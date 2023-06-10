@@ -9,11 +9,11 @@
         MinHeight="450">
 
         <!-- First column: Announcements and station alert level controls -->
-        <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="6 12 6 12">
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="12 12 6 12">
             <!-- Announcement controls -->
             <ui:ForegroundImageContainer
                 ForegroundPanelStyle="PanelRaisedHighlight"
-                ForegroundModulate="#ffffff22"
+                ForegroundModulate="#ffffff32"
                 VerticalExpand="True"
                 VerticalAlignment="Top"
                 Margin="0 0 0 6" >
@@ -37,48 +37,53 @@
 
             <ui:ForegroundImageContainer
                 ForegroundPanelStyle="PanelRaisedHighlight"
-                ForegroundModulate="#ffffff22"
+                ForegroundModulate="#ffffff32"
                 VerticalExpand="True"
-                VerticalAlignment="Bottom"
-                Margin="0 0 0 6" >
+                VerticalAlignment="Bottom">
                 <PanelContainer StyleClasses="PanelBackgroundBaseDark">
-                    <GridContainer Columns="2">
-                        <!-- Row with alert level light and label -->
-                        <ui:ForegroundImageContainer
-                            Margin="6 6 6 2"
-                            ForegroundImagePath="/Textures/Interface/CommsConsole/PanelMountBorder.svg.96dpi.png"
-                            ForegroundPatch="16 16 24 24"
-                            ForegroundScale="0.5 0.5"
-                            ForegroundMargin="4 4 8 8"
-                            HorizontalAlignment="Center"
-                            SetSize="60 35"
-                            VerticalAlignment="Center">
-                            <TextureButton Name="AlertLevelLight"
-                                TexturePath="/Textures/Interface/Nano/square.png"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch" />
-                        </ui:ForegroundImageContainer>
-                        <Label Text="{Loc 'comms-console-current-alert-label'}"  />
+                    <BoxContainer Orientation="Vertical">
+                        <ui:BracketedContainer Margin="6 12 6 0"  HorizontalAlignment="Center">
+                            <Label Text="{Loc 'comms-console-alert-level-label'}"  Margin="6 0 6 0" />
+                        </ui:BracketedContainer>
+                        <GridContainer Columns="2">
+                            <!-- Row with alert level light and label -->
+                            <ui:ForegroundImageContainer
+                                Margin="6 6 6 2"
+                                ForegroundImagePath="/Textures/Interface/CommsConsole/PanelMountBorder.svg.96dpi.png"
+                                ForegroundPatch="16 16 24 24"
+                                ForegroundScale="0.5 0.5"
+                                ForegroundMargin="4 4 8 8"
+                                HorizontalAlignment="Center"
+                                SetSize="60 35"
+                                VerticalAlignment="Center">
+                                <TextureButton Name="AlertLevelLight"
+                                    TexturePath="/Textures/Interface/Nano/square.png"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch" />
+                            </ui:ForegroundImageContainer>
 
-                        <!-- Row with a visual seperator line -->
-                        <PanelContainer>
-                            <PanelContainer.PanelOverride>
-                                <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
-                            </PanelContainer.PanelOverride>
-                            <ui:HSpacer Spacing="2"/>
-                        </PanelContainer>
-                        <!-- A little horizontal gap appears here. Can it be removed somehow?-->
-                        <PanelContainer>
-                            <PanelContainer.PanelOverride>
-                                <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
-                            </PanelContainer.PanelOverride>
-                            <ui:HSpacer Spacing="2"/>
-                        </PanelContainer>
+                            <Label Name="CurrentAlertLabel" HorizontalAlignment="Center"/>
 
-                        <!-- Row with controls to change alert level -->
-                        <OptionButton Name="AlertLevelOptions" MinWidth="100" Access="Public" VerticalAlignment="Center"/>
-                        <Button Name="SetAlertLevelButton" Access="Public" Text="{Loc 'comms-console-menu-set-alert-button-label'}" Margin="6"/>
-                    </GridContainer>
+                            <!-- Row with a visual seperator line -->
+                            <PanelContainer>
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
+                                </PanelContainer.PanelOverride>
+                                <ui:HSpacer Spacing="2"/>
+                            </PanelContainer>
+                            <!-- A little horizontal gap appears here. Can it be removed somehow?-->
+                            <PanelContainer>
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
+                                </PanelContainer.PanelOverride>
+                                <ui:HSpacer Spacing="2"/>
+                            </PanelContainer>
+
+                            <!-- Row with controls to change alert level -->
+                            <OptionButton Name="AlertLevelOptions" MinWidth="100" Access="Public" VerticalAlignment="Center"/>
+                            <Button Name="SetAlertLevelButton" Access="Public" Text="{Loc 'comms-console-menu-set-alert-button-label'}" Margin="6"/>
+                        </GridContainer>
+                    </BoxContainer>
                 </PanelContainer>
             </ui:ForegroundImageContainer>
         </BoxContainer>
@@ -125,10 +130,10 @@
                             <PanelContainer StyleClasses="AngleRect">
                                 <BoxContainer Orientation="Vertical">
                                     <!-- "Shuttle is incoming" light in here -->
-                                    <ui:BracketedContainer HorizontalExpand="True">
-                                        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                                            <Label Text="{Loc 'comms-shuttle-incoming-label'}" Margin="0 0 6 0" />
-                                            <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right">
+                                    <ui:BracketedContainer HorizontalAlignment="Stretch" HorizontalExpand="True">
+                                        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Stretch">
+                                            <Label Text="{Loc 'comms-shuttle-incoming-label'}" VerticalAlignment="Center" Margin="0 0 6 0" />
+                                            <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right" VerticalAlignment="Center">
                                                 <ui:ForegroundImageContainer
                                                     Margin="0 0 4 0"
                                                     ForegroundImagePath="/Textures/Interface/CommsConsole/PanelMountBorder.svg.96dpi.png"
@@ -147,11 +152,10 @@
                                     </ui:BracketedContainer>
 
                                     <!-- Shuttle "arriving in" label here -->
-                                    <ui:BracketedContainer HorizontalExpand="True">
+                                    <ui:BracketedContainer HorizontalAlignment="Stretch">
                                         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 6 0 6">
-                                            <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" Margin="0 0 6 0" />
+                                            <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" VerticalAlignment="Center" Margin="0 0 6 0" />
                                             <ui:ForegroundImageContainer
-                                                Margin="0 0 0 0"
                                                 ForegroundImagePath="/Textures/Interface/CommsConsole/PanelMountBorder.svg.96dpi.png"
                                                 ForegroundPatch="16 16 24 24"
                                                 ForegroundMargin="10 10 13 13"

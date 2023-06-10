@@ -104,16 +104,13 @@ namespace Content.Client.Communications.UI
                 // level to match the currentLevel
                 UserSelectedAlertLevel = currentAlert;
             }
+
             CurrentStationAlertLevel = currentAlert;
+            CurrentAlertLabel.Text = GetLocalizedAlertName(currentAlert);
 
             if (alerts == null)
             {
-                var name = currentAlert;
-                if (Loc.TryGetString($"alert-level-{currentAlert}", out var locName))
-                {
-                    name = locName;
-                }
-                AlertLevelOptions.AddItem(name);
+                AlertLevelOptions.AddItem(CurrentAlertLabel.Text);
                 AlertLevelOptions.SetItemMetadata(AlertLevelOptions.ItemCount - 1, currentAlert);
             }
             else
@@ -124,12 +121,8 @@ namespace Content.Client.Communications.UI
                 for(int i = 0; i < alerts.Count; i++)
                 {
                     var alert = alerts[i];
-                    var name = alert;
-                    if (Loc.TryGetString($"alert-level-{alert}", out var locName))
-                    {
-                        name = locName;
-                    }
-                    AlertLevelOptions.AddItem(name);
+                    var localizedAlertName = GetLocalizedAlertName(alert);
+                    AlertLevelOptions.AddItem(localizedAlertName);
                     AlertLevelOptions.SetItemMetadata(AlertLevelOptions.ItemCount - 1, alert);
 
                     if (alert == UserSelectedAlertLevel)
@@ -155,6 +148,15 @@ namespace Content.Client.Communications.UI
             }
 
             CheckSetLevelButton();
+        }
+
+        private string GetLocalizedAlertName(string alertName)
+        {
+            if (Loc.TryGetString($"alert-level-{alertName}", out var locName))
+            {
+                return locName;
+            }
+            return alertName;
         }
 
         private void CheckSetLevelButton()

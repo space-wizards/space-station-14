@@ -2,11 +2,15 @@
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
 
-    <BoxContainer Orientation="Horizontal" VerticalAlignment="Center">
+    <BoxContainer
+        Orientation="Horizontal"
+        HorizontalExpand="True"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
         <!-- Surely there is a way to add a texture to container? -->
         <TextureButton StyleClasses="BracketedContainerBegin" VerticalExpand="True"/>
 
-        <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
             <Control Access="Public" Name="ContentsContainer" HorizontalExpand="True" VerticalExpand="True" />
         </BoxContainer>
 
