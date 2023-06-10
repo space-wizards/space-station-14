@@ -9,62 +9,19 @@ namespace Content.Client.UserInterface.Controls
     [GenerateTypedNameReferences]
     public partial class ForegroundImageContainer : Container //<todo.eoin Rename this
     {
-        public const string StylePropertyForegroundContentMargin = "ForegroundContentMargin"; //<todo.eoin Rename
+        // The least amount of margin that a child needs to have to avoid drawing under
+        // undesirable parts of the images. Children can add larger margins if desired
+        public const string StylePropertyContentMargin = "MinimumContentMargin"; //<todo.eoin Rename
 
-        public const string StylePropertyForegroundPanelStyle = "ForegroundPanelStyle"; //<todo.eoin Remove
+        // The stylebox used to draw the foreground
         public const string StylePropertyForegroundStyleBox = "ForegroundStyleBox";
+        // An extra modulation color for the foreground style box
         public const string StylePropertyForegroundModulate = "ForegroundModulate";
 
+        // The stylebox used to draw the background
         public const string StylePropertyBackgroundStyleBox = "BackgroundStyleBox";
+        // An extra modulation color for the background style box
         public const string StylePropertyBackgroundModulate = "BackgroundModulate";
-
-        private string? _foregroundImagePath = null;
-        private Thickness _foregroundPatch = new();
-        private Vector2 _foregroundScale = Vector2.One; //<todo.eoin Would like this to be able to override the stylebox
-        private StyleBoxTexture? _styleBox = null;
-
-        // PanelRaisedHighlight
-        // AngleRectEmbedded
-        public string ForegroundPanelStyle
-        {
-            set => ForegroundContainer.SetOnlyStyleClass(value);
-        }
-
-        public Thickness ForegroundMargin
-        {
-            get => ContentsContainer.Margin;
-            set => ContentsContainer.Margin = value;
-        }
-
-        public string? ForegroundImagePath
-        {
-            get => _foregroundImagePath;
-            set
-            {
-                _foregroundImagePath = value;
-                recalculateStyleBox();
-            }
-        }
-
-        public Thickness ForegroundPatch
-        {
-            get => _foregroundPatch;
-            set
-            {
-                _foregroundPatch = value;
-                recalculateStyleBox();
-            }
-        }
-
-        public Vector2 ForegroundScale
-        {
-            get => _foregroundScale;
-            set
-            {
-                _foregroundScale = value;
-                recalculateStyleBox();
-            }
-        }
 
         public Color? ForegroundModulate
         {
@@ -78,28 +35,6 @@ namespace Content.Client.UserInterface.Controls
             set => ForegroundContainer.ModulateSelfOverride = value;
         }
 
-
-        private void recalculateStyleBox()
-        {
-            if (_foregroundImagePath == null)
-            {
-                ForegroundContainer.PanelOverride = null;
-                return;
-            }
-
-            var resCache = IoCManager.Resolve<IResourceCache>();
-            var foregroundImage = resCache.GetResource<TextureResource>(_foregroundImagePath);
-            ForegroundContainer.PanelOverride = new StyleBoxTexture
-            {
-                Texture = foregroundImage,
-                TextureScale = _foregroundScale,
-                PatchMarginLeft = _foregroundPatch.Left,
-                PatchMarginBottom = _foregroundPatch.Bottom,
-                PatchMarginRight = _foregroundPatch.Right,
-                PatchMarginTop = _foregroundPatch.Top
-            };
-        }
-
         public ForegroundImageContainer()
         {
             RobustXamlLoader.Load(this);
@@ -108,12 +43,6 @@ namespace Content.Client.UserInterface.Controls
 
         protected override void StylePropertiesChanged()
         {
-            //<todo.eoin Make a stylebox, instead
-            if (TryGetStyleProperty<string>(StylePropertyForegroundPanelStyle, out var foregroundStyle))
-            {
-                ForegroundPanelStyle = foregroundStyle;
-            }
-
             if (TryGetStyleProperty<StyleBox>(StylePropertyForegroundStyleBox, out var foregroundStyleBox))
             {
                 ForegroundContainer.PanelOverride = foregroundStyleBox;
@@ -124,10 +53,9 @@ namespace Content.Client.UserInterface.Controls
                 ForegroundContainer.ModulateSelfOverride = foregroundModulate;
             }
 
-            //<todo.eoin Rename
-            if (TryGetStyleProperty<Thickness>(StylePropertyForegroundContentMargin, out var foregroundMargin))
+            if (TryGetStyleProperty<Thickness>(StylePropertyContentMargin, out var contentMargin))
             {
-                ForegroundMargin = foregroundMargin;
+                ContentsContainer.Margin = contentMargin;
             }
 
             if (TryGetStyleProperty<StyleBox>(StylePropertyBackgroundStyleBox, out var backgroundStyleBox))
@@ -139,7 +67,6 @@ namespace Content.Client.UserInterface.Controls
             {
                 BackgroundContainer.ModulateSelfOverride = backgroundModulate;
             }
-
          }
 
     }

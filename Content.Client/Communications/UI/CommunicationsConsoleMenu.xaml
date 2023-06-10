@@ -27,8 +27,12 @@
                                 <TextEdit Name="MessageInput" MinHeight="100" Margin="6" />
                             </ui:ForegroundImageContainer>
                             <ui:HSpacer Spacing="10"/>
-                            <Button Name="AnnounceButton" Access="Public"
-                                Text="{Loc 'comms-console-menu-announcement-button'}" />
+                            <ui:ForegroundImageContainer StyleClasses="AngleRectOutlineShadow">
+                                <ui:ForegroundImageContainer StyleClasses="AngleRectBevel">
+                                    <Button Name="AnnounceButton" Access="Public"
+                                        Text="{Loc 'comms-console-menu-announcement-button'}" />
+                                </ui:ForegroundImageContainer>
+                            </ui:ForegroundImageContainer>
                         </BoxContainer>
                     </PanelContainer>
                 </ui:ForegroundImageContainer>
@@ -79,8 +83,17 @@
                                     </PanelContainer>
 
                                     <!-- Row with controls to change alert level -->
-                                    <OptionButton Name="AlertLevelOptions" MinWidth="100" Access="Public" VerticalAlignment="Center"/>
-                                    <Button Name="SetAlertLevelButton" Access="Public" Text="{Loc 'comms-console-menu-set-alert-button-label'}" Margin="6"/>
+                                    <ui:ForegroundImageContainer StyleClasses="AngleRectOutlineShadow" Margin="6">
+                                        <ui:ForegroundImageContainer StyleClasses="AngleRectBevel">
+                                            <OptionButton Name="AlertLevelOptions" MinWidth="100" Access="Public" VerticalAlignment="Center"/>
+                                        </ui:ForegroundImageContainer>
+                                    </ui:ForegroundImageContainer>
+
+                                    <ui:ForegroundImageContainer StyleClasses="AngleRectOutlineShadow" Margin="6">
+                                        <ui:ForegroundImageContainer StyleClasses="AngleRectBevel">
+                                            <Button Name="SetAlertLevelButton" Access="Public" Text="{Loc 'comms-console-menu-set-alert-button-label'}" />
+                                        </ui:ForegroundImageContainer>
+                                    </ui:ForegroundImageContainer>
                                 </GridContainer>
                             </BoxContainer>
                         </ui:ForegroundImageContainer>
@@ -109,9 +122,9 @@
                                     <ui:ForegroundImageContainer Margin="4" StyleClasses="BracketedContainerEmbossed">
                                         <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center" VerticalExpand="True">
                                             <Label Text="{Loc 'comms-console-menu-call-shuttle'}" />
+                                            <ui:HSpacer Spacing="12"/>
                                             <ui:ForegroundImageContainer
                                                 StyleClasses="PanelMountBorder"
-                                                Margin="12"
                                                 HorizontalAlignment="Center"
                                                 SetSize="80 80"
                                                 VerticalAlignment="Center">
@@ -133,7 +146,7 @@
                                     <BoxContainer Orientation="Vertical">
                                         <!-- "Shuttle is incoming" light in here -->
                                         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Stretch">
-                                            <Label Text="{Loc 'comms-shuttle-incoming-label'}" VerticalAlignment="Center" Margin="0 0 6 0" />
+                                            <Label Text="{Loc 'comms-shuttle-incoming-label'}" VerticalAlignment="Center" />
                                             <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right" VerticalAlignment="Center">
                                                 <ui:ForegroundImageContainer
                                                     Margin="0 0 4 0"
@@ -148,9 +161,11 @@
                                             </BoxContainer>
                                         </BoxContainer>
 
+                                        <ui:HSpacer Spacing="12"/>
+
                                         <!-- Shuttle "arriving in" label here -->
-                                        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 6 0 6">
-                                            <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" VerticalAlignment="Center" Margin="0 0 6 0" />
+                                        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                            <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" VerticalAlignment="Center"/>
                                             <ui:ForegroundImageContainer
                                                 StyleClasses="PanelMountBorder"
                                                 HorizontalExpand="True"
@@ -177,8 +192,8 @@
                                 <ui:ForegroundImageContainer Margin="4" StyleClasses="BracketedContainerEmbossed">
                                     <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
                                         <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
+                                        <ui:HSpacer Spacing="12"/>
                                         <ui:ForegroundImageContainer
-                                            Margin="12"
                                             StyleClasses="PanelMountBorder"
                                             HorizontalAlignment="Center"
                                             SetSize="80 80"
