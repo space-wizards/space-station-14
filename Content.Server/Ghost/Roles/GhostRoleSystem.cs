@@ -363,14 +363,9 @@ namespace Content.Server.Ghost.Roles
 
         private bool CanTakeGhost(EntityUid uid, GhostRoleComponent? component = null)
         {
-            if (!Resolve(uid, ref component, false) ||
-                component.Taken ||
-                MetaData(uid).EntityPaused)
-            {
-                return false;
-            }
-
-            return true;
+            return Resolve(uid, ref component, false) &&
+                   !component.Taken &&
+                   !MetaData(uid).EntityPaused;
         }
 
         private void OnTakeoverTakeRole(EntityUid uid, GhostTakeoverAvailableComponent component, ref TakeGhostRoleEvent args)
