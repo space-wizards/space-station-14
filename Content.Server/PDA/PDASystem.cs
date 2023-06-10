@@ -10,6 +10,7 @@ using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Content.Shared.Light.Component;
 
@@ -32,20 +33,25 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
             SubscribeLocalEvent<PDAComponent, GridModifiedEvent>(OnGridChanged);
             SubscribeLocalEvent<PDAComponent, AlertLevelChangedEvent>(OnAlertLevelChanged);
+
+            // UI Events:
+            SubscribeLocalEvent<PDAComponent, PDARequestUpdateInterfaceMessage>(OnUiMessage);
+            SubscribeLocalEvent<PDAComponent, PDAToggleFlashlightMessage>(OnUiMessage);
+            SubscribeLocalEvent<PDAComponent, PDAShowRingtoneMessage>(OnUiMessage);
+            SubscribeLocalEvent<PDAComponent, PDAShowMusicMessage>(OnUiMessage);
+            SubscribeLocalEvent<PDAComponent, PDAShowUplinkMessage>(OnUiMessage);
+            SubscribeLocalEvent<PDAComponent, PDALockUplinkMessage>(OnUiMessage);
         }
 
         protected override void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
         {
             base.OnComponentInit(uid, pda, args);
 
-            if (!TryComp(uid, out ServerUserInterfaceComponent? uiComponent))
+            if (!HasComp<ServerUserInterfaceComponent>(uid))
                 return;
 
             UpdateAlertLevel(uid, pda);
             UpdateStationName(uid, pda);
-
-            if (_ui.TryGetUi(uid, PDAUiKey.Key, out var ui, uiComponent))
-                ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
         }
 
         protected override void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)
@@ -116,55 +122,66 @@ namespace Content.Server.PDA
             _cartridgeLoader?.UpdateUiState(uid, state);
         }
 
-        private void OnUIMessage(PDAComponent pda, ServerBoundUserInterfaceMessage msg)
+        private void OnUiMessage(EntityUid uid, PDAComponent pda, PDARequestUpdateInterfaceMessage msg)
         {
-            var uid = pda.Owner;
-            // todo: move this to entity events
-            switch (msg.Message)
+            if (!PDAUiKey.Key.Equals(msg.UiKey))
+                return;
+
+            UpdatePdaUi(uid, pda);
+        }
+
+        private void OnUiMessage(EntityUid uid, PDAComponent pda, PDAToggleFlashlightMessage msg)
+        {
+            if (!PDAUiKey.Key.Equals(msg.UiKey))
+                return;
+
+            if (TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
+                _unpoweredFlashlight.ToggleLight(uid, flashlight);
+        }
+
+        private void OnUiMessage(EntityUid uid, PDAComponent pda, PDAShowRingtoneMessage msg)
+        {
+            if (!PDAUiKey.Key.Equals(msg.UiKey))
+                return;
+
+            if (HasComp<RingerComponent>(uid))
+                _ringer.ToggleRingerUI(uid, (IPlayerSession) msg.Session);
+        }
+
+        private void OnUiMessage(EntityUid uid, PDAComponent pda, PDAShowMusicMessage msg)
+        {
+            if (!PDAUiKey.Key.Equals(msg.UiKey))
+                return;
+
+            if (TryComp<InstrumentComponent>(uid, out var instrument))
+                _instrument.ToggleInstrumentUi(uid, (IPlayerSession) msg.Session, instrument);
+        }
+
+        private void OnUiMessage(EntityUid uid, PDAComponent pda, PDAShowUplinkMessage msg)
+        {
+            if (!PDAUiKey.Key.Equals(msg.UiKey))
+                return;
+
+            // check if its locked again to prevent malicious clients opening locked uplinks
+            if (TryComp<StoreComponent>(uid, out var store) && IsUnlocked(uid))
+                _store.ToggleUi(msg.Session.AttachedEntity!.Value, uid, store);
+        }
+
+        private void OnUiMessage(EntityUid uid, PDAComponent pda, PDALockUplinkMessage msg)
+        {
+            if (!PDAUiKey.Key.Equals(msg.UiKey))
+                return;
+
+            if (TryComp<RingerUplinkComponent>(uid, out var uplink))
             {
-                case PDARequestUpdateInterfaceMessage _:
-                    UpdatePdaUi(uid, pda);
-                    break;
-                case PDAToggleFlashlightMessage _:
-                    {
-                        if (TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
-                            _unpoweredFlashlight.ToggleLight(uid, flashlight);
-                        break;
-                    }
-                case PDAShowRingtoneMessage _:
-                    {
-                        if (TryComp<RingerComponent>(uid, out var ringer))
-                            _ringer.ToggleRingerUI(ringer, msg.Session);
-                        break;
-                    }
-                case PDAShowMusicMessage _:
-                {
-                    if (TryComp<InstrumentComponent>(uid, out var instrument))
-                        _instrument.ToggleInstrumentUi(uid, msg.Session, instrument);
-                    break;
-                }
-                case PDAShowUplinkMessage _:
-                {
-                    // check if its locked again to prevent malicious clients opening locked uplinks
-                    if (TryComp<StoreComponent>(uid, out var store) && IsUnlocked(uid))
-                        _store.ToggleUi(msg.Session.AttachedEntity!.Value, uid, store);
-                    break;
-                }
-                case PDALockUplinkMessage _:
-                {
-                    if (TryComp<RingerUplinkComponent>(uid, out var uplink))
-                    {
-                        _ringer.LockUplink(uid, uplink);
-                        UpdatePdaUi(uid, pda);
-                    }
-                    break;
-                }
+                _ringer.LockUplink(uid, uplink);
+                UpdatePdaUi(uid, pda);
             }
         }
 
         private bool IsUnlocked(EntityUid uid)
         {
-            return TryComp<RingerUplinkComponent>(uid, out var uplink) ? uplink.Unlocked : true;
+            return !TryComp<RingerUplinkComponent>(uid, out var uplink) || uplink.Unlocked;
         }
 
         private void UpdateStationName(EntityUid uid, PDAComponent pda)
