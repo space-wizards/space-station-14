@@ -108,18 +108,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void OnStateEntered(GameplayState state)
     {
-        DebugTools.Assert(_window == null);
-
-        _window = UIManager.CreateWindow<ActionsWindow>();
-        LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
-
-        _window.OnOpen += OnWindowOpened;
-        _window.OnClose += OnWindowClosed;
-        _window.ClearButton.OnPressed += OnClearPressed;
-        _window.SearchBar.OnTextChanged += OnSearchChanged;
-        _window.FilterButton.OnItemSelected += OnFilterSelected;
-
-
         if (_actionsSystem != null)
         {
             _actionsSystem.ActionAdded += OnActionAdded;
@@ -326,18 +314,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _actionsSystem.ActionRemoved -= OnActionRemoved;
             _actionsSystem.ActionReplaced -= OnActionReplaced;
             _actionsSystem.ActionsUpdated -= OnActionsUpdated;
-        }
-
-        if (_window != null)
-        {
-            _window.OnOpen -= OnWindowOpened;
-            _window.OnClose -= OnWindowClosed;
-            _window.ClearButton.OnPressed -= OnClearPressed;
-            _window.SearchBar.OnTextChanged -= OnSearchChanged;
-            _window.FilterButton.OnItemSelected -= OnFilterSelected;
-
-            _window.Dispose();
-            _window = null;
         }
 
         CommandBinds.Unregister<ActionUIController>();
@@ -779,10 +755,32 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         ActionsBar.PageButtons.LeftArrow.OnPressed -= OnLeftArrowPressed;
         ActionsBar.PageButtons.RightArrow.OnPressed -= OnRightArrowPressed;
+
+        if (_window != null)
+        {
+            _window.OnOpen -= OnWindowOpened;
+            _window.OnClose -= OnWindowClosed;
+            _window.ClearButton.OnPressed -= OnClearPressed;
+            _window.SearchBar.OnTextChanged -= OnSearchChanged;
+            _window.FilterButton.OnItemSelected -= OnFilterSelected;
+
+            _window.Dispose();
+            _window = null;
+        }
     }
 
     private void LoadGui()
     {
+        DebugTools.Assert(_window == null);
+        _window = UIManager.CreateWindow<ActionsWindow>();
+        LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
+
+        _window.OnOpen += OnWindowOpened;
+        _window.OnClose += OnWindowClosed;
+        _window.ClearButton.OnPressed += OnClearPressed;
+        _window.SearchBar.OnTextChanged += OnSearchChanged;
+        _window.FilterButton.OnItemSelected += OnFilterSelected;
+
         if (ActionsBar == null)
         {
             return;
@@ -790,7 +788,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         ActionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
         ActionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
-
 
         RegisterActionContainer(ActionsBar.ActionsContainer);
 

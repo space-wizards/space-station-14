@@ -12,7 +12,6 @@
     - Donut
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donut.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:

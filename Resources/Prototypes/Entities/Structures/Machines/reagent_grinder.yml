@@ -33,7 +33,6 @@
         layer:
         - TabletopMachineLayer
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/juicer.rsi
     drawdepth: SmallObjects
     snapCardinals: true

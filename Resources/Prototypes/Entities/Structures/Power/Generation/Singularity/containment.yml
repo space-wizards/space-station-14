@@ -20,7 +20,6 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/containment.rsi
     state: icon
-    netsync: false
     noRot: true
     layers:
       - state: icon
@@ -93,7 +92,6 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi
     state: field
-    netsync: false
     noRot: true
   - type: Icon
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi

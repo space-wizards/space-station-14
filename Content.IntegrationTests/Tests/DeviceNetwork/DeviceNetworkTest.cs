@@ -91,7 +91,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
             });
 
-            await server.WaitRunTicks(1);
+            await server.WaitRunTicks(2);
             await server.WaitIdleAsync();
 
             await server.WaitAssertion(() => {
@@ -146,7 +146,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
             });
 
-            await server.WaitRunTicks(1);
+            await server.WaitRunTicks(2);
             await server.WaitIdleAsync();
 
             await server.WaitAssertion(() => {
@@ -200,7 +200,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 ["testbool"] = true
             };
 
-            await server.WaitRunTicks(1);
+            await server.WaitRunTicks(2);
             await server.WaitIdleAsync();
 
             await server.WaitAssertion(() => {

@@ -800,6 +800,16 @@
   description: flavor-complex-themartinez
 
 - type: flavor
+  id: plastic
+  flavorType: Complex
+  description: flavor-complex-plastic
+
+- type: flavor
+  id: glue
+  flavorType: Complex
+  description: flavor-complex-glue
+  
+- type: flavor
   id: rocksandstones
   flavorType: Complex
   description: flavor-complex-rocksandstones
