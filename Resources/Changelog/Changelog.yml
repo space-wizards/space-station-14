@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix NPCs prying doors., type: Fix}
-  id: 3476
-  time: '2023-04-21T05:05:29.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Disabled ghost roles for salvage expeditions., type: Tweak}
   id: 3477
   time: '2023-04-21T05:06:22.0000000+00:00'
@@ -2908,3 +2903,9 @@ Entries:
     type: Fix}
   id: 3975
   time: '2023-06-08T15:10:27.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Tweaked toolbelt starting items to remove multitools from non-engineering
+      personnel., type: Tweak}
+  id: 3976
+  time: '2023-06-10T02:58:09.0000000+00:00'
