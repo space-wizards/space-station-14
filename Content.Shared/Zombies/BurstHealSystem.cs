@@ -1,11 +1,13 @@
 ﻿using Content.Shared.Damage;
 using Content.Shared.Mobs;
-using Content.Shared.Movement.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Zombies;
 
+/// <summary>
+///   Delivers a burst of healing after a specific delay, currently used to bring zombies out of crit.
+/// </summary>
 public class BurstHealSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -18,6 +20,12 @@ public class BurstHealSystem : EntitySystem
 
         SubscribeLocalEvent<BurstHealComponent, MobStateChangedEvent>(OnMobState);
         SubscribeLocalEvent<BurstHealComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<BurstHealComponent, EntityUnpausedEvent>(OnUnpause);
+    }
+
+    private void OnUnpause(EntityUid uid, BurstHealComponent component, ref EntityUnpausedEvent args)
+    {
+        component.HealTime += args.PausedTime;
     }
 
     public BurstHealComponent QueueBurstHeal(EntityUid uid, float minSecs, float maxSecs)

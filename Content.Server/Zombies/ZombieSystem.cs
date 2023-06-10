@@ -10,7 +10,6 @@ using Content.Server.Inventory;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Emoting.Systems;
-using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.IdentityManagement;
@@ -40,7 +39,6 @@ namespace Content.Server.Zombies
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
-        [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _sharedHuApp = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
@@ -53,14 +51,13 @@ namespace Content.Server.Zombies
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly PassiveHealSystem _passiveHeal = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly BurstHealSystem _burstHealSystem = default!;
         [Dependency] private readonly ServerInventorySystem _inv = default!;
         [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly ZombieRuleSystem _zombieRule = default!;
 
         public override void Initialize()
@@ -70,7 +67,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, EmoteEvent>(OnEmote, before:
                 new []{typeof(VocalSystem), typeof(BodyEmotesSystem)});
 
-            SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<LivingZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
             SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
             SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
@@ -101,7 +98,7 @@ namespace Content.Server.Zombies
         {
             if (!HasComp<LivingZombieComponent>(uid))
             {
-                // We have a very specific edge case. Zombies who we marked as dead (no revive) can come back
+                // We have a very specific edge case. Zombies who we marked as "dead" (no burst heal) can come back
                 // if they still have Bicardine in their system from biting someone. Or someone foolishly
                 // healed them.
                 if (HasComp<PendingZombieComponent>(uid) || HasComp<InitialInfectedComponent>(uid))
@@ -214,9 +211,9 @@ namespace Content.Server.Zombies
         }
 
         // When a zombie hits a victim, process what happens next.
-        private void OnMeleeHit(EntityUid uid, ZombieComponent component, MeleeHitEvent args)
+        private void OnMeleeHit(EntityUid uid, LivingZombieComponent component, MeleeHitEvent args)
         {
-            if (!EntityManager.TryGetComponent<ZombieComponent>(args.User, out var zombieComp))
+            if (!EntityManager.TryGetComponent<ZombieComponent>(args.User, out var zombieAttacker))
                 return;
 
             if (!args.HitEntities.Any())
@@ -235,7 +232,7 @@ namespace Content.Server.Zombies
                     if (HasComp<LivingZombieComponent>(entity))
                     {
                         // Reduce damage to living zombies.
-                        args.BonusDamage = -args.BaseDamage * zombieComp.Settings.OtherZombieDamageCoefficient;
+                        args.BonusDamage = -args.BaseDamage * zombieAttacker.Settings.OtherZombieDamageCoefficient;
                     }
 
                     if (_random.Prob(0.3f))
@@ -255,18 +252,19 @@ namespace Content.Server.Zombies
                             var pending = EnsureComp<PendingZombieComponent>(entity);
                             var zombie = EnsureComp<ZombieComponent>(entity);
                             pending.MaxInfectionLength =
-                                _random.NextFloat(0.25f, 1.0f) * component.Settings.InfectionTurnTime;
+                                _random.NextFloat(0.25f, 1.0f) * zombieAttacker.Settings.InfectionTurnTime;
                             pending.InfectionStarted = _timing.CurTime;
                             pending.VirusDamage = zombie.Settings.VirusDamage;
                             pending.DeadMinTurnTime = zombie.Settings.DeadMinTurnTime;
 
                             // Our victims inherit our settings, which defines damage and more.
-                            zombie.Settings = component.VictimSettings ?? component.Settings;
+                            zombie.Settings = zombieAttacker.VictimSettings ?? zombieAttacker.Settings;
 
                             // Track who infected this new zombo
                             zombie.Family = new ZombieFamily()
                             {
-                                Rules = component.Family.Rules, Generation = component.Family.Generation + 1,
+                                Rules = zombieAttacker.Family.Rules,
+                                Generation = zombieAttacker.Family.Generation + 1,
                                 Infector = uid
                             };
                         }
@@ -320,31 +318,6 @@ namespace Content.Server.Zombies
         {
             if (UnZombify(args.Source, args.Target, zombiecomp))
                 args.NameHandled = true;
-        }
-
-        // Force every existing zombie in this rule to turn very soon.
-        //
-        // Some players were "forgetting" that they were initial infected and playing most or all of the round
-        // as players, even after zombies had rampaged across the entire ship. This ensures that as the horde takes
-        // hold, all possible zombies convert.
-        public void ForceZombies(EntityUid ruleUid, ZombieRuleComponent zombies)
-        {
-            var pendingQuery = EntityQueryEnumerator<InitialInfectedComponent, ZombieComponent>();
-            while (pendingQuery.MoveNext(out var uid, out var initial, out var zombie))
-            {
-                if (zombie.Family.Rules == ruleUid)
-                {
-                    // Immediately jump to an active virus for initial players
-                    var pending = EnsureComp<PendingZombieComponent>(uid);
-                    pending.MaxInfectionLength = zombie.Settings.InfectionTurnTime;
-                    pending.InfectionStarted = _timing.CurTime;
-                    pending.VirusDamage = zombie.Settings.VirusDamage;
-
-                    RemCompDeferred<InitialInfectedComponent>(uid);
-
-                    _popup.PopupEntity(Loc.GetString("zombie-forced"), uid, uid);
-                }
-            }
         }
 
     }

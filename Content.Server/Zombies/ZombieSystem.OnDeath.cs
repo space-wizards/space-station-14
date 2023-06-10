@@ -41,7 +41,7 @@ namespace Content.Server.Zombies
     ///     Handles zombie propagation and inherent zombie traits
     /// </summary>
     /// <remarks>
-    ///     Don't Shitcode Open Inside
+    ///     Don't Open, Shitcode Inside
     /// </remarks>
     public sealed partial class ZombieSystem
     {
@@ -57,7 +57,7 @@ namespace Content.Server.Zombies
         ///     rewrite this, but this is how it shall lie eternal. Turn back now.
         ///     -emo
         /// </remarks>
-        public void ZombifyEntity(EntityUid target, MobStateComponent? mobState = null, PendingZombieComponent? pending= null)
+        public void ZombifyEntity(EntityUid target, MobStateComponent? mobState = null, ZombieComponent? zombie = null)
         {
             //Don't zombify living zombies
             if (HasComp<LivingZombieComponent>(target))
@@ -69,20 +69,20 @@ namespace Content.Server.Zombies
             //He's gotta have a mind
             var mindcomp = EnsureComp<MindComponent>(target);
 
-            //you're a real zombie now, son. Probably had this already.
-            var zombiecomp = EnsureComp<ZombieComponent>(target);
+            //If you weren't already, you're a real zombie now, son.
+            zombie ??= EnsureComp<ZombieComponent>(target);
 
-            if (zombiecomp.Family.Rules == EntityUid.Invalid)
+            if (zombie.Family.Rules == EntityUid.Invalid)
             {
                 // Attempt to find a zombie rule to attach this zombie to
                 var (rulesUid, rules) = _zombieRule.FindActiveRule();
                 if (rules != null)
                 {
                     // Admin command added a new zombie to this existing rule.
-                    zombiecomp.Settings = rules.EarlySettings;
-                    zombiecomp.VictimSettings = rules.VictimSettings;
-                    zombiecomp.Family = new ZombieFamily(){ Rules = rulesUid, Generation = 0 };
-                    _zombieRule.AddToInfectedList(target, zombiecomp, rules, mindcomp);
+                    zombie.Settings = rules.EarlySettings;
+                    zombie.VictimSettings = rules.VictimSettings;
+                    zombie.Family = new ZombieFamily(){ Rules = rulesUid, Generation = 0 };
+                    _zombieRule.AddToInfectedList(target, zombie, rules, mindcomp);
                 }
             }
 
@@ -105,9 +105,9 @@ namespace Content.Server.Zombies
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
             var melee = EnsureComp<MeleeWeaponComponent>(target);
-            melee.ClickAnimation = zombiecomp.Settings.AttackAnimation;
-            melee.WideAnimation = zombiecomp.Settings.AttackAnimation;
-            melee.Range = zombiecomp.Settings.MeleeRange;
+            melee.ClickAnimation = zombie.Settings.AttackAnimation;
+            melee.WideAnimation = zombie.Settings.AttackAnimation;
+            melee.Range = zombie.Settings.MeleeRange;
             Dirty(melee);
 
             // Groaning when damaged
@@ -118,26 +118,26 @@ namespace Content.Server.Zombies
             EnsureComp<AutoEmoteComponent>(target);
             _autoEmote.AddEmote(target, "ZombieGroan");
 
-            _passiveHeal.BeginHealing(target, zombiecomp.Settings.HealingPerSec);
+            _passiveHeal.BeginHealing(target, zombie.Settings.HealingPerSec);
 
             //We have specific stuff for humanoid zombies because they matter more
             if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp)) //huapcomp
             {
                 //store some values before changing them in case the humanoid get cloned later
                 // If somehow a dead zombie gets zombified again, this data might get damaged.
-                zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
-                zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
+                zombie.BeforeZombifiedSkinColor = huApComp.SkinColor;
+                zombie.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
 
-                _sharedHuApp.SetSkinColor(target, zombiecomp.Settings.SkinColor, verify: false, humanoid: huApComp);
-                _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.Settings.EyeColor, humanoid: huApComp);
+                _sharedHuApp.SetSkinColor(target, zombie.Settings.SkinColor, verify: false, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombie.Settings.EyeColor, humanoid: huApComp);
 
                 // this might not resync on clone?
-                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Tail, zombiecomp.Settings.BaseLayerExternal, humanoid: huApComp);
-                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.HeadSide, zombiecomp.Settings.BaseLayerExternal, humanoid: huApComp);
-                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.HeadTop, zombiecomp.Settings.BaseLayerExternal, humanoid: huApComp);
-                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Snout, zombiecomp.Settings.BaseLayerExternal, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Tail, zombie.Settings.BaseLayerExternal, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.HeadSide, zombie.Settings.BaseLayerExternal, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.HeadTop, zombie.Settings.BaseLayerExternal, humanoid: huApComp);
+                _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Snout, zombie.Settings.BaseLayerExternal, humanoid: huApComp);
 
-                melee.Damage = zombiecomp.Settings.AttackDamage;
+                melee.Damage = zombie.Settings.AttackDamage;
             }
 
             //The zombie gets the assigned damage weaknesses and strengths
@@ -153,7 +153,7 @@ namespace Content.Server.Zombies
             _serverInventory.TryUnequip(target, "ears", true, true);
 
             //popup
-            _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
+            _popup.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
 
             //Make it sentient if it's an animal or something
             if (!HasComp<InputMoverComponent>(target)) //this component is cursed and fucks shit up
@@ -178,7 +178,7 @@ namespace Content.Server.Zombies
 
             //gives it the funny "Zombie ___" name.
             var meta = MetaData(target);
-            zombiecomp.BeforeZombifiedEntityName = meta.EntityName;
+            zombie.BeforeZombifiedEntityName = meta.EntityName;
             meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
 
             _identity.QueueIdentityUpdate(target);
@@ -186,12 +186,12 @@ namespace Content.Server.Zombies
             if (mindcomp.Mind != null && mindcomp.Mind.TryGetSession(out var session))
             {
                 //Zombie role for player manifest
-                mindcomp.Mind.AddRole(new ZombieRole(mindcomp.Mind, _proto.Index<AntagPrototype>(zombiecomp.Settings.ZombieRoleId)));
+                mindcomp.Mind.AddRole(new ZombieRole(mindcomp.Mind, _proto.Index<AntagPrototype>(zombie.Settings.ZombieRoleId)));
                 //Greeting message for new bebe zombers
                 _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
 
                 // Notify player about new role assignment
-                _audioSystem.PlayGlobal(zombiecomp.Settings.GreetSoundNotification, session);
+                _audioSystem.PlayGlobal(zombie.Settings.GreetSoundNotification, session);
             }
 
             if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !mindcomp.HasMind) //this specific component gives build test trouble so pop off, ig
@@ -204,8 +204,8 @@ namespace Content.Server.Zombies
                 ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
             }
 
-            //Goes through every hand, drops the items in it, then removes the hand
-            //may become the source of various bugs.
+            // Goes through every hand, drops the items in it, then removes the hand
+            // may become the source of various bugs.
             foreach (var hand in _sharedHands.EnumerateHands(target))
             {
                 _sharedHands.SetActiveHand(target, hand);
@@ -213,15 +213,18 @@ namespace Content.Server.Zombies
                 _sharedHands.RemoveHand(target, hand.Name);
             }
             RemComp<HandsComponent>(target);
+
             // No longer waiting to become a zombie:
             // Requires deferral one of these are (probably) the cause of the call to ZombifyEntity in the first place.
             RemCompDeferred<PendingZombieComponent>(target);
             RemCompDeferred<InitialInfectedComponent>(target);
             EnsureComp<LivingZombieComponent>(target);
 
-            //zombie gamemode stuff
+            // zombie gamemode stuff
             RaiseLocalEvent(new EntityZombifiedEvent(target));
-            //zombies get slowdown once they convert
+
+            // Zombies get slowdown once they convert
+            // See SharedZombieSystem.OnRefreshSpeed
             _movementSpeedModifier.RefreshMovementSpeedModifiers(target);
         }
     }

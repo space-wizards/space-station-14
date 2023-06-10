@@ -157,8 +157,6 @@ namespace Content.Shared.Zombies
         /// </summary>
         [DataField("greetSoundNotification")]
         public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
-
-
     }
 
     [DataDefinition, NetworkedComponent]
@@ -184,6 +182,14 @@ namespace Content.Shared.Zombies
 
     }
 
+    /// <summary>
+    ///   Applied to any mob that is carrying a zombie infection in any state.
+    ///   That mob will also have one of these additional components depending on the stage of infection:
+    ///   - InitialInfectedComponent - Human Patient0 players who are not being hurt by the infection yet.
+    ///   - PendingZombieComponent - The painful stage of the infection.
+    ///   - LivingZombieComponent - An active zombie either alive or in crit (and about to heal back to life)
+    ///   - [none of these] - This zombie has turned from undead to actually dead.
+    /// </summary>
     [RegisterComponent, NetworkedComponent]
     public sealed class ZombieComponent : Component
     {

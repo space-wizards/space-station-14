@@ -2,6 +2,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Zombies
 {
+    /// <summary>
+    ///   Specifically for tracking players who will zombify later (on demand) but are not turned or turning yet.
+    ///   Should also have ZombieComponent.
+    /// </summary>
     [RegisterComponent]
     public sealed class InitialInfectedComponent : Component
     {

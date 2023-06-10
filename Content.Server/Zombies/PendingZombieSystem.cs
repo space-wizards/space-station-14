@@ -17,7 +17,7 @@ public class PendingZombieSystem : SharedPendingZombieSystem
     protected override void ZombifyNow(EntityUid uid, PendingZombieComponent pending, ZombieComponent zombie, MobStateComponent mobState)
     {
         // NB: This removes PendingZombieComponent
-        _zombie.ZombifyEntity(uid, pending: pending, mobState: mobState);
+        _zombie.ZombifyEntity(uid, mobState: mobState, zombie:zombie);
     }
 
 }

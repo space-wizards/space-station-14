@@ -1,17 +1,37 @@
 ﻿using Content.Shared.Damage;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Movement.Systems;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Zombies;
 
+/// <summary>
+///   Deals damage to bitten zombie victims each tick until they die. Then (serverside) zombifies them.
+/// </summary>
 public abstract class SharedPendingZombieSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<PendingZombieComponent, EntityUnpausedEvent>(OnUnpause);
+        SubscribeLocalEvent<PendingZombieComponent, ComponentAdd>(OnAddComponent);
+    }
+
+    private void OnAddComponent(EntityUid uid, PendingZombieComponent component, ComponentAdd args)
+    {
+        // Mark the zombie as being allowed to revive, as a "revive" is exactly what will happen when it dies.
+        // This prevents the game expecting the ghost to come out on death and avoids a race condition when the
+        // client thinks the ghost should leave the body while the server is making them into a zombie.
+        _mobThreshold.SetAllowRevives(uid, true);
+    }
 
     // Hurt them each second. Once they die, PendingZombieSystem will call Zombify and remove PendingZombieComponent
     public override void Update(float frameTime)
@@ -69,8 +89,14 @@ public abstract class SharedPendingZombieSystem : EntitySystem
         }
     }
 
+    private void OnUnpause(EntityUid uid, PendingZombieComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextTick += args.PausedTime;
+        component.InfectionStarted += args.PausedTime;
+    }
+
     protected virtual void ZombifyNow(EntityUid uid, PendingZombieComponent pending, ZombieComponent zombie, MobStateComponent mobState)
     {
-        // Server only (see PendingZombieSystem)
+        // Server only (see PendingZombieSystem, where the server-only ZombifyEntity is called.)
     }
 }

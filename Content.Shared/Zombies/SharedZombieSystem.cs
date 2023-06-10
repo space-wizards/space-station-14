@@ -12,6 +12,7 @@ public abstract class SharedZombieSystem : EntitySystem
         SubscribeLocalEvent<ZombieComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
     }
 
+    // Apply a zombie slow.
     private void OnRefreshSpeed(EntityUid uid, ZombieComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         var mod = component.Settings.MovementSpeedDebuff;

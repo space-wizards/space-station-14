@@ -1,10 +1,12 @@
 ﻿using Content.Shared.Damage;
 using Content.Shared.Mobs;
-using Content.Shared.Movement.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Zombies;
 
+/// <summary>
+///   For providing a flat heal each second to a living mob. Currently only used by zombies.
+/// </summary>
 public class PassiveHealSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -15,6 +17,12 @@ public class PassiveHealSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<PassiveHealComponent, MobStateChangedEvent>(OnMobState);
+        SubscribeLocalEvent<PassiveHealComponent, EntityUnpausedEvent>(OnUnpause);
+    }
+
+    private void OnUnpause(EntityUid uid, PassiveHealComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextTick += args.PausedTime;
     }
 
     private void OnMobState(EntityUid uid, PassiveHealComponent component, MobStateChangedEvent args)
@@ -25,11 +33,10 @@ public class PassiveHealSystem : EntitySystem
         }
     }
 
-    public PassiveHealComponent BeginHealing(EntityUid uid, float pointsPerSec)
+    public void BeginHealing(EntityUid uid, float pointsPerSec)
     {
         var heal = EnsureComp<PassiveHealComponent>(uid);
         heal.PointsPerSec = pointsPerSec;
-        return heal;
     }
 
     public override void Update(float frameTime)

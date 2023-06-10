@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Zombies;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
@@ -93,12 +94,12 @@ public sealed class ZombieRuleComponent : Component
 
     // -- Params below here are not really meant to be modified in YML
     // When we infect the initial infected and tell them
-    [DataField("infectInitialAt"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan InfectInitialAt = TimeSpan.Zero;
+    [DataField("infectInitialAt", customTypeSerializer:typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan? InfectInitialAt;
 
     // When Initial Infected can first turn
-    [DataField("firstTurnAllowed"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan FirstTurnAllowed = TimeSpan.Zero;
+    [DataField("firstTurnAllowed", customTypeSerializer:typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan? FirstTurnAllowed;
 
     // If we have forced all initialInfected
     [DataField("forcedZombies"), ViewVariables(VVAccess.ReadWrite)]

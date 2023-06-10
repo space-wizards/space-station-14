@@ -1,15 +1,11 @@
-using Content.Shared.Chat.Prototypes;
-using Content.Shared.Damage;
-using Content.Shared.Roles;
-using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Shared.Zombies
 {
+    /// <summary>
+    ///   For providing a flat heal each second to a living mob. Currently only used by zombies.
+    /// </summary>
     [RegisterComponent, NetworkedComponent]
     public sealed class PassiveHealComponent : Component
     {
