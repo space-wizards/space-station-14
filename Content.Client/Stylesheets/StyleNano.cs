@@ -511,6 +511,24 @@ namespace Content.Client.Stylesheets
             };
             raiseHighlightStyleBox.SetPatchMargin(StyleBox.Margin.All, 15.0f);
 
+            var bracketedContainerBeginStyleBox = new StyleBoxTexture
+            {
+                Texture = resCache.GetTexture("/Textures/Interface/Nano/open_widget_grouping.svg.192dpi.png"),
+                PatchMarginTop = 4,
+                PatchMarginBottom = 8,
+                PatchMarginLeft = 9,
+                Mode = StyleBoxTexture.StretchMode.Tile
+            };
+            var bracketedContainerEndStyleBox = new StyleBoxTexture
+            {
+                Texture = resCache.GetTexture("/Textures/Interface/Nano/close_widget_grouping.svg.192dpi.png"),
+                PatchMarginTop = 8,
+                PatchMarginBottom = 4,
+                PatchMarginRight = 9,
+                Mode = StyleBoxTexture.StretchMode.Tile
+            };
+
+
             // Default paper background:
             var paperBackground = new StyleBoxTexture
             {
@@ -1381,6 +1399,16 @@ namespace Content.Client.Stylesheets
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
                 // ---
 
+                // Bracketed Container start/end textures
+                Element<PanelContainer>().Class("BracketedContainerBegin")
+                    .Prop(PanelContainer.StylePropertyPanel, bracketedContainerBeginStyleBox)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#343647")),
+
+                Element<PanelContainer>().Class("BracketedContainerEnd")
+                    .Prop(PanelContainer.StylePropertyPanel, bracketedContainerEndStyleBox)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#343647")),
+
+
                 // The default look of paper in UIs. Pages can have components which override this
                 Element<PanelContainer>().Class("PaperDefaultBorder")
                     .Prop(PanelContainer.StylePropertyPanel, paperBackground),
@@ -1541,15 +1569,6 @@ namespace Content.Client.Stylesheets
                         .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
                 Element<TextureButton>().Class(StyleClassLockableButtonRed).Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorHoveredRed),
-
-                // Bracketed Container start/end textures
-                Element<TextureButton>().Class("BracketedContainerBegin")
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/open_widget_grouping.svg.192dpi.png"))
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#343647")),
-
-                Element<TextureButton>().Class("BracketedContainerEnd")
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/close_widget_grouping.svg.192dpi.png"))
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#343647")),
 
             }).ToList());
         }
