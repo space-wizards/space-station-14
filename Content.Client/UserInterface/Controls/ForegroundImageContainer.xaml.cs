@@ -9,8 +9,12 @@ namespace Content.Client.UserInterface.Controls
     [GenerateTypedNameReferences]
     public partial class ForegroundImageContainer : Container //<todo.eoin Rename this
     {
-        public const string StylePropertyForegroundPanelStyle = "ForegroundPanelStyle";
-        public const string StylePropertyForegroundContentMargin = "ForegroundContentMargin";
+        public const string StylePropertyForegroundContentMargin = "ForegroundContentMargin"; //<todo.eoin Rename
+
+        public const string StylePropertyForegroundPanelStyle = "ForegroundPanelStyle"; //<todo.eoin Remove
+        public const string StylePropertyForegroundStyleBox = "ForegroundStyleBox";
+        public const string StylePropertyForegroundModulate = "ForegroundModulate";
+
         public const string StylePropertyBackgroundStyleBox = "BackgroundStyleBox";
         public const string StylePropertyBackgroundModulate = "BackgroundModulate";
 
@@ -68,6 +72,13 @@ namespace Content.Client.UserInterface.Controls
             set => ForegroundContainer.ModulateSelfOverride = value;
         }
 
+        public Color? BackgroundModulate
+        {
+            get => ForegroundContainer.ModulateSelfOverride;
+            set => ForegroundContainer.ModulateSelfOverride = value;
+        }
+
+
         private void recalculateStyleBox()
         {
             if (_foregroundImagePath == null)
@@ -101,6 +112,16 @@ namespace Content.Client.UserInterface.Controls
             if (TryGetStyleProperty<string>(StylePropertyForegroundPanelStyle, out var foregroundStyle))
             {
                 ForegroundPanelStyle = foregroundStyle;
+            }
+
+            if (TryGetStyleProperty<StyleBox>(StylePropertyForegroundStyleBox, out var foregroundStyleBox))
+            {
+                ForegroundContainer.PanelOverride = foregroundStyleBox;
+            }
+
+            if (TryGetStyleProperty<Color>(StylePropertyForegroundModulate, out var foregroundModulate))
+            {
+                ForegroundContainer.ModulateSelfOverride = foregroundModulate;
             }
 
             //<todo.eoin Rename

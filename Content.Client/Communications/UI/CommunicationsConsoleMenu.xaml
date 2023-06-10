@@ -16,9 +16,7 @@
                 VerticalAlignment="Top"
                 Margin="0 0 0 6">
 
-                <ui:ForegroundImageContainer
-                    StyleClasses="SquareBevelHighlight"
-                    ForegroundModulate="#ffffff40">
+                <ui:ForegroundImageContainer StyleClasses="SquareBevelHighlight">
                     <PanelContainer StyleClasses="PanelBackgroundBaseDark">
                         <BoxContainer Orientation="Vertical" Margin="12">
                             <ui:ForegroundImageContainer
@@ -39,14 +37,13 @@
             <ui:ForegroundImageContainer StyleClasses="SquareOutlineShadow">
                 <ui:ForegroundImageContainer
                     StyleClasses="SquareBevelHighlight"
-                    ForegroundModulate="#ffffff40"
                     VerticalExpand="True"
                     VerticalAlignment="Bottom">
                     <PanelContainer StyleClasses="PanelBackgroundBaseDark">
                         <BoxContainer Orientation="Vertical">
-                            <ui:BracketedContainer Margin="6 12 6 0"  HorizontalAlignment="Center">
+                            <ui:ForegroundImageContainer Margin="6 12 6 0" HorizontalAlignment="Center" StyleClasses="BracketedContainer">
                                 <Label Text="{Loc 'comms-console-alert-level-label'}"  Margin="6 0 6 0" />
-                            </ui:BracketedContainer>
+                            </ui:ForegroundImageContainer>
                             <GridContainer Columns="2">
                                 <!-- Row with alert level light and label -->
                                 <ui:ForegroundImageContainer
@@ -105,7 +102,7 @@
                                 <PanelContainer StyleClasses="AngleRect"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch">
-                                    <ui:BracketedContainer Margin="4">
+                                    <ui:ForegroundImageContainer Margin="4" StyleClasses="BracketedContainer">
                                         <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center" VerticalExpand="True">
                                             <Label Text="{Loc 'comms-console-menu-call-shuttle'}" />
                                             <ui:ForegroundImageContainer
@@ -118,7 +115,7 @@
                                                     StyleClasses="TemptingRedButton" />
                                             </ui:ForegroundImageContainer>
                                         </BoxContainer>
-                                    </ui:BracketedContainer>
+                                    </ui:ForegroundImageContainer>
                                 </PanelContainer>
                         </ui:ForegroundImageContainer>
 
@@ -128,7 +125,7 @@
                             StyleClasses="AngleRectEmbedded"
                             VerticalAlignment="Center">
                             <PanelContainer StyleClasses="AngleRect">
-                                <ui:BracketedContainer Margin="4">
+                                <ui:ForegroundImageContainer Margin="4" StyleClasses="BracketedContainer">
                                     <BoxContainer Orientation="Vertical">
                                         <!-- "Shuttle is incoming" light in here -->
                                         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Stretch">
@@ -163,7 +160,7 @@
                                             </ui:ForegroundImageContainer>
                                         </BoxContainer>
                                     </BoxContainer>
-                                </ui:BracketedContainer>
+                                </ui:ForegroundImageContainer>
                             </PanelContainer>
                         </ui:ForegroundImageContainer>
 
@@ -173,7 +170,7 @@
                                 VerticalAlignment="Bottom"
                                 VerticalExpand="True">
                             <PanelContainer StyleClasses="AngleRect">
-                                <ui:BracketedContainer Margin="4">
+                                <ui:ForegroundImageContainer Margin="4" StyleClasses="BracketedContainer">
                                     <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
                                         <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
                                         <ui:ForegroundImageContainer
@@ -186,7 +183,7 @@
                                                 StyleClasses="TemptingRedButton" />
                                         </ui:ForegroundImageContainer>
                                     </BoxContainer>
-                                </ui:BracketedContainer>
+                                </ui:ForegroundImageContainer>
                             </PanelContainer>
                         </ui:ForegroundImageContainer>
                     </BoxContainer>

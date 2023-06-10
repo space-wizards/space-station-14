@@ -538,23 +538,16 @@ namespace Content.Client.Stylesheets
                 PatchMarginBottom = 24
             };
 
-            var bracketedContainerBeginStyleBox = new StyleBoxTexture
+            var bracketedContainerStyleBox = new StyleBoxTexture
             {
-                Texture = resCache.GetTexture("/Textures/Interface/Nano/open_widget_grouping.svg.192dpi.png"),
-                PatchMarginTop = 4,
-                PatchMarginBottom = 8,
-                PatchMarginLeft = 9,
+                Texture = resCache.GetTexture("/Textures/Interface/Nano/angle_bracket_grouping.svg.192dpi.png"),
+                TextureScale = new Vector2(0.5f, 0.5f),
+                PatchMarginTop = 20,
+                PatchMarginBottom = 20,
+                PatchMarginLeft = 20,
+                PatchMarginRight = 20,
                 Mode = StyleBoxTexture.StretchMode.Tile
             };
-            var bracketedContainerEndStyleBox = new StyleBoxTexture
-            {
-                Texture = resCache.GetTexture("/Textures/Interface/Nano/close_widget_grouping.svg.192dpi.png"),
-                PatchMarginTop = 8,
-                PatchMarginBottom = 4,
-                PatchMarginRight = 9,
-                Mode = StyleBoxTexture.StretchMode.Tile
-            };
-
 
             // Default paper background:
             var paperBackground = new StyleBoxTexture
@@ -1413,6 +1406,7 @@ namespace Content.Client.Stylesheets
 
                // Highlight top-left and darken top-right of a square UI element
                 Element<ForegroundImageContainer>().Class("SquareBevelHighlight")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundModulate, new Color(1, 1, 1, 0.2f))
                     .Prop(ForegroundImageContainer.StylePropertyForegroundPanelStyle, "SquareBevelHighlight"),
                 // Gives a small outline shadow to a square UI element
                 Element<ForegroundImageContainer>().Class("SquareOutlineShadow")
@@ -1436,7 +1430,15 @@ namespace Content.Client.Stylesheets
                 // the impression that the child components are moulded into the panel.
                 Element<ForegroundImageContainer>().Class("AngleRectEmbedded")
                     .Prop(ForegroundImageContainer.StylePropertyForegroundPanelStyle, ClassAngleRectEmbedded)
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundModulate, new Color(1, 1, 1, 0.8f))
                     .Prop(ForegroundImageContainer.StylePropertyForegroundContentMargin, new Thickness(10)),
+                // Bracketed Container start/end textures
+                Element<ForegroundImageContainer>().Class("BracketedContainer")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundStyleBox, bracketedContainerStyleBox)
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundContentMargin, new Thickness(10))
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundModulate, Color.FromHex("#343647")),
+
+
 
                 // Window Footer
                 Element<TextureRect>().Class("NTLogoDark")
@@ -1459,17 +1461,7 @@ namespace Content.Client.Stylesheets
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
                 // ---
 
-                // Bracketed Container start/end textures
-                Element<PanelContainer>().Class("BracketedContainerBegin")
-                    .Prop(PanelContainer.StylePropertyPanel, bracketedContainerBeginStyleBox)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#343647")),
-
-                Element<PanelContainer>().Class("BracketedContainerEnd")
-                    .Prop(PanelContainer.StylePropertyPanel, bracketedContainerEndStyleBox)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#343647")),
-
-
-                // The default look of paper in UIs. Pages can have components which override this
+               // The default look of paper in UIs. Pages can have components which override this
                 Element<PanelContainer>().Class("PaperDefaultBorder")
                     .Prop(PanelContainer.StylePropertyPanel, paperBackground),
                 Element<RichTextLabel>().Class("PaperWrittenText")
