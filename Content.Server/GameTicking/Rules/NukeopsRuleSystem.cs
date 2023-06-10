@@ -825,7 +825,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             var minPlayers = nukeops.MinPlayers;
             if (!ev.Forced && ev.Players.Length < minPlayers)
             {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-not-enough-ready-players",
+                _chatManager.SendAdminAnnouncement(Loc.GetString("nukeops-not-enough-ready-players",
                     ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers)));
                 ev.Cancel();
                 continue;
