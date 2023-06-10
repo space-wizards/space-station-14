@@ -118,10 +118,9 @@ namespace Content.Server.Construction
             if (_tagSystem.HasTag(uid, "Unstackable"))
             {
                 // Need to enforce the unstackable rules on anchoring also.
-                var condition = new NoUnstackableInTile();
                 if (NoUnstackableInTile.AnyUnstackableTiles(coordinates, _tagSystem))
                 {
-                    var message = condition.GenerateGuideEntry()?.Localization;
+                    var message = NoUnstackableInTile.GuidebookString;
                     if (message != null)
                     {
                         // Show the reason to the user:

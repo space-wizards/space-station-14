@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Construction.Conditions
 {
@@ -9,6 +10,7 @@ namespace Content.Shared.Construction.Conditions
     [DataDefinition]
     public sealed class NoUnstackableInTile : IConstructionCondition
     {
+        public const string GuidebookString = "construction-step-condition-no-unstackable-in-tile";
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var tagSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<TagSystem>();
@@ -21,18 +23,19 @@ namespace Content.Shared.Construction.Conditions
 
         public static bool AnyUnstackableTiles(EntityCoordinates location, TagSystem tagSystem)
         {
-            var lookup = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<EntityLookupSystem>();
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            foreach (var entity in lookup.GetEntitiesIntersecting(location, LookupFlags.Approximate | LookupFlags.Static |
-                                                                            LookupFlags.Sundries))
+            var gridUid = location.GetGridUid(entityManager);
+            if (gridUid == null)
+                return false;
+
+            if (!entityManager.TryGetComponent<MapGridComponent>((EntityUid)gridUid, out var grid))
+                return false;
+
+            foreach (var entity in grid.GetAnchoredEntities(location))
             {
                 if (tagSystem.HasTag(entity, "Unstackable"))
                 {
-                    // Only test against anchored unstackables.
-                    if (entityManager.TryGetComponent<TransformComponent>(entity, out var transform) && !transform.Anchored)
-                        continue;
-
                     return true;
                 }
             }
@@ -44,7 +47,7 @@ namespace Content.Shared.Construction.Conditions
         {
             return new ConstructionGuideEntry
             {
-                Localization = "construction-step-condition-no-unstackable-in-tile"
+                Localization = GuidebookString
             };
         }
     }
