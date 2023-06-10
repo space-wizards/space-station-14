@@ -6,7 +6,6 @@
   components:
     - type: Sprite
       sprite: Objects/Devices/mousetrap.rsi
-      netsync: false
       drawdepth: SmallMobs # if mice can hide under tables, so can mousetraps
       layers:
         - state: mousetrap

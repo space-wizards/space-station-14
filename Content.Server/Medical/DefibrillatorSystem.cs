@@ -29,7 +29,6 @@ namespace Content.Server.Medical;
 public sealed class DefibrillatorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly ChatSystem _chatManager = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -217,17 +216,16 @@ public sealed class DefibrillatorSystem : EntitySystem
         }
         else
         {
+            _mobThreshold.SetAllowRevives(target, true, thresholds);
             if (_mobState.IsDead(target, mob))
                 _damageable.TryChangeDamage(target, component.ZapHeal, true, origin: uid);
-
-            _mobThreshold.SetAllowRevives(target, true, thresholds);
             _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
             _mobThreshold.SetAllowRevives(target, false, thresholds);
 
             if (TryComp<MindComponent>(target, out var mindComp) &&
-                mindComp.Mind?.UserId != null &&
-                _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out session))
+                mindComp.Mind?.Session is { } playerSession)
             {
+                session = playerSession;
                 // notify them they're being revived.
                 if (mindComp.Mind.CurrentEntity != target)
                 {
