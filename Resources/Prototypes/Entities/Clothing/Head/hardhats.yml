@@ -13,6 +13,7 @@
   - type: Clothing
     equippedPrefix: off
   - type: PointLight
+    netsync: false
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
