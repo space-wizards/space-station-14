@@ -1,9 +1,4 @@
 Entries:
-- author: emisse
-  changes:
-  - {message: Added a shuttle for salvage., type: Add}
-  id: 3479
-  time: '2023-04-21T05:36:32.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added mega spray bottles to advanced cleaning tech. They have bigger
@@ -2910,3 +2905,8 @@ Entries:
       / dragon on expeditions and waiting for the crew to arrive)., type: Tweak}
   id: 3978
   time: '2023-06-10T12:24:35.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed glue puddles sometimes causing permanent slowdown., type: Fix}
+  id: 3979
+  time: '2023-06-11T17:04:42.0000000+00:00'
