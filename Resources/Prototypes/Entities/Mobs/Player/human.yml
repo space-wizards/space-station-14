@@ -55,6 +55,8 @@
   parent: MobHuman
   id: MobHumanNukeOp
   components:
+    - type: Eye
+      drawFov: false
     - type: NukeOperative
     - type: RandomHumanoidAppearance
 
@@ -64,6 +66,8 @@
   id: MobHumanLoneNuclearOperative
   name: Lone Operative
   components:
+    - type: Eye
+      drawFov: false
     - type: RandomHumanoidAppearance
       randomizeName: false
     - type: NukeOperative
