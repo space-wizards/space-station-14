@@ -16,8 +16,11 @@ namespace Content.Server.Objectives.Conditions
             var allHumans = EntityManager.EntityQuery<MindComponent>(true).Where(mc =>
             {
                 var entity = mc.Mind?.OwnedEntity;
-
+                
                 if (entity == default)
+                    return false;
+
+                if (EntityManager.IsQueuedForDeletion(entity!.Value))
                     return false;
 
                 return EntityManager.TryGetComponent(entity, out MobStateComponent? mobState) &&

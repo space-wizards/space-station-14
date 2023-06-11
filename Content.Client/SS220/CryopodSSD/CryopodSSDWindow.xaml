@@ -1,0 +1,9 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'cryopodSSD-ui-title'}"
+               MinSize="750 500">
+    <BoxContainer Orientation="Vertical">
+        <ScrollContainer VerticalExpand="True">
+            <ItemList Name="CryopodSSDRecord"></ItemList>
+        </ScrollContainer>
+    </BoxContainer>
+</DefaultWindow>

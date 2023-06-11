@@ -1,0 +1,59 @@
+﻿- type: entity
+  parent: [ BaseStructure ]
+  id: SSDStorageConsole
+  name: Консоль крио хранилища
+  description:
+  components:
+    - type: AccessReader
+      access: [ [ "Command" ] ]
+    - type: Appearance
+    - type: Sprite
+      sprite: SS220/Structures/Machines/ssdStorageConsole.rsi
+      layers:
+        - state: ssdStorageConsole
+    - type: Icon
+      sprite: SS220/Structures/Machines/ssdStorageConsole.rsi
+      state: icon
+    - type: Transform
+      anchored: true
+    - type: Storage
+      capacity: 2000000000
+      clickInsert: false
+    - type: ActivatableUI
+      key: enum.SSDStorageConsoleKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.SSDStorageConsoleKey.Key
+          type: CryopodSSDBoundUserInterface
+    - type: SSDStorageConsole
+      whitelist:
+        tags:
+          - HighRiskItem
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+
+- type: entity
+  parent: [ SSDStorageConsole ]
+  id: CryopodSSD
+  name: криопод
+  description:
+  components:
+    - type: Sprite
+      sprite: SS220/Structures/Machines/cryopodSSD.rsi
+      layers:
+      - state: cryopodSSD-open
+        map: [ "enum.CryopodSSDVisualLayers.Cover" ]
+    - type: Icon
+      sprite: SS220/Structures/Machines/cryopodSSD.rsi
+      state: icon
+    - type: CryopodSSD
+      autoTransferToCryoDelay: 900
+    - type: SSDStorageConsole
+      isItReallyCryopod: true
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+        pod-body:
+          !type:ContainerSlot
+          showEnts: false

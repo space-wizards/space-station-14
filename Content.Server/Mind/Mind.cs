@@ -303,6 +303,11 @@ namespace Content.Server.Mind
             return true;
         }
 
+        public bool TryRemoveObjective(Objective objective)
+        {
+            return TryRemoveObjective(_objectives.IndexOf(objective));
+        }
+
         /// <summary>
         ///     Transfer this mind's control over to a new entity.
         /// </summary>

@@ -148,3 +148,11 @@
   icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
   checkCanInteract: false
   event: !type:WakeActionEvent
+    
+- type: instantAction
+  id: CryopodSSDLeave
+  name: action-name-cryopodSSDLeave
+  description: action-desc-cryopodSSDLeave
+  icon: { sprite: SS220/Structures/Machines/cryopodSSD.rsi, state: icon }
+  checkCanInteract: false
+  event: !type:CryopodSSDLeaveActionEvent
