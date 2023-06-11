@@ -93,3 +93,22 @@
       - state: green
       - sprite: Structures/Wallmounts/signs.rsi
         state: radiation
+
+- type: entity
+  id: SpawnPointHumanCivilianZombie
+  name: ghost role spawn point
+  suffix: zombie
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: Zombie
+      description: A malevolent creature of the dead.
+      rules: You are an antagonist. Search out the living and bite them in order to infect them and turn them into zombies. Work together with other the zombies to overtake the station.
+    - type: GhostRoleRandomSpawner
+      settings: RandCivilianZombie
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: passenger
+        - sprite: Structures/Wallmounts/signs.rsi
+          state: medium_biohazard

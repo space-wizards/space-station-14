@@ -4,6 +4,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
+using Content.Server.Humanoid.Systems;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
@@ -33,6 +34,7 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly RandomHumanoidSystem _randomHumanoid = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
@@ -56,6 +58,7 @@ namespace Content.Server.Ghost.Roles
             SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<GhostRoleComponent, EntityPausedEvent>(OnPaused);
             SubscribeLocalEvent<GhostRoleComponent, EntityUnpausedEvent>(OnUnpaused);
+            SubscribeLocalEvent<GhostRoleRandomSpawnerComponent, TakeGhostRoleEvent>(OnRandomSpawnerTakeRole);
             SubscribeLocalEvent<GhostRoleMobSpawnerComponent, TakeGhostRoleEvent>(OnSpawnerTakeRole);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, TakeGhostRoleEvent>(OnTakeoverTakeRole);
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
@@ -322,6 +325,25 @@ namespace Content.Server.Ghost.Roles
             UnregisterGhostRole(role);
         }
 
+
+        private void OnRandomSpawnerTakeRole(EntityUid uid, GhostRoleRandomSpawnerComponent component, ref TakeGhostRoleEvent args)
+        {
+            if (!TryComp(uid, out GhostRoleComponent? ghostRole) ||
+                ghostRole.Taken)
+            {
+                args.TookRole = false;
+                return;
+            }
+
+            if (string.IsNullOrEmpty(component.Settings))
+                throw new NullReferenceException("Prototype string cannot be null or empty!");
+
+            var mob = _randomHumanoid.SpawnRandomHumanoid(component.Settings, Transform(uid).Coordinates, MetaData(uid).EntityName);
+            _transform.AttachToGridOrMap(mob);
+
+            FinishSpawnerProcess(uid, component, args, mob, ghostRole);
+        }
+
         private void OnSpawnerTakeRole(EntityUid uid, GhostRoleMobSpawnerComponent component, ref TakeGhostRoleEvent args)
         {
             if (!TryComp(uid, out GhostRoleComponent? ghostRole) ||
@@ -337,6 +359,12 @@ namespace Content.Server.Ghost.Roles
             var mob = Spawn(component.Prototype, Transform(uid).Coordinates);
             _transform.AttachToGridOrMap(mob);
 
+            FinishSpawnerProcess(uid, component, args, mob, ghostRole);
+        }
+
+        private void FinishSpawnerProcess(EntityUid uid, GhostRoleSpawnerComponent component, TakeGhostRoleEvent args,
+            EntityUid mob, GhostRoleComponent ghostRole)
+        {
             var spawnedEvent = new GhostRoleSpawnerUsedEvent(uid, mob);
             RaiseLocalEvent(mob, spawnedEvent);
 

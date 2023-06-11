@@ -28,6 +28,8 @@ public sealed class RandomHumanoidSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, RandomHumanoidSpawnerComponent component, MapInitEvent args)
     {
+        // Note: This is why GhostRoleMobSpawner doesn't play nice with RandomHumanoidSpawner - we bait and switch
+        // the entity IDs here. Use GhostRoleRandomSpawnerComponent instead.
         QueueDel(uid);
         SpawnRandomHumanoid(component.SettingsPrototypeId, Transform(uid).Coordinates, MetaData(uid).EntityName);
     }

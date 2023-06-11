@@ -1,5 +1,18 @@
 # Random humanoids
 
+## Civilian
+- type: randomHumanoidSettings
+  id: RandCivilianZombie
+  randomizeName: true
+  components:
+    - type: Loadout
+      prototypes: [ PassengerGear, BartenderGear, BotanistGear, ChaplainGear, ChefGear, ClownGear, JanitorGear, LawyerGear, LibrarianGear ]
+    - type: MakeZombie
+    - type: RandomMetadata
+      nameSegments:
+        - names_first
+        - names_last
+
 ## ERT Leader
 
 - type: entity
