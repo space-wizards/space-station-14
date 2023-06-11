@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Power.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -248,6 +249,7 @@ namespace Content.Server.Power.EntitySystems
             var coordinates = xform.Coordinates;
             var nearbyEntities = grid.GetCellsInSquareArea(coordinates, (int) Math.Ceiling(range / grid.TileSize));
 
+            var candidates = new List<Tuple<float, ExtensionCableProviderComponent>>();
             foreach (var entity in nearbyEntities)
             {
                 if (entity == owner || !EntityManager.TryGetComponent<ExtensionCableProviderComponent?>(entity, out var provider)) continue;
@@ -258,14 +260,18 @@ namespace Content.Server.Power.EntitySystems
 
                 if (!provider.Connectable) continue;
 
-                if ((Transform(entity).LocalPosition - xform.LocalPosition).Length > Math.Min(range, provider.TransferRange)) continue;
+                var distance = (Transform(entity).LocalPosition - xform.LocalPosition).Length;
+                if (distance > Math.Min(range, provider.TransferRange)) continue;
 
-                foundProvider = provider;
-                return true;
+                candidates.Add(new Tuple<float, ExtensionCableProviderComponent>(distance, provider));
             }
 
-            foundProvider = default;
-            return false;
+            foundProvider = candidates
+                .OrderBy(entity => entity.Item1)
+                .Select(entity => entity.Item2)
+                .FirstOrDefault();
+
+            return foundProvider != default;
         }
 
         #endregion
