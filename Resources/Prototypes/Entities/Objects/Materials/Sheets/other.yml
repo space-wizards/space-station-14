@@ -5,7 +5,6 @@
   description: A sheet of material, used often on the station in various applications.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/Sheets/other.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/other.rsi

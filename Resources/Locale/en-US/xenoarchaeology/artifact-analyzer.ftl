@@ -4,8 +4,8 @@ analysis-console-scan-button = Scan
 analysis-console-scan-tooltip-info = Scan artifacts to learn information about their structure.
 analysis-console-print-button = Print
 analysis-console-print-tooltip-info = Print out the current information about the artifact.
-analysis-console-destroy-button = Extract
-analysis-console-destroy-button-info = Extract points from an artifact based on the explored nodes.
+analysis-console-extract-button = Extract
+analysis-console-extract-button-info = Extract points from an artifact based on the newly explored nodes.
 
 analysis-console-info-no-scanner = No analyzer connected! Please connect one using a network configurator.
 analysis-console-info-no-artifact = No artifact present! Place one on the pad then scan for information.

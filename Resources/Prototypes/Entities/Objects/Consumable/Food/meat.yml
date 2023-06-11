@@ -11,7 +11,6 @@
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
-    netsync: false
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -126,7 +125,6 @@
     tags:
     - Raw
   - type: Sprite
-    netsync: false
     state: bacon
   - type: SolutionContainerManager
     solutions:
@@ -645,7 +643,6 @@
     - Cooked
   - type: Food
   - type: Sprite
-    netsync: true
     layers:
     - state: plate-meat
     - state: bacon-cooked
@@ -752,7 +749,6 @@
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
-    netsync: false
     layers:
     - state: chicken-fried
       map: [ "enum.DamageStateVisualLayers.Base" ]

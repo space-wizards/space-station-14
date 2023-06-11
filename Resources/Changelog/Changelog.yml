@@ -3392,61 +3392,53 @@ Entries:
   time: '2023-06-07T22:18:18.0000000+00:00'
 - author: deltanedas
   changes:
-  - message: You can now build logic gates and link them to some things, currently
-      doors and other logic gates.
-    type: Add
+  - {message: 'You can now build logic gates and link them to some things, currently
+      doors and other logic gates.', type: Add}
   id: 3968
   time: '2023-06-07T23:48:43.0000000+00:00'
 - author: Sanchez_
   changes:
-  - message: Added new emotion sound
-    type: Add
+  - {message: Added new emotion sound, type: Add}
   id: 3969
   time: '2023-06-08T06:22:02.0000000+00:00'
 - author: TemporalOroboros
   changes:
-  - message: Central has distributed a new subversion of the standard particle accelerators.
+  - {message: 'Central has distributed a new subversion of the standard particle accelerators.
       Nothing exciting, but they have brought back the old wiring layout. Apparently
       some of the newer versions were having firmware issues and it was more reliable.
-      Keep on eye on it while it's running will you? We don't want an intern disabling
-      the safeties and frying their face off.
-    type: Add
-  - message: Some components of the particle accelerator have been relabeled to make
-      their orientation more obvious.
-    type: Tweak
+      Keep on eye on it while it''s running will you? We don''t want an intern disabling
+      the safeties and frying their face off.', type: Add}
+  - {message: Some components of the particle accelerator have been relabeled to make
+      their orientation more obvious., type: Tweak}
   id: 3970
   time: '2023-06-08T06:25:59.0000000+00:00'
 - author: brainfood1183
   changes:
-  - message: HAMTR mech has been added.
-    type: Add
+  - {message: HAMTR mech has been added., type: Add}
   id: 3971
   time: '2023-06-08T06:33:36.0000000+00:00'
 - author: OctoRocket
   changes:
-  - message: The game will now fall back to Traitor if there are more than 5 people
-      in the game.
-    type: Tweak
+  - {message: The game will now fall back to Traitor if there are more than 5 people
+      in the game., type: Tweak}
   id: 3972
   time: '2023-06-08T07:16:18.0000000+00:00'
 - author: EmoGarbage404
   changes:
-  - message: 'The R&D server can be deconstructed. Be warned: this resets all unlocked
-      technology, points, and the current discipline.'
-    type: Add
+  - {message: 'The R&D server can be deconstructed. Be warned: this resets all unlocked
+      technology, points, and the current discipline.', type: Add}
   id: 3973
   time: '2023-06-08T07:39:29.0000000+00:00'
 - author: EmoGarbage404
   changes:
-  - message: Added the chemical compendium, a book containing all chemistry recipes
-      and effects. Find it in the library today.
-    type: Add
+  - {message: 'Added the chemical compendium, a book containing all chemistry recipes
+      and effects. Find it in the library today.', type: Add}
   id: 3974
   time: '2023-06-08T14:47:54.0000000+00:00'
 - author: Ahion
   changes:
-  - message: Fixed O2 tanks in oxygen deprivation treatment kit spawning empty.
-    type: Fix
+  - {message: Fixed O2 tanks in oxygen deprivation treatment kit spawning empty.,
+    type: Fix}
   id: 3975
   time: '2023-06-08T15:10:27.0000000+00:00'
 - author: Legendaxe
@@ -3464,3 +3456,20 @@ Entries:
     type: Tweak
   id: 3977
   time: '2023-06-11T09:36:50.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Tweaked toolbelt starting items to remove multitools from non-engineering
+      personnel., type: Tweak}
+  id: 3976
+  time: '2023-06-10T02:58:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix cargo pallet collision when anchored., type: Fix}
+  id: 3977
+  time: '2023-06-10T09:43:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Paused entities will no longer show as ghost roles (no more taking xeno
+      / dragon on expeditions and waiting for the crew to arrive)., type: Tweak}
+  id: 3978
+  time: '2023-06-10T12:24:35.0000000+00:00'

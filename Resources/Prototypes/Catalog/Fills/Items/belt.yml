@@ -10,6 +10,19 @@
       - id: Screwdriver
       - id: Wirecutter
       - id: Welder
+
+- type: entity
+  id: ClothingBeltUtilityEngineering
+  parent: ClothingBeltUtility
+  suffix: Engineering
+  components:
+  - type: StorageFill
+    contents:
+      - id: Crowbar
+      - id: Wrench
+      - id: Screwdriver
+      - id: Wirecutter
+      - id: Welder
       - id: Multitool
 
 - type: entity

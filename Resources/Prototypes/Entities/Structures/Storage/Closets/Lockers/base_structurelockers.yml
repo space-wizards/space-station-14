@@ -6,7 +6,6 @@
   - type: AccessReader
   - type: Lock
   - type: Sprite
-    netsync: false
     sprite: Structures/Storage/closet.rsi
     noRot: true
     layers:

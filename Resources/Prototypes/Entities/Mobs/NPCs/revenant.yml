@@ -14,7 +14,6 @@
   - type: Sprite
     noRot: true
     drawdepth: Ghosts
-    netsync: false
     sprite: Mobs/Ghosts/revenant.rsi
     layers:
     - state: active

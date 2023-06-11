@@ -8,7 +8,6 @@
     - type: Sprite
       sprite: Objects/Weapons/Melee/shields.rsi
       state: riot-icon
-      netsync: false
     - type: Item
       sprite: Objects/Weapons/Melee/shields.rsi
       size: 100
