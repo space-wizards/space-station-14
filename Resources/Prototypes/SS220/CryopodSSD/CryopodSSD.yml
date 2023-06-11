@@ -1,14 +1,19 @@
-﻿- type: entity
-  parent: [ BaseStructure ]
-  id: SSDStorageConsole
+﻿# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: entity
+  noSpawn: true
+  id: BaseSSDConsole
   name: Консоль крио хранилища
-  description:
+  description: С помощью этой консоли вы можете узнать имена членов экипажа которые переместились в криохранилище
+  placement:
+    mode: SnapgridCenter
   components:
     - type: AccessReader
       access: [ [ "Command" ] ]
     - type: Appearance
     - type: Sprite
       sprite: SS220/Structures/Machines/ssdStorageConsole.rsi
+      drawdepth: WallMountedItems
       layers:
         - state: ssdStorageConsole
     - type: Icon
@@ -32,9 +37,20 @@
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
-
+    - type: WallMount
+      arc: 90
+      direction: 0
+    - type: InteractionOutline
+    - type: Clickable
+    
+  
 - type: entity
-  parent: [ SSDStorageConsole ]
+  parent: BaseSSDConsole
+  id: SSDStorageConsole
+    
+      
+- type: entity
+  parent: [ SSDStorageConsole, BaseStructure ]
   id: CryopodSSD
   name: криопод
   description:

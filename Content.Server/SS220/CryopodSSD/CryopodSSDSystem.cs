@@ -1,8 +1,11 @@
-﻿using Content.Server.Mind.Components;
+﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+using Content.Server.Mind.Components;
+using Content.Shared.CCVar;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.SS220.CryopodSSD;
 using Content.Shared.Verbs;
+using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 
 namespace Content.Server.SS220.CryopodSSD;
@@ -17,14 +20,19 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
 {
     [Dependency] private readonly SSDStorageConsoleSystem _SSDStorageConsoleSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     private ISawmill _sawmill = default!;
+
+    private float _autoTransferDelay;
 
     public override void Initialize()
     {
         base.Initialize();
 
         _sawmill = Logger.GetSawmill("cryopodSSD");
+        
+        _cfg.OnValueChanged(CCVars.AutoTransferToCryoDelay, SetAutoTransferDelay, true);
 
         SubscribeLocalEvent<CryopodSSDComponent, ComponentInit>(OnComponentInit);
         
@@ -39,15 +47,14 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
     {
         base.Update(frameTime);
 
-        var currTime = _gameTiming.CurTime;
+        var timeToAutoTransfer = _gameTiming.CurTime - TimeSpan.FromSeconds(_autoTransferDelay);
 
         var entityEnumerator = EntityQueryEnumerator<CryopodSSDComponent>();
 
         while (entityEnumerator.MoveNext(out var uid, out var cryopodSSDComp))
         {
             if (cryopodSSDComp.BodyContainer.ContainedEntity is null ||
-                currTime < cryopodSSDComp.CurrentEntityLyingInCryopodTime +
-                TimeSpan.FromSeconds(cryopodSSDComp.AutoTransferDelay))
+                timeToAutoTransfer < cryopodSSDComp.EntityLiedInCryopodTime)
             {
                 continue;
             }
@@ -78,6 +85,8 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
         return contained;
     }
 
+    private void SetAutoTransferDelay(float value) => _autoTransferDelay = value;
+    
     private void HandleDragDropOn(EntityUid uid, CryopodSSDComponent cryopodSsdComponent, ref DragDropTargetEvent args)
     {
         if (cryopodSsdComponent.BodyContainer.ContainedEntity != null)

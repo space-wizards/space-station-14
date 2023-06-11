@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Containers;
+﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -15,13 +17,8 @@ public sealed class CryopodSSDComponent : Component
     /// Delay before climbing in cryopod
     /// </summary>
     [DataField("entryDelay")] public float EntryDelay = 6f;
-    
-    /// <summary>
-    /// Time to afk before automatic cryostorage transfer
-    /// </summary>
-    [DataField("autoTransferToCryoDelay")] public float AutoTransferDelay = 900f;
 
-    [ViewVariables(VVAccess.ReadWrite)] public TimeSpan CurrentEntityLyingInCryopodTime;
+    [ViewVariables(VVAccess.ReadWrite)] public TimeSpan EntityLiedInCryopodTime;
 
     [ViewVariables(VVAccess.ReadWrite)] public ContainerSlot BodyContainer = default!;
 

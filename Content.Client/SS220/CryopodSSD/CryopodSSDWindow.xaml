@@ -1,4 +1,6 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
+﻿<!-- © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt -->
+
+<DefaultWindow xmlns="https://spacestation14.io"
                Title="{Loc 'cryopodSSD-ui-title'}"
                MinSize="750 500">
     <BoxContainer Orientation="Vertical">

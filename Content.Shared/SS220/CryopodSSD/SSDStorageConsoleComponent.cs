@@ -1,4 +1,6 @@
-﻿using Content.Shared.Whitelist;
+﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+using Content.Shared.Whitelist;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SS220.CryopodSSD;
@@ -24,7 +26,7 @@ public sealed class SSDStorageConsoleComponent : Component
     /// of the cryopods
     /// </summary>
     [DataField("radiusToConnect"), ViewVariables(VVAccess.ReadWrite)]
-    public float RadiusToConnect = 100f;
+    public float RadiusToConnect = 500f;
 
     /// <summary>
     /// We want the cryopod to have ConsoleComponent for
