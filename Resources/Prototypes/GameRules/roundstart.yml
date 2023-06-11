@@ -52,13 +52,13 @@
   components:
   - type: TraitorRule
 
-- type: entity
-  id: Sandbox
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: SandboxRule
-
+#- type: entity
+#  id: Sandbox
+#  parent: BaseGameRule
+#  noSpawn: true
+#  components:
+#  - type: SandboxRule
+#
 - type: entity
   id: Secret
   parent: BaseGameRule

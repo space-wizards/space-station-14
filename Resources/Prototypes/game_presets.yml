@@ -30,17 +30,17 @@
   rules:
     - Secret
 
-- type: gamePreset
-  id: Sandbox
-  alias:
-    - sandbox
-  name: sandbox-title
-  description: sandbox-description
-  showInVote: true
-  maxPlayers: 5
-  rules:
-    - Sandbox
-
+#- type: gamePreset
+#  id: Sandbox
+#  alias:
+#    - sandbox
+#  name: sandbox-title
+#  description: sandbox-description
+#  showInVote: true
+#  maxPlayers: 5
+#  rules:
+#    - Sandbox
+#
 - type: gamePreset
   id: Traitor
   alias:
