@@ -22,19 +22,19 @@ public sealed class CombatMetricComponent : Component
     ///   Cost per point of medical damage for friendly entities
     /// </summary>
     [DataField("medicalMultiplier"), ViewVariables(VVAccess.ReadWrite)]
-    public readonly FixedPoint2 MedicalMultiplier = 0.2f;
+    public readonly FixedPoint2 MedicalMultiplier = 0.05f;
 
     /// <summary>
     ///   Cost for friendlies who are in crit
     /// </summary>
     [DataField("critScore"), ViewVariables(VVAccess.ReadWrite)]
-    public readonly FixedPoint2 CritScore = 50.0f;
+    public readonly FixedPoint2 CritScore = 10.0f;
 
     /// <summary>
     ///   Cost for friendlies who are dead
     /// </summary>
     [DataField("deadScore"), ViewVariables(VVAccess.ReadWrite)]
-    public readonly FixedPoint2 DeadScore = 100.0f;
+    public readonly FixedPoint2 DeadScore = 20.0f;
 
     // [DataField("secScore), ViewVariables(VVAccess.ReadWrite)]
     // public readonly FixedPoint2 SecScore = 10.0f;

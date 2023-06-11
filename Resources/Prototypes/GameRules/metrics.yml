@@ -11,6 +11,7 @@
   noSpawn: true
   components:
   - type: JaniMetric
+    baselineQty : 200
     puddles:
       Water: 2.0
       SpaceCleaner: 2.0
@@ -41,10 +42,10 @@
   noSpawn: true
   components:
     - type: DoorMetric
-      EmagCost: 100
-      PowerCost: 10
-      PressureCost: 20
-      FireCost: 50
+      EmagCost: 10
+      PowerCost: 5
+      PressureCost: 10
+      FireCost: 20
 
 - type: entity
   id: FoodMetric
@@ -63,6 +64,6 @@
   noSpawn: true
   components:
     - type: AnomalyMetric
-      growingCost: 100
-      severityCost: 50
-      dangerCost: 40
+      growingCost: 40
+      severityCost: 20
+      dangerCost: 10

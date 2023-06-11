@@ -6,7 +6,12 @@ using Content.Shared.Fluids.Components;
 
 namespace Content.Server.StationEvents.Metric;
 
-public sealed class JaniMetric : StationMetric<JaniMetricComponent>
+/// <summary>
+///   Measure the mess of the station in puddles on the floor
+///
+///   Jani - 2-30 points per 200mL (about one square) of various substances
+/// </summary>
+public sealed class JaniMetric : ChaosMetricSystem<JaniMetricComponent>
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
@@ -29,7 +34,7 @@ public sealed class JaniMetric : StationMetric<JaniMetricComponent>
                 puddleChaos += substanceChaos * substance.Quantity;
             }
 
-            janiChaos += puddleChaos / component.baselineQty;
+            janiChaos += puddleChaos / component.BaselineQty;
         }
 
         var chaos = new ChaosMetrics(new Dictionary<string, FixedPoint2>(){{"Jani", janiChaos}});

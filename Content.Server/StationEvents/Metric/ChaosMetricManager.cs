@@ -6,7 +6,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents.Metric;
 
-public class StationMetricSystem : EntitySystem
+/// <summary>
+///   Spawns and runs ChaosMetricSystems (which measure station ChaosMetrics)
+/// </summary>
+public class ChaosMetricManager : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 

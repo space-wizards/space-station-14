@@ -7,8 +7,7 @@ namespace Content.Server.StationEvents.Metric.Components;
 public sealed class JaniMetricComponent : Component
 {
     /// <summary>
-    ///   The dictionary that stores all of the item slots whose interactions will be managed by the <see
-    ///   cref="ItemSlotsSystem"/>.
+    ///   The cost of each puddle
     /// </summary>
     [DataField("puddles"), ViewVariables(VVAccess.ReadWrite)]
     public readonly Dictionary<string, FixedPoint2> Puddles =
@@ -36,6 +35,6 @@ public sealed class JaniMetricComponent : Component
     ///   How many ml of the substance qualify as the point values described above
     /// </summary>
     [DataField("baselineQty"), ViewVariables(VVAccess.ReadWrite)]
-    public readonly float baselineQty = 100.0f;
+    public readonly float BaselineQty = 200.0f;
 
 }

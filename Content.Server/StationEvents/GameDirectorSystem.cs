@@ -49,7 +49,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EventManagerSystem _event = default!;
-    [Dependency] private readonly StationMetricSystem _metrics = default!;
+    [Dependency] private readonly ChaosMetricManager _metrics = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -76,6 +76,9 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         LogMessage($"Started, first event in {scheduler.TimeUntilNextEvent} seconds");
     }
 
+    /// <summary>
+    ///   Build a list of events to use for the entire story
+    /// </summary>
     private void SetupEvents(GameDirectorComponent scheduler, PlayerCount count)
     {
         scheduler.PossibleEvents.Clear();
@@ -105,6 +108,9 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         scheduler.TimeUntilNextEvent = BasicStationEventSchedulerComponent.MinimumTimeUntilFirstEvent;
     }
 
+    /// <summary>
+    ///   Decide what event to run next
+    /// </summary>
     protected override void ActiveTick(EntityUid uid, GameDirectorComponent scheduler, GameRuleComponent gameRule, float frameTime)
     {
         scheduler.BeatTime += frameTime;
@@ -139,10 +145,6 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
 
             _event.RunNamedEvent(chosenEvent.PossibleEvent.PrototypeId);
 
-            // Don't select this event again for the current story (when SetupEvents is called again)
-            //   Commented out this code as we don't have enough events for this strategy yet.
-            // scheduler.PossibleEvents.Remove(chosenEvent.PossibleEvent);
-
             // 2 - 6 minutes until the next event is considered.
             scheduler.TimeUntilNextEvent = _random.NextFloat(120f, 360f);
         }
@@ -154,9 +156,11 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         }
     }
 
-    // Count the active players and ghosts on the server.
-    //  Players gates which stories and events are available
-    //  Ghosts can be used to gate certain events (which require ghosts to occur)
+    /// <summary>
+    ///   Count the active players and ghosts on the server.
+    ///   Players gates which stories and events are available
+    ///   Ghosts can be used to gate certain events (which require ghosts to occur)
+    /// </summary>
     private PlayerCount CountActivePlayers()
     {
         var allPlayers = _playerManager.ServerSessions.ToList();
@@ -180,8 +184,10 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         return count;
     }
 
-    // Sorts the possible events and then picks semi-randomly.
-    // when maxRandom is 1 it's always the "best" event picked. Higher values allow more events to be randomly selected.
+    /// <summary>
+    ///   Sorts the possible events and then picks semi-randomly.
+    ///   when maxRandom is 1 it's always the "best" event picked. Higher values allow more events to be randomly selected.
+    /// </summary>
     protected RankedEvent SelectBest(List<RankedEvent> bestEvents, int maxRandom)
     {
         var ranked =bestEvents.OrderBy(ev => ev.Score).Take(maxRandom).ToList();
@@ -213,8 +219,10 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         }
 
     }
-    // Returns the StoryBeat that should be currently used to select events.
-    // Advances the current story and picks new stories when the current beat is complete.
+    /// <summary>
+    ///   Returns the StoryBeat that should be currently used to select events.
+    ///   Advances the current story and picks new stories when the current beat is complete.
+    /// </summary>
     private StoryBeat DetermineNextBeat(GameDirectorComponent scheduler, ChaosMetrics chaos, PlayerCount count)
     {
         // Potentially Complete CurrBeat, which is always scheduler.CurrStory[0]
@@ -324,8 +332,10 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         return result;
     }
 
-    // Filter only to events which improve the chaos score in alignment with desiredChange.
-    //   Score them (lower is better) in how well they do this.
+    /// <summary>
+    ///   Filter only to events which improve the chaos score in alignment with desiredChange.
+    ///   Score them (lower is better) in how well they do this.
+    /// </summary>
     private List<RankedEvent> FilterAndScore(GameDirectorComponent scheduler, ChaosMetrics chaos,
         ChaosMetrics desiredChange, PlayerCount count, bool inclNoChaos = false)
     {
@@ -391,7 +401,9 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         }
     }
 
-    // Check that the stories have a valid configuration.
+    /// <summary>
+    ///   Check that the stories have a valid configuration.
+    /// </summary>
     private void ValidateStories(GameDirectorComponent scheduler)
     {
         if (scheduler.Stories.Count == 0)

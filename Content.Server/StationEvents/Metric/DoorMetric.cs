@@ -8,7 +8,14 @@ using Content.Shared.Fluids.Components;
 
 namespace Content.Server.StationEvents.Metric;
 
-public sealed class DoorMetric : StationMetric<DoorMetricComponent>
+/// <summary>
+///   Uses doors and firelocks to sample station chaos across the station
+///
+///   Emag - 10 points per emaged door
+///   Power - 5 points per door or firelock with no power
+///   Atmos - 10 points for holding spacing or 20 for holding back fire
+/// </summary>
+public sealed class DoorMetric : ChaosMetricSystem<DoorMetricComponent>
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 

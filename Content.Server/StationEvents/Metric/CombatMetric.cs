@@ -12,7 +12,21 @@ using Content.Shared.Zombies;
 
 namespace Content.Server.StationEvents.Metric;
 
-public sealed class CombatMetric : StationMetric<CombatMetricComponent>
+/// <summary>
+///   Measures the strength of friendies and hostiles. Also calculates related health / death stats.
+///
+///   I've used 10 points per entity because later we might somehow estimate combat strength
+///   as a multiplier. We could for instance detect damage delt / recieved and look also at
+///   entity hitpoints & resistances as an analogue for danger.
+///
+///   Writes the following
+///   Friend : -10 per each friendly entity on the station (negative is GOOD in chaos)
+///   Hostile : about 10 points per hostile (those with antag roles) - varies per constants
+///   Combat: friendlies + hostiles (to represent the balance of power)
+///   Death: 20 per dead body,
+///   Medical: 10 for crit + 0.05 * damage (so 5 for 100 damage),
+/// </summary>
+public sealed class CombatMetric : ChaosMetricSystem<CombatMetricComponent>
 {
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, CombatMetricComponent component, ChaosMetricComponent metric,
         CalculateChaosEvent args)

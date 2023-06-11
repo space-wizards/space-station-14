@@ -9,7 +9,12 @@ using Content.Shared.Fluids.Components;
 
 namespace Content.Server.StationEvents.Metric;
 
-public sealed class AnomalyMetric : StationMetric<AnomalyMetricComponent>
+/// <summary>
+///   Measures the number and severity of anomalies on the station.
+///
+///   Writes this to the Anomaly chaos value.
+/// </summary>
+public sealed class AnomalyMetric : ChaosMetricSystem<AnomalyMetricComponent>
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 

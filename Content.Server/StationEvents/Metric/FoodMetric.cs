@@ -14,7 +14,13 @@ using Content.Shared.Zombies;
 
 namespace Content.Server.StationEvents.Metric;
 
-public sealed class FoodMetric : StationMetric<FoodMetricComponent>
+/// <summary>
+///   Measure friendly crew's hunger and thirst
+///
+///   Hunger - 2 points for peckish or 5 for starving per player
+///   Thirst - 2 points for thirsty or 5 for parched per player
+/// </summary>
+public sealed class FoodMetric : ChaosMetricSystem<FoodMetricComponent>
 {
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, FoodMetricComponent component, ChaosMetricComponent metric,
         CalculateChaosEvent args)

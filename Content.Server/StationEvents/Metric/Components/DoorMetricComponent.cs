@@ -10,23 +10,23 @@ public sealed class DoorMetricComponent : Component
     ///   Cost of an emagged door
     /// </summary>
     [DataField("emagCost"), ViewVariables(VVAccess.ReadWrite)]
-    public readonly float EmagCost = 100.0f;
+    public readonly float EmagCost = 10.0f;
 
     /// <summary>
     ///   Cost of a door with no power
     /// </summary>
     [DataField("powerCost"), ViewVariables(VVAccess.ReadWrite)]
-    public readonly float PowerCost = 10.0f;
+    public readonly float PowerCost = 5.0f;
 
     /// <summary>
     ///   Cost of a firedoor holding pressure
     /// </summary>
     [DataField("pressureCost"), ViewVariables(VVAccess.ReadWrite)]
-    public readonly float PressureCost = 20.0f;
+    public readonly float PressureCost = 10.0f;
 
     /// <summary>
     ///   Cost of a firedoor holding temperature
     /// </summary>
     [DataField("fireCost"), ViewVariables(VVAccess.ReadWrite)]
-    public readonly float FireCost = 50.0f;
+    public readonly float FireCost = 20.0f;
 }
