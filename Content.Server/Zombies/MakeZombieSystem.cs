@@ -4,7 +4,7 @@ namespace Content.Server.Zombies;
 
 public sealed class MakeZombieSystem : EntitySystem
 {
-    [Dependency] private readonly ZombieSystem _zombie = default!;
+    [Dependency] private readonly ZombifyOnDeathSystem _zombie = default!;
 
     public override void Initialize()
     {

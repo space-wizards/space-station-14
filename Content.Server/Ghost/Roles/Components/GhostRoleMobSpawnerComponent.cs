@@ -4,6 +4,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Ghost.Roles.Components
 {
+    /// <summary>
+    ///   Base class for spawning of an entity for a Ghost
+    /// </summary>
     public abstract class GhostRoleSpawnerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)] [DataField("deleteOnSpawn")]
@@ -17,7 +20,7 @@ namespace Content.Server.Ghost.Roles.Components
     }
 
     /// <summary>
-    ///     Allows a ghost to take this role, spawning a new entity.
+    ///   Allows a ghost to take this role, spawning a new entity.
     /// </summary>
     [RegisterComponent]
     [Access(typeof(GhostRoleSystem))]
@@ -29,7 +32,7 @@ namespace Content.Server.Ghost.Roles.Components
     }
 
     /// <summary>
-    ///     Allows a ghost to take this role, spawning a new entity.
+    ///   Allows a ghost to take this role, spawning a randomized Humanoid
     /// </summary>
     [RegisterComponent]
     [Access(typeof(GhostRoleSystem))]
