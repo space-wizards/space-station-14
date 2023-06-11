@@ -77,3 +77,33 @@
   id: ArtifactAnalyzerReceiver
   name: signal-port-name-artifact-analyzer-receiver
   description: signal-port-description-artifact-analyzer-receiver
+
+- type: sinkPort
+  id: InputA
+  name: signal-port-name-logic-input-a
+  description: signal-port-description-logic-input-a
+
+- type: sinkPort
+  id: InputB
+  name: signal-port-name-logic-input-b
+  description: signal-port-description-logic-input-b
+
+- type: sinkPort
+  id: Input
+  name: signal-port-name-logic-input
+  description: signal-port-description-logic-input
+
+- type: sinkPort
+  id: SetParticleDelta
+  name: signal-port-name-set-particle-delta
+  description: signal-port-description-set-particle-delta
+
+- type: sinkPort
+  id: SetParticleEpsilon
+  name: signal-port-name-set-particle-epsilon
+  description: signal-port-description-set-particle-epsilon
+
+- type: sinkPort
+  id: SetParticleZeta
+  name: signal-port-name-set-particle-zeta
+  description: signal-port-description-set-particle-zeta

@@ -11,7 +11,6 @@
           canMix: true
     - type: Sprite
       sprite: Objects/Specific/Chemistry/jug.rsi
-      netsync: false
       layers:
         - state: jug
         - state: jug1
@@ -50,6 +49,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (carbon)
   id: JugCarbon
   noSpawn: true
   components:
@@ -64,6 +64,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (iodine)
   id: JugIodine
   noSpawn: true
   components:
@@ -78,6 +79,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (fluorine)
   id: JugFluorine
   noSpawn: true
   components:
@@ -92,6 +94,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (chlorine)
   id: JugChlorine
   noSpawn: true
   components:
@@ -106,6 +109,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (aluminium)
   id: JugAluminium
   noSpawn: true
   components:
@@ -120,6 +124,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (phosphorus)
   id: JugPhosphorus
   noSpawn: true
   components:
@@ -134,6 +139,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (sulfur)
   id: JugSulfur
   noSpawn: true
   components:
@@ -148,6 +154,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (silicon)
   id: JugSilicon
   noSpawn: true
   components:
@@ -162,6 +169,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (hydrogen)
   id: JugHydrogen
   noSpawn: true
   components:
@@ -176,6 +184,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (lithium)
   id: JugLithium
   noSpawn: true
   components:
@@ -190,6 +199,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (sodium)
   id: JugSodium
   noSpawn: true
   components:
@@ -204,6 +214,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (potassium)
   id: JugPotassium
   noSpawn: true
   components:
@@ -218,6 +229,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (radium)
   id: JugRadium
   noSpawn: true
   components:
@@ -232,6 +244,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (iron)
   id: JugIron
   noSpawn: true
   components:
@@ -246,6 +259,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (copper)
   id: JugCopper
   noSpawn: true
   components:
@@ -260,6 +274,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (gold)
   id: JugGold
   noSpawn: true
   components:
@@ -274,6 +289,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (mercury)
   id: JugMercury
   noSpawn: true
   components:
@@ -288,6 +304,7 @@
 
 - type: entity
   parent: Jug
+  name: jug (silver)
   id: JugSilver
   noSpawn: true
   components:
@@ -298,4 +315,64 @@
         beaker:
           reagents:
             - ReagentId: Silver
+              Quantity: 200
+
+- type: entity
+  parent: Jug
+  name: jug (ethanol)
+  id: JugEthanol
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: Ethanol
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Ethanol
+              Quantity: 200
+
+- type: entity
+  parent: Jug
+  name: jug (sugar)
+  id: JugSugar
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: Sugar
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Sugar
+              Quantity: 200
+
+- type: entity
+  parent: Jug
+  name: jug (nitrogen)
+  id: JugNitrogen
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: Nitrogen
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Nitrogen
+              Quantity: 200
+
+- type: entity
+  parent: Jug
+  name: jug (oxygen)
+  id: JugOxygen
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: Oxygen
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Oxygen
               Quantity: 200

@@ -314,7 +314,6 @@
     baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
-    netsync: false
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: butterfly
@@ -426,6 +425,9 @@
     prototype: AnimalRuminant
   - type: HTN
     rootTask: RuminantCompound
+  - type: GuideHelp
+    guides:
+    - Chef
 
 - type: entity
   name: crab
@@ -802,10 +804,21 @@
     factions:
     - Passive
   - type: GhostRole
+    prob: 0.05
     makeSentient: true
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
   - type: GhostTakeoverAvailable
+  - type: Clumsy
+    clumsyDamage:
+      types:
+        Blunt: 5
+        Piercing: 4
+      groups:
+        Burn: 3
+    clumsySound:
+      path: /Audio/Animals/monkey_scream.ogg
+  - type: IdExaminable
 
 - type: entity
   name: guidebook monkey
@@ -889,10 +902,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Blood
-          Quantity: 50
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -2100,7 +2111,9 @@
         - ReagentId: Nutriment
           Quantity: 10
         - ReagentId: Blood
-          Quantity: 60
+          Quantity: 55
+        - ReagentId: Fat
+          Quantity: 5
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -2111,6 +2124,7 @@
     tags:
     - Trash
     - CannotSuicide
+    - Hamster
   - type: Respirator
     damage:
       types:

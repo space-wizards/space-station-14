@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/PixelTheKermit",
+  "copyright": "Made by PixelTheKermit (github) for SS14",
   "size": {
     "x": 32,
     "y": 32
@@ -13,6 +13,18 @@
     },
     {
       "name": "sharp",
+      "directions": 4
+    },
+    {
+      "name": "stingers",
+      "directions": 4
+    },
+    {
+      "name": "curled",
+      "directions": 4
+    },
+    {
+      "name": "zigzag",
       "directions": 4
     },
     {

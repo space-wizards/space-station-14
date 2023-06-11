@@ -53,8 +53,6 @@
     malus: 0
   - type: Reflect
     enabled: false
-    reflectProb: 0.25
-    spread: 45
 
 - type: entity
   name: pen
@@ -131,7 +129,6 @@
   - type: Sprite
     sprite: Objects/Storage/penbox.rsi
     state: e_dagger
-    netsync: false
   - type: SpawnItemsOnUse
     items:
     - id: EnergyDagger

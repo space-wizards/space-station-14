@@ -1,0 +1,195 @@
+﻿# Tier 1
+
+- type: technology
+  id: BasicRobotics
+  name: research-technology-basic-robotics
+  icon:
+    sprite: Mobs/Silicon/drone.rsi
+    state: drone
+  discipline: Experimental
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - ProximitySensor
+  - LeftArmBorg
+  - LightHeadBorg
+  - RightArmBorg
+  - LeftLegBorg
+  - RightLegBorg
+  - Drone
+  - ExosuitFabricatorMachineCircuitboard
+
+- type: technology
+  id: SignallingTech
+  name: research-technology-signalling-tech
+  icon:
+    sprite: Objects/Devices/signaller.rsi
+    state: signaller
+  discipline: Experimental
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - Signaller
+  - SignalTrigger
+  - VoiceTrigger
+  - TimerTrigger
+  - SignalTimerElectronics
+
+- type: technology
+  id: BasicAnomalousResearch
+  name: research-technology-basic-anomalous-research
+  icon:
+    sprite: Objects/Specific/Research/anomalyscanner.rsi
+    state: icon
+  discipline: Experimental
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - AnomalyScanner
+  - AnomalyLocator
+  - APECircuitboard
+  - AnomalyVesselCircuitboard
+
+- type: technology
+  id: BasicXenoArcheology
+  name: research-technology-basic-xenoarcheology
+  icon:
+    sprite: Structures/Machines/artifact_analyzer.rsi
+    state: display
+  discipline: Experimental
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - NodeScanner
+  - AnalysisComputerCircuitboard
+  - ArtifactAnalyzerMachineCircuitboard
+
+- type: technology
+  id: AlternativeResearch
+  name: research-technology-alternative-research
+  icon:
+    sprite: Structures/Machines/tech_disk_printer.rsi
+    state: display
+  discipline: Experimental
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - TechDiskComputerCircuitboard
+
+- type: technology
+  id: MagnetsTech
+  name: research-technology-magnets-tech
+  icon:
+    sprite: Clothing/Shoes/Boots/magboots.rsi
+    state: icon
+  discipline: Experimental
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - ClothingShoesBootsMag
+
+# Tier 2
+
+- type: technology
+  id: AdvancedParts
+  name: research-technology-advanced-parts
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: advanced_matter_bin
+  discipline: Experimental
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - AdvancedCapacitorStockPart
+  - AdvancedMatterBinStockPart
+  - NanoManipulatorStockPart
+
+- type: technology
+  id: AbnormalArtifactManipulation
+  name: research-technology-abnormal-artifact-manipulation
+  icon:
+    sprite: Structures/Machines/traversal_distorter.rsi
+    state: display
+  discipline: Experimental
+  tier: 2
+  cost: 5000
+  recipeUnlocks:
+  - TraversalDistorterMachineCircuitboard
+
+- type: technology
+  id: MobileAnomalyTech
+  name: research-technology-mobile-anomaly-tech
+  icon:
+    sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
+    state: base
+  discipline: Experimental
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - WeaponPistolCHIMP
+  - CartridgeAnomalousParticleDelta
+  - CartridgeAnomalousParticleEpsilon
+  - CartridgeAnomalousParticleZeta
+  technologyPrerequisites:
+  - BasicAnomalousResearch
+
+- type: technology
+  id: RapidPartExchange
+  name: research-technology-rped
+  icon:
+    sprite: Objects/Specific/Research/rped.rsi
+    state: icon
+  discipline: Experimental
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - RPED
+
+
+- type: technology
+  id: HamtrMechTech
+  name: research-technology-hamtr
+  icon:
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: hamtr
+  discipline: Experimental
+  tier: 2
+  cost: 8000
+  recipeUnlocks:
+  - HamtrHarness
+  - HamtrLArm
+  - HamtrRArm
+  - HamtrLLeg
+  - HamtrRLeg
+  - HamtrCentralElectronics
+  - HamtrPeripheralsElectronics
+  - MechEquipmentGrabberSmall
+
+# Tier 3
+
+- type: technology
+  id: SuperParts
+  name: research-technology-super-parts
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: super_matter_bin
+  discipline: Experimental
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - SuperCapacitorStockPart
+  - SuperMatterBinStockPart
+  - PicoManipulatorStockPart
+
+- type: technology
+  id: GravityManipulation
+  name: research-technology-gravity-manipulation
+  icon:
+    sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+    state: base
+  discipline: Experimental
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+    - WeaponForceGun
+    - WeaponTetherGun

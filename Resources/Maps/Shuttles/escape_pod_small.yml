@@ -1,7 +1,5 @@
 meta:
   format: 4
-  name: DemoStation
-  author: Space-Wizards
   postmapinit: false
 tilemap:
   0: Space
@@ -102,7 +100,7 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: SpreaderGrid
-- proto: AirlockExternalShuttleLocked
+- proto: AirlockGlassShuttle
   entities:
   - uid: 12
     components:

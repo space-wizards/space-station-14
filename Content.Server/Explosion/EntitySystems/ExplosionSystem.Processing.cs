@@ -283,7 +283,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         ref (List<TransformComponent> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
         in FixtureProxy proxy)
     {
-        var owner = proxy.Fixture.Body.Owner;
+        var owner = proxy.Entity;
         return GridQueryCallback(ref state, in owner);
     }
 
@@ -366,8 +366,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         ref (List<TransformComponent> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox) state,
         in FixtureProxy proxy)
     {
-        var owner = proxy.Fixture.Body.Owner;
-        return SpaceQueryCallback(ref state, in owner);
+        var uid = proxy.Entity;
+        return SpaceQueryCallback(ref state, in uid);
     }
 
     /// <summary>
@@ -467,10 +467,10 @@ public sealed partial class ExplosionSystem : EntitySystem
             effectiveIntensity -= type.TileBreakRerollReduction;
 
             // does this have a base-turf that we can break it down to?
-            if (tileDef.BaseTurfs.Count == 0)
+            if (string.IsNullOrEmpty(tileDef.BaseTurf))
                 break;
 
-            if (_tileDefinitionManager[tileDef.BaseTurfs[^1]] is not ContentTileDefinition newDef)
+            if (_tileDefinitionManager[tileDef.BaseTurf] is not ContentTileDefinition newDef)
                 break;
 
             if (newDef.IsSpace && !canCreateVacuum)

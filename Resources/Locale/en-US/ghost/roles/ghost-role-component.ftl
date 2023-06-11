@@ -21,6 +21,9 @@ ghost-role-information-slimes-name = Slime
 ghost-role-information-slimes-description = An ordinary slime with no special needs or interests. He just lives.
 ghost-role-information-angry-slimes-description = Everything around you irritates your instincts, destroy them!
 
+ghost-role-information-punpun-name = Pun Pun
+ghost-role-information-punpun-description = An honorable member of the monkey society in charge of the bar and helping the bartenders in any way he can.
+
 ghost-role-information-xeno-name = Xeno
 ghost-role-information-xeno-description = You are a xeno, co-operate with your hive to kill all crewmembers!
 ghost-role-information-xeno-rules = You are an antagonist, smack, slash, and wack!
@@ -96,6 +99,7 @@ ghost-role-information-ifrit-description = Listen to your owner. Don't tank dama
 
 ghost-role-information-space-dragon-name = Space dragon
 ghost-role-information-space-dragon-description = Call in 3 carp rifts and take over this quadrant! You have only 5 minutes in between each rift before you will disappear.
+ghost-role-information-space-dragon-dungeon-description = Defend the expedition dungeon with your fishy comrades!
 
 ghost-role-information-cluwne-name = Cluwne
 ghost-role-information-cluwne-description = Become a pitiful cluwne, your only goal in life is to find a sweet release from your suffering (usually by being beaten to death). A cluwne is not an antagonist but may defend itself. Crewmembers may murder cluwnes freely.

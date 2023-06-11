@@ -13,7 +13,6 @@
     ports:
       - MedicalScannerReceiver
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/scanner.rsi
     snapCardinals: true
     layers:
@@ -77,6 +76,7 @@
         acts: ["Destruction"]
   - type: Machine
     board: MedicalScannerMachineCircuitboard
+  - type: WiresPanel
   - type: Wires
     BoardName: "MedicalScanner"
     LayoutId: MedicalScanner
@@ -87,3 +87,6 @@
   - type: EmptyOnMachineDeconstruct
     containers:
     - scanner-bodyContainer
+  - type: GuideHelp
+    guides:
+    - Cloning

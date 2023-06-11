@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
     snapCardinals: true
-    netsync: false
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
@@ -51,6 +50,7 @@
         - Sheet
         - RawMaterial
         - Ingot
+  - type: WiresPanel
   - type: Wires
     BoardName: "Autolathe"
     LayoutId: Autolathe
@@ -76,12 +76,40 @@
       - Multitool
       - NetworkConfigurator
       - AirlockPainter
+      - FlashlightLantern
       - CableStack
+      - CableMVStack
+      - CableHVStack
       - HandheldGPSBasic
       - TRayScanner
       - GasAnalyzer
       - UtilityBelt
       - Pickaxe
+      - AppraisalTool
+      - SheetRGlass
+      - Beaker
+      - Syringe
+      - LightTube
+      - LightBulb
+      - Bucket
+      - SprayBottle
+      - PowerCellSmall
+      - MicroManipulatorStockPart
+      - MatterBinStockPart
+      - CapacitorStockPart
+      - ConveyorBeltAssembly
+      - IntercomElectronics
+      - FirelockElectronics
+      - DoorElectronics
+      - AirAlarmElectronics
+      - StationMapElectronics
+      - FireAlarmElectronics
+      - MailingUnitElectronics
+      - APCElectronics
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
+      - CellRechargerCircuitboard
+      - WeaponCapacitorRechargerCircuitboard
   - type: StaticPrice
     price: 800
 
@@ -94,7 +122,6 @@
   - type: Sprite
     sprite: Structures/Machines/protolathe.rsi
     snapCardinals: true
-    netsync: false
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
@@ -133,6 +160,7 @@
         acts: ["Destruction"]
   - type: Machine
     board: ProtolatheMachineCircuitboard
+  - type: WiresPanel
   - type: Wires
     BoardName: "Protolathe"
     LayoutId: Protolathe
@@ -159,29 +187,12 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
-      - LightTube
-      - LightBulb
-      - SheetSteel #these sheet recipe costs don't scale with upgrades
-      - SheetGlass1
-      - SheetRGlass
-      - SheetPlastic
-      - CableStack
-      - CableMVStack
-      - CableHVStack
       - PowerDrill
       - MiningDrill
-      - ConveyorBeltAssembly
-      - AppraisalTool
       - AnomalyScanner
       - AnomalyLocator
       - RCD
       - RCDAmmo
-      - HydroponicsToolScythe
-      - HydroponicsToolHatchet
-      - Clippers
-      - MiniHoe
-      - Shovel
-      - Spade
       - HandheldCrewMonitor
       - Scalpel
       - Retractor
@@ -198,42 +209,28 @@
       - PillCanister
       - ChemistryEmptyBottle01
       - Drone
-      - Flash
-      - MicroManipulatorStockPart
-      - MatterBinStockPart
-      - CapacitorStockPart
       - AdvancedCapacitorStockPart
       - AdvancedMatterBinStockPart
       - NanoManipulatorStockPart
       - SuperCapacitorStockPart
       - SuperMatterBinStockPart
       - PicoManipulatorStockPart
-      - FirelockElectronics
-      - DoorElectronics
-      - APCElectronics
-      - AirAlarmElectronics
-      - FireAlarmElectronics
-      - IntercomElectronics
-      - MailingUnitElectronics
       - SignalTimerElectronics
-      - Bucket
       - MopItem
+      - Holoprojector
+      - Mousetrap
+      - LightReplacer
+      - TrashBag
       - AdvMopItem
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
-      - SprayBottle
       - MegaSprayBottle
-      - FireExtinguisher
-      - KitchenKnife
-      - ButchCleaver
-      - FlashlightLantern
       - TimerTrigger
       - ChemicalPayload
       - FlashPayload
       - Signaller
       - SignalTrigger
       - VoiceTrigger
-      - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh
       - WeaponPistolCHIMP
@@ -245,7 +242,14 @@
       - ClothingShoesBootsMag
       - NodeScanner
       - HolofanProjector
-      - Vape
+      - WeaponForceGun
+      - WeaponTetherGun
+      - WeaponGrapplingGun
+      - ClothingBackpackHolding
+      - ClothingBackpackSatchelHolding
+      - ClothingBackpackDuffelHolding
+      - WelderExperimental
+      - JawsOfLife
 
 - type: entity
   parent: Protolathe
@@ -254,7 +258,6 @@
   description: Prints circuit boards for machines.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/circuit_imprinter.rsi
     layers:
     - state: icon
@@ -271,16 +274,7 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
-      - FirelockElectronics
-      - DoorElectronics
-      - APCElectronics
-      - AirAlarmElectronics
-      - FireAlarmElectronics
-      - MailingUnitElectronics
-      - IntercomElectronics
       - SignalTimerElectronics
-      - SMESMachineCircuitboard
-      - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
@@ -317,11 +311,14 @@
       - StasisBedMachineCircuitboard
       - MaterialReclaimerMachineCircuitboard
       - OreProcessorMachineCircuitboard
+      - CargoTelepadMachineCircuitboard
       - RipleyCentralElectronics
       - RipleyPeripheralsElectronics
       - HonkerCentralElectronics
       - HonkerPeripheralsElectronics
       - HonkerTargetingElectronics
+      - HamtrCentralElectronics
+      - HamtrPeripheralsElectronics
       - GeneratorPlasmaMachineCircuitboard
       - GeneratorUraniumMachineCircuitboard
       - WallmountGeneratorElectronics
@@ -355,7 +352,6 @@
   description: Creates parts for robotics and other mechanical needs
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/exosuit_fabricator.rsi
     layers:
     - state: fab-idle
@@ -388,12 +384,22 @@
     - HonkerLLeg
     - HonkerRLeg
     - MechEquipmentHorn
+    - MechEquipmentGrabberSmall
+    - HamtrHarness
+    - HamtrLArm
+    - HamtrRArm
+    - HamtrLLeg
+    - HamtrRLeg
   - type: MaterialStorage
     whitelist:
       tags:
       - Sheet
       - RawMaterial
       - Ingot
+  - type: GuideHelp
+    guides:
+    - Robotics
+
 
 - type: entity
   parent: Protolathe
@@ -402,7 +408,6 @@
   description: Prints equipment for use by security crew.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/techfab.rsi
     layers:
     - state: icon
@@ -465,7 +470,6 @@
   description: Prints equipment for use by the medbay.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/techfab.rsi
     layers:
     - state: icon
@@ -482,22 +486,15 @@
     idleState: icon
     runningState: icon
     staticRecipes:
+      - Brutepack
+      - Ointment
       - HandLabeler
       - Defibrillator
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
       - ClothingMaskSterile
       - DiseaseSwab
-      - Scalpel
-      - Retractor
-      - Cautery
-      - Drill
-      - Saw
-      - Hemostat
       - Beaker
-      - LargeBeaker
-      - CryostasisBeaker
-      - Dropper
       - Syringe
       - Implanter
       - PillCanister
@@ -514,6 +511,15 @@
     dynamicRecipes:
       - HandheldCrewMonitor
       - ClothingHandsGlovesNitrile
+      - CryostasisBeaker
+      - LargeBeaker
+      - Dropper
+      - Scalpel
+      - Retractor
+      - Cautery
+      - Drill
+      - Saw
+      - Hemostat
   - type: Machine
     board: MedicalTechFabCircuitboard
 
@@ -527,7 +533,6 @@
     noRot: false
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
-    netsync: false
     snapCardinals: false
     layers:
     - state: icon
@@ -645,7 +650,6 @@
   components:
     - type: Sprite
       sprite: Structures/Machines/ore_processor.rsi
-      netsync: false
       layers:
         - state: icon
           map: ["enum.LatheVisualLayers.IsRunning"]

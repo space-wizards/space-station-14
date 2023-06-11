@@ -27,6 +27,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly MaterialStorageSystem _material = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -67,7 +68,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
     private void OnStartCollide(EntityUid uid, AnomalyComponent component, ref StartCollideEvent args)
     {
-        if (!TryComp<AnomalousParticleComponent>(args.OtherFixture.Body.Owner, out var particle))
+        if (!TryComp<AnomalousParticleComponent>(args.OtherEntity, out var particle))
             return;
 
         if (args.OtherFixture.ID != particle.FixtureId)

@@ -1,8 +1,6 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.Doors.Systems;
-using Content.Server.MachineLinking.Events;
-using Content.Server.MachineLinking.System;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors;
 using JetBrains.Annotations;
@@ -13,11 +11,9 @@ namespace Content.Server.DeviceLinking.Systems
     [UsedImplicitly]
     public sealed class DoorSignalControlSystem : EntitySystem
     {
-        [Dependency] private readonly AirlockSystem _airlockSystem = default!;
+        [Dependency] private readonly DoorBoltSystem _bolts = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-
-        private const string DoorSignalState = "DoorState";
 
         public override void Initialize()
         {
@@ -40,14 +36,14 @@ namespace Content.Server.DeviceLinking.Systems
                 return;
 
             var state = SignalState.Momentary;
-            args.Data?.TryGetValue(DoorSignalState, out state);
+            args.Data?.TryGetValue(DeviceNetworkConstants.LogicState, out state);
 
 
             if (args.Port == component.OpenPort)
             {
                 if (state == SignalState.High || state == SignalState.Momentary)
                 {
-                    if (door.State != DoorState.Open)
+                    if (door.State == DoorState.Closed)
                         _doorSystem.TryOpen(uid, door);
                 }
             }
@@ -55,7 +51,7 @@ namespace Content.Server.DeviceLinking.Systems
             {
                 if (state == SignalState.High || state == SignalState.Momentary)
                 {
-                    if (door.State != DoorState.Closed)
+                    if (door.State == DoorState.Open)
                         _doorSystem.TryClose(uid, door);
                 }
             }
@@ -63,21 +59,27 @@ namespace Content.Server.DeviceLinking.Systems
             {
                 if (state == SignalState.High || state == SignalState.Momentary)
                 {
-                    _doorSystem.TryToggleDoor(uid, door);
+                    if (door.State is DoorState.Closed or DoorState.Open)
+                        _doorSystem.TryToggleDoor(uid, door);
                 }
             }
             else if (args.Port == component.InBolt)
             {
-                if (state == SignalState.High)
+                if (!TryComp<DoorBoltComponent>(uid, out var bolts))
+                    return;
+
+                // if its a pulse toggle, otherwise set bolts to high/low
+                bool bolt;
+                if (state == SignalState.Momentary)
                 {
-                    if(TryComp<AirlockComponent>(uid, out var airlockComponent))
-                        _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, true);
+                    bolt = !bolts.BoltsDown;
                 }
                 else
                 {
-                    if(TryComp<AirlockComponent>(uid, out var airlockComponent))
-                        _airlockSystem.SetBoltsWithAudio(uid, airlockComponent, false);
+                    bolt = state == SignalState.High;
                 }
+
+                _bolts.SetBoltsWithAudio(uid, bolts, bolt);
             }
         }
 
@@ -85,12 +87,12 @@ namespace Content.Server.DeviceLinking.Systems
         {
             var data = new NetworkPayload()
             {
-                { DoorSignalState, SignalState.Momentary }
+                { DeviceNetworkConstants.LogicState, SignalState.Momentary }
             };
 
             if (args.State == DoorState.Closed)
             {
-                data[DoorSignalState] = SignalState.Low;
+                data[DeviceNetworkConstants.LogicState] = SignalState.Low;
                 _signalSystem.InvokePort(uid, door.OutOpen, data);
             }
             else if (args.State == DoorState.Open
@@ -98,7 +100,7 @@ namespace Content.Server.DeviceLinking.Systems
                   || args.State == DoorState.Closing
                   || args.State == DoorState.Emagging)
             {
-                data[DoorSignalState] = SignalState.High;
+                data[DeviceNetworkConstants.LogicState] = SignalState.High;
                 _signalSystem.InvokePort(uid, door.OutOpen, data);
             }
         }

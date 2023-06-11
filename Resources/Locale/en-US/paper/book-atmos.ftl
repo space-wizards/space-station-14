@@ -36,7 +36,7 @@ book-text-atmos-alarms = Air alarms are located throughout stations to allow man
             - Fill: Disables scrubbers and sets vents to their maximum pressure
             - Panic: Disables vents and sets scrubbers to siphon
 
-            A multitool can be used to link devices to air alarms.
+            A multitool or network configurator can be used to link devices to air alarms.
 
 book-text-atmos-vents =
     Below is a quick reference guide to several atmospheric devices:

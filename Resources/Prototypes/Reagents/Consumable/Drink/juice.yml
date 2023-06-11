@@ -6,6 +6,7 @@
   physicalDesc: reagent-physical-desc-crisp
   flavor: apple
   color: "#FDAD01"
+  recognizable: true
 
 - type: reagent
   id: JuiceBanana
@@ -24,35 +25,6 @@
   physicalDesc: reagent-physical-desc-sweet
   flavor: juice
   color: "#660099"
-
-- type: reagent
-  id: JuiceBerryPoison
-  name: reagent-name-juice-berry-poison
-  desc: reagent-desc-juice-berry-poison
-  physicalDesc: reagent-physical-desc-sickly
-  flavor: bitter
-  color: "#6600CC"
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 1
-
-#TODO: restore eyesight
-#if(..())
-#return 1
-# M.eye_blurry = max(M.eye_blurry - 1 , 0)
-# M.eye_blind = max(M.eye_blind - 1 , 0)
-# switch(data)
-# if(21 to INFINITY)
-# if(prob(data - 10))
-# M.disabilities &= ~NEARSIGHTED
-# data++
 
 - type: reagent
   id: JuiceCarrot

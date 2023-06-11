@@ -37,7 +37,8 @@
 - type: sourcePort
   id: DoorStatus
   name: signal-port-name-doorstatus
-  description: signal-port-description-status
+  description: signal-port-description-doorstatus
+  defaultLinks: [ DoorBolt ]
 
 - type: sourcePort
   id: OrderSender
@@ -60,3 +61,30 @@
   name: signal-port-name-artifact-analyzer-sender
   description: signal-port-description-artifact-analyzer-sender
   defaultLinks: [ ArtifactAnalyzerReceiver ]
+
+- type: sourcePort
+  id: Timer
+  name: signal-port-name-timer-trigger
+  description: signal-port-description-timer-trigger
+  defaultLinks: [ AutoClose, On, Open, Forward, Trigger ]
+
+- type: sourcePort
+  id: Start
+  name: signal-port-name-timer-start
+  description: signal-port-description-timer-start
+  defaultLinks: [ Close, Off ]
+
+- type: sourcePort
+  id: Output
+  name: signal-port-name-logic-output
+  description: signal-port-description-logic-output
+
+- type: sourcePort
+  id: OutputHigh
+  name: signal-port-name-logic-output-high
+  description: signal-port-description-logic-output-high
+
+- type: sourcePort
+  id: OutputLow
+  name: signal-port-name-logic-output-low
+  description: signal-port-description-logic-output-low
