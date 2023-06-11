@@ -4,48 +4,28 @@
         HorizontalExpand="True">
         <BoxContainer
             Name="RootContainer"
-            Orientation="Vertical"
-            HorizontalExpand="True"
-            VerticalExpand="True">
+            Orientation="Vertical">
             <Label
                 Name="NoPatientDataText"
                 Visible="False"
                 Text="{Loc health-analyzer-window-no-patient-data-text}" />
-            <Label
-                Name="PatientData"
-                Visible="False" />
+            <BoxContainer
+                Name="PatientDataContainer"
+                Visible="False"
+                Orientation="Vertical">
+                <Label
+                    Name="PatientName" />
+                <Label
+                    Name="patientDamageAmount" 
+                    Margin="0 20"/>
+            </BoxContainer>
+            <BoxContainer
+                Name="GroupsContainer"
+                HorizontalExpand="True"
+                VerticalExpand="True"
+                 Orientation="Vertical"
+                Visible="False">
+            </BoxContainer>
         </BoxContainer>
     </ScrollContainer>
-    <BoxContainer
-        Name="DiagnosticRowTemplate"
-        Visible="False"
-        Margin="0 10 0 10"
-        HorizontalExpand="True"
-        Orientation="Horizontal" />
-    <BoxContainer
-        Name="DiagnosticItemTemplate"
-        Visible="False"
-        Margin="0 0 50 0"
-        Align="Begin"
-        Orientation="Vertical">
-        <PanelContainer StyleClasses="LowDivider" />
-    </BoxContainer>
-
-    <BoxContainer
-        VerticalAlignment="Bottom"
-        Orientation="Horizontal">
-        <PanelContainer
-            Name="DiagnosticItemPictureTemplate"
-            StyleClasses="Inset"
-            VerticalAlignment="Center">
-            <TextureRect
-                SetSize="32 32" />
-        </PanelContainer>
-    </BoxContainer>
-
-    <Label
-        Name="DiagnosticItemLabelTemplate"
-        Visible="False"
-        Margin="0 0 10 0"
-        Text="Burn: 0" />
 </DefaultWindow>
