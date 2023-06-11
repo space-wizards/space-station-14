@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added mega spray bottles to advanced cleaning tech. They have bigger
-      spray and more capacity., type: Add}
-  - {message: You can adjust the solution transfer amount of spray bottles., type: Tweak}
-  id: 3480
-  time: '2023-04-21T09:16:33.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Reduce the standard salvage expedition time from 18-20 minutes to 15
@@ -2910,3 +2903,10 @@ Entries:
   - {message: Fixed glue puddles sometimes causing permanent slowdown., type: Fix}
   id: 3979
   time: '2023-06-11T17:04:42.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Added the White Gilgamesh., type: Add}
+  - {message: Removed bilk., type: Remove}
+  - {message: Fixed the grammar of The Martinez., type: Fix}
+  id: 3980
+  time: '2023-06-11T17:09:41.0000000+00:00'
