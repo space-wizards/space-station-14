@@ -15180,6 +15180,13 @@ entities:
       type: Transform
     - fixtures: {}
       type: Fixtures
+  - uid: 7808
+    components:
+    - pos: 19.5,27.5
+      parent: 1
+      type: Transform
+    - fixtures: {}
+      type: Fixtures
   - uid: 8830
     components:
     - pos: 1.5,-5.5
