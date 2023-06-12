@@ -30,8 +30,9 @@
     range: 200
   - type: DeviceLinkSource
     ports:
-      - On
-      - Off
+    - On
+    - Off
+    - Status
 
 - type: entity
   id: SignalButton
