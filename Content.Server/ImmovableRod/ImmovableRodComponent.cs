@@ -13,12 +13,6 @@ public sealed class ImmovableRodComponent : Component
     [DataField("hitSoundProbability")]
     public float HitSoundProbability = 0.1f;
 
-    [DataField("minSpeed")]
-    public float MinSpeed = 10f;
-
-    [DataField("maxSpeed")]
-    public float MaxSpeed = 35f;
-
     /// <summary>
     ///     With this set to true, rods will automatically set the tiles under them to space.
     /// </summary>

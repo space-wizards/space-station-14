@@ -49,7 +49,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         SubscribeLocalEvent<ImmovableRodComponent, ExaminedEvent>(OnExamined);
     }
 
-    public EntityUid SpawnAndLaunch(string prototype, MapCoordinates coordinates, Vector2 direction)
+    public EntityUid SpawnAndLaunch(string prototype, MapCoordinates coordinates, Vector2 direction, float speed)
     {
         var uid = Spawn(prototype, coordinates);
 
@@ -58,9 +58,6 @@ public sealed class ImmovableRodSystem : EntitySystem
             _physics.SetLinearDamping(physics, 0f);
             _physics.SetFriction(physics, 0f);
             _physics.SetBodyStatus(physics, BodyStatus.InAir);
-
-            var speed = _random.NextFloat(rod.MinSpeed, rod.MaxSpeed);
-
             _gun.ShootProjectile(uid, direction, Vector2.Zero, uid, speed: speed);
         }
 
