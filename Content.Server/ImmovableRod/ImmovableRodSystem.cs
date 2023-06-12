@@ -52,7 +52,7 @@ public sealed class ImmovableRodSystem : EntitySystem
     {
         var uid = Spawn("ImmovableRod", coordinates);
 
-        if (TryComp<PhysicsComponent>(uid, out var physics) && TryComp<ImmovableRodComponent>(uid, out var rod))
+        if (TryComp<PhysicsComponent>(uid, out var physics))
         {
             _physics.SetLinearDamping(physics, 0f);
             _physics.SetFriction(physics, 0f);
