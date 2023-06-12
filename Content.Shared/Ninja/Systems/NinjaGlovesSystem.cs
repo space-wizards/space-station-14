@@ -28,18 +28,18 @@ namespace Content.Shared.Ninja.Systems;
 
 public abstract class SharedNinjaGlovesSystem : EntitySystem
 {
+    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedNinjaSystem _ninja = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly TagSystem _tags = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
