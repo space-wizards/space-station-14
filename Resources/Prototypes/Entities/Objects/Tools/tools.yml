@@ -142,7 +142,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 6
+        Blunt: 8
         Structural: 3
   - type: Tool
     qualities:
@@ -163,7 +163,7 @@
   components:
   - type: Tag
     tags:
-    - Crowbar
+    - Crwowbar
     - CrowbarRed
   - type: Sprite
     sprite: Objects/Tools/crowbar.rsi
@@ -175,7 +175,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 8 #free man
+        Blunt: 6 # encourage powergamers to use regular crowbars so emergency toolboxes still have them
         Structural: 3
 
 - type: entity
