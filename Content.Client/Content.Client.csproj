@@ -34,9 +34,6 @@
       <DependentUpon>StrippingWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Flesh\" />
-  </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
