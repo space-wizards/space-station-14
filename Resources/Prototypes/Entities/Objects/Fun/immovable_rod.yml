@@ -1,6 +1,4 @@
-﻿ # Immovable rod
-
-- type: entity
+﻿- type: entity
   id: ImmovableRod
   name: immovable rod
   description: You can sense that it's hungry. That's usually a bad sign.
@@ -33,3 +31,6 @@
         layer:
         - Impassable
         - Opaque
+  - type: WarpPoint
+    follow: true
+    location: immovable rod
