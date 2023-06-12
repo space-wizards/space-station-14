@@ -4,12 +4,10 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
-using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.ImmovableRod;
