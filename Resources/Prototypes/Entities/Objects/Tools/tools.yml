@@ -168,15 +168,6 @@
   - type: Sprite
     sprite: Objects/Tools/crowbar.rsi
     state: red-icon
-  - type: Item
-    sprite: Objects/Tools/crowbar.rsi
-    size: 10
-    heldPrefix: red
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 8
-        Structural: 3
 
 - type: entity
   name: multitool
