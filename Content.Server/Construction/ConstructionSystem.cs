@@ -1,7 +1,7 @@
 using Content.Server.Construction.Components;
-using Content.Server.DoAfter;
 using Content.Server.Stack;
 using Content.Shared.Construction;
+using Content.Shared.DoAfter;
 using Content.Shared.Tools;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
@@ -19,7 +19,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly SharedToolSystem _toolSystem = default!;

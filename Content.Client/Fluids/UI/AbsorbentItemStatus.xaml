@@ -1,13 +1,4 @@
-﻿<Control xmlns="https://spacestation14.io">
-    <BoxContainer Orientation="Horizontal">
-        <ProgressBar
-            HorizontalExpand="True"
-            Name="PercentBar"
-            MinSize="20 20"
-            VerticalAlignment="Center"
-            Margin="2 8 4 2"
-            MaxValue="1.0"
-            MinValue="0.0">
-        </ProgressBar>
-    </BoxContainer>
-</Control>
+﻿<controls:SplitBar xmlns="https://spacestation14.io"
+                   xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                   Name="Bar">
+</controls:SplitBar>

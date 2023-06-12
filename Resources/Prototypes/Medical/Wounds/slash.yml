@@ -1,12 +1,4 @@
-﻿- type: trauma
-  id: Slash
-  wounds:
-    10: Welt
-    30: RoughAbrasion
-    50: OpenLaceration
-    100: WeepingAvulsion
-
-- type: entity
+﻿- type: entity
   id: Welt
   components:
     - type: Wound

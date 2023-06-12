@@ -6,13 +6,14 @@
   components:
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.1"
-      density: 190
-      hard: true
-      mask:
-      - MachineMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.1"
+        density: 190
+        hard: true
+        mask:
+        - MachineMask
   - type: Anchorable
   - type: Pullable
   - type: Sprite

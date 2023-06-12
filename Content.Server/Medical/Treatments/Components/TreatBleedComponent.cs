@@ -1,0 +1,15 @@
+﻿using Content.Server.Medical.Treatments.Systems;
+using Content.Shared.FixedPoint;
+
+namespace Content.Server.Medical.Treatments.Components;
+
+[RegisterComponent]
+[Access(typeof(TreatmentSystem))]
+public sealed class TreatBleedComponent : Component
+{
+    [DataField("fullyStopsBleed"), AutoNetworkedField]
+    public bool FullyStopsBleed;
+
+    [DataField("decrease"), AutoNetworkedField]
+    public FixedPoint2 Decrease = 0;
+}

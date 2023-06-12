@@ -10,7 +10,7 @@
         amount: 2
       - id: ClothingHeadHatHardhatYellow
         amount: 2
-      - id: ClothingHeadHatWeldingMaskFlame # Replace with regular welding mask when we have it.
+      - id: ClothingHeadHatWelding
         amount: 2
       - id: ClothingOuterVestHazard
         amount: 3
@@ -96,7 +96,7 @@
     contents:
       - id: JetpackBlue
         amount: 2
-        
+
 - type: entity
   id: CrateEngineeringMiniJetpack
   parent: CrateGenericSteel
@@ -113,8 +113,6 @@
   - type: StorageFill
     contents:
       - id: SheetSteel
-        amount: 1
       - id: CableApcStack
-        amount: 1
       - id: DoorElectronics
         amount: 6

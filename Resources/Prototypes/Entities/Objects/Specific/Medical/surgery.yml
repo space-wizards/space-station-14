@@ -53,6 +53,12 @@
     - Cauterization
     delay: 3
   - type: Cautery
+  - type: MeleeWeapon
+    damage:
+       types:
+        Heat: 5
+    soundHit:
+      path: /Audio/Effects/lightburn.ogg
 
 # Drill
 

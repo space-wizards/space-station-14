@@ -11,42 +11,74 @@
       path: /Audio/Effects/singularity.ogg
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
-    fixtures:
-    - id: EventHorizon
-      shape:
-        !type:PhysShapeCircle
-          radius: 0.5
-      restitution: 0.9
-      density: 99999
-      mask:
-      - AllMask
-      layer:
-      - AllMask
-  - type: Singularity
-    energy: 180
-    level: 1
-    radsPerLevel: 2
-  - type: GravityWell # To make the singularity attract things.
   - type: EventHorizon # To make the singularity consume things.
     radius: 0.5
     canBreachContainment: false
     horizonFixtureId: EventHorizon
+  - type: GravityWell # To make the singularity attract things.
+  - type: Fixtures
+    fixtures:
+      EventHorizon:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.35
+        restitution: 0.8
+        density: 99999
+        mask:
+        - AllMask
+        layer:
+        - AllMask
+  - type: Singularity
+    energy: 180
+    level: 1
+    radsPerLevel: 2
   - type: RandomWalk # To make the singularity move around.
   - type: SingularityDistortion
+    intensity: 20
   - type: RadiationSource
     slope: 0.2 # its emit really far away
-  - type: Sprite
-    sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
-    state: singularity_1
-    shader: unshaded
-    netsync: false
   - type: PointLight
     enabled: true
     radius: 10
   - type: Appearance
   - type: GuideHelp
-    guides: [ Singularity, Power ]
+    guides: [ Singularity, Power ] # uhhh.. I would hoped they'd  have read the manual before ever getting in viewing distance...
   - type: WarpPoint
     follow: true
     location: singularity
+  - type: Sprite
+    sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
+    shader: unshaded
+    netsync: false
+    layers:
+    - map: [ "VisualLevel" ]
+      state: singularity_1
+  - type: GenericVisualizer
+    visuals:
+      enum.SingularityAppearanceKeys.Singularity:
+       VisualLevel:
+          1:
+            sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
+            state: singularity_1
+            scale: 1.0,1.0
+          2:
+            sprite: Structures/Power/Generation/Singularity/singularity_2.rsi
+            state: singularity_2
+            scale: 1.0,1.0
+          3:
+            sprite: Structures/Power/Generation/Singularity/singularity_3.rsi
+            state: singularity_3
+            scale: 1.0,1.0
+          4:
+            sprite: Structures/Power/Generation/Singularity/singularity_4.rsi
+            state: singularity_4
+            scale: 1.0,1.0
+          5:
+            sprite: Structures/Power/Generation/Singularity/singularity_5.rsi
+            state: singularity_5
+            scale: 1.5,1.5
+          6:
+            sprite: Structures/Power/Generation/Singularity/singularity_6.rsi
+            state: singularity_6
+            scale: .9,.9
+

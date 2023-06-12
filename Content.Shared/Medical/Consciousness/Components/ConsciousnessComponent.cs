@@ -1,39 +1,51 @@
 ﻿using Content.Shared.FixedPoint;
-using Robust.Shared.Serialization;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Medical.Consciousness.Components;
 
-[RegisterComponent]
-public sealed class ConsciousnessComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class ConsciousnessComponent : Component
 {
-    [DataField("threshold", required: true)]
+    //Unconsciousness threshold, ie: when does this entity pass out
+    [DataField("threshold", required: true), AutoNetworkedField]
     public FixedPoint2 Threshold = 30;
-    [DataField("capacity")] public FixedPoint2 Capacity = 100;
-    [DataField("damage")] public FixedPoint2 Damage = 0;
-    public FixedPoint2 Modifier = 1.0;
-    public FixedPoint2 Clamp = 100;
+
+    //The raw/starting consciousness value, this should be between 0 and the cap or -1 to automatically get the cap
+    // Do not directly edit this value, use modifiers instead!
+    [DataField("consciousness"), AutoNetworkedField]
+    public FixedPoint2 RawConsciousness = -1;
+
+    //The current consciousness value adjusted by the multiplier and clamped
+    [AutoNetworkedField] public FixedPoint2 Consciousness => FixedPoint2.Clamp(RawConsciousness * Multiplier, 0, Cap);
+
+    //Multiplies the consciousness value whenever it is used. Do not directly edit this value, use multipliers instead!
+    [DataField("multiplier"), AutoNetworkedField]
+    public FixedPoint2 Multiplier = 1.0;
+
+    //The maximum consciousness value, and starting consciousness if rawConsciousness is -1
+    [DataField("cap"), AutoNetworkedField]
+    public FixedPoint2 Cap = 100;
+
+    //List of modifiers that are applied to this consciousness
+    [AutoNetworkedField] public readonly Dictionary<(EntityUid, ConsciousnessModType),ConsciousnessModifier> Modifiers = new();
+
+    //List of multipliers that are applied to this consciousness
+    [AutoNetworkedField] public readonly Dictionary<(EntityUid, ConsciousnessModType),ConsciousnessMultiplier> Multipliers = new();
+
+    [DataField("isConscious"), AutoNetworkedField]
+    public bool IsConscious = true;
 }
 
-[NetSerializable, Serializable]
-public sealed class ConsciousnessComponentState : ComponentState
-{
-    public FixedPoint2 Threshold;
-    public FixedPoint2 Damage;
-    public FixedPoint2 Modifier;
-    public FixedPoint2 Capacity;
-    public FixedPoint2 Clamp;
+[Serializable, DataRecord]
+public record struct ConsciousnessModifier(FixedPoint2 Change, string Identifier = "Unspecified");
 
-    public ConsciousnessComponentState(
-        FixedPoint2 threshold,
-        FixedPoint2 damage,
-        FixedPoint2 modifier,
-        FixedPoint2 clamp,
-        FixedPoint2 capacity)
-    {
-        Threshold = threshold;
-        Damage = damage;
-        Modifier = modifier;
-        Clamp = clamp;
-        Capacity = capacity;
-    }
+[Serializable, DataRecord]
+public record struct ConsciousnessMultiplier(FixedPoint2 Change,
+    string Identifier = "Unspecified", ConsciousnessModType Type = ConsciousnessModType.Generic);
+
+[Serializable]
+public enum ConsciousnessModType
+{
+    Generic,
+    Pain
 }

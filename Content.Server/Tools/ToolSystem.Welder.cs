@@ -4,6 +4,7 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Tools.Components;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -15,6 +16,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Tools
 {
@@ -38,8 +40,8 @@ namespace Content.Server.Tools
             SubscribeLocalEvent<WelderComponent, SolutionChangedEvent>(OnWelderSolutionChange);
             SubscribeLocalEvent<WelderComponent, ActivateInWorldEvent>(OnWelderActivate);
             SubscribeLocalEvent<WelderComponent, AfterInteractEvent>(OnWelderAfterInteract);
-            SubscribeLocalEvent<WelderComponent, ToolUseAttemptEvent>(OnWelderToolUseAttempt);
-            SubscribeLocalEvent<WelderComponent, ToolUseFinishAttemptEvent>(OnWelderToolUseFinishAttempt);
+            SubscribeLocalEvent<WelderComponent, DoAfterAttemptEvent<ToolDoAfterEvent>>(OnWelderToolUseAttempt);
+            SubscribeLocalEvent<WelderComponent, ToolDoAfterEvent>(OnWelderDoAfter);
             SubscribeLocalEvent<WelderComponent, ComponentShutdown>(OnWelderShutdown);
             SubscribeLocalEvent<WelderComponent, ComponentGetState>(OnWelderGetState);
             SubscribeLocalEvent<WelderComponent, MeleeHitEvent>(OnMeleeHit);
@@ -262,56 +264,36 @@ namespace Content.Server.Tools
             args.Handled = true;
         }
 
-        private void OnWelderToolUseAttempt(EntityUid uid, WelderComponent welder, ToolUseAttemptEvent args)
+        private void OnWelderToolUseAttempt(EntityUid uid, WelderComponent welder, DoAfterAttemptEvent<ToolDoAfterEvent> args)
         {
-            if (args.Cancelled)
-                return;
+            DebugTools.Assert(args.Event.Fuel > 0);
+            var user = args.DoAfter.Args.User;
 
             if (!welder.Lit)
             {
-                _popupSystem.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, args.User);
+                _popupSystem.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, user);
                 args.Cancel();
                 return;
             }
 
             var (fuel, _) = GetWelderFuelAndCapacity(uid, welder);
 
-            if (FixedPoint2.New(args.Fuel) > fuel)
+            if (FixedPoint2.New(args.Event.Fuel) > fuel)
             {
-                _popupSystem.PopupEntity(Loc.GetString("welder-component-cannot-weld-message"), uid, args.User);
+                _popupSystem.PopupEntity(Loc.GetString("welder-component-cannot-weld-message"), uid, user);
                 args.Cancel();
             }
         }
 
-        private void OnWelderToolUseFinishAttempt(EntityUid uid, WelderComponent welder, ToolUseFinishAttemptEvent args)
+        private void OnWelderDoAfter(EntityUid uid, WelderComponent welder, ToolDoAfterEvent args)
         {
             if (args.Cancelled)
                 return;
 
-            if (!welder.Lit)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, args.User);
-                args.Cancel();
-                return;
-            }
-
-            var (fuel, _) = GetWelderFuelAndCapacity(uid, welder);
-
-            var neededFuel = FixedPoint2.New(args.Fuel);
-
-            if (neededFuel > fuel)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("welder-component-cannot-weld-message"), uid, args.User);
-                args.Cancel();
-            }
-
             if (!_solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var solution))
-            {
-                args.Cancel();
                 return;
-            }
 
-            solution.RemoveReagent(welder.FuelReagent, neededFuel);
+            solution.RemoveReagent(welder.FuelReagent, FixedPoint2.New(args.Fuel));
             _entityManager.Dirty(welder);
         }
 

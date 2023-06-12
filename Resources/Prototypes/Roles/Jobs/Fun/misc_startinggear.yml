@@ -16,22 +16,6 @@
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
 
-#Pirate Outfit
-- type: startingGear
-  id: PirateGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitColorLightBrown
-    back: ClothingBackpackSatchelEngineering
-    head: ClothingHeadHatPirate
-    outerClothing: ClothingOuterCoatPirate
-    shoes: ClothingShoesBootsWork
-    id: PassengerPDA
-    belt: ClothingBeltUtility
-    pocket1: AppraisalTool
-  innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
-  satchel: ClothingBackpackSatchelEngineering
-  duffelbag: ClothingBackpackSatchelEngineering
-
 #Skeleton Biker
 - type: startingGear
   id: SkeletonBiker
@@ -68,19 +52,20 @@
 
 #Deathsquad Outfit
 - type: startingGear
-  id: DeadsquadGear
+  id: DeathSquadGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlack
+    jumpsuit: ClothingUniformJumpsuitDeathSquad
     back: ClothingBackpackDuffelSyndicateAmmo
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
-    ears: ClothingHeadsetCentCom
+    ears: ClothingHeadsetAltCommand
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitDeathsquad
-    shoes: ClothingShoesChameleonNoSlips
+    suitstorage: YellowOxygenTankFilled
+    shoes: ClothingShoesBootsMagAdv
     id: CentcomPDA
-    pocket1: EmergencyOxygenTankFilled
-    belt: ClothingBeltUtilityFilled
+    pocket1: EnergySword
+    belt: ClothingBeltChiefEngineerFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackDuffelSyndicateAmmo
   duffelbag: ClothingBackpackDuffelSyndicateAmmo
@@ -179,17 +164,29 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBrown
     back: ClothingBackpackDuffelCBURN
-    mask: ClothingMaskGas
+    mask: ClothingMaskGasExplorer
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetAltCommand
-    gloves: ClothingHandsGlovesFingerless
+    gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitCBURN
-    shoes: ClothingShoesBootsJack
+    shoes: ClothingShoesBootsCombatFilled
     id: CBURNPDA
-    pocket1: CombatKnife
+    pocket1: RadioHandheld
     pocket2: WeaponLaserGun
     suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier
   innerclothingskirt: ClothingUniformJumpsuitColorBrown
   satchel: ClothingBackpackDuffelCBURN
   duffelbag: ClothingBackpackDuffelCBURN
+
+- type: startingGear
+  id: BoxingKangarooGear
+  equipment:
+    gloves: ClothingHandsGlovesBoxingBlue
+
+- type: startingGear
+  id: MobMonkeyGear
+  equipment:
+    head: ClothingHeadHatTophat
+    jumpsuit: ClothingUniformJumpsuitJacketMonkey
+    id: BartenderIDCard

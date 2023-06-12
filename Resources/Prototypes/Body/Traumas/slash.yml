@@ -1,9 +1,0 @@
-﻿- type: trauma # TODO wounds before merge
-  id: Slash
-  wounds:
-    1: Bruise
-    5: Scrape
-    10: Abrasion
-    20: Cut
-    30: Laceration
-    50: Avulsion

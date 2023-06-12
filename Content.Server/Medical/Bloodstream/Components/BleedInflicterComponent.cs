@@ -7,6 +7,6 @@ namespace Content.Server.Medical.Bloodstream.Components;
 public sealed class BleedInflicterComponent : Component
 {
     //How much bloodloss to apply
-    [DataField("bloodLoss", required: true)]
-    public FixedPoint2 BloodLoss;
+    [DataField("bloodloss", required: true)]
+    public FixedPoint2 Bloodloss;
 }

@@ -11,6 +11,7 @@
     noRot: true
     layers:
     - state: generic
+      map: ["enum.StorageVisualLayers.Base"]
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
@@ -21,6 +22,12 @@
       map: ["enum.WeldableLayers.BaseWelded"]
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50

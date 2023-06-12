@@ -121,5 +121,8 @@ public sealed class SlipAttemptEvent : CancellableEntityEventArgs, IInventoryRel
     public SlotFlags TargetSlots { get; } = SlotFlags.FEET;
 }
 
+/// <summary>
+///     This event is raised directed at an entity that CAUSED some other entity to slip (e.g., the banana peel).
+/// </summary>
 [ByRefEvent]
 public readonly record struct SlipEvent(EntityUid Slipped);

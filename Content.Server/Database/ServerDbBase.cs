@@ -12,7 +12,6 @@ using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
@@ -69,23 +68,26 @@ namespace Content.Server.Database
                 throw new NotImplementedException();
             }
 
-            var entity = ConvertProfiles(humanoid, slot);
+            var oldProfile = db.DbContext.Profile
+                .Include(p => p.Preference)
+                .Where(p => p.Preference.UserId == userId.UserId)
+                .Include(p => p.Jobs)
+                .Include(p => p.Antags)
+                .Include(p => p.Traits)
+                .AsSplitQuery()
+                .SingleOrDefault(h => h.Slot == slot);
 
-            var prefs = await db.DbContext
-                .Preference
-                .Include(p => p.Profiles)
-                .SingleAsync(p => p.UserId == userId.UserId);
-
-            var oldProfile = prefs
-                .Profiles
-                .SingleOrDefault(h => h.Slot == entity.Slot);
-
-            if (oldProfile is not null)
+            var newProfile = ConvertProfiles(humanoid, slot, oldProfile);
+            if (oldProfile == null)
             {
-                prefs.Profiles.Remove(oldProfile);
+                var prefs = await db.DbContext
+                    .Preference
+                    .Include(p => p.Profiles)
+                    .SingleAsync(p => p.UserId == userId.UserId);
+
+                prefs.Profiles.Add(newProfile);
             }
 
-            prefs.Profiles.Add(entity);
             await db.DbContext.SaveChangesAsync();
         }
 
@@ -217,8 +219,9 @@ namespace Content.Server.Database
             );
         }
 
-        private static Profile ConvertProfiles(HumanoidCharacterProfile humanoid, int slot)
+        private static Profile ConvertProfiles(HumanoidCharacterProfile humanoid, int slot, Profile? profile = null)
         {
+            profile ??= new Profile();
             var appearance = (HumanoidCharacterAppearance) humanoid.CharacterAppearance;
             List<string> markingStrings = new();
             foreach (var marking in appearance.Markings)
@@ -227,41 +230,44 @@ namespace Content.Server.Database
             }
             var markings = JsonSerializer.SerializeToDocument(markingStrings);
 
-            var entity = new Profile
-            {
-                CharacterName = humanoid.Name,
-                FlavorText = humanoid.FlavorText,
-                Species = humanoid.Species,
-                Age = humanoid.Age,
-                Sex = humanoid.Sex.ToString(),
-                Gender = humanoid.Gender.ToString(),
-                HairName = appearance.HairStyleId,
-                HairColor = appearance.HairColor.ToHex(),
-                FacialHairName = appearance.FacialHairStyleId,
-                FacialHairColor = appearance.FacialHairColor.ToHex(),
-                EyeColor = appearance.EyeColor.ToHex(),
-                SkinColor = appearance.SkinColor.ToHex(),
-                Clothing = humanoid.Clothing.ToString(),
-                Backpack = humanoid.Backpack.ToString(),
-                Markings = markings,
-                Slot = slot,
-                PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable
-            };
-            entity.Jobs.AddRange(
+            profile.CharacterName = humanoid.Name;
+            profile.FlavorText = humanoid.FlavorText;
+            profile.Species = humanoid.Species;
+            profile.Age = humanoid.Age;
+            profile.Sex = humanoid.Sex.ToString();
+            profile.Gender = humanoid.Gender.ToString();
+            profile.HairName = appearance.HairStyleId;
+            profile.HairColor = appearance.HairColor.ToHex();
+            profile.FacialHairName = appearance.FacialHairStyleId;
+            profile.FacialHairColor = appearance.FacialHairColor.ToHex();
+            profile.EyeColor = appearance.EyeColor.ToHex();
+            profile.SkinColor = appearance.SkinColor.ToHex();
+            profile.Clothing = humanoid.Clothing.ToString();
+            profile.Backpack = humanoid.Backpack.ToString();
+            profile.Markings = markings;
+            profile.Slot = slot;
+            profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
+
+            profile.Jobs.Clear();
+            profile.Jobs.AddRange(
                 humanoid.JobPriorities
                     .Where(j => j.Value != JobPriority.Never)
                     .Select(j => new Job {JobName = j.Key, Priority = (DbJobPriority) j.Value})
             );
-            entity.Antags.AddRange(
+
+            profile.Antags.Clear();
+            profile.Antags.AddRange(
                 humanoid.AntagPreferences
                     .Select(a => new Antag {AntagName = a})
             );
-            entity.Traits.AddRange(
+
+            profile.Traits.Clear();
+            profile.Traits.AddRange(
                 humanoid.TraitPreferences
                         .Select(t => new Trait {TraitName = t})
             );
 
-            return entity;
+            return profile;
         }
         #endregion
 
@@ -332,6 +338,52 @@ namespace Content.Server.Database
 
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
         public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);
+
+        protected static async Task<ServerBanExemptFlags?> GetBanExemptionCore(DbGuard db, NetUserId? userId)
+        {
+            if (userId == null)
+                return null;
+
+            var exemption = await db.DbContext.BanExemption
+                .SingleOrDefaultAsync(e => e.UserId == userId.Value.UserId);
+
+            return exemption?.Flags;
+        }
+
+        public async Task UpdateBanExemption(NetUserId userId, ServerBanExemptFlags flags)
+        {
+            await using var db = await GetDb();
+
+            if (flags == 0)
+            {
+                // Delete whatever is there.
+                await db.DbContext.BanExemption.Where(u => u.UserId == userId.UserId).ExecuteDeleteAsync();
+                return;
+            }
+
+            var exemption = await db.DbContext.BanExemption.SingleOrDefaultAsync(u => u.UserId == userId.UserId);
+            if (exemption == null)
+            {
+                exemption = new ServerBanExemption
+                {
+                    UserId = userId
+                };
+
+                db.DbContext.BanExemption.Add(exemption);
+            }
+
+            exemption.Flags = flags;
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<ServerBanExemptFlags> GetBanExemption(NetUserId userId)
+        {
+            await using var db = await GetDb();
+
+            var flags = await GetBanExemptionCore(db, userId);
+            return flags ?? ServerBanExemptFlags.None;
+        }
+
         #endregion
 
         #region Role Bans
@@ -617,23 +669,16 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var round = await db.DbContext.Round
-                .Include(round => round.Players)
-                .SingleAsync(round => round.Id == id);
-
-            var players = await db.DbContext.Player
+            // ReSharper disable once SuggestVarOrType_Elsewhere
+            Dictionary<Guid, int> players = await db.DbContext.Player
                 .Where(player => playerIds.Contains(player.UserId))
-                .ToListAsync();
+                .ToDictionaryAsync(player => player.UserId, player => player.Id);
 
-            var playerSet = new HashSet<Guid>(round.Players.Select(player => player.UserId));
-            foreach (var player in players)
+            foreach (var player in playerIds)
             {
-                if (playerSet.Contains(player.UserId))
-                {
-                    continue;
-                }
-
-                round.Players.Add(player);
+                await db.DbContext.Database.ExecuteSqlAsync($"""
+INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}) ON CONFLICT DO NOTHING
+""");
             }
 
             await db.DbContext.SaveChangesAsync();
@@ -678,30 +723,14 @@ namespace Content.Server.Database
             return (server, false);
         }
 
-        public virtual async Task AddAdminLogs(List<QueuedLog> logs)
+        public async Task AddAdminLogs(List<AdminLog> logs)
         {
             await using var db = await GetDb();
-
-            var entities = new Dictionary<int, AdminLogEntity>();
-
-            foreach (var (log, entityData) in logs)
-            {
-                var logEntities = new List<AdminLogEntity>(entityData.Count);
-                foreach (var (id, name) in entityData)
-                {
-                    var entity = entities.GetOrNew(id);
-                    entity.Name = name;
-                    logEntities.Add(entity);
-                }
-
-                log.Entities = logEntities;
-                db.DbContext.AdminLog.Add(log);
-            }
-
+            db.DbContext.AdminLog.AddRange(logs);
             await db.DbContext.SaveChangesAsync();
         }
 
-        private async Task<IQueryable<AdminLog>> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        private static IQueryable<AdminLog> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
             IQueryable<AdminLog> query = db.AdminLog;
 
@@ -765,8 +794,8 @@ namespace Content.Server.Database
             {
                 query = filter.DateOrder switch
                 {
-                    DateOrder.Ascending => query.Where(log => log.Id < filter.LastLogId),
-                    DateOrder.Descending => query.Where(log => log.Id > filter.LastLogId),
+                    DateOrder.Ascending => query.Where(log => log.Id > filter.LastLogId),
+                    DateOrder.Descending => query.Where(log => log.Id < filter.LastLogId),
                     _ => throw new ArgumentOutOfRangeException(nameof(filter),
                         $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
                 };
@@ -796,7 +825,7 @@ namespace Content.Server.Database
         public async IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = await GetAdminLogsQuery(db.DbContext, filter);
+            var query = GetAdminLogsQuery(db.DbContext, filter);
 
             await foreach (var log in query.Select(log => log.Message).AsAsyncEnumerable())
             {
@@ -807,7 +836,7 @@ namespace Content.Server.Database
         public async IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = await GetAdminLogsQuery(db.DbContext, filter);
+            var query = GetAdminLogsQuery(db.DbContext, filter);
             query = query.Include(log => log.Players);
 
             await foreach (var log in query.AsAsyncEnumerable())
@@ -825,12 +854,18 @@ namespace Content.Server.Database
         public async IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = await GetAdminLogsQuery(db.DbContext, filter);
+            var query = GetAdminLogsQuery(db.DbContext, filter);
 
             await foreach (var json in query.Select(log => log.Json).AsAsyncEnumerable())
             {
                 yield return json;
             }
+        }
+
+        public async Task<int> CountAdminLogs(int round)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.AdminLog.CountAsync(log => log.RoundId == round);
         }
 
         #endregion
@@ -985,6 +1020,5 @@ namespace Content.Server.Database
 
             public abstract ValueTask DisposeAsync();
         }
-
     }
 }

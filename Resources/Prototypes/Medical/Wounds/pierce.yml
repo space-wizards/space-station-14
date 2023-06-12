@@ -1,10 +1,4 @@
-﻿- type: trauma
-  id: Pierce
-  wounds:
-    10: DeepBruise
-    30: MinorBreakage
-    50: OpenPuncture
-    100: RupturedCavity
+﻿
 
 - type: entity
   id: DeepBruise

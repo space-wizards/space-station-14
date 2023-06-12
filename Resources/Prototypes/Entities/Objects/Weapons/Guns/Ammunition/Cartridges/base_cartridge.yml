@@ -6,10 +6,20 @@
   - type: Sprite
     drawdepth: Items
     netsync: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.05,0.10,0.05"
+        density: 20
+        mask:
+          - ItemMask
+        restitution: 0.3  # fite me
+        friction: 0.2
   - type: Tag
     tags:
     - Cartridge
   - type: Item
     size: 1
-  - type: Recyclable
   - type: SpaceGarbage

@@ -1,48 +1,55 @@
-﻿- type: gameMap
+- type: gameMap
   id: Origin
   mapName: 'Origin'
   mapPath: /Maps/origin.yml
   minPlayers: 50
   stations:
     Origin:
-      mapNameTemplate: '{0} Origin {1}'
-      emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
-      nameGenerator:
-        !type:NanotrasenNameGenerator
-        prefixCreator: '14'
-      overflowJobs:
-        - Passenger
-      availableJobs:
-        CargoTechnician: [ 5, 5 ]
-        Passenger: [ -1, -1 ]
-        Bartender: [ 3, 3 ]
-        Botanist: [ 3, 3 ]
-        Chef: [ 3, 3 ]
-        Clown: [ 1, 1 ]
-        Janitor: [ 3, 3 ]
-        Mime: [ 1, 1 ]
-        Captain: [ 1, 1 ]
-        HeadOfPersonnel: [ 1, 1 ]
-        ChiefEngineer: [ 1, 1 ]
-        StationEngineer: [ 5, 5 ]
-        ChiefMedicalOfficer: [ 1, 1 ]
-        MedicalDoctor: [ 5, 5 ]
-        Chemist: [ 2, 3 ]
-        ResearchDirector: [ 1, 1 ]
-        Scientist: [ 5, 5 ]
-        HeadOfSecurity: [ 1, 1 ]
-        SecurityOfficer: [ 6, 6 ]
-        Chaplain: [ 2, 2 ]
-        Warden: [ 1, 1 ]
-        Librarian: [ 2, 2 ]
-        Lawyer: [ 2, 2 ]
-        Quartermaster: [ 1, 1 ]
-        SalvageSpecialist: [ 3, 3 ]
-        Musician: [ 2, 2 ]
-        AtmosphericTechnician: [ 3, 3 ]
-        TechnicalAssistant: [ 2, 2 ]
-        MedicalIntern: [ 2, 2 ]
-        ServiceWorker: [ 4, 4 ]
-        SecurityCadet: [ 3, 3 ]
-        Detective: [ 1, 1 ]
-        ResearchAssistant: [ 2, 2]
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Origin {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
+        - type: StationJobs
+          overflowJobs:
+            - Passenger
+          availableJobs:
+            CargoTechnician: [ 5, 5 ]
+            Passenger: [ -1, -1 ]
+            Bartender: [ 3, 3 ]
+            Botanist: [ 3, 3 ]
+            Chef: [ 3, 3 ]
+            Clown: [ 1, 1 ]
+            Janitor: [ 3, 3 ]
+            Mime: [ 1, 1 ]
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            ChiefEngineer: [ 1, 1 ]
+            StationEngineer: [ 5, 5 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            MedicalDoctor: [ 5, 5 ]
+            Chemist: [ 2, 3 ]
+            ResearchDirector: [ 1, 1 ]
+            Scientist: [ 5, 5 ]
+            HeadOfSecurity: [ 1, 1 ]
+            SecurityOfficer: [ 6, 6 ]
+            Chaplain: [ 2, 2 ]
+            Warden: [ 1, 1 ]
+            Librarian: [ 2, 2 ]
+            Lawyer: [ 2, 2 ]
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 3, 3 ]
+            Musician: [ 2, 2 ]
+            AtmosphericTechnician: [ 3, 3 ]
+            TechnicalAssistant: [ 2, 2 ]
+            MedicalIntern: [ 2, 2 ]
+            ServiceWorker: [ 4, 4 ]
+            SecurityCadet: [ 3, 3 ]
+            Detective: [ 1, 1 ]
+            ResearchAssistant: [ 2, 2]
+            Boxer: [ 1, 1]
+            Paramedic: [ 1, 1]

@@ -1,0 +1,7 @@
+﻿- type: trauma
+  id: Slash
+  wounds:
+    10: Welt
+    30: RoughAbrasion
+    50: OpenLaceration
+    100: WeepingAvulsion

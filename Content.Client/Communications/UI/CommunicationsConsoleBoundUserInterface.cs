@@ -1,10 +1,6 @@
-﻿using System;
-using Content.Shared.Communications;
+﻿using Content.Shared.Communications;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Communications.UI
 {
@@ -59,8 +55,22 @@ namespace Content.Client.Communications.UI
 
         public void AnnounceButtonPressed(string message)
         {
-            var msg = message.Length <= 256 ? message.Trim() : $"{message.Trim().Substring(0, 256)}...";
-            SendMessage(new CommunicationsConsoleAnnounceMessage(msg));
+            var msg = (message.Length <= 256 ? message.Trim() : $"{message.Trim().Substring(0, 256)}...").ToCharArray();
+
+            // No more than 2 newlines, other replaced to spaces
+            var newlines = 0;
+            for (var i = 0; i < msg.Length; i++)
+            {
+                if (msg[i] != '\n')
+                    continue;
+
+                if (newlines >= 2)
+                    msg[i] = ' ';
+
+                newlines++;
+            }
+
+            SendMessage(new CommunicationsConsoleAnnounceMessage(new string(msg)));
         }
 
         public void CallShuttle()

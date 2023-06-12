@@ -44,17 +44,14 @@ public sealed class StationRecordsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialize);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
-    }
-
-    private void OnStationInitialize(StationInitializedEvent args)
-    {
-        AddComp<StationRecordsComponent>(args.Station);
     }
 
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
     {
+        if (!HasComp<StationRecordsComponent>(args.Station))
+            return;
+
         CreateGeneralRecord(args.Station, args.Mob, args.Profile, args.JobId);
     }
 
@@ -74,8 +71,9 @@ public sealed class StationRecordsSystem : EntitySystem
         }
 
         TryComp<FingerprintComponent>(player, out var fingerprintComponent);
+        TryComp<DnaComponent>(player, out var dnaComponent);
 
-        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, fingerprintComponent?.Fingerprint, profile, records);
+        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, fingerprintComponent?.Fingerprint, dnaComponent?.DNA, profile, records);
     }
 
 
@@ -97,13 +95,16 @@ public sealed class StationRecordsSystem : EntitySystem
     ///     this call will cause an exception. Ensure that a general record starts out with a job
     ///     that is currently a valid job prototype.
     /// </param>
+    /// <param name="mobFingerprint">Fingerprint of the character.</param>
+    /// <param name="dna">DNA of the character.</param>
+    ///
     /// <param name="profile">
     ///     Profile for the related player. This is so that other systems can get further information
     ///     about the player character.
     ///     Optional - other systems should anticipate this.
     /// </param>
     /// <param name="records">Station records component.</param>
-    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string jobId, string? mobFingerprint, HumanoidCharacterProfile? profile = null,
+    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string jobId, string? mobFingerprint, string? dna, HumanoidCharacterProfile? profile = null,
         StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records))
@@ -126,7 +127,8 @@ public sealed class StationRecordsSystem : EntitySystem
             Species = species,
             Gender = gender,
             DisplayPriority = jobPrototype.Weight,
-            Fingerprint = mobFingerprint
+            Fingerprint = mobFingerprint,
+            DNA = dna
         };
 
         var key = AddRecord(station, records);

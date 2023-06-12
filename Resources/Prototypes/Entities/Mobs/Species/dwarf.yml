@@ -23,8 +23,36 @@
     drawdepth: Mobs
     scale: 1, 0.8
   - type: Body
-    prototype: Human
+    prototype: Dwarf
     requiredLegs: 2
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatHuman
+      amount: 5
+  - type: Fixtures
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        # they r smaller
+        density: 120
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Vocal
+    sounds:
+      Male: UnisexDwarf
+      Female: UnisexDwarf
+      Unsexed: UnisexDwarf
+  - type: ReplacementAccent
+    accent: dwarf
+  - type: Speech
+    speechSounds: Bass
+  - type: Perishable
 
 - type: entity
   save: false

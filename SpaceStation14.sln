@@ -56,6 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{5040
 		RobustToolbox\MSBuild\Robust.Trimming.targets = RobustToolbox\MSBuild\Robust.Trimming.targets
 		RobustToolbox\MSBuild\Robust.Platform.props = RobustToolbox\MSBuild\Robust.Platform.props
 		RobustToolbox\MSBuild\Robust.Configurations.props = RobustToolbox\MSBuild\Robust.Configurations.props
+		RobustToolbox\MSBuild\Robust.CompNetworkGenerator.targets = RobustToolbox\MSBuild\Robust.CompNetworkGenerator.targets
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{806ED41A-411B-4B3B-BEB6-DEC6DCA4C205}"
@@ -119,6 +120,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Files", "Project Fi
 		RobustToolbox\README.md = RobustToolbox\README.md
 		RobustToolbox\RELEASE-NOTES.md = RobustToolbox\RELEASE-NOTES.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Shared.CompNetworkGenerator", "RobustToolbox\Robust.Shared.CompNetworkGenerator\Robust.Shared.CompNetworkGenerator.csproj", "{07CA34A1-1D37-4771-A2E3-495A1044AE0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -399,6 +402,14 @@ Global
 		{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}.DebugOpt|Any CPU.Build.0 = DebugOpt|Any CPU
 		{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
 		{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}.Tools|Any CPU.Build.0 = Tools|Any CPU
+		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.DebugOpt|Any CPU.ActiveCfg = DebugOpt|Any CPU
+		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.DebugOpt|Any CPU.Build.0 = DebugOpt|Any CPU
+		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
+		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Tools|Any CPU.Build.0 = Tools|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -428,6 +439,7 @@ Global
 		{8A21C7CA-2EB8-40E5-8043-33582C06D139} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{952AAF2A-DF63-4A7D-8094-3453893EBA80} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{A965CB3B-FD31-44AF-8872-85ABA436098D} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
+		{07CA34A1-1D37-4771-A2E3-495A1044AE0B} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA37ED9F-F8D6-468E-A101-658AD605B09A}

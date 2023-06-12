@@ -92,13 +92,13 @@ public sealed partial class NPCSteeringSystem
         // This is to avoid popping it too early
         else if (steering.CurrentPath.TryPeek(out var node) && node.Data.IsFreeSpace)
         {
-            arrivalDistance = MathF.Min(node.Box.Width, node.Box.Height) - 0.01f;
+            arrivalDistance = MathF.Min(node.Box.Width / 2f, node.Box.Height / 2f) - 0.01f;
         }
         // Try getting into blocked range I guess?
         // TODO: Consider melee range or the likes.
         else
         {
-            arrivalDistance = SharedInteractionSystem.InteractionRange - 0.65f;
+            arrivalDistance = SharedInteractionSystem.InteractionRange - 0.05f;
         }
 
         // Check if mapids match.
@@ -126,6 +126,12 @@ public sealed partial class NPCSteeringSystem
                 // Breaking behaviours and the likes.
                 lock (_obstacles)
                 {
+                    // We're still coming to a stop so wait for the do_after.
+                    if (body.LinearVelocity.LengthSquared > 0.01f)
+                    {
+                        return true;
+                    }
+
                     status = TryHandleFlags(uid, steering, node, bodyQuery);
                 }
 
@@ -133,8 +139,10 @@ public sealed partial class NPCSteeringSystem
                 switch (status)
                 {
                     case SteeringObstacleStatus.Completed:
+                        steering.DoAfterId = null;
                         break;
                     case SteeringObstacleStatus.Failed:
+                        steering.DoAfterId = null;
                         // TODO: Blacklist the poly for next query
                         steering.Status = SteeringStatus.NoPath;
                         return false;
@@ -447,7 +455,7 @@ public sealed partial class NPCSteeringSystem
         EntityQuery<PhysicsComponent> bodyQuery,
         EntityQuery<TransformComponent> xformQuery)
     {
-        var detectionRadius = agentRadius + 0.1f;
+        var detectionRadius = MathF.Max(0.35f, agentRadius + 0.1f);
         var ourVelocity = body.LinearVelocity;
         var factionQuery = GetEntityQuery<FactionComponent>();
         factionQuery.TryGetComponent(uid, out var ourFaction);
@@ -462,7 +470,7 @@ public sealed partial class NPCSteeringSystem
                 (mask & otherBody.CollisionLayer) == 0x0 &&
                 (layer & otherBody.CollisionMask) == 0x0 ||
                 !factionQuery.TryGetComponent(ent, out var otherFaction) ||
-                !_faction.IsFriendly(uid, ent, ourFaction, otherFaction) ||
+                !_faction.IsEntityFriendly(uid, ent, ourFaction, otherFaction) ||
                 // Use <= 0 so we ignore stationary friends in case.
                 Vector2.Dot(otherBody.LinearVelocity, ourVelocity) <= 0f)
             {

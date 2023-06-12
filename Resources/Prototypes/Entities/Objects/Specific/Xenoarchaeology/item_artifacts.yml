@@ -7,7 +7,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
-    netsync: false
     layers:
     - state: ano01
       map: [ "enum.ArtifactsVisualLayers.Base" ]
@@ -22,16 +21,17 @@
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.25,0.25,0.25"
-      density: 20
-      mask:
-      - ItemMask
-      layer:
-      - Opaque
-      restitution: 0.3  # fite me
-      friction: 0.2
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        layer:
+        - Opaque
+        restitution: 0.3  # fite me
+        friction: 0.2
   - type: Artifact
   - type: RandomArtifactSprite
     maxSprite: 11
@@ -49,8 +49,6 @@
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
   - type: Appearance
-  - type: StaticPrice
-    price: 500
   - type: Item
     size: 40
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi

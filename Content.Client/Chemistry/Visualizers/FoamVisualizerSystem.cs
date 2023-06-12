@@ -1,6 +1,9 @@
-﻿using Content.Shared.Foam;
+﻿using Content.Shared.Smoking;
+using Content.Shared.Spawners.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Chemistry.Visualizers;
 
@@ -9,10 +12,35 @@ namespace Content.Client.Chemistry.Visualizers;
 /// </summary>
 public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent>
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<FoamVisualsComponent, ComponentInit>(OnComponentInit);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
+        var query = EntityQueryEnumerator<FoamVisualsComponent, TimedDespawnComponent>();
+
+        while (query.MoveNext(out var uid, out var comp, out var despawn))
+        {
+            if (despawn.Lifetime > 1f)
+                continue;
+
+            // Despawn animation.
+            if (TryComp(uid, out AnimationPlayerComponent? animPlayer)
+                && !AnimationSystem.HasRunningAnimation(uid, animPlayer, FoamVisualsComponent.AnimationKey))
+            {
+                AnimationSystem.Play(uid, animPlayer, comp.Animation, FoamVisualsComponent.AnimationKey);
+            }
+        }
     }
 
     /// <summary>
@@ -20,12 +48,12 @@ public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent
     /// </summary>
     private void OnComponentInit(EntityUid uid, FoamVisualsComponent comp, ComponentInit args)
     {
-        comp.Animation = new Animation()
+        comp.Animation = new Animation
         {
             Length = TimeSpan.FromSeconds(comp.AnimationTime),
             AnimationTracks =
             {
-                new AnimationTrackSpriteFlick()
+                new AnimationTrackSpriteFlick
                 {
                     LayerKey = FoamVisualLayers.Base,
                     KeyFrames =
@@ -35,25 +63,6 @@ public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent
                 }
             }
         };
-    }
-
-    /// <summary>
-    /// Plays the animation used by foam visuals when the foam dissolves.
-    /// </summary>
-    protected override void OnAppearanceChange(EntityUid uid, FoamVisualsComponent comp, ref AppearanceChangeEvent args)
-    {
-        if (AppearanceSystem.TryGetData<bool>(uid, FoamVisuals.State, out var state, args.Component) && state)
-        {
-            if (TryComp(uid, out AnimationPlayerComponent? animPlayer)
-            && !AnimationSystem.HasRunningAnimation(uid, animPlayer, FoamVisualsComponent.AnimationKey))
-                AnimationSystem.Play(uid, animPlayer, comp.Animation, FoamVisualsComponent.AnimationKey);
-        }
-
-        if (AppearanceSystem.TryGetData<Color>(uid, FoamVisuals.Color, out var color, args.Component))
-        {
-            if (args.Sprite != null)
-                args.Sprite.Color = color;
-        }
     }
 }
 
