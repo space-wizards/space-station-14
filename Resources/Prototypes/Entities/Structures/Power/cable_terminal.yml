@@ -8,7 +8,6 @@
     - type: Sprite
       sprite: Structures/Power/cable_terminal.rsi
       state: term
-      netsync: false
       drawdepth: BelowFloor
     - type: Clickable
     - type: InteractionOutline

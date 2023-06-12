@@ -12,7 +12,6 @@
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -78,7 +77,6 @@
       - salty
   - type: Sprite
     state: fries-carrot
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
