@@ -77,6 +77,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatBeretMerc
+  name: mercenary beret
+  description: Olive beret, the badge depicts a jackal on a rock.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_merc.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_merc.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBowlerHat
   name: bowler hat
   description: Stylish bowler hat.
@@ -586,3 +597,34 @@
     sprite: Clothing/Head/Hats/hetman_hat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/hetman_hat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatMagician
+  name: magician's top hat.
+  description: "A magician's top hat."
+  components:
+  - type: Icon
+    sprite: Clothing/Head/Hats/magician.rsi
+    state: "icon"
+  - type: Sprite
+    state: "icon"
+    sprite: Clothing/Head/Hats/magician.rsi
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.12"
+    sprite: Clothing/Head/Hats/magician.rsi
+  - type: Item
+    size: 10
+    sprite: Clothing/Head/Hats/magician.rsi
+  - type: Storage
+    capacity: 10
+  - type: UserInterface
+    interfaces:
+      - key: enum.StorageUiKey.Key
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
