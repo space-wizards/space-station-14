@@ -1,0 +1,41 @@
+- type: decal
+  id: SuitSign1
+  tags: ["station"]
+  sprite:
+    sprite: Decals/suitsign.rsi
+    state: suitsign1
+
+- type: decal
+  id: SuitSign2
+  tags: ["station"]
+  sprite:
+    sprite: Decals/suitsign.rsi
+    state: suitsign2
+
+- type: decal
+  id: SuitSign3
+  tags: ["station"]
+  sprite:
+    sprite: Decals/suitsign.rsi
+    state: suitsign3
+
+- type: decal
+  id: SuitSign4
+  tags: ["station"]
+  sprite:
+    sprite: Decals/suitsign.rsi
+    state: suitsign4
+
+- type: decal
+  id: SuitSign5
+  tags: ["station"]
+  sprite:
+    sprite: Decals/suitsign.rsi
+    state: suitsign5
+
+- type: decal
+  id: SuitSign6
+  tags: ["station"]
+  sprite:
+    sprite: Decals/suitsign.rsi
+    state: suitsign6
