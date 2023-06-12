@@ -175,7 +175,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 6 # encourage powergamers to use regular crowbars so emergency toolboxes still have them
+        Blunt: 8
         Structural: 3
 
 - type: entity
