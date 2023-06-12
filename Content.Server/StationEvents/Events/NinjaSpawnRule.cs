@@ -25,7 +25,7 @@ public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
         if (!TryGetRandomStation(out var station))
             return;
 
-        var stationData = Comp<StationDataComponent>(station);
+        var stationData = Comp<StationDataComponent>(station.Value);
 
         // find a station grid
         var gridUid = StationSystem.GetLargestGrid(stationData);
