@@ -49,7 +49,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         SubscribeLocalEvent<ImmovableRodComponent, ExaminedEvent>(OnExamined);
     }
 
-    public void SpawnAndLaunch(string prototype, EntityCoordinates coordinates, Vector2 direction)
+    public EntityUid SpawnAndLaunch(string prototype, MapCoordinates coordinates, Vector2 direction)
     {
         var uid = Spawn(prototype, coordinates);
 
@@ -63,6 +63,8 @@ public sealed class ImmovableRodSystem : EntitySystem
 
             _gun.ShootProjectile(uid, direction, Vector2.Zero, uid, speed: speed);
         }
+
+        return uid;
     }
 
     private void OnCollide(EntityUid uid, ImmovableRodComponent component, ref StartCollideEvent args)
