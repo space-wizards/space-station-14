@@ -29535,13 +29535,6 @@ entities:
     - pos: 43.576782,13.655371
       parent: 31
       type: Transform
-- proto: ClothingHandsGlovesIhscombat
-  entities:
-  - uid: 8996
-    components:
-    - pos: 9.438957,-32.4091
-      parent: 31
-      type: Transform
 - proto: ClothingHandsGlovesLatex
   entities:
   - uid: 7102
@@ -34055,19 +34048,21 @@ entities:
       type: Transform
     - name: library
       type: FaxMachine
-  - uid: 9686
-    components:
-    - pos: 7.5,24.5
-      parent: 31
-      type: Transform
-    - name: captain's office
-      type: FaxMachine
   - uid: 9687
     components:
     - pos: 8.5,18.5
       parent: 31
       type: Transform
     - name: hop's office
+      type: FaxMachine
+- proto: FaxMachineCaptain
+  entities:
+  - uid: 9686
+    components:
+    - pos: 7.5,24.5
+      parent: 31
+      type: Transform
+    - name: captain's office
       type: FaxMachine
 - proto: FigureSpawner
   entities:

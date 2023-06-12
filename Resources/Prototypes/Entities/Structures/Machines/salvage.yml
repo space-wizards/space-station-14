@@ -5,7 +5,6 @@
   description: "Pulls in salvage."
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/salvage.rsi
     layers:
       - state: salvage-magnet

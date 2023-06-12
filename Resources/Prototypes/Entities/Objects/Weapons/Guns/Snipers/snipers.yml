@@ -6,7 +6,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]

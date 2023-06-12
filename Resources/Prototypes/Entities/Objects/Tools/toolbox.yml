@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/toolbox_drop.ogg

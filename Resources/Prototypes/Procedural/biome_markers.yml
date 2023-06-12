@@ -10,7 +10,7 @@
 
 - type: biomeMarkerLayer
   id: Carps
-  proto: MobCarp
+  proto: MobCarpDungeon
 
 
 #- type: biomeMarkerLayer

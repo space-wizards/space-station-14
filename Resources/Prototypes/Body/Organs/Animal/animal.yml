@@ -5,7 +5,6 @@
   components:
   - type: Organ
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Human/organs.rsi
   - type: StaticPrice
     price: 50

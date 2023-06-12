@@ -25,12 +25,6 @@ namespace Content.Server.Stunnable
 
             if (EntityManager.TryGetComponent<StatusEffectsComponent>(target, out var status))
             {
-                StandingStateComponent? standingState = null;
-                AppearanceComponent? appearance = null;
-
-                // Let the actual methods log errors for these.
-                Resolve(target, ref standingState, ref appearance, false);
-
                 _stunSystem.TryStun(target, TimeSpan.FromSeconds(component.StunAmount), true, status);
 
                 _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(component.KnockdownAmount), true,
