@@ -42,7 +42,7 @@
         Emotes = ChatChannel.Emotes,
 
         /// <summary>
-        ///     Telepathic
+        ///     CollectiveMind
         /// </summary>
         CollectiveMind = ChatChannel.CollectiveMind,
 
