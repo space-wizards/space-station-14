@@ -131,7 +131,6 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite
-      netsync: false
       sprite: Structures/conveyor.rsi
       layers:
         - state: switch-off

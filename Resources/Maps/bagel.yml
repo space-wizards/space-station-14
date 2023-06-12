@@ -13147,8 +13147,6 @@ entities:
     - pos: 24.428608,14.675939
       parent: 60
       type: Transform
-    - nextSound: 234.7810822
-      type: EmitSoundOnCollide
 - proto: APCBasic
   entities:
   - uid: 283
@@ -14098,8 +14096,6 @@ entities:
       type: Transform
     - nextAttack: 161.0343576
       type: MeleeWeapon
-    - nextSound: 161.2343576
-      type: EmitSoundOnCollide
 - proto: Bed
   entities:
   - uid: 181
@@ -14371,8 +14367,6 @@ entities:
     - pos: 29.5,-20.5
       parent: 60
       type: Transform
-    - nextSound: 291.2155438
-      type: EmitSoundOnCollide
   - uid: 5675
     components:
     - pos: 41.5,-19.5
@@ -15440,8 +15434,6 @@ entities:
     - pos: -28.662039,2.7893302
       parent: 60
       type: Transform
-    - nextSound: 1119.4952097
-      type: EmitSoundOnCollide
 - proto: BoxMouthSwab
   entities:
   - uid: 8886
@@ -72252,8 +72244,6 @@ entities:
     - pos: 45.485657,-24.447033
       parent: 60
       type: Transform
-    - nextSound: 562.7445825
-      type: EmitSoundOnCollide
 - proto: chem_master
   entities:
   - uid: 2626
@@ -72386,8 +72376,6 @@ entities:
     - pos: 20.412983,18.644688
       parent: 60
       type: Transform
-    - nextSound: 249.7324275
-      type: EmitSoundOnCollide
 - proto: ClosetBase
   entities:
   - uid: 3502
@@ -75155,8 +75143,6 @@ entities:
     - pos: 22.039051,-11.200508
       parent: 60
       type: Transform
-    - nextSound: 2312.1736175
-      type: EmitSoundOnCollide
 - proto: ClothingMaskSexyMime
   entities:
   - uid: 4261
@@ -75164,8 +75150,6 @@ entities:
     - pos: 27.273426,-11.294258
       parent: 60
       type: Transform
-    - nextSound: 2306.057438
-      type: EmitSoundOnCollide
 - proto: ClothingMaskSterile
   entities:
   - uid: 6783
@@ -75334,8 +75318,6 @@ entities:
     - pos: -11.417416,-50.455223
       parent: 60
       type: Transform
-    - nextSound: 988.7793572
-      type: EmitSoundOnCollide
 - proto: ClothingOuterArmorReflective
   entities:
   - uid: 24113
@@ -77971,8 +77953,6 @@ entities:
     - pos: 22.46938,18.647226
       parent: 60
       type: Transform
-    - nextSound: 157.3438438
-      type: EmitSoundOnCollide
 - proto: CrewMonitoringServer
   entities:
   - uid: 21479
@@ -77987,8 +77967,6 @@ entities:
     - pos: 22.694233,18.490541
       parent: 60
       type: Transform
-    - nextSound: 123.4653188
-      type: EmitSoundOnCollide
 - proto: Crowbar
   entities:
   - uid: 23156
@@ -83179,8 +83157,6 @@ entities:
       type: Transform
     - nextAttack: 1228.9386562
       type: MeleeWeapon
-    - nextSound: 1229.1386562
-      type: EmitSoundOnCollide
 - proto: DrinkShotGlass
   entities:
   - uid: 6388
@@ -83724,8 +83700,6 @@ entities:
     - pos: 48.465664,-16.502686
       parent: 60
       type: Transform
-    - nextSound: 256.9484891
-      type: EmitSoundOnCollide
 - proto: Emitter
   entities:
   - uid: 15585
@@ -89251,8 +89225,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 428.4325427
-      type: EmitSoundOnCollide
   - uid: 6803
     components:
     - rot: -1.5707963267948966 rad
@@ -90550,8 +90522,6 @@ entities:
     - pos: 47.5,-13.5
       parent: 60
       type: Transform
-    - nextSound: 98.7965778
-      type: EmitSoundOnCollide
   - uid: 3129
     components:
     - pos: 45.5,-22.5
@@ -90638,8 +90608,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 436.8994075
-      type: EmitSoundOnCollide
   - uid: 6761
     components:
     - pos: -27.5,-2.5
@@ -90661,8 +90629,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 386.1321651
-      type: EmitSoundOnCollide
   - uid: 9232
     components:
     - pos: 17.5,7.5
@@ -93172,8 +93138,6 @@ entities:
       type: Transform
     - color: '#0035FCFF'
       type: AtmosPipeColor
-    - nextSound: 34.4476301
-      type: EmitSoundOnCollide
   - uid: 1657
     components:
     - pos: -25.5,-16.5
@@ -98295,8 +98259,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 384.6227894
-      type: EmitSoundOnCollide
   - uid: 6124
     components:
     - rot: -1.5707963267948966 rad
@@ -98315,8 +98277,6 @@ entities:
       type: Transform
     - color: '#0035FCFF'
       type: AtmosPipeColor
-    - nextSound: 430.9480755
-      type: EmitSoundOnCollide
   - uid: 6178
     components:
     - rot: -1.5707963267948966 rad
@@ -98987,8 +98947,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 40.0467708
-      type: EmitSoundOnCollide
   - uid: 7856
     components:
     - rot: -1.5707963267948966 rad
@@ -104086,8 +104044,6 @@ entities:
       type: AtmosPipeColor
     - enabled: True
       type: AmbientSound
-    - nextSound: 39.6163766
-      type: EmitSoundOnCollide
   - uid: 16660
     components:
     - rot: -1.5707963267948966 rad
@@ -109640,8 +109596,6 @@ entities:
       type: Transform
     - color: '#0035FCFF'
       type: AtmosPipeColor
-    - nextSound: 440.1834433
-      type: EmitSoundOnCollide
   - uid: 6120
     components:
     - rot: 1.5707963267948966 rad
@@ -109866,8 +109820,6 @@ entities:
     - pos: 48.5,-13.5
       parent: 60
       type: Transform
-    - nextSound: 104.7009975
-      type: EmitSoundOnCollide
   - uid: 9637
     components:
     - pos: -55.5,13.5
@@ -110788,8 +110740,6 @@ entities:
       type: Transform
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 37.5504514
-      type: EmitSoundOnCollide
   - uid: 16654
     components:
     - rot: 3.141592653589793 rad
@@ -111467,8 +111417,6 @@ entities:
       type: GasPressurePump
     - color: '#0035FCFF'
       type: AtmosPipeColor
-    - nextSound: 80.5242931
-      type: EmitSoundOnCollide
   - uid: 8074
     components:
     - rot: 1.5707963267948966 rad
@@ -112070,8 +112018,6 @@ entities:
       type: AmbientSound
     - color: '#0035FCFF'
       type: AtmosPipeColor
-    - nextSound: 443.681625
-      type: EmitSoundOnCollide
   - uid: 1133
     components:
     - rot: 1.5707963267948966 rad
@@ -114703,8 +114649,6 @@ entities:
       type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 445.3151107
-      type: EmitSoundOnCollide
   - uid: 9017
     components:
     - pos: -47.5,3.5
@@ -114717,8 +114661,6 @@ entities:
       type: AmbientSound
     - color: '#FF1212FF'
       type: AtmosPipeColor
-    - nextSound: 389.8275181
-      type: EmitSoundOnCollide
   - uid: 9061
     components:
     - rot: 1.5707963267948966 rad
@@ -126735,15 +126677,11 @@ entities:
     - pos: -28.427664,2.5080802
       parent: 60
       type: Transform
-    - nextSound: 1127.6619145
-      type: EmitSoundOnCollide
   - uid: 9524
     components:
     - pos: -28.427664,2.6487052
       parent: 60
       type: Transform
-    - nextSound: 1126.9302499
-      type: EmitSoundOnCollide
 - proto: MagazinePistol
   entities:
   - uid: 21335
@@ -127043,8 +126981,6 @@ entities:
     - pos: 20.506733,18.550938
       parent: 60
       type: Transform
-    - nextSound: 256.3931728
-      type: EmitSoundOnCollide
 - proto: MedicalTechFab
   entities:
   - uid: 6962
@@ -128774,8 +128710,6 @@ entities:
       type: Transform
     - nextAttack: 176.1781844
       type: MeleeWeapon
-    - nextSound: 176.3781845
-      type: EmitSoundOnCollide
   - uid: 2149
     components:
     - pos: 30.651426,-14.7669
@@ -135860,8 +135794,6 @@ entities:
       type: Transform
     - nextAttack: 996.6566437
       type: MeleeWeapon
-    - nextSound: 996.8566437
-      type: EmitSoundOnCollide
 - proto: Recycler
   entities:
   - uid: 4073
@@ -140074,8 +140006,6 @@ entities:
         - 6733
         - 6206
       type: DeviceLinkSource
-    - nextSound: 1334.562191
-      type: EmitSoundOnCollide
   - uid: 10621
     components:
     - name: Cell 4 Shutters
@@ -140093,8 +140023,6 @@ entities:
         - 7045
         - 6796
       type: DeviceLinkSource
-    - nextSound: 1293.0961918
-      type: EmitSoundOnCollide
   - uid: 10622
     components:
     - name: Medical Cell Shutters
@@ -140112,8 +140040,6 @@ entities:
         - 188
         - 148
       type: DeviceLinkSource
-    - nextSound: 1371.3112353
-      type: EmitSoundOnCollide
   - uid: 11098
     components:
     - name: Cell 1 Shutters
@@ -140131,8 +140057,6 @@ entities:
         - 6467
         - 7032
       type: DeviceLinkSource
-    - nextSound: 1398.1945616
-      type: EmitSoundOnCollide
   - uid: 11555
     components:
     - name: Cell 2 Shutters
@@ -140150,8 +140074,6 @@ entities:
         - 552
         - 8002
       type: DeviceLinkSource
-    - nextSound: 1419.8709598
-      type: EmitSoundOnCollide
   - uid: 19870
     components:
     - name: Cell 3 Shutters
@@ -140560,8 +140482,6 @@ entities:
       pos: -24.486025,1.614541
       parent: 60
       type: Transform
-    - nextSound: 947.612863
-      type: EmitSoundOnCollide
   - uid: 11799
     components:
     - pos: -57.47909,29.480463
@@ -149591,8 +149511,6 @@ entities:
     - pos: 48.597424,-12.435903
       parent: 60
       type: Transform
-    - nextSound: 166.1328771
-      type: EmitSoundOnCollide
 - proto: SyringeEphedrine
   entities:
   - uid: 19925
@@ -169410,8 +169328,6 @@ entities:
       type: Transform
     - nextFire: 1062.8958829
       type: Gun
-    - nextSound: 1063.0958829
-      type: EmitSoundOnCollide
   - uid: 13787
     components:
     - pos: -28.517275,2.708291
@@ -169419,8 +169335,6 @@ entities:
       type: Transform
     - nextFire: 1057.7012111
       type: Gun
-    - nextSound: 1057.9012111
-      type: EmitSoundOnCollide
   - uid: 13788
     components:
     - pos: -28.517275,2.552041
@@ -169428,8 +169342,6 @@ entities:
       type: Transform
     - nextFire: 1058.617045
       type: Gun
-    - nextSound: 1058.817045
-      type: EmitSoundOnCollide
 - proto: WeaponSubMachineGunWt550
   entities:
   - uid: 21074

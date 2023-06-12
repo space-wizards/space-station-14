@@ -22,7 +22,6 @@
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
     noRot: true
-    netsync: false
   - type: Strap
     position: Stand
     buckleOffset: "0,0.15"

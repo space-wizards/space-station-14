@@ -11,7 +11,6 @@
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
-    netsync: false
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -23,6 +22,8 @@
           Quantity: 5
         - ReagentId: UncookedAnimalProteins
           Quantity: 1
+        - ReagentId: Fat
+          Quantity: 5
   - type: Item
     size: 5
   - type: Temperature
@@ -55,6 +56,8 @@
       food:
         reagents:
         - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
           Quantity: 9
   - type: SliceableFood
     count: 3
@@ -122,7 +125,6 @@
     tags:
     - Raw
   - type: Sprite
-    netsync: false
     state: bacon
   - type: SolutionContainerManager
     solutions:
@@ -130,6 +132,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 2
+        - ReagentId: Fat
+          Quantity: 9
 
 - type: entity
   name: raw bear meat
@@ -147,6 +151,8 @@
       food:
         reagents:
         - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
           Quantity: 9
   - type: SliceableFood
     count: 3
@@ -173,6 +179,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatPenguinCutletSlice
@@ -198,6 +206,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatChickenCutlet
@@ -222,6 +232,8 @@
       food:
         reagents:
         - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
           Quantity: 9
   - type: SliceableFood
     count: 3
@@ -272,6 +284,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 1
+        - ReagentId: Fat
+          Quantity: 2
   - type: Construction
     graph: CrabSteak
     node: start
@@ -294,6 +308,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+        - ReagentId: Fat
+          Quantity: 3
   - type: Construction
     graph: GoliathSteak
     node: start
@@ -342,6 +358,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 3
 
 - type: entity
   name: raw lizard meat
@@ -359,6 +377,8 @@
       food:
         reagents:
         - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
           Quantity: 9
   - type: SliceableFood
     count: 3
@@ -412,6 +432,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatSpiderCutlet
@@ -433,6 +455,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 10
+        - ReagentId: Fat
+          Quantity: 3
 
 - type: entity
   name: meatwheat clump
@@ -619,7 +643,6 @@
     - Cooked
   - type: Food
   - type: Sprite
-    netsync: true
     layers:
     - state: plate-meat
     - state: bacon-cooked
@@ -726,7 +749,6 @@
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
-    netsync: false
     layers:
     - state: chicken-fried
       map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -906,6 +928,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw bear cutlet
@@ -928,6 +952,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw penguin cutlet
@@ -948,6 +974,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw chicken cutlet
@@ -968,6 +996,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw duck cutlet
@@ -988,6 +1018,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw lizard cutlet
@@ -1011,6 +1043,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw spider cutlet
@@ -1030,6 +1064,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw xeno cutlet
