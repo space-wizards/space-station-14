@@ -157,3 +157,13 @@
   cost: 400
   category: Fun
   group: market
+
+- type: cargoProduct
+  id: FunToyBox
+  icon:
+    sprite: Structures/Storage/Crates/toybox.rsi
+    state: crate_icon
+  product: CrateFunToyBox
+  cost: 900
+  category: Fun
+  group: market

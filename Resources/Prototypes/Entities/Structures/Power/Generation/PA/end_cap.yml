@@ -4,14 +4,14 @@
   name: PA end-cap
   description: Formally known as the Alpha Particle Generation Array. This is where Alpha particles are generated from [REDACTED].
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/end_cap.rsi
-      layers:
-      - state: completed
-        map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
-    - type: ParticleAcceleratorEndCap
-    - type: Construction
-      graph: ParticleAcceleratorEndCap
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/end_cap.rsi
+    layers:
+    - state: completed
+      map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
+  - type: ParticleAcceleratorEndCap
+  - type: Construction
+    graph: ParticleAcceleratorEndCap
 
 # Unfinished
 
@@ -22,7 +22,7 @@
   suffix: Unfinished
   description: Formally known as the Alpha Particle Generation Array. This is where Alpha particles are generated from [REDACTED]. It looks unfinished.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/end_cap.rsi
-    - type: Construction
-      graph: ParticleAcceleratorEndCap
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/end_cap.rsi
+  - type: Construction
+    graph: ParticleAcceleratorEndCap
