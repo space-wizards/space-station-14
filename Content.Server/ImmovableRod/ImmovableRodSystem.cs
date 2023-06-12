@@ -1,5 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Server.Popups;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
@@ -21,6 +22,7 @@ public sealed class ImmovableRodSystem : EntitySystem
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly GunSystem _gun = default!;
 
     public override void Update(float frameTime)
     {
@@ -44,30 +46,22 @@ public sealed class ImmovableRodSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ImmovableRodComponent, StartCollideEvent>(OnCollide);
-        SubscribeLocalEvent<ImmovableRodComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<ImmovableRodComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnComponentInit(EntityUid uid, ImmovableRodComponent component, ComponentInit args)
+    public void SpawnAndLaunch(string prototype, EntityCoordinates coordinates, Vector2 direction)
     {
-        if (EntityManager.TryGetComponent(uid, out PhysicsComponent? phys))
+        var uid = Spawn(prototype, coordinates);
+
+        if (TryComp<PhysicsComponent>(uid, out var physics) && TryComp<ImmovableRodComponent>(uid, out var rod))
         {
-            _physics.SetLinearDamping(phys, 0f);
-            _physics.SetFriction(phys, 0f);
-            _physics.SetBodyStatus(phys, BodyStatus.InAir);
+            _physics.SetLinearDamping(physics, 0f);
+            _physics.SetFriction(physics, 0f);
+            _physics.SetBodyStatus(physics, BodyStatus.InAir);
 
-            if (!component.RandomizeVelocity)
-                return;
+            var speed = _random.NextFloat(rod.MinSpeed, rod.MaxSpeed);
 
-            var xform = Transform(uid);
-            var vel = component.DirectionOverride.Degrees switch
-            {
-                0f => _random.NextVector2(component.MinSpeed, component.MaxSpeed),
-                _ => xform.WorldRotation.RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
-            };
-
-            _physics.ApplyLinearImpulse(uid, vel, body: phys);
-            xform.LocalRotation = (vel - xform.WorldPosition).ToWorldAngle() + MathHelper.PiOver2;
+            _gun.ShootProjectile(uid, direction, Vector2.Zero, uid, speed: speed);
         }
     }
 

@@ -300,3 +300,15 @@
     reoccurrenceDelay: 25
     duration: 1
   - type: LoneOpsSpawnRule
+
+- type: entity
+  id: ImmovableRodSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 1
+    duration: 1
+    earliestStart: 90
+    minimumPlayers: 20
+  - type: ImmovableRodRule

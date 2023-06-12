@@ -19,18 +19,6 @@ public sealed class ImmovableRodComponent : Component
     [DataField("maxSpeed")]
     public float MaxSpeed = 35f;
 
-    /// <remarks>
-    ///     Stuff like wizard rods might want to set this to false, so that they can set the velocity themselves.
-    /// </remarks>
-    [DataField("randomizeVelocity")]
-    public bool RandomizeVelocity = true;
-
-    /// <summary>
-    ///     Overrides the random direction for an immovable rod.
-    /// </summary>
-    [DataField("directionOverride")]
-    public Angle DirectionOverride = Angle.Zero;
-
     /// <summary>
     ///     With this set to true, rods will automatically set the tiles under them to space.
     /// </summary>
