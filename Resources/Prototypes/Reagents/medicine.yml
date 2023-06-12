@@ -966,7 +966,7 @@
       - !type:ChemCleanBloodstream
         conditions:
         - !type:TotalDamage
-          min: 180
+          min: 100
         cleanseRate: 5
 
 - type: reagent
