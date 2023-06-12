@@ -7,5 +7,11 @@
             <LineEdit Name="NameSelector" HorizontalExpand="True" />
             <Button Name="NameSelectorSet" Text="{Loc 'voice-mask-name-change-set'}" />
         </BoxContainer>
+        <!-- Corvax-TTS-Start -->
+        <Label Text="{Loc 'voice-mask-voice-change-info'}" />
+        <BoxContainer Orientation="Horizontal">
+            <OptionButton Name="VoiceSelector" HorizontalExpand="True" />
+        </BoxContainer>
+        <!-- Corvax-TTS-End -->
     </BoxContainer>
 </DefaultWindow>

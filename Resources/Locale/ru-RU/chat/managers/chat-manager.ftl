@@ -21,6 +21,7 @@ chat-manager-entity-say-wrap-message = {$entityName} говорит, "{$message}
 chat-manager-entity-whisper-wrap-message = {$entityName} шепчет, "{$message}"
 chat-manager-entity-me-wrap-message = {$entityName} {$message}
 chat-manager-entity-looc-wrap-message = LOOC: {$entityName}: {$message}
+chat-manager-entity-looc-patron-wrap-message = LOOC: [color={$patronColor}]{$entityName}[/color]: {$message}
 chat-manager-send-ooc-wrap-message = OOC: {$playerName}: {$message}
 chat-manager-send-ooc-patron-wrap-message = OOC: [color={$patronColor}]{$playerName}[/color]: {$message}
 chat-manager-send-dead-chat-wrap-message = {$deadChannelName}: {$playerName}: {$message}
