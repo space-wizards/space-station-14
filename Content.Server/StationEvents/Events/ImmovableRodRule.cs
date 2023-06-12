@@ -22,7 +22,7 @@ public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleCompon
 
         var mapCoords = coords.ToMap(EntityManager, _transform).Offset(-direction * speed * component.Lifetime / 2);
 
-        var rod = _immovableRod.SpawnAndLaunch("ImmovableRod", mapCoords, direction, speed);
+        var rod = _immovableRod.SpawnAndLaunch(mapCoords, direction, speed);
         EnsureComp<TimedDespawnComponent>(rod).Lifetime = component.Lifetime;
     }
 }

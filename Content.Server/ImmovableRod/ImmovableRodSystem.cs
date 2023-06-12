@@ -49,9 +49,9 @@ public sealed class ImmovableRodSystem : EntitySystem
         SubscribeLocalEvent<ImmovableRodComponent, ExaminedEvent>(OnExamined);
     }
 
-    public EntityUid SpawnAndLaunch(string prototype, MapCoordinates coordinates, Vector2 direction, float speed)
+    public EntityUid SpawnAndLaunch(MapCoordinates coordinates, Vector2 direction, float speed)
     {
-        var uid = Spawn(prototype, coordinates);
+        var uid = Spawn("ImmovableRod", coordinates);
 
         if (TryComp<PhysicsComponent>(uid, out var physics) && TryComp<ImmovableRodComponent>(uid, out var rod))
         {
