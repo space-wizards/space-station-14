@@ -1,9 +1,14 @@
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Administration.Logs;
+using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Events;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -18,8 +23,10 @@ namespace Content.Server.Stunnable.Systems
 {
     public sealed class StunbatonSystem : EntitySystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly RiggedSystem _riggedSystem = default!;
 
         public override void Initialize()
         {
@@ -29,6 +36,7 @@ namespace Content.Server.Stunnable.Systems
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
             SubscribeLocalEvent<StunbatonComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
+            SubscribeLocalEvent<StunbatonComponent, SolutionChangedEvent>(OnSolutionChanged);
         }
 
         private void OnGetMeleeDamage(EntityUid uid, StunbatonComponent component, ref GetMeleeDamageEvent args)
@@ -100,16 +108,22 @@ namespace Content.Server.Stunnable.Systems
 
         private void TurnOn(EntityUid uid, StunbatonComponent comp, EntityUid user)
         {
+
             if (comp.Activated)
                 return;
 
             var playerFilter = Filter.Pvs(comp.Owner, entityManager: EntityManager);
             if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
+
                 SoundSystem.Play(comp.TurnOnFailSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("stunbaton-component-low-charge"));
                 return;
             }
+
+            if (TryComp<RiggedComponent>(uid, out var rig) && rig.IsRigged)
+                    _riggedSystem.Explode(uid, battery, user);
+
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(comp.Owner, out var appearance) &&
                 EntityManager.TryGetComponent<ItemComponent>(comp.Owner, out var item))
@@ -129,6 +143,23 @@ namespace Content.Server.Stunnable.Systems
                 Used = used,
                 User = user
             }, false);
+        }
+
+        private void OnSolutionChanged(EntityUid uid, StunbatonComponent component, SolutionChangedEvent args)
+        {
+            if (TryComp<BatteryComponent>(uid, out var battery))
+            {
+                _riggedSystem.IsRigged(uid, component, battery.SolutionName, args);
+            }
+
+            if (TryComp<RiggedComponent>(uid, out var rig) && rig.IsRigged)
+            {
+                _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(uid)} has been rigged up to explode when used.");
+
+                // Go ahead - inject plasma into an enabled baton.
+                if (component.Activated)
+                    _riggedSystem.Explode(uid, battery, uid);
+            }
         }
     }
 }

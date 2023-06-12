@@ -30,6 +30,7 @@
       - DroneUsable
   - type: Appearance
   - type: PowerCellVisuals
+  - type: Rigged
 
 - type: entity
   name: potato battery
