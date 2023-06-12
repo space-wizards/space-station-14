@@ -249,7 +249,7 @@ namespace Content.Server.Power.EntitySystems
             var coordinates = xform.Coordinates;
             var nearbyEntities = grid.GetCellsInSquareArea(coordinates, (int) Math.Ceiling(range / grid.TileSize));
 
-            var candidates = new List<Tuple<float, ExtensionCableProviderComponent>>();
+            var candidates = new List<(float Distance, ExtensionCableProviderComponent Provider)>();
             foreach (var entity in nearbyEntities)
             {
                 if (entity == owner || !EntityManager.TryGetComponent<ExtensionCableProviderComponent?>(entity, out var provider)) continue;
@@ -263,12 +263,12 @@ namespace Content.Server.Power.EntitySystems
                 var distance = (Transform(entity).LocalPosition - xform.LocalPosition).Length;
                 if (distance > Math.Min(range, provider.TransferRange)) continue;
 
-                candidates.Add(new Tuple<float, ExtensionCableProviderComponent>(distance, provider));
+                candidates.Add((Distance: distance, Provider: provider));
             }
 
+            candidates.Sort((x, y) => x.Distance.CompareTo(y.Distance));
             foundProvider = candidates
-                .OrderBy(entity => entity.Item1)
-                .Select(entity => entity.Item2)
+                .Select(entity => entity.Provider)
                 .FirstOrDefault();
 
             return foundProvider != default;
