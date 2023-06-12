@@ -80,6 +80,7 @@
   parent: ClothingHandsGlovesBoxingBlue
   id: ClothingHandsGlovesBoxingRigged
   name: blue boxing gloves
+  suffix: Rigged
   description: Blue gloves for competitive boxing. Feels like they're heavier than usual...
   components:
   - type: StaminaDamageOnHit
