@@ -15,21 +15,6 @@
   fireStates: 3
 
 - type: explosion
-  id: Flesh
-  damagePerIntensity:
-    types:
-      Heat: 5
-      Poison: 3
-  tileBreakChance: [0, 0.25, 0.5]
-  tileBreakIntensity: [0, 5, 15]
-  tileBreakRerollReduction: 20
-  lightColor: Red
-  fireColor: Red
-  texturePath: /Textures/Effects/fire.rsi
-  fireStates: 3
-  Sound: /Audio/Effects/Fluids/splat.ogg
-
-- type: explosion
   id: DemolitionCharge
   damagePerIntensity:
     types:

@@ -74,7 +74,6 @@
   - type: GroupExamine
   - type: Tag
     tags:
-    - FullBodyOuter
     - Hardsuit
 
 - type: entity
@@ -93,6 +92,3 @@
     sprintModifier: 0.8
   - type: Item
     size: 80
-  - type: Tag
-    tags:
-      - FullBodyOuter

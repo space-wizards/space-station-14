@@ -26,6 +26,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Text\Names\*.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Flesh\" />
+  </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.CompNetworkGenerator.targets" />

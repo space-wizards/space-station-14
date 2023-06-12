@@ -64,30 +64,22 @@ public sealed class ClientClothingSystem : ClothingSystem
         if (!TryComp(uid, out SpriteComponent? sprite) || !sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var layer))
             return;
 
-        if (!TryComp(uid, out HumanoidAppearanceComponent? humanoid))
-            return;
-        if (!_inventorySystem.TryGetSlotEntity(uid, "jumpsuit", out var suit, component))
-            return;
-        if (!TryComp(suit, out ClothingComponent? clothing))
-            return;
-        if (humanoid.Sex == Sex.Female)
-        {
-            sprite.LayerSetState(layer, clothing.FemaleMask switch
-            {
-                FemaleClothingMask.NoMask => "female_none",
-                FemaleClothingMask.UniformTop => "female_top",
-                _ => "female_full",
-            });
-            sprite.LayerSetVisible(layer, true);
-        }
-        else
+        if (!TryComp(uid, out HumanoidAppearanceComponent? humanoid)
+            || humanoid.Sex != Sex.Female
+            || !_inventorySystem.TryGetSlotEntity(uid, "jumpsuit", out var suit, component)
+            || !TryComp(suit, out ClothingComponent? clothing))
         {
             sprite.LayerSetVisible(layer, false);
+            return;
         }
-        if (sprite.LayerMapTryGet(HumanoidVisualLayers.LegsMask, out var jumpsuitLayer))
+
+        sprite.LayerSetState(layer, clothing.FemaleMask switch
         {
-            sprite.LayerSetVisible(jumpsuitLayer, clothing.HidePants);
-        }
+            FemaleClothingMask.NoMask => "female_none",
+            FemaleClothingMask.UniformTop => "female_top",
+            _ => "female_full",
+        });
+        sprite.LayerSetVisible(layer, true);
     }
 
     private void OnGetVisuals(EntityUid uid, ClothingComponent item, GetEquipmentVisualsEvent args)
@@ -233,27 +225,20 @@ public sealed class ClientClothingSystem : ClothingSystem
             return;
         }
 
-        if (slot == "jumpsuit")
+        if (slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var suitLayer))
         {
-            if (sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var suitLayer))
+            if (TryComp(equipee, out HumanoidAppearanceComponent? humanoid) && humanoid.Sex == Sex.Female)
             {
-                if (TryComp(equipee, out HumanoidAppearanceComponent? humanoid) && humanoid.Sex == Sex.Female)
+                sprite.LayerSetState(suitLayer, clothingComponent.FemaleMask switch
                 {
-                    sprite.LayerSetState(suitLayer, clothingComponent.FemaleMask switch
-                    {
-                        FemaleClothingMask.NoMask => "female_none",
-                        FemaleClothingMask.UniformTop => "female_top",
-                        _ => "female_full",
-                    });
-                    sprite.LayerSetVisible(suitLayer, true);
-                }
-                else
-                    sprite.LayerSetVisible(suitLayer, false);
+                    FemaleClothingMask.NoMask => "female_none",
+                    FemaleClothingMask.UniformTop => "female_top",
+                    _ => "female_full",
+                });
+                sprite.LayerSetVisible(suitLayer, true);
             }
-            if (sprite.LayerMapTryGet(HumanoidVisualLayers.LegsMask, out var jumpsuitLayer))
-            {
-                sprite.LayerSetVisible(jumpsuitLayer, clothingComponent.HidePants);
-            }
+            else
+                sprite.LayerSetVisible(suitLayer, false);
         }
 
         if (!_inventorySystem.TryGetSlot(equipee, slot, out var slotDef, inventory))

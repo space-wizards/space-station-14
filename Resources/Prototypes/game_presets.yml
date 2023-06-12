@@ -31,31 +31,6 @@
     - Secret
 
 - type: gamePreset
-  id: FleshCult
-  alias:
-    - fleshcult
-    - fs
-  name: flesh-cult-title
-  description: flesh-cult-description
-  showInVote: false
-  rules:
-    - FleshCult
-    - BasicStationEventScheduler
-
-- type: gamePreset
-  id: FleshCultAndTraitor
-  alias:
-    - madness
-    - fleshcultandtraitor
-  name: flesh-cult-and-traitor-title
-  showInVote: false
-  description: flesh-cult-and-traitor-description
-  rules:
-    - FleshCult
-    - Traitor
-    - BasicStationEventScheduler
-
-- type: gamePreset
   id: Sandbox
   alias:
     - sandbox

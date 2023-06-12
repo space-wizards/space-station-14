@@ -17,15 +17,6 @@
     func: Always
 
 - type: shader
-  id: StencilJumpsuitMask
-  kind: source
-  path: "/Textures/Shaders/stencil_mask.swsl"
-  stencil:
-    ref: 1
-    op: Replace
-    func: Always
-
-- type: shader
   id: StencilDraw
   kind: canvas
   stencil:
