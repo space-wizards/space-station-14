@@ -15,7 +15,6 @@ namespace Content.Server.StationEvents.Events;
 /// </summary>
 public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly NinjaSystem _ninja = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -23,11 +22,9 @@ public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
     {
         base.Started(uid, comp, gameRule, args);
 
-        var stations = StationSystem.GetStations().ToList();
-        if (stations.Count == 0)
+        if (!TryGetRandomStation(out var station))
             return;
 
-        var station = _random.Pick(stations);
         var stationData = Comp<StationDataComponent>(station);
 
         // find a station grid
@@ -41,7 +38,7 @@ public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
         // figure out its AABB size and use that as a guide to how far ninja should be
         var size = grid.LocalAABB.Size.Length / 2;
         var distance = size + comp.SpawnDistance;
-        var angle = _random.NextAngle();
+        var angle = RobustRandom.NextAngle();
         // position relative to station center
         var location = angle.ToVec() * distance;
 
