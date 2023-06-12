@@ -84,8 +84,9 @@ public abstract class SharedNinjaSystem : EntitySystem
     /// <summary>
     /// Require ninja to fight with HONOR, no guns!
     /// </summary>
-    private void OnShotAttempted(EntityUid uid, NinjaComponent comp, ShotAttemptedEvent args)
+    private void OnShotAttempted(EntityUid uid, NinjaComponent comp, ref ShotAttemptedEvent args)
     {
-        _popup.ClientPopup(Loc.GetString("gun-disabled"), uid, uid);
+        _popup.PopupClient(Loc.GetString("gun-disabled"), uid, uid);
+        args.Cancel();
     }
 }
