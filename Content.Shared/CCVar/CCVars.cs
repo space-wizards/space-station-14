@@ -167,7 +167,7 @@ namespace Content.Shared.CCVar
         ///     The preset for the game to fall back to if the selected preset could not be used, and fallback is enabled.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "extended", CVar.ARCHIVE);
+            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "Traitor,Extended", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if people can win the game in Suspicion or Deathmatch.
@@ -479,10 +479,15 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DatabasePgPassword =
             CVarDef.Create("database.pg_password", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
+        /// <summary>
+        /// Max amount of concurrent Postgres database operations.
+        /// </summary>
+        public static readonly CVarDef<int> DatabasePgConcurrency =
+            CVarDef.Create("database.pg_concurrency", 8, CVar.SERVERONLY);
+
         // Basically only exists for integration tests to avoid race conditions.
         public static readonly CVarDef<bool> DatabaseSynchronous =
             CVarDef.Create("database.sync", false, CVar.SERVERONLY);
-
 
         /*
          * Outline
@@ -1097,16 +1102,10 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.arrivals_returns", false, CVar.SERVERONLY);
 
         /// <summary>
-        /// Whether cargo shuttles are enabled.
-        /// </summary>
-        public static readonly CVarDef<bool> CargoShuttles =
-            CVarDef.Create("shuttle.cargo", true, CVar.SERVERONLY);
-
-        /// <summary>
         /// Whether to automatically spawn escape shuttles.
         /// </summary>
-        public static readonly CVarDef<bool> DisableGridFill =
-            CVarDef.Create("shuttle.disable_grid_fill", false, CVar.SERVERONLY);
+        public static readonly CVarDef<bool> GridFill =
+            CVarDef.Create("shuttle.grid_fill", true, CVar.SERVERONLY);
 
         /*
          * Emergency
@@ -1587,5 +1586,16 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> GCMaximumTimeMs =
             CVarDef.Create("entgc.maximum_time_ms", 5, CVar.SERVERONLY);
+
+        /*
+         * Replays
+         */
+
+        /// <summary>
+        ///     Whether or not to record admin chat. If replays are being publicly distributes, this should probably be
+        ///     false.
+        /// </summary>
+        public static readonly CVarDef<bool> ReplayRecordAdminChat =
+            CVarDef.Create("replay.record_admin_chat", false, CVar.SERVERONLY);
     }
 }

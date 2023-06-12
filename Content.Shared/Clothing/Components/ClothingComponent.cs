@@ -54,8 +54,16 @@ public sealed class ClothingComponent : Component
     public string? RsiPath;
 
     [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("maleMask")]
+    public ClothingMask MaleMask = ClothingMask.UniformFull;
+
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("femaleMask")]
-    public FemaleClothingMask FemaleMask = FemaleClothingMask.UniformFull;
+    public ClothingMask FemaleMask = ClothingMask.UniformFull;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("unisexMask")]
+    public ClothingMask UnisexMask = ClothingMask.UniformFull;
 
     public string? InSlot;
 }
@@ -71,7 +79,7 @@ public sealed class ClothingComponentState : ComponentState
     }
 }
 
-public enum FemaleClothingMask : byte
+public enum ClothingMask : byte
 {
     NoMask = 0,
     UniformFull,

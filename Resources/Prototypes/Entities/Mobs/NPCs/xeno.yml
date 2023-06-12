@@ -233,6 +233,9 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: Ravager

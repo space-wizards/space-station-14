@@ -29,7 +29,7 @@ namespace Content.IntegrationTests.Tests
             var xformSystem = sEntities.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
             var resManager = server.ResolveDependency<IResourceManager>();
             var cfg = server.ResolveDependency<IConfigurationManager>();
-            Assert.That(cfg.GetCVar(CCVars.DisableGridFill), Is.False);
+            Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 
             await server.WaitAssertion(() =>
             {

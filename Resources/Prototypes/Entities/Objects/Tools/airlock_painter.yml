@@ -7,7 +7,6 @@
     - type: Sprite
       sprite: Objects/Tools/airlock_painter.rsi
       state: airlock_painter
-      netsync: false
     - type: Item
       sprite: Objects/Tools/airlock_painter.rsi
     - type: UserInterface

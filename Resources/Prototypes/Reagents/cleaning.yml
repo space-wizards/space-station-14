@@ -56,7 +56,7 @@
   name: reagent-name-space-glue
   desc: reagent-desc-space-glue
   physicalDesc: reagent-physical-desc-sticky
-  flavor: funny
+  flavor: glue
   color: "#ffffff"
   boilingPoint: 250.0
   meltingPoint: 380.0

@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/clusterbang.rsi
-    netsync: false
     state: base-0
   - type: Appearance
   - type: ClusterGrenadeVisuals

@@ -47,11 +47,10 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
+            var systemMan = sEntities.EntitySysManager;
 
             await server.WaitAssertion(() =>
             {
-                var mapMan = IoCManager.Resolve<IMapManager>();
-                var systemMan = IoCManager.Resolve<IEntitySystemManager>();
                 var human = sEntities.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
                 var invSystem = systemMan.GetEntitySystem<InventorySystem>();
 

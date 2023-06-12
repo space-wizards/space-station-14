@@ -6,7 +6,6 @@
   components:
   - type: InteractionOutline
   - type: Sprite
-    netsync: false
     # temp to make clickmask work
     sprite: Structures/meat_spike.rsi
     state: spike
@@ -53,3 +52,6 @@
   - type: Construction
     graph: MeatSpike
     node: MeatSpike
+  - type: GuideHelp
+    guides:
+    - Chef
