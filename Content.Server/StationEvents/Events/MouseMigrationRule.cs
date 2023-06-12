@@ -1,19 +1,39 @@
 using System.Linq;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.StationEvents.Events;
 
 public sealed class MouseMigrationRule : StationEventSystem<MouseMigrationRuleComponent>
 {
+    [Dependency] private readonly StationSystem _stationSystem = default!;
+
     protected override void Started(EntityUid uid, MouseMigrationRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
 
+        var targetStation = _stationSystem.GetStations().FirstOrNull();
+
+        if (!TryComp(targetStation, out StationDataComponent? data))
+        {
+            Logger.Info("TargetStation not have StationDataComponent");
+            return;
+        }
+
         var modifier = GetSeverityModifier();
 
         var spawnLocations = EntityManager.EntityQuery<VentCritterSpawnLocationComponent, TransformComponent>().ToList();
+
+        var grids = data.Grids.ToHashSet();
+        spawnLocations.RemoveAll(
+            backupSpawnLoc =>
+                backupSpawnLoc.Item2.GridUid.HasValue &&
+                !grids.Contains(backupSpawnLoc.Item2.GridUid.Value));
+
         RobustRandom.Shuffle(spawnLocations);
 
         // sqrt so we dont get insane values for ramping events

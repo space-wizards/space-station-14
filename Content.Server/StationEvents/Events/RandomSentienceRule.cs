@@ -2,19 +2,38 @@
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Server.StationEvents.Events;
 
 public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRuleComponent>
 {
+    [Dependency] private readonly StationSystem _stationSystem = default!;
+
     protected override void Started(EntityUid uid, RandomSentienceRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         HashSet<EntityUid> stationsToNotify = new();
 
+        var targetStation = _stationSystem.GetStations().FirstOrNull();
+
+        if (!TryComp(targetStation, out StationDataComponent? data))
+        {
+            Logger.Info("TargetStation not have StationDataComponent");
+            return;
+        }
+
         var mod = GetSeverityModifier();
-        var targetList = EntityQuery<SentienceTargetComponent>().ToList();
+        var targetList = EntityQuery<SentienceTargetComponent, TransformComponent>().ToList();
+
+
+        var grids = data.Grids.ToHashSet();
+        targetList.RemoveAll(
+            backupSpawnLoc =>
+                backupSpawnLoc.Item2.GridUid.HasValue && !grids.Contains(backupSpawnLoc.Item2.GridUid.Value));
+
         RobustRandom.Shuffle(targetList);
 
         var toMakeSentient = (int) (RobustRandom.Next(2, 5) * Math.Sqrt(mod));
@@ -25,12 +44,12 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
             if (toMakeSentient-- == 0)
                 break;
 
-            RemComp<SentienceTargetComponent>(target.Owner);
-            var ghostRole = EnsureComp<GhostRoleComponent>(target.Owner);
-            EnsureComp<GhostTakeoverAvailableComponent>(target.Owner);
-            ghostRole.RoleName = MetaData(target.Owner).EntityName;
+            RemComp<SentienceTargetComponent>(target.Item1.Owner);
+            var ghostRole = EnsureComp<GhostRoleComponent>(target.Item1.Owner);
+            EnsureComp<GhostTakeoverAvailableComponent>(target.Item1.Owner);
+            ghostRole.RoleName = MetaData(target.Item1.Owner).EntityName;
             ghostRole.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", ghostRole.RoleName));
-            groups.Add(Loc.GetString(target.FlavorKind));
+            groups.Add(Loc.GetString(target.Item1.FlavorKind));
         }
 
         if (groups.Count == 0)
@@ -43,7 +62,7 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
 
         foreach (var target in targetList)
         {
-            var station = StationSystem.GetOwningStation(target.Owner);
+            var station = StationSystem.GetOwningStation(target.Item1.Owner);
             if(station == null) continue;
             stationsToNotify.Add((EntityUid) station);
         }
