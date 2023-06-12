@@ -1,5 +1,5 @@
 using Content.Server.Objectives.Interfaces;
-using Content.Server.Ninja;
+using Content.Server.Roles;
 
 namespace Content.Server.Objectives.Requirements;
 

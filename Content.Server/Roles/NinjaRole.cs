@@ -1,4 +1,4 @@
-using Content.Server.Traitor;
+using Content.Shared.Roles;
 
 namespace Content.Server.Roles;
 
