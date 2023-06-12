@@ -356,16 +356,3 @@
       tags:
         - CartridgeRocket
     proto: MeteorLarge
-
-- type: entity
-  name: immovable rod launcher
-  parent: WeaponLauncherAdmemeMeteorLarge
-  id: WeaponLauncherAdmemeImmovableRodSlow
-  suffix: Admeme
-  description: It fires slow immovable rods.
-  components:
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeRocket
-    proto: ImmovableRodSlow

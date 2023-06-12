@@ -33,12 +33,3 @@
         layer:
         - Impassable
         - Opaque
-
-- type: entity
-  id: ImmovableRodSlow
-  suffix: Slow
-  parent: ImmovableRod
-  components:
-  - type: ImmovableRod
-    minSpeed: 1
-    maxSpeed: 5
