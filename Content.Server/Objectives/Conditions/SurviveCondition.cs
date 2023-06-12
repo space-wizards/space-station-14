@@ -17,7 +17,7 @@ public sealed class SurviveCondition : IObjectiveCondition
 
     public string Description => Loc.GetString("objective-condition-survive-description");
 
-    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResPath("Clothing/Masks/ninja.rsi"), "icon");
+    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResPath("Clothing/Mask/ninja.rsi"), "icon");
 
     public float Difficulty => 0.5f;
 
