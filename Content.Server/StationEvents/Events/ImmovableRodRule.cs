@@ -18,11 +18,11 @@ public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleCompon
         var angle = RobustRandom.NextAngle();
         var direction = angle.ToVec();
 
-        var speed = RobustRandom.NextFloat(component.minSpeed, component.maxSpeed);
+        var speed = RobustRandom.NextFloat(component.MinSpeed, component.MaxSpeed);
 
-        var mapCoords = coords.ToMap(EntityManager, _transform).Offset(-direction * speed * component.lifetime / 2);
+        var mapCoords = coords.ToMap(EntityManager, _transform).Offset(-direction * speed * component.Lifetime / 2);
 
         var rod = _immovableRod.SpawnAndLaunch("ImmovableRod", mapCoords, direction, speed);
-        EnsureComp<TimedDespawnComponent>(rod).Lifetime = component.lifetime;
+        EnsureComp<TimedDespawnComponent>(rod).Lifetime = component.Lifetime;
     }
 }
