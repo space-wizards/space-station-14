@@ -25,7 +25,7 @@ public sealed class AnalysisConsolePrintButtonPressedMessage : BoundUserInterfac
 }
 
 [Serializable, NetSerializable]
-public sealed class AnalysisConsoleDestroyButtonPressedMessage : BoundUserInterfaceMessage
+public sealed class AnalysisConsoleExtractButtonPressedMessage : BoundUserInterfaceMessage
 {
 }
 

@@ -18,7 +18,6 @@
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
-    netsync: false
   - type: Item
   - type: Tool
     qualities:

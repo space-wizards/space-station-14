@@ -103,6 +103,20 @@
     guides:
     - Robotics
 
+# yes i know this prototype name is long i'm just following conventions
+- type: entity
+  id: ResearchAndDevelopmentServerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: R&D server machine board
+  description: A machine printed circuit board for the R&D server.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: ResearchAndDevelopmentServer
+    materialRequirements:
+      Plasma: 5
+
 - type: entity
   id: UniformPrinterMachineCircuitboard
   parent: BaseMachineCircuitboard

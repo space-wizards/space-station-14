@@ -51,7 +51,6 @@
     anchored: true
     noRot: false
   - type: Sprite
-    netsync: false
     drawdepth: Doors
     sprite: Structures/Machines/recycling.rsi
     layers:

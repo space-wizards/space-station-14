@@ -13,7 +13,6 @@
   - type: Sprite
     sprite: Objects/Vehicles/janicart.rsi
     state: keys
-    netsync: false
 
 - type: entity
   parent: VehicleKeyJanicart
@@ -28,7 +27,6 @@
   - type: Sprite
     sprite: Objects/Vehicles/secway.rsi
     state: keys
-    netsync: false
 
 - type: entity
   parent: VehicleKeyJanicart
@@ -43,7 +41,6 @@
   - type: Sprite
     sprite: Objects/Vehicles/atv.rsi
     state: keys
-    netsync: false
 
 - type: entity
   parent: VehicleKeyATV
@@ -73,7 +70,6 @@
     - type: Sprite
       sprite: Objects/Vehicles/syndicatesegway.rsi
       state: keys
-      netsync: false
 
 - type: entity
   parent: VehicleKeyATV
@@ -88,4 +84,3 @@
     - type: Sprite
       sprite: Objects/Vehicles/motorbike.rsi
       state: keys
-      netsync: false
