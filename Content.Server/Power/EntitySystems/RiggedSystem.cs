@@ -4,6 +4,9 @@ using Content.Server.Power.Components;
 
 namespace Content.Server.Power.EntitySystems;
 
+/// <summary>
+///  Handles sabotaged/rigged objects
+/// </summary>
 public sealed class RiggedSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
