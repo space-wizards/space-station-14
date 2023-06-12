@@ -8,7 +8,6 @@
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:

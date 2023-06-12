@@ -314,7 +314,6 @@
     baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
-    netsync: false
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: butterfly

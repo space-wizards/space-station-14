@@ -37,7 +37,6 @@
       damageContainer: Box
     - type: Sprite
       noRot: true
-      netsync: false
       sprite: Structures/Storage/closet.rsi
       layers:
       - state: cardboard
@@ -122,7 +121,6 @@
       sprite: Structures/Storage/closet.rsi
       drawdepth: Effects
       noRot: true
-      netsync: false
       layers:
       - state: "cardboard_special"
     - type: TimedDespawn
