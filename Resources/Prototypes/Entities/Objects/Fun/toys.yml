@@ -813,6 +813,8 @@
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: bask
+  - type: TileFrictionModifier
+    modifier: 0.01
 
 - type: entity
   parent: BaseItem
@@ -827,6 +829,22 @@
     size: 12
     sprite: Objects/Fun/toys.rsi
     heldPrefix: footb
+
+- type: entity
+  parent: BaseItem
+  id: BeachBall
+  name: beach ball
+  description: Magic ball of solar happiness.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: beachball
+  - type: Item
+    size: 24
+    sprite: Objects/Fun/toys.rsi
+    heldPrefix: beachb
+  - type: TileFrictionModifier
+    modifier: 0.01
 
 - type: entity
   parent: BaseItem
