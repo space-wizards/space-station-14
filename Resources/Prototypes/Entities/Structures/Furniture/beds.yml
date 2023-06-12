@@ -25,7 +25,6 @@
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
     state: bed
-    netsync: false
     noRot: true
   - type: Strap
     position: Down
@@ -79,6 +78,9 @@
   - type: Construction
     graph: bed
     node: medicalbed
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
 
 - type: entity
   parent: Bed

@@ -10,7 +10,6 @@
       - sprite: Objects/Materials/Shards/shard.rsi
         state: shard1
         map: [ "enum.DamageStateVisualLayers.Base" ]
-    netsync: false
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:

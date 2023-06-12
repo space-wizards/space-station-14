@@ -6,7 +6,6 @@
   description: A special hardsuit helmet designed for working in low-pressure, high thermal environments.
   components:
   - type: Sprite
-    netsync: false
     sprite: Clothing/Head/Hardsuits/atmospherics.rsi
     layers:
     - state: icon
@@ -328,7 +327,6 @@
   description: A sturdy helmet designed for complex industrial operations in space.
   components:
   - type: Sprite
-    netsync: false
     sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
     layers:
     - state: icon
@@ -430,7 +428,6 @@
   description: A pressure resistant and fireproof hood worn by special cleanup units.
   components:
   - type: Sprite
-    netsync: false
     sprite: Clothing/Head/Hardsuits/cburn.rsi
     layers:
     - state: icon
