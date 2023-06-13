@@ -56,23 +56,19 @@ namespace Content.Client.Medical.CrewMonitoring
             // add a row for each sensor
             foreach (var sensor in stSensors.OrderBy(a => a.Name))
             {
+                var suitSensorUid = new Label()
+                {
+                    Text = sensor.SuitSensorUid.ToString()
+                };
+                _rowsContent.Add(suitSensorUid);
                 // add users name
                 // format: UserName
-                var nameLabel = new PanelContainer()
+                var nameLabel = new Button()
                 {
-                    PanelOverride = new StyleBoxFlat()
-                    {
-                        BackgroundColor = StyleNano.ButtonColorDisabled,
-                    },
-                    Children =
-                    {
-                        new Label()
-                        {
-                            Text = sensor.Name,
-                            Margin = new Thickness(5f, 5f),
-                        }
-                    }
+                    Text = sensor.Name,
+                    Margin = new Thickness(5f, 5f),
                 };
+                nameLabel.StyleClasses.Add(StyleNano.StyleClassButtonColorRed);
 
                 // add users job
                 // format: JobName
@@ -113,32 +109,16 @@ namespace Content.Client.Medical.CrewMonitoring
                 if (sensor.Coordinates != null && NavMap.Visible)
                 {
                     NavMap.TrackedCoordinates.TryAdd(sensor.Coordinates.Value, (true, Color.FromHex("#B02E26")));
-                    nameLabel.MouseFilter = MouseFilterMode.Stop;
-
-                    // Hide all others upon mouseover.
-                    nameLabel.OnMouseEntered += args =>
+                    nameLabel.OnButtonDown += args =>
                     {
-                        foreach (var (coord, value) in NavMap.TrackedCoordinates)
-                        {
-                            if (coord == sensor.Coordinates)
-                                continue;
-
-                            NavMap.TrackedCoordinates[coord] = (false, value.Color);
-                        }
-                    };
-
-                    nameLabel.OnMouseExited += args =>
-                    {
-                        foreach (var (coord, value) in NavMap.TrackedCoordinates)
-                        {
-                            NavMap.TrackedCoordinates[coord] = (true, value.Color);
-                        }
+                        NavMap.TrackedCoordinates[sensor.Coordinates.Value] = (true, Color.FromHex("#38b026"));
+                        NavMap.CenterToCoordinates(sensor.Coordinates.Value);
                     };
                 }
             }
             // For debugging.
-            //if (monitorCoords != null)
-            //    NavMap.TrackedCoordinates.Add(monitorCoords.Value, (true, Color.FromHex("#FF00FF")));
+            if (monitorCoords != null)
+                NavMap.TrackedCoordinates.Add(monitorCoords.Value, (true, Color.FromHex("#FF00FF")));
         }
 
         private BoxContainer GetPositionBox(EntityCoordinates? coordinates, Vector2 monitorCoordsInStationSpace, bool snap, float precision)
@@ -199,11 +179,7 @@ namespace Content.Client.Medical.CrewMonitoring
 
         private void ClearAllSensors()
         {
-            foreach (var child in _rowsContent)
-            {
-                SensorsTable.RemoveChild(child);
-            }
-
+            SensorsTable.RemoveAllChildren();
             _rowsContent.Clear();
             _directionIcons.Clear();
             NavMap.TrackedCoordinates.Clear();
