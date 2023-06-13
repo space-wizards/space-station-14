@@ -104,6 +104,11 @@ namespace Content.Client.Stylesheets
         public static readonly Color ButtonColorGoodDefault = Color.FromHex("#3E6C45");
         public static readonly Color ButtonColorGoodHovered = Color.FromHex("#31843E");
 
+        //NavMap
+        public static readonly Color PointRed = Color.FromHex("#B02E26");
+        public static readonly Color PointGreen = Color.FromHex("#38b026");
+        public static readonly Color PointMagenta = Color.FromHex("#FF00FF");
+
         // Context menu button colors
         public static readonly Color ButtonColorContext = Color.FromHex("#1119");
         public static readonly Color ButtonColorContextHover = Color.DarkSlateGray;
