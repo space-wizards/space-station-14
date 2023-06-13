@@ -463,6 +463,10 @@ public sealed partial class DungeonJob
             - After ALL the above working, then make entirely NEW templates.
          */
 
+        // TODO:
+        // Maybe do BFS and get the fastest path to each
+        // Then, we assign tile node multipliers to each node that is traversed
+        // then we pick the cheapest path for each
         foreach (var (start, end) in edges)
         {
             frontier.Clear();
@@ -560,7 +564,7 @@ public sealed partial class DungeonJob
         }
 
         // Widen the path
-        if (expansion >= 1)
+        if (false && expansion >= 1)
         {
             var toAdd = new ValueList<Vector2i>();
 
@@ -600,6 +604,11 @@ public sealed partial class DungeonJob
         foreach (var tile in corridorTiles)
         {
             setTiles.Add((tile, new Tile(_tileDefManager["FloorSteel"].TileId)));
+        }
+
+        foreach (var tile in entrances)
+        {
+            setTiles.Add((tile, new Tile(_tileDefManager["FloorAsteroidSand"].TileId)));
         }
 
         grid.SetTiles(setTiles);

@@ -337,7 +337,9 @@ public sealed partial class DungeonJob
                         tiles.Add((rounded, tileRef.Tile));
                         roomTiles.Add(rounded);
 
-                        mapBounds = mapBounds?.Union(new Box2i(rounded, rounded + grid.TileSize)) ?? new Box2i(rounded, rounded + grid.TileSize);
+                        // If this were a Box2 we'd add tilesize although here I think that's undesirable as
+                        // for example, a box2i of 0,0,1,1 is assumed to also include the tile at 1,1
+                        mapBounds = mapBounds?.Union(new Box2i(rounded, rounded)) ?? new Box2i(rounded, rounded);
                     }
                 }
 
