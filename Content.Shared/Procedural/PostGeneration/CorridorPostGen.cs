@@ -9,7 +9,7 @@ public sealed class CorridorPostGen : IPostDunGen
     /// How far we're allowed to generate a corridor before calling it.
     /// </summary>
     [DataField("pathLimit")]
-    public int PathLimit = 256;
+    public int PathLimit = 1024;
 
     [DataField("method")]
     public CorridorPostGenMethod Method = CorridorPostGenMethod.MinimumSpanningTree;
