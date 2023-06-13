@@ -245,3 +245,5 @@
     state: icon
   - type: FaxMachine
     name: "ОБР"
+    receiveNukeCodes: true
+    notifyAdmins: true
