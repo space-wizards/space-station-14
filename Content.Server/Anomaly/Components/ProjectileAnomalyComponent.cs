@@ -13,10 +13,10 @@ public sealed class ProjectileAnomalyComponent : Component
     public string ProjectilePrototype = default!;
 
     /// <summary>
-    /// The MAXIMUM speed <see cref="ProjectilePrototype"/> can travel
+    /// The speed <see cref="ProjectilePrototype"/> can travel
     /// </summary>
-    [DataField("maxProjectileSpeed")]
-    public float MaxProjectileSpeed = 30f;
+    [DataField("projectileSpeed")]
+    public float ProjectileSpeed = 30f;
 
     /// <summary>
     /// The minimum number of projectiles shot per pulse
