@@ -21,7 +21,6 @@
       - ForceFixRotations
       - Window
   - type: Sprite
-    netsync: false
     drawdepth: WallTops
     sprite: Structures/Windows/window.rsi
   - type: Icon
@@ -112,7 +111,6 @@
           "/Audio/Effects/glass_hit.ogg"
   - type: Sprite
     drawdepth: Mobs
-    netsync: false
     sprite: Structures/Windows/directional.rsi
     state: window
   - type: Icon
@@ -184,7 +182,6 @@
     - Window
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Windows/directional.rsi
     state: tinted_window
   - type: Tag
@@ -207,7 +204,6 @@
     - Window
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Windows/directional.rsi
     state: frosted_window
   - type: Icon

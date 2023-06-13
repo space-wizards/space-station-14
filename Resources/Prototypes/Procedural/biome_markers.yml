@@ -8,6 +8,10 @@
   id: Xenos
   proto: MobXeno
 
+- type: biomeMarkerLayer
+  id: Carps
+  proto: MobCarpDungeon
+
 
 #- type: biomeMarkerLayer
 #  id: Experiment

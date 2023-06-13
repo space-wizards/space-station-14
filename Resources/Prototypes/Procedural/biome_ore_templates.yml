@@ -3,7 +3,7 @@
   id: OreTin
   proto: WallRockTin
   entityMask: WallRock
-  maxCount: 5
+  maxCount: 15
   groupCount: 10
   radius: 4
 
@@ -13,7 +13,7 @@
   id: OreGold
   proto: WallRockGold
   entityMask: WallRock
-  maxCount: 5
+  maxCount: 15
   groupCount: 5
   radius: 4
 
@@ -22,7 +22,7 @@
   id: OreSilver
   proto: WallRockSilver
   entityMask: WallRock
-  maxCount: 5
+  maxCount: 15
   groupCount: 5
   radius: 4
 
@@ -32,7 +32,7 @@
   id: OrePlasma
   proto: WallRockPlasma
   entityMask: WallRock
-  maxCount: 2
+  maxCount: 6
   groupCount: 5
   radius: 4
 
@@ -41,7 +41,7 @@
   id: OreUranium
   proto: WallRockUranium
   entityMask: WallRock
-  maxCount: 2
+  maxCount: 6
   groupCount: 5
   radius: 4
 
@@ -49,6 +49,6 @@
   id: OreBananium
   proto: WallRockBananium
   entityMask: WallRock
-  maxCount: 2
+  maxCount: 6
   groupCount: 5
   radius: 4

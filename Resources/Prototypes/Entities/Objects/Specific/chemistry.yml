@@ -8,7 +8,6 @@
     - GlassBeaker
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker.rsi
-    netsync: false
     layers:
       - state: beaker
       - state: beaker1
@@ -98,6 +97,8 @@
   components:
   - type: Spillable
     solution: beaker
+  - type: StaticPrice
+    price: 10
 
 - type: entity
   name: large beaker
@@ -188,7 +189,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/dropper.rsi
-    netsync: false
     layers:
       - state: dropper
       - state: dropper1
@@ -231,7 +231,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/syringe.rsi
-    netsync: false
     layers:
       - state: syringe1
         map: ["enum.SolutionContainerLayers.Fill"]

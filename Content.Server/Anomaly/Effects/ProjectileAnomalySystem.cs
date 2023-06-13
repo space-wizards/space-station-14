@@ -74,8 +74,8 @@ public sealed class ProjectileAnomalySystem : EntitySystem
     {
         var mapPos = coords.ToMap(EntityManager, _xform);
 
-        var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
-                ? coords.WithEntityId(grid.Owner, EntityManager)
+        var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var gridUid, out _)
+                ? coords.WithEntityId(gridUid, EntityManager)
                 : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
 
         var ent = Spawn(component.ProjectilePrototype, spawnCoords);

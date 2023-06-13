@@ -362,7 +362,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         var loadedMarkers = component.LoadedMarkers;
         var spawnSet = new HashSet<Vector2i>();
         var spawns = new List<Vector2i>();
-        var frontier = new Queue<Vector2i>();
+        var frontier = new ValueList<Vector2i>();
 
         foreach (var (layer, chunks) in markers)
         {
@@ -426,11 +426,14 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     }
 
                     // BFS search
-                    frontier.Enqueue(point);
+                    frontier.Add(point);
                     var groupCount = layerProto.GroupCount;
 
-                    while (frontier.TryDequeue(out var node) && groupCount > 0)
+                    while (frontier.Count > 0 && groupCount > 0)
                     {
+                        var frontierIndex = _random.Next(frontier.Count);
+                        var node = frontier[frontierIndex];
+                        frontier.RemoveSwap(frontierIndex);
                         var enumerator = grid.GetAnchoredEntitiesEnumerator(node);
 
                         if (enumerator.MoveNext(out _))
@@ -463,7 +466,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                                 if (!spawnSet.Contains(neighbor))
                                     continue;
 
-                                frontier.Enqueue(neighbor);
+                                frontier.Add(neighbor);
                                 // Rather than doing some uggo remove check on the list we'll defer it until later
                                 spawnSet.Remove(neighbor);
                             }
