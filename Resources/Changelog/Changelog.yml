@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix xeno ravagers not being able to pry doors on expeditions., type: Fix}
-  id: 3484
-  time: '2023-04-22T08:57:20.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: fix holofan charges loc string missing, type: Fix}
@@ -2911,3 +2906,8 @@ Entries:
     type: Tweak}
   id: 3983
   time: '2023-06-13T06:37:54.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: The economy behind timer electronics has crashed., type: Tweak}
+  id: 3984
+  time: '2023-06-13T08:09:18.0000000+00:00'
