@@ -46,16 +46,6 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
 
-    protected override void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
-    {
-        // TODO once access permissions are shared, move this back to shared.
-        if (args.Handled || !door.ClickOpen)
-            return;
-
-        TryToggleDoor(uid, door, args.User);
-        args.Handled = true;
-    }
-
     protected override void SetCollidable(
         EntityUid uid,
         bool collidable,
