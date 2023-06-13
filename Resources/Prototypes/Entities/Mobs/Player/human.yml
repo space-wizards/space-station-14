@@ -68,8 +68,6 @@
           Quantity: 4
         - ReagentId: Ephedrine
           Quantity: 0.5
-        - ReagentId: Omnizine
-          Quantity: 0.5
 
 - type: entity
   noSpawn: true
