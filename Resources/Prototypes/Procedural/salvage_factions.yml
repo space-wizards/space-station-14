@@ -21,6 +21,10 @@
     - id: MobXenoRavager
       amount: 1
     prob: 0.1
+  - entries:
+    - id: MobXenoRouny
+      amount: 1
+    prob: 0.001
   configs:
     DefenseStructure: XenoWardingTower
     Mining: Xenos
