@@ -194,7 +194,7 @@ namespace Content.Server.AME.Components
                 {
                     //_chat.SendAdminAlert(player, $"increased AME over safe limit to {InjectionAmount}", mindComponent); //original
                     SoundSystem.Play("/Audio/Effects/ame_overloading_admin_alert.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins),AudioParams.Default.WithVolume(-4f));//admin ame alert sound
-                    _chat.SendAdminAlert(player, Loc.GetString("admin-alert-ame-over-limit", ("injection-amount", InjectionAmount)));//locale ame alert
+                    _chat.SendAdminAlert(player, Loc.GetString("admin-alert-ame-over-limit", ("injection-amount", InjectionAmount)), mindComponent);//locale ame alert
                 }
             }
 
