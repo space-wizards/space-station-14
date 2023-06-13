@@ -12,7 +12,6 @@
     rootTask: SimpleHostileCompound
   - type: Sprite
     drawdepth: Mobs
-    netsync: false
     sprite: Mobs/Aliens/slimes.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]

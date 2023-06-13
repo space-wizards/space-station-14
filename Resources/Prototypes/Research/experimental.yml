@@ -145,6 +145,26 @@
   recipeUnlocks:
   - RPED
 
+
+- type: technology
+  id: HamtrMechTech
+  name: research-technology-hamtr
+  icon:
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: hamtr
+  discipline: Experimental
+  tier: 2
+  cost: 8000
+  recipeUnlocks:
+  - HamtrHarness
+  - HamtrLArm
+  - HamtrRArm
+  - HamtrLLeg
+  - HamtrRLeg
+  - HamtrCentralElectronics
+  - HamtrPeripheralsElectronics
+  - MechEquipmentGrabberSmall
+
 # Tier 3
 
 - type: technology

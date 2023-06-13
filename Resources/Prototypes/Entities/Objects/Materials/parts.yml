@@ -4,7 +4,6 @@
   id: PartBase
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/parts.rsi
     state: rods
   - type: Item

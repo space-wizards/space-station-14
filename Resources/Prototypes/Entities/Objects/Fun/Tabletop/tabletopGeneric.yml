@@ -5,7 +5,6 @@
   components:
   - type: TabletopDraggable
   - type: Sprite
-    netsync: false
     noRot: true
     sprite: Objects/Fun/Tabletop/generic_pieces.rsi
   - type: Appearance

@@ -323,6 +323,28 @@
 - type: Tag
   id: GuideEmbeded
 
+
+- type: Tag
+  id: Hamster
+
+- type: Tag
+  id: HamtrCentralControlModule
+
+- type: Tag
+  id: HamtrPeripheralsControlModule
+
+- type: Tag
+  id: HamtrLArm
+
+- type: Tag
+  id: HamtrLLeg
+
+- type: Tag
+  id: HamtrRLeg
+
+- type: Tag
+  id: HamtrRArm
+
 - type: Tag
   id: Handcuffs
 
@@ -639,6 +661,9 @@
 
 - type: Tag
   id: SkeletonMotorcycleKeys
+
+- type: Tag
+  id: SmallMech
 
 - type: Tag
   id: Smokable
