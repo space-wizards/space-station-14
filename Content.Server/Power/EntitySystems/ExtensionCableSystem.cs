@@ -248,27 +248,43 @@ namespace Content.Server.Power.EntitySystems
 
             var coordinates = xform.Coordinates;
             var nearbyEntities = grid.GetCellsInSquareArea(coordinates, (int) Math.Ceiling(range / grid.TileSize));
+            var cableQuery = GetEntityQuery<ExtensionCableProviderComponent>();
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
 
-            foundProvider = default;
+            ExtensionCableProviderComponent? closestCandidate = null;
             var closestDistanceFound = float.MaxValue;
             foreach (var entity in nearbyEntities)
             {
-                if (entity == owner || !EntityManager.TryGetComponent<ExtensionCableProviderComponent?>(entity, out var provider)) continue;
+                if (entity == owner || !cableQuery.TryGetComponent(entity, out var provider) || !provider.Connectable)
+                    continue;
 
-                if (EntityManager.IsQueuedForDeletion(entity)) continue;
+                if (EntityManager.IsQueuedForDeletion(entity))
+                    continue;
 
-                if (MetaData(entity).EntityLifeStage > EntityLifeStage.MapInitialized) continue;
+                if (!metaQuery.TryGetComponent(entity, out var meta) || meta.EntityLifeStage > EntityLifeStage.MapInitialized)
+                    continue;
 
-                if (!provider.Connectable) continue;
+                // Find the closest provider
+                if (!xformQuery.TryGetComponent(entity, out var entityXform))
+                    continue;
+                var distance = (entityXform.LocalPosition - xform.LocalPosition).Length;
+                if (distance >= closestDistanceFound)
+                    continue;
 
-                var distance = (Transform(entity).LocalPosition - xform.LocalPosition).Length;
-                // Is the provider out of range or have we already found a closer one?
-                if (distance > Math.Min(range, provider.TransferRange) || distance >= closestDistanceFound) continue;
-
-                foundProvider = provider;
+                closestCandidate = provider;
                 closestDistanceFound = distance;
             }
-            return foundProvider != default;
+
+            // Make sure the provider is in range before claiming success
+            if (closestCandidate != null && closestDistanceFound <= Math.Min(range, closestCandidate.TransferRange))
+            {
+                foundProvider = closestCandidate;
+                return true;
+            }
+
+            foundProvider = null;
+            return false;
         }
 
         #endregion
