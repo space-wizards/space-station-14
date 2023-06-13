@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: fix holofan charges loc string missing, type: Fix}
-  id: 3485
-  time: '2023-04-22T09:54:42.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Admins and ghosts can now scrollin and scrollout., type: Add}
@@ -2911,3 +2906,9 @@ Entries:
   - {message: The economy behind timer electronics has crashed., type: Tweak}
   id: 3984
   time: '2023-06-13T08:09:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add doorbumpopener to some stuff that should've had it (slimes)., type: Fix}
+  - {message: Mobs that can bump open doors can also click them open now., type: Tweak}
+  id: 3985
+  time: '2023-06-13T10:30:05.0000000+00:00'
