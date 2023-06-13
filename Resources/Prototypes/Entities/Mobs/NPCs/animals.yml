@@ -323,7 +323,6 @@
     baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
-    netsync: false
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: butterfly
@@ -2176,10 +2175,10 @@
     accent: mouse
   - type: Tag
     tags:
-    - Trash
-    - CannotSuicide
     - VimPilot
     - Hamster
+    - CannotSuicide
+    - Trash
   - type: Respirator
     damage:
       types:

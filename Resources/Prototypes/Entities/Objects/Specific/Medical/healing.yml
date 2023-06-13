@@ -161,7 +161,6 @@
   id: AloeCream
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Specific/Hydroponics/aloe.rsi
     state: cream
   - type: Stack

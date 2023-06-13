@@ -8,7 +8,6 @@
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -168,7 +167,6 @@
     layers:
       - state: tendie
         map: [ "enum.DamageStateVisualLayers.Base" ]
-    netsync: false
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:

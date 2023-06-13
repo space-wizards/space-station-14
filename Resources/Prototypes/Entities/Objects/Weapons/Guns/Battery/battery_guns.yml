@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
   - type: Item
     size: 50
   - type: Clothing
