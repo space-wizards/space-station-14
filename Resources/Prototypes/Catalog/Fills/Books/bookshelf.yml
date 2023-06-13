@@ -9,6 +9,30 @@
         prob: 0.4
         amount: 1
         maxAmount: 4
+      - id: BookSpaceEncyclopedia
+        prob: 0.05
+      - id: BookTheBookOfControl
+        prob: 0.2
+      - id: BookBartendersManual
+        prob: 0.2
+      - id: BookChefGaming
+        prob: 0.2
+      - id: BookLeafLoversSecret
+        prob: 0.2
+      - id: BookEngineersHandbook
+        prob: 0.2
+      - id: BookScientistsGuidebook
+        prob: 0.2
+      - id: BookSecurity
+        prob: 0.2
+      - id: BookHowToKeepStationClean
+        prob: 0.2
+      - id: BookHowToRockAndStone
+        prob: 0.2
+      - id: BookMedicalReferenceBook
+        prob: 0.2
+      - id: BookHowToSurvive
+        prob: 0.2
       - id: BookChemicalCompendium
         prob: 0.2
       - id: BookNarsieLegend
