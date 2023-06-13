@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Added decorative crystals., type: Add}
-  id: 3483
-  time: '2023-04-22T07:10:51.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix xeno ravagers not being able to pry doors on expeditions., type: Fix}
@@ -2910,3 +2905,9 @@ Entries:
   - {message: All xenos now enjoy a slowdown when badly wounded., type: Tweak}
   id: 3982
   time: '2023-06-13T04:48:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: R&D has figured out how to upgrade salvage magnets using high-tier capacitors.,
+    type: Tweak}
+  id: 3983
+  time: '2023-06-13T06:37:54.0000000+00:00'
