@@ -1,26 +1,24 @@
 <Document>
-  # Radio
+  # Радиосвязь
 
-  Your radio allows you to communicate across the entire station and to your specific [color=#a4885c]department[/color].
+  Ваша гарнитура позволяет вам общаться как со всей станцией, так и с вашим [color=#a4885c]отделом[/color].
 
   <Box>
     <GuideEntityEmbed Entity="ClothingHeadsetGrey"/>
   </Box>
 
-  To send a station-wide message over the radio preface your text with [color=#a4885c]semi-colon (;)[/color].
+  Чтобы отправить радиосообщение на всю станцию, начните своё сообщение с [color=#a4885c]точки с запятой (;)[/color].
 
-  ## Departmental Radio
+  ## Радиоканалы отделов
 
-  You are able to send messages over your departmental radio channels using [color=#a4885c]colon (:)[/color] followed by the
-  department letter as long as you're wearing a headset with your department's encryption key.
-
-  Examine your headset to see the department channels available to you.
+  Чтобы отправить радиосообщение по каналу вашего отдела, начните своё сообщение с [color=#a4885c]двоеточия (:)[/color], затем укажите букву (префикс), соответствующую вашему отделу.
+  Возможность отправлять сообщения в радиоканалы отделов зависит от того, какие ключи шифрования установлены в гарнитуру.
+  Осмотрите свою гарнитуру чтобы узнать, каналы каких отделов вам доступны.
 
 <Box>
   <GuideEntityEmbed Entity="ClothingHeadsetEngineering"/>
 </Box>
 
-  Examining a default engineering headset would show you the prefixes for the [color=#32cd32]Common[/color] and [color=#f37746]Engineering[/color]
-  channels.
+  Осмотрев стандартную инженерную гарнитуру, вы увидите префиксы для [color=#32cd32]общего[/color] и [color=#f37746]инженерного[/color] радиоканалов.
 
 </Document>

@@ -1,17 +1,17 @@
 <Document>
-# Antimatter Engine (AME)
+# Двигатель антиматерии (ДАМ)
 
-The AME is one of the simplest engines available. You put together the multi-tile structure, stick some fuel into it, and you're all set. This doesn't mean it isn't potentially dangerous with overheating though.
+Двигатель антиматерии — один из самых простых в применении генераторов электроэнергии. Соберите мультиблоковую структуру генератора на небольшой площади, закиньте баллон топлива, и всё готово. Однако, это не означает что этот тип генератора является полностью безопасным, потенциальной опасностью является риск его перегрева.
 
-## Construction
-<Box>Required parts:</Box>
+## Строительство
+<Box>Требуемые компоненты:</Box>
 <Box>
 <GuideEntityEmbed Entity="AMEController"/>
 <GuideEntityEmbed Entity="AMEPart"/>
 <GuideEntityEmbed Entity="AMEJar"/>
 </Box>
 
-To assemble an AME, start by wrenching down the controller on the far end of a HV wire. On most stations, there's catwalks to assist with this. From there, start putting down a 3x3 or larger square of AME parts in preparation for construction, making sure to maximize the number of "center" pieces that are surrounded on all 8 sides.
+Начните сборку ДАМ с установки и закрепления контроллера ДАМ на ВВ кабеле. На многих станциях в генераторных на полу имеются решётчатые мостики, которые упростят понимание где что, и куда. Разложите части ДАМ квадратом минимум 3 на 3, старайтесь максимизировать количество "центральных" ядер ДАМ, такие ядра должны быть окружены другими частями со всех 8-ми сторон.
 
-Once this is done, you can use a multitool to convert each AME part into shielding, which should form a finished AME configuration. From there, insert a fuel jar, set the fuel rate to [color=#a4885c]twice the core count or less[/color], and turn on injection.
+Разложив, воспользуйтесь мультитулом чтобы превратить части ДАМ в его экранирование, что должно завершить создание двигателя антиматерии. Затем, поместите баллон топлива ДАМ в контроллер ДАМ, установите расход топлива на [color=#a4885c]количество ядер умноженное на два[/color] (или меньше) и переключите впрыск.
 </Document>

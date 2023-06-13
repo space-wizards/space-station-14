@@ -1,10 +1,10 @@
-﻿<Document>
-# Construction
+<Document>
+# Строительство
 
-By pressing [color=#a4885c]G[/color], one can open the construction menu, which allows you to craft and build a variety of objects.
+Нажав [color=#a4885c]G[/color] на клавиатуре, или соответствующую кнопку на экране, вы откроете меню строительства, через которое можно строить различные объекты и создавать предметы.
 
-When placing objects that "snap" to the grid, you can hold [color=#a4885c]shift[/color] to place an entire line at a time, and [color=#a4885c]ctrl[/color] to place an entire square at a time.
+При размещении призраков объектов, которые «привязываются» к сетке, зажмите [color=#a4885c]Shift[/color] чтобы разместить сразу несколько объектов в линию, или [color=#a4885c]Ctrl[/color] чтобы разместить объекты квадратом.
 
-When crafting objects with a lot of ingredients, keep in mind you don't have to hold everything at once, you can simply place the ingredients on the floor or on a table near you and they'll be used up during crafting like normal.
+При создании предметов с большим количеством компонентов помните, что не обязательно держать у себя всё сразу. Вы можете просто положить компоненты на пол или на стол около себя, и они будут использованы автоматически.
 
 </Document>
