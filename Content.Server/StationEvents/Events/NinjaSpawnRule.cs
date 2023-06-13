@@ -31,7 +31,7 @@ public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
         var gridUid = StationSystem.GetLargestGrid(stationData);
         if (gridUid == null || !TryComp<MapGridComponent>(gridUid, out var grid))
         {
-            Sawmill.Error("Chosen station has no grids, cannot spawn space ninja!");
+            Sawmill.Warn("Chosen station has no grids, cannot spawn space ninja!");
             return;
         }
 
