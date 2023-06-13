@@ -192,7 +192,6 @@ public abstract class SharedDoorSystem : EntitySystem
 
     public void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
     {
-        // TODO once access permissions are shared, move this back to shared.
         if (args.Handled || !door.ClickOpen)
             return;
 
