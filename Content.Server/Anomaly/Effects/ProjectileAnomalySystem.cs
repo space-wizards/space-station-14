@@ -1,7 +1,8 @@
+using System.Linq;
 using Content.Server.Anomaly.Components;
-using Content.Server.Mind.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Projectiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -39,20 +40,23 @@ public sealed class ProjectileAnomalySystem : EntitySystem
     private void ShootProjectilesAtEntities(EntityUid uid, ProjectileAnomalyComponent component, float severity)
     {
         var xform = Transform(uid);
-        var projectilesShot = 0;
-        var range = component.ProjectileRange * severity;
-        var mobQuery = GetEntityQuery<MindComponent>();
+        var projectileCount = (int) MathF.Round(MathHelper.Lerp(component.MinProjectiles, component.MaxProjectiles, severity));
+        var mobQuery = GetEntityQuery<MobStateComponent>();
+        var inRange = _lookup.GetEntitiesInRange(uid, component.ProjectileRange * severity, LookupFlags.Dynamic).ToList();
+        _random.Shuffle(inRange);
 
-        foreach (var entity in _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic))
+        var priority = inRange.Where(mobQuery.HasComponent).ToList();
+        var randomProjectiles = projectileCount - priority.Count;
+
+        var toShoot = priority.Take(Math.Min(projectileCount, priority.Count)).ToList();
+        for (var i = 0; i < randomProjectiles; i++)
         {
-            if (projectilesShot >= component.MaxProjectiles * severity)
-                return;
+            toShoot.Add(_random.PickAndTake(inRange));
+        }
 
-            // Sentient entities are more likely to be shot at than non sentient
-            if (!mobQuery.HasComponent(entity) && !_random.Prob(component.TargetNonSentientChance))
-                continue;
-
-            var targetCoords = Transform(entity).Coordinates.Offset(_random.NextVector2(-1, 1));
+        foreach (var entity in toShoot)
+        {
+            var targetCoords = Transform(entity).Coordinates.Offset(_random.NextVector2(0.5f));
 
             ShootProjectile(
                 uid, component,
@@ -60,7 +64,6 @@ public sealed class ProjectileAnomalySystem : EntitySystem
                 targetCoords,
                 severity
             );
-            projectilesShot++;
         }
     }
 
@@ -69,8 +72,7 @@ public sealed class ProjectileAnomalySystem : EntitySystem
         ProjectileAnomalyComponent component,
         EntityCoordinates coords,
         EntityCoordinates targetCoords,
-        float severity
-        )
+        float severity)
     {
         var mapPos = coords.ToMap(EntityManager, _xform);
 

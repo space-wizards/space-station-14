@@ -6,7 +6,7 @@ namespace Content.Server.Anomaly.Components;
 [RegisterComponent]
 public sealed class ProjectileAnomalyComponent : Component
 {
-    /// <sumarry>
+    /// <summary>
     /// The prototype of the projectile that will be shot when the anomaly pulses
     /// </summary>
     [DataField("projectilePrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
@@ -19,20 +19,20 @@ public sealed class ProjectileAnomalyComponent : Component
     public float MaxProjectileSpeed = 30f;
 
     /// <summary>
+    /// The minimum number of projectiles shot per pulse
+    /// </summary>
+    [DataField("minProjectiles")]
+    public int MinProjectiles = 2;
+
+    /// <summary>
     /// The MAXIMUM number of projectiles shot per pulse
     /// </summary>
     [DataField("maxProjectiles")]
-    public int MaxProjectiles = 5;
+    public int MaxProjectiles = 9;
 
     /// <summary>
     /// The MAXIMUM range for targeting entities
     /// </summary>
     [DataField("projectileRange")]
     public float ProjectileRange = 50f;
-
-    /// <summary>
-    /// Chance that a non sentient entity will be targeted, value must be between 0.0-1.0
-    /// </summary>
-    [DataField("targetNonSentientChance")]
-    public float TargetNonSentientChance = 0.5f;
 }
