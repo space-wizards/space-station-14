@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added the lipid extractor. Simply place a well-fed spaceman inside and
-      let the excess food fall off into meat. Unlock it at science today!, type: Add}
-  id: 3482
-  time: '2023-04-22T07:03:50.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Added decorative crystals., type: Add}
@@ -2909,3 +2903,10 @@ Entries:
   - {message: Fixes a minor error in the Food Recipes guidebook., type: Fix}
   id: 3981
   time: '2023-06-13T01:17:48.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Praetorian and Runner xenos can now be rarely found on expeditions.,
+    type: Add}
+  - {message: All xenos now enjoy a slowdown when badly wounded., type: Tweak}
+  id: 3982
+  time: '2023-06-13T04:48:29.0000000+00:00'
