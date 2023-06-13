@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Admins and ghosts can now scrollin and scrollout., type: Add}
-  id: 3486
-  time: '2023-04-22T10:26:41.0000000+00:00'
 - author: Kit0vras
   changes:
   - {message: Lights and light posts now have ambient sound., type: Add}
@@ -2912,3 +2907,10 @@ Entries:
   - {message: Mobs that can bump open doors can also click them open now., type: Tweak}
   id: 3985
   time: '2023-06-13T10:30:05.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: made temperature ignore resistances, type: Tweak}
+  - {message: fixed shields making blocking sound when user is damaged by temperature,
+    type: Fix}
+  id: 3986
+  time: '2023-06-13T12:59:08.0000000+00:00'
