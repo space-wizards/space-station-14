@@ -249,7 +249,8 @@ namespace Content.Server.Power.EntitySystems
             var coordinates = xform.Coordinates;
             var nearbyEntities = grid.GetCellsInSquareArea(coordinates, (int) Math.Ceiling(range / grid.TileSize));
 
-            var candidates = new List<(float Distance, ExtensionCableProviderComponent Provider)>();
+            foundProvider = default;
+            var closestDistanceFound = float.MaxValue;
             foreach (var entity in nearbyEntities)
             {
                 if (entity == owner || !EntityManager.TryGetComponent<ExtensionCableProviderComponent?>(entity, out var provider)) continue;
@@ -261,16 +262,12 @@ namespace Content.Server.Power.EntitySystems
                 if (!provider.Connectable) continue;
 
                 var distance = (Transform(entity).LocalPosition - xform.LocalPosition).Length;
-                if (distance > Math.Min(range, provider.TransferRange)) continue;
+                // Is the provider out of range or have we already found a closer one?
+                if (distance > Math.Min(range, provider.TransferRange) || distance >= closestDistanceFound) continue;
 
-                candidates.Add((Distance: distance, Provider: provider));
+                foundProvider = provider;
+                closestDistanceFound = distance;
             }
-
-            candidates.Sort((x, y) => x.Distance.CompareTo(y.Distance));
-            foundProvider = candidates
-                .Select(entity => entity.Provider)
-                .FirstOrDefault();
-
             return foundProvider != default;
         }
 
