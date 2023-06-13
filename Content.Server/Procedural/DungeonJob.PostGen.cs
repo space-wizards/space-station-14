@@ -450,8 +450,6 @@ public sealed partial class DungeonJob
         var frontier = new PriorityQueue<Vector2i, float>();
         var cameFrom = new Dictionary<Vector2i, Vector2i>();
         var costSoFar = new Dictionary<Vector2i, float>();
-        var paths = new Dictionary<Vector2i, Dictionary<Vector2i, ValueList<Vector2i>>>();
-
         // With greedy h-score 256 should be fine for decently long distances in testing.
         var pathLimit = gen.PathLimit;
 
@@ -467,125 +465,8 @@ public sealed partial class DungeonJob
 
         // TODO:
         // Maybe do BFS and get the fastest path to each
-        // Then, we assign tile values to each node that is traversed
+        // Then, we assign tile node multipliers to each node that is traversed
         // then we pick the cheapest path for each
-        foreach (var start in entrances)
-        {
-            frontier.Clear();
-            cameFrom.Clear();
-            costSoFar.Clear();
-            frontier.Enqueue(start, 0f);
-            costSoFar[start] = 0f;
-            var count = 0;
-            var remainingEnds = new ValueList<Vector2i>(entrances);
-            await SuspendIfOutOfTime();
-            ValidateResume();
-            pathLimit = 4096;
-
-            while (frontier.Count > 0 && count < pathLimit)
-            {
-                count++;
-                var node = frontier.Dequeue();
-
-                // Nothing else left let's abort.
-                if (remainingEnds.Remove(node) && remainingEnds.Count == 0)
-                {
-                    break;
-                }
-
-                // Foreach neighbor etc etc
-                for (var x = -1; x <= 1; x++)
-                {
-                    for (var y = -1; y <= 1; y++)
-                    {
-                        // Cardinals only.
-                        if (x != 0 && y != 0)
-                            continue;
-
-                        var neighbor = new Vector2i(node.X + x, node.Y + y);
-
-                        // FORBIDDEN
-                        if (!remainingEnds.Contains(neighbor) &&
-                            (dungeon.RoomTiles.Contains(neighbor) ||
-                            dungeon.ExteriorTiles.Contains(neighbor)))
-                        {
-                            continue;
-                        }
-
-                        var tileCost = PathfindingSystem.ManhattanDistance(node, neighbor);
-
-                        // If it's next to a dungeon room then avoid it if at all possible
-                        if (deterredTiles.Contains(neighbor))
-                        {
-                            tileCost *= 2f;
-                        }
-
-                        // f = g + h
-                        // gScore is distance to the start node
-                        // hScore is distance to the end node
-                        // As we use BFS we ignore distance to any end node.
-                        var gScore = costSoFar[node] + tileCost;
-                        if (costSoFar.TryGetValue(neighbor, out var nextValue) && gScore >= nextValue)
-                        {
-                            continue;
-                        }
-
-                        cameFrom[neighbor] = node;
-                        costSoFar[neighbor] = gScore;
-
-                        frontier.Enqueue(neighbor, gScore);
-                    }
-                }
-            }
-
-            // Rebuild paths if it's valid.
-            if (remainingEnds.Count != 0)
-                continue;
-
-            var nodeEnds = paths.GetOrNew(start);
-
-            foreach (var end in entrances)
-            {
-                var node = end;
-                var path = new ValueList<Vector2i>();
-
-                while (true)
-                {
-                    node = cameFrom[node];
-
-                    // Don't want start or end nodes included.
-                    if (node == start)
-                        break;
-
-                    path.Add(node);
-                }
-
-                nodeEnds.Add(end, path);
-            }
-        }
-
-        // Okay now we have all of the paths so let's work out multipliers for each tile
-        var tileMultipliers = new Dictionary<Vector2i, float>();
-
-        foreach (var nodeEnds in paths.Values)
-        {
-            foreach (var nodes in nodeEnds.Values)
-            {
-                foreach (var node in nodes)
-                {
-                    if (!tileMultipliers.TryGetValue(node, out var existing))
-                    {
-                        existing = 1f;
-                    }
-
-                    existing /= 2f;
-                    tileMultipliers[node] = existing;
-                }
-            }
-        }
-
-        // Now actually get paths now that we have tile-costs for most commonly traversed tiles.
-        // We can't just do this upfront as we might have 2 paths 2 tiles apart that have no knowledge of each other.
         foreach (var (start, end) in edges)
         {
             frontier.Clear();
@@ -593,8 +474,8 @@ public sealed partial class DungeonJob
             costSoFar.Clear();
             frontier.Enqueue(start, 0f);
             costSoFar[start] = 0f;
-            var count = 0;
             var found = false;
+            var count = 0;
             await SuspendIfOutOfTime();
             ValidateResume();
 
@@ -630,12 +511,11 @@ public sealed partial class DungeonJob
 
                         var tileCost = PathfindingSystem.ManhattanDistance(node, neighbor);
 
-                        if (!tileMultipliers.TryGetValue(neighbor, out var multiplier))
+                        // Weight towards existing corridors ig
+                        if (corridorTiles.Contains(neighbor))
                         {
-                            multiplier = 1f;
+                            tileCost *= 0.25f;
                         }
-
-                        tileCost *= multiplier;
 
                         // If it's next to a dungeon room then avoid it if at all possible
                         if (deterredTiles.Contains(neighbor))
@@ -646,12 +526,14 @@ public sealed partial class DungeonJob
                         // f = g + h
                         // gScore is distance to the start node
                         // hScore is distance to the end node
-                        // As we use BFS we ignore distance to any end node.
                         var gScore = costSoFar[node] + tileCost;
                         if (costSoFar.TryGetValue(neighbor, out var nextValue) && gScore >= nextValue)
                         {
                             continue;
                         }
+
+                        cameFrom[neighbor] = node;
+                        costSoFar[neighbor] = gScore;
 
                         // Make it greedy so multiply h-score to punish further nodes.
                         // This is necessary as we might have the deterredTiles multiplying towards the end
@@ -663,10 +545,8 @@ public sealed partial class DungeonJob
                 }
             }
 
-            // Rebuild paths if it's valid.
-            if (!found)
-                continue;
-
+            // Rebuild path if it's valid.
+            if (found)
             {
                 var node = end;
 
