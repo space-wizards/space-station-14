@@ -9,3 +9,4 @@ ent-CoronerIDCard = ID карта патологоанатома
 job-name-coroner = Патологоанатом
 job-description-coroner = Управляйте моргом, отбивайтесь от пассажиров, что пытаются завладеть вещами умерших, поставляйте личные вещи умерших гп и глав их отделов, подпольно торгуйте Б/У вещами.
 ent-ClothingUniformJumpsuitCoroner = Униформа патологоанатома
+ent-ClothingUniformJumpskirtCoroner = Юбка-униформа патологоанатома
