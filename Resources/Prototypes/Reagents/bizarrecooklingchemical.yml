@@ -1,0 +1,42 @@
+- type: reagent
+  id: UnknownSubstance
+  name: reagent-name-unknown-substance
+  group: Toxins
+  desc: reagent-desc-unknown-substance
+  physicalDesc: reagent-physical-desc-oily
+  color: "#4A633D"
+  boilingPoint: 337.0
+  meltingPoint: 10.31
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 10
+  - !type:PlantAdjustWeeds
+    amount: -5
+  - !type:PlantAdjustHealth
+    amount: -5
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Cellular: 0.1
+            Piercing: 0.2
+      - !type:Emote
+        emote: Scream
+        probability: 0.1
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 2
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33

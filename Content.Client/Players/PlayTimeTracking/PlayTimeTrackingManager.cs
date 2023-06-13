@@ -8,6 +8,7 @@ using Robust.Client.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Content.Client.Corvax.Sponsors;
 
 namespace Content.Client.Players.PlayTimeTracking;
 
@@ -18,6 +19,7 @@ public sealed class PlayTimeTrackingManager
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly SponsorsManager _sponsorsManager = default!;
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
 
@@ -57,6 +59,12 @@ public sealed class PlayTimeTrackingManager
     public bool IsAllowed(JobPrototype job, [NotNullWhen(false)] out string? reason)
     {
         reason = null;
+
+        if (job.SponsorsOnly && !(_sponsorsManager.TryGetInfo(out var sponsorData) && sponsorData.HavePriorityJoin == true))
+        {
+            reason = "Только для подписчиков Imperial Pass";
+            return false;
+        }
 
         if (job.Requirements == null ||
             !_cfg.GetCVar(CCVars.GameRoleTimers))

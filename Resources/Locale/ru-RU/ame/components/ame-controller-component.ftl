@@ -20,3 +20,7 @@ ame-window-toggle-injection-button = Переключение впрыска
 ame-window-eject-button = Извлечь
 ame-window-increase-fuel-button = Увеличить
 ame-window-decrease-fuel-button = Уменьшить
+
+## admin alert
+
+admin-alert-ame-over-limit = повысил впрыск ДАМ свыше безопасного лимита в  {$injection-amount}

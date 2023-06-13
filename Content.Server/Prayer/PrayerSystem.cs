@@ -10,6 +10,8 @@ using Robust.Shared.Player;
 using Content.Shared.Chat;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;//for admin pray sound
+using Content.Server.Administration.Managers;//for admin pray sound
 
 namespace Content.Server.Prayer;
 /// <summary>
@@ -24,6 +26,7 @@ public sealed class PrayerSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;//for admin pray sound
 
     public override void Initialize()
     {
@@ -105,5 +108,22 @@ public sealed class PrayerSystem : EntitySystem
 
         _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotifiactionPrefix)} <{sender.Name}>: {message}");
         _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotifiactionPrefix)}): {message}");
+        //imperial admin pray sounds start
+        switch (comp.NotifiactionPrefix)
+        {
+            case "prayer-chat-notify-pray":
+                SoundSystem.Play("/Audio/Effects/admin_pray_sound.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), AudioParams.Default.WithVolume(-4f));
+                break;
+            case "prayer-chat-notify-honkmother":
+                SoundSystem.Play("/Audio/Items/bikehorn.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), AudioParams.Default.WithVolume(-4f));
+                break;
+            case "prayer-chat-notify-centcom":
+                SoundSystem.Play("/Audio/Effects/admin_cc_call_sound.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), AudioParams.Default.WithVolume(-4f));
+                break;
+            default:
+                SoundSystem.Play("/Audio/Effects/beep1.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), AudioParams.Default.WithVolume(-4f));
+                break;
+        }
+        //imperial admin pray sound end
     }
 }

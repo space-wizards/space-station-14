@@ -13,6 +13,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Content.Server.Administration.Managers;//for admin alert sound
 
 namespace Content.Server.AME.Components
 {
@@ -23,6 +24,7 @@ namespace Content.Server.AME.Components
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IChatManager _chat = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;//for admin alert sound
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(AMEControllerUiKey.Key);
         private bool _injecting;
@@ -189,7 +191,11 @@ namespace Content.Server.AME.Components
 
                 // Admin alert
                 if (GetCoreCount() * 2 == InjectionAmount - 2 && msg.Button == UiButton.IncreaseFuel)
-                    _chat.SendAdminAlert(player, $"increased AME over safe limit to {InjectionAmount}", mindComponent);
+                {
+                    //_chat.SendAdminAlert(player, $"increased AME over safe limit to {InjectionAmount}", mindComponent); //original
+                    SoundSystem.Play("/Audio/Effects/ame_overloading_admin_alert.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins),AudioParams.Default.WithVolume(-4f));//admin ame alert sound
+                    _chat.SendAdminAlert(player, Loc.GetString("admin-alert-ame-over-limit", ("injection-amount", InjectionAmount)), mindComponent);//locale ame alert
+                }
             }
 
             GetAMENodeGroup()?.UpdateCoreVisuals();

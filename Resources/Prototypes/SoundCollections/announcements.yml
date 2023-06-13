@@ -1,4 +1,5 @@
 - type: soundCollection
   id: RoundEnd
   files:
-  - /Audio/Announcements/RoundEnd/apc_destroyed.ogg
+#  - /Audio/Announcements/RoundEnd/apc_destroyed.ogg
+  - /Audio/Announcements/RoundEnd/notice2.ogg

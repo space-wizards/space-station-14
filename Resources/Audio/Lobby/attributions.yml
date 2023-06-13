@@ -78,3 +78,38 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "every light is blinking at once by Alexander Divine."
   source: "https://soundcloud.com/alexanderdivine/every-light-is-blinking-at-once"
+
+- files: ["gneiss_bluespace.ogg"]
+  license: "Custom"
+  copyright: "Bluespace by Gneiss. Converted from WAV to OGG."
+  source: "https://soundcloud.com/dukegneiss/bluespace"
+
+- files: ["gneiss_codebrain.ogg"]
+  license: "Custom"
+  copyright: "Codebrain by Gneiss. Converted from WAV to OGG."
+  source: "https://soundcloud.com/dukegneiss/codebrain"
+
+- files: ["gneiss_exploring.ogg"]
+  license: "Custom"
+  copyright: "Exploring by Gneiss. Converted from WAV to OGG."
+  source: "https://soundcloud.com/dukegneiss/exploring"
+
+- files: ["gneiss_metropolis.ogg"]
+  license: "Custom"
+  copyright: "Metropolis by Gneiss. Converted from WAV to OGG."
+  source: "https://soundcloud.com/dukegneiss/metropolis"
+
+- files: ["gneiss_phoron_industry.ogg"]
+  license: "Custom"
+  copyright: "Phoron Industry by Gneiss. Converted from WAV to OGG."
+  source: "https://soundcloud.com/dukegneiss/phoron-industry"
+
+- files: ["gneiss_phoron_leak.ogg"]
+  license: "Custom"
+  copyright: "Phoron Leak by Gneiss. Converted from WAV to OGG."
+  source: "https://soundcloud.com/dukegneiss/phoron-leak"
+
+- files: ["gneiss_quantums_escape_plan.ogg"]
+  license: "Custom"
+  copyright: "Quantums Escape Plan by Gneiss. Converted from WAV to OGG."
+  source: "https://soundcloud.com/dukegneiss/quantums-escape-plan"
