@@ -301,3 +301,18 @@
         Slash: 0.95
         Heat: 0.90
         Radiation: 0.75
+
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetAncient
+  name: NTSRA void helmet
+  description: An ancient space helmet, designed by the NTSRA branch of CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - HelmetEVA

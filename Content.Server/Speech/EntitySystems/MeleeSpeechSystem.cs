@@ -1,6 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Shared.Speech.Components;
-using Content.Shared.Weapons.Melee;
+using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Database;
 
 
@@ -22,10 +22,15 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
 	private void OnBattlecryChanged(EntityUid uid, MeleeSpeechComponent comp, MeleeSpeechBattlecryChangedMessage args)
 	{
 
-		if (!TryComp<MeleeSpeechComponent>(uid, out var meleeSpeechUser))
+        if (!TryComp<MeleeSpeechComponent>(uid, out var meleeSpeechUser))
 			return;
 
-		TryChangeBattlecry(uid, args.Battlecry, meleeSpeechUser);
+        string battlecry = args.Battlecry;
+
+        if (battlecry.Length > comp.MaxBattlecryLength)
+            battlecry = battlecry[..comp.MaxBattlecryLength];
+
+        TryChangeBattlecry(uid, battlecry, meleeSpeechUser);
 	}
 
 
@@ -41,12 +46,14 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
 	public bool TryChangeBattlecry(EntityUid uid, string? battlecry, MeleeSpeechComponent? meleeSpeechComp = null)
 	{
 
-		if (!Resolve(uid, ref meleeSpeechComp))
+        if (!Resolve(uid, ref meleeSpeechComp))
 			return false;
 
 		if (!string.IsNullOrWhiteSpace(battlecry))
 		{
 			battlecry = battlecry.Trim();
+
+
 		}
 		else
 		{
@@ -56,6 +63,9 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
 		if (meleeSpeechComp.Battlecry == battlecry)
 
 			return true;
+
+
+
 		meleeSpeechComp.Battlecry = battlecry;
 		Dirty(meleeSpeechComp);
 

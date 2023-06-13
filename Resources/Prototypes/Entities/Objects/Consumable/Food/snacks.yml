@@ -8,7 +8,6 @@
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -82,7 +81,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     state: chocolatebar
-    netsync: false
   - type: Item
     heldPrefix: chocolatebar
     size: 3
@@ -300,7 +298,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     state: nutribrick
-    netsync: false
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketMRETrash
@@ -339,7 +336,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     state: mre-brownie
-    netsync: false
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketMRETrash
@@ -380,7 +376,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
-    netsync: false
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet

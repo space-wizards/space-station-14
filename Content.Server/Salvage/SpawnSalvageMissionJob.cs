@@ -205,6 +205,15 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         }
 
         // Handle loot
+        // We'll always add this loot if possible
+        foreach (var lootProto in _prototypeManager.EnumeratePrototypes<SalvageLootPrototype>())
+        {
+            if (!lootProto.Guaranteed)
+                continue;
+
+            await SpawnDungeonLoot(dungeon, lootProto, mapUid, grid, random, reservedTiles);
+        }
+
         foreach (var (loot, count) in mission.Loot)
         {
             for (var i = 0; i < count; i++)

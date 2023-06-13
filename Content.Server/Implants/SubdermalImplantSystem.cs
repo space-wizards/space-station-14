@@ -5,44 +5,31 @@ using Content.Shared.Cuffs.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Mobs;
 using Content.Shared.Popups;
-using Robust.Shared.Containers;
 
 namespace Content.Server.Implants;
 
 public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 {
     [Dependency] private readonly CuffableSystem _cuffable = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<SubdermalImplantComponent, UseFreedomImplantEvent>(OnFreedomImplant);
-
-        SubscribeLocalEvent<StoreComponent, AfterInteractUsingEvent>(OnUplinkInteractUsing);
-
-        SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayToImplantEvent);
-        SubscribeLocalEvent<ImplantedComponent, AfterInteractUsingEvent>(RelayToImplantEvent);
-        SubscribeLocalEvent<ImplantedComponent, SuicideEvent>(RelayToImplantEvent);
+        SubscribeLocalEvent<StoreComponent, ImplantRelayEvent<AfterInteractUsingEvent>>(OnStoreRelay);
     }
 
-    private void OnFreedomImplant(EntityUid uid, SubdermalImplantComponent component, UseFreedomImplantEvent args)
+    private void OnStoreRelay(EntityUid uid, StoreComponent store, ImplantRelayEvent<AfterInteractUsingEvent> implantRelay)
     {
-        if (!TryComp<CuffableComponent>(component.ImplantedEntity, out var cuffs) || cuffs.Container.ContainedEntities.Count < 1)
+        var args = implantRelay.Event;
+
+        if (args.Handled)
             return;
 
-        _cuffable.Uncuff(component.ImplantedEntity.Value, cuffs.LastAddedCuffs, cuffs.LastAddedCuffs);
-        args.Handled = true;
-    }
-
-    private void OnUplinkInteractUsing(EntityUid uid, StoreComponent store, AfterInteractUsingEvent args)
-    {
         // can only insert into yourself to prevent uplink checking with renault
         if (args.Target != args.User)
             return;
@@ -61,46 +48,12 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         QueueDel(args.Used);
     }
 
-    #region Relays
-
-    //Relays from the implanted to the implant
-    private void RelayToImplantEvent<T>(EntityUid uid, ImplantedComponent component, T args) where T: notnull
+    private void OnFreedomImplant(EntityUid uid, SubdermalImplantComponent component, UseFreedomImplantEvent args)
     {
-        if (!_container.TryGetContainer(uid, ImplanterComponent.ImplantSlotId, out var implantContainer))
+        if (!TryComp<CuffableComponent>(component.ImplantedEntity, out var cuffs) || cuffs.Container.ContainedEntities.Count < 1)
             return;
-        foreach (var implant in implantContainer.ContainedEntities)
-        {
-            RaiseLocalEvent(implant, args);
-        }
-    }
 
-    //Relays from the implanted to the implant
-    private void RelayToImplantEventByRef<T>(EntityUid uid, ImplantedComponent component, ref T args) where T: notnull
-    {
-        if (!_container.TryGetContainer(uid, ImplanterComponent.ImplantSlotId, out var implantContainer))
-            return;
-        foreach (var implant in implantContainer.ContainedEntities)
-        {
-            RaiseLocalEvent(implant,ref args);
-        }
+        _cuffable.Uncuff(component.ImplantedEntity.Value, cuffs.LastAddedCuffs, cuffs.LastAddedCuffs);
+        args.Handled = true;
     }
-
-    //Relays from the implant to the implanted
-    private void RelayToImplantedEvent<T>(EntityUid uid, SubdermalImplantComponent component, T args) where T : EntityEventArgs
-    {
-        if (component.ImplantedEntity != null)
-        {
-            RaiseLocalEvent(component.ImplantedEntity.Value, args);
-        }
-    }
-
-    private void RelayToImplantedEventByRef<T>(EntityUid uid, SubdermalImplantComponent component, ref T args) where T : EntityEventArgs
-    {
-        if (component.ImplantedEntity != null)
-        {
-            RaiseLocalEvent(component.ImplantedEntity.Value, ref args);
-        }
-    }
-
-    #endregion
 }

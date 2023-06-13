@@ -9,7 +9,6 @@
       tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Mask/gas.rsi
-      netsync: false
     - type: Clothing
       sprite: Clothing/Mask/gas.rsi
     - type: ChameleonClothing

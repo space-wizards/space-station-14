@@ -27,8 +27,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
     public override void Shutdown()
     {
         base.Shutdown();
-        ShutdownShuttle();
-        CleanupShuttle();
+        CleanupCargoShuttle();
     }
 
     public override void Update(float frameTime)
@@ -39,19 +38,21 @@ public sealed partial class CargoSystem : SharedCargoSystem
     }
 
     [PublicAPI]
-    public void UpdateBankAccount(StationBankAccountComponent component, int balanceAdded)
+    public void UpdateBankAccount(EntityUid uid, StationBankAccountComponent component, int balanceAdded)
     {
         component.Balance += balanceAdded;
-        // TODO: Code bad
-        foreach (var comp in EntityQuery<CargoOrderConsoleComponent>())
-        {
-            if (!_uiSystem.IsUiOpen(comp.Owner, CargoConsoleUiKey.Orders)) continue;
+        var query = EntityQueryEnumerator<CargoOrderConsoleComponent>();
 
-            var station = _station.GetOwningStation(comp.Owner);
-            if (station != component.Owner)
+        while (query.MoveNext(out var oUid, out var oComp))
+        {
+            if (!_uiSystem.IsUiOpen(oUid, CargoConsoleUiKey.Orders))
                 continue;
 
-            UpdateOrderState(comp, station);
+            var station = _station.GetOwningStation(oUid);
+            if (station != uid)
+                continue;
+
+            UpdateOrderState(oComp, station);
         }
     }
 }

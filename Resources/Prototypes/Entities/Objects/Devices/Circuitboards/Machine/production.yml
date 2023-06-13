@@ -103,6 +103,20 @@
     guides:
     - Robotics
 
+# yes i know this prototype name is long i'm just following conventions
+- type: entity
+  id: ResearchAndDevelopmentServerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: R&D server machine board
+  description: A machine printed circuit board for the R&D server.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: ResearchAndDevelopmentServer
+    materialRequirements:
+      Plasma: 5
+
 - type: entity
   id: UniformPrinterMachineCircuitboard
   parent: BaseMachineCircuitboard
@@ -449,6 +463,50 @@
       prototype: SMESBasicEmpty
       requirements:
         Capacitor: 5
+
+- type: entity
+  id: CellRechargerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cell recharger machine board
+  description: A machine printed circuit board for a cell recharger.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: charger_APC
+    - type: MachineBoard
+      prototype: PowerCellRecharger
+      requirements:
+        Capacitor: 2
+      materialRequirements:
+        Cable: 5
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 30
+        Plastic: 30
+    - type: StaticPrice
+      price: 15
+
+- type: entity
+  id: WeaponCapacitorRechargerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: recharger machine board
+  description: A machine printed circuit board for a recharger.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: charger_APC
+    - type: MachineBoard
+      prototype: WeaponCapacitorRecharger
+      requirements:
+        Capacitor: 2
+      materialRequirements:
+        CableMV: 5
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 30
+        Plastic: 30
+    - type: StaticPrice
+      price: 15
 
 - type: entity
   id: SubstationMachineCircuitboard
