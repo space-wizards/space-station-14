@@ -31,3 +31,6 @@ ent-FaxMachineQuartermasterColored = факс дальнего действия 
 ent-FaxMachineInternalAffairsAgentColored = факс дальнего действия АВД
     .suffix = АВД
     .desc = Прямая связь с оператором ЦентКома. Удобный и стильный
+ent-FaxMachineERTColored = факс подразделений специального назначения
+    .suffix = ОБР
+    .desc = Факс дальнего действия подразделений специального назначения

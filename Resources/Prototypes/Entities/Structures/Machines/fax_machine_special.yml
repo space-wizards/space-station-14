@@ -225,3 +225,23 @@
     state: icon
   - type: FaxMachine
     name: "АВД"
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineERTColored
+  name: ERT long range fax machine
+  description: Long-range fax of special operations units
+  suffix: ERT
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/fax_machine_special/fax_machine_ert.rsi
+    drawdepth: SmallObjects
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Structures/Machines/fax_machine_special/fax_machine_ert.rsi
+    state: icon
+  - type: FaxMachine
+    name: "ОБР"
