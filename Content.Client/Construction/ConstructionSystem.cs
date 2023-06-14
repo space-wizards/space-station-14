@@ -190,7 +190,7 @@ namespace Content.Client.Construction
             if (!_interactionSystem.InRangeUnobstructed(user, loc, 20f, predicate: predicate))
                 return false;
 
-            if (!CheckConstructionConditions(prototype, loc, dir, user))
+            if (!CheckConstructionConditions(prototype, loc, dir, user, showPopup: true))
                 return false;
 
             ghost = EntityManager.SpawnEntity("constructionghost", loc);
@@ -217,17 +217,20 @@ namespace Content.Client.Construction
         }
 
         private bool CheckConstructionConditions(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir,
-            EntityUid user)
+            EntityUid user, bool showPopup = false)
         {
             foreach (var condition in prototype.Conditions)
             {
                 if (!condition.Condition(user, loc, dir))
                 {
-                    var message = condition.GenerateGuideEntry()?.Localization;
-                    if (message != null)
+                    if (showPopup)
                     {
-                        // Show the reason to the user:
-                        _popupSystem.PopupCoordinates(Loc.GetString(message), loc);
+                        var message = condition.GenerateGuideEntry()?.Localization;
+                        if (message != null)
+                        {
+                            // Show the reason to the user:
+                            _popupSystem.PopupCoordinates(Loc.GetString(message), loc);
+                        }
                     }
 
                     return false;
