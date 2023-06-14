@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.EUI;
 using Content.Server.Ghost.Components;
@@ -39,9 +40,6 @@ namespace Content.Server.Ghost.Roles
         private readonly Dictionary<uint, GhostRoleInfo> _ghostRoles = new();
         private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
         private readonly Dictionary<IPlayerSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
-
-        [ViewVariables]
-        public IReadOnlyCollection<GhostRoleInfo> GhostRoles => _ghostRoles.Values;
 
         public override void Initialize()
         {
@@ -155,7 +153,7 @@ namespace Content.Server.Ghost.Roles
             if (_needsUpdateGhostRoleCount)
             {
                 _needsUpdateGhostRoleCount = false;
-                var response = new GhostUpdateGhostRoleCountEvent(GetGhostRolesInfo().Length);
+                var response = new GhostUpdateGhostRoleCountEvent(GhostRoles().Count());
                 foreach (var player in _playerManager.Sessions)
                 {
                     RaiseNetworkEvent(response, player.ConnectedClient);
@@ -257,6 +255,13 @@ namespace Content.Server.Ghost.Roles
 
             newMind.ChangeOwningPlayer(player.UserId);
             newMind.TransferTo(mob);
+        }
+
+        public IEnumerable<GhostRoleInfo> GhostRoles()
+        {
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
+
+            return _ghostRoles.Values.Where((info) => !metaQuery.GetComponent(info.Owner).EntityPaused);
         }
 
         private void OnPlayerAttached(PlayerAttachedEvent message)

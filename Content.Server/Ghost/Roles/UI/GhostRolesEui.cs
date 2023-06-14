@@ -9,7 +9,7 @@ namespace Content.Server.Ghost.Roles.UI
     {
         public override GhostRolesEuiState GetNewState()
         {
-            return new(EntitySystem.Get<GhostRoleSystem>().GhostRoles.ToArray());
+            return new(EntitySystem.Get<GhostRoleSystem>().GhostRoles().ToArray());
         }
 
         public override void HandleMessage(EuiMessageBase msg)
