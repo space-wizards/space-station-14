@@ -3,7 +3,6 @@ using Content.Server.Mind.Components;
 using Content.Server.StationEvents.Components;
 using Content.Server.Traits.Assorted;
 using Content.Shared.Traits.Assorted;
-using Robust.Shared.Audio;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -15,14 +14,15 @@ public sealed class MassHallucinationsRule : StationEventSystem<MassHallucinatio
     {
         base.Started(uid, component, gameRule, args);
         var query = EntityQueryEnumerator<MindComponent>();
-        var sounds = new SoundCollectionSpecifier("Paracusia");
         while (query.MoveNext(out var ent, out _))
         {
             if (!HasComp<ParacusiaComponent>(ent))
             {
                 EnsureComp<MassHallucinationsComponent>(ent);
                 var paracusia = EnsureComp<ParacusiaComponent>(ent);
-                _paracusia.SetSounds(ent, sounds, paracusia);
+                _paracusia.SetSounds(ent, component.Sounds, paracusia);
+                _paracusia.SetTime(ent, component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents, paracusia);
+                _paracusia.SetDistance(ent, component.MaxSoundDistance);
             }
         }
     }
