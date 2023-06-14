@@ -5,10 +5,10 @@
   description: It's watching you everywhere.
   components:
   - type: Item
-    sprite: /Uploaded/handheld_camera/body_camera.rsi
+    sprite: Objects/Devices/body_camera.rsi
   - type: Sprite
     state: icon
-    sprite: /Uploaded/handheld_camera/body_camera.rsi
+    sprite: Objects/Devices/body_camera.rsi
   - type: Clothing
     quickEquip: true
     slots:
