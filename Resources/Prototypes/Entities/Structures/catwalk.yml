@@ -8,7 +8,6 @@
   components:
   - type: Clickable
   - type: Sprite
-    netsync: false
     sprite: Structures/catwalk.rsi
     drawdepth: FloorTiles
   - type: Icon

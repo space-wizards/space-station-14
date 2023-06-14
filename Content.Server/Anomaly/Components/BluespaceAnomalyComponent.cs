@@ -1,9 +1,9 @@
-﻿using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
+﻿using Content.Server.Anomaly.Effects;
+using Robust.Shared.Audio;
 
-namespace Content.Shared.Anomaly.Effects.Components;
+namespace Content.Server.Anomaly.Components;
 
-[RegisterComponent, NetworkedComponent, Access(typeof(BluespaceAnomalySystem))]
+[RegisterComponent, Access(typeof(BluespaceAnomalySystem))]
 public sealed class BluespaceAnomalyComponent : Component
 {
     /// <summary>
