@@ -3,6 +3,11 @@
   id: ErtEmpty
   path: "Maps/Shuttles/dart.yml"
 
+#Standart ERT shuttle with crew
+- type: ertCall
+  id: ErtStandart
+  path: "Maps/Shuttles/ERTPresets/dartStandart.yml"
+
 #6 crew ERT team for small problems
 #1 lead 1 med 1 eng 3 sec
 - type: ertCall

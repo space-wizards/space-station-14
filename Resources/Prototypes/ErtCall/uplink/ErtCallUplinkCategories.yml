@@ -15,7 +15,7 @@
   name: store-category-ert-uplink-melee
 
 - type: storeCategory
-  id: ERTUplikWeaponCombat
+  id: ERTUplinkWeaponCombat
   name: store-category-ert-uplink-weapon-combat
 
 - type: storeCategory

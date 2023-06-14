@@ -1,16 +1,83 @@
 #temp
+#Full
 - type: storePreset
   id: ErtCallUplinkPreset
   storeName: ErtUplinkFull
   categories:
   - ERTUplinkMelee
-  - ERTUplikWeaponCombat
+  - ERTUplinkWeaponCombat
   - ERTUplinkAmmoCombat
-  - ERTUplinkWeaponNonCombat
-  - ERTUplinkAmmoNonCombat
   - ERTUplinkExplosives
   - ERTUplinkMedial
   - ERTUplinkEngineering
+  - ERTUplinkUtilities
+  - ERTUplinkJunitor
+  - ERTUplinkPointless
+  currencyWhitelist:
+  - Telecrystal
+
+#Medic
+- type: storePreset
+  id: ErtCallUplinkMedicPreset
+  storeName: ErtUplinkFull
+  categories:
+  - ERTUplinkMelee
+  - ERTUplinkWeaponCombat
+  - ERTUplinkAmmoCombat
+  #- ERTUplinkExplosives
+  - ERTUplinkMedial
+  #- ERTUplinkEngineering
+  - ERTUplinkUtilities
+  #- ERTUplinkJunitor
+  - ERTUplinkPointless
+  currencyWhitelist:
+  - Telecrystal
+
+#Security
+- type: storePreset
+  id: ErtCallUplinkSecurityPreset
+  storeName: ErtUplinkFull
+  categories:
+  - ERTUplinkMelee
+  - ERTUplinkWeaponCombat
+  - ERTUplinkAmmoCombat
+  - ERTUplinkExplosives
+  #- ERTUplinkMedial
+  #- ERTUplinkEngineering
+  - ERTUplinkUtilities
+  #- ERTUplinkJunitor
+  - ERTUplinkPointless
+  currencyWhitelist:
+  - Telecrystal
+
+#Engineer
+- type: storePreset
+  id: ErtCallUplinkEngineerPreset
+  storeName: ErtUplinkFull
+  categories:
+  - ERTUplinkMelee
+  - ERTUplinkWeaponCombat
+  - ERTUplinkAmmoCombat
+  - ERTUplinkExplosives
+  #- ERTUplinkMedial
+  - ERTUplinkEngineering
+  - ERTUplinkUtilities
+  #- ERTUplinkJunitor
+  - ERTUplinkPointless
+  currencyWhitelist:
+  - Telecrystal
+
+#Janitor
+- type: storePreset
+  id: ErtCallUplinkJanitorPreset
+  storeName: ErtUplinkFull
+  categories:
+  - ERTUplinkMelee
+  - ERTUplinkWeaponCombat
+  - ERTUplinkAmmoCombat
+  #- ERTUplinkExplosives
+  #- ERTUplinkMedial
+  #- ERTUplinkEngineering
   - ERTUplinkUtilities
   - ERTUplinkJunitor
   - ERTUplinkPointless

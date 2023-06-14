@@ -1,18 +1,21 @@
 - type: entity
   parent: BaseItem
-  id: BaseErtUplinkRadio
+  id: BaseERTUplink
   name: ert uplink
   description: super ert uplink
   suffix: Empty
   components:
   - type: Sprite
-    sprite: Objects/Devices/communication.rsi
+    sprite: Objects/Devices/ert_tablet.rsi
     layers:
-    - state: old-radio
+    - state: device-on
+    - state: device-anim
+      shader: unshaded
+      visible: true
     netsync: false
   - type: Item
-    sprite: Objects/Devices/communication.rsi
-    heldPrefix: old-radio
+    sprite: Objects/Devices/ert_tablet.rsi
+    heldPrefix: device
   - type: UserInterface
     interfaces:
     - key: enum.StoreUiKey.Key
@@ -24,13 +27,73 @@
     balance:
       Telecrystal: 0
 
+#Leader
 - type: entity
-  parent: BaseErtUplinkRadio
-  id: BaseErtUplinkRadio20TC
-  suffix: 20 TC, ert
+  parent: BaseERTUplink
+  id: ERTUplinkLeader
+  suffix: ERT
   components:
   - type: Store
     preset: ErtCallUplinkPreset
     balance:
+      Telecrystal: 30
+  - type: Tag
+    tags:
+      - ErtUplinkCombat
+
+#Medic
+- type: entity
+  parent: BaseERTUplink
+  id: ERTUplinkMedic
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkMedicPreset
+    balance:
       Telecrystal: 20
+  # - type: Tag
+  #   tags:
+  #     - ErtUplinkCombat
+
+#Security
+- type: entity
+  parent: BaseERTUplink
+  id: ERTUplinkSecurity
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkSecurityPreset
+    balance:
+      Telecrystal: 20
+  - type: Tag
+    tags:
+      - ErtUplinkCombat
+
+#Engineer
+- type: entity
+  parent: BaseERTUplink
+  id: ERTUplinkEngineer
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkEngineerPreset
+    balance:
+      Telecrystal: 20
+  # - type: Tag
+  #   tags:
+  #     - ErtUplinkCombat
+
+#Junitor
+- type: entity
+  parent: BaseERTUplink
+  id: ERTUplinkJunitor
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkJanitorPreset
+    balance:
+      Telecrystal: 20
+  # - type: Tag
+  #   tags:
+  #     - ErtUplinkCombat
 

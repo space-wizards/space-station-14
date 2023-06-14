@@ -2,7 +2,7 @@
 - type: entity
   noSpawn: true
   parent: MobHuman
-  id: ERTLeaderPreset
+  id: ERTLeaderEVAPreset
   name: ERT leader
   suffix: EVA
   components:
@@ -15,13 +15,13 @@
       sprite: Markers/jobs.rsi
       state: ertleadereva
     - type: Loadout
-      prototypes: [ ERTLeaderPresetGear ]
+      prototypes: [ ERTCallLeaderGearEVA ]
 
 #Medic
 - type: entity
   noSpawn: true
   parent: MobHuman
-  id: ERTMedicPreset
+  id: ERTMedicEVAPreset
   name: ERT medic
   suffix: EVA
   components:
@@ -34,13 +34,13 @@
       sprite: Markers/jobs.rsi
       state: ertmedicaleva
     - type: Loadout
-      prototypes: [ ERTMedicalGearEVA ]
+      prototypes: [ ERTCallMedicalGearEVA ]
 
 #Security
 - type: entity
   noSpawn: true
   parent: MobHuman
-  id: ERTSecurityPreset
+  id: ERTSecurityEVAPreset
   name: ERT security
   suffix: EVA
   components:
@@ -53,13 +53,13 @@
       sprite: Markers/jobs.rsi
       state: ertsecurityeva
     - type: Loadout
-      prototypes: [ ERTSecurityGearEVA ]
+      prototypes: [ ERTCallSecurityGearEVA ]
 
 #Engineer
 - type: entity
   noSpawn: true
   parent: MobHuman
-  id: ERTEngineerPreset
+  id: ERTEngineerEVAPreset
   name: ERT engineer
   suffix: EVA
   components:
@@ -72,13 +72,13 @@
       sprite: Markers/jobs.rsi
       state: ertengineereva
     - type: Loadout
-      prototypes: [ ERTEngineerGearEVA ]
+      prototypes: [ ERTCallEngineerGearEVA ]
 
 #Junitor
 - type: entity
   noSpawn: true
   parent: MobHuman
-  id: ERTJunitorPreset
+  id: ERTJunitorEVAPreset
   name: ERT junitor
   suffix: EVA
   components:
@@ -91,7 +91,7 @@
       sprite: Markers/jobs.rsi
       state: ertjanitoreva
     - type: Loadout
-      prototypes: [ ERTJanitorGearEVA ]
+      prototypes: [ ERTCallJanitorGearEVA ]
 
 #CBURN
 - type: entity

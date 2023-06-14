@@ -1,7 +1,7 @@
 #Leader
 - type: entity
   #noSpawn: true
-  id: SpawnERTLeaderPreset
+  id: SpawnERTLeaderEVAPreset
   name: ghost role spawn point
   parent: MarkerBase
   components:
@@ -10,7 +10,7 @@
       description: ertcall-leader-eva-desc
       rules: ertcall-leader-eva-rules
     - type: GhostRoleMobSpawner
-      prototype: ERTLeaderPreset
+      prototype: ERTLeaderEVAPreset
     - type: Sprite
       sprite: Markers/jobs.rsi
       layers:
@@ -22,7 +22,7 @@
 
 - type: entity
   #noSpawn: true
-  id: SpawnERTMedicPreset
+  id: SpawnERTMedicEVAPreset
   name: ghost role spawn point
   parent: MarkerBase
   components:
@@ -31,7 +31,7 @@
       description: ertcall-medic-eva-desc
       rules: ertcall-medic-eva-rules
     - type: GhostRoleMobSpawner
-      prototype: ERTMedicPreset
+      prototype: ERTMedicEVAPreset
     - type: Sprite
       sprite: Markers/jobs.rsi
       layers:
@@ -42,7 +42,7 @@
 #Security
 - type: entity
   #noSpawn: true
-  id: SpawnERTSecurityPreset
+  id: SpawnERTSecurityEVAPreset
   name: ghost role spawn point
   parent: MarkerBase
   components:
@@ -51,7 +51,7 @@
       description: ertcall-security-eva-desc
       rules: ertcall-security-eva-rules
     - type: GhostRoleMobSpawner
-      prototype: ERTSecurityPreset
+      prototype: ERTSecurityEVAPreset
     - type: Sprite
       sprite: Markers/jobs.rsi
       layers:
@@ -62,7 +62,7 @@
 #Engineer
 - type: entity
   #noSpawn: true
-  id: SpawnERTEngineerPreset
+  id: SpawnERTEngineerEVAPreset
   name: ghost role spawn point
   parent: MarkerBase
   components:
@@ -71,7 +71,7 @@
       description: ertcall-engineer-eva-desc
       rules: ertcall-engineer-eva-rules
     - type: GhostRoleMobSpawner
-      prototype: ERTEngineerPreset
+      prototype: ERTEngineerEVAPreset
     - type: Sprite
       sprite: Markers/jobs.rsi
       layers:
@@ -82,7 +82,7 @@
 #Junitor
 - type: entity
   #noSpawn: true
-  id: SpawnERTJunitorPreset
+  id: SpawnERTJunitorEVAPreset
   name: ghost role spawn point
   parent: MarkerBase
   components:
@@ -91,7 +91,7 @@
       description: ertcall-junitor-eva-desc
       rules: ertcall-junitor-eva-rules
     - type: GhostRoleMobSpawner
-      prototype: ERTJunitorPreset
+      prototype: ERTJunitorEVAPreset
     - type: Sprite
       sprite: Markers/jobs.rsi
       layers:

@@ -1,25 +1,159 @@
 #Leader
 - type: startingGear
-  id: ERTLeaderPresetGear
+  id: ERTCallLeaderGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTLeader
-    back: ClothingBackpackERTLeaderFilled
-    shoes: ClothingShoesBootsMag
+    back: ClothingBackpackCallERTLeaderFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltSecurityWebbing
+    pocket1: ERTUplinkLeader
+
+- type: startingGear
+  id: ERTCallLeaderGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTLeader
+    back: ClothingBackpackCallERTLeaderFilled
+    shoes: ClothingShoesBootsJack
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTLeader
     suitstorage: OxygenTankFilled
     id: ERTLeaderPDA
-    ears: ClothingHeadsetAltCommand
+    ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityFilled
-    pocket1: BaseErtUplinkRadio20TC
+    pocket1: ERTUplinkLeader
+
 #Medic
+- type: startingGear
+  id: ERTCallMedicalGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTMedic
+    back: ClothingBackpackCallERTMedicalFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesHudMedical
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTCallLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltMedicalFilled
+    pocket1: ERTUplinkMedic
+
+- type: startingGear
+  id: ERTCallMedicalGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTMedic
+    back: ClothingBackpackCallERTMedicalFilled
+    shoes: ClothingShoesBootsJack
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesHudMedical
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTMedical
+    suitstorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltMedicalFilled
+    pocket1: ERTUplinkMedic
 
 #Security
+- type: startingGear
+  id: ERTCallSecurityGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
+    back: ClothingBackpackCallERTSecurityFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltSecurityWebbing
+    pocket1: ERTUplinkSecurity
+
+- type: startingGear
+  id: ERTCallSecurityGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
+    back: ClothingBackpackCallERTSecurityFilled
+    shoes: ClothingShoesBootsJack
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTSecurity
+    suitstorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltSecurityWebbing
+    pocket1: ERTUplinkSecurity
 
 #Engineer
+- type: startingGear
+  id: ERTCallEngineerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTEngineer
+    back: ClothingBackpackCallERTEngineerFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesGlassesMeson
+    gloves: ClothingHandsGlovesColorYellow
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltChiefEngineerFilled
+    pocket1: ERTUplinkEngineer
+
+- type: startingGear
+  id: ERTCallEngineerGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTEngineer
+    back: ClothingBackpackCallERTEngineerFilled
+    shoes: ClothingShoesBootsJack
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesGlassesMeson
+    gloves: ClothingHandsGlovesColorYellow
+    outerClothing: ClothingOuterHardsuitERTEngineer
+    suitstorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltChiefEngineerFilled
+    pocket1: ERTUplinkEngineer
 
 #Junitor
+- type: startingGear
+  id: ERTCallJanitorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTJanitor
+    back: ClothingBackpackCallERTJanitorFilled
+    shoes: ClothingShoesGaloshes
+    head: ClothingHeadHelmetHelmet
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltJanitorFilled
+    pocket1: ERTUplinkJunitor
+
+- type: startingGear
+  id: ERTCallJanitorGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTJanitor
+    back: ClothingBackpackCallERTJanitorFilled
+    shoes: ClothingShoesGaloshes
+    mask: ClothingMaskBreath
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTJanitor
+    suitstorage: OxygenTankFilled
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltJanitorFilled
+    pocket1: ERTUplinkJunitor
 
 #RHBZZ
