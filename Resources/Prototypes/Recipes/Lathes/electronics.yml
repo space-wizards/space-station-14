@@ -451,7 +451,7 @@
   completetime: 4
   materials:
      Steel: 50
-     Glass: 350
+     Glass: 150
 
 - type: latheRecipe
   id: WallmountGeneratorAPUElectronics
