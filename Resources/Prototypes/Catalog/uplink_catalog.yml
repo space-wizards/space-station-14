@@ -169,7 +169,7 @@
   icon: { sprite: /Textures/Objects/Misc/bureaucracy.rsi, state: pen }
   productEntity: PenExplodingBox
   cost:
-    Telecrystal: 4
+    Telecrystal: 3
   categories:
   - UplinkExplosives
 
