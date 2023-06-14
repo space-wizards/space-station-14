@@ -2,6 +2,7 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
@@ -12,6 +13,10 @@ public sealed class ModifyBloodLevel : ReagentEffect
 
     [DataField("amount")]
     public FixedPoint2 Amount = 1.0f;
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("reagent-effect-guidebook-modify-blood-level", ("chance", Probability),
+            ("deltasign", MathF.Sign(Amount.Float())));
 
     public override void Effect(ReagentEffectArgs args)
     {

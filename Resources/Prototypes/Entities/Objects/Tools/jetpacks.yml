@@ -5,7 +5,6 @@
   - type: TimedDespawn
     lifetime: 2
   - type: Sprite
-    netsync: false
     drawdepth: SmallMobs
     noRot: true
     layers:
@@ -35,7 +34,6 @@
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/blue.rsi
       state: icon
-      netsync: false
     - type: Item
       sprite: Objects/Tanks/Jetpacks/blue.rsi
       size: 100

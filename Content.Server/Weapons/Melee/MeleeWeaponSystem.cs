@@ -62,7 +62,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!args.CanInteract || !args.CanAccess || component.HideFromExamine)
             return;
 
-        var damageSpec = GetDamage(uid, component);
+        var damageSpec = GetDamage(uid, args.User, component);
 
         if (damageSpec.Total == FixedPoint2.Zero)
             return;
@@ -269,7 +269,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         if (comp.Battlecry != null)//If the battlecry is set to empty, doesn't speak
         {
-            _chat.TrySendInGameICMessage(args.User, comp.Battlecry, InGameICChatType.Speak, true, true);  //Speech that isn't sent to chat or adminlogs
+            _chat.TrySendInGameICMessage(args.User, comp.Battlecry, InGameICChatType.Speak, true, true, checkRadioPrefix: false);  //Speech that isn't sent to chat or adminlogs
         }
 
     }

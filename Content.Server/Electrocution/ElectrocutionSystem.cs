@@ -163,7 +163,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             if (!electrified.OnAttacked)
                 return;
 
-            if (_meleeWeapon.GetDamage(args.Used).Total == 0)
+            if (_meleeWeapon.GetDamage(args.Used, args.User).Total == 0)
                 return;
 
             TryDoElectrifiedAct(uid, args.User, 1, electrified);
@@ -322,6 +322,10 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         var electrocutionEntity = Spawn($"VirtualElectrocutionLoad{node.NodeGroupID}", sourceTransform.Coordinates);
         var electrocutionNode = Comp<NodeContainerComponent>(electrocutionEntity).GetNode<ElectrocutionNode>("electrocution");
         var electrocutionComponent = Comp<ElectrocutionComponent>(electrocutionEntity);
+
+        // This shows up in the power monitor.
+        // Yes. Yes exactly.
+        MetaData(electrocutionEntity).EntityName = MetaData(uid).EntityName;
 
         electrocutionNode.CableEntity = sourceUid;
         electrocutionNode.NodeName = node.Name;
