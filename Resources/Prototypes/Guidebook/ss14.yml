@@ -1,4 +1,4 @@
-﻿- type: guideEntry
+- type: guideEntry
   id: SS14
   name: guide-entry-ss14
   text: "/ServerInfo/Guidebook/Space Station 14.xml"
@@ -7,3 +7,4 @@
   - Jobs
   - Survival
   - Chemicals
+  - Species

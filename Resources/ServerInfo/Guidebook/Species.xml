@@ -1,0 +1,63 @@
+<Document>
+  # Species
+  A diverse variety of different species take up jobs on SS14,
+  each with their own special strengths, weaknesses, abilities, and quirks.
+  Make sure to treat everyone with respect!
+
+  ## Humans
+<Box>
+  <GuideEntityEmbed Entity="MobHumanDummy" Caption=""/>
+</Box>
+  Everyone's favorite standard, boiler-plate sentient primates. Nothing much to say.
+  
+  ## Reptilians
+<Box>
+  <GuideEntityEmbed Entity="MobReptilianDummy" Caption=""/>
+</Box>
+  Lizard-like humanoids with sharp claws, tough scales, and an appetite for meat.
+
+  - Reptilians can eat raw meat without any downsides.
+  - They are resistant to blunt damage, but vulnerable to slash.
+  - Due to their cold-blooded nature, they take significantly more freezing damage.
+  
+## Slime People
+<Box>
+  <GuideEntityEmbed Entity="MobSlimePersonDummy" Caption=""/>
+</Box>
+  Gelatinous, human-shaped sacks of goo who breath nitrogen instead of oxygen.
+
+  - Slime people breath nitrogen and exhale nitrous oxide. Make sure you're breathing the right gas!
+  - They take significantly more pressure damage, but almost no cellular damage.
+  - Slimes won't get drunk very easily.
+  
+  ## Diona
+<Box>
+  <GuideEntityEmbed Entity="MobDionaDummy" Caption=""/>
+</Box>
+  Tree-like plant people, whose anatomy more closely resembles the plants of Earth than any animal species.
+
+  - Diona can metabolize fertilizers and weedkiller reagents similar to plants. this makes robust harvest a potent healer, but makes weedkiller and its derivatives deadly toxins.
+  - Diona cannot wear shoes to protect their feet. Watch your step!
+  - Though their thick, bark-like exoskeletons serve as incredible armor to most physical damage, the extra weight makes them considerably slow on their feet.
+  
+  ## Dwarves
+<Box>
+  <GuideEntityEmbed Entity="MobDwarfDummy" Caption=""/>
+</Box>
+  Humanity's crafty and stout cousins, with a penchant for alcohol and scottish accents.
+
+  - Most Dwarves share a common ancestry originating from ancient Scottland, and thus tend to speak in thick accents.
+  - Dwarves can metabolize alcohol as a weak healing agent.
+  - Due to their stout profile, they tend to run out of stamina faster than others in physical situations.
+  
+  ## Arachnids
+<Box>
+  <GuideEntityEmbed Entity="MobArachnidDummy" Caption=""/>
+</Box>
+  Theorized to be a distant cousin of the giant tarantula, Arachnids have tough exoskeletons, capable of withstanding even the vacuum of space.
+
+  - Arachnids may be able to go on spacewalks without suits, but their passive lungs make their respiratory systems very weak. They'll quickly die without an external supply of oxygen, and will recover slower after experiencing airloss.
+  - They have a slower metabolic rate than other species, meaning they'll metabolise both medicine and toxins much slower than normal.
+  - They cannot wear large oxygen tanks on their hardsuits, but come equipped with two extra "web pockets" to offset this.
+  
+</Document>
