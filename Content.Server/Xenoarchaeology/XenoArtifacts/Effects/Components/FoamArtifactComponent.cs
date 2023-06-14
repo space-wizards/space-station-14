@@ -32,23 +32,17 @@ public sealed class FoamArtifactComponent : Component
     /// How much reagent is in the foam?
     /// </summary>
     [DataField("reagentAmount")]
-    public float ReagentAmount = 100;
+    public float ReagentAmount = 200;
 
     /// <summary>
     /// Minimum radius of foam spawned
     /// </summary>
     [DataField("minFoamAmount")]
-    public int MinFoamAmount = 2;
+    public int MinFoamAmount = 15;
 
     /// <summary>
     /// Maximum radius of foam spawned
     /// </summary>
     [DataField("maxFoamAmount")]
-    public int MaxFoamAmount = 6;
-
-    /// <summary>
-    /// How long it takes for each tile of foam to spawn
-    /// </summary>
-    [DataField("spreadDuration")]
-    public float SpreadDuration = 1;
+    public int MaxFoamAmount = 20;
 }
