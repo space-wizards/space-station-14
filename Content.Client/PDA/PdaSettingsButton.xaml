@@ -1,4 +1,4 @@
-﻿<pda:PDASettingsButton xmlns="https://spacestation14.io"
+﻿<pda:PdaSettingsButton xmlns="https://spacestation14.io"
                        xmlns:pda="clr-namespace:Content.Client.PDA"
                        HorizontalExpand="True"
                        MinHeight="48"
@@ -8,4 +8,4 @@
     <Label Name="OptionName"/>
     <Label Name="OptionDescription"/>
 </BoxContainer>
-</pda:PDASettingsButton>
+</pda:PdaSettingsButton>
