@@ -38,6 +38,7 @@
         - SurveillanceCameraGeneral
         - SurveillanceCameraMedical
         - SurveillanceCameraCommand
+        - SurveillanceCameraBody
 
 - type: entity
   parent: SurveillanceCameraRouterBase
@@ -102,6 +103,14 @@
   components:
     - type: SurveillanceCameraRouter
       subnetFrequency: SurveillanceCameraGeneral
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterBody
+  suffix: Body
+  components:
+    - type: SurveillanceCameraRouter
+      subnetFrequency: SurveillanceCameraBody
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
