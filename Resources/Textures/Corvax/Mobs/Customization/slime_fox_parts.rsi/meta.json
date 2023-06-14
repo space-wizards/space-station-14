@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Reworked from Corvax/Mobs/Customization/fox_parts.rsi by &H13;#4495",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ears_slime_fox_inner",
+      "directions": 4
+    },
+    {
+      "name": "ears_slime_fox_outer",
+      "directions": 4
+    }
+  ]
+}

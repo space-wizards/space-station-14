@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Decals;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -47,7 +48,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         }
 
         LoadProfile(uid, startingSet.Profile, humanoid);
-        
+
     }
 
     private void OnExamined(EntityUid uid, HumanoidAppearanceComponent component, ExaminedEvent args)
@@ -103,17 +104,17 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
             ? profile.Appearance.SkinColor.WithAlpha(hairAlpha) : profile.Appearance.HairColor;
         var facialHairColor = _markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.FacialHair, out var facialHairAlpha, _prototypeManager)
             ? profile.Appearance.SkinColor.WithAlpha(facialHairAlpha) : profile.Appearance.FacialHairColor;
-        
+
         if (_markingManager.Markings.TryGetValue(profile.Appearance.HairStyleId, out var hairPrototype) &&
             _markingManager.CanBeApplied(profile.Species, hairPrototype, _prototypeManager))
         {
             AddMarking(uid, profile.Appearance.HairStyleId, hairColor, false);
         }
-        
+
         if (_markingManager.Markings.TryGetValue(profile.Appearance.FacialHairStyleId, out var facialHairPrototype) &&
             _markingManager.CanBeApplied(profile.Species, facialHairPrototype, _prototypeManager))
         {
-            AddMarking(uid, profile.Appearance.FacialHairStyleId, facialHairColor, false); 
+            AddMarking(uid, profile.Appearance.FacialHairStyleId, facialHairColor, false);
         }
 
         humanoid.MarkingSet.EnsureSpecies(profile.Species, profile.Appearance.SkinColor, _markingManager, _prototypeManager);
@@ -129,8 +130,9 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
             );
             AddMarking(uid, marking.MarkingId, markingColors, false);
         }
-        
+
         EnsureDefaultMarkings(uid, humanoid);
+        SetTTSVoice(uid, profile.Voice, humanoid); // Corvax-TTS
 
         humanoid.Gender = profile.Gender;
         if (TryComp<GrammarComponent>(uid, out var grammar))
@@ -139,6 +141,12 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         }
 
         humanoid.Age = profile.Age;
+        // Corvax-SpeakerColor-Start
+        const string paletteId = "Material";
+        var colors = _prototypeManager.Index<ColorPalettePrototype>(paletteId).Colors.Values.ToArray();
+        var colorIdx = Math.Abs(profile.Name.GetHashCode() % colors.Length);
+        humanoid.SpeakerColor = colors[colorIdx];
+        // Corvax-SpeakerColor-End
 
         Dirty(humanoid);
     }
@@ -167,6 +175,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
         targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
+        SetTTSVoice(target, sourceHumanoid.Voice, targetHumanoid); // Corvax-TTS
 
         targetHumanoid.Gender = sourceHumanoid.Gender;
         if (TryComp<GrammarComponent>(target, out var grammar))

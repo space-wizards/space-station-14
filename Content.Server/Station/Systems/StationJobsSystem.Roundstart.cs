@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Managers;
+using Content.Server.Corvax.Sponsors;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Station.Components;
 using Content.Shared.Preferences;
@@ -17,6 +19,7 @@ public sealed partial class StationJobsSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly RoleBanManager _roleBanManager = default!;
     [Dependency] private readonly PlayTimeTrackingSystem _playTime = default!;
+    [Dependency] private readonly SponsorsManager _sponsorsManager = default!;
 
     private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
     private List<int> _orderedWeights = default!;
@@ -245,7 +248,26 @@ public sealed partial class StationJobsSystem
                                 continue;
 
                             // Picking players it finds that have the job set.
-                            var player = _random.Pick(jobPlayerOptions[job]);
+
+                            // Found it! Yeah!
+
+                            var sponsors = new HashSet<NetUserId>();
+                            foreach (var userId in jobPlayerOptions[job])
+                            {
+                                if (_sponsorsManager.TryGetInfo(userId, out var sponsorData) && sponsorData.HavePriorityJoin == true)
+                                    sponsors.Add(userId);
+                            }
+
+                            NetUserId player;
+                            if (sponsors.Count > 0)
+                            {
+                                player = _random.Pick(sponsors);
+                            }
+                            else
+                            {
+                                player = _random.Pick(jobPlayerOptions[job]);
+                            }
+
                             AssignPlayer(player, job, station);
                             stationShares[station]--;
 
@@ -292,7 +314,7 @@ public sealed partial class StationJobsSystem
                 assignedJobs.Add(player, (null, EntityUid.Invalid));
                 continue;
             }
-            
+
             _random.Shuffle(givenStations);
 
             foreach (var station in givenStations)

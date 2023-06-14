@@ -125,7 +125,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         }
         if (localPlayer.UserId != message.TrueSender)
         {
-            SoundSystem.Play("/Audio/Effects/adminhelp.ogg", Filter.Local());
+            SoundSystem.Play("/Audio/Effects/adminhelp_imperial.ogg", Filter.Local());//imperial ahelp sound
             _clyde.RequestWindowAttention();
         }
 
