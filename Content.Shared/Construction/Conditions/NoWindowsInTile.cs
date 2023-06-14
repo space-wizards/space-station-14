@@ -11,8 +11,9 @@ namespace Content.Shared.Construction.Conditions
     {
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
-            var tagSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<TagSystem>();
-            var lookup = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<EntityLookupSystem>();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            var tagSystem = sysMan.GetEntitySystem<TagSystem>();
+            var lookup = sysMan.GetEntitySystem<EntityLookupSystem>();
 
             foreach (var entity in lookup.GetEntitiesIntersecting(location, LookupFlags.Approximate | LookupFlags.Static))
             {

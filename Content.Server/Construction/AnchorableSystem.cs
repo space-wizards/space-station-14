@@ -27,7 +27,6 @@ namespace Content.Server.Construction
         [Dependency] private readonly SharedToolSystem _tool = default!;
         [Dependency] private readonly PullingSystem _pulling = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         public override void Initialize()
         {
@@ -91,8 +90,11 @@ namespace Content.Server.Construction
             {
                 var coordinates = xform.Coordinates.SnapToGrid(EntityManager, _mapManager);
 
-                if (CheckUnstackable(uid, args.User, coordinates))
+                if (DoesUnstackableCancel(uid, coordinates))
+                {
+                    _popup.PopupEntity(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, args.User);
                     return;
+                }
 
                 _transform.SetCoordinates(uid, coordinates);
             }
@@ -111,27 +113,6 @@ namespace Content.Server.Construction
                 LogImpact.Low,
                 $"{EntityManager.ToPrettyString(args.User):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(used):using}"
             );
-        }
-
-        private bool CheckUnstackable(EntityUid uid, EntityUid user, EntityCoordinates coordinates)
-        {
-            if (_tagSystem.HasTag(uid, "Unstackable"))
-            {
-                // Need to enforce the unstackable rules on anchoring also.
-                if (NoUnstackableInTile.AnyUnstackableTiles(coordinates, _tagSystem))
-                {
-                    var message = NoUnstackableInTile.GuidebookString;
-                    if (message != null)
-                    {
-                        // Show the reason to the user:
-                        _popup.PopupEntity(Loc.GetString(message), uid, user);
-                    }
-
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         private bool TileFree(EntityCoordinates coordinates, PhysicsComponent anchorBody)
@@ -225,8 +206,11 @@ namespace Content.Server.Construction
                 return;
             }
 
-            if (CheckUnstackable(uid, userUid, transform.Coordinates))
+            if (DoesUnstackableCancel(uid, transform.Coordinates))
+            {
+                _popup.PopupEntity(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, userUid);
                 return;
+            }
 
             _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryAnchorCompletedEvent());
         }

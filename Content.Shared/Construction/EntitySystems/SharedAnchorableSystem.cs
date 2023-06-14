@@ -3,13 +3,17 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Tag;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Construction.EntitySystems;
 
 public abstract class SharedAnchorableSystem : EntitySystem
 {
+    [Dependency] private readonly TagSystem _tagSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -40,6 +44,41 @@ public abstract class SharedAnchorableSystem : EntitySystem
         // Thanks tool system.
 
         // TODO tool system is fixed now, make this actually shared.
+    }
+
+    public bool AnyUnstackablesAnchoredAt(EntityCoordinates location, EntityQuery<TagComponent>? tagQuery = null)
+    {
+        var gridUid = location.GetGridUid(EntityManager);
+        if (gridUid == null)
+            return false;
+
+        if (!TryComp<MapGridComponent>(gridUid.Value, out var grid))
+            return false;
+
+        tagQuery ??= GetEntityQuery<TagComponent>();
+
+        foreach (var entity in grid.GetAnchoredEntities(location))
+        {
+            // If we find another unstackable here, return true.
+            if (_tagSystem.HasTag(entity, "Unstackable", tagQuery.Value))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool DoesUnstackableCancel(EntityUid uid, EntityCoordinates location)
+    {
+        var tagQuery = GetEntityQuery<TagComponent>();
+        // If we are unstackable, iterate through any other entities anchored on the current square
+        if (_tagSystem.HasTag(uid, "Unstackable", tagQuery))
+        {
+            return AnyUnstackablesAnchoredAt(location, tagQuery);
+        }
+
+        return false;
     }
 
     [Serializable, NetSerializable]
