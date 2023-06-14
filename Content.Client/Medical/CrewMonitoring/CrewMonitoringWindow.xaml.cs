@@ -16,6 +16,7 @@ namespace Content.Client.Medical.CrewMonitoring
     [GenerateTypedNameReferences]
     public sealed partial class CrewMonitoringWindow : FancyWindow
     {
+        private List<Control> _rowsContent = new();
         private List<(DirectionIcon Icon, Vector2 Position)> _directionIcons = new();
         private readonly IEntityManager _entManager;
         private readonly IEyeManager _eye;
@@ -67,6 +68,7 @@ namespace Content.Client.Medical.CrewMonitoring
                 if (sensor.SuitSensorUid == _trackedButton?.SuitSensorUid)
                     nameButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
                 SensorsTable.AddChild(nameButton);
+                _rowsContent.Add(nameButton);
 
                 // add users job
                 // format: JobName
@@ -76,6 +78,7 @@ namespace Content.Client.Medical.CrewMonitoring
                     HorizontalExpand = true
                 };
                 SensorsTable.AddChild(jobLabel);
+                _rowsContent.Add(jobLabel);
 
                 // add users status and damage
                 // format: IsAlive (TotalDamage)
@@ -91,12 +94,14 @@ namespace Content.Client.Medical.CrewMonitoring
                     Text = statusText
                 };
                 SensorsTable.AddChild(statusLabel);
+                _rowsContent.Add(statusLabel);
 
                 // add users positions
                 // format: (x, y)
                 var box = GetPositionBox(sensor.Coordinates, monitorCoordsInStationSpace ?? Vector2.Zero, snap, precision);
 
                 SensorsTable.AddChild(box);
+                _rowsContent.Add(box);
 
                 if (sensor.Coordinates != null && NavMap.Visible)
                 {
@@ -186,7 +191,11 @@ namespace Content.Client.Medical.CrewMonitoring
 
         private void ClearAllSensors()
         {
-            SensorsTable.RemoveAllChildren();
+            foreach (var child in _rowsContent)
+            {
+                SensorsTable.RemoveChild(child);
+            }
+            _rowsContent.Clear();
             _directionIcons.Clear();
             NavMap.TrackedCoordinates.Clear();
         }
