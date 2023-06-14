@@ -314,6 +314,7 @@
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
+      - id: BoxBodyCamera
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -356,3 +357,4 @@
       - id: SecurityTechFabCircuitboard
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
+      - id: BoxBodyCamera
