@@ -358,7 +358,6 @@
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
-      storagebase: !type:Container
   - type: Item
     size: 30
   - type: Sprite
