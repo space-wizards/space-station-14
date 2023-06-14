@@ -26,6 +26,12 @@
 
                 <!-- Table rows are filled by code -->
             </GridContainer>
+            <Label  Name="NoServerLabel"
+                    Text="{Loc 'crew-monitoring-user-interface-no-server'}"
+                    StyleClasses="LabelHeading"
+                    FontColorOverride="Red"
+                    HorizontalAlignment="Center"
+                    Visible="false"/>
         </ScrollContainer>
         <ui:NavMapControl Name="NavMap"
                           Margin="5 5"/>

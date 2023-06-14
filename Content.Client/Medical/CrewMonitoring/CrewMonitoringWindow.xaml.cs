@@ -53,6 +53,12 @@ namespace Content.Client.Medical.CrewMonitoring
             // TODO scroll container
             // TODO filter by name & occupation
             // TODO make each row a xaml-control. Get rid of some of this c# control creation.
+            if (stSensors.Count == 0)
+            {
+                NoServerLabel.Visible = true;
+                return;
+            }
+            NoServerLabel.Visible = false;
 
             // add a row for each sensor
             foreach (var sensor in stSensors.OrderBy(a => a.Name))
