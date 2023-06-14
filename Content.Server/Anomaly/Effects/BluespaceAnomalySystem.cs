@@ -1,11 +1,11 @@
 ﻿using System.Linq;
+using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Teleportation.Components;
 using Robust.Shared.Random;
 
-namespace Content.Shared.Anomaly.Effects;
+namespace Content.Server.Anomaly.Effects;
 
 public sealed class BluespaceAnomalySystem : EntitySystem
 {
@@ -24,13 +24,12 @@ public sealed class BluespaceAnomalySystem : EntitySystem
 
     private void OnPulse(EntityUid uid, BluespaceAnomalyComponent component, ref AnomalyPulseEvent args)
     {
-        var xform = Transform(uid);
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var xform = xformQuery.GetComponent(uid);
         var range = component.MaxShuffleRadius * args.Severity;
         var allEnts = _lookup.GetComponentsInRange<MobStateComponent>(xform.Coordinates, range)
             .Select(x => x.Owner).ToList();
         allEnts.Add(uid);
-
-        var xformQuery = GetEntityQuery<TransformComponent>();
         var coords = new List<Vector2>();
         foreach (var ent in allEnts)
         {

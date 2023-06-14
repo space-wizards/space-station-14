@@ -1,42 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Reduce the standard salvage expedition time from 18-20 minutes to 15
-      minutes., type: Tweak}
-  id: 3481
-  time: '2023-04-21T10:26:17.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added the lipid extractor. Simply place a well-fed spaceman inside and
-      let the excess food fall off into meat. Unlock it at science today!, type: Add}
-  id: 3482
-  time: '2023-04-22T07:03:50.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Added decorative crystals., type: Add}
-  id: 3483
-  time: '2023-04-22T07:10:51.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix xeno ravagers not being able to pry doors on expeditions., type: Fix}
-  id: 3484
-  time: '2023-04-22T08:57:20.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: fix holofan charges loc string missing, type: Fix}
-  id: 3485
-  time: '2023-04-22T09:54:42.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Admins and ghosts can now scrollin and scrollout., type: Add}
-  id: 3486
-  time: '2023-04-22T10:26:41.0000000+00:00'
-- author: Kit0vras
-  changes:
-  - {message: Lights and light posts now have ambient sound., type: Add}
-  - {message: Substation now have a right sound for buzzing., type: Tweak}
-  id: 3487
-  time: '2023-04-22T10:40:58.0000000+00:00'
 - author: Menshin
   changes:
   - {message: Magboots sprite now updates on toggling. The toggling verb works properly
@@ -2910,3 +2872,47 @@ Entries:
   - {message: Fixed the grammar of The Martinez., type: Fix}
   id: 3980
   time: '2023-06-11T17:09:41.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Fixes a minor error in the Food Recipes guidebook., type: Fix}
+  id: 3981
+  time: '2023-06-13T01:17:48.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Praetorian and Runner xenos can now be rarely found on expeditions.,
+    type: Add}
+  - {message: All xenos now enjoy a slowdown when badly wounded., type: Tweak}
+  id: 3982
+  time: '2023-06-13T04:48:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: R&D has figured out how to upgrade salvage magnets using high-tier capacitors.,
+    type: Tweak}
+  id: 3983
+  time: '2023-06-13T06:37:54.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: The economy behind timer electronics has crashed., type: Tweak}
+  id: 3984
+  time: '2023-06-13T08:09:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add doorbumpopener to some stuff that should've had it (slimes)., type: Fix}
+  - {message: Mobs that can bump open doors can also click them open now., type: Tweak}
+  id: 3985
+  time: '2023-06-13T10:30:05.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: made temperature ignore resistances, type: Tweak}
+  - {message: fixed shields making blocking sound when user is damaged by temperature,
+    type: Fix}
+  id: 3986
+  time: '2023-06-13T12:59:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Bluespace anomalies no longer mispredict teleportation (no more jittering
+      around and teleporting 7 times instantly), type: Fix}
+  - {message: Portals and bluespace anomalies no longer teleport players into walls,
+    type: Fix}
+  id: 3987
+  time: '2023-06-14T01:32:03.0000000+00:00'
