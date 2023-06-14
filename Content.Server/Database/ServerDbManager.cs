@@ -283,11 +283,11 @@ namespace Content.Server.Database
             {
                 case "sqlite":
                     SetupSqlite(out var contextFunc, out var inMemory);
-                    _db = new ServerDbSqlite(contextFunc, inMemory);
+                    _db = new ServerDbSqlite(contextFunc, inMemory, _cfg);
                     break;
                 case "postgres":
                     var pgOptions = CreatePostgresOptions();
-                    _db = new ServerDbPostgres(pgOptions);
+                    _db = new ServerDbPostgres(pgOptions, _cfg);
                     break;
                 default:
                     throw new InvalidDataException($"Unknown database engine {engine}.");

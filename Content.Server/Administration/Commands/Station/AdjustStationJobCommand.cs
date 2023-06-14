@@ -30,7 +30,7 @@ public sealed class AdjustStationJobCommand : IConsoleCommand
 
         var stationJobs = _entSysManager.GetEntitySystem<StationJobsSystem>();
 
-        if (!EntityUid.TryParse(args[0], out var station) || _entityManager.HasComponent<StationDataComponent>(station))
+        if (!EntityUid.TryParse(args[0], out var station) || !_entityManager.HasComponent<StationDataComponent>(station))
         {
             shell.WriteError(Loc.GetString("shell-argument-station-id-invalid", ("index", 1)));
             return;

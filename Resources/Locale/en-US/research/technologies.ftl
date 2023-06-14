@@ -34,9 +34,11 @@ research-technology-basic-xenoarcheology = Basic XenoArcheology
 research-technology-alternative-research = Alternative Research
 research-technology-magnets-tech = Localized Magnetism
 research-technology-advanced-parts = Advanced Parts
+research-technology-grappling = Grappling
 research-technology-abnormal-artifact-manipulation = Abnormal Artifact Manipulation
 research-technology-gravity-manipulation = Gravity Manipulation
 research-technology-mobile-anomaly-tech = Mobile Anomaly Tech
+research-technology-hamtr = HAMTR Mech
 research-technology-rped = Rapid Part Exchange
 research-technology-super-parts = Super Parts
 

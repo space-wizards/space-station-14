@@ -9,7 +9,6 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Melee.Components;
-using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
@@ -40,8 +39,10 @@ public sealed class WieldableSystem : EntitySystem
 
         SubscribeLocalEvent<MeleeRequiresWieldComponent, AttemptMeleeEvent>(OnMeleeAttempt);
         SubscribeLocalEvent<GunRequiresWieldComponent, AttemptShootEvent>(OnShootAttempt);
+        SubscribeLocalEvent<GunWieldBonusComponent, ItemWieldedEvent>(OnGunWielded);
+        SubscribeLocalEvent<GunWieldBonusComponent, ItemUnwieldedEvent>(OnGunUnwielded);
 
-        SubscribeLocalEvent<IncreaseDamageOnWieldComponent, MeleeHitEvent>(OnMeleeHit);
+        SubscribeLocalEvent<IncreaseDamageOnWieldComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
     }
 
     private void OnMeleeAttempt(EntityUid uid, MeleeRequiresWieldComponent component, ref AttemptMeleeEvent args)
@@ -62,6 +63,26 @@ public sealed class WieldableSystem : EntitySystem
             args.Cancelled = true;
             args.Message = Loc.GetString("wieldable-component-requires", ("item", uid));
         }
+    }
+
+    private void OnGunUnwielded(EntityUid uid, GunWieldBonusComponent component, ItemUnwieldedEvent args)
+    {
+        if (!TryComp<GunComponent>(uid, out var gun))
+            return;
+
+        gun.MinAngle -= component.MinAngle;
+        gun.MaxAngle -= component.MaxAngle;
+        Dirty(gun);
+    }
+
+    private void OnGunWielded(EntityUid uid, GunWieldBonusComponent component, ref ItemWieldedEvent args)
+    {
+        if (!TryComp<GunComponent>(uid, out var gun))
+            return;
+
+        gun.MinAngle += component.MinAngle;
+        gun.MaxAngle += component.MaxAngle;
+        Dirty(gun);
     }
 
     private void OnDisarmAttemptEvent(EntityUid uid, WieldableComponent component, DisarmAttemptEvent args)
@@ -198,6 +219,9 @@ public sealed class WieldableSystem : EntitySystem
         _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", uid)), args.Args.User, args.Args.User);
         _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", args.Args.User),("item", uid)), args.Args.User, Filter.PvsExcept(args.Args.User), true);
 
+        var ev = new ItemWieldedEvent();
+        RaiseLocalEvent(uid, ref ev);
+
         Dirty(component);
         args.Handled = true;
     }
@@ -244,16 +268,13 @@ public sealed class WieldableSystem : EntitySystem
             AttemptUnwield(args.BlockingEntity, component, args.User);
     }
 
-    private void OnMeleeHit(EntityUid uid, IncreaseDamageOnWieldComponent component, MeleeHitEvent args)
+    private void OnGetMeleeDamage(EntityUid uid, IncreaseDamageOnWieldComponent component, ref GetMeleeDamageEvent args)
     {
-        if (EntityManager.TryGetComponent<WieldableComponent>(uid, out var wield))
-        {
-            if (!wield.Wielded)
-                return;
-        }
-        if (args.Handled)
+        if (!TryComp<WieldableComponent>(uid, out var wield))
+            return;
+        if (!wield.Wielded)
             return;
 
-        args.BonusDamage += component.BonusDamage;
+        args.Damage += component.BonusDamage;
     }
 }

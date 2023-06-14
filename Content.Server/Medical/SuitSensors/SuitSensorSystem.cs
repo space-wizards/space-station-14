@@ -60,11 +60,14 @@ namespace Content.Server.Medical.SuitSensors
 
             while (sensors.MoveNext(out var uid, out var sensor, out var device))
             {
-                if (device.TransmitFrequency is null || !sensor.StationId.HasValue)
+                if (device.TransmitFrequency is null)
                     continue;
 
                 // check if sensor is ready to update
                 if (curTime < sensor.NextUpdate)
+                    continue;
+
+                if (!CheckSensorAssignedStation(uid, sensor))
                     continue;
 
                 // TODO: This would cause imprecision at different tick rates.
@@ -78,7 +81,7 @@ namespace Content.Server.Medical.SuitSensors
                 //Retrieve active server address if the sensor isn't connected to a server
                 if (sensor.ConnectedServer == null)
                 {
-                    if (!_monitoringServerSystem.TryGetActiveServerAddress(sensor.StationId.Value, out var address))
+                    if (!_monitoringServerSystem.TryGetActiveServerAddress(sensor.StationId!.Value, out var address))
                         continue;
 
                     sensor.ConnectedServer = address;
@@ -96,6 +99,20 @@ namespace Content.Server.Medical.SuitSensors
 
                 _deviceNetworkSystem.QueuePacket(uid, sensor.ConnectedServer, payload, device: device);
             }
+        }
+
+        /// <summary>
+        /// Checks whether the sensor is assigned to a station or not
+        /// and tries to assign an unassigned sensor to a station if it's currently on a grid
+        /// </summary>
+        /// <returns>True if the sensor is assigned to a station or assigning it was successful. False otherwise.</returns>
+        private bool CheckSensorAssignedStation(EntityUid uid, SuitSensorComponent sensor)
+        {
+            if (!sensor.StationId.HasValue && Transform(uid).GridUid == null)
+                return false;
+
+            sensor.StationId = _stationSystem.GetOwningStation(uid);
+            return sensor.StationId.HasValue;
         }
 
         private void OnPlayerSpawn(PlayerSpawnCompleteEvent ev)

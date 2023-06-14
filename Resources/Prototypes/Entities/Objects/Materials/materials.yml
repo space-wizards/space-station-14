@@ -5,7 +5,6 @@
   description: A raw material.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/materials.rsi
   - type: Item
     sprite: Objects/Materials/materials.rsi
@@ -71,7 +70,8 @@
     - DroneUsable
     - Gauze
   - type: Healing
-    damageContainer: Biological
+    damageContainers:
+      - Biological
     damage:
       types:
         Slash: -0.5
@@ -202,6 +202,9 @@
     sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
     color: "#8A9A5B"
+  - type: GuideHelp
+    guides:
+    - Cloning
 
 - type: entity
   parent: MaterialBiomass
@@ -218,7 +221,6 @@
   name: bear hide
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/materials.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]

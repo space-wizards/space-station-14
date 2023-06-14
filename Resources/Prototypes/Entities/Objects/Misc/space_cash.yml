@@ -23,7 +23,6 @@
     - cash_1000000
   - type: Sprite
     sprite: Objects/Economy/cash.rsi
-    netsync: false
     state: cash
     layers:
     - state: cash
