@@ -16,4 +16,10 @@ public sealed class ImmovableRodRuleComponent : Component
     /// </summary>
     [DataField("lifetime")]
     public float Lifetime = 60f;
+
+    /// <summary>
+    /// With this set to true, rods will automatically set the tiles under them to space.
+    /// </summary>
+    [DataField("destroyTiles")]
+    public bool DestroyTiles = false;
 }

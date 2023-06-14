@@ -312,6 +312,6 @@
       path: /Audio/Announcements/attention.ogg
     weight: 1
     duration: 1
-    earliestStart: 90
+    earliestStart: 45
     minimumPlayers: 20
   - type: ImmovableRodRule

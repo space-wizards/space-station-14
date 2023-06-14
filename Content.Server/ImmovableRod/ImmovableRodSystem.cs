@@ -48,9 +48,9 @@ public sealed class ImmovableRodSystem : EntitySystem
         SubscribeLocalEvent<ImmovableRodComponent, ExaminedEvent>(OnExamined);
     }
 
-    public EntityUid SpawnAndLaunch(MapCoordinates coordinates, Vector2 direction, float speed)
+    public EntityUid SpawnAndLaunch(MapCoordinates coordinates, Vector2 direction, float speed, bool destroyTiles = true)
     {
-        var uid = Spawn("ImmovableRod", coordinates);
+        var uid = Spawn(destroyTiles ? "ImmovableRod" : "ImmovableRodKeepTiles", coordinates);
 
         if (TryComp<PhysicsComponent>(uid, out var physics))
         {

@@ -34,3 +34,12 @@
   - type: WarpPoint
     follow: true
     location: immovable rod
+
+- type: entity
+  name: immovable rod
+  parent: ImmovableRod
+  id: ImmovableRodKeepTiles
+  suffix: Keep Tiles
+  components:
+  - type: ImmovableRod
+    destroyTiles: false
