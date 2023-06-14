@@ -1,0 +1,13 @@
+- type: latheRecipe
+  id: ClothingUniformJumpsuitCoroner
+  result: ClothingUniformJumpsuitCoroner
+  completetime: 3.2
+  materials:
+    Cloth: 200
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtCoroner
+  result: ClothingUniformJumpskirtCoroner
+  completetime: 3.2
+  materials:
+    Cloth: 200

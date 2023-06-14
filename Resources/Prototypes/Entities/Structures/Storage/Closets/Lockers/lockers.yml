@@ -398,3 +398,5 @@
         actOnClose: false
         destroyAfterUses: 2
         destroyType: DeleteComponent
+
+
