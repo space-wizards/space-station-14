@@ -17,14 +17,14 @@ public sealed partial class ParacusiaComponent : Component
     /// </summary>
     [DataField("maxTimeBetweenIncidents", required: true), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public float MaxTimeBetweenIncidents = 30f;
+    public float MaxTimeBetweenIncidents = 60f;
 
     /// <summary>
     /// The minimum time between incidents in seconds
     /// </summary>
     [DataField("minTimeBetweenIncidents", required: true), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public float MinTimeBetweenIncidents = 60f;
+    public float MinTimeBetweenIncidents = 30f;
 
     /// <summary>
     /// How far away at most can the sound be?

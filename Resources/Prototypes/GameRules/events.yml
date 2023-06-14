@@ -300,3 +300,14 @@
     reoccurrenceDelay: 25
     duration: 1
   - type: LoneOpsSpawnRule
+
+- type: entity
+  id: MassHallucinations
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    duration: 150
+    maxDuration: 300
+  - type: MassHallucinationsRule
