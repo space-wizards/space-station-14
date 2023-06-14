@@ -72,6 +72,19 @@
   - type: GasProducerAnomaly
     releasedGas: 3
     releaseOnMaxSeverity: true
+  - type: TempReactingAnomaly
+    reactions:
+    # Really low temperature causes anomaly to decay.
+    - maxTempKelvin: 250 # about -20 degrees Celsius
+      stabilityPerPulse: -0.05 # note: less stability = more stable. more stability = less stable.
+    # High temperatures causes instability.
+    - minTempKelvin: 600 # about 300 degrees Celsius
+      maxTempKelvin: 2000
+      stabilityPerPulse: 0.05
+    # This is pretty much impossible to reach unless you box it in without a cooling solution. Anomaly will quickly go critical if temps reach this point.
+    - minTempKelvin: 2000
+      stabilityPerPulse: 0.12
+      severityPerPulse: 0.12
 
 - type: entity
   id: AnomalyGravity

@@ -234,6 +234,9 @@ public abstract class SharedAnomalySystem : EntitySystem
     /// <param name="component"></param>
     public void ChangeAnomalyStability(EntityUid uid, float change, AnomalyComponent? component = null)
     {
+        if (change == 0)
+            return;
+
         if (!Resolve(uid, ref component))
             return;
 
@@ -254,6 +257,9 @@ public abstract class SharedAnomalySystem : EntitySystem
     /// <param name="component"></param>
     public void ChangeAnomalySeverity(EntityUid uid, float change, AnomalyComponent? component = null)
     {
+        if (change == 0)
+            return;
+
         if (!Resolve(uid, ref component))
             return;
 
@@ -277,6 +283,9 @@ public abstract class SharedAnomalySystem : EntitySystem
     /// <param name="component"></param>
     public void ChangeAnomalyHealth(EntityUid uid, float change, AnomalyComponent? component = null)
     {
+        if (change == 0)
+            return;
+
         if (!Resolve(uid, ref component))
             return;
 
