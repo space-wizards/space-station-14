@@ -87,7 +87,6 @@
   - type: Clickable
   - type: Sprite
     sprite: Objects/Specific/Janitorial/janitorial.rsi
-    netsync: false
     noRot: true
     layers:
     - state: mopbucket
@@ -101,6 +100,7 @@
       bucket:
         maxVol: 600
   - type: Spillable
+    solution: bucket
     spillDelay: 3.0
   - type: DrainableSolution
     solution: bucket
@@ -226,7 +226,6 @@
   description: This is the alpha and omega of sanitation.
   components:
     - type: Sprite
-      netSync: false
       noRot: true
       sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
       layers:
@@ -278,6 +277,7 @@
           mask:
           - MobMask
     - type: Spillable
+      solution: bucket
       spillDelay: 3.0
     - type: SolutionContainerManager
       solutions:
@@ -387,7 +387,6 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      netsync: false
       drawdepth: FloorObjects
       sprite: Objects/Specific/Janitorial/drain.rsi
       state: icon

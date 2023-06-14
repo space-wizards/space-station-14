@@ -20,7 +20,6 @@
   - type: ActivatableUIRequiresPower
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
-    netsync: false
     layers:
     - map: ["computerLayerBody"]
       state: computer

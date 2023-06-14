@@ -8,7 +8,6 @@
   - type: Appearance
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
-    netsync: false
     layers:
     - map: [ "enum.PDAVisualLayers.Base" ]
     - state: "light_overlay"

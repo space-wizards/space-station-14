@@ -13,6 +13,7 @@ using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
+using Content.Server.Roles;
 using Content.Server.Speech.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Traitor;
@@ -58,6 +59,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -207,9 +209,12 @@ namespace Content.Server.Zombies
             if (mindcomp.Mind != null && mindcomp.Mind.TryGetSession(out var session))
             {
                 //Zombie role for player manifest
-                mindcomp.Mind.AddRole(new TraitorRole(mindcomp.Mind, _proto.Index<AntagPrototype>(zombiecomp.ZombieRoleId)));
+                mindcomp.Mind.AddRole(new ZombieRole(mindcomp.Mind, _proto.Index<AntagPrototype>(zombiecomp.ZombieRoleId)));
                 //Greeting message for new bebe zombers
                 _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
+
+                // Notificate player about new role assignment
+                _audioSystem.PlayGlobal(zombiecomp.GreetSoundNotification, session);
             }
 
             if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !mindcomp.HasMind) //this specific component gives build test trouble so pop off, ig

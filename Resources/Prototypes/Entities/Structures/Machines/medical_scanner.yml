@@ -13,7 +13,6 @@
     ports:
       - MedicalScannerReceiver
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/scanner.rsi
     snapCardinals: true
     layers:

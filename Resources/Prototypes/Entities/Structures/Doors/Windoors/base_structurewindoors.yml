@@ -24,7 +24,6 @@
         layer:
         - GlassAirlockLayer
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: closed
@@ -145,7 +144,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: secure_underlay

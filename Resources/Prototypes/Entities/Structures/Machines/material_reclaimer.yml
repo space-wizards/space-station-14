@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Structures/Machines/material_reclaimer.rsi
     snapCardinals: true
-    netsync: false
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
