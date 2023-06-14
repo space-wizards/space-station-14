@@ -6,6 +6,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Projectiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
@@ -39,31 +40,36 @@ public sealed class ProjectileAnomalySystem : EntitySystem
 
     private void ShootProjectilesAtEntities(EntityUid uid, ProjectileAnomalyComponent component, float severity)
     {
-        var xform = Transform(uid);
         var projectileCount = (int) MathF.Round(MathHelper.Lerp(component.MinProjectiles, component.MaxProjectiles, severity));
+        var xformQuery = GetEntityQuery<TransformComponent>();
         var mobQuery = GetEntityQuery<MobStateComponent>();
+        var xform = xformQuery.GetComponent(uid);
+
         var inRange = _lookup.GetEntitiesInRange(uid, component.ProjectileRange * severity, LookupFlags.Dynamic).ToList();
         _random.Shuffle(inRange);
-
-        var priority = inRange.Where(mobQuery.HasComponent).ToList();
-        var randomProjectiles = projectileCount - priority.Count;
-
-        var toShoot = priority.Take(Math.Min(projectileCount, priority.Count)).ToList();
-        for (var i = 0; i < randomProjectiles; i++)
+        var priority = new List<EntityUid>();
+        foreach (var entity in inRange)
         {
-            toShoot.Add(_random.PickAndTake(inRange));
+            if (mobQuery.HasComponent(entity))
+                priority.Add(entity);
         }
 
-        foreach (var entity in toShoot)
+        Logger.Debug($"shots: {projectileCount}");
+        while (projectileCount > 0)
         {
-            var targetCoords = Transform(entity).Coordinates.Offset(_random.NextVector2(0.5f));
+            Logger.Debug($"{projectileCount}");
+            var target = priority.Any()
+                ? _random.PickAndTake(priority)
+                : _random.Pick(inRange);
+
+            var targetCoords = xformQuery.GetComponent(target).Coordinates.Offset(_random.NextVector2(0.5f));
 
             ShootProjectile(
                 uid, component,
                 xform.Coordinates,
                 targetCoords,
-                severity
-            );
+                severity);
+            projectileCount--;
         }
     }
 
