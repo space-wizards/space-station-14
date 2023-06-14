@@ -1,10 +1,4 @@
 Entries:
-- author: Kit0vras
-  changes:
-  - {message: Lights and light posts now have ambient sound., type: Add}
-  - {message: Substation now have a right sound for buzzing., type: Tweak}
-  id: 3487
-  time: '2023-04-22T10:40:58.0000000+00:00'
 - author: Menshin
   changes:
   - {message: Magboots sprite now updates on toggling. The toggling verb works properly
@@ -2914,3 +2908,11 @@ Entries:
     type: Fix}
   id: 3986
   time: '2023-06-13T12:59:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Bluespace anomalies no longer mispredict teleportation (no more jittering
+      around and teleporting 7 times instantly), type: Fix}
+  - {message: Portals and bluespace anomalies no longer teleport players into walls,
+    type: Fix}
+  id: 3987
+  time: '2023-06-14T01:32:03.0000000+00:00'
