@@ -1,12 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Puddles now only overflow when they can fully occupy a tile., type: Tweak}
-  - {message: Puddles will now never overflow to a water puddle., type: Tweak}
-  - {message: Bumped mop volume from 60 to 100 and reduced cooldown from 1.5s to 1s.,
-    type: Tweak}
-  id: 3508
-  time: '2023-04-23T08:20:04.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: APCs now show correct charge and state, type: Fix}
@@ -2919,3 +2911,8 @@ Entries:
       inside of it., type: Fix}
   id: 4007
   time: '2023-06-15T11:26:10.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Changed sprites, type: Tweak}
+  id: 4008
+  time: '2023-06-15T11:55:07.0000000+00:00'
