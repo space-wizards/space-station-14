@@ -68,7 +68,7 @@
 
 - type: entity
   name: Salvage T3/4 Machine Parts Spawner
-  id: SalvagePartsT3Spawner
+  id: SalvagePartsT3T4Spawner
   parent: MarkerBase
   components:
     - type: Sprite
