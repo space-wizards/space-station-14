@@ -23,7 +23,7 @@
         type: WiresBoundUserInterface
   - type: DeviceNetwork
     deviceNetId: Wired
-    receiveFrequencyId: SurveillanceCameraHandheld
+    receiveFrequencyId: SurveillanceCameraBody
     transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
     networkSet: true
