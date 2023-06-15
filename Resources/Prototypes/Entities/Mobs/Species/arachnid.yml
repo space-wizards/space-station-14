@@ -72,6 +72,9 @@
     spawned:
       - id: FoodMeatSpider
         amount: 5
+  - type: Tag
+    tags:
+      - ZombifyableByMelee
 
 - type: entity
   save: false

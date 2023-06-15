@@ -107,6 +107,9 @@
       Male: UnisexVox
       Female: UnisexVox
       Unsexed: UnisexVox
+  - type: Tag
+    tags:
+      - ZombifyableByMelee
 
 - type: entity
   id: MobVoxDummy

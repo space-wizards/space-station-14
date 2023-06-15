@@ -70,6 +70,9 @@
       types:
         Asphyxiation: -1.0
     maxSaturation: 15
+  - type: Tag
+    tags:
+      - ZombifyableByMelee
 
 - type: entity
   save: false
