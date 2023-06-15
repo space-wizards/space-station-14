@@ -13,24 +13,24 @@ DrinkKvassGlass: null
 KvassTank: null
 
 # 2023-05-03
-SpawnPointBrigmedic: null
-ClothingHeadsetBrigmedic: null
-ClothingHeadHatBeretBrigmedic: null
-ClothingHeadHelmetHardsuitBrigmedic: null
-ClothingOuterHardsuitBrigmedic: null
-ClothingOuterCoatAMG: null
-ClothingBackpackBrigmedic: null
-ClothingBackpackBrigmedicFilled: null
-ClothingBackpackSatchelBrigmedic: null
-ClothingBackpackSatchelBrigmedicFilled: null
-ClothingBackpackDuffelBrigmedic: null
-ClothingBackpackDuffelBrigmedicFilled: null
-BrigmedicIDCard: null
-BrigmedicPDA: null
-BoxSurvivalBrigmedic: null
-LockerBrigmedic: null
-LockerBrigmedicFilled: null
-BedsheetBrigmedic: null
+# SpawnPointBrigmedic: null
+# ClothingHeadsetBrigmedic: null
+# ClothingHeadHatBeretBrigmedic: null
+# ClothingHeadHelmetHardsuitBrigmedic: null
+# ClothingOuterHardsuitBrigmedic: null
+# ClothingOuterCoatAMG: null
+# ClothingBackpackBrigmedic: null
+# ClothingBackpackBrigmedicFilled: null
+# ClothingBackpackSatchelBrigmedic: null
+# ClothingBackpackSatchelBrigmedicFilled: null
+# ClothingBackpackDuffelBrigmedic: null
+# ClothingBackpackDuffelBrigmedicFilled: null
+# BrigmedicIDCard: null
+# BrigmedicPDA: null
+# BoxSurvivalBrigmedic: null
+# LockerBrigmedic: null
+# LockerBrigmedicFilled: null
+# BedsheetBrigmedic: null
 
 # 2023-05-04
 BoxMagazineMagnumSubMachineGun: BoxMagazinePistolSubMachineGun
