@@ -18,7 +18,6 @@
         - state: spider_web_1
           map: ["spiderWebLayer"]
       drawdepth: WallMountedItems
-      netsync: false
     - type: Appearance
     - type: GenericVisualizer
       visuals:

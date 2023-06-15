@@ -38,7 +38,6 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-    netsync: false
   - type: Faction
     factions:
     - SimpleNeutral

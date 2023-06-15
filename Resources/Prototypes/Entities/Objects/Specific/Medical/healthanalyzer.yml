@@ -8,7 +8,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/healthanalyzer.rsi
-    netsync: false
     state: icon
     layers:
     - state: icon

@@ -13,7 +13,6 @@
     ports:
       - CloningPodReceiver
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/cloning.rsi
     snapCardinals: true
     layers:
