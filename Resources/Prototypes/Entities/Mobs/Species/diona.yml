@@ -56,9 +56,6 @@
       Unsexed: UnisexDiona
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
-  - type: Tag
-    tags:
-      - ZombifyableByMelee
 
 - type: entity
   save: false

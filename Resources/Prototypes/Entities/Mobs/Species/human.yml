@@ -13,9 +13,6 @@
     spawned:
     - id: FoodMeatHuman
       amount: 5
-  - type: Tag
-    tags:
-      - ZombifyableByMelee
 
 - type: entity
   name: Urist McHands

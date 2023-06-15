@@ -55,9 +55,6 @@
     baseWalkSpeed : 2.7
     baseSprintSpeed : 4.5
   - type: Perishable
-  - type: Tag
-    tags:
-      - ZombifyableByMelee
 
 - type: entity
   save: false
