@@ -25,7 +25,6 @@
     anchored: true
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
-    netsync: false
     layers:
     - state: emitter2
     - state: beam

@@ -6,7 +6,6 @@
   description: It's a dummy, dummy!
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Fun/mrchips.rsi
     layers:
     - state: icon
@@ -39,7 +38,6 @@
   name: mr dips
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Fun/mrdips.rsi
     layers:
     - state: icon

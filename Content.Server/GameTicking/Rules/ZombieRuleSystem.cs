@@ -165,7 +165,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             var minPlayers = _cfg.GetCVar(CCVars.ZombieMinPlayers);
             if (!ev.Forced && ev.Players.Length < minPlayers)
             {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("zombie-not-enough-ready-players", ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers)));
+                _chatManager.SendAdminAnnouncement(Loc.GetString("zombie-not-enough-ready-players",
+                    ("readyPlayersCount", ev.Players.Length),
+                    ("minimumPlayers", minPlayers)));
                 ev.Cancel();
                 continue;
             }

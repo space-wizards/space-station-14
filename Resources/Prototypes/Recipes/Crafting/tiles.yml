@@ -44,6 +44,17 @@
   icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
   objectType: Item
 
+- type: construction
+  name: flesh tile
+  id: TileFlesh
+  graph: TileFlesh
+  startNode: start
+  targetNode: fleshTile
+  category: construction-category-tiles
+  description: "Four fleshy tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: meat }
+  objectType: Item
+
 # - type: construction
 #   name: techmaint floor
 #   id: tileTechmaint

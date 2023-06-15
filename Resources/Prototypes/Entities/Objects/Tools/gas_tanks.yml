@@ -126,7 +126,6 @@
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_yellow.rsi
-    netsync: false
   - type: GasTank
     outputPressure: 21.27825
     air:
