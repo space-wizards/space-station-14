@@ -1,9 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: add salvage rig, type: Add}
-  id: 3507
-  time: '2023-04-23T07:36:01.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Puddles now only overflow when they can fully occupy a tile., type: Tweak}
@@ -2917,3 +2912,10 @@ Entries:
       hear random sounds (paracusia), type: Add}
   id: 4006
   time: '2023-06-15T06:45:51.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Our top scientists have injected our artifacts with foaming agents to
+      greatly increase their foam output. Let's just hope that there's nothing dangerous
+      inside of it., type: Fix}
+  id: 4007
+  time: '2023-06-15T11:26:10.0000000+00:00'
