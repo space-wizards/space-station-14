@@ -27,6 +27,7 @@ guide-entry-medicine = Medicine
 guide-entry-botanicals = Botanicals
 guide-entry-cloning = Cloning
 guide-entry-cryogenics = Cryogenics
+guide-entry-cargo = Cargo
 
 guide-entry-science = Science
 guide-entry-anomalous-research = Anomalous Research

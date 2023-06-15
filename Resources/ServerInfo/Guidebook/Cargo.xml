@@ -1,0 +1,30 @@
+<Document>
+  # Cargo
+  The supply department, more commonly known simply as Cargo, is in charge of keeping the station stocked up on necessary resources, such as fuel and raw materials. Though, they are not restricted to simple goods, and can order a wide variety of different items from offstation. The point is, it's Cargo's job to get the rest of the station what they need.
+
+  ## Ordering
+<Box>
+  <GuideEntityEmbed Entity="ComputerCargoOrders"/>
+</Box>
+  Every transaction you make will begin at a [color=#a4885c]cargo request computer[/color], from which you can send orders for specific items. Making any order requires [color=#118C4F]spacebucks[/color], but we'll get to that later. For now, click the "request" button next to whatever you need, type an appropriate reason for why you're ordering it, and hit "approve" when it appears below the request list.
+  
+  ## Piloting
+  Alright! now that we've ordered an item, we have to get it to the station. Orders are shipped to the station via the [color=#a4885c]cargo shuttle[/color], the remotely piloted spacecraft that cargo uses to buy and sell goods. In order to move the shuttle, you must first find the [color=#a4885c]cargo shuttle computer[/color].
+<Box>
+  <GuideEntityEmbed Entity="ComputerCargoShuttle"/>
+</Box>
+  After clicking the computer, you should see a radar-esque view of the shuttle from the top-down. Here are the steps for piloting the shuttle back and forth from the station, to the trading post, and back.
+  
+  - First, disconnect any airlocks that are connected to the dock.
+  - Then, you actually get to pilot the shuttle. The controls are fairly simple, with W/S being forward/backward, A/D being turn left/right, and Spacebar being the brake.
+  - Move the shuttle a decent distance away from the station. After getting sufficiently far away, a FTL destination named something like "Trading Post Alpha" should light up on the computer. Hit this button, and the shuttle will start traveling to the trading post.
+  - After some time, you should get the option to FTL the shuttle back to the station. After this, just pilot the shuttle back to the cargo dock, and it should have everything you ordered inside. Enjoy!
+
+  ## Selling
+  So, you want to order something, but don't have the money for it? You just need to sell something! Almost everything on the station has economic value, which an [color=#a4885c]appraisal tool[/color] can read out to you.
+<Box>
+  <GuideEntityEmbed Entity="AppraisalTool"/>
+</Box>
+  After finding something worth selling, just heave it onto one of the shuttle's cargo pallets (they look like catwalks, and orders always spawn on them). The next time the shuttle arrives at the trading post, the item will be sold, and the money will be directly transfered back to the request computer.
+  
+</Document>
