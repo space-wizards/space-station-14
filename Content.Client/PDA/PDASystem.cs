@@ -4,28 +4,28 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.PDA;
 
-public sealed class PDASystem : SharedPDASystem
+public sealed class PdaSystem : SharedPdaSystem
 {
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PDAComponent, AppearanceChangeEvent>(OnAppearanceChange);
+        SubscribeLocalEvent<PdaComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    private void OnAppearanceChange(EntityUid uid, PDAComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(EntityUid uid, PdaComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
         if (Appearance.TryGetData<bool>(uid, UnpoweredFlashlightVisuals.LightOn, out var isFlashlightOn, args.Component))
-            args.Sprite.LayerSetVisible(PDAVisualLayers.Flashlight, isFlashlightOn);
+            args.Sprite.LayerSetVisible(PdaVisualLayers.Flashlight, isFlashlightOn);
 
-        if (Appearance.TryGetData<bool>(uid, PDAVisuals.IDCardInserted, out var isCardInserted, args.Component))
-            args.Sprite.LayerSetVisible(PDAVisualLayers.IDLight, isCardInserted);
+        if (Appearance.TryGetData<bool>(uid, PdaVisuals.IdCardInserted, out var isCardInserted, args.Component))
+            args.Sprite.LayerSetVisible(PdaVisualLayers.IdLight, isCardInserted);
     }
 
-    protected override void OnComponentInit(EntityUid uid, PDAComponent component, ComponentInit args)
+    protected override void OnComponentInit(EntityUid uid, PdaComponent component, ComponentInit args)
     {
         base.OnComponentInit(uid, component, args);
 
@@ -33,16 +33,16 @@ public sealed class PDASystem : SharedPDASystem
             return;
 
         if (component.State != null)
-            sprite.LayerSetState(PDAVisualLayers.Base, component.State);
+            sprite.LayerSetState(PdaVisualLayers.Base, component.State);
 
-        sprite.LayerSetVisible(PDAVisualLayers.Flashlight, component.FlashlightOn);
-        sprite.LayerSetVisible(PDAVisualLayers.IDLight, component.IdSlot.StartingItem != null);
+        sprite.LayerSetVisible(PdaVisualLayers.Flashlight, component.FlashlightOn);
+        sprite.LayerSetVisible(PdaVisualLayers.IdLight, component.IdSlot.StartingItem != null);
     }
 
-    public enum PDAVisualLayers : byte
+    public enum PdaVisualLayers : byte
     {
         Base,
         Flashlight,
-        IDLight
+        IdLight
     }
 }

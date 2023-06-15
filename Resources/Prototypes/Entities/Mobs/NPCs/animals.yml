@@ -1458,6 +1458,64 @@
     - type: GhostTakeoverAvailable
 
 - type: entity
+  name: clown spider
+  parent: MobGiantSpider
+  id: MobClownSpider
+  description: Combines the two most terrifying things in existence, spiders and clowns.
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+      - map: ["enum.DamageStateVisualLayers.Base"]
+        state: clown
+        sprite: Mobs/Animals/clownspider.rsi
+    - type: Faction
+      factions:
+        - Xeno
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask: SimpleHostileCompound
+    - type: Butcherable
+      spawned:
+        - id: MaterialBananium1
+          amount: 1
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-giant-spider-name
+      description: ghost-role-information-giant-spider-description
+    - type: GhostTakeoverAvailable
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: clown
+        Dead:
+          Base: dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        180: Dead
+    - type: Spider
+      webPrototype: SpiderWebClown
+    - type: Tag
+      tags:
+      - DoorBumpOpener
+      - FootstepSound
+    - type: MeleeWeapon
+      hidden: true
+      angle: 0
+      animation: WeaponArcBite
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      damage:
+        types:
+          Piercing: 8
+          Poison: 6
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepClownFast
+
+- type: entity
   name: possum
   parent: SimpleMobBase
   id: MobPossum

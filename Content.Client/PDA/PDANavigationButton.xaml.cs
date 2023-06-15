@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.PDA;
 
 [GenerateTypedNameReferences]
-public sealed partial class PDANavigationButton : ContainerButton
+public sealed partial class PdaNavigationButton : ContainerButton
 {
 
     private bool _isCurrent;
@@ -100,7 +100,7 @@ public sealed partial class PDANavigationButton : ContainerButton
         }
     }
 
-    public PDANavigationButton()
+    public PdaNavigationButton()
     {
         RobustXamlLoader.Load(this);
         Background.PanelOverride = _styleBox;

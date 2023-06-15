@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.PDA;
 
 [GenerateTypedNameReferences]
-public sealed partial class PDAProgramItem : ContainerButton
+public sealed partial class PdaProgramItem : ContainerButton
 {
     public const string StylePropertyBgColor = "backgroundColor";
     public const string NormalBgColor = "#313138";
@@ -23,7 +23,7 @@ public sealed partial class PDAProgramItem : ContainerButton
         set => _styleBox.BackgroundColor = value;
     }
 
-    public PDAProgramItem()
+    public PdaProgramItem()
     {
         RobustXamlLoader.Load(this);
         Panel.PanelOverride = _styleBox;
