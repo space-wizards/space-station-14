@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/11402f6ae62facc2e8bcfa1f8ef5353b26663278",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/11402f6ae62facc2e8bcfa1f8ef5353b26663278, meat.png is CC0-1.0 by EmoGarbage404 (github) for Space Station 14",
   "size": {
     "x": 32,
     "y": 32
@@ -37,6 +37,10 @@
     },
     {
       "name": "comfy-overlay",
+      "directions": 4
+    },
+    {
+      "name": "meat",
       "directions": 4
     },
     {
