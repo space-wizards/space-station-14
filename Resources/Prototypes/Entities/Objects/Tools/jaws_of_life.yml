@@ -10,7 +10,6 @@
   - type: Sprite
     sprite: Objects/Tools/jaws_of_life.rsi
     state: jaws_pry
-    netsync: false
   - type: Item
     size: 50
   - type: Clothing

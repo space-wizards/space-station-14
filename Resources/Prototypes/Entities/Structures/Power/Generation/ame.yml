@@ -8,7 +8,6 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    netsync: false
     snapCardinals: true
     sprite: Structures/Power/Generation/ame.rsi
     state: control
@@ -105,7 +104,6 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    netsync: false
     drawdepth: Walls
     sprite: Structures/Power/Generation/ame.rsi
     state: shield_0
