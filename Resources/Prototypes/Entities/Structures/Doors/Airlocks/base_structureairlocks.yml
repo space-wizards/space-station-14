@@ -62,7 +62,7 @@
     containers:
       board: !type:Container
   - type: Weldable
-    fuel: 3
+    fuel: 5
     time: 3
   - type: Airlock
   - type: DoorBolt

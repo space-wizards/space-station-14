@@ -31,7 +31,7 @@ public sealed class WeldableComponent : SharedWeldableComponent
     /// </summary>
     [DataField("fuel")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float FuelConsumption = 1f;
+    public float FuelConsumption = 3f;
 
     /// <summary>
     ///     How much time does it take to weld/unweld entity.
