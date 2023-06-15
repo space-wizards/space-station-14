@@ -40,5 +40,3 @@ guide-entry-robotics = Robotics
 
 guide-entry-security = Security
 guide-entry-dna = DNA
-
-guide-entry-species = Species
