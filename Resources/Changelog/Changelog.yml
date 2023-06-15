@@ -1,16 +1,4 @@
 Entries:
-- author: GoodWheatley
-  changes:
-  - {message: 'Rigged Boxing Gloves are now available in the uplink for 5 TC, if you''re
-      a Passenger or Boxer.', type: Add}
-  id: 3492
-  time: '2023-04-22T23:08:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Health analyzer, handheld crew monitor, and handheld station maps require
-      power.', type: Tweak}
-  id: 3493
-  time: '2023-04-23T02:25:13.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Removed the jackboot walking sound., type: Remove}
@@ -2916,3 +2904,14 @@ Entries:
       output., type: Tweak}
   id: 3991
   time: '2023-06-15T01:45:07.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Blood-red hardsuits now slow you half as much as before., type: Tweak}
+  id: 3992
+  time: '2023-06-15T02:12:09.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Implemented a new robust harvest overdose threshold for Diona, preventing
+      them from achieving immortality.', type: Tweak}
+  id: 3993
+  time: '2023-06-15T02:13:06.0000000+00:00'
