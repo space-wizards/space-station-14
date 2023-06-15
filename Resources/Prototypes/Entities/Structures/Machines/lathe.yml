@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
     snapCardinals: true
-    netsync: false
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
@@ -123,7 +122,6 @@
   - type: Sprite
     sprite: Structures/Machines/protolathe.rsi
     snapCardinals: true
-    netsync: false
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
@@ -260,7 +258,6 @@
   description: Prints circuit boards for machines.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/circuit_imprinter.rsi
     layers:
     - state: icon
@@ -304,6 +301,7 @@
       - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
       - FatExtractorMachineCircuitboard
+      - SheetifierMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - RadarConsoleCircuitboard
@@ -320,6 +318,8 @@
       - HonkerCentralElectronics
       - HonkerPeripheralsElectronics
       - HonkerTargetingElectronics
+      - HamtrCentralElectronics
+      - HamtrPeripheralsElectronics
       - GeneratorPlasmaMachineCircuitboard
       - GeneratorUraniumMachineCircuitboard
       - WallmountGeneratorElectronics
@@ -353,7 +353,6 @@
   description: Creates parts for robotics and other mechanical needs
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/exosuit_fabricator.rsi
     layers:
     - state: fab-idle
@@ -386,6 +385,12 @@
     - HonkerLLeg
     - HonkerRLeg
     - MechEquipmentHorn
+    - MechEquipmentGrabberSmall
+    - HamtrHarness
+    - HamtrLArm
+    - HamtrRArm
+    - HamtrLLeg
+    - HamtrRLeg
   - type: MaterialStorage
     whitelist:
       tags:
@@ -404,7 +409,6 @@
   description: Prints equipment for use by security crew.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/techfab.rsi
     layers:
     - state: icon
@@ -467,7 +471,6 @@
   description: Prints equipment for use by the medbay.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/techfab.rsi
     layers:
     - state: icon
@@ -531,7 +534,6 @@
     noRot: false
   - type: Sprite
     sprite: Structures/Machines/uniform_printer.rsi
-    netsync: false
     snapCardinals: false
     layers:
     - state: icon
@@ -649,7 +651,6 @@
   components:
     - type: Sprite
       sprite: Structures/Machines/ore_processor.rsi
-      netsync: false
       layers:
         - state: icon
           map: ["enum.LatheVisualLayers.IsRunning"]
@@ -680,3 +681,31 @@
         - IngotGold1
         - IngotSilver1
         - MaterialBananium1
+
+- type: entity
+  parent: Autolathe
+  id: Sheetifier
+  name: sheet-meister 2000
+  description: A very sheety machine.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/sheetifier.rsi
+    layers:
+    - state: base_machine
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: buttons_on
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: Machine
+    board: SheetifierMachineCircuitboard
+  - type: MaterialStorage
+    dropOnDeconstruct: false #should drop ores instead of ingots/sheets
+    ignoreColor: true
+    whitelist:
+      tags:
+      - Raw
+  - type: Lathe
+    idleState: base_machine
+    runningState: base_machine_processing
+    staticRecipes:
+    - MaterialSheetMeat

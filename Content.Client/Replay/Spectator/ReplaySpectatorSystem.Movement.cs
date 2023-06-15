@@ -57,7 +57,7 @@ public sealed partial class ReplaySpectatorSystem
         if (!player.IsClientSide() || !HasComp<ReplaySpectatorComponent>(player))
         {
             // Player is trying to move -> behave like the ghost-on-move component.
-            SpawnObserverGhost(new EntityCoordinates(player, default), true);
+            SpawnSpectatorGhost(new EntityCoordinates(player, default), true);
             return;
         }
 
@@ -80,7 +80,7 @@ public sealed partial class ReplaySpectatorSystem
         if (!xform.ParentUid.IsValid())
         {
             // Were they sitting on a grid as it was getting deleted?
-            SetObserverPosition(default);
+            SetSpectatorPosition(default);
             return;
         }
 

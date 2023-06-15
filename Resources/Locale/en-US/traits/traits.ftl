@@ -19,3 +19,6 @@ trait-paracusia-desc = You hear sounds that aren't really there
 
 trait-uncloneable-name = Uncloneable
 trait-uncloneable-desc = Cannot be cloned
+
+trait-pirate-accent-name = Pirate Accent
+trait-pirate-accent-desc = You can't stop speaking like a pirate!
