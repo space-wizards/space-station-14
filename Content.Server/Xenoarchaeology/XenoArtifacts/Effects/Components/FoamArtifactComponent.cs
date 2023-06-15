@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Reagent;
+﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
@@ -6,7 +7,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 /// <summary>
 /// Generates foam from the artifact when activated
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(FoamArtifactSystem))]
 public sealed class FoamArtifactComponent : Component
 {
     /// <summary>
@@ -19,30 +20,30 @@ public sealed class FoamArtifactComponent : Component
     /// <summary>
     /// The foam reagent
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("selectedReagent"), ViewVariables(VVAccess.ReadWrite)]
     public string? SelectedReagent;
 
     /// <summary>
     /// How long does the foam last?
     /// </summary>
-    [DataField("duration")]
+    [DataField("duration"), ViewVariables(VVAccess.ReadWrite)]
     public float Duration = 10;
 
     /// <summary>
     /// How much reagent is in the foam?
     /// </summary>
-    [DataField("reagentAmount")]
+    [DataField("reagentAmount"), ViewVariables(VVAccess.ReadWrite)]
     public float ReagentAmount = 200;
 
     /// <summary>
     /// Minimum radius of foam spawned
     /// </summary>
-    [DataField("minFoamAmount")]
+    [DataField("minFoamAmount"), ViewVariables(VVAccess.ReadWrite)]
     public int MinFoamAmount = 15;
 
     /// <summary>
     /// Maximum radius of foam spawned
     /// </summary>
-    [DataField("maxFoamAmount")]
+    [DataField("maxFoamAmount"), ViewVariables(VVAccess.ReadWrite)]
     public int MaxFoamAmount = 20;
 }
