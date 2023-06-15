@@ -1,10 +1,4 @@
 Entries:
-- author: Menshin
-  changes:
-  - {message: Magboots sprite now updates on toggling. The toggling verb works properly
-      too., type: Fix}
-  id: 3488
-  time: '2023-04-22T10:42:37.0000000+00:00'
 - author: jick
   changes:
   - {message: Fixed sleepwalking after being stunned, type: Fix}
@@ -2916,3 +2910,10 @@ Entries:
     type: Fix}
   id: 3987
   time: '2023-06-14T01:32:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the sheetmeister, a machine that presses raw meat into construction
+      sheets.', type: Add}
+  - {message: Added sheetmeister to meat manipulation technology., type: Add}
+  id: 3988
+  time: '2023-06-15T00:49:24.0000000+00:00'
