@@ -1,9 +1,4 @@
 Entries:
-- author: jick
-  changes:
-  - {message: Fixed sleepwalking after being stunned, type: Fix}
-  id: 3489
-  time: '2023-04-22T11:06:45.0000000+00:00'
 - author: lapatison
   changes:
   - {message: 'Boxing equipment crates, empty boxes crates, and medical body bag crates
@@ -2917,3 +2912,9 @@ Entries:
   - {message: Added sheetmeister to meat manipulation technology., type: Add}
   id: 3988
   time: '2023-06-15T00:49:24.0000000+00:00'
+- author: Dynexust
+  changes:
+  - {message: 'Interdyne Pharmaceutics has pushed a new chemical on the market, Doxarubixadone,
+      which cryogenically heals cellular damage.', type: Add}
+  id: 3989
+  time: '2023-06-15T01:26:28.0000000+00:00'
