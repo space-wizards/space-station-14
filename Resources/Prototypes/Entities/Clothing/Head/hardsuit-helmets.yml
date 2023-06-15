@@ -579,3 +579,26 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitCarp
+  noSpawn: true
+  name: carp hardsuit helmet
+  description: A gnarly helmet adorned with razor sharp space carp teeth.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/carpsuit.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/carpsuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.87
+        Slash: 0.87
+        Heat: 0.95
+        Radiation: 0.9
+        Caustic: 0.85

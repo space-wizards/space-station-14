@@ -157,3 +157,20 @@
     walkModifier: 0.7
     sprintModifier: 0.75
   - type: GroupExamine
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitIan
+  name: ian suit
+  description: Who's a good boy?
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/iansuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/iansuit.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1.1
+    sprintModifier: 1.1
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetIan
+

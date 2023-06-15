@@ -835,3 +835,33 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitCarp
+  name: carp hardsuit
+  description: A special hardsuit designed to enable the wearer the agility of a space carp.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/carpsuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/carpsuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 10000
+  - type: ClothingSpeedModifier
+    walkModifier: 1.35
+    sprintModifier: 1.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 1.13
+        Slash: 1.13
+        Piercing: 1.1
+        Heat: 1.2
+        Radiation: 1
+        Caustic: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 1.05
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCarp

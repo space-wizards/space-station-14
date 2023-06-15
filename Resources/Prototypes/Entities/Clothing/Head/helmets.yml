@@ -316,3 +316,17 @@
   - type: Tag
     tags:
     - HelmetEVA
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetIan
+  name: ian hood
+  description: A hood to complete the 'Good boy' look.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/iansuit.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/iansuit.rsi
+  - type: Tag
+    tags:
+    - HidesHair
