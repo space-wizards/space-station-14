@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix railing / windoor bounds., type: Fix}
-  id: 3503
-  time: '2023-04-23T05:23:03.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Eating and drinking interactions can once again be cancelled by using
@@ -2916,3 +2911,9 @@ Entries:
     type: Add}
   id: 4002
   time: '2023-06-15T03:11:11.0000000+00:00'
+- author: Ahion
+  changes:
+  - {message: 'Using the crew monitoring console, it has become more convenient to
+      track the position of the crew on the map.', type: Tweak}
+  id: 4003
+  time: '2023-06-15T03:29:53.0000000+00:00'
