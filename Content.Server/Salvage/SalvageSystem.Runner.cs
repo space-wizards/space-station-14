@@ -285,27 +285,56 @@ public sealed partial class SalvageSystem
             if (comp.Completed)
             {
                 Announce(uid, Loc.GetString("salvage-expedition-completed"));
-                GiveReward(uid, comp);
+                GiveReward(comp);
             }
         }
     }
 
-    private void GiveReward(EntityUid uid, SalvageExpeditionComponent comp)
+    private void GiveReward(SalvageExpeditionComponent comp)
     {
-        // pick a random reward to give
-        var rewards = _prototypeManager.Index<WeightedRandomPrototype>(comp.Rewards);
-        var reward = rewards.Pick(_random);
-
-        // send it to cargo if possible
+        // send it to cargo, no rewards otherwise.
         if (!TryComp<StationCargoOrderDatabaseComponent>(comp.Station, out var cargoDb))
         {
             return;
         }
 
-        var sender = Loc.GetString("cargo-gift-default-sender");
-        var desc = Loc.GetString("salvage-expedition-reward-description");
-        var dest = Loc.GetString("cargo-gift-default-dest");
-        // FIXME: this needs changes to just deliver an item rather than a cargo product
-        _cargo.AddAndApproveOrder(cargoDb, reward, 1, sender, desc, dest);
+        var ids = RewardsForDifficulty(comp.Difficulty);
+        foreach (var id in ids)
+        {
+            // pick a random reward to give
+            var rewards = _prototypeManager.Index<WeightedRandomPrototype>(id);
+            var reward = rewards.Pick(_random);
+
+            var sender = Loc.GetString("cargo-gift-default-sender");
+            var desc = Loc.GetString("salvage-expedition-reward-description");
+            var dest = Loc.GetString("cargo-gift-default-dest");
+            // FIXME: this needs changes to just deliver an item rather than a cargo product
+            _cargo.AddAndApproveOrder(cargoDb, reward, 1, sender, desc, dest);
+        }
+    }
+
+    /// <summary>
+    /// Get a list of WeightedRandomPrototype IDs with the rewards for a certain difficulty.
+    /// </summary>
+    private string[] RewardsForDifficulty(DifficultyRating rating)
+    {
+        var common = "SalvageRewardCommon";
+        var rare = "SalvageRewardRare";
+        var epic = "SalvageRewardEpic";
+        switch (rating)
+        {
+            case DifficultyRating.Minimal:
+                return new string[] { common, common, common };
+            case DifficultyRating.Minor:
+                return new string[] { common, common, rare };
+            case DifficultyRating.Moderate:
+                return new string[] { common, rare, rare };
+            case DifficultyRating.Hazardous:
+                return new string[] { rare, rare, epic };
+            case DifficultyRating.Extreme:
+                return new string[] { rare, epic, epic };
+            default:
+                throw new NotImplementedException();
+        }
     }
 }

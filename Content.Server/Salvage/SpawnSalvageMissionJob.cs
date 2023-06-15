@@ -134,7 +134,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         expedition.EndTime = _timing.CurTime + mission.Duration;
         expedition.MissionParams = _missionParams;
         expedition.Difficulty = _missionParams.Difficulty;
-        expedition.Rewards = RewardsForDifficulty(expedition.Difficulty);
 
         // Don't want consoles to have the incorrect name until refreshed.
         var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
@@ -225,26 +224,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             }
         }
         return true;
-    }
-
-    /// <summary>
-    /// Get the ID of the WeightedRandomPrototype with the rewards for a certain difficulty.
-    /// </summary>
-    private string RewardsForDifficulty(DifficultyRating rating)
-    {
-        switch (rating)
-        {
-            case DifficultyRating.Minimal:
-            case DifficultyRating.Minor:
-                return "SalvageRewardCommon";
-            case DifficultyRating.Moderate:
-            case DifficultyRating.Hazardous:
-                return "SalvageRewardRare";
-            case DifficultyRating.Extreme:
-                return "SalvageRewardEpic";
-            default:
-                throw new NotImplementedException();
-        }
     }
 
     private async Task SpawnDungeonLoot(Dungeon? dungeon, SalvageLootPrototype loot, EntityUid gridUid, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)

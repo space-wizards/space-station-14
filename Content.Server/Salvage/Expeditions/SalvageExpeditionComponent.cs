@@ -56,13 +56,6 @@ public sealed class SalvageExpeditionComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("difficulty")]
     public DifficultyRating Difficulty;
-
-    /// <summary>
-    /// Possible rewards sent to cargo upon mission completion.
-    /// Based on mission difficulty.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("rewards", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>))]
-    public string Rewards = string.Empty;
 }
 
 public enum ExpeditionStage : byte
