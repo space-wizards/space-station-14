@@ -79,10 +79,6 @@
   conditions:
     - !type:TileNotBlocked
       failIfSpace: false
-    - !type:TileType
-      targets:
-        - Lattice
-        - Plating
 
 - type: construction
   name: cable terminal

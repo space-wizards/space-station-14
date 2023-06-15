@@ -116,6 +116,7 @@
   cost: 5000
   recipeUnlocks:
   - FatExtractorMachineCircuitboard
+  - SheetifierMachineCircuitboard
 
 - type: technology
   id: HONKMech
