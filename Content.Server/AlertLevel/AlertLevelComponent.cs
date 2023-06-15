@@ -1,3 +1,5 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
 namespace Content.Server.AlertLevel;
 
 /// <summary>
@@ -14,7 +16,7 @@ public sealed class AlertLevelComponent : Component
     public AlertLevelPrototype? AlertLevels;
 
     // Once stations are a prototype, this should be used.
-    [DataField("alertLevelPrototype")]
+    [DataField("alertLevelPrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<AlertLevelPrototype>))]
     public string AlertLevelPrototype = default!;
 
     /// <summary>

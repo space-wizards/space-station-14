@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Tag
 {
@@ -47,7 +48,6 @@ namespace Content.IntegrationTests.Tests.Tag
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
-            var sMapManager = server.ResolveDependency<IMapManager>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
             var entManager = server.ResolveDependency<IEntitySystemManager>();
@@ -119,36 +119,6 @@ namespace Content.IntegrationTests.Tests.Tag
                     sPrototypeManager.Index<TagPrototype>(UnregisteredTag);
                 });
 
-                // Single
-                Assert.Throws<UnknownPrototypeException>(() =>
-                {
-                    tagSystem.HasTag(sTagDummy, UnregisteredTag);
-                });
-                Assert.Throws<UnknownPrototypeException>(() =>
-                {
-                    tagSystem.HasTag(sTagComponent, UnregisteredTag);
-                });
-
-                // Any
-                Assert.Throws<UnknownPrototypeException>(() =>
-                {
-                    tagSystem.HasAnyTag(sTagDummy, UnregisteredTag);
-                });
-                Assert.Throws<UnknownPrototypeException>(() =>
-                {
-                    tagSystem.HasAnyTag(sTagComponent, UnregisteredTag);
-                });
-
-                // All
-                Assert.Throws<UnknownPrototypeException>(() =>
-                {
-                    tagSystem.HasAllTags(sTagDummy, UnregisteredTag);
-                });
-                Assert.Throws<UnknownPrototypeException>(() =>
-                {
-                    tagSystem.HasAllTags(sTagComponent, UnregisteredTag);
-                });
-
                 // Cannot add the starting tag again
                 Assert.That(tagSystem.AddTag(sTagComponent, StartingTag), Is.False);
                 Assert.That(tagSystem.AddTags(sTagComponent, StartingTag, StartingTag), Is.False);
@@ -215,6 +185,40 @@ namespace Content.IntegrationTests.Tests.Tag
 
                 // No tags left in the component
                 Assert.That(sTagComponent.Tags, Is.Empty);
+
+                #if !DEBUG
+                return;
+                #endif
+
+                // Single
+                Assert.Throws<DebugAssertException>(() =>
+                {
+                    tagSystem.HasTag(sTagDummy, UnregisteredTag);
+                });
+                Assert.Throws<DebugAssertException>(() =>
+                {
+                    tagSystem.HasTag(sTagComponent, UnregisteredTag);
+                });
+
+                // Any
+                Assert.Throws<DebugAssertException>(() =>
+                {
+                    tagSystem.HasAnyTag(sTagDummy, UnregisteredTag);
+                });
+                Assert.Throws<DebugAssertException>(() =>
+                {
+                    tagSystem.HasAnyTag(sTagComponent, UnregisteredTag);
+                });
+
+                // All
+                Assert.Throws<DebugAssertException>(() =>
+                {
+                    tagSystem.HasAllTags(sTagDummy, UnregisteredTag);
+                });
+                Assert.Throws<DebugAssertException>(() =>
+                {
+                    tagSystem.HasAllTags(sTagComponent, UnregisteredTag);
+                });
             });
             await pairTracker.CleanReturnAsync();
         }

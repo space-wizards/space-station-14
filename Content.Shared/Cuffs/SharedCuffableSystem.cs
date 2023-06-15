@@ -255,8 +255,8 @@ namespace Content.Shared.Cuffs
                 return;
             }
 
-            TryCuffing(args.User, target, uid, component);
-            args.Handled = true;
+            var result = TryCuffing(args.User, target, uid, component);
+            args.Handled = result;
         }
 
         private void OnCuffMeleeHit(EntityUid uid, HandcuffComponent component, MeleeHitEvent args)
@@ -422,10 +422,11 @@ namespace Content.Shared.Cuffs
             return true;
         }
 
-        public void TryCuffing(EntityUid user, EntityUid target, EntityUid handcuff, HandcuffComponent? handcuffComponent = null, CuffableComponent? cuffable = null)
+        /// <returns>False if the target entity isn't cuffable.</returns>
+        public bool TryCuffing(EntityUid user, EntityUid target, EntityUid handcuff, HandcuffComponent? handcuffComponent = null, CuffableComponent? cuffable = null)
         {
             if (!Resolve(handcuff, ref handcuffComponent) || !Resolve(target, ref cuffable, false))
-                return;
+                return false;
 
             if (!TryComp<HandsComponent?>(target, out var hands))
             {
@@ -434,7 +435,7 @@ namespace Content.Shared.Cuffs
                     _popup.PopupEntity(Loc.GetString("handcuff-component-target-has-no-hands-error",
                         ("targetName", Identity.Name(target, EntityManager, user))), user, user);
                 }
-                return;
+                return true;
             }
 
             if (cuffable.CuffedHandCount >= hands.Count)
@@ -444,7 +445,7 @@ namespace Content.Shared.Cuffs
                     _popup.PopupEntity(Loc.GetString("handcuff-component-target-has-no-free-hands-error",
                         ("targetName", Identity.Name(target, EntityManager, user))), user, user);
                 }
-                return;
+                return true;
             }
 
             var cuffTime = handcuffComponent.CuffTime;
@@ -464,7 +465,7 @@ namespace Content.Shared.Cuffs
             };
 
             if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
-                return;
+                return true;
 
             if (_net.IsServer)
             {
@@ -487,6 +488,7 @@ namespace Content.Shared.Cuffs
             }
 
             _audio.PlayPredicted(handcuffComponent.StartCuffSound, handcuff, user);
+            return true;
         }
 
         /// <summary>

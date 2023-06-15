@@ -20,11 +20,11 @@ public sealed class EuiManagerTest
             var server = pairTracker.Pair.Server;
 
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
+            var eui = server.ResolveDependency<EuiManager>();
 
             await server.WaitAssertion(() =>
             {
                 var clientSession = sPlayerManager.ServerSessions.Single();
-                var eui = IoCManager.Resolve<EuiManager>();
                 var ui = new AdminAnnounceEui();
                 eui.OpenEui(ui, clientSession);
             });

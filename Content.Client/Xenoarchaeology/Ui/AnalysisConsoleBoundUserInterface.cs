@@ -35,9 +35,9 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
         {
             SendMessage(new AnalysisConsolePrintButtonPressedMessage());
         };
-        _consoleMenu.OnDestroyButtonPressed += () =>
+        _consoleMenu.OnExtractButtonPressed += () =>
         {
-            SendMessage(new AnalysisConsoleDestroyButtonPressedMessage());
+            SendMessage(new AnalysisConsoleExtractButtonPressedMessage());
         };
     }
 
