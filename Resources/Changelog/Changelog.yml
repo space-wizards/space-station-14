@@ -1,12 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: 'added hot potato. When activated you can''t drop it, hit others to
-      transfer until it explodes!', type: Add}
-  - {message: 'added hot potato to chef, botanist, clown and mime uplink (4 TC)',
-    type: Add}
-  id: 3491
-  time: '2023-04-22T11:40:37.0000000+00:00'
 - author: GoodWheatley
   changes:
   - {message: 'Rigged Boxing Gloves are now available in the uplink for 5 TC, if you''re
@@ -2918,3 +2910,9 @@ Entries:
     type: Fix}
   id: 3990
   time: '2023-06-15T01:31:15.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Wallmount generator board is now cheaper to compensate for less power
+      output., type: Tweak}
+  id: 3991
+  time: '2023-06-15T01:45:07.0000000+00:00'
