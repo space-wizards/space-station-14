@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix medical PDA not working., type: Fix}
-  id: 3499
-  time: '2023-04-23T03:46:48.0000000+00:00'
 - author: 778b
   changes:
   - {message: Stop Onestar mecha colliding with items and also use the mech footstep
@@ -2913,3 +2908,8 @@ Entries:
       defences), type: Tweak}
   id: 3998
   time: '2023-06-15T02:25:29.0000000+00:00'
+- author: OttoMaticode
+  changes:
+  - {message: Linked the science entry in the robotics guidebook entry., type: Fix}
+  id: 3999
+  time: '2023-06-15T02:43:02.0000000+00:00'
