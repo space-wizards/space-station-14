@@ -7,7 +7,7 @@ using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Clickable
 {
-    internal sealed class ClickMapManager : IClickMapManager, IPostInjectInit
+    public sealed class ClickMapManager : IClickMapManager, IPostInjectInit
     {
         private static readonly string[] IgnoreTexturePaths =
         {
@@ -137,7 +137,7 @@ namespace Content.Client.Clickable
             }
         }
 
-        internal sealed class ClickMap
+        public sealed class ClickMap
         {
             [ViewVariables] private readonly byte[] _data;
 

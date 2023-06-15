@@ -26,7 +26,7 @@ using Content.Shared.Kitchen;
 
 namespace Content.Server.IoC
 {
-    internal static class ServerContentIoC
+    public static class ServerContentIoC
     {
         public static void Register()
         {

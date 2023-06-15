@@ -20,8 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Checker", "Build Chec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildChecker", "BuildChecker\BuildChecker.csproj", "{C899FCA4-7037-4E49-ABC2-44DE72487110}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Tests", "Content.Tests\Content.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RobustToolbox", "RobustToolbox", "{83B4CBBA-547A-42F0-A7CD-8A67D93196CE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lidgren.Network", "RobustToolbox\Lidgren.Network\Lidgren.Network.csproj", "{59250BAF-0000-0000-0000-000000000000}"
@@ -120,6 +118,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Files", "Project Fi
 		RobustToolbox\README.md = RobustToolbox\README.md
 		RobustToolbox\RELEASE-NOTES.md = RobustToolbox\RELEASE-NOTES.md
 	EndProjectSection
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Replay", "Content.Replay\Content.Replay.csproj", "{A493616C-338D-47B7-8072-A7F14D034D0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Shared.CompNetworkGenerator", "RobustToolbox\Robust.Shared.CompNetworkGenerator\Robust.Shared.CompNetworkGenerator.csproj", "{07CA34A1-1D37-4771-A2E3-495A1044AE0B}"
@@ -163,14 +162,6 @@ Global
 		{C899FCA4-7037-4E49-ABC2-44DE72487110}.DebugOpt|Any CPU.Build.0 = DebugOpt|Any CPU
 		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
 		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Tools|Any CPU.Build.0 = Tools|Any CPU
-		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8EDF4429-251A-416D-BB68-93F227191BCF}.DebugOpt|Any CPU.ActiveCfg = DebugOpt|Any CPU
-		{8EDF4429-251A-416D-BB68-93F227191BCF}.DebugOpt|Any CPU.Build.0 = DebugOpt|Any CPU
-		{8EDF4429-251A-416D-BB68-93F227191BCF}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
-		{8EDF4429-251A-416D-BB68-93F227191BCF}.Tools|Any CPU.Build.0 = Tools|Any CPU
 		{59250BAF-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{59250BAF-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59250BAF-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU

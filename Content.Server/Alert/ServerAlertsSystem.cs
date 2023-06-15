@@ -3,7 +3,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Alert;
 
-internal sealed class ServerAlertsSystem : AlertsSystem
+public sealed class ServerAlertsSystem : AlertsSystem
 {
     public override void Initialize()
     {
