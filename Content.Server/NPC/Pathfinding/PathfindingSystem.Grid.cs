@@ -103,7 +103,7 @@ public sealed partial class PathfindingSystem
         while (query.MoveNext(out var comp))
         {
             if (comp.DirtyChunks.Count == 0 ||
-                comp.NextUpdate < curTime ||
+                curTime < comp.NextUpdate ||
                 !TryComp<MapGridComponent>(comp.Owner, out var mapGridComp))
             {
                 continue;

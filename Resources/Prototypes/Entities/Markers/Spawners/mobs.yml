@@ -123,6 +123,32 @@
   - type: ConditionalSpawner
     prototypes:
       - MobCatFloppa
+      
+- type: entity
+  name: Bingus Spawner
+  id: SpawnMobCatBingus
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobBingus
+
+- type: entity
+  name: Space Cat Spawner
+  id: SpawnMobCatSpace
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatSpace
 
 - type: entity
   name: Cat Spawner
@@ -138,6 +164,7 @@
       - MobCatRuntime
       - MobCatException
       - MobCatFloppa
+      - MobBingus
 
 - type: entity
   name: Generic Cat Spawner
@@ -148,11 +175,14 @@
     layers:
       - state: green
       - state: ai
-  - type: ConditionalSpawner
+  - type: RandomSpawner
     prototypes:
       - MobCat
       - MobCatCalico
       - MobCatCaracal
+    rarePrototypes:
+      - MobCatSpace
+    rareChance: 0.05
 
 - type: entity
   name: Bandito Spawner
@@ -344,7 +374,7 @@
   - type: ConditionalSpawner
     prototypes:
     - MobBoxingKangaroo
-  
+
 - type: entity
   name: Space Spider Spawner
   id: SpawnMobSpaceSpider
@@ -448,7 +478,7 @@
   - type: ConditionalSpawner
     prototypes:
       - MobSlimesPet
-  
+
 - type: entity
   name: Pun Pun Spawner
   id: SpawnMobMonkeyPunpun
@@ -462,3 +492,216 @@
   - type: ConditionalSpawner
     prototypes:
     - MobMonkeyPunpun
+
+- type: entity
+  name: behonker Spawner
+  id: SpawnMobBehonker
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: base
+      sprite: Objects/Weapons/Guns/Battery/behonker_eye.rsi
+  - type: ConditionalSpawner
+    prototypes:
+      - MobBehonkerIce
+      - MobBehonkerPyro
+      - MobBehonkerElectrical
+      - MobBehonkerGrav
+
+- type: entity
+  name: Monkey Spawner
+  id: SpawnMobMonkey
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: monkey
+      sprite: Mobs/Animals/monkey.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobMonkey
+
+- type: entity
+  name: Purple Snake Spawner
+  id: SpawnMobPurpleSnake
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: purple_snake
+      sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobPurpleSnake
+
+- type: entity
+  name: Small Purple Snake Spawner
+  id: SpawnMobSmallPurpleSnake
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: small_purple_snake
+      sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSmallPurpleSnake
+
+- type: entity
+  name: Slug Spawner
+  id: SpawnMobSlug
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: slug
+      sprite: Mobs/Animals/slug.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSlug
+
+- type: entity
+  name: Lizard Spawner
+  id: SpawnMobLizard
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: lizard
+      sprite: Mobs/Animals/lizard.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobLizard
+
+- type: entity
+  name: Crab Spawner
+  id: SpawnMobCrab
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: crab
+      sprite: Mobs/Animals/crab.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCrab
+
+- type: entity
+  name: Goat Spawner
+  id: SpawnMobGoat
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: goat
+      sprite: Mobs/Animals/goat.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobGoat
+
+- type: entity
+  name: Frog Spawner
+  id: SpawnMobFrog
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: frog
+      sprite: Mobs/Animals/frog.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobFrog
+
+- type: entity
+  name: Bee Spawner
+  id: SpawnMobBee
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: 0
+      sprite: Mobs/Animals/bee.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBee
+
+- type: entity
+  name: Parrot Spawner
+  id: SpawnMobParrot
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: parrot
+      sprite: Mobs/Animals/parrot.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobParrot
+
+- type: entity
+  name: Butterfly Spawner
+  id: SpawnMobButterfly
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: butterfly
+      sprite: Mobs/Animals/butterfly.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobButterfly
+
+- type: entity
+  name: Cow Spawner
+  id: SpawnMobCow
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: cow
+      sprite: Mobs/Animals/cow.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCow
+
+- type: entity
+  name: Gorilla Spawner
+  id: SpawnMobGorilla
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: crawling
+      sprite: Mobs/Animals/gorilla.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobGorilla
+
+- type: entity
+  name: Penguin Spawner
+  id: SpawnMobPenguin
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: penguin
+      sprite: Mobs/Animals/penguin.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobPenguin

@@ -1,5 +1,4 @@
 using Content.Shared.Movement.Components;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -11,6 +10,8 @@ public sealed class SlowContactsSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
 
+    // TODO full-game-save
+    // Either these need to be processed before a map is saved, or slowed/slowing entities need to update on init.
     private HashSet<EntityUid> _toUpdate = new();
     private HashSet<EntityUid> _toRemove = new();
 
@@ -20,9 +21,7 @@ public sealed class SlowContactsSystem : EntitySystem
         SubscribeLocalEvent<SlowContactsComponent, StartCollideEvent>(OnEntityEnter);
         SubscribeLocalEvent<SlowContactsComponent, EndCollideEvent>(OnEntityExit);
         SubscribeLocalEvent<SlowedByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
-
-        SubscribeLocalEvent<SlowContactsComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<SlowContactsComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<SlowContactsComponent, ComponentShutdown>(OnShutdown);
 
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
     }
@@ -46,18 +45,30 @@ public sealed class SlowContactsSystem : EntitySystem
         _toUpdate.Clear();
     }
 
-    private void OnGetState(EntityUid uid, SlowContactsComponent component, ref ComponentGetState args)
+    public void ChangeModifiers(EntityUid uid, float speed, SlowContactsComponent? component = null)
     {
-        args.State = new SlowContactsComponentState(component.WalkSpeedModifier, component.SprintSpeedModifier);
+        ChangeModifiers(uid, speed, speed, component);
     }
 
-    private void OnHandleState(EntityUid uid, SlowContactsComponent component, ref ComponentHandleState args)
+    public void ChangeModifiers(EntityUid uid, float walkSpeed, float sprintSpeed, SlowContactsComponent? component = null)
     {
-        if (args.Current is not SlowContactsComponentState state)
+        if (!Resolve(uid, ref component))
+        {
+            return;
+        }
+        component.WalkSpeedModifier = walkSpeed;
+        component.SprintSpeedModifier = sprintSpeed;
+        Dirty(component);
+        _toUpdate.UnionWith(_physics.GetContactingEntities(uid));
+    }
+
+    private void OnShutdown(EntityUid uid, SlowContactsComponent component, ComponentShutdown args)
+    {
+        if (!TryComp(uid, out PhysicsComponent? phys))
             return;
 
-        component.WalkSpeedModifier = state.WalkSpeedModifier;
-        component.SprintSpeedModifier = state.SprintSpeedModifier;
+        // Note that the entity may not be getting deleted here. E.g., glue puddles.
+        _toUpdate.UnionWith(_physics.GetContactingEntities(uid, phys));
     }
 
     private void MovementSpeedCheck(EntityUid uid, SlowedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -92,8 +103,7 @@ public sealed class SlowContactsSystem : EntitySystem
     private void OnEntityExit(EntityUid uid, SlowContactsComponent component, ref EndCollideEvent args)
     {
         var otherUid = args.OtherEntity;
-        if (HasComp<MovementSpeedModifierComponent>(otherUid))
-            _toUpdate.Add(otherUid);
+        _toUpdate.Add(otherUid);
     }
 
     private void OnEntityEnter(EntityUid uid, SlowContactsComponent component, ref StartCollideEvent args)

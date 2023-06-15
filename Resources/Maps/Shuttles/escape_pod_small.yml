@@ -100,7 +100,7 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: SpreaderGrid
-- proto: AirlockExternalShuttleLocked
+- proto: AirlockGlassShuttle
   entities:
   - uid: 12
     components:
