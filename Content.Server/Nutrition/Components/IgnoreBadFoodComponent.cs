@@ -3,7 +3,7 @@ using Content.Server.Nutrition.EntitySystems;
 namespace Content.Server.Nutrition.Components;
 
 /// <summary>
-/// This component allows ai mobs to eat food with BadFoodComponent.
+/// This component allows NPC mobs to eat food with BadFoodComponent.
 /// See MobMouseAdmeme for usage.
 /// </summary>
 [RegisterComponent, Access(typeof(FoodSystem))]
