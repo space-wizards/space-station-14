@@ -34,15 +34,13 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly RiggedSystem _riggedSystem = default!;
+    [Dependency] private readonly RiggableSystem _riggableSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<PowerCellComponent, ChargeChangedEvent>(OnChargeChanged);
-        SubscribeLocalEvent<PowerCellComponent, SolutionChangedEvent>(OnSolutionChange);
-        SubscribeLocalEvent<PowerCellComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
 
         SubscribeLocalEvent<PowerCellDrawComponent, EntityUnpausedEvent>(OnUnpaused);
@@ -52,14 +50,6 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         // funny
         SubscribeLocalEvent<PowerCellSlotComponent, ExaminedEvent>(OnCellSlotExamined);
         SubscribeLocalEvent<PowerCellSlotComponent, BeingMicrowavedEvent>(OnSlotMicrowaved);
-
-        SubscribeLocalEvent<BatteryComponent, BeingMicrowavedEvent>(OnMicrowaved);
-    }
-
-    private void OnRejuvenate(EntityUid uid, PowerCellComponent component, RejuvenateEvent args)
-    {
-        if (TryComp<RiggedComponent>(uid, out var rig))
-            rig.IsRigged = false;
     }
 
     private void OnSlotMicrowaved(EntityUid uid, PowerCellSlotComponent component, BeingMicrowavedEvent args)
@@ -73,22 +63,11 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         RaiseLocalEvent(slot.Item.Value, args);
     }
 
-    private void OnMicrowaved(EntityUid uid, BatteryComponent component, BeingMicrowavedEvent args)
-    {
-        if (component.CurrentCharge == 0)
-            return;
-
-        args.Handled = true;
-
-        // What the fuck are you doing???
-        _riggedSystem.Explode(uid, component, args.User);
-    }
-
     private void OnChargeChanged(EntityUid uid, PowerCellComponent component, ref ChargeChangedEvent args)
     {
-        if (TryComp<RiggedComponent>(uid, out var rig) && rig.IsRigged)
+        if (TryComp<RiggableComponent>(uid, out var rig) && rig.IsRigged)
         {
-            _riggedSystem.Explode(uid, cause: null);
+            _riggableSystem.Explode(uid, cause: null);
             return;
         }
 
@@ -247,16 +226,6 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         batteryEnt = null;
         battery = null;
         return false;
-    }
-
-    private void OnSolutionChange(EntityUid uid, PowerCellComponent component, SolutionChangedEvent args)
-    {
-        _riggedSystem.IsRigged(uid, component, PowerCellComponent.SolutionName, args);
-
-        if (TryComp<RiggedComponent>(uid, out var rig) && rig.IsRigged)
-        {
-            _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"Power cell {ToPrettyString(uid)} has been rigged up to explode when used.");
-        }
     }
 
     private void OnCellExamined(EntityUid uid, PowerCellComponent component, ExaminedEvent args)

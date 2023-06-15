@@ -23,10 +23,9 @@ namespace Content.Server.Stunnable.Systems
 {
     public sealed class StunbatonSystem : EntitySystem
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly RiggedSystem _riggedSystem = default!;
+        [Dependency] private readonly RiggableSystem _riggableSystem = default!;
 
         public override void Initialize()
         {
@@ -36,7 +35,6 @@ namespace Content.Server.Stunnable.Systems
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
             SubscribeLocalEvent<StunbatonComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
-            SubscribeLocalEvent<StunbatonComponent, SolutionChangedEvent>(OnSolutionChanged);
         }
 
         private void OnGetMeleeDamage(EntityUid uid, StunbatonComponent component, ref GetMeleeDamageEvent args)
@@ -121,8 +119,10 @@ namespace Content.Server.Stunnable.Systems
                 return;
             }
 
-            if (TryComp<RiggedComponent>(uid, out var rig) && rig.IsRigged)
-                    _riggedSystem.Explode(uid, battery, user);
+            if (TryComp<RiggableComponent>(uid, out var rig) && rig.IsRigged)
+            {
+                _riggableSystem.Explode(uid, battery, user);
+            }
 
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(comp.Owner, out var appearance) &&
@@ -143,23 +143,6 @@ namespace Content.Server.Stunnable.Systems
                 Used = used,
                 User = user
             }, false);
-        }
-
-        private void OnSolutionChanged(EntityUid uid, StunbatonComponent component, SolutionChangedEvent args)
-        {
-            if (TryComp<BatteryComponent>(uid, out var battery))
-            {
-                _riggedSystem.IsRigged(uid, component, battery.SolutionName, args);
-            }
-
-            if (TryComp<RiggedComponent>(uid, out var rig) && rig.IsRigged)
-            {
-                _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(uid)} has been rigged up to explode when used.");
-
-                // Go ahead - inject plasma into an enabled baton.
-                if (component.Activated)
-                    _riggedSystem.Explode(uid, battery, uid);
-            }
         }
     }
 }

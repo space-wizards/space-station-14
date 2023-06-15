@@ -11,7 +11,6 @@ namespace Content.Shared.PowerCell;
 [RegisterComponent]
 public sealed class PowerCellComponent : Component
 {
-    public const string SolutionName = "powerCell";
     public const int PowerCellVisualsLevels = 2;
 }
 

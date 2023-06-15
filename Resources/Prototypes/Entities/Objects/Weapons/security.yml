@@ -43,7 +43,7 @@
           False: {state: stunbaton_off}
   - type: StaticPrice
     price: 100
-  - type: Rigged
+  - type: Riggable
   - type: SolutionContainerManager
     solutions:
       battery:
