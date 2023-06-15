@@ -67,7 +67,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingBeltUtilityFilled
+      - id: ClothingBeltUtilityEngineering
       - id: ClothingHandsGlovesCombat
       - id: ClothingMaskGasSyndicate
 
