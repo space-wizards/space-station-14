@@ -297,6 +297,10 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: syringe
+  - type: Tag
+    tags:
+    - Syringe
+    - Trash
 
 - type: entity
   name: pill
