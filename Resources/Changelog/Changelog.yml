@@ -1,11 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'We have restricted the access to skin color dyes to our fellow undead
-      crewmembers. Now their cracked, broken skin will show that flourishing rot that
-      screams ''kill me, now''!', type: Fix}
-  id: 3511
-  time: '2023-04-23T09:16:59.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix follower eye rotation not being reset on map changes., type: Fix}
@@ -2918,3 +2911,8 @@ Entries:
       uranium., type: Fix}
   id: 4010
   time: '2023-06-15T12:35:11.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Female dwarves now have female laughs., type: Tweak}
+  id: 4011
+  time: '2023-06-15T19:19:26.0000000+00:00'
