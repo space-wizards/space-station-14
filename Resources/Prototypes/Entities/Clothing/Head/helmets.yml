@@ -283,41 +283,6 @@
   - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingHeadEVAHelmetBase
-  id: ClothingHeadHelmetVoidParamed
-  name: Paramedic Void Helmet
-  description: A void helmet made for paramedics.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Helmets/paramedhelm.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/paramedhelm.rsi
-  - type: IngestionBlocker
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.90
-        Radiation: 0.75
-
-- type: entity
-  parent: ClothingHeadEVAHelmetBase
-  id: ClothingHeadHelmetAncient
-  name: NTSRA void helmet
-  description: An ancient space helmet, designed by the NTSRA branch of CentCom.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi
-  - type: IngestionBlocker
-  - type: Tag
-    tags:
-    - HelmetEVA
-
-- type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetIan
   name: ian hood
