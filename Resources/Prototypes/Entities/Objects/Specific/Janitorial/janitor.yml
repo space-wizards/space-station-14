@@ -356,26 +356,10 @@
           whitelist:
             tags:
               - WetFloorSign
-        cart_spray:
-          whitelist:
-            tags:
-              - Spray
-        cart_garbage:
-          whitelist:
-            tags:
-              - TrashBag
-        cart_replacer:
-          whitelist:
-            components:
-              - LightReplacer
         cart_bucket:
           whitelist:
             tags:
               - Bucket
-        cart_mop:
-          whitelist:
-            tags:
-              - Mop
       sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
     - type: Appearance
     - type: SolutionContainerVisuals
