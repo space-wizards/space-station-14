@@ -1,3 +1,35 @@
+#When adding new hardsuits, please try to keep the organization consistent with hardsuit-helmets.yml (if possible.)
+
+#CREW HARDSUITS
+#Basic Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitBasic
+  name: basic hardsuit
+  description: A basic, universal hardsuit that protects the wearer against the horrors of life in space. Beats not having a hardsuit, at least.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+        Radiation: 0.9
+        Caustic: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 0.80
+    sprintModifier: 0.80
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitBasic
+
+#Atmospherics Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitAtmos
@@ -30,66 +62,7 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitAtmos
 
-- type: entity
-  parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitCap
-  name: captain's armored spacesuit
-  description: A formal armored spacesuit, made for the station's captain.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.02
-    lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.75
-        Heat: 0.3
-        Radiation: 0.1
-        Caustic: 0.6
-  - type: ExplosionResistance
-    damageCoefficient: 0.5
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitCap
-
-- type: entity
-  parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitDeathsquad
-  name: deathsquad hardsuit
-  description: An advanced hardsuit favored by commandos for use in special operations.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.02
-    lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.2 #best armor in the game
-        Slash: 0.2
-        Piercing: 0.2
-        Heat: 0.2
-        Radiation: 0.2
-        Caustic: 0.2
-  - type: ExplosionResistance
-    damageCoefficient: 0.2
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
-
+#Engineering Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitEngineering
@@ -120,6 +93,185 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
 
+#Spationaut Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSpatio
+  name: spationaut hardsuit
+  description: A lightweight hardsuit designed for industrial EVA in zero gravity.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.72
+    lowPressureMultiplier: 10000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.95
+        Heat: 0.9
+        Radiation: 0.5
+        Caustic: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSpatio
+
+#Salvage Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSalvage
+  name: salvage hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.6
+    sprintModifier: 0.65
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.85
+        Radiation: 0.5
+        Caustic: 0.75
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSalvage
+
+#Security Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSecurity
+  name: security hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/security.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/security.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7   
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.8
+        Radiation: 0.25
+        Caustic: 0.75
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSecurity
+
+#Brigmedic Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitBrigmedic
+  name: brigmedic hardsuit
+  description: Special hardsuit of the guardian angel of the brig. It is the medical version of the security hardsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 5500
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.85
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.75
+        Heat: 0.9
+        Radiation: 0.30
+        Caustic: 0.2
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
+
+#Warden's Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitWarden
+  name: warden's hardsuit
+  description: A specialized riot suit geared to combat low pressure environments while maintaining agility.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.8
+        Radiation: 0.25
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitWarden
+    
+#Captain's Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitCap
+  name: captain's armored spacesuit
+  description: A formal armored spacesuit, made for the station's captain.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.75
+        Heat: 0.3
+        Radiation: 0.1
+        Caustic: 0.6
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCap
+
+#Chief Engineer's Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitEngineeringWhite
@@ -150,65 +302,7 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
 
-#The voidsuit and eva suit are not techically 'hardsuits' but this seems to be the place for all EVA-capable outer clothing. This may be worth reevaluating when we have a lot more items.
-- type: entity
-  parent: ClothingOuterEVASuitBase
-  id: ClothingOuterHardsuitAncientEVA
-  name: NTSRA voidsuit #Nanotrasen Space Research Association
-  description: An ancient space suit, designed by the NTSRA branch of CentCom. It is very finely crafted, allowing for greater mobility than most modern space suits.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Suits/ancientvoidsuit.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Suits/ancientvoidsuit.rsi
-  - type: ClothingSpeedModifier
-    walkModifier: 0.85
-    sprintModifier: 0.85
-
-- type: entity
-  parent: ClothingOuterEVASuitBase
-  id: ClothingOuterHardsuitEVA
-  name: EVA suit
-  description: A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
-  - type: Tag
-    tags:
-    - HardsuitEVA
-
-# Moved to hardsuits because this is where EVA capable suits are apparently.
-# Same stats as normal EVA suit.
-- type: entity
-  parent: ClothingOuterEVASuitBase
-  id: ClothingOuterHardsuitSyndicate
-  name: syndicate EVA suit
-  description: "Has a tag on it 'Totally not property of an enemy corporation, honest!'"
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Suits/syndicate.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Suits/syndicate.rsi
-  - type: Tag
-    tags:
-    - HardsuitEVA
-
-- type: entity
-  parent: ClothingOuterEVASuitBase
-  id:  ClothingOuterHardsuitEVAPrisoner
-  name: prisoner EVA suit
-  description: A lightweight space suit for prisoners to protect them from the vacuum of space during emergencies.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
-  - type: Tag
-    tags:
-    - HardsuitEVA
-
+#Chief Medical Officer's Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitMedical
@@ -234,6 +328,7 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMedical
 
+#Research Director's Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitRd
@@ -272,66 +367,7 @@
   - type: StaticPrice
     price: 750
 
-- type: entity
-  parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitSalvage
-  name: salvage hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.525
-    lowPressureMultiplier: 10000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.6
-    sprintModifier: 0.65
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.75
-        Slash: 0.7
-        Piercing: 0.7
-        Heat: 0.85
-        Radiation: 0.5
-        Caustic: 0.75
-  - type: ExplosionResistance
-    damageCoefficient: 0.3
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitSalvage
-
-- type: entity
-  parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitSecurity
-  name: security hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/security.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/security.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.525
-    lowPressureMultiplier: 10000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.7   
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.6
-        Heat: 0.8
-        Radiation: 0.25
-        Caustic: 0.75
-  - type: ExplosionResistance
-    damageCoefficient: 0.4
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitSecurity
-
+#Head of Security's Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitSecurity
   id: ClothingOuterHardsuitSecurityRed
@@ -362,60 +398,8 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
 
-- type: entity
-  parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitBrigmedic
-  name: brigmedic hardsuit
-  description: Special hardsuit of the guardian angel of the brig. It is the medical version of the security hardsuit.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.3
-    lowPressureMultiplier: 5500
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.85
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.75
-        Heat: 0.9
-        Radiation: 0.30
-        Caustic: 0.2
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
-
-- type: entity
-  parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitWarden
-  name: warden's hardsuit
-  description: A specialized riot suit geared to combat low pressure environments while maintaining agility.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.525
-    lowPressureMultiplier: 10000
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.5
-        Slash: 0.6
-        Piercing: 0.6
-        Heat: 0.8
-        Radiation: 0.25
-  - type: ExplosionResistance
-    damageCoefficient: 0.4
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitWarden
-
+#ANTAG HARDSUITS
+#Blood-red Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSyndie
@@ -446,120 +430,7 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
 
-- type: entity
-  parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitWizard
-  name: wizard hardsuit
-  description: A bizarre gem-encrusted suit that radiates magical energies.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.4
-        Heat: 0.25
-        Radiation: 0.20
-        Caustic: 0.75
-  - type: ExplosionResistance
-    damageCoefficient: 0.5
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitWizard
-
-- type: entity
-  parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitLing
-  name: organic space suit
-  description: A spaceworthy biomass of pressure and temperature resistant tissue.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.225
-    lowPressureMultiplier: 10000
-  - type: ClothingSpeedModifier
-    walkModifier: .8
-    sprintModifier: .8
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 1
-        Heat: 0.5
-        Radiation: 0.3
-  - type: ExplosionResistance
-    damageCoefficient: 0.2
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitLing
-
-- type: entity
-  parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitSpatio
-  name: spationaut hardsuit
-  description: A lightweight hardsuit designed for industrial EVA in zero gravity.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.72
-    lowPressureMultiplier: 10000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.8
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.95
-        Heat: 0.9
-        Radiation: 0.5
-        Caustic: 0.9
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitSpatio
-
-- type: entity
-  parent: ClothingOuterEVASuitBase
-  id: ClothingOuterHardsuitVoidParamed
-  name: Paramedic Void Suit
-  description: A void suit made for paramedics.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.5
-    lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
-  - type: TemperatureProtection
-    coefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.95
-        Heat: 0.90
-        Radiation: 0.75
-        Caustic: 0.5
-  - type: GroupExamine
-
+#Cybersun Juggernaut Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitJuggernaut
@@ -590,36 +461,7 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
 
-- type: entity
-  parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitSyndieCommander
-  name: syndicate commander hardsuit
-  description: A blood red hardsuit heavily modified for use by the commander of operative squads.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/syndiecommander.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/syndiecommander.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.4
-        Slash: 0.4
-        Piercing: 0.3
-        Heat: 0.3
-        Radiation: 0.20
-        Caustic: 0.4
-  - type: ExplosionResistance
-    damageCoefficient: 0.5
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
-
+#Syndicate Elite Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSyndieElite
@@ -652,6 +494,257 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
 
+#Syndicate Commander Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSyndieCommander
+  name: syndicate commander hardsuit
+  description: A blood red hardsuit heavily modified for use by the commander of operative squads.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/syndiecommander.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/syndiecommander.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.3
+        Heat: 0.3
+        Radiation: 0.20
+        Caustic: 0.4
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
+
+#Wizard Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitWizard
+  name: wizard hardsuit
+  description: A bizarre gem-encrusted suit that radiates magical energies.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.4
+        Heat: 0.25
+        Radiation: 0.20
+        Caustic: 0.75
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitWizard
+
+#Ling Space Suit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitLing
+  name: organic space suit
+  description: A spaceworthy biomass of pressure and temperature resistant tissue.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.225
+    lowPressureMultiplier: 10000
+  - type: ClothingSpeedModifier
+    walkModifier: .8
+    sprintModifier: .8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 1
+        Heat: 0.5
+        Radiation: 0.3
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitLing
+
+#Pirate EVA Suit (Deep Space EVA Suit)
+#Despite visually appearing like a softsuit, it functions exactly like a hardsuit would (parents off of base hardsuit, has resistances and toggleable clothing, etc.) so it goes here.
+- type: entity
+  parent:  ClothingOuterHardsuitBase
+  id:  ClothingOuterHardsuitPirateEVA
+  name: deep space EVA suit
+  suffix: Pirate
+  description: A heavy space suit that provides some basic protection from the cold harsh realities of deep space.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.6
+    sprintModifier: 0.6
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Heat: 0.4
+        Radiation: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitPirateEVA
+
+#Pirate Captain Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitPirateCap
+  name: pirate captain's hardsuit
+  description: An ancient armored hardsuit, perfect for defending against space scurvy and toolbox-wielding scallywags.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.8
+        Piercing: 0.85
+        Heat: 0.4
+        Radiation: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
+
+
+#CENTCOMM / ERT HARDSUITS
+#ERT Leader Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitSyndieCommander
+  id: ClothingOuterHardsuitERTLeader
+  name: ERT leader's hardsuit
+  description: A protective hardsuit worn by members of an emergency response team.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
+
+#ERT Engineer Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitERTEngineer
+  name: ERT engineer's hardsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
+
+#ERT Medic Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitSyndieElite
+  id: ClothingOuterHardsuitERTMedical
+  name: ERT medic's hardsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
+
+#ERT Security Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitERTSecurity
+  name: ERT security's hardsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTSecurity
+
+#ERT Janitor Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitERTJanitor
+  name: ERT janitor's hardsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTJanitor
+
+#Deathsquad
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitDeathsquad
+  name: deathsquad hardsuit
+  description: An advanced hardsuit favored by commandos for use in special operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.2 #best armor in the game
+        Slash: 0.2
+        Piercing: 0.2
+        Heat: 0.2
+        Radiation: 0.2
+        Caustic: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
+
+#CBURN Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitCBURN
@@ -686,126 +779,8 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURN
 
-#ERT
-- type: entity
-  parent: ClothingOuterHardsuitSyndieCommander
-  id: ClothingOuterHardsuitERTLeader
-  name: ERT leader's hardsuit
-  description: A protective hardsuit worn by members of an emergency response team.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
-
-- type: entity
-  parent: ClothingOuterHardsuitSyndie
-  id: ClothingOuterHardsuitERTEngineer
-  name: ERT engineer's hardsuit
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
-
-- type: entity
-  parent: ClothingOuterHardsuitSyndieElite
-  id: ClothingOuterHardsuitERTMedical
-  name: ERT medic's hardsuit
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
-
-
-- type: entity
-  parent: ClothingOuterHardsuitSyndie
-  id: ClothingOuterHardsuitERTSecurity
-  name: ERT security's hardsuit
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitERTSecurity
-
-- type: entity
-  parent: ClothingOuterHardsuitSyndie
-  id: ClothingOuterHardsuitERTJanitor
-  name: ERT janitor's hardsuit
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitERTJanitor
-
-- type: entity
-  parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitPirateCap
-  name: ancient armored hardsuit
-  suffix: Pirate
-  description: An ancient armored hardsuit.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.02
-    lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.7
-        Slash: 0.8
-        Piercing: 0.85
-        Heat: 0.4
-        Radiation: 0.2
-  - type: ExplosionResistance
-    damageCoefficient: 0.6
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
-
-- type: entity
-  parent:  ClothingOuterHardsuitBase
-  id:  ClothingOuterHardsuitPirateEVA
-  name: deep space EVA suit
-  suffix: Pirate
-  description: A heavy space suit that provides some basic protection from the cold harsh realities of deep space.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
-  - type: ClothingSpeedModifier
-    walkModifier: 0.6
-    sprintModifier: 0.6
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.9
-        Heat: 0.4
-        Radiation: 0.2
-  - type: ExplosionResistance
-    damageCoefficient: 0.7
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitPirateEVA
-
+#MISC. HARDSUITS
+#Clown Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitClown
