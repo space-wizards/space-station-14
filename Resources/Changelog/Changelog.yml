@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: APCs now show correct charge and state, type: Fix}
-  id: 3509
-  time: '2023-04-23T08:22:09.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Update the salvage expedition song to the final version., type: Tweak}
@@ -2916,3 +2911,9 @@ Entries:
   - {message: Changed sprites, type: Tweak}
   id: 4008
   time: '2023-06-15T11:55:07.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed being able to insert tanks/jetpacks into locked gas canisters.,
+    type: Fix}
+  id: 4009
+  time: '2023-06-15T12:03:20.0000000+00:00'
