@@ -1,10 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: The Syndicate has elected to introduce a permanent two-for-the-price-of-one
-      deal on Syndicate Encryption Keys. Give the spare to a friend (or enemy)!, type: Tweak}
-  id: 3502
-  time: '2023-04-23T05:08:13.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix railing / windoor bounds., type: Fix}
@@ -2914,3 +2908,11 @@ Entries:
       crews., type: Add}
   id: 4001
   time: '2023-06-15T02:47:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added high-capacity bluespace beakers and large-volume quick-injecting
+      bluespace syringes., type: Add}
+  - {message: Replaced the tier 3 biochemical technology with Bluespace Chemistry.,
+    type: Add}
+  id: 4002
+  time: '2023-06-15T03:11:11.0000000+00:00'
