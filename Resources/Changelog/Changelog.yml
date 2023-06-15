@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Update the salvage expedition song to the final version., type: Tweak}
-  id: 3510
-  time: '2023-04-23T09:13:38.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'We have restricted the access to skin color dyes to our fellow undead
@@ -2917,3 +2912,9 @@ Entries:
     type: Fix}
   id: 4009
   time: '2023-06-15T12:03:20.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: CentCom's Ministry Of Truth has trained station mice to stop eating
+      uranium., type: Fix}
+  id: 4010
+  time: '2023-06-15T12:35:11.0000000+00:00'
