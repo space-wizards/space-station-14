@@ -1,0 +1,25 @@
+- type: listing
+  id: ChangelingArmBlade
+  name: armblade-listing-name
+  description: armblade-listing-description
+  productAction: ChangelingArmBlade
+  cost: 
+    Points: 2
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ChangelingFleshmend
+  name: fleshmend-listing-name
+  description: fleshmend-listing-description
+  productAction: ChangelingFleshmend
+  cost: 
+    Points: 2
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
