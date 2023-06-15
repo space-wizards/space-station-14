@@ -424,3 +424,22 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
+      
+- type: entity
+  name: dumplings
+  parent: FoodBakedBase
+  id: FoodBakedDumplings
+  description: Average recipe for meat in doughs.
+  components:
+  - type: Sprite
+    state: dumplings 
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Protein
+          Quantity: 2
+            
