@@ -40459,132 +40459,6 @@ entities:
       type: AmbientSound
     - fixtures: {}
       type: Fixtures
-  - uid: 15822
-    components:
-    - pos: -11.5,66.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 15823
-    components:
-    - pos: -10.5,67.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 15824
-    components:
-    - pos: -11.5,67.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 15825
-    components:
-    - pos: -10.5,68.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 15826
-    components:
-    - pos: -14.5,68.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 15827
-    components:
-    - pos: -14.5,69.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 15828
-    components:
-    - pos: -17.5,68.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 15829
-    components:
-    - pos: -17.5,69.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 15830
-    components:
-    - pos: -21.5,66.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 15831
-    components:
-    - pos: -21.5,67.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 15832
-    components:
-    - pos: -22.5,67.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 15833
-    components:
-    - pos: -22.5,68.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 15834
-    components:
-    - pos: -23.5,63.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
-  - uid: 15835
-    components:
-    - pos: -24.5,63.5
-      parent: 1
-      type: Transform
-    - enabled: True
-      type: AmbientSound
-    - fixtures: {}
-      type: Fixtures
 - proto: CableHVStack
   entities:
   - uid: 2889
@@ -48591,12 +48465,6 @@ entities:
     - pos: -9.5,29.5
       parent: 1
       type: Transform
-  - uid: 2807
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -9.5,11.5
-      parent: 1
-      type: Transform
   - uid: 2979
     components:
     - rot: -1.5707963267948966 rad
@@ -51858,6 +51726,11 @@ entities:
         - 0
         - 0
       type: EntityStorage
+  - uid: 2807
+    components:
+    - pos: -9.5,12.5
+      parent: 1
+      type: Transform
   - uid: 2914
     components:
     - pos: -17.5,19.5
@@ -62357,13 +62230,6 @@ entities:
       type: Transform
 - proto: FoodTinBeans
   entities:
-  - uid: 4199
-    components:
-    - pos: -8.780895,11.728236
-      parent: 1
-      type: Transform
-    - nextSound: 2975.4729834
-      type: EmitSoundOnCollide
   - uid: 15940
     components:
     - pos: 16.724224,-9.292183
@@ -62391,13 +62257,6 @@ entities:
       parent: 1
       type: Transform
     - nextSound: 958.2128384
-      type: EmitSoundOnCollide
-  - uid: 15968
-    components:
-    - pos: -8.249645,11.650111
-      parent: 1
-      type: Transform
-    - nextSound: 2977.0703278
       type: EmitSoundOnCollide
 - proto: ForensicPad
   entities:
@@ -89510,6 +89369,11 @@ entities:
       pos: -18.5,16.5
       parent: 1
       type: Transform
+  - uid: 4199
+    components:
+    - pos: -8.5,12.5
+      parent: 1
+      type: Transform
   - uid: 5431
     components:
     - pos: -29.5,-2.5
@@ -89715,6 +89579,11 @@ entities:
   - uid: 2789
     components:
     - pos: -25.5,55.5
+      parent: 1
+      type: Transform
+  - uid: 2882
+    components:
+    - pos: -8.5,11.5
       parent: 1
       type: Transform
   - uid: 2961
@@ -94186,13 +94055,6 @@ entities:
     components:
     - rot: 1.5707963267948966 rad
       pos: -17.5,28.5
-      parent: 1
-      type: Transform
-    - powerLoad: 0
-      type: ApcPowerReceiver
-  - uid: 2882
-    components:
-    - pos: -8.5,12.5
       parent: 1
       type: Transform
     - powerLoad: 0
