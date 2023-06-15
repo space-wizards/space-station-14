@@ -67,9 +67,9 @@
       offset: 0.0
 
 - type: entity
-  name: Salvage T3/4 Machine Parts Spawner
-  id: SalvagePartsT3Spawner
   parent: MarkerBase
+  id: SalvagePartsT3Spawner
+  name: Salvage T3/4 Machine Parts Spawner
   components:
     - type: Sprite
       layers:
@@ -91,7 +91,7 @@
 
 - type: entity
   parent: MarkerBase
-  id: SalvagePartsT3Spawner
+  id: SalvagePartT3
   name: tier 3 machine part
   suffix: Spawner
   components:
@@ -109,7 +109,7 @@
 
 - type: entity
   parent: MarkerBase
-  id: SalvagePartsT4Spawner
+  id: SalvagePartT4
   name: tier 4 machine part
   suffix: Spawner
   components:

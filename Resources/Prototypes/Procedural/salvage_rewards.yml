@@ -25,11 +25,15 @@
     IngotSilver: 1.0
     SheetPlasma: 1.0
     SheetUranium: 1.0
-    SalvagePartsT3Spawner: 1.0
+    SalvagePartsT3: 1.0
     # things the expedition team might want
     CrateEmergencyBruteKit: 0.5
     CrateMedicalSupplies: 0.5
     CrateSecurityRiot: 0.5
+    # cloning boards
+    CloningPodMachineCircuitboard: 0.5
+    MedicalScannerMachineCircuitboard: 0.5
+    CloningConsoleComputerCircuitboard: 0.5
     # basic weapons
     CrateArmorySMG: 0.25
     CrateArmoryLaser: 0.25
@@ -42,8 +46,8 @@
   weights:
     # rare machinery
     SecurityTechFabCircuitboard: 1.0
-    # TODO: r&d server board when its done
-    SalvagePartsT4Spawner: 1.0
+    ResearchAndDevelopmentServerMachineCircuitboard: 1.0
+    SalvagePartsT4: 1.0
     # rare weapons
     WeaponAdvancedLaser: 1.0
     WeaponLaserCannon: 1.0
