@@ -18,7 +18,7 @@ public sealed class RiggableSystem : EntitySystem
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-    public void Initialize()
+    public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<RiggableComponent, RejuvenateEvent>(OnRejuvenate);
