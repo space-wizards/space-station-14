@@ -49,8 +49,6 @@ entities:
     - nextUpdate: -307.6002253
       type: SpreaderGrid
     - type: Shuttle
-    - nextUpdate: 6051.0947718
-      type: GridPathfinding
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
