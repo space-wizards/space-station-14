@@ -111,7 +111,7 @@
     capacity: 60
     whitelist:
       components:
-      - PDA
+      - Pda
 
 - type: entity
   name: ID card box

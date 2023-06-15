@@ -12,7 +12,7 @@
             - tag: HardsuitEVA
               name: EVA suit
               icon:
-                sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
+                sprite: Clothing/OuterClothing/Suits/eva.rsi
                 state: icon
               doAfter: 1
             - tag: HelmetEVA

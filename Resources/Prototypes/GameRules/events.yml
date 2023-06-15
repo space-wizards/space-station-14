@@ -278,6 +278,22 @@
         maxAmount: 8
 
 - type: entity
+  id: SpiderClownSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 2
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+      - id: MobClownSpider
+        amount: 4
+        maxAmount: 8
+
+- type: entity
   id: ZombieOutbreak
   parent: BaseGameRule
   noSpawn: true
