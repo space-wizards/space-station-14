@@ -6,7 +6,7 @@ namespace Content.Client.PDA;
 
 [Virtual]
 [GenerateTypedNameReferences]
-public partial class PDAWindow : BaseWindow
+public partial class PdaWindow : BaseWindow
 {
 
     public string? BorderColor
@@ -38,7 +38,7 @@ public partial class PDAWindow : BaseWindow
         }
     }
 
-    public PDAWindow()
+    public PdaWindow()
     {
         RobustXamlLoader.Load(this);
 
