@@ -25,6 +25,7 @@ research-technology-virology = Virology
 research-technology-cryogenics = Cryogenics
 research-technology-chemical-dispensary = Chemical Dispensary
 research-technology-crew-monitoring = Crew Monitoring
+research-technology-bluespace-chemistry = Bluespace Chemistry
 research-technology-cloning = Cloning
 
 research-technology-basic-robotics = Basic Robotics

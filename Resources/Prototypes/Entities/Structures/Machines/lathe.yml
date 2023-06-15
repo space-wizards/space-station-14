@@ -242,6 +242,8 @@
       - ClothingShoesBootsMag
       - NodeScanner
       - HolofanProjector
+      - BluespaceBeaker
+      - SyringeBluespace
       - WeaponForceGun
       - WeaponTetherGun
       - WeaponGrapplingGun
@@ -521,6 +523,8 @@
       - Drill
       - Saw
       - Hemostat
+      - BluespaceBeaker
+      - SyringeBluespace
   - type: Machine
     board: MedicalTechFabCircuitboard
 
