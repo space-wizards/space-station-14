@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the anomaly locator. When powered with a battery, it will beep
-      as you approach anomalies. Happy hunting!', type: Add}
-  id: 3505
-  time: '2023-04-23T05:39:33.0000000+00:00'
 - author: Nimfar
   changes:
   - {message: Adds 7 new animal masks., type: Add}
@@ -2917,3 +2911,8 @@ Entries:
       the IQ of spessman.', type: Add}
   id: 4004
   time: '2023-06-15T03:36:16.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Shuttle airlocks now have wires and can be hacked., type: Tweak}
+  id: 4005
+  time: '2023-06-15T03:37:58.0000000+00:00'
