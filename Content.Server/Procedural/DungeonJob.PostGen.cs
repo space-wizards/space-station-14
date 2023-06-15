@@ -648,11 +648,12 @@ public sealed partial class DungeonJob
         }
 
         var setTiles = new List<(Vector2i, Tile)>();
-        var tileId = new Tile(_tileDefManager["FloorSteel"].TileId);
+        var tileType = _tileDefManager["FloorSteel"];
+        var tileVariants = tileType.Variants;
 
         foreach (var tile in corridorTiles)
         {
-            setTiles.Add((tile, tileId));
+            setTiles.Add((tile, new Tile(tileType.TileId, variant: (byte) random.Next(tileVariants))));
         }
 
         grid.SetTiles(setTiles);

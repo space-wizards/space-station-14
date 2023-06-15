@@ -14,7 +14,7 @@
     roomWhitelist:
       - SalvageExperiment
     presets:
-      - FourSquareSpread
+      - Bucket
   postGeneration:
     - !type:CorridorPostGen
       width: 3
