@@ -1,3 +1,29 @@
+#When adding new hardsuits, please try to keep the organization consistent with hardsuit.yml (if possible.)
+
+#CREW HARDSUITS
+#Standard Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitBasic
+  noSpawn: true
+  name: basic hardsuit helmet
+  description: A basic-looking hardsuit helmet that provides minor protection against most sources of damage.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/basic.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/basic.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+        Radiation: 0.9
+        Caustic: 0.9
+
+#Atmospherics Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitAtmos
@@ -45,36 +71,7 @@
   - type: TemperatureProtection
     coefficient: 0.005
 
-- type: entity
-  parent: ClothingHeadHardsuitBase
-  id: ClothingHeadHelmetHardsuitCap
-  noSpawn: true
-  name: captain's hardsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/capspace.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/capspace.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.3
-    lowPressureMultiplier: 1000
-
-- type: entity
-  parent: ClothingHeadHardsuitBase
-  id: ClothingHeadHelmetHardsuitDeathsquad
-  noSpawn: true
-  name: deathsquad hardsuit helmet
-  description: A robust helmet for special operations.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/deathsquad.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/deathsquad.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.08
-    lowPressureMultiplier: 1000
-
+#Engineering Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitEngineering
@@ -92,233 +89,7 @@
     highPressureMultiplier: 0.1
     lowPressureMultiplier: 1000
 
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitEngineeringWhite
-  noSpawn: true
-  name: chief engineer's hardsuit helmet
-  description: Special hardsuit helmet, made for the chief engineer of the station.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/engineering-white.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/engineering-white.rsi
-  - type: PointLight
-    color: "#daffad"
-  - type: PressureProtection
-    highPressureMultiplier: 0.08
-    lowPressureMultiplier: 1000
-
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitMedical
-  noSpawn: true
-  name: chief medical officer's hardsuit helmet
-  description: Lightweight medical hardsuit helmet that doesn't restrict your head movements.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/medical.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/medical.rsi
-  - type: PointLight
-    color: "#adf1ff"
-  - type: PressureProtection
-    highPressureMultiplier: 0.6
-    lowPressureMultiplier: 5500
-
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitRd
-  noSpawn: true
-  name: experimental research hardsuit helmet
-  description: Lightweight hardsuit helmet that doesn't restrict your head movements.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/rd.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/rd.rsi
-  - type: PointLight
-    color: "#d6adff"
-  - type: PressureProtection
-    highPressureMultiplier: 0.60
-    lowPressureMultiplier: 5500
-
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSalvage
-  noSpawn: true
-  name: salvage hardsuit helmet
-  description: A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters and dual floodlights.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/salvage.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/salvage.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.525
-    lowPressureMultiplier: 10000
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.8
-  - type: PointLight
-    radius: 7
-    energy: 3
-
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSecurity
-  noSpawn: true
-  name: security hardsuit helmet
-  description: Armored hardsuit helmet for security needs.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/security.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/security.rsi
-  - type: PointLight
-    color: "#ffeead"
-  - type: PressureProtection
-    highPressureMultiplier: 0.525
-    lowPressureMultiplier: 10000
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.8
-
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSecurityRed
-  noSpawn: true
-  name: head of security's hardsuit helmet
-  description: Security hardsuit helmet with the latest top secret NT-HUD software. Belongs to the HoS.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/security-red.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/security-red.rsi
-  - type: PointLight
-    color: "#ffeead"
-  - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 10000
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.8
-
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitBrigmedic
-  noSpawn: true
-  name: brigmedic hardsuit helmet
-  description: The lightweight helmet of the brigmedic hardsuit. Protects against viruses, and clowns.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/brigmedic.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/brigmedic.rsi
-  - type: PointLight
-    color: "#00FFFF"
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Heat: 0.95
-        Radiation: 0.90
-        Caustic: 0.90
-  - type: PressureProtection
-    highPressureMultiplier: 0.6
-    lowPressureMultiplier: 5500
-
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitWarden
-  noSpawn: true
-  name: warden's hardsuit helmet
-  description: A modified riot helmet. Oddly comfortable.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/security-warden.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/security-warden.rsi
-  - type: PointLight
-    color: "#ffeead"
-  - type: PressureProtection
-    highPressureMultiplier: 0.525
-    lowPressureMultiplier: 10000
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.8
-
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSyndie
-  noSpawn: true
-  name: blood-red hardsuit helmet
-  description: An advanced red hardsuit helmet designed for work in special operations.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/syndicate.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndicate.rsi
-  - type: PointLight
-    color: green
-  - type: PressureProtection
-    highPressureMultiplier: 0.08
-    lowPressureMultiplier: 1000
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.8
-        Heat: 0.8
-        Radiation: 0.5
-
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitWizard
-  noSpawn: true
-  name: wizard hardsuit helmet
-  description: A bizarre gem-encrusted helmet that radiates magical energies.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/wizard.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/wizard.rsi
-  - type: PointLight
-    color: "#ffadfb"
-  - type: PressureProtection
-    highPressureMultiplier: 0.27
-    lowPressureMultiplier: 1000
-
-- type: entity
-  parent: ClothingHeadHardsuitBase
-  id: ClothingHeadHelmetHardsuitLing
-  noSpawn: true
-  name: organic space helmet
-  description: A spaceworthy biomass of pressure and temperature resistant tissue.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.225
-    lowPressureMultiplier: 10000
-
+#Spationaut Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSpatio
@@ -353,6 +124,228 @@
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 10000
 
+#Salvage Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitSalvage
+  noSpawn: true
+  name: salvage hardsuit helmet
+  description: A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters and dual floodlights.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/salvage.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/salvage.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+  - type: PointLight
+    radius: 7
+    energy: 3
+
+#Security Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitSecurity
+  noSpawn: true
+  name: security hardsuit helmet
+  description: Armored hardsuit helmet for security needs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/security.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/security.rsi
+  - type: PointLight
+    color: "#ffeead"
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+
+#Brigmedic Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitBrigmedic
+  noSpawn: true
+  name: brigmedic hardsuit helmet
+  description: The lightweight helmet of the brigmedic hardsuit. Protects against viruses, and clowns.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/brigmedic.rsi
+  - type: PointLight
+    color: "#00FFFF"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
+        Radiation: 0.90
+        Caustic: 0.90
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 5500
+
+#Warden's Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitWarden
+  noSpawn: true
+  name: warden's hardsuit helmet
+  description: A modified riot helmet. Oddly comfortable.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/security-warden.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/security-warden.rsi
+  - type: PointLight
+    color: "#ffeead"
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+
+#Captain's Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitCap
+  noSpawn: true
+  name: captain's hardsuit helmet
+  description: Special hardsuit helmet, made for the captain of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/capspace.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/capspace.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+
+#Chief Engineer's Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitEngineeringWhite
+  noSpawn: true
+  name: chief engineer's hardsuit helmet
+  description: Special hardsuit helmet, made for the chief engineer of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/engineering-white.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/engineering-white.rsi
+  - type: PointLight
+    color: "#daffad"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+#Chief Medical Officer's Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitMedical
+  noSpawn: true
+  name: chief medical officer's hardsuit helmet
+  description: Lightweight medical hardsuit helmet that doesn't restrict your head movements.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/medical.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/medical.rsi
+  - type: PointLight
+    color: "#adf1ff"
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 5500
+
+#Research Director's Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitRd
+  noSpawn: true
+  name: experimental research hardsuit helmet
+  description: Lightweight hardsuit helmet that doesn't restrict your head movements.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/rd.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/rd.rsi
+  - type: PointLight
+    color: "#d6adff"
+  - type: PressureProtection
+    highPressureMultiplier: 0.60
+    lowPressureMultiplier: 5500
+
+#Head of Security's hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitSecurityRed
+  noSpawn: true
+  name: head of security's hardsuit helmet
+  description: Security hardsuit helmet with the latest top secret NT-HUD software. Belongs to the HoS.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/security-red.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/security-red.rsi
+  - type: PointLight
+    color: "#ffeead"
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+
+#ANTAG HARDSUITS
+#Blood-red Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitSyndie
+  noSpawn: true
+  name: blood-red hardsuit helmet
+  description: An advanced red hardsuit helmet designed for work in special operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/syndicate.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/syndicate.rsi
+  - type: PointLight
+    color: green
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+        Radiation: 0.5
+
+#Cybersun Juggernaut Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitCybersun
@@ -368,31 +361,7 @@
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
 
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSyndieCommander
-  noSpawn: true
-  name: syndicate commander helmet
-  description: A syndicate hardsuit helmet custom designed for commanders of syndicate operative squads.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
-  - type: PointLight
-    color: green
-  - type: PressureProtection
-    highPressureMultiplier: 0.08
-    lowPressureMultiplier: 1000
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.6
-        Heat: 0.8
-        Radiation: 0.5
-
+#Syndicate Elite Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSyndieElite
@@ -420,6 +389,173 @@
         Heat: 0.2
         Radiation: 0.5
 
+#Syndicate Commander Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitSyndieCommander
+  noSpawn: true
+  name: syndicate commander helmet
+  description: A syndicate hardsuit helmet custom designed for commanders of syndicate operative squads.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
+  - type: PointLight
+    color: green
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.8
+        Radiation: 0.5
+
+#Wizard Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitWizard
+  noSpawn: true
+  name: wizard hardsuit helmet
+  description: A bizarre gem-encrusted helmet that radiates magical energies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/wizard.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/wizard.rsi
+  - type: PointLight
+    color: "#ffadfb"
+  - type: PressureProtection
+    highPressureMultiplier: 0.27
+    lowPressureMultiplier: 1000
+
+#Organic Space Suit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitLing
+  noSpawn: true
+  name: organic space helmet
+  description: A spaceworthy biomass of pressure and temperature resistant tissue.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.225
+    lowPressureMultiplier: 10000
+
+#Pirate EVA Suit (Deep Space EVA Suit)
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitPirateEVA
+  noSpawn: true
+  name: deep space EVA helmet
+  suffix: Pirate
+  description: A deep space EVA helmet, very heavy but provides good protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/pirateeva.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/pirateeva.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+
+#Pirate Captain Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitPirateCap
+  noSpawn: true
+  name: pirate captain's hardsuit helmet
+  suffix: Pirate
+  description: A special hardsuit helmet, made for the captain of a pirate ship.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+
+#CENTCOMM / ERT HARDSUITS
+#ERT Leader Hardsuit
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndieCommander
+  id: ClothingHeadHelmetHardsuitERTLeader
+  noSpawn: true
+  name: ERT leader hardsuit helmet
+  description: A special hardsuit helmet worn by members of an emergency response team.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
+  - type: PointLight
+    color: "#addbff"
+
+#ERT Engineer Hardsuit
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndie
+  id: ClothingHeadHelmetHardsuitERTEngineer
+  noSpawn: true
+  name: ERT engineer hardsuit helmet
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
+  - type: PointLight
+    color: "#f4ffad"
+
+#ERT Medical Hardsuit
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndieElite
+  id: ClothingHeadHelmetHardsuitERTMedical
+  noSpawn: true
+  name: ERT medic hardsuit helmet
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
+  - type: PointLight
+    color: "#adffec"
+
+#ERT Security Hardsuit
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndie
+  id: ClothingHeadHelmetHardsuitERTSecurity
+  noSpawn: true
+  name: ERT security hardsuit helmet
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
+  - type: PointLight
+    color: "#ffadc6"
+
+#ERT Janitor Hardsuit
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndie
+  id: ClothingHeadHelmetHardsuitERTJanitor
+  noSpawn: true
+  name: ERT janitor hardsuit helmet
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
+  - type: PointLight
+    color: "#cbadff"
+
+#CBURN Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetCBURN
@@ -461,105 +597,24 @@
         Cold: 0.2
         Radiation: 0.2
 
+#Deathsquad Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitBase
-  id: ClothingHeadHelmetHardsuitPirateCap
+  id: ClothingHeadHelmetHardsuitDeathsquad
   noSpawn: true
-  name: ancient hardsuit helmet
-  suffix: Pirate
-  description: Special hardsuit helmet, made for the captain of a pirate ship.
+  name: deathsquad hardsuit helmet
+  description: A robust helmet for special operations.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
+    sprite: Clothing/Head/Hardsuits/deathsquad.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
+    sprite: Clothing/Head/Hardsuits/deathsquad.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.3
+    highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
 
-- type: entity
-  parent: ClothingHeadHardsuitBase
-  id: ClothingHeadHelmetHardsuitPirateEVA
-  noSpawn: true
-  name: deep space EVA helmet
-  suffix: Pirate
-  description: A deep space EVA helmet, very heavy but provides good protection.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/pirateeva.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/pirateeva.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.3
-    lowPressureMultiplier: 1000
-
-#ERT
-- type: entity
-  parent: ClothingHeadHelmetHardsuitSyndieCommander
-  id: ClothingHeadHelmetHardsuitERTLeader
-  noSpawn: true
-  name: ERT leader hardsuit helmet
-  description: A special hardsuit helmet worn by members of an emergency response team.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
-  - type: PointLight
-    color: "#addbff"
-
-- type: entity
-  parent: ClothingHeadHelmetHardsuitSyndie
-  id: ClothingHeadHelmetHardsuitERTEngineer
-  noSpawn: true
-  name: ERT engineer hardsuit helmet
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
-  - type: PointLight
-    color: "#f4ffad"
-
-- type: entity
-  parent: ClothingHeadHelmetHardsuitSyndieElite
-  id: ClothingHeadHelmetHardsuitERTMedical
-  noSpawn: true
-  name: ERT medic hardsuit helmet
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
-  - type: PointLight
-    color: "#adffec"
-
-- type: entity
-  parent: ClothingHeadHelmetHardsuitSyndie
-  id: ClothingHeadHelmetHardsuitERTSecurity
-  noSpawn: true
-  name: ERT security hardsuit helmet
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
-  - type: PointLight
-    color: "#ffadc6"
-
-- type: entity
-  parent: ClothingHeadHelmetHardsuitSyndie
-  id: ClothingHeadHelmetHardsuitERTJanitor
-  noSpawn: true
-  name: ERT janitor hardsuit helmet
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
-  - type: PointLight
-    color: "#cbadff"
-
+#MISC. HARDSUITS
+#Clown Hardsuit
 - type: entity
   parent: ClothingHeadHelmetHardsuitSecurity
   id: ClothingHeadHelmetHardsuitClown

@@ -494,6 +494,23 @@
     - MobMonkeyPunpun
 
 - type: entity
+  name: behonker Spawner
+  id: SpawnMobBehonker
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: base
+      sprite: Objects/Weapons/Guns/Battery/behonker_eye.rsi
+  - type: ConditionalSpawner
+    prototypes:
+      - MobBehonkerIce
+      - MobBehonkerPyro
+      - MobBehonkerElectrical
+      - MobBehonkerGrav
+
+- type: entity
   name: Monkey Spawner
   id: SpawnMobMonkey
   parent: MarkerBase
