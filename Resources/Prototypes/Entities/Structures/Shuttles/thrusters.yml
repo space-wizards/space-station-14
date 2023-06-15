@@ -21,7 +21,6 @@
           Heat: 40
     - type: InteractionOutline
     - type: Sprite
-      netsync: false
     - type: Appearance
     - type: ThrusterVisuals
     - type: ApcPowerReceiver
@@ -161,4 +160,3 @@
       map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
       shader: unshaded
       visible: false
-      offset: 0, 1

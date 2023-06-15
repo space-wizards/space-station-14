@@ -44,17 +44,14 @@ public sealed class StationRecordsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialize);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
-    }
-
-    private void OnStationInitialize(StationInitializedEvent args)
-    {
-        AddComp<StationRecordsComponent>(args.Station);
     }
 
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
     {
+        if (!HasComp<StationRecordsComponent>(args.Station))
+            return;
+
         CreateGeneralRecord(args.Station, args.Mob, args.Profile, args.JobId);
     }
 
@@ -140,7 +137,7 @@ public sealed class StationRecordsSystem : EntitySystem
         if (idUid != null)
         {
             var keyStorageEntity = idUid;
-            if (TryComp(idUid, out PDAComponent? pdaComponent) && pdaComponent.ContainedID != null)
+            if (TryComp(idUid, out PdaComponent? pdaComponent) && pdaComponent.ContainedId != null)
             {
                 keyStorageEntity = pdaComponent.IdSlot.Item;
             }

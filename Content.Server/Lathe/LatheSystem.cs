@@ -274,6 +274,8 @@ namespace Content.Server.Lathe
                 {
                     if (TryAddToQueue(uid, recipe, component))
                         count++;
+                    else
+                        break;
                 }
                 if (count > 0 && args.Session.AttachedEntity != null)
                 {

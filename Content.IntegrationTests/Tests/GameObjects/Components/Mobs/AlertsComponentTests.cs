@@ -22,6 +22,11 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
+            var clientPlayerMgr = client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
+            var clientUIMgr = client.ResolveDependency<IUserInterfaceManager>();
+            var clientEntManager = client.ResolveDependency<IEntityManager>();
+
+            var entManager = server.ResolveDependency<IEntityManager>();
             var serverPlayerManager = server.ResolveDependency<IPlayerManager>();
             var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AlertsSystem>();
 
@@ -31,7 +36,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 playerUid = serverPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
                 Assert.That(playerUid != default);
                 // Making sure it exists
-                _ = IoCManager.Resolve<IEntityManager>().GetComponent<AlertsComponent>(playerUid);
+                Assert.That(entManager.HasComponent<AlertsComponent>(playerUid));
 
                 var alerts = alertsSystem.GetActiveAlerts(playerUid);
                 Assert.IsNotNull(alerts);
@@ -48,15 +53,12 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             AlertsUI clientAlertsUI = default;
             await client.WaitAssertion(() =>
             {
-                var clientPlayerMgr = IoCManager.Resolve<Robust.Client.Player.IPlayerManager>();
-                var clientUIMgr = IoCManager.Resolve<IUserInterfaceManager>();
-
                 var local = clientPlayerMgr.LocalPlayer;
                 Assert.NotNull(local);
                 var controlled = local.ControlledEntity;
                 Assert.NotNull(controlled);
                 // Making sure it exists
-                _ = IoCManager.Resolve<IEntityManager>().GetComponent<AlertsComponent>(controlled.Value);
+                Assert.That(clientEntManager.HasComponent<AlertsComponent>(controlled.Value));
 
                 // find the alertsui
 

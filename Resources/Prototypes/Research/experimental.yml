@@ -145,6 +145,26 @@
   recipeUnlocks:
   - RPED
 
+
+- type: technology
+  id: HamtrMechTech
+  name: research-technology-hamtr
+  icon:
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: hamtr
+  discipline: Experimental
+  tier: 2
+  cost: 8000
+  recipeUnlocks:
+  - HamtrHarness
+  - HamtrLArm
+  - HamtrRArm
+  - HamtrLLeg
+  - HamtrRLeg
+  - HamtrCentralElectronics
+  - HamtrPeripheralsElectronics
+  - MechEquipmentGrabberSmall
+
 # Tier 3
 
 - type: technology
@@ -160,3 +180,16 @@
   - SuperCapacitorStockPart
   - SuperMatterBinStockPart
   - PicoManipulatorStockPart
+
+- type: technology
+  id: GravityManipulation
+  name: research-technology-gravity-manipulation
+  icon:
+    sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+    state: base
+  discipline: Experimental
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+    - WeaponForceGun
+    - WeaponTetherGun

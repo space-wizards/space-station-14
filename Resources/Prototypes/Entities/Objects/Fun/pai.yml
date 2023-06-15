@@ -16,7 +16,6 @@
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
   - type: Sprite
-    netsync: false
     sprite: Objects/Fun/pai.rsi
     layers:
     - state: pai-base
