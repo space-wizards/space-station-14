@@ -1,9 +1,4 @@
 Entries:
-- author: OctoRocket
-  changes:
-  - {message: Medipen prick popup is now centered on you, type: Tweak}
-  id: 3498
-  time: '2023-04-23T03:43:47.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix medical PDA not working., type: Fix}
@@ -2912,3 +2907,9 @@ Entries:
       in-hand.', type: Tweak}
   id: 3997
   time: '2023-06-15T02:18:38.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: grilles can now be constructed on lattice (easier to rebuild asteroid
+      defences), type: Tweak}
+  id: 3998
+  time: '2023-06-15T02:25:29.0000000+00:00'
