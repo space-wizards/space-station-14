@@ -197,6 +197,24 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: meat wall
+  id: MeatWall
+  graph: Girder
+  startNode: start
+  targetNode: meatWall
+  category: construction-category-structures
+  description: Sticky.
+  icon:
+    sprite: Structures/Walls/meat.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   name: grille
   id: Grille
   graph: Grille
