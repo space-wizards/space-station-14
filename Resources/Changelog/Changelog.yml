@@ -1,16 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Remove lobby starting soon showing up 20 seconds before roundstart.,
-    type: Fix}
-  id: 3496
-  time: '2023-04-23T03:14:26.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Remote signaller can now be used as a payload in grenades and mines,
-      have fun!', type: Tweak}
-  id: 3497
-  time: '2023-04-23T03:17:59.0000000+00:00'
 - author: OctoRocket
   changes:
   - {message: Medipen prick popup is now centered on you, type: Tweak}
@@ -2913,3 +2901,14 @@ Entries:
     type: Tweak}
   id: 3995
   time: '2023-06-15T02:16:12.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: Added a trait that gives you a pirate accent!, type: Add}
+  id: 3996
+  time: '2023-06-15T02:17:40.0000000+00:00'
+- author: MisterMecky
+  changes:
+  - {message: 'Condiment bottles and shakers are now refillable, and are spill-able
+      in-hand.', type: Tweak}
+  id: 3997
+  time: '2023-06-15T02:18:38.0000000+00:00'
