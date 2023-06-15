@@ -1,21 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Removed the jackboot walking sound., type: Remove}
-  id: 3494
-  time: '2023-04-23T02:51:04.0000000+00:00'
-- author: Menshin
-  changes:
-  - {message: Heaters/freezers aren't constantly updating UI/sprite when turned off
-      anymore. It should now be possible to set temperature in such cases., type: Fix}
-  - {message: 'Heaters/freezers now uses power only when actually running. That also
-      means, they have to be powered to run now.', type: Add}
-  - {message: Visual feedback for when heaters/freezers maintenance panel is open,
-    type: Add}
-  - {message: Heaters/freezers set temperature should now appear on detailed examined
-      (i.e when close enough), type: Add}
-  id: 3495
-  time: '2023-04-23T03:05:33.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Remove lobby starting soon showing up 20 seconds before roundstart.,
@@ -2915,3 +2898,18 @@ Entries:
       them from achieving immortality.', type: Tweak}
   id: 3993
   time: '2023-06-15T02:13:06.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Added the basic hardsuit, a modest but lightweight hardsuit with minor
+      damage resistances in all categories.', type: Add}
+  - {message: Resprited all EVA suits., type: Tweak}
+  - {message: 'Changed a bunch of descriptions relating to hardsuits, softsuits, and
+      EVA helmets.', type: Tweak}
+  id: 3994
+  time: '2023-06-15T02:15:22.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Pre-filled non-engineering utility belts now come with a network configurator.,
+    type: Tweak}
+  id: 3995
+  time: '2023-06-15T02:16:12.0000000+00:00'
