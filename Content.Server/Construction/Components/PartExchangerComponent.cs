@@ -13,12 +13,6 @@ public sealed class PartExchangerComponent : Component
     public float ExchangeDuration = 3;
 
     /// <summary>
-    /// How long it takes to add the parts to an in-progress machine frame
-    /// </summary>
-    [DataField("constructDuration")]
-    public float ConstructDuration = 1;
-
-    /// <summary>
     /// Whether or not the distance check is needed.
     /// Good for BRPED.
     /// </summary>

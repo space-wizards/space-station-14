@@ -10,6 +10,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 using Content.Shared.Wires;
+using Robust.Shared.Collections;
 
 namespace Content.Server.Construction;
 
@@ -38,11 +39,12 @@ public sealed class PartExchangerSystem : EntitySystem
         if (!TryComp<ServerStorageComponent>(uid, out var storage) || storage.Storage == null)
             return; //the parts are stored in here
 
+        var machinePartQuery = GetEntityQuery<MachinePartComponent>();
         var machineParts = new List<MachinePartComponent>();
 
-        foreach (var ent in storage.Storage.ContainedEntities) //get parts in RPED
+        foreach (var item in storage.Storage.ContainedEntities) //get parts in RPED
         {
-            if (TryComp<MachinePartComponent>(ent, out var part))
+            if (machinePartQuery.TryGetComponent(item, out var part))
                 machineParts.Add(part);
         }
 
@@ -57,22 +59,22 @@ public sealed class PartExchangerSystem : EntitySystem
         if (!TryComp<MachineComponent>(uid, out var machine) || storage.Storage == null)
             return;
 
+        var machinePartQuery = GetEntityQuery<MachinePartComponent>();
         var board = machine.BoardContainer.ContainedEntities.FirstOrNull();
 
         if (board == null || !TryComp<MachineBoardComponent>(board, out var macBoardComp))
             return;
 
-        foreach (var ent in new List<EntityUid>(machine.PartContainer.ContainedEntities)) //clone so don't modify during enumeration
+        foreach (var item in new ValueList<EntityUid>(machine.PartContainer.ContainedEntities)) //clone so don't modify during enumeration
         {
-            if (TryComp<MachinePartComponent>(ent, out var part))
+            if (machinePartQuery.TryGetComponent(item, out var part))
             {
                 machineParts.Add(part);
-                _container.RemoveEntity(uid, ent);
+                _container.RemoveEntity(uid, item);
             }
         }
 
-        //order by highest rating
-        machineParts = machineParts.OrderByDescending(p => p.Rating).ToList();
+        machineParts.Sort((x, y) => y.Rating.CompareTo(x.Rating));
 
         var updatedParts = new List<MachinePartComponent>();
         foreach (var (type, amount) in macBoardComp.Requirements)
@@ -100,23 +102,23 @@ public sealed class PartExchangerSystem : EntitySystem
         if (!TryComp<MachineFrameComponent>(uid, out var machine) || storage.Storage == null)
             return;
 
+        var machinePartQuery = GetEntityQuery<MachinePartComponent>();
         var board = machine.BoardContainer.ContainedEntities.FirstOrNull();
 
         if (!machine.HasBoard || !TryComp<MachineBoardComponent>(board, out var macBoardComp))
             return;
 
-        foreach (var ent in new List<EntityUid>(machine.PartContainer.ContainedEntities)) //clone so don't modify during enumeration
+        foreach (var item in new ValueList<EntityUid>(machine.PartContainer.ContainedEntities)) //clone so don't modify during enumeration
         {
-            if (TryComp<MachinePartComponent>(ent, out var part))
+            if (machinePartQuery.TryGetComponent(item, out var part))
             {
                 machineParts.Add(part);
-                _container.RemoveEntity(uid, ent);
+                _container.RemoveEntity(uid, item);
                 machine.Progress[part.PartType]--;
             }
         }
 
-        //order by highest rating
-        machineParts = machineParts.OrderByDescending(p => p.Rating).ToList();
+        machineParts.Sort((x, y) => y.Rating.CompareTo(x.Rating));
 
         var updatedParts = new List<MachinePartComponent>();
         foreach (var (type, amount) in macBoardComp.Requirements)
@@ -140,6 +142,8 @@ public sealed class PartExchangerSystem : EntitySystem
             storage.Storage.Insert(unused.Owner);
             _storage.Insert(uid, unused.Owner, null, false);
         }
+
+
     }
 
     private void OnAfterInteract(EntityUid uid, PartExchangerComponent component, AfterInteractEvent args)
@@ -162,7 +166,7 @@ public sealed class PartExchangerSystem : EntitySystem
 
         component.AudioStream = _audio.PlayPvs(component.ExchangeSound, uid);
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, HasComp<MachineComponent>(args.Target) ? component.ExchangeDuration : component.ConstructDuration, new ExchangerDoAfterEvent(), uid, target: args.Target, used: uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.ExchangeDuration, new ExchangerDoAfterEvent(), uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
             BreakOnUserMove = true
