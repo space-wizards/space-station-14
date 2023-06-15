@@ -40,6 +40,5 @@ public sealed class TransformableContainerComponent : Component
     /// This returns whether this container in a transformed or initial state.
     /// </summary>
     ///
-    [DataField("transformed")]
-    public bool Transformed { get; internal set; }
+    public bool Transformed { get; set; }
 }

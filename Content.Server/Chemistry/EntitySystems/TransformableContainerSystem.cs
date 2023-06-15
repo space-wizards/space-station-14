@@ -1,11 +1,9 @@
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-[UsedImplicitly]
 public sealed class TransformableContainerSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -22,8 +20,14 @@ public sealed class TransformableContainerSystem : EntitySystem
     private void OnMapInit(EntityUid uid, TransformableContainerComponent component, MapInitEvent args)
     {
         var meta = MetaData(uid);
-        if(string.IsNullOrEmpty(component.InitialName)) component.InitialName = meta.EntityName;
-        if (string.IsNullOrEmpty(component.InitialDescription)) component.InitialDescription = meta.EntityDescription;
+        if (string.IsNullOrEmpty(component.InitialName))
+        {
+            component.InitialName = meta.EntityName;
+        }
+        if (string.IsNullOrEmpty(component.InitialDescription))
+        {
+            component.InitialDescription = meta.EntityDescription;
+        }
     }
 
     private void OnSolutionChange(EntityUid owner, TransformableContainerComponent component,
@@ -66,7 +70,13 @@ public sealed class TransformableContainerSystem : EntitySystem
 
         var metadata = MetaData(owner);
 
-        if(!string.IsNullOrEmpty(component.InitialName)) metadata.EntityName = component.InitialName;
-        if(!string.IsNullOrEmpty(component.InitialDescription)) metadata.EntityDescription = component.InitialDescription;
+        if (!string.IsNullOrEmpty(component.InitialName))
+        {
+            metadata.EntityName = component.InitialName;
+        }
+        if (!string.IsNullOrEmpty(component.InitialDescription))
+        {
+            metadata.EntityDescription = component.InitialDescription;
+        }
     }
 }
