@@ -9,5 +9,9 @@ public sealed class Dungeon
     /// </summary>
     public readonly HashSet<Vector2i> RoomTiles = new();
 
-    public readonly HashSet<Vector2i> ExteriorTiles = new();
+    public readonly HashSet<Vector2i> RoomExteriorTiles = new();
+
+    public readonly HashSet<Vector2i> CorridorTiles = new();
+
+    public readonly HashSet<Vector2i> CorridorExteriorTiles = new();
 }

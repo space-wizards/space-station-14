@@ -94,7 +94,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
         foreach (var room in dungeon.Rooms)
         {
             dungeon.RoomTiles.UnionWith(room.Tiles);
-            dungeon.ExteriorTiles.UnionWith(room.Exterior);
+            dungeon.RoomExteriorTiles.UnionWith(room.Exterior);
         }
 
         // To make it slightly more deterministic treat this RNG as separate ig.
@@ -106,13 +106,16 @@ public sealed partial class DungeonJob : Job<Dungeon>
 
             switch (post)
             {
+                case BoundaryWallPostGen boundary:
+                    await PostGen(boundary, dungeon, _gridUid, _grid, random);
+                    break;
                 case CorridorPostGen cordor:
                     await PostGen(cordor, dungeon, _gridUid, _grid, random);
                     break;
                 case MiddleConnectionPostGen dordor:
                     await PostGen(dordor, dungeon, _gridUid, _grid, random);
                     break;
-                case EntrancePostGen entrance:
+                case DungeonEntrancePostGen entrance:
                     await PostGen(entrance, dungeon, _gridUid, _grid, random);
                     break;
                 case ExternalWindowPostGen externalWindow:
@@ -121,8 +124,8 @@ public sealed partial class DungeonJob : Job<Dungeon>
                 case InternalWindowPostGen internalWindow:
                     await PostGen(internalWindow, dungeon, _gridUid, _grid, random);
                     break;
-                case BoundaryWallPostGen boundary:
-                    await PostGen(boundary, dungeon, _gridUid, _grid, random);
+                case RoomEntrancePostGen rEntrance:
+                    await PostGen(rEntrance, dungeon, _gridUid, _grid, random);
                     break;
                 case WallMountPostGen wall:
                     await PostGen(wall, dungeon, _gridUid, _grid, random);

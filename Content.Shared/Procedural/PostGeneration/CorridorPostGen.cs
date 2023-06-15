@@ -8,8 +8,11 @@ public sealed class CorridorPostGen : IPostDunGen
     /// <summary>
     /// How far we're allowed to generate a corridor before calling it.
     /// </summary>
+    /// <remarks>
+    /// Given the heavy weightings this needs to be fairly large for larger dungeons.
+    /// </remarks>
     [DataField("pathLimit")]
-    public int PathLimit = 256;
+    public int PathLimit = 2048;
 
     [DataField("method")]
     public CorridorPostGenMethod Method = CorridorPostGenMethod.MinimumSpanningTree;
