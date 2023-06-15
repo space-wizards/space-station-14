@@ -135,7 +135,7 @@ namespace Content.Client.Cargo.UI
                 var row = new CargoOrderRow
                 {
                     Order = order,
-                    Icon = { Texture = _spriteSystem.Frame0(product) },
+                    Icon = { Texture = _spriteSystem.GetPrototypeIcon(product).Default },
                     ProductName =
                     {
                         Text = Loc.GetString(
