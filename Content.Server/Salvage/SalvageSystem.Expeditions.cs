@@ -1,13 +1,17 @@
-using System.Linq;
-using System.Threading;
-using Robust.Shared.CPUJob.JobQueues;
-using Robust.Shared.CPUJob.JobQueues.Queues;
+using Content.Server.Cargo.Components;
+using Content.Server.Cargo.Systems;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Examine;
 using Content.Shared.Salvage;
+using Robust.Shared.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
+using System.Linq;
+using System.Threading;
 
 namespace Content.Server.Salvage;
 
@@ -16,6 +20,8 @@ public sealed partial class SalvageSystem
     /*
      * Handles setup / teardown of salvage expeditions.
      */
+
+    [Dependency] private readonly CargoSystem _cargo = default!;
 
     private const int MissionLimit = 5;
 
@@ -272,7 +278,7 @@ public sealed partial class SalvageSystem
         args.PushMarkup(Loc.GetString("salvage-expedition-structure-examine"));
     }
 
-    private void GiveReward(SalvageExpeditionComponent comp)
+    private void GiveRewards(SalvageExpeditionComponent comp)
     {
         // send it to cargo, no rewards otherwise.
         if (!TryComp<StationCargoOrderDatabaseComponent>(comp.Station, out var cargoDb))

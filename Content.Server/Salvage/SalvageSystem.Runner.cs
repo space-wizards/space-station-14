@@ -1,5 +1,3 @@
-using Content.Server.Cargo.Components;
-using Content.Server.Cargo.Systems;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Shuttles.Components;
@@ -10,8 +8,6 @@ using Content.Shared.Chat;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Random;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Audio;
@@ -27,7 +23,6 @@ public sealed partial class SalvageSystem
      * Handles actively running a salvage expedition.
      */
 
-    [Dependency] private readonly CargoSystem _cargo = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
     private void InitializeRunner()
