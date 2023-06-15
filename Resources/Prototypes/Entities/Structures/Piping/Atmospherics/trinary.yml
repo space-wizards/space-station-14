@@ -33,7 +33,6 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      netsync: false
       sprite: Structures/Piping/Atmospherics/gasfilter.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -76,7 +75,6 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/Atmospherics/gasfilter.rsi
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -118,7 +116,6 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      netsync: false
       sprite: Structures/Piping/Atmospherics/gasmixer.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -163,7 +160,6 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/Atmospherics/gasmixer.rsi
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -223,7 +219,6 @@
           nodeGroupID: Pipe
           pipeDirection: South
     - type: Sprite
-      netsync: false
       sprite: Structures/Piping/Atmospherics/pneumaticvalve.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi

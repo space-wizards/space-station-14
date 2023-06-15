@@ -8,7 +8,6 @@
     - type: Clickable
     - type: Sprite
       sprite: Structures/Magic/Cult/rune.rsi
-      netsync: false
       layers:
         - state: cult2
           color: '#FF00FF'

@@ -95,7 +95,6 @@
       layers:
         - sprite: Fluids/wet_floor_sparkles.rsi
           state: sparkles
-      netsync: false
       drawdepth: FloorObjects
       color: "#FFFFFF80"
 

@@ -399,23 +399,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkBilkGlass
-  name: bilk
-  description: A brew of milk and beer. For those alcoholics who fear osteoporosis.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Bilk
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/glass_brown.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkBlackRussianGlass
   name: black russian glass
   description: For the lactose-intolerant. Still as classy as a White Russian.
