@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix monkeys standing up in crit., type: Fix}
-  id: 3501
-  time: '2023-04-23T04:29:56.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: The Syndicate has elected to introduce a permanent two-for-the-price-of-one
@@ -2912,3 +2907,10 @@ Entries:
   - {message: Added dumplings!, type: Add}
   id: 4000
   time: '2023-06-15T02:45:31.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Clown Spiders have been sighted in the maintenance corridors., type: Add}
+  - {message: Rumors of giant floating Behonkers have been circulating between salvage
+      crews., type: Add}
+  id: 4001
+  time: '2023-06-15T02:47:37.0000000+00:00'
