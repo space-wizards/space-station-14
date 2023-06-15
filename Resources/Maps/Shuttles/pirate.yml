@@ -340,8 +340,6 @@ entities:
       type: GridAtmosphere
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 1678.8452663
-      type: GridPathfinding
     - type: RadiationGridResistance
     - nextShake: -4201.5220081
       shakeTimes: 10
