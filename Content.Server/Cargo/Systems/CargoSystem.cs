@@ -1,14 +1,15 @@
 using Content.Server.Cargo.Components;
-using Content.Server.Station.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem : SharedCargoSystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -22,6 +23,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
         InitializeConsole();
         InitializeShuttle();
         InitializeTelepad();
+        InitializeBounty();
     }
 
     public override void Shutdown()
@@ -35,6 +37,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
         base.Update(frameTime);
         UpdateConsole(frameTime);
         UpdateTelepad(frameTime);
+        UpdateBounty();
     }
 
     [PublicAPI]

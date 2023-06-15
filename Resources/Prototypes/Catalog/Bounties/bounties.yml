@@ -1,0 +1,10 @@
+﻿- type: cargoBounty
+  id: BountyPen
+  reward: 500
+  description: We are hosting the intergalactic pen balancing competition. We need you to send us some standardized ball point pens.
+  entries:
+  - name: Pens
+    amount: 10
+    whitelist:
+      tags:
+      - Write

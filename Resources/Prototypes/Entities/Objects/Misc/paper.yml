@@ -132,6 +132,16 @@
     headerMargin: 0.0, 12.0, 0.0, 0.0
 
 - type: entity
+  id: PaperCargoBountyManifest
+  parent: PaperCargoInvoice
+  name: cargo bounty manifest
+  description: A paper label designating a crate as containing a bounty. Selling a crate with this label will fulfill the bounty.
+  components:
+  - type: CargoBountyLabel
+  - type: StaticPrice
+    price: 0
+
+- type: entity
   parent: Paper
   id: PaperWritten
   noSpawn: true
