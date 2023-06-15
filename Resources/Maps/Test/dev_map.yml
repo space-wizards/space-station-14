@@ -77,8 +77,6 @@ entities:
       type: DecalGrid
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 3888.4058032
-      type: GridPathfinding
     - type: RadiationGridResistance
     - nextShake: 0
       shakeTimes: 10

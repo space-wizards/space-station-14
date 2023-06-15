@@ -947,6 +947,17 @@
 
 - type: entity
   parent: MobMouse
+  id: MobMouseAdmeme
+  suffix: Admeme
+  components:
+  # allow admeme mouse to eat pills
+  - type: IgnoreBadFood
+  # intended for swarms that eat pills so only temporary
+  - type: TimedDespawn
+    lifetime: 60
+
+- type: entity
+  parent: MobMouse
   id: MobMouse1
   components:
   - type: Sprite
