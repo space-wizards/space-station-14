@@ -309,7 +309,7 @@ public sealed partial class SalvageSystem
             var desc = Loc.GetString("salvage-expedition-reward-description");
             var dest = Loc.GetString("cargo-gift-default-dest");
             // FIXME: this needs changes to just deliver an item rather than a cargo product
-            _cargo.AddAndApproveOrder(cargoDb, reward, 1, sender, desc, dest);
+            _cargo.AddAndApproveOrder(cargoDb, reward, 0, 1, sender, desc, dest);
         }
     }
 
