@@ -91,7 +91,7 @@
 
 - type: entity
   parent: MarkerBase
-  id: SalvagePartT3Spawner
+  id: SalvagePartsT3Spawner
   name: tier 3 machine part
   suffix: Spawner
   components:
@@ -109,7 +109,7 @@
 
 - type: entity
   parent: MarkerBase
-  id: SalvagePartT4Spawner
+  id: SalvagePartsT4Spawner
   name: tier 4 machine part
   suffix: Spawner
   components:
