@@ -1,10 +1,4 @@
 Entries:
-- author: 778b
-  changes:
-  - {message: Stop Onestar mecha colliding with items and also use the mech footstep
-      sounds for it., type: Fix}
-  id: 3500
-  time: '2023-04-23T03:55:44.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix monkeys standing up in crit., type: Fix}
@@ -2913,3 +2907,8 @@ Entries:
   - {message: Linked the science entry in the robotics guidebook entry., type: Fix}
   id: 3999
   time: '2023-06-15T02:43:02.0000000+00:00'
+- author: SonicDC
+  changes:
+  - {message: Added dumplings!, type: Add}
+  id: 4000
+  time: '2023-06-15T02:45:31.0000000+00:00'
