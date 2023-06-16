@@ -52,7 +52,7 @@ public sealed partial class ToolSystem
         if (!TryComp<ToolComponent?>(toolEntity, out var tool) && component.ToolComponentNeeded)
             return false;
 
-        if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out var mapGrid))
+        if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out _, out var mapGrid))
             return false;
 
         var tile = mapGrid.GetTileRef(clickLocation);

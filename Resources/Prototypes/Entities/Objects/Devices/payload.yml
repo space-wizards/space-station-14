@@ -5,7 +5,6 @@
   components:
   - type: Appearance
   - type: Sprite
-    netsync: false
   - type: Tag
     tags:
     - Payload

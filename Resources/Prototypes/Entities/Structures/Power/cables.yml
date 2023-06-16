@@ -11,11 +11,12 @@
   - type: Transform
     anchored: true
     noRot: true
+  # TODO: Remove both of these, same with CollideOnAnchor
   - type: Physics
     bodyType: Static
     canCollide: false
+  - type: Fixtures
   - type: Sprite
-    netsync: false
     drawdepth: ThinWire
     visible: false
   - type: Damageable
@@ -44,7 +45,7 @@
     lowVoltageNode: power
   - type: CableVis
     node: power
-   
+
 
 - type: entity
   parent: CableBase

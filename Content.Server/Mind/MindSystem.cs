@@ -93,7 +93,7 @@ public sealed class MindSystem : EntitySystem
 
         if (!TryGetMind(uid, out var mind, mindContainerComp))
             return;
-        
+
         if (mind.VisitingEntity is {Valid: true} visiting)
         {
             if (TryComp(visiting, out GhostComponent? ghost))
@@ -224,7 +224,7 @@ public sealed class MindSystem : EntitySystem
         // They might actually be alive.
         return _mobStateSystem.IsDead(mind.OwnedEntity.Value, targetMobState);
     }
-    
+
     public void Visit(Mind mind, EntityUid entity)
     {
         mind.Session?.AttachToEntity(entity);
@@ -364,7 +364,7 @@ public sealed class MindSystem : EntitySystem
         // Make sure to remove control from our old owner if they're logged in.
         var oldSession = mind.Session;
         oldSession?.AttachToEntity(null);
-    
+
         if (mind.UserId.HasValue)
         {
             if (_playerManager.TryGetPlayerData(mind.UserId.Value, out var oldUncast))
@@ -378,13 +378,13 @@ public sealed class MindSystem : EntitySystem
                 Logger.Warning($"Mind UserId {newOwner} is does not exist in PlayerManager");
             }
         }
-    
+
         SetUserId(mind, newOwner);
         if (!newOwner.HasValue)
         {
             return;
         }
-    
+
         if (!_playerManager.TryGetPlayerData(newOwner.Value, out var uncast))
         {
             // This restriction is because I'm too lazy to initialize the player data
@@ -392,10 +392,10 @@ public sealed class MindSystem : EntitySystem
             // Go ahead and remove it if you need.
             throw new ArgumentException("New owner must have previously logged into the server.", nameof(newOwner));
         }
-    
+
         // PlayerData? newOwnerData = null;
         var newOwnerData = uncast.ContentData();
-    
+
         // Yank new owner out of their old mind too.
         // Can I mention how much I love the word yank?
         DebugTools.AssertNotNull(newOwnerData);
@@ -403,7 +403,7 @@ public sealed class MindSystem : EntitySystem
             ChangeOwningPlayer(newOwnerData.Mind, null);
         newOwnerData.UpdateMindFromMindChangeOwningPlayer(mind);
     }
-    
+
     /// <summary>
     /// Adds an objective to this mind.
     /// </summary>
@@ -499,14 +499,12 @@ public sealed class MindSystem : EntitySystem
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
             $"'{role.Name}' removed from mind of {MindOwnerLoggingString(mind)}");
     }
-    
+
     public bool HasRole<T>(Mind mind) where T : Role
     {
-        var t = typeof(T);
-    
-        return mind.Roles.Any(role => role.GetType() == t);
+        return mind.Roles.Any(role => role is T);
     }
-    
+
     public bool TryGetSession(Mind mind, [NotNullWhen(true)] out IPlayerSession? session)
     {
         return (session = mind.Session) != null;
@@ -555,14 +553,14 @@ public sealed class MindSystem : EntitySystem
     private void SetUserId(Mind mind, NetUserId? userId)
     {
         mind.UserId = userId;
-        
+
         if (!userId.HasValue)
             return;
-        
+
         _playerManager.TryGetSessionById(userId.Value, out var ret);
         mind.Session = ret;
     }
-    
+
     /// <summary>
     ///     True if this Mind is 'sufficiently dead' IC (Objectives, EndText).
     ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.

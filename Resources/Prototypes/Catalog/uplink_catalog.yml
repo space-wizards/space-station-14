@@ -75,6 +75,16 @@
   categories:
   - UplinkWeapons
 
+- type: listing
+  id: UplinkGlovesNorthStar
+  name: uplink-gloves-north-star-name
+  description: uplink-gloves-north-star-desc
+  productEntity: ClothingHandsGlovesNorthStar
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkWeapons
+
 # Explosives
 
 - type: listing
@@ -769,7 +779,7 @@
   id: UplinkEVASyndie
   name: uplink-eva-syndie-name
   description: uplink-eva-syndie-desc
-  icon: { sprite: /Textures/Clothing/OuterClothing/Suits/syndicate.rsi, state: icon }
+  icon: { sprite: /Textures/Clothing/OuterClothing/Suits/eva_syndicate.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateEVABundle
   cost:
     Telecrystal: 2
@@ -884,7 +894,7 @@
   description: uplink-experimental-stimpack-desc
   productEntity: StimpackExperimental
   cost:
-    Telecrystal: 15
+    Telecrystal: 8
   categories:
   - UplinkMisc
   conditions:

@@ -33,6 +33,8 @@ public abstract class SharedSalvageSystem : EntitySystem
                 return Loc.GetString("salvage-expedition-desc-structure",
                     ("count", GetStructureCount(mission.Difficulty)),
                     ("structure", _loc.GetEntityData(proto).Name));
+            case SalvageMissionType.Elimination:
+                return Loc.GetString("salvage-expedition-desc-elimination");
             default:
                 throw new NotImplementedException();
         }
@@ -99,11 +101,15 @@ public abstract class SharedSalvageSystem : EntitySystem
         var dungeon = GetDungeon(biome.ID, rand, ref rating);
         var mods = new List<string>();
 
-        SalvageLightMod? light = null;
-
-        if (biome.BiomePrototype != null)
+        var air = GetAir(biome.ID, rand, ref rating);
+        if (air.Description != string.Empty)
         {
-            light = GetLight(biome.ID, rand, ref rating);
+            mods.Add(air.Description);
+        }
+
+        var light = GetLight(biome.ID, rand, ref rating);
+        if (light.Description != string.Empty)
+        {
             mods.Add(light.Description);
         }
 
@@ -113,15 +119,16 @@ public abstract class SharedSalvageSystem : EntitySystem
         exactDuration = MathF.Round(exactDuration / 15f) * 15f;
         var duration = TimeSpan.FromSeconds(exactDuration);
 
-        if (time.ID != "StandardTime")
+        if (time.Description != string.Empty)
         {
             mods.Add(time.Description);
         }
 
-        var loots = GetLoot(config, _proto.EnumeratePrototypes<SalvageLootPrototype>().ToList(), GetDifficulty(difficulty), seed);
-        return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration, loots, mods);
+        var loots = GetLoot(config, _proto.EnumeratePrototypes<SalvageLootPrototype>().Where(o => !o.Guaranteed).ToList(), GetDifficulty(difficulty), seed);
+        return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, air.ID, light.Color, duration, loots, mods);
     }
 
+    // TODO: probably worth putting the biome whitelist thing in a common thing then having a getmod overload for it
     public SalvageDungeonMod GetDungeon(string biome, System.Random rand, ref float rating)
     {
         var mods = _proto.EnumeratePrototypes<SalvageDungeonMod>().ToList();
@@ -137,6 +144,25 @@ public abstract class SharedSalvageSystem : EntitySystem
             }
 
             rating -= (int) mod.Cost;
+
+            return mod;
+        }
+
+        throw new InvalidOperationException();
+    }
+
+    public SalvageAirMod GetAir(string biome, System.Random rand, ref float rating)
+    {
+        var mods = _proto.EnumeratePrototypes<SalvageAirMod>().ToList();
+        mods.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
+        rand.Shuffle(mods);
+
+        foreach (var mod in mods)
+        {
+            if (mod.Biomes?.Contains(biome) == false || mod.Cost > rating)
+                continue;
+
+            rating -= mod.Cost;
 
             return mod;
         }
@@ -219,6 +245,11 @@ public enum SalvageMissionType : byte
     /// Destroy the specified structures in a dungeon.
     /// </summary>
     Destruction,
+
+    /// <summary>
+    /// Kill a large creature in a dungeon.
+    /// </summary>
+    Elimination,
 }
 
 [Serializable, NetSerializable]

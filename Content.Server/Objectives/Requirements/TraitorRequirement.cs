@@ -1,7 +1,7 @@
 ﻿using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
-using Content.Server.Traitor;
 using JetBrains.Annotations;
+using TraitorRole = Content.Server.Roles.TraitorRole;
 
 namespace Content.Server.Objectives.Requirements
 {
