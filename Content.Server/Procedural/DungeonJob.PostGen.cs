@@ -685,57 +685,102 @@ public sealed partial class DungeonJob
     {
         var tileDef = _tileDefManager[gen.Tile];
 
-        // Work out 1x wide junctions
-        // That is, it has a 1x wide on one side and it opens up on the other
+        // N-wide junctions
         foreach (var tile in dungeon.CorridorTiles)
         {
-            var isValid = false;
+            if (!_anchorable.TileFree(_grid, tile, CollisionLayer, CollisionMask))
+                continue;
 
-            for (var i = 0; i < 4; i++)
+            // Check each direction:
+            // - Check if immediate neighbors are free
+            // - Check if the neighbors beyond that are not free
+            // - Then check either side if they're slightly more free
+            var exteriorWidth = 3;
+            var width = exteriorWidth - 1;
+
+            for (var i = 0; i < 2; i++)
             {
+                var isValid = true;
                 var neighborDir = (Direction) (i * 2);
                 var neighborVec = neighborDir.ToIntVec();
 
-                var neighbor = tile + neighborVec;
-
-                if (_anchorable.TileFree(_grid, neighbor, CollisionLayer, CollisionMask))
-                    continue;
-
-                // Okay that side's blocked let's check if it's a junction
-                // Check the opposite side to see if it's blocked
-                var oppositeNeighbor = tile - neighborVec;
-
-                if (_anchorable.TileFree(_grid, oppositeNeighbor, CollisionLayer, CollisionMask))
-                    continue;
-
-                // Check corners to see if either side opens up (if it's just a 1x wide corridor do nothing, needs to be a funnel.
-
-                for (var j = 0; j < 4; j++)
+                for (var j = -width; j <= width; j++)
                 {
-                    var cornerDir = (Direction) (j * 2 + 1);
-                    var cornerVec = cornerDir.ToIntVec();
-                    var cornerNeighbor = tile + cornerVec;
+                    var neighbor = tile + neighborVec * j;
 
-                    if (!_anchorable.TileFree(_grid, cornerNeighbor, CollisionLayer, CollisionMask))
+                    // If it's an end tile then check it's occupied.
+                    if (j == -width ||
+                        j == width)
                     {
+                        if (_anchorable.TileFree(_grid, neighbor, CollisionLayer, CollisionMask))
+                        {
+                            isValid = false;
+                            break;
+                        }
+
                         continue;
                     }
 
+                    // If we're not at the end tile then check if it's free.
+                    if (!_anchorable.TileFree(_grid, neighbor, CollisionLayer, CollisionMask))
+                    {
+                        isValid = false;
+                        break;
+                    }
+                }
+
+                if (!isValid)
+                    continue;
+
+                // Check corners to see if either side opens up (if it's just a 1x wide corridor do nothing, needs to be a funnel.
+                foreach (var j in new [] {-exteriorWidth, exteriorWidth})
+                {
+                    var freeCount = 0;
+
+                    // Need at least 3 of 4 free
+                    for (var k = 0; k < 4; k++)
+                    {
+                        var cornerDir = (Direction) (k * 2 + 1);
+                        var cornerVec = cornerDir.ToIntVec();
+                        var cornerNeighbor = tile + neighborVec * j + cornerVec;
+
+                        if (_anchorable.TileFree(_grid, cornerNeighbor, CollisionLayer, CollisionMask))
+                        {
+                            freeCount++;
+                        }
+                    }
+
+                    if (freeCount < 3)
+                        continue;
+
                     // Valid!
                     isValid = true;
-                    grid.SetTile(tile, new Tile(tileDef.TileId, variant: (byte) random.Next(tileDef.Variants)));
-                    var coords = grid.GridTileToLocal(tile);
 
-                    foreach (var ent in gen.Entities)
+                    for (var x = -width + 1; x < width; x++)
                     {
-                        _entManager.SpawnEntity(ent, coords);
+                        var weh = tile + neighborDir.ToIntVec() * x;
+                        grid.SetTile(weh, new Tile(tileDef.TileId, variant: (byte) random.Next(tileDef.Variants)));
+
+                        var coords = grid.GridTileToLocal(weh);
+
+                        foreach (var ent in gen.Entities)
+                        {
+                            _entManager.SpawnEntity(ent, coords);
+                        }
                     }
 
                     break;
                 }
 
                 if (isValid)
-                    break;
+                {
+                    await SuspendIfOutOfTime();
+
+                    if (!ValidateResume())
+                        return;
+                }
+
+                break;
             }
         }
     }

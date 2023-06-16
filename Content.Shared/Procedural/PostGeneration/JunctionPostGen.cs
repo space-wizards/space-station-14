@@ -10,6 +10,12 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// </summary>
 public sealed class JunctionPostGen : IPostDunGen
 {
+    /// <summary>
+    /// Width to check for junctions.
+    /// </summary>
+    [DataField("width")]
+    public int Width = 3;
+
     [DataField("tile", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
     public string Tile = "FloorSteel";
 
