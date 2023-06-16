@@ -129,6 +129,8 @@
           prob: 0.20
         - id: DrinkSpaceGlue
           prob: 0.20
+        - id: DrinkSpaceLube
+          prob: 0.20
 
 - type: entity
   id: ClosetWallMaintenanceFilledRandom
