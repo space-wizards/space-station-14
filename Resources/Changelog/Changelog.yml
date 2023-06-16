@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix follower eye rotation not being reset on map changes., type: Fix}
-  id: 3512
-  time: '2023-04-23T10:01:16.0000000+00:00'
 - author: Endecc
   changes:
   - {message: 'Centcomm has actually TURNED ON the motors of the Advanced Mop, allowing
@@ -2916,3 +2911,12 @@ Entries:
   - {message: Female dwarves now have female laughs., type: Tweak}
   id: 4011
   time: '2023-06-15T19:19:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Ice anomaly projectiles do increased structural damage., type: Tweak}
+  - {message: Ice anomalies now shoot more projectiles with increased accuracy on
+      living targets., type: Tweak}
+  - {message: Decreased explosive power from the ice anomaly supercritical event.,
+    type: Tweak}
+  id: 4012
+  time: '2023-06-16T00:52:49.0000000+00:00'
