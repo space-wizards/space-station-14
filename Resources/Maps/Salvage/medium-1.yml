@@ -134,8 +134,6 @@ entities:
       type: GridAtmosphere
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 737.3128624
-      type: GridPathfinding
     - chunkCollection:
         version: 2
         nodes:

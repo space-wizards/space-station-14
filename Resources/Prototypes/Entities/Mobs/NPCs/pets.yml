@@ -485,6 +485,8 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - Trash
+    - Hamster
 
 - type: entity
   name: Shiva

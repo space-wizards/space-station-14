@@ -74,6 +74,9 @@
   id: BulletFoam
 
 - type: Tag
+  id: BypassInteractionRangeChecks
+
+- type: Tag
   id: CableCoil
 
 - type: Tag
@@ -240,6 +243,9 @@
   id: DroneUsable
 
 - type: Tag
+  id: Ectoplasm
+
+- type: Tag
   id: Egg
 
 - type: Tag
@@ -317,6 +323,28 @@
 - type: Tag
   id: GuideEmbeded
 
+
+- type: Tag
+  id: Hamster
+
+- type: Tag
+  id: HamtrCentralControlModule
+
+- type: Tag
+  id: HamtrPeripheralsControlModule
+
+- type: Tag
+  id: HamtrLArm
+
+- type: Tag
+  id: HamtrLLeg
+
+- type: Tag
+  id: HamtrRLeg
+
+- type: Tag
+  id: HamtrRArm
+
 - type: Tag
   id: Handcuffs
 
@@ -380,6 +408,9 @@
 
 - type: Tag
   id: Ingot
+
+- type: Tag
+  id: InstantDoAfters
 
 - type: Tag
   id: IntercomElectronics
@@ -559,6 +590,9 @@
   id: Plastic
 
 - type: Tag
+  id: PlushieGhost
+
+- type: Tag
   id: Powerdrill
 
 - type: Tag
@@ -630,6 +664,9 @@
 
 - type: Tag
   id: SkeletonMotorcycleKeys
+
+- type: Tag
+  id: SmallMech
 
 - type: Tag
   id: Smokable

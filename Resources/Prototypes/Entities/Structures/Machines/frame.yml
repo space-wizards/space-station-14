@@ -102,7 +102,6 @@
         machine_board: !type:Container
         machine_parts: !type:Container
     - type: Sprite
-      netsync: false
       sprite: Structures/Machines/parts.rsi
       state: box_1
     - type: Appearance
@@ -146,6 +145,5 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
     - type: Sprite
-      netsync: false
       sprite: Structures/Machines/parts.rsi
       state: destroyed
