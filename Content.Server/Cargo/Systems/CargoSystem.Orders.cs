@@ -18,6 +18,8 @@ using Content.Shared.Access.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems
 {
@@ -33,13 +35,6 @@ namespace Content.Server.Cargo.Systems
         /// </summary>
         private float _timer;
 
-        [Dependency] private readonly IdCardSystem _idCardSystem = default!;
-        [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-        [Dependency] private readonly DeviceLinkSystem _linker = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly StationSystem _station = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         private void InitializeConsole()
@@ -73,6 +68,8 @@ namespace Content.Server.Cargo.Systems
         {
             _timer += frameTime;
 
+            // TODO: Doesn't work with serialization and shouldn't just be updating every delay
+            // client can just interp this just fine on its own.
             while (_timer > Delay)
             {
                 _timer -= Delay;
@@ -125,7 +122,7 @@ namespace Content.Server.Cargo.Systems
             }
 
             // Invalid order
-            if (!_protoMan.TryIndex<CargoProductPrototype>(order.ProductId, out var product))
+            if (!_protoMan.HasIndex<EntityPrototype>(order.ProductId))
             {
                 ConsolePopup(args.Session, Loc.GetString("cargo-console-invalid-product"));
                 PlayDenySound(uid, component);
@@ -153,7 +150,7 @@ namespace Content.Server.Cargo.Systems
                 PlayDenySound(uid, component);
             }
 
-            var cost = product.PointCost * order.OrderQuantity;
+            var cost = order.Price * order.OrderQuantity;
 
             // Not enough balance
             if (cost > bankAccount.Balance)
@@ -164,7 +161,7 @@ namespace Content.Server.Cargo.Systems
             }
 
             _idCardSystem.TryFindIdCard(player, out var idCard);
-            order.SetApproverData(idCard);
+            order.SetApproverData(idCard?.FullName, idCard?.JobTitle);
             _audio.PlayPvs(_audio.GetSound(component.ConfirmSound), uid);
 
             // Log order approval
@@ -191,11 +188,20 @@ namespace Content.Server.Cargo.Systems
                 return;
 
             var bank = GetBankAccount(component);
-            if (bank == null) return;
-            var orderDatabase = GetOrderDatabase(component);
-            if (orderDatabase == null) return;
+            if (bank == null)
+                return;
 
-            var data = GetOrderData(args, GenerateOrderId(orderDatabase));
+            var orderDatabase = GetOrderDatabase(component);
+            if (orderDatabase == null)
+                return;
+
+            if (!_protoMan.TryIndex<CargoProductPrototype>(args.CargoProductId, out var product))
+            {
+                _sawmill.Error($"Tried to add invalid cargo product {args.CargoProductId} as order!");
+                return;
+            }
+
+            var data = GetOrderData(args, product, GenerateOrderId(orderDatabase));
 
             if (!TryAddOrder(orderDatabase, data))
             {
@@ -240,9 +246,9 @@ namespace Content.Server.Cargo.Systems
             _audio.PlayPvs(_audio.GetSound(component.ErrorSound), uid);
         }
 
-        private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, int id)
+        private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, CargoProductPrototype cargoProduct, int id)
         {
-            return new CargoOrderData(id, args.ProductId, args.Amount, args.Requester, args.Reason);
+            return new CargoOrderData(id, cargoProduct.Product, cargoProduct.PointCost, args.Amount, args.Requester, args.Reason);
         }
 
         public int GetOutstandingOrderCount(StationCargoOrderDatabaseComponent component)
@@ -287,18 +293,12 @@ namespace Content.Server.Cargo.Systems
             }
         }
 
-        public bool AddAndApproveOrder(EntityUid? orderer, StationCargoOrderDatabaseComponent component, string productId, int qty, string requester, string approverName, string approverJobTitle, string description)
+        public bool AddAndApproveOrder(EntityUid? orderer, StationCargoOrderDatabaseComponent component, string spawnId, int cost, int qty, string requester, string approverName, string approverJobTitle, string description)
         {
-            if (!_prototypeManager.HasIndex<CargoProductPrototype>(productId))
-            {
-                _sawmill.Warning($"CargoSystem.Orders could not find CargoProductPrototype for '{productId}' in {description}.");
-                // Pretend that it worked OK, since we don't want the caller to try again.
-                return true;
-            }
-
+            DebugTools.Assert(_protoMan.HasIndex<EntityPrototype>(spawnId));
             // Make an order
             var id = GenerateOrderId(component);
-            var order = new CargoOrderData(id, productId, qty, requester, description);
+            var order = new CargoOrderData(id, spawnId, cost, qty, requester, description);
 
             return AddAndApproveOrder(orderer, component, order, approverName, approverJobTitle);
         }
@@ -315,7 +315,7 @@ namespace Content.Server.Cargo.Systems
         public bool AddAndApproveOrder(EntityUid? orderer, StationCargoOrderDatabaseComponent component, CargoOrderData order, string approverName, string approverJobTitle)
         {
             // Approve it now
-            order.SetApproverData(new IdCardComponent(){FullName = approverName, JobTitle = approverJobTitle});
+            order.SetApproverData(dest, sender);
 
             // Log order addition
             if (orderer != null)
@@ -391,7 +391,7 @@ namespace Content.Server.Cargo.Systems
             if (PopFrontOrder(orderDB, out var order))
             {
                 // Create the item itself
-                var item = order.OrderEntity ?? Spawn(_protoMan.Index<CargoProductPrototype>(order.ProductId).Product, whereToPutIt);
+                var item = order.OrderEntity ?? Spawn(order.ProductId, whereToPutIt);
                 if (order.OrderEntity != null)
                     _transformSystem.SetCoordinates(item, whereToPutIt);
 

@@ -152,13 +152,13 @@ namespace Content.Client.Cargo.UI
                 }
                 else
                 {
-                    var product = _protoManager.Index<CargoProductPrototype>(order.ProductId);
+                    var product = _protoManager.Index<EntityPrototype>(order.ProductId);
                     var productName = product.Name;
 
                     row = new CargoOrderRow
                     {
                         Order = order,
-                        Icon = { Texture = _spriteSystem.Frame0(product.Icon) },
+                        Icon = { Texture = _spriteSystem.Frame0(product) },
                         ProductName =
                         {
                             Text = Loc.GetString(

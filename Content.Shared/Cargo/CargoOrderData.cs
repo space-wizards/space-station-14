@@ -7,6 +7,11 @@ namespace Content.Shared.Cargo
     public sealed class CargoOrderData
     {
         /// <summary>
+        /// Price when the order was added.
+        /// </summary>
+        public int Price;
+
+        /// <summary>
         /// A unique (arbitrary) ID which identifies this order.
         /// </summary>
         public readonly int OrderId;
@@ -17,7 +22,7 @@ namespace Content.Shared.Cargo
         public readonly EntityUid? OrderEntity;
 
         /// <summary>
-        /// Prototype id for the item to create
+        /// Prototype Id for the item to be created
         /// </summary>
         public readonly string ProductId;
 
@@ -39,36 +44,38 @@ namespace Content.Shared.Cargo
         public  bool Approved => Approver is not null;
         public string? Approver;
 
-        public CargoOrderData(int orderId, string productId, int amount, string requester, string reason)
+        public CargoOrderData(int orderId, string productId, int price, int amount, string requester, string reason)
         {
             OrderId = orderId;
             OrderEntity = null;
             ProductId = productId;
+            Price = price;
             OrderQuantity = amount;
             Requester = requester;
             Reason = reason;
         }
 
-        public CargoOrderData(int orderId, EntityUid orderEntityUid, string requester, string reason)
+        public CargoOrderData(int orderId, EntityUid orderEntityUid, int price, string requester, string reason)
         {
             OrderId = orderId;
             OrderEntity = orderEntityUid;
             ProductId = "";
+            Price = price;
             OrderQuantity = 1;
             Requester = requester;
             Reason = reason;
         }
 
-        public void SetApproverData(IdCardComponent? idCard)
+        public void SetApproverData(string? fullName, string? jobTitle)
         {
             var sb = new StringBuilder();
-            if (!string.IsNullOrWhiteSpace(idCard?.FullName))
+            if (!string.IsNullOrWhiteSpace(fullName))
             {
-                sb.Append($"{idCard.FullName} ");
+                sb.Append($"{fullName} ");
             }
-            if (!string.IsNullOrWhiteSpace(idCard?.JobTitle))
+            if (!string.IsNullOrWhiteSpace(jobTitle))
             {
-                sb.Append($"({idCard.JobTitle})");
+                sb.Append($"({jobTitle})");
             }
             Approver = sb.ToString();
         }

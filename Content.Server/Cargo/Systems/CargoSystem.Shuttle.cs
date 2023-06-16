@@ -29,15 +29,6 @@ public sealed partial class CargoSystem
      * Handles cargo shuttle mechanics.
      */
 
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly PricingSystem _pricing = default!;
-    [Dependency] private readonly ShuttleConsoleSystem _console = default!;
-    [Dependency] private readonly StackSystem _stack = default!;
     public MapId? CargoMap { get; private set; }
 
     private void InitializeShuttle()
@@ -191,7 +182,7 @@ public sealed partial class CargoSystem
                     // We won't be able to fit the whole order on, so make one
                     // which represents the space we do have left:
                     var reducedOrder = new CargoOrderData(order.OrderId,
-                            order.ProductId, spaceRemaining, order.Requester, order.Reason);
+                            order.ProductId, order.Price, spaceRemaining, order.Requester, order.Reason);
                     orders.Add(reducedOrder);
                 }
                 else
@@ -335,7 +326,7 @@ public sealed partial class CargoSystem
         }
 
         SellPallets(gridUid, out var price);
-        var stackPrototype = _prototypeManager.Index<StackPrototype>(component.CashType);
+        var stackPrototype = _protoMan.Index<StackPrototype>(component.CashType);
         _stack.Spawn((int)price, stackPrototype, uid.ToCoordinates());
         UpdatePalletConsoleInterface(uid);
     }
