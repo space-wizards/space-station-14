@@ -32,9 +32,12 @@ public sealed class TempReactingAnomalySystem : EntitySystem
         if (mixture is null)
             return;
 
+        if (!TryComp<AnomalyComponent>(uid, out var anomaly))
+            return;
+
         foreach (var reaction in tempReactingAnomaly.Reactions)
         {
-            if (reaction.TempInRange(mixture.Temperature) && TryComp<AnomalyComponent>(uid, out var anomaly))
+            if (reaction.TempInRange(mixture.Temperature))
             {
                 _anomalySystem.ChangeAnomalyStability(uid, reaction.StabilityPerPulse, anomaly);
                 _anomalySystem.ChangeAnomalySeverity(uid, reaction.SeverityPerPulse, anomaly);

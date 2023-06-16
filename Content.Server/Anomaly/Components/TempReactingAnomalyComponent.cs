@@ -14,7 +14,7 @@ public sealed class TempReactingAnomalyComponent : Component
     /// <summary>
     /// A list of reactions that happen at certain temperatures.
     /// </summary>
-    [DataField("reactions")]
+    [DataField("reactions", required: true)]
     public List<TempReaction> Reactions = new();
 }
 
