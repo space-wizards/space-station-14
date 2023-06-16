@@ -31,7 +31,7 @@ public sealed class GlueComponent : Component
     /// <summary>
     /// Reagent consumption per use.
     /// </summary>
-    [DataField("consumption")]
+    [DataField("consumption"), ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 Consumption = FixedPoint2.New(3);
 
     /// <summary>
