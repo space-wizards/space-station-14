@@ -120,52 +120,79 @@ public sealed partial class DungeonJob
             // Move out 3 tiles in a direction away from center of the room
             // If none of those intersect another tile it's probably external
             // TODO: Maybe need to take top half of furthest rooms in case there's interior exits?
-            roomTiles.AddRange(room.Tiles);
+            roomTiles.AddRange(room.Exterior);
             random.Shuffle(roomTiles);
 
             foreach (var tile in roomTiles)
             {
-                var direction = (tile - room.Center).ToAngle().GetCardinalDir().ToAngle().ToVec();
-                var isValid = true;
+                var isValid = false;
 
-                for (var j = 1; j < 4; j++)
+                // Check if one side is dungeon and the other side is nothing.
+                for (var j = 0; j < 4; j++)
                 {
-                    var neighbor = (tile + direction * j).Floored();
+                    var dir = (Direction) (j * 2);
+                    var oppositeDir = dir.GetOpposite();
+                    var dirVec = tile + dir.ToIntVec();
+                    var oppositeDirVec = tile + oppositeDir.ToIntVec();
 
-                    // If it's an interior tile or blocked.
-                    if (dungeon.RoomTiles.Contains(neighbor) || _lookup.GetEntitiesIntersecting(gridUid, neighbor, LookupFlags.Dynamic | LookupFlags.Static).Any())
+                    if (!dungeon.RoomTiles.Contains(dirVec))
                     {
-                        isValid = false;
-                        break;
-                    }
-                }
-
-                if (!isValid)
-                    continue;
-
-                var entrancePos = (tile + direction).Floored();
-
-                // Entrance wew
-                grid.SetTile(entrancePos, tileData);
-                ClearDoor(dungeon, grid, entrancePos);
-                var gridCoords = grid.GridTileToLocal(entrancePos);
-                // Need to offset the spawn to avoid spawning in the room.
-
-                foreach (var ent in gen.Entities)
-                {
-                    _entManager.SpawnEntity(ent, gridCoords);
-                }
-
-                // Clear out any biome tiles nearby to avoid blocking it
-                foreach (var nearTile in grid.GetTilesIntersecting(new Circle(gridCoords.Position, 1.5f), false))
-                {
-                    if (dungeon.RoomTiles.Contains(nearTile.GridIndices))
                         continue;
+                    }
 
-                    grid.SetTile(nearTile.GridIndices, tileData);
+                    if (dungeon.RoomTiles.Contains(oppositeDirVec) ||
+                        dungeon.RoomExteriorTiles.Contains(oppositeDirVec) ||
+                        dungeon.CorridorExteriorTiles.Contains(oppositeDirVec) ||
+                        dungeon.CorridorTiles.Contains(oppositeDirVec))
+                    {
+                        continue;
+                    }
+
+                    // Check if exterior spot free.
+                    if (!_anchorable.TileFree(_grid, tile, CollisionLayer, CollisionMask))
+                    {
+                        continue;
+                    }
+
+                    // Check if interior spot free (no guarantees on exterior but ClearDoor should handle it)
+                    if (!_anchorable.TileFree(_grid, dirVec, CollisionLayer, CollisionMask))
+                    {
+                        continue;
+                    }
+
+                    // Valid pick!
+                    isValid = true;
+
+                    // Entrance wew
+                    grid.SetTile(tile, tileData);
+                    ClearDoor(dungeon, grid, tile);
+                    var gridCoords = grid.GridTileToLocal(tile);
+                    // Need to offset the spawn to avoid spawning in the room.
+
+                    foreach (var ent in gen.Entities)
+                    {
+                        _entManager.SpawnEntity(ent, gridCoords);
+                    }
+
+                    // Clear out any biome tiles nearby to avoid blocking it
+                    foreach (var nearTile in grid.GetTilesIntersecting(new Circle(gridCoords.Position, 1.5f), false))
+                    {
+                        if (dungeon.RoomTiles.Contains(nearTile.GridIndices) ||
+                            dungeon.RoomExteriorTiles.Contains(nearTile.GridIndices) ||
+                            dungeon.CorridorTiles.Contains(nearTile.GridIndices) ||
+                            dungeon.CorridorExteriorTiles.Contains(nearTile.GridIndices))
+                        {
+                            continue;
+                        }
+
+                        grid.SetTile(nearTile.GridIndices, tileData);
+                    }
+
+                    break;
                 }
 
-                break;
+                if (isValid)
+                    break;
             }
 
             roomTiles.Clear();
@@ -695,8 +722,8 @@ public sealed partial class DungeonJob
             // - Check if immediate neighbors are free
             // - Check if the neighbors beyond that are not free
             // - Then check either side if they're slightly more free
-            var exteriorWidth = 3;
-            var width = exteriorWidth - 1;
+            var exteriorWidth = (int) Math.Floor(gen.Width / 2f);
+            var width = (int) Math.Ceiling(gen.Width / 2f);
 
             for (var i = 0; i < 2; i++)
             {
@@ -706,6 +733,9 @@ public sealed partial class DungeonJob
 
                 for (var j = -width; j <= width; j++)
                 {
+                    if (j == 0)
+                        continue;
+
                     var neighbor = tile + neighborVec * j;
 
                     // If it's an end tile then check it's occupied.
@@ -750,7 +780,7 @@ public sealed partial class DungeonJob
                         }
                     }
 
-                    if (freeCount < 3)
+                    if (freeCount < gen.Width)
                         continue;
 
                     // Valid!
