@@ -100,3 +100,98 @@
   proto: LavaBrig
   biomeMods:
     - Lava
+
+# Air mixtures
+- type: salvageAirMod
+  id: Space
+  desc: No Atmosphere
+  space: true
+  cost: 1
+  biomes:
+  - Caves
+  - Lava
+
+- type: salvageAirMod
+  id: Breathable
+  gases:
+  - 21.824779 # oxygen
+  - 82.10312 # nitrogen
+  biomes:
+  - Caves
+  #- LowDesert
+  - Snow
+  - Grasslands
+
+- type: salvageAirMod
+  id: Sleepy
+  cost: 1
+  desc: Dangerous Atmosphere
+  gases:
+  - 21.824779 # oxygen
+  - 77.10312 # nitrogen
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 5 # nitrous oxide
+  biomes:
+  - Caves
+  #- LowDesert
+  - Snow
+  - Grasslands
+  - Lava
+
+- type: salvageAirMod
+  id: Poisoned
+  cost: 2
+  desc: Dangerous Atmosphere
+  gases:
+  - 21.824779 # oxygen
+  - 77.10312 # nitrogen
+  - 5 # carbon dioxide
+  biomes:
+  - Caves
+  #- LowDesert
+  - Snow
+  - Grasslands
+  - Lava
+
+- type: salvageAirMod
+  id: Poison
+  cost: 3
+  desc: Toxic Atmosphere
+  gases:
+  - 21.824779 # oxygen
+  - 0
+  - 82.10312 # carbon dioxide
+  biomes:
+  - Caves
+  - Snow
+  - Lava
+
+- type: salvageAirMod
+  id: Plasma
+  cost: 4
+  desc: Toxic Atmosphere
+  gases:
+  - 0
+  - 0
+  - 0
+  - 103.927899 # plasma
+  biomes:
+  - Caves
+  - Lava
+
+- type: salvageAirMod
+  id: Burnable
+  cost: 5
+  desc: Volatile Atmosphere
+  gases:
+  - 21.824779 # oxygen
+  - 0
+  - 0
+  - 82.10312 # plasma
+  biomes:
+  - Caves
+  - Lava

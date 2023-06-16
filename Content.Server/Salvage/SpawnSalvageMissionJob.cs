@@ -105,16 +105,14 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             _entManager.Dirty(gravity, metadata);
 
             // Atmos
+            var air = _prototypeManager.Index<SalvageAirMod>(mission.Air);
             var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
-            atmos.Space = false;
-            var moles = new float[Atmospherics.AdjustedNumberOfGases];
-            moles[(int) Gas.Oxygen] = 21.824779f;
-            moles[(int) Gas.Nitrogen] = 82.10312f;
-
+            atmos.Space = air.Space;
             atmos.Mixture = new GasMixture(2500)
             {
+                // TODO: temperature mods
                 Temperature = 293.15f,
-                Moles = moles,
+                Moles = air.Gases,
             };
 
             if (mission.Color != null)
