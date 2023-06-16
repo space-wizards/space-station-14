@@ -37,6 +37,6 @@ public sealed class GlueComponent : Component
     /// <summary>
     /// Duration per unit
     /// </summary>
-    [DataField("duration", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField("duration", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan Duration = TimeSpan.FromSeconds(10);
 }
