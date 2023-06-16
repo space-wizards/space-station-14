@@ -25,6 +25,6 @@
   <Box>
     <GuideEntityEmbed Entity="AppraisalTool"/>
   </Box>
-  After finding something worth selling, just heave it onto one of the shuttle's cargo pallets (they look like catwalks, and orders always spawn on them). The next time the shuttle arrives at the trading post, the item will be sold, and the money will be directly transfered back to the request computer.
+  After finding something worth selling, place it on one of the shuttle's cargo pallets. The next time the shuttle is sent to a trading post, the item will be sold and the money will be directly transferred back to the station's bank account.
 
 </Document>
