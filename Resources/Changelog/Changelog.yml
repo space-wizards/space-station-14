@@ -1,13 +1,4 @@
 Entries:
-- author: Endecc
-  changes:
-  - {message: 'Centcomm has actually TURNED ON the motors of the Advanced Mop, allowing
-      it to actually be an upgrade Janitors will want!', type: Tweak}
-  - {message: 'To accommodate for this actual running motor, the plastic cost for
-      the Advanced Mop at the lathe has been increased from 100 > 400 to reinforce
-      the structure', type: Tweak}
-  id: 3513
-  time: '2023-04-23T10:17:21.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Space Gru has returned the stars he stole and is very sorry., type: Fix}
@@ -2920,3 +2911,9 @@ Entries:
     type: Tweak}
   id: 4012
   time: '2023-06-16T00:52:49.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Changed anchored and unanchored examine text to be green and red respectfully.,
+    type: Tweak}
+  id: 4013
+  time: '2023-06-16T02:46:39.0000000+00:00'
