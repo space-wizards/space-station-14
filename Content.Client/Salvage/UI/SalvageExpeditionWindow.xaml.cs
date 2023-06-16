@@ -191,6 +191,20 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
 
             lBox.AddChild(new Label()
             {
+                Text = Loc.GetString("salvage-expedition-window-rewards")
+            });
+
+            // there will always be 3 rewards so no need for 0 check
+            lBox.AddChild(new Label()
+            {
+                Text = string.Join("\n", mission.Rewards.Select(id => "- " + _prototype.Index<EntityPrototype>(id).Name)),
+                FontColorOverride = StyleNano.ConcerningOrangeFore,
+                HorizontalAlignment = HAlignment.Left,
+                Margin = new Thickness(0f, 0f, 0f, 5f)
+            });
+
+            lBox.AddChild(new Label()
+            {
                 Text = Loc.GetString("salvage-expedition-window-loot")
             });
 
