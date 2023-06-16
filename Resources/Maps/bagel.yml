@@ -8771,8 +8771,6 @@ entities:
       type: GridAtmosphere
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 2145.1086759
-      type: GridPathfinding
     - nextUpdate: 1
       type: SpreaderGrid
     - type: RadiationGridResistance
@@ -8819,8 +8817,6 @@ entities:
       type: Fixtures
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 0.45
-      type: GridPathfinding
     - nextUpdate: 1
       type: SpreaderGrid
     - gravityShakeSound: !type:SoundPathSpecifier
