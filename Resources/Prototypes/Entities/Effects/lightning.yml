@@ -6,7 +6,6 @@
   - type: Sprite
     sprite: /Textures/Effects/lightning.rsi
     drawdepth: Effects
-    netsync: false
     layers:
     - state: "lightning_1"
       shader: unshaded

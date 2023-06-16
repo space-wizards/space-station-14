@@ -67,6 +67,16 @@
     Cryoxadone: 3
 
 - type: reaction
+  id: Doxarubixadone
+  reactants:
+    Cryoxadone:
+      amount: 1
+    UnstableMutagen:
+      amount: 1
+  products:
+    Doxarubixadone: 2
+
+- type: reaction
   id: Epinephrine
   reactants:
     Phenol:

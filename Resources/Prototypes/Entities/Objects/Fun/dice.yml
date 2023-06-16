@@ -7,7 +7,6 @@
   - type: ItemCooldown
   - type: UseDelay
   - type: Sprite
-    netsync: false
     sprite: Objects/Fun/dice.rsi
     noRot: true # If their sprites rotate, the number becomes even more illegible than usual.
   - type: Tag
