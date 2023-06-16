@@ -44,7 +44,7 @@ public readonly record struct CargoBountyItemEntry()
     [DataField("whitelist")]
     public readonly EntityWhitelist Whitelist = default!;
 
-    // todo: some kind of condition system? idk
+    // todo: implement some kind of simple generic condition system
 
     /// <summary>
     /// How much of the item must be present to satisfy the entry

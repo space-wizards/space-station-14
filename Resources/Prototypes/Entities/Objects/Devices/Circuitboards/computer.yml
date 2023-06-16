@@ -79,6 +79,21 @@
       - HighRiskItem
 
 - type: entity
+  id: CargoBountyComputerCircuitboard
+  parent: BaseComputerCircuitboard
+  name: cargo bounty computer board
+  description: A computer printed circuit board for a cargo bounty computer.
+  components:
+  - type: Sprite
+    state: cpu_supply
+  - type: ComputerBoard
+    prototype: ComputerCargoBounty
+  - type: StaticPrice
+  - type: Tag
+    tags:
+    - DroneUsable
+
+- type: entity
   parent: BaseComputerCircuitboard
   id: CargoShuttleComputerCircuitboard
   name: cargo shuttle computer board
