@@ -6707,8 +6707,6 @@ entities:
     - pos: 2.5208104,12.456571
       parent: 1653
       type: Transform
-    - nextAttack: 10380.4568435
-      type: MeleeWeapon
 - proto: CryostasisBeaker
   entities:
   - uid: 1340
@@ -10343,8 +10341,6 @@ entities:
     - pos: 4.523156,12.6515875
       parent: 1653
       type: Transform
-    - nextAttack: 10488.7397437
-      type: MeleeWeapon
   - uid: 1586
     components:
     - pos: 36.51179,16.622833
