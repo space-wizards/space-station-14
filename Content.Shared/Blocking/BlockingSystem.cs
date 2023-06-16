@@ -89,7 +89,7 @@ public sealed partial class BlockingSystem : EntitySystem
 
     private void OnToggleAction(EntityUid uid, BlockingComponent component, ToggleActionEvent args)
     {
-        if(args.Handled)
+        if (args.Handled)
             return;
 
         var blockQuery = GetEntityQuery<BlockingComponent>();
