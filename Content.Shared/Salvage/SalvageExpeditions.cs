@@ -104,6 +104,7 @@ public sealed record SalvageMission(
     Color? Color,
     TimeSpan Duration,
     Dictionary<string, int> Loot,
+    List<string> Rewards,
     List<string> Modifiers)
 {
     /// <summary>
@@ -152,6 +153,11 @@ public sealed record SalvageMission(
     public TimeSpan Duration = Duration;
 
     public Dictionary<string, int> Loot = Loot;
+
+    /// <summary>
+    /// The list of items to order on mission completion.
+    /// </summary>
+    public List<string> Rewards = Rewards;
 
     /// <summary>
     /// Modifiers (outside of the above) applied to the mission.

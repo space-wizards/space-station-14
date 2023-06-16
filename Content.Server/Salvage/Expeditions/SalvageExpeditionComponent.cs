@@ -56,6 +56,12 @@ public sealed class SalvageExpeditionComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("difficulty")]
     public DifficultyRating Difficulty;
+
+    /// <summary>
+    /// List of items to order on mission completion
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public List<string> Rewards = default!;
 }
 
 public enum ExpeditionStage : byte

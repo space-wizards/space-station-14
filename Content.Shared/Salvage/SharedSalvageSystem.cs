@@ -125,7 +125,8 @@ public abstract class SharedSalvageSystem : EntitySystem
         }
 
         var loots = GetLoot(config, _proto.EnumeratePrototypes<SalvageLootPrototype>().Where(o => !o.Guaranteed).ToList(), GetDifficulty(difficulty), seed);
-        return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, air.ID, light.Color, duration, loots, mods);
+        var rewards = GetRewards(difficulty, rand);
+        return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, air.ID, light.Color, duration, loots, rewards, mods);
     }
 
     // TODO: probably worth putting the biome whitelist thing in a common thing then having a getmod overload for it
@@ -230,6 +231,45 @@ public abstract class SharedSalvageSystem : EntitySystem
         }
 
         return results;
+    }
+
+    private List<string> GetRewards(DifficultyRating difficulty, System.Random rand)
+    {
+        var rewards = new List<string>(3);
+        var ids = RewardsForDifficulty(difficulty);
+        foreach (var id in ids)
+        {
+            // pick a random reward to give
+            var weights = _proto.Index<WeightedRandomPrototype>(id);
+            rewards.Add(weights.Pick(rand));
+        }
+
+        return rewards;
+    }
+
+    /// <summary>
+    /// Get a list of WeightedRandomPrototype IDs with the rewards for a certain difficulty.
+    /// </summary>
+    private string[] RewardsForDifficulty(DifficultyRating rating)
+    {
+        var common = "SalvageRewardCommon";
+        var rare = "SalvageRewardRare";
+        var epic = "SalvageRewardEpic";
+        switch (rating)
+        {
+            case DifficultyRating.Minimal:
+                return new string[] { common, common, common };
+            case DifficultyRating.Minor:
+                return new string[] { common, common, rare };
+            case DifficultyRating.Moderate:
+                return new string[] { common, rare, rare };
+            case DifficultyRating.Hazardous:
+                return new string[] { rare, rare, epic };
+            case DifficultyRating.Extreme:
+                return new string[] { rare, epic, epic };
+            default:
+                throw new NotImplementedException();
+        }
     }
 }
 
