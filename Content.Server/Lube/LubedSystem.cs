@@ -1,4 +1,6 @@
+using Content.Shared.IdentityManagement;
 using Content.Shared.Lube;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
@@ -11,6 +13,7 @@ public sealed class LubedSystem : EntitySystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -38,7 +41,9 @@ public sealed class LubedSystem : EntitySystem
         }
         component.SlipsLeft--;
         args.Cancel();
-        _transform.SetCoordinates(uid, Transform(args.Container.Owner).Coordinates);
+        var user = args.Container.Owner;
+        _transform.SetCoordinates(uid, Transform(user).Coordinates);
         _throwing.TryThrow(uid, _random.NextVector2(), strength: component.SlipStrength);
+        _popup.PopupEntity(Loc.GetString("lube-slip", ("target", Identity.Entity(uid, EntityManager))), user, user, PopupType.MediumCaution);
     }
 }
