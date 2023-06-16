@@ -706,7 +706,7 @@ public sealed partial class AdminVerbSystem
             Act = () =>
             {
                 var eye = EnsureComp<ContentEyeComponent>(args.Target);
-                _eyeSystem.SetTargetZoomDirectly(eye.TargetZoom * Vector2.One * 0.2f, args.Target);
+                _eyeSystem.SetZoom(args.Target, eye.TargetZoom * 0.2f, ignoreLimits: true);
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-zoom-in-description"),
@@ -721,7 +721,7 @@ public sealed partial class AdminVerbSystem
             Act = () =>
             {
                 var eye = EnsureComp<ContentEyeComponent>(args.Target);
-                _eyeSystem.SetTargetZoomDirectly(eye.TargetZoom * -1, args.Target);
+                _eyeSystem.SetZoom(args.Target, eye.TargetZoom * -1, ignoreLimits: true);
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-flip-eye-description"),

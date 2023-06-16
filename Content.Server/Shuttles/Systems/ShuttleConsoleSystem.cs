@@ -403,7 +403,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             return;
         }
 
-        _eyeSystem.SetTargetZoomDirectly(component.Zoom, entity);
+        _eyeSystem.SetZoom(entity, component.Zoom, ignoreLimits:true);
 
         component.SubscribedPilots.Add(pilotComponent);
 
@@ -424,8 +424,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         pilotComponent.Console = null;
         pilotComponent.Position = null;
-
-        _eyeSystem.SetTargetZoomDirectly(_eyeSystem.DefaultZoom, pilotUid);
+        _eyeSystem.ResetZoom(pilotUid);
 
         if (!helmsman.SubscribedPilots.Remove(pilotComponent))
             return;

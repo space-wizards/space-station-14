@@ -6,6 +6,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Shared.Movement.Systems;
 
@@ -16,10 +17,9 @@ public abstract class SharedContentEyeSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminManager _admin = default!;
 
-    private const float ZoomMod = 1.5f;
-    public readonly Vector2 DefaultZoom = Vector2.One;
-
-    protected ISawmill Sawmill = Logger.GetSawmill("ceye");
+    public const float ZoomMod = 1.5f;
+    public static readonly Vector2 DefaultZoom = Vector2.One;
+    public static readonly Vector2 MinZoom = DefaultZoom * (float)Math.Pow(ZoomMod, -3);
 
     public override void Initialize()
     {
@@ -29,28 +29,60 @@ public abstract class SharedContentEyeSystem : EntitySystem
         SubscribeAllEvent<RequestFovEvent>(OnRequestFov);
 
         CommandBinds.Builder
-            .Bind(ContentKeyFunctions.ZoomIn, new ScrollInputCmdHandler(true, this))
-            .Bind(ContentKeyFunctions.ZoomOut, new ScrollInputCmdHandler(false, this))
-            .Bind(ContentKeyFunctions.ResetZoom, new ResetZoomInputCmdHandler(this))
+            .Bind(ContentKeyFunctions.ZoomIn, InputCmdHandler.FromDelegate(ZoomIn, handle:false))
+            .Bind(ContentKeyFunctions.ZoomOut, InputCmdHandler.FromDelegate(ZoomOut, handle:false))
+            .Bind(ContentKeyFunctions.ResetZoom, InputCmdHandler.FromDelegate(ResetZoom, handle:false))
             .Register<SharedContentEyeSystem>();
 
-        Sawmill.Level = LogLevel.Info;
+        Log.Level = LogLevel.Info;
         UpdatesOutsidePrediction = true;
     }
 
-    private Vector2 CheckZoomValueClamping(Vector2 checkedZoom, ContentEyeComponent component)
+    public override void Shutdown()
     {
-        var minZoom = Vector2.One * (float)Math.Pow(ZoomMod, -3);
-        return Vector2.Clamp(checkedZoom, minZoom, component.MaxZoom);
+        base.Shutdown();
+        CommandBinds.Unregister<SharedContentEyeSystem>();
+    }
+
+    private void ResetZoom(ICommonSession? session)
+    {
+        if (TryComp(session?.AttachedEntity, out ContentEyeComponent? eye))
+            ResetZoom(session.AttachedEntity.Value, eye);
+    }
+
+    private void ZoomOut(ICommonSession? session)
+    {
+        if (TryComp(session?.AttachedEntity, out ContentEyeComponent? eye))
+            SetZoom(session.AttachedEntity.Value, eye.TargetZoom * ZoomMod, eye: eye);
+    }
+
+    private void ZoomIn(ICommonSession? session)
+    {
+        if (TryComp(session?.AttachedEntity, out ContentEyeComponent? eye))
+            SetZoom(session.AttachedEntity.Value, eye.TargetZoom / ZoomMod, eye: eye);
+    }
+
+    private Vector2 Clamp(Vector2 zoom, ContentEyeComponent component)
+    {
+        return Vector2.Clamp(zoom, MinZoom, component.MaxZoom);
+    }
+
+    /// <summary>
+    /// Sets the target zoom, optionally ignoring normal zoom limits.
+    /// </summary>
+    public void SetZoom(EntityUid uid, Vector2 zoom, bool ignoreLimits = false, ContentEyeComponent? eye = null)
+    {
+        if (!Resolve(uid, ref eye, false))
+            return;
+
+        eye.TargetZoom = ignoreLimits ? zoom : Clamp(zoom, eye);
+        Dirty(eye);
     }
 
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
     {
-        if (!TryComp<ContentEyeComponent>(args.SenderSession.AttachedEntity, out var content))
-            return;
-
-        content.TargetZoom = CheckZoomValueClamping(msg.TargetZoom, content);
-        Dirty(content);
+        if (TryComp<ContentEyeComponent>(args.SenderSession.AttachedEntity, out var content))
+            SetZoom(args.SenderSession.AttachedEntity.Value, msg.TargetZoom, eye: content);
     }
 
     private void OnRequestFov(RequestFovEvent msg, EntitySessionEventArgs args)
@@ -66,12 +98,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
             eyeComp.DrawFov = msg.Fov;
             Dirty(eyeComp);
         }
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        CommandBinds.Unregister<SharedContentEyeSystem>();
     }
 
     private void OnContentEyeStartup(EntityUid uid, ContentEyeComponent component, ComponentStartup args)
@@ -100,106 +126,19 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Dirty(eye);
     }
 
-    private void ResetZoom(ContentEyeComponent component)
+    public void ResetZoom(EntityUid uid, ContentEyeComponent? component = null)
     {
-        var zoom = CheckZoomValueClamping(DefaultZoom, component);
-
-        if (component.TargetZoom.Equals(Vector2.One))
-            return;
-
-        component.TargetZoom = Vector2.One;
-        Dirty(component);
+        SetZoom(uid, DefaultZoom, eye: component);
     }
 
     public void SetMaxZoom(EntityUid uid, Vector2 value, ContentEyeComponent? component = null)
     {
-        if (Resolve(uid, ref component))
-            component.MaxZoom = value;
-    }
-
-    private void Zoom(bool zoomIn, ContentEyeComponent component)
-    {
-        var actual = component.TargetZoom;
-
-        if (zoomIn)
-        {
-            actual /= ZoomMod;
-        }
-        else
-        {
-            actual *= ZoomMod;
-        }
-
-        actual = CheckZoomValueClamping(actual, component);
-
-        if (actual.Equals(component.TargetZoom))
+        if (!Resolve(uid, ref component))
             return;
 
-        component.TargetZoom = actual;
+        component.MaxZoom = value;
+        component.TargetZoom = Clamp(component.TargetZoom, component);
         Dirty(component);
-        Sawmill.Debug($"Set target zoom to {actual}");
-    }
-
-    public void SetTargetZoomDirectly(Vector2 newZoom, EntityUid playerUid)
-    {
-        if (TryComp<ContentEyeComponent>(playerUid, out var content)
-            || content is not ContentEyeComponent comp)
-            return;
-
-        content.TargetZoom = newZoom;
-        Dirty(content);
-    }
-
-    private ContentEyeComponent? GetContentFromCmdMessage(ICommonSession? session, InputCmdMessage message)
-    {
-        if (message is not FullInputCmdMessage full || full.State != BoundKeyState.Down)
-            return null;
-
-        if (session?.AttachedEntity == null
-            || !TryComp<ContentEyeComponent>(session.AttachedEntity, out var component))
-        {
-            return null;
-        }
-
-        return component;
-    }
-
-    private sealed class ResetZoomInputCmdHandler : InputCmdHandler
-    {
-        private readonly SharedContentEyeSystem _system;
-
-        public ResetZoomInputCmdHandler(SharedContentEyeSystem system)
-        {
-            _system = system;
-        }
-
-        public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
-        {
-            if (_system.GetContentFromCmdMessage(session, message) is ContentEyeComponent comp)
-                _system.ResetZoom(comp);
-
-            return false;
-        }
-    }
-
-    private sealed class ScrollInputCmdHandler : InputCmdHandler
-    {
-        private readonly bool _zoomIn;
-        private readonly SharedContentEyeSystem _system;
-
-        public ScrollInputCmdHandler(bool zoomIn, SharedContentEyeSystem system)
-        {
-            _zoomIn = zoomIn;
-            _system = system;
-        }
-
-        public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
-        {
-            if (_system.GetContentFromCmdMessage(session, message) is ContentEyeComponent comp)
-                _system.Zoom(_zoomIn, comp);
-
-            return false;
-        }
     }
 
     /// <summary>
