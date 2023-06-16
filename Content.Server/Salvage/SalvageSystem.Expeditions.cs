@@ -1,13 +1,17 @@
-using System.Linq;
-using System.Threading;
-using Robust.Shared.CPUJob.JobQueues;
-using Robust.Shared.CPUJob.JobQueues.Queues;
+using Content.Server.Cargo.Components;
+using Content.Server.Cargo.Systems;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Examine;
 using Content.Shared.Salvage;
+using Robust.Shared.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
+using System.Linq;
+using System.Threading;
 
 namespace Content.Server.Salvage;
 
@@ -16,6 +20,8 @@ public sealed partial class SalvageSystem
     /*
      * Handles setup / teardown of salvage expeditions.
      */
+
+    [Dependency] private readonly CargoSystem _cargo = default!;
 
     private const int MissionLimit = 5;
 
@@ -99,7 +105,7 @@ public sealed partial class SalvageSystem
         // Finish mission
         if (TryComp<SalvageExpeditionDataComponent>(component.Station, out var data))
         {
-            FinishExpedition(data, component, null);
+            FinishExpedition(data, uid, component, null);
         }
     }
 
@@ -141,7 +147,7 @@ public sealed partial class SalvageSystem
         }
     }
 
-    private void FinishExpedition(SalvageExpeditionDataComponent component, SalvageExpeditionComponent expedition, EntityUid? shuttle)
+    private void FinishExpedition(SalvageExpeditionDataComponent component, EntityUid uid, SalvageExpeditionComponent expedition, EntityUid? shuttle)
     {
         // Finish mission cleanup.
         switch (expedition.MissionParams.MissionType)
@@ -150,7 +156,7 @@ public sealed partial class SalvageSystem
             case SalvageMissionType.Mining:
                 expedition.Completed = true;
 
-                if (shuttle != null && TryComp<SalvageMiningExpeditionComponent>(expedition.Owner, out var mining))
+                if (shuttle != null && TryComp<SalvageMiningExpeditionComponent>(uid, out var mining))
                 {
                     var xformQuery = GetEntityQuery<TransformComponent>();
                     var entities = new List<EntityUid>();
@@ -169,18 +175,19 @@ public sealed partial class SalvageSystem
                 break;
         }
 
-        // Payout already handled elsewhere.
+        // Handle payout after expedition has finished
         if (expedition.Completed)
         {
             _sawmill.Debug($"Completed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + TimeSpan.FromSeconds(_cooldown);
-            Announce(expedition.Owner, Loc.GetString("salvage-expedition-mission-completed"));
+            Announce(uid, Loc.GetString("salvage-expedition-mission-completed"));
+            GiveRewards(expedition);
         }
         else
         {
             _sawmill.Debug($"Failed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + TimeSpan.FromSeconds(_failedCooldown);
-            Announce(expedition.Owner, Loc.GetString("salvage-expedition-mission-failed"));
+            Announce(uid, Loc.GetString("salvage-expedition-mission-failed"));
         }
 
         component.ActiveMission = 0;
@@ -269,5 +276,52 @@ public sealed partial class SalvageSystem
     private void OnStructureExamine(EntityUid uid, SalvageStructureComponent component, ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("salvage-expedition-structure-examine"));
+    }
+
+    private void GiveRewards(SalvageExpeditionComponent comp)
+    {
+        // send it to cargo, no rewards otherwise.
+        if (!TryComp<StationCargoOrderDatabaseComponent>(comp.Station, out var cargoDb))
+        {
+            return;
+        }
+
+        var ids = RewardsForDifficulty(comp.Difficulty);
+        foreach (var id in ids)
+        {
+            // pick a random reward to give
+            var rewards = _prototypeManager.Index<WeightedRandomPrototype>(id);
+            var reward = rewards.Pick(_random);
+
+            var sender = Loc.GetString("cargo-gift-default-sender");
+            var desc = Loc.GetString("salvage-expedition-reward-description");
+            var dest = Loc.GetString("cargo-gift-default-dest");
+            _cargo.AddAndApproveOrder(cargoDb, reward, 0, 1, sender, desc, dest);
+        }
+    }
+
+    /// <summary>
+    /// Get a list of WeightedRandomPrototype IDs with the rewards for a certain difficulty.
+    /// </summary>
+    private string[] RewardsForDifficulty(DifficultyRating rating)
+    {
+        var common = "SalvageRewardCommon";
+        var rare = "SalvageRewardRare";
+        var epic = "SalvageRewardEpic";
+        switch (rating)
+        {
+            case DifficultyRating.Minimal:
+                return new string[] { common, common, common };
+            case DifficultyRating.Minor:
+                return new string[] { common, common, rare };
+            case DifficultyRating.Moderate:
+                return new string[] { common, rare, rare };
+            case DifficultyRating.Hazardous:
+                return new string[] { rare, rare, epic };
+            case DifficultyRating.Extreme:
+                return new string[] { rare, epic, epic };
+            default:
+                throw new NotImplementedException();
+        }
     }
 }
