@@ -202,8 +202,8 @@ public sealed partial class DungeonJob
     private async Task PostGen(ExternalWindowPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid,
         Random random)
     {
-        // Iterate every room with N chance to spawn windows on that wall per cardinal dir.
-        var chance = 0.25;
+        // Iterate every tile with N chance to spawn windows on that wall per cardinal dir.
+        var chance = 0.25 / 3f;
 
         var allExterior = new HashSet<Vector2i>(dungeon.CorridorExteriorTiles);
         allExterior.UnionWith(dungeon.RoomExteriorTiles);
@@ -211,34 +211,76 @@ public sealed partial class DungeonJob
         random.Shuffle(validTiles);
 
         var tiles = new List<(Vector2i, Tile)>();
-        var tileId = new Tile(_tileDefManager[gen.Tile].TileId);
+        var tileDef = _tileDefManager[gen.Tile];
         var count = Math.Floor(validTiles.Count * chance);
         var index = 0;
+        var takenTiles = new HashSet<Vector2i>();
 
+        // There's a bunch of shit here but tl;dr
+        // - don't spawn over cap
+        // - Check if we have 3 tiles in a row that aren't corners and aren't obstructed
         foreach (var tile in validTiles)
         {
             if (index > count)
                 break;
 
             // Room tile / already used.
-            if (dungeon.RoomTiles.Contains(tile) || !allExterior.Contains(tile))
-                continue;
-
-            for (var x = -1; x <= 1; x++)
+            if (!_anchorable.TileFree(_grid, tile, CollisionLayer, CollisionMask) ||
+                takenTiles.Contains(tile))
             {
-                for (var y = -1; y <= 1; y++)
+                continue;
+            }
+
+            // Check we're not on a corner
+            for (var i = 0; i < 2; i++)
+            {
+                var dir = (Direction) (i * 2);
+                var dirVec = dir.ToIntVec();
+                var isValid = true;
+
+                // Check 1 beyond either side to ensure it's not a corner.
+                for (var j = -1; j < 4; j++)
                 {
-                    var neighbor = new Vector2i(tile.X + x, tile.Y + y);
+                    var neighbor = tile + dirVec * j;
 
-                    if (!allExterior.Contains(neighbor))
-                        continue;
+                    if (!allExterior.Contains(neighbor) ||
+                        takenTiles.Contains(neighbor) ||
+                        !_anchorable.TileFree(grid, neighbor, CollisionLayer, CollisionMask))
+                    {
+                        isValid = false;
+                        break;
+                    }
 
-                    if (!_anchorable.TileFree(grid, neighbor, CollisionLayer, CollisionMask))
-                        continue;
+                    // Also check perpendicular that it is free
+                    foreach (var k in new [] {2, 6})
+                    {
+                        var perp = (Direction) ((i * 2 + k) % 8);
+                        var perpVec = perp.ToIntVec();
+                        var perpTile = tile + perpVec;
 
-                    tiles.Add((neighbor, tileId));
+                        if (allExterior.Contains(perpTile) ||
+                            takenTiles.Contains(neighbor) ||
+                            !_anchorable.TileFree(_grid, perpTile, CollisionLayer, CollisionMask))
+                        {
+                            isValid = false;
+                            break;
+                        }
+                    }
+
+                    if (!isValid)
+                        break;
+                }
+
+                if (!isValid)
+                    continue;
+
+                for (var j = 0; j < 3; j++)
+                {
+                    var neighbor = tile + dirVec * j;
+
+                    tiles.Add((neighbor, new Tile(tileDef.TileId, variant: (byte) random.Next(tileDef.Variants))));
                     index++;
-                    allExterior.Remove(neighbor);
+                    takenTiles.Add(neighbor);
                 }
             }
         }
