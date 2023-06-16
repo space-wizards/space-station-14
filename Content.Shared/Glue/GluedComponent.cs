@@ -18,18 +18,11 @@ public sealed class GluedComponent : Component
     [DataField("squeeze")]
     public SoundSpecifier Squeeze = new SoundPathSpecifier("/Audio/Items/squeezebottle.ogg");
 
-    /// <summary>
-    /// Timings for glue duration and removal.
-    /// </summary>
-    [DataField("nextGlueTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan? NextGlueTime;
-
     [DataField("glueTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan GlueTime = TimeSpan.Zero;
 
     [DataField("glueCooldown")]
     public TimeSpan GlueCooldown = TimeSpan.FromSeconds(20);
-
 
     /// <summary>
     /// Bools which control timings and when to apply the glue effect.
