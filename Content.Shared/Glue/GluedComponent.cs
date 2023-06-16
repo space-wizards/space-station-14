@@ -10,7 +10,7 @@ public sealed class GluedComponent : Component
     /// Reverts name to before prefix event (essentially removes prefix).
     /// </summary>
     [DataField("beforeGluedEntityName"), ViewVariables(VVAccess.ReadOnly)]
-    public string BeforeGluedEntityName = String.Empty;
+    public string BeforeGluedEntityName = string.Empty;
 
     /// <summary>
     /// Sound made when glue applied.

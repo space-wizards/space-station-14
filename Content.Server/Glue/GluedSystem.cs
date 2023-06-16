@@ -7,8 +7,8 @@ namespace Content.Server.Glue;
 
 public sealed class GluedSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
@@ -23,7 +23,6 @@ public sealed class GluedSystem : EntitySystem
     {
         base.Update(frameTime);
 
-
         var query = EntityQueryEnumerator<GluedComponent>();
         while (query.MoveNext(out var uid, out var glue))
         {
@@ -35,7 +34,7 @@ public sealed class GluedSystem : EntitySystem
 
             glue.Glued = false;
             glue.GlueBroken = false;
-            MetaData(uid).EntityName = glue.BeforeGluedEntityName;
+            _metaData.SetEntityName(uid, glue.BeforeGluedEntityName);
             RemComp<UnremoveableComponent>(uid);
             RemComp<GluedComponent>(uid);
         }
@@ -47,7 +46,7 @@ public sealed class GluedSystem : EntitySystem
         var meta = MetaData(uid);
         var name = meta.EntityName;
         component.BeforeGluedEntityName = meta.EntityName;
-        meta.EntityName = Loc.GetString("glued-name-prefix", ("target", name));
+        _metaData.SetEntityName(uid, Loc.GetString("glued-name-prefix", ("target", name)));
     }
 
     // Timers start only when the glued item is picked up.
