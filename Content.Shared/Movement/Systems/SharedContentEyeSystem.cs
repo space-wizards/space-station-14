@@ -35,6 +35,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
             .Register<SharedContentEyeSystem>();
 
         Sawmill.Level = LogLevel.Info;
+        UpdatesOutsidePrediction = true;
     }
 
     private Vector2 CheckZoomValueClamping(Vector2 checkedZoom, ContentEyeComponent component)
@@ -108,6 +109,12 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
         component.TargetZoom = Vector2.One;
         Dirty(component);
+    }
+    
+    public void SetMaxZoom(EntityUid uid, Vector2 value, ContentEyeComponent? component = null)
+    {
+        if (Resolve(uid, ref component))
+            component.MaxZoom = value;
     }
 
     private void Zoom(bool zoomIn, ContentEyeComponent component)
