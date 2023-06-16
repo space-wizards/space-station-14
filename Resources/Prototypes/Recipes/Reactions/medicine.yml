@@ -112,7 +112,7 @@
     Oxygen:
       amount: 2
     Plasma:
-      amount: 5
+      amount: 1
       catalyst: true
   products:
     Dexalin: 3
@@ -191,7 +191,7 @@
     Copper:
       amount: 1
     Plasma:
-      amount: 5
+      amount: 1
       catalyst: true
   products:
     Leporazine: 2
@@ -317,7 +317,7 @@
     Histamine:
       amount: 2
     Plasma:
-      amount: 5
+      amount: 1
       catalyst: true
   products:
     Ultravasculine: 2
