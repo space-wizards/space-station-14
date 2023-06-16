@@ -12,12 +12,6 @@ public sealed class GluedComponent : Component
     [DataField("beforeGluedEntityName"), ViewVariables(VVAccess.ReadOnly)]
     public string BeforeGluedEntityName = string.Empty;
 
-    /// <summary>
-    /// Sound made when glue applied.
-    /// </summary>
-    [DataField("squeeze")]
-    public SoundSpecifier Squeeze = new SoundPathSpecifier("/Audio/Items/squeezebottle.ogg");
-
     [DataField("glueTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan GlueTime = TimeSpan.Zero;
 
