@@ -1,10 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: 'Added Disease protection for CBURN, ERT, and Syndie Elite (hardsuits
-      and their helmets)', type: Add}
-  id: 3515
-  time: '2023-04-23T17:22:08.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Reduced water tank price from 2k -> 1k and fuel tank from 2k -> 1.5k.,
@@ -2920,3 +2914,9 @@ Entries:
   - {message: todo..., type: Remove}
   id: 4014
   time: '2023-06-16T05:19:03.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'NanoTrasen has discovered new planets with dangerous atmospheres, or
+      none at all, to send salvagers to.', type: Add}
+  id: 4015
+  time: '2023-06-16T05:25:26.0000000+00:00'
