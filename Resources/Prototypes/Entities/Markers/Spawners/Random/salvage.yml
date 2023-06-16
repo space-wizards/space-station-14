@@ -71,23 +71,22 @@
   id: SalvagePartsT3T4Spawner
   name: Salvage T3/4 Machine Parts Spawner
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Misc/stock_parts.rsi
-          state: super_matter_bin
-    - type: RandomSpawner
-      rarePrototypes:
-        - QuadraticCapacitorStockPart
-        - FemtoManipulatorStockPart
-        - BluespaceMatterBinStockPart
-      rareChance: 0.05
-      prototypes:
-        - SuperCapacitorStockPart
-        - PicoManipulatorStockPart
-        - SuperMatterBinStockPart
-      chance: 0.95
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - sprite: Objects/Misc/stock_parts.rsi
+      state: super_matter_bin
+  - type: RandomSpawner
+    rarePrototypes:
+    - QuadraticCapacitorStockPart
+    - FemtoManipulatorStockPart
+    - BluespaceMatterBinStockPart
+    rareChance: 0.05
+    prototypes:
+    - SuperCapacitorStockPart
+    - PicoManipulatorStockPart
+    - SuperMatterBinStockPart
+    chance: 0.95
+    offset: 0.0
 
 - type: entity
   parent: MarkerBase
@@ -95,17 +94,16 @@
   name: tier 3 machine part
   suffix: Spawner
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Misc/stock_parts.rsi
-          state: super_matter_bin
-    - type: RandomSpawner
-      prototypes:
-        - SuperCapacitorStockPart
-        - PicoManipulatorStockPart
-        - SuperMatterBinStockPart
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - sprite: Objects/Misc/stock_parts.rsi
+      state: super_matter_bin
+  - type: RandomSpawner
+    prototypes:
+    - SuperCapacitorStockPart
+    - PicoManipulatorStockPart
+    - SuperMatterBinStockPart
+    offset: 0.0
 
 - type: entity
   parent: MarkerBase
@@ -113,17 +111,16 @@
   name: tier 4 machine part
   suffix: Spawner
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Misc/stock_parts.rsi
-          state: bluespace_matter_bin
-    - type: RandomSpawner
-      prototypes:
-        - QuadraticCapacitorStockPart
-        - PicoManipulatorStockPart
-        - BluespaceMatterBinStockPart
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - sprite: Objects/Misc/stock_parts.rsi
+      state: bluespace_matter_bin
+  - type: RandomSpawner
+    prototypes:
+    - QuadraticCapacitorStockPart
+    - PicoManipulatorStockPart
+    - BluespaceMatterBinStockPart
+    offset: 0.0
 
 - type: entity
   name: Salvage Mob Spawner
