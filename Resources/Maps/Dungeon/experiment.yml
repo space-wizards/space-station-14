@@ -7696,26 +7696,6 @@ entities:
     - pos: 31.5,9.5
       parent: 1653
       type: Transform
-- proto: MachineAPE
-  entities:
-  - uid: 838
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 22.5,25.5
-      parent: 1653
-      type: Transform
-  - uid: 839
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 22.5,26.5
-      parent: 1653
-      type: Transform
-  - uid: 840
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 22.5,27.5
-      parent: 1653
-      type: Transform
 - proto: MachineFrame
   entities:
   - uid: 617
@@ -9123,55 +9103,6 @@ entities:
     - pos: 1.5,13.5
       parent: 1653
       type: Transform
-- proto: SalvagePartsT2Spawner
-  entities:
-  - uid: 1637
-    components:
-    - pos: 41.5,12.5
-      parent: 1653
-      type: Transform
-  - uid: 1639
-    components:
-    - pos: 35.5,14.5
-      parent: 1653
-      type: Transform
-  - uid: 1640
-    components:
-    - pos: 10.5,7.5
-      parent: 1653
-      type: Transform
-  - uid: 1641
-    components:
-    - pos: 23.5,2.5
-      parent: 1653
-      type: Transform
-  - uid: 1643
-    components:
-    - pos: 37.5,0.5
-      parent: 1653
-      type: Transform
-  - uid: 1644
-    components:
-    - pos: 2.5,31.5
-      parent: 1653
-      type: Transform
-  - uid: 1645
-    components:
-    - pos: 1.5,46.5
-      parent: 1653
-      type: Transform
-- proto: SalvagePartsT3Spawner
-  entities:
-  - uid: 1638
-    components:
-    - pos: 42.5,13.5
-      parent: 1653
-      type: Transform
-  - uid: 1642
-    components:
-    - pos: 31.5,2.5
-      parent: 1653
-      type: Transform
 - proto: Screwdriver
   entities:
   - uid: 1111
@@ -9208,99 +9139,6 @@ entities:
   - uid: 1561
     components:
     - pos: 25.506968,14.578961
-      parent: 1653
-      type: Transform
-- proto: SheetGlass
-  entities:
-  - uid: 1112
-    components:
-    - pos: 0.5572295,16.464039
-      parent: 1653
-      type: Transform
-  - uid: 1535
-    components:
-    - pos: 27.48748,8.492639
-      parent: 1653
-      type: Transform
-- proto: SheetPGlass
-  entities:
-  - uid: 820
-    components:
-    - pos: 14.534195,24.571789
-      parent: 1653
-      type: Transform
-- proto: SheetPlasma
-  entities:
-  - uid: 1472
-    components:
-    - pos: 32.4712,4.556815
-      parent: 1653
-      type: Transform
-- proto: SheetPlasteel
-  entities:
-  - uid: 658
-    components:
-    - pos: 15.499195,34.56076
-      parent: 1653
-      type: Transform
-  - uid: 1536
-    components:
-    - pos: 31.534355,8.523889
-      parent: 1653
-      type: Transform
-- proto: SheetPlastic
-  entities:
-  - uid: 1114
-    components:
-    - pos: 0.5416045,16.026539
-      parent: 1653
-      type: Transform
-  - uid: 1537
-    components:
-    - pos: 7.5163627,6.5836935
-      parent: 1653
-      type: Transform
-- proto: SheetRGlass
-  entities:
-  - uid: 1538
-    components:
-    - pos: 6.5744953,22.554136
-      parent: 1653
-      type: Transform
-- proto: SheetRPGlass
-  entities:
-  - uid: 841
-    components:
-    - pos: 16.508902,24.578423
-      parent: 1653
-      type: Transform
-  - uid: 1474
-    components:
-    - pos: 20.5658,4.54119
-      parent: 1653
-      type: Transform
-- proto: SheetSteel
-  entities:
-  - uid: 670
-    components:
-    - pos: 21.511246,34.536728
-      parent: 1653
-      type: Transform
-  - uid: 1113
-    components:
-    - pos: 0.5103545,15.635914
-      parent: 1653
-      type: Transform
-  - uid: 1539
-    components:
-    - pos: 4.6210227,35.514687
-      parent: 1653
-      type: Transform
-- proto: SheetSteel1
-  entities:
-  - uid: 536
-    components:
-    - pos: 32.52815,38.437122
       parent: 1653
       type: Transform
 - proto: ShuttersWindow
@@ -9532,13 +9370,6 @@ entities:
   - uid: 1487
     components:
     - pos: 30.5,8.5
-      parent: 1653
-      type: Transform
-- proto: SpawnVehicleATV
-  entities:
-  - uid: 844
-    components:
-    - pos: 20.5,25.5
       parent: 1653
       type: Transform
 - proto: SprayBottleSpaceCleaner
@@ -10405,13 +10236,6 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
-- proto: VehicleKeyATV
-  entities:
-  - uid: 846
-    components:
-    - pos: 20.483374,24.635374
-      parent: 1653
-      type: Transform
 - proto: VendingMachineCigs
   entities:
   - uid: 928
@@ -10890,25 +10714,6 @@ entities:
   - uid: 1353
     components:
     - pos: 7.5,3.5
-      parent: 1653
-      type: Transform
-- proto: WeaponLaserGun
-  entities:
-  - uid: 1150
-    components:
-    - pos: 12.468685,14.590134
-      parent: 1653
-      type: Transform
-  - uid: 1151
-    components:
-    - pos: 12.593685,14.371384
-      parent: 1653
-      type: Transform
-- proto: WeaponXrayCannon
-  entities:
-  - uid: 1152
-    components:
-    - pos: 10.48431,14.543259
       parent: 1653
       type: Transform
 - proto: Welder
