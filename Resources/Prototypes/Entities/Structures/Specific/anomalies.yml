@@ -215,9 +215,9 @@
         Cold: 10
   - type: ExplosionAnomaly
     supercriticalExplosion: Cryo
-    explosionTotalIntensity: 1000
-    explosionDropoff: 1
-    explosionMaxTileIntensity: 10
+    explosionTotalIntensity: 300
+    explosionDropoff: 2
+    explosionMaxTileIntensity: 20
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileIcicle
     targetNonSentientChance: 0.1
