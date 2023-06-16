@@ -39,16 +39,16 @@ public abstract class SharedIdCardSystem : EntitySystem
 
     /// <summary>
     ///     Attempt to get an id card component from an entity, either by getting it directly from the entity, or by
-    ///     getting the contained id from a <see cref="PDAComponent"/>.
+    ///     getting the contained id from a <see cref="PdaComponent"/>.
     /// </summary>
     public bool TryGetIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
     {
         if (EntityManager.TryGetComponent(uid, out idCard))
             return true;
 
-        if (EntityManager.TryGetComponent(uid, out PDAComponent? pda) && pda.ContainedID != null)
+        if (EntityManager.TryGetComponent(uid, out PdaComponent? pda) && pda.ContainedId != null)
         {
-            idCard = pda.ContainedID;
+            idCard = pda.ContainedId;
             return true;
         }
 

@@ -128,9 +128,9 @@ namespace Content.Server.Sandbox
                 {
                     UpgradeId(slotEntity.Value);
                 }
-                else if (TryComp<PDAComponent>(slotEntity, out var pda))
+                else if (TryComp<PdaComponent>(slotEntity, out var pda))
                 {
-                    if (pda.ContainedID == null)
+                    if (pda.ContainedId == null)
                     {
                         var newID = CreateFreshId();
                         if (TryComp<ItemSlotsComponent>(pda.Owner, out var itemSlots))
@@ -140,7 +140,7 @@ namespace Content.Server.Sandbox
                     }
                     else
                     {
-                        UpgradeId(pda.ContainedID.Owner);
+                        UpgradeId(pda.ContainedId.Owner);
                     }
                 }
             }

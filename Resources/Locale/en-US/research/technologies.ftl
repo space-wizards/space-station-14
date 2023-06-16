@@ -4,6 +4,7 @@ research-discipline-biochemical = Biochemical
 research-discipline-experimental = Experimental
 research-discipline-civilian-services = Civilian Services
 
+research-technology-salvage-weapons = Salvage weapons
 research-technology-salvage-equipment = Salvage Equipment
 research-technology-advanced-powercells = Advanced Powercells
 research-technology-compact-power = Compact Power
@@ -25,6 +26,7 @@ research-technology-virology = Virology
 research-technology-cryogenics = Cryogenics
 research-technology-chemical-dispensary = Chemical Dispensary
 research-technology-crew-monitoring = Crew Monitoring
+research-technology-bluespace-chemistry = Bluespace Chemistry
 research-technology-cloning = Cloning
 
 research-technology-basic-robotics = Basic Robotics

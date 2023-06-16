@@ -33,7 +33,6 @@
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: generator
-    netsync: false
     snapCardinals: true
   - type: NodeContainer
     examinable: true
@@ -114,7 +113,6 @@
     canCollide: false
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     layers:
     - state: panel
@@ -151,7 +149,6 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     layers:
     - state: panel
@@ -287,7 +284,6 @@
   - type: PowerSupplier
     supplyRate: 10000
   - type: Sprite
-    netsync: false
     sprite: Structures/Power/Generation/rtg.rsi
     layers:
       - state: rtg_damaged

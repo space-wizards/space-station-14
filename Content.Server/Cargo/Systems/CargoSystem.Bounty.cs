@@ -200,14 +200,14 @@ public sealed partial class CargoSystem
     public bool TryAddBounty(EntityUid uid, StationCargoBountyDatabaseComponent? component = null)
     {
         // todo: consider making the cargo bounties weighted.
-        var bounty = _random.Pick(_prototypeManager.EnumeratePrototypes<CargoBountyPrototype>().ToList());
+        var bounty = _random.Pick(_protoMan.EnumeratePrototypes<CargoBountyPrototype>().ToList());
         return TryAddBounty(uid, bounty, component);
     }
 
     [PublicAPI]
     public bool TryAddBounty(EntityUid uid, string bountyId, StationCargoBountyDatabaseComponent? component = null)
     {
-        if (!_prototypeManager.TryIndex<CargoBountyPrototype>(bountyId, out var bounty))
+        if (!_protoMan.TryIndex<CargoBountyPrototype>(bountyId, out var bounty))
         {
             return false;
         }

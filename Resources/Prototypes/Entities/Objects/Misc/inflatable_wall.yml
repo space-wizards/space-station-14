@@ -8,7 +8,6 @@
   - type: Sprite
     sprite: Objects/Misc/inflatable_wall.rsi
     state: inflatable_wall
-    netsync: false
   - type: Physics
     bodyType: Static
   - type: Fixtures

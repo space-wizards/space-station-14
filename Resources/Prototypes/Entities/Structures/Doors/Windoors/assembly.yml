@@ -6,7 +6,6 @@
   components:
   - type: InteractionOutline
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: assembly
@@ -53,7 +52,6 @@
   parent: WindoorAssembly
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: secure_underlay
