@@ -4,7 +4,6 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.CCVar;
 using Content.Shared.Parallax.Biomes;
-using Content.Shared.Procedural.Loot;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions.Modifiers;
 using Content.Shared.Shuttles.BUIStates;
@@ -202,32 +201,6 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                 HorizontalAlignment = HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f)
             });
-
-            lBox.AddChild(new Label()
-            {
-                Text = Loc.GetString("salvage-expedition-window-loot")
-            });
-
-            if (mission.Loot.Count == 0)
-            {
-                lBox.AddChild(new Label()
-                {
-                    Text = Loc.GetString("salvage-expedition-window-none"),
-                    FontColorOverride = StyleNano.ConcerningOrangeFore,
-                    HorizontalAlignment = HAlignment.Left,
-                    Margin = new Thickness(0f, 0f, 0f, 5f),
-                });
-            }
-            else
-            {
-                lBox.AddChild(new Label()
-                {
-                    Text = string.Join("\n", mission.Loot.Select(o => "- " + _prototype.Index<SalvageLootPrototype>(o.Key).Description + (o.Value > 1 ? $" x {o.Value}" : ""))).TrimEnd(),
-                    FontColorOverride = StyleNano.ConcerningOrangeFore,
-                    HorizontalAlignment = HAlignment.Left,
-                    Margin = new Thickness(0f, 0f, 0f, 5f),
-                });
-            }
 
             // Claim
             var claimButton = new Button()

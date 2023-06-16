@@ -103,7 +103,6 @@ public sealed record SalvageMission(
     string Air,
     Color? Color,
     TimeSpan Duration,
-    Dictionary<string, int> Loot,
     List<string> Rewards,
     List<string> Modifiers)
 {
@@ -151,8 +150,6 @@ public sealed record SalvageMission(
     /// Mission duration.
     /// </summary>
     public TimeSpan Duration = Duration;
-
-    public Dictionary<string, int> Loot = Loot;
 
     /// <summary>
     /// The list of items to order on mission completion.

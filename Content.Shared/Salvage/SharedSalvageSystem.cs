@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Dataset;
-using Content.Shared.Procedural.Loot;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage.Expeditions;
@@ -124,9 +123,8 @@ public abstract class SharedSalvageSystem : EntitySystem
             mods.Add(time.Description);
         }
 
-        var loots = GetLoot(config, _proto.EnumeratePrototypes<SalvageLootPrototype>().Where(o => !o.Guaranteed).ToList(), GetDifficulty(difficulty), seed);
         var rewards = GetRewards(difficulty, rand);
-        return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, air.ID, light.Color, duration, loots, rewards, mods);
+        return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, air.ID, light.Color, duration, rewards, mods);
     }
 
     // TODO: probably worth putting the biome whitelist thing in a common thing then having a getmod overload for it
@@ -207,30 +205,6 @@ public abstract class SharedSalvageSystem : EntitySystem
         }
 
         throw new InvalidOperationException();
-    }
-
-    private Dictionary<string, int> GetLoot(SalvageMissionType mission, List<SalvageLootPrototype> loots, int count, int seed)
-    {
-        var results = new Dictionary<string, int>();
-        var adjustedSeed = new System.Random(seed + 2);
-
-        for (var i = 0; i < count; i++)
-        {
-            adjustedSeed.Shuffle(loots);
-
-            foreach (var loot in loots)
-            {
-                if (loot.Blacklist.Contains(mission))
-                    continue;
-
-                var weh = results.GetOrNew(loot.ID);
-                weh++;
-                results[loot.ID] = weh;
-                break;
-            }
-        }
-
-        return results;
     }
 
     private List<string> GetRewards(DifficultyRating difficulty, System.Random rand)
