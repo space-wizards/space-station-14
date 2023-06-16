@@ -26,7 +26,7 @@ public sealed partial class DungeonJob
     private async Task PostGen(BoundaryWallPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
     {
         var tile = new Tile(_tileDefManager[gen.Tile].TileId);
-        var tiles = new List<(Vector2i Index, Tile Tile)>();
+        var tiles = new List<(Vector2i Index, Tile Tile)>(dungeon.RoomExteriorTiles.Count);
 
         // Spawn wall outline
         // - Tiles first
@@ -41,15 +41,15 @@ public sealed partial class DungeonJob
             tiles.Add((neighbor, tile));
         }
 
-        foreach (var neighbor in dungeon.CorridorExteriorTiles)
+        foreach (var index in dungeon.CorridorExteriorTiles)
         {
-            if (dungeon.RoomTiles.Contains(neighbor))
+            if (dungeon.RoomTiles.Contains(index))
                 continue;
 
-            if (!_anchorable.TileFree(grid, neighbor, CollisionLayer, CollisionMask))
+            if (!_anchorable.TileFree(grid, index, CollisionLayer, CollisionMask))
                 continue;
 
-            tiles.Add((neighbor, tile));
+            tiles.Add((index, tile));
         }
 
         grid.SetTiles(tiles);
@@ -79,7 +79,7 @@ public sealed partial class DungeonJob
 
                         var neighbor = new Vector2i(index.Index.X + x, index.Index.Y + y);
 
-                        if (dungeon.RoomTiles.Contains(neighbor))
+                        if (dungeon.RoomTiles.Contains(neighbor) || dungeon.CorridorTiles.Contains(neighbor))
                         {
                             isCorner = false;
                             break;
@@ -97,7 +97,7 @@ public sealed partial class DungeonJob
             if (!isCorner)
                 _entManager.SpawnEntity(gen.Wall, grid.GridTileToLocal(index.Index));
 
-            if (i % 10 == 0)
+            if (i % 20 == 0)
             {
                 await SuspendIfOutOfTime();
                 ValidateResume();
