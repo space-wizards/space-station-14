@@ -5,7 +5,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Blocking;
 
-public abstract partial class SharedBlockingSystem
+public sealed partial class BlockingSystem
 {
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
