@@ -106,13 +106,16 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
             // Atmos
             var air = _prototypeManager.Index<SalvageAirMod>(mission.Air);
+            // copy into a new array since the yml deserialization discards the fixed length
+            var moles = new float[Atmospherics.AdjustedNumberOfGases];
+            air.Gases.CopyTo(moles, 0);
             var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
             atmos.Space = air.Space;
             atmos.Mixture = new GasMixture(2500)
             {
                 // TODO: temperature mods
                 Temperature = 293.15f,
-                Moles = air.Gases,
+                Moles = moles,
             };
 
             if (mission.Color != null)
