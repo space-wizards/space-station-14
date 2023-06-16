@@ -6,5 +6,4 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Vapes/vape-standart.rsi
-    netsync: false
     state: icon

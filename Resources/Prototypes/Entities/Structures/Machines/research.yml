@@ -64,7 +64,6 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/rndpointsource.rsi
-    netsync: false
     layers:
     - state: rndpointsource-off
     - state: rndpointsource

@@ -26,7 +26,6 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/apc.rsi
     layers:
     - state: base
@@ -146,7 +145,6 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/apc.rsi
     state: frame
   - type: Construction
