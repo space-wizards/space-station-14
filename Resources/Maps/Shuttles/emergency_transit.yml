@@ -1742,14 +1742,6 @@ entities:
       type: AmbientSound
     - fixtures: {}
       type: Fixtures
-- proto: CableTerminal
-  entities:
-  - uid: 575
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 15.5,-19.5
-      parent: 2
-      type: Transform
 - proto: ChairOfficeLight
   entities:
   - uid: 161
@@ -2752,6 +2744,11 @@ entities:
       type: AmbientSound
 - proto: GeneratorUranium
   entities:
+  - uid: 138
+    components:
+    - pos: 15.5,-18.5
+      parent: 2
+      type: Transform
   - uid: 300
     components:
     - pos: 15.5,-19.5
@@ -3601,13 +3598,6 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 13.5,-13.5
-      parent: 2
-      type: Transform
-- proto: SMESBasic
-  entities:
-  - uid: 138
-    components:
-    - pos: 15.5,-18.5
       parent: 2
       type: Transform
 - proto: StasisBed
