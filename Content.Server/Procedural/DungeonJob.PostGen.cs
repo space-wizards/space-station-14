@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Arcade;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
@@ -675,6 +676,66 @@ public sealed partial class DungeonJob
 
                     exterior.Add(neighbor);
                 }
+            }
+        }
+    }
+
+    private async Task PostGen(JunctionPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid,
+        Random random)
+    {
+        var tileDef = _tileDefManager[gen.Tile];
+
+        // Work out 1x wide junctions
+        // That is, it has a 1x wide on one side and it opens up on the other
+        foreach (var tile in dungeon.CorridorTiles)
+        {
+            var isValid = false;
+
+            for (var i = 0; i < 4; i++)
+            {
+                var neighborDir = (Direction) (i * 2);
+                var neighborVec = neighborDir.ToIntVec();
+
+                var neighbor = tile + neighborVec;
+
+                if (_anchorable.TileFree(_grid, neighbor, CollisionLayer, CollisionMask))
+                    continue;
+
+                // Okay that side's blocked let's check if it's a junction
+                // Check the opposite side to see if it's blocked
+                var oppositeNeighbor = tile - neighborVec;
+
+                if (_anchorable.TileFree(_grid, oppositeNeighbor, CollisionLayer, CollisionMask))
+                    continue;
+
+                // Check corners to see if either side opens up (if it's just a 1x wide corridor do nothing, needs to be a funnel.
+
+                for (var j = 0; j < 4; j++)
+                {
+                    var cornerDir = (Direction) (j * 2 + 1);
+                    var cornerVec = cornerDir.ToIntVec();
+                    var cornerNeighbor = tile + cornerVec;
+
+                    if (!_anchorable.TileFree(_grid, cornerNeighbor, CollisionLayer, CollisionMask))
+                    {
+                        continue;
+                    }
+
+                    // Valid!
+                    isValid = true;
+                    grid.SetTile(tile, new Tile(tileDef.TileId, variant: (byte) random.Next(tileDef.Variants)));
+                    var coords = grid.GridTileToLocal(tile);
+
+                    foreach (var ent in gen.Entities)
+                    {
+                        _entManager.SpawnEntity(ent, coords);
+                    }
+
+                    break;
+                }
+
+                if (isValid)
+                    break;
             }
         }
     }

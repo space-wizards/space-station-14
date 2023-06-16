@@ -51,3 +51,5 @@
       tile: FloorSteel
       wall: WallSolid
       cornerWall: WallReinforced
+
+    - !type:JunctionPostGen
