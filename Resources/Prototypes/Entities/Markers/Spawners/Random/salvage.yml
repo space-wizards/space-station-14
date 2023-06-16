@@ -69,7 +69,7 @@
 - type: entity
   parent: MarkerBase
   id: SalvagePartsT3T4Spawner
-  name: Salvage T3/4 Machine Parts Spawner
+  name: tier 3/4 machine part
   components:
   - type: Sprite
     layers:

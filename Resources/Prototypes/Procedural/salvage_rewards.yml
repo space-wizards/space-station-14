@@ -53,6 +53,7 @@
     WeaponAdvancedLaser: 1.0
     WeaponLaserCannon: 1.0
     WeaponXrayCannon: 1.0
+    WeaponSniperHristov: 1.0
     # extremely rare weapons
     WeaponLauncherRocket: 0.1
     # rare chemicals
