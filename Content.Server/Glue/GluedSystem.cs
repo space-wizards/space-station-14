@@ -18,29 +18,22 @@ public sealed class GluedSystem : EntitySystem
         SubscribeLocalEvent<GluedComponent, GotEquippedHandEvent>(OnHandPickUp);
     }
 
-    // Timing to remove glued and unremoveable.
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<GluedComponent>();
-        while (query.MoveNext(out var uid, out var glue))
+        var query = EntityQueryEnumerator<GluedComponent, UnremoveableComponent>();
+        while (query.MoveNext(out var uid, out var glue, out _))
         {
-            if (!glue.GlueBroken || glue.Glued)
+            if (_timing.CurTime < glue.Until)
                 continue;
 
-            if (_timing.CurTime < glue.GlueTime)
-                continue;
-
-            glue.Glued = false;
-            glue.GlueBroken = false;
             _metaData.SetEntityName(uid, glue.BeforeGluedEntityName);
             RemComp<UnremoveableComponent>(uid);
             RemComp<GluedComponent>(uid);
         }
     }
 
-    //Adds the prefix on init.
     private void OnGluedInit(EntityUid uid, GluedComponent component, ComponentInit args)
     {
         var meta = MetaData(uid);
@@ -49,11 +42,9 @@ public sealed class GluedSystem : EntitySystem
         _metaData.SetEntityName(uid, Loc.GetString("glued-name-prefix", ("target", name)));
     }
 
-    // Timers start only when the glued item is picked up.
     private void OnHandPickUp(EntityUid uid, GluedComponent component, GotEquippedHandEvent args)
     {
         EnsureComp<UnremoveableComponent>(uid);
-        component.GlueBroken = true;
-        component.GlueTime = _timing.CurTime + component.GlueCooldown;
+        component.Until = _timing.CurTime + component.Duration;
     }
 }

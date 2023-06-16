@@ -1,3 +1,3 @@
-glue-success = {THE($target)} has been covered in glue.
+glue-success = {THE($target)} has been covered in glue!
 glued-name-prefix = Glued {$target}
-glue-failure = {THE($target)} is already covered in glue.
+glue-failure = Can't cover {THE($target)} in glue!

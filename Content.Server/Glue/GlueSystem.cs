@@ -2,8 +2,8 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Item;
 using Content.Shared.Glue;
-using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
 
 namespace Content.Server.Glue;
@@ -12,7 +12,7 @@ public sealed class GlueSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly FoodSystem _food = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
 
     public override void Initialize()
     {
@@ -30,24 +30,39 @@ public sealed class GlueSystem : EntitySystem
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
 
-        if (HasComp<GluedComponent>(target))
+        if (TryComp<DrinkComponent>(uid, out var drink) && !drink.Opened)
         {
-            _popup.PopupEntity(Loc.GetString("glue-failure", ("target", Identity.Entity(target, EntityManager))), args.User, args.User, PopupType.Medium);
             return;
         }
 
-        if (HasComp<ItemComponent>(target))
+        if (TryGlue(uid, component, target))
         {
+            args.Handled = true;
             _audio.PlayPvs(component.Squeeze, uid);
             _popup.PopupEntity(Loc.GetString("glue-success", ("target", Identity.Entity(target, EntityManager))), args.User, args.User, PopupType.Medium);
-            EnsureComp<GluedComponent>(target);
         }
-
-        if (TryComp<FoodComponent>(uid, out var food))
+        else
         {
-            _food.DeleteAndSpawnTrash(food, uid, args.User);
+            _popup.PopupEntity(Loc.GetString("glue-failure", ("target", Identity.Entity(target, EntityManager))), args.User, args.User, PopupType.Medium);
+        }
+    }
+
+    private bool TryGlue(EntityUid uid, GlueComponent component, EntityUid target)
+    {
+        if (HasComp<GluedComponent>(target) || !HasComp<ItemComponent>(target))
+        {
+            return false;
         }
 
-        args.Handled = true;
+        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
+        {
+            var quantity = solution.RemoveReagent(component.Reagent, component.Consumption);
+            if (quantity > 0)
+            {
+                EnsureComp<GluedComponent>(target).Duration = quantity.Double() * component.Duration;
+                return true;
+            }
+        }
+        return false;
     }
 }

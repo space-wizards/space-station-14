@@ -1,4 +1,3 @@
-using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Glue;
@@ -12,18 +11,9 @@ public sealed class GluedComponent : Component
     [DataField("beforeGluedEntityName"), ViewVariables(VVAccess.ReadOnly)]
     public string BeforeGluedEntityName = string.Empty;
 
-    [DataField("glueTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan GlueTime = TimeSpan.Zero;
+    [DataField("until", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan Until = TimeSpan.Zero;
 
-    [DataField("glueCooldown")]
-    public TimeSpan GlueCooldown = TimeSpan.FromSeconds(20);
-
-    /// <summary>
-    /// Bools which control timings and when to apply the glue effect.
-    /// </summary>
-    public bool GlueBroken = false;
-
-    [DataField("glued")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool Glued = false;
+    [DataField("duration", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan Duration = TimeSpan.Zero;
 }
