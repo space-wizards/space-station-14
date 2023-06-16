@@ -1,22 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Puddles now only overflow when they can fully occupy a tile., type: Tweak}
-  - {message: Puddles will now never overflow to a water puddle., type: Tweak}
-  - {message: Bumped mop volume from 60 to 100 and reduced cooldown from 1.5s to 1s.,
-    type: Tweak}
-  id: 3508
-  time: '2023-04-23T08:20:04.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: APCs now show correct charge and state, type: Fix}
-  id: 3509
-  time: '2023-04-23T08:22:09.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Update the salvage expedition song to the final version., type: Tweak}
-  id: 3510
-  time: '2023-04-23T09:13:38.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'We have restricted the access to skin color dyes to our fellow undead
@@ -2919,3 +2901,20 @@ Entries:
       inside of it., type: Fix}
   id: 4007
   time: '2023-06-15T11:26:10.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Changed sprites, type: Tweak}
+  id: 4008
+  time: '2023-06-15T11:55:07.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed being able to insert tanks/jetpacks into locked gas canisters.,
+    type: Fix}
+  id: 4009
+  time: '2023-06-15T12:03:20.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: CentCom's Ministry Of Truth has trained station mice to stop eating
+      uranium., type: Fix}
+  id: 4010
+  time: '2023-06-15T12:35:11.0000000+00:00'
