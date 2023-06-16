@@ -149,13 +149,12 @@ public abstract class SharedContentEyeSystem : EntitySystem
             return null;
 
         if (session?.AttachedEntity == null
-            || TryComp<ContentEyeComponent>(session.AttachedEntity, out var component)
-            || component is not ContentEyeComponent resultComp)
+            || TryComp<ContentEyeComponent>(session.AttachedEntity, out var component))
         {
             return null;
         }
 
-        return resultComp;
+        return component;
     }
 
     private sealed class ResetZoomInputCmdHandler : InputCmdHandler
