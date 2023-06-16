@@ -104,7 +104,7 @@
 # Air mixtures
 - type: salvageAirMod
   id: Space
-  desc: No Atmosphere
+  desc: No atmosphere
   space: true
   cost: 1
   biomes:
@@ -125,16 +125,16 @@
 - type: salvageAirMod
   id: Sleepy
   cost: 1
-  desc: Dangerous Atmosphere
+  desc: Dangerous atmosphere
   gases:
   - 21.824779 # oxygen
-  - 77.10312 # nitrogen
+  - 72.10312 # nitrogen
   - 0
   - 0
   - 0
   - 0
   - 0
-  - 5 # nitrous oxide
+  - 10 # nitrous oxide
   biomes:
   - Caves
   #- LowDesert
@@ -145,11 +145,11 @@
 - type: salvageAirMod
   id: Poisoned
   cost: 2
-  desc: Dangerous Atmosphere
+  desc: Dangerous atmosphere
   gases:
   - 21.824779 # oxygen
   - 77.10312 # nitrogen
-  - 5 # carbon dioxide
+  - 10 # carbon dioxide
   biomes:
   - Caves
   #- LowDesert
@@ -160,7 +160,7 @@
 - type: salvageAirMod
   id: Poison
   cost: 3
-  desc: Toxic Atmosphere
+  desc: Toxic atmosphere
   gases:
   - 21.824779 # oxygen
   - 0
@@ -173,7 +173,7 @@
 - type: salvageAirMod
   id: Plasma
   cost: 4
-  desc: Toxic Atmosphere
+  desc: Toxic atmosphere
   gases:
   - 0
   - 0
@@ -186,7 +186,7 @@
 - type: salvageAirMod
   id: Burnable
   cost: 5
-  desc: Volatile Atmosphere
+  desc: Volatile atmosphere
   gases:
   - 21.824779 # oxygen
   - 0
