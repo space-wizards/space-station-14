@@ -244,7 +244,10 @@
       - HolofanProjector
       - BluespaceBeaker
       - SyringeBluespace
+      - WeaponCrusher
+      - WeaponCrusherDagger
       - WeaponForceGun
+      - WeaponProtoKineticAccelerator
       - WeaponTetherGun
       - WeaponGrapplingGun
       - ClothingBackpackHolding
