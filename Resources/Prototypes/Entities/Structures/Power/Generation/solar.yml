@@ -30,7 +30,6 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: normal
-    netsync: false
   - type: NodeContainer
     examinable: true
     nodes:
@@ -39,6 +38,12 @@
         nodeGroupID: HVPower
   - type: Anchorable
   - type: Pullable
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: output
 
 - type: entity
   id: SolarPanel
@@ -171,7 +176,6 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_tracker
-    netsync: false
   - type: Transform
     anchored: true
     noRot: true

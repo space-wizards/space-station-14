@@ -4,6 +4,7 @@
   abstract: true
   components:
   - type: Sprite
+    noRot: true
     sprite: Objects/Fun/Tabletop/generic_pieces.rsi
 
 - type: entity

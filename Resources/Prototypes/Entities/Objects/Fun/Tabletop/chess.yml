@@ -26,17 +26,11 @@
     sprite: Objects/Fun/Tabletop/chessboard_tabletop.rsi
     state: chessboard_tabletop
 
-## Chess pieces
-- type: entity
-  id: BaseChessPiece
-  parent: BaseTabletopPiece
-  abstract: true
-
 # White pieces
 - type: entity
   id: WhiteKing
   name: white king
-  parent: BaseChessPiece
+  parent: BaseTabletopPiece
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -45,7 +39,7 @@
 - type: entity
   id: WhiteQueen
   name: white queen
-  parent: BaseChessPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -54,7 +48,7 @@
 - type: entity
   id: WhiteRook
   name: white rook
-  parent: BaseChessPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -63,7 +57,7 @@
 - type: entity
   id: WhiteBishop
   name: white bishop
-  parent: BaseChessPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -72,7 +66,7 @@
 - type: entity
   id: WhiteKnight
   name: white knight
-  parent: BaseChessPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -81,7 +75,7 @@
 - type: entity
   id: WhitePawn
   name: white pawn
-  parent: BaseChessPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -91,7 +85,7 @@
 - type: entity
   id: BlackKing
   name: black king
-  parent: BaseChessPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -100,7 +94,7 @@
 - type: entity
   id: BlackQueen
   name: black queen
-  parent: BaseChessPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -109,7 +103,7 @@
 - type: entity
   id: BlackRook
   name: black rook
-  parent: BaseChessPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -118,7 +112,7 @@
 - type: entity
   id: BlackBishop
   name: black bishop
-  parent: BaseChessPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -127,7 +121,7 @@
 - type: entity
   id: BlackKnight
   name: black knight
-  parent: BaseChessPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/chess_pieces.rsi
@@ -136,7 +130,7 @@
 - type: entity
   id: BlackPawn
   name: black pawn
-  parent: BaseChessPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/chess_pieces.rsi

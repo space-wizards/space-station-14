@@ -31,7 +31,6 @@
           basic_icon_base-11: ""
   - type: Sprite
     sprite: Objects/Tools/lighters.rsi
-    netsync: false
     layers:
     - state: icon_map
       map: ["enum.WelderLayers.Base"]

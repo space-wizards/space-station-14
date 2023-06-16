@@ -205,6 +205,7 @@ namespace Content.Server.Database
         IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null);
         IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null);
         IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
+        Task<int> CountAdminLogs(int round);
 
         #endregion
 
@@ -282,11 +283,11 @@ namespace Content.Server.Database
             {
                 case "sqlite":
                     SetupSqlite(out var contextFunc, out var inMemory);
-                    _db = new ServerDbSqlite(contextFunc, inMemory);
+                    _db = new ServerDbSqlite(contextFunc, inMemory, _cfg);
                     break;
                 case "postgres":
                     var pgOptions = CreatePostgresOptions();
-                    _db = new ServerDbPostgres(pgOptions);
+                    _db = new ServerDbPostgres(pgOptions, _cfg);
                     break;
                 default:
                     throw new InvalidDataException($"Unknown database engine {engine}.");
@@ -586,6 +587,12 @@ namespace Content.Server.Database
         {
             DbReadOpsMetric.Inc();
             return _db.GetAdminLogsJson(filter);
+        }
+
+        public Task<int> CountAdminLogs(int round)
+        {
+            DbReadOpsMetric.Inc();
+            return _db.CountAdminLogs(round);
         }
 
         public Task<bool> GetWhitelistStatusAsync(NetUserId player)

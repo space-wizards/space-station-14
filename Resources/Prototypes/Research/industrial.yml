@@ -1,6 +1,21 @@
 ﻿# Tier 1
 
 - type: technology
+  id: SalvageWeapons
+  name: research-technology-salvage-weapons
+  icon:
+    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
+    state: gun
+  discipline: Industrial
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+    - WeaponProtoKineticAccelerator
+    # These are roundstart but not replenishable for salvage
+    - WeaponCrusher
+    - WeaponCrusherDagger
+
+- type: technology
   id: SalvageEquipment
   name: research-technology-salvage-equipment
   icon:
@@ -10,7 +25,6 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - PowerDrill #todo remove this once we have advanced tools
   - MiningDrill
   - OreProcessorMachineCircuitboard
 
@@ -87,6 +101,18 @@
 # Tier 2
 
 - type: technology
+  id: Grappling
+  name: research-technology-grappling
+  icon:
+    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+    state: base
+  discipline: Industrial
+  tier: 2
+  cost: 5000
+  recipeUnlocks:
+    - WeaponGrapplingGun
+
+- type: technology
   id: RapidConstruction
   name: research-technology-rapid-construction
   icon:
@@ -159,6 +185,20 @@
   - PowerCellHigh
   technologyPrerequisites:
   - AdvancedPowercells
+
+- type: technology
+  id: AdvancedToolsTechnology
+  name: research-technology-advanced-tools
+  icon:
+    sprite: Objects/Tools/welder_experimental.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+    - WelderExperimental
+    - PowerDrill
+    - JawsOfLife
 
 # Tier 3
 
