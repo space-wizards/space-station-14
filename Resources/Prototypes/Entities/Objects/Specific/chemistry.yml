@@ -297,6 +297,10 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: syringe
+  - type: Tag
+    tags:
+    - Syringe
+    - Trash
 
 - type: entity
   name: pill
@@ -316,6 +320,7 @@
     transferAmount: null
     eatMessage: food-swallow
     useSound: /Audio/Items/pill.ogg
+  - type: BadFood
   - type: FlavorProfile
     ignoreReagents: []
   - type: SolutionContainerManager

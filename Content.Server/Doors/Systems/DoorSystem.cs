@@ -17,6 +17,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Tools;
 using Robust.Shared.Physics.Components;
@@ -27,6 +28,7 @@ namespace Content.Server.Doors.Systems;
 
 public sealed class DoorSystem : SharedDoorSystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly DoorBoltSystem _bolts = default!;
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
@@ -181,6 +183,7 @@ public sealed class DoorSystem : SharedDoorSystem
         var modEv = new DoorGetPryTimeModifierEvent(user);
         RaiseLocalEvent(target, modEv, false);
 
+        _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is using {ToPrettyString(tool)} to pry {ToPrettyString(target)} while it is {door.State}"); // TODO move to generic tool use logging in a way that includes door state
         _toolSystem.UseTool(tool, user, target, TimeSpan.FromSeconds(modEv.PryTimeModifier * door.PryTime), new[] {door.PryingQuality}, new DoorPryDoAfterEvent(), out id);
         return true; // we might not actually succeeded, but a do-after has started
     }
@@ -191,9 +194,15 @@ public sealed class DoorSystem : SharedDoorSystem
             return;
 
         if (door.State == DoorState.Closed)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} open"); // TODO move to generic tool use logging in a way that includes door state
             StartOpening(uid, door);
+        }
         else if (door.State == DoorState.Open)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} closed"); // TODO move to generic tool use logging in a way that includes door state
             StartClosing(uid, door);
+        }
     }
 #endregion
 
