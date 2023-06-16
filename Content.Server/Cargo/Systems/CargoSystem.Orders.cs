@@ -40,6 +40,7 @@ namespace Content.Server.Cargo.Systems
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         private void InitializeConsole()
         {
@@ -286,7 +287,7 @@ namespace Content.Server.Cargo.Systems
             }
         }
 
-        public bool AddAndApproveOrder(StationCargoOrderDatabaseComponent component, string productId, int qty, string sender, string description, string dest)
+        public bool AddAndApproveOrder(EntityUid? orderer, StationCargoOrderDatabaseComponent component, string productId, int qty, string requester, string approverName, string approverJobTitle, string description)
         {
             if (!_prototypeManager.HasIndex<CargoProductPrototype>(productId))
             {
@@ -297,14 +298,36 @@ namespace Content.Server.Cargo.Systems
 
             // Make an order
             var id = GenerateOrderId(component);
-            var order = new CargoOrderData(id, productId, qty, sender, description);
+            var order = new CargoOrderData(id, productId, qty, requester, description);
 
+            return AddAndApproveOrder(orderer, component, order, approverName, approverJobTitle);
+        }
+
+        public bool AddAndApproveOrder(EntityUid? orderer, EntityUid orderUid, StationCargoOrderDatabaseComponent component, string requester, string approverName, string approverJobTitle, string description)
+        {
+            // Make an order
+            var id = GenerateOrderId(component);
+            var order = new CargoOrderData(id, orderUid, requester, description);
+
+            return AddAndApproveOrder(orderer, component, order, approverName, approverJobTitle);
+        }
+
+        public bool AddAndApproveOrder(EntityUid? orderer, StationCargoOrderDatabaseComponent component, CargoOrderData order, string approverName, string approverJobTitle)
+        {
             // Approve it now
-            order.SetApproverData(new IdCardComponent(){FullName = dest, JobTitle = sender});
+            order.SetApproverData(new IdCardComponent(){FullName = approverName, JobTitle = approverJobTitle});
 
             // Log order addition
-            _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"AddAndApproveOrder {description} added order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}]");
+            if (orderer != null)
+            {
+                _adminLogger.Add(LogType.Action, LogImpact.Low,
+                    $"{ToPrettyString(orderer.Value)} added and approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}]");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.Action, LogImpact.Low,
+                    $"Added and approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}]");
+            }
 
             // Add it to the list
             return TryAddOrder(component, order);
@@ -368,7 +391,9 @@ namespace Content.Server.Cargo.Systems
             if (PopFrontOrder(orderDB, out var order))
             {
                 // Create the item itself
-                var item = Spawn(_protoMan.Index<CargoProductPrototype>(order.ProductId).Product, whereToPutIt);
+                var item = order.OrderEntity ?? Spawn(_protoMan.Index<CargoProductPrototype>(order.ProductId).Product, whereToPutIt);
+                if (order.OrderEntity != null)
+                    _transformSystem.SetCoordinates(item, whereToPutIt);
 
                 // Create a sheet of paper to write the order details on
                 var printed = EntityManager.SpawnEntity(paperPrototypeToPrint, whereToPutIt);

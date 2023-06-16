@@ -186,7 +186,7 @@ public sealed partial class CargoSystem
             if(order.Approved)
             {
                 var numToShip = order.OrderQuantity - order.NumDispatched;
-                if (numToShip > spaceRemaining)
+                if (numToShip > spaceRemaining && order.OrderEntity == null)
                 {
                     // We won't be able to fit the whole order on, so make one
                     // which represents the space we do have left:

@@ -20,6 +20,7 @@ shell-wrong-arguments-number = Wrong number of arguments.
 shell-need-between-arguments = Need {$lower} to {$upper} arguments!
 
 shell-argument-uid = EntityUid
+shell-argument-station = StationUid
 
 ## Guards
 

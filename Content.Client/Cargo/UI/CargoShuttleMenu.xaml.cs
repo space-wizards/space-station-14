@@ -39,29 +39,56 @@ namespace Content.Client.Cargo.UI
 
             foreach (var order in orders)
             {
-                 var product = _protoManager.Index<CargoProductPrototype>(order.ProductId);
-                 var productName = product.Name;
+                CargoOrderRow row;
+                if (order.OrderEntity != null)
+                {
+                    row = new CargoOrderRow
+                    {
+                        Order = order,
+                        ProductName =
+                        {
+                            Text = Loc.GetString(
+                                "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
+                                ("productName", Loc.GetString("cargo-console-menu-order-special-order")),
+                                ("orderAmount", order.OrderQuantity),
+                                ("orderRequester", order.Requester))
+                        },
+                        Description =
+                        {
+                            Text = Loc.GetString("cargo-console-menu-order-reason-description",
+                                ("reason", order.Reason))
+                        }
+                    };
+                }
+                else
+                {
+                    var product = _protoManager.Index<CargoProductPrototype>(order.ProductId);
+                    var productName = product.Name;
 
-                 var row = new CargoOrderRow
-                 {
-                     Order = order,
-                     Icon = { Texture = _spriteSystem.Frame0(product.Icon) },
-                     ProductName =
-                     {
-                         Text = Loc.GetString(
-                             "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
-                             ("productName", productName),
-                             ("orderAmount", order.OrderQuantity - order.NumDispatched),
-                             ("orderRequester", order.Requester))
-                     },
-                     Description = {Text = Loc.GetString("cargo-console-menu-order-reason-description",
-                         ("reason", order.Reason))}
-                 };
+                    row = new CargoOrderRow
+                    {
+                        Order = order,
+                        Icon = { Texture = _spriteSystem.Frame0(product.Icon) },
+                        ProductName =
+                        {
+                            Text = Loc.GetString(
+                                "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
+                                ("productName", productName),
+                                ("orderAmount", order.OrderQuantity - order.NumDispatched),
+                                ("orderRequester", order.Requester))
+                        },
+                        Description =
+                        {
+                            Text = Loc.GetString("cargo-console-menu-order-reason-description",
+                                ("reason", order.Reason))
+                        }
+                    };
+                }
 
-                 row.Approve.Visible = false;
-                 row.Cancel.Visible = false;
+                row.Approve.Visible = false;
+                row.Cancel.Visible = false;
 
-                 Orders.AddChild(row);
+                Orders.AddChild(row);
             }
         }
     }

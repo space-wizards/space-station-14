@@ -12,6 +12,11 @@ namespace Content.Shared.Cargo
         public readonly int OrderId;
 
         /// <summary>
+        /// Entity to use as the order. Overrides <see cref="ProductId"/> and <see cref="OrderQuantity"/>
+        /// </summary>
+        public readonly EntityUid? OrderEntity;
+
+        /// <summary>
         /// Prototype id for the item to create
         /// </summary>
         public readonly string ProductId;
@@ -24,7 +29,7 @@ namespace Content.Shared.Cargo
 
         /// <summary>
         /// How many instances of this order that we've already dispatched
-        /// <summary>
+        /// </summary>
         public int NumDispatched = 0;
 
         public readonly string Requester;
@@ -37,8 +42,19 @@ namespace Content.Shared.Cargo
         public CargoOrderData(int orderId, string productId, int amount, string requester, string reason)
         {
             OrderId = orderId;
+            OrderEntity = null;
             ProductId = productId;
             OrderQuantity = amount;
+            Requester = requester;
+            Reason = reason;
+        }
+
+        public CargoOrderData(int orderId, EntityUid orderEntityUid, string requester, string reason)
+        {
+            OrderId = orderId;
+            OrderEntity = orderEntityUid;
+            ProductId = "";
+            OrderQuantity = 1;
             Requester = requester;
             Reason = reason;
         }

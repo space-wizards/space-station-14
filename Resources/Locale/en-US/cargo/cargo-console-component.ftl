@@ -16,6 +16,7 @@ cargo-console-menu-search-bar-placeholder = Search
 cargo-console-menu-requests-label = Requests
 cargo-console-menu-orders-label = Orders
 cargo-console-menu-order-reason-description = Reasons: {$reason}
+cargo-console-menu-order-special-order = Special Order
 cargo-console-menu-populate-categories-all-text = All
 cargo-console-menu-populate-orders-cargo-order-row-product-name-text = {$productName} (x{$orderAmount}) by {$orderRequester}
 cargo-console-menu-cargo-order-row-approve-button = Approve
