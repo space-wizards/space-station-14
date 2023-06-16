@@ -793,8 +793,23 @@ public sealed partial class DungeonJob
                         continue;
                     }
 
-                    // If we're not at the end tile then check if it's free.
+                    // If we're not at the end tile then check it + perpendicular are free.
                     if (!_anchorable.TileFree(_grid, neighbor, CollisionLayer, CollisionMask))
+                    {
+                        isValid = false;
+                        break;
+                    }
+
+                    var perp1 = tile + neighborVec * j + ((Direction) ((i * 2 + 2) % 8)).ToIntVec();
+                    var perp2 = tile + neighborVec * j + ((Direction) ((i * 2 + 6) % 8)).ToIntVec();
+
+                    if (!_anchorable.TileFree(_grid, perp1, CollisionLayer, CollisionMask))
+                    {
+                        isValid = false;
+                        break;
+                    }
+
+                    if (!_anchorable.TileFree(_grid, perp2, CollisionLayer, CollisionMask))
                     {
                         isValid = false;
                         break;
