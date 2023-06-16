@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Space Gru has returned the stars he stole and is very sorry., type: Fix}
-  id: 3514
-  time: '2023-04-23T10:28:41.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: 'Added Disease protection for CBURN, ERT, and Syndie Elite (hardsuits
@@ -2917,3 +2912,11 @@ Entries:
     type: Tweak}
   id: 4013
   time: '2023-06-16T02:46:39.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'NanoTrasen has finally started rewarding salvagers for actually completing
+      their missions. Rewards can range from materials, to cloning parts, to advanced
+      weaponry.', type: Add}
+  - {message: todo..., type: Remove}
+  id: 4014
+  time: '2023-06-16T05:19:03.0000000+00:00'
