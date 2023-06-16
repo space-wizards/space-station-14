@@ -295,11 +295,8 @@ public sealed partial class BlockingSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess || !_net.IsServer)
             return;
 
-        _proto.TryIndex<DamageModifierSetPrototype>(component.PassiveBlockDamageModifer, out var passiveblockModifier);
-        _proto.TryIndex<DamageModifierSetPrototype>(component.ActiveBlockDamageModifier, out var activeBlockModifier);
-
         var fraction = component.IsBlocking ? component.ActiveBlockFraction : component.PassiveBlockFraction;
-        var modifier = component.IsBlocking ? activeBlockModifier : passiveblockModifier;
+        var modifier = component.IsBlocking ? component.ActiveBlockDamageModifier : component.PassiveBlockDamageModifer;
 
         var msg = new FormattedMessage();
 
