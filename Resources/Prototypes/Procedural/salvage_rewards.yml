@@ -55,6 +55,7 @@
     WeaponXrayCannon: 1.0
     WeaponSniperHristov: 1.0
     # extremely rare weapons
+    GatfruitSeeds: 0.25
     WeaponLauncherRocket: 0.1
     # rare chemicals
     CognizineChemistryBottle: 1.0
