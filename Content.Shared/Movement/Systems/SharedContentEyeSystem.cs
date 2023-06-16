@@ -99,21 +99,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Dirty(eye);
     }
 
-    private ContentEyeComponent? HasContentEyeComp(ICommonSession? session, EntityUid? playerUid = null)
-    {
-        var uid = session != null ? session.AttachedEntity : playerUid;
-
-        if (uid is EntityUid entityUid
-            && TryComp<ContentEyeComponent>(entityUid, out var ghostComp))
-        {
-            return ghostComp;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
     private void ResetZoom(ContentEyeComponent component)
     {
         var zoom = CheckZoomValueClamping(DefaultZoom, component);
@@ -150,11 +135,27 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     public void SetTargetZoomDirectly(Vector2 newZoom, EntityUid playerUid)
     {
-        if (HasContentEyeComp(null, playerUid) is not ContentEyeComponent content)
+        if (TryComp<ContentEyeComponent>(playerUid, out var content)
+            || content is not ContentEyeComponent comp)
             return;
 
         content.TargetZoom = newZoom;
         Dirty(content);
+    }
+
+    private ContentEyeComponent? GetContentFromCmdMessage(ICommonSession? session, InputCmdMessage message)
+    {
+        if (message is not FullInputCmdMessage full || full.State != BoundKeyState.Down)
+            return null;
+
+        if (session?.AttachedEntity == null
+            || TryComp<ContentEyeComponent>(session.AttachedEntity, out var component)
+            || component is not ContentEyeComponent resultComp)
+        {
+            return null;
+        }
+
+        return resultComp;
     }
 
     private sealed class ResetZoomInputCmdHandler : InputCmdHandler
@@ -168,16 +169,8 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
         public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
         {
-            if (message is not FullInputCmdMessage full || full.State != BoundKeyState.Down)
-                return false;
-
-            if (session?.AttachedEntity == null
-                || _system.HasContentEyeComp(session) is not ContentEyeComponent component)
-            {
-                return false;
-            }
-
-            _system.ResetZoom(component);
+            if (_system.GetContentFromCmdMessage(session, message) is ContentEyeComponent comp)
+                _system.ResetZoom(comp);
             return false;
         }
     }
@@ -195,16 +188,8 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
         public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
         {
-            if (message is not FullInputCmdMessage full || full.State != BoundKeyState.Down)
-                return false;
-
-            if (session?.AttachedEntity == null
-                || _system.HasContentEyeComp(session) is not ContentEyeComponent component)
-            {
-                return false;
-            }
-
-            _system.Zoom(_zoomIn, component);
+            if (_system.GetContentFromCmdMessage(session, message) is ContentEyeComponent comp)
+                _system.Zoom(_zoomIn, comp);
             return false;
         }
     }
