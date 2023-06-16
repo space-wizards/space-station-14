@@ -7642,8 +7642,6 @@ entities:
       type: BecomesStation
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 7724.1283525
-      type: GridPathfinding
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - nextUpdate: 0
