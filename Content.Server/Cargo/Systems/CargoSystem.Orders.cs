@@ -303,11 +303,11 @@ namespace Content.Server.Cargo.Systems
             return AddAndApproveOrder(orderer, component, order, approverName, approverJobTitle);
         }
 
-        public bool AddAndApproveOrder(EntityUid? orderer, EntityUid orderUid, StationCargoOrderDatabaseComponent component, string requester, string approverName, string approverJobTitle, string description)
+        public bool AddAndApproveOrder(EntityUid? orderer, EntityUid orderUid, StationCargoOrderDatabaseComponent component, int cost, string requester, string approverName, string approverJobTitle, string description)
         {
             // Make an order
             var id = GenerateOrderId(component);
-            var order = new CargoOrderData(id, orderUid, requester, description);
+            var order = new CargoOrderData(id, orderUid, cost, requester, description);
 
             return AddAndApproveOrder(orderer, component, order, approverName, approverJobTitle);
         }
@@ -315,7 +315,7 @@ namespace Content.Server.Cargo.Systems
         public bool AddAndApproveOrder(EntityUid? orderer, StationCargoOrderDatabaseComponent component, CargoOrderData order, string approverName, string approverJobTitle)
         {
             // Approve it now
-            order.SetApproverData(dest, sender);
+            order.SetApproverData(approverName, approverJobTitle);
 
             // Log order addition
             if (orderer != null)

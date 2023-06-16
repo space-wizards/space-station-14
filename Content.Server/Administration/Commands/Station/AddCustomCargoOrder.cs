@@ -38,7 +38,7 @@ public sealed class AddCustomCargoOrder : LocalizedCommands
             return;
         }
 
-        if (_entityManager.TrySystem<CargoSystem>(out var cargoSystem) && cargoSystem.AddAndApproveOrder(shell.Player?.AttachedEntity, orderUid, stationCargoOrderDatabaseComponent,
+        if (_entityManager.TrySystem<CargoSystem>(out var cargoSystem) && cargoSystem.AddAndApproveOrder(shell.Player?.AttachedEntity, orderUid, stationCargoOrderDatabaseComponent, 0,
                 args[2], args[3], args[4], args[5]))
         {
             shell.WriteLine(Loc.GetString("addcustomcargoorder-success"));
