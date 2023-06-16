@@ -21,6 +21,7 @@ namespace Content.Client.Medical.CrewMonitoring
         private readonly IEntityManager _entManager;
         private readonly IEyeManager _eye;
         private EntityUid? _stationUid;
+        private CrewMonitoringButton? _trackedButton;
 
         public static int IconSize = 16; // XAML has a `VSeparationOverride` of 20 for each row.
 
@@ -52,27 +53,28 @@ namespace Content.Client.Medical.CrewMonitoring
             // TODO scroll container
             // TODO filter by name & occupation
             // TODO make each row a xaml-control. Get rid of some of this c# control creation.
+            if (stSensors.Count == 0)
+            {
+                NoServerLabel.Visible = true;
+                return;
+            }
+            NoServerLabel.Visible = false;
 
             // add a row for each sensor
             foreach (var sensor in stSensors.OrderBy(a => a.Name))
             {
-                // add users name
-                // format: UserName
-                var nameLabel = new PanelContainer()
+                // add button with username
+                var nameButton = new CrewMonitoringButton()
                 {
-                    PanelOverride = new StyleBoxFlat()
-                    {
-                        BackgroundColor = StyleNano.ButtonColorDisabled,
-                    },
-                    Children =
-                    {
-                        new Label()
-                        {
-                            Text = sensor.Name,
-                            Margin = new Thickness(5f, 5f),
-                        }
-                    }
+                    SuitSensorUid = sensor.SuitSensorUid,
+                    Coordinates = sensor.Coordinates,
+                    Text = sensor.Name,
+                    Margin = new Thickness(5f, 5f),
                 };
+                if (sensor.SuitSensorUid == _trackedButton?.SuitSensorUid)
+                    nameButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+                SensorsTable.AddChild(nameButton);
+                _rowsContent.Add(nameButton);
 
                 // add users job
                 // format: JobName
@@ -81,9 +83,6 @@ namespace Content.Client.Medical.CrewMonitoring
                     Text = sensor.Job,
                     HorizontalExpand = true
                 };
-
-                SensorsTable.AddChild(nameLabel);
-                _rowsContent.Add(nameLabel);
                 SensorsTable.AddChild(jobLabel);
                 _rowsContent.Add(jobLabel);
 
@@ -112,33 +111,32 @@ namespace Content.Client.Medical.CrewMonitoring
 
                 if (sensor.Coordinates != null && NavMap.Visible)
                 {
-                    NavMap.TrackedCoordinates.TryAdd(sensor.Coordinates.Value, (true, Color.FromHex("#B02E26")));
-                    nameLabel.MouseFilter = MouseFilterMode.Stop;
+                    NavMap.TrackedCoordinates.TryAdd(sensor.Coordinates.Value,
+                        (true, sensor.SuitSensorUid == _trackedButton?.SuitSensorUid ? StyleNano.PointGreen : StyleNano.PointRed));
 
-                    // Hide all others upon mouseover.
-                    nameLabel.OnMouseEntered += args =>
+                    nameButton.OnButtonUp += args =>
                     {
-                        foreach (var (coord, value) in NavMap.TrackedCoordinates)
-                        {
-                            if (coord == sensor.Coordinates)
-                                continue;
+                        if (_trackedButton != null && _trackedButton?.Coordinates != null)
+                            //Make previous point red
+                            NavMap.TrackedCoordinates[_trackedButton.Coordinates.Value] = (true, StyleNano.PointRed);
 
-                            NavMap.TrackedCoordinates[coord] = (false, value.Color);
-                        }
-                    };
+                        NavMap.TrackedCoordinates[sensor.Coordinates.Value] = (true, StyleNano.PointGreen);
+                        NavMap.CenterToCoordinates(sensor.Coordinates.Value);
 
-                    nameLabel.OnMouseExited += args =>
-                    {
-                        foreach (var (coord, value) in NavMap.TrackedCoordinates)
-                        {
-                            NavMap.TrackedCoordinates[coord] = (true, value.Color);
+                        nameButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+                        if (_trackedButton != null)
+                        {   //Make previous button default
+                            var previosButton = SensorsTable.GetChild(_trackedButton.IndexInTable);
+                            previosButton.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
                         }
+                        _trackedButton = nameButton;
+                        _trackedButton.IndexInTable = nameButton.GetPositionInParent();
                     };
                 }
             }
-            // For debugging.
-            //if (monitorCoords != null)
-            //    NavMap.TrackedCoordinates.Add(monitorCoords.Value, (true, Color.FromHex("#FF00FF")));
+            // Show monitor point
+            if (monitorCoords != null)
+                NavMap.TrackedCoordinates.Add(monitorCoords.Value, (true, StyleNano.PointMagenta));
         }
 
         private BoxContainer GetPositionBox(EntityCoordinates? coordinates, Vector2 monitorCoordsInStationSpace, bool snap, float precision)
@@ -203,10 +201,16 @@ namespace Content.Client.Medical.CrewMonitoring
             {
                 SensorsTable.RemoveChild(child);
             }
-
             _rowsContent.Clear();
             _directionIcons.Clear();
             NavMap.TrackedCoordinates.Clear();
         }
+    }
+
+    public sealed class CrewMonitoringButton : Button
+    {
+        public int IndexInTable;
+        public EntityUid? SuitSensorUid;
+        public EntityCoordinates? Coordinates;
     }
 }

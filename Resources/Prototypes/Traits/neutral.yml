@@ -1,0 +1,6 @@
+- type: trait
+  id: PirateAccent
+  name: trait-pirate-accent-name
+  description: trait-pirate-accent-desc
+  components:
+    - type: PirateAccent

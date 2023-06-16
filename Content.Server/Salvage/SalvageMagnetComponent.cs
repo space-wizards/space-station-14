@@ -6,90 +6,104 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Salvage
 {
     /// <summary>
-    ///     A salvage magnet.
+    /// A salvage magnet.
     /// </summary>
     [NetworkedComponent, RegisterComponent]
     [Access(typeof(SalvageSystem))]
     public sealed class SalvageMagnetComponent : SharedSalvageMagnetComponent
     {
         /// <summary>
-        ///     Offset relative to magnet used as centre of the placement circle.
+        /// Offset relative to magnet used as centre of the placement circle.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("offset")]
         public Vector2 Offset = Vector2.Zero; // TODO: Maybe specify a direction, and find the nearest edge of the magnets grid the salvage can fit at
 
         /// <summary>
-        ///     Minimum distance from the offset position that will be used as a salvage's spawnpoint.
+        /// Minimum distance from the offset position that will be used as a salvage's spawnpoint.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("offsetRadiusMin")]
-        public float OffsetRadiusMin = 0f;
+        public float OffsetRadiusMin = 24f;
 
         /// <summary>
-        ///     Maximum distance from the offset position that will be used as a salvage's spawnpoint.
+        /// Maximum distance from the offset position that will be used as a salvage's spawnpoint.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("offsetRadiusMax")]
-        public float OffsetRadiusMax = 0f;
+        public float OffsetRadiusMax = 48f;
 
         /// <summary>
-        ///     The entity attached to the magnet
+        /// The entity attached to the magnet
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("attachedEntity")]
         public EntityUid? AttachedEntity = null;
 
         /// <summary>
-        ///     Current state of this magnet
+        /// Current state of this magnet
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("magnetState")]
         public MagnetState MagnetState = MagnetState.Inactive;
 
         /// <summary>
-        ///     How long it takes for the magnet to pull in the debris
+        /// How long it takes for the magnet to pull in the debris
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("baseAttachingTime")]
+        public TimeSpan BaseAttachingTime = TimeSpan.FromSeconds(30);
+
+        /// <summary>
+        /// How long it actually takes for the magnet to pull in the debris
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("attachingTime")]
-        public TimeSpan AttachingTime = TimeSpan.FromSeconds(10);
+        public TimeSpan AttachingTime = TimeSpan.FromSeconds(30);
 
         /// <summary>
-        ///     How long the magnet can hold the debris until it starts losing the lock
+        /// How long the magnet can hold the debris until it starts losing the lock
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("holdTime")]
-        public TimeSpan HoldTime = TimeSpan.FromSeconds(10);
+        public TimeSpan HoldTime = TimeSpan.FromSeconds(240);
 
         /// <summary>
-        ///     How long the magnet can hold the debris while losing the lock
+        /// How long the magnet can hold the debris while losing the lock
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("detachingTime")]
-        public TimeSpan DetachingTime = TimeSpan.FromSeconds(10);
+        public TimeSpan DetachingTime = TimeSpan.FromSeconds(30);
 
         /// <summary>
-        ///     How long the magnet has to cool down after use
+        /// How long the magnet has to cool down for after use
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("baseCooldownTime")]
+        public TimeSpan BaseCooldownTime = TimeSpan.FromSeconds(60);
+
+        /// <summary>
+        /// How long the magnet actually has to cool down for after use
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("cooldownTime")]
-        public TimeSpan CooldownTime = TimeSpan.FromSeconds(10);
+        public TimeSpan CooldownTime = TimeSpan.FromSeconds(60);
 
         [DataField("salvageChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
         public string SalvageChannel = "Supply";
 
         /// <summary>
-        ///     Current how much charge the magnet currently has
+        /// Current how much charge the magnet currently has
         /// </summary>
         public int ChargeRemaining = 5;
 
         /// <summary>
-        ///     How much capacity the magnet can hold
+        /// How much capacity the magnet can hold
         /// </summary>
         public int ChargeCapacity = 5;
 
         /// <summary>
-        ///     Used as a guard to prevent spamming the appearance system
+        /// Used as a guard to prevent spamming the appearance system
         /// </summary>
         public int PreviousCharge = 5;
 

@@ -41,6 +41,7 @@
         volume: 3
   - type: Tag
     tags:
+    - DoorBumpOpener
     - FootstepSound
   - type: Butcherable
     butcheringType: Knife

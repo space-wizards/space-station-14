@@ -105,14 +105,15 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             _entManager.Dirty(gravity, metadata);
 
             // Atmos
-            var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
-            atmos.Space = false;
+            var air = _prototypeManager.Index<SalvageAirMod>(mission.Air);
+            // copy into a new array since the yml deserialization discards the fixed length
             var moles = new float[Atmospherics.AdjustedNumberOfGases];
-            moles[(int) Gas.Oxygen] = 21.824779f;
-            moles[(int) Gas.Nitrogen] = 82.10312f;
-
+            air.Gases.CopyTo(moles, 0);
+            var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
+            atmos.Space = air.Space;
             atmos.Mixture = new GasMixture(2500)
             {
+                // TODO: temperature mods
                 Temperature = 293.15f,
                 Moles = moles,
             };
@@ -133,6 +134,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         expedition.Station = Station;
         expedition.EndTime = _timing.CurTime + mission.Duration;
         expedition.MissionParams = _missionParams;
+        expedition.Difficulty = _missionParams.Difficulty;
 
         // Don't want consoles to have the incorrect name until refreshed.
         var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
