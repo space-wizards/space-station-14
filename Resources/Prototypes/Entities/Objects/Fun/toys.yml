@@ -1132,6 +1132,7 @@
     state: icon
   - type: Appearance
   - type: Glue
+    consumption: 5
   - type: Item
     sprite: Objects/Fun/glue.rsi
   - type: SolutionContainerManager

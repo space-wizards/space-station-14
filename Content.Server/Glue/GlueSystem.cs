@@ -49,6 +49,7 @@ public sealed class GlueSystem : EntitySystem
 
     private bool TryGlue(EntityUid uid, GlueComponent component, EntityUid target)
     {
+        // if item is glued then don't apply glue again so it can be removed for reasonable time
         if (HasComp<GluedComponent>(target) || !HasComp<ItemComponent>(target))
         {
             return false;
