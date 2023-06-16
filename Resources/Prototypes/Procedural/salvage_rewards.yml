@@ -54,6 +54,8 @@
     WeaponLaserCannon: 1.0
     WeaponXrayCannon: 1.0
     WeaponSniperHristov: 1.0
+    # rare armor
+    ClothingHeadHelmetSwat: 0.75
     # extremely rare weapons
     GatfruitSeeds: 0.25
     WeaponLauncherRocket: 0.1

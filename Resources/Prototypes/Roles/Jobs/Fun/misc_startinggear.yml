@@ -173,7 +173,6 @@
     shoes: ClothingShoesBootsCombat
     pocket1: CombatKnife
     id: SyndiPDA
-#    id: Syndicate Access, whenever it's made
   innerclothingskirt: ClothingUniformJumpsuitOperative
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -192,7 +191,6 @@
     back: ClothingBackpackFilled
     shoes: ClothingShoesBootsCombatFilled
     pocket1: EnergySword
-    pocket2: EmergencyOxygenTank
     id: SyndiPDA
   innerclothingskirt: ClothingUniformJumpsuitOperative
   satchel: ClothingBackpackSatchelFilled
@@ -211,14 +209,13 @@
     back: ClothingBackpackFilled
     shoes: ClothingShoesBootsCombat
     pocket1: WeaponPistolViper
-    pocket2: EmergencyOxygenTank
     id: SyndiPDA
   innerclothingskirt: ClothingUniformJumpsuitOperative
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
 
 # Nanotrasen Paramilitary Unit Gear - Unarmed
-#I do not feel like doing more of these right now because this needs more stuff (like a different ID.)
+#I do not feel like doing more of these right now because this probably needs more stuff (like a different ID.)
 - type: startingGear
   id: NanotrasenParamilitaryGear
   equipment:
@@ -287,20 +284,3 @@
   innerclothingskirt: ClothingUniformJumpskirtBrigmedic
   satchel: ClothingBackpackSatchelBrigmedicFilled
   duffelbag: ClothingBackpackDuffelBrigmedicFilled
-
-#Spacefarer (Basic Hardsuit Gear)
-- type: startingGear
-  id: SpacefarerEVAGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitColorGrey
-    back: ClothingBackpackERTSecurit
-    shoes: ClothingShoesBootsMag
-    mask: ClothingMaskBreath
-    eyes: ClothingEyesGlassesSecurity
-    gloves: ClothingHandsGlovesColorBlack
-    outerClothing: ClothingOuterHardsuitERTSecurity
-    suitstorage: OxygenTankFilled
-    id: ERTLeaderPDA
-    ears: ClothingHeadsetAltCommand
-    belt: ClothingBeltSecurityWebbing
-    pocket1: Flare
