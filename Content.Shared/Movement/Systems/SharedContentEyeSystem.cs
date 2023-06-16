@@ -110,7 +110,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         component.TargetZoom = Vector2.One;
         Dirty(component);
     }
-    
+
     public void SetMaxZoom(EntityUid uid, Vector2 value, ContentEyeComponent? component = null)
     {
         if (Resolve(uid, ref component))
@@ -156,7 +156,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
             return null;
 
         if (session?.AttachedEntity == null
-            || TryComp<ContentEyeComponent>(session.AttachedEntity, out var component))
+            || !TryComp<ContentEyeComponent>(session.AttachedEntity, out var component))
         {
             return null;
         }
@@ -177,6 +177,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         {
             if (_system.GetContentFromCmdMessage(session, message) is ContentEyeComponent comp)
                 _system.ResetZoom(comp);
+
             return false;
         }
     }
@@ -196,6 +197,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         {
             if (_system.GetContentFromCmdMessage(session, message) is ContentEyeComponent comp)
                 _system.Zoom(_zoomIn, comp);
+
             return false;
         }
     }
