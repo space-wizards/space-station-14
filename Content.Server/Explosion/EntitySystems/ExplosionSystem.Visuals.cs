@@ -50,7 +50,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // restricted to something like the same map, but whatever.
         _pvsSys.AddGlobalOverride(explosionEntity);
 
-        var appearance = AddComp<ServerAppearanceComponent>(explosionEntity);
+        var appearance = AddComp<AppearanceComponent>(explosionEntity);
         _appearance.SetData(explosionEntity, ExplosionAppearanceData.Progress, 1, appearance);
 
         return explosionEntity;
