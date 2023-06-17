@@ -30,6 +30,7 @@ public sealed class MindSystem : EntitySystem
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly ActorSystem _actor = default!;
 
     public override void Initialize()
     {
@@ -134,7 +135,7 @@ public sealed class MindSystem : EntitySystem
                 if (!spawnPosition.IsValid(EntityManager))
                 {
                     // This should be an error, if it didn't cause tests to start erroring when they delete a player.
-                    Logger.WarningS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
+                    Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
                     TransferTo(mind, null);
                     return;
                 }
@@ -144,7 +145,7 @@ public sealed class MindSystem : EntitySystem
                 _ghostSystem.SetCanReturnToBody(ghostComponent, false);
 
                 // Log these to make sure they're not causing the GameTicker round restart bugs...
-                Logger.DebugS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
+                Log.Debug($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
 
                 var val = mind.CharacterName ?? string.Empty;
                 MetaData(ghost).EntityName = val;
@@ -377,7 +378,7 @@ public sealed class MindSystem : EntitySystem
         if (mind.Session != null && !alreadyAttached && mind.VisitingEntity == null)
         {
             mind.Session.AttachToEntity(entity);
-            Logger.Info($"Session {mind.Session.Name} transferred to entity {entity}.");
+            Log.Info($"Session {mind.Session.Name} transferred to entity {entity}.");
         }
     }
 
@@ -397,7 +398,7 @@ public sealed class MindSystem : EntitySystem
             }
             else
             {
-                Logger.Warning($"Mind UserId {newOwner} is does not exist in PlayerManager");
+                Log.Warning($"Mind UserId {newOwner} is does not exist in PlayerManager");
             }
         }
 
