@@ -22,12 +22,16 @@ namespace Content.Client.HealthAnalyzer.UI
         private readonly IEntityManager _entityManager;
         private readonly SpriteSystem _spriteSystem;
 
+        private bool _isSettledWidth = false;
+
         public HealthAnalyzerWindow()
         {
             RobustXamlLoader.Load(this);
 
             _entityManager = IoCManager.Resolve<IEntityManager>();
             _spriteSystem = _entityManager.System<SpriteSystem>();
+
+            RootContainer.OnResized += OnRootResized;
         }
 
         public void Populate(HealthAnalyzerScannedUserMessage msg)
@@ -37,9 +41,10 @@ namespace Content.Client.HealthAnalyzer.UI
             GroupsContainer.Visible = false;
             GroupsContainer.RemoveAllChildren();
 
-            if (msg.TargetEntity == null ||
-                !_entityManager.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
+            if (msg.TargetEntity == null
+                || !_entityManager.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
             {
+                Logger.Debug("no patien data!");
                 NoPatientDataText.Visible = true;
                 SetSize = (250, 100);
                 return;
@@ -68,18 +73,20 @@ namespace Content.Client.HealthAnalyzer.UI
 
             var protos = IoCManager.Resolve<IPrototypeManager>();
 
-            var diagnosticGroupsCounter = 0;
+            var groupsInRow = 3;
+
+            var diagnosticGroupsCounter = groupsInRow;
 
             BoxContainer? diagnosticGroupRow = null;
 
             // Show the total damage and type breakdown for each damage group.
             foreach (var (damageGroupId, damageAmount) in damagePerGroup)
             {
-                if ((diagnosticGroupsCounter + 3) % 3 == 0)
+                if ((diagnosticGroupsCounter) % groupsInRow == 0)
                 {
                     diagnosticGroupRow = new BoxContainer
                     {
-                        Margin = new Thickness(0, 10),
+                        Margin = new Thickness(0, 5),
                         HorizontalExpand = true,
                         Orientation = BoxContainer.LayoutOrientation.Horizontal,
                     };
@@ -98,7 +105,7 @@ namespace Content.Client.HealthAnalyzer.UI
 
                 var groupContainer = new BoxContainer
                 {
-                    Margin = new Thickness(0, 0, 50, 0),
+                    Margin = new Thickness(0, 0, 30, 0),
                     Align = BoxContainer.AlignMode.Begin,
                     Orientation = BoxContainer.LayoutOrientation.Vertical
                 };
@@ -134,7 +141,7 @@ namespace Content.Client.HealthAnalyzer.UI
                 diagnosticGroupsCounter++;
             }
 
-            SetSize = (600, 500);
+            SetHeight = 430;
         }
 
         private Texture GetTexture(string texture)
@@ -172,6 +179,19 @@ namespace Content.Client.HealthAnalyzer.UI
             rootContainer.AddChild(CreateDiagnosticItemLabel(text, damageAmount == 0));
 
             return rootContainer;
+        }
+
+        private void OnRootResized()
+        {
+            if (_isSettledWidth)
+                return;
+
+            _isSettledWidth = true;
+
+            if (RootContainer.Width > 500)
+                SetWidth = 500;
+            else
+                SetWidth = RootContainer.Width + 30;
         }
     }
 }
