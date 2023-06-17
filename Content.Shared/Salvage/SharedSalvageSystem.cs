@@ -106,8 +106,9 @@ public abstract class SharedSalvageSystem : EntitySystem
             mods.Add(air.Description);
         }
 
+        // only show the description if there is an atmosphere since wont matter otherwise
         var temp = GetBiomeMod<SalvageTemperatureMod>(biome.ID, rand, ref rating);
-        if (temp.Description != string.Empty)
+        if (temp.Description != string.Empty && !air.Space)
         {
             mods.Add(temp.Description);
         }
