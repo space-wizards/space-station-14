@@ -228,12 +228,6 @@
         layer:
         - MobLayer
   - type: Appearance
-    rotate: true
-    states:
-      Alive:
-        Base: onestar_boss
-      Dead:
-        Base: onestar_boss_wrecked
   - type: CombatMode
   - type: Tag
     tags:
