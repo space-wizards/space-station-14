@@ -114,3 +114,35 @@
       - id: WeaponRevolverMateba
         prob: 0.0001
 
+- type: entity
+  parent: CrateGenericSteel
+  id: CratePartsT3
+  name: tier 3 parts crate
+  description: Contains 5 random tier 3 parts for upgrading machines.
+  components:
+  - type: StorageFill
+    contents:
+    - id: SalvagePartsT3Spawner
+      amount: 5
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CratePartsT3T4
+  name: tier 3/4 parts crate
+  description: Contains 5 random tier 3 or 4 parts for upgrading machines.
+  components:
+  - type: StorageFill
+    contents:
+    - id: SalvagePartsT3T4Spawner
+      amount: 5
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CratePartsT4
+  name: tier 4 parts crate
+  description: Contains 5 random tier 4 parts for upgrading machines.
+  components:
+  - type: StorageFill
+    contents:
+    - id: SalvagePartsT4Spawner
+      amount: 5

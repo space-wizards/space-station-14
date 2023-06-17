@@ -356,9 +356,6 @@
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
 
 - type: Tag
-  id: HardsuitEVA
-
-- type: Tag
   id: Head
 
 - type: Tag
@@ -709,6 +706,9 @@
 
 - type: Tag
   id: SubdermalImplant
+
+- type: Tag
+  id: SuitEVA
 
 - type: Tag
   id: SurveillanceCameraMonitorCircuitboard
