@@ -398,14 +398,17 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
     {
         foreach (var layer in damageVisComp.TargetLayerMapKeys)
         {
-            AppearanceSystem.TryGetData(uid, layer, out bool layerStatus, component);
+            // I assume this gets set by something like body system if limbs are missing???
+            // TODO is this actually used by anything anywhere?
+            AppearanceSystem.TryGetData(uid, layer, out bool disabled, component);
 
-            if (damageVisComp.DisabledLayers[layer] == layerStatus)
+            if (damageVisComp.DisabledLayers[layer] == disabled)
                 continue;
 
+            damageVisComp.DisabledLayers[layer] = disabled;
             if (damageVisComp.TrackAllDamage)
             {
-                spriteComponent.LayerSetVisible($"{layer}trackDamage", layerStatus);
+                spriteComponent.LayerSetVisible($"{layer}trackDamage", !disabled);
                 continue;
             }
 
@@ -414,7 +417,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
 
             foreach (var damageGroup in damageVisComp.DamageOverlayGroups.Keys)
             {
-                spriteComponent.LayerSetVisible($"{layer}{damageGroup}", layerStatus);
+                spriteComponent.LayerSetVisible($"{layer}{damageGroup}", !disabled);
             }
         }
     }
