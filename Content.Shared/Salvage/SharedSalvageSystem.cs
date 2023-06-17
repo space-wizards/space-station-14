@@ -65,9 +65,9 @@ public abstract class SharedSalvageSystem : EntitySystem
             case DifficultyRating.Moderate:
                 return 4;
             case DifficultyRating.Hazardous:
-                return 6;
-            case DifficultyRating.Extreme:
                 return 8;
+            case DifficultyRating.Extreme:
+                return 16;
             default:
                 throw new ArgumentOutOfRangeException(nameof(rating), rating, null);
         }
@@ -238,9 +238,9 @@ public abstract class SharedSalvageSystem : EntitySystem
             case DifficultyRating.Moderate:
                 return new string[] { common, rare, rare };
             case DifficultyRating.Hazardous:
-                return new string[] { rare, rare, epic };
+                return new string[] { rare, rare, rare, epic };
             case DifficultyRating.Extreme:
-                return new string[] { rare, epic, epic };
+                return new string[] { rare, rare, epic, epic, epic };
             default:
                 throw new NotImplementedException();
         }
