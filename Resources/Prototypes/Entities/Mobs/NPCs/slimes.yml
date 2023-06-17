@@ -118,7 +118,6 @@
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
 
-
 - type: entity
   name: blue slime
   id: MobAdultSlimesBlue
