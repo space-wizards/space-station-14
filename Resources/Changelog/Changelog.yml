@@ -1,10 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: 'Added secure chemicals crates, and jugs for greater chemical storage.',
-    type: Add}
-  id: 3521
-  time: '2023-04-23T23:53:18.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added the CHIMP handcannon, a hand-held version of science''s APE.
@@ -2919,3 +2913,9 @@ Entries:
       on planets.', type: Fix}
   id: 4020
   time: '2023-06-17T02:30:56.0000000+00:00'
+- author: Sigil
+  changes:
+  - {message: Fixed the armour values on all winter coats that have caustic armour
+      as well as the CMO and virology bio suits., type: Fix}
+  id: 4021
+  time: '2023-06-17T09:55:16.0000000+00:00'
