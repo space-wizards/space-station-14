@@ -1,17 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: 'Added the CHIMP handcannon, a hand-held version of science''s APE.
-      Each bullet packs twice the punch of a normal APE.', type: Add}
-  id: 3522
-  time: '2023-04-23T23:58:45.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Autolathe icons for screwdrivers and wirecutters are now correct., type: Fix}
-  id: 3523
-  time: '2023-04-24T00:01:54.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Printed health analyzers and crew monitors no longer come pre-loaded
       with batteries., type: Fix}
   id: 3524
@@ -2919,3 +2908,16 @@ Entries:
       as well as the CMO and virology bio suits., type: Fix}
   id: 4021
   time: '2023-06-17T09:55:16.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: Tweaked arachnids to look a bit more fluffier., type: Tweak}
+  id: 4022
+  time: '2023-06-17T19:47:32.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Added Dermaline Pills and Cryoxadone Beaker entities., type: Add}
+  - {message: 'Unit amounts to medicine in kits is now displayed. (IE: bicardine (10u)',
+    type: Tweak}
+  - {message: Burn kits now contain Dermaline pills instead., type: Tweak}
+  id: 4023
+  time: '2023-06-17T19:47:56.0000000+00:00'
