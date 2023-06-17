@@ -2191,9 +2191,9 @@
     accent: mouse
   - type: Tag
     tags:
-    - Hamster
-    - CannotSuicide
     - Trash
+    - CannotSuicide
+    - Hamster
   - type: Respirator
     damage:
       types:

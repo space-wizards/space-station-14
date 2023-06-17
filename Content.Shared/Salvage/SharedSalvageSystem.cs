@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Dataset;
-using Content.Shared.Procedural.Loot;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage.Expeditions;
@@ -124,8 +123,8 @@ public abstract class SharedSalvageSystem : EntitySystem
             mods.Add(time.Description);
         }
 
-        var loots = GetLoot(config, _proto.EnumeratePrototypes<SalvageLootPrototype>().Where(o => !o.Guaranteed).ToList(), GetDifficulty(difficulty), seed);
-        return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, air.ID, light.Color, duration, loots, mods);
+        var rewards = GetRewards(difficulty, rand);
+        return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, air.ID, light.Color, duration, rewards, mods);
     }
 
     // TODO: probably worth putting the biome whitelist thing in a common thing then having a getmod overload for it
@@ -208,28 +207,43 @@ public abstract class SharedSalvageSystem : EntitySystem
         throw new InvalidOperationException();
     }
 
-    private Dictionary<string, int> GetLoot(SalvageMissionType mission, List<SalvageLootPrototype> loots, int count, int seed)
+    private List<string> GetRewards(DifficultyRating difficulty, System.Random rand)
     {
-        var results = new Dictionary<string, int>();
-        var adjustedSeed = new System.Random(seed + 2);
-
-        for (var i = 0; i < count; i++)
+        var rewards = new List<string>(3);
+        var ids = RewardsForDifficulty(difficulty);
+        foreach (var id in ids)
         {
-            adjustedSeed.Shuffle(loots);
-
-            foreach (var loot in loots)
-            {
-                if (loot.Blacklist.Contains(mission))
-                    continue;
-
-                var weh = results.GetOrNew(loot.ID);
-                weh++;
-                results[loot.ID] = weh;
-                break;
-            }
+            // pick a random reward to give
+            var weights = _proto.Index<WeightedRandomPrototype>(id);
+            rewards.Add(weights.Pick(rand));
         }
 
-        return results;
+        return rewards;
+    }
+
+    /// <summary>
+    /// Get a list of WeightedRandomPrototype IDs with the rewards for a certain difficulty.
+    /// </summary>
+    private string[] RewardsForDifficulty(DifficultyRating rating)
+    {
+        var common = "SalvageRewardCommon";
+        var rare = "SalvageRewardRare";
+        var epic = "SalvageRewardEpic";
+        switch (rating)
+        {
+            case DifficultyRating.Minimal:
+                return new string[] { common, common, common };
+            case DifficultyRating.Minor:
+                return new string[] { common, common, rare };
+            case DifficultyRating.Moderate:
+                return new string[] { common, rare, rare };
+            case DifficultyRating.Hazardous:
+                return new string[] { rare, rare, epic };
+            case DifficultyRating.Extreme:
+                return new string[] { rare, epic, epic };
+            default:
+                throw new NotImplementedException();
+        }
     }
 }
 
