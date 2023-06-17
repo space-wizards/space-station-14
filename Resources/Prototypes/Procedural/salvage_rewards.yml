@@ -35,6 +35,7 @@
     CloningPodMachineCircuitboard: 0.5
     MedicalScannerMachineCircuitboard: 0.5
     CloningConsoleComputerCircuitboard: 0.5
+    BiomassReclaimerMachineCircuitboard: 0.5
     # basic weapons
     CrateArmorySMG: 0.25
     CrateArmoryLaser: 0.25
