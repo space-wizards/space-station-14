@@ -137,7 +137,7 @@ public sealed class StationRecordsSystem : EntitySystem
         if (idUid != null)
         {
             var keyStorageEntity = idUid;
-            if (TryComp(idUid, out PDAComponent? pdaComponent) && pdaComponent.ContainedID != null)
+            if (TryComp(idUid, out PdaComponent? pdaComponent) && pdaComponent.ContainedId != null)
             {
                 keyStorageEntity = pdaComponent.IdSlot.Item;
             }

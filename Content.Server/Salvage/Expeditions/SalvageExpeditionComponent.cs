@@ -1,6 +1,10 @@
+using Content.Shared.Random;
 using Content.Shared.Salvage;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Salvage.Expeditions;
 
@@ -27,7 +31,7 @@ public sealed class SalvageExpeditionComponent : Component
     /// <summary>
     /// Station whose mission this is.
     /// </summary>
-    [ViewVariables, DataField("station")]
+    [DataField("station")]
     public EntityUid Station;
 
     [ViewVariables] public bool Completed = false;
@@ -48,6 +52,18 @@ public sealed class SalvageExpeditionComponent : Component
     {
         Params = AudioParams.Default.WithVolume(-15),
     };
+
+    /// <summary>
+    /// The difficulty this mission had or, in the future, was selected.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("difficulty")]
+    public DifficultyRating Difficulty;
+
+    /// <summary>
+    /// List of items to order on mission completion
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("rewards", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public List<string> Rewards = default!;
 }
 
 public enum ExpeditionStage : byte

@@ -61,7 +61,7 @@ namespace Content.Server.Chat
         /// <summary>
         /// If not handled, does the default suicide, which is biting your own tongue
         /// </summary>
-        private static void DefaultSuicideHandler(EntityUid victim, SuicideEvent suicideEvent)
+        private void DefaultSuicideHandler(EntityUid victim, SuicideEvent suicideEvent)
         {
             if (suicideEvent.Handled)
                 return;
