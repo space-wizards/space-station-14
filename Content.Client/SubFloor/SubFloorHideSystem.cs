@@ -66,9 +66,10 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 
     private void UpdateAll()
     {
-        foreach (var (_, appearance) in EntityManager.EntityQuery<SubFloorHideComponent, AppearanceComponent>(true))
+        var query = AllEntityQuery<SubFloorHideComponent, AppearanceComponent>();
+        while (query.MoveNext(out var uid, out _, out var appearance))
         {
-            _appearance.MarkDirty(appearance, true);
+            _appearance.QueueUpdate(uid, appearance);
         }
     }
 }
