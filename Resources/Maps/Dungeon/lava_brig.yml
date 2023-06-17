@@ -3144,11 +3144,6 @@ entities:
     - pos: 19.42657,0.6288943
       parent: 588
       type: Transform
-  - uid: 398
-    components:
-    - pos: 28.387192,8.540832
-      parent: 588
-      type: Transform
 - proto: BookRandom
   entities:
   - uid: 1835
@@ -9365,6 +9360,13 @@ entities:
     - pos: 30.5,42.5
       parent: 588
       type: Transform
+- proto: IngotGold
+  entities:
+  - uid: 952
+    components:
+    - pos: 11.069347,39.504154
+      parent: 588
+      type: Transform
 - proto: KitchenMicrowave
   entities:
   - uid: 524
@@ -9834,7 +9836,7 @@ entities:
     - pos: 22.5,40.5
       parent: 588
       type: Transform
-- proto: PowerCellHigh
+- proto: PowerCellHyper
   entities:
   - uid: 469
     components:
@@ -11312,6 +11314,39 @@ entities:
     - pos: 28.5,42.5
       parent: 588
       type: Transform
+- proto: SheetGlass
+  entities:
+  - uid: 649
+    components:
+    - pos: 14.3137455,32.471424
+      parent: 588
+      type: Transform
+- proto: SheetPlasteel
+  entities:
+  - uid: 866
+    components:
+    - pos: 2.412651,34.456436
+      parent: 588
+      type: Transform
+- proto: SheetPlastic
+  entities:
+  - uid: 398
+    components:
+    - pos: 20.04785,45.07574
+      parent: 588
+      type: Transform
+- proto: SheetSteel
+  entities:
+  - uid: 656
+    components:
+    - pos: 26.36062,32.5183
+      parent: 588
+      type: Transform
+  - uid: 699
+    components:
+    - pos: 29.259031,40.432583
+      parent: 588
+      type: Transform
 - proto: ShowcaseRobot
   entities:
   - uid: 1621
@@ -11505,6 +11540,13 @@ entities:
   - uid: 1834
     components:
     - pos: 24.466219,48.441994
+      parent: 588
+      type: Transform
+- proto: SpeedLoaderMagnumHighVelocity
+  entities:
+  - uid: 950
+    components:
+    - pos: 28.703945,8.421182
       parent: 588
       type: Transform
 - proto: StasisBed
