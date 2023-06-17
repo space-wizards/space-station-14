@@ -129,6 +129,7 @@
                                                 SetSize="80 80"
                                                 VerticalAlignment="Center">
                                                 <TextureButton Name="EmergencyShuttleCallButton" Access="Public"
+                                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                                     StyleClasses="TemptingRedButton" />
                                             </ui:ForegroundImageContainer>
                                         </BoxContainer>
@@ -138,6 +139,7 @@
 
                         <!-- This contains the shuttle state indicators -->
                         <ui:ForegroundImageContainer
+                            Name="EmbeddedShuttleState"
                             Margin="12"
                             StyleClasses="AngleRectEmbedded"
                             VerticalAlignment="Center">
@@ -147,6 +149,7 @@
                                         <!-- "Shuttle is incoming" light in here -->
                                         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Stretch">
                                             <Label Text="{Loc 'comms-shuttle-incoming-label'}" VerticalAlignment="Center" />
+                                            <ui:VSpacer Spacing="12"/>
                                             <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right" VerticalAlignment="Center">
                                                 <ui:ForegroundImageContainer
                                                     Margin="0 0 4 0"
@@ -166,6 +169,7 @@
                                         <!-- Shuttle "arriving in" label here -->
                                         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                                             <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" VerticalAlignment="Center"/>
+                                            <ui:VSpacer Spacing="12"/>
                                             <ui:ForegroundImageContainer
                                                 StyleClasses="PanelMountBorder"
                                                 HorizontalExpand="True"
@@ -196,7 +200,7 @@
                                         <ui:ForegroundImageContainer
                                             StyleClasses="PanelMountBorder"
                                             HorizontalAlignment="Center"
-                                            SetSize="80 80"
+                                            MinSize="80 80"
                                             VerticalAlignment="Center">
                                             <TextureButton Name="EmergencyShuttleRecallButton" Access="Public"
                                                 StyleClasses="TemptingRedButton" />
