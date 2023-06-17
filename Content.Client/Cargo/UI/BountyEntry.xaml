@@ -15,7 +15,7 @@
                 <Control MinWidth="10"/>
                 <BoxContainer Orientation="Vertical" MinWidth="120">
                     <Button Name="PrintButton" Text="{Loc 'bounty-console-label-button-text'}" HorizontalExpand="False" HorizontalAlignment="Right"/>
-                    <Label Name="IdLabel" HorizontalAlignment="Right"/>
+                    <Label Name="IdLabel" HorizontalAlignment="Right" Margin="0 0 5 0"/>
                 </BoxContainer>
             </BoxContainer>
             <customControls:HSeparator Margin="5 10 5 10"/>

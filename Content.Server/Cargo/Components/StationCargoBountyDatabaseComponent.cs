@@ -36,11 +36,12 @@ public sealed class StationCargoBountyDatabaseComponent : Component
         TimeSpan.FromMinutes(5),
         TimeSpan.FromMinutes(7.5f),
         TimeSpan.FromMinutes(7.5f),
+        TimeSpan.FromMinutes(7.5f),
         TimeSpan.FromMinutes(10),
         TimeSpan.FromMinutes(10),
         TimeSpan.FromMinutes(10),
-        TimeSpan.FromMinutes(12.5f),
-        TimeSpan.FromMinutes(12.5f),
+        TimeSpan.FromMinutes(10),
+        TimeSpan.FromMinutes(10),
         TimeSpan.FromMinutes(15)
     };
 }

@@ -4,9 +4,9 @@ bounty-console-time-label = Time: [color=orange]{$time}[/color]
 bounty-console-reward-label = Reward: [color=limegreen]${$reward}[/color]
 bounty-console-manifest-label = Manifest: [color=gray]{$item}[/color]
 bounty-console-manifest-entry =
-    x{$amount} { $amount ->
+    { $amount ->
         [1] {$item}
-        *[other] {MAKEPLURAL($item)}
+        *[other] x{$amount} {MAKEPLURAL($item)}
     }
 bounty-console-description-label = [color=gray]{$description}[/color]
 bounty-console-id-label = ID#{$id}

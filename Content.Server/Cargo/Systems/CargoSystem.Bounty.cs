@@ -120,6 +120,7 @@ public sealed partial class CargoSystem
 
         TryRemoveBounty(args.Station, bounty.Value);
         FillBountyDatabase(args.Station);
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"Bounty \"{bounty.Value.Bounty.ID}\" (id:{bounty.Value.Id}) was fulfilled");
     }
 
     private void OnMapInit(EntityUid uid, StationCargoBountyDatabaseComponent component, MapInitEvent args)
@@ -223,10 +224,10 @@ public sealed partial class CargoSystem
         if (component.Bounties.Count >= component.MaxBounties)
             return false;
 
-        var endTime = _timing.CurTime + _random.Pick(component.BountyDurations);
+        var endTime = _timing.CurTime + _random.Pick(component.BountyDurations) + TimeSpan.FromSeconds(_random.Next(-10, 10));
         component.Bounties.Add(new CargoBountyData(component.TotalBounties, bounty, endTime));
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {ToPrettyString(uid)}");
         component.TotalBounties++;
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty {bounty.ID} to station {ToPrettyString(uid)}");
         return true;
     }
 
