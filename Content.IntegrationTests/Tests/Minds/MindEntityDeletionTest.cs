@@ -1,3 +1,4 @@
+#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Mind;
@@ -29,7 +30,7 @@ namespace Content.IntegrationTests.Tests.Minds
 
             EntityUid playerEnt = default;
             EntityUid visitEnt = default;
-            Mind mind = null;
+            Mind mind = default!;
             var map = await PoolManager.CreateTestMap(pairTracker);
 
             await server.WaitAssertion(() =>
@@ -53,11 +54,6 @@ namespace Content.IntegrationTests.Tests.Minds
             await server.WaitAssertion(() =>
             {
                 entMan.DeleteEntity(visitEnt);
-                if (mind == null)
-                {
-                    Assert.Fail("Mind was null");
-                    return;
-                }
 
                 if (mind.VisitingEntity != null)
                 {
@@ -96,7 +92,7 @@ namespace Content.IntegrationTests.Tests.Minds
             var map = await PoolManager.CreateTestMap(pairTracker);
 
             EntityUid playerEnt = default;
-            Mind mind = null;
+            Mind mind = default!;
             await server.WaitAssertion(() =>
             {
                 var player = playerMan.ServerSessions.Single();
@@ -149,7 +145,7 @@ namespace Content.IntegrationTests.Tests.Minds
             var map = await PoolManager.CreateTestMap(pairTracker);
 
             EntityUid playerEnt = default;
-            Mind mind = null;
+            Mind mind = default!;
             await server.WaitAssertion(() =>
             {
                 playerEnt = entMan.SpawnEntity(null, coordinates);

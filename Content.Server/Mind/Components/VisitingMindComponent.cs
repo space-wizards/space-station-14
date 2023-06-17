@@ -4,7 +4,7 @@ namespace Content.Server.Mind.Components
     public sealed class VisitingMindComponent : Component
     {
         [ViewVariables]
-        public Mind Mind { get; set; } = default!;
+        public Mind? Mind;
     }
 
     public sealed class MindUnvisitedMessage : EntityEventArgs

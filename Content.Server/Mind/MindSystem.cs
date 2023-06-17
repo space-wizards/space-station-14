@@ -38,15 +38,20 @@ public sealed class MindSystem : EntitySystem
         SubscribeLocalEvent<MindContainerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<MindContainerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MindContainerComponent, SuicideEvent>(OnSuicide);
-        SubscribeLocalEvent<VisitingMindComponent, ComponentRemove>(OnVisitingMindRemoved);
+        SubscribeLocalEvent<VisitingMindComponent, EntityTerminatingEvent>(OnTerminating);
+        SubscribeLocalEvent<VisitingMindComponent, PlayerDetachedEvent>(OnDetached);
     }
 
-    private void OnVisitingMindRemoved(EntityUid uid, VisitingMindComponent component, ComponentRemove args)
+    private void OnDetached(EntityUid uid, VisitingMindComponent component, PlayerDetachedEvent args)
     {
-        if (Deleted(uid) || Terminating(uid))
-            return;
+        component.Mind = null;
+        RemCompDeferred(uid, component);
+    }
 
-        UnVisit(component.Mind);
+    private void OnTerminating(EntityUid uid, VisitingMindComponent component, ref EntityTerminatingEvent args)
+    {
+        if (component.Mind?.Session?.AttachedEntity == uid)
+            UnVisit(component.Mind);
     }
 
     public void SetGhostOnShutdown(EntityUid uid, bool value, MindContainerComponent? mind = null)
@@ -227,13 +232,25 @@ public sealed class MindSystem : EntitySystem
 
     public void Visit(Mind mind, EntityUid entity)
     {
+        if (mind.VisitingEntity != null)
+        {
+            Log.Error($"Attempted to visit an entity ({ToPrettyString(entity)}) while already visiting another ({ToPrettyString(mind.VisitingEntity.Value)}).");
+            return;
+        }
+
+        if (HasComp<VisitingMindComponent>(entity))
+        {
+            Log.Error($"Attempted to visit an entity that already has a visiting mind. Entity: {ToPrettyString(entity)}");
+            return;
+        }
+
         mind.Session?.AttachToEntity(entity);
         mind.VisitingEntity = entity;
 
-        var comp = AddComp<VisitingMindComponent>(entity);
+        // EnsureComp instead of AddComp to deal with deferred deletions.
+        var comp = EnsureComp<VisitingMindComponent>(entity);
         comp.Mind = mind;
-
-        Logger.Info($"Session {mind.Session?.Name} visiting entity {entity}.");
+        Log.Info($"Session {mind.Session?.Name} visiting entity {entity}.");
     }
 
     /// <summary>
@@ -241,18 +258,19 @@ public sealed class MindSystem : EntitySystem
     /// </summary>
     public void UnVisit(Mind? mind)
     {
-        if (mind == null)
+        if (mind == null || mind.VisitingEntity == null)
             return;
 
-        var currentEntity = mind.Session?.AttachedEntity;
-        if (currentEntity != mind.VisitingEntity)
-            return; // TODO Fix this. UnVisit gets run twice when returning to body.
-
-        mind.Session?.AttachToEntity(mind.OwnedEntity);
+        DebugTools.Assert(mind.VisitingEntity != mind.OwnedEntity);
         RemoveVisitingEntity(mind);
 
+        if (mind.Session == null || mind.Session.AttachedEntity == mind.VisitingEntity)
+            return;
+
         var owned = mind.OwnedEntity;
-        if (mind.Session != null && owned != null && owned != currentEntity)
+        mind.Session.AttachToEntity(owned);
+
+        if (owned.HasValue)
         {
             _adminLogger.Add(LogType.Mind, LogImpact.Low,
                 $"{mind.Session.Name} returned to {ToPrettyString(owned.Value)}");
@@ -272,8 +290,12 @@ public sealed class MindSystem : EntitySystem
         // Null this before removing the component to avoid any infinite loops.
         mind.VisitingEntity = null;
 
-        DebugTools.AssertNotNull(oldVisitingEnt);
-        RemComp<VisitingMindComponent>(oldVisitingEnt);
+        if (TryComp(oldVisitingEnt, out VisitingMindComponent? visitComp))
+        {
+            visitComp.Mind = null;
+            RemCompDeferred(oldVisitingEnt, visitComp);
+        }
+
         RaiseLocalEvent(oldVisitingEnt, new MindUnvisitedMessage(), true);
     }
 
