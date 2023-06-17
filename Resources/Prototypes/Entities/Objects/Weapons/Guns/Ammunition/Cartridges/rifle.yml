@@ -51,3 +51,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletRifleRubber
+
+- type: entity
+  id: CartridgeRifleIncendiary
+  name: cartridge (.20 rifle incendiary)
+  parent: BaseCartridgeRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletRifleIncendiary

@@ -41,3 +41,14 @@
     damage:
       types:
         Blunt: 3
+
+- type: entity
+  id: BulletPistolIncendiary
+  parent: BaseBulletIncendiary
+  name: bullet (.35 auto incendiary)
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      groups:
+        Burn: 14

@@ -41,6 +41,15 @@
     #one fourth of what making a flash would cost
 
 - type: latheRecipe
+  id: ExplosivePayload
+  result: ExplosivePayload
+  completetime: 1
+  materials:
+    Steel: 50
+    Plastic: 100
+    Glass: 50
+
+- type: latheRecipe
   id: Signaller
   result: RemoteSignaller
   completetime: 2
