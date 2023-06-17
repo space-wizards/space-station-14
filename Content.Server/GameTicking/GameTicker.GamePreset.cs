@@ -193,7 +193,7 @@ namespace Content.Server.GameTicking
                 _mindSystem.UnVisit(mind);
             }
 
-            var position = playerEntity is {Valid: true}
+            var position = Exists(playerEntity)
                 ? Transform(playerEntity.Value).Coordinates
                 : GetObserverSpawnPoint();
 
