@@ -736,6 +736,25 @@
     stackType: FloorTileWoodPattern
 
 - type: entity
+  id: FloorTileItemFlesh
+  parent: FloorTileItemBase
+  name: flesh floor
+  components:
+  - type: Sprite
+    state: meat
+  - type: Item
+    heldPrefix: meat
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorFlesh
+  - type: Stack
+    stackType: FloorTileFlesh
+  - type: Construction
+    graph: TileFlesh
+    node: fleshTile
+
+- type: entity
   name: steel maint floor
   parent: FloorTileItemBase
   id: FloorTileItemSteelMaint

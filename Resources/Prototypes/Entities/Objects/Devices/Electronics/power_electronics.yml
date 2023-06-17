@@ -34,18 +34,21 @@
 
 # Wallmount Generator
 - type: entity
-  id: WallmountGeneratorElectronics
   parent: BaseElectronics
+  id: WallmountGeneratorElectronics
   name: wallmount generator electronics
   description: Circuit used to construct a wallmount generator.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: charger_APC
-    - type: Tag
-      tags:
-        - DroneUsable
-        - WallmountGeneratorElectronics
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: charger_APC
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 90
+  - type: Tag
+    tags:
+      - DroneUsable
+      - WallmountGeneratorElectronics
 
 # APU
 - type: entity

@@ -105,14 +105,15 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             _entManager.Dirty(gravity, metadata);
 
             // Atmos
-            var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
-            atmos.Space = false;
+            var air = _prototypeManager.Index<SalvageAirMod>(mission.Air);
+            // copy into a new array since the yml deserialization discards the fixed length
             var moles = new float[Atmospherics.AdjustedNumberOfGases];
-            moles[(int) Gas.Oxygen] = 21.824779f;
-            moles[(int) Gas.Nitrogen] = 82.10312f;
-
+            air.Gases.CopyTo(moles, 0);
+            var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
+            atmos.Space = air.Space;
             atmos.Mixture = new GasMixture(2500)
             {
+                // TODO: temperature mods
                 Temperature = 293.15f,
                 Moles = moles,
             };
@@ -133,6 +134,8 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         expedition.Station = Station;
         expedition.EndTime = _timing.CurTime + mission.Duration;
         expedition.MissionParams = _missionParams;
+        expedition.Difficulty = _missionParams.Difficulty;
+        expedition.Rewards = mission.Rewards;
 
         // Don't want consoles to have the incorrect name until refreshed.
         var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
@@ -214,14 +217,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             await SpawnDungeonLoot(dungeon, lootProto, mapUid, grid, random, reservedTiles);
         }
 
-        foreach (var (loot, count) in mission.Loot)
-        {
-            for (var i = 0; i < count; i++)
-            {
-                var lootProto = _prototypeManager.Index<SalvageLootPrototype>(loot);
-                await SpawnDungeonLoot(dungeon, lootProto, mapUid, grid, random, reservedTiles);
-            }
-        }
         return true;
     }
 
@@ -249,61 +244,9 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                         }
                     }
                     break;
-                // Spawns a cluster (like an ore vein) nearby.
-                case DungeonClusterLoot clusterLoot:
-                    await SpawnDungeonClusterLoot(dungeon!, clusterLoot, grid, random, reservedTiles);
-                    break;
             }
         }
     }
-
-    #region Loot
-
-    private async Task SpawnDungeonClusterLoot(
-        Dungeon dungeon,
-        DungeonClusterLoot loot,
-        MapGridComponent grid,
-        Random random,
-        List<Vector2i> reservedTiles)
-    {
-        var spawnTiles = new HashSet<Vector2i>();
-
-        for (var i = 0; i < loot.Points; i++)
-        {
-            var room = dungeon.Rooms[random.Next(dungeon.Rooms.Count)];
-            var clusterAmount = loot.ClusterAmount;
-            var spots = room.Tiles.ToList();
-            random.Shuffle(spots);
-
-            foreach (var spot in spots)
-            {
-                if (reservedTiles.Contains(spot))
-                    continue;
-
-                var anchored = grid.GetAnchoredEntitiesEnumerator(spot);
-
-                if (anchored.MoveNext(out _))
-                {
-                    continue;
-                }
-
-                clusterAmount--;
-                spawnTiles.Add(spot);
-
-                if (clusterAmount == 0)
-                    break;
-            }
-        }
-
-        foreach (var tile in spawnTiles)
-        {
-            await SuspendIfOutOfTime();
-            var proto = _prototypeManager.Index<WeightedRandomPrototype>(loot.Prototype).Pick(random);
-            _entManager.SpawnEntity(proto, grid.GridTileToLocal(tile));
-        }
-    }
-
-    #endregion
 
     #region Mission Specific
 

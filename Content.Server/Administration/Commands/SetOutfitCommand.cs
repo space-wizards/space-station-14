@@ -105,10 +105,10 @@ namespace Content.Server.Administration.Commands
                     }
                     var equipmentEntity = entityManager.SpawnEntity(gearStr, entityManager.GetComponent<TransformComponent>(target).Coordinates);
                     if (slot.Name == "id" &&
-                        entityManager.TryGetComponent<PDAComponent?>(equipmentEntity, out var pdaComponent) &&
-                        pdaComponent.ContainedID != null)
+                        entityManager.TryGetComponent<PdaComponent?>(equipmentEntity, out var pdaComponent) &&
+                        pdaComponent.ContainedId != null)
                     {
-                        pdaComponent.ContainedID.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
+                        pdaComponent.ContainedId.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
                     }
 
                     invSystem.TryEquip(target, equipmentEntity, slot.Name, silent: true, force: true, inventory: inventoryComponent);
