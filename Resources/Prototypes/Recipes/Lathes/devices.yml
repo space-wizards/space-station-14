@@ -104,6 +104,24 @@
     Uranium: 1500
 
 - type: latheRecipe
+  id: WeaponCrusher
+  result: WeaponCrusher
+  completetime: 5
+  materials:
+    Steel: 1000
+    Glass: 250
+    Plastic: 100
+
+- type: latheRecipe
+  id: WeaponCrusherDagger
+  result: WeaponCrusherDagger
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 250
+    Plastic: 50
+
+- type: latheRecipe
   id: WeaponForceGun
   result: WeaponForceGun
   completetime: 5
@@ -111,6 +129,15 @@
     Steel: 500
     Glass: 400
     Silver: 200
+
+- type: latheRecipe
+  id: WeaponProtoKineticAccelerator
+  result: WeaponProtoKineticAccelerator
+  completetime: 5
+  materials:
+    Steel: 1000
+    Glass: 500
+    Silver: 100
 
 - type: latheRecipe
   id: WeaponTetherGun

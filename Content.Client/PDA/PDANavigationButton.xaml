@@ -1,5 +1,0 @@
-﻿<pda:PDANavigationButton xmlns="https://spacestation14.io" xmlns:pda="clr-namespace:Content.Client.PDA">
-    <PanelContainer Name="Background"/>
-    <AnimatedTextureRect Margin="0 0 0 2" Visible="False" Name="Icon" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    <Label Visible="True" Name="Label" Margin="8 0 8 2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-</pda:PDANavigationButton>

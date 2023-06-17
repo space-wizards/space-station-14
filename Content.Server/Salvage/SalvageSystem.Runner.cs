@@ -163,8 +163,7 @@ public sealed partial class SalvageSystem
             else if (comp.Stage < ExpeditionStage.MusicCountdown && remaining < TimeSpan.FromMinutes(2))
             {
                 // TODO: Some way to play audio attached to a map for players.
-               comp.Stream = _audio.PlayGlobal(comp.Sound,
-                    Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true);
+                comp.Stream = _audio.PlayGlobal(comp.Sound, Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true);
                 comp.Stage = ExpeditionStage.MusicCountdown;
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(2).Minutes)));
             }
@@ -209,7 +208,7 @@ public sealed partial class SalvageSystem
             }
         }
 
-        // Mining missions: NOOP
+        // Mining missions: NOOP since it's handled after ftling
 
         // Structure missions
         var structureQuery = EntityQueryEnumerator<SalvageStructureExpeditionComponent, SalvageExpeditionComponent>();
