@@ -300,6 +300,7 @@ public sealed class ClientClothingSystem : ClothingSystem
 
             // Another "temporary" fix for clothing stencil masks.
             // Sprite layer redactor when
+            // Sprite "redactor" just a week away.
             if (slot == Jumpsuit)
                 layerData.Shader ??= "StencilDraw";
 
