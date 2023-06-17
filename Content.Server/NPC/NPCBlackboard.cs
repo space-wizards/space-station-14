@@ -226,6 +226,11 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     public const string NavSmash = "NavSmash";
 
     /// <summary>
+    /// Can the NPC climb obstacles for steering.
+    /// </summary>
+    public const string NavClimb = "NavClimb";
+
+    /// <summary>
     /// Default key storage for a movement pathfind.
     /// </summary>
     public const string PathfindKey = "MovementPathfind";

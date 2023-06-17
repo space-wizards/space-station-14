@@ -29,7 +29,7 @@ public sealed class ClimbingTest : MovementTest
 
         // Try to start climbing
         var sys = SEntMan.System<ClimbSystem>();
-        await Server.WaitPost(() => sys.TryClimb(Player, Player, Target.Value));
+        await Server.WaitPost(() => sys.TryClimb(Player, Player, Target.Value, out _));
         await AwaitDoAfters();
 
         // Player should now be climbing
@@ -49,7 +49,7 @@ public sealed class ClimbingTest : MovementTest
         Assert.That(Delta(), Is.LessThan(0));
 
         // Start climbing
-        await Server.WaitPost(() => sys.TryClimb(Player, Player, Target.Value));
+        await Server.WaitPost(() => sys.TryClimb(Player, Player, Target.Value, out _));
         await AwaitDoAfters();
         Assert.That(comp.IsClimbing, Is.True);
         Assert.That(comp.DisabledFixtureMasks.Count, Is.GreaterThan(0));
