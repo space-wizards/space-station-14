@@ -10,7 +10,7 @@ namespace Content.Shared.Salvage.Expeditions.Modifiers;
 /// Which one is selected depends on the mission difficulty, different weightedRandoms are picked from.
 /// </summary>
 [Prototype("salvageAirMod")]
-public sealed class SalvageAirMod : IPrototype, ISalvageMod
+public sealed class SalvageAirMod : IPrototype, IBiomeSpecificMod
 {
     [IdDataField]
     public string ID { get; } = default!;
@@ -23,6 +23,10 @@ public sealed class SalvageAirMod : IPrototype, ISalvageMod
     [DataField("cost")]
     public float Cost { get; } = 0f;
 
+    /// <inheritdoc/>
+    [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeMod>))]
+    public List<string>? Biomes { get; } = null;
+
     /// <summary>
     /// Set to true if this planet will have no atmosphere.
     /// </summary>
@@ -34,10 +38,4 @@ public sealed class SalvageAirMod : IPrototype, ISalvageMod
     /// </summary>
     [DataField("gases")]
     public float[] Gases = new float[Atmospherics.AdjustedNumberOfGases];
-
-    /// <summary>
-    /// Biomes this air mixture is allowed to occur in.
-    /// </summary>
-    [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeMod>))]
-    public List<string>? Biomes;
 }

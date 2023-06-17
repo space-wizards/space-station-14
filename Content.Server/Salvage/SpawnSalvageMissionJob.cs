@@ -113,8 +113,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             atmos.Space = air.Space;
             atmos.Mixture = new GasMixture(2500)
             {
-                // TODO: temperature mods
-                Temperature = 293.15f,
+                Temperature = mission.Temperature,
                 Moles = moles,
             };
 

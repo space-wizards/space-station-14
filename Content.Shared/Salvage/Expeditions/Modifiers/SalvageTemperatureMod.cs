@@ -1,10 +1,11 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
 
-[Prototype("salvageLightMod")]
-public sealed class SalvageLightMod : IPrototype, IBiomeSpecificMod
+[Prototype("salvageTemperatureMod")]
+public sealed class SalvageTemperatureMod : IPrototype, IBiomeSpecificMod
 {
     [IdDataField] public string ID { get; } = default!;
 
@@ -18,5 +19,9 @@ public sealed class SalvageLightMod : IPrototype, IBiomeSpecificMod
     [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeMod>))]
     public List<string>? Biomes { get; } = null;
 
-    [DataField("color", required: true)] public Color? Color;
+    /// <summary>
+    /// Temperature in the planets air mix.
+    /// </summary>
+    [DataField("temperature")]
+    public float Temperature = 293.15f;
 }
