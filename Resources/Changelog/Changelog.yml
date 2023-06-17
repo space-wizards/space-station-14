@@ -1,11 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: The Syndicate has added a ringtone code lock to uplinks. Operatives
-      are told the code when they are briefed. Set your ringtone to the code to open
-      your uplink!, type: Add}
-  id: 3519
-  time: '2023-04-23T21:00:42.0000000+00:00'
 - author: ProPandaBear
   changes:
   - {message: The "Spacebucks" barsign was added., type: Add}
@@ -2920,3 +2913,8 @@ Entries:
   - {message: When taking a mission you can now see what its rewards will be., type: Tweak}
   id: 4018
   time: '2023-06-17T02:00:54.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Shield values now can be examined, type: Add}
+  id: 4019
+  time: '2023-06-17T02:07:58.0000000+00:00'
