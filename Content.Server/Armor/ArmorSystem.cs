@@ -85,7 +85,7 @@ namespace Content.Server.Armor
             _examine.AddDetailedExamineVerb(args, component, examineMarkup, Loc.GetString("armor-examinable-verb-text"), "/Textures/Interface/VerbIcons/dot.svg.192dpi.png", Loc.GetString("armor-examinable-verb-message"));
         }
 
-        private static FormattedMessage GetArmorExamine(DamageModifierSet armorModifiers)
+        private FormattedMessage GetArmorExamine(DamageModifierSet armorModifiers)
         {
             var msg = new FormattedMessage();
 
