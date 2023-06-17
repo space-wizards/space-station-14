@@ -6,7 +6,7 @@ bounty-console-manifest-label = Manifest: [color=gray]{$item}[/color]
 bounty-console-manifest-entry =
     { $amount ->
         [1] {$item}
-        *[other] x{$amount} {MAKEPLURAL($item)}
+        *[other] {$item} x{$amount}
     }
 bounty-console-description-label = [color=gray]{$description}[/color]
 bounty-console-id-label = ID#{$id}
