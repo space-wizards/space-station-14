@@ -77,8 +77,8 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
                     product.PointCost,
                     qty,
                     Loc.GetString(component.Sender),
-                    Loc.GetString(component.Sender),
                     Loc.GetString(component.Dest),
+                    Loc.GetString(component.Sender),
                     Loc.GetString(component.Description)))
             {
                 break;

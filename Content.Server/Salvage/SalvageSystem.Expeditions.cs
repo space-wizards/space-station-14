@@ -296,7 +296,7 @@ public sealed partial class SalvageSystem
             var sender = Loc.GetString("cargo-gift-default-sender");
             var desc = Loc.GetString("salvage-expedition-reward-description");
             var dest = Loc.GetString("cargo-gift-default-dest");
-            _cargo.AddAndApproveOrder(uid, cargoDb, reward, 0, 1, sender, sender, dest, desc);
+            _cargo.AddAndApproveOrder(uid, cargoDb, reward, 0, 1, sender, dest, sender, desc);
         }
     }
 
