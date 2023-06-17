@@ -181,7 +181,7 @@ public sealed partial class SalvageSystem
             _sawmill.Debug($"Completed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + TimeSpan.FromSeconds(_cooldown);
             Announce(uid, Loc.GetString("salvage-expedition-mission-completed"));
-            GiveRewards(expedition);
+            GiveRewards(uid, expedition);
         }
         else
         {
@@ -278,7 +278,7 @@ public sealed partial class SalvageSystem
         args.PushMarkup(Loc.GetString("salvage-expedition-structure-examine"));
     }
 
-    private void GiveRewards(SalvageExpeditionComponent comp)
+    private void GiveRewards(EntityUid uid, SalvageExpeditionComponent comp)
     {
         // send it to cargo, no rewards otherwise.
         if (!TryComp<StationCargoOrderDatabaseComponent>(comp.Station, out var cargoDb))
@@ -296,7 +296,7 @@ public sealed partial class SalvageSystem
             var sender = Loc.GetString("cargo-gift-default-sender");
             var desc = Loc.GetString("salvage-expedition-reward-description");
             var dest = Loc.GetString("cargo-gift-default-dest");
-            _cargo.AddAndApproveOrder(cargoDb, reward, 0, 1, sender, desc, dest);
+            _cargo.AddAndApproveOrder(uid, cargoDb, reward, 0, 1, sender, sender, dest, desc);
         }
     }
 
