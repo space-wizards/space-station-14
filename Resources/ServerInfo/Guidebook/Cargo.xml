@@ -13,7 +13,7 @@
   <Box>
     <GuideEntityEmbed Entity="ComputerCargoShuttle"/>
   </Box>
-  After clicking the computer, you should see a radar-esque view of the shuttle from the top-down. Here are the steps for piloting the shuttle back and forth from the station, to the trading post, and back.
+  After clicking the computer, you should see a radar view of the shuttle. Here are the steps for piloting the shuttle back and forth:
 
   - First, disconnect any airlocks that are connected to the dock.
   - Then, you actually get to pilot the shuttle. The controls are fairly simple, with W and S being forward and backward, A and D being turn left and right; and Spacebar being the brake.
