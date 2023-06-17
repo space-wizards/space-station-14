@@ -382,7 +382,6 @@ public sealed class MindTests
         // Client is needed to spawn session
         await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
-        var client = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();

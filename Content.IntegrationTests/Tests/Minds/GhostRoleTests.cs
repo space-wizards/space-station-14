@@ -16,14 +16,14 @@ public sealed class GhostRoleTests
 {
     private const string Prototypes = @"
 - type: entity
-  id: MindTestEntity
+  id: GhostRoleTestEntity_Player
   components:
   - type: MindContainer
 
 - type: entity
-  parent: MindTestEntity
-  id: GhostRole
+  id: GhostRoleTestEntity_Role
   components:
+  - type: MindContainer
   - type: GhostRole
   - type: GhostTakeoverAvailable
 ";
@@ -56,7 +56,7 @@ public sealed class GhostRoleTests
         EntityUid originalMob = default;
         await server.WaitPost(() =>
         {
-            originalMob = entMan.SpawnEntity("MindTestEntity", MapCoordinates.Nullspace);
+            originalMob = entMan.SpawnEntity("GhostRoleTestEntity_Player", MapCoordinates.Nullspace);
             mindSystem.TransferTo(session.ContentData()!.Mind!, originalMob, true);
         });
 
@@ -71,7 +71,7 @@ public sealed class GhostRoleTests
 
         // Spawn ghost takeover entity.
         EntityUid ghostRole = default;
-        await server.WaitPost(() => ghostRole = entMan.SpawnEntity("GhostRole", MapCoordinates.Nullspace));
+        await server.WaitPost(() => ghostRole = entMan.SpawnEntity("GhostRoleTestEntity_Role", MapCoordinates.Nullspace));
 
         // Take the ghost role
         await server.WaitPost(() =>
