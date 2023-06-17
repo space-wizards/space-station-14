@@ -256,8 +256,8 @@ namespace Content.Shared.Access.Systems
                 return true;
             }
 
-            if (TryComp(uid, out PDAComponent? pda) &&
-                pda.ContainedID?.Owner is {Valid: true} id)
+            if (TryComp(uid, out PdaComponent? pda) &&
+                pda.ContainedId?.Owner is {Valid: true} id)
             {
                 tags = EntityManager.GetComponent<AccessComponent>(id).Tags;
                 return true;
@@ -279,8 +279,8 @@ namespace Content.Shared.Access.Systems
                 return true;
             }
 
-            if (TryComp<PDAComponent>(uid, out var pda) &&
-                pda.ContainedID?.Owner is {Valid: true} id)
+            if (TryComp<PdaComponent>(uid, out var pda) &&
+                pda.ContainedId?.Owner is {Valid: true} id)
             {
                 if (TryComp<StationRecordKeyStorageComponent>(id, out var pdastorage) && pdastorage.Key != null)
                 {

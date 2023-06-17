@@ -12,9 +12,6 @@ namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {
-    [Dependency] private readonly PaperSystem _paperSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-
     private void InitializeTelepad()
     {
         SubscribeLocalEvent<CargoTelepadComponent, ComponentInit>(OnInit);
