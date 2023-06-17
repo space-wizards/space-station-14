@@ -321,12 +321,12 @@ namespace Content.Server.Cargo.Systems
             if (orderer != null)
             {
                 _adminLogger.Add(LogType.Action, LogImpact.Low,
-                    $"{ToPrettyString(orderer.Value)} added and approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}]");
+                    $"{ToPrettyString(orderer.Value)} added and approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, item:{order.OrderEntity}, product:{order.ProductId}, requester:{order.Requester}, approver:{order.Approver}, reason:{order.Reason}]");
             }
             else
             {
                 _adminLogger.Add(LogType.Action, LogImpact.Low,
-                    $"Added and approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}]");
+                    $"Added and approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, item:{order.OrderEntity}, product:{order.ProductId}, requester:{order.Requester}, approver:{order.Approver}, reason:{order.Reason}]");
             }
 
             // Add it to the list
