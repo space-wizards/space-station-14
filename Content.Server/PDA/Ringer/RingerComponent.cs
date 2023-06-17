@@ -30,5 +30,7 @@ namespace Content.Server.PDA.Ringer
     }
 
     [RegisterComponent]
-    public sealed class ActiveRingerComponent : Component {}
+    public sealed class ActiveRingerComponent : Component
+    {
+    }
 }

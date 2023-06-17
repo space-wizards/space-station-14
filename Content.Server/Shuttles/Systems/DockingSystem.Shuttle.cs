@@ -15,6 +15,8 @@ public sealed partial class DockingSystem
      * Handles the shuttle side of FTL docking.
      */
 
+    private const int DockRoundingDigits = 2;
+
     public Angle GetAngle(EntityUid uid, TransformComponent xform, EntityUid targetUid, TransformComponent targetXform, EntityQuery<TransformComponent> xformQuery)
    {
        var (shuttlePos, shuttleRot) = _transform.GetWorldPositionRotation(xform, xformQuery);
@@ -44,10 +46,10 @@ public sealed partial class DockingSystem
        FixturesComponent shuttleFixtures,
        MapGridComponent grid,
        out Matrix3 matty,
-       [NotNullWhen(true)] out Box2? shuttleDockedAABB,
+       out Box2 shuttleDockedAABB,
        out Angle gridRotation)
    {
-       shuttleDockedAABB = null;
+       shuttleDockedAABB = Box2.UnitCentered;
        gridRotation = Angle.Zero;
        matty = Matrix3.Identity;
 
@@ -132,7 +134,6 @@ public sealed partial class DockingSystem
         var targetGridAngle = _transform.GetWorldRotation(targetGridXform).Reduced();
         var shuttleFixturesComp = Comp<FixturesComponent>(shuttleUid);
         var shuttleAABB = Comp<MapGridComponent>(shuttleUid).LocalAABB;
-        var foundDocks = new HashSet<EntityUid>();
 
         var validDockConfigs = new List<DockingConfig>();
         if (shuttleDocks.Count > 0)
@@ -140,9 +141,6 @@ public sealed partial class DockingSystem
            // We'll try all combinations of shuttle docks and see which one is most suitable
            foreach (var (dockUid, shuttleDock) in shuttleDocks)
            {
-               if (foundDocks.Contains(dockUid))
-                   continue;
-
                var shuttleDockXform = xformQuery.GetComponent(dockUid);
 
                foreach (var (gridDockUid, gridDock) in gridDocks)
@@ -186,9 +184,11 @@ public sealed partial class DockingSystem
                        (dockUid, gridDockUid, shuttleDock, gridDock),
                    };
 
+                   dockedAABB = dockedAABB.Rounded(DockRoundingDigits);
+
                    foreach (var (otherUid, other) in shuttleDocks)
                    {
-                       if (other == shuttleDock || foundDocks.Contains(otherUid))
+                       if (other == shuttleDock)
                            continue;
 
                        foreach (var (otherGridUid, otherGrid) in gridDocks)
@@ -206,8 +206,15 @@ public sealed partial class DockingSystem
                                    shuttleFixturesComp, targetGridGrid,
                                    out _,
                                    out var otherdockedAABB,
-                                   out var otherTargetAngle) ||
-                               !targetAngle.Equals(otherTargetAngle) ||
+                                   out var otherTargetAngle))
+                           {
+                               continue;
+                           }
+
+                           otherdockedAABB = otherdockedAABB.Rounded(DockRoundingDigits);
+
+                           // Different setup.
+                           if (!targetAngle.Equals(otherTargetAngle) ||
                                !dockedAABB.Equals(otherdockedAABB))
                            {
                                continue;
@@ -221,13 +228,9 @@ public sealed partial class DockingSystem
                    {
                        Docks = dockedPorts,
                        Coordinates = spawnPosition,
+                       Area = dockedAABB,
                        Angle = targetAngle,
                    });
-
-                   foreach (var dock in dockedPorts)
-                   {
-                       foundDocks.Add(dock.DockAUid);
-                   }
                }
            }
         }

@@ -1,9 +1,7 @@
 using System.Linq;
 using Content.Server.Cargo.Components;
-using Content.Server.Shuttle.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
-using Content.Server.UserInterface;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Stack;
 using Content.Shared.Stacks;
@@ -11,12 +9,9 @@ using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
-using Content.Shared.Cargo.Prototypes;
 using Content.Shared.CCVar;
-using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
 using Content.Shared.Whitelist;
-using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -34,14 +29,6 @@ public sealed partial class CargoSystem
      * Handles cargo shuttle mechanics.
      */
 
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly PricingSystem _pricing = default!;
-    [Dependency] private readonly ShuttleConsoleSystem _console = default!;
-    [Dependency] private readonly StackSystem _stack = default!;
     public MapId? CargoMap { get; private set; }
 
     private void InitializeShuttle()
@@ -57,6 +44,20 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoPalletConsoleComponent, BoundUIOpenedEvent>(OnPalletUIOpen);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+        _cfgManager.OnValueChanged(CCVars.GridFill, SetGridFill);
+    }
+
+    private void ShutdownShuttle()
+    {
+        _cfgManager.UnsubValueChanged(CCVars.GridFill, SetGridFill);
+    }
+
+    private void SetGridFill(bool obj)
+    {
+        if (obj)
+        {
+            SetupCargoShuttle();
+        }
     }
 
     private void OnCargoFTLTag(EntityUid uid, CargoShuttleComponent component, ref FTLTagEvent args)
@@ -181,7 +182,7 @@ public sealed partial class CargoSystem
                     // We won't be able to fit the whole order on, so make one
                     // which represents the space we do have left:
                     var reducedOrder = new CargoOrderData(order.OrderId,
-                            order.ProductId, spaceRemaining, order.Requester, order.Reason);
+                            order.ProductId, order.Price, spaceRemaining, order.Requester, order.Reason);
                     orders.Add(reducedOrder);
                 }
                 else
@@ -325,7 +326,7 @@ public sealed partial class CargoSystem
         }
 
         SellPallets(gridUid, out var price);
-        var stackPrototype = _prototypeManager.Index<StackPrototype>(component.CashType);
+        var stackPrototype = _protoMan.Index<StackPrototype>(component.CashType);
         _stack.Spawn((int)price, stackPrototype, uid.ToCoordinates());
         UpdatePalletConsoleInterface(uid);
     }
@@ -368,7 +369,9 @@ public sealed partial class CargoSystem
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
         CleanupCargoShuttle();
-        SetupCargoShuttle();
+
+        if (_cfgManager.GetCVar(CCVars.GridFill))
+            SetupCargoShuttle();
     }
 
     private void CleanupCargoShuttle()
@@ -388,12 +391,11 @@ public sealed partial class CargoSystem
 
         while (query.MoveNext(out var uid, out var comp))
         {
-            var stationUid = _station.GetOwningStation(uid);
-
             if (TryComp<StationCargoOrderDatabaseComponent>(uid, out var station))
             {
                 station.Shuttle = null;
             }
+
             QueueDel(uid);
         }
     }

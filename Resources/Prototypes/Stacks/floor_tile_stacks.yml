@@ -3,7 +3,7 @@
   name: steel tile
   spawn: FloorTileItemSteel
   maxCount: 30
-  
+
 - type: stack
   id: FloorTileMetalDiamond
   name: steel tile
@@ -129,7 +129,7 @@
   name: blue arcade tile
   spawn: FloorTileItemArcadeBlue
   maxCount: 30
-  
+
 - type: stack
   id: FloorTileStackArcadeBlue2
   name: blue arcade tile
@@ -189,7 +189,7 @@
   name: pink carpet tile
   spawn: FloorCarpetItemPink
   maxCount: 30
-  
+
 - type: stack
   id: FloorTileStackCarpetClown
   name: clown carpet tile
@@ -201,13 +201,13 @@
   name: office carpet tile
   spawn: FloorTileItemCarpetOffice
   maxCount: 30
-  
+
 - type: stack
   id: FloorTileStackBoxing
   name: boxing ring tile
   spawn: FloorTileItemBoxing
   maxCount: 30
-  
+
 - type: stack
   id: FloorTileStackGym
   name: gym floor tile
@@ -296,6 +296,12 @@
   id: FloorTileWoodPattern
   name: wood pattern floor
   spawn: FloorTileItemWoodPattern
+  maxCount: 30
+
+- type: stack
+  id: FloorTileFlesh
+  name: flesh floor
+  spawn: FloorTileItemFlesh
   maxCount: 30
 
 - type: stack

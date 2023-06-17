@@ -74,6 +74,9 @@
   id: BulletFoam
 
 - type: Tag
+  id: BypassInteractionRangeChecks
+
+- type: Tag
   id: CableCoil
 
 - type: Tag
@@ -320,6 +323,28 @@
 - type: Tag
   id: GuideEmbeded
 
+
+- type: Tag
+  id: Hamster
+
+- type: Tag
+  id: HamtrCentralControlModule
+
+- type: Tag
+  id: HamtrPeripheralsControlModule
+
+- type: Tag
+  id: HamtrLArm
+
+- type: Tag
+  id: HamtrLLeg
+
+- type: Tag
+  id: HamtrRLeg
+
+- type: Tag
+  id: HamtrRArm
+
 - type: Tag
   id: Handcuffs
 
@@ -329,9 +354,6 @@
 
 - type: Tag
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
-
-- type: Tag
-  id: HardsuitEVA
 
 - type: Tag
   id: Head
@@ -383,6 +405,9 @@
 
 - type: Tag
   id: Ingot
+
+- type: Tag
+  id: InstantDoAfters
 
 - type: Tag
   id: IntercomElectronics
@@ -638,6 +663,9 @@
   id: SkeletonMotorcycleKeys
 
 - type: Tag
+  id: SmallMech
+
+- type: Tag
   id: Smokable
 
 - type: Tag
@@ -678,6 +706,9 @@
 
 - type: Tag
   id: SubdermalImplant
+
+- type: Tag
+  id: SuitEVA
 
 - type: Tag
   id: SurveillanceCameraMonitorCircuitboard
