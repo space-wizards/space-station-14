@@ -286,42 +286,12 @@ public sealed partial class SalvageSystem
             return;
         }
 
-        var ids = RewardsForDifficulty(comp.Difficulty);
-        foreach (var id in ids)
+        foreach (var reward in comp.Rewards)
         {
-            // pick a random reward to give
-            var rewards = _prototypeManager.Index<WeightedRandomPrototype>(id);
-            var reward = rewards.Pick(_random);
-
             var sender = Loc.GetString("cargo-gift-default-sender");
             var desc = Loc.GetString("salvage-expedition-reward-description");
             var dest = Loc.GetString("cargo-gift-default-dest");
             _cargo.AddAndApproveOrder(cargoDb, reward, 0, 1, sender, desc, dest);
-        }
-    }
-
-    /// <summary>
-    /// Get a list of WeightedRandomPrototype IDs with the rewards for a certain difficulty.
-    /// </summary>
-    private string[] RewardsForDifficulty(DifficultyRating rating)
-    {
-        var common = "SalvageRewardCommon";
-        var rare = "SalvageRewardRare";
-        var epic = "SalvageRewardEpic";
-        switch (rating)
-        {
-            case DifficultyRating.Minimal:
-                return new string[] { common, common, common };
-            case DifficultyRating.Minor:
-                return new string[] { common, common, rare };
-            case DifficultyRating.Moderate:
-                return new string[] { common, rare, rare };
-            case DifficultyRating.Hazardous:
-                return new string[] { rare, rare, epic };
-            case DifficultyRating.Extreme:
-                return new string[] { rare, epic, epic };
-            default:
-                throw new NotImplementedException();
         }
     }
 }
