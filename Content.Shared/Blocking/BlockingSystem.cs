@@ -302,10 +302,7 @@ public sealed partial class BlockingSystem : EntitySystem
 
         msg.AddMarkup(Loc.GetString("blocking-fraction", ("value", MathF.Round(fraction * 100, 1))));
 
-        if (modifier != null)
-        {
-            AppendCoefficients(modifier, msg);
-        }
+        AppendCoefficients(modifier, msg);
 
         _examine.AddDetailedExamineVerb(args, component, msg,
             Loc.GetString("blocking-examinable-verb-text"),
@@ -314,12 +311,12 @@ public sealed partial class BlockingSystem : EntitySystem
         );
     }
 
-    private static FormattedMessage AppendCoefficients(DamageModifierSet modifiers, FormattedMessage msg)
+    private void AppendCoefficients(DamageModifierSet modifiers, FormattedMessage msg)
     {
         foreach (var coefficient in modifiers.Coefficients)
         {
             msg.PushNewline();
-            msg.AddMarkup(Loc.GetString("blocking-coefficient-value",
+            msg.AddMarkup(Robust.Shared.Localization.Loc.GetString("blocking-coefficient-value",
                 ("type", coefficient.Key),
                 ("value", MathF.Round(coefficient.Value * 100, 1))
             ));
@@ -328,12 +325,10 @@ public sealed partial class BlockingSystem : EntitySystem
         foreach (var flat in modifiers.FlatReduction)
         {
             msg.PushNewline();
-            msg.AddMarkup(Loc.GetString("blocking-reduction-value",
+            msg.AddMarkup(Robust.Shared.Localization.Loc.GetString("blocking-reduction-value",
                 ("type", flat.Key),
                 ("value", flat.Value)
             ));
         }
-
-        return msg;
     }
 }
