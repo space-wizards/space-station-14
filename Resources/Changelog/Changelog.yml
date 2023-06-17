@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Fixed theatrical performances crate now have name and desc., type: Fix}
-  id: 3518
-  time: '2023-04-23T20:45:16.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: The Syndicate has added a ringtone code lock to uplinks. Operatives
@@ -2920,3 +2915,8 @@ Entries:
   - {message: HAMTR Mech is now a tier 1 civilian service technology., type: Tweak}
   id: 4017
   time: '2023-06-17T01:59:54.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: When taking a mission you can now see what its rewards will be., type: Tweak}
+  id: 4018
+  time: '2023-06-17T02:00:54.0000000+00:00'
