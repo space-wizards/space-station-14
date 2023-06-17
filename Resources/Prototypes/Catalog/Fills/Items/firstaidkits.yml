@@ -26,7 +26,7 @@
       - id: SyringeInaprovaline
       - id: Ointment
         amount: 4
-      - id: PillKelotane
+      - id: PillDermaline
         amount: 5
 
 - type: entity
