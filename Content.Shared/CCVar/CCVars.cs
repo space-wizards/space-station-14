@@ -1596,6 +1596,6 @@ namespace Content.Shared.CCVar
         ///     false.
         /// </summary>
         public static readonly CVarDef<bool> ReplayRecordAdminChat =
-            CVarDef.Create("replay.record_admin_chat", false, CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
+            CVarDef.Create("replay.record_admin_chat", false, CVar.ARCHIVE);
     }
 }
