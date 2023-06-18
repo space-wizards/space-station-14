@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Fix some equipment actions (toggle light, magboots, etc) not showing
-      up.', type: Fix}
-  id: 3533
-  time: '2023-04-24T19:29:48.0000000+00:00'
 - author: lzk
   changes:
   - {message: 'Syndicate has provided cheap top-tech disguise glasses, the outlaw
@@ -2921,3 +2915,8 @@ Entries:
       in their uplinks., type: Add}
   id: 4032
   time: '2023-06-18T19:35:23.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Command role requirements have been modified., type: Tweak}
+  id: 4033
+  time: '2023-06-18T21:53:05.0000000+00:00'
