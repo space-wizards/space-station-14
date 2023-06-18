@@ -1,18 +1,21 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Coordinates.Helpers;
 using Content.Server.Popups;
 using Content.Server.Pulling;
+
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
-using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
+using Content.Shared.Tools;
+
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
+
+
 
 namespace Content.Server.Construction
 {
@@ -20,27 +23,14 @@ namespace Content.Server.Construction
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly SharedToolSystem _tool = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PullingSystem _pulling = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<AnchorableComponent, TryAnchorCompletedEvent>(OnAnchorComplete);
-            SubscribeLocalEvent<AnchorableComponent, TryUnanchorCompletedEvent>(OnUnanchorComplete);
-            SubscribeLocalEvent<AnchorableComponent, ExaminedEvent>(OnAnchoredExamine);
-        }
 
-        private void OnAnchoredExamine(EntityUid uid, AnchorableComponent component, ExaminedEvent args)
-        {
-            var isAnchored = Comp<TransformComponent>(uid).Anchored;
-            var messageId = isAnchored ? "examinable-anchored" : "examinable-unanchored";
-            args.PushMarkup(Loc.GetString(messageId, ("target", uid)));
-        }
-
-        private void OnUnanchorComplete(EntityUid uid, AnchorableComponent component, TryUnanchorCompletedEvent args)
+        //keep for popup and admin log
+        protected override void OnUnanchorComplete(EntityUid uid, AnchorableComponent component, TryUnanchorCompletedEvent args)
         {
             if (args.Cancelled || args.Used is not { } used)
                 return;
@@ -60,7 +50,7 @@ namespace Content.Server.Construction
             );
         }
 
-        private void OnAnchorComplete(EntityUid uid, AnchorableComponent component, TryAnchorCompletedEvent args)
+        protected override void OnAnchorComplete(EntityUid uid, AnchorableComponent component, TryAnchorCompletedEvent args)
         {
             if (args.Cancelled || args.Used is not { } used)
                 return;
@@ -104,77 +94,46 @@ namespace Content.Server.Construction
             );
         }
 
-        private bool TileFree(EntityCoordinates coordinates, PhysicsComponent anchorBody)
-        {
-            // Probably ignore CanCollide on the anchoring body?
-            var gridUid = coordinates.GetGridUid(EntityManager);
-
-            if (!_mapManager.TryGetGrid(gridUid, out var grid))
-                return false;
-
-            var tileIndices = grid.TileIndicesFor(coordinates);
-            return TileFree(grid, tileIndices, anchorBody.CollisionLayer, anchorBody.CollisionMask);
-        }
-
-        public bool TileFree(MapGridComponent grid, Vector2i gridIndices, int collisionLayer = 0, int collisionMask = 0)
-        {
-            var enumerator = grid.GetAnchoredEntitiesEnumerator(gridIndices);
-            var bodyQuery = GetEntityQuery<PhysicsComponent>();
-
-            while (enumerator.MoveNext(out var ent))
-            {
-                if (!bodyQuery.TryGetComponent(ent, out var body) ||
-                    !body.CanCollide ||
-                    !body.Hard)
-                {
-                    continue;
-                }
-
-                if ((body.CollisionMask & collisionLayer) != 0x0 ||
-                    (body.CollisionLayer & collisionMask) != 0x0)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
 
         /// <summary>
-        ///     Checks if a tool can change the anchored status.
+        ///     Tries to toggle the anchored status of this component's owner.
+        ///     override is used due to popup and adminlog being server side systems in this case.
         /// </summary>
-        /// <returns>true if it is valid, false otherwise</returns>
-        private bool Valid(EntityUid uid, EntityUid userUid, EntityUid usingUid, bool anchoring, AnchorableComponent? anchorable = null, ToolComponent? usingTool = null)
+        /// <returns>true if toggled, false otherwise</returns>
+        public override void TryToggleAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
+            AnchorableComponent? anchorable = null,
+            TransformComponent? transform = null,
+            SharedPullableComponent? pullable = null,
+            ToolComponent? usingTool = null)
         {
-            if (!Resolve(uid, ref anchorable))
-                return false;
+            if (!Resolve(uid, ref transform))
+                return;
 
-            if (!Resolve(usingUid, ref usingTool))
-                return false;
+            if (transform.Anchored)
+            {
+                TryUnAnchor(uid, userUid, usingUid, anchorable, transform, usingTool);
 
-            BaseAnchoredAttemptEvent attempt =
-                anchoring ? new AnchorAttemptEvent(userUid, usingUid) : new UnanchorAttemptEvent(userUid, usingUid);
-
-            // Need to cast the event or it will be raised as BaseAnchoredAttemptEvent.
-            if (anchoring)
-                RaiseLocalEvent(uid, (AnchorAttemptEvent) attempt);
+                // Log unanchor attempt (server only)
+                _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to unanchor {ToPrettyString(uid):entity} from {transform.Coordinates:targetlocation}");
+            }
             else
-                RaiseLocalEvent(uid, (UnanchorAttemptEvent) attempt);
+            {
+                TryAnchor(uid, userUid, usingUid, anchorable, transform, pullable, usingTool);
 
-            anchorable.Delay += attempt.Delay;
-
-            return !attempt.Cancelled;
+                // Log anchor attempt (server only)
+                _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
+            }
         }
 
         /// <summary>
         ///     Tries to anchor the entity.
         /// </summary>
         /// <returns>true if anchored, false otherwise</returns>
-        private void TryAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
-            AnchorableComponent? anchorable = null,
-            TransformComponent? transform = null,
-            SharedPullableComponent? pullable = null,
-            ToolComponent? usingTool = null)
+        protected override void TryAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
+                AnchorableComponent? anchorable = null,
+                TransformComponent? transform = null,
+                SharedPullableComponent? pullable = null,
+                ToolComponent? usingTool = null)
         {
             if (!Resolve(uid, ref anchorable, ref transform))
                 return;
@@ -196,56 +155,6 @@ namespace Content.Server.Construction
             }
 
             _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryAnchorCompletedEvent());
-        }
-
-        /// <summary>
-        ///     Tries to unanchor the entity.
-        /// </summary>
-        /// <returns>true if unanchored, false otherwise</returns>
-        private void TryUnAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
-            AnchorableComponent? anchorable = null,
-            TransformComponent? transform = null,
-            ToolComponent? usingTool = null)
-        {
-            if (!Resolve(uid, ref anchorable, ref transform))
-                return;
-
-            if (!Resolve(usingUid, ref usingTool))
-                return;
-
-            if (!Valid(uid, userUid, usingUid, false))
-                return;
-
-            _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryUnanchorCompletedEvent());
-        }
-
-        /// <summary>
-        ///     Tries to toggle the anchored status of this component's owner.
-        /// </summary>
-        /// <returns>true if toggled, false otherwise</returns>
-        public override void TryToggleAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
-            AnchorableComponent? anchorable = null,
-            TransformComponent? transform = null,
-            SharedPullableComponent? pullable = null,
-            ToolComponent? usingTool = null)
-        {
-            if (!Resolve(uid, ref transform))
-                return;
-
-            if (transform.Anchored)
-            {
-                TryUnAnchor(uid, userUid, usingUid, anchorable, transform, usingTool);
-
-                // Log unanchor attempt
-                _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to unanchor {ToPrettyString(uid):entity} from {transform.Coordinates:targetlocation}");
-            }
-            else
-            {
-                TryAnchor(uid, userUid, usingUid, anchorable, transform, pullable, usingTool);
-
-                // Log anchor attempt
-                _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
-            }
         }
     }
 }
