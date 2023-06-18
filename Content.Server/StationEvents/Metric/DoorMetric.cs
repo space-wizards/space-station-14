@@ -11,9 +11,9 @@ namespace Content.Server.StationEvents.Metric;
 /// <summary>
 ///   Uses doors and firelocks to sample station chaos across the station
 ///
-///   Emag - 10 points per emaged door
-///   Power - 5 points per door or firelock with no power
-///   Atmos - 10 points for holding spacing or 20 for holding back fire
+///   Emag - EmagCost per emaged door
+///   Power - PowerCost per door or firelock with no power
+///   Atmos - PressureCost for holding spacing or FireCost for holding back fire
 /// </summary>
 public sealed class DoorMetric : ChaosMetricSystem<DoorMetricComponent>
 {
@@ -23,9 +23,9 @@ public sealed class DoorMetric : ChaosMetricSystem<DoorMetricComponent>
         CalculateChaosEvent args)
     {
 
-        FixedPoint2 powerChaos = 0.0f;
-        FixedPoint2 atmosChaos = 0.0f;
-        FixedPoint2 emagChaos = 0.0f;
+        var powerChaos = FixedPoint2.Zero;
+        var atmosChaos = FixedPoint2.Zero;
+        var emagChaos = FixedPoint2.Zero;
 
         // Add up the pain of all the firelocks
         var queryFirelock = EntityQueryEnumerator<DoorComponent, FirelockComponent, ApcPowerReceiverComponent>();

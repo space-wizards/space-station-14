@@ -1,12 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
-using Content.Server.DeviceLinking.Systems;
-using Content.Server.Popups;
-using Content.Server.Station.Systems;
-using Content.Shared.Access.Systems;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Events;
@@ -14,8 +8,6 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Server.Paper;
-using Content.Shared.Access.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
@@ -316,7 +308,7 @@ namespace Content.Server.Cargo.Systems
             return true;
         }
 
-        public int GenerateOrderId(StationCargoOrderDatabaseComponent orderDB)
+        private int GenerateOrderId(StationCargoOrderDatabaseComponent orderDB)
         {
             // We need an arbitrary unique ID to identify orders, since they may
             // want to be cancelled later.

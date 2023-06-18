@@ -1,6 +1,9 @@
 ﻿using System.Runtime.Serialization;
 using Content.Server.StationEvents.Metric;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -13,32 +16,33 @@ public sealed class GameDirectorComponent : Component
     ///   How long until the next check for an event runs
     /// </summary>
     ///   Default value is how long until first event is allowed
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float TimeUntilNextEvent = MinimumTimeUntilFirstEvent;
+    [DataField("timeNextEvent", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan TimeNextEvent;
 
     /// <summary>
-    ///   How long we've been in the current beat
+    ///   When the current beat started
     /// </summary>
-    [DataField("beatTime"), ViewVariables(VVAccess.ReadWrite)]
-    public float BeatTime = 0.0f;
+    [DataField("beatStart", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan BeatStart;
 
     /// <summary>
-    ///   How long we've been in the current beat
+    ///   The chaos we measured last time we ran
+    ///   This is helpful for ViewVariables and perhaps as a cache to hold chaos for other functions to use.
     /// </summary>
-    [DataField("currChaos"), ViewVariables(VVAccess.ReadWrite)]
-    public ChaosMetrics CurrChaos = new();
+    [DataField("currentChaos"), ViewVariables(VVAccess.ReadOnly)]
+    public ChaosMetrics CurrentChaos = new();
 
     /// <summary>
     ///   The story we are currently executing from stories
     /// </summary>
-    [DataField("currStoryName"), ViewVariables(VVAccess.ReadWrite)]
-    public string CurrStoryName = "";
+    [DataField("currentStoryName"), ViewVariables(VVAccess.ReadOnly)]
+    public string CurrentStoryName = "";
 
     /// <summary>
     ///   Remaining beats in the story we are currently executing (a list of beat IDs)
     /// </summary>
     [DataField("currStory"), ViewVariables(VVAccess.ReadWrite)]
-    public List<string> CurrStory = new List<string>();
+    public Stack<string> CurrStory = new();
 
     /// <summary>
     ///   All possible story beats, by ID
@@ -48,7 +52,7 @@ public sealed class GameDirectorComponent : Component
 
     /// <summary>
     ///   A dictionary mapping story names to the list of beats for each story.
-    ///   One of these get picked randomly each time the current story is exausted.
+    ///   One of these get picked randomly each time the current story is exhausted.
     /// </summary>
     [DataField("stories"), ViewVariables(VVAccess.ReadWrite)]
     public Dictionary<string, Story> Stories = new();
@@ -143,12 +147,28 @@ public sealed class StoryBeat
     /// <summary>
     ///   The number of seconds that we will remain in this state at minimum
     /// </summary>
+    [DataField("minSecs"), ViewVariables(VVAccess.ReadWrite)]
     public float MinSecs = 480.0f;
 
     /// <summary>
     ///   The number of seconds that we will remain in this state at maximum
     /// </summary>
+    [DataField("maxSecs"), ViewVariables(VVAccess.ReadWrite)]
     public float MaxSecs = 1200.0f;
+
+    /// <summary>
+    ///   Seconds between events during this beat (min)
+    ///   2 minute default (120)
+    /// </summary>
+    [DataField("eventDelayMin"), ViewVariables(VVAccess.ReadWrite)]
+    public float EventDelayMin = 120.0f;
+
+    /// <summary>
+    ///   Seconds between events during this beat (min)
+    ///   6 minute default (360)
+    /// </summary>
+    [DataField("eventDelayMax"), ViewVariables(VVAccess.ReadWrite)]
+    public float EventDelayMax = 360.0f;
 
     /// <summary>
     ///   How many different events we choose from (at random) when performing this StoryBeat
@@ -157,20 +177,34 @@ public sealed class StoryBeat
     public int RandomEventLimit = 3;
 }
 
+/// <summary>
+///   Caches a possible StationEvent prototype with the chaos expected (from the game rule's data)
+///   A list of PossibleEvents are built and cached by the game director.
+/// </summary>
 [DataDefinition]
 public sealed class PossibleEvent
 {
-    public string PrototypeId = "";
+    /// <summary>
+    ///   ID of a station event prototype (anomaly, spiders, pizzas, etc) that could occur
+    /// </summary>
+    [DataField("stationEvent", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public string StationEvent = "";
 
+    /// <summary>
+    ///   Expected Chaos changes when this event occurs.
+    ///   Used by the GameDirector, which picks an event expected to make the desired chaos changes.
+    ///   Copy of the StationEventComponent.Chaos field from the relevant event.
+    /// </summary>
+    [DataField("chaos"), ViewVariables(VVAccess.ReadWrite)]
     public ChaosMetrics Chaos = new();
 
     public PossibleEvent()
     {
     }
 
-    public PossibleEvent(string prototypeId, ChaosMetrics chaos)
+    public PossibleEvent(string stationEvent, ChaosMetrics chaos)
     {
-        PrototypeId = prototypeId;
+        StationEvent = stationEvent;
         Chaos = chaos;
     }
 }

@@ -21,9 +21,9 @@ public sealed class AnomalyMetric : ChaosMetricSystem<AnomalyMetricComponent>
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, AnomalyMetricComponent component, ChaosMetricComponent metric,
         CalculateChaosEvent args)
     {
-        FixedPoint2 anomalyChaos = 0.0f;
+        var anomalyChaos = FixedPoint2.Zero;
 
-        // Add up the pain of all the firelocks
+        // Consider each anomaly and add its stability and growth to the accumulator
         var anomalyQ = EntityQueryEnumerator<AnomalyComponent>();
         while (anomalyQ.MoveNext(out var uid, out var anomaly))
         {

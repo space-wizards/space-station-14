@@ -27,8 +27,8 @@ public sealed class FoodMetric : ChaosMetricSystem<FoodMetricComponent>
     {
         // Add up the pain of all the puddles
         var query = EntityQueryEnumerator<MindComponent, MobStateComponent>();
-        FixedPoint2 hungerSc = 0.0f;
-        FixedPoint2 thirstSc = 0.0f;
+        var hungerSc = FixedPoint2.Zero;
+        var thirstSc = FixedPoint2.Zero;
 
         var thirstQ = GetEntityQuery<ThirstComponent>();
         var hungerQ = GetEntityQuery<HungerComponent>();

@@ -1,30 +1,44 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.StationEvents.Components;
 using Content.Server.StationEvents.Metric;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
-using Content.Shared.Preferences;
 using Content.Shared.Prototypes;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.StationEvents;
 
+/// <summary>
+///   Pairs a PossibleEvent with the resultant chaos and a "score" for sorting by the GameDirector
+///   Temporary class used in processing and ranking the list of events.
+/// </summary>
 public sealed class RankedEvent
 {
-    public PossibleEvent PossibleEvent;
-    public ChaosMetrics Result;
-    public float Score;
+    /// <summary>
+    ///   Contains the StationEvent and expected chaos delta
+    /// </summary>
+    public readonly PossibleEvent PossibleEvent;
+
+    /// <summary>
+    ///   Current chaos + PossibleEvent.Chaos at time of creation
+    /// </summary>
+    public readonly ChaosMetrics Result;
+
+    /// <summary>
+    ///   Preference for this RankedEvent, lower is better.
+    ///   Essentially the "pain" of how far Result is from the StoryBeat.Goal
+    /// </summary>
+    public readonly float Score;
 
     public RankedEvent(PossibleEvent possibleEvent, ChaosMetrics result, float score)
     {
@@ -54,7 +68,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] public readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ILogManager _log = default!;
     [Dependency] private readonly IChatManager _chat = default!;
 
@@ -64,6 +78,13 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
     {
         base.Initialize();
         _sawmill = _log.GetSawmill("game_rule");
+        SubscribeLocalEvent<GameDirectorComponent, EntityUnpausedEvent>(OnUnpaused);
+    }
+
+    private void OnUnpaused(EntityUid uid, GameDirectorComponent component, ref EntityUnpausedEvent args)
+    {
+        component.BeatStart += args.PausedTime;
+        component.TimeNextEvent += args.PausedTime;
     }
 
     protected override void Added(EntityUid uid, GameDirectorComponent scheduler, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -73,7 +94,8 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         SetupEvents(scheduler, CountActivePlayers());
         CopyStories(uid, scheduler);
         ValidateStories(scheduler);
-        LogMessage($"Started, first event in {scheduler.TimeUntilNextEvent} seconds");
+        scheduler.TimeNextEvent = _timing.CurTime + TimeSpan.FromSeconds(GameDirectorComponent.MinimumTimeUntilFirstEvent);
+        LogMessage($"Started, first event in {GameDirectorComponent.MinimumTimeUntilFirstEvent} seconds");
     }
 
     /// <summary>
@@ -82,14 +104,8 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
     private void SetupEvents(GameDirectorComponent scheduler, PlayerCount count)
     {
         scheduler.PossibleEvents.Clear();
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
+        foreach (var proto in GameTicker.GetAllGameRulePrototypes())
         {
-            if (proto.Abstract)
-                continue;
-
-            if (!proto.HasComponent<GameRuleComponent>(_factory))
-                continue;
-
             if (!proto.TryGetComponent<StationEventComponent>(out var stationEvent, _factory))
                 continue;
 
@@ -102,21 +118,14 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         }
     }
 
-    protected override void Ended(EntityUid uid, GameDirectorComponent scheduler, GameRuleComponent gameRule,
-        GameRuleEndedEvent args)
-    {
-        scheduler.TimeUntilNextEvent = BasicStationEventSchedulerComponent.MinimumTimeUntilFirstEvent;
-    }
-
     /// <summary>
     ///   Decide what event to run next
     /// </summary>
     protected override void ActiveTick(EntityUid uid, GameDirectorComponent scheduler, GameRuleComponent gameRule, float frameTime)
     {
-        scheduler.BeatTime += frameTime;
-        if (scheduler.TimeUntilNextEvent > 0)
+        var currTime = _timing.CurTime;
+        if (currTime < scheduler.TimeNextEvent)
         {
-            scheduler.TimeUntilNextEvent -= frameTime;
             return;
         }
 
@@ -126,7 +135,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         var count = CountActivePlayers();
 
         chaos = _metrics.CalculateChaos();
-        scheduler.CurrChaos = chaos;
+        scheduler.CurrentChaos = chaos;
 
         // Decide what story beat to work with (which sets chaos goals)
         var beat = DetermineNextBeat(scheduler, chaos, count);
@@ -143,16 +152,16 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
             // allow more events to be randomly selected.
             var chosenEvent = SelectBest(bestEvents, beat.RandomEventLimit);
 
-            _event.RunNamedEvent(chosenEvent.PossibleEvent.PrototypeId);
+            _event.RunNamedEvent(chosenEvent.PossibleEvent.StationEvent);
 
-            // 2 - 6 minutes until the next event is considered.
-            scheduler.TimeUntilNextEvent = _random.NextFloat(120f, 360f);
+            // 2 - 6 minutes until the next event is considered, can vary per beat
+            scheduler.TimeNextEvent = currTime + TimeSpan.FromSeconds(_random.NextFloat(beat.EventDelayMin, beat.EventDelayMax));
         }
         else
         {
-            // No events were run. Consider again in 30 seconds.
+            // No events were run. Consider again in 30 seconds (current beat or chaos might change)
             LogMessage($"Chaos is: {chaos} (No events ran)", false);
-            scheduler.TimeUntilNextEvent = 30f;
+            scheduler.TimeNextEvent = currTime + TimeSpan.FromSeconds(30f);
         }
     }
 
@@ -192,22 +201,17 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
     {
         var ranked =bestEvents.OrderBy(ev => ev.Score).Take(maxRandom).ToList();
 
-        var events = String.Join(", ", ranked.Select(r => r.PossibleEvent.PrototypeId));
+        var rand = _random.NextFloat();
+        rand *= rand; // Square it, which leads to a front-weighted distribution
+                      // Of 3 items, there is (50% chance of 1, 36% chance of 2 and 14% chance of 3)
+        rand *= ranked.Count - 1;
 
-        foreach (var rankedEvent in ranked)
-        {
-            // I'd like a nice weighted random here but I'm lazy
-            if (_random.Prob(0.7f))
-            {
-                // Pick this event
-                LogMessage( $"Picked {rankedEvent.PossibleEvent.PrototypeId} from best events (in sequence) {events}");
-                return rankedEvent;
-            }
-        }
+        var rankedEvent = ranked[(int) Math.Round(rand)];
 
-        // Random dropped through all, just take best.
-        LogMessage( $"Picked {ranked[0].PossibleEvent.PrototypeId} from best events (in sequence) {events}");
-        return ranked[0];
+        // Pick this event
+        var events = String.Join(", ", ranked.Select(r => r.PossibleEvent.StationEvent));
+        LogMessage( $"Picked {rankedEvent.PossibleEvent.StationEvent} from best events (in sequence) {events}");
+        return rankedEvent;
     }
 
     private void LogMessage(string message, bool showChat=true)
@@ -225,18 +229,20 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
     /// </summary>
     private StoryBeat DetermineNextBeat(GameDirectorComponent scheduler, ChaosMetrics chaos, PlayerCount count)
     {
+        var curTime = _timing.CurTime;
         // Potentially Complete CurrBeat, which is always scheduler.CurrStory[0]
         if (scheduler.CurrStory.Count > 0)
         {
-            var beatName = scheduler.CurrStory[0];
+            var beatName = scheduler.CurrStory.Peek();
             var beat = scheduler.StoryBeats[beatName];
+            var secsInBeat = (curTime - scheduler.BeatStart).TotalSeconds;
 
-            if (scheduler.BeatTime > beat.MaxSecs)
+            if (secsInBeat > beat.MaxSecs)
             {
-                // Done with this beat (it's lasted too long)
-                _sawmill.Info($"StoryBeat {beatName} complete. It's lasted {scheduler.BeatTime} out of a maximum of {beat.MaxSecs} seconds.");
+                // Done with this beat (it has lasted too long)
+                _sawmill.Info($"StoryBeat {beatName} complete. It's lasted {scheduler.BeatStart} out of a maximum of {beat.MaxSecs} seconds.");
             }
-            else if (scheduler.BeatTime > beat.MinSecs)
+            else if (secsInBeat > beat.MinSecs)
             {
                 // Determine if we meet the chaos thresholds to exit this beat
                 if (!beat.EndIfAnyWorse.Empty && chaos.AnyWorseThan(beat.EndIfAnyWorse))
@@ -260,15 +266,15 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
             }
 
             // If we didn't return by here, we are done with this beat.
-            scheduler.CurrStory.RemoveAt(0);
+            scheduler.CurrStory.Pop();
         }
-        scheduler.BeatTime = 0.0f;
+        scheduler.BeatStart = curTime;
 
         // Advance in the current story
         if (scheduler.CurrStory.Count > 0)
         {
             // Return the next beat in the current story.
-            var beatName = scheduler.CurrStory[0];
+            var beatName = scheduler.CurrStory.Peek();
             var beat = scheduler.StoryBeats[beatName];
 
             LogMessage($"New StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
@@ -288,12 +294,15 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
             }
 
             // A new story was picked. Copy the full list of beats (for us to pop beats from the front as we proceed)
-            scheduler.CurrStory = story.Beats.ShallowClone();
-            scheduler.CurrStoryName = storyName;
+            foreach (var storyBeat in story.Beats)
+            {
+                scheduler.CurrStory.Push(storyBeat);
+            }
+            scheduler.CurrentStoryName = storyName;
             SetupEvents(scheduler, count);
             _sawmill.Info($"New Story {storyName}: {story.Description}. {scheduler.PossibleEvents.Count} events to use.");
 
-            var beatName = scheduler.CurrStory[0];
+            var beatName = scheduler.CurrStory.Peek();
             var beat = scheduler.StoryBeats[beatName];
 
             LogMessage($"First StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
@@ -301,7 +310,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
         }
 
         // Just use the fallback beat when no stories were found. That beat does exist, right!?
-        scheduler.CurrStory.Add(scheduler.FallbackBeatName);
+        scheduler.CurrStory.Push(scheduler.FallbackBeatName);
         return scheduler.StoryBeats[scheduler.FallbackBeatName];
     }
 
@@ -309,6 +318,8 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
     {
         // Just a sum of squares (trying to get close to 0 on every score)
         //   Lower is better
+        // Note:  if the chaos value is above 655.36 then its square is above maxint (inside FixedPoint2) and it wraps
+        //        around. We need a full float range to handle the square.
         return chaos.ChaosDict.Values.Sum(v => (float)(v) * (float)(v));
     }
 
@@ -357,12 +368,12 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
             if (rank < noEvent || noChaosEvent)
             {
                 // Look up this event's prototype and check it is ready to run.
-                var proto = _prototypeManager.Index<EntityPrototype>(possibleEvent.PrototypeId);
+                var proto = _prototypeManager.Index<EntityPrototype>(possibleEvent.StationEvent);
 
                 if (!proto.TryGetComponent<StationEventComponent>(out var stationEvent, _factory))
                     continue;
 
-                if (!_event.CanRun(proto, stationEvent, count.Players, _gameTicker.RoundDuration()))
+                if (!_event.CanRun(proto, stationEvent, count.Players, GameTicker.RoundDuration()))
                     continue;
 
                 result.Add(new RankedEvent(possibleEvent, allChaosAfter, rank));

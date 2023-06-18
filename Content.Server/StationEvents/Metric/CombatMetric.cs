@@ -33,11 +33,11 @@ public sealed class CombatMetric : ChaosMetricSystem<CombatMetricComponent>
     {
         // Add up the pain of all the puddles
         var query = EntityQueryEnumerator<MindComponent, MobStateComponent, DamageableComponent>();
-        FixedPoint2 hostiles = 0.0f;
-        FixedPoint2 friendlies = 0.0f;
+        var hostiles = FixedPoint2.Zero;
+        var friendlies = FixedPoint2.Zero;
 
-        FixedPoint2 medical = 0.0f;
-        FixedPoint2 death = 0.0f;
+        var medical = FixedPoint2.Zero;
+        var death = FixedPoint2.Zero;
 
         var nukieQ = GetEntityQuery<NukeOperativeComponent>();
         var zombieQ = GetEntityQuery<ZombieComponent>();

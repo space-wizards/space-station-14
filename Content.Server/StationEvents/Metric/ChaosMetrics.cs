@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Text.Json.Serialization;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 using Robust.Shared.Utility;
@@ -22,15 +21,8 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
     public Dictionary<string, FixedPoint2> ChaosDict { get; set; } = new();
 
     /// <summary>
-    ///   Sum of the chaos values.
-    /// </summary>
-    [JsonIgnore]
-    public FixedPoint2 Total => ChaosDict.Values.Sum();
-
-    /// <summary>
     ///   Whether this chaos specifier has any entries.
     /// </summary>
-    [JsonIgnore]
     public bool Empty => ChaosDict.Count == 0;
 
     /// <summary>
@@ -80,30 +72,6 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
     }
 
     /// <summary>
-    ///   Remove any chaos entries with zero chaos.
-    /// </summary>
-    public void TrimZeros()
-    {
-        foreach (var (key, value) in ChaosDict)
-        {
-            if (value == 0)
-            {
-                ChaosDict.Remove(key);
-            }
-        }
-    }
-
-    /// <summary>
-    ///   Clamps each chaos value to be within the given range.
-    /// </summary>
-    public void Clamp(FixedPoint2 minValue, FixedPoint2 maxValue)
-    {
-        DebugTools.Assert(minValue < maxValue);
-        ClampMax(maxValue);
-        ClampMin(minValue);
-    }
-
-    /// <summary>
     ///   Sets all chaos values to be at least as large as the given number.
     /// </summary>
     /// <remarks>
@@ -136,25 +104,6 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
     }
 
     /// <summary>
-    ///   This adds the chaos values of some other <see cref="ChaosMetrics"/> without
-    ///   adding any new chaos types.
-    /// </summary>
-    public ChaosMetrics ExclusiveAdd(ChaosMetrics other)
-    {
-        ChaosMetrics newDamage = new(ChaosDict.ShallowClone());
-
-        foreach (var (type, value) in other.ChaosDict)
-        {
-            if (newDamage.ChaosDict.ContainsKey(type))
-            {
-                newDamage.ChaosDict[type] += value;
-            }
-        }
-
-        return newDamage;
-    }
-
-    /// <summary>
     ///   This subtracts the chaos values of some other <see cref="ChaosMetrics"/> without
     ///   adding any new chaos types.
     /// </summary>
@@ -170,48 +119,6 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
             }
         }
 
-        return newDamage;
-    }
-
-    #region Operators
-    public static ChaosMetrics operator *(ChaosMetrics chaos, FixedPoint2 factor)
-    {
-        ChaosMetrics newDamage = new();
-        foreach (var entry in chaos.ChaosDict)
-        {
-            newDamage.ChaosDict.Add(entry.Key, entry.Value * factor);
-        }
-        return newDamage;
-    }
-
-    public static ChaosMetrics operator *(ChaosMetrics chaos, float factor)
-    {
-        ChaosMetrics newDamage = new();
-        foreach (var entry in chaos.ChaosDict)
-        {
-            newDamage.ChaosDict.Add(entry.Key, entry.Value * factor);
-        }
-        return newDamage;
-    }
-
-    public static ChaosMetrics operator /(ChaosMetrics chaos, FixedPoint2 factor)
-    {
-        ChaosMetrics newDamage = new();
-        foreach (var entry in chaos.ChaosDict)
-        {
-            newDamage.ChaosDict.Add(entry.Key, entry.Value / factor);
-        }
-        return newDamage;
-    }
-
-    public static ChaosMetrics operator /(ChaosMetrics chaos, float factor)
-    {
-        ChaosMetrics newDamage = new();
-
-        foreach (var entry in chaos.ChaosDict)
-        {
-            newDamage.ChaosDict.Add(entry.Key, entry.Value / factor);
-        }
         return newDamage;
     }
 
@@ -247,15 +154,6 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
         }
         return newDamage;
     }
-
-    public static ChaosMetrics operator +(ChaosMetrics chaos) => chaos;
-
-    public static ChaosMetrics operator -(ChaosMetrics chaos) => chaos * -1;
-
-    public static ChaosMetrics operator *(float factor, ChaosMetrics chaos) => chaos * factor;
-
-    public static ChaosMetrics operator *(FixedPoint2 factor, ChaosMetrics chaos) => chaos * factor;
-
     public bool Equals(ChaosMetrics? other)
     {
         if (other == null || ChaosDict.Count != other.ChaosDict.Count)
@@ -269,5 +167,5 @@ public sealed class ChaosMetrics : IEquatable<ChaosMetrics>
 
         return true;
     }
-    #endregion
+    // #endregion
 }

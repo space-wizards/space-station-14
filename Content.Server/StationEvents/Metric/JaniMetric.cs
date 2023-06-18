@@ -9,7 +9,7 @@ namespace Content.Server.StationEvents.Metric;
 /// <summary>
 ///   Measure the mess of the station in puddles on the floor
 ///
-///   Jani - 2-30 points per 200mL (about one square) of various substances
+///   Jani - JaniMetricComponent.Puddles points per BaselineQty of various substances
 /// </summary>
 public sealed class JaniMetric : ChaosMetricSystem<JaniMetricComponent>
 {
@@ -21,7 +21,7 @@ public sealed class JaniMetric : ChaosMetricSystem<JaniMetricComponent>
 
         // Add up the pain of all the puddles
         var query = EntityQueryEnumerator<PuddleComponent, SolutionContainerManagerComponent>();
-        FixedPoint2 janiChaos = 0.0f;
+        var janiChaos = FixedPoint2.Zero;
         while (query.MoveNext(out var puddleUid, out var puddle, out var solutionMgr))
         {
             if (!_solutionContainerSystem.TryGetSolution(puddleUid, puddle.SolutionName, out var puddleSolution, solutionMgr))
