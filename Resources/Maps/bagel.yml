@@ -8807,6 +8807,7 @@ entities:
       type: SpreaderGrid
     - type: RadiationGridResistance
     - type: GasTileOverlay
+      nextUpdate: 0
     - type: GridPathfinding
   - uid: 943
     components:
@@ -9066,6 +9067,7 @@ entities:
       type: GridAtmosphere
     - type: GasTileOverlay
     - type: RadiationGridResistance
+      nextUpdate: 0
     - type: GridPathfinding
 - proto: AcousticGuitarInstrument
   entities:
@@ -62281,16 +62283,12 @@ entities:
     - pos: 31.52947,14.40356
       parent: 60
       type: Transform
-    - nextSound: 223.9654771
-      type: EmitSoundOnCollide
   - uid: 17299
     components:
     - flags: InContainer
       type: MetaData
     - parent: 16058
       type: Transform
-    - nextSound: 1332.9551461
-      type: EmitSoundOnCollide
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
@@ -62332,8 +62330,6 @@ entities:
       type: MetaData
     - parent: 16058
       type: Transform
-    - nextSound: 1336.9231484
-      type: EmitSoundOnCollide
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
@@ -62427,8 +62423,6 @@ entities:
       type: MetaData
     - parent: 16058
       type: Transform
-    - nextSound: 1344.6943063
-      type: EmitSoundOnCollide
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
@@ -62593,8 +62587,6 @@ entities:
       type: MetaData
     - parent: 16058
       type: Transform
-    - nextSound: 1342.5612744
-      type: EmitSoundOnCollide
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
@@ -62940,8 +62932,6 @@ entities:
     - pos: 50.5,-44.5
       parent: 60
       type: Transform
-    - nextSound: 702.0977996
-      type: EmitSoundOnCollide
 - proto: ClothingHeadHelmetCosmonaut
   entities:
   - uid: 4357
@@ -63017,8 +63007,6 @@ entities:
     - pos: -53.482998,21.673847
       parent: 60
       type: Transform
-    - nextSound: 1250.3538049
-      type: EmitSoundOnCollide
 - proto: ClothingHeadsetEngineering
   entities:
   - uid: 16082
@@ -63096,8 +63084,6 @@ entities:
     - pos: -45.5,-32.5
       parent: 60
       type: Transform
-    - nextSound: 1177.1111392
-      type: EmitSoundOnCollide
 - proto: ClothingMaskClown
   entities:
   - uid: 6684
@@ -63415,8 +63401,6 @@ entities:
     - pos: 50.5,-44.5
       parent: 60
       type: Transform
-    - nextSound: 700.2180887
-      type: EmitSoundOnCollide
 - proto: ClothingOuterHardsuitBasic
   entities:
   - uid: 5542
@@ -63424,8 +63408,6 @@ entities:
     - pos: -40.51241,3.5016193
       parent: 60
       type: Transform
-    - nextSound: 790.312397
-      type: EmitSoundOnCollide
 - proto: ClothingOuterHardsuitEVA
   entities:
   - uid: 5207
@@ -63521,8 +63503,6 @@ entities:
       type: MetaData
     - parent: 16058
       type: Transform
-    - nextSound: 1334.594179
-      type: EmitSoundOnCollide
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
@@ -63547,8 +63527,6 @@ entities:
     - pos: -54.5,21.5
       parent: 60
       type: Transform
-    - nextSound: 1220.576973
-      type: EmitSoundOnCollide
 - proto: ClothingShoesBootsLaceup
   entities:
   - uid: 7523
@@ -63586,8 +63564,6 @@ entities:
       type: MetaData
     - parent: 16058
       type: Transform
-    - nextSound: 1340.1781086
-      type: EmitSoundOnCollide
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
@@ -63801,8 +63777,6 @@ entities:
       type: MetaData
     - parent: 16058
       type: Transform
-    - nextSound: 1346.2511638
-      type: EmitSoundOnCollide
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
@@ -63831,10 +63805,6 @@ entities:
     - pos: -53.451748,20.486347
       parent: 60
       type: Transform
-    - nextUpdate: 1242.3615122
-      type: SuitSensor
-    - nextSound: 1242.5615122
-      type: EmitSoundOnCollide
 - proto: ClothingUniformOveralls
   entities:
   - uid: 941
@@ -112064,8 +112034,6 @@ entities:
       type: MetaData
     - parent: 16058
       type: Transform
-    - nextSound: 1338.543622
-      type: EmitSoundOnCollide
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
