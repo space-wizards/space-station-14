@@ -115,7 +115,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 if (duc != null)
                     duc.Container.Insert(entity, EntityManager, xform, meta: meta);
                 else
-                    _xformSystem.AttachToGridOrMap(uid, xform);
+                    _xformSystem.AttachToGridOrMap(entity, xform);
 
                 if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics))
                 {

@@ -59,7 +59,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             base.Initialize();
 
-            _vitalSawmill = IoCManager.Resolve<LogManager>().GetSawmill("VitalComponentMissing");
+            _vitalSawmill = IoCManager.Resolve<ILogManager>().GetSawmill("VitalComponentMissing");
 
             // Shouldn't need re-anchoring.
             SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
@@ -318,8 +318,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             _ui.TryCloseAll(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key);
-            component.AutomaticEngageToken?.Cancel();
-            component.AutomaticEngageToken = null;
+            component.NextFlush = TimeSpan.MaxValue;
 
             component.Container = null!;
             RemComp<ActiveDisposalUnitComponent>(uid);
@@ -335,11 +334,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // TODO: Need to check the other stuff.
             if (!args.Powered)
             {
-                component.AutomaticEngageToken?.Cancel();
-                component.AutomaticEngageToken = null;
+                component.NextFlush = TimeSpan.MaxValue;
             }
 
-            HandleStateChange(uid, component, args.Powered && component.State == SharedDisposalUnitComponent.PressureState.Pressurizing);
+            HandleStateChange(uid, component, args.Powered && (component.State == SharedDisposalUnitComponent.PressureState.Pressurizing || component.NextFlush != TimeSpan.MaxValue));
             UpdateVisualState(uid, component);
             UpdateInterface(uid, component, args.Powered);
 
@@ -436,13 +434,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
             else if (component.State == SharedDisposalUnitComponent.PressureState.Ready && component.NextFlush < _gameTiming.CurTime)
             {
-                if (!TryFlush(uid, component))
-                {
-                    if (component.AutoFlushing)
-                        TryQueueEngage(uid, component);
-                    else
-                        component.AutoFlushing = false;
-                }
+                if (!TryFlush(uid, component) && component.AutoFlushing)
+                    TryQueueEngage(uid, component);
+                else
+                    component.AutoFlushing = false;
             }
 
             Box2? disposalsBounds = null;
@@ -480,7 +475,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (count != component.RecentlyEjected.Count)
                 Dirty(component);
 
-            return state == SharedDisposalUnitComponent.PressureState.Ready && component.RecentlyEjected.Count == 0;
+            return state == SharedDisposalUnitComponent.PressureState.Ready && component.NextFlush == TimeSpan.MaxValue && component.RecentlyEjected.Count == 0;
         }
 
         public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid? userId, DisposalUnitComponent? unit = null)
@@ -565,8 +560,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             _disposalTubeSystem.TryInsert(entry, component, beforeFlushArgs.Tags);
 
-            component.AutomaticEngageToken?.Cancel();
-            component.AutomaticEngageToken = null;
+            component.NextFlush = TimeSpan.MaxValue;
 
             if (!component.DisablePressure)
             {
@@ -664,8 +658,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (component.Container.ContainedEntities.Count == 0)
             {
-                component.AutomaticEngageToken?.Cancel();
-                component.AutomaticEngageToken = null;
+                component.NextFlush = TimeSpan.MaxValue;
             }
 
             if (!component.RecentlyEjected.Contains(toRemove))
@@ -692,6 +685,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (CanFlush(uid, component))
             {
                 component.NextFlush = _gameTiming.CurTime + component.FlushDelay;
+                EnsureComp<ActiveDisposalUnitComponent>(uid);
             }
         }
 
@@ -724,7 +718,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         /// <summary>
         /// If something is inserted (or the likes) then we'll queue up a flush in the future.
         /// </summary>
-        public void TryQueueEngage(EntityUid _, DisposalUnitComponent component)
+        public void TryQueueEngage(EntityUid uid, DisposalUnitComponent component)
         {
             if (component.Deleted || !component.AutomaticEngage || !component.Powered && component.Container.ContainedEntities.Count == 0)
             {
@@ -733,6 +727,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             component.NextFlush = _gameTiming.CurTime + component.AutomaticEngageTime;
             component.AutoFlushing = true;
+
+            EnsureComp<ActiveDisposalUnitComponent>(uid);
         }
 
         public void AfterInsert(EntityUid uid, DisposalUnitComponent component, EntityUid inserted, EntityUid? user = null)

@@ -35,7 +35,6 @@ namespace Content.Server.Disposal.Tube
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly DisposableSystem _disposableSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         public override void Initialize()
         {
