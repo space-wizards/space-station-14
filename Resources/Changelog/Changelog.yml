@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Electricity anomalies will now create an EMP when going supercritical.,
-    type: Tweak}
-  id: 3525
-  time: '2023-04-24T00:11:24.0000000+00:00'
 - author: Tunguso4ka
   changes:
   - {message: cossacks jumpsuit and hat, type: Add}
@@ -2920,3 +2914,9 @@ Entries:
   - {message: added a guidebook entry for cargo, type: Add}
   id: 4024
   time: '2023-06-18T02:31:49.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: The Syndicate has stopped making zombie bundles available to nuclear
+      operatives after learning that the included bioweapon has expired., type: Remove}
+  id: 4025
+  time: '2023-06-18T03:23:42.0000000+00:00'
