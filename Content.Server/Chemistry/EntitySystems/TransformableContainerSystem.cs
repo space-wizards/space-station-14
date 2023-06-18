@@ -1,5 +1,6 @@
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -8,6 +9,7 @@ public sealed class TransformableContainerSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metadataSystem = default!;
 
     public override void Initialize()
     {
@@ -56,8 +58,8 @@ public sealed class TransformableContainerSystem : EntitySystem
         {
             var metadata = MetaData(owner);
             var val = Loc.GetString("transformable-container-component-glass", ("name", proto.LocalizedName));
-            metadata.EntityName = val;
-            metadata.EntityDescription = proto.LocalizedDescription;
+            _metadataSystem.SetEntityName(owner, val, metadata);
+            _metadataSystem.SetEntityDescription(owner, proto.LocalizedDescription, metadata);
             component.CurrentReagent = proto;
             component.Transformed = true;
         }
@@ -72,11 +74,11 @@ public sealed class TransformableContainerSystem : EntitySystem
 
         if (!string.IsNullOrEmpty(component.InitialName))
         {
-            metadata.EntityName = component.InitialName;
+            _metadataSystem.SetEntityName(owner, component.InitialName, metadata);
         }
         if (!string.IsNullOrEmpty(component.InitialDescription))
         {
-            metadata.EntityDescription = component.InitialDescription;
+            _metadataSystem.SetEntityDescription(owner, component.InitialDescription, metadata);
         }
     }
 }
