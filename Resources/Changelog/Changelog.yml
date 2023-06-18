@@ -1,9 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - {message: Jonkbots can now be constructed., type: Add}
-  id: 3530
-  time: '2023-04-24T02:32:33.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Entities that draw battery power should now draw at a consistent rate.,
@@ -2922,3 +2917,8 @@ Entries:
     type: Tweak}
   id: 4029
   time: '2023-06-18T15:02:27.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Removed the spare CE belt., type: Remove}
+  id: 4030
+  time: '2023-06-18T17:06:09.0000000+00:00'
