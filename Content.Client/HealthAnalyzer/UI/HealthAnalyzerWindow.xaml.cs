@@ -36,27 +36,21 @@ namespace Content.Client.HealthAnalyzer.UI
 
         public void Populate(HealthAnalyzerScannedUserMessage msg)
         {
-            PatientDataContainer.Visible = false;
-            NoPatientDataText.Visible = false;
-            GroupsContainer.Visible = false;
+            NoPatientDataText.Visible = true;
             GroupsContainer.RemoveAllChildren();
 
             if (msg.TargetEntity == null
                 || !_entityManager.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
             {
-                Logger.Debug("no patien data!");
-                NoPatientDataText.Visible = true;
-                SetSize = (250, 100);
                 return;
             }
 
-            string entityName = "Unknown";
+            var entityName = "Unknown";
             if (msg.TargetEntity != null &&
                 _entityManager.TryGetComponent<MetaDataComponent>(msg.TargetEntity.Value, out var metaData))
                 entityName = Identity.Name(msg.TargetEntity.Value, _entityManager);
 
-            PatientDataContainer.Visible = true;
-            GroupsContainer.Visible = true;
+            NoPatientDataText.Visible = false;
 
             PatientName.Text = Loc.GetString(
                 "health-analyzer-window-entity-health-text",
@@ -73,7 +67,7 @@ namespace Content.Client.HealthAnalyzer.UI
 
             var protos = IoCManager.Resolve<IPrototypeManager>();
 
-            var groupsInRow = 3;
+            var groupsInRow = 2;
 
             var diagnosticGroupsCounter = groupsInRow;
 
@@ -110,7 +104,7 @@ namespace Content.Client.HealthAnalyzer.UI
                     Orientation = BoxContainer.LayoutOrientation.Vertical
                 };
 
-                groupContainer.AddChild(CreateDiagnosticGroupTitle(groupTitleText, damageGroupId, (int)damageAmount));
+                groupContainer.AddChild(CreateDiagnosticGroupTitle(groupTitleText, damageGroupId, (int) damageAmount));
                 groupContainer.AddChild(new PanelContainer { StyleClasses = { "LowDivider" } });
 
                 // Show the damage for each type in that group.
@@ -132,7 +126,7 @@ namespace Content.Client.HealthAnalyzer.UI
                                 ("amount", typeAmount)
                             );
 
-                            groupContainer.AddChild(CreateDiagnosticItemLabel(damageString, (int)typeAmount == 0));
+                            groupContainer.AddChild(CreateDiagnosticItemLabel(damageString, (int) typeAmount == 0));
                         }
                     }
                 }

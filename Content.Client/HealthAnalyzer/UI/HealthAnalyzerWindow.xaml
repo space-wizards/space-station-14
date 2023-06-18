@@ -1,4 +1,5 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io">
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+               SetSize="250 100">
     <ScrollContainer
         VerticalExpand="True"
         HorizontalExpand="True">
@@ -7,24 +8,21 @@
             Orientation="Vertical">
             <Label
                 Name="NoPatientDataText"
-                Visible="False"
                 Text="{Loc health-analyzer-window-no-patient-data-text}" />
             <BoxContainer
                 Name="PatientDataContainer"
-                Visible="False"
                 Orientation="Vertical">
                 <Label
                     Name="PatientName" />
                 <Label
-                    Name="patientDamageAmount" 
-                    Margin="0 10"/>
+                    Name="patientDamageAmount"
+                    Margin="0 10" />
             </BoxContainer>
             <BoxContainer
                 Name="GroupsContainer"
                 HorizontalExpand="True"
                 VerticalExpand="True"
-                 Orientation="Vertical"
-                Visible="False">
+                Orientation="Vertical">
             </BoxContainer>
         </BoxContainer>
     </ScrollContainer>
