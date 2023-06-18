@@ -41,3 +41,11 @@
   loots:
     - !type:BiomeMarkerLoot
       proto: OreUranium
+
+- type: salvageLoot
+  id: OreBananium
+  desc: Veins of bananium ore
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreBananium
