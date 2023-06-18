@@ -86536,7 +86536,7 @@ entities:
     - baseSprintSpeed: 2.5
       type: MovementSpeedModifier
     - type: GhostTakeoverAvailable
-    - type: Mind
+    - type: MindContainer
     - lerpTarget: 0
       type: InputMover
     - type: MobMover

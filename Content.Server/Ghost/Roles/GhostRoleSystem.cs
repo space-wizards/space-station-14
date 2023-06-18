@@ -5,6 +5,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Commands;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
@@ -33,6 +34,7 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
@@ -214,18 +216,14 @@ namespace Content.Server.Ghost.Roles
         {
             if (!Resolve(roleUid, ref role)) return;
 
-            var contentData = player.ContentData();
+            DebugTools.AssertNotNull(player.ContentData());
 
-            DebugTools.AssertNotNull(contentData);
+            var newMind = _mindSystem.CreateMind(player.UserId,
+                EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
+            _mindSystem.AddRole(newMind, new GhostRoleMarkerRole(newMind, role.RoleName));
 
-            var newMind = new Mind.Mind(player.UserId)
-            {
-                CharacterName = EntityManager.GetComponent<MetaDataComponent>(mob).EntityName
-            };
-            newMind.AddRole(new GhostRoleMarkerRole(newMind, role.RoleName));
-
-            newMind.ChangeOwningPlayer(player.UserId);
-            newMind.TransferTo(mob);
+            _mindSystem.ChangeOwningPlayer(newMind, player.UserId);
+            _mindSystem.TransferTo(newMind, mob);
         }
 
         public GhostRoleInfo[] GetGhostRolesInfo()
@@ -343,7 +341,7 @@ namespace Content.Server.Ghost.Roles
             if (ghostRole.MakeSentient)
                 MakeSentientCommand.MakeSentient(mob, EntityManager, ghostRole.AllowMovement, ghostRole.AllowSpeech);
 
-            mob.EnsureComponent<MindComponent>();
+            mob.EnsureComponent<MindContainerComponent>();
 
             GhostRoleInternalCreateMindAndTransfer(args.Player, uid, mob, ghostRole);
 
@@ -379,7 +377,7 @@ namespace Content.Server.Ghost.Roles
 
             ghostRole.Taken = true;
 
-            var mind = EnsureComp<MindComponent>(uid);
+            var mind = EnsureComp<MindContainerComponent>(uid);
 
             if (mind.HasMind)
             {
