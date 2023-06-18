@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original is taken from CEV-Eris at commit 7c7358df0347984994c1e6c643b61b8802cd7da7",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "off"
+    },
+    {
+      "name": "led_printing",
+      "delays": [
+        [ 0.25, 0.25 ]
+      ]
+    },
+    {
+      "name": "led_powered"
+    },
+    {
+      "name": "led_out"
+    },
+    {
+      "name": "top_powered"
+    },
+    {
+      "name": "top_scanning"
+    },
+	{
+      "name": "top_scanning_emagged"
+    },
+    {
+      "name": "top_paper"
+    },
+    {
+      "name": "printing_paper",
+      "delays": [
+        [
+          0.4, 0.4, 0.4,
+          0.4, 0.4
+        ]
+      ]
+    }
+  ]
+}

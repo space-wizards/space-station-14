@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>med_rep_death</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-МЕД-СВД</EntityName>
+  <PhotocopierTitle>Свидетельство о смерти</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-МЕД-СВД
+Свидетельство о смерти
+Дата: ДЕНЬ/МЕСЯЦ/ГОД
+
+Имя умершего:
+Раса:
+Пол:
+Должность:
+Причина смерти:
+Статус клонирования:
+Ответственный за отчет: (ПОЛНОЕ ИМЯ), (ДОЛЖНОСТЬ)
+
+Место для печатей – Главный врач]]></Content>
+</Form>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>cmd_dsc</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-КОМ-УВОЛ</EntityName>
+  <PhotocopierTitle>Приказ об увольнении</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-КОМ-УВОЛ
+Приказ об увольнении
+Дата: ДЕНЬ/МЕСЯЦ/ГОД
+
+Заявитель:
+Должность:
+Я, увольняю сотрудника:
+По причине:
+
+Место для печатей]]></Content>
+</Form>

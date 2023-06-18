@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>sup_ord</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-СНБ-ЗАК</EntityName>
+  <PhotocopierTitle>Заказ</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-СНБ-ЗАК
+Заказ
+
+Заявитель:
+Должность:
+Товар:
+Причина:
+Место доставки:
+
+Место для печатей – Квартирмейстер]]></Content>
+</Form>

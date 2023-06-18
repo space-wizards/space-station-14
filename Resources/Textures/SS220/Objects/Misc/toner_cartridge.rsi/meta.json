@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Is taken from Paradise Station (github.com/ParadiseSS13/Paradise) at commit 7bea1afd265dda02945207c8fd8821469441f757",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+	{
+	  "name": "icon"
+	}
+  ]
+}

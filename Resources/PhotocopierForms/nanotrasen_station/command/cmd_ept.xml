@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>cmd_ept</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-КОМ-СМД</EntityName>
+  <PhotocopierTitle>Заявление о смене должности</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-КОМ-СМД
+Заявление о смене должности
+Дата: ДЕНЬ/МЕСЯЦ/ГОД
+
+Заявитель:
+Текущая занятость заявителя:
+Выдаваемая занятость:
+Причины по которым я должны получить данную работу:
+(ОПИШИТЕ ПРИЧИНЫ ЗДЕСЬ)
+
+Место для печатей]]></Content>
+</Form>

@@ -1,0 +1,1 @@
+nanotrasen_form_header.png: CC-BY-NC-SA-3.0 Original is taken from Paradise build of SS13 (ParadiseSS13/Paradise on GitHub) at commit 548161c4ec3bdff455ba7a972b079780d74641bf. Author is Warriorstar (warriorstar-orion on GitHub).

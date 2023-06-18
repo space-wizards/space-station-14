@@ -7,6 +7,7 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobHumanDummy
   skinColoration: HumanToned
+  buttScanTexture: /Textures/SS220/Interface/Butts/human.png
 
 # The lack of a layer means that
 # this person cannot have round-start anything

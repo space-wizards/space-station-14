@@ -1,0 +1,11 @@
+- type: entity
+  name: paper
+  parent: Paper
+  id: PaperNtForm
+  description: "A sheet paper with a NanoTrasen logo on it."
+  components:
+    - type: PaperVisuals
+      headerImagePath: "/Textures/SS220/Interface/Paper/nanotrasen_form_header.png"
+      backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 32.0, 16.0, 32.0, 0.0

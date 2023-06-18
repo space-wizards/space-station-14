@@ -1,0 +1,79 @@
+nanotrasen_central_command:
+  main:
+    Name: ЦентКом
+    Forms:
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_evac.xml
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_goal_rep.xml
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_shift_end.xml
+nanotrasen_station:
+  command:
+    Name: Командование
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/command/cc_req_bonus.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_acap.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_acom.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_acr.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_acwt.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_afe.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_cc_frs.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_cc_goal.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_cc_inv.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_cc_srt.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_dcr_award.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_dsc.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_ept.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_fcom.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_qlf.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_req_id.xml
+    - /PhotocopierForms/nanotrasen_station/command/cmd_req_pda.xml
+  internal_affairs:
+    Name: Агент Внутренних Дел
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/internal_affairs/cmd_comp.xml
+    - /PhotocopierForms/nanotrasen_station/internal_affairs/sec_gop.xml
+    - /PhotocopierForms/nanotrasen_station/internal_affairs/sec_rep_ia.xml
+    - /PhotocopierForms/nanotrasen_station/internal_affairs/sec_sopb.xml
+  security:
+    Name: Служба Безопасности
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/security/sec_awt.xml
+    - /PhotocopierForms/nanotrasen_station/security/sec_dty.xml
+    - /PhotocopierForms/nanotrasen_station/security/sec_exc.xml
+    - /PhotocopierForms/nanotrasen_station/security/sec_inw.xml
+    - /PhotocopierForms/nanotrasen_station/security/sec_itg.xml
+    - /PhotocopierForms/nanotrasen_station/security/sec_ord_imp.xml
+    - /PhotocopierForms/nanotrasen_station/security/sec_pmt.xml
+    - /PhotocopierForms/nanotrasen_station/security/sec_rep_itg.xml
+    - /PhotocopierForms/nanotrasen_station/security/sec_sur.xml
+    - /PhotocopierForms/nanotrasen_station/security/sec_swt.xml
+    - /PhotocopierForms/nanotrasen_station/security/sec_vdc.xml
+    - /PhotocopierForms/nanotrasen_station/security/sec_vdc_gop.xml
+    - /PhotocopierForms/nanotrasen_station/security/sup_ord_wep.xml
+  medical:
+    Name: Медицинский отдел
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/medical/med_eut.xml
+    - /PhotocopierForms/nanotrasen_station/medical/med_ord_chem.xml
+    - /PhotocopierForms/nanotrasen_station/medical/med_rcp.xml
+    - /PhotocopierForms/nanotrasen_station/medical/med_rep_death.xml
+    - /PhotocopierForms/nanotrasen_station/medical/med_rep_psych.xml
+  engineering:
+    Name: Инженерный отдел
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/engineering/eng_permit.xml
+    - /PhotocopierForms/nanotrasen_station/engineering/eng_permit_2.xml
+    - /PhotocopierForms/nanotrasen_station/engineering/eng_req_tw.xml
+  science:
+    Name: Научный отдел
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/science/rnd_ord.xml
+    - /PhotocopierForms/nanotrasen_station/science/rnd_rnt.xml
+  cargo:
+    Name: Отдел снабжения
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/cargo/sup_ord.xml
+  service:
+    Name: Отдел обслуживания
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/service/svc_mcf.xml
+    - /PhotocopierForms/nanotrasen_station/service/svc_mds.xml

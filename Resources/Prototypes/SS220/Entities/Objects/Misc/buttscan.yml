@@ -1,0 +1,25 @@
+- type: entity
+  name: butt scan
+  parent: BaseItem
+  id: ButtScan
+  description: "A paper with a grayscale copy of the butt, apparently made using photocopier."
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Misc/butt_scan.rsi
+    netsync: false
+    layers:
+    - state: icon
+  - type: ActivatableUI
+    key: enum.ButtScanUiKey.Key
+    closeOnHandDeselect: false
+  - type: UserInterface
+    interfaces:
+    - key: enum.ButtScanUiKey.Key
+      type: ButtScanBoundUserInterface
+  - type: ButtScan
+  - type: Item
+    size: 1
+  - type: Tag
+    tags:
+    - Document
+    - Trash

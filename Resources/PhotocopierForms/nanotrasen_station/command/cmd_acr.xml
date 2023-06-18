@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>cmd_acr</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-КОМ-ЛД</EntityName>
+  <PhotocopierTitle>Приказ о лишении доступа</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-КОМ-ЛД
+Приказ о лишении доступа
+
+Заявитель:
+Прошу лишить сотрудника(ов):
+доступа в:
+Причина:
+
+Место для печатей – Глава(ы) отдела(ов)]]></Content>
+</Form>

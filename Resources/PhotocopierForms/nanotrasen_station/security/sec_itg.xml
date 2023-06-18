@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>sec_itg</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-СБ-РОЗ</EntityName>
+  <PhotocopierTitle>Постановление о розыске</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-СБ-РОЗ
+Постановление о розыске
+Дата: ДЕНЬ/МЕСЯЦ/ГОД
+
+Причина розыска:
+Имя подозреваемого: (ПОЛНОЕ ИМЯ)
+Дополнительные замечания:
+
+Место для печатей]]></Content>
+</Form>

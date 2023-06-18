@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>eng_permit_2</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-ИНЖ-РАЗР-02</EntityName>
+  <PhotocopierTitle>Заявление на проведение строительных работ</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-ИНЖ-РАЗР-02
+Заявление на проведение строительных работ
+Дата: ДЕНЬ/МЕСЯЦ/ГОД
+
+Заявитель: (ПОЛНОЕ ИМЯ)
+Должность:
+Прошу разрешение на строительство/модернизацию следующего(их) объекта(ов):
+Причина:
+
+Место для печатей]]></Content>
+</Form>

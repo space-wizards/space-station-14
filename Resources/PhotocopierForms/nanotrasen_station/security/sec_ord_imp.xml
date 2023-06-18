@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>sec_ord_imp</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-СБ-ЗАК</EntityName>
+  <PhotocopierTitle>Постановление об установке отслеживающего импланта</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-СБ-ЗАК
+Постановление об установке отслеживающего импланта
+Дата: ДЕНЬ/МЕСЯЦ/ГОД
+
+Имя того, которому будет установлен: (ПОЛНОЕ ИМЯ)
+Должность:
+Причина установки импланта:
+
+Место для печатей - Глава Службы Безопасности]]></Content>
+</Form>

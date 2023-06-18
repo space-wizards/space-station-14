@@ -11,6 +11,7 @@
   maleFirstNames: names_reptilian_male
   femaleFirstNames: names_reptilian_female
   naming: FirstDashFirst
+  buttScanTexture: /Textures/SS220/Interface/Butts/unathi.png
 
 - type: speciesBaseSprites
   id: MobReptilianSprites

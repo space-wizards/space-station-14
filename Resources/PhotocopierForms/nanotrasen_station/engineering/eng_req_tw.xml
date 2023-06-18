@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>eng_req_tw</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-ИНЖ-ЗАП</EntityName>
+  <PhotocopierTitle>Запрос на проведение технических работ в отделе</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-ИНЖ-ЗАП
+Запрос на проведение технических работ в отделе
+Дата: ДЕНЬ/МЕСЯЦ/ГОД
+
+Заявитель: (ПОЛНОЕ ИМЯ)
+Должность:
+Название отдела:
+Причина:
+
+Место для печати - Печать главы отдела]]></Content>
+</Form>

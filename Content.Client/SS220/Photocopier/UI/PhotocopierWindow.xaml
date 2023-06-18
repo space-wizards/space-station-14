@@ -1,0 +1,153 @@
+<!-- // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt -->
+
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                      xmlns:fancyTree="clr-namespace:Content.Client.UserInterface.Controls.FancyTree"
+                      xmlns:ui="clr-namespace:Content.Client.SS220.Photocopier.UI"
+
+                      Title="{Loc 'photocopier-ui-window'}"
+                      Resizable="True"
+                      MinSize="550 353"
+                      SetSize="600 353">
+
+    <BoxContainer Orientation="Vertical">
+
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+            <!-- Tree of form templates -->
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Name="TreeBox" MinWidth="100">
+                <!-- FIX LATER (31.05.2023): FancyTree содержит скролл, но горизонтальный не работает
+                в некоторых случаях после ресайза из-за ReturnMeasure, поэтому заворачиваю еще в один, так вроде всё ок -->
+                <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="2 0 0 0">
+                    <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True"/>
+                </ScrollContainer>
+                <cc:VSeparator StyleClasses="LowDivider" Margin="4 0"/>
+            </BoxContainer>
+
+            <!-- Controls and status -->
+            <BoxContainer Orientation="Vertical"
+                          VerticalExpand="True"
+                          HorizontalExpand="False"
+                          SetWidth="375"
+                          Margin="0 3 7 0">
+                <!-- Toner Progress Bar -->
+                <Label Text="{Loc 'photocopier-ui-toner'}" />
+                <ProgressBar Name="TonerBar"
+                             HorizontalExpand="True"
+                             MinValue="0"
+                             MaxValue="1"
+                             MinHeight="25"
+                             Page="0"
+                             Margin="0 10"
+                             Value="0.5">
+                    <Label Name="ChargePercentage" Margin="4 0" Text="0 %" />
+                </ProgressBar>
+
+                <!-- Status -->
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Text="{Loc 'photocopier-ui-status'}" />
+                    <Control MinWidth="4" />
+                    <RichTextLabel Name="StatusLabel" VerticalAlignment="Center" />
+                    <Button Name="StopButton"
+                            Text="{Loc 'photocopier-ui-stop-button'}"
+                            HorizontalExpand="True"
+                            Disabled="True"
+                            HorizontalAlignment="Right" />
+                </BoxContainer>
+
+                <cc:HSeparator Margin="-2 10"/>
+
+                <!-- Changing copy amount -->
+                <BoxContainer Orientation="Horizontal"
+                              HorizontalExpand="True"
+                              HorizontalAlignment="Left"
+                              Margin="0 0 0 20"
+                              SetHeight="32">
+
+                    <Label Text="{Loc 'photocopier-ui-amount'}" />
+                    <Control MinWidth="4" />
+                    <ui:IconButton Name="DecreaseButton"
+                                   Margin="0 0 0 0"
+                                   IconTexture="/Textures/SS220/Interface/Misc/minus.png"
+                                   VerticalExpand="True"
+                                   StyleClasses="OpenRight"
+                                   SetWidth="48"/>
+                    <LineEdit Name="AmountLineEdit"
+                              Margin="2 0"
+                              PlaceHolder="0"
+                              Text="1"
+                              HorizontalExpand="True"
+                              SetWidth="48"/>
+                    <ui:IconButton Name="IncreaseButton"
+                                   Margin="1 0 0 0"
+                                   IconTexture="/Textures/SS220/Interface/Misc/plus.png"
+                                   VerticalExpand="True"
+                                   StyleClasses="OpenLeft"
+                                   SetWidth="48"/>
+                </BoxContainer>
+
+                <!-- Scanning/Copying -->
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SetHeight="32">
+                    <Label Text="{Loc 'photocopier-ui-scan-surface'}" />
+                    <Control MinWidth="4" />
+                    <RichTextLabel Name="PaperStatusLabel" VerticalAlignment="Center" />
+
+                    <BoxContainer
+                        Orientation="Horizontal"
+                        HorizontalExpand="True"
+                        SetHeight="32"
+                        HorizontalAlignment="Right"
+                        Align="End">
+
+                        <ui:IconButton
+                            Name="RefreshButton"
+                            Margin="0 0 2 0"
+                            SetWidth="64"
+                            IconTexture="/Textures/SS220/Interface/Misc/alternate-sync.png"
+                            HorizontalExpand="True"
+                            VerticalExpand="True"
+                            ToolTip="{Loc 'photocopier-ui-refresh-button'}"
+                            StyleClasses="OpenRight"/>
+                        <ui:IconButton
+                            Name="EjectButton"
+                            Margin="0 0"
+                            SetWidth="64"
+                            IconTexture="/Textures/SS220/Interface/Misc/eject-cropped.png"
+                            Disabled="True"
+                            HorizontalExpand="True"
+                            VerticalExpand="True"
+                            ToolTip="{Loc 'photocopier-ui-eject-button'}"
+                            StyleClasses="OpenLeft"/>
+                    </BoxContainer>
+                </BoxContainer>
+                <Button Name="CopyButton"
+                        Text="{Loc 'photocopier-ui-copy-button'}"
+                        HorizontalExpand="True"
+                        Disabled="True"
+                        HorizontalAlignment="Left"
+                        Margin="0 0 0 10" />
+
+                <!-- Printing templates -->
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Text="{Loc 'photocopier-ui-selected'}" />
+                    <Control MinWidth="4" />
+                    <RichTextLabel Name="SelectedFormLabel" VerticalAlignment="Center"/>
+                </BoxContainer>
+                <Button Name="PrintButton"
+                        Text="{Loc 'photocopier-ui-print-button'}"
+                        HorizontalExpand="True"
+                        Disabled="True"
+                        HorizontalAlignment="Left" />
+            </BoxContainer>
+        </BoxContainer>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'photocopier-flavor-left'}" StyleClasses="WindowFooterText" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

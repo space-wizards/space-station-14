@@ -1,0 +1,20 @@
+﻿<!-- © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt -->
+<ui:ButtScanWindow xmlns="https://spacestation14.io"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:ui="clr-namespace:Content.Client.SS220.ButtScan.UI"
+
+                      MouseFilter="Stop"
+                      Resizable="False">
+
+    <BoxContainer Name="ContentsRoot" Orientation="Vertical">
+        <PanelContainer StyleClasses="AngleRect" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="6">
+            <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"/>
+        </PanelContainer>
+
+        <PanelContainer Name="ScanBackground" StyleClasses="PaperDefaultBorder" VerticalExpand="True" HorizontalExpand="True">
+            <PanelContainer Name="ScanContent" VerticalExpand="True" HorizontalExpand="True">
+                <TextureButton Name="ContentsImage" SetSize="300 300" Margin="25 25" HorizontalAlignment="Center" VerticalAlignment="Center" MouseFilter="Ignore"/>
+            </PanelContainer>
+        </PanelContainer>
+    </BoxContainer>
+</ui:ButtScanWindow>

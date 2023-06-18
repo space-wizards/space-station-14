@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>rnd_ord</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-ИСЛ-ЗАК</EntityName>
+  <PhotocopierTitle>Заказ на производство продукта</PhotocopierTitle>
+  <Content><![CDATA[Форма: НТ-ИСЛ-ЗАК
+Заказ на производство продукта
+
+Заявитель: (ПОЛНОЕ ИМЯ)
+Должность заявителя:
+Продукт:
+Количество:
+Причина:
+
+Место для печатей – Научный руководитель]]></Content>
+</Form>

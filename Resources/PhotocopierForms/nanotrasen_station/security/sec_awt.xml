@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>sec_awt</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-СБ-АРСТ</EntityName>
+  <PhotocopierTitle>Ордер на арест</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-СБ-АРСТ
+Ордер на арест
+
+Заявитель ордера: (ПОЛНОЕ ИМЯ)
+Должность заявителя:
+Провести задержание и арест лиц(а):
+Причина:
+
+Место для печатей – Служба безопасности]]></Content>
+</Form>

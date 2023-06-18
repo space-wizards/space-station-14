@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>sec_vdc_gop</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-СБ-СУД-УДО</EntityName>
+  <PhotocopierTitle>Заключение суда по УДО</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-СБ-СУД-УДО
+Заключение суда по УДО
+Дата: ДЕНЬ/МЕСЯЦ/ГОД
+
+Представитель судебной власти: (ПОЛНОЕ ИМЯ ПРЕДСТАВИТЕЛЯ)
+В должности: (ДОЛЖНОСТЬ ПРЕДСТАВИТЕЛЯ)
+Утверждаю акт об условно-досрочном освобождении заключенного: (ПОЛНОЕ ИМЯ ЗАКЛЮЧЕННОГО)
+
+Место для печатей]]></Content>
+</Form>

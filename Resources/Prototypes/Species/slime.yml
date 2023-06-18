@@ -8,6 +8,7 @@
   markingLimits: MobSlimeMarkingLimits
   dollPrototype: MobSlimePersonDummy
   skinColoration: Hues
+  buttScanTexture: /Textures/SS220/Interface/Butts/slime.png
 
 - type: speciesBaseSprites
   id: MobSlimeSprites

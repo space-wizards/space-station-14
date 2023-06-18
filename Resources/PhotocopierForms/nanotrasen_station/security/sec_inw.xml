@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>sec_inw</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-СБ-ПКЗ</EntityName>
+  <PhotocopierTitle>Показания</PhotocopierTitle>
+  <Content><![CDATA[Форма: НТ-СБ-ПКЗ
+Показания
+Дата: ДЕНЬ/МЕСЯЦ/ГОД
+
+Заявитель:
+Должность заявителя:
+Дознаватель:
+Должность дознавателя:
+По существу заданных мне вопросов я могу показать следующее:
+(РАССКАЗ О ПРОИСШЕСТВИИ)]]></Content>
+</Form>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>svc_mcf</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-СЗБ</EntityName>
+  <PhotocopierTitle>Свидетельство о заключении брака</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-СЗБ
+Свидетельство о заключении брака
+
+Я, (ПОЛНОЕ ИМЯ), в должности (УКАЗАТЬ: священник/капитан), заключаю брак между (ПОЛНОЕ ИМЯ) и (ПОЛНОЕ ИМЯ).
+После заключения брака присвоены фамилии:
+Мужу:
+Жене:
+
+Место для печатей]]></Content>
+</Form>

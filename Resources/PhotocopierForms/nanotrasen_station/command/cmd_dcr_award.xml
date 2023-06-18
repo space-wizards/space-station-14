@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>cmd_dcr_award</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-КОМ-УКЗ</EntityName>
+  <PhotocopierTitle>Приказ о награждении</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-КОМ-УКЗ
+Приказ о награждении
+Дата: ДЕНЬ/МЕСЯЦ/ГОД
+
+Я, (ПОЛНОЕ ИМЯ), в лице (ДОЛЖНОСТЬ)
+Награждаю (ПОЛНОЕ ИМЯ) (ВИД НАГРАДЫ - Медалью и т.п.)
+За следующие заслуги:
+
+Место для печатей]]></Content>
+</Form>

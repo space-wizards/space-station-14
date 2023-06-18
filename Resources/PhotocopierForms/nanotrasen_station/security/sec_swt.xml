@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>sec_swt</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-СБ-ОБСК</EntityName>
+  <PhotocopierTitle>Ордер на обыск</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-СБ-ОБСК
+Ордер на обыск
+
+Заявитель ордера: (ПОЛНОЕ ИМЯ ЗАЯВИТЕЛЯ)
+Должность заявителя:
+Провести обыск лиц(а):
+Причина:
+
+Место для печатей – Служба безопасности]]></Content>
+</Form>

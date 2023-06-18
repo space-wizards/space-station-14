@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>med_rcp</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-МЕД-РЦП</EntityName>
+  <PhotocopierTitle>Рецепт</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-МЕД-РЦП
+Рецепт
+
+Врач: (ПОЛНОЕ ИМЯ ВРАЧА)
+Полное имя и должность пациента:
+Разрешенные лекарства:
+Причина: (Невыносимые муки причиняемые психологическими/физическими болезнями и т.п.)
+
+Место для печатей - Главный врач или Психолог]]></Content>
+</Form>

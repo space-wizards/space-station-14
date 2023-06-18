@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>cc_req_bonus</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>форма НТ-ЦК-ЗПЦК</EntityName>
+  <PhotocopierTitle>Запрос на выдачу премии отделу или сотруднику</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-ЦК-ЗАП
+Запрос на выдачу премии отделу или сотруднику
+Дата: ДЕНЬ/МЕСЯЦ/ГОД
+
+Уполномоченное лицо: (ПОЛНОЕ ИМЯ), (ДОЛЖНОСТЬ)
+Награждаемый отдел или сотрудник:
+За следующие заслуги:
+
+Место для печатей]]></Content>
+</Form>

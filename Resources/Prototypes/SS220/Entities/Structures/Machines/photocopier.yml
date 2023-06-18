@@ -1,0 +1,98 @@
+- type: entity
+  id: PhotocopierBase
+  parent: BaseMachinePowered
+  name: photocopier
+  description: Can be used to print a variety of forms or photocopy whatever ((document)) you put on it.
+  components:
+  - type: Sprite
+    sprite: SS220/Structures/Machines/photocopier.rsi
+    netsync: false
+    noRot: true
+    layers:
+    - state: "off"
+      map: ["enum.PhotocopierVisualLayers.Base"]
+    - state: "led_powered"
+      map: ["enum.PhotocopierVisualLayers.Led"]
+      shader: unshaded
+    - state: "top_powered"
+      map: ["enum.PhotocopierVisualLayers.Top"]
+      shader: unshaded
+    - state: "top_paper"
+      map: ["enum.PhotocopierVisualLayers.TopPaper"]
+    - state: "printing_paper"
+      map: ["enum.PhotocopierVisualLayers.PrintAnim"]
+  - type: Appearance
+  - type: Climbable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 150
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: ApcPowerReceiver
+    powerLoad: 200
+    priority: Low
+  - type: Photocopier
+    formCollections: [ "nanotrasen_station" ]
+    emagButtDamage:
+      types:
+        Heat: 10
+    paperSlot:
+      insertSound: null #Is handled by Photocopier component, use paperInsertSound field of Photocopier
+      ejectSound: /Audio/SS220/Effects/paper_pick_up.ogg
+      whitelist:
+        components:
+          - Paper
+          - ButtScan
+    tonerSlot:
+      insertSound: /Audio/Machines/screwdriveropen.ogg
+      ejectSound: /Audio/Machines/screwdriverclose.ogg
+      startingItem: TonerCartridge
+      whitelist:
+        components:
+          - TonerCartridge
+  - type: ActivatableUI
+    key: enum.PhotocopierUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      - key: enum.PhotocopierUiKey.Key
+        type: PhotocopierBoundUi
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      CopierScan: !type:ContainerSlot
+      TonerCartridge: !type:ContainerSlot
+
+- type: entity
+  id: PhotocopierCentralCommand
+  parent: PhotocopierBase
+  name: central command photocopier
+  components:
+    - type: Photocopier
+      formCollections: [ "nanotrasen_station", "nanotrasen_central_command" ]
+
+- type: entity
+  name: toner cartridge
+  parent: BaseItem
+  id: TonerCartridge
+  description: A cartridge that contains toner. Meant to be used in a photocopier.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: SS220/Objects/Misc/toner_cartridge.rsi
+    layers:
+    - state: "icon"
+  - type: Item
+    size: 20
+    sprite: SS220/Objects/Misc/toner_cartridge.rsi
+  - type: TonerCartridge
+    capacity: 60
+    charges: 60
+  - type: StaticPrice
+    price: 10
