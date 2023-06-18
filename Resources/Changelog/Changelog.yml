@@ -1,10 +1,4 @@
 Entries:
-- author: Kit0vras
-  changes:
-  - {message: Added construction for curtains. They can be disassembled using wire
-      cutters., type: Add}
-  id: 3527
-  time: '2023-04-24T02:12:11.0000000+00:00'
 - author: freeman2651
   changes:
   - {message: First aid kits are now more thoroughly stocked, type: Tweak}
@@ -2920,3 +2914,8 @@ Entries:
   - {message: Bananium now generates on expedition planets., type: Fix}
   id: 4026
   time: '2023-06-18T07:11:30.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Added more dwarf accenting, type: Add}
+  id: 4027
+  time: '2023-06-18T09:12:10.0000000+00:00'
