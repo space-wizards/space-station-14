@@ -178,7 +178,7 @@
             Heat: 6.5
             Structural: 6
             Blunt: -4.5
-    litDisarmMalus: 0.6
+    litDisarmMalus: 0.7
   - type: MeleeWeapon
     attackRate: 1.6
     angle: 100
