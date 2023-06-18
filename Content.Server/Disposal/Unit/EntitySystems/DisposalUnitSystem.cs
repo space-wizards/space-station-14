@@ -143,7 +143,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!_actionBlockerSystem.CanDrop(args.User))
                 return;
 
-            if (!CanInsert(component, args.Using.Value))
+            if (!CanInsert(uid, component, args.Using.Value))
                 return;
 
             InteractionVerb insertVerb = new()
@@ -259,7 +259,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            if (!CanInsert(component, args.Used) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, component.Container))
+            if (!CanInsert(uid, component, args.Used) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, component.Container))
             {
                 return;
             }
@@ -274,7 +274,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         /// </summary>
         private void HandleThrowCollide(EntityUid uid, DisposalUnitComponent component, ThrowHitByEvent args)
         {
-            if (!CanInsert(component, args.Thrown) ||
+            if (!CanInsert(uid, component, args.Thrown) ||
                 _robustRandom.NextDouble() > 0.75 ||
                 !component.Container.Insert(args.Thrown))
             {
@@ -474,7 +474,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             }
 
-            if (!CanInsert(unit, toInsertId))
+            if (!CanInsert(unitId, unit, toInsertId))
                 return false;
 
             var delay = userId == toInsertId ? unit.EntryDelay : unit.DraggedEntryDelay;
@@ -691,9 +691,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
         }
 
-        public override bool CanInsert(SharedDisposalUnitComponent component, EntityUid entity)
+        public override bool CanInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid entity)
         {
-            if (!base.CanInsert(component, entity) || component is not DisposalUnitComponent serverComp)
+            if (!base.CanInsert(uid, component, entity) || component is not DisposalUnitComponent serverComp)
                 return false;
 
             return serverComp.Container.CanInsert(entity);

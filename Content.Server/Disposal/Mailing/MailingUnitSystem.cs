@@ -181,14 +181,8 @@ public sealed class MailingUnitSystem : EntitySystem
 
     private void OnTargetSelected(EntityUid uid, MailingUnitComponent component, TargetSelectedMessage args)
     {
-        if (string.IsNullOrEmpty(args.target))
-        {
-            component.Target = null;
-        }
-
-        component.Target = args.target;
+        component.Target = args.Target;
         UpdateUserInterface(component);
-
     }
 
     /// <summary>
