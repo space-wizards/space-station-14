@@ -1,11 +1,4 @@
 Entries:
-- author: OctoRocket
-  changes:
-  - {message: Healing items like bruise packs will now repeatedly heal until the patient
-      can't be healed of that type any more!, type: Add}
-  - {message: Added a popup when bleeding stops because of a healing item, type: Add}
-  id: 3532
-  time: '2023-04-24T04:34:18.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fix some equipment actions (toggle light, magboots, etc) not showing
@@ -2921,3 +2914,10 @@ Entries:
     type: Fix}
   id: 4031
   time: '2023-06-18T17:23:04.0000000+00:00'
+- author: FacePlus
+  changes:
+  - {message: Interns at Syndicate Command found a lost crate of Double Bladed Energy
+      Swords in the back. They will be giving them to agents at the cost of 16tc each
+      in their uplinks., type: Add}
+  id: 4032
+  time: '2023-06-18T19:35:23.0000000+00:00'
