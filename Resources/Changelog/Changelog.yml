@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Entities that draw battery power should now draw at a consistent rate.,
-    type: Fix}
-  - {message: Anomaly locators now consume less power while active., type: Tweak}
-  id: 3531
-  time: '2023-04-24T03:35:19.0000000+00:00'
 - author: OctoRocket
   changes:
   - {message: Healing items like bruise packs will now repeatedly heal until the patient
@@ -2922,3 +2915,9 @@ Entries:
   - {message: Removed the spare CE belt., type: Remove}
   id: 4030
   time: '2023-06-18T17:06:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed equipped clothing sprites not working for some mobs (e.g., monkeys).',
+    type: Fix}
+  id: 4031
+  time: '2023-06-18T17:23:04.0000000+00:00'
