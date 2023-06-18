@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: fixed hypospray "you feel prick" popup appearing to everyone., type: Fix}
-  id: 3539
-  time: '2023-04-25T13:18:52.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Space Dragon event works again., type: Fix}
@@ -2927,3 +2922,8 @@ Entries:
   - {message: Adds a gas mask for the ERT and death squadron., type: Add}
   id: 4038
   time: '2023-06-18T23:14:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Updated visuals for machine parts., type: Tweak}
+  id: 4039
+  time: '2023-06-18T23:28:27.0000000+00:00'
