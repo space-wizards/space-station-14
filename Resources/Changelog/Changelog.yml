@@ -1,14 +1,4 @@
 Entries:
-- author: Kit0vras
-  changes:
-  - {message: The security holoprojector sprite has been changed., type: Tweak}
-  id: 3537
-  time: '2023-04-25T11:58:35.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed artifacts getting negative point values, type: Fix}
-  id: 3538
-  time: '2023-04-25T13:18:30.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: fixed hypospray "you feel prick" popup appearing to everyone., type: Fix}
@@ -2925,3 +2915,15 @@ Entries:
     type: Fix}
   id: 4036
   time: '2023-06-18T22:35:19.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: 'Turning around from the previous change to the CE''s belt: the CE no
+      longer spawns with their special belt, instead it''s in their locker again.',
+    type: Tweak}
+  id: 4037
+  time: '2023-06-18T23:13:53.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds a gas mask for the ERT and death squadron., type: Add}
+  id: 4038
+  time: '2023-06-18T23:14:32.0000000+00:00'
