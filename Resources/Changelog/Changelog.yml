@@ -1,60 +1,4 @@
 Entries:
-- author: ProPandaBear
-  changes:
-  - {message: The "Spacebucks" barsign was added., type: Add}
-  id: 3520
-  time: '2023-04-23T22:13:32.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: 'Added secure chemicals crates, and jugs for greater chemical storage.',
-    type: Add}
-  id: 3521
-  time: '2023-04-23T23:53:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the CHIMP handcannon, a hand-held version of science''s APE.
-      Each bullet packs twice the punch of a normal APE.', type: Add}
-  id: 3522
-  time: '2023-04-23T23:58:45.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Autolathe icons for screwdrivers and wirecutters are now correct., type: Fix}
-  id: 3523
-  time: '2023-04-24T00:01:54.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Printed health analyzers and crew monitors no longer come pre-loaded
-      with batteries., type: Fix}
-  id: 3524
-  time: '2023-04-24T00:07:41.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Electricity anomalies will now create an EMP when going supercritical.,
-    type: Tweak}
-  id: 3525
-  time: '2023-04-24T00:11:24.0000000+00:00'
-- author: Tunguso4ka
-  changes:
-  - {message: cossacks jumpsuit and hat, type: Add}
-  id: 3526
-  time: '2023-04-24T01:46:15.0000000+00:00'
-- author: Kit0vras
-  changes:
-  - {message: Added construction for curtains. They can be disassembled using wire
-      cutters., type: Add}
-  id: 3527
-  time: '2023-04-24T02:12:11.0000000+00:00'
-- author: freeman2651
-  changes:
-  - {message: First aid kits are now more thoroughly stocked, type: Tweak}
-  id: 3528
-  time: '2023-04-24T02:15:21.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: Solar's Best Hot Drinks has more best hot drinks, type: Tweak}
-  - {message: Emmaged Hot Drinks will give you cup with nothing, type: Tweak}
-  id: 3529
-  time: '2023-04-24T02:27:28.0000000+00:00'
 - author: brainfood1183
   changes:
   - {message: Jonkbots can now be constructed., type: Add}
@@ -2918,3 +2862,63 @@ Entries:
   - {message: Shield values now can be examined, type: Add}
   id: 4019
   time: '2023-06-17T02:07:58.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Fix gas tile overlays not always showing, e.g. gas leaks on shuttles
+      on planets.', type: Fix}
+  id: 4020
+  time: '2023-06-17T02:30:56.0000000+00:00'
+- author: Sigil
+  changes:
+  - {message: Fixed the armour values on all winter coats that have caustic armour
+      as well as the CMO and virology bio suits., type: Fix}
+  id: 4021
+  time: '2023-06-17T09:55:16.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: Tweaked arachnids to look a bit more fluffier., type: Tweak}
+  id: 4022
+  time: '2023-06-17T19:47:32.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Added Dermaline Pills and Cryoxadone Beaker entities., type: Add}
+  - {message: 'Unit amounts to medicine in kits is now displayed. (IE: bicardine (10u)',
+    type: Tweak}
+  - {message: Burn kits now contain Dermaline pills instead., type: Tweak}
+  id: 4023
+  time: '2023-06-17T19:47:56.0000000+00:00'
+- author: Nails-n-Tape
+  changes:
+  - {message: added a guidebook entry for cargo, type: Add}
+  id: 4024
+  time: '2023-06-18T02:31:49.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: The Syndicate has stopped making zombie bundles available to nuclear
+      operatives after learning that the included bioweapon has expired., type: Remove}
+  id: 4025
+  time: '2023-06-18T03:23:42.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Bananium now generates on expedition planets., type: Fix}
+  id: 4026
+  time: '2023-06-18T07:11:30.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Added more dwarf accenting, type: Add}
+  id: 4027
+  time: '2023-06-18T09:12:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added artifact fragments. These can be uncovered in rock on planets
+      and asteroids. Combining a few of them will produce an artifact that science
+      can research., type: Add}
+  id: 4028
+  time: '2023-06-18T14:56:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The artifact division has finally remembered to wash alien artifacts
+      before giving them to scientists. They should now look significantly better.,
+    type: Tweak}
+  id: 4029
+  time: '2023-06-18T15:02:27.0000000+00:00'
