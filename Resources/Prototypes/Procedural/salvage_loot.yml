@@ -93,3 +93,11 @@
   loots:
     - !type:BiomeMarkerLoot
       proto: OreUranium
+
+- type: salvageLoot
+  id: OreArtifactFragment
+  desc: artifact fragment-embedded rock
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreArtifactFragment
