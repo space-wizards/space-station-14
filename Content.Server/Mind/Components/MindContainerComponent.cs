@@ -1,10 +1,13 @@
+using System.Diagnostics.CodeAnalysis;
+using YamlDotNet.Core.Tokens;
+
 namespace Content.Server.Mind.Components
 {
     /// <summary>
     ///     Stores a <see cref="Server.Mind.Mind"/> on a mob.
     /// </summary>
     [RegisterComponent, Access(typeof(MindSystem))]
-    public sealed class MindComponent : Component
+    public sealed class MindContainerComponent : Component
     {
         /// <summary>
         ///     The mind controlling this mob. Can be null.
@@ -17,6 +20,7 @@ namespace Content.Server.Mind.Components
         ///     True if we have a mind, false otherwise.
         /// </summary>
         [ViewVariables]
+        [MemberNotNullWhen(true, nameof(Mind))]
         public bool HasMind => Mind != null;
 
         /// <summary>

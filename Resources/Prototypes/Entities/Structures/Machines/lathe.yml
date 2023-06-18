@@ -116,6 +116,7 @@
       - StationMapElectronics
       - FireAlarmElectronics
       - MailingUnitElectronics
+      - SignalTimerElectronics
       - APCElectronics
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
@@ -184,7 +185,6 @@
       - SuperCapacitorStockPart
       - SuperMatterBinStockPart
       - PicoManipulatorStockPart
-      - SignalTimerElectronics
       - MopItem
       - Holoprojector
       - Mousetrap
@@ -248,7 +248,6 @@
     idleState: icon
     runningState: building
     dynamicRecipes:
-      - SignalTimerElectronics
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
@@ -400,7 +399,6 @@
     runningState: icon
     staticRecipes:
       - Flash
-      - FlashPayload
       - Handcuffs
       - Zipties
       - Stunbaton
@@ -409,27 +407,56 @@
       - RiotShield
       - CartridgePistol
       - CartridgeMagnum
-      - CartridgePistolRubber
-      - CartridgeMagnumRubber
       - ShellShotgun
-      - ShellShotgunBeanbag
       - ShellShotgunFlare
       - ShellTranquilizer
       - CartridgeLightRifle
       - CartridgeRifle
-      - CartridgeLightRifleRubber
-      - CartridgeRifleRubber
+      - MagazineBoxPistol
+      - MagazineBoxMagnum
+      - MagazineBoxRifle
+      - MagazineBoxLightRifle
       - TargetHuman
       - TargetSyndicate
       - TargetClown
-      - MagazineBoxPistol
+    dynamicRecipes:
+      - CartridgePistolRubber
+      - CartridgeMagnumRubber
+      - ShellShotgunBeanbag
+      - CartridgeRifleRubber
+      - CartridgeLightRifleRubber
       - MagazineBoxPistolRubber
-      - MagazineBoxMagnum
       - MagazineBoxMagnumRubber
-      - MagazineBoxRifle
       - MagazineBoxRifleRubber
-      - MagazineBoxLightRifle
       - MagazineBoxLightRifleRubber
+      - CartridgePistolHighVelocity
+      - CartridgeMagnumHighVelocity
+      - CartridgeLightRifleHighVelocity
+      - CartridgeRifleHighVelocity
+      - MagazineBoxPistolHighVelocity
+      - MagazineBoxMagnumHighVelocity
+      - MagazineBoxLightRifleHighVelocity
+      - MagazineBoxRifleHighVelocity
+      - ShellShotgunIncendiary
+      - CartridgePistolIncendiary
+      - CartridgeMagnumIncendiary
+      - CartridgeLightRifleIncendiary
+      - CartridgeRifleIncendiary
+      - MagazineBoxPistolIncendiary
+      - MagazineBoxMagnumIncendiary
+      - MagazineBoxLightRifleIncendiary
+      - MagazineBoxRifleIncendiary
+      - Signaller
+      - SignalTrigger
+      - VoiceTrigger
+      - TimerTrigger
+      - FlashPayload
+      - ExplosivePayload
+      - WeaponLaserCarbine
+      - WeaponAdvancedLaser
+      - WeaponLaserCannon
+      - WeaponXrayCannon
+      - WeaponTaser
   - type: MaterialStorage
     whitelist:
       tags:
