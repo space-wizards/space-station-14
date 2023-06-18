@@ -527,6 +527,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             }
 
+            component.NextFlush = TimeSpan.MaxValue;
+
             //Allows the MailingUnitSystem to add tags or prevent flushing
             var beforeFlushArgs = new BeforeDisposalFlushEvent();
             RaiseLocalEvent(uid, beforeFlushArgs);
@@ -573,7 +575,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             component.Engaged = false;
-            component.NextFlush = TimeSpan.MaxValue;
 
             HandleStateChange(uid, component, true);
             UpdateVisualState(uid, component, true);
