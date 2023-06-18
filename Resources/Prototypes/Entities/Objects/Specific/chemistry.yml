@@ -89,6 +89,12 @@
         Blunt: 5
   - type: StaticPrice
     price: 30
+  - type: Weldable
+    fuel: 2
+    time: 2
+  - type: Coolable
+    water: 2
+    time: 2
 
 - type: entity
   name: beaker

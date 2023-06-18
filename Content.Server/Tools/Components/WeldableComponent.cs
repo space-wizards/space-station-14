@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tools.Components;
 
 /// <summary>
-///     Allows users to weld/unweld doors, crates and lockers.
+///     Allows users to weld/unweld doors, crates, lockers and heat containers.
 /// </summary>
 [RegisterComponent]
 [Access(typeof(WeldableSystem))]
@@ -39,6 +39,12 @@ public sealed class WeldableComponent : SharedWeldableComponent
     [DataField("time")]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan WeldingTime = TimeSpan.FromSeconds(1f);
+
+    /// <summary>
+    ///     How much we can heat a entity each threshold
+    /// </summary>
+    [DataField("heatingThreshold")]
+    public float HeatingThreshold = 60f;
 
     /// <summary>
     ///     Shown when welded entity is examined.

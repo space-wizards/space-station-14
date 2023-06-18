@@ -214,6 +214,7 @@ namespace Content.Server.Tools
                     ("fuelCapacity", capacity),
                     ("status", string.Empty))); // Lit status is handled above
             }
+            args.PushMarkup(Loc.GetString("welder-component-on-examine-container-message", ("color", Color.Red)));
         }
 
         private void OnWelderSolutionChange(EntityUid uid, WelderComponent welder, SolutionChangedEvent args)
@@ -294,6 +295,13 @@ namespace Content.Server.Tools
                 return;
 
             solution.RemoveReagent(welder.FuelReagent, FixedPoint2.New(args.Fuel));
+
+            if (args.Target != null)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("welder-component-entity-message", ("entity", args.Target.Value)), uid,
+                    args.User);
+            }
+
             _entityManager.Dirty(welder);
         }
 
@@ -320,8 +328,7 @@ namespace Content.Server.Tools
             foreach (var tool in _activeWelders.ToArray())
             {
                 if (!EntityManager.TryGetComponent(tool, out WelderComponent? welder)
-                    || !EntityManager.TryGetComponent(tool, out SolutionContainerManagerComponent? solutionContainer)
-                    || !EntityManager.TryGetComponent(tool, out TransformComponent? transform))
+                    || !EntityManager.TryGetComponent(tool, out SolutionContainerManagerComponent? solutionContainer))
                     continue;
 
                 if (!_solutionContainerSystem.TryGetSolution(tool, welder.FuelSolution, out var solution, solutionContainer))

@@ -1,5 +1,10 @@
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Shared.DoAfter;
+using Content.Shared.Extinguisher.Events;
+using Content.Shared.Examine;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Fluids.Components;
 using Content.Server.Popups;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
@@ -18,6 +23,8 @@ public sealed class FireExtinguisherSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
     {
@@ -28,6 +35,9 @@ public sealed class FireExtinguisherSystem : EntitySystem
         SubscribeLocalEvent<FireExtinguisherComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<FireExtinguisherComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
         SubscribeLocalEvent<FireExtinguisherComponent, SprayAttemptEvent>(OnSprayAttempt);
+        SubscribeLocalEvent<FireExtinguisherComponent, DoAfterAttemptEvent<CoolingDoAfterEvent>>(OnCoolUseAttempt);
+        SubscribeLocalEvent<FireExtinguisherComponent, CoolingDoAfterEvent>(OnCoolDoAfter);
+        SubscribeLocalEvent<FireExtinguisherComponent, ExaminedEvent>(OnExtinguisherExamined);
     }
 
     private void OnFireExtinguisherInit(EntityUid uid, FireExtinguisherComponent component, ComponentInit args)
@@ -139,4 +149,101 @@ public sealed class FireExtinguisherSystem : EntitySystem
             uid, AudioHelpers.WithVariation(0.125f).WithVolume(-4f));
         UpdateAppearance(uid, extinguisher);
     }
+
+    private void OnExtinguisherExamined(EntityUid uid, FireExtinguisherComponent comp, ExaminedEvent args)
+    {
+        args.PushMarkup(Loc.GetString("fire-extinguisher-component-on-examine-container-message", ("color", Color.Blue)));
+    }
+
+    #region GhettoChemistry
+    private void OnCoolUseAttempt(EntityUid uid, FireExtinguisherComponent extinguisher, DoAfterAttemptEvent<CoolingDoAfterEvent> args)
+    {
+        if (!_solutionContainerSystem.TryGetSolution(uid, SprayComponent.SolutionName, out var solution))
+        {
+            args.Cancel();
+        }
+
+        var user = args.DoAfter.Args.User;
+        if (extinguisher.HasSafety && extinguisher.Safety)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("fire-extinguisher-component-safety-on-message"), uid, user);
+            args.Cancel();
+            return;
+        }
+        if (solution != null && solution.Volume <= 0)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("spray-component-is-empty-message"), uid, user);
+            args.Cancel();
+        }
+    }
+
+    private void OnCoolDoAfter(EntityUid uid, FireExtinguisherComponent extinguisher, CoolingDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (!_solutionContainerSystem.TryGetSolution(uid, SprayComponent.SolutionName, out var solution))
+            return;
+
+        solution.RemoveReagent(extinguisher.WaterReagent, FixedPoint2.New(args.Water));
+        PlayToolSound(uid, args.User);
+        if (args.Target != null)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("fire-extinguisher-component-entity-message", ("entity", args.Target.Value)), uid, args.User);
+        }
+        var ev = args.WrappedEvent;
+        ev.DoAfter = args.DoAfter;
+
+        if (args.OriginalTarget != null)
+            RaiseLocalEvent(args.OriginalTarget.Value, (object)ev);
+        else
+            RaiseLocalEvent((object)ev);
+    }
+
+    public (FixedPoint2 water, FixedPoint2 capacity) GetExtinguisherWaterAndCapacity(EntityUid uid, FireExtinguisherComponent? extinguisher = null, SolutionContainerManagerComponent? solutionContainer = null)
+    {
+        if (!Resolve(uid, ref extinguisher, ref solutionContainer)
+            || !_solutionContainerSystem.TryGetSolution(uid, SprayComponent.SolutionName, out var waterSolution, solutionContainer))
+            return (FixedPoint2.Zero, FixedPoint2.Zero);
+
+        return (_solutionContainerSystem.GetReagentQuantity(uid, extinguisher.WaterReagent), waterSolution.MaxVolume);
+    }
+
+    public void PlayToolSound(EntityUid uid, EntityUid? user, SprayComponent? sprayComponent = null)
+    {
+        if (!Resolve(uid, ref sprayComponent))
+            return;
+
+        if (sprayComponent.SpraySound == null)
+            return;
+
+        _audioSystem.PlayPvs(sprayComponent.SpraySound, uid, sprayComponent.SpraySound.Params.WithVariation(0.125f));
+    }
+
+    public bool UseExtinguisher(EntityUid extinguisher, EntityUid user, EntityUid? target, float doAfterDelay, DoAfterEvent doAfterEv, float water = 0f, FireExtinguisherComponent? extinguisherComponent = null)
+    {
+        return UseExtinguisher(extinguisher, user, target, TimeSpan.FromSeconds(doAfterDelay), doAfterEv, out _, water, extinguisherComponent);
+    }
+
+    public bool UseExtinguisher(EntityUid extinguisher, EntityUid user, EntityUid? target, TimeSpan delay, DoAfterEvent doAfterEv, out DoAfterId? id, float water = 0f, FireExtinguisherComponent? extinguisherComponent = null)
+    {
+        id = null;
+        if (!Resolve(extinguisher, ref extinguisherComponent, false))
+            return false;
+
+        var extinguisherEvent = new CoolingDoAfterEvent(water, doAfterEv, target);
+        var doAfterArgs = new DoAfterArgs(user, delay, extinguisherEvent, extinguisher, target: target, used: extinguisher)
+        {
+            BreakOnDamage = true,
+            BreakOnTargetMove = true,
+            BreakOnUserMove = true,
+            NeedHand = extinguisher != user,
+            AttemptFrequency = water <= 0 ? AttemptFrequency.Never : AttemptFrequency.EveryTick
+        };
+
+        _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
+        return true;
+    }
+    #endregion GhettoChemistry
+
 }
