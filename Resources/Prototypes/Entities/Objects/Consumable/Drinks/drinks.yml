@@ -100,7 +100,7 @@
     solutions:
       drink:
         maxVol: 30
-    matchContents: true
+    matchContentsName: true
     emptyName: metamorphic glass
     emptyDescription: A metamorphic glass that automagically turns into a glass appropriate for the drink within. There's a sanded off patent number on the bottom.
   - type: SolutionContainerVisuals

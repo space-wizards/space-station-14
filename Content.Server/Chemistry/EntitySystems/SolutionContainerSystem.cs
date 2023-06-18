@@ -168,7 +168,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 		
-		if(!component.MatchContents)
+		if(!component.MatchContentsName)
 			return;
 		
 		var metadata = MetaData(uid);

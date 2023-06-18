@@ -10,11 +10,6 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
-
     protected override void OnAppearanceChange(EntityUid uid, SolutionContainerVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (!AppearanceSystem.TryGetData<float>(uid, SolutionContainerVisuals.FillFraction, out var fraction, args.Component))
@@ -45,8 +40,6 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
                         args.Component))
                 {
                     _prototype.TryIndex<ReagentPrototype>(baseOverride, out var reagentProto);
-
-                    var metadata = MetaData(uid);
 
                     if (reagentProto?.MetamorphicSprite is { } sprite)
                     {
