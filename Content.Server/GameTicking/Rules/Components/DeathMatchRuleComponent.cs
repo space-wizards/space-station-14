@@ -1,4 +1,4 @@
-﻿namespace Content.Server.GameTicking.Rules.Components;
+namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
 ///     Simple GameRule that will do a free-for-all death match.
@@ -30,4 +30,13 @@ public sealed class DeathMatchRuleComponent : Component
     /// </summary>
     [DataField("restartTimer"), ViewVariables(VVAccess.ReadWrite)]
     public float? RestartTimer;
+
+    public enum SelectionState
+    {
+        WaitingForSpawn = 0,
+        ReadyToSelect = 1,
+        SelectionMade = 2,
+    }
+
+    public SelectionState SelectionStatus = SelectionState.WaitingForSpawn;
 }
