@@ -11,12 +11,13 @@
                 Text="{Loc health-analyzer-window-no-patient-data-text}" />
             <BoxContainer
                 Name="PatientDataContainer"
-                Orientation="Vertical">
+                Orientation="Vertical"
+                Margin="0 0 5 10">
                 <Label
                     Name="PatientName" />
                 <Label
                     Name="patientDamageAmount"
-                    Margin="0 10" />
+                    Margin="0 10 0 0" />
             </BoxContainer>
             <BoxContainer
                 Name="GroupsContainer"
