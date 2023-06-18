@@ -27,7 +27,7 @@ public sealed class RenameStationCommand : IConsoleCommand
 
         var stationSystem = _entSysManager.GetEntitySystem<StationSystem>();
 
-        if (!EntityUid.TryParse(args[0], out var station) || _entityManager.HasComponent<StationDataComponent>(station))
+        if (!EntityUid.TryParse(args[0], out var station) || !_entityManager.HasComponent<StationDataComponent>(station))
         {
             shell.WriteError(Loc.GetString("shell-argument-station-id-invalid", ("index", 1)));
             return;
