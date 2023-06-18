@@ -1,9 +1,4 @@
 Entries:
-- author: freeman2651
-  changes:
-  - {message: First aid kits are now more thoroughly stocked, type: Tweak}
-  id: 3528
-  time: '2023-04-24T02:15:21.0000000+00:00'
 - author: lzk
   changes:
   - {message: Solar's Best Hot Drinks has more best hot drinks, type: Tweak}
@@ -2919,3 +2914,10 @@ Entries:
   - {message: Added more dwarf accenting, type: Add}
   id: 4027
   time: '2023-06-18T09:12:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added artifact fragments. These can be uncovered in rock on planets
+      and asteroids. Combining a few of them will produce an artifact that science
+      can research., type: Add}
+  id: 4028
+  time: '2023-06-18T14:56:45.0000000+00:00'
