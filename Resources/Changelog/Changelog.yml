@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Printed health analyzers and crew monitors no longer come pre-loaded
-      with batteries., type: Fix}
-  id: 3524
-  time: '2023-04-24T00:07:41.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Electricity anomalies will now create an EMP when going supercritical.,
@@ -2921,3 +2915,8 @@ Entries:
   - {message: Burn kits now contain Dermaline pills instead., type: Tweak}
   id: 4023
   time: '2023-06-17T19:47:56.0000000+00:00'
+- author: Nails-n-Tape
+  changes:
+  - {message: added a guidebook entry for cargo, type: Add}
+  id: 4024
+  time: '2023-06-18T02:31:49.0000000+00:00'
