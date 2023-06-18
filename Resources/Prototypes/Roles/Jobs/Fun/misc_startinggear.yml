@@ -54,7 +54,6 @@
   satchel: ClothingBackpackDuffelSyndicateAmmo
   duffelbag: ClothingBackpackDuffelSyndicateAmmo
 
-
 # Syndicate Operative Outfit - Poverty
 - type: startingGear
   id: SyndicateOperativeGearExtremelyBasic
@@ -65,7 +64,6 @@
   innerclothingskirt: ClothingUniformJumpsuitOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
-
 
 #Syndicate Operative Outfit - Basic
 - type: startingGear
@@ -103,6 +101,7 @@
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
 
+#Nuclear Operative Commander Gear
 - type: startingGear
   id: SyndicateCommanderGearFull
   equipment:
@@ -123,6 +122,7 @@
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
 
+#Nuclear Operative Medic Gear
 - type: startingGear
   id: SyndicateOperativeMedicFull
   equipment:
@@ -141,6 +141,96 @@
   innerclothingskirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperativeMedic
   duffelbag: ClothingBackpackDuffelSyndicateOperativeMedic
+
+# Syndicate Footsoldier Gear - Unarmed
+- type: startingGear
+  id: SyndicateFootsoldierGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetSwatSyndicate
+    mask: ClothingMaskGas
+    outerClothing: ClothingOuterVestKevlar
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA #a subtype of this for footsoldiers would probably be good to have
+  innerclothingskirt: ClothingUniformJumpsuitOperative
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
+
+# Syndicate Footsoldier Gear - Knife
+- type: startingGear
+  id: SyndicateFootsoldierGearKnife
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetSwatSyndicate
+    mask: ClothingMaskGas
+    outerClothing: ClothingOuterVestKevlar
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesBootsCombat
+    pocket1: CombatKnife
+    id: SyndiPDA
+  innerclothingskirt: ClothingUniformJumpsuitOperative
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
+
+# Syndicate Footsoldier Gear - Energy Sword
+#Add energy shield to this when that gets added.
+- type: startingGear
+  id: SyndicateFootsoldierGearESword
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetSwatSyndicate
+    mask: ClothingMaskGas
+    outerClothing: ClothingOuterVestKevlar
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesBootsCombatFilled
+    pocket1: EnergySword
+    id: SyndiPDA
+  innerclothingskirt: ClothingUniformJumpsuitOperative
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
+
+# Syndicate Footsoldier Gear - Viper
+- type: startingGear
+  id: SyndicateFootsoldierGearPistol
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetSwatSyndicate
+    mask: ClothingMaskGas
+    outerClothing: ClothingOuterVestKevlar
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesBootsCombat
+    pocket1: WeaponPistolViper
+    id: SyndiPDA
+  innerclothingskirt: ClothingUniformJumpsuitOperative
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
+
+# Nanotrasen Paramilitary Unit Gear - Unarmed
+#I do not feel like doing more of these right now because this probably needs more stuff (like a different ID.)
+- type: startingGear
+  id: NanotrasenParamilitaryGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSec
+    back: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsCombatFilled
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHelmetSwat
+    mask: ClothingMaskGasSwat
+    outerClothing: ClothingOuterVestKevlar
+    ears: ClothingHeadsetSecurity
+    gloves: ClothingHandsGlovesCombat
+  innerclothingskirt: ClothingUniformJumpskirtSec
+  satchel: ClothingBackpackSatchelSecurityFilled
+  duffelbag: ClothingBackpackDuffelSecurityFilled
 
 #CBURN Unit Gear - Full Kit
 - type: startingGear

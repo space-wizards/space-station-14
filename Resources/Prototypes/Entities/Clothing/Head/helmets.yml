@@ -22,12 +22,47 @@
   parent: ClothingHeadHelmetHelmet
   id: ClothingHeadHelmetHelmetOld
   name: helmet
-  description: An old usual helmet.
+  description: Standard Security gear. Protects the head from impacts.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/securityold.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/securityold.rsi
+
+#SWAT Helmet
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetSwat
+  name: SWAT helmet
+  description: An extremely robust helmet, commonly used by paramilitary forces. This one has the Nanotrasen logo emblazoned on the top.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/swat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/swat.rsi
+  - type: Armor #In SS13 this has 100% acid (caustic) protection, however it would be probably be silly to give this to a helmet without locational damage existing yet.
+    modifiers:
+      coefficients:
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.80
+        Heat: 0.80
+        Radiation: 0.80
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+
+#Syndicate SWAT Helmet
+- type: entity
+  parent: ClothingHeadHelmetSwat
+  id: ClothingHeadHelmetSwatSyndicate
+  name: SWAT helmet
+  suffix: Syndicate
+  description: An extremely robust helmet, commonly used by paramilitary forces. It is adorned in a nefarious red and black stripe pattern.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/swat_syndicate.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/swat_syndicate.rsi
 
 #Light Riot Helmet
 - type: entity

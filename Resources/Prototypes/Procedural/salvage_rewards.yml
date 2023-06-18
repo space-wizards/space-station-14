@@ -39,6 +39,8 @@
     CrateArmorySMG: 0.25
     CrateArmoryLaser: 0.25
     WeaponMakeshiftLaser: 0.25
+    # rare armor
+    ClothingHeadHelmetSwat: 0.1
     # rare weapons
     WeaponSubMachineGunC20r: 0.1
 
