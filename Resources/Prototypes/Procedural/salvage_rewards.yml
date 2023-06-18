@@ -46,7 +46,6 @@
   id: SalvageRewardEpic
   weights:
     # rare machinery
-    SecurityTechFabCircuitboard: 1.0
     ResearchAndDevelopmentServerMachineCircuitboard: 1.0
     CratePartsT4: 1.0
     # rare weapons
