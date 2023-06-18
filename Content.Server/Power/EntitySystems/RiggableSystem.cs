@@ -5,6 +5,7 @@ using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Database;
+using Content.Shared.Power.Components;
 using Content.Shared.Rejuvenate;
 
 namespace Content.Server.Power.EntitySystems;

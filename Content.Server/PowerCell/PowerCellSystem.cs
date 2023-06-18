@@ -14,7 +14,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Popups;
-using Content.Shared.Rejuvenate;
+using Content.Shared.Power.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server.PowerCell;
