@@ -13,14 +13,6 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SolutionContainerVisualsComponent, MapInitEvent>(OnMapInit);
-    }
-
-    private void OnMapInit(EntityUid uid, SolutionContainerVisualsComponent component, MapInitEvent args)
-    {
-        var meta = MetaData(uid);
-        component.InitialName = meta.EntityName;
-        component.InitialDescription = meta.EntityDescription;
     }
 
     protected override void OnAppearanceChange(EntityUid uid, SolutionContainerVisualsComponent component, ref AppearanceChangeEvent args)
@@ -62,9 +54,6 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
                         args.Sprite.LayerSetVisible(fillLayer, false);
                         if (hasOverlay)
                             args.Sprite.LayerSetVisible(overlayLayer, false);
-                        metadata.EntityName = Loc.GetString(component.MetamorphicNameFull,
-                            ("name", reagentProto.LocalizedName));
-                        metadata.EntityDescription = reagentProto.LocalizedDescription;
                         return;
                     }
                     else
@@ -72,8 +61,6 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
                         if (hasOverlay)
                             args.Sprite.LayerSetVisible(overlayLayer, true);
                         args.Sprite.LayerSetSprite(baseLayer, component.MetamorphicDefaultSprite);
-                        metadata.EntityName = component.InitialName;
-                        metadata.EntityDescription = component.InitialDescription;
                     }
                 }
             }

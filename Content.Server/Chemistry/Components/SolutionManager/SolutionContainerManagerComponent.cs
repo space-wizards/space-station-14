@@ -10,5 +10,17 @@ namespace Content.Server.Chemistry.Components.SolutionManager
         [DataField("solutions")]
         [Access(typeof(SolutionContainerSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public readonly Dictionary<string, Solution> Solutions = new();
+		
+		[DataField("matchContents")]
+		public bool MatchContents = false;
+		
+        [DataField("matchNameFull")]
+        public string MatchNameFull = "transformable-container-component-glass";
+
+		[DataField("emptyName")]
+        public string EmptyName = string.Empty;
+		
+		[DataField("emptyDescription")]
+        public string EmptyDescription = string.Empty;
     }
 }

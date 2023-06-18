@@ -278,6 +278,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: sake
   color: "#DDDDDD"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    state: icon
 
 - type: reagent
   id: Tequila
@@ -287,6 +290,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: tequila
   color: "#d7d1d155"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/tequillaglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -1024,6 +1030,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#d1d7d155"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/glass_clear.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:

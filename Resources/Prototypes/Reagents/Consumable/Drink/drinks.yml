@@ -154,6 +154,9 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: milk
   color: "#DFDFDF"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/glass_white.rsi
+    state: icon
   recognizable: true
   plantMetabolism:
     - !type:PlantAdjustNutrition
@@ -279,6 +282,9 @@
   flavor: tea
   color: "#8a5a3a"
   recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/teaglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -322,6 +328,9 @@
   physicalDesc: reagent-physical-desc-frosty
   flavor: cold
   color: "#bed8e6"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/iceglass.rsi
+    state: icon
   recognizable: true
   meltingPoint: 0.0
   boilingPoint: 100.0

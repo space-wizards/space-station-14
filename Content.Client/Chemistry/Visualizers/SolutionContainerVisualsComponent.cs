@@ -33,10 +33,5 @@ namespace Content.Client.Chemistry.Visualizers
         public bool Metamorphic = false;
         [DataField("metamorphicDefaultSprite")]
         public SpriteSpecifier MetamorphicDefaultSprite = SpriteSpecifier.Invalid;
-        [DataField("metamorphicNameFull")]
-        public string MetamorphicNameFull = "transformable-container-component-glass";
-
-        public string InitialName = string.Empty;
-        public string InitialDescription = string.Empty;
     }
 }

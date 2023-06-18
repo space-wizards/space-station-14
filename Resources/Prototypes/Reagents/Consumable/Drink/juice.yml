@@ -63,6 +63,9 @@
   physicalDesc: reagent-physical-desc-citric
   flavor: sour
   color: "#fff690"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/lemonjuice.rsi
+    state: icon
 
 - type: reagent
   id: JuiceLime
@@ -72,6 +75,9 @@
   physicalDesc: reagent-physical-desc-citric
   flavor: sour
   color: "#99bb43"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/glassgreen.rsi
+    state: icon
 
 # /datum/reagent/drink/orangejuice/on_mob_life(var/mob/living/M)
 
@@ -125,3 +131,6 @@
   physicalDesc: reagent-physical-desc-sweet
   flavor: watermelon
   color: "#EF3520"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/watermelon.rsi
+    state: icon

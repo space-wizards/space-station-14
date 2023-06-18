@@ -162,6 +162,31 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             _appearance.SetData(uid, SolutionContainerVisuals.BaseOverride, string.Empty, appearanceComponent);
         }
     }
+	
+	public void UpdateName(EntityUid uid, Solution solution, SolutionContainerManagerComponent? component = null)
+	{
+        if (!Resolve(uid, ref component))
+            return;
+		
+		if(!component.MatchContents)
+			return;
+		
+		var metadata = MetaData(uid);
+		
+		if (solution.GetPrimaryReagentId() is { } reagent)
+		{
+			_prototypeManager.TryIndex<ReagentPrototype>(reagent, out var reagentProto);
+		
+			if (reagentProto?.MetamorphicSprite is { } sprite)
+			{
+				metadata.EntityName = Loc.GetString(component.MatchNameFull, ("name", reagentProto.LocalizedName));
+				metadata.EntityDescription = reagentProto.LocalizedDescription;
+				return;
+			}
+		}
+		metadata.EntityName = component.EmptyName;
+		metadata.EntityDescription = component.EmptyDescription;
+	}
 
     /// <summary>
     ///     Removes part of the solution in the container.
@@ -207,6 +232,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         }
 
         UpdateAppearance(uid, solutionHolder);
+		UpdateName(uid, solutionHolder);
         RaiseLocalEvent(uid, new SolutionChangedEvent(solutionHolder));
     }
 
