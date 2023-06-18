@@ -1,10 +1,4 @@
 Entries:
-- author: lzk
-  changes:
-  - {message: Solar's Best Hot Drinks has more best hot drinks, type: Tweak}
-  - {message: Emmaged Hot Drinks will give you cup with nothing, type: Tweak}
-  id: 3529
-  time: '2023-04-24T02:27:28.0000000+00:00'
 - author: brainfood1183
   changes:
   - {message: Jonkbots can now be constructed., type: Add}
@@ -2921,3 +2915,10 @@ Entries:
       can research., type: Add}
   id: 4028
   time: '2023-06-18T14:56:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The artifact division has finally remembered to wash alien artifacts
+      before giving them to scientists. They should now look significantly better.,
+    type: Tweak}
+  id: 4029
+  time: '2023-06-18T15:02:27.0000000+00:00'
