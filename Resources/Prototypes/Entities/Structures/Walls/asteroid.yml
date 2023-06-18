@@ -287,4 +287,3 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_west
         - state: rock_artifact_fragment
-
