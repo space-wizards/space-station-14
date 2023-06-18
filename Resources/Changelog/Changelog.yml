@@ -1,14 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Space Dragon event works again., type: Fix}
-  id: 3540
-  time: '2023-04-26T00:23:14.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Flashbangs now have a light when they flash., type: Add}
-  id: 3541
-  time: '2023-04-26T03:51:48.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug that caused the toggle-light & FOV ghost actions to not
@@ -2927,3 +2917,14 @@ Entries:
   - {message: Updated visuals for machine parts., type: Tweak}
   id: 4039
   time: '2023-06-18T23:28:27.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Due to new refinement procedures, Bags of Holding now require less
+      uranium to create.', type: Tweak}
+  id: 4040
+  time: '2023-06-18T23:37:17.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Removed security techfab board from expedition loot., type: Remove}
+  id: 4041
+  time: '2023-06-18T23:37:34.0000000+00:00'
