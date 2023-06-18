@@ -14,7 +14,7 @@
   - ERTUplinkJunitor
   - ERTUplinkPointless
   currencyWhitelist:
-  - Telecrystal
+  - BlueSpaceCube
 
 #Medic
 - type: storePreset
@@ -31,7 +31,7 @@
   #- ERTUplinkJunitor
   - ERTUplinkPointless
   currencyWhitelist:
-  - Telecrystal
+  - BlueSpaceCube
 
 #Security
 - type: storePreset
@@ -48,7 +48,7 @@
   #- ERTUplinkJunitor
   - ERTUplinkPointless
   currencyWhitelist:
-  - Telecrystal
+  - BlueSpaceCube
 
 #Engineer
 - type: storePreset
@@ -65,7 +65,7 @@
   #- ERTUplinkJunitor
   - ERTUplinkPointless
   currencyWhitelist:
-  - Telecrystal
+  - BlueSpaceCube
 
 #Janitor
 - type: storePreset
@@ -82,4 +82,4 @@
   - ERTUplinkJunitor
   - ERTUplinkPointless
   currencyWhitelist:
-  - Telecrystal
+  - BlueSpaceCube

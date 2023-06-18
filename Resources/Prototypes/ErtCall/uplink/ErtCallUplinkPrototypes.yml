@@ -25,7 +25,7 @@
   - type: Store
     preset: ErtCallUplinkPreset
     balance:
-      Telecrystal: 0
+      BlueSpaceCube: 0
 
 #Leader
 - type: entity
@@ -36,7 +36,7 @@
   - type: Store
     preset: ErtCallUplinkPreset
     balance:
-      Telecrystal: 30
+      BlueSpaceCube: 30
   - type: Tag
     tags:
       - ErtUplinkCombat
@@ -50,7 +50,7 @@
   - type: Store
     preset: ErtCallUplinkMedicPreset
     balance:
-      Telecrystal: 20
+      BlueSpaceCube: 20
   # - type: Tag
   #   tags:
   #     - ErtUplinkCombat
@@ -64,7 +64,7 @@
   - type: Store
     preset: ErtCallUplinkSecurityPreset
     balance:
-      Telecrystal: 20
+      BlueSpaceCube: 20
   - type: Tag
     tags:
       - ErtUplinkCombat
@@ -78,7 +78,7 @@
   - type: Store
     preset: ErtCallUplinkEngineerPreset
     balance:
-      Telecrystal: 20
+      BlueSpaceCube: 20
   # - type: Tag
   #   tags:
   #     - ErtUplinkCombat
@@ -92,7 +92,7 @@
   - type: Store
     preset: ErtCallUplinkJanitorPreset
     balance:
-      Telecrystal: 20
+      BlueSpaceCube: 20
   # - type: Tag
   #   tags:
   #     - ErtUplinkCombat
