@@ -57,6 +57,7 @@ public abstract class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<DoorComponent, ComponentHandleState>(OnHandleState);
 
+        SubscribeLocalEvent<DoorComponent, InteractedNoHandEvent>(OnInteractedNoHand);
         SubscribeLocalEvent<DoorComponent, ActivateInWorldEvent>(OnActivate);
 
         SubscribeLocalEvent<DoorComponent, StartCollideEvent>(HandleCollide);
@@ -179,9 +180,22 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Interactions
-    protected virtual void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
+
+    private void OnInteractedNoHand(EntityUid uid, DoorComponent component, InteractedNoHandEvent args)
     {
-        // avoid client-mispredicts, as the server will definitely handle this event
+        if (args.Handled || !component.ClickOpen || !Tags.HasTag(args.User, "DoorBumpOpener"))
+            return;
+
+        TryToggleDoor(uid, component, args.User, predicted: true);
+        args.Handled = true;
+    }
+
+    public void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
+    {
+        if (args.Handled || !door.ClickOpen)
+            return;
+
+        TryToggleDoor(uid, door, args.User, predicted: true);
         args.Handled = true;
     }
 

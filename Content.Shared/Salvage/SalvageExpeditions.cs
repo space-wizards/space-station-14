@@ -100,6 +100,7 @@ public sealed record SalvageMission(
     string Faction,
     SalvageMissionType Mission,
     string Biome,
+    string Air,
     Color? Color,
     TimeSpan Duration,
     Dictionary<string, int> Loot,
@@ -134,6 +135,11 @@ public sealed record SalvageMission(
     /// Biome to be used for the mission.
     /// </summary>
     public readonly string Biome = Biome;
+
+    /// <summary>
+    /// Air mixture to be used for the mission's planet.
+    /// </summary>
+    public readonly string Air = Air;
 
     /// <summary>
     /// Lighting color to be used (AKA outdoor lighting).

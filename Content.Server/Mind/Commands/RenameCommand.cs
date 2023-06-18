@@ -80,9 +80,9 @@ public sealed class RenameCommand : IConsoleCommand
         }
 
         // PDAs
-        if (entSysMan.TryGetEntitySystem<PDASystem>(out var pdaSystem))
+        if (entSysMan.TryGetEntitySystem<PdaSystem>(out var pdaSystem))
         {
-            var query = entMan.EntityQueryEnumerator<PDAComponent>();
+            var query = entMan.EntityQueryEnumerator<PdaComponent>();
             while (query.MoveNext(out var uid, out var pda))
             {
                 if (pda.OwnerName == oldName)

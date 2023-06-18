@@ -28,7 +28,6 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
     - type: Sprite
-      netsync: false
       sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
       snapCardinals: true
       layers:

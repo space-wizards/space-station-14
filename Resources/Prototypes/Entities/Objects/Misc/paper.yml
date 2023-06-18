@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    netsync: false
     layers:
     - state: paper
     - state: paper_words
@@ -52,7 +51,6 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    netsync: false
     layers:
     - state: paper_dotmatrix
     - state: paper_dotmatrix_words
@@ -84,7 +82,6 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    netsync: false
     layers:
     - state: paper
       color: "#e6e6fa"
@@ -110,7 +107,6 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    netsync: false
     layers:
     - state: paper
       color: "#f7e574"
@@ -198,7 +194,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: overpriced_pen
-    netsync: false
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
@@ -233,7 +228,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen_centcom
-    netsync: false
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     heldPrefix: pen_centcom
@@ -255,7 +249,6 @@
   description: A folder filled with top secret paperwork.
   components:
   - type: Sprite
-#    netsync: true
     sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: folder-colormap
@@ -386,7 +379,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-mime
-    netsync: false
   - type: Item
     size: 3
 

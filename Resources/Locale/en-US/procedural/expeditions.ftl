@@ -46,3 +46,4 @@ salvage-expedition-announcement-countdown-minutes = {$duration} minutes remainin
 salvage-expedition-announcement-countdown-seconds = {$duration} seconds remaining to complete the expedition.
 salvage-expedition-announcement-dungeon = Dungeon is located {$direction}.
 salvage-expedition-completed = Expedition is completed.
+salvage-expedition-reward-description = Mission completion reward

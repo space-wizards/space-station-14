@@ -7,7 +7,6 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
-    netsync: false
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak
@@ -83,7 +82,6 @@
     - type: Sprite
       sprite: Mobs/Ghosts/revenant.rsi
       state: icon
-      netsync: false
       noRot: true
     - type: Construction
       graph: PlushieGhostRevenant
@@ -421,7 +419,6 @@
   components:
   - type: Sprite
     state: plushie_vox
-    netsync: false
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
@@ -473,7 +470,6 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
-    netsync: false
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
@@ -686,7 +682,6 @@
   id: FoamWeaponBase
   components:
   - type: Sprite
-    netsync: false
   - type: Item
     size: 24
 
@@ -730,7 +725,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
 
 - type: entity
   parent: ToyGunBase
@@ -956,7 +950,6 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/pequeno.rsi
-    netsync: false
     layers:
     - state: base
       map: [ "enum.DamageStateVisualLayers.Base" ]

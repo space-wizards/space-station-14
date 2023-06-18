@@ -129,7 +129,6 @@
   - type: Sprite
     sprite: Objects/Storage/penbox.rsi
     state: e_dagger
-    netsync: false
   - type: SpawnItemsOnUse
     items:
     - id: EnergyDagger
