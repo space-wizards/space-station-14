@@ -1,0 +1,28 @@
+- type: entity
+  parent: BaseItem
+  id: PipePainter
+  name: pipe painter
+  description: A pipe painter for painting gas pipes.
+  components:
+    - type: Sprite
+      sprite: SS220/Objects/Tools/pipe_painter.rsi
+      state: icon
+      netsync: false
+    - type: Item
+      sprite: SS220/Objects/Tools/pipe_painter.rsi
+    - type: UserInterface
+      interfaces:
+        - key: enum.PipePainterUiKey.Key
+          type: PipePainterBoundUserInterface
+    - type: PipePainter
+      colorPalette:
+        red: '#FF1212FF'
+        yellow: '#B3A234FF'
+        brown: '#947507FF'
+        green: '#3AB334FF'
+        cyan: '#03FCD3FF'
+        blue: '#0335FCFF'
+        white: '#FFFFFFFF'
+        black: '#333333FF'
+    - type: StaticPrice
+      price: 40
