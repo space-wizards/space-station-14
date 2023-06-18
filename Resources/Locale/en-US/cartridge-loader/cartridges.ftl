@@ -7,3 +7,5 @@ net-probe-label-name = Name
 net-probe-label-address = Address
 net-probe-label-frequency = Frequency
 net-probe-label-network = Network
+
+digital-ian-program-name = Digital Ian

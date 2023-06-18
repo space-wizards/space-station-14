@@ -40,4 +40,23 @@
         state: server
     - type: NetProbeCartridge
 
-
+- type: entity
+  parent: BaseItem
+  id: DigitalIanCartridge
+  name: digital ian cartridge
+  description: This is needed to become the cool kid back in the days.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-y
+    - type: Icon
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-y
+    - type: UIFragment
+      ui: !type:DigitalIanUi
+    - type: Cartridge
+      programName: digital-ian-program-name
+      icon:
+        sprite: Mobs/Pets/corgi.rsi
+        state: ian
+    - type: DigitalIanCartridge
