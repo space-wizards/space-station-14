@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: NT added appraisal tool to cargodrobe and cargo lockers, type: Tweak}
-  id: 3536
-  time: '2023-04-24T20:44:10.0000000+00:00'
 - author: Kit0vras
   changes:
   - {message: The security holoprojector sprite has been changed., type: Tweak}
@@ -2924,3 +2919,9 @@ Entries:
   - {message: Reduced taser shot count from 10 down to 5., type: Tweak}
   id: 4035
   time: '2023-06-18T21:56:49.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The security techfab no longer contains all the protolathe recipes.,
+    type: Fix}
+  id: 4036
+  time: '2023-06-18T22:35:19.0000000+00:00'
