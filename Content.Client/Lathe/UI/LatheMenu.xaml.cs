@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
@@ -53,7 +54,7 @@ public sealed partial class LatheMenu : DefaultWindow
 
         if (_entityManager.TryGetComponent<LatheComponent>(owner.Lathe, out var latheComponent))
         {
-            if (latheComponent.DynamicRecipes == null)
+            if (!latheComponent.DynamicRecipes.Any())
             {
                 ServerListButton.Visible = false;
                 ServerSyncButton.Visible = false;
@@ -132,7 +133,7 @@ public sealed partial class LatheMenu : DefaultWindow
                     sb.Append('\n');
 
                 var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, component.MaterialUseMultiplier);
-                
+
                 sb.Append(adjustedAmount);
                 sb.Append(' ');
                 sb.Append(Loc.GetString(proto.Name));
