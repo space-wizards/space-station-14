@@ -32,7 +32,6 @@ public sealed partial class DungeonJob
         var dungeonRotation = _dungeon.GetDungeonRotation(seed);
         var dungeonTransform = Matrix3.CreateTransform(_position, dungeonRotation);
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
-        var externalNodes = new Dictionary<DungeonRoomPackPrototype, HashSet<Vector2i>>();
         var fallbackTile = new Tile(_tileDefManager[prefab.Tile].TileId);
 
         foreach (var pack in _prototype.EnumeratePrototypes<DungeonRoomPackPrototype>())
@@ -40,21 +39,6 @@ public sealed partial class DungeonJob
             var size = pack.Size;
             var sizePacks = roomPackProtos.GetOrNew(size);
             sizePacks.Add(pack);
-
-            // Determine external connections; these are only valid when adjacent to a room node.
-            // We use this later to determine which room packs connect to each other
-            var nodes = new HashSet<Vector2i>();
-            externalNodes.Add(pack, nodes);
-
-            foreach (var room in pack.Rooms)
-            {
-                var rator = new Box2iEdgeEnumerator(room, false);
-
-                while (rator.MoveNext(out var index))
-                {
-                    nodes.Add(index);
-                }
-            }
         }
 
         // Need to sort to make the RNG deterministic (at least without prototype changes).
@@ -64,7 +48,7 @@ public sealed partial class DungeonJob
                 string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         }
 
-        var roomProtos = new Dictionary<Vector2i, List<DungeonRoomPrototype>>();
+        var roomProtos = new Dictionary<Vector2i, List<DungeonRoomPrototype>>(_prototype.Count<DungeonRoomPrototype>());
 
         foreach (var proto in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
         {
@@ -142,7 +126,6 @@ public sealed partial class DungeonJob
         var chosenPacks = new DungeonRoomPackPrototype?[gen.RoomPacks.Count];
         var packTransforms = new Matrix3[gen.RoomPacks.Count];
         var packRotations = new Angle[gen.RoomPacks.Count];
-        var rotatedPackNodes = new HashSet<Vector2i>[gen.RoomPacks.Count];
 
         // Actually pick the room packs and rooms
         for (var i = 0; i < gen.RoomPacks.Count; i++)
@@ -168,9 +151,6 @@ public sealed partial class DungeonJob
             }
 
             // Iterate every pack
-            // To be valid it needs its edge nodes to overlap with every edge group
-            var external = connections[i];
-
             random.Shuffle(availablePacks);
             Matrix3 packTransform = default!;
             var found = false;
@@ -178,11 +158,12 @@ public sealed partial class DungeonJob
 
             foreach (var aPack in availablePacks)
             {
-                var aExternal = externalNodes[aPack];
+                var startIndex = random.Next(4);
 
                 for (var j = 0; j < 4; j++)
                 {
-                    var dir = (DirectionFlag) Math.Pow(2, j);
+                    var index = (startIndex + j) % 4;
+                    var dir = (DirectionFlag) Math.Pow(2, index);
                     Vector2i aPackDimensions;
 
                     if ((dir & (DirectionFlag.East | DirectionFlag.West)) != 0x0)
@@ -199,37 +180,11 @@ public sealed partial class DungeonJob
                         continue;
 
                     found = true;
-                    var rotatedNodes = new HashSet<Vector2i>(aExternal.Count);
                     var aRotation = dir.AsDir().ToAngle();
-
-                    // Get the external nodes in terms of the dungeon layout
-                    // (i.e. rotated if necessary + translated to the room position)
-                    foreach (var node in aExternal)
-                    {
-                        // Get the node in pack terms (offset from center), then rotate it
-                        // Afterwards we offset it by where the pack is supposed to be in world terms.
-                        var rotated = aRotation.RotateVec((Vector2) node + grid.TileSize / 2f - aPack.Size / 2f);
-                        rotatedNodes.Add((rotated + bounds.Center).Floored());
-                    }
-
-                    foreach (var group in external.Values)
-                    {
-                        if (rotatedNodes.Overlaps(group))
-                            continue;
-
-                        found = false;
-                        break;
-                    }
-
-                    if (!found)
-                    {
-                        continue;
-                    }
 
                     // Use this pack
                     packTransform = Matrix3.CreateTransform(bounds.Center, aRotation);
                     packRotations[i] = aRotation;
-                    rotatedPackNodes[i] = rotatedNodes;
                     pack = aPack;
                     break;
                 }
