@@ -64,9 +64,7 @@ public sealed class EnergySwordSystem : EntitySystem
         args.Handled = true;
 
         if (TryComp<WieldableComponent>(uid, out var wieldableComp))
-        {
             return;
-        }
 
         if (comp.Activated)
         {
@@ -84,14 +82,14 @@ public sealed class EnergySwordSystem : EntitySystem
 
     private void TurnOffonUnwielded(EntityUid uid, EnergySwordComponent comp, ItemUnwieldedEvent args)
     {
-        EnergySwordDeactivatedEvent ev = new EnergySwordDeactivatedEvent();
+        var ev = new EnergySwordDeactivatedEvent();
         RaiseLocalEvent(uid, ref ev);
         UpdateAppearance(uid, comp);
     }
 
     private void TurnOnonWielded(EntityUid uid, EnergySwordComponent comp, ref ItemWieldedEvent args)
     {
-        EnergySwordActivatedEvent ev = new EnergySwordActivatedEvent();
+        var ev = new EnergySwordActivatedEvent();
         RaiseLocalEvent(uid, ref ev);
         UpdateAppearance(uid, comp);
     }
