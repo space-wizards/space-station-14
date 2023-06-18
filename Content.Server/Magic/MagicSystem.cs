@@ -1,7 +1,6 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
-using Content.Server.Coordinates.Helpers;
 using Content.Server.Doors.Systems;
 using Content.Server.Magic.Components;
 using Content.Server.Magic.Events;
@@ -9,6 +8,7 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Body.Components;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
