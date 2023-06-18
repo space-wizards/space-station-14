@@ -260,8 +260,6 @@ entities:
       type: Fixtures
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 132705.6201203
-      type: GridPathfinding
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -8638,8 +8636,6 @@ entities:
       type: Fixtures
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 97465.7475215
-      type: GridPathfinding
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity

@@ -709,6 +709,17 @@
         Glass: 1
 
 - type: entity
+  id: SheetifierMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: sheet-meister 2000 machine board
+  components:
+  - type: MachineBoard
+    prototype: Sheetifier
+    requirements:
+      MatterBin: 1
+      Manipulator: 1
+
+- type: entity
   id: MicrowaveMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: microwave machine board

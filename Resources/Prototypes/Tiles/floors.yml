@@ -1135,6 +1135,7 @@
   canCrowbar: true
   footstepSounds:
     collection: BarestepCarpet
+  itemDrop: FloorTileItemFlesh
   friction: 0.20 #slippy
   heatCapacity: 10000
 

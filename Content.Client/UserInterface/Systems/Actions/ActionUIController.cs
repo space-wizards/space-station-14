@@ -668,7 +668,18 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (args.Function == EngineKeyFunctions.UIClick)
         {
-            _menuDragHelper.MouseDown(button);
+            if (button.Action == null)
+            {
+                var ev = new FillActionSlotEvent();
+                EntityManager.EventBus.RaiseEvent(EventSource.Local, ev);
+                if (ev.Action != null)
+                    SetAction(button, ev.Action);
+            }
+            else
+            {
+                _menuDragHelper.MouseDown(button);
+            }
+
             args.Handle();
         }
         else if (args.Function == EngineKeyFunctions.UIRightClick)

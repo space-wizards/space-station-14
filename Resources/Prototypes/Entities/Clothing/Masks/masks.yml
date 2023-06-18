@@ -263,6 +263,38 @@
     sprite: Clothing/Mask/swat.rsi
 
 - type: entity
+  parent: ClothingMaskGasExplorer
+  id: ClothingMaskGasERT
+  name: ert gas mask
+  description: The gas mask of the elite squad of the ERT.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/ert.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/ert.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+
+- type: entity
+  parent: ClothingMaskGasERT
+  id: ClothingMaskGasDeathSquad
+  name: death squad gas mask
+  description: A unique gas mask for the NT's most elite squad.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/squadron.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/squadron.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.80
+        Piercing: 0.90
+        Heat: 0.90
+
+- type: entity
   parent: ClothingMaskBase
   id: ClothingMaskRat
   name: rat mask

@@ -161,3 +161,46 @@
   - type: Item
     size: 5
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
+
+- type: entity
+  name: Double Bladed Energy Sword
+  parent: EnergySword
+  id: EnergySwordDouble
+  description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
+  components:
+  - type: Wieldable
+    wieldTime: 0
+  - type: EnergySword
+    litDamageBonus:
+        types:
+            Slash: 9
+            Heat: 9
+            Structural: 20
+            Blunt: -4.5
+    litDisarmMalus: 0.7
+  - type: MeleeWeapon
+    attackRate: 1.6
+    angle: 100
+    heavyWindupModifier: .9
+    heavyDamageModifier: 1.5
+    soundHit:
+      path: /Audio/Weapons/eblade1.ogg
+    damage:
+      types:
+        Blunt: 4.5
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+    layers:
+      - state: e_sword_double
+      - state: e_sword_double_blade
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+  - type: Reflect
+    enabled: true
+    reflectProb: .75
+    spread: 75

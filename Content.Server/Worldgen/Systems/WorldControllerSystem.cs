@@ -121,7 +121,7 @@ public sealed class WorldControllerSystem : EntitySystem
             }
         }
 
-        var mindEnum = EntityQueryEnumerator<MindComponent, TransformComponent>();
+        var mindEnum = EntityQueryEnumerator<MindContainerComponent, TransformComponent>();
         var ghostQuery = GetEntityQuery<GhostComponent>();
 
         // Mindful entities get special privilege as they're always a player and we don't want the illusion being broken around them.
@@ -275,4 +275,3 @@ public readonly record struct WorldChunkLoadedEvent(EntityUid Chunk, Vector2i Co
 [ByRefEvent]
 [PublicAPI]
 public readonly record struct WorldChunkUnloadedEvent(EntityUid Chunk, Vector2i Coords);
-
