@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Popups;
@@ -29,6 +30,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
@@ -48,10 +50,16 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
+        [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
+
+        private ISawmill _vitalSawmill = default!;
         public override void Initialize()
         {
             base.Initialize();
+
+            _vitalSawmill = IoCManager.Resolve<LogManager>().GetSawmill("VitalComponentMissing");
 
             // Shouldn't need re-anchoring.
             SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
@@ -92,11 +100,13 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (component.Container.ContainedEntities.Count > 0)
             {
                 // Verbs to flush the unit
-                AlternativeVerb flushVerb = new();
-                flushVerb.Act = () => Engage(uid, component);
-                flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
-                flushVerb.Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"));
-                flushVerb.Priority = 1;
+                AlternativeVerb flushVerb = new()
+                {
+                    Act = () => Engage(uid, component),
+                    Text = Loc.GetString("disposal-flush-verb-get-data-text"),
+                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
+                    Priority = 1,
+                };
                 args.Verbs.Add(flushVerb);
 
                 // Verb to eject the contents
@@ -186,10 +196,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var (_, comp) in EntityQuery<ActiveDisposalUnitComponent, DisposalUnitComponent>())
+
+            var query = EntityQueryEnumerator<ActiveDisposalUnitComponent, DisposalUnitComponent>();
+            while (query.MoveNext(out var uid, out var _, out var unit))
             {
-                var uid = comp.Owner;
-                if (!Update(uid, comp, frameTime))
+                if (!Update(uid, unit, frameTime))
                     continue;
 
                 RemComp<ActiveDisposalUnitComponent>(uid);
@@ -199,7 +210,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         #region UI Handlers
         private void OnUiButtonPressed(EntityUid uid, DisposalUnitComponent component, SharedDisposalUnitComponent.UiButtonPressedMessage args)
         {
-            if (args.Session.AttachedEntity is not {Valid: true} player)
+            if (args.Session.AttachedEntity is not { Valid: true } player)
             {
                 return;
             }
@@ -218,7 +229,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     _power.TogglePower(uid, user: args.Session.AttachedEntity);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException($"{ToPrettyString(player):player} attempted to hit a nonexistant button on {ToPrettyString(uid)}");
             }
         }
 
@@ -295,7 +306,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (!HasComp<AnchorableComponent>(uid))
             {
-                Logger.WarningS("VitalComponentMissing", $"Disposal unit {uid} is missing an {nameof(AnchorableComponent)}");
+                _vitalSawmill.Warning($"Disposal unit {uid} is missing an {nameof(AnchorableComponent)}");
             }
         }
 
@@ -341,7 +352,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         /// <summary>
         /// Add or remove this disposal from the active ones for updating.
         /// </summary>
-        public void HandleStateChange(EntityUid uid, DisposalUnitComponent component, bool active)
+        public void HandleStateChange(EntityUid uid, DisposalUnitComponent _, bool active)
         {
             if (active)
             {
@@ -416,11 +427,21 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (component.State == SharedDisposalUnitComponent.PressureState.Pressurizing)
             {
                 var oldTimeElapsed = oldPressure / PressurePerSecond;
-                if (oldTimeElapsed < component.FlushTime && (oldTimeElapsed + frameTime) >= component.FlushTime)
+                if (oldTimeElapsed < component.FlushTime && oldTimeElapsed + frameTime >= component.FlushTime)
                 {
                     // We've crossed over the amount of time it takes to flush. This will switch the
                     // visuals over to a 'Charging' state.
                     UpdateVisualState(uid, component);
+                }
+            }
+            else if (component.State == SharedDisposalUnitComponent.PressureState.Ready && component.NextFlush < _gameTiming.CurTime)
+            {
+                if (!TryFlush(uid, component))
+                {
+                    if (component.AutoFlushing)
+                        TryQueueEngage(uid, component);
+                    else
+                        component.AutoFlushing = false;
                 }
             }
 
@@ -429,7 +450,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (count > 0)
             {
-                if (!TryComp(uid, out PhysicsComponent? disposalsBody))
+                if (!HasComp<PhysicsComponent>(uid))
                 {
                     component.RecentlyEjected.Clear();
                 }
@@ -442,8 +463,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             for (var i = component.RecentlyEjected.Count - 1; i >= 0; i--)
             {
                 var ejectedId = component.RecentlyEjected[i];
-                if (Exists(ejectedId) &&
-                    TryComp(ejectedId, out PhysicsComponent? body))
+                if (HasComp<PhysicsComponent>(ejectedId))
                 {
                     // TODO: We need to use a specific collision method (which sloth hasn't coded yet) for actual bounds overlaps.
                     // TODO: Come do this sloth :^)
@@ -534,14 +554,14 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var entryComponent = Comp<DisposalEntryComponent>(entry);
             var indices = _transformSystem.GetGridOrMapTilePosition(uid, xform);
 
-            if (_atmosSystem.GetTileMixture(xform.GridUid, xform.MapUid, indices, true) is {Temperature: > 0} environment)
+            if (_atmosSystem.GetTileMixture(xform.GridUid, xform.MapUid, indices, true) is { Temperature: > 0f } environment)
             {
                 var transferMoles = 0.1f * (0.25f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
 
                 component.Air = environment.Remove(transferMoles);
             }
 
-            entryComponent.TryInsert(component, beforeFlushArgs.Tags);
+            _disposalTubeSystem.TryInsert(entry, component, beforeFlushArgs.Tags);
 
             component.AutomaticEngageToken?.Cancel();
             component.AutomaticEngageToken = null;
@@ -553,6 +573,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             component.Engaged = false;
+            component.NextFlush = TimeSpan.MaxValue;
 
             HandleStateChange(uid, component, true);
             UpdateVisualState(uid, component, true);
@@ -669,7 +690,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (CanFlush(uid, component))
             {
-                uid.SpawnTimer(component.FlushDelay, () => TryFlush(uid, component));
+                component.NextFlush = _gameTiming.CurTime + component.FlushDelay;
             }
         }
 
@@ -702,22 +723,15 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         /// <summary>
         /// If something is inserted (or the likes) then we'll queue up a flush in the future.
         /// </summary>
-        public void TryQueueEngage(EntityUid uid, DisposalUnitComponent component)
+        public void TryQueueEngage(EntityUid _, DisposalUnitComponent component)
         {
             if (component.Deleted || !component.AutomaticEngage || !component.Powered && component.Container.ContainedEntities.Count == 0)
             {
                 return;
             }
 
-            component.AutomaticEngageToken = new CancellationTokenSource();
-
-            uid.SpawnTimer(component.AutomaticEngageTime, () =>
-            {
-                if (!TryFlush(uid, component))
-                {
-                    TryQueueEngage(uid, component);
-                }
-            }, component.AutomaticEngageToken.Token);
+            component.NextFlush = _gameTiming.CurTime + component.AutomaticEngageTime;
+            component.AutoFlushing = true;
         }
 
         public void AfterInsert(EntityUid uid, DisposalUnitComponent component, EntityUid inserted, EntityUid? user = null)

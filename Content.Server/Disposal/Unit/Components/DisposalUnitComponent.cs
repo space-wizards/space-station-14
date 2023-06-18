@@ -67,5 +67,8 @@ namespace Content.Server.Disposal.Unit.Components
 
         [DataField("air")]
         public GasMixture Air { get; set; } = new(Atmospherics.CellVolume);
+
+        public TimeSpan NextFlush = TimeSpan.MaxValue;
+        public bool AutoFlushing = false;
     }
 }

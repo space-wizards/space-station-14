@@ -7,7 +7,6 @@ using Content.Shared.Maps;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
-using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Server.Atmos.EntitySystems
 {
