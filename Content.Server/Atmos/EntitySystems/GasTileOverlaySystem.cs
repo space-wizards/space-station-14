@@ -139,6 +139,34 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
+        public GasOverlayData GetOverlayData(GasMixture mixture)
+        {
+            for (var i = 0; i < VisibleGasId.Length; i++)
+            {
+                var id = VisibleGasId[i];
+                var gas = _atmosphereSystem.GetGas(id);
+                var moles = mixture.Moles[id];
+
+                if (moles < gas.GasMolesVisible)
+                {
+                    continue;
+                }
+
+                var opacity = (byte) (ContentHelpers.RoundToLevels(
+                    MathHelper.Clamp01((moles - gas.GasMolesVisible) /
+                                       (gas.GasMolesVisibleMax - gas.GasMolesVisible)) * 255, byte.MaxValue,
+                    _thresholds) * 255 / (_thresholds - 1));
+
+                if (oldOpacity == opacity)
+                    continue;
+
+                oldOpacity = opacity;
+                changed = true;
+            }
+
+            return new GasOverlayData(0, )
+        }
+
         /// <summary>
         ///     Updates the visuals for a tile on some grid chunk. Returns true if the visuals have changed.
         /// </summary>
