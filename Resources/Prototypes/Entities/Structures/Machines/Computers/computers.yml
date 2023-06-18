@@ -742,6 +742,9 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+  - type: GuideHelp
+    guides:
+    - CargoBounties
 
 - type: entity
   parent: BaseComputer

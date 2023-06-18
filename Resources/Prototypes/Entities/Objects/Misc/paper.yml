@@ -136,6 +136,9 @@
   - type: CargoBountyLabel
   - type: StaticPrice
     price: 0
+  - type: GuideHelp
+    guides:
+    - CargoBounties
 
 - type: entity
   parent: Paper
