@@ -431,8 +431,8 @@ accent-dwarf-words-replace-141 = fin
 accent-dwarf-words-142 = crusher
 accent-dwarf-words-replace-142 = axe
 
-accent-dwarf-words-143 = gun
-accent-dwarf-words-replace-143 = flinger
+accent-dwarf-words-143 = coward
+accent-dwarf-words-replace-143 = leaflover
 
 accent-dwarf-words-144 = idiot
 accent-dwarf-words-replace-144 = dobber
