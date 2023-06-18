@@ -469,25 +469,25 @@
   categories:
   - UplinkBundles
 
-- type: listing
-  id: UplinkZombieBundle
-  name: uplink-zombie-bundle-name
-  description: uplink-zombie-bundle-desc
-  icon: { sprite: /Textures/Structures/Wallmounts/signs.rsi, state: bio }
-  productEntity: ClothingBackpackDuffelZombieBundle
-  cost:
-    Telecrystal: 40
-  categories:
-  - UplinkBundles
-  conditions:
-  - !type:StoreWhitelistCondition
-    whitelist:
-      tags:
-      - NukeOpsUplink
-  - !type:BuyerWhitelistCondition
-    blacklist:
-      components:
-      - SurplusBundle
+#- type: listing
+#  id: UplinkZombieBundle
+#  name: uplink-zombie-bundle-name
+#  description: uplink-zombie-bundle-desc
+#  icon: { sprite: /Textures/Structures/Wallmounts/signs.rsi, state: bio }
+#  productEntity: ClothingBackpackDuffelZombieBundle
+#  cost:
+#    Telecrystal: 40
+#  categories:
+#  - UplinkBundles
+#  conditions:
+#  - !type:StoreWhitelistCondition
+#    whitelist:
+#      tags:
+#      - NukeOpsUplink
+#  - !type:BuyerWhitelistCondition
+#    blacklist:
+#      components:
+#      - SurplusBundle
 
 - type: listing
   id: UplinkSurplusBundle
