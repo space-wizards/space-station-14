@@ -40,7 +40,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitDeathSquad
     back: ClothingBackpackDuffelSyndicateAmmo
-    mask: ClothingMaskBreath
+    mask: ClothingMaskGasDeathSquad
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetAltCommand
     gloves: ClothingHandsGlovesCombat
