@@ -1,66 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Added a generic bonk sound to items that collide with stuff., type: Add}
-  id: 3517
-  time: '2023-04-23T17:42:09.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Fixed theatrical performances crate now have name and desc., type: Fix}
-  id: 3518
-  time: '2023-04-23T20:45:16.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The Syndicate has added a ringtone code lock to uplinks. Operatives
-      are told the code when they are briefed. Set your ringtone to the code to open
-      your uplink!, type: Add}
-  id: 3519
-  time: '2023-04-23T21:00:42.0000000+00:00'
-- author: ProPandaBear
-  changes:
-  - {message: The "Spacebucks" barsign was added., type: Add}
-  id: 3520
-  time: '2023-04-23T22:13:32.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: 'Added secure chemicals crates, and jugs for greater chemical storage.',
-    type: Add}
-  id: 3521
-  time: '2023-04-23T23:53:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the CHIMP handcannon, a hand-held version of science''s APE.
-      Each bullet packs twice the punch of a normal APE.', type: Add}
-  id: 3522
-  time: '2023-04-23T23:58:45.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Autolathe icons for screwdrivers and wirecutters are now correct., type: Fix}
-  id: 3523
-  time: '2023-04-24T00:01:54.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Printed health analyzers and crew monitors no longer come pre-loaded
-      with batteries., type: Fix}
-  id: 3524
-  time: '2023-04-24T00:07:41.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Electricity anomalies will now create an EMP when going supercritical.,
-    type: Tweak}
-  id: 3525
-  time: '2023-04-24T00:11:24.0000000+00:00'
-- author: Tunguso4ka
-  changes:
-  - {message: cossacks jumpsuit and hat, type: Add}
-  id: 3526
-  time: '2023-04-24T01:46:15.0000000+00:00'
-- author: Kit0vras
-  changes:
-  - {message: Added construction for curtains. They can be disassembled using wire
-      cutters., type: Add}
-  id: 3527
-  time: '2023-04-24T02:12:11.0000000+00:00'
 - author: freeman2651
   changes:
   - {message: First aid kits are now more thoroughly stocked, type: Tweak}
@@ -2920,3 +2858,64 @@ Entries:
       Zooming out is still restricted., type: Tweak}
   id: 4016
   time: '2023-06-16T23:22:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: HAMTR Mech is now a tier 1 civilian service technology., type: Tweak}
+  id: 4017
+  time: '2023-06-17T01:59:54.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: When taking a mission you can now see what its rewards will be., type: Tweak}
+  id: 4018
+  time: '2023-06-17T02:00:54.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Shield values now can be examined, type: Add}
+  id: 4019
+  time: '2023-06-17T02:07:58.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Fix gas tile overlays not always showing, e.g. gas leaks on shuttles
+      on planets.', type: Fix}
+  id: 4020
+  time: '2023-06-17T02:30:56.0000000+00:00'
+- author: Sigil
+  changes:
+  - {message: Fixed the armour values on all winter coats that have caustic armour
+      as well as the CMO and virology bio suits., type: Fix}
+  id: 4021
+  time: '2023-06-17T09:55:16.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: Tweaked arachnids to look a bit more fluffier., type: Tweak}
+  id: 4022
+  time: '2023-06-17T19:47:32.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Added Dermaline Pills and Cryoxadone Beaker entities., type: Add}
+  - {message: 'Unit amounts to medicine in kits is now displayed. (IE: bicardine (10u)',
+    type: Tweak}
+  - {message: Burn kits now contain Dermaline pills instead., type: Tweak}
+  id: 4023
+  time: '2023-06-17T19:47:56.0000000+00:00'
+- author: Nails-n-Tape
+  changes:
+  - {message: added a guidebook entry for cargo, type: Add}
+  id: 4024
+  time: '2023-06-18T02:31:49.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: The Syndicate has stopped making zombie bundles available to nuclear
+      operatives after learning that the included bioweapon has expired., type: Remove}
+  id: 4025
+  time: '2023-06-18T03:23:42.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Bananium now generates on expedition planets., type: Fix}
+  id: 4026
+  time: '2023-06-18T07:11:30.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Added more dwarf accenting, type: Add}
+  id: 4027
+  time: '2023-06-18T09:12:10.0000000+00:00'

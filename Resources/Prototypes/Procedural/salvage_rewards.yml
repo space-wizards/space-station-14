@@ -25,8 +25,8 @@
     IngotSilver: 1.0
     SheetPlasma: 1.0
     SheetUranium: 1.0
-    SalvagePartsT3Spawner: 1.0
-    SalvagePartsT3T4Spawner: 1.0
+    CratePartsT3: 1.0
+    CratePartsT3T4: 0.5
     # things the expedition team might want
     CrateEmergencyBruteKit: 0.5
     CrateMedicalSupplies: 0.5
@@ -48,7 +48,7 @@
     # rare machinery
     SecurityTechFabCircuitboard: 1.0
     ResearchAndDevelopmentServerMachineCircuitboard: 1.0
-    SalvagePartsT4Spawner: 1.0
+    CratePartsT4: 1.0
     # rare weapons
     WeaponAdvancedLaser: 1.0
     WeaponLaserCannon: 1.0

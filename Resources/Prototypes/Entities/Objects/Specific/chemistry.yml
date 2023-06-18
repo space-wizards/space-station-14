@@ -101,6 +101,20 @@
     price: 10
 
 - type: entity
+  name: cryoxadone beaker
+  description: Filled with a reagent used in cryogenic tubes.
+  parent: Beaker
+  id: CryoxadoneBeakerSmall
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Cryoxadone
+          Quantity: 50
+
+- type: entity
   name: large beaker
   parent: BaseBeaker
   description: Used to contain a large amount of chemicals or solutions.
