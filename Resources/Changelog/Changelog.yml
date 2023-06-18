@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that caused the toggle-light & FOV ghost actions to not
-      appear., type: Fix}
-  id: 3542
-  time: '2023-04-26T04:05:05.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: 'Added a new job tab for Station specific jobs, as well as saying what
@@ -2928,3 +2922,9 @@ Entries:
   - {message: Removed security techfab board from expedition loot., type: Remove}
   id: 4041
   time: '2023-06-18T23:37:34.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added the extremely robust & highly coveted SWAT helmet. You can find
+      it as a reward in salvage expeditions., type: Add}
+  id: 4042
+  time: '2023-06-18T23:38:55.0000000+00:00'
