@@ -158,6 +158,10 @@
                         <humanoid:MarkingPicker Name="CMarkings" IgnoreCategories="Hair,FacialHair" />
                     </ScrollContainer>
                 </BoxContainer>
+                <BoxContainer Name="CAfkPreferences" Orientation="Vertical" Margin="10">
+                    <!-- Afk preferences -->
+                   <CheckBox Name="CTeleportAfkToCryoStorage" Text="{Loc 'humanoid-profile-edtior-afkPreferences-teleport-to-cryo-storage'}"/>
+                </BoxContainer>
             </TabContainer>
         </BoxContainer>
         <!-- Right side -->

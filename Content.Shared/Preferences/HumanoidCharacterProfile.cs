@@ -46,7 +46,8 @@ namespace Content.Shared.Preferences
             Dictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
             List<string> antagPreferences,
-            List<string> traitPreferences)
+            List<string> traitPreferences,
+            bool teleportAfkToCryoStorage = true)
         {
             Name = name;
             FlavorText = flavortext;
@@ -62,6 +63,7 @@ namespace Content.Shared.Preferences
             PreferenceUnavailable = preferenceUnavailable;
             _antagPreferences = antagPreferences;
             _traitPreferences = traitPreferences;
+            TeleportAfkToCryoStorage = teleportAfkToCryoStorage;
         }
 
         /// <summary>Copy constructor but with overridable references (to prevent useless copies)</summary>
@@ -71,7 +73,7 @@ namespace Content.Shared.Preferences
             List<string> antagPreferences,
             List<string> traitPreferences)
             : this(other.Name, other.FlavorText, other.Species, other.Voice, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack,
-                jobPriorities, other.PreferenceUnavailable, antagPreferences, traitPreferences)
+                jobPriorities, other.PreferenceUnavailable, antagPreferences, traitPreferences, other.TeleportAfkToCryoStorage)
         {
         }
 
@@ -224,6 +226,7 @@ namespace Content.Shared.Preferences
         public IReadOnlyList<string> AntagPreferences => _antagPreferences;
         public IReadOnlyList<string> TraitPreferences => _traitPreferences;
         public PreferenceUnavailableMode PreferenceUnavailable { get; private set; }
+        public bool TeleportAfkToCryoStorage { get; private set; } = true;
 
         public HumanoidCharacterProfile WithName(string name)
         {
@@ -345,6 +348,9 @@ namespace Content.Shared.Preferences
             }
             return new(this, _jobPriorities, _antagPreferences, list);
         }
+
+        public HumanoidCharacterProfile WithTeleportAfkToCryoStorage(bool teleportAfkToCryoStorage)
+            => new(this) { TeleportAfkToCryoStorage = teleportAfkToCryoStorage };
 
         public string Summary =>
             Loc.GetString(

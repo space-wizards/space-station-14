@@ -39,3 +39,5 @@ humanoid-profile-editor-job-priority-never-button = Никогда
 humanoid-profile-editor-naming-rules-warning = Внимание: Оскорбительные или странные имена и описания могут повлечь за собой беседу с администрацией. Прочитайте \[Правила\].
 humanoid-profile-editor-markings-tab = Черты внешности
 humanoid-profile-editor-flavortext-tab = Описание
+humanoid-profile-edtior-afkPreferences-tab = ССД
+humanoid-profile-edtior-afkPreferences-teleport-to-cryo-storage = Телепортация в крио хранилище при длительном ССД

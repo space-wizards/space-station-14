@@ -73,6 +73,8 @@ namespace Content.Client.Preferences.UI
         private SingleMarkingPicker _facialHairPicker => CFacialHairPicker;
         private EyeColorPicker _eyesPicker => CEyeColorPicker;
 
+        private CheckBox _teleportAfkToCryoStorage => CTeleportAfkToCryoStorage; 
+
         private TabContainer _tabContainer => CTabContainer;
         private BoxContainer _jobList => CJobList;
         private BoxContainer _antagList => CAntagList;
@@ -513,6 +515,14 @@ namespace Content.Client.Preferences.UI
             };
             _previewSpriteSideControl.AddChild(_previewSpriteSide);
             #endregion Dummy
+            
+            #region TeleportAfkToCryoStorage
+            
+            _tabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-edtior-afkPreferences-tab"));
+            _teleportAfkToCryoStorage.Pressed = Profile?.TeleportAfkToCryoStorage ?? true;
+            _teleportAfkToCryoStorage.OnToggled += args => SetTeleportAfkToCryoStorage(args.Pressed);
+
+            #endregion TeleportAfkToCryoStorage
 
             #endregion Left
 
@@ -842,6 +852,12 @@ namespace Content.Client.Preferences.UI
         private void SetBackpack(BackpackPreference newBackpack)
         {
             Profile = Profile?.WithBackpackPreference(newBackpack);
+            IsDirty = true;
+        }
+
+        private void SetTeleportAfkToCryoStorage(bool newTeleportAfkToCryoStorage)
+        {
+            Profile = Profile?.WithTeleportAfkToCryoStorage(newTeleportAfkToCryoStorage);
             IsDirty = true;
         }
 

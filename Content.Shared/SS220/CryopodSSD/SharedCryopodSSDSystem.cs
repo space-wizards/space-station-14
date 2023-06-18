@@ -54,7 +54,7 @@ namespace Content.Shared.SS220.CryopodSSD
                 return false;
 
             var xform = Transform(target);
-            cryopodSsdComponent.BodyContainer.Insert(target, transform: xform);
+            cryopodSsdComponent.BodyContainer.Insert(target, transform: xform, force: true);
             
             if (_prototypeManager.TryIndex<InstantActionPrototype>("CryopodSSDLeave", out var leaveAction))
             {
@@ -118,7 +118,7 @@ namespace Content.Shared.SS220.CryopodSSD
             if (args.Handled)
                 return;
 
-            args.CanDrop = HasComp<BodyComponent>(args.Dragged);
+            args.CanDrop = HasComp<BodyComponent>(args.Dragged) && _mobStateSystem.IsAlive(args.Dragged);
             args.Handled = true;
         }
 
@@ -167,6 +167,17 @@ namespace Content.Shared.SS220.CryopodSSD
         [Serializable, NetSerializable]
         public sealed class CryopodSSDDragFinished : SimpleDoAfterEvent
         {
+        }
+        
+        [Serializable, NetSerializable]
+        public sealed class TeleportToCryoFinished : SimpleDoAfterEvent
+        {
+            public EntityUid PortalId { get; private set; }
+
+            public TeleportToCryoFinished(EntityUid portalId)
+            {
+                PortalId = portalId;
+            }
         }
     }
 }

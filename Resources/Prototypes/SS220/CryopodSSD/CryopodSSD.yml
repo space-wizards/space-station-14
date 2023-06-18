@@ -32,6 +32,8 @@
           type: CryopodSSDBoundUserInterface
     - type: SSDStorageConsole
       whitelist:
+        components:
+          - Stamp
         tags:
           - HighRiskItem
     - type: ContainerContainer
@@ -64,7 +66,6 @@
       sprite: SS220/Structures/Machines/cryopodSSD.rsi
       state: icon
     - type: CryopodSSD
-      autoTransferToCryoDelay: 900
     - type: SSDStorageConsole
       isItReallyCryopod: true
     - type: ContainerContainer
@@ -73,3 +74,20 @@
         pod-body:
           !type:ContainerSlot
           showEnts: false
+          
+- type: entity
+  id: CryoStoragePortal
+  noSpawn: true
+  name: портал в крио
+  components:
+    - type: Sprite
+      sprite: /Textures/Effects/portal.rsi
+      state: portal-blue
+    - type: PointLight
+      netsync: false
+      color: SkyBlue
+      radius: 3
+      energy: 3
+    - type: AmbientSound
+      enabled: false
+      sound: /Audio/Effects/teleport_departure.ogg
