@@ -10,6 +10,7 @@
       - id: Screwdriver
       - id: Wirecutter
       - id: Welder
+      - id: NetworkConfigurator
 
 - type: entity
   id: ClothingBeltUtilityEngineering

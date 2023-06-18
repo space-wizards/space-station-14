@@ -427,3 +427,35 @@
   - type: Appearance
   - type: StaticPrice
     price: 63
+
+
+- type: entity
+  name: Eye of a behonker
+  parent: BaseWeaponBatterySmall
+  id: WeaponBehonkerLaser
+  description: The eye of a behonker, it fires a laser when squeezed.
+  components:
+  - type: Item
+    size: 30
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/behonker_eye.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Gun
+    fireRate: 1
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_clown.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 750

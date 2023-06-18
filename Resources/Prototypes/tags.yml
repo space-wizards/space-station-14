@@ -11,6 +11,9 @@
   id: AppraisalTool
 
 - type: Tag
+  id: ArtifactFragment
+
+- type: Tag
   id: ATVKeys
 
 - type: Tag
@@ -356,9 +359,6 @@
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
 
 - type: Tag
-  id: HardsuitEVA
-
-- type: Tag
   id: Head
 
 - type: Tag
@@ -408,6 +408,9 @@
 
 - type: Tag
   id: Ingot
+
+- type: Tag
+  id: InstantDoAfters
 
 - type: Tag
   id: IntercomElectronics
@@ -706,6 +709,9 @@
 
 - type: Tag
   id: SubdermalImplant
+
+- type: Tag
+  id: SuitEVA
 
 - type: Tag
   id: SurveillanceCameraMonitorCircuitboard

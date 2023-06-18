@@ -5,6 +5,8 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Humanoid;
+using Content.Server.Humanoid.Systems;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
@@ -54,6 +56,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     public override void Initialize()
     {
@@ -81,7 +84,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 continue;
 
             // If entity has a prior mind attached, add them to the players list.
-            if (!TryComp<MindComponent>(uid, out var mindComponent))
+            if (!TryComp<MindContainerComponent>(uid, out var mindComponent))
                 continue;
 
             var session = mindComponent.Mind?.Session;
@@ -571,22 +574,21 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     private void OnMindAdded(EntityUid uid, NukeOperativeComponent component, MindAddedMessage args)
     {
-        if (!TryComp<MindComponent>(uid, out var mindComponent) || mindComponent.Mind == null)
+        if (!TryComp<MindContainerComponent>(uid, out var mindContainerComponent) || mindContainerComponent.Mind == null)
             return;
 
-        var mind = mindComponent.Mind;
+        var mind = mindContainerComponent.Mind;
 
         foreach (var nukeops in EntityQuery<NukeopsRuleComponent>())
         {
             if (nukeops.OperativeMindPendingData.TryGetValue(uid, out var role) || !nukeops.SpawnOutpost || !nukeops.EndsRound)
             {
                 role ??= nukeops.OperativeRoleProto;
-
-                mind.AddRole(new NukeopsRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
+                _mindSystem.AddRole(mind, new NukeopsRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
                 nukeops.OperativeMindPendingData.Remove(uid);
             }
 
-            if (!mind.TryGetSession(out var playerSession))
+            if (!_mindSystem.TryGetSession(mind, out var playerSession))
                 return;
             if (nukeops.OperativePlayers.ContainsValue(playerSession))
                 return;
@@ -756,15 +758,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
                 var mob = EntityManager.SpawnEntity(species.Prototype, _random.Pick(spawns));
                 SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear, profile, component);
+                var newMind = _mindSystem.CreateMind(session.UserId, spawnDetails.Name);
+                _mindSystem.ChangeOwningPlayer(newMind, session.UserId);
+                _mindSystem.AddRole(newMind, new NukeopsRole(newMind, nukeOpsAntag));
 
-                var newMind = new Mind.Mind(session.UserId)
-                {
-                    CharacterName = spawnDetails.Name
-                };
-                newMind.ChangeOwningPlayer(session.UserId);
-                newMind.AddRole(new NukeopsRole(newMind, nukeOpsAntag));
-
-                newMind.TransferTo(mob);
+                _mindSystem.TransferTo(newMind, mob);
             }
             else if (addSpawnPoints)
             {
@@ -810,7 +808,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
 
         //ok hardcoded value bad but so is everything else here
-        mind.AddRole(new NukeopsRole(mind, _prototypeManager.Index<AntagPrototype>("Nukeops")));
+        _mindSystem.AddRole(mind, new NukeopsRole(mind, _prototypeManager.Index<AntagPrototype>("Nukeops")));
         SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "SyndicateOperativeGearFull", EntityManager);
     }
 
@@ -859,10 +857,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         }
 
         // Add pre-existing nuke operatives to the credit list.
-        var query = EntityQuery<NukeOperativeComponent, MindComponent, MetaDataComponent>(true);
+        var query = EntityQuery<NukeOperativeComponent, MindContainerComponent, MetaDataComponent>(true);
         foreach (var (_, mindComp, metaData) in query)
         {
-            if (mindComp.Mind == null || !mindComp.Mind.TryGetSession(out var session))
+            if (!mindComp.HasMind || !_mindSystem.TryGetSession(mindComp.Mind, out var session))
                 continue;
             component.OperativePlayers.Add(metaData.EntityName, session);
         }

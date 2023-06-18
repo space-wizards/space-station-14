@@ -20,6 +20,7 @@ using Content.Server.Materials;
 using Content.Server.Jobs;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Components;
+using Content.Server.Mind;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Zombies;
@@ -37,6 +38,7 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
 using Robust.Shared.Audio;
 using System.Runtime.InteropServices;
+using Content.Server.MachineLinking.Events;
 using Content.Server.Popups;
 using Content.Server.Traits.Assorted;
 
@@ -63,6 +65,7 @@ namespace Content.Server.Cloning
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
         public const float EasyModeCloningCost = 0.7f;
@@ -107,12 +110,12 @@ namespace Content.Server.Cloning
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entity) ||
                 !EntityManager.EntityExists(entity) ||
-                !TryComp<MindComponent>(entity, out var mindComp) ||
+                !TryComp<MindContainerComponent>(entity, out var mindComp) ||
                 mindComp.Mind != null)
                 return;
 
-            mind.TransferTo(entity, ghostCheckOverride: true);
-            mind.UnVisit();
+            _mindSystem.TransferTo(mind, entity, ghostCheckOverride: true);
+            _mindSystem.UnVisit(mind);
             ClonesWaitingForMind.Remove(mind);
         }
 
@@ -167,7 +170,7 @@ namespace Content.Server.Cloning
             {
                 if (EntityManager.EntityExists(clone) &&
                     !_mobStateSystem.IsDead(clone) &&
-                    TryComp<MindComponent>(clone, out var cloneMindComp) &&
+                    TryComp<MindContainerComponent>(clone, out var cloneMindComp) &&
                     (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
                     return false; // Mind already has clone
 

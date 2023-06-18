@@ -52,3 +52,12 @@
   maxCount: 6
   groupCount: 5
   radius: 4
+
+# Artifact Fragment
+- type: biomeMarkerLayer
+  id: OreArtifactFragment
+  proto: WallRockArtifactFragment
+  entityMask: WallRock
+  maxCount: 6
+  groupCount: 1
+  radius: 4

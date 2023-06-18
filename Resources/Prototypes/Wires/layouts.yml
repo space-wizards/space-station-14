@@ -84,3 +84,15 @@
   - !type:ParticleAcceleratorLimiterWireAction
   - !type:ParticleAcceleratorPowerWireAction
   - !type:ParticleAcceleratorStrengthWireAction
+
+- type: wireLayout
+  id: Docking
+  dummyWires: 2
+  wires:
+  - !type:PowerWireAction
+  - !type:PowerWireAction
+    pulseTimeout: 15
+  - !type:DoorBoltWireAction
+  - !type:DoorBoltLightWireAction
+  - !type:DoorTimingWireAction
+  - !type:DoorSafetyWireAction

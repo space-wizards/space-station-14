@@ -207,6 +207,20 @@
     node: chairRitual
 
 - type: entity
+  id: ChairMeat
+  parent: SeatBase
+  name: meat chair
+  description: Uncomfortably sweaty.
+  components:
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: meat
+  - type: Construction
+    graph: Seat
+    node: chairMeat
+
+- type: entity
   name: cursed chair
   id: ChairCursed
   parent: SeatBase
