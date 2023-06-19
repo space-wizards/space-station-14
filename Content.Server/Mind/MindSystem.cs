@@ -67,11 +67,11 @@ public sealed class MindSystem : EntitySystem
 
     public void WipeAllMinds()
     {
-        foreach (var (user, mind) in _userMinds)
+        foreach (var mind in _userMinds.Values)
         {
             WipeMind(mind);
         }
-        _userMinds.Clear();
+        DebugTools.Assert(_userMinds.Count == 0);
 
         foreach (var unCastData in _playerManager.GetAllPlayerData())
         {
@@ -616,6 +616,10 @@ public sealed class MindSystem : EntitySystem
 
             mind.Session.AttachToEntity(null);
             mind.Session = null;
+        }
+        else if (mind.UserId != null)
+        {
+            DebugTools.AssertNull(_playerManager.GetPlayerData(mind.UserId.Value).ContentData()?.Mind);
         }
 
         if (mind.UserId != null)
