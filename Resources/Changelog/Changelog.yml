@@ -1,9 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: 'Holos share less damage to their owner, updated description.', type: Tweak}
-  id: 3546
-  time: '2023-04-26T06:52:07.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Bump collision sound velocity required from 0.25 to 1., type: Tweak}
@@ -2926,3 +2921,10 @@ Entries:
     type: Fix}
   id: 4045
   time: '2023-06-19T04:02:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Quartz now generates on planets., type: Add}
+  - {message: Greatly increased the amount of ore that generates on planets. Grab
+      your picks!, type: Tweak}
+  id: 4046
+  time: '2023-06-19T04:03:41.0000000+00:00'
