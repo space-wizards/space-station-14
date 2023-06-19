@@ -596,6 +596,9 @@
   id: Powerdrill
 
 - type: Tag
+  id: PowerCellSmall
+
+- type: Tag
   id: ProximitySensor
 
 - type: Tag

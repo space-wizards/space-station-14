@@ -1,0 +1,21 @@
+- type: constructionGraph
+  id: makeshiftstunprod
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: msstunprod
+          steps:
+            - material: MetalRod
+              amount: 1
+            - material: Cable
+              amount: 15
+            - tag: PowerCellSmall
+              name: Power Cell Small
+              icon:
+                sprite: Objects/Power/power_cells.rsi
+                state: small
+              doAfter: 20
+    - node: msstunprod
+      entity: Stunprod
+      
