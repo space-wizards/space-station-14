@@ -54,7 +54,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     /// <param name="toolQualitiesNeeded">The qualities needed for this tool to work.</param>
     /// <param name="doAfterEv">The event that will be raised when the tool has finished (including cancellation). Event
     /// will be directed at the tool target.</param>
-    /// <param name="fuel">Amount of fuel that should be taken from the tool.</param>
+    /// <param name="fuel">Minimum amount of fuel needed in the tool.</param>
     /// <param name="toolComponent">The tool component.</param>
     /// <returns>Returns true if any interaction takes place.</returns>
     public bool UseTool(
@@ -92,7 +92,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     /// will be directed at the tool target.</param>
     /// <param name="id">The id of the DoAfter that was created. This may be null even if the function returns true in
     /// the event that this tool-use cancelled an existing DoAfter</param>
-    /// <param name="fuel">Amount of fuel that should be taken from the tool.</param>
+    /// <param name="fuel">Minimum amount of fuel needed in the tool.</param>
     /// <param name="toolComponent">The tool component.</param>
     /// <returns>Returns true if any interaction takes place.</returns>
     public bool UseTool(

@@ -26,7 +26,7 @@ namespace Content.Server.Tools.Components
         ///     Fuel consumption per second, while the welder is active.
         /// </summary>
         [DataField("fuelConsumption")]
-        public FixedPoint2 FuelConsumption { get; } = FixedPoint2.New(0.05f);
+        public FixedPoint2 FuelConsumption { get; } = FixedPoint2.New(1.0f);
 
         /// <summary>
         ///     A fuel amount to be consumed when the welder goes from being unlit to being lit.
