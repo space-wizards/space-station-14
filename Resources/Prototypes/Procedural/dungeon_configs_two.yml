@@ -56,3 +56,5 @@
       width: 1
 
     - !type:JunctionPostGen
+
+    - !type:AutoCablingPostGen

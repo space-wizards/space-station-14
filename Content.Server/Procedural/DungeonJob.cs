@@ -106,6 +106,9 @@ public sealed partial class DungeonJob : Job<Dungeon>
 
             switch (post)
             {
+                case AutoCablingPostGen cabling:
+                    await PostGen(cabling, dungeon, _gridUid, _grid, random);
+                    break;
                 case BoundaryWallPostGen boundary:
                     await PostGen(boundary, dungeon, _gridUid, _grid, random);
                     break;

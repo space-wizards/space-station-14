@@ -1,7 +1,9 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.NodeContainer;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Arcade;
+using Content.Shared.Doors.Components;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
@@ -23,6 +25,107 @@ public sealed partial class DungeonJob
 
     private const int CollisionMask = (int) CollisionGroup.Impassable;
     private const int CollisionLayer = (int) CollisionGroup.Impassable;
+
+    private async Task PostGen(AutoCablingPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid,
+        Random random)
+    {
+        // There's a lot of ways you could do this.
+        // For now we'll just connect every LV cable in the dungeon.
+        var cableTiles = new HashSet<Vector2i>();
+        var allTiles = new HashSet<Vector2i>(dungeon.CorridorTiles);
+        allTiles.UnionWith(dungeon.RoomTiles);
+        allTiles.UnionWith(dungeon.RoomExteriorTiles);
+        allTiles.UnionWith(dungeon.CorridorExteriorTiles);
+        var nodeQuery = _entManager.GetEntityQuery<NodeContainerComponent>();
+
+        // Gather existing nodes
+        foreach (var tile in allTiles)
+        {
+            var anchored = grid.GetAnchoredEntitiesEnumerator(tile);
+
+            while (anchored.MoveNext(out var anc))
+            {
+                if (!nodeQuery.TryGetComponent(anc, out var nodeContainer) ||
+                   nodeContainer.Nodes.ContainsKey("Apc"))
+                {
+                    continue;
+                }
+
+                cableTiles.Add(tile);
+                break;
+            }
+        }
+
+        // Iterating them all might be expensive.
+        await SuspendIfOutOfTime();
+
+        if (!ValidateResume())
+            return;
+
+        var startNodes = new List<Vector2i>(cableTiles);
+
+        var edges = _dungeon.MinimumSpanningTree(startNodes, random);
+        await SuspendIfOutOfTime();
+        if (!ValidateResume())
+            return;
+
+        var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
+        var doorQuery = _entManager.GetEntityQuery<DoorComponent>();
+
+        _dungeon.GetCorridorNodes(cableTiles, edges, pathLimit: 512, tileCallback: tile =>
+        {
+            var enumerator = grid.GetAnchoredEntitiesEnumerator(tile);
+            var mod = 1f;
+
+            while (enumerator.MoveNext(out var ent))
+            {
+                if (!physicsQuery.TryGetComponent(ent, out var body) ||
+                    !body.CanCollide ||
+                    !body.Hard)
+                {
+                    continue;
+                }
+
+                if (((body.CollisionMask & CollisionLayer) != 0x0 ||
+                    (body.CollisionLayer & CollisionMask) != 0x0) &&
+                    !doorQuery.HasComponent(ent.Value))
+                {
+                    mod *= 10f;
+                    break;
+                }
+            }
+
+            return mod;
+        });
+
+        // TODO: Move this to a method.
+        await SuspendIfOutOfTime();
+        if (!ValidateResume())
+            return;
+
+        foreach (var tile in cableTiles)
+        {
+            var anchored = grid.GetAnchoredEntitiesEnumerator(tile);
+            var found = false;
+
+            while (anchored.MoveNext(out var anc))
+            {
+                if (!nodeQuery.TryGetComponent(anc, out var nodeContainer) ||
+                    nodeContainer.Nodes.ContainsKey("Apc"))
+                {
+                    continue;
+                }
+
+                found = true;
+                break;
+            }
+
+            if (found)
+                continue;
+
+            _entManager.SpawnEntity("CableApcExtension", _grid.GridTileToLocal(tile));
+        }
+    }
 
     private async Task PostGen(BoundaryWallPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
     {
@@ -440,74 +543,11 @@ public sealed partial class DungeonJob
             entrances.AddRange(room.Entrances);
         }
 
-        // Generate connections between all rooms.
-        var connections = new Dictionary<Vector2i, List<(Vector2i Tile, float Distance)>>(entrances.Count);
+        var edges = _dungeon.MinimumSpanningTree(entrances, random);
+        await SuspendIfOutOfTime();
 
-        foreach (var entrance in entrances)
-        {
-            var edgeConns = new List<(Vector2i Tile, float Distance)>(entrances.Count - 1);
-
-            foreach (var other in entrances)
-            {
-                if (entrance == other)
-                    continue;
-
-                edgeConns.Add((other, (other - entrance).Length));
-            }
-
-            // Sort these as they will be iterated many times.
-            edgeConns.Sort((x, y) => x.Distance.CompareTo(y.Distance));
-            connections.Add(entrance, edgeConns);
-        }
-
-        // Pathfind between them, lower weight for nodes we've already generated corridors for.
-
-        // MST
-        // Use Prim's algo
-        // 0. Pick random vert as seed
-        // 1. Of all the tree edges (i.e. for all verts we've added already) pick the lowest weight one and add it to the tree
-        // 2. Repeat 1. until all vertices in the tree.
-        var seedIndex = random.Next(entrances.Count);
-        var remaining = new ValueList<Vector2i>(entrances);
-        remaining.RemoveAt(seedIndex);
-
-        var edges = new List<(Vector2i Start, Vector2i End)>();
-        var cheapest = (Vector2i.Zero, Vector2i.Zero);
-
-        var seedEntrance = entrances[seedIndex];
-        var forest = new ValueList<Vector2i>(entrances.Count) { seedEntrance };
-
-        while (remaining.Count > 0)
-        {
-            // Get cheapest edge
-            var cheapestDistance = float.MaxValue;
-            cheapest = (Vector2i.Zero, Vector2i.Zero);
-
-            foreach (var node in forest)
-            {
-                foreach (var conn in connections[node])
-                {
-                    // Existing tile, skip
-                    if (forest.Contains(conn.Tile))
-                        continue;
-
-                    // Not the cheapest
-                    if (cheapestDistance < conn.Distance)
-                        continue;
-
-                    cheapestDistance = conn.Distance;
-                    cheapest = (node, conn.Tile);
-                    // List is pre-sorted so we can just breakout easily.
-                    break;
-                }
-            }
-
-            DebugTools.Assert(cheapestDistance < float.MaxValue);
-            // Add to tree
-            edges.Add(cheapest);
-            forest.Add(cheapest.Item2);
-            remaining.Remove(cheapest.Item2);
-        }
+        if (!ValidateResume())
+            return;
 
         // TODO: Add in say 1/3 of edges back in to add some cyclic to it.
 
@@ -551,135 +591,26 @@ public sealed partial class DungeonJob
             }
         }
 
-        // Pathfind each entrance
+        var excludedTiles = new HashSet<Vector2i>(dungeon.RoomExteriorTiles);
+        excludedTiles.UnionWith(dungeon.RoomTiles);
         var corridorTiles = new HashSet<Vector2i>();
-        var frontier = new PriorityQueue<Vector2i, float>();
-        var cameFrom = new Dictionary<Vector2i, Vector2i>();
-        var directions = new Dictionary<Vector2i, Direction>();
-        var costSoFar = new Dictionary<Vector2i, float>();
-        var pathLimit = gen.PathLimit;
 
-        /*
-         *  - Fix entrance gen (fallback to middle bits if no markers specified)
-            - Have corridors sometimes overshoot (postgen step maybe)
-            - Bump poster frequency I think
-            - Re-use the markers from above for entrance gen
-            - Corridors just uhh regular walls only corners reinforced
-
-            - After ALL the above working, then make entirely NEW templates.
-         */
-
-        foreach (var (start, end) in edges)
+        _dungeon.GetCorridorNodes(corridorTiles, edges, gen.PathLimit, excludedTiles, tile =>
         {
-            frontier.Clear();
-            cameFrom.Clear();
-            costSoFar.Clear();
-            directions.Clear();
-            directions[start] = Direction.Invalid;
-            frontier.Enqueue(start, 0f);
-            costSoFar[start] = 0f;
-            var found = false;
-            var count = 0;
-            await SuspendIfOutOfTime();
+            var mod = 1f;
 
-            if (!ValidateResume())
-                return;
-
-            while (frontier.Count > 0 && count < pathLimit)
+            if (corridorTiles.Contains(tile))
             {
-                count++;
-                var node = frontier.Dequeue();
-
-                if (node == end)
-                {
-                    found = true;
-                    break;
-                }
-
-                var lastDirection = directions[node];
-
-                // Foreach neighbor etc etc
-                for (var x = -1; x <= 1; x++)
-                {
-                    for (var y = -1; y <= 1; y++)
-                    {
-                        // Cardinals only.
-                        if (x != 0 && y != 0)
-                            continue;
-
-                        var neighbor = new Vector2i(node.X + x, node.Y + y);
-
-                        // FORBIDDEN
-                        if (neighbor != end &&
-                            (dungeon.RoomTiles.Contains(neighbor) ||
-                            dungeon.RoomExteriorTiles.Contains(neighbor)))
-                        {
-                            continue;
-                        }
-
-                        var tileCost = PathfindingSystem.ManhattanDistance(node, neighbor);
-
-                        // Weight towards existing corridors ig
-                        if (corridorTiles.Contains(neighbor))
-                        {
-                            tileCost *= 0.10f;
-                        }
-
-                        // If it's next to a dungeon room then avoid it if at all possible
-                        if (deterredTiles.Contains(neighbor))
-                        {
-                            tileCost *= 2f;
-                        }
-
-                        var direction = (neighbor - node).GetCardinalDir();
-                        directions[neighbor] = direction;
-
-                        // If direction is different then penalise it.
-                        if (direction != lastDirection)
-                        {
-                            tileCost *= 3f;
-                        }
-
-                        // f = g + h
-                        // gScore is distance to the start node
-                        // hScore is distance to the end node
-                        var gScore = costSoFar[node] + tileCost;
-
-                        if (costSoFar.TryGetValue(neighbor, out var nextValue) && gScore >= nextValue)
-                        {
-                            continue;
-                        }
-
-                        cameFrom[neighbor] = node;
-                        costSoFar[neighbor] = gScore;
-
-                        // Make it greedy so multiply h-score to punish further nodes.
-                        // This is necessary as we might have the deterredTiles multiplying towards the end
-                        // so just finish it.
-                        var hScore = PathfindingSystem.ManhattanDistance(end, neighbor) * (1.0f - 1.0f / 1000.0f);
-                        var fScore = gScore + hScore;
-                        frontier.Enqueue(neighbor, fScore);
-                    }
-                }
+                mod *= 0.1f;
             }
 
-            // Rebuild path if it's valid.
-            if (found)
+            if (deterredTiles.Contains(tile))
             {
-                var node = end;
-
-                while (true)
-                {
-                    node = cameFrom[node];
-
-                    // Don't want start or end nodes included.
-                    if (node == start)
-                        break;
-
-                    corridorTiles.Add(node);
-                }
+                mod *= 2f;
             }
-        }
+
+            return mod;
+        });
 
         // Widen the path
         if (expansion >= 1)
