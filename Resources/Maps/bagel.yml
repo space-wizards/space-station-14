@@ -112014,7 +112014,7 @@ entities:
     - pos: 22.5,-0.5
       parent: 60
       type: Transform
-- proto: HatBandGold
+- proto: ClothingHeadBandGold
   entities:
   - uid: 952
     components:
@@ -112026,7 +112026,7 @@ entities:
     - pos: -56.55667,-23.491457
       parent: 60
       type: Transform
-- proto: HatBandMerc
+- proto: ClothingHeadBandMerc
   entities:
   - uid: 17463
     components:
@@ -112037,7 +112037,7 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
-- proto: HatBandRed
+- proto: ClothingHeadBandRed
   entities:
   - uid: 1405
     components:
@@ -112054,7 +112054,7 @@ entities:
     - pos: 31.491577,14.711699
       parent: 60
       type: Transform
-- proto: HatBandSkull
+- proto: ClothingHeadBandSkull
   entities:
   - uid: 4377
     components:
