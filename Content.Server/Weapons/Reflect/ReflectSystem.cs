@@ -1,5 +1,5 @@
 using Content.Server.Weapons.Melee.EnergySword;
-using Content.Server.Weapons.Melee.EnergyShield;
+using Content.Shared.Weapons.Melee.EnergyShield;
 using Content.Shared.Weapons.Reflect;
 
 namespace Content.Server.Weapons.Reflect;

@@ -308,13 +308,14 @@
   id: EnergyShield
   description: Exotic energy shield, when folded, can even fit in your pocket.
   components:
-    - type: EnergyShield
+    - type: ItemToggle
       secret: true
-      litDisarmMalus: 0.6
+      activatedDisarmMalus: 0.6
       activateSound:
         path: /Audio/Weapons/ebladeon.ogg
       deActivateSound:
         path: /Audio/Weapons/ebladeoff.ogg
+      offSize: 5
     - type: Sprite
       sprite: Objects/Weapons/Melee/e_shield.rsi
       layers:
@@ -354,14 +355,14 @@
       passiveBlockModifier:
         coefficients:
           Blunt: 1.0
-          Slash: 0.95
-          Piercing: 0.9
-          Heat: 0.8
+          Slash: 0.9
+          Piercing: 0.85
+          Heat: 0.6
       activeBlockModifier:
         coefficients:
           Blunt: 1.2
           Slash: 0.85
-          Piercing: 0.7
+          Piercing: 0.5
           Heat: 0.4
         flatReductions:
           Heat: 1
@@ -373,13 +374,13 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 150
+            damage: 180
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
-            damage: 120
+            damage: 150
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]

@@ -8,7 +8,7 @@ using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Player;
 
-namespace Content.Server.Weapons.Melee.EnergyShield;
+namespace Content.Shared.Weapons.Melee.EnergyShield;
 
 public sealed class EnergyShieldSystem : EntitySystem
 {
@@ -20,14 +20,14 @@ public sealed class EnergyShieldSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EnergyShieldComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<EnergyShieldComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<EnergyShieldComponent, IsHotEvent>(OnIsHotEvent);
-        SubscribeLocalEvent<EnergyShieldComponent, EnergyShieldDeactivatedEvent>(TurnOff);
-        SubscribeLocalEvent<EnergyShieldComponent, EnergyShieldActivatedEvent>(TurnOn);
+        SubscribeLocalEvent<ItemToggleComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<ItemToggleComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<ItemToggleComponent, IsHotEvent>(OnIsHotEvent);
+        SubscribeLocalEvent<ItemToggleComponent, EnergyShieldDeactivatedEvent>(TurnOff);
+        SubscribeLocalEvent<ItemToggleComponent, EnergyShieldActivatedEvent>(TurnOn);
     }
 
-    private void OnUseInHand(EntityUid uid, EnergyShieldComponent comp, UseInHandEvent args)
+    private void OnUseInHand(EntityUid uid, ItemToggleComponent comp, UseInHandEvent args)
     {
         if (args.Handled)
             return;
@@ -48,16 +48,16 @@ public sealed class EnergyShieldSystem : EntitySystem
         UpdateAppearance(uid, comp);
     }
 
-    private void TurnOff(EntityUid uid, EnergyShieldComponent comp, ref EnergyShieldDeactivatedEvent args)
+    private void TurnOff(EntityUid uid, ItemToggleComponent comp, ref EnergyShieldDeactivatedEvent args)
     {
         if (TryComp(uid, out ItemComponent? item))
         {
-            _item.SetSize(uid, 5, item);
+            _item.SetSize(uid, comp.OffSize, item);
         }
 
         if (TryComp<DisarmMalusComponent>(uid, out var malus))
         {
-            malus.Malus -= comp.LitDisarmMalus;
+            malus.Malus -= comp.ActivatedDisarmMalus;
         }
 
         if (comp.IsSharp)
@@ -68,11 +68,11 @@ public sealed class EnergyShieldSystem : EntitySystem
         comp.Activated = false;
     }
 
-    private void TurnOn(EntityUid uid, EnergyShieldComponent comp, ref EnergyShieldActivatedEvent args)
+    private void TurnOn(EntityUid uid, ItemToggleComponent comp, ref EnergyShieldActivatedEvent args)
     {
         if (TryComp(uid, out ItemComponent? item))
         {
-            _item.SetSize(uid, 9999, item);
+            _item.SetSize(uid, comp.OnSize, item);
         }
 
         if (comp.IsSharp)
@@ -80,7 +80,7 @@ public sealed class EnergyShieldSystem : EntitySystem
 
         if (TryComp<DisarmMalusComponent>(uid, out var malus))
         {
-            malus.Malus += comp.LitDisarmMalus;
+            malus.Malus += comp.ActivatedDisarmMalus;
         }
 
         _audio.Play(comp.ActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.ActivateSound.Params);
@@ -88,7 +88,7 @@ public sealed class EnergyShieldSystem : EntitySystem
         comp.Activated = true;
     }
 
-    private void UpdateAppearance(EntityUid uid, EnergyShieldComponent component)
+    private void UpdateAppearance(EntityUid uid, ItemToggleComponent component)
     {
         if (!TryComp(uid, out AppearanceComponent? appearanceComponent))
             return;
@@ -96,7 +96,7 @@ public sealed class EnergyShieldSystem : EntitySystem
         _appearance.SetData(uid, ToggleableLightVisuals.Enabled, component.Activated, appearanceComponent);
     }
 
-    private void OnInteractUsing(EntityUid uid, EnergyShieldComponent comp, InteractUsingEvent args)
+    private void OnInteractUsing(EntityUid uid, ItemToggleComponent comp, InteractUsingEvent args)
     {
         if (args.Handled)
             return;
@@ -107,8 +107,8 @@ public sealed class EnergyShieldSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnIsHotEvent(EntityUid uid, EnergyShieldComponent energyShield, IsHotEvent args)
+    private void OnIsHotEvent(EntityUid uid, ItemToggleComponent itemToggle, IsHotEvent args)
     {
-        args.IsHot = energyShield.Activated;
+        args.IsHot = itemToggle.Activated;
     }
 }
