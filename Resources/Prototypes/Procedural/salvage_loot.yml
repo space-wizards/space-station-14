@@ -8,6 +8,14 @@
     - !type:BiomeMarkerLoot
       proto: OreTin
 
+- type: salvageLoot
+  id: OreQuartz
+  desc: Veins of quartz
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreQuartz
+
 # - Medium value
 - type: salvageLoot
   id: OreGold
