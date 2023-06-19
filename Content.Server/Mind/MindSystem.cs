@@ -611,20 +611,15 @@ public sealed class MindSystem : EntitySystem
 
         if (mind.Session != null)
         {
-            if (mind.Session.ContentData() is { } oldData)
-                oldData.Mind = null;
-
             mind.Session.AttachToEntity(null);
             mind.Session = null;
-        }
-        else if (mind.UserId != null)
-        {
-            DebugTools.AssertNull(_playerManager.GetPlayerData(mind.UserId.Value).ContentData()?.Mind);
         }
 
         if (mind.UserId != null)
         {
             _userMinds.Remove(mind.UserId.Value);
+            if (_playerManager.GetPlayerData(mind.UserId.Value).ContentData() is { } oldData)
+                oldData.Mind = null;
             mind.UserId = null;
         }
 
