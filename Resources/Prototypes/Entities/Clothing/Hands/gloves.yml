@@ -80,7 +80,8 @@
   parent: ClothingHandsGlovesBoxingBlue
   id: ClothingHandsGlovesBoxingRigged
   name: blue boxing gloves
-  description: Blue gloves for competitive boxing. Feels like they're heavier than usual...
+  suffix: Rigged
+  description: Regal blue gloves, with a nice gold trim. Swanky.
   components:
   - type: StaminaDamageOnHit
     damage: 30
