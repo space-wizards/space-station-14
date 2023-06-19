@@ -1,12 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: 'Added more things for the brigmedic, updated PDA animation, a new sprite
-      for brigmedic locker, a custom brigmedic headset , new sprites skirts and overalls,
-      a new beret, armored medical gown, new bags, a new military-style medical mask,
-      and most importantly, a bedsheet, and all this for the brigmedic.', type: Add}
-  id: 3544
-  time: '2023-04-26T06:48:44.0000000+00:00'
 - author: Nimfar
   changes:
   - {message: Adds the Space Spider., type: Add}
@@ -2927,3 +2919,9 @@ Entries:
   - {message: Proto-kinetic accelerators have returned to the salvage vendor., type: Tweak}
   id: 4043
   time: '2023-06-19T00:53:01.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: Provided some minor updates to Janitorial and Cryogenics guidebooks.,
+    type: Tweak}
+  id: 4044
+  time: '2023-06-19T01:15:01.0000000+00:00'
