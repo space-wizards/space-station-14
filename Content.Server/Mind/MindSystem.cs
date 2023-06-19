@@ -225,9 +225,6 @@ public sealed class MindSystem : EntitySystem
         mind.CharacterName = name;
         ChangeOwningPlayer(mind, userId);
 
-        if (userId != null)
-            _userMinds[userId.Value] = mind;
-
         return mind;
     }
 
