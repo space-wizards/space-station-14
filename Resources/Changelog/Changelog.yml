@@ -1,9 +1,4 @@
 Entries:
-- author: Nimfar
-  changes:
-  - {message: Adds the Space Spider., type: Add}
-  id: 3545
-  time: '2023-04-26T06:51:40.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: 'Holos share less damage to their owner, updated description.', type: Tweak}
@@ -2925,3 +2920,9 @@ Entries:
     type: Tweak}
   id: 4044
   time: '2023-06-19T01:15:01.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed being able to craft artifacts without the proper amount of fragments.,
+    type: Fix}
+  id: 4045
+  time: '2023-06-19T04:02:28.0000000+00:00'
