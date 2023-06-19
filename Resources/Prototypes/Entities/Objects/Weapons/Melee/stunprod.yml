@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/stunprod.rsi
-    netsync: false
     layers:
     - state: stunprod_off
       map: [ "enum.ToggleVisuals.Layer" ]
