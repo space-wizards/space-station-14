@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Puddles will disperse faster., type: Fix}
-  id: 3549
-  time: '2023-04-26T11:29:31.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: fixed combat (harm) mode popup appearing to everyone, type: Fix}
@@ -2927,3 +2922,9 @@ Entries:
   - {message: Added 4 new mercenary items, type: Add}
   id: 4048
   time: '2023-06-19T17:38:57.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lathe recipes no longer permanently duplicate and accumulate when trying
+      to sync., type: Fix}
+  id: 4049
+  time: '2023-06-19T17:43:20.0000000+00:00'
