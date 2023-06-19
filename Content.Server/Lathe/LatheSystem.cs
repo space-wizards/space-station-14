@@ -101,7 +101,7 @@ namespace Content.Server.Lathe
         {
             var ev = new LatheGetRecipesEvent(uid)
             {
-                Recipes = component.StaticRecipes
+                Recipes = new List<string>(component.StaticRecipes)
             };
             RaiseLocalEvent(uid, ev);
             return ev.Recipes;
@@ -195,7 +195,7 @@ namespace Content.Server.Lathe
 
             foreach (var recipe in latheComponent.DynamicRecipes)
             {
-                if (!component.UnlockedRecipes.Contains(recipe))
+                if (!component.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
                     continue;
                 args.Recipes.Add(recipe);
             }
