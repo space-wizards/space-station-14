@@ -241,7 +241,7 @@ public sealed class MindTests
             var newUserId = new NetUserId(Guid.NewGuid());
             Assert.That(mindComp.HasMind);
             CatchPlayerDataException(() =>
-                mindSystem.ChangeOwningPlayer(mindComp.Mind!, newUserId));
+                mindSystem.SetUserId(mindComp.Mind!, newUserId));
 
             Assert.That(mind.UserId, Is.EqualTo(newUserId));
         });
@@ -353,7 +353,7 @@ public sealed class MindTests
             MakeSentientCommand.MakeSentient(mob, IoCManager.Resolve<IEntityManager>());
             mobMind = mindSystem.CreateMind(player.UserId, "Mindy McThinker the Second");
 
-            mindSystem.ChangeOwningPlayer(mobMind, player.UserId);
+            mindSystem.SetUserId(mobMind, player.UserId);
             mindSystem.TransferTo(mobMind, mob);
         });
 

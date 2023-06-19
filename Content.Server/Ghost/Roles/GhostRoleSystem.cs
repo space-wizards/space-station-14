@@ -222,7 +222,7 @@ namespace Content.Server.Ghost.Roles
                 EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
             _mindSystem.AddRole(newMind, new GhostRoleMarkerRole(newMind, role.RoleName));
 
-            _mindSystem.ChangeOwningPlayer(newMind, player.UserId);
+            _mindSystem.SetUserId(newMind, player.UserId);
             _mindSystem.TransferTo(newMind, mob);
         }
 

@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Roles;
@@ -112,7 +113,7 @@ namespace Content.Server.Mind
         ///     The session of the player owning this mind.
         ///     Can be null, in which case the player is currently not logged in.
         /// </summary>
-        [ViewVariables, Access(typeof(MindSystem))]
+        [ViewVariables, Access(typeof(MindSystem), typeof(GameTicker))]
         public IPlayerSession? Session { get; internal set; }
 
         /// <summary>
