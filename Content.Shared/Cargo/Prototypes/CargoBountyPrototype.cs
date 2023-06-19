@@ -41,7 +41,7 @@ public readonly record struct CargoBountyItemEntry()
     /// <summary>
     /// A whitelist for determining what items satisfy the entry.
     /// </summary>
-    [DataField("whitelist")]
+    [DataField("whitelist", required: true)]
     public readonly EntityWhitelist Whitelist = default!;
 
     // todo: implement some kind of simple generic condition system

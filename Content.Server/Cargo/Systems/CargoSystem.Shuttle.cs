@@ -240,19 +240,8 @@ public sealed partial class CargoSystem
         {
             if (station != null)
             {
-                var ev = new EntitySoldEvent(station.Value);
+                var ev = new EntitySoldEvent(station.Value, toSell);
                 RaiseLocalEvent(ent, ref ev);
-
-                if (TryComp<ContainerManagerComponent>(ent, out var containers))
-                {
-                    foreach (var container in containers.Containers.Values)
-                    {
-                        foreach (var containedEntity in container.ContainedEntities)
-                        {
-                            RaiseLocalEvent(containedEntity, ref ev);
-                        }
-                    }
-                }
             }
 
             Del(ent);
@@ -445,8 +434,8 @@ public sealed partial class CargoSystem
 }
 
 /// <summary>
-/// Event raised by-ref on an entity before it is sold and
+/// Event broadcast raised by-ref before it is sold and
 /// deleted but after the price has been calculated.
 /// </summary>
 [ByRefEvent]
-public readonly record struct EntitySoldEvent(EntityUid Station);
+public readonly record struct EntitySoldEvent(EntityUid Station, HashSet<EntityUid> Sold);
