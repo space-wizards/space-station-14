@@ -14,7 +14,6 @@
       path: /Audio/Ambience/Objects/vending_machine_hum.ogg
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/empty.rsi
-    netsync: false
     snapCardinals: true
   - type: Physics
     bodyType: Static
@@ -1311,7 +1310,6 @@
   components:
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     snapCardinals: false
   - type: WallMount
     arc: 180

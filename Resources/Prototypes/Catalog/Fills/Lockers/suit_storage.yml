@@ -12,7 +12,34 @@
         - id: ClothingOuterHardsuitEVA
         - id: ClothingHeadHelmetEVA
         - id: ClothingMaskBreath
-        
+
+#Basic EVA (Big Ass Helmet)
+- type: entity
+  id: SuitStorageEVAAlternate
+  parent: SuitStorageBase
+  suffix: EVA, Large Helmet
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitEVA
+        - id: ClothingHeadHelmetEVALarge
+        - id: ClothingMaskBreath
+
+#Emergency EVA
+- type: entity
+  id: SuitStorageEVAEmergency
+  parent: SuitStorageBase
+  suffix: Emergency EVA
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterSuitEmergency
+        - id: ClothingMaskBreath
+     
 #Prisoner EVA
 - type: entity
   id: SuitStorageEVAPrisoner
@@ -21,10 +48,10 @@
   components:
   - type: StorageFill
     contents:
-#        - id: NitrogenTankFilled #there's no emergency nitrogen tank to match yet so i have opted to remove it. call it cost cutting measures
-        - id: EmergencyOxygenTankFilled
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
         - id: ClothingOuterHardsuitEVAPrisoner
-        - id: ClothingHeadHelmetEVA
+        - id: ClothingHeadHelmetEVALarge
         - id: ClothingMaskBreath
 
 #Syndicate EVA
@@ -51,10 +78,9 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitEVAPrisoner
-        - id: ClothingHeadHelmetEVA
+        - id: ClothingOuterHardsuitPirateEVA
         - id: ClothingMaskGas
-
+        
 #NTSRA Voidsuit
 - type: entity
   id: SuitStorageNTSRA
@@ -69,6 +95,19 @@
         - id: ClothingMaskBreath
         
 #HARDSUITS
+#Basic hardsuit
+- type: entity
+  id: SuitStorageBasic
+  parent: SuitStorageBase
+  suffix: Basic Hardsuit
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitBasic
+        - id: ClothingMaskBreath
+
 #Engineering hardsuit
 - type: entity
   id: SuitStorageEngi

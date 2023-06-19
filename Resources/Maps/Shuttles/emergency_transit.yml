@@ -49,8 +49,6 @@ entities:
     - nextUpdate: -307.6002253
       type: SpreaderGrid
     - type: Shuttle
-    - nextUpdate: 6051.0947718
-      type: GridPathfinding
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -337,12 +335,9 @@ entities:
   entities:
   - uid: 4
     components:
-    - anchored: True
-      pos: 12.5,-20.5
+    - pos: 12.5,-20.5
       parent: 2
       type: Transform
-    - bodyType: Static
-      type: Physics
 - proto: AirlockCommandLocked
   entities:
   - uid: 5
@@ -1744,14 +1739,6 @@ entities:
       type: AmbientSound
     - fixtures: {}
       type: Fixtures
-- proto: CableTerminal
-  entities:
-  - uid: 575
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 15.5,-19.5
-      parent: 2
-      type: Transform
 - proto: ChairOfficeLight
   entities:
   - uid: 161
@@ -2220,6 +2207,12 @@ entities:
     - pos: 16.5,-15.5
       parent: 2
       type: Transform
+  - uid: 425
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 9.5,-20.5
+      parent: 2
+      type: Transform
 - proto: GasPipeBend
   entities:
   - uid: 214
@@ -2246,11 +2239,6 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 4.5,-2.5
-      parent: 2
-      type: Transform
-  - uid: 218
-    components:
-    - pos: 5.5,-2.5
       parent: 2
       type: Transform
   - uid: 219
@@ -2289,14 +2277,20 @@ entities:
       pos: 13.5,-1.5
       parent: 2
       type: Transform
-  - uid: 425
+  - uid: 360
     components:
     - rot: -1.5707963267948966 rad
-      pos: 16.5,-16.5
+      pos: 16.5,-17.5
       parent: 2
       type: Transform
     - enabled: True
       type: AmbientSound
+  - uid: 575
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 5.5,-1.5
+      parent: 2
+      type: Transform
 - proto: GasPipeStraight
   entities:
   - uid: 225
@@ -2607,6 +2601,18 @@ entities:
       pos: 10.5,-18.5
       parent: 2
       type: Transform
+  - uid: 293
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 5.5,-2.5
+      parent: 2
+      type: Transform
+  - uid: 599
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 16.5,-16.5
+      parent: 2
+      type: Transform
 - proto: GasPipeTJunction
   entities:
   - uid: 279
@@ -2704,10 +2710,10 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-  - uid: 293
+  - uid: 598
     components:
-    - rot: 3.141592653589793 rad
-      pos: 9.5,-20.5
+    - rot: -1.5707963267948966 rad
+      pos: 6.5,-1.5
       parent: 2
       type: Transform
     - enabled: False
@@ -2754,6 +2760,11 @@ entities:
       type: AmbientSound
 - proto: GeneratorUranium
   entities:
+  - uid: 138
+    components:
+    - pos: 15.5,-18.5
+      parent: 2
+      type: Transform
   - uid: 300
     components:
     - pos: 15.5,-19.5
@@ -3603,13 +3614,6 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 13.5,-13.5
-      parent: 2
-      type: Transform
-- proto: SMESBasic
-  entities:
-  - uid: 138
-    components:
-    - pos: 15.5,-18.5
       parent: 2
       type: Transform
 - proto: StasisBed

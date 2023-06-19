@@ -41,6 +41,15 @@
     #one fourth of what making a flash would cost
 
 - type: latheRecipe
+  id: ExplosivePayload
+  result: ExplosivePayload
+  completetime: 1
+  materials:
+    Steel: 50
+    Plastic: 100
+    Glass: 50
+
+- type: latheRecipe
   id: Signaller
   result: RemoteSignaller
   completetime: 2
@@ -81,7 +90,7 @@
     Steel: 2000
     Silver: 750
     Plasma: 1500
-    Uranium: 1500
+    Uranium: 150
 
 - type: latheRecipe
   id: ClothingBackpackSatchelHolding
@@ -91,7 +100,7 @@
     Steel: 2000
     Silver: 750
     Plasma: 1500
-    Uranium: 1500
+    Uranium: 150
 
 - type: latheRecipe
   id: ClothingBackpackDuffelHolding
@@ -101,7 +110,25 @@
     Steel: 2000
     Silver: 750
     Plasma: 1500
-    Uranium: 1500
+    Uranium: 150
+
+- type: latheRecipe
+  id: WeaponCrusher
+  result: WeaponCrusher
+  completetime: 5
+  materials:
+    Steel: 1000
+    Glass: 250
+    Plastic: 100
+
+- type: latheRecipe
+  id: WeaponCrusherDagger
+  result: WeaponCrusherDagger
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 250
+    Plastic: 50
 
 - type: latheRecipe
   id: WeaponForceGun
@@ -111,6 +138,15 @@
     Steel: 500
     Glass: 400
     Silver: 200
+
+- type: latheRecipe
+  id: WeaponProtoKineticAccelerator
+  result: WeaponProtoKineticAccelerator
+  completetime: 5
+  materials:
+    Steel: 1000
+    Glass: 500
+    Silver: 100
 
 - type: latheRecipe
   id: WeaponTetherGun

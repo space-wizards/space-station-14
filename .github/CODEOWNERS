@@ -1,15 +1,19 @@
 # Last match in file takes precedence.
 
+# Sorting by path instead of by who added it one day :(
+/Resources/ConfigPresets/WizardsDen/  @Chief-Engineer
+
 # Moony's Gargantuan List Of Things She Cares About, or MGLOTSCA for short.
 # You need to add your name to these entries, not make a new one, if you care about them.
 /Content.*/Bql/ @moonheart08
-/Content.*/Administration/ @moonheart08 @PaulRitter @DrSmugleaf
+/Content.*/Administration/ @moonheart08 @PaulRitter @DrSmugleaf @Chief-Engineer
 /Content.*/Station/ @moonheart08
 /Content.*/Maps/ @moonheart08
 /Content.*/GameTicking/ @moonheart08
-/Resources/ServerInfo/ @moonheart08
-/Resources/engineCommandPerms.yml @moonheart08
-/Resources/clientCommandPerms.yml @moonheart08
+/Resources/ServerInfo/ @moonheart08 @Chief-Engineer
+/Resources/ServerInfo/Guidebook/ @moonheart08
+/Resources/engineCommandPerms.yml @moonheart08 @Chief-Engineer
+/Resources/clientCommandPerms.yml @moonheart08 @Chief-Engineer
 /Resources/Prototypes/species.yml @moonheart08
 /Resources/Prototypes/Body/ @moonheart08 @mirrorcult @DrSmugleaf # suffering
 /Resources/Prototypes/Maps/ @moonheart08 @Emisse
@@ -50,5 +54,6 @@
 
 # SKREEEE
 /Content.*.Database/ @PJB3005 @DrSmugleaf
+/Content.Shared.Database/Log*.cs @PJB3005 @DrSmugleaf @Chief-Engineer
 /Pow3r/ @PJB3005
 /Content.Server/Power/Pow3r/ @PJB3005
