@@ -200,7 +200,7 @@ public sealed partial class CargoSystem
             var temp = new HashSet<EntityUid>();
             foreach (var entity in entities)
             {
-                if (!entry.Whitelist.IsValid(entity))
+                if (!entry.Whitelist.IsValid(entity, EntityManager))
                     continue;
                 count++;
                 temp.Add(entity);
