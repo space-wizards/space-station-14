@@ -68,8 +68,7 @@ public sealed class WeldableSystem : EntitySystem
         if (!CanWeld(uid, tool, user, component))
             return false;
 
-        // require a minimum of 1u of fuel before cancelling the doafter
-        if (!_toolSystem.UseTool(tool, user, uid, component.WeldingTime.Seconds, component.WeldingQuality, new WeldFinishedEvent(), fuel: 1f))
+        if (!_toolSystem.UseTool(tool, user, uid, component.WeldingTime.Seconds, component.WeldingQuality, new WeldFinishedEvent()))
             return false;
 
         // Log attempt

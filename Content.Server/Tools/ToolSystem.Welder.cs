@@ -265,7 +265,6 @@ namespace Content.Server.Tools
 
         private void OnWelderToolUseAttempt(EntityUid uid, WelderComponent welder, DoAfterAttemptEvent<ToolDoAfterEvent> args)
         {
-            DebugTools.Assert(args.Event.Fuel > 0);
             var user = args.DoAfter.Args.User;
 
             if (!welder.Lit)
@@ -273,14 +272,6 @@ namespace Content.Server.Tools
                 _popupSystem.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, user);
                 args.Cancel();
                 return;
-            }
-
-            // make sure that the fuel is above a minimum threshold, it is not consumed but requires that you don't run out of fuel.
-            var (fuel, _) = GetWelderFuelAndCapacity(uid, welder);
-            if (FixedPoint2.New(args.Event.Fuel) > fuel)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("welder-component-cannot-weld-message"), uid, user);
-                args.Cancel();
             }
         }
 
