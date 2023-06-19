@@ -68,7 +68,7 @@ namespace Content.Server.Zombies
                 return;
 
             //He's gotta have a mind
-            var mindcomp = EnsureComp<MindComponent>(target);
+            var mindcomp = EnsureComp<MindContainerComponent>(target);
 
             //If you weren't already, you're a real zombie now, son.
             zombie ??= EnsureComp<ZombieComponent>(target);
@@ -178,7 +178,7 @@ namespace Content.Server.Zombies
             if (_mindSystem.TryGetMind(target, out var mind, mindComp) && _mindSystem.TryGetSession(mind, out var session))
             {
                 //Zombie role for player manifest
-                _mindSystem.AddRole(mind, new ZombieRole(mind, _proto.Index<AntagPrototype>(zombiecomp.ZombieRoleId)));
+                _mindSystem.AddRole(mind, new ZombieRole(mind, _proto.Index<AntagPrototype>(zombie.Settings.ZombieRoleId)));
 
                 //Greeting message for new bebe zombers
                 _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));

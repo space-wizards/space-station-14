@@ -12,6 +12,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Server.Emoting.Systems;
 using Content.Server.GameTicking.Rules;
 using Content.Server.IdentityManagement;
+using Content.Server.Mind;
 using Content.Server.Popups;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.CombatMode;
@@ -57,6 +58,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly ZombieRuleSystem _zombieRule = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         public override void Initialize()
         {

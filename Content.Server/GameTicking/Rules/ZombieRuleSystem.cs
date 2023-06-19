@@ -347,7 +347,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         return healthy;
     }
 
-    public void AddToInfectedList(EntityUid uid, ZombieComponent zombie, ZombieRuleComponent rules, MindComponent? mindComponent = null)
+    public void AddToInfectedList(EntityUid uid, ZombieComponent zombie, ZombieRuleComponent rules, MindContainerComponent? mindComponent = null)
     {
         if (!Resolve(uid, ref mindComponent))
             return;
@@ -467,7 +467,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             }
 
             DebugTools.AssertNotNull(mind.OwnedEntity);
-            _mindSystem.AddRole(new ZombieRole(mind, _prototypeManager.Index<AntagPrototype>(rules.PatientZeroPrototypeID)));
+            _mindSystem.AddRole(mind, new ZombieRole(mind, _prototypeManager.Index<AntagPrototype>(rules.PatientZeroPrototypeID)));
 
             var inCharacterName = string.Empty;
             // Create some variation between the times of each zombie, relative to the time of the group as a whole.
