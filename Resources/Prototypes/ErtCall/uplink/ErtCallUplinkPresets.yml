@@ -1,4 +1,4 @@
-#temp
+#ERT START
 #Full
 - type: storePreset
   id: ErtCallUplinkPreset
@@ -83,3 +83,8 @@
   - ERTUplinkPointless
   currencyWhitelist:
   - BlueSpaceCube
+#ERT END
+
+#CBURN START
+
+#CBURN END

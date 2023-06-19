@@ -1,3 +1,4 @@
+#ERT START
 #Leader
 - type: entity
   noSpawn: true
@@ -27,7 +28,7 @@
   components:
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitaryLeader
+      - NamesFirstMilitary
       - names_last
     - type: Sprite
       netsync: false
@@ -46,7 +47,7 @@
   components:
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitaryLeader
+      - NamesFirstMilitary
       - names_last
     - type: Sprite
       netsync: false
@@ -65,7 +66,7 @@
   components:
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitaryLeader
+      - NamesFirstMilitary
       - names_last
     - type: Sprite
       netsync: false
@@ -84,7 +85,7 @@
   components:
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitaryLeader
+      - NamesFirstMilitary
       - names_last
     - type: Sprite
       netsync: false
@@ -93,13 +94,15 @@
     - type: Loadout
       prototypes: [ ERTCallJanitorGearEVA ]
 
-#CBURN
+#ERT END
+
+#CBURN START
+#Leader
 - type: entity
   noSpawn: true
   parent: MobHuman
-  id: CBURNPreset
-  name: CBURN
-  suffix: EVA
+  id: CBURNLeaderEVAPreset
+  name: CBURN Agent
   components:
     - type: RandomMetadata
       nameSegments:
@@ -107,7 +110,45 @@
       - names_last
     - type: Sprite
       netsync: false
-      sprite: Markers/jobs.rsi
+      sprite: Markers/imperial_jobs.rsi
+      state: cburnLeader
+    - type: Loadout
+      prototypes: [ ERTCallCBURNLeaderGearEVA ]
+
+#Security
+- type: entity
+  noSpawn: true
+  parent: MobHuman
+  id: CBURNSecurityEVAPreset
+  name: CBURN Agent
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/imperial_jobs.rsi
       state: cburn
     - type: Loadout
-      prototypes: [ CBURNGear ]
+      prototypes: [ ERTCallCBURNSecurityGearEVA ]
+
+#Medic
+- type: entity
+  noSpawn: true
+  parent: MobHuman
+  id: CBURNMedicEVAPreset
+  name: CBURN Agent
+  components:
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - names_last
+    - type: Sprite
+      netsync: false
+      sprite: Markers/imperial_jobs.rsi
+      state: cburnMedic
+    - type: Loadout
+      prototypes: [ ERTCallCBURNMedicGearEVA ]
+#CBURN END
+

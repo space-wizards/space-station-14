@@ -33,9 +33,23 @@ ertcall-junitor-eva-name = Уборщик ОБР
 ertcall-junitor-eva-desc = Уборщик отряда бстрого реагирования.
 ertcall-junitor-eva-rules = Ваша задача в кратчайшие сроки приводить станцию в порядок. Ваши главные враги грязь, трупы и сорняки, вырвавшиеся из отдела гидропоники. Вы подчиняетесь лидеру ОБР.
 
-ent-SpawnCBURNPreset = Спавн РХБЗЗ
+ent-SpawnCBURNSecurityEVAPreset = Спавн РХБЗЗ
     .desc = Спавн поинт РХБЗЗ
     .suffix = ERTCALL
-ertcall-cburn-eva-name = РХБЗЗ
-ertcall-cburn-eva-desc = Боец отряда радио химическо биологическо зомби защиты.
-ertcall-cburn-eva-rules = Ваша задача ликвидировать все последствия катастрофы на станции. Вы подчиняетесь ЦК.
+ertcall-cburn-security-eva-name = РХБЗЗ
+ertcall-cburn-security-eva-desc = Боец отряда радио химическо биологическо зомби защиты.
+ertcall-cburn-security-eva-rules = Ваша задача ликвидировать все последствия катастрофы на станции. Вы подчиняетесь ЦК.
+
+ent-SpawnCBURNLeaderEVAPreset = Спавн лидера РХБЗЗ
+    .desc = Спавн поинт лидера РХБЗЗ
+    .suffix = ERTCALL
+ertcall-cburn-leader-eva-name = Лидер РХБЗЗ
+ertcall-cburn-leader-eva-desc = Лидер отряда радио химическо биологическо зомби защиты.
+ertcall-cburn-leader-eva-rules = Ваша задача ликвидировать все последствия катастрофы на станции. Вы подчиняетесь ЦК.
+
+ent-SpawnCBURNMedicEVAPreset = Спавн медика РХБЗЗ
+    .desc = Спавн поинт медика РХБЗЗ
+    .suffix = ERTCALL
+ertcall-cburn-medic-eva-name = Медик РХБЗЗ
+ertcall-cburn-medic-eva-desc = Медик отряда радио химическо биологическо зомби защиты.
+ertcall-cburn-medic-eva-rules = Ваша задача ликвидировать все последствия катастрофы на станции. Вы подчиняетесь ЦК.

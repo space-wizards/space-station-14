@@ -1,3 +1,4 @@
+#ERT START
 #Leader
 - type: startingGear
   id: ERTCallLeaderGear
@@ -155,5 +156,69 @@
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltJanitorFilled
     pocket1: ERTUplinkJunitor
+#ERT END
 
-#RHBZZ
+#CBURN START
+#Leader
+- type: startingGear
+  id: ERTCallCBURNLeaderGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingBackpackDuffelCBURN
+    mask: ClothingMaskGasExplorer
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURNLeader
+    shoes: ClothingShoesBootsCombatFilled
+    id: CBURNPDA
+    pocket1: ERTUplinkLeader
+    #pocket2: WeaponLaserGun
+    suitstorage: YellowOxygenTankFilled
+    belt: ClothingBeltBandolier
+  innerclothingskirt: ClothingUniformJumpsuitColorBrown
+  satchel: ClothingBackpackDuffelCBURN
+  duffelbag: ClothingBackpackDuffelCBURN
+
+#Security
+- type: startingGear
+  id: ERTCallCBURNSecurityGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingBackpackDuffelCBURN
+    mask: ClothingMaskGasExplorer
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURN
+    shoes: ClothingShoesBootsCombatFilled
+    id: CBURNPDA
+    pocket1: ERTUplinkSecurity
+    #pocket2: WeaponLaserGun
+    suitstorage: YellowOxygenTankFilled
+    belt: ClothingBeltBandolier
+  innerclothingskirt: ClothingUniformJumpsuitColorBrown
+  satchel: ClothingBackpackDuffelCBURN
+  duffelbag: ClothingBackpackDuffelCBURN
+
+#Medic
+- type: startingGear
+  id: ERTCallCBURNMedicGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingBackpackDuffelCBURN
+    mask: ClothingMaskGasExplorer
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURNMedic
+    shoes: ClothingShoesBootsCombatFilled
+    id: CBURNPDA
+    pocket1: ERTUplinkMedic
+    #pocket2: WeaponLaserGun
+    suitstorage: YellowOxygenTankFilled
+    belt: ClothingBeltBandolier
+  innerclothingskirt: ClothingUniformJumpsuitColorBrown
+  satchel: ClothingBackpackDuffelCBURN
+  duffelbag: ClothingBackpackDuffelCBURN
+#CBURN END
