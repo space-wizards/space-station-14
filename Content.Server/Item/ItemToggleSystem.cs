@@ -1,16 +1,14 @@
 using Content.Server.CombatMode.Disarm;
-using Content.Server.Kitchen.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Temperature;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Player;
 
-namespace Content.Shared.Weapons.Melee.EnergyShield;
+namespace Content.Server.Weapons.Melee.ItemToggle;
 
-public sealed class EnergyShieldSystem : EntitySystem
+public sealed class ItemToggleSystem : EntitySystem
 {
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -22,9 +20,8 @@ public sealed class EnergyShieldSystem : EntitySystem
 
         SubscribeLocalEvent<ItemToggleComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<ItemToggleComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<ItemToggleComponent, IsHotEvent>(OnIsHotEvent);
-        SubscribeLocalEvent<ItemToggleComponent, EnergyShieldDeactivatedEvent>(TurnOff);
-        SubscribeLocalEvent<ItemToggleComponent, EnergyShieldActivatedEvent>(TurnOn);
+        SubscribeLocalEvent<ItemToggleComponent, ItemToggleDeactivatedEvent>(TurnOff);
+        SubscribeLocalEvent<ItemToggleComponent, ItemToggleActivatedEvent>(TurnOn);
     }
 
     private void OnUseInHand(EntityUid uid, ItemToggleComponent comp, UseInHandEvent args)
@@ -36,19 +33,19 @@ public sealed class EnergyShieldSystem : EntitySystem
 
         if (comp.Activated)
         {
-            var ev = new EnergyShieldDeactivatedEvent();
+            var ev = new ItemToggleDeactivatedEvent();
             RaiseLocalEvent(uid, ref ev);
         }
         else
         {
-            var ev = new EnergyShieldActivatedEvent();
+            var ev = new ItemToggleActivatedEvent();
             RaiseLocalEvent(uid, ref ev);
         }
 
         UpdateAppearance(uid, comp);
     }
 
-    private void TurnOff(EntityUid uid, ItemToggleComponent comp, ref EnergyShieldDeactivatedEvent args)
+    private void TurnOff(EntityUid uid, ItemToggleComponent comp, ref ItemToggleDeactivatedEvent args)
     {
         if (TryComp(uid, out ItemComponent? item))
         {
@@ -60,23 +57,17 @@ public sealed class EnergyShieldSystem : EntitySystem
             malus.Malus -= comp.ActivatedDisarmMalus;
         }
 
-        if (comp.IsSharp)
-            RemComp<SharpComponent>(uid);
-
         _audio.Play(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
 
         comp.Activated = false;
     }
 
-    private void TurnOn(EntityUid uid, ItemToggleComponent comp, ref EnergyShieldActivatedEvent args)
+    private void TurnOn(EntityUid uid, ItemToggleComponent comp, ref ItemToggleActivatedEvent args)
     {
         if (TryComp(uid, out ItemComponent? item))
         {
             _item.SetSize(uid, comp.OnSize, item);
         }
-
-        if (comp.IsSharp)
-            EnsureComp<SharpComponent>(uid);
 
         if (TryComp<DisarmMalusComponent>(uid, out var malus))
         {
@@ -105,10 +96,5 @@ public sealed class EnergyShieldSystem : EntitySystem
             return;
 
         args.Handled = true;
-    }
-
-    private void OnIsHotEvent(EntityUid uid, ItemToggleComponent itemToggle, IsHotEvent args)
-    {
-        args.IsHot = itemToggle.Activated;
     }
 }

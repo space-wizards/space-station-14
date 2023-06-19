@@ -1,21 +1,12 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Weapons.Melee.EnergyShield;
+namespace Content.Server.Weapons.Melee.ItemToggle;
 
 [RegisterComponent, NetworkedComponent]
 public sealed class ItemToggleComponent : Component
 {
     public bool Activated = false;
-
-    [DataField("isSharp")]
-    public bool IsSharp = true;
-
-    /// <summary>
-    ///     Does this become hidden when deactivated
-    /// </summary>
-    [DataField("secret")]
-    public bool Secret { get; set; } = false;
 
     [DataField("activateSound")]
     public SoundSpecifier ActivateSound { get; set; } = default!;
@@ -37,7 +28,7 @@ public sealed class ItemToggleComponent : Component
 }
 
 [ByRefEvent]
-public readonly record struct EnergyShieldActivatedEvent();
+public readonly record struct ItemToggleActivatedEvent();
 
 [ByRefEvent]
-public readonly record struct EnergyShieldDeactivatedEvent();
+public readonly record struct ItemToggleDeactivatedEvent();
