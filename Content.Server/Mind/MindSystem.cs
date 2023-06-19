@@ -42,9 +42,18 @@ public sealed class MindSystem : EntitySystem
         SubscribeLocalEvent<MindContainerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<MindContainerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MindContainerComponent, SuicideEvent>(OnSuicide);
+        SubscribeLocalEvent<MindContainerComponent, EntityTerminatingEvent>(OnMindContainerTerminating);
         SubscribeLocalEvent<VisitingMindComponent, EntityTerminatingEvent>(OnTerminating);
         SubscribeLocalEvent<VisitingMindComponent, PlayerDetachedEvent>(OnDetached);
         _playerManager.PlayerStatusChanged += OnStatusChanged;
+    }
+
+    private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
+    {
+        if (!component.HasMind)
+            return;
+
+        TransferTo(component.Mind, null);
     }
 
     public override void Shutdown()
@@ -54,19 +63,19 @@ public sealed class MindSystem : EntitySystem
         _userMinds.Clear();
     }
 
-    private void OnStatusChanged(object? sender, SessionStatusEventArgs e)
+    private void OnStatusChanged(object? sender, SessionStatusEventArgs args)
     {
-        if (!_userMinds.TryGetValue(e.Session.UserId, out var mind))
+        if (!_userMinds.TryGetValue(args.Session.UserId, out var mind))
             return;
 
-        if (e.NewStatus == SessionStatus.Disconnected)
+        if (args.NewStatus == SessionStatus.Disconnected)
         {
             mind.Session = null;
             return;
         }
 
-        DebugTools.Assert(mind.Session == null || mind.Session == e.Session);
-        mind.Session = e.Session;
+        DebugTools.Assert(mind.Session == null || mind.Session == args.Session);
+        SetUserId(mind, args.Session.UserId);
     }
 
     private void OnDetached(EntityUid uid, VisitingMindComponent component, PlayerDetachedEvent args)
