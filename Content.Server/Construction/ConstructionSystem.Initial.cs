@@ -170,6 +170,9 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
+                            if (used.Contains(entity))
+                                continue;
+
                             // TODO allow taking from several stacks.
                             // Also update crafting steps to check if it works.
                             var splitStack = _stackSystem.Split(entity, materialStep.Amount, user.ToCoordinates(0, 0), stack);
@@ -197,7 +200,6 @@ namespace Content.Server.Construction
                             if (!arbitraryStep.EntityValid(entity, EntityManager, _factory))
                                 continue;
 
-                            // you can't use the same entity for multiple tag steps.
                             if (used.Contains(entity))
                                 continue;
 
