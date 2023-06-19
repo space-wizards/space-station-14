@@ -12,4 +12,10 @@ public sealed class CargoBountyLabelComponent : Component
     /// </summary>
     [DataField("id"), ViewVariables(VVAccess.ReadWrite)]
     public int Id;
+
+    /// <summary>
+    /// Used to prevent recursion in calculating the price.
+    /// </summary>
+    [DataField("calculating")]
+    public bool Calculating;
 }

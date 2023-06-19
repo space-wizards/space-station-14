@@ -10,6 +10,7 @@ using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
+using Robust.Shared.Collections;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -70,7 +71,7 @@ public sealed partial class CargoSystem
         {
             msg.AddMarkup($"- {Loc.GetString("bounty-console-manifest-entry",
                 ("amount", entry.Amount),
-                ("item", entry.Name))}");
+                ("item", Loc.GetString(entry.Name)))}");
             msg.PushNewline();
         }
         _paperSystem.SetContent(uid, msg.ToMarkup(), paper);
@@ -82,7 +83,7 @@ public sealed partial class CargoSystem
     /// </summary>
     private void OnGetBountyPrice(EntityUid uid, CargoBountyLabelComponent component, ref PriceCalculationEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || component.Calculating)
             return;
 
         // make sure this label was actually applied to a crate.
@@ -99,19 +100,26 @@ public sealed partial class CargoSystem
             return;
         args.Handled = true;
 
-        args.Price = bountyProtoype.Reward;
+        component.Calculating = true;
+        args.Price = bountyProtoype.Reward - _pricing.GetPrice(container.Owner);
+        component.Calculating = false;
     }
 
     private void OnSold(ref EntitySoldEvent args)
     {
+        var containerQuery = GetEntityQuery<ContainerManagerComponent>();
         var labelQuery = GetEntityQuery<CargoBountyLabelComponent>();
         foreach (var sold in args.Sold)
         {
-            if (!labelQuery.TryGetComponent(sold, out var component))
+            if (!containerQuery.TryGetComponent(sold, out var containerMan))
                 continue;
 
             // make sure this label was actually applied to a crate.
-            if (!_container.TryGetContainingContainer(sold, out var container) || container.ID != LabelSystem.ContainerName)
+            if (!_container.TryGetContainer(sold, LabelSystem.ContainerName, out var container, containerMan))
+                continue;
+
+            if (container.ContainedEntities.FirstOrNull() is not { } label ||
+                !labelQuery.TryGetComponent(label, out var component))
                 continue;
 
             if (!TryGetBountyFromId(args.Station, component.Id, out var bounty))
@@ -269,11 +277,11 @@ public sealed partial class CargoSystem
         if (!Resolve(uid, ref component))
             return false;
 
-        foreach (var bounty in new List<CargoBountyData>(component.Bounties))
+        for (var i = 0; i < component.Bounties.Count; i++)
         {
-            if (bounty.Id == data.Id)
+            if (component.Bounties[i].Id == data.Id)
             {
-                component.Bounties.Remove(data);
+                component.Bounties.RemoveAt(i);
                 return true;
             }
         }
@@ -320,7 +328,7 @@ public sealed partial class CargoSystem
         var query = EntityQueryEnumerator<StationCargoBountyDatabaseComponent>();
         while (query.MoveNext(out var uid, out var bountyDatabase))
         {
-            var bounties = new List<CargoBountyData>(bountyDatabase.Bounties);
+            var bounties = new ValueList<CargoBountyData>(bountyDatabase.Bounties);
             foreach (var bounty in bounties)
             {
                 if (_timing.CurTime < bounty.EndTime)

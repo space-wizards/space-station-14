@@ -241,7 +241,7 @@ public sealed partial class CargoSystem
             if (station != null)
             {
                 var ev = new EntitySoldEvent(station.Value, toSell);
-                RaiseLocalEvent(ent, ref ev);
+                RaiseLocalEvent(ref ev);
             }
 
             Del(ent);
