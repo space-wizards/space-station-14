@@ -1,10 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: 'Added a new job tab for Station specific jobs, as well as saying what
-      stations have the role.', type: Add}
-  id: 3543
-  time: '2023-04-26T06:18:25.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: 'Added more things for the brigmedic, updated PDA animation, a new sprite
@@ -2928,3 +2922,8 @@ Entries:
       it as a reward in salvage expeditions., type: Add}
   id: 4042
   time: '2023-06-18T23:38:55.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Proto-kinetic accelerators have returned to the salvage vendor., type: Tweak}
+  id: 4043
+  time: '2023-06-19T00:53:01.0000000+00:00'
