@@ -593,10 +593,10 @@
   id: PlushieGhost
 
 - type: Tag
-  id: Powerdrill
+  id: PowerCellSmall
 
 - type: Tag
-  id: PowerCellSmall
+  id: Powerdrill
 
 - type: Tag
   id: ProximitySensor
