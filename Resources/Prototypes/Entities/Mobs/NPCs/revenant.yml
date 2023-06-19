@@ -3,7 +3,7 @@
   name: revenant
   description: A spooky ghostie.
   components:
-  - type: Mind
+  - type: MindContainer
   - type: InputMover
   - type: MobMover
   - type: Input

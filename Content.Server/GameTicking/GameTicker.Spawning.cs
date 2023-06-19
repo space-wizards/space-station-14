@@ -176,15 +176,12 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(data);
 
             data!.WipeMind();
-            var newMind = new Mind.Mind(data.UserId)
-            {
-                CharacterName = character.Name
-            };
-            newMind.ChangeOwningPlayer(data.UserId);
+            var newMind = _mindSystem.CreateMind(data.UserId, character.Name);
+            _mindSystem.ChangeOwningPlayer(newMind, data.UserId);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new Job(newMind, jobPrototype);
-            newMind.AddRole(job);
+            _mindSystem.AddRole(newMind, job);
 
             _playTimeTrackings.PlayerRolesChanged(player);
 
@@ -193,7 +190,7 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(mobMaybe);
             var mob = mobMaybe!.Value;
 
-            newMind.TransferTo(mob);
+            _mindSystem.TransferTo(newMind, mob);
 
             if (lateJoin)
             {
@@ -282,15 +279,15 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(data);
 
             data!.WipeMind();
-            var newMind = new Mind.Mind(data.UserId);
-            newMind.ChangeOwningPlayer(data.UserId);
-            newMind.AddRole(new ObserverRole(newMind));
+            var newMind = _mindSystem.CreateMind(data.UserId);
+            _mindSystem.ChangeOwningPlayer(newMind, data.UserId);
+            _mindSystem.AddRole(newMind, new ObserverRole(newMind));
 
             var mob = SpawnObserverMob();
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
             var ghost = EntityManager.GetComponent<GhostComponent>(mob);
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
-            newMind.TransferTo(mob);
+            _mindSystem.TransferTo(newMind, mob);
 
             _playerGameStatuses[player.UserId] = PlayerGameStatus.JoinedGame;
             RaiseNetworkEvent(GetStatusSingle(player, PlayerGameStatus.JoinedGame));

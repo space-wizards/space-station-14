@@ -14,6 +14,9 @@ uplink-rifle-mosin-desc = A bolt action service rifle that has seen many wars. N
 uplink-esword-name = Energy Sword
 uplink-esword-desc = A very dangerous energy sword that can reflect shots. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
 
+uplink-esword-double-name = Double Bladed Energy Sword
+uplink-esword-double-desc = A much more expensive counter part to the normal energy sword: with a much higher reflection chance, larger attack angle, higher structural damage, and faster swing, all at the cost of lower heat and slash damage. Makes a lot of noise when used or turned on. 
+
 uplink-edagger-name = Energy Dagger
 uplink-edagger-desc = A small energy blade conveniently disguised in the form of a pen.
 

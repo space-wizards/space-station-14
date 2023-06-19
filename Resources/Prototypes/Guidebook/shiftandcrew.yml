@@ -1,4 +1,4 @@
-﻿- type: guideEntry
+- type: guideEntry
   id: Jobs
   name: guide-entry-jobs
   text: "/ServerInfo/Guidebook/Jobs.xml"
@@ -10,6 +10,7 @@
   - Science
   - Security
   - Janitorial
+  - Cargo
   - Salvage
   - Medical
 
