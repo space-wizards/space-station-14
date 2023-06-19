@@ -15,6 +15,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
@@ -32,6 +33,8 @@ public sealed class MindSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly ActorSystem _actor = default!;
 
+    private readonly Dictionary<NetUserId, Mind> _userMinds = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -41,6 +44,29 @@ public sealed class MindSystem : EntitySystem
         SubscribeLocalEvent<MindContainerComponent, SuicideEvent>(OnSuicide);
         SubscribeLocalEvent<VisitingMindComponent, EntityTerminatingEvent>(OnTerminating);
         SubscribeLocalEvent<VisitingMindComponent, PlayerDetachedEvent>(OnDetached);
+        _playerManager.PlayerStatusChanged += OnStatusChanged;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _playerManager.PlayerStatusChanged -= OnStatusChanged;
+        _userMinds.Clear();
+    }
+
+    private void OnStatusChanged(object? sender, SessionStatusEventArgs e)
+    {
+        if (!_userMinds.TryGetValue(e.Session.UserId, out var mind))
+            return;
+
+        if (e.NewStatus == SessionStatus.Disconnected)
+        {
+            mind.Session = null;
+            return;
+        }
+
+        DebugTools.Assert(mind.Session == null || mind.Session == e.Session);
+        mind.Session = e.Session;
     }
 
     private void OnDetached(EntityUid uid, VisitingMindComponent component, PlayerDetachedEvent args)
@@ -198,6 +224,10 @@ public sealed class MindSystem : EntitySystem
         var mind = new Mind(userId);
         mind.CharacterName = name;
         ChangeOwningPlayer(mind, userId);
+
+        if (userId != null)
+            _userMinds[userId.Value] = mind;
+
         return mind;
     }
 
@@ -575,11 +605,18 @@ public sealed class MindSystem : EntitySystem
     /// <param name="userId"></param>
     private void SetUserId(Mind mind, NetUserId? userId)
     {
+        if (mind.UserId != null)
+            _userMinds.Remove(mind.UserId.Value);
+
         mind.UserId = userId;
 
         if (!userId.HasValue)
             return;
 
+        if (_userMinds.TryGetValue(userId.Value, out var oldMind))
+            SetUserId(oldMind, null);
+
+        _userMinds[userId.Value] = mind;
         _playerManager.TryGetSessionById(userId.Value, out var ret);
         mind.Session = ret;
     }

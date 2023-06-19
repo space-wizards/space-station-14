@@ -39,7 +39,7 @@ namespace Content.Server.Mind
         /// <summary>
         ///     The session ID of the player owning this mind.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables, Access(typeof(MindSystem))]
         public NetUserId? UserId { get; internal set; }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Content.Server.Mind
         ///     The session of the player owning this mind.
         ///     Can be null, in which case the player is currently not logged in.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables, Access(typeof(MindSystem))]
         public IPlayerSession? Session { get; internal set; }
 
         /// <summary>
