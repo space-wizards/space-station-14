@@ -641,9 +641,12 @@ public sealed class MindSystem : EntitySystem
 
         _userMinds[userId.Value] = mind;
         mind.UserId = userId;
+
         _playerManager.TryGetSessionById(userId.Value, out var ret);
         mind.Session = ret;
-        if (ret?.ContentData() is { } data)
+
+        // session may be null, but user data may still exist for disconnected players.
+        if (_playerManager.GetPlayerData(userId.Value).ContentData() is { } data)
             data.Mind = mind;
     }
 
