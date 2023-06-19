@@ -222,3 +222,23 @@
   satchel: ClothingBackpackDuffelCBURN
   duffelbag: ClothingBackpackDuffelCBURN
 #CBURN END
+
+#DEAD SQUAD START
+- type: startingGear
+  id: ERTCallDeadSquadSecurityGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+    back: ClothingBackpackDeadSquadSecurityFilled
+    mask: ClothingMaskGasSwat
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitDeathsquad
+    shoes: ClothingShoesBootsMagAdv #DOTO black variant
+    id: DeadSquadPDA
+    pocket1: ERTUplinkDeadSquad
+    #pocket2: WeaponLaserGun
+    suitstorage: YellowOxygenTankFilled
+    belt: ClothingBeltDeadSquadFilled
+#DEAD SQUAD END
+

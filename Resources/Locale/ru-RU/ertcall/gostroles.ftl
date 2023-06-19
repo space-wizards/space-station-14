@@ -53,3 +53,10 @@ ent-SpawnCBURNMedicEVAPreset = Спавн медика РХБЗЗ
 ertcall-cburn-medic-eva-name = Медик РХБЗЗ
 ertcall-cburn-medic-eva-desc = Медик отряда радио химическо биологическо зомби защиты.
 ertcall-cburn-medic-eva-rules = Ваша задача ликвидировать все последствия катастрофы на станции. Вы подчиняетесь ЦК.
+
+ent-SpawnDeadSquadSecurityEVAPreset = Спавн бойца эскадрона смерти
+    .desc = Спавн поинт бойца эскадрона смерти
+    .suffix = ERTCALL
+ertcall-deadsquad-security-eva-name = Боец эскадрона смерти
+ertcall-deadsquad-security-eva-desc = Уничтожитель всего живого
+ertcall-deadsquad-security-eva-rules = Ваша задача ликвидировать станцию и весь персонал

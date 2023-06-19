@@ -55,16 +55,21 @@
     BlueSpaceCube: 2
   categories:
   - ERTUplinkAmmoCombat
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - ErtUplinkDeadSquad
 
-- type: listing
-  id: ErtCallUplinkMagazineBoxMagnumRubber
-  name: ert-uplink-ammononcombat-magazineboxmagnumrubber-name
-  description: ert-uplink-ammononcombat-magazineboxmagnumrubber-desc
-  productEntity: MagazineBoxMagnumRubber
-  cost:
-    BlueSpaceCube: 2
-  categories:
-  - ERTUplinkAmmoCombat
+# - type: listing
+#   id: ErtCallUplinkMagazineBoxMagnumRubber
+#   name: ert-uplink-ammononcombat-magazineboxmagnumrubber-name
+#   description: ert-uplink-ammononcombat-magazineboxmagnumrubber-desc
+#   productEntity: MagazineBoxMagnumRubber
+#   cost:
+#     BlueSpaceCube: 2
+#   categories:
+#   - ERTUplinkAmmoCombat
 
 - type: listing
   id: ErtCallUplinkSpeedLoaderMagnum
@@ -75,16 +80,21 @@
     BlueSpaceCube: 2
   categories:
   - ERTUplinkAmmoCombat
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - ErtUplinkDeadSquad
 
-- type: listing
-  id: ErtCallUplinkSpeedLoaderMagnumRubber
-  name: ert-uplink-ammononcombat-speedloadermagnumrubber-name
-  description: ert-uplink-ammononcombat-speedloadermagnumrubber-desc
-  productEntity: SpeedLoaderMagnumRubber
-  cost:
-    BlueSpaceCube: 2
-  categories:
-  - ERTUplinkAmmoCombat
+# - type: listing
+#   id: ErtCallUplinkSpeedLoaderMagnumRubber
+#   name: ert-uplink-ammononcombat-speedloadermagnumrubber-name
+#   description: ert-uplink-ammononcombat-speedloadermagnumrubber-desc
+#   productEntity: SpeedLoaderMagnumRubber
+#   cost:
+#     BlueSpaceCube: 2
+#   categories:
+#   - ERTUplinkAmmoCombat
 
 - type: listing
   id: ErtCallUplinkMagazinePistol
@@ -197,35 +207,35 @@
         tags:
           - ErtUplinkCombat
 
-- type: listing
-  id: ErtCallUplinkMagazineLightRifleRubber
-  name: ert-uplink-ammo-magazinelightriflerubber-name
-  description: ert-uplink-ammo-magazinelightriflerubber-desc
-  productEntity: MagazineLightRifleRubber
-  cost:
-    BlueSpaceCube: 2
-  categories:
-  - ERTUplinkAmmoCombat
-  conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - ErtUplinkCombat
+# - type: listing
+#   id: ErtCallUplinkMagazineLightRifleRubber
+#   name: ert-uplink-ammo-magazinelightriflerubber-name
+#   description: ert-uplink-ammo-magazinelightriflerubber-desc
+#   productEntity: MagazineLightRifleRubber
+#   cost:
+#     BlueSpaceCube: 2
+#   categories:
+#   - ERTUplinkAmmoCombat
+#   conditions:
+#     - !type:StoreWhitelistCondition
+#       whitelist:
+#         tags:
+#           - ErtUplinkCombat
 
-- type: listing
-  id: ErtCallUplinkMagazineLightRifle
-  name: ert-uplink-ammo-magazinelightrifle-name
-  description: ert-uplink-ammo-magazinelightrifle-desc
-  productEntity: MagazineLightRifle
-  cost:
-    BlueSpaceCube: 2
-  categories:
-  - ERTUplinkAmmoCombat
-  conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - ErtUplinkCombat
+# - type: listing
+#   id: ErtCallUplinkMagazineLightRifle
+#   name: ert-uplink-ammo-magazinelightrifle-name
+#   description: ert-uplink-ammo-magazinelightrifle-desc
+#   productEntity: MagazineLightRifle
+#   cost:
+#     BlueSpaceCube: 2
+#   categories:
+#   - ERTUplinkAmmoCombat
+#   conditions:
+#     - !type:StoreWhitelistCondition
+#       whitelist:
+#         tags:
+#           - ErtUplinkCombat
 
 - type: listing
   id: ErtCallUplinkCartridgeRocket
@@ -253,15 +263,15 @@
   categories:
   - ERTUplinkExplosives
 
-- type: listing
-  id: ErtCallUplinkEmpGrenade
-  name: ert-uplink-explosives-empgrenade-name
-  description: ert-uplink-explosives-empgrenade-desc
-  productEntity: EmpGrenade
-  cost:
-    BlueSpaceCube: 2
-  categories:
-  - ERTUplinkExplosives
+# - type: listing
+#   id: ErtCallUplinkEmpGrenade
+#   name: ert-uplink-explosives-empgrenade-name
+#   description: ert-uplink-explosives-empgrenade-desc
+#   productEntity: EmpGrenade
+#   cost:
+#     BlueSpaceCube: 2
+#   categories:
+#   - ERTUplinkExplosives
 
 - type: listing
   id: ErtCallUplinkExGrenade
@@ -269,7 +279,7 @@
   description: ert-uplink-explosives-exgrenade-desc
   productEntity: ExGrenade
   cost:
-    BlueSpaceCube: 5
+    BlueSpaceCube: 4
   categories:
   - ERTUplinkExplosives
 
@@ -548,7 +558,7 @@
   categories:
   - ERTUplinkEngineering
 
-#ERTUplinkMedial
+#ERTUplinkMedical
 - type: listing
   id: ErtCallUplinkOmnizineChemistryBottle
   name: ert-uplink-medical-omnizinechemistrybottle-name
@@ -691,15 +701,15 @@
   categories:
   - ERTUplinkWeaponCombat
 
-- type: listing
-  id: ErtCallUplinkWeaponRevolverInspector
-  name: ert-uplink-weaponnoncombat-weaponrevolverinspector-name
-  description: ert-uplink-weaponnoncombat-weaponrevolverinspector-desc
-  productEntity: WeaponRevolverInspector
-  cost:
-    BlueSpaceCube: 5
-  categories:
-  - ERTUplinkWeaponCombat
+# - type: listing
+#   id: ErtCallUplinkWeaponRevolverInspector
+#   name: ert-uplink-weaponnoncombat-weaponrevolverinspector-name
+#   description: ert-uplink-weaponnoncombat-weaponrevolverinspector-desc
+#   productEntity: WeaponRevolverInspector
+#   cost:
+#     BlueSpaceCube: 5
+#   categories:
+#   - ERTUplinkWeaponCombat
 
 - type: listing
   id: ErtCallUplinkWeaponPistolMk58
@@ -710,6 +720,22 @@
     BlueSpaceCube: 5
   categories:
   - ERTUplinkWeaponCombat
+
+- type: listing
+  id: ErtCallUplinkWeaponRevolverMateba
+  name: ert-uplink-weaponnoncombat-weaponrevolvermateba-name
+  description: ert-uplink-weaponnoncombat-weaponrevolvermateba-desc
+  productEntity: WeaponRevolverMateba
+  cost:
+    BlueSpaceCube: 5
+  categories:
+  - ERTUplinkWeaponCombat
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - ErtUplinkDeadSquad
+
 
 #ERTUplinkWeaponCombat
 - type: listing
@@ -743,25 +769,55 @@
           - ErtUplinkCombat
 
 - type: listing
-  id: ErtCallUplinkWeaponLaserGun
-  name: ert-uplink-weaponcombat-weaponlasergun-name
-  description: ert-uplink-weaponcombat-weaponlasergun-desc
-  productEntity: WeaponLaserGun
+  id: ErtCallUplinkWeaponPulseRifle
+  name: ert-uplink-weaponcombat-weaponpulserifle-name
+  description: ert-uplink-weaponcombat-weaponpulserifle-desc
+  productEntity: WeaponPulseRifle
   cost:
-    BlueSpaceCube: 5
+    BlueSpaceCube: 20
   categories:
   - ERTUplinkWeaponCombat
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
         tags:
-          - ErtUplinkCombat
+          - ErtUplinkDeadSquad
 
 - type: listing
-  id: ErtCallUplinkWeaponLaserCarbine
-  name: ert-uplink-weaponcombat-weaponlasercarbine-name
-  description: ert-uplink-weaponcombat-weaponlasercarbine-desc
-  productEntity: WeaponLaserCarbine
+  id: ErtCallUplinkWeaponMinigun
+  name: ert-uplink-weaponcombat-weaponminigun-name
+  description: ert-uplink-weaponcombat-weaponminigun-desc
+  productEntity: WeaponMinigun
+  cost:
+    BlueSpaceCube: 25
+  categories:
+  - ERTUplinkWeaponCombat
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - ErtUplinkDeadSquad
+
+- type: listing
+  id: ErtCallUplinkWeaponXrayCannon
+  name: ert-uplink-weaponcombat-weaponxraycannon-name
+  description: ert-uplink-weaponcombat-weaponxraycannon-desc
+  productEntity: WeaponXrayCannon
+  cost:
+    BlueSpaceCube: 25
+  categories:
+  - ERTUplinkWeaponCombat
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - ErtUplinkDeadSquad
+
+- type: listing
+  id: ErtCallUplinkWeaponTaser
+  name: ert-uplink-weaponcombat-weapontaser-name
+  description: ert-uplink-weaponcombat-weapontaser-desc
+  productEntity: WeaponTaser
   cost:
     BlueSpaceCube: 10
   categories:
@@ -770,22 +826,52 @@
     - !type:StoreWhitelistCondition
       whitelist:
         tags:
-          - ErtUplinkCombat
+          - ErtUplinkDeadSquad
 
-- type: listing
-  id: ErtCallUplinkWeaponAdvancedLaser
-  name: ert-uplink-weaponcombat-weaponadvancedlaser-name
-  description: ert-uplink-weaponcombat-weaponadvancedlaser-desc
-  productEntity: WeaponAdvancedLaser
-  cost:
-    BlueSpaceCube: 12
-  categories:
-  - ERTUplinkWeaponCombat
-  conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - ErtUplinkCombat
+# - type: listing
+#   id: ErtCallUplinkWeaponLaserGun
+#   name: ert-uplink-weaponcombat-weaponlasergun-name
+#   description: ert-uplink-weaponcombat-weaponlasergun-desc
+#   productEntity: WeaponLaserGun
+#   cost:
+#     BlueSpaceCube: 5
+#   categories:
+#   - ERTUplinkWeaponCombat
+#   conditions:
+#     - !type:StoreWhitelistCondition
+#       whitelist:
+#         tags:
+#           - ErtUplinkCombat
+
+# - type: listing
+#   id: ErtCallUplinkWeaponLaserCarbine
+#   name: ert-uplink-weaponcombat-weaponlasercarbine-name
+#   description: ert-uplink-weaponcombat-weaponlasercarbine-desc
+#   productEntity: WeaponLaserCarbine
+#   cost:
+#     BlueSpaceCube: 10
+#   categories:
+#   - ERTUplinkWeaponCombat
+#   conditions:
+#     - !type:StoreWhitelistCondition
+#       whitelist:
+#         tags:
+#           - ErtUplinkCombat
+
+# - type: listing
+#   id: ErtCallUplinkWeaponAdvancedLaser
+#   name: ert-uplink-weaponcombat-weaponadvancedlaser-name
+#   description: ert-uplink-weaponcombat-weaponadvancedlaser-desc
+#   productEntity: WeaponAdvancedLaser
+#   cost:
+#     BlueSpaceCube: 12
+#   categories:
+#   - ERTUplinkWeaponCombat
+#   conditions:
+#     - !type:StoreWhitelistCondition
+#       whitelist:
+#         tags:
+#           - ErtUplinkCombat
 
 - type: listing
   id: ErtCallUplinkWeaponSniperHristov
@@ -817,20 +903,20 @@
         tags:
           - ErtUplinkCombat
 
-- type: listing
-  id: ErtCallUplinkWeaponRifleAk
-  name: ert-uplink-weaponcombat-weaponrifleak-name
-  description: ert-uplink-weaponcombat-weaponrifleak-desc
-  productEntity: WeaponRifleAk
-  cost:
-    BlueSpaceCube: 10
-  categories:
-  - ERTUplinkWeaponCombat
-  conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - ErtUplinkCombat
+# - type: listing
+#   id: ErtCallUplinkWeaponRifleAk
+#   name: ert-uplink-weaponcombat-weaponrifleak-name
+#   description: ert-uplink-weaponcombat-weaponrifleak-desc
+#   productEntity: WeaponRifleAk
+#   cost:
+#     BlueSpaceCube: 10
+#   categories:
+#   - ERTUplinkWeaponCombat
+#   conditions:
+#     - !type:StoreWhitelistCondition
+#       whitelist:
+#         tags:
+#           - ErtUplinkCombat
 
 - type: listing
   id: ErtCallUplinkWeaponLauncherRocket

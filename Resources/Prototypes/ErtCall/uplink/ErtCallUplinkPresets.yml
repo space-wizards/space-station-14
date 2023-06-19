@@ -88,3 +88,21 @@
 #CBURN START
 
 #CBURN END
+
+#DEAD SQUAD START
+- type: storePreset
+  id: ErtCallUplinkDeadSquadPreset
+  storeName: ErtUplinkFull
+  categories:
+  - ERTUplinkMelee
+  - ERTUplinkWeaponCombat
+  - ERTUplinkAmmoCombat
+  - ERTUplinkExplosives
+  - ERTUplinkMedial
+  #- ERTUplinkEngineering
+  - ERTUplinkUtilities
+  #- ERTUplinkJunitor
+  #- ERTUplinkPointless
+  currencyWhitelist:
+  - BlueSpaceCube
+#DEAD SQUAD END

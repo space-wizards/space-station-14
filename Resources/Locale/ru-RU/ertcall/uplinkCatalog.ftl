@@ -153,6 +153,17 @@ ert-uplink-weaponcombat-weaponrifleak-name = { ent-WeaponRifleAk }
 ert-uplink-weaponcombat-weaponrifleak-desc = { ent-WeaponRifleAk.desc }
 ert-uplink-weaponcombat-weaponlauncherrocket-name = { ent-WeaponLauncherRocket }
 ert-uplink-weaponcombat-weaponlauncherrocket-desc = { ent-WeaponLauncherRocket.desc }
+ert-uplink-weaponcombat-weaponpulserifle-name = { ent-WeaponPulseRifle }
+ert-uplink-weaponcombat-weaponpulserifle-desc = { ent-WeaponPulseRifle.desc }
+ert-uplink-weaponcombat-weaponminigun-name = { ent-WeaponMinigun }
+ert-uplink-weaponcombat-weaponminigun-desc = { ent-WeaponMinigun.desc }
+ert-uplink-weaponcombat-weaponxraycannon-name = { ent-WeaponXrayCannon }
+ert-uplink-weaponcombat-weaponxraycannon-desc = { ent-WeaponXrayCannon.desc }
+ert-uplink-weaponcombat-weapontaser-name = { ent-WeaponTaser }
+ert-uplink-weaponcombat-weapontaser-desc = { ent-WeaponTaser.desc }
+ert-uplink-weaponnoncombat-weaponrevolvermateba-name = { ent-WeaponRevolverMateba }
+ert-uplink-weaponnoncombat-weaponrevolvermateba-desc = { ent-WeaponRevolverMateba.desc }
+
 
 ert-uplink-junitor-advmopitem-name = { ent-AdvMopItem }
 ert-uplink-junitor-advmopitem-desc = { ent-AdvMopItem.desc }

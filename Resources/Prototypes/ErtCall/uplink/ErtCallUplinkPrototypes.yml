@@ -1,3 +1,4 @@
+#ERT START
 - type: entity
   parent: BaseItem
   id: BaseERTUplink
@@ -96,4 +97,24 @@
   # - type: Tag
   #   tags:
   #     - ErtUplinkCombat
+#ERT END
+#CBURN START
+
+#CBURN END
+
+#DEAD SQUAD START
+- type: entity
+  parent: BaseERTUplink
+  id: ERTUplinkDeadSquad
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkDeadSquadPreset
+    balance:
+      BlueSpaceCube: 60
+  - type: Tag
+    tags:
+      - ErtUplinkDeadSquad
+      - ErtUplinkCombat
+#DEAD SQUAD END
 

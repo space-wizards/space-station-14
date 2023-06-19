@@ -163,4 +163,25 @@
           state: cburnMedic
 #CBURN END
 
+#DEAD SQUAD START
+- type: entity
+  #noSpawn: true
+  id: SpawnDeadSquadSecurityEVAPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-deadsquad-security-eva-name
+      description: ertcall-deadsquad-security-eva-desc
+      rules: ertcall-deadsquad-security-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: DeadSquadSecurityEVAPreset
+    - type: Sprite
+      sprite: Markers/imperial_jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/imperial_jobs.rsi
+          state: deadSquad
+#DEAD SQUAD END
+
 
