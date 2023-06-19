@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Bump collision sound velocity required from 0.25 to 1., type: Tweak}
-  id: 3547
-  time: '2023-04-26T06:52:57.0000000+00:00'
 - author: kzhanik
   changes:
   - {message: 'HoS and CMO get survival boxes according to their departments (HoS
@@ -2928,3 +2923,8 @@ Entries:
       your picks!, type: Tweak}
   id: 4046
   time: '2023-06-19T04:03:41.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Added paramedic and atmospherics windoor for mapping., type: Add}
+  id: 4047
+  time: '2023-06-19T17:29:45.0000000+00:00'
