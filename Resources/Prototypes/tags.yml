@@ -83,6 +83,9 @@
   id: CableCoil
 
 - type: Tag
+  id: CapacitorStockPart
+
+- type: Tag
   id: Carrot
 
 - type: Tag
@@ -241,6 +244,9 @@
 
 - type: Tag
   id: Donut
+
+- type: Tag
+  id: DrinkSpaceGlue
 
 - type: Tag
   id: DroneUsable
