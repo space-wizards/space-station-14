@@ -106,8 +106,8 @@ public sealed partial class MindTests
         await DisconnectReconnect(pair);
 
         // Player now controls their original mob, mind was preserved
-        Assert.That(mind == GetMind(pair));
-        Assert.That(mind.CurrentEntity == original);
+        Assert.That(mind, Is.EqualTo(GetMind(pair)));
+        Assert.That(mind.CurrentEntity, Is.EqualTo(original));
         Assert.That(!entMan.Deleted(original));
         Assert.That(entMan.Deleted(ghost));
 

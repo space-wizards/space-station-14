@@ -269,13 +269,8 @@ namespace Content.Server.GameTicking
             if (DummyTicker)
                 return;
 
-            DebugTools.Assert(!_playerGameStatuses.TryGetValue(player.UserId, out var status)
-                              || status != PlayerGameStatus.JoinedGame);
-
             PlayerJoinGame(player);
             SpawnObserver(player);
-
-            _playerGameStatuses[player.UserId] = PlayerGameStatus.JoinedGame;
             RaiseNetworkEvent(GetStatusSingle(player, PlayerGameStatus.JoinedGame));
         }
 
