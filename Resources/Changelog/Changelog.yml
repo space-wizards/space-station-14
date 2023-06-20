@@ -1,14 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Only traitors can insert TC into PDAs now., type: Tweak}
-  id: 3557
-  time: '2023-04-29T04:41:24.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Dragons no longer spawn off-station., type: Fix}
-  id: 3558
-  time: '2023-04-29T04:51:31.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Nerf or remove some standard sell prices., type: Tweak}
@@ -2934,3 +2924,14 @@ Entries:
       are less heat resistant.', type: Tweak}
   id: 4056
   time: '2023-06-20T20:29:13.0000000+00:00'
+- author: Equivocateur
+  changes:
+  - {message: Added hidden items in multiple vending machines., type: Add}
+  id: 4057
+  time: '2023-06-20T20:30:27.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Added more dwarf accenting and fixed bug with the words 'over' 'moreover'
+      and 'more', type: Add}
+  id: 4058
+  time: '2023-06-20T20:30:57.0000000+00:00'
