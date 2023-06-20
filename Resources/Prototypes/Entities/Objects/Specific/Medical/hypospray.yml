@@ -166,7 +166,7 @@
   name: stimulant injector
   parent: ChemicalMedipen
   id: Stimpack
-  description: Contains enough stimulants for you to have the chemical's effect for 5 minutes. Use it when you're sure you're ready to throw down.
+  description: Contains enough stimulants for you to have the chemical's effect for 30 seconds. Use it when you're sure you're ready to throw down.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
