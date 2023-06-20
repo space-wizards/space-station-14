@@ -98,7 +98,6 @@ namespace Content.Server.GameTicking
                     }
                     else
                     {
-                        session.AttachToEntity(data.Mind.CurrentEntity);
                         PlayerJoinGame(session);
                     }
                     break;
