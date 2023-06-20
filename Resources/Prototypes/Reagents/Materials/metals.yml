@@ -30,9 +30,17 @@
   price: 0.28 # 1-1 mix of plasma and steel.
 
 - type: material
-  id: ElysiumIngot
+  id: Elysium
   stackEntity: IngotElysium1
   name: materials-elysium
   icon: { sprite: Objects/Materials/ingots.rsi, state: elysium }
+  color: "#9455F5"
+  price: .5
+
+- type: material
+  id: ElysiumAlloy
+  stackEntity: IngotElysium1
+  name: materials-elysium-alloy
+  icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: elysium }
   color: "#9455F5"
   price: .5

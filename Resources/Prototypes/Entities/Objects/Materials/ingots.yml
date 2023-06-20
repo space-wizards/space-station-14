@@ -36,7 +36,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      Gold: 100
+      Gold: 500
   - type: Stack
     stackType: Gold
     baseLayer: base
@@ -73,7 +73,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      Silver: 100
+      Silver: 500
   - type: Stack
     stackType: Silver
     baseLayer: base
@@ -110,7 +110,7 @@
     - type: Material
     - type: PhysicalComposition
       materialComposition:
-        RefinedElysium: 100
+        Elysium: 500
     - type: Extractable
       grindableSolutionName: elysium
     - type: SolutionContainerManager

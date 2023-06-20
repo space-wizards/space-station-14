@@ -711,3 +711,4 @@
     - type: Lathe
       staticRecipes:
         - ElysiumShiv
+      dynamicRecipes: []
