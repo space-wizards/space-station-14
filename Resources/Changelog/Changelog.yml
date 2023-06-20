@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: fixed combat (harm) mode popup appearing to everyone, type: Fix}
-  id: 3550
-  time: '2023-04-26T16:21:44.0000000+00:00'
 - author: OctoRocket
   changes:
   - {message: Blood packs work now., type: Fix}
@@ -2928,3 +2923,10 @@ Entries:
       to sync., type: Fix}
   id: 4049
   time: '2023-06-19T17:43:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed experimental stims., type: Remove}
+  - {message: Bumped stimulants metabolism from 0.2 to 1.0 per second, type: Tweak}
+  - {message: Reduced stimpacks from 5 minutes to 30 seconds., type: Tweak}
+  id: 4050
+  time: '2023-06-20T02:23:10.0000000+00:00'
