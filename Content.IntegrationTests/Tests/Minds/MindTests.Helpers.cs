@@ -63,7 +63,7 @@ public sealed partial class MindTests
     }
 
     /// <summary>
-    /// Check that the player exists and the mind has been properly set up.
+    /// Get the player's current mind and check that the entities exists.
     /// </summary>
     public Mind GetMind(Pair pair)
     {
@@ -75,7 +75,7 @@ public sealed partial class MindTests
 
         var mind = player.ContentData()!.Mind;
         Assert.NotNull(mind);
-        Assert.That(player.AttachedEntity == mind.CurrentEntity);
+        Assert.That(player.AttachedEntity, Is.EqualTo(mind.CurrentEntity));
         Assert.That(entMan.EntityExists(mind.OwnedEntity));
         Assert.That(entMan.EntityExists(mind.CurrentEntity));
 

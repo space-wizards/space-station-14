@@ -220,31 +220,43 @@ public sealed partial class MindTests
     [Test]
     public async Task TestOwningPlayerCanBeChanged()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
 
+        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+        var originalMind = GetMind(pairTracker.Pair);
+        var userId = originalMind.UserId;
+
+        Mind mind = default!;
         await server.WaitAssertion(() =>
         {
-            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
-
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
             var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
+            entMan.DirtyEntity(entity);
 
-            var mind = mindSystem.CreateMind(null);
-
+            mind = mindSystem.CreateMind(null);
             mindSystem.TransferTo(mind, entity);
-
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
-
-            var newUserId = new NetUserId(Guid.NewGuid());
             Assert.That(mindComp.HasMind);
-            CatchPlayerDataException(() =>
-                mindSystem.SetUserId(mindComp.Mind!, newUserId));
-
-            Assert.That(mind.UserId, Is.EqualTo(newUserId));
         });
+
+        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+
+        await server.WaitAssertion(() =>
+        {
+            mindSystem.SetUserId(mind, userId);
+            Assert.That(mind.UserId, Is.EqualTo(userId));
+            Assert.That(originalMind.UserId, Is.EqualTo(null));
+
+            mindSystem.SetUserId(originalMind, userId);
+            Assert.That(mind.UserId, Is.EqualTo(null));
+            Assert.That(originalMind.UserId, Is.EqualTo(userId));
+        });
+
+        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
         await pairTracker.CleanReturnAsync();
     }

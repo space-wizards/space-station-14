@@ -58,6 +58,7 @@ public sealed partial class MindTests
         var player = playerMan.ServerSessions.Single();
         var name = player.Name;
         var user = player.UserId;
+        Assert.NotNull(mind.OwnedEntity);
         var entity = mind.OwnedEntity.Value;
 
         // Player is not a ghost
