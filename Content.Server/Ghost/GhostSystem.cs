@@ -38,6 +38,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         public override void Initialize()
         {
@@ -104,13 +105,13 @@ namespace Content.Server.Ghost
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
             // Allow this entity to be seen by other ghosts.
-            var visibility = EntityManager.EnsureComponent<VisibilityComponent>(component.Owner);
+            var visibility = EnsureComp<VisibilityComponent>(uid);
 
             if (_ticker.RunLevel != GameRunLevel.PostRound)
             {
-                _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Ghost, false);
-                _visibilitySystem.RemoveLayer(visibility, (int) VisibilityFlags.Normal, false);
-                _visibilitySystem.RefreshVisibility(visibility);
+                _visibilitySystem.AddLayer(uid, visibility, (int) VisibilityFlags.Ghost, false);
+                _visibilitySystem.RemoveLayer(uid, visibility, (int) VisibilityFlags.Normal, false);
+                _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
             }
 
             SetCanSeeGhosts(uid, true);
@@ -141,11 +142,11 @@ namespace Content.Server.Ghost
             if (!Terminating(uid))
             {
                 // Entity can't be seen by ghosts anymore.
-                if (EntityManager.TryGetComponent(component.Owner, out VisibilityComponent? visibility))
+                if (EntityManager.TryGetComponent(uid, out VisibilityComponent? visibility))
                 {
-                    _visibilitySystem.RemoveLayer(visibility, (int) VisibilityFlags.Ghost, false);
-                    _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Normal, false);
-                    _visibilitySystem.RefreshVisibility(visibility);
+                    _visibilitySystem.RemoveLayer(uid, visibility, (int) VisibilityFlags.Ghost, false);
+                    _visibilitySystem.AddLayer(uid, visibility, (int) VisibilityFlags.Normal, false);
+                    _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
                 }
 
                 // Entity can't see ghosts anymore.
@@ -185,7 +186,7 @@ namespace Content.Server.Ghost
             if (args.SenderSession.AttachedEntity is not {Valid: true} entity ||
                 !EntityManager.HasComponent<GhostComponent>(entity))
             {
-                Logger.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
+                Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
                 return;
             }
 
@@ -200,7 +201,7 @@ namespace Content.Server.Ghost
                 !ghost.CanReturnToBody ||
                 !EntityManager.TryGetComponent(attached, out ActorComponent? actor))
             {
-                Logger.Warning($"User {args.SenderSession.Name} sent an invalid {nameof(GhostReturnToBodyRequest)}");
+                Log.Warning($"User {args.SenderSession.Name} sent an invalid {nameof(GhostReturnToBodyRequest)}");
                 return;
             }
 
@@ -212,26 +213,26 @@ namespace Content.Server.Ghost
             if (args.SenderSession.AttachedEntity is not {Valid: true} attached ||
                 !EntityManager.TryGetComponent(attached, out GhostComponent? ghost))
             {
-                Logger.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
                 return;
             }
 
             if (!EntityManager.EntityExists(msg.Target))
             {
-                Logger.Warning($"User {args.SenderSession.Name} tried to warp to an invalid entity id: {msg.Target}");
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to an invalid entity id: {msg.Target}");
                 return;
             }
 
             if (TryComp(msg.Target, out WarpPointComponent? warp) && warp.Follow
                 || HasComp<MobStateComponent>(msg.Target))
             {
-                 _followerSystem.StartFollowingEntity(ghost.Owner, msg.Target);
+                 _followerSystem.StartFollowingEntity(attached, msg.Target);
                  return;
             }
 
-            var xform = Transform(ghost.Owner);
-            xform.Coordinates = Transform(msg.Target).Coordinates;
-            xform.AttachToGridOrMap();
+            var xform = Transform(attached);
+            _transformSystem.SetCoordinates(attached, xform, Transform(msg.Target).Coordinates);
+            _transformSystem.AttachToGridOrMap(attached, xform);
             if (TryComp(attached, out PhysicsComponent? physics))
                 _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
         }
@@ -246,11 +247,13 @@ namespace Content.Server.Ghost
 
         private IEnumerable<GhostWarp> GetLocationWarps()
         {
-            foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
+            var enumerator = AllEntityQuery<WarpPointComponent>();
+
+            while (enumerator.MoveNext(out var uid, out var warp))
             {
                 if (warp.Location != null)
                 {
-                    yield return new GhostWarp(warp.Owner, warp.Location, true);
+                    yield return new GhostWarp(uid, warp.Location, true);
                 }
             }
         }
@@ -283,19 +286,20 @@ namespace Content.Server.Ghost
         /// </summary>
         public void MakeVisible(bool visible)
         {
-            foreach (var (_, vis) in EntityQuery<GhostComponent, VisibilityComponent>())
+            var entityQuery = EntityQueryEnumerator<GhostComponent, VisibilityComponent>();
+            while (entityQuery.MoveNext(out var uid, out _, out var vis))
             {
                 if (visible)
                 {
-                    _visibilitySystem.AddLayer(vis, (int) VisibilityFlags.Normal, false);
-                    _visibilitySystem.RemoveLayer(vis, (int) VisibilityFlags.Ghost, false);
+                    _visibilitySystem.AddLayer(uid, vis, (int) VisibilityFlags.Normal, false);
+                    _visibilitySystem.RemoveLayer(uid, vis, (int) VisibilityFlags.Ghost, false);
                 }
                 else
                 {
-                    _visibilitySystem.AddLayer(vis, (int) VisibilityFlags.Ghost, false);
-                    _visibilitySystem.RemoveLayer(vis, (int) VisibilityFlags.Normal, false);
+                    _visibilitySystem.AddLayer(uid, vis, (int) VisibilityFlags.Ghost, false);
+                    _visibilitySystem.RemoveLayer(uid, vis, (int) VisibilityFlags.Normal, false);
                 }
-                _visibilitySystem.RefreshVisibility(vis);
+                _visibilitySystem.RefreshVisibility(uid, visibilityComponent: vis);
             }
         }
 
