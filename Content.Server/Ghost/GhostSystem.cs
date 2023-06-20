@@ -90,10 +90,10 @@ namespace Content.Server.Ghost
         private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, ref MoveInputEvent args)
         {
             // Let's not ghost if our mind is visiting...
-            if (EntityManager.HasComponent<VisitingMindComponent>(uid))
+            if (HasComp<VisitingMindComponent>(uid))
                 return;
 
-            if (!EntityManager.TryGetComponent<MindContainerComponent>(uid, out var mind) || !mind.HasMind || mind.Mind.IsVisitingEntity)
+            if (!TryComp<MindContainerComponent>(uid, out var mind) || !mind.HasMind || mind.Mind.IsVisitingEntity)
                 return;
 
             if (component.MustBeDead && (_mobState.IsAlive(uid) || _mobState.IsCritical(uid)))
@@ -142,7 +142,7 @@ namespace Content.Server.Ghost
             if (!Terminating(uid))
             {
                 // Entity can't be seen by ghosts anymore.
-                if (EntityManager.TryGetComponent(uid, out VisibilityComponent? visibility))
+                if (TryComp(uid, out VisibilityComponent? visibility))
                 {
                     _visibilitySystem.RemoveLayer(uid, visibility, (int) VisibilityFlags.Ghost, false);
                     _visibilitySystem.AddLayer(uid, visibility, (int) VisibilityFlags.Normal, false);
@@ -184,7 +184,7 @@ namespace Content.Server.Ghost
         private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
         {
             if (args.SenderSession.AttachedEntity is not {Valid: true} entity
-                || !EntityManager.HasComponent<GhostComponent>(entity))
+                || !HasComp<GhostComponent>(entity))
             {
                 Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
                 return;
@@ -197,9 +197,9 @@ namespace Content.Server.Ghost
         private void OnGhostReturnToBodyRequest(GhostReturnToBodyRequest msg, EntitySessionEventArgs args)
         {
             if (args.SenderSession.AttachedEntity is not {Valid: true} attached
-                || !EntityManager.TryGetComponent(attached, out GhostComponent? ghost)
+                || !TryComp(attached, out GhostComponent? ghost)
                 || !ghost.CanReturnToBody
-                || !EntityManager.TryGetComponent(attached, out ActorComponent? actor))
+                || !TryComp(attached, out ActorComponent? actor))
             {
                 Log.Warning($"User {args.SenderSession.Name} sent an invalid {nameof(GhostReturnToBodyRequest)}");
                 return;
@@ -211,13 +211,13 @@ namespace Content.Server.Ghost
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
         {
             if (args.SenderSession.AttachedEntity is not {Valid: true} attached
-                || !EntityManager.TryGetComponent(attached, out GhostComponent? ghost))
+                || !TryComp(attached, out GhostComponent? _))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
                 return;
             }
 
-            if (!EntityManager.EntityExists(msg.Target))
+            if (!Exists(msg.Target))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to warp to an invalid entity id: {msg.Target}");
                 return;
@@ -268,7 +268,7 @@ namespace Content.Server.Ghost
 
                     TryComp<MindContainerComponent>(attached, out var mind);
 
-                    string playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
+                    string playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
 
                     if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
                         yield return new GhostWarp(attached, playerInfo, false);
