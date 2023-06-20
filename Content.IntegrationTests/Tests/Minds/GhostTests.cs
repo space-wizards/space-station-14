@@ -89,13 +89,10 @@ public sealed class GhostTests
             ghost = entMan.SpawnEntity("MobObserver", MapCoordinates.Nullspace);
             mindSystem.Visit(mind, ghost);
 
-            Assert.That(player.AttachedEntity, Is.Not.EqualTo(null));
+            Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
             Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "player is not a ghost");
             Assert.That(mind.VisitingEntity, Is.EqualTo(player.AttachedEntity));
             Assert.That(mind.OwnedEntity, Is.EqualTo(originalEntity));
-            Assert.That(mind.OwnedEntity, Is.Not.EqualTo(mind.VisitingEntity));
-
-            ghost = player.AttachedEntity!.Value;
         });
 
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
