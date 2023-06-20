@@ -16,7 +16,7 @@ public sealed partial class MindTests
     // - attach a player to a ghost (not visiting)
     // - disconnect
     // - reconnect
-    // - spawned in as a new entity
+    // - assert that they spawned in as a new entity
     [Test]
     public async Task TestGhostsCanReconnect()
     {

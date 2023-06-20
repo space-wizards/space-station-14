@@ -85,12 +85,12 @@ public sealed class GhostTests
             Assert.That(player.AttachedEntity, Is.Not.EqualTo(null));
             originalEntity = player.AttachedEntity!.Value;
 
-            Assert.That(mindSystem.TryGetMind(player.UserId, out var mind));
+            Assert.That(mindSystem.TryGetMind(player.UserId, out var mind), "could not find mind");
             ghost = entMan.SpawnEntity("MobObserver", MapCoordinates.Nullspace);
             mindSystem.Visit(mind, ghost);
 
             Assert.That(player.AttachedEntity, Is.Not.EqualTo(null));
-            Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity));
+            Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "player is not a ghost");
             Assert.That(mind.VisitingEntity, Is.EqualTo(player.AttachedEntity));
             Assert.That(mind.OwnedEntity, Is.EqualTo(originalEntity));
             Assert.That(mind.OwnedEntity, Is.Not.EqualTo(mind.VisitingEntity));
@@ -108,11 +108,11 @@ public sealed class GhostTests
         await server.WaitAssertion(() =>
         {
             // Is player a ghost?
-            Assert.That(!entMan.Deleted(ghost));
+            Assert.That(!entMan.Deleted(ghost), "ghost has been deleted");
             Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
             Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity));
 
-            Assert.That(mindSystem.TryGetMind(player.UserId, out var mind));
+            Assert.That(mindSystem.TryGetMind(player.UserId, out var mind),  "could not find mind");
             Assert.That(mind.UserId, Is.EqualTo(player.UserId));
             Assert.That(mind.Session, Is.EqualTo(player));
             Assert.IsNull(mind.VisitingEntity);
