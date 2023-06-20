@@ -71,61 +71,6 @@ namespace Content.IntegrationTests.Tests.Minds
             await pairTracker.CleanReturnAsync();
         }
 
-        // This test checks that if a player is deleted they will respawn (usually as a ghost).
-        [Test]
-        public async Task TestGhostOnDelete()
-        {
-            // Has to be a non-dummy ticker so we have a proper map.
-
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
-
-            var entMan = server.ResolveDependency<IServerEntityManager>();
-            var playerMan = server.ResolveDependency<IPlayerManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
-
-            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
-
-            var map = await PoolManager.CreateTestMap(pairTracker);
-
-            EntityUid playerEnt = default;
-            Mind mind = default!;
-            await server.WaitAssertion(() =>
-            {
-                var player = playerMan.ServerSessions.Single();
-
-                var pos = new MapCoordinates(Vector2.Zero, map.MapId);
-
-                playerEnt = entMan.SpawnEntity(null, pos);
-
-                mind = mindSystem.CreateMind(player.UserId);
-                mindSystem.TransferTo(mind, playerEnt);
-
-                Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
-            });
-
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-
-            await server.WaitPost(() =>
-            {
-                entMan.DeleteEntity(playerEnt);
-            });
-
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-
-            await server.WaitAssertion(() =>
-            {
-                Assert.That(entMan.EntityExists(mind.CurrentEntity!.Value), Is.True);
-            });
-
-            await server.WaitPost(() =>
-            {
-                mapManager.DeleteMap(map.MapId);
-            });
-
-            await pairTracker.CleanReturnAsync();
-        }
-
         // this is a variant of TestGhostOnDelete that just deletes the whole map.
         [Test]
         public async Task TestGhostOnDeleteMap()

@@ -17,81 +17,13 @@ namespace Content.IntegrationTests.Tests.Minds;
 [TestFixture]
 public sealed class GhostTests
 {
-    [Test]
-    public async Task TestPlayerCanGhostThenDisconnectAndReconnect()
-    {
-        // Client is needed to spawn session
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
-        var client = pairTracker.Pair.Client;
-
-        var netManager = client.ResolveDependency<IClientNetManager>();
-
-        var entMan = server.ResolveDependency<IServerEntityManager>();
-        var playerMan = server.ResolveDependency<IPlayerManager>();
-
-        EntityUid entity = default!;
-        Mind mind = default!;
-        IPlayerSession player = playerMan.ServerSessions.Single();
-
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-
-        await server.WaitAssertion(() =>
-        {
-            Assert.That(player.AttachedEntity != null);
-            entity = player.AttachedEntity.Value;
-            Assert.That(entMan.TryGetComponent(entity, out MindContainerComponent mindContainerComponent));
-            Assert.That(mindContainerComponent.HasMind);
-            mind = mindContainerComponent.Mind;
-            entMan.DeleteEntity(entity);
-        });
-
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-
-        EntityUid mob = default!;
-
-        await server.WaitAssertion(() =>
-        {
-            Assert.That(mind.OwnedEntity != null);
-            Assert.That(entity != mind.OwnedEntity);
-            mob = mind.OwnedEntity.Value;
-
-        });
-
-        await client.WaitAssertion(() =>
-        {
-            netManager.ClientDisconnect("Disconnect command used.");
-        });
-
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-
-        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
-        client.SetConnectTarget(server);
-        await client.WaitPost(() => netManager.ClientConnect(null!, 0, null!));
-        await PoolManager.RunTicksSync(pairTracker.Pair, 10);
-
-        await server.WaitAssertion(() =>
-        {
-            // New ghost is created to attach old mind to.
-            // Make sure that session is set correctly
-            // Mind still exists
-            var m = player.ContentData()?.Mind;
-            Assert.That(m, Is.Not.EqualTo(null));
-
-            Assert.That(m!.OwnedEntity, Is.Not.EqualTo(mob));
-            Assert.That(m, Is.EqualTo(mind));
-        });
-
-        await pairTracker.CleanReturnAsync();
-    }
-
     /// <summary>
     /// Test that a ghost gets created when the player entity is deleted.
     /// 1. Delete mob
     /// 2. Assert is ghost
     /// </summary>
     [Test]
-    public async Task TestPlayerCanGhost()
+    public async Task TestGhostOnDelete()
     {
         // Client is needed to spawn session
         await using var pairTracker = await PoolManager.GetServerClient();
@@ -156,6 +88,9 @@ public sealed class GhostTests
             Assert.That(gameTicker.OnGhostAttempt(mind!, true));
             Assert.That(player.AttachedEntity, Is.Not.EqualTo(null));
             Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity));
+            Assert.That(mind.VisitingEntity, Is.EqualTo(player.AttachedEntity));
+            Assert.That(mind.OwnedEntity, Is.EqualTo(originalEntity));
+            Assert.That(mind.OwnedEntity, Is.Not.EqualTo(mind.VisitingEntity));
 
             ghost = player.AttachedEntity!.Value;
         });
@@ -177,7 +112,7 @@ public sealed class GhostTests
             Assert.That(mindSystem.TryGetMind(player.UserId, out var mind));
             Assert.That(mind.UserId, Is.EqualTo(player.UserId));
             Assert.That(mind.Session, Is.EqualTo(player));
-            Assert.That(mind.CurrentEntity, Is.EqualTo(ghost));
+            Assert.IsNull(mind.VisitingEntity);
             Assert.That(mind.OwnedEntity, Is.EqualTo(ghost));
         });
 
@@ -185,7 +120,6 @@ public sealed class GhostTests
     }
 
     /// <summary>
-    ///
     /// Test that ghosts can become admin ghosts without issue
     /// 1. Become a ghost
     /// 2. visit an admin ghost
@@ -236,6 +170,10 @@ public sealed class GhostTests
             Assert.That(entMan.Deleted(ghost));
             Assert.That(player.AttachedEntity, Is.Not.EqualTo(ghost));
             Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity!.Value));
+
+            var mind = player.ContentData()?.Mind;
+            Assert.NotNull(mind);
+            Assert.Null(mind.VisitingEntity);
         });
 
         await pairTracker.CleanReturnAsync();
