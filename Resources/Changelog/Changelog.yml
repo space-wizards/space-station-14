@@ -1,9 +1,4 @@
 Entries:
-- author: notquitehadouken
-  changes:
-  - {message: updated the localization files (there was a typo), type: Fix}
-  id: 3552
-  time: '2023-04-29T03:12:21.0000000+00:00'
 - author: freeman2651
   changes:
   - {message: Pills are now destructible., type: Tweak}
@@ -2930,3 +2925,8 @@ Entries:
   - {message: Remove guaranteed cat ear spawns., type: Remove}
   id: 4051
   time: '2023-06-20T03:53:27.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some bugs that prevented ghosts from spawning., type: Fix}
+  id: 4052
+  time: '2023-06-20T04:29:26.0000000+00:00'
