@@ -28,7 +28,7 @@ using IPlayerManager = Robust.Server.Player.IPlayerManager;
 namespace Content.IntegrationTests.Tests.Minds;
 
 [TestFixture]
-public sealed class MindTests
+public sealed partial class MindTests
 {
     private const string Prototypes = @"
 - type: entity
@@ -125,7 +125,7 @@ public sealed class MindTests
             var mind = mindSystem.CreateMind(null);
             mindSystem.TransferTo(mind, entity);
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
-            
+
             var mind2 = mindSystem.CreateMind(null);
             mindSystem.TransferTo(mind2, entity);
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind2));
@@ -275,26 +275,26 @@ public sealed class MindTests
             Assert.That(!mindSystem.HasRole<Job>(mind));
 
             var traitorRole = new TraitorRole(mind, new AntagPrototype());
-            
+
             mindSystem.AddRole(mind, traitorRole);
-            
+
             Assert.That(mindSystem.HasRole<TraitorRole>(mind));
             Assert.That(!mindSystem.HasRole<Job>(mind));
 
             var jobRole = new Job(mind, new JobPrototype());
-            
+
             mindSystem.AddRole(mind, jobRole);
-            
+
             Assert.That(mindSystem.HasRole<TraitorRole>(mind));
             Assert.That(mindSystem.HasRole<Job>(mind));
-            
+
             mindSystem.RemoveRole(mind, traitorRole);
-            
+
             Assert.That(!mindSystem.HasRole<TraitorRole>(mind));
             Assert.That(mindSystem.HasRole<Job>(mind));
-            
+
             mindSystem.RemoveRole(mind, jobRole);
-            
+
             Assert.That(!mindSystem.HasRole<TraitorRole>(mind));
             Assert.That(!mindSystem.HasRole<Job>(mind));
         });
