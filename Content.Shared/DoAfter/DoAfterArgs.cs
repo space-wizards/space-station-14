@@ -80,6 +80,13 @@ public sealed class DoAfterArgs
     public bool BreakOnUserMove;
 
     /// <summary>
+    ///     If this is true then any movement, even when weightless, will break the doafter.
+    ///     When there is no gravity, BreakOnUserMove is ignored. If it is false to begin with nothing will change.
+    /// </summary>
+    [DataField("breakOnWeightlessMove")]
+    public bool BreakOnWeightlessMove;
+
+    /// <summary>
     ///     If do_after stops when the target moves (if there is a target)
     /// </summary>
     [DataField("breakOnTargetMove")]
@@ -219,6 +226,7 @@ public sealed class DoAfterArgs
         NeedHand = other.NeedHand;
         BreakOnHandChange = other.BreakOnHandChange;
         BreakOnUserMove = other.BreakOnUserMove;
+        BreakOnWeightlessMove = other.BreakOnWeightlessMove;
         BreakOnTargetMove = other.BreakOnTargetMove;
         MovementThreshold = other.MovementThreshold;
         DistanceThreshold = other.DistanceThreshold;

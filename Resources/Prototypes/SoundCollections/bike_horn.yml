@@ -22,3 +22,13 @@
   id: BoxingBell
   files:
   - /Audio/Weapons/boxingbell.ogg
+
+- type: soundCollection
+  id: RubberHammer
+  files:
+  - /Audio/Weapons/rubberhammer.ogg
+
+- type: soundCollection
+  id: Parp
+  files:
+  - /Audio/Effects/Emotes/parp1.ogg

@@ -316,6 +316,20 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     }
 
     /// <summary>
+    /// Removes every link from the given sink
+    /// </summary>
+    public void RemoveAllFromSink(EntityUid sinkUid, DeviceLinkSinkComponent? sinkComponent = null)
+    {
+        if (!Resolve(sinkUid, ref sinkComponent))
+            return;
+
+        foreach (var sourceUid in sinkComponent.LinkedSources)
+        {
+            RemoveSinkFromSource(sourceUid, sinkUid, null, sinkComponent);
+        }
+    }
+
+    /// <summary>
     /// Removes all links between a source and a sink
     /// </summary>
     public void RemoveSinkFromSource(
@@ -332,7 +346,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
         if (sourceComponent == null && sinkComponent == null)
         {
-            // Both were delted?
+            // Both were deleted?
             return;
         }
 

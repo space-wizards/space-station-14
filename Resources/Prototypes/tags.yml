@@ -11,6 +11,9 @@
   id: AppraisalTool
 
 - type: Tag
+  id: ArtifactFragment
+
+- type: Tag
   id: ATVKeys
 
 - type: Tag
@@ -72,6 +75,9 @@
 
 - type: Tag
   id: BulletFoam
+
+- type: Tag
+  id: BypassInteractionRangeChecks
 
 - type: Tag
   id: CableCoil
@@ -240,6 +246,9 @@
   id: DroneUsable
 
 - type: Tag
+  id: Ectoplasm
+
+- type: Tag
   id: Egg
 
 - type: Tag
@@ -285,6 +294,9 @@
   id: FootstepSound
 
 - type: Tag
+  id: ForceableFollow
+
+- type: Tag
   id: ForceFixRotations # fixrotations command WILL target this
 
 - type: Tag
@@ -314,6 +326,28 @@
 - type: Tag
   id: GuideEmbeded
 
+
+- type: Tag
+  id: Hamster
+
+- type: Tag
+  id: HamtrCentralControlModule
+
+- type: Tag
+  id: HamtrPeripheralsControlModule
+
+- type: Tag
+  id: HamtrLArm
+
+- type: Tag
+  id: HamtrLLeg
+
+- type: Tag
+  id: HamtrRLeg
+
+- type: Tag
+  id: HamtrRArm
+
 - type: Tag
   id: Handcuffs
 
@@ -323,9 +357,6 @@
 
 - type: Tag
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
-
-- type: Tag
-  id: HardsuitEVA
 
 - type: Tag
   id: Head
@@ -377,6 +408,9 @@
 
 - type: Tag
   id: Ingot
+
+- type: Tag
+  id: InstantDoAfters
 
 - type: Tag
   id: IntercomElectronics
@@ -556,6 +590,9 @@
   id: Plastic
 
 - type: Tag
+  id: PlushieGhost
+
+- type: Tag
   id: Powerdrill
 
 - type: Tag
@@ -629,6 +666,9 @@
   id: SkeletonMotorcycleKeys
 
 - type: Tag
+  id: SmallMech
+
+- type: Tag
   id: Smokable
 
 - type: Tag
@@ -665,7 +705,13 @@
   id: StringInstrument
 
 - type: Tag
+  id: StationMapElectronics
+
+- type: Tag
   id: SubdermalImplant
+
+- type: Tag
+  id: SuitEVA
 
 - type: Tag
   id: SurveillanceCameraMonitorCircuitboard

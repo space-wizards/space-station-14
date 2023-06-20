@@ -3,6 +3,7 @@ using Content.Server.Administration.Commands;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Mind;
 using Content.Server.Preferences.Managers;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
@@ -14,12 +15,14 @@ using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.Enums;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -35,10 +38,11 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly NamingSystem _namingSystem = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -203,20 +207,20 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 var name = _namingSystem.GetName("Human", gender);
 
                 var session = ops[i];
-                var newMind = new Mind.Mind(session.UserId)
-                {
-                    CharacterName = name
-                };
-                newMind.ChangeOwningPlayer(session.UserId);
+                var newMind = _mindSystem.CreateMind(session.UserId, name);
+                _mindSystem.ChangeOwningPlayer(newMind, session.UserId);
 
                 var mob = Spawn("MobHuman", _random.Pick(spawns));
                 MetaData(mob).EntityName = name;
 
-                newMind.TransferTo(mob);
+                _mindSystem.TransferTo(newMind, mob);
                 var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
                 _stationSpawningSystem.EquipStartingGear(mob, pirateGear, profile);
 
                 pirates.Pirates.Add(newMind);
+
+                // Notificate every player about a pirate antagonist role with sound
+                _audioSystem.PlayGlobal(pirates.PirateAlertSound, session);
 
                 GameTicker.PlayerJoinGame(session);
             }
@@ -235,6 +239,20 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
         if (!mind.OwnedEntity.HasValue)
             return;
         SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "PirateGear", EntityManager);
+
+        var pirateRule = EntityQuery<PiratesRuleComponent>().FirstOrDefault();
+        if (pirateRule == null)
+        {
+            //todo fuck me this shit is awful
+            GameTicker.StartGameRule("Pirates", out var ruleEntity);
+            pirateRule = Comp<PiratesRuleComponent>(ruleEntity);
+        }
+
+        // Notificate every player about a pirate antagonist role with sound
+        if (mind.Session != null)
+        {
+            _audioSystem.PlayGlobal(pirateRule.PirateAlertSound, mind.Session);
+        }
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
@@ -248,7 +266,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             var minPlayers = _cfg.GetCVar(CCVars.PiratesMinPlayers);
             if (!ev.Forced && ev.Players.Length < minPlayers)
             {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-not-enough-ready-players",
+                _chatManager.SendAdminAnnouncement(Loc.GetString("nukeops-not-enough-ready-players",
                     ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers)));
                 ev.Cancel();
                 return;

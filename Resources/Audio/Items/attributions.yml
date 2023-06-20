@@ -38,6 +38,11 @@
   copyright: "Created by SamKolber, shortened and converted to OGG and mono"
   source: "https://freesound.org/people/SamKolber/sounds/210022/"
 
+- files: ["squeezebottle.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Breviceps, shortened and converted to OGG and mono"
+  source: "https://freesound.org/people/Breviceps/sounds/445118/"
+
 - files: ["Toys/toyfall1.ogg, Toys/toyfall2.ogg"]
   license: "CC0-1.0"
   copyright: "Created by HighTechPuddle"

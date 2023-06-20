@@ -1,1 +1,2 @@
-charger-examine = Charges [color={$color}]{$chargeRate}W[/color] per second.
+charger-examine = Charges at [color={$color}]{$chargeRate}W[/color].
+charger-component-charge-rate = Charge rate

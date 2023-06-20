@@ -79,9 +79,6 @@ public sealed class NukeopsRuleComponent : Component
     [DataField("shuttleMap", customTypeSerializer: typeof(ResPathSerializer))]
     public ResPath NukieShuttleMap = new("/Maps/infiltrator.yml");
 
-    [DataField("greetingSound", customTypeSerializer: typeof(SoundSpecifierTypeSerializer))]
-    public SoundSpecifier? GreetSound = new SoundPathSpecifier("/Audio/Misc/nukeops.ogg");
-
     [DataField("winType")]
     public WinType WinType = WinType.Neutral;
 
