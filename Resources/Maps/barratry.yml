@@ -105607,12 +105607,6 @@ entities:
       pos: 19.5,-10.5
       parent: 1
       type: Transform
-    - containers:
-        stash: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 1856
-      type: ContainerContainer
   - uid: 4069
     components:
     - rot: -1.5707963267948966 rad

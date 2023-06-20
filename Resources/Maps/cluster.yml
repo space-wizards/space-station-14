@@ -36123,20 +36123,6 @@ entities:
     - pos: 3.278635,-0.52339196
       parent: 1
       type: Transform
-  - uid: 9045
-    components:
-    - pos: -29.974428,-14.48443
-      parent: 1
-      type: Transform
-    - isSeatUp: True
-      toggleSound: !type:SoundPathSpecifier
-        path: /Audio/Items/desk_bell_ring.ogg
-      type: Toilet
-    - type: SecretStash
-    - containers:
-        stash: !type:ContainerSlot
-          ent: 9046
-      type: ContainerContainer
 - proto: DiceBag
   entities:
   - uid: 5590
