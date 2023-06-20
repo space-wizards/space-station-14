@@ -243,7 +243,7 @@
   components:
   - type: Tag
     tags:
-      - Spear
+    - Spear
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/uranium_spear.rsi
@@ -265,7 +265,7 @@
   - type: Clothing
     quickEquip: false
     slots:
-      - back
+    - back
   - type: Construction
     graph: SpearUranium
     node: spear
