@@ -54,12 +54,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
 
-        private ISawmill _vitalSawmill = default!;
         public override void Initialize()
         {
             base.Initialize();
-
-            _vitalSawmill = IoCManager.Resolve<ILogManager>().GetSawmill("VitalComponentMissing");
 
             // Shouldn't need re-anchoring.
             SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
@@ -306,7 +303,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (!HasComp<AnchorableComponent>(uid))
             {
-                _vitalSawmill.Warning($"Disposal unit {uid} is missing an {nameof(AnchorableComponent)}");
+                Log.Warning($"Disposal unit {uid} is missing an {nameof(AnchorableComponent)}");
             }
         }
 

@@ -24,13 +24,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
-        private ISawmill _holderLogger = default!;
-
         public override void Initialize()
         {
             base.Initialize();
 
-            _holderLogger = IoCManager.Resolve<ILogManager>().GetSawmill("c.s.disposal.holder");
             SubscribeLocalEvent<DisposalHolderComponent, ComponentStartup>(OnComponentStartup);
         }
 
@@ -78,7 +75,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             if (holder.IsExitingDisposals)
             {
-                _holderLogger.Error("Tried exiting disposals twice. This should never happen.");
+                Log.Error("Tried exiting disposals twice. This should never happen.");
                 return;
             }
             holder.IsExitingDisposals = true;
@@ -144,7 +141,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             if (holder.IsExitingDisposals)
             {
-                _holderLogger.Error("Tried entering tube after exiting disposals. This should never happen.");
+                Log.Error("Tried entering tube after exiting disposals. This should never happen.");
                 return false;
             }
             if (!Resolve(toUid, ref to, ref toTransform))
