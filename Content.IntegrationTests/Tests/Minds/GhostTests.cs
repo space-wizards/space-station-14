@@ -10,6 +10,7 @@ using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 
 namespace Content.IntegrationTests.Tests.Minds;
@@ -85,7 +86,9 @@ public sealed class GhostTests
             originalEntity = player.AttachedEntity!.Value;
 
             Assert.That(mindSystem.TryGetMind(player.UserId, out var mind));
-            Assert.That(gameTicker.OnGhostAttempt(mind!, true));
+            ghost = entMan.SpawnEntity("MobObserver", MapCoordinates.Nullspace);
+            mindSystem.Visit(mind, ghost);
+
             Assert.That(player.AttachedEntity, Is.Not.EqualTo(null));
             Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity));
             Assert.That(mind.VisitingEntity, Is.EqualTo(player.AttachedEntity));
