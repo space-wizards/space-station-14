@@ -1,3 +1,5 @@
+uniform highp vec2 ZOOM_SCALE;
+
 highp vec4 circle(in highp vec2 uv, in highp vec2 pos, highp float rad, in highp vec3 color) {
     highp float d = length(pos - uv) - rad;
     highp float t = clamp(d, 0.0, 1.0);
@@ -5,13 +7,15 @@ highp vec4 circle(in highp vec2 uv, in highp vec2 pos, highp float rad, in highp
 }
 void fragment(){
 	highp vec2 uv = FRAGCOORD.xy;
+    highp vec2 uv_stretch = vec2(uv.x * ZOOM_SCALE.x, uv.y * ZOOM_SCALE.y);
     highp vec2 res_xy = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
     highp vec2 center = res_xy*0.5;
+    highp vec2 center_stretch = vec2(center.x * ZOOM_SCALE.x, center.y * ZOOM_SCALE.y);
     highp float radius = 0.05 * res_xy.y;
 
     highp vec4 layer1 = vec4(vec3(0.0), 0.0);
     
-    highp vec4 layer2 = circle(uv, center, radius, vec3(0.0));
+    highp vec4 layer2 = circle(uv_stretch, center_stretch, radius, vec3(0.0));
 
     COLOR = mix(layer1, layer2, layer2.a);
 }

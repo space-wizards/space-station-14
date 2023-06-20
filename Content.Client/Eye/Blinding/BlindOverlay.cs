@@ -4,6 +4,7 @@ using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Content.Shared.Eye.Blinding;
+using Content.Shared.Movement.Components;
 using Content.Shared.Eye.Blinding.Components;
 
 namespace Content.Client.Eye.Blinding
@@ -22,6 +23,8 @@ namespace Content.Client.Eye.Blinding
         private readonly ShaderInstance _circleMaskShader;
 
         private BlindableComponent _blindableComponent = default!;
+
+        private SharedEyeComponent _eyeComponent = default!;
 
         public BlindOverlay()
         {
@@ -57,6 +60,11 @@ namespace Content.Client.Eye.Blinding
                 return true;
             }
 
+            if (!_entityManager.TryGetComponent<SharedEyeComponent>(playerEntity, out var eyeComponent))
+                return false;
+
+            _eyeComponent = eyeComponent;
+
             return blind;
         }
 
@@ -73,6 +81,10 @@ namespace Content.Client.Eye.Blinding
             {
                 _blindableComponent.GraceFrame = false;
             }
+
+            var zoom_scale = _eyeComponent.Zoom;
+
+            _circleMaskShader?.SetParameter("ZOOM_SCALE", zoom_scale);
 
             _greyscaleShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
