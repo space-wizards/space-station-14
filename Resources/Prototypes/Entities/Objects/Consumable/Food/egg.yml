@@ -77,7 +77,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
     state: eggshells
-    netsync: false
   - type: Item
     size: 1
   - type: SolutionContainerManager
@@ -105,7 +104,6 @@
     layers:
       - state: icon
         map: [ "enum.DamageStateVisualLayers.Base" ]
-    netsync: false
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:

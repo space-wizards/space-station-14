@@ -1530,8 +1530,6 @@ entities:
     - type: RadiationGridResistance
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 4156.5052092
-      type: GridPathfinding
     - shakeTimes: 10
       type: GravityShake
     - type: GasTileOverlay
@@ -5737,7 +5735,7 @@ entities:
     - pos: 3.9415665,-8.34479
       parent: 104
       type: Transform
-- proto: DrinkBeer
+- proto: DrinkBeerBottleFull
   entities:
   - uid: 161
     components:

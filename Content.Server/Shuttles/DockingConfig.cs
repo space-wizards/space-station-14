@@ -18,6 +18,11 @@ public sealed class DockingConfig
     /// </summary>
     public EntityUid TargetGrid;
 
+    /// <summary>
+    /// This is used for debugging.
+    /// </summary>
+    public Box2 Area;
+
     public EntityCoordinates Coordinates;
     public Angle Angle;
 }

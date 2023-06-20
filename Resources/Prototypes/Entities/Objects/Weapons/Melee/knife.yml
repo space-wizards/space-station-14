@@ -18,7 +18,6 @@
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
-    netsync: false
   - type: Item
   - type: Tool
     qualities:
@@ -42,6 +41,9 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+  - type: GuideHelp
+    guides:
+    - Chef
 
 - type: entity
   name: butcher's cleaver
@@ -64,6 +66,9 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/cleaver.rsi
+  - type: GuideHelp
+    guides:
+    - Chef
 
 - type: entity
   name: combat knife
@@ -159,7 +164,7 @@
   components:
   - type: Construction
     graph: ReinforcedShiv
-    node: icon 
+    node: icon
     size: 2
     state: icon
   - type: MeleeWeapon
@@ -180,7 +185,7 @@
   components:
   - type: Construction
     graph: PlasmaShiv
-    node: icon 
+    node: icon
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
@@ -199,7 +204,7 @@
   components:
   - type: Construction
     graph: UraniumShiv
-    node: icon 
+    node: icon
   - type: MeleeWeapon
     attackRate: 1.5
     damage:

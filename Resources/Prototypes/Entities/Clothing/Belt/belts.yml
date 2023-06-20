@@ -112,6 +112,8 @@
         - Handcuff
         - PowerCell
         - Geiger
+        - TrayScanner
+        - GasAnalyzer
   - type: ItemMapper
     mapLayers:
       drill:

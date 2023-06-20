@@ -28,7 +28,6 @@
     - Holy
   - type: ItemCooldown
   - type: Sprite
-    netsync: false
     sprite: Objects/Specific/Chapel/bible.rsi
     state: icon
   - type: Item
@@ -72,7 +71,6 @@
     specialItem: SpawnPointGhostCerberus
     respawnTime: 300
   - type: Sprite
-    netsync: false
     sprite: Objects/Specific/Chapel/necronomicon.rsi
     state: icon
   - type: Item
