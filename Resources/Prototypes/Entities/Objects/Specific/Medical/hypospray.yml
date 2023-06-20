@@ -179,13 +179,13 @@
   - type: SolutionContainerManager
     solutions:
       pen:
-        maxVol: 60
+        maxVol: 30
         reagents:
         - ReagentId: Stimulants
-          Quantity: 60
+          Quantity: 30
   - type: Hypospray
     solutionName: pen
-    transferAmount: 60
+    transferAmount: 30
   - type: StaticPrice
     price: 500
   - type: Tag
@@ -195,7 +195,7 @@
   name: stimulant microinjector
   parent: ChemicalMedipen
   id: StimpackMini
-  description: A microinjector of stimulants that give you about one minute of the chemical's effects.
+  description: A microinjector of stimulants that give you about fifteen seconds of the chemical's effects.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
@@ -214,35 +214,6 @@
           Quantity: 15
   - type: StaticPrice
     price: 100
-  - type: Tag
-    tags: []
-
-- type: entity
-  name: experimental stimulant injector
-  parent: ChemicalMedipen
-  id: StimpackExperimental
-  description: There's a red label on the side of it. It says "PRODUCT HAS EXTREME SIDE EFFECTS, PRODUCTION HALTED. DO NOT DISTRIBUTE."
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Medical/medipen.rsi
-    layers:
-    - state: stimpen
-      map: ["enum.SolutionContainerLayers.Fill"]
-  - type: Item
-    sprite: Objects/Specific/Medical/medipen.rsi
-    size: 10
-  - type: SolutionContainerManager
-    solutions:
-      pen:
-        maxVol: 60
-        reagents:
-        - ReagentId: ExperimentalStimulants
-          Quantity: 60
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 60
-  - type: StaticPrice
-    price: 1000
   - type: Tag
     tags: []
 
