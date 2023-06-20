@@ -38,7 +38,7 @@ namespace Content.IntegrationTests.Tests.Interaction;
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public abstract partial class InteractionTest
 {
-    protected virtual string PlayerPrototype => "AdminObserver";
+    protected virtual string PlayerPrototype => "InteractionTestMob";
 
     protected PairTracker PairTracker = default!;
     protected TestMapData MapData = default!;
@@ -115,10 +115,28 @@ public abstract partial class InteractionTest
 
     public float TickPeriod => (float)STiming.TickPeriod.TotalSeconds;
 
+
+    // Simple mob that has one hand and can perform misc interactions.
+    public const string TestPrototypes = @"
+- type: entity
+  id: InteractionTestMob
+  components:
+  - type: Body
+    prototype: Aghost
+  - type: DoAfter
+  - type: Hands
+  - type: MindContainer
+  - type: Stripping
+  - type: Tag
+    tags:
+    - CanPilot
+  - type: UserInterface
+";
+
     [SetUp]
     public virtual async Task Setup()
     {
-        PairTracker = await PoolManager.GetServerClient(new PoolSettings());
+        PairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = TestPrototypes});
 
         // server dependencies
         SEntMan = Server.ResolveDependency<IEntityManager>();

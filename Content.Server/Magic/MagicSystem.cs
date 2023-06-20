@@ -39,7 +39,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AirlockSystem _airlock = default!;
+    [Dependency] private readonly DoorBoltSystem _boltsSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
@@ -167,8 +167,8 @@ public sealed class MagicSystem : EntitySystem
         {
             // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
             var mapPos = pos.ToMap(EntityManager);
-            var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
-                ? pos.WithEntityId(grid.Owner, EntityManager)
+            var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var gridUid, out _)
+                ? pos.WithEntityId(gridUid, EntityManager)
                 : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
 
             var ent = Spawn(ev.Prototype, spawnCoords);
@@ -303,8 +303,8 @@ public sealed class MagicSystem : EntitySystem
         //Look for doors and don't open them if they're already open.
         foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
         {
-            if (TryComp<AirlockComponent>(entity, out var airlock))
-                _airlock.SetBoltsDown(entity, airlock, false);
+            if (TryComp<DoorBoltComponent>(entity, out var bolts))
+                _boltsSystem.SetBoltsDown(entity, bolts, false);
 
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
                 _doorSystem.StartOpening(doorComp.Owner);

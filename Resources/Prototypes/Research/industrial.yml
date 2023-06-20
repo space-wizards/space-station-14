@@ -87,6 +87,18 @@
 # Tier 2
 
 - type: technology
+  id: Grappling
+  name: research-technology-grappling
+  icon:
+    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+    state: base
+  discipline: Industrial
+  tier: 2
+  cost: 5000
+  recipeUnlocks:
+    - WeaponGrapplingGun
+
+- type: technology
   id: RapidConstruction
   name: research-technology-rapid-construction
   icon:
@@ -170,7 +182,7 @@
   tier: 2
   cost: 10000
   recipeUnlocks:
-    - WelderIndustrialAdvanced
+    - WelderExperimental
     - PowerDrill
     - JawsOfLife
 

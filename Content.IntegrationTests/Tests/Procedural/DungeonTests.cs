@@ -87,6 +87,8 @@ public sealed class DungeonTests
                     var rotated = new Vector2i(pack.Size.Y, pack.Size.X);
 
                     Assert.That(sizes.Contains(pack.Size) || sizes.Contains(rotated), $"Didn't find any dungeon room prototypes for {pack.Size} for {preset.ID} index {i}");
+
+                    Assert.That(pack.Bottom, Is.GreaterThanOrEqualTo(0), "All dungeon room packs need their y-axis to be above 0!");
                 }
             }
         });

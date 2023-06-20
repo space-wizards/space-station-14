@@ -25,7 +25,6 @@
     noRot: true
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/collector.rsi
-    netsync: false
     snapCardinals: true
     layers:
       - state: ca_off

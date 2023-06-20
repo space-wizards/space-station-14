@@ -36,6 +36,22 @@
       curve: !type:BoolCurve
 
 - type: utilityQuery
+  id: NearbyPuddles
+  query:
+    - !type:ComponentQuery
+      components:
+        - type: Puddle
+    - !type:PuddleFilter
+  considerations:
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+    - !type:TargetInLOSOrCurrentCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
   id: NearbyRangedTargets
   query:
     - !type:NearbyHostilesQuery

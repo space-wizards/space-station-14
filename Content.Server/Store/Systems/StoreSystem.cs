@@ -70,12 +70,12 @@ public sealed partial class StoreSystem : EntitySystem
         if (args.Handled || !args.CanReach)
             return;
 
-        if (args.Target == null || !TryComp<StoreComponent>(args.Target, out var store))
+        if (!TryComp<StoreComponent>(args.Target, out var store))
             return;
 
-        // if the store can be locked, it must be unlocked first before inserting currency
-        var user = args.User;
-        if (TryComp<RingerUplinkComponent>(args.Target, out var uplink) && !uplink.Unlocked)
+        var ev = new CurrencyInsertAttemptEvent(args.User, args.Target.Value, args.Used, store);
+        RaiseLocalEvent(args.Target.Value, ev);
+        if (ev.Cancelled)
             return;
 
         args.Handled = TryAddCurrency(GetCurrencyValue(uid, component), args.Target.Value, store);
@@ -187,5 +187,21 @@ public sealed partial class StoreSystem : EntitySystem
         {
             _ui.SetUiState(ui, new StoreInitializeState(preset.StoreName));
         }
+    }
+}
+
+public sealed class CurrencyInsertAttemptEvent : CancellableEntityEventArgs
+{
+    public readonly EntityUid User;
+    public readonly EntityUid Target;
+    public readonly EntityUid Used;
+    public readonly StoreComponent Store;
+
+    public CurrencyInsertAttemptEvent(EntityUid user, EntityUid target, EntityUid used, StoreComponent store)
+    {
+        User = user;
+        Target = target;
+        Used = used;
+        Store = store;
     }
 }

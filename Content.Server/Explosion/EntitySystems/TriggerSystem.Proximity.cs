@@ -43,7 +43,7 @@ public sealed partial class TriggerSystem
         // Re-check for contacts as we cleared them.
         else if (TryComp<PhysicsComponent>(uid, out var body))
         {
-            _broadphase.RegenerateContacts(body);
+            _broadphase.RegenerateContacts(uid, body);
         }
     }
 

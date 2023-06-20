@@ -75,25 +75,20 @@
 
 - type: receiverPort
   id: DoorBolt
-  name: "Bolt"
-  description: "Bolt door when HIGH."
+  name: signal-port-name-doorbolt
+  description: signal-port-description-doorbolt
 
 - type: receiverPort
-  id: A1
-  name: "Input A1"
-  description: "Input A1"
+  id: InputA
+  name: signal-port-name-logic-input-a
+  description: signal-port-description-logic-input-a
 
 - type: receiverPort
-  id: B1
-  name: "Input B1"
-  description: "Input B1"
+  id: InputB
+  name: signal-port-name-logic-input-b
+  description: signal-port-description-logic-input-b
 
 - type: receiverPort
-  id: A2
-  name: "Input A2"
-  description: "Input A2"
-
-- type: receiverPort
-  id: B2
-  name: "Input B2"
-  description: "Input B2"
+  id: Input
+  name: signal-port-name-logic-input
+  description: signal-port-description-logic-input

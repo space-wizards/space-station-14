@@ -5,11 +5,11 @@
     ClothingBackpackDuffel: 5
     ClothingBackpackSatchel: 3
     ClothingBackpackSatchelLeather: 2
-    HatBandBlack: 2
-    HatBandBlue: 2
-    HatBandGreen: 2
-    HatBandRed: 2
-    HatBandSkull: 2
+    ClothingHeadBandBlack: 2
+    ClothingHeadBandBlue: 2
+    ClothingHeadBandGreen: 2
+    ClothingHeadBandRed: 2
+    ClothingHeadBandSkull: 2
     ClothingUniformJumpsuitColorGrey: 8
     ClothingUniformJumpskirtColorGrey: 8
     ClothingUniformJumpsuitColorWhite: 3

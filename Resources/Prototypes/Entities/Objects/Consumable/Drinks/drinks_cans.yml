@@ -26,7 +26,6 @@
     layers:
       - state: icon
         map: ["drinkCanIcon"]
-    netsync: false
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
@@ -346,7 +345,6 @@
   name: 6pack
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Misc/6pack.rsi
     layers:
       - state: plastic-thingy

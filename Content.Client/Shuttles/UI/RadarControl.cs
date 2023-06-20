@@ -25,6 +25,7 @@ public sealed class RadarControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    private SharedTransformSystem _transform = default!;
 
     private const float GridLinesDistance = 32f;
 
@@ -50,8 +51,6 @@ public sealed class RadarControl : MapGridControl
     /// </summary>
     public EntityUid? HighlightedDock;
 
-    public Action<float>? OnRadarRangeChanged;
-
     /// <summary>
     /// Raised if the user left-clicks on the radar control with the relevant entitycoordinates.
     /// </summary>
@@ -59,7 +58,7 @@ public sealed class RadarControl : MapGridControl
 
     public RadarControl() : base(64f, 256f, 256f)
     {
-
+        _transform = _entManager.System<SharedTransformSystem>();
     }
 
     public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
@@ -188,7 +187,7 @@ public sealed class RadarControl : MapGridControl
 
             Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out var matrix);
 
-            DrawGrid(handle, matrix, ourFixturesComp, ourGrid, Color.MediumSpringGreen, true);
+            DrawGrid(handle, matrix, ourGrid, Color.MediumSpringGreen, true);
             DrawDocks(handle, ourGridId.Value, matrix);
         }
 
@@ -287,7 +286,7 @@ public sealed class RadarControl : MapGridControl
             }
 
             // Detailed view
-            DrawGrid(handle, matty, fixturesComp, grid, color, true);
+            DrawGrid(handle, matty, grid, color, true);
 
             DrawDocks(handle, grid.Owner, matty);
         }
@@ -358,7 +357,7 @@ public sealed class RadarControl : MapGridControl
         }
     }
 
-    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, FixturesComponent fixturesComp, MapGridComponent grid, Color color, bool drawInterior)
+    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, MapGridComponent grid, Color color, bool drawInterior)
     {
         var rator = grid.GetAllTilesEnumerator();
         var edges = new ValueList<Vector2>();

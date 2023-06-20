@@ -5,15 +5,17 @@ namespace Content.Shared.Speech.Components;
 
 [RegisterComponent]
 [AutoGenerateComponentState]
-[Access(typeof(SharedMeleeSpeechSystem), Other = AccessPermissions.ReadWrite)]
 public sealed partial class MeleeSpeechComponent : Component
 {
 
 	[ViewVariables(VVAccess.ReadWrite)]
 	[DataField("Battlecry")]
 	[AutoNetworkedField]
-	[Access(typeof(SharedMeleeSpeechSystem), Other = AccessPermissions.ReadWrite)]
 	public string? Battlecry;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("MaxBattlecryLength")]
+    public int MaxBattlecryLength = 12;
 }
 
 /// <summary>

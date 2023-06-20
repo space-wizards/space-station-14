@@ -14,6 +14,8 @@
       types:
         Slash: 17 #cmon, it has to be at least BETTER than the rest. Aexxie - I totally agree. NO reason a fucking SPEAR should be more robust.
         Pierce: 3
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
@@ -39,9 +41,11 @@
       attackRate: 1.77
       damage:
         types:
-          Slash: 17 #cmon, it has to be at least BETTER than the rest. Aexxie - I totally agree. NO reason a fucking SPEAR should be more robust.
+          Slash: 17
           Pierce: 3
           Shock: 5
+      soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
     - type: Item
       size: 15
       sprite: Objects/Weapons/Melee/divine_sabre.rsi
@@ -70,6 +74,8 @@
     damage:
       types:
         Slash: 25
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/katana.rsi
@@ -92,6 +98,8 @@
     damage:
       types:
         Slash: 20
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/machete.rsi
@@ -112,6 +120,8 @@
     damage:
       types:
         Slash: 33
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: 20
   - type: Clothing
@@ -137,6 +147,8 @@
     damage:
       types:
         Slash: 16
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/cutlass.rsi

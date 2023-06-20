@@ -437,7 +437,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         DeviceLinkSourceComponent? sourceComponent = null, DeviceLinkSinkComponent? sinkComponent = null,
         DeviceNetworkComponent? sourceNetworkComponent = null, DeviceNetworkComponent? sinkNetworkComponent = null)
     {
-        if (!Resolve(sourceUid, ref sourceComponent) || !Resolve(sinkUid, ref sinkComponent))
+        if (!Resolve(sourceUid, ref sourceComponent, false) || !Resolve(sinkUid, ref sinkComponent, false))
             return;
 
         var sources = _deviceLinkSystem.GetSourcePorts(sourceUid, sourceComponent);
@@ -445,8 +445,8 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         var links = _deviceLinkSystem.GetLinks(sourceUid, sinkUid, sourceComponent);
         var defaults = _deviceLinkSystem.GetDefaults(sources);
 
-        var sourceAddress = Resolve(sourceUid, ref sourceNetworkComponent) ? sourceNetworkComponent.Address : "";
-        var sinkAddress = Resolve(sinkUid, ref sinkNetworkComponent) ? sinkNetworkComponent.Address : "";
+        var sourceAddress = Resolve(sourceUid, ref sourceNetworkComponent, false) ? sourceNetworkComponent.Address : "";
+        var sinkAddress = Resolve(sinkUid, ref sinkNetworkComponent, false) ? sinkNetworkComponent.Address : "";
 
         var state = new DeviceLinkUserInterfaceState(sources, sinks, links, sourceAddress, sinkAddress, defaults);
         _uiSystem.TrySetUiState(configuratorUid, NetworkConfiguratorUiKey.Link, state);

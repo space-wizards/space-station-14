@@ -26,7 +26,6 @@
   parent: PartSilicon
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Silicon/drone.rsi
     state: "l_hand"
   - type: Icon
@@ -46,7 +45,6 @@
   parent: PartSilicon
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Silicon/drone.rsi
     state: "r_hand"
   - type: Icon
@@ -66,7 +64,6 @@
   parent: PartSilicon
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Silicon/borg.rsi
     state: "l_leg"
   - type: Icon
@@ -87,7 +84,6 @@
   parent: PartSilicon
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Silicon/borg.rsi
     state: "r_leg"
   - type: Icon
@@ -108,7 +104,6 @@
   parent: PartSilicon
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Specific/Borg/head.rsi
     state: "light_borg_head"
   - type: Icon

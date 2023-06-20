@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitAssertion(() =>
             {
-                var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sDestructibleEntity).Coordinates;
+                var coordinates = sEntityManager.GetComponent<TransformComponent>(sDestructibleEntity).Coordinates;
                 var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
                 DamageSpecifier bruteDamage = new(bruteDamageGroup,50);
 

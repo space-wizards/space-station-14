@@ -105,7 +105,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 var coordinates = new MapCoordinates(0, 0, map);
 
                 sDamageableEntity = sEntityManager.SpawnEntity("TestDamageableEntityId", coordinates);
-                sDamageableComponent = IoCManager.Resolve<IEntityManager>().GetComponent<DamageableComponent>(sDamageableEntity);
+                sDamageableComponent = sEntityManager.GetComponent<DamageableComponent>(sDamageableEntity);
                 sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
 
                 group1 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup1");
