@@ -172,7 +172,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 9
+        Piercing: 10
     angle: 0
     animation: WeaponArcThrust
   - type: DamageOtherOnHit
