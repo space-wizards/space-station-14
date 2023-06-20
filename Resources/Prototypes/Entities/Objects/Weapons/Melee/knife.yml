@@ -14,7 +14,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 12
+        Slash: 7
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
@@ -74,7 +74,7 @@
   name: combat knife
   parent: BaseKnife
   id: CombatKnife
-  description: A deadly knife intended for melee confrontations.
+  description: A deadly, razor sharp knife intended for melee confrontations and close-quarters combat alike. The edge is serrated.
   components:
   - type: Tag
     tags:
@@ -88,7 +88,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 10
+        Slash: 15
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/combat_knife.rsi
@@ -101,12 +101,16 @@
   id: SurvivalKnife
   description: Weapon of first and last resort for combatting space carp.
   components:
+  - type: Tag
+    tags:
+      - CombatKnife
+      - Knife
   - type: Sprite
     sprite: Objects/Weapons/Melee/survival_knife.rsi
     size: 2
     state: icon
   - type: Item
-    size: 10
+    size: 12
     sprite: Objects/Weapons/Melee/survival_knife.rsi
 
 - type: entity
