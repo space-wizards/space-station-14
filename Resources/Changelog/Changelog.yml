@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Fixed a bunch of station events never starting., type: Fix}
-  id: 3555
-  time: '2023-04-29T03:15:06.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Removed the laser and scanning module machine parts., type: Remove}
   - {message: Adjusted recipes for many machine boards., type: Tweak}
   id: 3556
@@ -2932,3 +2927,8 @@ Entries:
   - {message: Removed useless sync button on the research console., type: Remove}
   id: 4054
   time: '2023-06-20T06:39:35.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Updated all cargo department clothing sprites., type: Tweak}
+  id: 4055
+  time: '2023-06-20T20:26:41.0000000+00:00'
