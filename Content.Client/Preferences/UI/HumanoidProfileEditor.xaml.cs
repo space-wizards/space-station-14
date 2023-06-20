@@ -1332,7 +1332,7 @@ namespace Content.Client.Preferences.UI
         private void UpdateLoadoutPreferences()
         {
             if (_loadoutPoints.Value == null) return;
-            int points = 14; // Default value from the xaml, keep these consistent or issues will arise
+            int points = 14; // TODO: Default value from the xaml, keep these consistent or issues will arise
             _loadoutPoints.Value = points;
 
             if (_loadoutPreferences == null) return;
@@ -1414,7 +1414,6 @@ namespace Content.Client.Preferences.UI
                 _checkBox = new CheckBox {Text = Loc.GetString(trait.Name)};
                 _checkBox.OnToggled += OnCheckBoxToggled;
 
-                var tooltip = "";
                 if (trait.Description is { } desc)
                 {
                     _checkBox.ToolTip = Loc.GetString(desc);
