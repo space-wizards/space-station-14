@@ -202,3 +202,13 @@
     Glass: 500
     Plasma: 300
     Gold: 50
+
+- type: latheRecipe
+  id: DivineSabre
+  result: DivineSabre
+  completetime: 10
+  materials:
+    Elysium: 1000
+    ElysiumAlloy: 500
+    Plasma: 100
+    Gold: 500

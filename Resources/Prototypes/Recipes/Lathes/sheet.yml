@@ -117,9 +117,9 @@
   result: SheetElysium1
   completetime: 2
   materials:
-    Plasteel: 200
-    Gold: 100
-    Elysium: 100
+    Plasteel: 500
+    Gold: 500
+    Elysium: 500
 
 - type: latheRecipe
   id: MaterialSheetMeat

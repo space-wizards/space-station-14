@@ -709,24 +709,6 @@
         Glass: 1
 
 - type: entity
-  id: ForgeMachineCircuitboard
-  parent: BaseMachineCircuitboard
-  name: forge machine board
-  components:
-    - type: Sprite
-      state: supply
-    - type: MachineBoard
-      prototype: Forge
-      requirements:
-        MatterBin: 1
-        Manipulator: 2
-        Capacitor: 2
-      materialRequirements:
-        ReinforcedPlasmaGlass: 1
-        Plasteel: 1
-        Cable: 2
-
-- type: entity
   id: SheetifierMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: sheet-meister 2000 machine board
