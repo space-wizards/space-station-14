@@ -246,7 +246,7 @@ public sealed class MindSystem : EntitySystem
 
     public Mind CreateMind(NetUserId? userId, string? name = null)
     {
-        var mind = new Mind(userId);
+        var mind = new Mind();
         mind.CharacterName = name;
         SetUserId(mind, userId);
 

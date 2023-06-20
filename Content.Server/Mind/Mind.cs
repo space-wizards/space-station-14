@@ -31,10 +31,8 @@ namespace Content.Server.Mind
         ///     Note: the Mind is NOT initially attached!
         ///     The provided UserId is solely for tracking of intended owner.
         /// </summary>
-        /// <param name="userId">The session ID of the original owner (may get credited).</param>
-        public Mind(NetUserId? userId)
+        public Mind()
         {
-            OriginalOwnerUserId = userId;
         }
 
         /// <summary>
