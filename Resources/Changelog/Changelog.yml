@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Nuke ops will no longer start in the middle of rounds instead of lone
-      ops., type: Fix}
-  id: 3554
-  time: '2023-04-29T03:14:15.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Fixed a bunch of station events never starting., type: Fix}
   id: 3555
   time: '2023-04-29T03:15:06.0000000+00:00'
@@ -2931,3 +2925,10 @@ Entries:
       the player needing to hit enter on the input fields., type: Tweak}
   id: 4053
   time: '2023-06-20T04:52:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed lathe ui not expanding properly. Also gave it a facelift., type: Fix}
+  - {message: Lathes no longer have to be manually synced to servers., type: Tweak}
+  - {message: Removed useless sync button on the research console., type: Remove}
+  id: 4054
+  time: '2023-06-20T06:39:35.0000000+00:00'
