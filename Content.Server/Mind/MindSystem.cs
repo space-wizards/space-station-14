@@ -383,10 +383,7 @@ public sealed class MindSystem : EntitySystem
     public void TransferTo(Mind mind, EntityUid? entity, bool ghostCheckOverride = false)
     {
         if (entity == mind.OwnedEntity)
-        {
-            UnVisit(mind);
             return;
-        }
 
         MindContainerComponent? component = null;
         var alreadyAttached = false;
