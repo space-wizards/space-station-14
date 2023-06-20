@@ -269,7 +269,7 @@ namespace Content.Server.Database
                 humanoid.TraitPreferences
                         .Select(t => new Trait {TraitName = t})
             );
-            entity.Loadouts.AddRange(
+            profile.Loadouts.AddRange(
                 humanoid.LoadoutPreferences
                         .Select(t => new Loadout {LoadoutName = t})
             );

@@ -447,6 +447,108 @@ namespace Content.Client.Preferences.UI
 
             #endregion
 
+            #region Loadouts
+
+            _tabContainer.SetTabTitle(4, Loc.GetString("humanoid-profile-editor-loadouts-tab"));
+            _loadoutPreferences = new List<LoadoutPreferenceSelector>();
+            var loadouts = prototypeManager.EnumeratePrototypes<LoadoutPrototype>().OrderBy(l => l.ID).ToList();
+
+            if (loadouts.Count >= 0)
+            {
+                // Make Uncategorized category
+                var uncategorized = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Vertical,
+                    VerticalExpand = true,
+                    Name = "Uncategorized_0"
+                };
+
+                _loadoutsTabs.AddChild(uncategorized);
+                _loadoutsTabs.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-loadouts-uncategorized-tab"));
+
+                // Make categories
+                var currentCategory = 1;
+                foreach (var loadout in loadouts)
+                {
+                    // Check for existing category
+                    BoxContainer? match = null;
+                    foreach (var child in _loadoutsTabs.Children)
+                    {
+                        if (match != null || child.Name == null)
+                            continue;
+                        if (child.Name.Split("_")[0] == loadout.Category)
+                            match = (BoxContainer) child;
+                    }
+
+                    // If there is a category do nothing
+                    if (match != null)
+                        continue;
+
+                    // If not, make it
+                    var box = new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Vertical,
+                        VerticalExpand = true,
+                        Name = $"{loadout.Category}_{currentCategory}"
+                    };
+
+                    _loadoutsTabs.AddChild(box);
+                    _loadoutsTabs.SetTabTitle(currentCategory, Loc.GetString(loadout.Category));
+                    currentCategory++;
+                }
+
+                // Fill categories
+                foreach (var loadout in loadouts.OrderBy(l => !l.Exclusive))
+                {
+                    var selector = new LoadoutPreferenceSelector(loadout);
+
+                    // Look for an existing loadout category
+                    BoxContainer? match = null;
+                    foreach (var child in _loadoutsTabs.Children)
+                    {
+                        if (match != null || child.Name == null)
+                            continue;
+                        if (child.Name.Split("_")[0] == loadout.Category)
+                            match = (BoxContainer) child;
+                    }
+
+                    if (match?.Name == null)
+                        uncategorized.AddChild(selector);
+                    else
+                        match.AddChild(selector);
+
+                    _loadoutPreferences.Add(selector);
+                    selector.PreferenceChanged += preference =>
+                    {
+                        // Make sure they have enough loadout points
+                        if (preference == true)
+                        {
+                            var temp = _loadoutPoints.Value - loadout.Cost;
+
+                            if (temp < 0)
+                                preference = false;
+                            else
+                                _loadoutPoints.Value = temp;
+                        }
+                        else
+                            _loadoutPoints.Value += loadout.Cost;
+
+                        // Update Preference
+                        Profile = Profile?.WithLoadoutPreference(loadout.ID, preference);
+                        IsDirty = true;
+
+                        UpdateLoadoutPreferences();
+                    };
+                }
+
+                if (uncategorized.Children.Count() <= 0)
+                    _loadoutsTabs.SetTabVisible(0, false);
+            }
+            else
+                _loadoutsTab.AddChild(new Label { Text = Loc.GetString("humanoid-profile-editor-loadouts-no-loadouts") });
+
+            #endregion
+
             #region Save
 
             _saveButton.OnPressed += _ => { Save(); };
@@ -1331,11 +1433,11 @@ namespace Content.Client.Preferences.UI
 
         private void UpdateLoadoutPreferences()
         {
-            if (_loadoutPoints.Value == null) return;
             int points = 14; // TODO: Default value from the xaml, keep these consistent or issues will arise
             _loadoutPoints.Value = points;
 
-            if (_loadoutPreferences == null) return;
+            if (_loadoutPreferences == null)
+                return;
 
             foreach (var preferenceSelector in _loadoutPreferences)
             {
@@ -1451,7 +1553,8 @@ namespace Content.Client.Preferences.UI
                 Loadout = loadout;
 
                 var entman = IoCManager.Resolve<IEntityManager>();
-                var dummyLoadout = entman.SpawnEntity(loadout.Item, MapCoordinates.Nullspace);
+                var exists = IoCManager.Resolve<IPrototypeManager>().TryIndex<EntityPrototype>(loadout.Item!, out _);
+                var dummyLoadout = entman.SpawnEntity(exists ? loadout.Item : "Error", MapCoordinates.Nullspace);
                 var sprite = entman.GetComponent<SpriteComponent>(dummyLoadout);
 
                 var previewLoadout = new SpriteView
@@ -1486,9 +1589,6 @@ namespace Content.Client.Preferences.UI
                     if (loadout.Whitelist?.Tags != null)
                         foreach (var require in loadout.Whitelist.Tags)
                             tooltip += $"\n - {require} (Tag)";
-                    if (loadout.Whitelist?.Species != null)
-                        foreach (var require in loadout.Whitelist.Species)
-                            tooltip += $"\n - {require} (Species)";
                     if (loadout.Whitelist?.RequireAll == true) tooltip += $"\n Require All: {loadout.Whitelist.RequireAll}"; // This comes first because job whitelist has no effect on requireall
                     if (loadout.JobWhitelist != null)
                         foreach (var require in loadout.JobWhitelist)
@@ -1503,9 +1603,6 @@ namespace Content.Client.Preferences.UI
                     if (loadout.Blacklist?.Tags != null)
                         foreach (var require in loadout.Blacklist.Tags)
                             tooltip += $"\n - {require} (Tag)";
-                    if (loadout.Blacklist?.Species != null)
-                        foreach (var require in loadout.Blacklist.Species)
-                            tooltip += $"\n - {require} (Species)";
                     if (loadout.Blacklist?.RequireAll == true) tooltip += $"\n Require All: {loadout.Blacklist.RequireAll}"; // This comes first because job whitelist has no effect on requireall
                     if (loadout.JobBlacklist != null)
                         foreach (var require in loadout.JobBlacklist)
