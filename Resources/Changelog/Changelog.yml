@@ -1,24 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: fixed combat (harm) mode popup appearing to everyone, type: Fix}
-  id: 3550
-  time: '2023-04-26T16:21:44.0000000+00:00'
-- author: OctoRocket
-  changes:
-  - {message: Blood packs work now., type: Fix}
-  id: 3551
-  time: '2023-04-28T14:01:24.0000000+00:00'
-- author: notquitehadouken
-  changes:
-  - {message: updated the localization files (there was a typo), type: Fix}
-  id: 3552
-  time: '2023-04-29T03:12:21.0000000+00:00'
-- author: freeman2651
-  changes:
-  - {message: Pills are now destructible., type: Tweak}
-  id: 3553
-  time: '2023-04-29T03:13:20.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Nuke ops will no longer start in the middle of rounds instead of lone
@@ -2928,3 +2908,26 @@ Entries:
       to sync., type: Fix}
   id: 4049
   time: '2023-06-19T17:43:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed experimental stims., type: Remove}
+  - {message: Bumped stimulants metabolism from 0.2 to 1.0 per second, type: Tweak}
+  - {message: Reduced stimpacks from 5 minutes to 30 seconds., type: Tweak}
+  id: 4050
+  time: '2023-06-20T02:23:10.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Remove guaranteed cat ear spawns., type: Remove}
+  id: 4051
+  time: '2023-06-20T03:53:27.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some bugs that prevented ghosts from spawning., type: Fix}
+  id: 4052
+  time: '2023-06-20T04:29:26.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: The hand labeler and Syndicate agent ID now set their labels without
+      the player needing to hit enter on the input fields., type: Tweak}
+  id: 4053
+  time: '2023-06-20T04:52:03.0000000+00:00'

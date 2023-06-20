@@ -900,21 +900,6 @@
   - UplinkMisc
 
 - type: listing
-  id: UplinkStimpackExperimental
-  name: uplink-experimental-stimpack-name
-  description: uplink-experimental-stimpack-desc
-  productEntity: StimpackExperimental
-  cost:
-    Telecrystal: 8
-  categories:
-  - UplinkMisc
-  conditions:
-  - !type:StoreWhitelistCondition
-    whitelist:
-      tags:
-      - NukeOpsUplink
-
-- type: listing
   id: UplinkSyndicateSegwayCrate
   name: uplink-syndicate-segway-crate-name
   description: uplink-syndicate-segway-crate-desc
