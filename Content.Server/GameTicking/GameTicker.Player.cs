@@ -92,7 +92,7 @@ namespace Content.Server.GameTicking
 
                         // This player is joining the game with an existing mind, but the mind has no entity.
                         // Their entity was probably deleted sometime while they were disconnected, or they were an observer.
-                        // Instead of allowing them to spawn in, we will dump them in an observer role.
+                        // Instead of allowing them to spawn in, we will dump and their existing mind in an observer ghost.
                         SpawnObserverWaitDb();
                     }
                     else
