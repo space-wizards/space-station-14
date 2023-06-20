@@ -17,6 +17,11 @@ namespace Content.IntegrationTests.Tests.Minds
     [TestFixture]
     public sealed class MindEntityDeletionTest
     {
+        // This test will do the following:
+        // - spawn a  player
+        // - visit some entity
+        // - delete the entity being visited
+        // - assert that player returns to original entity
         [Test]
         public async Task TestDeleteVisiting()
         {
@@ -56,6 +61,7 @@ namespace Content.IntegrationTests.Tests.Minds
 
             Assert.IsNull(mind.VisitingEntity);
             Assert.That(entMan.EntityExists(mind.OwnedEntity));
+            Assert.That(mind.OwnedEntity, Is.EqualTo(playerEnt));
 
             // This used to throw so make sure it doesn't.
             await server.WaitPost(() => entMan.DeleteEntity(mind.OwnedEntity!.Value));
@@ -65,6 +71,7 @@ namespace Content.IntegrationTests.Tests.Minds
             await pairTracker.CleanReturnAsync();
         }
 
+        // This test checks that if a player is deleted they will respawn (usually as a ghost).
         [Test]
         public async Task TestGhostOnDelete()
         {
@@ -119,6 +126,7 @@ namespace Content.IntegrationTests.Tests.Minds
             await pairTracker.CleanReturnAsync();
         }
 
+        // this is a variant of TestGhostOnDelete that just deletes the whole map.
         [Test]
         public async Task TestGhostOnDeleteMap()
         {
