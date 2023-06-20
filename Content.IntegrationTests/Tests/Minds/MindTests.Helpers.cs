@@ -69,7 +69,6 @@ public sealed partial class MindTests
     {
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
         var entMan = pair.Server.ResolveDependency<IEntityManager>();
-
         var player = playerMan.ServerSessions.SingleOrDefault();
         Assert.NotNull(player);
 

@@ -162,9 +162,8 @@ public sealed class MindSystem : EntitySystem
 
         if (component.GhostOnShutdown && mind.Session != null)
         {
-            // Changing an entities parents while deleting is VERY sus. This WILL throw exceptions.
-            // TODO: just find the applicable spawn position directly without actually updating the transform's parent.
-            Transform(uid).AttachToGridOrMap();
+            var xform = Transform(uid);
+            var gridId = xform.GridUid;
             var spawnPosition = Transform(uid).Coordinates;
 
             // Use a regular timer here because the entity has probably been deleted.
@@ -175,11 +174,8 @@ public sealed class MindSystem : EntitySystem
                     return;
 
                 // Async this so that we don't throw if the grid we're on is being deleted.
-                var gridId = spawnPosition.GetGridUid(EntityManager);
-                if (!spawnPosition.IsValid(EntityManager) || gridId == EntityUid.Invalid || !_mapManager.GridExists(gridId))
-                {
+                if (!_mapManager.GridExists(gridId))
                     spawnPosition = _gameTicker.GetObserverSpawnPoint();
-                }
 
                 // TODO refactor observer spawning.
                 // please.

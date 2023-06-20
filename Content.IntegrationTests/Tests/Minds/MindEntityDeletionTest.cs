@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Mind;
+using Content.Server.Players;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -50,28 +51,17 @@ namespace Content.IntegrationTests.Tests.Minds
             });
 
             await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-
-            await server.WaitAssertion(() =>
-            {
-                entMan.DeleteEntity(visitEnt);
-
-                if (mind.VisitingEntity != null)
-                {
-                    Assert.Fail("Mind VisitingEntity was not null");
-                    return;
-                }
-
-                // This used to throw so make sure it doesn't.
-                entMan.DeleteEntity(playerEnt);
-            });
-
+            await server.WaitPost(() => entMan.DeleteEntity(visitEnt));
             await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
-            await server.WaitPost(() =>
-            {
-                mapManager.DeleteMap(map.MapId);
-            });
+            Assert.IsNull(mind.VisitingEntity);
+            Assert.That(entMan.EntityExists(mind.OwnedEntity));
 
+            // This used to throw so make sure it doesn't.
+            await server.WaitPost(() => entMan.DeleteEntity(mind.OwnedEntity!.Value));
+            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+
+            await server.WaitPost(() => mapManager.DeleteMap(map.MapId));
             await pairTracker.CleanReturnAsync();
         }
 
@@ -132,13 +122,15 @@ namespace Content.IntegrationTests.Tests.Minds
         [Test]
         public async Task TestGhostOnDeleteMap()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
 
             var entMan = server.ResolveDependency<IServerEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var playerMan = server.ResolveDependency<IPlayerManager>();
+            var player = playerMan.ServerSessions.Single();
 
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
@@ -149,8 +141,7 @@ namespace Content.IntegrationTests.Tests.Minds
             await server.WaitAssertion(() =>
             {
                 playerEnt = entMan.SpawnEntity(null, coordinates);
-
-                mind = mindSystem.CreateMind(null);
+                mind = player.ContentData()!.Mind!;
                 mindSystem.TransferTo(mind, playerEnt);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
