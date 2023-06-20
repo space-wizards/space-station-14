@@ -274,7 +274,7 @@
   meltingPoint: 5077.0
   boilingPoint: 1077.0
   metabolisms:
-    Toxin:
+    Poison:
       effects:
         - !type:HealthChange
           conditions:
