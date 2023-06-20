@@ -5735,7 +5735,7 @@ entities:
     - pos: 3.9415665,-8.34479
       parent: 104
       type: Transform
-- proto: DrinkBeer
+- proto: DrinkBeerBottleFull
   entities:
   - uid: 161
     components:
