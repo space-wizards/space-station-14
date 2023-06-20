@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Removed the laser and scanning module machine parts., type: Remove}
-  - {message: Adjusted recipes for many machine boards., type: Tweak}
-  id: 3556
-  time: '2023-04-29T03:23:49.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Only traitors can insert TC into PDAs now., type: Tweak}
@@ -2932,3 +2926,11 @@ Entries:
   - {message: Updated all cargo department clothing sprites., type: Tweak}
   id: 4055
   time: '2023-06-20T20:26:41.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: 'Nanotrasen realized they could stuff even more asbestos into the Atmospherics
+      firesuits, and have promptly done so.', type: Tweak}
+  - {message: 'Due to a recent reallocation in asbestos supply, the Atmospherics hardsuits
+      are less heat resistant.', type: Tweak}
+  id: 4056
+  time: '2023-06-20T20:29:13.0000000+00:00'
