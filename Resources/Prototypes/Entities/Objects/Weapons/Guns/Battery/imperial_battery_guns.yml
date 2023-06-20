@@ -1,0 +1,29 @@
+- type: entity
+  name: pulse sniper
+  parent: BaseWeaponBattery
+  id: WeaponPulseSniper
+  description: A high tech energy sniper favoured by the NT-ERT operatives.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/pulse_sniper.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/pulse_sniper.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 1.0
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: PulseSniper
+    fireCost: 2000
+  - type: Battery
+    maxCharge: 20000
+    startingCharge: 20000
