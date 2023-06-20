@@ -629,6 +629,7 @@ public sealed class MindSystem : EntitySystem
 
         _userMinds[userId.Value] = mind;
         mind.UserId = userId;
+        mind.OriginalOwnerUserId ??= userId;
 
         _playerManager.TryGetSessionById(userId.Value, out var ret);
         mind.Session = ret;
