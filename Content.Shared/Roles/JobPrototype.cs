@@ -56,6 +56,18 @@ namespace Content.Shared.Roles
         public bool CanBeAntag { get; } = true;
 
         /// <summary>
+        /// Is this job part of the captain lottery?
+        /// </summary>
+        [DataField("captainLottery")]
+        public bool CaptainLottery { get; } = false;
+
+        /// <summary>
+        /// Should this job cancel the captain lottery on join?
+        /// </summary>
+        [DataField("cancelCaptainLottery")]
+        public bool CancelCaptainLottery { get; } = false;
+
+        /// <summary>
         ///     Whether this job is a head.
         ///     The job system will try to pick heads before other jobs on the same priority level.
         /// </summary>

@@ -33,6 +33,11 @@ public sealed class StationJobsComponent : Component
     [DataField("extendedAccess")] public bool ExtendedAccess;
 
     /// <summary>
+    /// Does the station have a captain?
+    /// </summary>
+    [DataField("hasCaptain")] public bool HasCaptain;
+
+    /// <summary>
     /// If there are less than or equal this amount of players in the game at round start,
     /// people get extended access levels from job prototypes.
     /// </summary>

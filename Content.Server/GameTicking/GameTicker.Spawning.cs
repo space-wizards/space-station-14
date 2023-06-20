@@ -94,6 +94,35 @@ namespace Content.Server.GameTicking
                 SpawnPlayer(_playerManager.GetSessionByUserId(player), profiles[player], station, job, false);
             }
 
+            // Get acting captain
+            // I know this is messy but players are malding about the command jobs recently, so...
+            var highestCaptainChance = 0;
+            var highestCaptainChancePlayer = new NetUserId();
+
+            foreach (var (player, (job, station)) in assignedJobs)
+            {
+                if (job == null)
+                    continue;
+
+                var jobPrototype = _prototypeManager.Index<JobPrototype>(job);
+                if (jobPrototype.CancelCaptainLottery)
+                    break;
+                if (jobPrototype.CaptainLottery && jobPrototype.Weight > highestCaptainChance)
+                {
+                    highestCaptainChance = jobPrototype.Weight;
+                    highestCaptainChancePlayer = player;
+                }
+            }
+
+            if (highestCaptainChance != 0 && highestCaptainChancePlayer != null)
+            {
+                if (_playerManager.TryGetSessionById(highestCaptainChancePlayer, out var playerSession))
+                {
+                    var player = playerSession.AttachedEntity;
+                    // todo assign captain ids
+                }
+            }
+
             RefreshLateJoinAllowed();
 
             // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)

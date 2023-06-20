@@ -48,6 +48,54 @@
         noiseType: Cellular
         frequency: 0.1
 
+- type: biomeTemplate
+  id: FunnyDesert
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.95
+      noise:
+        seed: 0
+        frequency: 2
+        noiseType: OpenSimplex2
+      allowedTiles:
+        - FloorLowDesert
+      entities:
+        - FloraRockSolid01
+        - FloraRockSolid02
+        - FloraRockSolid03
+    # Large rock areas
+    - !type:BiomeEntityLayer
+      threshold: -0.20
+      noise:
+        seed: 0
+        frequency: 0.04
+        noiseType: Cellular
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
+      allowedTiles:
+        - FloorLowDesert
+      entities:
+        - AsteroidRock
+    - !type:BiomeDummyLayer
+      id: Loot
+    # Fill layer
+    - !type:BiomeTileLayer
+      threshold: -1
+      variants:
+        - 0
+      tile: FloorLowDesert
+    - !type:BiomeTileLayer
+      threshold: 0.6
+      tile: FloorLowDesert
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 0.1
+
 # Grass
 - type: biomeTemplate
   id: Grasslands
