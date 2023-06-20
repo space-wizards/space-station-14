@@ -52,7 +52,7 @@
     price: 140
 
 - type: entity
-  id: ReinforcedElysiumWindowDirectional
+  id: ElysiumReinforcedWindowDirectional
   parent: WindowDirectional
   name: directional reinforced elysium window
   description: Don't smudge up the glass down there.
@@ -62,7 +62,6 @@
       - Window
   components:
     - type: Sprite
-      netsync: false
       sprite: Structures/Windows/directional.rsi
       state: elysium_reinforced_window
     - type: Icon
@@ -70,7 +69,7 @@
       state: elysium_reinforced_window
     - type: Construction
       graph: WindowDirectional
-      node: reinforcedElysiumWindowDirectional
+      node: elysiumReinforcedWindowDirectional
     - type: Destructible
       thresholds:
         - trigger:

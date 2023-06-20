@@ -14,6 +14,23 @@
     Steel: 3000
 
 - type: latheRecipe
+  id: SheetPlasteel
+  result: SheetPlasteel1
+  applyMaterialDiscount: false
+  completetime: 2
+  materials:
+    Steel: 100
+    Plasma: 100
+
+- type: latheRecipe
+  id: SheetPlasteel30
+  result: SheetPlasteel
+  completetime: 2
+  materials:
+    Steel: 3000
+    Plasma: 3000
+
+- type: latheRecipe
   id: SheetGlass1
   result: SheetGlass1
   applyMaterialDiscount: false

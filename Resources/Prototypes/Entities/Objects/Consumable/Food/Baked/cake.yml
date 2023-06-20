@@ -703,6 +703,7 @@
         - ReagentId: Nutriment
           Quantity: 12
   - type: Food
+    trash: WeaponRifleLecter
     transferAmount: 3
   - type: PointLight
     color: "#FFFF00"

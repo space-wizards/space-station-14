@@ -159,7 +159,7 @@
   - type: BadFood
   - type: PhysicalComposition
     materialComposition:
-      Uranium: 100
+      Uranium: 500
   - type: Stack
     stackType: Uranium
     baseLayer: base
