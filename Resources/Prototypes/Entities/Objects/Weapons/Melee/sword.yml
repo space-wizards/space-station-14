@@ -25,6 +25,7 @@
   - type: Tool
     qualities:
       - Prying
+    speed: .4
 
 
 - type: entity
