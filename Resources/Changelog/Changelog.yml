@@ -1,9 +1,4 @@
 Entries:
-- author: freeman2651
-  changes:
-  - {message: Pills are now destructible., type: Tweak}
-  id: 3553
-  time: '2023-04-29T03:13:20.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Nuke ops will no longer start in the middle of rounds instead of lone
@@ -2930,3 +2925,9 @@ Entries:
   - {message: Fixed some bugs that prevented ghosts from spawning., type: Fix}
   id: 4052
   time: '2023-06-20T04:29:26.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: The hand labeler and Syndicate agent ID now set their labels without
+      the player needing to hit enter on the input fields., type: Tweak}
+  id: 4053
+  time: '2023-06-20T04:52:03.0000000+00:00'
