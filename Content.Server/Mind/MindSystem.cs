@@ -310,7 +310,6 @@ public sealed class MindSystem : EntitySystem
         if (mind == null || mind.VisitingEntity == null)
             return;
 
-        DebugTools.Assert(mind.VisitingEntity != mind.OwnedEntity);
         RemoveVisitingEntity(mind);
 
         if (mind.Session == null || mind.Session.AttachedEntity == mind.VisitingEntity)
@@ -368,7 +367,7 @@ public sealed class MindSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Transfer this mind's control over to a new entity. Will unvisit any currently visited entity.
+    ///     Transfer this mind's control over to a new entity.
     /// </summary>
     /// <param name="mind">The mind to transfer</param>
     /// <param name="entity">
@@ -383,10 +382,11 @@ public sealed class MindSystem : EntitySystem
     /// </exception>
     public void TransferTo(Mind mind, EntityUid? entity, bool ghostCheckOverride = false)
     {
-        UnVisit(mind);
-
         if (entity == mind.OwnedEntity)
+        {
+            UnVisit(mind);
             return;
+        }
 
         MindContainerComponent? component = null;
         var alreadyAttached = false;

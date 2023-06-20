@@ -96,11 +96,8 @@ public sealed class GhostTests
         });
 
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-
-        await server.WaitAssertion(() =>
-        {
-            entMan.DeleteEntity(originalEntity);
-        });
+        await server.WaitAssertion(() => entMan.DeleteEntity(originalEntity));
+        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
         await server.WaitAssertion(() =>
         {
