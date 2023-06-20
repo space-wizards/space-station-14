@@ -164,7 +164,7 @@ public sealed class AmeControllerSystem : EntitySystem
         UpdateUi(uid, controller);
 
         // Logging
-        if (!TryComp<MindComponent>(user, out var _))
+        if (!HasComp<MindContainerComponent>(user))
             return;
 
         var humanReadableState = value ? "Inject" : "Not inject";
@@ -191,7 +191,7 @@ public sealed class AmeControllerSystem : EntitySystem
         UpdateUi(uid, controller);
 
         // Logging
-        if (!TryComp<MindComponent>(user, out var mind))
+        if (!TryComp<MindContainerComponent>(user, out var mindContainer))
             return;
 
         var humanReadableState = controller.Injecting ? "Inject" : "Not inject";
@@ -203,7 +203,7 @@ public sealed class AmeControllerSystem : EntitySystem
             safeLimit = group.CoreCount * 2;
 
         if (oldValue <= safeLimit && value > safeLimit)
-            _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}", mind);
+            _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}", mindContainer);
     }
 
     public void AdjustInjectionAmount(EntityUid uid, int delta, int min = 0, int max = int.MaxValue, EntityUid? user = null, AmeControllerComponent? controller = null)
@@ -229,7 +229,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
         _appearanceSystem.SetData(uid, AmeControllerVisuals.DisplayState, state, appearance);
     }
-    
+
     private void OnComponentStartup(EntityUid uid, AmeControllerComponent comp, ComponentStartup args)
     {
         // TODO: Fix this bad name. I'd update maps but then people get mad.
