@@ -30,11 +30,11 @@ public sealed partial class MindTests
         var ghost = await BecomeGhost(pair);
         await DisconnectReconnect(pair);
 
-        // Player in control of a NEW entity
-        var newMind = GetMind(pair);
-        Assert.That(newMind != mind);
+        // Player in control of a new ghost, but with the same mind
+        Assert.That(GetMind(pair) == mind);
         Assert.That(entMan.Deleted(ghost));
-        Assert.Null(newMind.VisitingEntity);
+        Assert.That(entMan.HasComponent<GhostComponent>(mind.OwnedEntity));
+        Assert.Null(mind.VisitingEntity);
 
         await pairTracker.CleanReturnAsync();
     }
@@ -76,15 +76,12 @@ public sealed partial class MindTests
         // Reconnect
         await Connect(pair, name);
         player = playerMan.ServerSessions.Single();
-        Assert.That(user == player.UserId);
+        Assert.That(user, Is.EqualTo(player.UserId));
 
-        // Player is now a new entity
-        var newMind = GetMind(pair);
-        Assert.That(newMind != mind);
-        Assert.Null(mind.UserId);
-        Assert.Null(mind.CurrentEntity);
-        Assert.NotNull(newMind.OwnedEntity);
-        Assert.That(entMan.EntityExists(newMind.OwnedEntity));
+        // Player is now a new ghost entity
+        Assert.That(GetMind(pair), Is.EqualTo(mind));
+        Assert.That(mind.OwnedEntity, Is.Not.EqualTo(entity));
+        Assert.That(entMan.HasComponent<GhostComponent>(mind.OwnedEntity));
 
         await pairTracker.CleanReturnAsync();
     }
