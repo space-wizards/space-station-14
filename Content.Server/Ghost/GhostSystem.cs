@@ -183,8 +183,8 @@ namespace Content.Server.Ghost
 
         private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} entity ||
-                !EntityManager.HasComponent<GhostComponent>(entity))
+            if (args.SenderSession.AttachedEntity is not {Valid: true} entity
+                || !EntityManager.HasComponent<GhostComponent>(entity))
             {
                 Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
                 return;
@@ -196,10 +196,10 @@ namespace Content.Server.Ghost
 
         private void OnGhostReturnToBodyRequest(GhostReturnToBodyRequest msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} attached ||
-                !EntityManager.TryGetComponent(attached, out GhostComponent? ghost) ||
-                !ghost.CanReturnToBody ||
-                !EntityManager.TryGetComponent(attached, out ActorComponent? actor))
+            if (args.SenderSession.AttachedEntity is not {Valid: true} attached
+                || !EntityManager.TryGetComponent(attached, out GhostComponent? ghost)
+                || !ghost.CanReturnToBody
+                || !EntityManager.TryGetComponent(attached, out ActorComponent? actor))
             {
                 Log.Warning($"User {args.SenderSession.Name} sent an invalid {nameof(GhostReturnToBodyRequest)}");
                 return;
@@ -210,8 +210,8 @@ namespace Content.Server.Ghost
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} attached ||
-                !EntityManager.TryGetComponent(attached, out GhostComponent? ghost))
+            if (args.SenderSession.AttachedEntity is not {Valid: true} attached
+                || !EntityManager.TryGetComponent(attached, out GhostComponent? ghost))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
                 return;
