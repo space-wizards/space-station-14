@@ -22,6 +22,15 @@
         Base: ian_dead
       Dead:
         Base: ian_dead
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: Ian
+    description: The favorite pet of the head of staff.
+  - type: GhostTakeoverAvailable
+  - type: InteractionPopup
+    successChance: 1
   - type: Grammar
     attributes:
       proper: true
