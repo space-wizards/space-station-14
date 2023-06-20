@@ -70,10 +70,10 @@ namespace Content.Server.Ghost
             if (args.Handled)
                 return;
 
-            var ents = _lookup.GetEntitiesInRange(args.Performer, component.BooRadius);
+            var entities = _lookup.GetEntitiesInRange(args.Performer, component.BooRadius);
 
             var booCounter = 0;
-            foreach (var ent in ents)
+            foreach (var ent in entities)
             {
                 var handled = DoGhostBooEvent(ent);
 
@@ -139,21 +139,21 @@ namespace Content.Server.Ghost
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
         {
             // Perf: If the entity is deleting itself, no reason to change these back.
-            if (!Terminating(uid))
+            if (Terminating(uid))
+                return;
+
+            // Entity can't be seen by ghosts anymore.
+            if (TryComp(uid, out VisibilityComponent? visibility))
             {
-                // Entity can't be seen by ghosts anymore.
-                if (TryComp(uid, out VisibilityComponent? visibility))
-                {
-                    _visibilitySystem.RemoveLayer(uid, visibility, (int) VisibilityFlags.Ghost, false);
-                    _visibilitySystem.AddLayer(uid, visibility, (int) VisibilityFlags.Normal, false);
-                    _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
-                }
-
-                // Entity can't see ghosts anymore.
-                SetCanSeeGhosts(uid, false);
-
-                _actions.RemoveAction(uid, component.Action);
+                _visibilitySystem.RemoveLayer(uid, visibility, (int) VisibilityFlags.Ghost, false);
+                _visibilitySystem.AddLayer(uid, visibility, (int) VisibilityFlags.Normal, false);
+                _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
             }
+
+            // Entity can't see ghosts anymore.
+            SetCanSeeGhosts(uid, false);
+
+            _actions.RemoveAction(uid, component.Action);
         }
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
@@ -262,17 +262,17 @@ namespace Content.Server.Ghost
         {
             foreach (var player in _playerManager.Sessions)
             {
-                if (player.AttachedEntity is {Valid: true} attached)
-                {
-                    if (attached == except) continue;
+                if (player.AttachedEntity is not {Valid: true} attached)
+                    continue;
 
-                    TryComp<MindContainerComponent>(attached, out var mind);
+                if (attached == except) continue;
 
-                    string playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
+                TryComp<MindContainerComponent>(attached, out var mind);
 
-                    if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
-                        yield return new GhostWarp(attached, playerInfo, false);
-                }
+                var playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
+
+                if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
+                    yield return new GhostWarp(attached, playerInfo, false);
             }
         }
 
