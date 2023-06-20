@@ -47,3 +47,15 @@
   cost: 1700
   category: Armory
   group: market
+
+#Imperial revolver start
+- type: cargoProduct
+  id: ArmoryRevolver
+  icon:
+    sprite: Objects/Weapons/Guns/Revolvers/raxa.rsi
+    state: icon
+  product: CrateArmoryRaxa
+  cost: 1500
+  category: Armory
+  group: market
+#Imperial revolver end
