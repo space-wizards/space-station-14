@@ -65,6 +65,7 @@
     Steel: 700
     Plastic: 300
     Gold: 250
+    Silver: 500
 
 - type: latheRecipe
   id: ForensicPad
