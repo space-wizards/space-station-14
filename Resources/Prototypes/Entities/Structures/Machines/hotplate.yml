@@ -17,7 +17,6 @@
         layer:
         - TabletopMachineLayer
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/hotplate.rsi
     drawdepth: SmallObjects
     snapCardinals: true

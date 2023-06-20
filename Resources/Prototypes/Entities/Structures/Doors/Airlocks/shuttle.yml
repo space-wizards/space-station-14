@@ -1,8 +1,8 @@
 - type: entity
-  id: AirlockShuttle
   parent: Airlock
-  name: external airlock
+  id: AirlockShuttle
   suffix: Docking
+  name: external airlock
   description: Necessary for connecting two space craft together.
   components:
   - type: Docking
@@ -24,7 +24,6 @@
           position: "0,-0.5"
         hard: false
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Airlocks/Standard/shuttle.rsi
     snapCardinals: false
     layers:
@@ -79,7 +78,6 @@
   components:
   - type: Docking
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
     snapCardinals: false
     layers:
@@ -117,7 +115,6 @@
     noRot: false
   - type: Rotatable
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
     state: closed
   - type: Construction

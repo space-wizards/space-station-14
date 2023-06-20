@@ -8,7 +8,6 @@
   components:
   - type: InteractionOutline
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Airlocks/highsec/highsec.rsi
     layers:
     - state: closed
@@ -59,6 +58,7 @@
     fuel: 10
     time: 10
   - type: Airlock
+  - type: DoorBolt
   - type: Appearance
   - type: WiresVisuals
   - type: ApcPowerReceiver

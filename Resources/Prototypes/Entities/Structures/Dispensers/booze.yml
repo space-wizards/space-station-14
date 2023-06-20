@@ -9,7 +9,6 @@
     sprite: Structures/smalldispensers.rsi
     drawdepth: SmallObjects
     state: booze
-    netsync: false
   - type: ReagentDispenser
     pack: BoozeDispenserInventory
     emagPack: BoozeDispenserEmagInventory
@@ -20,3 +19,6 @@
   - type: Wires
     BoardName: "BoozeDispenser"
     LayoutId: BoozeDispenser
+  - type: GuideHelp
+    guides:
+    - Bartender

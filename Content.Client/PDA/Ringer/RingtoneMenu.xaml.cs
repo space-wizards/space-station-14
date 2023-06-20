@@ -18,20 +18,38 @@ namespace Content.Client.PDA.Ringer
 
             RingerNoteInputs = new[] { RingerNoteOneInput, RingerNoteTwoInput, RingerNoteThreeInput, RingerNoteFourInput };
 
-            for (int i = 0; i < RingerNoteInputs.Length; i++)
+            for (var i = 0; i < RingerNoteInputs.Length; ++i)
             {
                 var input = RingerNoteInputs[i];
-                int index = i;
-                input.OnTextChanged += _ => //Prevents unauthorized characters from being entered into the LineEdit
+                var index = i;
+                var foo = () => // Prevents unauthorized characters from being entered into the LineEdit
                 {
                     input.Text = input.Text.ToUpper();
 
                     if (!IsNote(input.Text))
+                    {
                         input.Text = PreviousNoteInputs[index];
+                    }
                     else
                         PreviousNoteInputs[index] = input.Text;
 
-                    input.CursorPosition = input.Text.Length; //Resets caret position to the end of the typed input
+                    input.RemoveStyleClass("Caution");
+                };
+
+                input.OnFocusExit += _ => foo();
+                input.OnTextEntered += _ =>
+                {
+                    foo();
+                    input.CursorPosition = input.Text.Length; // Resets caret position to the end of the typed input
+                };
+                input.OnTextChanged += _ =>
+                {
+                    input.Text = input.Text.ToUpper();
+
+                    if (!IsNote(input.Text))
+                        input.AddStyleClass("Caution");
+                    else
+                        input.RemoveStyleClass("Caution");
                 };
             }
         }

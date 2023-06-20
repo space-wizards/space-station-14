@@ -15,7 +15,6 @@
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
-    netsync: false
   - type: DamageOnLand
     damage:
       types:

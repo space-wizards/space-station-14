@@ -54,7 +54,6 @@
         startingItem: PowerCellMedium
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
-    netsync: false
     layers:
       - state: flashlight
       - state: flashlight-overlay
@@ -105,6 +104,10 @@
         shader: unshaded
         visible: false
         map: [ "light" ]
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: Item
     sprite: Objects/Tools/seclite.rsi
   - type: PointLight

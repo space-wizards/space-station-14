@@ -1,0 +1,38 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:pllax="clr-namespace:Content.Client.Parallax">
+    <pllax:ParallaxControl />
+    <PanelContainer Name="Background"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+        <BoxContainer Orientation="Vertical"
+                      Align="Center">
+            <BoxContainer
+                Orientation="Horizontal"
+                Align="Center"
+                Margin="12">
+                <AnimatedTextureRect Name="SpriteLeft"
+                                     SetSize="64 64"
+                                     Margin="16 0"/>
+                <Label Name="Header"
+                       Margin="5"
+                       Access="Public"/>
+                <AnimatedTextureRect Name="SpriteRight"
+                                     SetSize="64 64"
+                                     Margin="16 0"/>
+            </BoxContainer>
+            <ProgressBar Name="Bar"
+                         MaxValue="1.0"
+                         MinWidth="400"
+                         MinHeight="25"
+                         Margin="12 6"
+                         Access="Public"/>
+            <BoxContainer
+                Orientation="Horizontal"
+                Align="Center">
+                <Label Name="Subtext"
+                       Margin="6"
+                       Access="Public"/>
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</Control>

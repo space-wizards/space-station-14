@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
+using Content.Server.Station.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Station;
 using JetBrains.Annotations;
@@ -304,6 +305,9 @@ public sealed class StationSystem : EntitySystem
             AddGridToStation(station, grid, null, data, name);
         }
 
+        var ev = new StationPostInitEvent();
+        RaiseLocalEvent(station, ref ev);
+
         return station;
     }
 
@@ -439,6 +443,30 @@ public sealed class StationSystem : EntitySystem
     public HashSet<EntityUid> GetStationsSet()
     {
         return EntityQuery<StationDataComponent>().Select(x => x.Owner).ToHashSet();
+    }
+
+    /// <summary>
+    /// Returns the first station that has a grid in a certain map.
+    /// If the map has no stations, null is returned instead.
+    /// </summary>
+    /// </remarks
+    /// If there are multiple stations on a map it is probably arbitrary which one is returned.
+    /// </remarks>
+    public EntityUid? GetStationInMap(MapId map)
+    {
+        var query = EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var uid, out var data))
+        {
+            foreach (var gridUid in data.Grids)
+            {
+                if (Transform(gridUid).MapID == map)
+                {
+                    return uid;
+                }
+            }
+        }
+
+        return null;
     }
 }
 

@@ -22,6 +22,7 @@ namespace Content.IntegrationTests.Tests
 
             var server = pairTracker.Pair.Server;
 
+            var entManager = server.ResolveDependency<IEntityManager>();
             var config = server.ResolveDependency<IConfigurationManager>();
             var sysManager = server.ResolveDependency<IEntitySystemManager>();
             var ticker = sysManager.GetEntitySystem<GameTicker>();
@@ -42,7 +43,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                var bus = IoCManager.Resolve<IEntityManager>().EventBus;
+                var bus = entManager.EventBus;
                 bus.SubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this, _ => {
                     Interlocked.Increment(ref eventCount);
                 });
