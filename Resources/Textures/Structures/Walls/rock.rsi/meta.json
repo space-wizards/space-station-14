@@ -23,6 +23,9 @@
             "name": "rock_west"
         },
         {
+            "name": "rock_artifact_fragment"
+        },
+        {
             "name": "rock_bauxite"
         },
         {

@@ -1,10 +1,10 @@
 research-discipline-none = None
 research-discipline-industrial = Industrial
 research-discipline-biochemical = Biochemical
+research-discipline-arsenal = Arsenal
 research-discipline-experimental = Experimental
 research-discipline-civilian-services = Civilian Services
 
-research-technology-salvage-weapons = Salvage weapons
 research-technology-salvage-equipment = Salvage Equipment
 research-technology-advanced-powercells = Advanced Powercells
 research-technology-compact-power = Compact Power
@@ -29,8 +29,17 @@ research-technology-crew-monitoring = Crew Monitoring
 research-technology-bluespace-chemistry = Bluespace Chemistry
 research-technology-cloning = Cloning
 
+research-technology-salvage-weapons = Salvage Weapons
+research-technology-draconic-munitions = Draconic Munitions
+research-technology-explosive-technology = Explosive Technology
+research-technology-advanced-laser-manipulation = Advanced Laser Manipulation
+research-technology-nonlethal-ammunition = Nonlethal Ammunition
+research-technology-optimized-ballistics = Optimized Ballistics
+research-technology-concentrated-laser-weaponry = Concentrated Laser Weaponry
+research-technology-wave-particle-harnessing = Wave Particle Harnessing
+research-technology-handheld-electrical-propulsion = Handheld Electrical Propulsion
+
 research-technology-basic-robotics = Basic Robotics
-research-technology-signalling-tech = Signalling Tech
 research-technology-basic-anomalous-research = Basic Anomalous Research
 research-technology-basic-xenoarcheology = Basic XenoArcheology
 research-technology-alternative-research = Alternative Research

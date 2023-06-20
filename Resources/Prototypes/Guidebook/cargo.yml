@@ -1,0 +1,4 @@
+- type: guideEntry
+  id: Cargo
+  name: guide-entry-cargo
+  text: "/ServerInfo/Guidebook/Cargo.xml"

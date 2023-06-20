@@ -1,3 +1,4 @@
+using Content.Server.Commands;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
@@ -39,5 +40,16 @@ public sealed class ListStationJobsCommand : IConsoleCommand
             var amountText = amount is null ? "Infinite" : amount.ToString();
             shell.WriteLine($"{job}: {amountText}");
         }
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            var options = ContentCompletionHelper.StationIds(_entityManager);
+            return CompletionResult.FromHintOptions(options, "<station id>");
+        }
+
+        return CompletionResult.Empty;
     }
 }

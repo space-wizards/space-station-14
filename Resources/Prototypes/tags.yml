@@ -11,6 +11,9 @@
   id: AppraisalTool
 
 - type: Tag
+  id: ArtifactFragment
+
+- type: Tag
   id: ATVKeys
 
 - type: Tag

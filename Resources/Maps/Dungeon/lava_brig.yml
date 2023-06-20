@@ -9158,7 +9158,7 @@ entities:
     - pos: 22.608034,10.659381
       parent: 588
       type: Transform
-- proto: HatBandRed
+- proto: ClothingHeadBandRed
   entities:
   - uid: 1295
     components:

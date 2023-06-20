@@ -8,6 +8,14 @@
     - !type:BiomeMarkerLoot
       proto: OreTin
 
+- type: salvageLoot
+  id: OreQuartz
+  desc: Veins of quartz
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreQuartz
+
 # - Medium value
 - type: salvageLoot
   id: OreGold
@@ -41,3 +49,19 @@
   loots:
     - !type:BiomeMarkerLoot
       proto: OreUranium
+
+- type: salvageLoot
+  id: OreBananium
+  desc: Veins of bananium ore
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreBananium
+
+- type: salvageLoot
+  id: OreArtifactFragment
+  desc: artifact fragment-embedded rock
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreArtifactFragment

@@ -214,3 +214,19 @@
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
+
+- type: entity
+  parent: WindoorSecure
+  id: WindoorAtmosphericsLocked
+  suffix: Atmospherics, Locked
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
+  parent: WindoorSecure
+  id: WindoorParamedicLocked
+  suffix: Paramedic, Locked
+  components:
+  - type: AccessReader
+    access: [["Paramedic"]]
