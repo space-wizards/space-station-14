@@ -14,7 +14,7 @@ using Content.Shared.Ghost;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Content.Shared.SimpleStation14.Loadouts;
+using Content.Shared.Loadouts;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Map;

@@ -1,7 +1,7 @@
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.SimpleStation14.Loadouts
+namespace Content.Shared.Loadouts
 {
     /// <summary>
     ///     Describes a loadout.

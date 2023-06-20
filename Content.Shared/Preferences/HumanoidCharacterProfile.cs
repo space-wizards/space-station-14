@@ -14,7 +14,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using Content.Shared.SimpleStation14.Loadouts;
+using Content.Shared.Loadouts;
 
 namespace Content.Shared.Preferences
 {
