@@ -1,9 +1,4 @@
 Entries:
-- author: OctoRocket
-  changes:
-  - {message: Blood packs work now., type: Fix}
-  id: 3551
-  time: '2023-04-28T14:01:24.0000000+00:00'
 - author: notquitehadouken
   changes:
   - {message: updated the localization files (there was a typo), type: Fix}
@@ -2930,3 +2925,8 @@ Entries:
   - {message: Reduced stimpacks from 5 minutes to 30 seconds., type: Tweak}
   id: 4050
   time: '2023-06-20T02:23:10.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Remove guaranteed cat ear spawns., type: Remove}
+  id: 4051
+  time: '2023-06-20T03:53:27.0000000+00:00'
