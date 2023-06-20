@@ -63,45 +63,28 @@ public sealed partial class DungeonJob
             return;
 
         var startNodes = new List<Vector2i>(cableTiles);
+        random.Shuffle(startNodes);
+        var start = startNodes[0];
+        var remaining = new HashSet<Vector2i>(startNodes);
+        var frontier = new PriorityQueue<Vector2i, float>();
+        frontier.Enqueue(start, 0f);
+        var cameFrom = new Dictionary<Vector2i, Vector2i>();
 
-        var edges = _dungeon.MinimumSpanningTree(startNodes, random);
-        await SuspendIfOutOfTime();
-        if (!ValidateResume())
-            return;
-
-        var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
-        var doorQuery = _entManager.GetEntityQuery<DoorComponent>();
-
-        _dungeon.GetCorridorNodes(cableTiles, edges, pathLimit: 512, tileCallback: tile =>
+        // TODO:
+        // Pick a random node to start
+        // Then, dijkstra out from it. Add like +10 if it's a wall or smth
+        // When we hit another cable then mark it as found and iterate cameFrom and add to the thingie.
+        while (remaining.Count > 0)
         {
-            var enumerator = grid.GetAnchoredEntitiesEnumerator(tile);
-            var mod = 1f;
+            var node = frontier.Dequeue();
 
-            while (enumerator.MoveNext(out var ent))
+            if (remaining.Remove(node))
             {
-                if (!physicsQuery.TryGetComponent(ent, out var body) ||
-                    !body.CanCollide ||
-                    !body.Hard)
-                {
-                    continue;
-                }
-
-                if (((body.CollisionMask & CollisionLayer) != 0x0 ||
-                    (body.CollisionLayer & CollisionMask) != 0x0) &&
-                    !doorQuery.HasComponent(ent.Value))
-                {
-                    mod *= 10f;
-                    break;
-                }
+                // TODO: Do the cameFrom shit
             }
 
-            return mod;
-        });
-
-        // TODO: Move this to a method.
-        await SuspendIfOutOfTime();
-        if (!ValidateResume())
-            return;
+            // TODO: Neighbours and shit.
+        }
 
         foreach (var tile in cableTiles)
         {
