@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Roles;
@@ -30,16 +31,14 @@ namespace Content.Server.Mind
         ///     Note: the Mind is NOT initially attached!
         ///     The provided UserId is solely for tracking of intended owner.
         /// </summary>
-        /// <param name="userId">The session ID of the original owner (may get credited).</param>
-        public Mind(NetUserId? userId)
+        public Mind()
         {
-            OriginalOwnerUserId = userId;
         }
 
         /// <summary>
         ///     The session ID of the player owning this mind.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables, Access(typeof(MindSystem))]
         public NetUserId? UserId { get; internal set; }
 
         /// <summary>
@@ -112,7 +111,7 @@ namespace Content.Server.Mind
         ///     The session of the player owning this mind.
         ///     Can be null, in which case the player is currently not logged in.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables, Access(typeof(MindSystem), typeof(GameTicker))]
         public IPlayerSession? Session { get; internal set; }
 
         /// <summary>
