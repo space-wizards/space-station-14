@@ -1,6 +1,4 @@
 using Content.Shared.Research.Components;
-using Content.Shared.Research.Prototypes;
-using Content.Shared.Research.Systems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -15,7 +13,7 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
 
     public ResearchConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
-        SendMessage(new ConsoleServerSyncMessage());
+
     }
 
     protected override void Open()
@@ -34,11 +32,6 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
         _consoleMenu.OnServerButtonPressed += () =>
         {
             SendMessage(new ConsoleServerSelectionMessage());
-        };
-
-        _consoleMenu.OnSyncButtonPressed += () =>
-        {
-            SendMessage(new ConsoleServerSyncMessage());
         };
 
         _consoleMenu.OnClose += Close;

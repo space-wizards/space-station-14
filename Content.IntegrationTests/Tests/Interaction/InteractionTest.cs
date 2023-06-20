@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.Server.Body.Systems;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Stack;
@@ -184,7 +185,7 @@ public abstract partial class InteractionTest
         {
             // Fuck you mind system I want an hour of my life back
             // Mind system is a time vampire
-            ServerSession.ContentData()?.WipeMind();
+            SEntMan.System<MindSystem>().WipeMind(ServerSession.ContentData()?.Mind);
 
             old = cPlayerMan.LocalPlayer.ControlledEntity;
             Player = SEntMan.SpawnEntity(PlayerPrototype, PlayerCoords);

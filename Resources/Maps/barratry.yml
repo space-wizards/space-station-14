@@ -52694,16 +52694,6 @@ entities:
     - pos: 1.8966352,1.6815121
       parent: 1
       type: Transform
-- proto: ClothingHeadHatCatEars
-  entities:
-  - uid: 1856
-    components:
-    - flags: InContainer
-      type: MetaData
-    - parent: 1666
-      type: Transform
-    - canCollide: False
-      type: Physics
 - proto: ClothingHeadHatCone
   entities:
   - uid: 717
@@ -105617,12 +105607,6 @@ entities:
       pos: 19.5,-10.5
       parent: 1
       type: Transform
-    - containers:
-        stash: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 1856
-      type: ContainerContainer
   - uid: 4069
     components:
     - rot: -1.5707963267948966 rad

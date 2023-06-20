@@ -414,13 +414,6 @@ namespace Content.Server.GameTicking
                 PlayerJoinLobby(player);
             }
 
-            // Delete the minds of everybody.
-            // TODO: Maybe move this into a separate manager?
-            foreach (var unCastData in _playerManager.GetAllPlayerData())
-            {
-                unCastData.ContentData()?.WipeMind();
-            }
-
             // Delete all entities.
             foreach (var entity in EntityManager.GetEntities().ToArray())
             {

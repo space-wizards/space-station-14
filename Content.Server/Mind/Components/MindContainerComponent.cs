@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using YamlDotNet.Core.Tokens;
 
 namespace Content.Server.Mind.Components
 {

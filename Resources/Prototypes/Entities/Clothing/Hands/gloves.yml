@@ -224,6 +224,24 @@
 
 - type: entity
   parent: ClothingHandsBase
+  id: ClothingHandsMercGlovesCombat
+  name: mercenary combat gloves
+  description: High-quality combat gloves to protect hands from mechanical damage during combat.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/olive.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/olive.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-olive
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
   id: ClothingHandsGlovesFingerless
   name: fingerless gloves
   description: Plain black gloves without fingertips for the hard working.

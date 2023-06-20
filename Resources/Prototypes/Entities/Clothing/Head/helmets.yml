@@ -29,6 +29,18 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/securityold.rsi
 
+#Mercenary Helmet
+- type: entity
+  parent: ClothingHeadHelmetHelmet
+  id: ClothingHeadHelmetMerc
+  name: mercenary helmet
+  description: The combat helmet is commonly used by mercenaries, is strong, light and smells like gunpowder and the jungle.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/merc_helmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/merc_helmet.rsi
+
 #SWAT Helmet
 - type: entity
   parent: ClothingHeadBase
