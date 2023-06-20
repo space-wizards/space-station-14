@@ -166,6 +166,7 @@ namespace Content.Server.Ghost
             args.PushMarkup(deathTimeInfo);
         }
 
+        #region Ghost Deletion
         private void OnMindRemovedMessage(EntityUid uid, GhostComponent component, MindRemovedMessage args)
         {
             DeleteEntity(uid);
@@ -181,18 +182,14 @@ namespace Content.Server.Ghost
             DeleteEntity(uid);
         }
 
-        private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
+        private void DeleteEntity(EntityUid uid)
         {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} entity
-                || !HasComp<GhostComponent>(entity))
-            {
-                Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
+            if (Deleted(uid) || Terminating(uid))
                 return;
-            }
 
-            var response = new GhostWarpsResponseEvent(GetPlayerWarps(entity).Concat(GetLocationWarps()).ToList());
-            RaiseNetworkEvent(response, args.SenderSession.ConnectedClient);
+            QueueDel(uid);
         }
+        #endregion
 
         private void OnGhostReturnToBodyRequest(GhostReturnToBodyRequest msg, EntitySessionEventArgs args)
         {
@@ -206,6 +203,20 @@ namespace Content.Server.Ghost
             }
 
             _mindSystem.UnVisit(actor.PlayerSession.ContentData()!.Mind);
+        }
+
+        #region Warp
+        private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
+        {
+            if (args.SenderSession.AttachedEntity is not {Valid: true} entity
+                || !HasComp<GhostComponent>(entity))
+            {
+                Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
+                return;
+            }
+
+            var response = new GhostWarpsResponseEvent(GetPlayerWarps(entity).Concat(GetLocationWarps()).ToList());
+            RaiseNetworkEvent(response, args.SenderSession.ConnectedClient);
         }
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
@@ -235,14 +246,6 @@ namespace Content.Server.Ghost
             _transformSystem.AttachToGridOrMap(attached, xform);
             if (TryComp(attached, out PhysicsComponent? physics))
                 _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
-        }
-
-        private void DeleteEntity(EntityUid uid)
-        {
-            if (Deleted(uid) || Terminating(uid))
-                return;
-
-            QueueDel(uid);
         }
 
         private IEnumerable<GhostWarp> GetLocationWarps()
@@ -275,6 +278,7 @@ namespace Content.Server.Ghost
                     yield return new GhostWarp(attached, playerInfo, false);
             }
         }
+        #endregion
 
         private void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
         {
