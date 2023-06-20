@@ -71988,7 +71988,7 @@ entities:
     - pos: -34.5,-16.5
       parent: 6
       type: Transform
-- proto: Refinery
+- proto: OreProcessor
   entities:
   - uid: 7594
     components:

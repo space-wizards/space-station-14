@@ -67148,7 +67148,7 @@ entities:
       pos: -18.5,-16.5
       parent: 4812
       type: Transform
-- proto: Refinery
+- proto: OreProcessor
   entities:
   - uid: 2902
     components:
@@ -67163,7 +67163,7 @@ entities:
       - Gold
       - Silver
       type: MaterialStorage
-- proto: RefineryMachineCircuitboard
+- proto: OreProcessorMachineCircuitboard
   entities:
   - uid: 3749
     components:

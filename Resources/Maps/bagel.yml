@@ -115799,7 +115799,7 @@ entities:
     - pos: 42.498352,-0.3113162
       parent: 60
       type: Transform
-- proto: Refinery
+- proto: OreProcessor
   entities:
   - uid: 13113
     components:

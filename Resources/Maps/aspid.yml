@@ -105087,7 +105087,7 @@ entities:
     - pos: 19.5,27.5
       parent: 1
       type: Transform
-- proto: Refinery
+- proto: OreProcessor
   entities:
   - uid: 4128
     components:
