@@ -197,15 +197,16 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             var rewards = new Dictionary<string, int>();
             foreach (var reward in mission.Rewards)
             {
-                var count = rewards.GetOrNew(reward);
+                var name = _prototype.Index<EntityPrototype>(o.Key).Name;
+                var count = rewards.GetOrNew(name);
                 count++;
-                rewards[reward] = count;
+                rewards[name] = count;
             }
 
             // there will always be 3 or more rewards so no need for 0 check
             lBox.AddChild(new Label()
             {
-                Text = string.Join("\n", rewards.Select(o => "- " + _prototype.Index<EntityPrototype>(o.Key).Name + (o.Value > 1 ? $" x {o.Value}" : ""))).TrimEnd(),
+                Text = string.Join("\n", rewards.Select(o => "- " + o.Key + (o.Value > 1 ? $" x {o.Value}" : ""))).TrimEnd(),
                 FontColorOverride = StyleNano.ConcerningOrangeFore,
                 HorizontalAlignment = HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f)
