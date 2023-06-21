@@ -1,10 +1,4 @@
 Entries:
-- author: jamessimo
-  changes:
-  - {message: Minor UI enhancements to the Anomaly Generator UI, type: Tweak}
-  - {message: Fixed broken sprite view in Anomaly Generator UI, type: Fix}
-  id: 3561
-  time: '2023-04-29T05:53:57.0000000+00:00'
 - author: lzk
   changes:
   - {message: Added ghost sheet craft recipe, type: Add}
@@ -2936,3 +2930,8 @@ Entries:
       and reconnecting., type: Fix}
   id: 4060
   time: '2023-06-21T01:04:08.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed usernames not showing up in the round end window., type: Fix}
+  id: 4061
+  time: '2023-06-21T01:18:16.0000000+00:00'
