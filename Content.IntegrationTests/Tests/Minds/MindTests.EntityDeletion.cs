@@ -113,7 +113,7 @@ public sealed partial class MindTests
     public async Task TestGhostOnDelete()
     {
         // Client is needed to spawn session
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await SetupPair();
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -121,21 +121,13 @@ public sealed partial class MindTests
 
         IPlayerSession player = playerMan.ServerSessions.Single();
 
-        await server.WaitAssertion(() =>
-        {
-            Assert.That(player.AttachedEntity, Is.Not.EqualTo(null));
-            entMan.DeleteEntity(player.AttachedEntity!.Value);
-        });
+        Assert.That(!entMan.HasComponent<GhostComponent>(player.AttachedEntity), "Player was initially a ghost?");
 
+        // Delete entity
+        await server.WaitPost(() => entMan.DeleteEntity(player.AttachedEntity!.Value));
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
-        await server.WaitAssertion(() =>
-        {
-            // Is player a ghost?
-            Assert.That(player.AttachedEntity, Is.Not.EqualTo(null));
-            var entity = player.AttachedEntity!.Value;
-            Assert.That(entMan.HasComponent<GhostComponent>(entity));
-        });
+        Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "Player did not become a ghost");
 
         await pairTracker.CleanReturnAsync();
     }
