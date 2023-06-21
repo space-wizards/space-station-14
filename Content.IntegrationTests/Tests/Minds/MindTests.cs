@@ -32,14 +32,9 @@ public sealed partial class MindTests
 {
     private const string Prototypes = @"
 - type: entity
-  id: MindTestEntity
-  components:
-  - type: MindContainer
-
-- type: entity
-  parent: MindTestEntity
   id: MindTestEntityDamageable
   components:
+  - type: MindContainer
   - type: Damageable
     damageContainer: Biological
   - type: Body
