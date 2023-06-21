@@ -50,8 +50,6 @@ public sealed class StatusIconSystem : EntitySystem
         }
     }
 
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-
     public List<StatusIconData> GetStatusIcons(EntityUid uid)
     {
         if (!Exists(uid) || Terminating(uid))
@@ -59,8 +57,6 @@ public sealed class StatusIconSystem : EntitySystem
 
         var ev = new GetStatusIconsEvent(new());
         RaiseLocalEvent(uid, ref ev);
-
-        ev.StatusIcons.Add(_prototype.Index<StatusIconPrototype>("DebugStatus2"));
         return ev.StatusIcons;
     }
 }
