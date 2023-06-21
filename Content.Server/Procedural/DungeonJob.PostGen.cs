@@ -8,6 +8,7 @@ using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Content.Shared.Storage;
+using Content.Shared.Tag;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -46,7 +47,7 @@ public sealed partial class DungeonJob
             while (anchored.MoveNext(out var anc))
             {
                 if (!nodeQuery.TryGetComponent(anc, out var nodeContainer) ||
-                   nodeContainer.Nodes.ContainsKey("Apc"))
+                   !nodeContainer.Nodes.ContainsKey("power"))
                 {
                     continue;
                 }
@@ -69,6 +70,11 @@ public sealed partial class DungeonJob
         var frontier = new PriorityQueue<Vector2i, float>();
         frontier.Enqueue(start, 0f);
         var cameFrom = new Dictionary<Vector2i, Vector2i>();
+        var costSoFar = new Dictionary<Vector2i, float>();
+        var lastDirection = new Dictionary<Vector2i, Direction>();
+        costSoFar[start] = 0f;
+        lastDirection[start] = Direction.Invalid;
+        var tagQuery = _entManager.GetEntityQuery<TagComponent>();
 
         // TODO:
         // Pick a random node to start
@@ -76,14 +82,79 @@ public sealed partial class DungeonJob
         // When we hit another cable then mark it as found and iterate cameFrom and add to the thingie.
         while (remaining.Count > 0)
         {
+            if (frontier.Count == 0)
+            {
+                frontier.Enqueue(remaining.First(), 0f);
+            }
+
             var node = frontier.Dequeue();
 
             if (remaining.Remove(node))
             {
-                // TODO: Do the cameFrom shit
+                var weh = node;
+
+                while (cameFrom.TryGetValue(weh, out var receiver))
+                {
+                    cableTiles.Add(weh);
+                    weh = receiver;
+
+                    if (weh == start)
+                        break;
+                }
+            }
+
+            if (!grid.TryGetTileRef(node, out var tileRef) || tileRef.Tile.IsEmpty)
+            {
+                continue;
             }
 
             // TODO: Neighbours and shit.
+            for (var i = 0; i < 4; i++)
+            {
+                var dir = (Direction) (i * 2);
+
+                var neighbor = node + dir.ToIntVec();
+                var tileCost = 1f;
+
+                // Prefer straight lines.
+                if (lastDirection[node] != dir)
+                {
+                    tileCost *= 1.1f;
+                }
+
+                if (cableTiles.Contains(neighbor))
+                {
+                    tileCost *= 0.1f;
+                }
+
+                // Prefer tiles without walls on them
+                var enumerator = _grid.GetAnchoredEntitiesEnumerator(neighbor);
+
+                while (enumerator.MoveNext(out var ent))
+                {
+                    // If it's a wall then add a big cost for pathfinding.
+                    if (!tagQuery.TryGetComponent(ent, out var tags) ||
+                        !tags.Tags.Contains("Wall"))
+                    {
+                        continue;
+                    }
+
+                    tileCost *= 20f;
+                    break;
+                }
+
+                var gScore = costSoFar[node] + tileCost;
+
+                if (costSoFar.TryGetValue(neighbor, out var nextValue) && gScore >= nextValue)
+                {
+                    continue;
+                }
+
+                cameFrom[neighbor] = node;
+                costSoFar[neighbor] = gScore;
+                lastDirection[neighbor] = dir;
+                frontier.Enqueue(neighbor, gScore);
+            }
         }
 
         foreach (var tile in cableTiles)
@@ -94,7 +165,7 @@ public sealed partial class DungeonJob
             while (anchored.MoveNext(out var anc))
             {
                 if (!nodeQuery.TryGetComponent(anc, out var nodeContainer) ||
-                    nodeContainer.Nodes.ContainsKey("Apc"))
+                    !nodeContainer.Nodes.ContainsKey("power"))
                 {
                     continue;
                 }
