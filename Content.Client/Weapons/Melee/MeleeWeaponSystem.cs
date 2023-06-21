@@ -25,9 +25,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
@@ -38,15 +36,8 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     {
         base.Initialize();
         InitializeEffect();
-        _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _player, _protoManager));
         SubscribeAllEvent<DamageEffectEvent>(OnDamageEffect);
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _overlayManager.RemoveOverlay<MeleeWindupOverlay>();
     }
 
     public override void Update(float frameTime)

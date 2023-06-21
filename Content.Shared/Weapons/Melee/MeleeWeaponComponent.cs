@@ -54,25 +54,6 @@ public sealed class MeleeWeaponComponent : Component
     public bool Attacking = false;
 
     /// <summary>
-    /// When did we start a heavy attack.
-    /// </summary>
-    /// <returns></returns>
-    [ViewVariables(VVAccess.ReadWrite), DataField("windUpStart")]
-    public TimeSpan? WindUpStart;
-
-    /// <summary>
-    /// Heavy attack windup time gets multiplied by this value and the light attack cooldown.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("heavyWindupModifier")]
-    public float HeavyWindupModifier = 1.5f;
-
-    /// <summary>
-    /// Light attacks get multiplied by this over the base <see cref="Damage"/> value.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("heavyDamageModifier")]
-    public FixedPoint2 HeavyDamageModifier = FixedPoint2.New(2);
-
-    /// <summary>
     /// Base damage for this weapon. Can be modified via heavy damage or other means.
     /// </summary>
     [DataField("damage", required:true)]
