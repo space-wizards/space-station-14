@@ -48,6 +48,7 @@
   id: SalvageRewardEpic
   weights:
     # rare machinery
+    AmmoTechFabCircuitboard: 1.0
     ResearchAndDevelopmentServerMachineCircuitboard: 1.0
     CratePartsT4: 1.0
     # rare weapons
