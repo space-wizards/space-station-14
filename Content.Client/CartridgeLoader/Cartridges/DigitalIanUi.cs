@@ -1,0 +1,37 @@
+using Content.Client.UserInterface.Fragments;
+using Content.Shared.CartridgeLoader.Cartridges;
+using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
+using Content.Shared.CartridgeLoader;
+
+
+namespace Content.Client.CartridgeLoader.Cartridges;
+
+public sealed class DigitalIanUi : UIFragment
+{
+    private DigitalIanUiFragment? _fragment;
+
+    public override Control GetUIFragmentRoot()
+    {
+        return _fragment!;
+    }
+
+    public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
+    {
+        _fragment = new DigitalIanUiFragment();
+        _fragment.OnFeedButtonPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.))
+        _fragment.OnPetButtonPressed += () => SendDigitalIanMessage(DigitalIanUiAction.Pet, userInterface);
+    }
+
+//         _window.CloneButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Clone));
+
+    public override void UpdateState(BoundUserInterfaceState state)
+    {
+        // No state to update
+    }
+    private void SendDigitalIanMessage(DigitalIanUiAction action, BoundUserInterface userInterface)
+    {
+        var digitalIanMessage = new DigitalIanUiMessageEvent(action);
+        var message = new CartridgeUiMessage(digitalIanMessage);
+        userInterface.SendMessage(message);
+    }}
