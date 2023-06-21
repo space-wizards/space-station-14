@@ -62685,7 +62685,7 @@ entities:
       type: MetaData
     - parent: 16058
       type: Transform
-    - nextSound: 48.5307177
+    - nextSound: 48.5307176
       type: EmitSoundOnCollide
     - canCollide: False
       type: Physics

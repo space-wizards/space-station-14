@@ -5,6 +5,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Database;
 using Content.Server.Ghost;
 using Content.Server.Maps;
+using Content.Server.Mind;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerUpdates;
@@ -13,6 +14,8 @@ using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
 using Robust.Server;
 using Robust.Server.GameObjects;
@@ -34,6 +37,9 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly ArrivalsSystem _arrivals = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly GhostSystem _ghost = default!;
+        [Dependency] private readonly MindSystem _mind = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
 
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;
