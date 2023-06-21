@@ -46,7 +46,6 @@
     color: "#FF8080"
     radius: 1.0
     energy: 9.0
-    netsync: false
   - type: IgnitionSource
     temperature: 1000
   - type: LightBehaviour

@@ -60,7 +60,6 @@
     heldPrefix: off
   - type: ToggleableLightVisuals
   - type: PointLight
-    netsync: false
     enabled: false
     radius: 3
     energy: 2
@@ -179,7 +178,6 @@
     equippedPrefix: off
   - type: ToggleableLightVisuals
   - type: PointLight
-    netsync: false
     enabled: false
     radius: 3
     energy: 2

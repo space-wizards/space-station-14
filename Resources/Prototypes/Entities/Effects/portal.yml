@@ -32,7 +32,6 @@
     layers:
     - state: portal-red
   - type: PointLight
-    netsync: false
     color: OrangeRed
     radius: 3
     energy: 3
@@ -45,7 +44,6 @@
     layers:
     - state: portal-blue
   - type: PointLight
-    netsync: false
     color: SkyBlue
     radius: 3
     energy: 3

@@ -41,7 +41,6 @@
       sprite: Objects/Tools/lantern.rsi
       heldPrefix: off
     - type: PointLight
-      netsync: false
       enabled: false
       radius: 3
       energy: 2.5

@@ -232,7 +232,6 @@
     sprite: Clothing/Head/Misc/hides.rsi
     heldPrefix: bear
   - type: Clothing
-    netsync: false
     sprite: Clothing/Head/Misc/hides.rsi
     equippedPrefix: bear
     slots:

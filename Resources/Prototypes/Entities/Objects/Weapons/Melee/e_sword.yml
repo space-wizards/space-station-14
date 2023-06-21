@@ -34,7 +34,6 @@
   - type: UseDelay
     delay: 1.0
   - type: PointLight
-    netsync: false
     enabled: false
     radius: 2
     energy: 2
@@ -98,7 +97,6 @@
   - type: UseDelay
     delay: 1.0
   - type: PointLight
-    netsync: false
     enabled: false
     radius: 1.5
     energy: 1.5

@@ -40,7 +40,6 @@
       color: "#E25822"
       radius: 1.0
       energy: 5.0
-      netsync: false
     - type: IgnitionSource
       temperature: 400
       ignited: false

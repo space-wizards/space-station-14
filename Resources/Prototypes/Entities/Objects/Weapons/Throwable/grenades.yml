@@ -80,7 +80,6 @@
   components:
     - type: PointLight
       enabled: true
-      netsync: false
       radius: 5
       energy: 8
     - type: LightFade

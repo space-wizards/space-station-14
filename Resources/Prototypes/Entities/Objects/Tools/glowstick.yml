@@ -37,7 +37,6 @@
       color: "#00FF00"
       radius: 5
       energy: 0
-      netsync: false
     - type: LightBehaviour
       behaviours:
         - !type:FadeBehaviour # slowly fade in once activated
