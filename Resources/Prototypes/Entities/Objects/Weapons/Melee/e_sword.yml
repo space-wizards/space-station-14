@@ -179,10 +179,8 @@
             Blunt: -4.5
     litDisarmMalus: 0.7
   - type: MeleeWeapon
-    attackRate: 1.6
+    attackRate: 1.5
     angle: 100
-    heavyWindupModifier: .9
-    heavyDamageModifier: 1.5
     soundHit:
       path: /Audio/Weapons/eblade1.ogg
     damage:
