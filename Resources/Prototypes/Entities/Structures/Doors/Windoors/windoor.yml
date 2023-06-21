@@ -129,7 +129,7 @@
 
 - type: entity
   parent: WindoorSecure
-  id: WindoorCSecurehemistryLocked
+  id: WindoorSecureChemistryLocked
   suffix: Chemistry, Locked
   components:
   - type: AccessReader
@@ -206,7 +206,7 @@
   components:
   - type: AccessReader
     access: [["Research"]]
-    
+
 - type: entity
   parent: WindoorSecure
   id: WindoorSecureHeadOfPersonnelLocked
