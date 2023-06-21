@@ -74,9 +74,9 @@ public sealed partial class MindTests
 
         var mind = player.ContentData()!.Mind;
         Assert.NotNull(mind);
-        Assert.That(player.AttachedEntity, Is.EqualTo(mind.CurrentEntity));
-        Assert.That(entMan.EntityExists(mind.OwnedEntity));
-        Assert.That(entMan.EntityExists(mind.CurrentEntity));
+        Assert.That(player.AttachedEntity, Is.EqualTo(mind.CurrentEntity), "Player is not attached to the mind's current entity.");
+        Assert.That(entMan.EntityExists(mind.OwnedEntity), "The mind's current entity does not exist");
+        Assert.That(mind.VisitingEntity == null || entMan.EntityExists(mind.VisitingEntity), "The minds visited entity does not exist.");
 
         return mind;
     }
