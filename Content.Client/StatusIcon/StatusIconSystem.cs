@@ -3,7 +3,6 @@ using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.StatusIcon;
 
@@ -24,6 +23,7 @@ public sealed class StatusIconSystem : EntitySystem
         _configuration.OnValueChanged(CCVars.LocalStatusIconsEnabled, OnLocalStatusIconChanged, true);
         _configuration.OnValueChanged(CCVars.GlobalStatusIconsEnabled, OnGlobalStatusIconChanged, true);
     }
+
     private void OnLocalStatusIconChanged(bool obj)
     {
         _localEnabled = obj;
