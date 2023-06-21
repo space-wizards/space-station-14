@@ -20,10 +20,29 @@ public sealed class DigitalIanCartridgeSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<DigitalIanCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
+        SubscribeLocalEvent<DigitalIanCartridgeComponent, CartridgeMessageEvent>(OnAction);
     }
+
 
     private void OnUiReady(EntityUid uid, DigitalIanCartridgeComponent component, CartridgeUiReadyEvent args)
     {
         _audioSystem.PlayPvs(component.SoundPet, uid);
+    }
+    private void OnAction(EntityUid uid, DigitalIanCartridgeComponent component, CartridgeMessageEvent args)
+    {
+        if (args is not DigitalIanUiMessageEvent action)
+        {
+            return;
+        }
+
+        switch (action.Action)
+        {
+            case DigitalIanUiAction.Feed:
+                _audioSystem.PlayPvs(component.SoundFeed, uid);
+                break;
+            case DigitalIanUiAction.Pet:
+                _audioSystem.PlayPvs(component.SoundPet, uid);
+                break;
+        }
     }
 }
