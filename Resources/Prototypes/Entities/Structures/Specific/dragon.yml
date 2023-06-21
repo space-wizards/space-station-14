@@ -25,6 +25,7 @@
       color: "#366db5"
       radius: 10.0
       energy: 5.0
+      netsync: false
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
