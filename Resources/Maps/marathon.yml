@@ -9589,6 +9589,13 @@ entities:
     - pos: -19.5,41.5
       parent: 30
       type: Transform
+- proto: AirlockDetectiveLocked
+  entities:
+  - uid: 783
+    components:
+    - pos: -41.5,34.5
+      parent: 30
+      type: Transform
 - proto: AirlockEngineeringGlassLocked
   entities:
   - uid: 9353
@@ -10597,6 +10604,13 @@ entities:
     - pos: -8.5,-13.5
       parent: 30
       type: Transform
+- proto: AirlockMaintDetectiveLocked
+  entities:
+  - uid: 1423
+    components:
+    - pos: -45.5,30.5
+      parent: 30
+      type: Transform
 - proto: AirlockMaintEngiLocked
   entities:
   - uid: 1181
@@ -10939,11 +10953,6 @@ entities:
       type: Transform
 - proto: AirlockMaintSecLocked
   entities:
-  - uid: 1423
-    components:
-    - pos: -45.5,30.5
-      parent: 30
-      type: Transform
   - uid: 2195
     components:
     - pos: -49.5,43.5
@@ -11291,11 +11300,6 @@ entities:
   - uid: 1057
     components:
     - pos: -37.5,10.5
-      parent: 30
-      type: Transform
-  - uid: 1431
-    components:
-    - pos: -41.5,34.5
       parent: 30
       type: Transform
   - uid: 1782
@@ -51574,6 +51578,11 @@ entities:
       pos: 6.5,17.5
       parent: 30
       type: Transform
+  - uid: 4987
+    components:
+    - pos: -20.5,-58.5
+      parent: 30
+      type: Transform
   - uid: 5068
     components:
     - pos: -20.5,46.5
@@ -51679,6 +51688,16 @@ entities:
   - uid: 7028
     components:
     - pos: 27.5,-18.5
+      parent: 30
+      type: Transform
+  - uid: 7443
+    components:
+    - pos: -19.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 7444
+    components:
+    - pos: -18.5,-58.5
       parent: 30
       type: Transform
   - uid: 7975
@@ -60263,9 +60282,9 @@ entities:
       type: Transform
 - proto: ComputerTelevision
   entities:
-  - uid: 1440
+  - uid: 1431
     components:
-    - pos: -42.5,31.5
+    - pos: -42.5,33.5
       parent: 30
       type: Transform
 - proto: ContainmentFieldGenerator
@@ -107318,31 +107337,13 @@ entities:
         - 0
         - 0
       type: EntityStorage
-- proto: LockerCaptainFilled
+- proto: LockerCaptainFilledHardsuit
   entities:
-  - uid: 4987
+  - uid: 1440
     components:
     - pos: -17.5,32.5
       parent: 30
       type: Transform
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 3.4430928
-        - 12.952587
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
 - proto: LockerChemistryFilled
   entities:
   - uid: 6698
@@ -127399,13 +127400,6 @@ entities:
   - uid: 787
     components:
     - pos: 9.5,-27.5
-      parent: 30
-      type: Transform
-- proto: SuitStorageCaptain
-  entities:
-  - uid: 783
-    components:
-    - pos: -19.5,32.5
       parent: 30
       type: Transform
 - proto: SuitStorageCE
