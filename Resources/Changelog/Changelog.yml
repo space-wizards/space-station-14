@@ -1,14 +1,4 @@
 Entries:
-- author: lzk
-  changes:
-  - {message: Added ghost sheet craft recipe, type: Add}
-  id: 3562
-  time: '2023-04-29T06:14:46.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: Added LOOC and Emote focus keybinds, type: Add}
-  id: 3563
-  time: '2023-04-29T06:15:42.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug that allowed slime corpses/brains to move around after death.,
@@ -2935,3 +2925,20 @@ Entries:
   - {message: Fixed usernames not showing up in the round end window., type: Fix}
   id: 4061
   time: '2023-06-21T01:18:16.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: The rate of which bleeding wounds passively clot has been doubled. (0.5u
+      to 1.0u), type: Tweak}
+  - {message: Max bleed rate has been halved (20u to 10u), type: Tweak}
+  - {message: blood puddles will always be created at a minimum of 1u of blood lost.
+      (5u to 1u), type: Tweak}
+  - {message: 'The refresh rate for all bloodstream effects (Losing blood, Regaining
+      blood, taking damage, Wound clotting) has been reduced to 3 seconds. This will
+      mean players will both bleed faster but also recover faster.', type: Tweak}
+  id: 4062
+  time: '2023-06-21T14:30:20.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Armor has been removed from jumpsuits., type: Tweak}
+  id: 4063
+  time: '2023-06-21T14:30:31.0000000+00:00'
