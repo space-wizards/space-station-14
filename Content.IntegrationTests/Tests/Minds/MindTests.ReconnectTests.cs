@@ -20,11 +20,9 @@ public sealed partial class MindTests
     [Test]
     public async Task TestGhostsCanReconnect()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await SetupPair();
         var pair = pairTracker.Pair;
-
         var entMan = pair.Server.ResolveDependency<IEntityManager>();
-        await PoolManager.RunTicksSync(pair, 5);
         var mind = GetMind(pair);
 
         var ghost = await BecomeGhost(pair);
@@ -47,11 +45,9 @@ public sealed partial class MindTests
     [Test]
     public async Task TestDeletedCanReconnect()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await SetupPair();
         var pair = pairTracker.Pair;
-
         var entMan = pair.Server.ResolveDependency<IEntityManager>();
-        await PoolManager.RunTicksSync(pair, 5);
         var mind = GetMind(pair);
 
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
@@ -94,11 +90,10 @@ public sealed partial class MindTests
     [Test]
     public async Task TestVisitingGhostReconnect()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await SetupPair();
         var pair = pairTracker.Pair;
 
         var entMan = pair.Server.ResolveDependency<IEntityManager>();
-        await PoolManager.RunTicksSync(pair, 5);
         var mind = GetMind(pair);
 
         var original = mind.CurrentEntity;
@@ -122,7 +117,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestVisitingReconnect()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ ExtraPrototypes = Prototypes });
+        await using var pairTracker = await SetupPair();
         var pair = pairTracker.Pair;
 
         var entMan = pair.Server.ResolveDependency<IEntityManager>();
