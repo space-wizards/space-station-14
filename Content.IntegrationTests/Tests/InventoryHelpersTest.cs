@@ -38,7 +38,7 @@ namespace Content.IntegrationTests.Tests
     QuickEquip: false
     slots:
     - idcard
-  - type: PDA
+  - type: Pda
 ";
         [Test]
         public async Task SpawnItemInSlotTest()

@@ -15,7 +15,7 @@
         Caustic: 0.5
 
 - type: entity
-  parent: ClothingOuterBaseLarge
+  parent: ClothingOuterBioGeneral
   id: ClothingOuterBioCmo
   name: bio suit
   suffix: CMO
@@ -63,7 +63,7 @@
     sprite: Clothing/OuterClothing/Bio/security.rsi
 
 - type: entity
-  parent: ClothingOuterBioCmo
+  parent: ClothingOuterBioGeneral
   id: ClothingOuterBioVirology
   name: bio suit
   suffix: Virology

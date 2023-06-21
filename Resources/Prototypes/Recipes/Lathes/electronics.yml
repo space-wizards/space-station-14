@@ -451,7 +451,7 @@
   completetime: 4
   materials:
      Steel: 50
-     Glass: 350
+     Glass: 150
 
 - type: latheRecipe
   id: WallmountGeneratorAPUElectronics
@@ -500,6 +500,14 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: SheetifierMachineCircuitboard
+  result: SheetifierMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
 
 - type: latheRecipe
   id: SurveillanceCameraRouterCircuitboard

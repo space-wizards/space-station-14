@@ -47,9 +47,9 @@ public sealed class IdExaminableSystem : EntitySystem
         if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
         {
             // PDA
-            if (EntityManager.TryGetComponent(idUid, out PDAComponent? pda) && pda.ContainedID is not null)
+            if (EntityManager.TryGetComponent(idUid, out PdaComponent? pda) && pda.ContainedId is not null)
             {
-                return GetNameAndJob(pda.ContainedID);
+                return GetNameAndJob(pda.ContainedId);
             }
             // ID Card
             if (EntityManager.TryGetComponent(idUid, out IdCardComponent? id))

@@ -13,8 +13,23 @@
       size: 100
       heldPrefix: riot
     - type: Blocking
-      passiveBlockModifier: PassiveRiotShieldBlock
-      activeBlockModifier: ActiveRiotShieldBlock
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.9
+          Slash: 0.9
+          Piercing: 0.9
+          Heat: 0.9
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.8
+          Heat: 0.8
+        flatReductions:
+          Blunt: 1
+          Slash: 1
+          Piercing: 1
+          Heat: 1
       blockingToggleAction:
         name: action-name-blocking
         description: action-description-blocking
@@ -72,8 +87,14 @@
     - type: Item
       heldPrefix: riot_laser
     - type: Blocking
-      passiveBlockModifier: PassiveRiotLaserShieldBlock
-      activeBlockModifier: ActiveRiotLaserShieldBlock
+      passiveBlockModifier:
+        coefficients:
+          Heat: 0.8
+      activeBlockModifier:
+        coefficients:
+          Heat: 0.7
+        flatReductions:
+          Heat: 2
 
 - type: entity
   name: riot bullet shield
@@ -86,8 +107,17 @@
     - type: Item
       heldPrefix: riot_bullet
     - type: Blocking
-      passiveBlockModifier: PassiveRiotBulletShieldBlock
-      activeBlockModifier: ActiveRiotBulletShieldBlock
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.8
+          Piercing: 0.8
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.7
+          Piercing: 0.7
+        flatReductions:
+          Blunt: 1.5
+          Piercing: 1.5
 
 #Craftable shields
 
@@ -102,8 +132,22 @@
     - type: Item
       heldPrefix: buckler
     - type: Blocking
-      passiveBlockModifier: PassiveBucklerBlock
-      activeBlockModifier: ActiveBucklerBlock
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.95
+          Slash: 0.95
+          Piercing: 0.95
+          Heat: 2
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.85
+          Heat: 2
+        flatReductions:
+          Blunt: 1
+          Slash: 1
+          Piercing: 1
     - type: Construction
       graph: WoodenBuckler
       node: woodenBuckler
@@ -142,8 +186,23 @@
     - type: Item
       heldPrefix: metal
     - type: Blocking
-      passiveBlockModifier: PassiveMakeshiftBlock
-      activeBlockModifier: ActiveMakeshiftBlock
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.95
+          Slash: 0.95
+          Piercing: 0.95
+          Heat: 0.9
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.85
+          Heat: 0.8
+        flatReductions:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.5
+          Heat: 1
     - type: Construction
       graph: MakeshiftShield
       node: makeshiftShield
@@ -182,8 +241,22 @@
     - type: Item
       heldPrefix: ratvarian
     - type: Blocking
-      passiveBlockModifier: PassiveClockworkShieldBlock
-      activeBlockModifier: ActiveClockworkShieldBlock
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.8
+          Heat: 1.5
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.7
+          Piercing: 0.7
+          Heat: 1.5
+        flatReductions:
+          Blunt: 1
+          Slash: 1
+          Piercing: 1
       #Have it break into brass when clock cult is in
 
 - type: entity
@@ -196,9 +269,21 @@
       state: mirror-icon
     - type: Item
       heldPrefix: mirror
-    - type: Blocking
-      passiveBlockModifier: PassiveMirrorShieldBlock
-      activeBlockModifier: ActiveMirrorShieldBlock
+    - type: Blocking #Mirror shield should reflect heat/laser eventually, but be relatively weak to everything else.
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 1.2
+          Slash: 1.2
+          Piercing: 1.2
+          Heat: .7
+      activeBlockModifier:
+        coefficients:
+          Blunt: 1.2
+          Slash: 1.2
+          Piercing: 1.2
+          Heat: .6
+        flatReductions:
+          Heat: 1
       blockSound: !type:SoundPathSpecifier
         path: /Audio/Effects/glass_step.ogg
     - type: Destructible

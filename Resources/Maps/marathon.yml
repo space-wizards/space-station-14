@@ -7673,8 +7673,6 @@ entities:
       type: BecomesStation
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 4567.2250735
-      type: GridPathfinding
     - type: RadiationGridResistance
     - nextShake: 0
       shakeTimes: 10

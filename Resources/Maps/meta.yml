@@ -7642,8 +7642,6 @@ entities:
       type: BecomesStation
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 7724.1283525
-      type: GridPathfinding
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - nextUpdate: 0
@@ -136152,7 +136150,7 @@ entities:
     - pos: 29.558147,-58.540123
       parent: 5350
       type: Transform
-- proto: HatBandGold
+- proto: ClothingHeadBandGold
   entities:
   - uid: 24777
     components:
