@@ -56,6 +56,7 @@
     enabled: false
     radius: 1.5
     color: orange
+    netsync: false
   - type: Appearance
   - type: RequiresEyeProtection
   - type: PhysicalComposition
