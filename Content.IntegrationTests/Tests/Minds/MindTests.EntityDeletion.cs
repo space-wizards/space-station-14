@@ -1,9 +1,7 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Server.Players;
 using NUnit.Framework;
 using Robust.Server.Console;
@@ -11,13 +9,101 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 
 namespace Content.IntegrationTests.Tests.Minds;
 
-[TestFixture]
-public sealed class GhostTests
+// Tests various scenarios where an entity that is associated with a player's mind is deleted.
+public sealed partial class MindTests
 {
+    // This test will do the following:
+    // - spawn a  player
+    // - visit some entity
+    // - delete the entity being visited
+    // - assert that player returns to original entity
+    [Test]
+    public async Task TestDeleteVisiting()
+    {
+        await using var pairTracker = await PoolManager.GetServerClient();
+        var server = pairTracker.Pair.Server;
+
+        var entMan = server.ResolveDependency<IServerEntityManager>();
+        var playerMan = server.ResolveDependency<IPlayerManager>();
+
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+
+        EntityUid playerEnt = default;
+        EntityUid visitEnt = default;
+        Mind mind = default!;
+        await server.WaitAssertion(() =>
+        {
+            var player = playerMan.ServerSessions.Single();
+
+            playerEnt = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
+            visitEnt = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
+
+            mind = mindSystem.CreateMind(player.UserId);
+            mindSystem.TransferTo(mind, playerEnt);
+            mindSystem.Visit(mind, visitEnt);
+
+            Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
+            Assert.That(mind.VisitingEntity, Is.EqualTo(visitEnt));
+        });
+
+        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await server.WaitPost(() => entMan.DeleteEntity(visitEnt));
+        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+
+        Assert.IsNull(mind.VisitingEntity);
+        Assert.That(entMan.EntityExists(mind.OwnedEntity));
+        Assert.That(mind.OwnedEntity, Is.EqualTo(playerEnt));
+
+        // This used to throw so make sure it doesn't.
+        await server.WaitPost(() => entMan.DeleteEntity(mind.OwnedEntity!.Value));
+        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+
+        await pairTracker.CleanReturnAsync();
+    }
+
+    // this is a variant of TestGhostOnDelete that just deletes the whole map.
+    [Test]
+    public async Task TestGhostOnDeleteMap()
+    {
+        await using var pairTracker = await PoolManager.GetServerClient();
+        var server = pairTracker.Pair.Server;
+        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var coordinates = testMap.GridCoords;
+
+        var entMan = server.ResolveDependency<IServerEntityManager>();
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var playerMan = server.ResolveDependency<IPlayerManager>();
+        var player = playerMan.ServerSessions.Single();
+
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+
+        EntityUid playerEnt = default;
+        Mind mind = default!;
+        await server.WaitAssertion(() =>
+        {
+            playerEnt = entMan.SpawnEntity(null, coordinates);
+            mind = player.ContentData()!.Mind!;
+            mindSystem.TransferTo(mind, playerEnt);
+
+            Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
+        });
+
+        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await server.WaitPost(() => mapManager.DeleteMap(testMap.MapId));
+        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(entMan.EntityExists(mind.CurrentEntity!.Value), Is.True);
+            Assert.That(mind.CurrentEntity, Is.Not.EqualTo(playerEnt));
+        });
+
+        await pairTracker.CleanReturnAsync();
+    }
+
     /// <summary>
     /// Test that a ghost gets created when the player entity is deleted.
     /// 1. Delete mob
@@ -27,7 +113,7 @@ public sealed class GhostTests
     public async Task TestGhostOnDelete()
     {
         // Client is needed to spawn session
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await SetupPair();
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -35,21 +121,13 @@ public sealed class GhostTests
 
         IPlayerSession player = playerMan.ServerSessions.Single();
 
-        await server.WaitAssertion(() =>
-        {
-            Assert.That(player.AttachedEntity, Is.Not.EqualTo(null));
-            entMan.DeleteEntity(player.AttachedEntity!.Value);
-        });
+        Assert.That(!entMan.HasComponent<GhostComponent>(player.AttachedEntity), "Player was initially a ghost?");
 
+        // Delete entity
+        await server.WaitPost(() => entMan.DeleteEntity(player.AttachedEntity!.Value));
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
-        await server.WaitAssertion(() =>
-        {
-            // Is player a ghost?
-            Assert.That(player.AttachedEntity, Is.Not.EqualTo(null));
-            var entity = player.AttachedEntity!.Value;
-            Assert.That(entMan.HasComponent<GhostComponent>(entity));
-        });
+        Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "Player did not become a ghost");
 
         await pairTracker.CleanReturnAsync();
     }
@@ -72,7 +150,6 @@ public sealed class GhostTests
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
-        var gameTicker = entMan.EntitySysManager.GetEntitySystem<GameTicker>();
         var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
         IPlayerSession player = playerMan.ServerSessions.Single();

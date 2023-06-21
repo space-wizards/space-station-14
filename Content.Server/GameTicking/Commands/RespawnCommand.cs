@@ -22,7 +22,7 @@ namespace Content.Server.GameTicking.Commands
             }
 
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
-            var sysMan = IoCManager.Resolve<EntitySystemManager>();
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
             var ticker = sysMan.GetEntitySystem<GameTicker>();
             var mind = sysMan.GetEntitySystem<MindSystem>();
 

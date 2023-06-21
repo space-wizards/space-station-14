@@ -307,12 +307,11 @@ namespace Content.Server.GameTicking
             var allMinds = Get<MindTrackerSystem>().AllMinds;
             foreach (var mind in allMinds)
             {
-                if (mind == null)
-                    continue;
+                // TODO don't list redundant observer roles?
+                // I.e., if a player was an observer ghost, then a hamster ghost role, maybe just list hamster and not
+                // the observer role?
+                var userId = mind.UserId ?? mind.OriginalOwnerUserId;
 
-                // Some basics assuming things fail
-                var userId = mind.OriginalOwnerUserId;
-                var playerOOCName = userId.ToString();
                 var connected = false;
                 var observer = mind.AllRoles.Any(role => role is ObserverRole);
                 // Continuing

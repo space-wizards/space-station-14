@@ -32,14 +32,9 @@ public sealed partial class MindTests
 {
     private const string Prototypes = @"
 - type: entity
-  id: MindTestEntity
-  components:
-  - type: MindContainer
-
-- type: entity
-  parent: MindTestEntity
   id: MindTestEntityDamageable
   components:
+  - type: MindContainer
   - type: Damageable
     damageContainer: Biological
   - type: Body
@@ -60,26 +55,6 @@ public sealed partial class MindTests
         behaviors:
         - !type:GibBehavior { }
 ";
-
-    /// <summary>
-    ///     Exception handling for PlayerData and NetUserId invalid due to testing.
-    ///     Can be removed when Players can be mocked.
-    /// </summary>
-    /// <param name="func"></param>
-    private void CatchPlayerDataException(Action func)
-    {
-        try
-        {
-            func();
-        }
-        catch (ArgumentException e)
-        {
-            // Prevent exiting due to PlayerData not being initialized.
-            if (e.Message == "New owner must have previously logged into the server. (Parameter 'newOwner')")
-                return;
-            throw;
-        }
-    }
 
     [Test]
     public async Task TestCreateAndTransferMindToNewEntity()
@@ -382,11 +357,11 @@ public sealed partial class MindTests
         await pairTracker.CleanReturnAsync();
     }
 
-    [Test]
+    // TODO Implement
+    /*[Test]
     public async Task TestPlayerCanReturnFromGhostWhenDead()
     {
-        // TODO Implement
-    }
+    }*/
 
     [Test]
     public async Task TestGhostDoesNotInfiniteLoop()
