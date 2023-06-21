@@ -264,6 +264,17 @@
 
 - type: entity
   parent: ClothingMaskGasExplorer
+  id: ClothingMaskGasMerc
+  name: mercenary gas mask
+  description: Slightly outdated, but reliable military-style gas mask.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/merc.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/merc.rsi
+
+- type: entity
+  parent: ClothingMaskGasExplorer
   id: ClothingMaskGasERT
   name: ert gas mask
   description: The gas mask of the elite squad of the ERT.

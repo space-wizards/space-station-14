@@ -888,6 +888,21 @@
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
 
 - type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTacticool
+  name: tacticool jumpsuit
+  description: Uniform for subpar operative LARPers performing tactical insulated glove theft in deep space.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/tacticool.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/tacticool.rsi
+    # Too cool for sensors to be on
+    - type: SuitSensor
+      randomMode: false
+      mode: SensorOff
+
+- type: entity
   parent: UnsensoredClothingUniformBase
   id: ClothingUniformJumpsuitMercenary
   name: mercenary jumpsuit
