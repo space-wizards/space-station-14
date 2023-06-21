@@ -215,7 +215,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: duck-0
-      sprite: Mobs/Animals/duck.rsi
+    sprite: Mobs/Animals/duck.rsi
   - type: Fixtures
     fixtures:
       fix1:
@@ -266,12 +266,9 @@
   description: An adorable white duck, it's fluffy and soft!
   components:
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: duck-1
-      sprite: Mobs/Animals/duck.rsi
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -288,12 +285,9 @@
   description: An adorable brown duck, it's fluffy and soft!
   components:
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: duck-2
-      sprite: Mobs/Animals/duck.rsi
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -961,14 +955,11 @@
   id: MobMouse1
   components:
   - type: Sprite
-    drawdepth: SmallMobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-1
-      sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
     equippedPrefix: 1
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -977,22 +968,17 @@
         Base: dead-1
       Dead:
         Base: splat-1
-  - type: Bloodstream
-    bloodMaxVolume: 50
 
 - type: entity
   parent: MobMouse
   id: MobMouse2
   components:
   - type: Sprite
-    drawdepth: SmallMobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-2
-      sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    equippedPrefix: 1
-  - type: Appearance
+    equippedPrefix: 2
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1001,8 +987,6 @@
         Base: dead-2
       Dead:
         Base: splat-2
-  - type: Bloodstream
-    bloodMaxVolume: 50
 
 - type: entity
   name: lizard #Weh
@@ -1470,7 +1454,7 @@
 
 - type: entity
   name: clown spider
-  parent: MobGiantSpider
+  parent: MobGiantSpiderAngry
   id: MobClownSpider
   description: Combines the two most terrifying things in existence, spiders and clowns.
   components:
@@ -1480,13 +1464,6 @@
       - map: ["enum.DamageStateVisualLayers.Base"]
         state: clown
         sprite: Mobs/Animals/clownspider.rsi
-    - type: Faction
-      factions:
-        - Xeno
-    - type: InputMover
-    - type: MobMover
-    - type: HTN
-      rootTask: SimpleHostileCompound
     - type: Butcherable
       spawned:
         - id: MaterialBananium1
@@ -1916,12 +1893,9 @@
   description: Feline pet, very funny.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat2
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1930,9 +1904,6 @@
         Base: cat2_dead
       Dead:
         Base: cat2_dead
-  - type: Grammar
-    attributes:
-      gender: epicene
 
 - type: entity
   name: space cat
@@ -1941,12 +1912,9 @@
   description: Feline pet, prepared for the worst.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: spacecat
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1961,9 +1929,6 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
 
 - type: entity
   name: caracal cat
@@ -1972,12 +1937,10 @@
   description: Hilarious.
   components:
   - type: Sprite
-    drawdepth: Mobs
     sprite: Mobs/Pets/caracal.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: caracal_flop
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1986,9 +1949,6 @@
         Base: caracal_dead
       Dead:
         Base: caracal_dead
-  - type: Grammar
-    attributes:
-      gender: epicene
 
 - type: entity
   name: sloth
