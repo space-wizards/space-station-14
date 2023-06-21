@@ -15,7 +15,6 @@ using IPlayerManager = Robust.Server.Player.IPlayerManager;
 namespace Content.IntegrationTests.Tests.Minds;
 
 // This partial class contains misc helper functions for other tests.
-[TestFixture]
 public sealed partial class MindTests
 {
     /// <summary>
@@ -23,7 +22,7 @@ public sealed partial class MindTests
     /// </summary>
     public async Task<PairTracker> SetupPair()
     {
-        var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ ExtraPrototypes = Prototypes });
+        var pairTracker = await PoolManager.GetServerClient();
         var pair = pairTracker.Pair;
 
         var entMan = pair.Server.ResolveDependency<IServerEntityManager>();
@@ -35,7 +34,7 @@ public sealed partial class MindTests
         EntityUid entity = default;
         await pair.Server.WaitPost(() =>
         {
-            entity = entMan.SpawnEntity("MindTestEntity", MapCoordinates.Nullspace);
+            entity = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
             mindSys.TransferTo(mindSys.CreateMind(player.UserId), entity);
         });
 
