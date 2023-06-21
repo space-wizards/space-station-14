@@ -52,15 +52,15 @@
   id: AmmoTechFabCircuitboard
   parent: BaseMachineCircuitboard
   name: ammo techfab circuit board
-  description: A machine printed circuit board for a security techfab
+  description: A machine printed circuit board for a ammo techfab
   components:
     - type: Sprite
       state: security
     - type: MachineBoard
       prototype: AmmoTechFab
       requirements:
-        MatterBin: 3
-        Manipulator: 3
+        MatterBin: 1
+        Manipulator: 1
 
 - type: entity
   id: MedicalTechFabCircuitboard
