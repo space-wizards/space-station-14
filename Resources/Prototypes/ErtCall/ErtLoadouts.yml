@@ -164,7 +164,7 @@
   id: ERTCallCBURNLeaderGearEVA
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBrown
-    back: ClothingBackpackDuffelCBURN
+    back: ClothingBackpackCallERTCBURNFilled
     mask: ClothingMaskGasExplorer
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetAltCentCom
@@ -177,15 +177,15 @@
     suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier
   innerclothingskirt: ClothingUniformJumpsuitColorBrown
-  satchel: ClothingBackpackDuffelCBURN
-  duffelbag: ClothingBackpackDuffelCBURN
+  satchel: ClothingBackpackCallERTCBURNFilled
+  duffelbag: ClothingBackpackCallERTCBURNFilled
 
 #Security
 - type: startingGear
   id: ERTCallCBURNSecurityGearEVA
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBrown
-    back: ClothingBackpackDuffelCBURN
+    back: ClothingBackpackCallERTCBURNFilled
     mask: ClothingMaskGasExplorer
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetAltCentCom
@@ -198,15 +198,15 @@
     suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier
   innerclothingskirt: ClothingUniformJumpsuitColorBrown
-  satchel: ClothingBackpackDuffelCBURN
-  duffelbag: ClothingBackpackDuffelCBURN
+  satchel: ClothingBackpackCallERTCBURNFilled
+  duffelbag: ClothingBackpackCallERTCBURNFilled
 
 #Medic
 - type: startingGear
   id: ERTCallCBURNMedicGearEVA
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBrown
-    back: ClothingBackpackDuffelCBURN
+    back: ClothingBackpackCallERTCBURNFilled
     mask: ClothingMaskGasExplorer
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetAltCentCom
@@ -219,8 +219,8 @@
     suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier
   innerclothingskirt: ClothingUniformJumpsuitColorBrown
-  satchel: ClothingBackpackDuffelCBURN
-  duffelbag: ClothingBackpackDuffelCBURN
+  satchel: ClothingBackpackCallERTCBURNFilled
+  duffelbag: ClothingBackpackCallERTCBURNFilled
 #CBURN END
 
 #DEAD SQUAD START

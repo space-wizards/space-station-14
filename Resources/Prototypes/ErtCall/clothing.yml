@@ -46,7 +46,14 @@
 #ERT END
 
 #CBURN START
-
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffelCBURN
+  id: ClothingBackpackCallERTCBURNFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
 #CBURN END
 
 #DEAD SQUAD START

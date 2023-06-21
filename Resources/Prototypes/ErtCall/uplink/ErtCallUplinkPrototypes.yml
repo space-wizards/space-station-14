@@ -108,6 +108,13 @@
   id: ERTUplinkDeadSquad
   suffix: ERT
   components:
+  - type: Sprite
+    sprite: Objects/Devices/ert_tablet.rsi
+    layers:
+    - state: device-on
+    - state: device-deadsquad-anim
+      shader: unshaded
+      visible: true
   - type: Store
     preset: ErtCallUplinkDeadSquadPreset
     balance:
