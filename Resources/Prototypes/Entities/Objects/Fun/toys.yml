@@ -166,7 +166,7 @@
   - type: PointLight
     radius: 1.5
     energy: 2
-
+    netsync: false
 - type: entity
   parent: BasePlushie
   id: PlushieLizard #Weh!
@@ -923,6 +923,7 @@
       radius: 2
       energy: 2
       color: white
+      netsync: false
     - type: Appearance
     - type: ToggleableLightVisuals
       spriteLayer: blade
