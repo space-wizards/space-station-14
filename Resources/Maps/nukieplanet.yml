@@ -6200,6 +6200,13 @@ entities:
     - pos: 11.5,-6.5
       parent: 104
       type: Transform
+- proto: KitchenReagentGrinder
+  entities:
+  - uid: 507
+    components:
+    - pos: 3.5,-11.5
+      parent: 104
+      type: Transform
 - proto: LightPostSmall
   entities:
   - uid: 214
@@ -6386,13 +6393,6 @@ entities:
   - uid: 1894
     components:
     - pos: 7.5339637,-10.889339
-      parent: 104
-      type: Transform
-- proto: MedkitCombatFilled
-  entities:
-  - uid: 1844
-    components:
-    - pos: 3.1661625,-6.4598556
       parent: 104
       type: Transform
 - proto: MedkitFilled
