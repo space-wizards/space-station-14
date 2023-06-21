@@ -19,6 +19,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - WhitelistChameleon
 
 #Old (Security) Helmet
 - type: entity

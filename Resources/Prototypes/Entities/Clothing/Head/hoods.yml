@@ -86,6 +86,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -111,6 +112,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase

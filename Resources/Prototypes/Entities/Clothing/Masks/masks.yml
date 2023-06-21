@@ -14,6 +14,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskGas
@@ -170,6 +171,7 @@
     tags:
     - ClownMask
     - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskBase
@@ -198,6 +200,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -326,6 +329,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskBase
