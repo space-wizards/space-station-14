@@ -1,12 +1,4 @@
 - type: loadout
-  id: LoadoutEyesSalesman
-  name: Colored Glasses
-  description: Best salesman of 1997.
-  category: Accessories
-  cost: 1
-  item: ClothingEyesSalesman
-
-- type: loadout
   id: LoadoutEyesEyepatch
   name: Eyepatch
   description: Eyewear, for the fashionista without and eye.

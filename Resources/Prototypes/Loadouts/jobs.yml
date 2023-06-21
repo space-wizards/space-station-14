@@ -52,7 +52,6 @@
   cost: 2
   exclusive: true
   jobWhitelist:
-    - Mystagogue
     - ResearchDirector
   item: ClothingNeckMantleRD
 
@@ -208,17 +207,6 @@
   item: ClothingUniformJumpskirtParamedic
 
 - type: loadout
-  id: LoadoutMedicalUniformNurseJumpskirt
-  name: Nurse outfit
-  description: "An alternate job equipment."
-  category: Jobs
-  cost: 2
-  exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
-  item: ClothingUniformJumpskirtNurse
-
-- type: loadout
   id: LoadoutMedicalHeadNurse
   name: Nurse hat
   description: "An alternate job equipment."
@@ -360,7 +348,7 @@
   item: BoxInflatable
 
 
-# Epistemics
+# Science
 
 - type: loadout
   id: LoadoutScienceOuterLabcoat
@@ -370,35 +358,8 @@
   cost: 2
   exclusive: true
   jobWhitelist:
-    - Epistemologist
     - Scientist
   item: ClothingOuterCoatLab
-
-- type: loadout
-  id: LoadoutScienceItemTrackerAnomaly
-  name: Anomaly tracker
-  description: "A tracker used for locating anomalies on the station."
-  category: Jobs
-  cost: 3
-  jobWhitelist:
-    - Epistemologist
-    - ForensicMantis
-    - Cataloguer
-    - Scientist
-  item: PinpointerAnomaly
-
-- type: loadout
-  id: LoadoutScienceItemTrackerArtifact
-  name: Artifact tracker
-  description: "A tracker used for locating artifacts on the station."
-  category: Jobs
-  cost: 3
-  jobWhitelist:
-    - Epistemologist
-    - ForensicMantis
-    - Cataloguer
-    - Scientist
-  item: PinpointerArtifact
 
 
 # Service

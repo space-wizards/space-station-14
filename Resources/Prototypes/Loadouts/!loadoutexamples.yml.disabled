@@ -2,27 +2,6 @@
 # These are examples of what you could do
 
 - type: loadout
-  id: CategorizedSpeciesWhitelistExample
-  name: Purple Coat
-  description: A nice purple coat
-  category: things
-  cost: 1
-  whitelist:
-    species:
-      - SlimePerson # Only SlimePeople should get this item
-  item: ClothingOuterPurpleCoat
-
-- type: loadout
-  id: UncategorizedSpeciesBlacklistExample
-  name: Purple Coat
-  description: A nice purple coat
-  cost: 2
-  blacklist:
-    species:
-      - Felinid # Felinids can;t have this
-  item: ClothingOuterPurpleCoat
-
-- type: loadout
   id: CategorizedJobWhitelistExample
   name: Purple Coat
   description: A nice purple coat
@@ -46,7 +25,7 @@
   id: UncategorizedThisCostsTooMuchExample
   name: Purple Coat
   description: A nice purple coat
-  cost: 100 # You cannot get this
+  cost: 100 # You probably can't get this
   item: ClothingOuterPurpleCoat
 
 - type: loadout
@@ -66,5 +45,5 @@
   cost: 4
   whitelist:
     tags:
-      - DroneUsable # This is a bad example and will always fail, as no mob is given this tag
+      - DroneUsable # This is a bad example and will always fail, as no mob should be given this tag
   item: ClothingOuterPurpleCoat
