@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Shuttle movement has been overhauled to use forces instead of setting
-      velocity directly., type: Tweak}
-  id: 3565
-  time: '2023-04-29T08:17:32.0000000+00:00'
 - author: keronshb
   changes:
   - {message: The ability to temporarily speak Ratvarian has been added after drinking
@@ -2942,3 +2936,8 @@ Entries:
   - {message: Added Bicaridine syringe to combat medkit., type: Add}
   id: 4064
   time: '2023-06-21T20:35:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed many PDAs not having the correct colors in their UIs., type: Fix}
+  id: 4065
+  time: '2023-06-21T21:45:17.0000000+00:00'
