@@ -1937,6 +1937,7 @@
   description: Hilarious.
   components:
   - type: Sprite
+    sprite: Mobs/Pets/caracal.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: caracal_flop
