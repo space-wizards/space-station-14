@@ -125,17 +125,6 @@ namespace Content.Server.Ghost
             _actions.AddAction(uid, component.Action, null);
         }
 
-        private void SetCanSeeGhosts(EntityUid uid, bool canSee, EyeComponent? eyeComponent = null)
-        {
-            if (!Resolve(uid, ref eyeComponent))
-                return;
-
-            if (canSee)
-                eyeComponent.VisibilityMask |= (uint) VisibilityFlags.Ghost;
-            else
-                eyeComponent.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
-        }
-
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
         {
             // Perf: If the entity is deleting itself, no reason to change these back.
@@ -154,6 +143,17 @@ namespace Content.Server.Ghost
             SetCanSeeGhosts(uid, false);
 
             _actions.RemoveAction(uid, component.Action);
+        }
+
+        private void SetCanSeeGhosts(EntityUid uid, bool canSee, EyeComponent? eyeComponent = null)
+        {
+            if (!Resolve(uid, ref eyeComponent))
+                return;
+
+            if (canSee)
+                eyeComponent.VisibilityMask |= (uint) VisibilityFlags.Ghost;
+            else
+                eyeComponent.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
         }
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
