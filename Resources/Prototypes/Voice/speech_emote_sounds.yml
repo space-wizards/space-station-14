@@ -84,10 +84,74 @@
       collection: MaleCry
 
 - type: emoteSounds
-  id: UnisexSlime
+  id: MaleSlime
   sounds:
     Squish:
       collection: Squishes
+    Scream:
+      collection: MaleScreams
+    Laugh:
+      collection: MaleLaugh
+    Sneeze:
+      collection: MaleSneezes
+    Cough:
+      collection: MaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: MaleYawn
+    Snore:
+      collection: Snores
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: MaleSigh
+    Crying:
+      collection: MaleCry
+    Whistle:
+      collection: Whistles
+  params:
+    variation: 0.125
+
+- type: emoteSounds
+  id: FemaleSlime
+  sounds:
+    Squish:
+      collection: Squishes
+    Scream:
+      collection: FemaleScreams
+    Laugh:
+      collection: FemaleLaugh
+    Sneeze:
+      collection: FemaleSneezes
+    Cough:
+      collection: FemaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: FemaleYawn
+    Snore:
+      collection: Snores
+    Honk:
+      collection: CluwneHorn
+    Sigh:
+      collection: FemaleSigh
+    Crying:
+      collection: FemaleCry
+    Whistle:
+      collection: Whistles
   params:
     variation: 0.125
 
