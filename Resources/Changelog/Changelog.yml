@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Nerf or remove some standard sell prices., type: Tweak}
-  id: 3559
-  time: '2023-04-29T04:59:25.0000000+00:00'
 - author: brainfood1183
   changes:
   - {message: 'Added Bananium, you can build things with it. Dont eat it!', type: Add}
@@ -2935,3 +2930,8 @@ Entries:
       and 'more', type: Add}
   id: 4058
   time: '2023-06-20T20:30:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed chemistry from nukie planet., type: Remove}
+  id: 4059
+  time: '2023-06-21T00:50:35.0000000+00:00'
