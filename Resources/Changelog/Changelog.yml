@@ -1,9 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - {message: 'Added Bananium, you can build things with it. Dont eat it!', type: Add}
-  id: 3560
-  time: '2023-04-29T05:38:10.0000000+00:00'
 - author: jamessimo
   changes:
   - {message: Minor UI enhancements to the Anomaly Generator UI, type: Tweak}
@@ -2935,3 +2930,9 @@ Entries:
   - {message: Removed chemistry from nukie planet., type: Remove}
   id: 4059
   time: '2023-06-21T00:50:35.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that allowed observers/ghosts to respawn by disconnecting
+      and reconnecting., type: Fix}
+  id: 4060
+  time: '2023-06-21T01:04:08.0000000+00:00'
