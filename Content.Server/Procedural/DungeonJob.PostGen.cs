@@ -266,6 +266,7 @@ public sealed partial class DungeonJob
         Random random)
     {
         var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
+        var tagQuery = _entManager.GetEntityQuery<TagComponent>();
 
         foreach (var tile in dungeon.CorridorTiles)
         {
@@ -299,9 +300,8 @@ public sealed partial class DungeonJob
 
                 while (dirEnumerator.MoveNext(out var ent))
                 {
-                    if (!physicsQuery.TryGetComponent(ent, out var physics) ||
-                        !physics.CanCollide ||
-                        !physics.Hard)
+                    if (!tagQuery.TryGetComponent(ent, out var tags) ||
+                        !tags.Tags.Contains("Wall"))
                     {
                         continue;
                     }
@@ -313,14 +313,14 @@ public sealed partial class DungeonJob
                 if (!blocked)
                     continue;
 
+                blocked = false;
                 var nextDir = (Direction) ((i + 1) * 2 % 8);
                 var nextDirEnumerator = _grid.GetAnchoredEntitiesEnumerator(tile + nextDir.ToIntVec());
 
                 while (nextDirEnumerator.MoveNext(out var ent))
                 {
-                    if (!physicsQuery.TryGetComponent(ent, out var physics) ||
-                        !physics.CanCollide ||
-                        !physics.Hard)
+                    if (!tagQuery.TryGetComponent(ent, out var tags) ||
+                        !tags.Tags.Contains("Wall"))
                     {
                         continue;
                     }
