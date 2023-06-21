@@ -273,6 +273,18 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> GameTableBonk =
             CVarDef.Create("game.table_bonk", false, CVar.REPLICATED);
 
+        /// <summary>
+        /// Whether or not to allow characters to select loadout items.
+        /// </summary>
+        public static readonly CVarDef<bool> GameLoadoutsEnabled =
+            CVarDef.Create("game.loadouts_enabled", true, CVar.REPLICATED);
+
+        /// <summary>
+        /// How many points to give to each player for loadouts.
+        /// </summary>
+        public static readonly CVarDef<int> GameLoadoutsPoints =
+            CVarDef.Create("game.loadouts_points", 14, CVar.REPLICATED);
+
 #if EXCEPTION_TOLERANCE
         /// <summary>
         ///     Amount of times round start must fail before the server is shut down.

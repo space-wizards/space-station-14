@@ -145,9 +145,7 @@
                 </BoxContainer>
                 <BoxContainer Name="CLoadoutsTab" Orientation="Vertical" Margin="10">
                     <!-- Loadouts -->
-                    <!-- TODO Server-Side validation -->
-                    <!-- Keep this value consistent with the Update_Preferences function's default 'points' value or issues will arise -->
-                    <ProgressBar Name="LoadoutPoints" MaxValue="14" Value="14" />
+                    <ProgressBar Name="LoadoutPoints" MaxValue="1" Value="1" />
                     <ScrollContainer VerticalExpand="True">
                         <TabContainer Name="CLoadoutsTabs" VerticalExpand="True" />
                     </ScrollContainer>

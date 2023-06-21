@@ -453,6 +453,12 @@ namespace Content.Client.Preferences.UI
             _loadoutPreferences = new List<LoadoutPreferenceSelector>();
             var loadouts = prototypeManager.EnumeratePrototypes<LoadoutPrototype>().OrderBy(l => l.ID).ToList();
 
+            _tabContainer.SetTabVisible(4, _configurationManager.GetCVar(CCVars.GameLoadoutsEnabled));
+            _configurationManager.OnValueChanged(CCVars.GameLoadoutsEnabled, enabled => { _tabContainer.SetTabVisible(4, enabled); });
+            var points = _configurationManager.GetCVar(CCVars.GameLoadoutsPoints);
+            _loadoutPoints.MaxValue = points;
+            _loadoutPoints.Value = points;
+
             if (loadouts.Count >= 0)
             {
                 // Make Uncategorized category
@@ -521,7 +527,7 @@ namespace Content.Client.Preferences.UI
                     selector.PreferenceChanged += preference =>
                     {
                         // Make sure they have enough loadout points
-                        if (preference == true)
+                        if (preference)
                         {
                             var temp = _loadoutPoints.Value - loadout.Cost;
 
@@ -541,7 +547,7 @@ namespace Content.Client.Preferences.UI
                     };
                 }
 
-                if (uncategorized.Children.Count() <= 0)
+                if (!uncategorized.Children.Any())
                     _loadoutsTabs.SetTabVisible(0, false);
             }
             else
@@ -1433,7 +1439,7 @@ namespace Content.Client.Preferences.UI
 
         private void UpdateLoadoutPreferences()
         {
-            int points = 14; // TODO: Default value from the xaml, keep these consistent or issues will arise
+            var points = _configurationManager.GetCVar(CCVars.GameLoadoutsPoints);
             _loadoutPoints.Value = points;
 
             if (_loadoutPreferences == null)
@@ -1552,10 +1558,10 @@ namespace Content.Client.Preferences.UI
             {
                 Loadout = loadout;
 
-                var entman = IoCManager.Resolve<IEntityManager>();
+                var entMan = IoCManager.Resolve<IEntityManager>();
                 var exists = IoCManager.Resolve<IPrototypeManager>().TryIndex<EntityPrototype>(loadout.Item!, out _);
-                var dummyLoadout = entman.SpawnEntity(exists ? loadout.Item : "Error", MapCoordinates.Nullspace);
-                var sprite = entman.GetComponent<SpriteComponent>(dummyLoadout);
+                var dummyLoadout = entMan.SpawnEntity(exists ? loadout.Item : "Error", MapCoordinates.Nullspace);
+                var sprite = entMan.GetComponent<SpriteComponent>(dummyLoadout);
 
                 var previewLoadout = new SpriteView
                 {
@@ -1589,7 +1595,8 @@ namespace Content.Client.Preferences.UI
                     if (loadout.Whitelist?.Tags != null)
                         foreach (var require in loadout.Whitelist.Tags)
                             tooltip += $"\n - {require} (Tag)";
-                    if (loadout.Whitelist?.RequireAll == true) tooltip += $"\n Require All: {loadout.Whitelist.RequireAll}"; // This comes first because job whitelist has no effect on requireall
+                    if (loadout.Whitelist?.RequireAll == true)
+                        tooltip += $"\n Require All: {loadout.Whitelist.RequireAll}"; // This comes first because job whitelist has no effect on requireall
                     if (loadout.JobWhitelist != null)
                         foreach (var require in loadout.JobWhitelist)
                             tooltip += $"\n - {require} (Job)";
@@ -1603,7 +1610,8 @@ namespace Content.Client.Preferences.UI
                     if (loadout.Blacklist?.Tags != null)
                         foreach (var require in loadout.Blacklist.Tags)
                             tooltip += $"\n - {require} (Tag)";
-                    if (loadout.Blacklist?.RequireAll == true) tooltip += $"\n Require All: {loadout.Blacklist.RequireAll}"; // This comes first because job whitelist has no effect on requireall
+                    if (loadout.Blacklist?.RequireAll == true)
+                        tooltip += $"\n Require All: {loadout.Blacklist.RequireAll}"; // This comes first because job whitelist has no effect on requireall
                     if (loadout.JobBlacklist != null)
                         foreach (var require in loadout.JobBlacklist)
                             tooltip += $"\n - {require} (Job)";

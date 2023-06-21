@@ -8,6 +8,7 @@ using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
 using Content.Server.Storage.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
@@ -213,60 +214,65 @@ namespace Content.Server.GameTicking
             }
 
 
-            var invSystem = Get<InventorySystem>();
-
-            foreach (var loadout in character.LoadoutPreferences)
+            if (_configurationManager.GetCVar(CCVars.GameLoadoutsEnabled))
             {
-                var slot = "";
-                if (!_prototypeManager.TryIndex<LoadoutPrototype>(loadout, out var loadoutProto))
-                    continue;
+                var invSystem = Get<InventorySystem>();
 
-                if (loadoutProto.JobWhitelist != null &&
-                    !loadoutProto.JobWhitelist.Contains(jobPrototype.ID) ||
-                    loadoutProto.JobBlacklist != null &&
-                    loadoutProto.JobBlacklist.Contains(jobPrototype.ID))
-                    continue;
-
-                var spawned = EntityManager.SpawnEntity(loadoutProto.Item, EntityManager.GetComponent<TransformComponent>(mob).Coordinates);
-
-                if (EntityManager.TryGetComponent<ClothingComponent>(spawned, out var clothingComp))
+                foreach (var loadout in character.LoadoutPreferences)
                 {
-                    if (invSystem.TryGetSlots(mob, out var slotDefinitions))
+                    var slot = "";
+                    if (!_prototypeManager.TryIndex<LoadoutPrototype>(loadout, out var loadoutProto))
+                        continue;
+
+                    if (loadoutProto.JobWhitelist != null &&
+                        !loadoutProto.JobWhitelist.Contains(jobPrototype.ID) ||
+                        loadoutProto.JobBlacklist != null &&
+                        loadoutProto.JobBlacklist.Contains(jobPrototype.ID))
+                        continue;
+
+                    var spawned = EntityManager.SpawnEntity(loadoutProto.Item,
+                        EntityManager.GetComponent<TransformComponent>(mob).Coordinates);
+
+                    if (EntityManager.TryGetComponent<ClothingComponent>(spawned, out var clothingComp))
                     {
-                        var deleted = false;
-                        foreach (var slotCur in slotDefinitions)
+                        if (invSystem.TryGetSlots(mob, out var slotDefinitions))
                         {
-                            if (!clothingComp.Slots.HasFlag(slotCur.SlotFlags) || deleted)
-                                continue;
-
-                            if (invSystem.TryGetSlotEntity(mob, slotCur.Name, out var slotItem))
+                            var deleted = false;
+                            foreach (var slotCur in slotDefinitions)
                             {
-                                var slotItemMeta = EntityManager.GetComponent<MetaDataComponent>(slotItem.Value);
-                                if (loadoutProto.Exclusive ||
-                                    slotItemMeta.EntityPrototype!.ID is "ClothingUniformJumpsuitColorGrey" or "ClothingUniformJumpskirtColorGrey")
-                                    EntityManager.DeleteEntity((EntityUid) slotItem);
-                            }
+                                if (!clothingComp.Slots.HasFlag(slotCur.SlotFlags) || deleted)
+                                    continue;
 
-                            slot = slotCur.Name;
-                            deleted = true;
+                                if (invSystem.TryGetSlotEntity(mob, slotCur.Name, out var slotItem))
+                                {
+                                    var slotItemMeta = EntityManager.GetComponent<MetaDataComponent>(slotItem.Value);
+                                    if (loadoutProto.Exclusive ||
+                                        slotItemMeta.EntityPrototype!.ID is "ClothingUniformJumpsuitColorGrey"
+                                            or "ClothingUniformJumpskirtColorGrey")
+                                        EntityManager.DeleteEntity((EntityUid) slotItem);
+                                }
+
+                                slot = slotCur.Name;
+                                deleted = true;
+                            }
                         }
                     }
-                }
 
-                if (invSystem.TryEquip(mob, spawned, slot))
-                    continue;
-
-                if (invSystem.TryGetSlotEntity(mob, "back", out var item) &&
-                    EntityManager.TryGetComponent<ServerStorageComponent>(item, out var inventory))
-                {
-                    if (inventory.Storage == null)
+                    if (invSystem.TryEquip(mob, spawned, slot))
                         continue;
-                    if (inventory.Storage.CanInsert(spawned))
-                        inventory.Storage.Insert(spawned);
+
+                    if (invSystem.TryGetSlotEntity(mob, "back", out var item) &&
+                        EntityManager.TryGetComponent<ServerStorageComponent>(item, out var inventory))
+                    {
+                        if (inventory.Storage == null)
+                            continue;
+                        if (inventory.Storage.CanInsert(spawned))
+                            inventory.Storage.Insert(spawned);
+                    }
                 }
             }
 
-            
+
             _stationJobs.TryAssignJob(station, jobPrototype);
 
             if (lateJoin)
