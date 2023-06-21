@@ -1,21 +1,6 @@
 ﻿# Tier 1
 
 - type: technology
-  id: SalvageWeapons
-  name: research-technology-salvage-weapons
-  icon:
-    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-    state: gun
-  discipline: Industrial
-  tier: 1
-  cost: 10000
-  recipeUnlocks:
-    - WeaponProtoKineticAccelerator
-    # These are roundstart but not replenishable for salvage
-    - WeaponCrusher
-    - WeaponCrusherDagger
-
-- type: technology
   id: SalvageEquipment
   name: research-technology-salvage-equipment
   icon:

@@ -158,6 +158,7 @@
     contents:
       - id: ClothingNeckCloakCe
       - id: ClothingEyesGlassesMeson
+      - id: ClothingBeltChiefEngineerFilled
       - id: ClothingHeadHatBeretEngineering
       - id: ClothingHandsGlovesColorYellow
       - id: CigarCase

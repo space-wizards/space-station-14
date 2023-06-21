@@ -254,3 +254,19 @@
   - type: Tag
     tags:
     - Bottle
+
+- type: entity
+  id: ToxinChemistryBottle
+  name: toxin bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+          reagents:
+            - ReagentId: Toxin
+              Quantity: 30
+    - type: Tag
+      tags:
+        - Bottle

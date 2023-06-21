@@ -152,6 +152,7 @@
   id: ClothingHeadHatCatEars
   name: cat ears
   description: "NYAH!"
+  suffix: DO NOT MAP
   components:
   - type: Tag
     tags: # ignore "WhitelistChameleon" tag
