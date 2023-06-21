@@ -227,6 +227,23 @@ public sealed class StaminaSystem : EntitySystem
         _alerts.ShowAlert(uid, AlertType.Stamina, (short) severity);
     }
 
+    /// <summary>
+    /// Tries to take stamina damage without raising the entity over the crit threshold.
+    /// </summary>
+    public bool TryTakeStamina(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return false;
+
+        var oldStam = component.StaminaDamage;
+
+        if (oldStam + value > component.CritThreshold || component.Critical)
+            return false;
+
+        TakeStaminaDamage(uid, value, component, source, with);
+        return true;
+    }
+
     public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null)
     {
         if (!Resolve(uid, ref component, false))

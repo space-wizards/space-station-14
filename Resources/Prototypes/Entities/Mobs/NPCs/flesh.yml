@@ -30,7 +30,7 @@
       0: Alive
       75: Dead
   - type: Stamina
-    excess: 50
+    critThreshold: 50
   - type: Appearance
   - type: Butcherable
     spawned:

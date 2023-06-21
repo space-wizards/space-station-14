@@ -99,7 +99,7 @@
       5: Critical
       10: Dead
   - type: Stamina
-    excess: 10
+    critThreshold: 10
   - type: Appearance
   - type: DamageStateVisuals
     states:

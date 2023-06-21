@@ -60,55 +60,62 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!CombatMode.IsInCombatMode(entity) || !Blocker.CanAttack(entity))
         {
             weapon.Attacking = false;
-            if (weapon.WindUpStart != null)
-            {
-                EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weaponUid));
-            }
+            return;
+        }
 
+        var useDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
+        var altDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.UseSecondary);
+
+        if (useDown != BoundKeyState.Down && altDown != BoundKeyState.Down)
+        {
+            if (weapon.Attacking)
+            {
+                RaisePredictiveEvent(new StopAttackEvent(weaponUid));
+            }
+        }
+
+        if (weapon.Attacking || weapon.NextAttack > Timing.CurTime)
+        {
             return;
         }
 
         // TODO using targeted actions while combat mode is enabled should NOT trigger attacks.
 
-        var useDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
-        var altDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.UseSecondary);
-        var currentTime = Timing.CurTime;
+        // TODO: Need to make alt-fire melee its own component I guess?
+        // Melee and guns share a lot in the middle but share virtually nothing at the start and end so
+        // it's kinda tricky.
+        // I think as long as we make secondaries their own component it's probably fine
+        // as long as guncomp has an alt-use key then it shouldn't be too much of a PITA to deal with.
+        if (HasComp<GunComponent>(weaponUid))
+        {
+            return;
+        }
+
+        var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+
+        if (mousePos.MapId == MapId.Nullspace)
+        {
+            return;
+        }
+
+        EntityCoordinates coordinates;
+
+        if (MapManager.TryFindGridAt(mousePos, out var gridUid, out _))
+        {
+            coordinates = EntityCoordinates.FromMap(gridUid, mousePos, TransformSystem, EntityManager);
+        }
+        else
+        {
+            coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, TransformSystem, EntityManager);
+        }
 
         // Heavy attack.
         if (altDown == BoundKeyState.Down)
         {
-            // TODO: Need to make alt-fire melee its own component I guess?
-            // Melee and guns share a lot in the middle but share virtually nothing at the start and end so
-            // it's kinda tricky.
-            // I think as long as we make secondaries their own component it's probably fine
-            // as long as guncomp has an alt-use key then it shouldn't be too much of a PITA to deal with.
-            if (HasComp<GunComponent>(weaponUid))
-            {
-                return;
-            }
-
-            // We did the click to end the attack but haven't pulled the key up.
-            if (weapon.Attacking)
-            {
-                return;
-            }
-
             // If it's an unarmed attack then do a disarm
             if (weaponUid == entity)
             {
                 EntityUid? target = null;
-
-                var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-                EntityCoordinates coordinates;
-
-                if (MapManager.TryFindGridAt(mousePos, out var gridUid, out _))
-                {
-                    coordinates = EntityCoordinates.FromMap(gridUid, mousePos, TransformSystem, EntityManager);
-                }
-                else
-                {
-                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, TransformSystem, EntityManager);
-                }
 
                 if (_stateManager.CurrentState is GameplayStateBase screen)
                 {
@@ -119,52 +126,13 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 return;
             }
 
-            // Otherwise do heavy attack if it's a weapon.
-
-            // Start a windup
-            if (weapon.WindUpStart == null)
-            {
-                EntityManager.RaisePredictiveEvent(new StartHeavyAttackEvent(weaponUid));
-                weapon.WindUpStart = currentTime;
-            }
-
-            // Try to do a heavy attack.
-            if (useDown == BoundKeyState.Down)
-            {
-                var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-                EntityCoordinates coordinates;
-
-                // Bro why would I want a ternary here
-                // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-                if (MapManager.TryFindGridAt(mousePos, out var gridUid, out _))
-                {
-                    coordinates = EntityCoordinates.FromMap(gridUid, mousePos, TransformSystem, EntityManager);
-                }
-                else
-                {
-                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, TransformSystem, EntityManager);
-                }
-
-                ClientHeavyAttack(entity, coordinates, weaponUid, weapon);
-            }
-
+            ClientHeavyAttack(entity, coordinates, weaponUid, weapon);
             return;
-        }
-
-        if (weapon.WindUpStart != null)
-        {
-            EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weaponUid));
         }
 
         // Light attack
         if (useDown == BoundKeyState.Down)
         {
-            if (weapon.Attacking || weapon.NextAttack > Timing.CurTime)
-            {
-                return;
-            }
-
-            var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
             var attackerPos = Transform(entity).MapPosition;
 
             if (mousePos.MapId != attackerPos.MapId ||
@@ -173,22 +141,8 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 return;
             }
 
-            EntityCoordinates coordinates;
-
-            // Bro why would I want a ternary here
-            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-            if (MapManager.TryFindGridAt(mousePos, out var gridUid, out _))
-            {
-                coordinates = EntityCoordinates.FromMap(gridUid, mousePos, TransformSystem, EntityManager);
-            }
-            else
-            {
-                coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, TransformSystem, EntityManager);
-            }
-
             EntityUid? target = null;
 
-            // TODO: UI Refactor update I assume
             if (_stateManager.CurrentState is GameplayStateBase screen)
             {
                 target = screen.GetClickedEntity(mousePos);
@@ -196,11 +150,6 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
             RaisePredictiveEvent(new LightAttackEvent(target, weaponUid, coordinates));
             return;
-        }
-
-        if (weapon.Attacking)
-        {
-            RaisePredictiveEvent(new StopAttackEvent(weaponUid));
         }
     }
 
@@ -273,14 +222,6 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // Server will validate it with InRangeUnobstructed.
         var entities = ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user).ToList();
         RaisePredictiveEvent(new HeavyAttackEvent(meleeUid, entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), coordinates));
-    }
-
-    protected override void Popup(string message, EntityUid? uid, EntityUid? user)
-    {
-        if (!Timing.IsFirstTimePredicted || uid == null)
-            return;
-
-        PopupSystem.PopupEntity(message, uid.Value);
     }
 
     private void OnMeleeLunge(MeleeLungeEvent ev)

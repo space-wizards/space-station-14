@@ -38,7 +38,7 @@
         50: Critical
         100: Dead
     - type: Stamina
-      excess: 100
+      critThreshold: 100
     - type: MovementAlwaysTouching
     - type: Appearance
     - type: DamageStateVisuals

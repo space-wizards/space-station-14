@@ -60,9 +60,20 @@ public sealed class MeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage = default!;
 
-    [DataField("bluntStaminaDamageFactor")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 BluntStaminaDamageFactor { get; set; } = 0.5f;
+    [DataField("bluntStaminaDamageFactor")] [ViewVariables(VVAccess.ReadWrite)]
+    public FixedPoint2 BluntStaminaDamageFactor = FixedPoint2.New(0.5f);
+
+    /// <summary>
+    /// Multiplies damage by this amount for wide attacks.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("heavyDamageModifier")]
+    public FixedPoint2 HeavyDamageModifier = FixedPoint2.New(1.1);
+
+    /// <summary>
+    /// How much stamina it costs for a heavy attack.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("heavyStaminaCost")]
+    public float HeavyStaminaCost = 15f;
 
     // TODO: Temporarily 1.5 until interactionoutline is adjusted to use melee, then probably drop to 1.2
     /// <summary>
@@ -128,18 +139,16 @@ public sealed class MeleeWeaponComponentState : ComponentState
     public float AttackRate;
     public bool Attacking;
     public TimeSpan NextAttack;
-    public TimeSpan? WindUpStart;
 
     public string ClickAnimation;
     public string WideAnimation;
     public float Range;
 
-    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, TimeSpan? windupStart, string clickAnimation, string wideAnimation, float range)
+    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, string clickAnimation, string wideAnimation, float range)
     {
         AttackRate = attackRate;
         Attacking = attacking;
         NextAttack = nextAttack;
-        WindUpStart = windupStart;
         ClickAnimation = clickAnimation;
         WideAnimation = wideAnimation;
         Range = range;
