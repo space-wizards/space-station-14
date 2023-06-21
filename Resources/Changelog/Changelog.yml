@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that allowed slime corpses/brains to move around after death.,
-    type: Fix}
-  id: 3564
-  time: '2023-04-29T06:35:28.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Shuttle movement has been overhauled to use forces instead of setting
@@ -2942,3 +2936,9 @@ Entries:
   - {message: Armor has been removed from jumpsuits., type: Tweak}
   id: 4063
   time: '2023-06-21T14:30:31.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Added Bicaridine pills to brute medkit., type: Add}
+  - {message: Added Bicaridine syringe to combat medkit., type: Add}
+  id: 4064
+  time: '2023-06-21T20:35:21.0000000+00:00'
