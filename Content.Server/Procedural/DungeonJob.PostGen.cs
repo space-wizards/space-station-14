@@ -108,7 +108,6 @@ public sealed partial class DungeonJob
                 continue;
             }
 
-            // TODO: Neighbours and shit.
             for (var i = 0; i < 4; i++)
             {
                 var dir = (Direction) (i * 2);
@@ -259,6 +258,91 @@ public sealed partial class DungeonJob
             {
                 await SuspendIfOutOfTime();
                 ValidateResume();
+            }
+        }
+    }
+
+    private async Task PostGen(CornerClutterPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid,
+        Random random)
+    {
+        var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
+
+        foreach (var tile in dungeon.CorridorTiles)
+        {
+            var enumerator = _grid.GetAnchoredEntitiesEnumerator(tile);
+            var blocked = false;
+
+            while (enumerator.MoveNext(out var ent))
+            {
+                // TODO: TileFree
+                if (!physicsQuery.TryGetComponent(ent, out var physics) ||
+                    !physics.CanCollide ||
+                    !physics.Hard)
+                {
+                    continue;
+                }
+
+                blocked = true;
+                break;
+            }
+
+            if (blocked)
+                continue;
+
+            // If at least 2 adjacent tiles are blocked consider it a corner
+            for (var i = 0; i < 4; i++)
+            {
+                var dir = (Direction) (i * 2);
+                var dirEnumerator = _grid.GetAnchoredEntitiesEnumerator(tile + dir.ToIntVec());
+
+                blocked = false;
+
+                while (dirEnumerator.MoveNext(out var ent))
+                {
+                    if (!physicsQuery.TryGetComponent(ent, out var physics) ||
+                        !physics.CanCollide ||
+                        !physics.Hard)
+                    {
+                        continue;
+                    }
+
+                    blocked = true;
+                    break;
+                }
+
+                if (!blocked)
+                    continue;
+
+                var nextDir = (Direction) ((i + 1) * 2 % 8);
+                var nextDirEnumerator = _grid.GetAnchoredEntitiesEnumerator(tile + nextDir.ToIntVec());
+
+                while (nextDirEnumerator.MoveNext(out var ent))
+                {
+                    if (!physicsQuery.TryGetComponent(ent, out var physics) ||
+                        !physics.CanCollide ||
+                        !physics.Hard)
+                    {
+                        continue;
+                    }
+
+                    blocked = true;
+                    break;
+                }
+
+                if (!blocked)
+                    continue;
+
+                if (random.Prob(gen.Chance))
+                {
+                    var coords = _grid.GridTileToLocal(tile);
+
+                    foreach (var entry in EntitySpawnCollection.GetSpawns(gen.Contents, random))
+                    {
+                        _entManager.SpawnEntity(entry, coords);
+                    }
+                }
+
+                break;
             }
         }
     }

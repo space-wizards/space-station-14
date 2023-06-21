@@ -58,3 +58,8 @@
     - !type:JunctionPostGen
 
     - !type:AutoCablingPostGen
+
+    - !type:CornerClutterPostGen
+      contents:
+        - id: PottedPlantRandom
+          amount: 1

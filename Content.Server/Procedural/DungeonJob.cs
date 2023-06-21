@@ -112,6 +112,9 @@ public sealed partial class DungeonJob : Job<Dungeon>
                 case BoundaryWallPostGen boundary:
                     await PostGen(boundary, dungeon, _gridUid, _grid, random);
                     break;
+                case CornerClutterPostGen clutter:
+                    await PostGen(clutter, dungeon, _gridUid, _grid, random);
+                    break;
                 case CorridorPostGen cordor:
                     await PostGen(cordor, dungeon, _gridUid, _grid, random);
                     break;
