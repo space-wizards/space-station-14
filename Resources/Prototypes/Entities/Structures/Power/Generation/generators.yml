@@ -104,6 +104,7 @@
     energy: 1.6
     color: "#3db83b"
     castShadows: false
+    netsync: false
   - type: Fixtures
   - type: Transform
     anchored: true
