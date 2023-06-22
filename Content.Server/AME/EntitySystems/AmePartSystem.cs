@@ -27,12 +27,6 @@ public sealed class AmePartSystem : EntitySystem
 
     private void OnPartInteractUsing(EntityUid uid, AmePartComponent component, InteractUsingEvent args)
     {
-        if (!HasComp<HandsComponent>(args.User))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("ame-part-component-interact-using-no-hands"), uid, args.User);
-            return;
-        }
-
         if (!_toolSystem.HasQuality(args.Used, component.QualityNeeded))
             return;
 

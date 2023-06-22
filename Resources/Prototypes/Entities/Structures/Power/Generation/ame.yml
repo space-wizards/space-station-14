@@ -77,7 +77,7 @@
     supplyRate: 0
   - type: ContainerContainer
     containers:
-      AmeController-fuelJarContainer: !type:ContainerSlot {}
+      AmeFuel: !type:ContainerSlot {}
   - type: GuideHelp
     guides: [ AME, Power ]
   - type: Electrified

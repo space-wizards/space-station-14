@@ -14,6 +14,11 @@ namespace Content.Server.AME.Components;
 public sealed class AmeControllerComponent : SharedAmeControllerComponent
 {
     /// <summary>
+    /// The id of the container used to store the current fuel container for the AME.
+    /// </summary>
+    public const string FuelContainerId = "AmeFuel";
+
+    /// <summary>
     /// The container for the fuel canisters used by the AME.
     /// </summary>
     [ViewVariables]

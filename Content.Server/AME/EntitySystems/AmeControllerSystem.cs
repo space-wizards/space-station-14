@@ -86,13 +86,12 @@ public sealed class AmeControllerSystem : EntitySystem
             group.ExplodeCores();
     }
 
-    public void UpdateUi(EntityUid uid, AmeControllerComponent? controller = null, ServerUserInterfaceComponent? uis = null)
+    public void UpdateUi(EntityUid uid, AmeControllerComponent? controller = null)
     {
         if (!Resolve(uid, ref controller))
             return;
 
-        if (!Resolve(uid, ref uis, logMissing: false)
-        || !_userInterfaceSystem.TryGetUi(uid, SharedAmeControllerComponent.AmeControllerUiKey.Key, out var bui, uis))
+        if (!_userInterfaceSystem.TryGetUi(uid, AmeControllerUiKey.Key, out var bui))
             return;
 
         var state = GetUiState(uid, controller);
@@ -104,7 +103,7 @@ public sealed class AmeControllerSystem : EntitySystem
         var powered = !TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) || powerSource.Powered;
         var coreCount = TryGetAMENodeGroup(uid, out var group) ? group.CoreCount : 0;
 
-        var hasJar = EntityManager.EntityExists(controller.JarSlot.ContainedEntity);
+        var hasJar = Exists(controller.JarSlot.ContainedEntity);
         if (!hasJar || !TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var jar))
             return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, 0, controller.InjectionAmount, coreCount);
 
@@ -140,12 +139,12 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
 
         var jar = controller.JarSlot.ContainedEntity;
-        if (!EntityManager.EntityExists(jar))
+        if (!Exists(jar))
             return;
 
         controller.JarSlot.Remove(jar!.Value);
         UpdateUi(uid, controller);
-        if (EntityManager.EntityExists(user))
+        if (Exists(user))
             _handsSystem.PickupOrDrop(user, jar!.Value);
     }
 
@@ -233,7 +232,7 @@ public sealed class AmeControllerSystem : EntitySystem
     private void OnComponentStartup(EntityUid uid, AmeControllerComponent comp, ComponentStartup args)
     {
         // TODO: Fix this bad name. I'd update maps but then people get mad.
-        comp.JarSlot = _containerSystem.EnsureContainer<ContainerSlot>(uid, $"AmeController-fuelJarContainer");
+        comp.JarSlot = _containerSystem.EnsureContainer<ContainerSlot>(uid, AmeControllerComponent.FuelContainerId);
     }
 
     private void OnInteractUsing(EntityUid uid, AmeControllerComponent comp, InteractUsingEvent args)
@@ -250,7 +249,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
         }
 
-        if (EntityManager.EntityExists(comp.JarSlot.ContainedEntity))
+        if (Exists(comp.JarSlot.ContainedEntity))
         {
             _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-already-has-jar"), uid, args.User);
             return;
@@ -270,7 +269,7 @@ public sealed class AmeControllerSystem : EntitySystem
     private void OnUiButtonPressed(EntityUid uid, AmeControllerComponent comp, UiButtonPressedMessage msg)
     {
         var user = msg.Session.AttachedEntity;
-        if (!EntityManager.EntityExists(user))
+        if (!Exists(user))
             return;
 
         var needsPower = msg.Button switch
@@ -316,7 +315,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return false;
 
         //Need player entity to check if they are still able to use the dispenser
-        if (!EntityManager.EntityExists(playerEntity))
+        if (!Exists(playerEntity))
             return false;
 
         //Check if device is powered
