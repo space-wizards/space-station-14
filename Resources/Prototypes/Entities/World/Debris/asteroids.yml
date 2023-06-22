@@ -96,9 +96,9 @@
   components:
     - type: MapGrid
     - type: BlobFloorPlanBuilder
-      blobDrawProb: 0.33
+      blobDrawProb: 0.66
       radius: 15
-      floorPlacements: 80
+      floorPlacements: 100
 
 - type: entity
   id: AsteroidSalvageMedium
@@ -108,9 +108,9 @@
   components:
     - type: MapGrid
     - type: BlobFloorPlanBuilder
-      blobDrawProb: 0.33
+      blobDrawProb: 0.66
       radius: 17
-      floorPlacements: 100
+      floorPlacements: 150
 
 - type: entity
   id: AsteroidSalvageLarge
@@ -120,9 +120,9 @@
   components:
     - type: MapGrid
     - type: BlobFloorPlanBuilder
-      blobDrawProb: 0.33
+      blobDrawProb: 0.66
       radius: 20
-      floorPlacements: 140
+      floorPlacements: 200
 
 - type: entity
   id: AsteroidSalvageHuge
@@ -132,6 +132,6 @@
   components:
     - type: MapGrid
     - type: BlobFloorPlanBuilder
-      blobDrawProb: 0.33
+      blobDrawProb: 0.66
       radius: 23
-      floorPlacements: 185
+      floorPlacements: 250
