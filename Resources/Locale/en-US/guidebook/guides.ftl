@@ -15,6 +15,7 @@ guide-entry-jobs = Jobs
 guide-entry-cargo = Cargo
 guide-entry-salvage-eva = Salvage EVA
 guide-entry-salvage-money = Salvage Money Making
+guide-entry-cargo-bounties = Cargo Bounties
 guide-entry-survival = Survival
 guide-entry-chemicals = Chemicals
 guide-entry-ss14 = Space Station 14

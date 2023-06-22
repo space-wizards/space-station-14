@@ -8807,8 +8807,7 @@ entities:
       type: SpreaderGrid
     - type: RadiationGridResistance
     - type: GasTileOverlay
-    - nextUpdate: 0
-      type: GridPathfinding
+    - type: GridPathfinding
   - uid: 943
     components:
     - type: MetaData
@@ -9067,8 +9066,7 @@ entities:
       type: GridAtmosphere
     - type: GasTileOverlay
     - type: RadiationGridResistance
-    - nextUpdate: 0
-      type: GridPathfinding
+    - type: GridPathfinding
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 2133
@@ -134594,13 +134592,6 @@ entities:
       pos: 9.5,-71.5
       parent: 60
       type: Transform
-- proto: SpawnMobAdultSlimesBlue
-  entities:
-  - uid: 19885
-    components:
-    - pos: -50.5,13.5
-      parent: 60
-      type: Transform
 - proto: SpawnMobAlexander
   entities:
   - uid: 23769
@@ -134732,6 +134723,13 @@ entities:
   - uid: 14210
     components:
     - pos: -10.5,19.5
+      parent: 60
+      type: Transform
+- proto: SpawnMobSmile
+  entities:
+  - uid: 5906
+    components:
+    - pos: -50.5,13.5
       parent: 60
       type: Transform
 - proto: SpawnMobWalter
@@ -157794,50 +157792,12 @@ entities:
       pos: -118.5,4.5
       parent: 60
       type: Transform
-- proto: WindoorArmoryLocked
-  entities:
-  - uid: 1466
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -23.5,-9.5
-      parent: 60
-      type: Transform
-  - uid: 20984
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -28.5,1.5
-      parent: 60
-      type: Transform
-  - uid: 20989
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -28.5,2.5
-      parent: 60
-      type: Transform
-  - uid: 21010
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -19.5,-0.5
-      parent: 60
-      type: Transform
-  - uid: 24115
-    components:
-    - pos: -24.5,2.5
-      parent: 60
-      type: Transform
 - proto: WindoorBarLocked
   entities:
   - uid: 2235
     components:
     - rot: 3.141592653589793 rad
       pos: 12.5,-29.5
-      parent: 60
-      type: Transform
-- proto: WindoorBrigLocked
-  entities:
-  - uid: 4198
-    components:
-    - pos: -43.5,-18.5
       parent: 60
       type: Transform
 - proto: WindoorCargoLocked
@@ -157857,109 +157817,6 @@ entities:
   - uid: 13262
     components:
     - pos: 45.5,4.5
-      parent: 60
-      type: Transform
-- proto: WindoorChemistryLocked
-  entities:
-  - uid: 2684
-    components:
-    - pos: 39.5,-25.5
-      parent: 60
-      type: Transform
-  - uid: 2685
-    components:
-    - pos: 38.5,-25.5
-      parent: 60
-      type: Transform
-  - uid: 5814
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 36.5,-29.5
-      parent: 60
-      type: Transform
-  - uid: 8895
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 42.5,-27.5
-      parent: 60
-      type: Transform
-- proto: WindoorCommandLocked
-  entities:
-  - uid: 7443
-    components:
-    - pos: -109.5,11.5
-      parent: 60
-      type: Transform
-  - uid: 7456
-    components:
-    - pos: -113.5,11.5
-      parent: 60
-      type: Transform
-  - uid: 18105
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -11.5,2.5
-      parent: 60
-      type: Transform
-  - uid: 23052
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -112.5,26.5
-      parent: 60
-      type: Transform
-  - uid: 23053
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -110.5,26.5
-      parent: 60
-      type: Transform
-  - uid: 23079
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -116.5,26.5
-      parent: 60
-      type: Transform
-  - uid: 23080
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -106.5,26.5
-      parent: 60
-      type: Transform
-- proto: WindoorEngineeringLocked
-  entities:
-  - uid: 5906
-    components:
-    - pos: -17.5,27.5
-      parent: 60
-      type: Transform
-  - uid: 13804
-    components:
-    - pos: -3.5,17.5
-      parent: 60
-      type: Transform
-  - uid: 13949
-    components:
-    - rot: 3.141592653589793 rad
-      pos: -16.5,26.5
-      parent: 60
-      type: Transform
-  - uid: 13959
-    components:
-    - rot: 3.141592653589793 rad
-      pos: -15.5,26.5
-      parent: 60
-      type: Transform
-- proto: WindoorHeadOfPersonnelLocked
-  entities:
-  - uid: 1340
-    components:
-    - pos: 7.5,-26.5
-      parent: 60
-      type: Transform
-  - uid: 4691
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 4.5,-38.5
       parent: 60
       type: Transform
 - proto: WindoorHydroponicsLocked
@@ -157983,51 +157840,6 @@ entities:
     components:
     - rot: -1.5707963267948966 rad
       pos: 36.5,-29.5
-      parent: 60
-      type: Transform
-- proto: WindoorMedicalLocked
-  entities:
-  - uid: 3005
-    components:
-    - pos: 47.5,-26.5
-      parent: 60
-      type: Transform
-  - uid: 11101
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 46.5,-18.5
-      parent: 60
-      type: Transform
-  - uid: 11102
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 46.5,-17.5
-      parent: 60
-      type: Transform
-- proto: WindoorScienceLocked
-  entities:
-  - uid: 3689
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -41.5,-4.5
-      parent: 60
-      type: Transform
-  - uid: 7057
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -40.5,-5.5
-      parent: 60
-      type: Transform
-  - uid: 7097
-    components:
-    - name: Robotics Desk
-      type: MetaData
-    - pos: -37.5,10.5
-      parent: 60
-      type: Transform
-  - uid: 9359
-    components:
-    - pos: -45.5,15.5
       parent: 60
       type: Transform
 - proto: WindoorSecure
@@ -158091,6 +157903,63 @@ entities:
       pos: -8.5,-15.5
       parent: 60
       type: Transform
+- proto: WindoorSecureArmoryLocked
+  entities:
+  - uid: 1466
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -23.5,-9.5
+      parent: 60
+      type: Transform
+  - uid: 20984
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -28.5,1.5
+      parent: 60
+      type: Transform
+  - uid: 20989
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -28.5,2.5
+      parent: 60
+      type: Transform
+  - uid: 21010
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -19.5,-0.5
+      parent: 60
+      type: Transform
+  - uid: 24115
+    components:
+    - pos: -24.5,2.5
+      parent: 60
+      type: Transform
+- proto: WindoorSecureAtmosphericsLocked
+  entities:
+  - uid: 13949
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -16.5,26.5
+      parent: 60
+      type: Transform
+  - uid: 13959
+    components:
+    - pos: -17.5,27.5
+      parent: 60
+      type: Transform
+  - uid: 19416
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -15.5,26.5
+      parent: 60
+      type: Transform
+- proto: WindoorSecureBrigLocked
+  entities:
+  - uid: 4198
+    components:
+    - pos: -43.5,-18.5
+      parent: 60
+      type: Transform
 - proto: WindoorSecureCargoLocked
   entities:
   - uid: 2179
@@ -158123,7 +157992,138 @@ entities:
       pos: -20.5,16.5
       parent: 60
       type: Transform
-- proto: WindoorSecurityLocked
+- proto: WindoorSecureChemistryLocked
+  entities:
+  - uid: 2684
+    components:
+    - pos: 39.5,-25.5
+      parent: 60
+      type: Transform
+  - uid: 2685
+    components:
+    - pos: 38.5,-25.5
+      parent: 60
+      type: Transform
+  - uid: 5814
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 36.5,-29.5
+      parent: 60
+      type: Transform
+  - uid: 8895
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 42.5,-27.5
+      parent: 60
+      type: Transform
+- proto: WindoorSecureCommandLocked
+  entities:
+  - uid: 7443
+    components:
+    - pos: -109.5,11.5
+      parent: 60
+      type: Transform
+  - uid: 7456
+    components:
+    - pos: -113.5,11.5
+      parent: 60
+      type: Transform
+  - uid: 18105
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -11.5,2.5
+      parent: 60
+      type: Transform
+  - uid: 23052
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -112.5,26.5
+      parent: 60
+      type: Transform
+  - uid: 23053
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -110.5,26.5
+      parent: 60
+      type: Transform
+  - uid: 23079
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -116.5,26.5
+      parent: 60
+      type: Transform
+  - uid: 23080
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -106.5,26.5
+      parent: 60
+      type: Transform
+- proto: WindoorSecureEngineeringLocked
+  entities:
+  - uid: 13804
+    components:
+    - pos: -3.5,17.5
+      parent: 60
+      type: Transform
+- proto: WindoorSecureHeadOfPersonnelLocked
+  entities:
+  - uid: 1340
+    components:
+    - pos: 7.5,-26.5
+      parent: 60
+      type: Transform
+  - uid: 4691
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 4.5,-38.5
+      parent: 60
+      type: Transform
+- proto: WindoorSecureMedicalLocked
+  entities:
+  - uid: 3005
+    components:
+    - pos: 47.5,-26.5
+      parent: 60
+      type: Transform
+  - uid: 11101
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 46.5,-18.5
+      parent: 60
+      type: Transform
+  - uid: 11102
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 46.5,-17.5
+      parent: 60
+      type: Transform
+- proto: WindoorSecureScienceLocked
+  entities:
+  - uid: 3689
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -41.5,-4.5
+      parent: 60
+      type: Transform
+  - uid: 7057
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -40.5,-5.5
+      parent: 60
+      type: Transform
+  - uid: 7097
+    components:
+    - name: Robotics Desk
+      type: MetaData
+    - pos: -37.5,10.5
+      parent: 60
+      type: Transform
+  - uid: 9359
+    components:
+    - pos: -45.5,15.5
+      parent: 60
+      type: Transform
+- proto: WindoorSecureSecurityLocked
   entities:
   - uid: 72
     components:

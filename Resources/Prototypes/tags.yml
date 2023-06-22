@@ -20,6 +20,9 @@
   id: Baguette
 
 - type: Tag
+  id: BaseballBat
+
+- type: Tag
   id: Bee
 
 - type: Tag
@@ -66,6 +69,9 @@
 
 - type: Tag
   id: BrassInstrument
+
+- type: Tag
+  id: Briefcase
 
 - type: Tag
   id: Brutepack
@@ -259,6 +265,9 @@
 
 - type: Tag
   id: ExplosivePassable
+
+- type: Tag
+  id: Figurine
 
 - type: Tag
   id: FireAlarm
@@ -530,6 +539,9 @@
   id: Mop
 
 - type: Tag
+  id: Mouse
+
+- type: Tag
   id: Multitool
 
 - type: Tag
@@ -739,6 +751,9 @@
 
 - type: Tag
   id: TimerSignalElectronics
+
+- type: Tag
+  id: Toolbox
 
 - type: Tag
   id: Trash

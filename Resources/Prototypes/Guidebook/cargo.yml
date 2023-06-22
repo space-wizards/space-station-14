@@ -3,6 +3,7 @@
   name: guide-entry-cargo
   text: "/ServerInfo/Guidebook/Cargo/Cargo.xml"
   children:
+    - CargoBounties
     - SalvageEVA
     - SalvageMoney
 
@@ -16,3 +17,7 @@
   name: guide-entry-salvage-money
   text: "/ServerInfo/Guidebook/Cargo/SalvageMoney.xml"
 
+- type: guideEntry
+  id: CargoBounties
+  name: guide-entry-cargo-bounties
+  text: "/ServerInfo/Guidebook/Cargo/CargoBounties.xml"
