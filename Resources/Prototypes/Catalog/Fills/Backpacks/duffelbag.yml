@@ -279,3 +279,5 @@
       - id: WeaponPistolViper
       - id: PinpointerNuclear
       - id: HandheldHealthAnalyzer
+      - id: MicroBombImplanter
+      - id: MicroBombImplanter
