@@ -315,6 +315,7 @@
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
+      - id: ClothingOuterArmorBulletproof
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -357,3 +358,4 @@
       - id: SecurityTechFabCircuitboard
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
+      - id: ClothingOuterArmorBulletproof
