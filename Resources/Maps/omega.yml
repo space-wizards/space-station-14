@@ -33659,6 +33659,16 @@ entities:
       pos: -18.5,-15.5
       parent: 4812
       type: Transform
+- proto: ComputerCargoBounty
+  entities:
+  - uid: 9587
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 18.5,17.5
+      parent: 4812
+      type: Transform
+    - nextPrintTime: 17.516836
+      type: CargoBountyConsole
 - proto: ComputerCargoOrders
   entities:
   - uid: 2752
