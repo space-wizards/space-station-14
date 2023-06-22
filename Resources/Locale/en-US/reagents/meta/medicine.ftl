@@ -102,3 +102,6 @@ reagent-desc-diphenylmethylamine = A more stable medicine than ethyloxyephedrine
 
 reagent-name-sigynate = sigynate
 reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soothing trauma caused by acids.  Tastes sweet!
+
+reagent-name-meralyne = meralyne
+reagent-desc-meralyne = An advanced chemical that is more effective at treating brute damage than Bicaridine.

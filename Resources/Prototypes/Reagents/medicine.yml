@@ -445,9 +445,9 @@
       - !type:HealthChange
         damage:
           types:
-            Heat: -0.33
-            Shock: -0.33
-            Cold: -0.33
+            Heat: -0.67
+            Shock: -0.67
+            Cold: -0.67
       - !type:SatiateThirst
         factor: -10
         conditions:
@@ -910,3 +910,39 @@
         - !type:ReagentThreshold
           min: 30
         probability: 0.02
+
+- type: reagent
+  id: Meralyne
+  name: reagent-name-meralyne
+  group: Medicine
+  desc: reagent-desc-meralyne
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
+  color: "#aa0d0d"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          damage:
+            groups:
+              Brute: -3
+        - !type:HealthChange
+          conditions:
+            - !type:ReagentThreshold
+              min: 10
+          damage:
+            types:
+              Asphyxiation: 0.5
+              Poison: 3
+        - !type:ChemVomit
+          conditions:
+            - !type:ReagentThreshold
+              min: 30
+          probability: 0.02
+        - !type:Jitter
+          conditions:
+            - !type:ReagentThreshold
+              min: 10
+    Alcohol:
+      effects:
+        - !type:Drunk
