@@ -1,0 +1,26 @@
+<Document>
+# Salvage
+
+Salvage is one of Cargo's key sources of income... until atmos comes along with a bajillion dollars worth of frezon. Until then though, your main job will be making them money, and totally not making a shuttle
+
+Hopefully after getting everything listed in the EVA guide, youll be able to successfully get cargo some money, but how exactly do you do that?
+
+## How to make money as a salvager
+<Box>
+<GuideEntityEmbed Entity="SalvageMagnet"/>
+</Box>
+  The Salvage Magnet is a simple device that when activated will pull in a debri from space. This debris can be filled with plenty of things, ranging from very rare weapons and costmetics, to ores, and some other useful/useless junk
+  When activated the magnet will broadcast over Cargo radio when it is pulling in debris. When it does, you have about 240 seconds, or 4 minutes, at the minimum to find the debris and collect as much goodies as you can from inside.
+  Once at the 30 second mark the magnet will broadcast the time, in which in that case its best to take what you have and leave the debris for good, as when the debris dissapears, it will take all unlooted items and cause you to disorientate yourself, making returning to station difficult.
+  Be warned that if you enter crit, or are dead in a salvage when it dissapears, your body will dissapear too, meaning you cannot be retrieved, revived, or cloned
+<Box>
+<GuideEntityEmbed Entity="ComputerSalvageExpedition"/>
+</Box>
+  The Expeditions console is the newest addition to Salvage in which you can go to a planet and explore a procedurally generated dungeon to find loot and kill xenos and carps.
+  The console will show Expeditions difficulties, planet biomes, the kind of hostile you will face, mission details, duration of mission, modifiers, and rewards.
+  Once you select a mission, you can board either the cargo shuttle the salvagers very own shuttle, and FTL to the planet, in which you will have a short period of time to complete the mission. You can find the dungeon location by checking the chat box when you arrive on FTL.
+  While you can take all the loot from the dungeon no matter the mission status, the only way to get the rewards listed on the console is completing the mission listed under mission details.
+  At the 2 minute mark you will start to hear music, meaning the duration of the mission is coming to an end and you need to return to shuttle. At the mission duration's end, the shuttle will auto-FTL back to station, leaving behind any and everyone who was not on.
+  You can still FTL back to station before the end of the mission, but you need everyone who came onto the expedition on board, or else the FTL function wont work.
+  Once you complete the mission, the rewards will automatically be added to the cargo order's list, meaning you can continue to loot while the fellas in cargo handle reward distribuition.
+</Document>

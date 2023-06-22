@@ -1,4 +1,18 @@
 - type: guideEntry
   id: Cargo
   name: guide-entry-cargo
-  text: "/ServerInfo/Guidebook/Cargo.xml"
+  text: "/ServerInfo/Guidebook/Cargo/Cargo.xml"
+  children:
+    - SalvageEVA
+    - SalvageMoney
+
+- type: guideEntry
+  id: SalvageEVA
+  name: guide-entry-salvage-eva
+  text: "/ServerInfo/Guidebook/Cargo/SalvageEVA.xml"
+
+- type: guideEntry
+  id: SalvageMoney
+  name: guide-entry-salvage-money
+  text: "/ServerInfo/Guidebook/Cargo/SalvageMoney.xml"
+
