@@ -123,6 +123,7 @@
       - id: BoxEncryptionKeyService
       - id: ClothingBackpackIan
         prob: 0.5
+      - id: DigitalIanCartridge
 
 - type: entity
   id: LockerChiefEngineerFilledHardsuit
