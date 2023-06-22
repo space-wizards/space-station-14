@@ -321,7 +321,7 @@
 
 - type: entity
   id: IronChemistryBottle
-  name: Iron bottle
+  name: iron bottle
   parent: BaseChemistryEmptyBottle
   components:
   - type: SolutionContainerManager
@@ -337,7 +337,7 @@
 
 - type: entity
   id: TranexamicAcidChemistryBottle
-  name: Tranexamic acid bottle
+  name: tranexamic acid bottle
   parent: BaseChemistryEmptyBottle
   components:
   - type: SolutionContainerManager
