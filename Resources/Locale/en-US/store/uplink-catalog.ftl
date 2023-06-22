@@ -102,6 +102,9 @@ uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever y
 uplink-radio-jammer-name = Radio Jammer
 uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication when activated.
 
+uplink-medkit-name = Syndicate Medkit
+uplink-medkit-desc = This medkit is filled to the brim with medicine to keep you in perfect fighting condition.
+
 # Implants
 uplink-storage-implanter-name = Storage Implanter
 uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespace technology!

@@ -129,3 +129,29 @@
     contents:
       - id: StimpackMini
         amount: 6
+
+- type: entity
+  id: UplinkMedkitCombatFilled
+  suffix: Syndicate, Filled
+  parent: MedkitCombat
+  components:
+  - type: StorageFill
+    contents:
+      - id: HandheldHealthAnalyzer
+      - id: SyringeBicaridine
+      - id: BicaridineChemistryBottle
+        amount: 3
+      - id: SyringeDermaline
+      - id: DermalineChemistryBottle
+        amount: 2
+      - id: SyringeDexalinPlus
+      - id: DexalinPlusChemistryBottle
+        amount: 2
+      - id: SyringeTranexamicAcid
+        amount: 1
+      - id: SyringeIron
+      - id: IronChemistryBottle
+      - id: SyringeEphedrine
+      - id: EphedrineChemistryBottle
+
+

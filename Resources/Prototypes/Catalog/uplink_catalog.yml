@@ -364,6 +364,16 @@
   categories:
   - UplinkUtility
 
+- type: listing
+  id: UplinkMedkit
+  name: uplink-medkit-name
+  description: uplink-medkit-desc
+  productEntity: UplinkMedkitCombatFilled
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkUtility
+
 # Implants
 
 - type: listing

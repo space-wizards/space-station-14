@@ -377,6 +377,45 @@
         - ReagentId: Ipecac
           Quantity: 15
 
+- type: entity
+  name: dermaline syringe
+  parent: BaseSyringe
+  id: SyringeDermaline
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Dermaline
+          Quantity: 15    
+
+- type: entity
+  name: dexalin plus syringe
+  parent: BaseSyringe
+  id: SyringeDexalinPlus
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: DexalinPlus
+          Quantity: 15    
+
+- type: entity
+  name: iron syringe
+  parent: BaseSyringe
+  id: SyringeIron
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Iron
+          Quantity: 15    
+
 #this is where all the syringes are so i didn't know where to put it
 - type: entity
   name: corpium syringe
