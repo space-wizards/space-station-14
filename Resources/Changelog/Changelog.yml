@@ -1,13 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: The ability to temporarily speak Ratvarian has been added after drinking
-      CogChamp, type: Add}
-  - {message: 'Adds CogChamp - a new drink based off of clock cult. Lets the user
-      temporarily speak in Ratvarian. Created by mixing Cognac, Welding Fuel, and
-      a Screwdriver Cocktail.', type: Add}
-  id: 3566
-  time: '2023-04-29T08:34:19.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Nanotrasen has supplied kitchens across space with salt and pepper shakers.,
@@ -2941,3 +2932,9 @@ Entries:
   - {message: Fixed many PDAs not having the correct colors in their UIs., type: Fix}
   id: 4065
   time: '2023-06-21T21:45:17.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed research console ui not updating when technology is unlocked on
+      another console., type: Fix}
+  id: 4066
+  time: '2023-06-22T00:59:58.0000000+00:00'
