@@ -809,6 +809,7 @@ public sealed partial class DungeonJob
     {
         var tiles = new List<(Vector2i Index, Tile)>();
         var tileDef = _tileDefManager[gen.Tile];
+        var spawnPositions = new ValueList<Vector2i>(dungeon.Rooms.Count);
 
         foreach (var room in dungeon.Rooms)
         {
@@ -823,8 +824,16 @@ public sealed partial class DungeonJob
                         continue;
 
                     tiles.Add((neighbor, _tileDefManager.GetVariantTile(tileDef, random)));
+                    spawnPositions.Add(neighbor);
                 }
             }
+        }
+
+        grid.SetTiles(tiles);
+
+        foreach (var entrance in spawnPositions)
+        {
+            _entManager.SpawnEntities(_grid.GridTileToLocal(entrance), gen.Entities);
         }
     }
 
