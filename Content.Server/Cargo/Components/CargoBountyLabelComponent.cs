@@ -16,6 +16,5 @@ public sealed class CargoBountyLabelComponent : Component
     /// <summary>
     /// Used to prevent recursion in calculating the price.
     /// </summary>
-    [DataField("calculating")]
     public bool Calculating;
 }
