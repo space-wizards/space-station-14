@@ -1,10 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Nanotrasen has supplied kitchens across space with salt and pepper shakers.,
-    type: Add}
-  id: 3567
-  time: '2023-04-29T08:42:44.0000000+00:00'
 - author: pofitlo
   changes:
   - {message: Added new nuke music, type: Add}
@@ -2938,3 +2932,8 @@ Entries:
       another console., type: Fix}
   id: 4066
   time: '2023-06-22T00:59:58.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds an Energy Shield to the Syndicate uplink for 6 TC., type: Add}
+  id: 4067
+  time: '2023-06-22T04:08:59.0000000+00:00'
