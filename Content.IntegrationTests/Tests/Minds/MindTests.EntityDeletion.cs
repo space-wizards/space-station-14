@@ -202,53 +202,31 @@ public sealed partial class MindTests
     [Test]
     public async Task TestGhostToAghost()
     {
-        // Client is needed to spawn session
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await SetupPair();
         var server = pairTracker.Pair.Server;
-
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var serverConsole = server.ResolveDependency<IServerConsoleHost>();
 
-        IPlayerSession player = playerMan.ServerSessions.Single();
+        var player = playerMan.ServerSessions.Single();
 
-        EntityUid ghost = default!;
+        var ghost = await BecomeGhost(pairTracker.Pair);
 
-        await server.WaitAssertion(() =>
-        {
-            Assert.That(player.AttachedEntity, Is.Not.EqualTo(null));
-            entMan.DeleteEntity(player.AttachedEntity!.Value);
-        });
+        // Player is a normal ghost (not admin ghost).
+        Assert.That(entMan.GetComponent<MetaDataComponent>(player.AttachedEntity!.Value).EntityPrototype?.ID, Is.Not.EqualTo("AdminObserver"));
 
+        // Try to become an admin ghost
+        await server.WaitAssertion(() => serverConsole.ExecuteCommand(player, "aghost"));
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
-        await server.WaitAssertion(() =>
-        {
-            // Is player a ghost?
-            Assert.That(player.AttachedEntity, Is.Not.EqualTo(null));
-            ghost = player.AttachedEntity!.Value;
-            Assert.That(entMan.HasComponent<GhostComponent>(ghost));
-        });
+        Assert.That(entMan.Deleted(ghost), "old ghost was not deleted");
+        Assert.That(player.AttachedEntity, Is.Not.EqualTo(ghost), "Player is still attached to the old ghost");
+        Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity!.Value), "Player did not become a new ghost");
+        Assert.That(entMan.GetComponent<MetaDataComponent>(player.AttachedEntity.Value).EntityPrototype?.ID, Is.EqualTo("AdminObserver"));
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-
-        await server.WaitAssertion(() =>
-        {
-            serverConsole.ExecuteCommand(player, "aghost");
-        });
-
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-
-        await server.WaitAssertion(() =>
-        {
-            Assert.That(entMan.Deleted(ghost));
-            Assert.That(player.AttachedEntity, Is.Not.EqualTo(ghost));
-            Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity!.Value));
-
-            var mind = player.ContentData()?.Mind;
-            Assert.NotNull(mind);
-            Assert.Null(mind.VisitingEntity);
-        });
+        var mind = player.ContentData()?.Mind;
+        Assert.NotNull(mind);
+        Assert.Null(mind.VisitingEntity);
 
         await pairTracker.CleanReturnAsync();
     }
