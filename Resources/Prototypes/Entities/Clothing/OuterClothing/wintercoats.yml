@@ -176,6 +176,13 @@
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+      Blunt: 0.7
+      Slash: 0.7
+      Pierce: 0.6
+      Heat: 0.6
 
 - type: entity
   parent: ClothingOuterWinterCoat
