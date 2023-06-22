@@ -1,6 +1,4 @@
-using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Shared.Audio;
-using Robust.Shared.Utility;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 

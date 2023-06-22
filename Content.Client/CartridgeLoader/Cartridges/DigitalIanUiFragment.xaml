@@ -1,11 +1,24 @@
 <cartridges:DigitalIanUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
                                  xmlns="https://spacestation14.io" Margin="1 0 2 0">
     <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-        <AnimatedTextureRect Name="Icon" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+    <BoxContainer  Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+            <AnimatedTextureRect Name="Icon" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+            <Button Name="FeedButton" Text="{Loc 'digital-ian-feed-button'}" HorizontalExpand="True" VerticalAlignment="Center" Margin="4"/>
+            <Button Name="PetButton" Text="{Loc 'digital-ian-pet-button'}" HorizontalExpand="True" VerticalAlignment="Center" Margin="4"/>
+        </BoxContainer>
     </BoxContainer>
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-        <Button Name="FeedButton" Text="{Loc 'digital-ian-feed-button'}" HorizontalExpand="True" VerticalAlignment="Center" Margin="4"/>
-        <Button Name="PetButton" Text="{Loc 'digital-ian-pet-button'}" HorizontalExpand="True" VerticalAlignment="Center" Margin="4"/>
-    </BoxContainer>
+    <!-- the progress bar and hunger system will be added later (i guess) -->
+    <!-- <BoxContainer  Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <Label Text="Hunger" StyleClasses="StatusFieldTitle" />
+        <ProgressBar Name="HungerBar" MaxValue="100">
+            lol <Label Name="HungerText" Margin="4 0" Text="0 %" /> 
+        </ProgressBar>
+        <Label Text="Fun" StyleClasses="StatusFieldTitle" />
+        <ProgressBar Name="FunBar" MaxValue="100">
+            <Label Name="FunText" Margin="4 0" Text="0 %" />
+        </ProgressBar>
+    </BoxContainer> -->
 </cartridges:DigitalIanUiFragment>

@@ -4,8 +4,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Content.Shared.CartridgeLoader;
 
-using Content.Shared.Containers.ItemSlots;
-using Robust.Shared.Prototypes;
 namespace Content.Client.CartridgeLoader.Cartridges;
 
 public sealed class DigitalIanUi : UIFragment
@@ -15,7 +13,6 @@ public sealed class DigitalIanUi : UIFragment
     public override Control GetUIFragmentRoot()
     {
         return _fragment!;
-
     }
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
@@ -28,7 +25,6 @@ public sealed class DigitalIanUi : UIFragment
     public override void UpdateState(BoundUserInterfaceState state)
     {
         // No state to update
-
     }
     private void SendDigitalIanMessage(DigitalIanUiAction action, BoundUserInterface userInterface)
     {
