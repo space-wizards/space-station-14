@@ -14,18 +14,11 @@ namespace Content.Server.Salvage
     public sealed class SalvageMagnetComponent : SharedSalvageMagnetComponent
     {
         /// <summary>
-        /// Minimum distance from the offset position that will be used as a salvage's spawnpoint.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("offsetRadiusMin")]
-        public float OffsetRadiusMin = 18;
-
-        /// <summary>
         /// Maximum distance from the offset position that will be used as a salvage's spawnpoint.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("offsetRadiusMax")]
-        public float OffsetRadiusMax = 36;
+        public float OffsetRadiusMax = 32;
 
         /// <summary>
         /// The entity attached to the magnet

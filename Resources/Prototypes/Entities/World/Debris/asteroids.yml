@@ -15,31 +15,31 @@
       entries:
         FloorAsteroidCoarseSand0:
           - id: WallRock
-            prob: 0.34
+            prob: 0.5
             orGroup: rock
           - id: WallRockTin
-            prob: 0.18
+            prob: 0.15
             orGroup: rock
           - id: WallRockQuartz
-            prob: 0.18
+            prob: 0.15
             orGroup: rock
           - id: WallRockGold
-            prob: 0.07
+            prob: 0.05
             orGroup: rock
           - id: WallRockSilver
-            prob: 0.07
+            prob: 0.05
             orGroup: rock
           - id: WallRockPlasma
-            prob: 0.07
+            prob: 0.05
             orGroup: rock
           - id: WallRockUranium
-            prob: 0.03
+            prob: 0.02
             orGroup: rock
           - id: WallRockBananium
-            prob: 0.03
+            prob: 0.02
             orGroup: rock
           - id: WallRockArtifactFragment
-            prob: 0.03
+            prob: 0.01
             orGroup: rock
     - type: GCAbleObject
       queue: SpaceDebris
@@ -89,12 +89,49 @@
       floorPlacements: 36
 
 - type: entity
-  id: AsteroidDebrisHuge
+  id: AsteroidSalvageSmall
   parent: BaseAsteroidDebris
-  name: Asteroid Debris Huge
+  name: Salvage Asteroid Small
   noSpawn: true
   components:
     - type: MapGrid
     - type: BlobFloorPlanBuilder
+      blobDrawProb: 0.33
       radius: 15
-      floorPlacements: 48
+      floorPlacements: 80
+
+- type: entity
+  id: AsteroidSalvageMedium
+  parent: BaseAsteroidDebris
+  name: Salvage Asteroid Medium
+  noSpawn: true
+  components:
+    - type: MapGrid
+    - type: BlobFloorPlanBuilder
+      blobDrawProb: 0.33
+      radius: 17
+      floorPlacements: 100
+
+- type: entity
+  id: AsteroidSalvageLarge
+  parent: BaseAsteroidDebris
+  name: Salvage Asteroid Large
+  noSpawn: true
+  components:
+    - type: MapGrid
+    - type: BlobFloorPlanBuilder
+      blobDrawProb: 0.33
+      radius: 20
+      floorPlacements: 140
+
+- type: entity
+  id: AsteroidSalvageHuge
+  parent: BaseAsteroidDebris
+  name: Salvage Asteroid Huge
+  noSpawn: true
+  components:
+    - type: MapGrid
+    - type: BlobFloorPlanBuilder
+      blobDrawProb: 0.33
+      radius: 23
+      floorPlacements: 185

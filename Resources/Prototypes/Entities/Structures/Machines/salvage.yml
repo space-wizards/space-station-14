@@ -71,15 +71,14 @@
   description: Locates salvage.
   components:
   - type: SalvageMagnet
-    offsetRadiusMin: 9
-    offsetRadiusMax: 18
+    offsetRadiusMax: 32
   - type: ApcPowerReceiver
     powerLoad: 1000
 
 - type: weightedRandom
   id: RandomAsteroidPool
   weights:
-    AsteroidDebrisMedium: 3
-    AsteroidDebrisLarge: 7
-    AsteroidDebrisLarger: 5
-    AsteroidDebrisHuge: 3
+    AsteroidSalvageSmall: 3
+    AsteroidSalvageMedium: 7
+    AsteroidSalvageLarge: 5
+    AsteroidSalvageHuge: 3

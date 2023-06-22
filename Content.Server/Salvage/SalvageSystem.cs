@@ -315,7 +315,7 @@ namespace Content.Server.Salvage
 
             for (var i = 0; i < SalvageLocationPlaceAttempts; i++)
             {
-                var randomRadius = _random.NextFloat(component.OffsetRadiusMin, component.OffsetRadiusMax);
+                var randomRadius = _random.NextFloat(component.OffsetRadiusMax);
                 var randomOffset = _random.NextAngle().ToWorldVec() * randomRadius;
                 var finalCoords = coords.Offset(randomOffset);
 
@@ -358,6 +358,7 @@ namespace Content.Server.Salvage
             if (!TryGetSalvagePlacementLocation(uid, component, bounds, out var spawnLocation, out var spawnAngle))
             {
                 Report(uid, component.SalvageChannel, "salvage-system-announcement-spawn-no-debris-available");
+                _mapManager.DeleteMap(salvMap);
                 return false;
             }
 
