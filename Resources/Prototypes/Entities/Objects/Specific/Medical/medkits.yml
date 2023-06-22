@@ -97,3 +97,16 @@
   - type: Storage
     capacity: 50
     
+- type: entity
+  name: advanced combat medkit
+  description: "For the even bigger weapons among us."
+  parent: Medkit
+  id: MedkitCombatAdvanced
+  components:
+  - type: Sprite
+    state: blackkit
+  - type: Item
+    heldPrefix: advblackkit  
+    size: 75
+  - type: Storage
+    capacity: 75

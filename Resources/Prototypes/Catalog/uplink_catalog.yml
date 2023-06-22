@@ -368,7 +368,7 @@
   id: UplinkMedkit
   name: uplink-medkit-name
   description: uplink-medkit-desc
-  productEntity: UplinkMedkitCombatFilled
+  productEntity: MedkitCombatAdvancedFilled
   cost:
     Telecrystal: 5
   categories:

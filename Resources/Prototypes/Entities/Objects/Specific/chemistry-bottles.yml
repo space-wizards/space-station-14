@@ -334,3 +334,19 @@
   - type: Tag
     tags:
     - Bottle
+
+- type: entity
+  id: TranexamicAcidChemistryBottle
+  name: Tranexamic acid bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: TranexamicAcid
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle

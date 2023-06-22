@@ -131,27 +131,32 @@
         amount: 6
 
 - type: entity
-  id: UplinkMedkitCombatFilled
-  suffix: Syndicate, Filled
-  parent: MedkitCombat
+  id: MedkitCombatAdvancedFilled
+  suffix: Filled
+  parent: MedkitCombatAdvanced
   components:
   - type: StorageFill
     contents:
       - id: HandheldHealthAnalyzer
       - id: SyringeBicaridine
       - id: BicaridineChemistryBottle
-        amount: 3
+        amount: 4
       - id: SyringeDermaline
       - id: DermalineChemistryBottle
         amount: 2
       - id: SyringeDexalinPlus
       - id: DexalinPlusChemistryBottle
         amount: 2
-      - id: SyringeTranexamicAcid
-        amount: 1
       - id: SyringeIron
       - id: IronChemistryBottle
+        amount: 2
       - id: SyringeEphedrine
       - id: EphedrineChemistryBottle
+        amount: 2
+      - id: SyringeTranexamicAcid
+      - id: TranexamicAcidChemistryBottle
+      - id: Brutepack
+      - id: Ointment
+      - id: EmergencyMedipen
 
 
