@@ -27,14 +27,15 @@ namespace Content.Server.GameTicking
         {
             var session = args.Session;
 
-            if (_mindSystem.TryGetMind(session.UserId, out var mind))
+            if (_mind.TryGetMind(session.UserId, out var mind))
             {
                 if (args.OldStatus == SessionStatus.Connecting && args.NewStatus == SessionStatus.Connected)
                     mind.Session = session;
 
                 DebugTools.Assert(mind.Session == session);
-                DebugTools.Assert(session.Data.ContentData()?.Mind is not {} dataMind || dataMind == mind);
             }
+
+            DebugTools.Assert(session.GetMind() == mind);
 
             switch (args.NewStatus)
             {
@@ -75,32 +76,32 @@ namespace Content.Server.GameTicking
                 {
                     _userDb.ClientConnected(session);
 
-                    var data = session.ContentData();
-
-                    DebugTools.AssertNotNull(data);
-
-                    if (data!.Mind == null)
+                    if (mind == null)
                     {
                         if (LobbyEnabled)
-                        {
                             PlayerJoinLobby(session);
-                            return;
-                        }
+                        else
+                            SpawnWaitDb();
 
-                        SpawnWaitDb();
                         break;
                     }
 
-                    if (data.Mind.CurrentEntity == null || Deleted(data.Mind.CurrentEntity))
+                    if (mind.CurrentEntity == null || Deleted(mind.CurrentEntity))
                     {
-                        DebugTools.Assert(data.Mind.CurrentEntity == null, "a mind's current entity has been deleted");
-                        SpawnWaitDb();
+                        DebugTools.Assert(mind.CurrentEntity == null, "a mind's current entity was deleted without updating the mind");
+
+                        // This player is joining the game with an existing mind, but the mind has no entity.
+                        // Their entity was probably deleted sometime while they were disconnected, or they were an observer.
+                        // Instead of allowing them to spawn in, we will dump and their existing mind in an observer ghost.
+                        SpawnObserverWaitDb();
                     }
                     else
                     {
-                        session.AttachToEntity(data.Mind.CurrentEntity);
+                        // Simply re-attach to existing entity.
+                        session.AttachToEntity(mind.CurrentEntity);
                         PlayerJoinGame(session);
                     }
+
                     break;
                 }
 
@@ -121,6 +122,12 @@ namespace Content.Server.GameTicking
             {
                 await _userDb.WaitLoadComplete(session);
                 SpawnPlayer(session, EntityUid.Invalid);
+            }
+
+            async void SpawnObserverWaitDb()
+            {
+                await _userDb.WaitLoadComplete(session);
+                JoinAsObserver(session);
             }
 
             async void AddPlayerToDb(Guid id)

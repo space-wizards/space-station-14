@@ -15,9 +15,45 @@ using IPlayerManager = Robust.Server.Player.IPlayerManager;
 namespace Content.IntegrationTests.Tests.Minds;
 
 // This partial class contains misc helper functions for other tests.
-[TestFixture]
 public sealed partial class MindTests
 {
+    /// <summary>
+    /// Gets a server-client pair and ensures that the client is attached to a simple mind test entity.
+    /// </summary>
+    /// <remarks>
+    /// Without this, it may be possible that a tests starts with the client attached to an entity that does not match
+    /// the player's mind's current entity, likely because some previous test directly changed the players attached
+    /// entity.
+    /// </remarks>
+    public async Task<PairTracker> SetupPair()
+    {
+        var pairTracker = await PoolManager.GetServerClient();
+        var pair = pairTracker.Pair;
+
+        var entMan = pair.Server.ResolveDependency<IServerEntityManager>();
+        var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
+        var mindSys = entMan.System<MindSystem>();
+
+        var player = playerMan.ServerSessions.Single();
+
+        EntityUid entity = default;
+        await pair.Server.WaitPost(() =>
+        {
+            entity = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
+            mindSys.TransferTo(mindSys.CreateMind(player.UserId), entity);
+        });
+
+        await PoolManager.RunTicksSync(pair, 5);
+
+        var mind = player.ContentData()?.Mind;
+        Assert.NotNull(mind);
+        Assert.That(player.AttachedEntity, Is.EqualTo(entity));
+        Assert.That(player.AttachedEntity, Is.EqualTo(mind.CurrentEntity), "Player is not attached to the mind's current entity.");
+        Assert.That(entMan.EntityExists(mind.OwnedEntity), "The mind's current entity does not exist");
+        Assert.That(mind.VisitingEntity == null || entMan.EntityExists(mind.VisitingEntity), "The minds visited entity does not exist.");
+        return pairTracker;
+    }
+
     public async Task<EntityUid> BecomeGhost(Pair pair, bool visit = false)
     {
         var entMan = pair.Server.ResolveDependency<IServerEntityManager>();
@@ -74,9 +110,9 @@ public sealed partial class MindTests
 
         var mind = player.ContentData()!.Mind;
         Assert.NotNull(mind);
-        Assert.That(player.AttachedEntity, Is.EqualTo(mind.CurrentEntity));
-        Assert.That(entMan.EntityExists(mind.OwnedEntity));
-        Assert.That(entMan.EntityExists(mind.CurrentEntity));
+        Assert.That(player.AttachedEntity, Is.EqualTo(mind.CurrentEntity), "Player is not attached to the mind's current entity.");
+        Assert.That(entMan.EntityExists(mind.OwnedEntity), "The mind's current entity does not exist");
+        Assert.That(mind.VisitingEntity == null || entMan.EntityExists(mind.VisitingEntity), "The minds visited entity does not exist.");
 
         return mind;
     }

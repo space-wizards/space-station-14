@@ -1,78 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed a bunch of station events never starting., type: Fix}
-  id: 3555
-  time: '2023-04-29T03:15:06.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Removed the laser and scanning module machine parts., type: Remove}
-  - {message: Adjusted recipes for many machine boards., type: Tweak}
-  id: 3556
-  time: '2023-04-29T03:23:49.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Only traitors can insert TC into PDAs now., type: Tweak}
-  id: 3557
-  time: '2023-04-29T04:41:24.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Dragons no longer spawn off-station., type: Fix}
-  id: 3558
-  time: '2023-04-29T04:51:31.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Nerf or remove some standard sell prices., type: Tweak}
-  id: 3559
-  time: '2023-04-29T04:59:25.0000000+00:00'
-- author: brainfood1183
-  changes:
-  - {message: 'Added Bananium, you can build things with it. Dont eat it!', type: Add}
-  id: 3560
-  time: '2023-04-29T05:38:10.0000000+00:00'
-- author: jamessimo
-  changes:
-  - {message: Minor UI enhancements to the Anomaly Generator UI, type: Tweak}
-  - {message: Fixed broken sprite view in Anomaly Generator UI, type: Fix}
-  id: 3561
-  time: '2023-04-29T05:53:57.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: Added ghost sheet craft recipe, type: Add}
-  id: 3562
-  time: '2023-04-29T06:14:46.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: Added LOOC and Emote focus keybinds, type: Add}
-  id: 3563
-  time: '2023-04-29T06:15:42.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that allowed slime corpses/brains to move around after death.,
-    type: Fix}
-  id: 3564
-  time: '2023-04-29T06:35:28.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Shuttle movement has been overhauled to use forces instead of setting
-      velocity directly., type: Tweak}
-  id: 3565
-  time: '2023-04-29T08:17:32.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: The ability to temporarily speak Ratvarian has been added after drinking
-      CogChamp, type: Add}
-  - {message: 'Adds CogChamp - a new drink based off of clock cult. Lets the user
-      temporarily speak in Ratvarian. Created by mixing Cognac, Welding Fuel, and
-      a Screwdriver Cocktail.', type: Add}
-  id: 3566
-  time: '2023-04-29T08:34:19.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Nanotrasen has supplied kitchens across space with salt and pepper shakers.,
-    type: Add}
-  id: 3567
-  time: '2023-04-29T08:42:44.0000000+00:00'
 - author: pofitlo
   changes:
   - {message: Added new nuke music, type: Add}
@@ -2932,3 +2858,82 @@ Entries:
   - {message: Removed useless sync button on the research console., type: Remove}
   id: 4054
   time: '2023-06-20T06:39:35.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Updated all cargo department clothing sprites., type: Tweak}
+  id: 4055
+  time: '2023-06-20T20:26:41.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: 'Nanotrasen realized they could stuff even more asbestos into the Atmospherics
+      firesuits, and have promptly done so.', type: Tweak}
+  - {message: 'Due to a recent reallocation in asbestos supply, the Atmospherics hardsuits
+      are less heat resistant.', type: Tweak}
+  id: 4056
+  time: '2023-06-20T20:29:13.0000000+00:00'
+- author: Equivocateur
+  changes:
+  - {message: Added hidden items in multiple vending machines., type: Add}
+  id: 4057
+  time: '2023-06-20T20:30:27.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Added more dwarf accenting and fixed bug with the words 'over' 'moreover'
+      and 'more', type: Add}
+  id: 4058
+  time: '2023-06-20T20:30:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed chemistry from nukie planet., type: Remove}
+  id: 4059
+  time: '2023-06-21T00:50:35.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that allowed observers/ghosts to respawn by disconnecting
+      and reconnecting., type: Fix}
+  id: 4060
+  time: '2023-06-21T01:04:08.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed usernames not showing up in the round end window., type: Fix}
+  id: 4061
+  time: '2023-06-21T01:18:16.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: The rate of which bleeding wounds passively clot has been doubled. (0.5u
+      to 1.0u), type: Tweak}
+  - {message: Max bleed rate has been halved (20u to 10u), type: Tweak}
+  - {message: blood puddles will always be created at a minimum of 1u of blood lost.
+      (5u to 1u), type: Tweak}
+  - {message: 'The refresh rate for all bloodstream effects (Losing blood, Regaining
+      blood, taking damage, Wound clotting) has been reduced to 3 seconds. This will
+      mean players will both bleed faster but also recover faster.', type: Tweak}
+  id: 4062
+  time: '2023-06-21T14:30:20.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Armor has been removed from jumpsuits., type: Tweak}
+  id: 4063
+  time: '2023-06-21T14:30:31.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Added Bicaridine pills to brute medkit., type: Add}
+  - {message: Added Bicaridine syringe to combat medkit., type: Add}
+  id: 4064
+  time: '2023-06-21T20:35:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed many PDAs not having the correct colors in their UIs., type: Fix}
+  id: 4065
+  time: '2023-06-21T21:45:17.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed research console ui not updating when technology is unlocked on
+      another console., type: Fix}
+  id: 4066
+  time: '2023-06-22T00:59:58.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds an Energy Shield to the Syndicate uplink for 6 TC., type: Add}
+  id: 4067
+  time: '2023-06-22T04:08:59.0000000+00:00'
