@@ -36,11 +36,11 @@ accent-pirate-replacement-10 = ahoy
 accent-pirate-replaced-11 = hey
 accent-pirate-replacement-11 = oye
 
-accent-pirate-replaced-12 = hello
-accent-pirate-replacement-12 = ahoy
+accent-pirate-replaced-12 = money
+accent-pirate-replacement-12 = dubloons
 
 accent-pirate-replaced-13 = cash
-accent-pirate-replacement-13 = doubloon
+accent-pirate-replacement-13 = doubloons
 
 accent-pirate-replaced-14 = crate
 accent-pirate-replacement-14 = coffer
@@ -54,8 +54,8 @@ accent-pirate-replacement-16 = booty
 accent-pirate-replaced-17 = attention
 accent-pirate-replacement-17 = avast
 
-accent-pirate-replaced-18 = hello
-accent-pirate-replacement-18 = ahoy
+accent-pirate-replaced-18 = stupid
+accent-pirate-replacement-18 = parrot-brained
 
 accent-pirate-replaced-19 = idiot
 accent-pirate-replacement-19 = seadog
