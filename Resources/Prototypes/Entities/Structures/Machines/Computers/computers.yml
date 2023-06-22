@@ -714,6 +714,39 @@
       - OrderSender
 
 - type: entity
+  id: ComputerCargoBounty
+  parent: BaseComputer
+  name: cargo bounty computer
+  description: Used to manage currently active bounties.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: bounty
+    - map: ["computerLayerKeys"]
+      state: tech_key
+  - type: CargoBountyConsole
+  - type: ActivatableUI
+    key: enum.CargoConsoleUiKey.Bounty
+  - type: UserInterface
+    interfaces:
+    - key: enum.CargoConsoleUiKey.Bounty
+      type: CargoBountyConsoleBoundUserInterface
+  - type: Computer
+    board: CargoBountyComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: GuideHelp
+    guides:
+    - CargoBounties
+
+- type: entity
   parent: BaseComputer
   id: ComputerCloningConsole
   name: cloning console computer
