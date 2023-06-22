@@ -17,7 +17,7 @@ public sealed class DungeonEntrancePostGen : IPostDunGen
     public int Count = 1;
 
     [DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> Entities = new()
+    public List<string?> Entities = new()
     {
         "CableApcExtension",
         "AirlockGlass",

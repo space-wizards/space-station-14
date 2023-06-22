@@ -376,13 +376,24 @@ public sealed partial class DungeonJob
                         {
                             position += new Vector2(-1f / 32f, 1f / 32f);
                         }
-                        else if (angle.Equals(Math.PI * 1.5))
+                        else if (angle.Equals(-Math.PI / 2f))
                         {
                             position += new Vector2(-1f / 32f, 0f);
                         }
                         else if (angle.Equals(Math.PI / 2f))
                         {
                             position += new Vector2(0f, 1f / 32f);
+                        }
+                        else if (angle.Equals(Math.PI * 1.5f))
+                        {
+                            // I hate this but decals are bottom-left rather than center position and doing the
+                            // matrix ops is a PITA hence this workaround for now; I also don't want to add a stupid
+                            // field for 1 specific op on decals
+                            if (decal.Id != "DiagonalCheckerAOverlay" &&
+                                decal.Id != "DiagonalCheckerBOverlay")
+                            {
+                                position += new Vector2(-1f / 32f, 0f);
+                            }
                         }
 
                         var tilePos = position.Floored();
@@ -412,19 +423,25 @@ public sealed partial class DungeonJob
             }
         }
 
-        // Calculate center
+        // Calculate center and do entrances
         var dungeonCenter = Vector2.Zero;
 
         foreach (var room in dungeon.Rooms)
         {
+            dungeon.RoomTiles.UnionWith(room.Tiles);
+            dungeon.RoomExteriorTiles.UnionWith(room.Exterior);
+        }
+
+        foreach (var room in dungeon.Rooms)
+        {
             dungeonCenter += room.Center;
-            SetDungeonEntrance(room, random);
+            SetDungeonEntrance(dungeon, room, random);
         }
 
         return dungeon;
     }
 
-    private void SetDungeonEntrance(DungeonRoom room, Random random)
+    private void SetDungeonEntrance(Dungeon dungeon, DungeonRoom room, Random random)
     {
         // TODO: Move to dungeonsystem.
 
@@ -433,24 +450,42 @@ public sealed partial class DungeonJob
         // Pick midpoints as fallback
         if (room.Entrances.Count == 0)
         {
-            var dir = (Direction) (random.Next(4) * 2);
+            var offset = random.Next(4);
 
-            switch (dir)
+            // Pick an entrance that isn't taken.
+            for (var i = 0; i < 4; i++)
             {
-                case Direction.East:
-                    room.Entrances.Add(new Vector2i(room.Bounds.Right + 1, room.Bounds.Bottom + room.Bounds.Height / 2));
-                    break;
-                case Direction.North:
-                    room.Entrances.Add(new Vector2i(room.Bounds.Left + room.Bounds.Width / 2, room.Bounds.Top + 1));
-                    break;
-                case Direction.West:
-                    room.Entrances.Add(new Vector2i(room.Bounds.Left - 1, room.Bounds.Bottom + room.Bounds.Height / 2));
-                    break;
-                case Direction.South:
-                    room.Entrances.Add(new Vector2i(room.Bounds.Left + room.Bounds.Width / 2, room.Bounds.Bottom - 1));
-                    break;
-                default:
-                    throw new NotImplementedException();
+                var dir = (Direction) ((i + offset) * 2 % 8);
+                Vector2i entrancePos;
+
+                switch (dir)
+                {
+                    case Direction.East:
+                        entrancePos = new Vector2i(room.Bounds.Right + 1, room.Bounds.Bottom + room.Bounds.Height / 2);
+                        break;
+                    case Direction.North:
+                        entrancePos = new Vector2i(room.Bounds.Left + room.Bounds.Width / 2, room.Bounds.Top + 1);
+                        break;
+                    case Direction.West:
+                        entrancePos = new Vector2i(room.Bounds.Left - 1, room.Bounds.Bottom + room.Bounds.Height / 2);
+                        break;
+                    case Direction.South:
+                        entrancePos = new Vector2i(room.Bounds.Left + room.Bounds.Width / 2, room.Bounds.Bottom - 1);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                // Check if it's not blocked
+                var blockPos = entrancePos + dir.ToIntVec() * 2;
+
+                if (i != 3 && dungeon.RoomTiles.Contains(blockPos))
+                {
+                    continue;
+                }
+
+                room.Entrances.Add(entrancePos);
+                break;
             }
         }
     }

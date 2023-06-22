@@ -27,6 +27,11 @@
         - CableApcExtension
         - AirlockGlass
 
+    - !type:EntranceFlankPostGen
+      entities:
+        - Grille
+        - Window
+
     - !type:ExternalWindowPostGen
       entities:
         - Grille

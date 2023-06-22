@@ -10,6 +10,7 @@ using Robust.Server.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
 
@@ -91,11 +92,8 @@ public sealed partial class DungeonJob : Job<Dungeon>
                 throw new NotImplementedException();
         }
 
-        foreach (var room in dungeon.Rooms)
-        {
-            dungeon.RoomTiles.UnionWith(room.Tiles);
-            dungeon.RoomExteriorTiles.UnionWith(room.Exterior);
-        }
+        DebugTools.Assert(dungeon.RoomTiles.Count > 0);
+        DebugTools.Assert(dungeon.RoomExteriorTiles.Count > 0);
 
         // To make it slightly more deterministic treat this RNG as separate ig.
         var random = new Random(_seed);
@@ -117,6 +115,9 @@ public sealed partial class DungeonJob : Job<Dungeon>
                     break;
                 case CorridorPostGen cordor:
                     await PostGen(cordor, dungeon, _gridUid, _grid, random);
+                    break;
+                case EntranceFlankPostGen flank:
+                    await PostGen(flank, dungeon, _gridUid, _grid, random);
                     break;
                 case JunctionPostGen junc:
                     await PostGen(junc, dungeon, _gridUid, _grid, random);
