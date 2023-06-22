@@ -1,0 +1,219 @@
+﻿- type: cargoBounty
+  id: BountyArtifact
+  reward: 2500
+  description: bounty-description-artifact
+  entries:
+  - name: bounty-item-artifact
+    amount: 1
+    whitelist:
+      components:
+      - Artifact
+
+- type: cargoBounty
+  id: BountyBaseballBat
+  reward: 800
+  description: bounty-description-baseball-bat
+  entries:
+  - name: bounty-item-baseball-bat
+    amount: 5
+    whitelist:
+      tags:
+      - BaseballBat
+
+- type: cargoBounty
+  id: BountyBoxHug
+  reward: 600
+  description: bounty-description-box-hugs
+  entries:
+  - name: bounty-item-box-hugs
+    amount: 1
+    whitelist:
+      tags:
+      - BoxHug
+
+- type: cargoBounty
+  id: BountyBrain
+  reward: 2000
+  description: bounty-description-brain
+  entries:
+  - name: bounty-item-brain
+    amount: 1
+    whitelist:
+      components:
+      - Brain
+
+- type: cargoBounty
+  id: BountyBriefcase
+  reward: 1000
+  description: bounty-description-briefcase
+  entries:
+  - name: bounty-item-briefcase
+    amount: 5
+    whitelist:
+      tags:
+      - Briefcase
+
+- type: cargoBounty
+  id: BountyCarp
+  reward: 2000
+  description: bounty-description-carp
+  entries:
+  - name: bounty-item-carp
+    amount: 1
+    whitelist:
+      tags:
+      - Carp
+
+- type: cargoBounty
+  id: BountyCrayon
+  reward: 800
+  description: bounty-description-crayon
+  entries:
+  - name: bounty-item-crayon
+    amount: 24
+    whitelist:
+      tags:
+      - Crayon
+
+- type: cargoBounty
+  id: BountyDonkPocket
+  reward: 1200
+  description: bounty-description-donk-pocket
+  entries:
+  - name: bounty-item-donk-pocket
+    amount: 12
+    whitelist:
+      tags:
+      - DonkPocket
+
+- type: cargoBounty
+  id: BountyDonut
+  reward: 1200
+  description: bounty-description-donut
+  entries:
+  - name: bounty-item-donut
+    amount: 10
+    whitelist:
+      tags:
+      - Donut
+
+- type: cargoBounty
+  id: BountyFigurine
+  reward: 1600
+  description: bounty-description-figurine
+  entries:
+  - name: bounty-item-figurine
+    amount: 5
+    whitelist:
+      tags:
+      - Figurine
+
+- type: cargoBounty
+  id: BountyFlower
+  reward: 400
+  description: bounty-description-flower
+  entries:
+  - name: bounty-item-flower
+    amount: 3
+    whitelist:
+      tags:
+      - Flower
+
+- type: cargoBounty
+  id: BountyLung
+  reward: 3000
+  description: bounty-description-lung
+  entries:
+  - name: bounty-item-lung
+    amount: 3
+    whitelist:
+      components:
+      - Lung
+
+- type: cargoBounty
+  id: BountyMouse
+  reward: 600
+  description: bounty-description-mouse
+  entries:
+  - name: bounty-item-mouse
+    amount: 5
+    whitelist:
+      tags:
+      - Mouse
+
+- type: cargoBounty
+  id: BountyResearchDisk
+  reward: 1200
+  description: bounty-description-research-disk
+  entries:
+  - name: bounty-item-research-disk
+    amount: 1
+    whitelist:
+      components:
+      - ResearchDisk
+
+- type: cargoBounty
+  id: BountySoap
+  reward: 800
+  description: bounty-description-soap
+  entries:
+  - name: bounty-item-soap
+    amount: 3
+    whitelist:
+      tags:
+      - Soap
+
+- type: cargoBounty
+  id: BountySpear
+  reward: 800
+  description: bounty-description-spear
+  entries:
+  - name: bounty-item-spear
+    amount: 5
+    whitelist:
+      tags:
+      - Spear
+
+- type: cargoBounty
+  id: BountyTechDisk
+  reward: 2000
+  description: bounty-description-tech-disk
+  entries:
+  - name: bounty-item-tech-disk
+    amount: 10
+    whitelist:
+      components:
+      - TechnologyDisk
+
+- type: cargoBounty
+  id: BountyToolbox
+  reward: 800
+  description: bounty-description-toolbox
+  entries:
+  - name: bounty-item-toolbox
+    amount: 6
+    whitelist:
+      tags:
+      - Toolbox
+
+- type: cargoBounty
+  id: BountyTrash
+  reward: 400
+  description: bounty-description-trash
+  entries:
+  - name: bounty-item-trash
+    amount: 10
+    whitelist:
+      tags:
+      - Trash
+
+- type: cargoBounty
+  id: BountyPen
+  reward: 800
+  description: bounty-description-pen
+  entries:
+  - name: bounty-item-pen
+    amount: 10
+    whitelist:
+      tags:
+      - Write

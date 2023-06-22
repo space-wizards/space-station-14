@@ -18,8 +18,13 @@ namespace Content.IntegrationTests.Tests.Minds;
 public sealed partial class MindTests
 {
     /// <summary>
-    ///     Gets a server-client pair and ensures that the client is attached to a simple mind test entity.
+    /// Gets a server-client pair and ensures that the client is attached to a simple mind test entity.
     /// </summary>
+    /// <remarks>
+    /// Without this, it may be possible that a tests starts with the client attached to an entity that does not match
+    /// the player's mind's current entity, likely because some previous test directly changed the players attached
+    /// entity.
+    /// </remarks>
     public async Task<PairTracker> SetupPair()
     {
         var pairTracker = await PoolManager.GetServerClient();
