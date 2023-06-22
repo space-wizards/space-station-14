@@ -9,3 +9,7 @@ net-probe-label-frequency = Frequency
 net-probe-label-network = Network
 
 digital-ian-program-name = Digital Ian
+digital-ian-feed-popup = You fed Ian!
+digital-ian-pet-popup = You pet Ian!
+digital-ian-feed-button = Feed
+digital-ian-pet-button = Pet

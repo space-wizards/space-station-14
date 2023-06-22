@@ -5,7 +5,7 @@
         <AnimatedTextureRect Name="Icon" VerticalAlignment="Center" HorizontalAlignment="Center"/>
     </BoxContainer>
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-        <Button Name="FeedButton" Text="Feed" HorizontalExpand="True" VerticalAlignment="Center" Margin="4"/>
-        <Button Name="PetButton" Text="Pet" HorizontalExpand="True" VerticalAlignment="Center" Margin="4"/>
+        <Button Name="FeedButton" Text="{Loc 'digital-ian-feed-button'}" HorizontalExpand="True" VerticalAlignment="Center" Margin="4"/>
+        <Button Name="PetButton" Text="{Loc 'digital-ian-pet-button'}" HorizontalExpand="True" VerticalAlignment="Center" Margin="4"/>
     </BoxContainer>
 </cartridges:DigitalIanUiFragment>

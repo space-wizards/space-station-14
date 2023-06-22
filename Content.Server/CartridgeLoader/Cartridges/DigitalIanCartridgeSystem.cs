@@ -39,9 +39,11 @@ public sealed class DigitalIanCartridgeSystem : EntitySystem
         {
             case DigitalIanUiAction.Feed:
                 _audioSystem.PlayPvs(component.SoundFeed, uid);
+                _popupSystem.PopupEntity(Loc.GetString("digital-ian-feed-popup"), uid);
                 break;
             case DigitalIanUiAction.Pet:
                 _audioSystem.PlayPvs(component.SoundPet, uid);
+                _popupSystem.PopupEntity(Loc.GetString("digital-ian-pet-popup"), uid);
                 break;
         }
     }
