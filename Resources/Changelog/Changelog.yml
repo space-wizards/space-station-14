@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: The Syndicate is now offering uplink implants so you can buy a super
-      surplus when locked up for gibbing the mime., type: Add}
-  id: 3569
-  time: '2023-04-29T09:07:51.0000000+00:00'
 - author: brainfood1183
   changes:
   - {message: 'Cloning Pod may now be Emagged, on failed cloning attempt the cloning
@@ -2938,3 +2932,8 @@ Entries:
       attach the manifest label, and sell it.', type: Add}
   id: 4068
   time: '2023-06-22T11:49:34.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Fixed dwarf accent word typo from 'anatag' to 'antag', type: Fix}
+  id: 4069
+  time: '2023-06-22T19:48:38.0000000+00:00'
