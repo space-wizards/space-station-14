@@ -1,9 +1,4 @@
 Entries:
-- author: pofitlo
-  changes:
-  - {message: Added new nuke music, type: Add}
-  id: 3568
-  time: '2023-04-29T08:58:00.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: The Syndicate is now offering uplink implants so you can buy a super
@@ -2937,3 +2932,9 @@ Entries:
   - {message: Adds an Energy Shield to the Syndicate uplink for 6 TC., type: Add}
   id: 4067
   time: '2023-06-22T04:08:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added cargo bounties. Simply fill up a crate with the specified items,
+      attach the manifest label, and sell it.', type: Add}
+  id: 4068
+  time: '2023-06-22T11:49:34.0000000+00:00'
