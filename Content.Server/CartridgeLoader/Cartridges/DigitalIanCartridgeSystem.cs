@@ -3,6 +3,7 @@ using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.Popups;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
+
 public sealed class DigitalIanCartridgeSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
