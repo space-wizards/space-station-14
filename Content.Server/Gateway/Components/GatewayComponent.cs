@@ -12,7 +12,7 @@ public sealed class GatewayComponent : Component
     /// Every other gateway destination on the server.
     /// </summary>
     [ViewVariables]
-    public HashSet<EntityUid> Destinations = default!;
+    public HashSet<EntityUid> Destinations = new();
 
     /// <summary>
     /// The time at which the portal will be closed.
