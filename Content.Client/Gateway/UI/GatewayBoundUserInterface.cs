@@ -18,10 +18,7 @@ public sealed class GatewayBoundUserInterface : BoundUserInterface
         _window = new GatewayWindow();
         _window.OpenPortal += destination =>
         {
-            SendMessage(new GatewayOpenPortalMessage()
-            {
-                Destination = destination
-            });
+            SendMessage(new GatewayOpenPortalMessage(destination));
         };
         _window.OnClose += Close;
         _window?.OpenCentered();

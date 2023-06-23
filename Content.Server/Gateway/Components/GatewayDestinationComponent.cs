@@ -38,5 +38,5 @@ public sealed class GatewayDestinationComponent : Component
     /// How long the destination is not ready for after the portal closes.
     /// </summary>
     [DataField("cooldown"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan Cooldown;
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(60);
 }
