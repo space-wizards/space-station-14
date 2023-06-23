@@ -90,7 +90,9 @@ public sealed partial class TriggerSystem
             var startPos = otherTranform.MapPosition.Position;
             var endPos = entTransform.MapPosition.Position;
 
-            var rayRes = physSystem.IntersectRay(otherTranform.MapID, new CollisionRay(startPos, (endPos - startPos).Normalized, (int)CollisionGroup.Impassable),2f).ToList();
+            float distance = (startPos - endPos).Length;
+
+            var rayRes = physSystem.IntersectRay(otherTranform.MapID, new CollisionRay(startPos, (endPos - startPos).Normalized, (int)CollisionGroup.Impassable), distance/2).ToList();
 
             if (!rayRes.Any())
                 return true;
