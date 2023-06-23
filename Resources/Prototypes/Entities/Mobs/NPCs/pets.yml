@@ -36,17 +36,14 @@
 
 - type: entity
   name: Old Ian
-  parent: MobCorgi
+  parent: MobCorgiIan
   id: MobCorgiIanOld
   description: Still the favorite pet corgi. Love his wheels.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: old_ian
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -55,32 +52,22 @@
         Base: old_ian_dead
       Dead:
         Base: old_ian_dead
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
   - type: Butcherable
     spawned:
     - id: FoodMeatCorgi
       amount: 2
     - id: SheetSteel1
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Lisa
-  parent: MobCorgi
+  parent: MobCorgiIan
   id: MobCorgiLisa
   description: Ian's favorite corgi.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: lisa
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -93,13 +80,6 @@
     attributes:
       proper: true
       gender: female
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatCorgi
-      amount: 2
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Runtime

@@ -68,7 +68,16 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
             var (productId, qty) = component.Gifts.First();
             component.Gifts.Remove(productId);
 
-            if (!_cargoSystem.AddAndApproveOrder(cargoDb, productId, qty, Loc.GetString(component.Sender), Loc.GetString(component.Description), Loc.GetString(component.Dest)))
+            var product = _prototypeManager.Index<CargoProductPrototype>(productId);
+
+            if (!_cargoSystem.AddAndApproveOrder(
+                    cargoDb,
+                    product.Product,
+                    product.PointCost,
+                    qty,
+                    Loc.GetString(component.Sender),
+                    Loc.GetString(component.Description),
+                    Loc.GetString(component.Dest)))
             {
                 break;
             }

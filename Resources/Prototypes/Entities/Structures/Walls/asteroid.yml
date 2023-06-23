@@ -265,3 +265,25 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_west
         - state: rock_bananium
+
+- type: entity
+  id: WallRockArtifactFragment
+  parent: WallRock
+  description: A rock wall. What's that sticking out of it?
+  suffix: Artifact Fragment
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreArtifactFragment
+    - type: Sprite
+      layers:
+        - state: rock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_west
+        - state: rock_artifact_fragment

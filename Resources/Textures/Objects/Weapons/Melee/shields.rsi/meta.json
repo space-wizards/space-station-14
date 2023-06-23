@@ -168,28 +168,6 @@
     {
       "name": "teleriot-inhand-left-on",
       "directions": 4
-    },
-    {
-      "name": "eshield-icon"
-    },
-    {
-      "name": "eshield-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "eshield-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "eshield-on"
-    },
-    {
-      "name": "eshield-inhand-right-on",
-      "directions": 4
-    },
-    {
-      "name": "eshield1-inhand-left-on",
-      "directions": 4
     }
   ]
 }
