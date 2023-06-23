@@ -12,7 +12,8 @@ namespace Content.Server.ErtCall;
 [AdminCommand(AdminFlags.Admin)]
 public sealed class CallErt : LocalizedCommands
 {
-
+    public string Description => Loc.GetString("callertcommand-desc");
+    public string Help => Loc.GetString("callertcommand-help");
 
     public override string Command => "callert";
 
@@ -22,9 +23,9 @@ public sealed class CallErt : LocalizedCommands
         {
             var options = IoCManager.Resolve<IPrototypeManager>()
                 .EnumeratePrototypes<ErtCallPresetPrototype>()
-                .Select(p => new CompletionOption(p.ID));
+                .Select(p => new CompletionOption(p.ID, p.Desc));
 
-            return CompletionResult.FromHintOptions(options, Loc.GetString("send-station-goal-command-arg-id"));//Переписать локализацию
+            return CompletionResult.FromHintOptions(options, Loc.GetString("callertcommand-id-preset"));
         }
 
         return CompletionResult.Empty;
@@ -34,12 +35,12 @@ public sealed class CallErt : LocalizedCommands
     {
         if (args.Length == 0)
         {
-            shell.WriteError(Loc.GetString("Аргументов не может быть 0")); //Дописать локализацию. shell.WriteError(Loc.GetString("cmd-savemap-not-exist"));
+            shell.WriteError(Loc.GetString("callertcommand-error-args0"));
             return;
         }
         if (args.Length > 1)
         {
-            shell.WriteError(Loc.GetString("аргумент должен быть 1")); //Дописать локализацию. shell.WriteError(Loc.GetString("cmd-savemap-not-exist"));
+            shell.WriteError(Loc.GetString("callertcommand-error-args1"));
             return;
         }
         var ertSpawnSystem = IoCManager.Resolve<IEntityManager>().System<CallErtSystem>();
@@ -47,17 +48,17 @@ public sealed class CallErt : LocalizedCommands
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             if (!prototypeManager.TryIndex<ErtCallPresetPrototype>(protoId, out var proto))
             {
-                shell.WriteError($"No station goal found with ID {protoId}!");
+                shell.WriteError(Loc.GetString("callertcommand-error-prest-not-found", ("protoid", protoId)));
                 return;
             }
         if (ertSpawnSystem.SpawnErt(proto))
         {
-            shell.WriteLine(Loc.GetString("пресет ОБР загружен на карту id"));
+            shell.WriteLine(Loc.GetString("callertcommand-preset-loaded", ("protoid", protoId)));
             return;
         }
         else
         {
-            shell.WriteError("ошибка загрузки");
+            shell.WriteError(Loc.GetString("callertcommand-error-when-load-grid"));
             return;
         }
     }

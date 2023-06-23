@@ -7,6 +7,8 @@ namespace Content.Server.ErtCall
     {
         [IdDataFieldAttribute] public string ID { get; } = default!;
 
-        [DataField("path")] public string path { get; set; } = string.Empty;
+        [DataField("path")] public string Path { get; set; } = string.Empty;
+
+        [DataField("desc")] public string Desc { get; set; } = string.Empty;
     }
 }

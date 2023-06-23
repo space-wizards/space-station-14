@@ -102,6 +102,8 @@ ert-uplink-engineering-cableapcstack-name = { ent-CableApcStack }
 ert-uplink-engineering-cableapcstack-desc = { ent-CableApcStack.desc }
 ert-uplink-engineering-boxinflatable-name = { ent-BoxInflatable }
 ert-uplink-engineering-boxinflatable-desc = { ent-BoxInflatable.desc }
+ert-uplink-engineering-welderindustrialadvanced-name = { ent-WelderIndustrialAdvanced }
+ert-uplink-engineering-welderindustrialadvanced-desc = { ent-WelderIndustrialAdvanced.desc }
 
 ert-uplink-medical-omnizinechemistrybottle-name = { ent-OmnizineChemistryBottle }
 ert-uplink-medical-omnizinechemistrybottle-desc = { ent-OmnizineChemistryBottle.desc }

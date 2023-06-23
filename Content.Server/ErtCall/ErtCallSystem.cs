@@ -23,7 +23,7 @@ public sealed class CallErtSystem : EntitySystem
             LoadMap = true,
         };
 
-        return(_map.TryLoad(shuttleMap, preset.path, out _, options));
+        return(_map.TryLoad(shuttleMap, preset.Path, out _, options));
     }
 }
 

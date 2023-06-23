@@ -558,6 +558,16 @@
   categories:
   - ERTUplinkEngineering
 
+- type: listing
+  id: ErtCallUplinkWelderIndustrialAdvanced
+  name: ert-uplink-engineering-welderindustrialadvanced-name
+  description: ert-uplink-engineering-welderindustrialadvanced-desc
+  productEntity: WelderIndustrialAdvanced
+  cost:
+    BlueSpaceCube: 5
+  categories:
+  - ERTUplinkEngineering
+
 #ERTUplinkMedical
 - type: listing
   id: ErtCallUplinkOmnizineChemistryBottle

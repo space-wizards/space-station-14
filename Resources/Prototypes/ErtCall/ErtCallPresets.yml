@@ -1,17 +1,24 @@
-#Base ert shuttle
 - type: ertCall
-  id: ErtEmpty
-  path: "Maps/Shuttles/dart.yml"
+  id: ERT-Small
+  path: "Maps/Shuttles/ERTPresets/dartERTSmall.yml"
+  desc: "1 лидер, 3 бойца, 1 инж, 1 мед"
 
-#Standart ERT shuttle with crew
 - type: ertCall
-  id: ErtStandart
-  path: "Maps/Shuttles/ERTPresets/dartStandart.yml"
+  id: ERT-Medium
+  path: "Maps/Shuttles/ERTPresets/dartERTMedium.yml"
+  desc: "1 лидер, 6 бойцов, 1 инж, 1 мед"
 
-#Standart ERT shuttle with crew
 - type: ertCall
-  id: ErtRHBZZ
-  path: "Maps/Shuttles/ERTPresets/dartStandart.yml"
+  id: ERT-BIG
+  path: "Maps/Shuttles/ERTPresets/dartERTBig.yml"
+  desc: "1 Лидер, 12 бойцов, 2 инж, 2 мед, 1 уборщик"
+
+- type: ertCall
+  id: CBURN
+  path: "Maps/Shuttles/ERTPresets/dartCBURN.yml"
+  desc: "1 лидер, 6 бойцов, 1 мед"
+
+
 
 
 
