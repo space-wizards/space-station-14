@@ -26,6 +26,7 @@ public sealed class DigitalIanUi : UIFragment
     {
         // No state to update
     }
+    
     private void SendDigitalIanMessage(DigitalIanUiAction action, BoundUserInterface userInterface)
     {
         var digitalIanMessage = new DigitalIanUiMessageEvent(action);
