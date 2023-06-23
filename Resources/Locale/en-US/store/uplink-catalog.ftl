@@ -58,7 +58,7 @@ uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 catridges. Compat
 uplink-speedloader-magnum-name = Speedloader (.45 magnum)
 uplink-speedloader-magnu-desc = Revolver speedloader with 6 catridges. Compatible with Python.
 
-uplink-rifle-ammo-name = .20 rifle magazine
+uplink-rifle-ammo-name = Rifle Magazine (.20 rifle)
 uplink-rifle-ammo-desc = Magazine for various rifles.
 
 # Utility
