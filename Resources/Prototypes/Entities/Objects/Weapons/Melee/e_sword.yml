@@ -173,8 +173,8 @@
   - type: EnergySword
     litDamageBonus:
         types:
-            Slash: 9
-            Heat: 9
+            Slash: 15
+            Heat: 12
             Structural: 15
             Blunt: -4.5
     litDisarmMalus: 0.7
@@ -185,7 +185,7 @@
     attackRate: 1.4
     angle: 100
     heavyWindupModifier: 1.25
-    heavyDamageModifier: 1.5
+    heavyDamageModifier: 1.35
     soundHit:
       path: /Audio/Weapons/eblade1.ogg
   - type: Sprite
