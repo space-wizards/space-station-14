@@ -949,7 +949,7 @@
     grindableSolutionName: food
   - type: Tag
     tags:
-    - GalaxyThistle
+    - Galaxythistle
 
 - type: entity
   name: fly amanita
