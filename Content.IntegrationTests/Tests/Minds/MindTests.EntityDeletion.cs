@@ -68,7 +68,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestGhostOnDeleteMap()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await SetupPair();
         var server = pairTracker.Pair.Server;
         var testMap = await PoolManager.CreateTestMap(pairTracker);
         var coordinates = testMap.GridCoords;
