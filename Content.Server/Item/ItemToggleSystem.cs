@@ -48,14 +48,10 @@ public sealed class ItemToggleSystem : EntitySystem
     private void TurnOff(EntityUid uid, ItemToggleComponent comp, ref ItemToggleDeactivatedEvent args)
     {
         if (TryComp(uid, out ItemComponent? item))
-        {
             _item.SetSize(uid, comp.OffSize, item);
-        }
 
         if (TryComp<DisarmMalusComponent>(uid, out var malus))
-        {
             malus.Malus -= comp.ActivatedDisarmMalus;
-        }
 
         _audio.Play(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
 
@@ -65,14 +61,10 @@ public sealed class ItemToggleSystem : EntitySystem
     private void TurnOn(EntityUid uid, ItemToggleComponent comp, ref ItemToggleActivatedEvent args)
     {
         if (TryComp(uid, out ItemComponent? item))
-        {
             _item.SetSize(uid, comp.OnSize, item);
-        }
 
         if (TryComp<DisarmMalusComponent>(uid, out var malus))
-        {
             malus.Malus += comp.ActivatedDisarmMalus;
-        }
 
         _audio.Play(comp.ActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.ActivateSound.Params);
 

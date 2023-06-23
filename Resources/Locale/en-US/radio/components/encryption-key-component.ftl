@@ -7,4 +7,4 @@ encryption-keys-panel-locked = Open maintenance panel first!
 
 examine-encryption-channels-prefix = Available frequencies:
 examine-encryption-channel = [color={$color}]{$key} for {$id} ({$freq})[/color]
-examine-encryption-default-channel = The default channel is [color={$color}]{$channel}[/color].
+examine-encryption-default-channel = The default channel is [color={$color}]{$id}[/color].

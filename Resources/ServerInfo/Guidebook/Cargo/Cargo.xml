@@ -26,6 +26,6 @@
     <GuideEntityEmbed Entity="AppraisalTool"/>
     <GuideEntityEmbed Entity="CargoPallet"/>
   </Box>
-  After finding something worth selling, place it on one of the shuttle's cargo pallets. The next time the shuttle is sent to a trading post, the item will be sold and the money will be directly transferred back to the station's bank account.
+  After finding something worth selling, place it on one of the shuttle's cargo pallets. The next time the shuttle is sent to a trading post, the item will be sold and the money will be directly transferred back to the station's bank account. You can also make even more money by completing [textlink="bounties" link="CargoBounties"] or selling valuable items from [textlink="salvage" link="Salvage"].
 
 </Document>

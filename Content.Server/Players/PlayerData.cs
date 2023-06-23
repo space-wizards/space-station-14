@@ -61,5 +61,13 @@ namespace Content.Server.Players
         {
             return session.Data.ContentData();
         }
+
+        /// <summary>
+        ///     Gets the mind that is associated with this player.
+        /// </summary>
+        public static Mind.Mind? GetMind(this IPlayerSession session)
+        {
+            return session.Data.ContentData()?.Mind;
+        }
     }
 }
