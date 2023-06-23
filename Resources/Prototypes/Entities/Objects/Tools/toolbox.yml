@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/toolbox_drop.ogg
@@ -21,7 +20,8 @@
       path: "/Audio/Weapons/smash.ogg"
   - type: Tag
     tags:
-      - DroneUsable
+    - DroneUsable
+    - Toolbox
 
 - type: entity
   name: emergency toolbox

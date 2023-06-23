@@ -11,7 +11,6 @@
     sprite: Structures/Storage/Crates/generic.rsi
     state: icon
   - type: Sprite
-    netsync: false
     noRot: true
     sprite: Structures/Storage/Crates/generic.rsi
     layers:

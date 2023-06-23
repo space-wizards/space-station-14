@@ -30,7 +30,7 @@ namespace Content.Server.GameTicking.Commands
             if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) &&
                 status != PlayerGameStatus.JoinedGame)
             {
-                ticker.MakeObserve(player);
+                ticker.JoinAsObserver(player);
             }
             else
             {

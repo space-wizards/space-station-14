@@ -22,12 +22,14 @@ public sealed class FollowerSystemTest
         await using var pairTracker = await PoolManager.GetServerClient(new (){NoClient = true});
         var server = pairTracker.Pair.Server;
 
+        var entMan = server.ResolveDependency<IEntityManager>();
+        var mapMan = server.ResolveDependency<IMapManager>();
+        var sysMan = server.ResolveDependency<IEntitySystemManager>();
+        var logMan = server.ResolveDependency<ILogManager>();
+        var logger = logMan.RootSawmill;
+
         await server.WaitPost(() =>
         {
-            var mapMan = IoCManager.Resolve<IMapManager>();
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
-            var logger = IoCManager.Resolve<ILogManager>().RootSawmill;
             var followerSystem = sysMan.GetEntitySystem<FollowerSystem>();
 
             // Create a map to spawn the observers on.

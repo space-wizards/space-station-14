@@ -41,6 +41,9 @@
   - type: UseDelay
   - type: StaticPrice
     price: 100
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
 
 - type: entity
   id: DefibrillatorEmpty

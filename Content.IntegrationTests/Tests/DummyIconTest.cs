@@ -17,14 +17,15 @@ namespace Content.IntegrationTests.Tests
         {
             await using var pairTracker = await PoolManager.GetServerClient();
             var client = pairTracker.Pair.Client;
+            var prototypeManager = client.ResolveDependency<IPrototypeManager>();
+            var resourceCache = client.ResolveDependency<IResourceCache>();
 
             await client.WaitAssertion(() =>
             {
-                var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-                var resourceCache = IoCManager.Resolve<IResourceCache>();
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (proto.NoSpawn || proto.Abstract || !proto.Components.ContainsKey("Sprite")) continue;
+                    if (proto.NoSpawn || proto.Abstract || !proto.Components.ContainsKey("Sprite"))
+                        continue;
 
                     Assert.DoesNotThrow(() =>
                     {

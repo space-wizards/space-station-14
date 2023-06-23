@@ -14,7 +14,6 @@
         - RCDDeconstructWhitelist
     - type: CanBuildWindowOnTop
     - type: Sprite
-      netsync: false
       drawdepth: Walls
       sprite: Structures/Walls/grille.rsi
       layers:
@@ -95,7 +94,6 @@
   description: A flimsy framework of iron rods. It has seen better days.
   components:
     - type: Sprite
-      netsync: false
       drawdepth: Walls
       sprite: Structures/Walls/grille.rsi
       state: grille_broken

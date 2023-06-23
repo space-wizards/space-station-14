@@ -1,8 +1,7 @@
 using Content.Shared.Interaction.Components;
 using Robust.Shared.Timing;
-using Content.Shared.Interaction;
 using Content.Shared.Glue;
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands;
 
 namespace Content.Server.Glue;
 
@@ -16,7 +15,7 @@ public sealed class GluedSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GluedComponent, ComponentInit>(OnGluedInit);
-        SubscribeLocalEvent<GluedComponent, InteractHandEvent>(OnPickUp);
+        SubscribeLocalEvent<GluedComponent, GotEquippedHandEvent>(OnHandPickUp);
     }
 
     // Timing to remove glued and unremoveable.
@@ -52,13 +51,10 @@ public sealed class GluedSystem : EntitySystem
     }
 
     // Timers start only when the glued item is picked up.
-    private void OnPickUp(EntityUid uid, GluedComponent component, InteractHandEvent args)
+    private void OnHandPickUp(EntityUid uid, GluedComponent component, GotEquippedHandEvent args)
     {
-        var userHands = Comp<HandsComponent>(args.User);
-        if (userHands.ActiveHandEntity == uid)
-        {
-            component.GlueBroken = true;
-            component.GlueTime = _timing.CurTime + component.GlueCooldown;
-        }
+        EnsureComp<UnremoveableComponent>(uid);
+        component.GlueBroken = true;
+        component.GlueTime = _timing.CurTime + component.GlueCooldown;
     }
 }
