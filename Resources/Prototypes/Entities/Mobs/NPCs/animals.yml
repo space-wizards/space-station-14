@@ -908,6 +908,7 @@
     tags:
     - Trash
     - CannotSuicide
+    - Mouse
   - type: Respirator
     damage:
       types:
