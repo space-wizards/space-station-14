@@ -1,4 +1,5 @@
 using Content.Server.Objectives.Interfaces;
+using Content.Server.Shuttles.Components;
 using Content.Server.Station.Components;
 using Content.Shared.Cuffs.Components;
 using JetBrains.Annotations;
@@ -61,7 +62,7 @@ namespace Content.Server.Objectives.Conditions
                     agentIsEscaping = false;
 
                 // Any emergency shuttle counts for this objective.
-                foreach (var stationData in entMan.EntityQuery<StationDataComponent>())
+                foreach (var stationData in entMan.EntityQuery<StationEmergencyShuttleComponent>())
                 {
                     if (IsAgentOnShuttle(xform, stationData.EmergencyShuttle)) {
                         shuttleContainsAgent = true;

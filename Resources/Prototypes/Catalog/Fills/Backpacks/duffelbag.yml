@@ -22,7 +22,7 @@
   - type: StorageFill
     contents:
       - id: WeaponShotgunDoubleBarreled
-      - id: BoxShotgunFlare
+      - id: BoxShotgunIncendiary
         amount: 2
       - id: GrenadeFlashBang
         amount: 2

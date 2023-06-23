@@ -12,7 +12,6 @@
   - type: Sprite
     sprite: Structures/Walls/asteroid_rock.rsi
     state: full
-    netsync: false
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -99,7 +98,6 @@
     - type: SmoothEdge
     - type: Sprite
       sprite: Structures/Walls/rock.rsi
-      netsync: false
       layers:
         - state: rock
         - map: [ "enum.EdgeLayer.South" ]

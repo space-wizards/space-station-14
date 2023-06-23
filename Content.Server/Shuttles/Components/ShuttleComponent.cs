@@ -14,9 +14,9 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         public const float BrakeCoefficient = 1.5f;
 
-        public const float MaxLinearVelocity = 10f;
+        public const float MaxLinearVelocity = 20f;
 
-        public const float MaxAngularVelocity = 1f;
+        public const float MaxAngularVelocity = 4f;
 
         /// <summary>
         /// The cached thrust available for each cardinal direction

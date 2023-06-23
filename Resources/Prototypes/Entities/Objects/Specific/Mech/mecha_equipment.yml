@@ -29,6 +29,27 @@
       item-container: !type:Container
 
 - type: entity
+  id: MechEquipmentGrabberSmall
+  parent: BaseMechEquipment
+  name: small hydraulic clamp
+  description: Gives the mech the ability to grab things and drag them around.
+  components:
+  - type: Sprite
+    state: mecha_clamp_small
+  - type: MechGrabber
+    maxContents: 4
+    grabDelay: 3
+    grabEnergyDelta: 20
+  - type: Tag
+    tags:
+    - SmallMech
+  - type: UIFragment
+    ui: !type:MechGrabberUi
+  - type: ContainerContainer
+    containers:
+      item-container: !type:Container
+
+- type: entity
   id: MechEquipmentHorn
   parent: BaseMechEquipment
   name: mech horn
@@ -44,7 +65,6 @@
     - collection: TrollAnimals
     - collection: TrollBeeping
     - collection: TrollEsword
-    - collection: TrollMeeting
   - type: UIFragment
     ui: !type:MechSoundboardUi
   - type: UseDelay

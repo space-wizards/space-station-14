@@ -78,7 +78,7 @@ namespace Content.Server.PAI
 
             EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = val;
 
-            var ghostRole = AddComp<GhostRoleComponent>(uid);
+            var ghostRole = EnsureComp<GhostRoleComponent>(uid);
             EnsureComp<GhostTakeoverAvailableComponent>(uid);
 
             ghostRole.RoleName = Loc.GetString("pai-system-role-name");
@@ -165,6 +165,7 @@ namespace Content.Server.PAI
                     if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
                     {
                         EntityManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
+						EntityManager.RemoveComponent<GhostRoleComponent>(uid);
                         _popupSystem.PopupEntity(Loc.GetString("pai-system-stopped-searching"), uid, args.User);
                         PAITurningOff(uid);
                     }

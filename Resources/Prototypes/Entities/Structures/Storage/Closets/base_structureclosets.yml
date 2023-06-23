@@ -9,16 +9,24 @@
     noRot: true
   - type: Sprite
     noRot: true
-    netsync: false
     sprite: Structures/Storage/closet.rsi
     layers:
     - state: generic
+      map: ["enum.StorageVisualLayers.Base"]
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
   - type: MovedByPressure
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: Attach Label
+      ejectVerbText: Remove Label
+      whitelist:
+        components:
+        - Paper
+  - type: ItemSlots
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -42,6 +50,7 @@
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
   - type: Weldable
   - type: PlaceableSurface
     placeCentered: true
@@ -72,11 +81,10 @@
             min: 1
             max: 1
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: generic_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: generic_door
 
 #Wall Closet
 - type: entity
@@ -99,11 +107,11 @@
     noRot: false
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     noRot: false
     sprite: Structures/Storage/wall_locker.rsi
     layers:
     - state: generic
+      map: ["enum.StorageVisualLayers.Base"]
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
@@ -155,10 +163,10 @@
   - type: AccessReader
   - type: Lock
   - type: Sprite
-    netsync: false
     sprite: Structures/Storage/wall_locker.rsi
     layers:
     - state: generic
+      map: ["enum.StorageVisualLayers.Base"]
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
@@ -183,7 +191,6 @@
     noRot: true
   - type: Sprite
     noRot: true
-    netsync: false
     sprite: Structures/Storage/suit_storage.rsi
     layers:
     - state: base
@@ -246,8 +253,7 @@
             min: 1
             max: 1
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: base
-      state_open: base 
-      state_closed: closed
+  - type: EntityStorageVisuals
+    stateBase: base
+    stateDoorOpen: base 
+    stateDoorClosed: closed

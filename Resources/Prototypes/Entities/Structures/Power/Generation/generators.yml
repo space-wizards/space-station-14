@@ -33,7 +33,6 @@
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: generator
-    netsync: false
     snapCardinals: true
   - type: NodeContainer
     examinable: true
@@ -76,6 +75,12 @@
     totalIntensity: 200
   - type: StaticPrice
     price: 500
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: output
 
 # Base Wallmount Generator
 
@@ -108,7 +113,6 @@
     canCollide: false
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     layers:
     - state: panel
@@ -145,7 +149,6 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     layers:
     - state: panel
@@ -174,6 +177,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen0_1
+  - type: WiresPanel
   - type: Wires
     BoardName: "GeneratorPlasma"
     LayoutId: GeneratorPlasma
@@ -193,6 +197,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen1_1
+  - type: WiresPanel
   - type: Wires
     BoardName: "GeneratorUranium"
     LayoutId: GeneratorUranium
@@ -279,7 +284,6 @@
   - type: PowerSupplier
     supplyRate: 10000
   - type: Sprite
-    netsync: false
     sprite: Structures/Power/Generation/rtg.rsi
     layers:
       - state: rtg_damaged

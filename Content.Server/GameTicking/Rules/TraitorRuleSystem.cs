@@ -7,21 +7,18 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Shuttles.Components;
-using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Preferences;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -76,7 +73,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             var minPlayers = _cfg.GetCVar(CCVars.TraitorMinPlayers);
             if (!ev.Forced && ev.Players.Length < minPlayers)
             {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-not-enough-ready-players",
+                _chatManager.SendAdminAnnouncement(Loc.GetString("traitor-not-enough-ready-players",
                     ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers)));
                 ev.Cancel();
                 continue;
@@ -149,7 +146,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
     }
 
-    public List<IPlayerSession> FindPotentialTraitors(in Dictionary<IPlayerSession, HumanoidCharacterProfile> candidates, TraitorRuleComponent component)
+    private List<IPlayerSession> FindPotentialTraitors(in Dictionary<IPlayerSession, HumanoidCharacterProfile> candidates, TraitorRuleComponent component)
     {
         var list = new List<IPlayerSession>();
         var pendingQuery = GetEntityQuery<PendingClockInComponent>();
@@ -187,7 +184,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         return prefList;
     }
 
-    public List<IPlayerSession> PickTraitors(int traitorCount, List<IPlayerSession> prefList)
+    private List<IPlayerSession> PickTraitors(int traitorCount, List<IPlayerSession> prefList)
     {
         var results = new List<IPlayerSession>(traitorCount);
         if (prefList.Count == 0)
@@ -213,6 +210,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             //no i wont fuck you, erp is against rules
             GameTicker.StartGameRule("Traitor", out var ruleEntity);
             traitorRule = Comp<TraitorRuleComponent>(ruleEntity);
+            MakeCodewords(traitorRule);
         }
 
         var mind = traitor.Data.ContentData()?.Mind;
@@ -221,58 +219,81 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             _sawmill.Info("Failed getting mind for picked traitor.");
             return false;
         }
-
         if (mind.OwnedEntity is not { } entity)
         {
             Logger.ErrorS("preset", "Mind picked for traitor did not have an attached entity.");
             return false;
         }
 
-        // creadth: we need to create uplink for the antag.
-        // PDA should be in place already
-        DebugTools.AssertNotNull(mind.OwnedEntity);
-
+        // Calculate the amount of currency on the uplink.
         var startingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
-
         if (mind.CurrentJob != null)
             startingBalance = Math.Max(startingBalance - mind.CurrentJob.Prototype.AntagAdvantage, 0);
 
+        // creadth: we need to create uplink for the antag.
+        // PDA should be in place already
         var pda = _uplink.FindUplinkTarget(mind.OwnedEntity!.Value);
         if (pda == null || !_uplink.AddUplink(mind.OwnedEntity.Value, startingBalance))
             return false;
 
+        // Add the ringtone uplink and get its code for greeting
+        var code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
 
-        // add the ringtone uplink and get its code for greeting
-        var code = AddComp<RingerUplinkComponent>(pda.Value).Code;
-
+        // Prepare antagonist role
         var antagPrototype = _prototypeManager.Index<AntagPrototype>(traitorRule.TraitorPrototypeId);
         var traitorRole = new TraitorRole(mind, antagPrototype);
-        mind.AddRole(traitorRole);
-        traitorRule.Traitors.Add(traitorRole);
-        traitorRole.GreetTraitor(traitorRule.Codewords, code);
 
+        // Give traitors their codewords and uplink code to keep in their character info menu
+        traitorRole.Mind.Briefing = string.Format(
+            "{0}\n{1}",
+            Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", traitorRule.Codewords))),
+            Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("", code))));
+
+        // Assign traitor roles
+        mind.AddRole(traitorRole);
+        SendTraitorBriefing(mind, traitorRule.Codewords, code);
+        traitorRule.Traitors.Add(traitorRole);
+
+        if (mind.TryGetSession(out var session))
+        {
+            // Notificate player about new role assignment
+            _audioSystem.PlayGlobal(traitorRule.GreetSoundNotification, session);
+        }
+
+        // Change the faction
         _faction.RemoveFaction(entity, "NanoTrasen", false);
         _faction.AddFaction(entity, "Syndicate");
 
+        // Give traitors their objectives
         var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
         var maxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);
-
-        //give traitors their objectives
         var difficulty = 0f;
         for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
         {
             var objective = _objectivesManager.GetRandomObjective(traitorRole.Mind, "TraitorObjectiveGroups");
-            if (objective == null) continue;
+            if (objective == null)
+                continue;
             if (traitorRole.Mind.TryAddObjective(objective))
                 difficulty += objective.Difficulty;
         }
 
-        //give traitors their codewords and uplink code to keep in their character info menu
-        traitorRole.Mind.Briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", traitorRule.Codewords)))
-            + "\n" + Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("", code)));
-
-        _audioSystem.PlayGlobal(traitorRule.AddedSound, Filter.Empty().AddPlayer(traitor), false, AudioParams.Default);
         return true;
+    }
+
+    /// <summary>
+    ///     Send a codewords and uplink codes to traitor chat.
+    /// </summary>
+    /// <param name="mind">A mind (player)</param>
+    /// <param name="codewords">Codewords</param>
+    /// <param name="code">Uplink codes</param>
+    private void SendTraitorBriefing(Mind.Mind mind, string[] codewords, Note[] code)
+    {
+        if (mind.TryGetSession(out var session))
+        {
+           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
+           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
+           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("", code))));
+        }
     }
 
     private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
@@ -428,7 +449,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         return allTraitors;
     }
 
-    public List<TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind, TraitorRuleComponent component)
+    private List<TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind, TraitorRuleComponent component)
     {
         return component.Traitors // don't want
             .Where(t => t.Mind.OwnedEntity is not null) // no entity

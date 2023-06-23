@@ -11,11 +11,11 @@
     sprite: Structures/Storage/Crates/generic.rsi
     state: icon
   - type: Sprite
-    netsync: false
     noRot: true
     sprite: Structures/Storage/Crates/generic.rsi
     layers:
     - state: base
+      map: ["enum.StorageVisualLayers.Base"]
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
@@ -50,10 +50,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: open
-      state_closed: closed
+  - type: EntityStorageVisuals
+    stateDoorOpen: open
+    stateDoorClosed: closed
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label

@@ -184,6 +184,7 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.EditorGridPlace);
             AddButton(EngineKeyFunctions.EditorLinePlace);
             AddButton(EngineKeyFunctions.EditorRotateObject);
+            AddButton(ContentKeyFunctions.EditorFlipObject);
             AddButton(ContentKeyFunctions.EditorCopyObject);
 
             AddHeader("ui-options-header-dev");

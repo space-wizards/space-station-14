@@ -46,6 +46,8 @@ namespace Content.Client.Construction
                     new PointerInputCmdHandler(HandleOpenCraftingMenu))
                 .Bind(EngineKeyFunctions.Use,
                     new PointerInputCmdHandler(HandleUse, outsidePrediction: true))
+                .Bind(ContentKeyFunctions.EditorFlipObject,
+                    new PointerInputCmdHandler(HandleFlip))
                 .Register<ConstructionSystem>();
 
             SubscribeLocalEvent<ConstructionGhostComponent, ExaminedEvent>(HandleConstructionGhostExamined);
@@ -99,6 +101,7 @@ namespace Content.Client.Construction
         public event EventHandler<CraftingAvailabilityChangedArgs>? CraftingAvailabilityChanged;
         public event EventHandler<string>? ConstructionGuideAvailable;
         public event EventHandler? ToggleCraftingWindow;
+        public event EventHandler? FlipConstructionPrototype;
 
         private void HandleAckStructure(AckStructureConstructionMessage msg)
         {
@@ -115,6 +118,13 @@ namespace Content.Client.Construction
         {
             if (args.State == BoundKeyState.Down)
                 ToggleCraftingWindow?.Invoke(this, EventArgs.Empty);
+            return true;
+        }
+
+        private bool HandleFlip(in PointerInputCmdHandler.PointerInputCmdArgs args)
+        {
+            if (args.State == BoundKeyState.Down)
+                FlipConstructionPrototype?.Invoke(this, EventArgs.Empty);
             return true;
         }
 

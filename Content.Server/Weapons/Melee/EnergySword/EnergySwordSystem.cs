@@ -28,7 +28,7 @@ public sealed class EnergySwordSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<EnergySwordComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<EnergySwordComponent, MeleeHitEvent>(OnMeleeHit);
+        SubscribeLocalEvent<EnergySwordComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
         SubscribeLocalEvent<EnergySwordComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<EnergySwordComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<EnergySwordComponent, IsHotEvent>(OnIsHotEvent);
@@ -42,13 +42,13 @@ public sealed class EnergySwordSystem : EntitySystem
             comp.BladeColor = _random.Pick(comp.ColorOptions);
     }
 
-    private void OnMeleeHit(EntityUid uid, EnergySwordComponent comp, MeleeHitEvent args)
+    private void OnGetMeleeDamage(EntityUid uid, EnergySwordComponent comp, ref GetMeleeDamageEvent args)
     {
         if (!comp.Activated)
             return;
 
         // Overrides basic blunt damage with burn+slash as set in yaml
-        args.BonusDamage = comp.LitDamageBonus;
+        args.Damage = comp.LitDamageBonus;
     }
 
     private void OnUseInHand(EntityUid uid, EnergySwordComponent comp, UseInHandEvent args)
@@ -57,7 +57,7 @@ public sealed class EnergySwordSystem : EntitySystem
             return;
 
         args.Handled = true;
-        
+
         if (comp.Activated)
         {
             var ev = new EnergySwordDeactivatedEvent();
@@ -120,7 +120,7 @@ public sealed class EnergySwordSystem : EntitySystem
         {
             malus.Malus += comp.LitDisarmMalus;
         }
-        
+
         _audio.Play(comp.ActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.ActivateSound.Params);
 
         comp.Activated = true;

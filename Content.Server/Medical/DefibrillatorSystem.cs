@@ -29,7 +29,6 @@ namespace Content.Server.Medical;
 public sealed class DefibrillatorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly ChatSystem _chatManager = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -156,7 +155,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (_timing.CurTime < component.NextZapTime)
             return false;
 
-        if (!TryComp<MobStateComponent>(target, out var mobState) || _rotting.IsRotten(target))
+        if (!TryComp<MobStateComponent>(target, out var mobState))
             return false;
 
         if (!_powerCell.HasActivatableCharge(uid, user: user))
@@ -203,40 +202,48 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (!_powerCell.TryUseActivatableCharge(uid, user: user))
             return;
 
-        _mobThreshold.SetAllowRevives(target, true, thresholds);
         _audio.PlayPvs(component.ZapSound, uid);
         _electrocution.TryDoElectrocution(target, null, component.ZapDamage, component.WritheDuration, true, ignoreInsulation: true);
-
-        if (_mobState.IsIncapacitated(target, mob))
-            _damageable.TryChangeDamage(target, component.ZapHeal, true, origin: uid);
-
         component.NextZapTime = _timing.CurTime + component.ZapDelay;
         _appearance.SetData(uid, DefibrillatorVisuals.Ready, false);
-        _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
-        _mobThreshold.SetAllowRevives(target, false, thresholds);
 
         IPlayerSession? session = null;
-        if (TryComp<MindComponent>(target, out var mindComp) &&
-            mindComp.Mind?.UserId != null &&
-            _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out session))
+
+        if (_rotting.IsRotten(target))
         {
-            // notify them they're being revived.
-            if (mindComp.Mind.CurrentEntity != target)
-            {
-                _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-ghosted"),
-                    InGameICChatType.Speak, true);
-                _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind), session);
-            }
+            _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-rotten"),
+                InGameICChatType.Speak, true);
         }
         else
         {
-            _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-no-mind"),
-                InGameICChatType.Speak, true);
+            _mobThreshold.SetAllowRevives(target, true, thresholds);
+            if (_mobState.IsDead(target, mob))
+                _damageable.TryChangeDamage(target, component.ZapHeal, true, origin: uid);
+            _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
+            _mobThreshold.SetAllowRevives(target, false, thresholds);
+
+            if (TryComp<MindComponent>(target, out var mindComp) &&
+                mindComp.Mind?.Session is { } playerSession)
+            {
+                session = playerSession;
+                // notify them they're being revived.
+                if (mindComp.Mind.CurrentEntity != target)
+                {
+                    _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-ghosted"),
+                        InGameICChatType.Speak, true);
+                    _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind), session);
+                }
+            }
+            else
+            {
+                _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-no-mind"),
+                    InGameICChatType.Speak, true);
+            }
         }
 
-        var sound = _mobState.IsAlive(target, mob) && session != null
-            ? component.SuccessSound
-            : component.FailureSound;
+        var sound = _mobState.IsDead(target, mob) || session == null
+            ? component.FailureSound
+            : component.SuccessSound;
         _audio.PlayPvs(sound, uid);
 
         // if we don't have enough power left for another shot, turn it off

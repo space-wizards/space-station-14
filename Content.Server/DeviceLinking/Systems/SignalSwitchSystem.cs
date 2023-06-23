@@ -1,40 +1,51 @@
 using Content.Server.DeviceLinking.Components;
+using Content.Server.DeviceNetwork;
 using Content.Server.MachineLinking.System;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
-namespace Content.Server.DeviceLinking.Systems
+namespace Content.Server.DeviceLinking.Systems;
+
+public sealed class SignalSwitchSystem : EntitySystem
 {
-    public sealed class SignalSwitchSystem : EntitySystem
+    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<SignalSwitchComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<SignalSwitchComponent, ActivateInWorldEvent>(OnActivated);
+    }
+
+    private void OnInit(EntityUid uid, SignalSwitchComponent comp, ComponentInit args)
+    {
+        _deviceLink.EnsureSourcePorts(uid, comp.OnPort, comp.OffPort, comp.StatusPort);
+    }
+
+    private void OnActivated(EntityUid uid, SignalSwitchComponent comp, ActivateInWorldEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        comp.State = !comp.State;
+        _deviceLink.InvokePort(uid, comp.State ? comp.OnPort : comp.OffPort);
+        var data = new NetworkPayload
         {
-            base.Initialize();
+            [DeviceNetworkConstants.LogicState] = comp.State ? SignalState.High : SignalState.Low
+        };
 
-            SubscribeLocalEvent<SignalSwitchComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<SignalSwitchComponent, ActivateInWorldEvent>(OnActivated);
+        // only send status if it's a toggle switch and not a button
+        if (comp.OnPort != comp.OffPort)
+        {
+            _deviceLink.InvokePort(uid, comp.StatusPort, data);
         }
 
-        private void OnInit(EntityUid uid, SignalSwitchComponent component, ComponentInit args)
-        {
-            _signalSystem.EnsureSourcePorts(uid, component.OnPort, component.OffPort);
-        }
+        _audio.PlayPvs(comp.ClickSound, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
 
-        private void OnActivated(EntityUid uid, SignalSwitchComponent component, ActivateInWorldEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            component.State = !component.State;
-            _signalSystem.InvokePort(uid, component.State ? component.OnPort : component.OffPort);
-            SoundSystem.Play(component.ClickSound.GetSound(), Filter.Pvs(component.Owner), component.Owner,
-                AudioHelpers.WithVariation(0.125f).WithVolume(8f));
-
-            args.Handled = true;
-        }
+        args.Handled = true;
     }
 }

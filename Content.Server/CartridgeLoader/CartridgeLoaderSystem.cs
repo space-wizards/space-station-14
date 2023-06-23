@@ -35,7 +35,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     /// Because the cartridge loader integrates with the ui of the entity using it, the entities ui state needs to inherit from <see cref="CartridgeLoaderUiState"/>
     /// and use this method to update its state so the cartridge loaders state can be added to it.
     /// </remarks>
-    /// <seealso cref="PDA.PDASystem.UpdatePDAUserInterface"/>
+    /// <seealso cref="PDA.PdaSystem.UpdatePdaUserInterface"/>
     public void UpdateUiState(EntityUid loaderUid, CartridgeLoaderUiState state, IPlayerSession? session = default!, CartridgeLoaderComponent? loader  = default!)
     {
         if (!Resolve(loaderUid, ref loader))
@@ -362,9 +362,9 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
     /// <summary>
     /// Shortcut for updating the loaders user interface state without passing in a subtype of <see cref="CartridgeLoaderUiState"/>
-    /// like the <see cref="PDA.PDASystem"/> does when updating its ui state
+    /// like the <see cref="PDA.PdaSystem"/> does when updating its ui state
     /// </summary>
-    /// <seealso cref="PDA.PDASystem.UpdatePDAUserInterface"/>
+    /// <seealso cref="PDA.PdaSystem.UpdatePdaUserInterface"/>
     private void UpdateUserInterfaceState(EntityUid loaderUid, CartridgeLoaderComponent loader)
     {
         UpdateUiState(loaderUid, new CartridgeLoaderUiState(), null, loader);

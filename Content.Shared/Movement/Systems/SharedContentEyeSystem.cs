@@ -37,6 +37,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
             .Register<SharedContentEyeSystem>();
 
         Sawmill.Level = LogLevel.Info;
+        UpdatesOutsidePrediction = true;
     }
 
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
@@ -110,6 +111,12 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
         component.TargetZoom = Vector2.One;
         Dirty(component);
+    }
+
+    public void SetMaxZoom(EntityUid uid, Vector2 value, ContentEyeComponent? component = null)
+    {
+        if (Resolve(uid, ref component))
+            component.MaxZoom = value;
     }
 
     private void Zoom(EntityUid uid, bool zoomIn, ContentEyeComponent? component = null)

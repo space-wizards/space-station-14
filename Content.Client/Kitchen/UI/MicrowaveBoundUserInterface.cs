@@ -98,10 +98,12 @@ namespace Content.Client.Kitchen.UI
                     return;
                 }
 
+                // TODO just use sprite view
+
                 Texture? texture;
                 if (_entityManager.TryGetComponent(entity, out IconComponent? iconComponent))
                 {
-                    texture = iconComponent.Icon?.Default;
+                    texture = _entityManager.System<SpriteSystem>().GetIcon(iconComponent);
                 }
                 else if (_entityManager.TryGetComponent(entity, out SpriteComponent? spriteComponent))
                 {

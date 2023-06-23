@@ -4,7 +4,6 @@ using Content.Shared.Research.Components;
 using Content.Shared.Research.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Research.Systems
@@ -13,7 +12,6 @@ namespace Content.Server.Research.Systems
     public sealed partial class ResearchSystem : SharedResearchSystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
@@ -23,6 +21,8 @@ namespace Content.Server.Research.Systems
             InitializeConsole();
             InitializeSource();
             InitializeServer();
+
+            SubscribeLocalEvent<TechnologyDatabaseComponent, ResearchRegistrationChangedEvent>(OnDatabaseRegistrationChanged);
         }
 
         /// <summary>

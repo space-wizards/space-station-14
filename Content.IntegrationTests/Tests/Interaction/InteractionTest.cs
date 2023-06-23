@@ -38,7 +38,7 @@ namespace Content.IntegrationTests.Tests.Interaction;
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public abstract partial class InteractionTest
 {
-    protected virtual string PlayerPrototype => "AdminObserver";
+    protected virtual string PlayerPrototype => "MobInteractionTestObserver";
 
     protected PairTracker PairTracker = default!;
     protected TestMapData MapData = default!;
@@ -118,7 +118,36 @@ public abstract partial class InteractionTest
     [SetUp]
     public virtual async Task Setup()
     {
-        PairTracker = await PoolManager.GetServerClient(new PoolSettings());
+        const string TestPrototypes = @"
+- type: entity
+  id: MobInteractionTestObserver
+  name: observer
+  noSpawn: true
+  save: false
+  description: Boo!
+  components:
+  - type: Access
+    groups:
+    - AllAccess
+  - type: Body
+    prototype: Aghost
+  - type: DoAfter
+  - type: Ghost
+    canInteract: true
+  - type: Hands
+  - type: Mind
+  - type: Stripping
+  - type: Tag
+    tags:
+    - CanPilot
+    - BypassInteractionRangeChecks
+  - type: Thieving
+    stripTimeReduction: 9999
+    stealthy: true
+  - type: UserInterface
+";
+
+        PairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = TestPrototypes});
 
         // server dependencies
         SEntMan = Server.ResolveDependency<IEntityManager>();

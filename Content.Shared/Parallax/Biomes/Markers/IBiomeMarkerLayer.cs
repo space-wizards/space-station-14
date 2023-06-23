@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Parallax.Biomes.Points;
+namespace Content.Shared.Parallax.Biomes.Markers;
 
 /// <summary>
 /// Specifies one-off marker points to be used. This could be for dungeon markers, mob markers, etc.
@@ -9,14 +9,14 @@ namespace Content.Shared.Parallax.Biomes.Points;
 public interface IBiomeMarkerLayer : IPrototype
 {
     /// <summary>
-    /// Minimum radius between 2 points
+    /// Biome template to use as a mask for this layer.
     /// </summary>
-    [DataField("radius")]
-    public float Radius { get; }
+    public string? EntityMask { get; }
+
+    public string Prototype { get; }
 
     /// <summary>
     /// How large the pre-generated points area is.
     /// </summary>
-    [DataField("size")]
     public int Size { get; }
 }

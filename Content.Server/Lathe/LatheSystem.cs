@@ -194,7 +194,7 @@ namespace Content.Server.Lathe
             if (uid != args.Lathe || !TryComp<LatheComponent>(uid, out var latheComponent) || latheComponent.DynamicRecipes == null)
                 return;
 
-            args.Recipes = args.Recipes.Union(component.RecipeIds.Where(r => latheComponent.DynamicRecipes.Contains(r))).ToList();
+            args.Recipes = args.Recipes.Union(component.UnlockedRecipes.Where(r => latheComponent.DynamicRecipes.Contains(r))).ToList();
         }
 
         private void OnMaterialAmountChanged(EntityUid uid, LatheComponent component, ref MaterialAmountChangedEvent args)
@@ -274,6 +274,8 @@ namespace Content.Server.Lathe
                 {
                     if (TryAddToQueue(uid, recipe, component))
                         count++;
+                    else
+                        break;
                 }
                 if (count > 0 && args.Session.AttachedEntity != null)
                 {

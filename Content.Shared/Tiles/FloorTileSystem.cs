@@ -136,13 +136,7 @@ public sealed class FloorTileSystem : EntitySystem
 
     public bool HasBaseTurf(ContentTileDefinition tileDef, string baseTurf)
     {
-        foreach (var tileBaseTurf in tileDef.BaseTurfs)
-        {
-            if (baseTurf == tileBaseTurf)
-                return true;
-        }
-
-        return false;
+        return tileDef.BaseTurf == baseTurf;
     }
 
     private void PlaceAt(EntityUid user, MapGridComponent mapGrid, EntityCoordinates location, ushort tileId, SoundSpecifier placeSound, float offset = 0)

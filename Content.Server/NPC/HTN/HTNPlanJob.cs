@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.NPC.HTN.PrimitiveTasks;
 
 namespace Content.Server.NPC.HTN;

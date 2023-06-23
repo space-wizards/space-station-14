@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
@@ -29,6 +30,7 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] private readonly OccluderSystem _occluder = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -55,6 +57,7 @@ public abstract class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<DoorComponent, ComponentHandleState>(OnHandleState);
 
+        SubscribeLocalEvent<DoorComponent, InteractedNoHandEvent>(OnInteractedNoHand);
         SubscribeLocalEvent<DoorComponent, ActivateInWorldEvent>(OnActivate);
 
         SubscribeLocalEvent<DoorComponent, StartCollideEvent>(HandleCollide);
@@ -177,9 +180,22 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Interactions
-    protected virtual void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
+
+    private void OnInteractedNoHand(EntityUid uid, DoorComponent component, InteractedNoHandEvent args)
     {
-        // avoid client-mispredicts, as the server will definitely handle this event
+        if (args.Handled || !component.ClickOpen || !Tags.HasTag(args.User, "DoorBumpOpener"))
+            return;
+
+        TryToggleDoor(uid, component, args.User, predicted: true);
+        args.Handled = true;
+    }
+
+    public void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
+    {
+        if (args.Handled || !door.ClickOpen)
+            return;
+
+        TryToggleDoor(uid, door, args.User, predicted: true);
         args.Handled = true;
     }
 
@@ -252,7 +268,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        if (!HasAccess(uid, user))
+        if (!HasAccess(uid, user, door))
         {
             if (!quiet)
                 Deny(uid, door);
@@ -325,7 +341,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        if (!HasAccess(uid, user))
+        if (!HasAccess(uid, user, door))
             return false;
 
         return !ev.PerformCollisionCheck || !GetColliding(uid).Any();
@@ -462,7 +478,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
     private void PreventCollision(EntityUid uid, DoorComponent component, ref PreventCollideEvent args)
     {
-        if (component.CurrentlyCrushing.Contains(args.BodyB.Owner))
+        if (component.CurrentlyCrushing.Contains(args.OtherEntity))
         {
             args.Cancelled = true;
         }
@@ -476,13 +492,39 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Access
-    public virtual bool HasAccess(EntityUid uid, EntityUid? user = null, AccessReaderComponent? access = null)
+
+    /// <summary>
+    ///     Does the user have the permissions required to open this door?
+    /// </summary>
+    public bool HasAccess(EntityUid uid, EntityUid? user = null, DoorComponent? door = null, AccessReaderComponent? access = null)
     {
         // TODO network AccessComponent for predicting doors
 
-        // Currently all door open/close & door-bumper collision stuff is done server side.
-        // so this return value means nothing.
-        return true;
+        // if there is no "user" we skip the access checks. Access is also ignored in some game-modes.
+        if (user == null || AccessType == AccessTypes.AllowAll)
+            return true;
+
+        // If the door is on emergency access we skip the checks.
+        if (TryComp<AirlockComponent>(uid, out var airlock) && airlock.EmergencyAccess)
+            return true;
+
+        // Can't click to close firelocks.
+        if (Resolve(uid, ref door) && door.State == DoorState.Open &&
+            TryComp<FirelockComponent>(uid, out var firelock))
+            return false;
+
+        if (!Resolve(uid, ref access, false))
+            return true;
+
+        var isExternal = access.AccessLists.Any(list => list.Contains("External"));
+
+        return AccessType switch
+        {
+            // Some game modes modify access rules.
+            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(user.Value, access),
+            AccessTypes.AllowAllNoExternal => !isExternal,
+            _ => _accessReaderSystem.IsAllowed(user.Value, access)
+        };
     }
 
     /// <summary>

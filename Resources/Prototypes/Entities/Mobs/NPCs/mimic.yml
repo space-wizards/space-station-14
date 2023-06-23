@@ -6,6 +6,7 @@
   components:
   - type: Tag
     tags:
+    - DoorBumpOpener
     - FootstepSound
   - type: InputMover
   - type: MobMover

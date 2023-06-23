@@ -28,7 +28,7 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 
     private void OnDestinationPressed(EntityUid obj)
     {
-        SendMessage(new ShuttleConsoleDestinationMessage()
+        SendMessage(new ShuttleConsoleFTLRequestMessage()
         {
             Destination = obj,
         });

@@ -42,27 +42,38 @@ namespace Content.Server.GameTicking
 
             if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
             {
-                ClearGameRules();
-                SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
-                AddGamePresetRules();
-                StartGamePresetRules();
+                var fallbackPresets = _configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset).Split(",");
+                var startFailed = true;
 
-                startAttempt.Uncancel();
-                RaiseLocalEvent(startAttempt);
+                foreach (var preset in fallbackPresets)
+                {
+                    ClearGameRules();
+                    SetGamePreset(preset);
+                    AddGamePresetRules();
+                    StartGamePresetRules();
 
-                _chatManager.DispatchServerAnnouncement(
-                    Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
-                        ("failedGameMode", presetTitle),
-                        ("fallbackMode", Loc.GetString(Preset!.ModeTitle))));
+                    startAttempt.Uncancel();
+                    RaiseLocalEvent(startAttempt);
 
-                if (startAttempt.Cancelled)
+                    if (!startAttempt.Cancelled)
+                    {
+                        _chatManager.SendAdminAnnouncement(
+                            Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
+                                ("failedGameMode", presetTitle),
+                                ("fallbackMode", Loc.GetString(preset))));
+                        RefreshLateJoinAllowed();
+                        startFailed = false;
+                        break;
+                    }
+                }
+
+                if (startFailed)
                 {
                     FailedPresetRestart();
                     return false;
                 }
-
-                RefreshLateJoinAllowed();
             }
+
             else
             {
                 FailedPresetRestart();

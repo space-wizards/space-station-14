@@ -27,6 +27,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -158,7 +159,21 @@ namespace Content.Server.Administration.Systems
                     Text = Loc.GetString("admin-verbs-teleport-here"),
                     Category = VerbCategory.Admin,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/close.svg.192dpi.png")),
-                    Act = () => _console.ExecuteCommand(player, $"tpto {args.User} {args.Target}"),
+                    Act = () =>
+                    {
+                        if (HasComp<MapGridComponent>(args.Target))
+                        {
+                            if (player.AttachedEntity != null)
+                            {
+                                var mapPos = Transform(player.AttachedEntity.Value).MapPosition;
+                                _console.ExecuteCommand(player, $"tpgrid {args.Target} {mapPos.X} {mapPos.Y} {mapPos.MapId}");
+                            }
+                        }
+                        else
+                        {
+                            _console.ExecuteCommand(player, $"tpto {args.User} {args.Target}");
+                        }
+                    },
                     Impact = LogImpact.Low
                 });
 

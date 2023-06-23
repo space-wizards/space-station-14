@@ -348,10 +348,12 @@ namespace Content.Client.Hands.Systems
                 // In case no RSI is given, use the item's base RSI as a default. This cuts down on a lot of unnecessary yaml entries.
                 if (layerData.RsiPath == null
                     && layerData.TexturePath == null
-                    && sprite[index].Rsi == null
-                    && TryComp(held, out SpriteComponent? clothingSprite))
+                    && sprite[index].Rsi == null)
                 {
-                    sprite.LayerSetRSI(index, clothingSprite.BaseRSI);
+                    if (TryComp<ItemComponent>(held, out var itemComponent) && itemComponent.RsiPath != null)
+                        sprite.LayerSetRSI(index, itemComponent.RsiPath);
+                    else if (TryComp(held, out SpriteComponent? clothingSprite))
+                        sprite.LayerSetRSI(index, clothingSprite.BaseRSI);
                 }
 
                 sprite.LayerSetData(index, layerData);

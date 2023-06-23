@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Construction;
-using Content.Server.CPUJob.JobQueues.Queues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
 using Content.Shared.CCVar;

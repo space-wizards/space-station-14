@@ -67,7 +67,7 @@
   - type: StorageFill
     contents:
       - id: ClothingMaskBreathMedical
-      - id: EmergencyOxygenTank
+      - id: EmergencyOxygenTankFilled
       - id: EmergencyMedipen
       - id: SyringeInaprovaline
       - id: PillDexalin

@@ -17,7 +17,6 @@
       ballistic-ammo: !type:Container
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/rifle.rsi
-    netsync: false
   - type: MagazineVisuals
     magState: mag
     steps: 2
