@@ -175,19 +175,19 @@
         types:
             Slash: 9
             Heat: 9
-            Structural: 20
+            Structural: 15
             Blunt: -4.5
     litDisarmMalus: 0.7
   - type: MeleeWeapon
-    attackRate: 1.6
-    angle: 100
-    heavyWindupModifier: .9
-    heavyDamageModifier: 1.5
-    soundHit:
-      path: /Audio/Weapons/eblade1.ogg
     damage:
       types:
         Blunt: 4.5
+    attackRate: 1.3
+    angle: 100
+    heavyWindupModifier: 1.25
+    heavyDamageModifier: 1.5
+    soundHit:
+      path: /Audio/Weapons/eblade1.ogg
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
     layers:
@@ -202,5 +202,5 @@
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
   - type: Reflect
     enabled: true
-    reflectProb: .75
+    reflectProb: .5
     spread: 75
