@@ -26,6 +26,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly HungerSystem _hunger = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -63,12 +64,12 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     {
         var meta = MetaData(uid);
         component.OriginalName = meta.EntityName;
-        meta.EntityName = Loc.GetString("infant-name-prefix", ("name", meta.EntityName));
+        _metaData.SetEntityName(uid, Loc.GetString("infant-name-prefix", ("name", meta.EntityName)), meta);
     }
 
     private void OnInfantShutdown(EntityUid uid, InfantComponent component, ComponentShutdown args)
     {
-        MetaData(uid).EntityName = component.OriginalName;
+        _metaData.SetEntityName(uid, component.OriginalName);
     }
 
     /// <summary>
@@ -230,7 +231,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
             reproductive.NextBreedAttempt += _random.Next(reproductive.MinBreedAttemptInterval, reproductive.MaxBreedAttemptInterval);
 
             // no.
-            if (HasComp<ActorComponent>(uid) || TryComp<MindComponent>(uid, out var mind) && mind.HasMind)
+            if (HasComp<ActorComponent>(uid) || TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
                 continue;
 
             TryReproduceNearby(uid, reproductive);
