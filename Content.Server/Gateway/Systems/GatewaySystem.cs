@@ -67,7 +67,7 @@ public sealed class GatewaySystem : EntitySystem
 
     private void UpdateAppearance(EntityUid uid)
     {
-        _appearanceSystem.SetData(uid, GatewayVisuals.Active, HasComp<PortalComponent>(uid));
+        _appearance.SetData(uid, GatewayVisuals.Active, HasComp<PortalComponent>(uid));
     }
 
     private void OnOpenPortal(EntityUid uid, GatewayComponent comp, GatewayOpenPortalMessage args)
