@@ -71,7 +71,8 @@ public sealed partial class GatewayWindow : FancyWindow,
 
             var box = new BoxContainer()
             {
-                Orientation = BoxContainer.LayoutOrientation.Horizontal
+                Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                Margin = new Thickness(5f, 5f)
             };
 
             box.AddChild(new Label()
@@ -170,7 +171,8 @@ public sealed partial class GatewayWindow : FancyWindow,
     {
         if (now < nextReady)
         {
-            return Loc.GetString("gateway-window-ready-in", ("time", nextReady - now));
+            var time = nextReady - now;
+            return Loc.GetString("gateway-window-ready-in", ("time", $"{time.Minutes:00}:{time.Seconds:00}"));
         }
 
         return Loc.GetString("gateway-window-ready");
