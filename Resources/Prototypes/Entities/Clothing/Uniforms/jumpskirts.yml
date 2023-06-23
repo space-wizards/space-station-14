@@ -10,7 +10,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/bartender.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCaptain
   name: captain's jumpskirt
   description: It's a blue jumpskirt with some gold markings denoting the rank of "Captain".
@@ -80,7 +80,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/chemistry.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtVirology
   name: virology jumpskirt
   description: It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it.
@@ -91,7 +91,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/virology.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtGenetics
   name: genetics jumpskirt
   description: It's made of a special fiber that gives special protection against biohazards. It has a geneticist rank stripe on it.
@@ -255,7 +255,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtBrigmedic
   name: brigmedic jumpskirt
   description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
@@ -632,7 +632,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/janimaidmini.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtLawyerRed
   name: red lawyer suitskirt
   description: A flashy red suitskirt worn by lawyers and show-offs.
@@ -643,7 +643,7 @@
       sprite: Clothing/Uniforms/Jumpskirt/lawyerred.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtLawyerBlue
   name: blue lawyer suitskirt
   description: A flashy blue suitskirt worn by lawyers and show-offs.
@@ -654,7 +654,7 @@
       sprite: Clothing/Uniforms/Jumpskirt/lawyerblue.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtLawyerBlack
   name: black lawyer suitskirt
   description: A subtle black suitskirt worn by lawyers and gangsters.
@@ -665,7 +665,7 @@
       sprite: Clothing/Uniforms/Jumpskirt/lawyerblack.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtLawyerPurple
   name: purple lawyer suitskirt
   description: A stylish purple piece worn by lawyers and show people.
@@ -676,7 +676,7 @@
       sprite: Clothing/Uniforms/Jumpskirt/lawyerpurple.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtLawyerGood
   name: good lawyer's suitskirt
   description: A tacky suitskirt perfect for a CRIMINAL lawyer!
@@ -687,7 +687,7 @@
       sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtOfLife
   name: skirt of life
   description: A skirt that symbolizes the joy and positivity of our life.
