@@ -2,10 +2,14 @@ using Content.Server.Explosion.Components;
 using Content.Shared.Physics;
 using Content.Shared.Trigger;
 using Robust.Server.GameObjects;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
+using System;
+using System.Linq;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -72,9 +76,36 @@ public sealed partial class TriggerSystem
             collisionLayer: (int) (CollisionGroup.MidImpassable | CollisionGroup.LowImpassable | CollisionGroup.HighImpassable));
     }
 
+    private bool ShouldCollideThroughWall(EntityUid uid, TriggerOnProximityComponent component,ref StartCollideEvent args)
+    {
+        if (component.TriggerBehindWall)
+            return true;
+
+        TryComp<TransformComponent>(uid, out var entTransform);
+        TryComp<TransformComponent>(args.OtherBody.Owner, out var otherTranform);
+
+        if (entTransform != null && otherTranform != null)
+        {
+            SharedPhysicsSystem physSystem = EntityManager.System<SharedPhysicsSystem>();
+            var rayRes = physSystem.IntersectRay(otherTranform.MapID, new CollisionRay(otherTranform.Coordinates.Position, entTransform.Coordinates.Position, (int)CollisionGroup.Impassable)).ToList();
+
+            Logger.Info("" + rayRes);
+
+            if (rayRes.Count > 0)
+                Logger.Info("" + rayRes[0].HitEntity);
+
+            if (rayRes.Count > 0 && rayRes[0].HitEntity == uid)
+                return true;
+        }
+        return false;
+    }
+
     private void OnProximityStartCollide(EntityUid uid, TriggerOnProximityComponent component, ref StartCollideEvent args)
     {
         if (args.OurFixture.ID != TriggerOnProximityComponent.FixtureID) return;
+
+        if (!ShouldCollideThroughWall(uid, component, ref args))
+            return;
 
         _activeProximities.Add(component);
         component.Colliding.Add(args.OtherBody);

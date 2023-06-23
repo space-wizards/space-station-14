@@ -100,6 +100,7 @@
     - type: TriggerOnProximity
       enabled: true
       cooldown: 5
+      triggerBehindWall: false
       shape:
         !type:PhysShapeCircle
           radius: 2

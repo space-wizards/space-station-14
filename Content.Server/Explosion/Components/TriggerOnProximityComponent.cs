@@ -34,6 +34,9 @@ namespace Content.Server.Explosion.Components
         [DataField("enabled")]
         public bool Enabled = true;
 
+        [DataField("triggerBehindWall")]
+        public bool TriggerBehindWall = true;
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("cooldown")]
         public float Cooldown { get; set; } = 5f;
