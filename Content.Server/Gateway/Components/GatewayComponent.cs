@@ -1,4 +1,5 @@
 using Content.Server.Gateway.Systems;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Gateway.Components;
 
@@ -8,6 +9,12 @@ namespace Content.Server.Gateway.Components;
 [RegisterComponent, Access(typeof(GatewaySystem))]
 public sealed class GatewayComponent : Component
 {
+    /// <summary>
+    /// Sound to play when opening or closing the portal.
+    /// </summary>
+    [DataField("portalSound")]
+    public SoundSpecifier PortalSound = new SoundPathSpecifier("/Audio/Effects/Lightning/lightningbolt.ogg");
+
     /// <summary>
     /// Every other gateway destination on the server.
     /// </summary>

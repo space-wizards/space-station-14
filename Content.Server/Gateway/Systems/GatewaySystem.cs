@@ -3,6 +3,7 @@ using Content.Shared.Gateway;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
@@ -15,6 +16,7 @@ public sealed class GatewaySystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly LinkedEntitySystem _linkedEntity = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
@@ -109,6 +111,9 @@ public sealed class GatewaySystem : EntitySystem
         // close automatically after time is up
         comp.NextClose = comp.LastOpen + destComp.OpenTime;
 
+        _audio.PlayPvs(comp.PortalSound, uid);
+        _audio.PlayPvs(comp.PortalSound, dest);
+
         UpdateUserInterface(uid, comp);
         UpdateAppearance(uid);
         UpdateAppearance(dest);
@@ -125,6 +130,9 @@ public sealed class GatewaySystem : EntitySystem
             // portals closed, put it on cooldown and let it eventually be opened again
             destComp.NextReady = _timing.CurTime + destComp.Cooldown;
         }
+
+        _audio.PlayPvs(comp.PortalSound, uid);
+        _audio.PlayPvs(comp.PortalSound, dest.Value);
 
         _linkedEntity.TryUnlink(uid, dest.Value);
         RemComp<PortalComponent>(dest.Value);
