@@ -182,7 +182,7 @@
     juiceSolution:
       reagents:
       - ReagentId: Artifexium
-        Quantity: 15
+        Quantity: 10
   - type: StaticPrice
     price: 250
   - type: GuideHelp
