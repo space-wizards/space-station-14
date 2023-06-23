@@ -53,18 +53,18 @@
     count: 1
 
 - type: entity
-  name: advanced ointment
+  name: regenerative mesh
   description: Used to treat even the nastiest burns. Also effective against caustic burns.
   parent: BaseHealingItem
-  id: OintmentAdvanced
+  id: RegenerativeMesh
   components:
   - type: Tag
     tags:
     - Ointment
   - type: Sprite
-    state: ointment-advanced
+    state: regenerative-mesh
   - type: Item
-    heldPrefix: ointment-advanced
+    heldPrefix: regenerative-mesh
   - type: Healing
     damageContainers:
       - Biological
@@ -79,17 +79,17 @@
     healingEndSound:
       path: "/Audio/Items/Medical/ointment_end.ogg"
   - type: Stack
-    stackType: OintmentAdvanced
+    stackType: RegenerativeMesh
     count: 10
   - type: StackPrice
     price: 20
 
 - type: entity
   id: OintmentAdvanced1
-  parent: OintmentAdvanced
+  parent: RegenerativeMesh
   components:
   - type: Stack
-    stackType: OintmentAdvanced
+    stackType: RegenerativeMesh
     count: 1
 
 - type: entity
@@ -128,40 +128,41 @@
     count: 1
 
 - type: entity
-  name: advanced bruise pack
-  description: A bruise pack with a special gel, improving it's effect.
+  name: medicated suture
+  description: A suture soaked in medicine, treats blunt-force trauma effectively and closes wounds.
   parent: BaseHealingItem
-  id: BrutepackAdvanced
+  id: MedicatedSuture
   components:
   - type: Tag
     tags:
     - Brutepack
   - type: Sprite
-    state: brutepack-advanced
+    state: medicated-suture
   - type: Item
-    heldPrefix: brutepack-advanced
+    heldPrefix: medicated-suture
   - type: Healing
     damageContainers:
       - Biological
     damage:
       groups:
         Brute: -30 # 10 for each type in the group
+    bloodlossModifier: -10 # a suture should stop ongoing bleeding
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
-    stackType: BrutepackAdvanced
+    stackType: MedicatedSuture
     count: 10
   - type: StackPrice
     price: 20
 
 - type: entity
   id: BrutepackAdvanced1
-  parent: BrutepackAdvanced
+  parent: MedicatedSuture
   components:
   - type: Stack
-    stackType: BrutepackAdvanced
+    stackType: MedicatedSuture
     count: 1
 
 - type: entity

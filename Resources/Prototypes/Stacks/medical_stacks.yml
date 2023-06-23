@@ -34,15 +34,15 @@
   maxCount: 10
 
 - type: stack
-  id: BrutepackAdvanced
-  name: advanced bruise pack
-  icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: advanced-brutepack }
-  spawn: BrutepackAdvanced
+  id: MedicatedSuture
+  name: medicated-suture
+  icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: medicated-suture }
+  spawn: MedicatedSuture
   maxCount: 10
 
 - type: stack
-  id: OintmentAdvanced
-  name: advanced ointment
-  icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: advanced-ointment}
-  spawn: OintmentAdvanced
+  id: RegenerativeMesh
+  name: regenerative-mesh
+  icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: regenerative-mesh}
+  spawn: RegenerativeMesh
   maxCount: 10
