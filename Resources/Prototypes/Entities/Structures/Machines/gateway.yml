@@ -1,5 +1,6 @@
 - type: entity
   abstract: true
+  parent: BaseStructure
   id: BaseGateway
   name: gateway
   description: A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations.
@@ -9,22 +10,43 @@
     noRot: true
     layers:
     - state: frame
-    - state: on
-      shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: portal
       shader: unshaded
       map: ["enum.GatewayVisualLayers.Portal"]
+    - state: on
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.GatewayVisuals.Active:
+        enum.GatewayVisualLayers.Portal:
+          True: { visible: true }
+          False: { visible: false }
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    noRot: true
   - type: Fixtures
     fixtures:
-      fix1:
+      portal:
         shape:
           !type:PhysShapeAabb
-          bounds: "-1.5,-1.0,1.5,1.0"
+          bounds: "-0.25,-0.48,0.25,0.48"
+#          bounds: "-1.5,-1.0,1.5,1.0"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
   - type: Appearance
 
 - type: entity
-  parent: [ BaseGateway, BaseMachinePowered ]
+  parent: BaseGateway
   id: Gateway
   components:
   - type: ActivatableUI
@@ -36,19 +58,13 @@
       type: GatewayBoundUserInterface
   - type: ApcPowerReceiver
     powerLoad: 3000
+  - type: ExtensionCableReceiver
   - type: Gateway
-  # no destroying gateway noob
-  - type: Destructible
-    thresholds: []
 
 - type: entity
   parent: BaseGateway
   id: GatewayDestination
   suffix: Destination
   components:
-  - type: Physics
-    bodyType: Static
-  - type: Transform
-    noRot: true
   - type: GatewayDestination
     name: Unknown

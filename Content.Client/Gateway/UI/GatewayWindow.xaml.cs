@@ -19,7 +19,10 @@ public sealed partial class GatewayWindow : FancyWindow,
     private readonly IGameTiming _timing;
 
     public event Action<EntityUid>? OpenPortal;
+    private List<(EntityUid, string, TimeSpan, bool)> _destinations = default!;
     private EntityUid? _current;
+    private List<Label> _readyLabels = default!;
+    private List<Button> _openButtons = default!;
 
     public GatewayWindow()
     {
@@ -29,11 +32,33 @@ public sealed partial class GatewayWindow : FancyWindow,
 
     public void UpdateState(GatewayBoundUserInterfaceState state)
     {
+        _destinations = state.Destinations;
         _current = state.Current;
 
         Container.DisposeAllChildren();
+        _readyLabels = new List<Label>(_destinations.Count);
+        _openButtons = new List<Button>(_destinations.Count);
 
-        foreach (var dest in state.Destinations)
+        if (_destinations.Count == 0)
+        {
+            Container.AddChild(new BoxContainer()
+            {
+                HorizontalExpand = true,
+                VerticalExpand = true,
+                Children =
+                {
+                    new Label()
+                    {
+                        Text = Loc.GetString("gateway-window-no-destinations"),
+                        Align = Label.AlignMode.Fill
+                    }
+                }
+            });
+            return;
+        }
+
+        var now = _timing.CurTime;
+        foreach (var dest in _destinations)
         {
             var uid = dest.Item1;
             var name = dest.Item2;
@@ -47,29 +72,24 @@ public sealed partial class GatewayWindow : FancyWindow,
 
             box.AddChild(new Label()
             {
-                Text = name,
-                Margin = new Thickness(0f, 5f, 0f, 0f),
+                Text = name
             });
 
-            var now = _timing.CurTime;
-            if (now < nextReady)
+            var readyLabel = new Label
             {
-                box.AddChild(new Label()
-                {
-                    Text = Loc.GetString("gateway-window-ready-in", ("time", nextReady - now))
-                });
-            }
+                Text = ReadyText(now, nextReady),
+                Margin = new Thickness(10f, 0f, 0f, 0f)
+            };
+            _readyLabels.Add(readyLabel);
+            box.AddChild(readyLabel);
 
             var openButton = new Button()
             {
                 Text = Loc.GetString("gateway-window-open-portal"),
-                HorizontalAlignment = HAlignment.Right,
-                Pressed = uid == state.Current,
+                Pressed = uid == _current,
                 ToggleMode = true,
-                Disabled = state.Current != null || busy,
+                Disabled = _current != null || busy || now < nextReady
             };
-
-            openButton.Label.Margin = new Thickness(0f, 5f);
 
             openButton.OnPressed += args =>
             {
@@ -81,8 +101,51 @@ public sealed partial class GatewayWindow : FancyWindow,
                 openButton.AddStyleClass(StyleBase.ButtonCaution);
             }
 
-            box.AddChild(openButton);
-            Container.AddChild(box);
+            _openButtons.Add(openButton);
+            box.AddChild(new BoxContainer()
+            {
+                HorizontalExpand = true,
+                Align = BoxContainer.AlignMode.End,
+                Children =
+                {
+                    openButton
+                }
+            });
+
+            Container.AddChild(new PanelContainer()
+            {
+                PanelOverride = new StyleBoxFlat(new Color(30, 30, 34)),
+                Margin = new Thickness(10f, 5f),
+                Children =
+                {
+                    box
+                }
+            });
         }
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        var now = _timing.CurTime;
+        for (var i = 0; i < _destinations.Count; i++)
+        {
+            var dest = _destinations[i];
+            var nextReady = dest.Item3;
+            var busy = dest.Item4;
+            _readyLabels[i].Text = ReadyText(now, nextReady);
+            _openButtons[i].Disabled = _current != null || busy || now < nextReady;
+        }
+    }
+
+    private string ReadyText(TimeSpan now, TimeSpan nextReady)
+    {
+        if (now < nextReady)
+        {
+            return Loc.GetString("gateway-window-ready-in", ("time", (nextReady - now).Seconds));
+        }
+
+        return Loc.GetString("gateway-window-ready");
     }
 }

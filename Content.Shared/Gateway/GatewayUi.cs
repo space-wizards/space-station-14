@@ -5,7 +5,7 @@ namespace Content.Shared.Gateway;
 [Serializable, NetSerializable]
 public enum GatewayVisuals : byte
 {
-    Linked
+    Active
 }
 
 [Serializable, NetSerializable]

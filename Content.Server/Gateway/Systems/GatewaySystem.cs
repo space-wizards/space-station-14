@@ -3,6 +3,7 @@ using Content.Shared.Gateway;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -13,6 +14,7 @@ public sealed class GatewaySystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly LinkedEntitySystem _linkedEntity = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
@@ -63,10 +65,16 @@ public sealed class GatewaySystem : EntitySystem
         _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
     }
 
+    private void UpdateAppearance(EntityUid uid)
+    {
+        _appearanceSystem.SetData(uid, GatewayVisuals.Active, HasComp<PortalComponent>(uid));
+    }
+
     private void OnOpenPortal(EntityUid uid, GatewayComponent comp, GatewayOpenPortalMessage args)
     {
-        // can't link if portal is already open, the destination is invalid or on cooldown
+        // can't link if portal is already open on either side, the destination is invalid or on cooldown
         if (HasComp<PortalComponent>(uid) ||
+            HasComp<PortalComponent>(args.Destination) ||
             !TryComp<GatewayDestinationComponent>(args.Destination, out var dest) ||
             !dest.Enabled ||
             _timing.CurTime < dest.NextReady)
@@ -85,25 +93,28 @@ public sealed class GatewaySystem : EntitySystem
         // close automatically after time is up
         comp.NextClose = _timing.CurTime + destComp.OpenTime;
 
-        // prevent destination being linked by another gateway
-        destComp.Enabled = false;
+        UpdateUserInterface(uid, comp);
+        UpdateAppearance(uid);
+        UpdateAppearance(dest);
     }
 
     private void ClosePortal(EntityUid uid, GatewayComponent comp)
     {
         RemComp<PortalComponent>(uid);
-        if (!GetDestination(uid, out var destUid))
+        if (!GetDestination(uid, out var dest))
             return;
 
-        if (TryComp<GatewayDestinationComponent>(destUid, out var dest))
+        if (TryComp<GatewayDestinationComponent>(dest, out var destComp))
         {
-            // portals closed, show it in the ui again
-            dest.NextReady = _timing.CurTime + dest.Cooldown;
-            dest.Enabled = true;
+            // portals closed, put it on cooldown and let it eventually be opened again
+            destComp.NextReady = _timing.CurTime + destComp.Cooldown;
         }
 
-        _linkedEntity.TryUnlink(uid, destUid.Value);
-        RemComp<PortalComponent>(destUid.Value);
+        _linkedEntity.TryUnlink(uid, dest.Value);
+        RemComp<PortalComponent>(dest.Value);
+        UpdateUserInterface(uid, comp);
+        UpdateAppearance(uid);
+        UpdateAppearance(dest.Value);
     }
 
     private bool GetDestination(EntityUid uid, [NotNullWhen(true)] out EntityUid? dest)

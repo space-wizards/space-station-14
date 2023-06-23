@@ -9,8 +9,7 @@ namespace Content.Server.Gateway.Components;
 public sealed class GatewayDestinationComponent : Component
 {
     /// <summary>
-    /// Whether this destination can be selected in the gateway ui.
-    /// Automatically enabled after the portal closes.
+    /// Whether this destination is shown in the gateway ui.
     /// If you are making a gateway for an admeme set this once you are ready for players to select it.
     /// </summary>
     [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
