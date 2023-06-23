@@ -182,7 +182,7 @@
     damage:
       types:
         Blunt: 4.5
-    attackRate: 1.3
+    attackRate: 1.4
     angle: 100
     heavyWindupModifier: 1.25
     heavyDamageModifier: 1.5
