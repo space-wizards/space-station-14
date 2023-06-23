@@ -50,7 +50,7 @@ public sealed partial class GatewayWindow : FancyWindow,
                     new Label()
                     {
                         Text = Loc.GetString("gateway-window-no-destinations"),
-                        Align = Label.AlignMode.Fill
+                        HorizontalAlignment = HAlignment.Center
                     }
                 }
             });

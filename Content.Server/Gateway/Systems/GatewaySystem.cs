@@ -21,6 +21,7 @@ public sealed class GatewaySystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<GatewayComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<GatewayComponent, BoundUIOpenedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GatewayComponent, GatewayOpenPortalMessage>(OnOpenPortal);
 
@@ -41,6 +42,19 @@ public sealed class GatewaySystem : EntitySystem
 
             ClosePortal(uid, comp);
         }
+    }
+
+    private void OnStartup(EntityUid uid, GatewayComponent comp, ComponentStartup args)
+    {
+        // add existing destinations
+        var query = EntityQueryEnumerator<GatewayDestinationComponent>();
+        while (query.MoveNext(out var dest, out var _))
+        {
+            comp.Destinations.Add(dest);
+        }
+
+        // no need to update ui since its just been created, just do portal
+        UpdateAppearance(uid);
     }
 
     private void UpdateUserInterface<T>(EntityUid uid, GatewayComponent comp, T args)
@@ -141,6 +155,8 @@ public sealed class GatewaySystem : EntitySystem
             gateway.Destinations.Add(uid);
             UpdateUserInterface(gatewayUid, gateway);
         }
+
+        UpdateAppearance(uid);
     }
 
     private void OnDestinationShutdown(EntityUid uid, GatewayDestinationComponent comp, ComponentShutdown args)
