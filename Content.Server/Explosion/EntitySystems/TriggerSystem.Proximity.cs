@@ -2,13 +2,12 @@ using Content.Server.Explosion.Components;
 using Content.Shared.Physics;
 using Content.Shared.Trigger;
 using Robust.Server.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
-using System;
+using Robust.Shared.Physics;
 using System.Linq;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -87,14 +86,13 @@ public sealed partial class TriggerSystem
         if (entTransform != null && otherTranform != null)
         {
             SharedPhysicsSystem physSystem = EntityManager.System<SharedPhysicsSystem>();
-            var rayRes = physSystem.IntersectRay(otherTranform.MapID, new CollisionRay(otherTranform.Coordinates.Position, entTransform.Coordinates.Position, (int)CollisionGroup.Impassable)).ToList();
 
-            Logger.Info("" + rayRes);
+            var startPos = otherTranform.MapPosition.Position;
+            var endPos = entTransform.MapPosition.Position;
 
-            if (rayRes.Count > 0)
-                Logger.Info("" + rayRes[0].HitEntity);
+            var rayRes = physSystem.IntersectRay(otherTranform.MapID, new CollisionRay(startPos, (endPos - startPos).Normalized, (int)CollisionGroup.Impassable),2f).ToList();
 
-            if (rayRes.Count > 0 && rayRes[0].HitEntity == uid)
+            if (!rayRes.Any())
                 return true;
         }
         return false;
