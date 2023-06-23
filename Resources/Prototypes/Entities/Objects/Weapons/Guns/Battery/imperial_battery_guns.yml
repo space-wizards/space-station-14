@@ -20,10 +20,10 @@
     availableModes:
       - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      path: /Audio/Weapons/Guns/Gunshots/laser_sniper.ogg
   - type: HitscanBatteryAmmoProvider
     proto: PulseSniper
-    fireCost: 2000
+    fireCost: 500
   - type: Battery
-    maxCharge: 20000
-    startingCharge: 20000
+    maxCharge: 7500
+    startingCharge: 7500
