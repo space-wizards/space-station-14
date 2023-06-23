@@ -1,9 +1,4 @@
 Entries:
-- author: Genkail
-  changes:
-  - {message: ERT and Syndicate hardsuits now have the same characteristics, type: Tweak}
-  id: 3575
-  time: '2023-04-29T11:45:24.0000000+00:00'
 - author: notquitehadouken
   changes:
   - {message: Added glass shuttle airlock construction., type: Add}
@@ -2936,3 +2931,10 @@ Entries:
   - {message: Fixed some jumpskirts gender masks, type: Fix}
   id: 4074
   time: '2023-06-23T12:24:38.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: Nanotrasen has installed REAL wheels on the janitorial trolleys after
+      complaints of fake wheels leaving marks on the tiling. They should be a bit
+      easier to move now., type: Tweak}
+  id: 4075
+  time: '2023-06-23T17:49:20.0000000+00:00'
