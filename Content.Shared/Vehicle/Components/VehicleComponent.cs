@@ -107,6 +107,10 @@ public sealed partial class VehicleComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public bool AutoAnimate = true;
 
+    [DataField("useHand")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool UseHand = true;
+
     [DataField("hideRider")]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool HideRider;

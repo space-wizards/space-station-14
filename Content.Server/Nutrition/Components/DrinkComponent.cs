@@ -42,6 +42,9 @@ namespace Content.Server.Nutrition.Components
         [DataField("delay")]
         public float Delay = 1;
 
+        [DataField("examinable")]
+        public bool Examinable = true;
+
         /// <summary>
         ///     This is how many seconds it takes to force feed someone this drink.
         /// </summary>

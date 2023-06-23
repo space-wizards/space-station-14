@@ -4,6 +4,8 @@ using Content.Server.Research.Systems;
 using Content.Server.Research.TechnologyDisk.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Prototypes;
@@ -66,46 +68,25 @@ public sealed class TechnologyDiskSystem : EntitySystem
         if (component.Recipes != null)
             return;
 
-        var lockoutTiers = new Dictionary<string, int>();
-        foreach (var discipline in _prototype.EnumeratePrototypes<TechDisciplinePrototype>())
-        {
-            lockoutTiers.Add(discipline.ID, discipline.LockoutTier);
-        }
+        var weightedRandom = _prototype.Index<WeightedRandomPrototype>(component.TierWeightPrototype);
+        var tier = int.Parse(weightedRandom.Pick(_random));
 
         //get a list of every distinct recipe in all the technologies.
-        var allTechs = new List<string>();
+        var techs = new List<string>();
         foreach (var tech in _prototype.EnumeratePrototypes<TechnologyPrototype>())
         {
-            if (tech.Tier >= lockoutTiers[tech.Discipline])
+            if (tech.Tier != tier)
                 continue;
 
-            allTechs.AddRange(tech.RecipeUnlocks);
+            techs.AddRange(tech.RecipeUnlocks);
         }
-        allTechs = allTechs.Distinct().ToList();
+        techs = techs.Distinct().ToList();
 
-        //get a list of every distinct unlocked tech across all databases
-        var allUnlocked = new List<string>();
-        foreach (var database in EntityQuery<TechnologyDatabaseComponent>())
-        {
-            allUnlocked.AddRange(database.UnlockedRecipes);
-        }
-        allUnlocked = allUnlocked.Distinct().ToList();
-
-        //make a list of every single non-unlocked tech
-        var validTechs = new List<string>();
-        foreach (var tech in allTechs)
-        {
-            if (allUnlocked.Contains(tech))
-                continue;
-
-            validTechs.Add(tech);
-        }
-
-        if (!validTechs.Any())
+        if (!techs.Any())
             return;
 
         //pick one
         component.Recipes = new();
-        component.Recipes.Add(_random.Pick(validTechs));
+        component.Recipes.Add(_random.Pick(techs));
     }
 }

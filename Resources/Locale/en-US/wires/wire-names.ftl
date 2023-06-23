@@ -14,3 +14,7 @@ wire-name-power = POWR
 wire-name-arcade-invincible = MNGR
 wire-name-vending-contraband = MNGR
 wire-name-vending-eject = VEND
+wire-name-pa-keyboard = KEYB
+wire-name-pa-limiter = LIMT
+wire-name-pa-power = POWR
+wire-name-pa-strength = STRC

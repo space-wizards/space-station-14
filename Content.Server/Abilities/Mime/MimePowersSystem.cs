@@ -18,6 +18,7 @@ namespace Content.Server.Abilities.Mime
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+        [Dependency] private readonly TurfSystem _turf = default!;
 
         [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -69,13 +70,17 @@ namespace Content.Server.Abilities.Mime
             if (tile == null)
                 return;
 
-            // Check there are no walls or mobs there
-            foreach (var entity in _lookupSystem.GetEntitiesIntersecting(tile.Value, flags: LookupFlags.Static))
+            // Check there are no walls there
+            if (_turf.IsTileBlocked(tile.Value, CollisionGroup.Impassable))
             {
-                PhysicsComponent? physics = null; // We use this to check if it's impassable
-                if (HasComp<MobStateComponent>(entity) && entity != uid // Is it a mob?
-                || Resolve(entity, ref physics, false) && (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0 // Is it impassable?
-                    && !(TryComp<DoorComponent>(entity, out var door) && door.State != DoorState.Closed)) // Is it a door that's open and so not actually impassable?
+                _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-failed"), uid, uid);
+                return;
+            }
+
+            // Check there are no mobs there
+            foreach (var entity in _lookupSystem.GetEntitiesIntersecting(tile.Value))
+            {
+                if (HasComp<MobStateComponent>(entity) && entity != uid)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-failed"), uid, uid);
                     return;

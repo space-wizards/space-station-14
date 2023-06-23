@@ -10,8 +10,9 @@ using Content.Server.Examine;
 using Content.Server.Medical.Bloodstream.Components;
 using Content.Server.Medical.Bloodstream.Systems;
 using Content.Server.Movement.Systems;
-using Content.Shared.Actions.Events;
+using Content.Server.Popups;
 using Content.Shared.Administration.Components;
+using Content.Shared.Actions.Events;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -20,6 +21,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
+using Content.Shared.Speech.Components;
 using Content.Shared.StatusEffect;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
@@ -45,11 +47,15 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly LagCompensationSystem _lag = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
+        SubscribeLocalEvent<MeleeSpeechComponent, MeleeHitEvent>(OnSpeechHit);
         SubscribeLocalEvent<MeleeWeaponComponent, GetVerbsEvent<ExamineVerb>>(OnMeleeExaminableVerb);
     }
 
@@ -58,16 +64,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!args.CanInteract || !args.CanAccess || component.HideFromExamine)
             return;
 
-        var getDamage = new MeleeHitEvent(new List<EntityUid>(), args.User, uid, component.Damage);
-        getDamage.IsHit = false;
-        RaiseLocalEvent(uid, getDamage);
-
-        var damageSpec = GetDamage(component);
-
-        if (damageSpec == null)
-            damageSpec = new DamageSpecifier();
-
-        damageSpec += getDamage.BonusDamage;
+        var damageSpec = GetDamage(uid, args.User, component);
 
         if (damageSpec.Total == FixedPoint2.Zero)
             return;
@@ -82,7 +79,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             Text = Loc.GetString("damage-examinable-verb-text"),
             Message = Loc.GetString("damage-examinable-verb-message"),
             Category = VerbCategory.Examine,
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
         };
 
         args.Verbs.Add(verb);
@@ -111,10 +108,6 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         return true;
     }
 
-    private DamageSpecifier? GetDamage(MeleeWeaponComponent component)
-    {
-        return component.Damage.Total > FixedPoint2.Zero ? component.Damage : null;
-    }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)
     {
@@ -192,7 +185,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 ("performerName", Identity.Entity(user, EntityManager)),
                 ("targetName", Identity.Entity(target, EntityManager)));
 
-       var msgUser = Loc.GetString(msgPrefix + "popup-message-cursor", ("targetName", Identity.Entity(target, EntityManager)));
+        var msgUser = Loc.GetString(msgPrefix + "popup-message-cursor", ("targetName", Identity.Entity(target, EntityManager)));
 
         PopupSystem.PopupEntity(msgOther, user, filterOther, true);
         PopupSystem.PopupEntity(msgUser, target, user);
@@ -203,7 +196,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var eventArgs = new DisarmedEvent { Target = target, Source = user, PushProbability = 1 - chance };
         RaiseLocalEvent(target, eventArgs);
 
-        RaiseNetworkEvent(new DamageEffectEvent(Color.Aqua, new List<EntityUid>() {target}));
+        RaiseNetworkEvent(new DamageEffectEvent(Color.Aqua, new List<EntityUid>() { target }));
         return true;
     }
 
@@ -266,6 +259,21 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
 
         RaiseNetworkEvent(new MeleeLungeEvent(user, angle, localPos, animation), filter);
+    }
+
+    private void OnSpeechHit(EntityUid owner, MeleeSpeechComponent comp, MeleeHitEvent args)
+    {
+        if (!args.IsHit ||
+        !args.HitEntities.Any())
+        {
+            return;
+        }
+
+        if (comp.Battlecry != null)//If the battlecry is set to empty, doesn't speak
+        {
+            _chat.TrySendInGameICMessage(args.User, comp.Battlecry, InGameICChatType.Speak, true, true, checkRadioPrefix: false);  //Speech that isn't sent to chat or adminlogs
+        }
+
     }
 
     private void OnChemicalInjectorHit(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)

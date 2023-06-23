@@ -9,7 +9,6 @@
       path: /Audio/Items/welder_drop.ogg
   - type: Sprite
     sprite: Objects/Tools/welder.rsi
-    netsync: false
     layers:
     - state: icon
       map: ["enum.WelderLayers.Base"]
@@ -33,7 +32,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
+        Blunt: 5 #i mean... i GUESS you could use it like that
   - type: ItemStatus
   - type: RefillableSolution
     solution: Welder
@@ -50,9 +49,9 @@
     qualities: Welding
   - type: Welder
     litMeleeDamageBonus:
-      types: # When lit, negate standard melee damage and replace with heat
-        Heat: 10
-        Blunt: -10
+      types:
+        Heat: 8
+        Blunt: -5
   - type: PointLight
     netsync: false
     enabled: false

@@ -21,10 +21,9 @@
             - SubdermalImplant
     - type: Sprite
       sprite: Objects/Specific/Chemistry/syringe.rsi
-      netsync: false
       state: syringe_base0
       layers:
-        - state: syringe4
+        - state: syringe2
           map: [ "implantFull" ]
           color: '#1cd94e'
           visible: false
@@ -61,10 +60,9 @@
   components:
     - type: Sprite
       sprite: Objects/Specific/Chemistry/syringe.rsi
-      netsync: false
       state: syringe_base0
       layers:
-        - state: syringe4
+        - state: syringe2
           map: [ "implantFull" ]
           color: '#1cd94e'
           visible: true

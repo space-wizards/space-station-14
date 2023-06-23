@@ -7,5 +7,8 @@ namespace Content.Shared.Body.Prototypes
     {
         [IdDataField]
         public string ID { get; } = default!;
+
+        [DataField("name", required: true)]
+        public string Name { get; } = default!;
     }
 }

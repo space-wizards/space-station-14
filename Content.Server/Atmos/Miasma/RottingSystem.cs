@@ -11,7 +11,6 @@ using Content.Shared.Rejuvenate;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Miasma;
@@ -19,7 +18,6 @@ namespace Content.Server.Atmos.Miasma;
 public sealed class RottingSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -171,12 +169,12 @@ public sealed class RottingSystem : EntitySystem
         var rotQuery = EntityQueryEnumerator<RottingComponent, PerishableComponent, TransformComponent>();
         while (rotQuery.MoveNext(out var uid, out var rotting, out var perishable, out var xform))
         {
-            if (!IsRotProgressing(uid, perishable))
-                continue;
-
             if (_timing.CurTime < rotting.NextRotUpdate) // This is where it starts to get noticable on larger animals, no need to run every second
                 continue;
             rotting.NextRotUpdate += rotting.RotUpdateRate;
+
+            if (!IsRotProgressing(uid, perishable))
+                continue;
             rotting.TotalRotTime += rotting.RotUpdateRate;
 
             if (rotting.DealDamage)
