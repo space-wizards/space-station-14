@@ -1,26 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Syndicate Viper has been retrofitted with a fully automatic receiver.,
-    type: Tweak}
-  id: 3571
-  time: '2023-04-29T10:53:35.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Anomaly scanners now show the exact point output, not an approximate
-      value.', type: Tweak}
-  id: 3572
-  time: '2023-04-29T10:54:06.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: Added CMO's headset, type: Add}
-  id: 3573
-  time: '2023-04-29T10:57:06.0000000+00:00'
-- author: vanx
-  changes:
-  - {message: Added the toy nuke sound!, type: Add}
-  id: 3574
-  time: '2023-04-29T11:37:13.0000000+00:00'
 - author: Genkail
   changes:
   - {message: ERT and Syndicate hardsuits now have the same characteristics, type: Tweak}
@@ -2936,3 +2914,25 @@ Entries:
   - {message: Added 22 new bounties for cargo., type: Add}
   id: 4070
   time: '2023-06-23T04:31:53.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Uranium spears now have melee sounds, type: Fix}
+  id: 4071
+  time: '2023-06-23T12:23:09.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Mining drills are now weldable and have increased structural damage,
+    type: Add}
+  id: 4072
+  time: '2023-06-23T12:23:21.0000000+00:00'
+- author: FluidRock
+  changes:
+  - {message: Nuclear Operative Zombie bundle now contains Incendiary shotgun shells
+      instead of Flare shells., type: Tweak}
+  id: 4073
+  time: '2023-06-23T12:24:03.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Fixed some jumpskirts gender masks, type: Fix}
+  id: 4074
+  time: '2023-06-23T12:24:38.0000000+00:00'
