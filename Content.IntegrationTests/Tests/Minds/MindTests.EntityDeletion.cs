@@ -23,7 +23,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestDeleteVisiting()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await SetupPair();
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -145,50 +145,43 @@ public sealed partial class MindTests
     public async Task TestOriginalDeletedWhileGhostingKeepsGhost()
     {
         // Client is needed to spawn session
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await SetupPair();
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+        var mind = GetMind(pairTracker.Pair);
 
-        IPlayerSession player = playerMan.ServerSessions.Single();
+        var player = playerMan.ServerSessions.Single();
+        Assert.NotNull(player.AttachedEntity);
+        Assert.That(entMan.EntityExists(player.AttachedEntity));
+        var originalEntity = player.AttachedEntity.Value;
 
-        EntityUid originalEntity = default!;
         EntityUid ghost = default!;
-
         await server.WaitAssertion(() =>
         {
-            Assert.That(player.AttachedEntity, Is.Not.EqualTo(null));
-            originalEntity = player.AttachedEntity!.Value;
-
-            Assert.That(mindSystem.TryGetMind(player.UserId, out var mind), "could not find mind");
             ghost = entMan.SpawnEntity("MobObserver", MapCoordinates.Nullspace);
             mindSystem.Visit(mind, ghost);
-
-            Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
-            Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "player is not a ghost");
-            Assert.That(mind.VisitingEntity, Is.EqualTo(player.AttachedEntity));
-            Assert.That(mind.OwnedEntity, Is.EqualTo(originalEntity));
         });
+
+        Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
+        Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "player is not a ghost");
+        Assert.That(mind.VisitingEntity, Is.EqualTo(player.AttachedEntity));
+        Assert.That(mind.OwnedEntity, Is.EqualTo(originalEntity));
 
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
         await server.WaitAssertion(() => entMan.DeleteEntity(originalEntity));
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        Assert.That(entMan.Deleted(originalEntity));
 
-        await server.WaitAssertion(() =>
-        {
-            // Is player a ghost?
-            Assert.That(!entMan.Deleted(ghost), "ghost has been deleted");
-            Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
-            Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity));
-
-            Assert.That(mindSystem.TryGetMind(player.UserId, out var mind),  "could not find mind");
-            Assert.That(mind.UserId, Is.EqualTo(player.UserId));
-            Assert.That(mind.Session, Is.EqualTo(player));
-            Assert.IsNull(mind.VisitingEntity);
-            Assert.That(mind.OwnedEntity, Is.EqualTo(ghost));
-        });
+        // Check that the player is still in control of the ghost
+        mind = GetMind(pairTracker.Pair);
+        Assert.That(!entMan.Deleted(ghost), "ghost has been deleted");
+        Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
+        Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity));
+        Assert.IsNull(mind.VisitingEntity);
+        Assert.That(mind.OwnedEntity, Is.EqualTo(ghost));
 
         await pairTracker.CleanReturnAsync();
     }
@@ -241,7 +234,7 @@ public sealed partial class MindTests
     public async Task TestGhostDeletedSpawnsNewGhost()
     {
         // Client is needed to spawn session
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await SetupPair();
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
