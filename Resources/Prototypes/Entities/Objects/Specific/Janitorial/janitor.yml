@@ -380,6 +380,7 @@
       - Janitorial
     - type: TileFrictionModifier
       modifier: 0.4
+
 - type: entity
   id: FloorDrain
   name: drain
