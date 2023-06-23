@@ -8,7 +8,6 @@ public sealed class DigitalIanCartridgeComponent : Component
     [DataField("soundFeed")]
     public SoundSpecifier SoundFeed = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
 
-    [DataField("soundpet")]
+    [DataField("soundPet")]
     public SoundSpecifier SoundPet = new SoundPathSpecifier("/Audio/Animals/small_dog_bark_happy.ogg");
-
 }
