@@ -33,7 +33,7 @@
     noRot: true
   - type: Fixtures
     fixtures:
-      portal:
+      portalFixture:
         shape:
           !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
