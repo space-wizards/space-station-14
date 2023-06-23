@@ -140,23 +140,19 @@
       - id: HandheldHealthAnalyzer
       - id: SyringeBicaridine
       - id: BicaridineChemistryBottle
-        amount: 4
+        amount: 3
       - id: SyringeDermaline
       - id: DermalineChemistryBottle
-        amount: 2
       - id: SyringeDexalinPlus
       - id: DexalinPlusChemistryBottle
-        amount: 2
       - id: SyringeIron
       - id: IronChemistryBottle
-        amount: 2
-      - id: SyringeEphedrine
-      - id: EphedrineChemistryBottle
-        amount: 2
       - id: SyringeTranexamicAcid
       - id: TranexamicAcidChemistryBottle
       - id: Brutepack
       - id: Ointment
       - id: EmergencyMedipen
+        amount: 2
+      - id: AntiPoisonMedipen
 
 
