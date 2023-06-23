@@ -1,0 +1,187 @@
+#ERT START
+#Leader
+- type: entity
+  #noSpawn: true
+  id: SpawnERTLeaderEVAPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-leader-eva-name
+      description: ertcall-leader-eva-desc
+      rules: ertcall-leader-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: ERTLeaderEVAPreset
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertleadereva
+
+#Medic
+
+- type: entity
+  #noSpawn: true
+  id: SpawnERTMedicEVAPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-medic-eva-name
+      description: ertcall-medic-eva-desc
+      rules: ertcall-medic-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: ERTMedicEVAPreset
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertmedicaleva
+
+#Security
+- type: entity
+  #noSpawn: true
+  id: SpawnERTSecurityEVAPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-security-eva-name
+      description: ertcall-security-eva-desc
+      rules: ertcall-security-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: ERTSecurityEVAPreset
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertsecurityeva
+
+#Engineer
+- type: entity
+  #noSpawn: true
+  id: SpawnERTEngineerEVAPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-engineer-eva-name
+      description: ertcall-engineer-eva-desc
+      rules: ertcall-engineer-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: ERTEngineerEVAPreset
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertengineereva
+
+#Junitor
+- type: entity
+  #noSpawn: true
+  id: SpawnERTJunitorEVAPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-junitor-eva-name
+      description: ertcall-junitor-eva-desc
+      rules: ertcall-junitor-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: ERTJunitorEVAPreset
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/jobs.rsi
+          state: ertjanitoreva
+#ERT END
+
+#CBURN START
+#Leader
+- type: entity
+  #noSpawn: true
+  id: SpawnCBURNLeaderEVAPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-cburn-leader-eva-name
+      description: ertcall-cburn-leader-eva-desc
+      rules: ertcall-cburn-leader-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: CBURNLeaderEVAPreset
+    - type: Sprite
+      sprite: Markers/imperial_jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/imperial_jobs.rsi
+          state: cburnLeader
+
+#Security
+- type: entity
+  #noSpawn: true
+  id: SpawnCBURNSecurityEVAPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-cburn-security-eva-name
+      description: ertcall-cburn-security-eva-desc
+      rules: ertcall-cburn-security-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: CBURNSecurityEVAPreset
+    - type: Sprite
+      sprite: Markers/imperial_jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/imperial_jobs.rsi
+          state: cburn
+
+#Medic
+- type: entity
+  #noSpawn: true
+  id: SpawnCBURNMedicEVAPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-cburn-medic-eva-name
+      description: ertcall-cburn-medic-eva-desc
+      rules: ertcall-cburn-medic-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: CBURNMedicEVAPreset
+    - type: Sprite
+      sprite: Markers/imperial_jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/imperial_jobs.rsi
+          state: cburnMedic
+#CBURN END
+
+#DEAD SQUAD START
+- type: entity
+  #noSpawn: true
+  id: SpawnDeadSquadSecurityEVAPreset
+  name: ghost role spawn point
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ertcall-deadsquad-security-eva-name
+      description: ertcall-deadsquad-security-eva-desc
+      rules: ertcall-deadsquad-security-eva-rules
+    - type: GhostRoleMobSpawner
+      prototype: DeadSquadSecurityEVAPreset
+    - type: Sprite
+      sprite: Markers/imperial_jobs.rsi
+      layers:
+        - state: green
+        - sprite: Markers/imperial_jobs.rsi
+          state: deadSquad
+#DEAD SQUAD END
+
+
