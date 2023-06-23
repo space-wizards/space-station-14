@@ -91,3 +91,5 @@ ent-BrigmedicPDA = КПК бригмедика
 ent-CluwnePDA = КПК клувеня
     .desc = Проклятый КПК клувеня.
     .suffix = Неснимаемый
+ent-BlueShieldPDA = КПК синего щита
+    .desc = Удивительно, но он не синий.

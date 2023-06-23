@@ -96,3 +96,5 @@ ent-CBURNIDcard = CBURN ID card
 ent-CluwneIDCard = cluwne ID card
     .suffix = Unremoveable
     .desc = { ent-IDCardStandard.desc }
+ent-BlueShieldIDCard = blue shield ID card
+    .desc = { ent-IDCardStandard.desc }

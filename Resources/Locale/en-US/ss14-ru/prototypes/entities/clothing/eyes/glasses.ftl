@@ -20,3 +20,5 @@ ent-ClothingEyesGlassesMercenary = mercenary glasses
     .desc = Glasses made for combat, to protect the eyes from bright blinding flashes.
 ent-ClothingEyesGlassesThermal = optical thermal scanner
     .desc = Thermals in the shape of glasses.
+ent-ClothingEyesGlassesBlueShield = blue shield sunglasses
+    .desc = Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes.

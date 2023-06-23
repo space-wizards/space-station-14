@@ -203,3 +203,5 @@ ent-ClothingUniformJumpsuitHawaiYellow = yellow hawaiian shirt
     .desc = Yellow as a bright sun.
 ent-ClothingUniformJumpsuitFlannel = flannel jumpsuit
     .desc = Smells like someones been grillin'.
+ent-ClothingUniformJumpsuitBlueShield = blueshield's uniform
+    .desc = A short-sleeved black uniform, paired with grey digital-camo cargo pants, all made out of a sturdy material. Blueshield standard issue.

@@ -429,10 +429,10 @@
     price: 63
 
 - type: entity
-  name: HK Phalanx
+  name: advanced laser revolver
   parent: BaseWeaponBatterySmall
-  id: WeaponHKPhalanx
-  description: Laser pistol stylized as a revolver. Issued with Nanotrasen as a service weapon for Blue Shield officers. A beautiful pistol and a powerful aid to protect the heads.
+  id: WeaponAdvancedRevolver
+  description: Robust and powerful laserarm revolver for protecting the station heads. It's so badass that even the most hardened criminals would stop and praise it.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_revolver.rsi
