@@ -32,3 +32,17 @@
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: bloodpack }
   spawn: Bloodpack
   maxCount: 10
+
+- type: stack
+  id: BrutepackAdvanced
+  name: advanced bruise pack
+  icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: advanced-brutepack }
+  spawn: BrutepackAdvanced
+  maxCount: 10
+
+- type: stack
+  id: OintmentAdvanced
+  name: advanced ointment
+  icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: advanced-ointment}
+  spawn: OintmentAdvanced
+  maxCount: 10

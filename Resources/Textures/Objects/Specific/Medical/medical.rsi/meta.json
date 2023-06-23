@@ -40,6 +40,28 @@
 		},
 		{
 			"name": "bloodpack"
+		},
+		{
+			"name": "brutepack-advanced"
+		},
+		{
+			"name": "brutepack-advanced-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "brutepack-advanced-inhand-right",
+			"directions": 4
+		},
+		{
+			"name": "ointment-advanced"
+		},
+		{
+			"name": "ointment-advanced-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "ointment-advanced-inhand-right",
+			"directions": 4
 		}
 	]
 }

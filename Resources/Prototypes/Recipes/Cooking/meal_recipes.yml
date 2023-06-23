@@ -1504,6 +1504,30 @@
   solids:
     FoodAloe: 1
 
+- type: microwaveMealRecipe
+  id: RecipeBrutepackAdvanced
+  name: advanced bruise pack recipe
+  result: BrutepackAdvanced
+  time: 10
+  solids: 
+    FoodPoppy: 1
+    Brutepack: 1
+  reagents:
+    TranexamicAcid: 50
+    Spaceacillin: 50
+
+- type: microwaveMealRecipe
+  id: RecipeOintmentAdvanced
+  name: advanced ointment recipe
+  result: OintmentAdvanced
+  time: 10
+  solids:
+    FoodAloe: 1
+    Ointment: 1
+  reagents:
+    Sigynate: 50
+    Dermaline: 50 
+
 # Suppermatter
 - type: microwaveMealRecipe
   id: RecipeSuppermatter
