@@ -1,10 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - {message: 'Cloning Pod may now be Emagged, on failed cloning attempt the cloning
-      pod will trigger the emag effect.', type: Add}
-  id: 3570
-  time: '2023-04-29T09:50:11.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Syndicate Viper has been retrofitted with a fully automatic receiver.,
@@ -2937,3 +2931,8 @@ Entries:
   - {message: Fixed dwarf accent word typo from 'anatag' to 'antag', type: Fix}
   id: 4069
   time: '2023-06-22T19:48:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added 22 new bounties for cargo., type: Add}
+  id: 4070
+  time: '2023-06-23T04:31:53.0000000+00:00'
