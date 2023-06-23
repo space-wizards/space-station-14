@@ -1,0 +1,35 @@
+- type: entity
+  parent: BaseMachinePowered
+  id: Gateway
+  name: gateway
+  description: A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/gateway.rsi
+    noRot: true
+    layers:
+    - state: frame
+    - state: on
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: portal
+      shader: unshaded
+      map: ["enum.GatewayVisualLayers.Portal"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-1.0,1.5,1.0"
+  - type: ActivatableUI
+    key: enum.GatewayUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.GatewayUiKey.Key
+      type: GatewayBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 3000
+  - type: Appearance
+  - type: ExtensionCableReceiver
+  - type: Gateway
