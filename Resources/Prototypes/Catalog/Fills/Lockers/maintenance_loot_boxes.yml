@@ -1,0 +1,777 @@
+#Part 4 of 4 of the main maintenance loot spawner pool.
+#Outside of the boxes category and the addition of homemade soap, most of this is copied straight from maintenance_loot.yml. It should maintain parity with that file.
+- type: entity
+  id: ClosetMaintenanceFilledRandomAndBoxes
+  suffix: USE MAINTENANCE LOOT SPAWNER!
+  noSpawn: true
+  parent: ClosetMaintenance
+  components:
+    - type: StorageFill
+      contents:
+#Boxes
+      - id: null
+        prob: 2.5
+        orGroup: MaintenanceBoxes
+      - id: Matchbox
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: CrayonBox
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxBeaker
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxBottle
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxFlare
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxTrashbag
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxSyringe
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxSterileMask
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxMousetrap
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxLatexGloves
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: MonkeyCubeBox
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxHeadset
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocket
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketSpicy
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketTeriyaki
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketHonk
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketPizza
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketBerry
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketDink
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketGondola
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+#Common Items
+      - id: Crowbar #Everyone should probably be able to find a crowbar if they want one
+        prob: 0.2
+      - id: FlashlightLantern
+        prob: 0.1
+      - id: FireExtinguisher
+        prob: 0.1
+      - id: CableApcStack
+        prob: 0.1
+      - id: SprayBottle
+        prob: 0.1
+      - id: HandheldGPSBasic
+        prob: 0.1
+      - id: DrinkCanPack
+        prob: 0.1
+      - id: BoxLightMixed
+        prob: 0.1
+      - id: ClothingHeadHatWelding
+        prob: 0.075
+      - id: ClothingUniformJumpsuitColorGrey
+        prob: 0.075
+      - id: ClothingHandsGlovesColorYellowBudget
+        prob: 0.075
+      - id: RadioHandheld
+        prob: 0.075
+      - id: ClothingMaskGas
+        prob: 0.075
+#Tools
+      - id: Wirecutter
+        prob: 0.075
+      - id: Wrench
+        prob: 0.075
+      - id: Welder #Replaced with other kinds of welders for different variations.
+        prob: 0.075
+      - id: Screwdriver
+        prob: 0.075
+      - id: trayScanner
+        prob: 0.075
+      - id: ClothingBeltUtility
+        prob: 0.075
+      - id: Multitool
+        prob: 0.050
+#Materials
+      - id: SheetSteel
+        prob: 0.05
+      - id: SheetSteel
+        prob: 0.05
+      - id: SheetGlass
+        prob: 0.05
+      - id: SheetPlastic
+        prob: 0.05
+      - id: PartRodMetal #replaced with wood and cardboard for other variations
+        prob: 0.025
+#Rare
+      - id: WeaponFlareGun #Fairly underwelming unless you can get ammo for it, can afford to be semi-common.
+        prob: 0.05
+      - id: ClothingOuterVestHazard
+        prob: 0.05
+      - id: SmokingPipe
+        prob: 0.025
+      - id: SheetPlasma1
+        prob: 0.025
+      - id: CigarGoldCase
+        prob: 0.025
+      - id: MedkitFilled
+        prob: 0.025
+      - id: MedkitOxygenFilled
+        prob: 0.025
+      - id: Lighter
+        prob: 0.025
+      - id: SimpleXenoArtifactItem
+        prob: 0.025
+#Rare
+      - id: CowToolboxFilled
+        prob: 0.01
+      - id: MopItem
+        prob: 0.015
+      - id: AntiPoisonMedipen
+        prob: 0.01
+      - id: NukeDiskFake
+        prob: 0.025
+      - id: ResearchDisk5000
+        prob: 0.01
+      - id: ClothingHeadHatWeldingMaskFlame
+        prob: 0.01
+      - id: ClothingNeckHeadphones
+        prob: 0.01
+      - id: ClothingHandsGlovesColorYellow
+        prob: 0.005
+      - id: KitchenKnife
+        prob: 0.005
+      - id: ClothingEyesGlassesSunglasses
+        prob: 0.005
+      - id: ClothingEyesHudSecurity
+        prob: 0.005
+      - id: ClothingEyesHudMedical
+        prob: 0.005
+      - id: BoxMRE
+        prob: 0.005
+      - id: WeaponMakeshiftLaser #Maybe delete this or replace it with something more interesting if the makeshift laser ever becomes craftable again.
+        prob: 0.005
+#Commented out because this is probably going to be useless for a long-ass time (it only works on borgs and mechs in SS13.) Uncomment this when that is not the case.
+#      - id: ClothingEyesHudDiagnostic
+#        prob: 0.005
+#Oddity
+      - id: SingularityToy
+        prob: 0.0001
+#Junk Pool
+#Largely comprised of literal garbage or extremely common / worthless items like pens and breath masks.
+#Stuff like reagent containers are here to avoid the dreaded locker bloat.
+#If/when loot spawning becomes not garbage (pun not intendned,) the junk pool should be able spawn multiple items from this group at once (or none, without having to use null here.)
+      - id: null
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: PowerCellPotato
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: KnifePlastic
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: StrangePill
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: Ash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: AirlockPainter
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketSusTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketCheesieTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketChipsTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketCheesieTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketSemkiTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketBoritosTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketSyndiTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketChocolateTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketChowMeinTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketDanDanTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPlateSmallTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPlateTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodBowlBig
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodBowlBigTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodTinPeachesTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodTinMRETrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodTinBeansTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodCornTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodFrozenSnowconeTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodFrozenPopsicleTrash
+        prob: 1      
+        orGroup: MaintenanceJunk
+      - id: TrashBananaPeel
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: BrokenBottle
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPlateTin
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: DrinkMug
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: DrinkMugMetal
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: DrinkGlass
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: DrinkWaterCup
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: DrinkShaker
+        prob: 0.50
+        orGroup: MaintenanceJunk
+      - id: DrinkTeacup
+        prob: 0.25
+        orGroup: MaintenanceJunk
+      - id: DrinkCoffee
+        prob: 0.25
+        orGroup: MaintenanceJunk
+      - id: DrinkWaterJug
+        prob: 0.25
+        orGroup: MaintenanceJunk
+      - id: Bucket
+        prob: 0.25
+        orGroup: MaintenanceJunk
+      - id: ChemistryEmptyBottle01
+        prob: 0.5
+        orGroup: MaintenanceJunk
+      - id: ChemistryEmptyBottle02
+        prob: 0.5
+        orGroup: MaintenanceJunk
+      - id: ShardGlass
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: ShardGlassReinforced
+        prob: 0.5
+        orGroup: MaintenanceJunk
+      - id: ShardGlassPlasma
+        prob: 0.15
+        orGroup: MaintenanceJunk
+      - id: Pen
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: EnergyDagger #balanced out by explosive pen existing
+        prob: 0.05
+        orGroup: MaintenanceJunk
+      - id: PenExplosive
+        prob: 0.05
+        orGroup: MaintenanceJunk
+      - id: Flare
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: Syringe
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: Dropper
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: LidSalami
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: BoxFolderBase
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: BoxFolderGrey
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: BoxFolderBlack
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: BoxFolderRed
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: BoxFolderBlue
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: BoxFolderYellow
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: BoxFolderWhite
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: CigarSpent
+        prob: 0.75
+        orGroup: MaintenanceJunk
+      - id: CigarGoldSpent
+        prob: 0.75
+        orGroup: MaintenanceJunk
+      - id: BoxCardboard
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: ClothingMaskBreath
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: GlowstickBase
+        prob: 0.275
+        orGroup: MaintenanceJunk
+      - id: GlowstickRed
+        prob: 0.275
+        orGroup: MaintenanceJunk
+      - id: GlowstickBlue
+        prob: 0.275
+        orGroup: MaintenanceJunk
+      - id: GlowstickPurple
+        prob: 0.275
+        orGroup: MaintenanceJunk
+      - id: GlowstickYellow
+        prob: 0.275
+        orGroup: MaintenanceJunk
+      - id: NetProbeCartridge
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: NotekeeperCartridge
+        prob: 1
+        orGroup: MaintenanceJunk
+
+- type: entity
+  id: ClosetWallMaintenanceFilledRandomAndBoxes
+  suffix: USE MAINTENANCE LOOT SPAWNER!
+  noSpawn: true
+  parent: ClosetWall
+  components:
+    - type: StorageFill
+      contents:
+#Boxes
+      - id: null
+        prob: 2.5
+        orGroup: MaintenanceBoxes
+      - id: Matchbox
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: CrayonBox
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxBeaker
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxBottle
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxFlare
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxTrashbag
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxSyringe
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxSterileMask
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxMousetrap
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxLatexGloves
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: MonkeyCubeBox
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: BoxHeadset
+        prob: 1
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocket
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketSpicy
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketTeriyaki
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketHonk
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketPizza
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketBerry
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketDink
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+      - id: FoodBoxDonkpocketGondola
+        prob: 0.142
+        orGroup: MaintenanceBoxes
+#Common Items
+      - id: Crowbar #Everyone should probably be able to find a crowbar if they want one
+        prob: 0.2
+      - id: FlashlightLantern
+        prob: 0.1
+      - id: FireExtinguisher
+        prob: 0.1
+      - id: CableApcStack
+        prob: 0.1
+      - id: SprayBottle
+        prob: 0.1
+      - id: HandheldGPSBasic
+        prob: 0.1
+      - id: DrinkCanPack
+        prob: 0.1
+      - id: BoxLightMixed
+        prob: 0.1
+      - id: ClothingHeadHatWelding
+        prob: 0.075
+      - id: ClothingUniformJumpsuitColorGrey
+        prob: 0.075
+      - id: ClothingHandsGlovesColorYellowBudget
+        prob: 0.075
+      - id: RadioHandheld
+        prob: 0.075
+      - id: ClothingMaskGas
+        prob: 0.075
+#Tools
+      - id: Wirecutter
+        prob: 0.075
+      - id: Wrench
+        prob: 0.075
+      - id: Welder #Replaced with other kinds of welders for different variations.
+        prob: 0.075
+      - id: Screwdriver
+        prob: 0.075
+      - id: trayScanner
+        prob: 0.075
+      - id: ClothingBeltUtility
+        prob: 0.075
+      - id: Multitool
+        prob: 0.050
+#Materials
+      - id: SheetSteel
+        prob: 0.05
+      - id: SheetSteel
+        prob: 0.05
+      - id: SheetGlass
+        prob: 0.05
+      - id: SheetPlastic
+        prob: 0.05
+      - id: PartRodMetal #replaced with wood and cardboard for other variations
+        prob: 0.025
+#Rare
+      - id: WeaponFlareGun #Fairly underwelming unless you can get ammo for it, can afford to be semi-common.
+        prob: 0.05
+      - id: ClothingOuterVestHazard
+        prob: 0.05
+      - id: SmokingPipe
+        prob: 0.025
+      - id: SheetPlasma1
+        prob: 0.025
+      - id: CigarGoldCase
+        prob: 0.025
+      - id: MedkitFilled
+        prob: 0.025
+      - id: MedkitOxygenFilled
+        prob: 0.025
+      - id: Lighter
+        prob: 0.025
+      - id: SimpleXenoArtifactItem
+        prob: 0.025
+#Rare
+      - id: CowToolboxFilled
+        prob: 0.01
+      - id: MopItem
+        prob: 0.015
+      - id: AntiPoisonMedipen
+        prob: 0.01
+      - id: NukeDiskFake
+        prob: 0.025
+      - id: ResearchDisk5000
+        prob: 0.01
+      - id: ClothingHeadHatWeldingMaskFlame
+        prob: 0.01
+      - id: ClothingNeckHeadphones
+        prob: 0.01
+      - id: ClothingHandsGlovesColorYellow
+        prob: 0.005
+      - id: KitchenKnife
+        prob: 0.005
+      - id: ClothingEyesGlassesSunglasses
+        prob: 0.005
+      - id: ClothingEyesHudSecurity
+        prob: 0.005
+      - id: ClothingEyesHudMedical
+        prob: 0.005
+      - id: BoxMRE
+        prob: 0.005
+      - id: WeaponMakeshiftLaser #Maybe delete this or replace it with something more interesting if the makeshift laser ever becomes craftable again.
+        prob: 0.005
+#Commented out because this is probably going to be useless for a long-ass time (it only works on borgs and mechs in SS13.) Uncomment this when that is not the case.
+#      - id: ClothingEyesHudDiagnostic
+#        prob: 0.005
+#Oddity
+      - id: SingularityToy
+        prob: 0.0001
+#Junk Pool
+#Largely comprised of literal garbage or extremely common / worthless items like pens and breath masks.
+#Stuff like reagent containers are here to avoid the dreaded locker bloat.
+#If/when loot spawning becomes not garbage (pun not intendned,) the junk pool should be able spawn multiple items from this group at once (or none, without having to use null here.)
+      - id: null
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: PowerCellPotato
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: KnifePlastic
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: StrangePill
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: Ash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: AirlockPainter
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketSusTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketCheesieTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketChipsTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketCheesieTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketSemkiTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketBoritosTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketSyndiTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketChocolateTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketChowMeinTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPacketDanDanTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPlateSmallTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPlateTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodBowlBig
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodBowlBigTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodTinPeachesTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodTinMRETrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodTinBeansTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodCornTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodFrozenSnowconeTrash
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodFrozenPopsicleTrash
+        prob: 1      
+        orGroup: MaintenanceJunk
+      - id: TrashBananaPeel
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: BrokenBottle
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: FoodPlateTin
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: DrinkMug
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: DrinkMugMetal
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: DrinkGlass
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: DrinkWaterCup
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: DrinkShaker
+        prob: 0.50
+        orGroup: MaintenanceJunk
+      - id: DrinkTeacup
+        prob: 0.25
+        orGroup: MaintenanceJunk
+      - id: DrinkCoffee
+        prob: 0.25
+        orGroup: MaintenanceJunk
+      - id: DrinkWaterJug
+        prob: 0.25
+        orGroup: MaintenanceJunk
+      - id: Bucket
+        prob: 0.25
+        orGroup: MaintenanceJunk
+      - id: ChemistryEmptyBottle01
+        prob: 0.5
+        orGroup: MaintenanceJunk
+      - id: ChemistryEmptyBottle02
+        prob: 0.5
+        orGroup: MaintenanceJunk
+      - id: ShardGlass
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: ShardGlassReinforced
+        prob: 0.5
+        orGroup: MaintenanceJunk
+      - id: ShardGlassPlasma
+        prob: 0.15
+        orGroup: MaintenanceJunk
+      - id: Pen
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: EnergyDagger #balanced out by explosive pen existing
+        prob: 0.05
+        orGroup: MaintenanceJunk
+      - id: PenExplosive
+        prob: 0.05
+        orGroup: MaintenanceJunk
+      - id: Flare
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: Syringe
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: Dropper
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: LidSalami
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: BoxFolderBase
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: BoxFolderGrey
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: BoxFolderBlack
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: BoxFolderRed
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: BoxFolderBlue
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: BoxFolderYellow
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: BoxFolderWhite
+        prob: 0.142
+        orGroup: MaintenanceJunk
+      - id: CigarSpent
+        prob: 0.75
+        orGroup: MaintenanceJunk
+      - id: CigarGoldSpent
+        prob: 0.75
+        orGroup: MaintenanceJunk
+      - id: BoxCardboard
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: ClothingMaskBreath
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: GlowstickBase
+        prob: 0.275
+        orGroup: MaintenanceJunk
+      - id: GlowstickRed
+        prob: 0.275
+        orGroup: MaintenanceJunk
+      - id: GlowstickBlue
+        prob: 0.275
+        orGroup: MaintenanceJunk
+      - id: GlowstickPurple
+        prob: 0.275
+        orGroup: MaintenanceJunk
+      - id: GlowstickYellow
+        prob: 0.275
+        orGroup: MaintenanceJunk
+      - id: NetProbeCartridge
+        prob: 1
+        orGroup: MaintenanceJunk
+      - id: NotekeeperCartridge
+        prob: 1
+        orGroup: MaintenanceJunk

@@ -1,0 +1,51 @@
+#TODO: Add trash crate, minifridge, and gross decal spawner from /tg/.
+#Currently, the fluff items (toys, plushies, etc.) have been taken out back since I'm not sure where to fit them (and typing all of these loot lists up is rather maddening.)
+- type: entity
+  id: MaintenanceLootSpawnerCloset
+  name: maintenance loot spawner
+  suffix: closet
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Storage/closet.rsi
+        state: generic
+    #This is a hilariously cursed way of doing this, but there's not really any better way to do it right now, as far as I know.
+    #If orGroups themselves are ever able to have probability, or spawners ever stop spawning items above lockers, then all of the below prototypes (sans the minifridge) should probably all be merged into one.
+  - type: RandomSpawner
+    prototypes:
+      - ClosetMaintenanceFilledRandom1
+      - ClosetMaintenanceFilledRandom2
+      - ClosetMaintenanceFilledRandom3
+      - ClosetMaintenanceFilledRandomAndBoxes #Based off of Random #1
+    chance: 1
+    rarePrototypes:
+      - ClosetMaintenanceFilledRandomAndInstruments #Based off of Random #2
+#      - ClosetMinifridgeFilledRandom
+    rareChance: 0.2
+
+- type: entity
+  id: MaintenanceLootSpawnerWallCloset
+  name: maintenance loot spawner
+  suffix: wall closet
+  parent: MarkerBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Storage/wall_locker.rsi
+        state: generic
+  - type: RandomSpawner
+    prototypes:
+      - ClosetWallMaintenanceFilledRandom1
+      - ClosetWallMaintenanceFilledRandom2
+      - ClosetWallMaintenanceFilledRandom3
+      - ClosetWallMaintenanceFilledRandomAndBoxes
+    chance: 1
+    rarePrototypes:
+      - ClosetWallMaintenanceFilledRandomAndInstruments
+#      - ClosetMinifridgeFilledRandom
+    rareChance: 0.2
