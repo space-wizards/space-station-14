@@ -19,4 +19,11 @@ public sealed class GatewayComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextClose;
+
+    /// <summary>
+    /// The time at which the portal was last opened.
+    /// Only used for UI.
+    /// </summary>
+    [ViewVariables]
+    public TimeSpan LastOpen;
 }

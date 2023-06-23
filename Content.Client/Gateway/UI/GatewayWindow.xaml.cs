@@ -21,6 +21,8 @@ public sealed partial class GatewayWindow : FancyWindow,
     public event Action<EntityUid>? OpenPortal;
     private List<(EntityUid, string, TimeSpan, bool)> _destinations = default!;
     private EntityUid? _current;
+    private TimeSpan _nextClose;
+    private TimeSpan _lastOpen;
     private List<Label> _readyLabels = default!;
     private List<Button> _openButtons = default!;
 
@@ -34,6 +36,8 @@ public sealed partial class GatewayWindow : FancyWindow,
     {
         _destinations = state.Destinations;
         _current = state.Current;
+        _nextClose = state.NextClose;
+        _lastOpen = state.LastOpen;
 
         Container.DisposeAllChildren();
         _readyLabels = new List<Label>(_destinations.Count);
@@ -129,6 +133,29 @@ public sealed partial class GatewayWindow : FancyWindow,
         base.FrameUpdate(args);
 
         var now = _timing.CurTime;
+
+        // if its not going to close then show it as empty
+        if (_current == null)
+        {
+            NextCloseBar.Value = 0f;
+            NextCloseText.Text = "00:00";
+        }
+        else
+        {
+            var remaining = _nextClose - _timing.CurTime;
+            if (remaining < TimeSpan.Zero)
+            {
+                NextCloseBar.Value = 1f;
+                NextCloseText.Text = "00:00";
+            }
+            else
+            {
+                var openTime = _nextClose - _lastOpen;
+                NextCloseBar.Value = 1f - (float) (remaining / openTime);
+                NextCloseText.Text = $"{remaining.Minutes:00}:{remaining.Seconds:00}";
+            }
+        }
+
         for (var i = 0; i < _destinations.Count; i++)
         {
             var dest = _destinations[i];
@@ -143,7 +170,7 @@ public sealed partial class GatewayWindow : FancyWindow,
     {
         if (now < nextReady)
         {
-            return Loc.GetString("gateway-window-ready-in", ("time", (nextReady - now).Seconds));
+            return Loc.GetString("gateway-window-ready-in", ("time", nextReady - now));
         }
 
         return Loc.GetString("gateway-window-ready");

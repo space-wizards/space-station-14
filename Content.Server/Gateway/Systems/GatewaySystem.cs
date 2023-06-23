@@ -75,7 +75,7 @@ public sealed class GatewaySystem : EntitySystem
         }
 
         GetDestination(uid, out var current);
-        var state = new GatewayBoundUserInterfaceState(destinations, current);
+        var state = new GatewayBoundUserInterfaceState(destinations, current, comp.NextClose, comp.LastOpen);
         _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
     }
 
@@ -104,8 +104,10 @@ public sealed class GatewaySystem : EntitySystem
         EnsureComp<PortalComponent>(uid);
         EnsureComp<PortalComponent>(dest);
 
+        // for ui
+        comp.LastOpen = _timing.CurTime;
         // close automatically after time is up
-        comp.NextClose = _timing.CurTime + destComp.OpenTime;
+        comp.NextClose = comp.LastOpen + destComp.OpenTime;
 
         UpdateUserInterface(uid, comp);
         UpdateAppearance(uid);

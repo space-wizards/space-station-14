@@ -33,10 +33,23 @@ public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
     /// </summary>
     public readonly EntityUid? Current;
 
-    public GatewayBoundUserInterfaceState(List<(EntityUid, string, TimeSpan, bool)> destinations, EntityUid? current)
+    /// <summary>
+    /// Time the portal will close at.
+    /// </summary>
+    public readonly TimeSpan NextClose;
+
+    /// <summary>
+    /// Time the portal last opened at.
+    /// </summary>
+    public readonly TimeSpan LastOpen;
+
+    public GatewayBoundUserInterfaceState(List<(EntityUid, string, TimeSpan, bool)> destinations,
+        EntityUid? current, TimeSpan nextClose, TimeSpan lastOpen)
     {
         Destinations = destinations;
         Current = current;
+        NextClose = nextClose;
+        LastOpen = lastOpen;
     }
 }
 
