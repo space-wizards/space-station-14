@@ -52,17 +52,17 @@
       minimumPlayers: 15
     - type: BreakerFlipRule
 
-- type: entity
-  id: BureaucraticError
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-    - type: StationEvent
-      startAnnouncement: station-event-bureaucratic-error-announcement
-      minimumPlayers: 25
-      weight: 5
-      duration: 1
-    - type: BureaucraticErrorRule
+# - type: entity
+#   id: BureaucraticError
+#   parent: BaseGameRule
+#   noSpawn: true
+#   components:
+#     - type: StationEvent
+#       startAnnouncement: station-event-bureaucratic-error-announcement
+#       minimumPlayers: 25
+#       weight: 5
+#       duration: 1
+#     - type: BureaucraticErrorRule
 
 - type: entity
   id: Dragon

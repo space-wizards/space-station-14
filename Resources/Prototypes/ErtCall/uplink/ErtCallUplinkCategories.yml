@@ -1,0 +1,58 @@
+#   - ERTUplinkMelee
+#   - ERTUplikWeaponCombat
+#   - ERTUplinkAmmoCombat
+#   - ERTUplinkWeaponNonCombat
+#   - ERTUplinkAmmoNonCombat
+#   - ERTUplinkExplosives
+#   - ERTUplinkMedial
+#   - ERTUplinkEngineering
+#   - ERTUplinkUtilities
+#   - ERTUplinkJunitor
+#   - ERTUplinkPointless
+
+- type: storeCategory
+  id: ERTUplinkMelee
+  name: store-category-ert-uplink-melee
+
+- type: storeCategory
+  id: ERTUplinkWeaponCombat
+  name: store-category-ert-uplink-weapon-combat
+
+- type: storeCategory
+  id: ERTUplinkAmmoCombat
+  name: store-category-ert-uplink-ammo-combat
+
+- type: storeCategory
+  id: ERTUplinkWeaponNonCombat
+  name: store-category-ert-uplink-weapon-noncombat
+
+- type: storeCategory
+  id: ERTUplinkAmmoNonCombat
+  name: store-category-ert-uplink-ammo-noncombat
+
+- type: storeCategory
+  id: ERTUplinkExplosives
+  name: store-category-ert-uplink-explosives
+
+- type: storeCategory
+  id: ERTUplinkMedial
+  name: store-category-ert-uplink-medial
+
+- type: storeCategory
+  id: ERTUplinkEngineering
+  name: store-category-ert-uplink-engineering
+
+- type: storeCategory
+  id: ERTUplinkUtilities
+  name: store-category-ert-uplink-utilities
+
+- type: storeCategory
+  id: ERTUplinkJunitor
+  name: store-category-ert-uplink-junitor
+
+- type: storeCategory
+  id: ERTUplinkPointless
+  name: store-category-ert-uplink-pointless
+
+
+

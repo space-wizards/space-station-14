@@ -1,0 +1,96 @@
+#ERT START
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackERTLeader
+  id: ClothingBackpackCallERTLeaderFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackERTSecurity
+  id: ClothingBackpackCallERTSecurityFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackERTMedical
+  id: ClothingBackpackCallERTMedicalFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackERTEngineer
+  id: ClothingBackpackCallERTEngineerFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackERTJanitor
+  id: ClothingBackpackCallERTJanitorFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+#ERT END
+
+#CBURN START
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffelCBURN
+  id: ClothingBackpackCallERTCBURNFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+#CBURN END
+
+#DEAD SQUAD START
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackDeadSquadSecurity
+  name: Dead squad backpack
+  description: You don't have to know whose backpack it is.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/deadsquad.rsi
+  - type: Storage
+    capacity: 250
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDeadSquadSecurity
+  id: ClothingBackpackDeadSquadSecurityFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+
+- type: entity
+  id: ClothingBeltDeadSquadFilled
+  parent: ClothingBeltChiefEngineer
+  suffix: Filled
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/deadsquad.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/deadsquad.rsi
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+      - id: CableApcStack
+#DEAD SQUAD END
