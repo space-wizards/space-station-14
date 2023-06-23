@@ -12,7 +12,7 @@
       time: 21600 #6 hrs
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 108000 # 30 hrs
+      time: 548000 # 15 hrs
   weight: 10
   startingGear: QuartermasterGear
   icon: "QuarterMaster"

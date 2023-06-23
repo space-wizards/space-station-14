@@ -12,10 +12,10 @@
       time: 7200 #2 hrs
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
-      time: 36000 #10 hrs
+      time: 18000 #5 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 108000 # 30 hrs
+      time: 54000 # 15 hrs
   weight: 10
   startingGear: HoSGear
   icon: "HeadOfSecurity"
