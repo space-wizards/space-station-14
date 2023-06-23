@@ -34,6 +34,9 @@
         Blunt: 0
   - type: Damageable
     damageContainer: Inorganic
+  - type: Tag
+    tags:
+    - Soup
   - type: Destructible
     thresholds:
     - trigger:
