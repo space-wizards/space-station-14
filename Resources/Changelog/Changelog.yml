@@ -1,12 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: 'Nanotrasen has striken the defective recipe for Impedrezene from its
-      list. Impedrezene now causes sluggishness and massive brain damage, but the
-      recipe is changed to 1 water + 1 oxygen + 1 mercury + temp>370 = 1 impedrezene.',
-    type: Tweak}
-  id: 3581
-  time: '2023-04-29T21:04:17.0000000+00:00'
 - author: DawBla
   changes:
   - {message: Nanotrasen now supplies the station with off-brand wirecutters. Cutting
@@ -2939,3 +2931,9 @@ Entries:
   - {message: Chemist PDA's can now analyze patient health., type: Tweak}
   id: 4080
   time: '2023-06-24T12:11:48.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: 'Hotplates no longer use itemslots, which means you can see and interact
+      with the beaker while it''s being heated.', type: Tweak}
+  id: 4081
+  time: '2023-06-24T18:09:24.0000000+00:00'
