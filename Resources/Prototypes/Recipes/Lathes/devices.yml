@@ -90,7 +90,7 @@
     Steel: 2000
     Silver: 750
     Plasma: 1500
-    Uranium: 1500
+    Uranium: 150
 
 - type: latheRecipe
   id: ClothingBackpackSatchelHolding
@@ -100,7 +100,7 @@
     Steel: 2000
     Silver: 750
     Plasma: 1500
-    Uranium: 1500
+    Uranium: 150
 
 - type: latheRecipe
   id: ClothingBackpackDuffelHolding
@@ -110,7 +110,7 @@
     Steel: 2000
     Silver: 750
     Plasma: 1500
-    Uranium: 1500
+    Uranium: 150
 
 - type: latheRecipe
   id: WeaponCrusher

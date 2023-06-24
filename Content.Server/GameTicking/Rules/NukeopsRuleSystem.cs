@@ -759,7 +759,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 var mob = EntityManager.SpawnEntity(species.Prototype, _random.Pick(spawns));
                 SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear, profile, component);
                 var newMind = _mindSystem.CreateMind(session.UserId, spawnDetails.Name);
-                _mindSystem.ChangeOwningPlayer(newMind, session.UserId);
+                _mindSystem.SetUserId(newMind, session.UserId);
                 _mindSystem.AddRole(newMind, new NukeopsRole(newMind, nukeOpsAntag));
 
                 _mindSystem.TransferTo(newMind, mob);

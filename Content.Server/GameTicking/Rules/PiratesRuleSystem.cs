@@ -208,7 +208,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 
                 var session = ops[i];
                 var newMind = _mindSystem.CreateMind(session.UserId, name);
-                _mindSystem.ChangeOwningPlayer(newMind, session.UserId);
+                _mindSystem.SetUserId(newMind, session.UserId);
 
                 var mob = Spawn("MobHuman", _random.Pick(spawns));
                 MetaData(mob).EntityName = name;

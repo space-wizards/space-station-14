@@ -273,6 +273,19 @@
           Quantity: 10
 
 - type: entity
+  name: bicaridine pill (10u)
+  parent: Pill
+  id: PillBicaridine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 10
+          
+- type: entity
   name: romerol pill
   parent: Pill
   id: PillRomerol
@@ -338,6 +351,19 @@
         - ReagentId: Spaceacillin
           Quantity: 15
 
+- type: entity
+  name: bicaridine syringe
+  parent: BaseSyringe
+  id: SyringeBicaridine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 15        
+          
 - type: entity
   name: ipecac syringe
   parent: BaseSyringe

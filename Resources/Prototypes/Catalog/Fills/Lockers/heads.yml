@@ -20,6 +20,7 @@
       - id: CargoShuttleComputerCircuitboard
       - id: CargoShuttleConsoleCircuitboard
       - id: SalvageShuttleConsoleCircuitboard
+      - id: CargoBountyComputerCircuitboard
       - id: CigPackGreen
         prob: 0.50
       - id: DoorRemoteCargo
@@ -158,6 +159,7 @@
     contents:
       - id: ClothingNeckCloakCe
       - id: ClothingEyesGlassesMeson
+      - id: ClothingBeltChiefEngineerFilled
       - id: ClothingHeadHatBeretEngineering
       - id: ClothingHandsGlovesColorYellow
       - id: CigarCase
