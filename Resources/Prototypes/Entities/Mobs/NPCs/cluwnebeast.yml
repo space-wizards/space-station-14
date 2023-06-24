@@ -24,19 +24,7 @@
       state: cluwnebeast
   - type: Physics
     bodyType: KinematicController
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.3
-      density: 230
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
   - type: MobState
-  - type: Mind
-    showExamineInfo: true
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: CluwneBeast
@@ -57,8 +45,6 @@
         Slash: 10
         Piercing: 2
         Structural: 8
-  - type: Body
-    prototype: Cluwne
     requiredLegs: 2
   - type: Strippable
   - type: InventorySlots

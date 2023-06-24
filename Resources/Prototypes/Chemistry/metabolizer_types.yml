@@ -30,8 +30,5 @@
   name: plant
 
 - type: metabolizerType
-  id: Cluwne
-
-- type: metabolizerType
   id: Dwarf
   name: dwarf

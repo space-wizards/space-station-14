@@ -59,25 +59,9 @@
     layers:
     - state: portal-green
   - type: TimedDespawn
-    lifetime: 60
+    lifetime: 5
   - type: PointLight
     netsync: false
     color: Green
-    radius: 3
-    energy: 3
-
-- type: entity
-  id: PortalYellow
-  parent: BasePortal
-  description: A mysterious yellow portal!
-  components:
-  - type: TimedDespawn
-    lifetime: 60
-  - type: Sprite
-    layers:
-    - state: portal-yellow
-  - type: PointLight
-    netsync: false
-    color: Yellow
     radius: 3
     energy: 3

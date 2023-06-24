@@ -20,14 +20,8 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
-using Content.Server.Mind.Components;
 using Content.Server.StationEvents.Components;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Server.Cluwne;
 
@@ -42,7 +36,6 @@ public sealed class CluwneSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly IChatManager _chatMan = default!;
 
     public override void Initialize()
     {
@@ -136,11 +129,6 @@ public sealed class CluwneSystem : EntitySystem
             _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
             _chat.TrySendInGameICMessage(uid, "spasms", InGameICChatType.Emote, ChatTransmitRange.Normal);
         }
-    }
-
-    public CluwneBeastSpawnRuleComponent RuleConfig(EntityUid uid)
-    {
-        return Comp<CluwneBeastSpawnRuleComponent>(uid);
     }
 
     private void OnMeleeHit(EntityUid uid, CluwneComponent component, MeleeHitEvent args)
