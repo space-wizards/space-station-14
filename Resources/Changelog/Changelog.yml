@@ -1,9 +1,4 @@
 Entries:
-- author: Nimfar
-  changes:
-  - {message: Changed the mailbox sprite., type: Tweak}
-  id: 3577
-  time: '2023-04-29T11:47:11.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Extra-bright lanterns can now be used by hitting people, like regular
@@ -2938,3 +2933,9 @@ Entries:
   - {message: Resprited the node scanner., type: Tweak}
   id: 4076
   time: '2023-06-24T04:20:27.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: QM is now officially supervised by the Captain., type: Tweak}
+  - {message: The Cargo department is no longer supervised by the HoP., type: Tweak}
+  id: 4077
+  time: '2023-06-24T05:32:15.0000000+00:00'
