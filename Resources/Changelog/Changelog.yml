@@ -1,21 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Extra-bright lanterns can now be used by hitting people, like regular
-      flashes.', type: Tweak}
-  id: 3578
-  time: '2023-04-29T13:38:40.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: Nanotrasen has experimented with hiring some arachnid-like humanoids.,
-    type: Add}
-  id: 3579
-  time: '2023-04-29T16:19:07.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Powered electrified grilles now create sparks when touched., type: Add}
-  id: 3580
-  time: '2023-04-29T20:05:10.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: 'Nanotrasen has striken the defective recipe for Impedrezene from its
@@ -2939,3 +2922,20 @@ Entries:
   - {message: The Cargo department is no longer supervised by the HoP., type: Tweak}
   id: 4077
   time: '2023-06-24T05:32:15.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added Artifexium, a chemical that can activate artifacts when sprayed
+      on their surface. Get it by grinding artifact fragments.', type: Add}
+  id: 4078
+  time: '2023-06-24T12:00:42.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds Amanita fly agaric seeds to the Vendomat of seeds after EMAG.,
+    type: Add}
+  id: 4079
+  time: '2023-06-24T12:03:09.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Chemist PDA's can now analyze patient health., type: Tweak}
+  id: 4080
+  time: '2023-06-24T12:11:48.0000000+00:00'
