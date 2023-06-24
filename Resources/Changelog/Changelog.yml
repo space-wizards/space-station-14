@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: The space dragon event is now less common and starts later in rounds.,
-    type: Tweak}
-  id: 3584
-  time: '2023-04-30T01:51:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: 'Fixed items that use drain power cells passively (anomaly locators,
       etc) draining instantly.', type: Fix}
   id: 3585
@@ -2937,3 +2931,9 @@ Entries:
       on Origin we have handed over to cargo., type: Remove}
   id: 4083
   time: '2023-06-24T19:57:56.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: 'Changed bluespace and cryostasis beakers to not be weird when thrown,
+      and cryostasis contents can now be spilled when thrown.', type: Tweak}
+  id: 4084
+  time: '2023-06-24T20:01:04.0000000+00:00'
