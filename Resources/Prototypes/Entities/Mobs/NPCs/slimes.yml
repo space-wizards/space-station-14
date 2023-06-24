@@ -112,6 +112,10 @@
   - type: ReplacementAccent
     accent: slimes
   - type: GhostTakeoverAvailable
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-slimes-name
+    description: ghost-role-information-slimes-description
 
 - type: entity
   name: blue slime
@@ -124,29 +128,17 @@
         Base: blue_adult_slime
       Dead:
         Base: blue_adult_slime_dead
-  - type: GhostRole
-    makeSentient: true
-    name: ghost-role-information-slimes-name
-    description: ghost-role-information-slimes-description
 
 - type: entity
   name: blue slime
-  parent: MobAdultSlimes
+  parent: MobAdultSlimesBlue
   id: MobAdultSlimesBlueAngry
   suffix: Angry
   components:
     - type: Faction
       factions:
         - SimpleHostile
-    - type: DamageStateVisuals
-      states:
-        Alive:
-          Base: blue_adult_slime
-        Dead:
-          Base: blue_adult_slime_dead
     - type: GhostRole
-      makeSentient: true
-      name: ghost-role-information-slimes-name
       description: ghost-role-information-angry-slimes-description
 
 - type: entity
@@ -171,40 +163,17 @@
           Structural: 4
           Caustic: 1
           Poison: 4
-    - type: GhostRole
-      makeSentient: true
-      name: ghost-role-information-slimes-name
-      description: ghost-role-information-slimes-description
 
 - type: entity
   name: green slime
-  parent: MobAdultSlimes
+  parent: MobAdultSlimesGreen
   id: MobAdultSlimesGreenAngry
   suffix: Angry
   components:
     - type: Faction
       factions:
         - SimpleHostile
-    - type: Sprite
-      layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: green_adult_slime
-    - type: DamageStateVisuals
-      states:
-        Alive:
-          Base: green_adult_slime
-        Dead:
-          Base: green_adult_slime_dead
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 6
-          Structural: 4
-          Caustic: 1
-          Poison: 4
     - type: GhostRole
-      makeSentient: true
-      name: ghost-role-information-slimes-name
       description: ghost-role-information-angry-slimes-description
 
 - type: entity
@@ -229,38 +198,15 @@
           Structural: 4
           Caustic: 1
           Cellular: 3
-    - type: GhostRole
-      makeSentient: true
-      name: ghost-role-information-slimes-name
-      description: ghost-role-information-slimes-description
 
 - type: entity
   name: yellow slime
-  parent: MobAdultSlimes
+  parent: MobAdultSlimesYellow
   id: MobAdultSlimesYellowAngry
   suffix: Angry
   components:
     - type: Faction
       factions:
         - SimpleHostile
-    - type: Sprite
-      layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: yellow_adult_slime
-    - type: DamageStateVisuals
-      states:
-        Alive:
-          Base: yellow_adult_slime
-        Dead:
-          Base: yellow_adult_slime_dead
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 6
-          Structural: 4
-          Caustic: 1
-          Cellular: 3
     - type: GhostRole
-      makeSentient: true
-      name: ghost-role-information-slimes-name
       description: ghost-role-information-angry-slimes-description

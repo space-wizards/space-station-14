@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.Server.Body.Systems;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Stack;
@@ -38,7 +39,7 @@ namespace Content.IntegrationTests.Tests.Interaction;
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public abstract partial class InteractionTest
 {
-    protected virtual string PlayerPrototype => "MobInteractionTestObserver";
+    protected virtual string PlayerPrototype => "InteractionTestMob";
 
     protected PairTracker PairTracker = default!;
     protected TestMapData MapData = default!;
@@ -115,38 +116,27 @@ public abstract partial class InteractionTest
 
     public float TickPeriod => (float)STiming.TickPeriod.TotalSeconds;
 
-    [SetUp]
-    public virtual async Task Setup()
-    {
-        const string TestPrototypes = @"
+
+    // Simple mob that has one hand and can perform misc interactions.
+    public const string TestPrototypes = @"
 - type: entity
-  id: MobInteractionTestObserver
-  name: observer
-  noSpawn: true
-  save: false
-  description: Boo!
+  id: InteractionTestMob
   components:
-  - type: Access
-    groups:
-    - AllAccess
   - type: Body
     prototype: Aghost
   - type: DoAfter
-  - type: Ghost
-    canInteract: true
   - type: Hands
-  - type: Mind
+  - type: MindContainer
   - type: Stripping
   - type: Tag
     tags:
     - CanPilot
-    - BypassInteractionRangeChecks
-  - type: Thieving
-    stripTimeReduction: 9999
-    stealthy: true
   - type: UserInterface
 ";
 
+    [SetUp]
+    public virtual async Task Setup()
+    {
         PairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = TestPrototypes});
 
         // server dependencies
@@ -195,7 +185,7 @@ public abstract partial class InteractionTest
         {
             // Fuck you mind system I want an hour of my life back
             // Mind system is a time vampire
-            ServerSession.ContentData()?.WipeMind();
+            SEntMan.System<MindSystem>().WipeMind(ServerSession.ContentData()?.Mind);
 
             old = cPlayerMan.LocalPlayer.ControlledEntity;
             Player = SEntMan.SpawnEntity(PlayerPrototype, PlayerCoords);
