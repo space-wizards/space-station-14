@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Fixed items that use drain power cells passively (anomaly locators,
-      etc) draining instantly.', type: Fix}
-  id: 3585
-  time: '2023-04-30T06:06:45.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Resprited the plating and tech maint tiles., type: Tweak}
@@ -2937,3 +2931,9 @@ Entries:
       and cryostasis contents can now be spilled when thrown.', type: Tweak}
   id: 4084
   time: '2023-06-24T20:01:04.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Emergency crowbar and regular crowbar now do the same damage. Please
+      leave emergency crowbars for emergencies!!!, type: Tweak}
+  id: 4085
+  time: '2023-06-24T20:05:03.0000000+00:00'
