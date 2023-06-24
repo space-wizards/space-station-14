@@ -1,10 +1,4 @@
 Entries:
-- author: DawBla
-  changes:
-  - {message: Nanotrasen now supplies the station with off-brand wirecutters. Cutting
-      cables and lattices takes slightly longer., type: Tweak}
-  id: 3582
-  time: '2023-04-29T21:50:32.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Eye damage now darkens the screen, rather than brightening it.', type: Fix}
@@ -2937,3 +2931,8 @@ Entries:
       with the beaker while it''s being heated.', type: Tweak}
   id: 4081
   time: '2023-06-24T18:09:24.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed cap gun ammo to look less like real bullets, type: Tweak}
+  id: 4082
+  time: '2023-06-24T19:56:42.0000000+00:00'
