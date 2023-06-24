@@ -98,9 +98,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("utilityCurvePreset");
             _prototypeManager.RegisterIgnore("accent");
             _prototypeManager.RegisterIgnore("material");
-            _prototypeManager
-                .RegisterIgnore(
-                    "reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
+            _prototypeManager.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
             _prototypeManager.RegisterIgnore("gasReaction");
             _prototypeManager.RegisterIgnore("seed"); // Seeds prototypes are server-only.
             _prototypeManager.RegisterIgnore("barSign");
