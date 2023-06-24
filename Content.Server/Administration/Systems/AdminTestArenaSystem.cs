@@ -37,6 +37,14 @@ public sealed class AdminTestArenaSystem : EntitySystem
         ArenaMap[admin.UserId] = _mapManager.GetMapEntityId(_mapManager.CreateMap());
         var grids = _map.LoadMap(Comp<MapComponent>(ArenaMap[admin.UserId]).MapId, ArenaMapPath);
         ArenaGrid[admin.UserId] = grids.Count == 0 ? null : grids[0];
+        //Imperial naming admin arena start
+        if (grids.Count != 0)
+        {
+            var metaData = MetaData(grids[0]);
+            var adminName = admin.Name;
+            metaData.EntityName = Loc.GetString("admin-test-arena-system-name", ("adminName", adminName));
+        }
+        //Imperial naming admin arena end
 
         return (ArenaMap[admin.UserId], ArenaGrid[admin.UserId]);
     }
