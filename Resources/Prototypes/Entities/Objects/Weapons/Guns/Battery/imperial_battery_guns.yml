@@ -16,14 +16,14 @@
     sprite: Objects/Weapons/Guns/Battery/pulse_sniper.rsi
   - type: Gun
     selectedMode: SemiAuto
-    fireRate: 1.0
+    fireRate: 0.5
     availableModes:
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_sniper.ogg
   - type: HitscanBatteryAmmoProvider
     proto: PulseSniper
-    fireCost: 500
+    fireCost: 750
   - type: Battery
     maxCharge: 7500
     startingCharge: 7500
