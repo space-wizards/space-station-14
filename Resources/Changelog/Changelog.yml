@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Eye damage now darkens the screen, rather than brightening it.', type: Fix}
-  id: 3583
-  time: '2023-04-30T01:44:02.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The space dragon event is now less common and starts later in rounds.,
@@ -2936,3 +2931,9 @@ Entries:
   - {message: Changed cap gun ammo to look less like real bullets, type: Tweak}
   id: 4082
   time: '2023-06-24T19:56:42.0000000+00:00'
+- author: Equivocateur
+  changes:
+  - {message: As part of a bounty program - whatever insulated gloves we could find
+      on Origin we have handed over to cargo., type: Remove}
+  id: 4083
+  time: '2023-06-24T19:57:56.0000000+00:00'
