@@ -1,5 +1,7 @@
 using System.Linq;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -24,6 +26,7 @@ public sealed class FloorTileSystem : EntitySystem
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -91,10 +94,11 @@ public sealed class FloorTileSystem : EntitySystem
 
             if (mapGrid != null)
             {
+                var gridUid = mapGrid.Owner;
                 var ev = new FloorTileAttemptEvent();
                 RaiseLocalEvent(mapGrid);
 
-                if (HasComp<ProtectedGridComponent>(mapGrid.Owner) || ev.Cancelled)
+                if (HasComp<ProtectedGridComponent>(gridUid) || ev.Cancelled)
                 {
                     if (_netManager.IsClient && _timing.IsFirstTimePredicted)
                         _popup.PopupEntity(Loc.GetString("invalid-floor-placement"), args.User);
@@ -110,7 +114,7 @@ public sealed class FloorTileSystem : EntitySystem
                     if (!_stackSystem.Use(uid, 1, stack))
                         continue;
 
-                    PlaceAt(args.User, mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound);
+                    PlaceAt(args.User, gridUid, mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound);
                     args.Handled = true;
                     return;
                 }
@@ -125,10 +129,11 @@ public sealed class FloorTileSystem : EntitySystem
                     return;
 
                 mapGrid = _mapManager.CreateGrid(locationMap.MapId);
-                var gridXform = Transform(mapGrid.Owner);
+                var gridUid = mapGrid.Owner;
+                var gridXform = Transform(gridUid);
                 _transform.SetWorldPosition(gridXform, locationMap.Position);
-                location = new EntityCoordinates(mapGrid.Owner, Vector2.Zero);
-                PlaceAt(args.User, mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);
+                location = new EntityCoordinates(gridUid, Vector2.Zero);
+                PlaceAt(args.User, gridUid, mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);
                 return;
             }
         }
@@ -139,8 +144,11 @@ public sealed class FloorTileSystem : EntitySystem
         return tileDef.BaseTurf == baseTurf;
     }
 
-    private void PlaceAt(EntityUid user, MapGridComponent mapGrid, EntityCoordinates location, ushort tileId, SoundSpecifier placeSound, float offset = 0)
+    private void PlaceAt(EntityUid user, EntityUid gridUid, MapGridComponent mapGrid, EntityCoordinates location,
+        ushort tileId, SoundSpecifier placeSound, float offset = 0)
     {
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):actor} placed tile {_tileDefinitionManager[tileId].Name} at {ToPrettyString(gridUid)} {location}");
+
         var variant = _random.Pick(((ContentTileDefinition) _tileDefinitionManager[tileId]).PlacementVariants);
         mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
 
