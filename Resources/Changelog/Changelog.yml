@@ -1,10 +1,4 @@
 Entries:
-- author: PixelTK
-  changes:
-  - {message: Nanotrasen has experimented with hiring some arachnid-like humanoids.,
-    type: Add}
-  id: 3579
-  time: '2023-04-29T16:19:07.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: Powered electrified grilles now create sparks when touched., type: Add}
@@ -2939,3 +2933,9 @@ Entries:
       on their surface. Get it by grinding artifact fragments.', type: Add}
   id: 4078
   time: '2023-06-24T12:00:42.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds Amanita fly agaric seeds to the Vendomat of seeds after EMAG.,
+    type: Add}
+  id: 4079
+  time: '2023-06-24T12:03:09.0000000+00:00'
