@@ -80,10 +80,9 @@ public sealed partial class TriggerSystem
         if (component.TriggerBehindWall)
             return true;
 
-        TryComp<TransformComponent>(uid, out var entTransform);
-        TryComp<TransformComponent>(args.OtherBody.Owner, out var otherTranform);
 
-        if (entTransform != null && otherTranform != null)
+        if (TryComp<TransformComponent>(uid, out var entTransform) &&
+                TryComp<TransformComponent>(args.OtherBody.Owner, out var otherTranform))
         {
             SharedPhysicsSystem physSystem = EntityManager.System<SharedPhysicsSystem>();
 
