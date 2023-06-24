@@ -5,6 +5,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Commands;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
@@ -33,6 +34,7 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
@@ -54,6 +56,8 @@ namespace Content.Server.Ghost.Roles
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<GhostRoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<GhostRoleComponent, EntityPausedEvent>(OnPaused);
+            SubscribeLocalEvent<GhostRoleComponent, EntityUnpausedEvent>(OnUnpaused);
             SubscribeLocalEvent<GhostRoleMobSpawnerComponent, TakeGhostRoleEvent>(OnSpawnerTakeRole);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, TakeGhostRoleEvent>(OnTakeoverTakeRole);
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
@@ -153,7 +157,7 @@ namespace Content.Server.Ghost.Roles
             if (_needsUpdateGhostRoleCount)
             {
                 _needsUpdateGhostRoleCount = false;
-                var response = new GhostUpdateGhostRoleCountEvent(_ghostRoles.Count);
+                var response = new GhostUpdateGhostRoleCountEvent(GetGhostRolesInfo().Length);
                 foreach (var player in _playerManager.Sessions)
                 {
                     RaiseNetworkEvent(response, player.ConnectedClient);
@@ -212,33 +216,32 @@ namespace Content.Server.Ghost.Roles
         {
             if (!Resolve(roleUid, ref role)) return;
 
-            var contentData = player.ContentData();
+            DebugTools.AssertNotNull(player.ContentData());
 
-            DebugTools.AssertNotNull(contentData);
+            var newMind = _mindSystem.CreateMind(player.UserId,
+                EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
+            _mindSystem.AddRole(newMind, new GhostRoleMarkerRole(newMind, role.RoleName));
 
-            var newMind = new Mind.Mind(player.UserId)
-            {
-                CharacterName = EntityManager.GetComponent<MetaDataComponent>(mob).EntityName
-            };
-            newMind.AddRole(new GhostRoleMarkerRole(newMind, role.RoleName));
-
-            newMind.ChangeOwningPlayer(player.UserId);
-            newMind.TransferTo(mob);
+            _mindSystem.SetUserId(newMind, player.UserId);
+            _mindSystem.TransferTo(newMind, mob);
         }
 
         public GhostRoleInfo[] GetGhostRolesInfo()
         {
-            var roles = new GhostRoleInfo[_ghostRoles.Count];
-
-            var i = 0;
+            var roles = new List<GhostRoleInfo>();
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
 
             foreach (var (id, role) in _ghostRoles)
             {
-                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules};
-                i++;
+                var uid = role.Owner;
+
+                if (metaQuery.GetComponent(uid).EntityPaused)
+                    continue;
+
+                roles.Add(new GhostRoleInfo {Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules});
             }
 
-            return roles;
+            return roles.ToArray();
         }
 
         private void OnPlayerAttached(PlayerAttachedEvent message)
@@ -283,6 +286,22 @@ namespace Content.Server.Ghost.Roles
             _nextRoleIdentifier = 0;
         }
 
+        private void OnPaused(EntityUid uid, GhostRoleComponent component, ref EntityPausedEvent args)
+        {
+            if (HasComp<ActorComponent>(uid))
+                return;
+
+            UpdateAllEui();
+        }
+
+        private void OnUnpaused(EntityUid uid, GhostRoleComponent component, ref EntityUnpausedEvent args)
+        {
+            if (HasComp<ActorComponent>(uid))
+                return;
+
+            UpdateAllEui();
+        }
+
         private void OnInit(EntityUid uid, GhostRoleComponent role, ComponentInit args)
         {
             if (role.Probability < 1f && !_random.Prob(role.Probability))
@@ -304,7 +323,7 @@ namespace Content.Server.Ghost.Roles
         private void OnSpawnerTakeRole(EntityUid uid, GhostRoleMobSpawnerComponent component, ref TakeGhostRoleEvent args)
         {
             if (!TryComp(uid, out GhostRoleComponent? ghostRole) ||
-                ghostRole.Taken)
+                !CanTakeGhost(uid, ghostRole))
             {
                 args.TookRole = false;
                 return;
@@ -322,7 +341,7 @@ namespace Content.Server.Ghost.Roles
             if (ghostRole.MakeSentient)
                 MakeSentientCommand.MakeSentient(mob, EntityManager, ghostRole.AllowMovement, ghostRole.AllowSpeech);
 
-            mob.EnsureComponent<MindComponent>();
+            mob.EnsureComponent<MindContainerComponent>();
 
             GhostRoleInternalCreateMindAndTransfer(args.Player, uid, mob, ghostRole);
 
@@ -340,10 +359,17 @@ namespace Content.Server.Ghost.Roles
             args.TookRole = true;
         }
 
+        private bool CanTakeGhost(EntityUid uid, GhostRoleComponent? component = null)
+        {
+            return Resolve(uid, ref component, false) &&
+                   !component.Taken &&
+                   !MetaData(uid).EntityPaused;
+        }
+
         private void OnTakeoverTakeRole(EntityUid uid, GhostTakeoverAvailableComponent component, ref TakeGhostRoleEvent args)
         {
             if (!TryComp(uid, out GhostRoleComponent? ghostRole) ||
-                ghostRole.Taken)
+                !CanTakeGhost(uid, ghostRole))
             {
                 args.TookRole = false;
                 return;
@@ -351,7 +377,7 @@ namespace Content.Server.Ghost.Roles
 
             ghostRole.Taken = true;
 
-            var mind = EnsureComp<MindComponent>(uid);
+            var mind = EnsureComp<MindContainerComponent>(uid);
 
             if (mind.HasMind)
             {

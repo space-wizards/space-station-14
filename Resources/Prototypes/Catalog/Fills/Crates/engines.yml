@@ -69,9 +69,9 @@
   - type: StorageFill
     contents:
       - id: MachineParticleAcceleratorEndCapCircuitboard
-      - id: MachineParticleAcceleratorEmitterLeftCircuitboard
-      - id: MachineParticleAcceleratorEmitterCenterCircuitboard
-      - id: MachineParticleAcceleratorEmitterRightCircuitboard
+      - id: MachineParticleAcceleratorEmitterStarboardCircuitboard
+      - id: MachineParticleAcceleratorEmitterForeCircuitboard
+      - id: MachineParticleAcceleratorEmitterPortCircuitboard
       - id: MachineParticleAcceleratorFuelChamberCircuitboard
       - id: MachineParticleAcceleratorPowerBoxCircuitboard
       - id: ParticleAcceleratorComputerCircuitboard

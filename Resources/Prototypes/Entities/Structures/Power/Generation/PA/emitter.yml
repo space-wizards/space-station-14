@@ -1,76 +1,76 @@
 - type: entity
   parent: ParticleAcceleratorFinishedPart
-  id: ParticleAcceleratorEmitterLeft
-  name: PA containment emitter L
+  id: ParticleAcceleratorEmitterPort
+  name: PA port containment emitter
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/emitter_left.rsi
-    - type: ParticleAcceleratorEmitter
-      emitterType: Left
-    - type: Construction
-      graph: ParticleAcceleratorEmitterLeft
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_port.rsi
+  - type: ParticleAcceleratorEmitter
+    emitterType: Port
+  - type: Construction
+    graph: ParticleAcceleratorEmitterPort
 
 - type: entity
   parent: ParticleAcceleratorFinishedPart
-  id: ParticleAcceleratorEmitterCenter
-  name: PA containment emitter C
+  id: ParticleAcceleratorEmitterFore
+  name: PA fore containment emitter
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/emitter_center.rsi
-    - type: ParticleAcceleratorEmitter
-      emitterType: Center
-    - type: Construction
-      graph: ParticleAcceleratorEmitterCenter
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_fore.rsi
+  - type: ParticleAcceleratorEmitter
+    emitterType: Fore
+  - type: Construction
+    graph: ParticleAcceleratorEmitterFore
 
 - type: entity
   parent: ParticleAcceleratorFinishedPart
-  id: ParticleAcceleratorEmitterRight
-  name: PA containment emitter R
+  id: ParticleAcceleratorEmitterStarboard
+  name: PA starboard containment emitter
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/emitter_right.rsi
-    - type: ParticleAcceleratorEmitter
-      emitterType: Right
-    - type: Construction
-      graph: ParticleAcceleratorEmitterRight
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_starboard.rsi
+  - type: ParticleAcceleratorEmitter
+    emitterType: Starboard
+  - type: Construction
+    graph: ParticleAcceleratorEmitterStarboard
 
 # Unfinished
 
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
-  id: ParticleAcceleratorEmitterLeftUnfinished
-  name: PA containment emitter L
-  suffix: Unfinished, Left
+  id: ParticleAcceleratorEmitterPortUnfinished
+  name: PA port containment emitter
+  suffix: Unfinished, Port
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/emitter_left.rsi
-    - type: Construction
-      graph: ParticleAcceleratorEmitterLeft
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_port.rsi
+  - type: Construction
+    graph: ParticleAcceleratorEmitterPort
 
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
-  id: ParticleAcceleratorEmitterCenterUnfinished
-  name: PA containment emitter C
-  suffix: Unfinished
+  id: ParticleAcceleratorEmitterForeUnfinished
+  name: PA fore containment emitter
+  suffix: Unfinished, Fore
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/emitter_center.rsi
-    - type: Construction
-      graph: ParticleAcceleratorEmitterCenter
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_fore.rsi
+  - type: Construction
+    graph: ParticleAcceleratorEmitterFore
 
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
-  id: ParticleAcceleratorEmitterRightUnfinished
-  name: PA containment emitter R
-  suffix: Unfinished
+  id: ParticleAcceleratorEmitterStarboardUnfinished
+  name: PA starboard containment emitter
+  suffix: Unfinished, Starboard
   description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/emitter_right.rsi
-    - type: Construction
-      graph: ParticleAcceleratorEmitterRight
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_starboard.rsi
+  - type: Construction
+    graph: ParticleAcceleratorEmitterStarboard

@@ -87,3 +87,13 @@
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 0.5
+
+- type: reagent
+  id: Fat
+  name: reagent-name-fat
+  group: Biological
+  desc: reagent-desc-fat
+  flavor: terrible
+  color: "#d8d8b0"
+  physicalDesc: reagent-physical-desc-exotic-smelling
+  slippery: false
