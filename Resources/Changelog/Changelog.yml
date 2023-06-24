@@ -1,9 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Resprited the plating and tech maint tiles., type: Tweak}
-  id: 3586
-  time: '2023-04-30T06:36:12.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Remove kvass., type: Remove}
@@ -2937,3 +2932,9 @@ Entries:
       leave emergency crowbars for emergencies!!!, type: Tweak}
   id: 4085
   time: '2023-06-24T20:05:03.0000000+00:00'
+- author: Myakot
+  changes:
+  - {message: Added additional information to guidebooks p.1, type: Add}
+  - {message: Some little typos in guidebook, type: Fix}
+  id: 4086
+  time: '2023-06-24T20:07:25.0000000+00:00'
