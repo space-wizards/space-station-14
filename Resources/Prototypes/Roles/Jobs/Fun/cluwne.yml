@@ -8,3 +8,9 @@
     id: CluwnePDA
     gloves: ClothingHandsGlovesCluwne
     pocket1: CluwneHorn
+
+- type: startingGear
+  id: CluwneBeastGear
+  equipment:
+    neck: ClothingNeckCloakHonk
+    pocket1: CluwneHorn

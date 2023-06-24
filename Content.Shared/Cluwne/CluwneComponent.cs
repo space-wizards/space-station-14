@@ -3,6 +3,7 @@ using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Cluwne;
 
@@ -39,6 +40,9 @@ public sealed class CluwneComponent : Component
 
     [DataField("cluwneOnMelee")]
     public bool CluwneOnMelee = false;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("portal", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string Portal = "PortalGreeny";
 
     [DataField("isBeast")]
     public bool IsBeast = false;

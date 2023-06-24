@@ -106,6 +106,12 @@ public sealed class CluwneSystem : EntitySystem
             meta.EntityName = Loc.GetString("cluwne-name-prefix", ("target", name));
             SetOutfitCommand.SetOutfit(uid, "CluwneGear", EntityManager);
         }
+
+        if (component.IsBeast == true)
+        {
+            Spawn(component.Portal, Transform(uid).Coordinates);
+            SetOutfitCommand.SetOutfit(uid, "CluwneBeastGear", EntityManager);
+        }
     }
 
     /// <summary>

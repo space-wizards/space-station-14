@@ -52,12 +52,27 @@
 
 - type: entity
   id: PortalGreeny
-  parent: BasePortal
   description: A mysterious green portal!
   components:
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
   - type: Sprite
+    sprite: /Textures/Effects/portal.rsi
     layers:
-    - state: portal-green
+      - state: portal-green
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
   - type: TimedDespawn
     lifetime: 5
   - type: PointLight

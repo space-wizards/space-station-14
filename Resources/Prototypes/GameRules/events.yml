@@ -305,19 +305,6 @@
   - type: ZombieRule
 
 - type: entity
-  id: CluwneBeastSpawn
-  parent: BaseGameRule
-  noSpawn: true
-  component:
-  - type: StationEvent
-    weight: 5
-    reoccurrenceDelay: 25
-    duration: 1
-    earliestStart: 45
-    minimumPlayers: 30
-  - type: CluwneBeastRule
-
-- type: entity
   id: LoneOpsSpawn
   parent: BaseGameRule
   noSpawn: true

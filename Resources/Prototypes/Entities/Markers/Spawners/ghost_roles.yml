@@ -77,14 +77,15 @@
 - type: entity
   id: SpawnPointGhostCluwneBeast
   name: ghost role spawn point
-  suffix: cluwne beast
+  suffix: cluwnebeast
   parent: MarkerBase
   components:
+  - type: GhostRole
+    name: Cluwne Beast
+    description: Spread laughter and chaos by hitting and turning the crew into cluwnes.
+    rules: You are an antagonist, transform as many of the crew as you can into cluwnes.
   - type: GhostRoleMobSpawner
     prototype: MobCluwneBeast
-    name: Cluwne Beast
-    description: Hide in the shadows, attack anything that moves and turn the crew into cluwnes.
-    rules: You are an antagonist, stalk your prey and turn the crew into friendly cluwnes!
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
