@@ -1,4 +1,4 @@
-﻿# If your species wants to metabolize stuff differently,
+# If your species wants to metabolize stuff differently,
 # you'll likely have to tag its metabolizers with something other than Human.
 
 - type: metabolizerType
@@ -28,6 +28,9 @@
 - type: metabolizerType
   id: Plant
   name: plant
+
+- type: metabolizerType
+  id: Cluwne
 
 - type: metabolizerType
   id: Dwarf

@@ -51,7 +51,6 @@ public sealed class CluwneSystem : EntitySystem
         SubscribeLocalEvent<CluwneComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<CluwneComponent, MobStateChangedEvent>(OnMobState);
         SubscribeLocalEvent<CluwneComponent, MeleeHitEvent>(OnMeleeHit);
-        SubscribeLocalEvent<CluwneComponent, MindAddedMessage>(OnCluwneBeastMindAdded);
         SubscribeLocalEvent<CluwneComponent, EmoteEvent>(OnEmote, before:
         new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
     }
@@ -142,25 +141,6 @@ public sealed class CluwneSystem : EntitySystem
     public CluwneBeastSpawnRuleComponent RuleConfig(EntityUid uid)
     {
         return Comp<CluwneBeastSpawnRuleComponent>(uid);
-    }
-
-    private void OnCluwneBeastMindAdded(EntityUid uid, CluwneComponent comp, MindAddedMessage args)
-    {
-        if (comp.IsBeast == true)
-        {
-            if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
-                HelloBeast(mind.Mind);
-        }
-    }
-
-    private void HelloBeast(Mind.Mind mind)
-    {
-        if (!mind.TryGetSession(out var session) || mind.OwnedEntity == null)
-            return;
-
-        var config = RuleConfig(mind.OwnedEntity.Value);
-        _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
-        _chatMan.DispatchServerMessage(session, Loc.GetString("cluwne-beast-greeting"));
     }
 
     private void OnMeleeHit(EntityUid uid, CluwneComponent component, MeleeHitEvent args)
