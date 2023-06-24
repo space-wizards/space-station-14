@@ -17,6 +17,16 @@ emergency-shuttle-docked = The Emergency Shuttle has docked with the station on 
 emergency-shuttle-good-luck = The Emergency Shuttle is unable to find a station. Good luck.
 emergency-shuttle-nearby = The Emergency Shuttle is unable to find a valid docking port. It has warped in {$direction} of the station.
 
+# World directions
+emergency-shuttle-direction-west = west
+emergency-shuttle-direction-south = south
+emergency-shuttle-direction-north = north
+emergency-shuttle-direction-east = east
+emergency-shuttle-direction-southeast = south-east
+emergency-shuttle-direction-northeast = north-east
+emergency-shuttle-direction-northwest = north-west
+emergency-shuttle-direction-southwest = south-west
+
 # Emergency shuttle console popup / announcement
 emergency-shuttle-console-no-early-launches = Early launch is disabled
 emergency-shuttle-console-auth-left = {$remaining} authorizations needed until shuttle is launched early.

@@ -197,8 +197,17 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        {
            if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
            {
-               var angle = _dock.GetAngle(stationShuttle.EmergencyShuttle.Value, xform, targetGrid.Value, targetXform, xformQuery);
-               _chatSystem.DispatchStationAnnouncement(stationUid, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}"), ("direction", angle.GetDir())), playDefaultSound: false);
+               var angle = _dock.GetAngle(stationShuttle.EmergencyShuttle.Value,
+                   xform,
+                   targetGrid.Value,
+                   targetXform,
+                   xformQuery);
+               var direction = angle.GetDir().ToString().ToLower();
+               _chatSystem.DispatchStationAnnouncement(stationUid,
+                   Loc.GetString("emergency-shuttle-docked",
+                       ("time", $"{_consoleAccumulator:0}"),
+                       ("direction", Loc.GetString($"emergency-shuttle-direction-{direction}"))),
+                   playDefaultSound: false);
            }
 
            _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid)} docked with stations");
@@ -209,8 +218,16 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        {
            if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
            {
-               var angle = _dock.GetAngle(stationShuttle.EmergencyShuttle.Value, xform, targetGrid.Value, targetXform, xformQuery);
-               _chatSystem.DispatchStationAnnouncement(stationUid, Loc.GetString("emergency-shuttle-nearby", ("direction", angle.GetDir())), playDefaultSound: false);
+               var angle = _dock.GetAngle(stationShuttle.EmergencyShuttle.Value,
+                   xform,
+                   targetGrid.Value,
+                   targetXform,
+                   xformQuery);
+               var direction = angle.GetDir().ToString().ToLower();
+               _chatSystem.DispatchStationAnnouncement(stationUid,
+                   Loc.GetString("emergency-shuttle-nearby",
+                       ("direction", Loc.GetString($"emergency-shuttle-direction-{direction}"))),
+                   playDefaultSound: false);
            }
 
            _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid)} unable to find a valid docking port for {ToPrettyString(stationUid)}");
