@@ -157,17 +157,18 @@
     price: 22
 
 - type: entity
-  name: emergency crowbar
   parent: Crowbar
   id: CrowbarRed
+  name: emergency crowbar
   components:
   - type: Tag
     tags:
     - Crowbar
     - CrowbarRed
   - type: Sprite
-    sprite: Objects/Tools/crowbar.rsi
     state: red-icon
+  - type: Item
+    heldPrefix: red
 
 - type: entity
   name: multitool
