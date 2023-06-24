@@ -46,6 +46,9 @@
       - id: RubberStampWarden
       - id: DoorRemoteArmory
       - id: HoloprojectorSecurity
+      - id: BoxHeadsetPrisoner #инвазивное ентити (наше)
+      - id: BoxHeadsetPrisoner #инвазивное ентити (наше)
+      - id: BoxHeadsetPrisoner #инвазивное ентити (наше)
 
 - type: entity
   id: LockerSecurityFilled
