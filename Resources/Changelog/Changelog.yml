@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: Powered electrified grilles now create sparks when touched., type: Add}
-  id: 3580
-  time: '2023-04-29T20:05:10.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: 'Nanotrasen has striken the defective recipe for Impedrezene from its
@@ -2939,3 +2934,8 @@ Entries:
     type: Add}
   id: 4079
   time: '2023-06-24T12:03:09.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Chemist PDA's can now analyze patient health., type: Tweak}
+  id: 4080
+  time: '2023-06-24T12:11:48.0000000+00:00'
