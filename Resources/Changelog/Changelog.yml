@@ -1,9 +1,4 @@
 Entries:
-- author: notquitehadouken
-  changes:
-  - {message: Added glass shuttle airlock construction., type: Add}
-  id: 3576
-  time: '2023-04-29T11:45:55.0000000+00:00'
 - author: Nimfar
   changes:
   - {message: Changed the mailbox sprite., type: Tweak}
@@ -2938,3 +2933,8 @@ Entries:
       easier to move now., type: Tweak}
   id: 4075
   time: '2023-06-23T17:49:20.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Resprited the node scanner., type: Tweak}
+  id: 4076
+  time: '2023-06-24T04:20:27.0000000+00:00'
