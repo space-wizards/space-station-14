@@ -45,7 +45,6 @@
         Slash: 10
         Piercing: 2
         Structural: 8
-    requiredLegs: 2
   - type: Strippable
   - type: InventorySlots
   - type: Inventory
@@ -83,6 +82,7 @@
   - type: StutteringAccent
   - type: Body
     prototype: Human
+    requiredLegs: 2
   - type: Cluwne
     isCluwne: false
     cluwneOnMelee: true

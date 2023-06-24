@@ -332,3 +332,19 @@
     maxSoundDistance: 7
     sounds:
       collection: Paracusia
+
+- type: entity
+  id: CluwneBeastSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    earliestStart: 120
+    minimumPlayers: 15
+    weight: 0.1
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+      - id: SpawnPointGhostCluwneBeast
+        amount: 1
+        maxAmount: 1
