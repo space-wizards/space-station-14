@@ -9,7 +9,6 @@
     - Disposal
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/disposal.rsi
     snapCardinals: true
     layers:
@@ -100,7 +99,6 @@
   description: A pneumatic mail delivery unit.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/disposal.rsi
     layers:
       - state: conmailing

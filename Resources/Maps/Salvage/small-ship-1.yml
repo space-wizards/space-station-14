@@ -72,8 +72,6 @@ entities:
       type: GridAtmosphere
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 119.6593293
-      type: GridPathfinding
     - type: GasTileOverlay
     - type: SpreaderGrid
 - proto: CapacitorStockPart

@@ -1,3 +1,4 @@
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
@@ -21,7 +22,15 @@ namespace Content.Server.Objectives.Conditions
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ("Mobs/Ghosts/ghost_human.rsi"), "icon");
 
-        public float Progress => (_mind?.CharacterDeadIC ?? true) ? 1f : 0f;
+        public float Progress
+        {
+            get
+            {
+                var entityManager = IoCManager.Resolve<EntityManager>();
+                var mindSystem = entityManager.System<MindSystem>();
+                return _mind == null || mindSystem.IsCharacterDeadIc(_mind) ? 1f : 0f;
+            }
+        }
 
         public float Difficulty => 0.5f;
 

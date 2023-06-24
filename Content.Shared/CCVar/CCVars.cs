@@ -479,10 +479,15 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DatabasePgPassword =
             CVarDef.Create("database.pg_password", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
+        /// <summary>
+        /// Max amount of concurrent Postgres database operations.
+        /// </summary>
+        public static readonly CVarDef<int> DatabasePgConcurrency =
+            CVarDef.Create("database.pg_concurrency", 8, CVar.SERVERONLY);
+
         // Basically only exists for integration tests to avoid race conditions.
         public static readonly CVarDef<bool> DatabaseSynchronous =
             CVarDef.Create("database.sync", false, CVar.SERVERONLY);
-
 
         /*
          * Outline
@@ -1591,6 +1596,6 @@ namespace Content.Shared.CCVar
         ///     false.
         /// </summary>
         public static readonly CVarDef<bool> ReplayRecordAdminChat =
-            CVarDef.Create("replay.record_admin_chat", false, CVar.SERVERONLY);
+            CVarDef.Create("replay.record_admin_chat", false, CVar.ARCHIVE);
     }
 }

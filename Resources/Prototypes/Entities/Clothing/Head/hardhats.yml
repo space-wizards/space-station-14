@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     layers:
     - state: icon
     - state: light-icon

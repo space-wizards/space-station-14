@@ -136,6 +136,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: meat chair
+  id: ChairMeat
+  graph: Seat
+  startNode: start
+  targetNode: chairMeat
+  category: construction-category-furniture
+  description: Uncomfortably sweaty.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: meat
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   name: ritual chair
   id: ChairRitual
   graph: RitualSeat
