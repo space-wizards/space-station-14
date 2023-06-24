@@ -20,36 +20,35 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
         var targetStation = _stationSystem.GetStations().FirstOrNull();
 
         if (!TryComp(targetStation, out StationDataComponent? data))
-        {
-            Logger.Info("TargetStation not have StationDataComponent");
             return;
-        }
 
         var mod = GetSeverityModifier();
         var targetList = EntityQuery<SentienceTargetComponent, TransformComponent>().ToList();
 
-
-        var grids = data.Grids.ToHashSet();
-        targetList.RemoveAll(
-            backupSpawnLoc =>
-                backupSpawnLoc.Item2.GridUid.HasValue && !grids.Contains(backupSpawnLoc.Item2.GridUid.Value));
+        var grids = data.Grids;
+        var sentienceTargets = new List<SentienceTargetComponent>();
+        foreach (var target in targetList)
+        {
+            if (target.Item2.GridUid.HasValue && grids.Contains(target.Item2.GridUid.Value))
+                sentienceTargets.Add(target.Item1);
+        }
 
         RobustRandom.Shuffle(targetList);
 
         var toMakeSentient = (int) (RobustRandom.Next(2, 5) * Math.Sqrt(mod));
         var groups = new HashSet<string>();
 
-        foreach (var target in targetList)
+        foreach (var target in sentienceTargets)
         {
             if (toMakeSentient-- == 0)
                 break;
 
-            RemComp<SentienceTargetComponent>(target.Item1.Owner);
-            var ghostRole = EnsureComp<GhostRoleComponent>(target.Item1.Owner);
-            EnsureComp<GhostTakeoverAvailableComponent>(target.Item1.Owner);
-            ghostRole.RoleName = MetaData(target.Item1.Owner).EntityName;
+            RemComp<SentienceTargetComponent>(target.Owner);
+            var ghostRole = EnsureComp<GhostRoleComponent>(target.Owner);
+            EnsureComp<GhostTakeoverAvailableComponent>(target.Owner);
+            ghostRole.RoleName = MetaData(target.Owner).EntityName;
             ghostRole.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", ghostRole.RoleName));
-            groups.Add(Loc.GetString(target.Item1.FlavorKind));
+            groups.Add(Loc.GetString(target.FlavorKind));
         }
 
         if (groups.Count == 0)

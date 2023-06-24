@@ -3,7 +3,9 @@ using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
+using Content.Server.StationEvents.Components;
 using Content.Shared.CCVar;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Station;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -440,9 +442,33 @@ public sealed class StationSystem : EntitySystem
         return EntityQuery<StationDataComponent>().Select(x => x.Owner).ToList();
     }
 
+    public EntityUid GetRandomStation()
+    {
+        return _random.Pick(EntityQuery<StationDataComponent>().Select(x => x.Owner).ToList());
+    }
+
     public HashSet<EntityUid> GetStationsSet()
     {
         return EntityQuery<StationDataComponent>().Select(x => x.Owner).ToHashSet();
+    }
+
+    public List<TransformComponent> GetRandomSpawnStationLocations()
+    {
+        var VentCrittersLocations = EntityManager.EntityQuery<VentCritterSpawnLocationComponent, TransformComponent>().ToList();
+
+        var targetStation = GetRandomStation();
+        if (!TryComp(targetStation, out StationDataComponent? data))
+            return new List<TransformComponent>();
+        var grids = data.Grids;
+
+        var spawnLocations = new List<TransformComponent>();
+        foreach (var spawnLoc in VentCrittersLocations)
+        {
+            if (spawnLoc.Item2.GridUid.HasValue && grids.Contains(spawnLoc.Item2.GridUid.Value))
+                spawnLocations.Add(spawnLoc.Item2);
+        }
+
+        return spawnLocations;
     }
 
     /// <summary>
