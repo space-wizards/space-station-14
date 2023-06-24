@@ -6,17 +6,21 @@ namespace Content.Shared.Medical.Consciousness.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ConsciousnessComponent : Component
 {
-    //Unconsciousness threshold, ie: when does this entity pass out
+    /// <summary>
+    /// Unconsciousness threshold, ie: when does this entity pass out
+    /// </summary>
     [DataField("threshold", required: true), AutoNetworkedField]
     public FixedPoint2 Threshold = 30;
 
-    //The raw/starting consciousness value, this should be between 0 and the cap or -1 to automatically get the cap
-    // Do not directly edit this value, use modifiers instead!
+    /// <summary>
+    /// The raw/starting consciousness value, this should be between 0 and the cap or -1 to automatically get the cap
+    /// Do not directly edit this value, use modifiers instead!
+    /// </summary>
     [DataField("consciousness"), AutoNetworkedField]
     public FixedPoint2 RawConsciousness = -1;
 
     //The current consciousness value adjusted by the multiplier and clamped
-    [AutoNetworkedField] public FixedPoint2 Consciousness => FixedPoint2.Clamp(RawConsciousness * Multiplier, 0, Cap);
+    public FixedPoint2 Consciousness => FixedPoint2.Clamp(RawConsciousness * Multiplier, 0, Cap);
 
     //Multiplies the consciousness value whenever it is used. Do not directly edit this value, use multipliers instead!
     [DataField("multiplier"), AutoNetworkedField]
@@ -27,10 +31,10 @@ public sealed partial class ConsciousnessComponent : Component
     public FixedPoint2 Cap = 100;
 
     //List of modifiers that are applied to this consciousness
-    [AutoNetworkedField] public readonly Dictionary<(EntityUid, ConsciousnessModType),ConsciousnessModifier> Modifiers = new();
+    [AutoNetworkedField] public Dictionary<(EntityUid, ConsciousnessModType),ConsciousnessModifier> Modifiers = new();
 
     //List of multipliers that are applied to this consciousness
-    [AutoNetworkedField] public readonly Dictionary<(EntityUid, ConsciousnessModType),ConsciousnessMultiplier> Multipliers = new();
+    [AutoNetworkedField] public Dictionary<(EntityUid, ConsciousnessModType),ConsciousnessMultiplier> Multipliers = new();
 
     [DataField("isConscious"), AutoNetworkedField]
     public bool IsConscious = true;
