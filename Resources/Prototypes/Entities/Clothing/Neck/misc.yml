@@ -1,5 +1,20 @@
 - type: entity
   parent: ClothingNeckBase
+  id: ClothingNeckAi
+  name: AI "implant"
+  description: With this "implant", you gain the ability to speak like a robot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Neck/Misc/ai-implant.rsi
+    - type: Clothing
+      sprite: Clothing/Neck/Misc/ai-implant.rsi
+    - type: TypingIndicatorClothing
+      proto: robot
+    - type: SpeechClothing
+      proto: Pai
+
+- type: entity
+  parent: ClothingNeckBase
   id: ClothingNeckHeadphones
   name: headphones
   description: Quality headphones from Drunk Masters, with good sound insulation.
