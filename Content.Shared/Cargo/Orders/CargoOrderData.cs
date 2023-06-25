@@ -1,4 +1,6 @@
 using System.Text;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cargo.Orders
@@ -56,5 +58,9 @@ namespace Content.Shared.Cargo.Orders
             }
             Approver = sb.ToString();
         }
+
+        public abstract CargoOrderStringRepresentation ToPrettyString(EntityManager entityManager);
+
+        public abstract CargoOrderData GetReducedOrder(int amount);
     }
 }

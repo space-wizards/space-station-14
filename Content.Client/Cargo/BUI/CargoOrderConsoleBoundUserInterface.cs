@@ -1,3 +1,4 @@
+using Content.Client.Cargo.Systems;
 using Content.Shared.Cargo;
 using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.BUI;
@@ -52,7 +53,7 @@ namespace Content.Client.Cargo.BUI
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var sysManager = entityManager.EntitySysManager;
             var spriteSystem = sysManager.GetEntitySystem<SpriteSystem>();
-            _menu = new CargoConsoleMenu(IoCManager.Resolve<IPrototypeManager>(), spriteSystem);
+            _menu = new CargoConsoleMenu(IoCManager.Resolve<IPrototypeManager>(), spriteSystem, sysManager.GetEntitySystem<CargoSystem>());
             var localPlayer = IoCManager.Resolve<IPlayerManager>()?.LocalPlayer?.ControlledEntity;
             var description = new FormattedMessage();
 

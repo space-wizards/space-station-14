@@ -36,8 +36,6 @@ namespace Content.Server.Cargo.Systems
         /// </summary>
         private float _timer;
 
-        [Dependency] private readonly TransformSystem _transformSystem = default!;
-
         private void InitializeConsole()
         {
             SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleAddOrderMessage>(OnAddOrderMessage);
@@ -123,7 +121,7 @@ namespace Content.Server.Cargo.Systems
             }
 
             // Invalid order
-            if (!_protoMan.HasIndex<EntityPrototype>(order.ProductId))
+            if (!IsValidOrder(order))
             {
                 ConsolePopup(args.Session, Loc.GetString("cargo-console-invalid-product"));
                 PlayDenySound(uid, component);
@@ -167,7 +165,7 @@ namespace Content.Server.Cargo.Systems
 
             // Log order approval
             _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bankAccount.Balance}");
+                $"{ToPrettyString(player):user} approved order {order.ToPrettyString(EntityManager)} with balance at {bankAccount.Balance}");
 
             DeductFunds(bankAccount, cost);
             UpdateOrders(orderDatabase);
@@ -212,7 +210,7 @@ namespace Content.Server.Cargo.Systems
 
             // Log order addition
             _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(player):user} added order [orderId:{data.OrderId}, quantity:{data.OrderQuantity}, product:{data.ProductId}, requester:{data.Requester}, reason:{data.Reason}]");
+                $"{ToPrettyString(player):user} added order {data.ToPrettyString(EntityManager)}");
 
         }
 
@@ -247,9 +245,9 @@ namespace Content.Server.Cargo.Systems
             _audio.PlayPvs(_audio.GetSound(component.ErrorSound), uid);
         }
 
-        private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, CargoProductPrototype cargoProduct, int id)
+        private CargoOrderDataProduct GetOrderData(CargoConsoleAddOrderMessage args, CargoProductPrototype cargoProduct, int id)
         {
-            return new CargoOrderData(id, cargoProduct.Product, cargoProduct.PointCost, args.Amount, args.Requester, args.Reason);
+            return new CargoOrderDataProduct(id, cargoProduct.Product, cargoProduct.PointCost, args.Amount, args.Requester, args.Reason);
         }
 
         public int GetOutstandingOrderCount(StationCargoOrderDatabaseComponent component)
@@ -299,7 +297,7 @@ namespace Content.Server.Cargo.Systems
             DebugTools.Assert(_protoMan.HasIndex<EntityPrototype>(spawnId));
             // Make an order
             var id = GenerateOrderId(component);
-            var order = new CargoOrderData(id, spawnId, cost, qty, requester, description);
+            var order = new CargoOrderDataProduct(id, spawnId, cost, qty, requester, description);
 
             return AddAndApproveOrder(orderer, component, order, approverName, approverJobTitle);
         }
@@ -308,7 +306,7 @@ namespace Content.Server.Cargo.Systems
         {
             // Make an order
             var id = GenerateOrderId(component);
-            var order = new CargoOrderData(id, orderUid, cost, requester, description);
+            var order = new CargoOrderDataEntity(id, orderUid, cost, requester, description);
 
             return AddAndApproveOrder(orderer, component, order, approverName, approverJobTitle);
         }
@@ -322,12 +320,12 @@ namespace Content.Server.Cargo.Systems
             if (orderer != null)
             {
                 _adminLogger.Add(LogType.Action, LogImpact.Low,
-                    $"{ToPrettyString(orderer.Value)} added and approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, item:{order.OrderEntity}, product:{order.ProductId}, requester:{order.Requester}, approver:{order.Approver}, reason:{order.Reason}]");
+                    $"{ToPrettyString(orderer.Value)} added and approved order {order.ToPrettyString(EntityManager)}");
             }
             else
             {
                 _adminLogger.Add(LogType.Action, LogImpact.Low,
-                    $"Added and approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, item:{order.OrderEntity}, product:{order.ProductId}, requester:{order.Requester}, approver:{order.Approver}, reason:{order.Reason}]");
+                    $"Added and approved order {order.ToPrettyString(EntityManager)}");
             }
 
             // Add it to the list
@@ -392,9 +390,9 @@ namespace Content.Server.Cargo.Systems
             if (PopFrontOrder(orderDB, out var order))
             {
                 // Create the item itself
-                var item = order.OrderEntity ?? Spawn(order.ProductId, whereToPutIt);
-                if (order.OrderEntity != null)
-                    _transformSystem.SetCoordinates(item, whereToPutIt);
+                var item = FulfillOrder(order, whereToPutIt);
+                if (item == null)
+                    return false;
 
                 // Create a sheet of paper to write the order details on
                 var printed = EntityManager.SpawnEntity(paperPrototypeToPrint, whereToPutIt);
@@ -407,7 +405,7 @@ namespace Content.Server.Cargo.Systems
                     _paperSystem.SetContent(printed, Loc.GetString(
                                 "cargo-console-paper-print-text",
                                 ("orderNumber", order.OrderId),
-                                ("itemName", MetaData(item).EntityName),
+                                ("itemName", MetaData(item.Value).EntityName),
                                 ("requester", order.Requester),
                                 ("reason", order.Reason),
                                 ("approver", order.Approver ?? string.Empty)),
@@ -416,7 +414,7 @@ namespace Content.Server.Cargo.Systems
                     // attempt to attach the label to the item
                     if (TryComp<PaperLabelComponent>(item, out var label))
                     {
-                        _slots.TryInsert(item, label.LabelSlot, printed, null);
+                        _slots.TryInsert(item.Value, label.LabelSlot, printed, null);
                     }
                 }
 

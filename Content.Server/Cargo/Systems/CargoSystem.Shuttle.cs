@@ -178,12 +178,11 @@ public sealed partial class CargoSystem
             if(order.Approved)
             {
                 var numToShip = order.OrderQuantity - order.NumDispatched;
-                if (numToShip > spaceRemaining && order.OrderEntity == null)
+                if (numToShip > spaceRemaining)
                 {
                     // We won't be able to fit the whole order on, so make one
                     // which represents the space we do have left:
-                    var reducedOrder = new CargoOrderData(order.OrderId,
-                            order.ProductId, order.Price, spaceRemaining, order.Requester, order.Reason);
+                    var reducedOrder = order.GetReducedOrder(spaceRemaining);
                     orders.Add(reducedOrder);
                 }
                 else

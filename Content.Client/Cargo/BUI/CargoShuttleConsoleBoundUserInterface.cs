@@ -1,3 +1,4 @@
+using Content.Client.Cargo.Systems;
 using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.BUI;
 using JetBrains.Annotations;
@@ -21,7 +22,8 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
         if (collection == null)
             return;
 
-        _menu = new CargoShuttleMenu(collection.Resolve<IPrototypeManager>(), collection.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>());
+        var entitySystemManager = collection.Resolve<IEntitySystemManager>();
+        _menu = new CargoShuttleMenu(collection.Resolve<IPrototypeManager>(), entitySystemManager.GetEntitySystem<SpriteSystem>(), entitySystemManager.GetEntitySystem<CargoSystem>());
         _menu.OnClose += Close;
 
         _menu.OpenCentered();

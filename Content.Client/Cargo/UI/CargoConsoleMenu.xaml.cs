@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Cargo.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Orders;
@@ -17,6 +18,7 @@ namespace Content.Client.Cargo.UI
     {
         private IPrototypeManager _protoManager;
         private SpriteSystem _spriteSystem;
+        private CargoSystem _cargoSystem;
 
         public event Action<ButtonEventArgs>? OnItemSelected;
         public event Action<ButtonEventArgs>? OnOrderApproved;
@@ -25,11 +27,12 @@ namespace Content.Client.Cargo.UI
         private readonly List<string> _categoryStrings = new();
         private string? _category;
 
-        public CargoConsoleMenu(IPrototypeManager protoManager, SpriteSystem spriteSystem)
+        public CargoConsoleMenu(IPrototypeManager protoManager, SpriteSystem spriteSystem, CargoSystem cargoSystem)
         {
             RobustXamlLoader.Load(this);
             _protoManager = protoManager;
             _spriteSystem = spriteSystem;
+            _cargoSystem = cargoSystem;
 
             Title = Loc.GetString("cargo-console-menu-title");
 
@@ -131,31 +134,11 @@ namespace Content.Client.Cargo.UI
             foreach (var order in orders)
             {
                 CargoOrderRow row;
-                if (order.OrderEntity != null)
-                {
-                    row = new CargoOrderRow
-                    {
-                        Order = order,
-                        ProductName =
-                        {
-                            Text = Loc.GetString(
-                                "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
-                                ("productName", Loc.GetString("cargo-console-menu-order-special-order")),
-                                ("orderAmount", order.OrderQuantity),
-                                ("orderRequester", order.Requester))
-                        },
-                        Description =
-                        {
-                            Text = Loc.GetString("cargo-console-menu-order-reason-description",
-                                ("reason", order.Reason))
-                        }
-                    };
-                }
-                else
-                {
-                    var product = _protoManager.Index<EntityPrototype>(order.ProductId);
-                    var productName = product.Name;
+                var product = _cargoSystem.GetOrderPrototype(order);
+                var productName = _cargoSystem.GetOrderDisplayName(order);
 
+                if (product != null)
+                {
                     row = new CargoOrderRow
                     {
                         Order = order,
@@ -175,6 +158,27 @@ namespace Content.Client.Cargo.UI
                         }
                     };
                 }
+                else
+                {
+                    row = new CargoOrderRow
+                    {
+                        Order = order,
+                        ProductName =
+                        {
+                            Text = Loc.GetString(
+                                "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
+                                ("productName", productName),
+                                ("orderAmount", order.OrderQuantity),
+                                ("orderRequester", order.Requester))
+                        },
+                        Description =
+                        {
+                            Text = Loc.GetString("cargo-console-menu-order-reason-description",
+                                ("reason", order.Reason))
+                        }
+                    };
+                }
+
                 row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(args); };
                 if (order.Approved)
                 {

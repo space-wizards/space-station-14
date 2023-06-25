@@ -1,3 +1,4 @@
+using Content.Client.Cargo.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Orders;
@@ -15,12 +16,14 @@ namespace Content.Client.Cargo.UI
     {
         private readonly IPrototypeManager _protoManager;
         private readonly SpriteSystem _spriteSystem;
+        private readonly CargoSystem _cargoSystem;
 
-        public CargoShuttleMenu(IPrototypeManager protoManager, SpriteSystem spriteSystem)
+        public CargoShuttleMenu(IPrototypeManager protoManager, SpriteSystem spriteSystem, CargoSystem cargoSystem)
         {
             RobustXamlLoader.Load(this);
             _protoManager = protoManager;
             _spriteSystem = spriteSystem;
+            _cargoSystem = cargoSystem;
             Title = Loc.GetString("cargo-shuttle-console-menu-title");
         }
 
@@ -41,17 +44,21 @@ namespace Content.Client.Cargo.UI
             foreach (var order in orders)
             {
                 CargoOrderRow row;
-                if (order.OrderEntity != null)
+                var product = _cargoSystem.GetOrderPrototype(order);
+                var productName = _cargoSystem.GetOrderDisplayName(order);
+
+                if (product != null)
                 {
                     row = new CargoOrderRow
                     {
                         Order = order,
+                        Icon = { Texture = _spriteSystem.Frame0(product) },
                         ProductName =
                         {
                             Text = Loc.GetString(
                                 "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
-                                ("productName", Loc.GetString("cargo-console-menu-order-special-order")),
-                                ("orderAmount", order.OrderQuantity),
+                                ("productName", productName),
+                                ("orderAmount", order.OrderQuantity - order.NumDispatched),
                                 ("orderRequester", order.Requester))
                         },
                         Description =
@@ -63,13 +70,9 @@ namespace Content.Client.Cargo.UI
                 }
                 else
                 {
-                    var product = _protoManager.Index<EntityPrototype>(order.ProductId);
-                    var productName = product.Name;
-
                     row = new CargoOrderRow
                     {
                         Order = order,
-                        Icon = { Texture = _spriteSystem.Frame0(product) },
                         ProductName =
                         {
                             Text = Loc.GetString(
