@@ -1,4 +1,4 @@
-ent-BaseERTUplink = WTH терпинал
+ent-BaseERTUplink = WTH терминал
     .desc = Warp To Hand терминал. Эксперементальное устройство для телепортации предметов прямо в руки пользователя.
     .suffix = ERT, EMPTY
 ent-ERTUplinkLeader = { ent-BaseERTUplink }
@@ -16,6 +16,6 @@ ent-ERTUplinkEngineer = { ent-BaseERTUplink }
 ent-ERTUplinkJunitor = { ent-BaseERTUplink }
     .desc = { ent-BaseERTUplink.desc }
     .suffix = ERT, JUNITOR, 20
-ent-ERTUplinkDeadSquad = WTH терпинал
+ent-ERTUplinkDeadSquad = WTH терминал
     .desc = { ent-BaseERTUplink.desc }
     .suffix = ERT, DEADSQUAD, 60
