@@ -1,0 +1,175 @@
+- type: radioChannel
+  id: Expedition
+  name: chat-radio-expedition
+  keycode: 'э'
+  frequency: 1067
+  color: "#10313c"
+  longRange: true
+
+- type: radioChannel
+  id: Cult
+  name: chat-radio-cult
+  keycode: 'q'
+  frequency: 1068
+  color: "#9a0e10"
+  longRange: true
+
+- type: radioChannel
+  id: Military
+  name: chat-radio-military
+  keycode: 'в'
+  frequency: 1069
+  color: "#0f4910"
+  longRange: true
+
+- type: radioChannel
+  id: Shadow
+  name: chat-radio-shadow
+  keycode: 's'
+  frequency: 1070
+  color: "#292d28"
+  longRange: true
+
+- type: radioChannel
+  id: Radio1
+  name: chat-radio-1
+  keycode: '1'
+  frequency: 1072
+  color: "#c7c7c7"
+  longRange: true
+
+- type: radioChannel
+  id: Radio2
+  name: chat-radio-2
+  keycode: '2'
+  frequency: 1073
+  color: "#c7c7c7"
+  longRange: true
+
+- type: radioChannel
+  id: Radio3
+  name: chat-radio-3
+  keycode: '3'
+  frequency: 1074
+  color: "#c7c7c7"
+  longRange: true
+
+- type: radioChannel
+  id: Radio4
+  name: chat-radio-4
+  keycode: '4'
+  frequency: 1075
+  color: "#c7c7c7"
+  longRange: true
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyExpedition
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Expedition
+    defaultChannel: Expedition
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyCult
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Cult
+    defaultChannel: Cult
+  - type: Sprite
+    layers:
+    - state: crypt_red
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyMilitary
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Military
+    defaultChannel: Military
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyShadow
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Shadow
+    defaultChannel: Shadow
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio1
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio1
+    defaultChannel: Radio1
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio2
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio2
+    defaultChannel: Radio2
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio3
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio3
+    defaultChannel: Radio3
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio4
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio4
+    defaultChannel: Radio4
+  - type: Sprite
+    layers:
+    - state: crypt_gray
