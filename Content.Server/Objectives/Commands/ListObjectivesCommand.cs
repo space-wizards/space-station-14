@@ -8,12 +8,12 @@ using Robust.Shared.Console;
 namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Logs)]
-    public sealed class ListObjectivesCommand : IConsoleCommand
+    public sealed class ListObjectivesCommand : LocalizedCommands
     {
-        public string Command => "lsobjectives";
-        public string Description => "Lists all objectives in a players mind.";
-        public string Help => "lsobjectives [<username>]";
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "lsobjectives";
+        //public string Description => "Lists all objectives in a players mind.";
+        //public string Help => "lsobjectives [<username>]";
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             IPlayerData? data;
@@ -23,14 +23,14 @@ namespace Content.Server.Objectives.Commands
             }
             else if (player == null || !IoCManager.Resolve<IPlayerManager>().TryGetPlayerDataByUsername(args[0], out data))
             {
-                shell.WriteLine("Can't find the playerdata.");
+                shell.WriteLine(LocalizationManager.GetString("cmd-lsobjectives-player"));
                 return;
             }
 
             var mind = data.ContentData()?.Mind;
             if (mind == null)
             {
-                shell.WriteLine("Can't find the mind.");
+                shell.WriteLine(LocalizationManager.GetString("cmd-lsobjectives-mind"));
                 return;
             }
 
@@ -47,13 +47,13 @@ namespace Content.Server.Objectives.Commands
 
         }
 
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length == 1)
             {
                 var playerMgr = IoCManager.Resolve<IPlayerManager>();
                 var options = playerMgr.ServerSessions.Select(c => c.Name).OrderBy(c => c).ToArray();
-                return CompletionResult.FromHintOptions(options, "<name/user ID>");
+                return CompletionResult.FromHintOptions(options, LocalizationManager.GetString("cmd-lsobjectives-hint"));
             }
 
             return CompletionResult.Empty;
