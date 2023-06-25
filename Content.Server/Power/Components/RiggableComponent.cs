@@ -1,8 +1,6 @@
-using Robust.Shared.GameStates;
+namespace Content.Server.Power.Components;
 
-namespace Content.Shared.Power.Components;
-
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed class RiggableComponent : Component
 {
     public const string SolutionName = "battery";
