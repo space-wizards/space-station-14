@@ -1383,6 +1383,18 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float>
             SalvageExpeditionFailedCooldown = CVarDef.Create("salvage.expedition_failed_cooldown", 900f, CVar.REPLICATED);
 
+        /// <summary>
+        ///    Probability of a survivor spawning during an expedition mission.
+        /// </summary>
+        public static readonly CVarDef<float>
+            SalvageExpeditionSurvivorProbability = CVarDef.Create("salvage.expedition_survivor_probability", 0.1f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///    Probability of an expedition mission survivor spawning as a fugitive.
+        /// </summary>
+        public static readonly CVarDef<float>
+            SalvageExpeditionFugitiveProbability = CVarDef.Create("salvage.expedition_fugitive_probability", 0.1f, CVar.SERVERONLY);
+
         /*
          * Flavor
          */

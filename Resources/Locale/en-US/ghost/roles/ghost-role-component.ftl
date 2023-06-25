@@ -145,3 +145,9 @@ ghost-role-information-centcom-official-description = Inspect the station, jot d
 
 ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
+
+ghost-role-information-outpost-survivor-name = Outpost Survivor
+ghost-role-information-outpost-survivor-description = You are the last one alive in an overrun outpost. Try to survive until help arrives.
+
+ghost-role-information-syndicate-fugitive-name = Syndicate Fugitive
+ghost-role-information-syndicate-fugitive-description = You are a known antagonist. Try to keep a low profile and do what you can to escape on the shuttle unrestrained.

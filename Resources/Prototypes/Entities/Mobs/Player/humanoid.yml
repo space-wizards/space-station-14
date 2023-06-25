@@ -321,6 +321,30 @@
     - type: Loadout
       prototypes: [ CentcomGear ]
 
+- type: entity
+  id: RandomHumanoidSpawnerOutpostSurvivor
+  name: Outpost Survivor
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+    - type: RandomHumanoidSpawner
+      settings: OutpostSurvivor
+
+- type: randomHumanoidSettings
+  id: OutpostSurvivor
+  components:
+    - type: Loadout
+      prototypes: [OutpostSurvivorGear]
+    - type: GhostRole
+      name: ghost-role-information-outpost-survivor-name
+      description: ghost-role-information-outpost-survivor-description
+    - type: GhostTakeoverAvailable
+
 ## Syndicate
 
 - type: entity
@@ -340,6 +364,29 @@
   components:
     - type: Loadout
       prototypes: [SyndicateOperativeGearExtremelyBasic]
+
+- type: entity
+  id: RandomHumanoidSpawnerSyndicateFugitive
+  name: Syndicate Fugitive
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - type: RandomMetadata
+      nameSegments: [ names_death_commando ]
+    - type: RandomHumanoidSpawner
+      settings: SyndicateFugitive
+
+- type: randomHumanoidSettings
+  id: SyndicateFugitive
+  components:
+    - type: Loadout
+      prototypes: [SyndicateFugitiveGear]
+    - type: GhostRole
+      name: ghost-role-information-syndicate-fugitive-name
+      description: ghost-role-information-syndicate-fugitive-description
+    - type: GhostTakeoverAvailable
+    - type: Fugitive
 
 - type: entity
   id: RandomHumanoidSpawnerNukeOp

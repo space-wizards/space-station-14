@@ -268,6 +268,8 @@ public sealed partial class SalvageSystem
             _mapManager,
             _prototypeManager,
             _anchorable,
+            _tileDefManager,
+            _configurationManager,
             _biome,
             _dungeon,
             this,

@@ -54,6 +54,24 @@
   satchel: ClothingBackpackDuffelSyndicateAmmo
   duffelbag: ClothingBackpackDuffelSyndicateAmmo
 
+# Outpost Survivor Outfit
+- type: startingGear
+  id: OutpostSurvivorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+    shoes: ClothingShoesColorBlack
+    pocket1: CrowbarRed
+  innerclothingskirt: ClothingUniformJumpskirtColorGrey
+
+# Syndicate Fugitive Outfit
+- type: startingGear
+  id: SyndicateFugitiveGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPrisoner
+    shoes: ClothingShoesColorOrange
+    pocket1: CrowbarRed
+  innerclothingskirt: ClothingUniformJumpsuitPrisoner
+
 # Syndicate Operative Outfit - Poverty
 - type: startingGear
   id: SyndicateOperativeGearExtremelyBasic

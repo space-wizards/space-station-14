@@ -445,12 +445,15 @@ public sealed class MindSystem : EntitySystem
     /// </summary>
     public bool TryAddObjective(Mind mind, ObjectivePrototype objectivePrototype)
     {
+        Logger.DebugS("admin", $"tryaddObjective: {objectivePrototype}");
         if (!objectivePrototype.CanBeAssigned(mind))
             return false;
+        Logger.DebugS("admin", $"CanBeAssigned True");
         var objective = objectivePrototype.GetObjective(mind);
         if (mind.Objectives.Contains(objective))
             return false;
 
+        Logger.DebugS("admin", $"mind does not contain objective already");
         foreach (var condition in objective.Conditions)
         {
             _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' added to mind of {MindOwnerLoggingString(mind)}");
@@ -458,6 +461,7 @@ public sealed class MindSystem : EntitySystem
 
 
         mind.Objectives.Add(objective);
+        Logger.DebugS("admin", $"finished adding objective: {objective}");
         return true;
     }
 

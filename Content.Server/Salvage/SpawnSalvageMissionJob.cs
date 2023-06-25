@@ -13,6 +13,7 @@ using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.EntitySystems;
+using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
@@ -24,6 +25,7 @@ using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
 using Content.Shared.Storage;
 using Robust.Shared.Collections;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -39,6 +41,8 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     private readonly IMapManager _mapManager;
     private readonly IPrototypeManager _prototypeManager;
     private readonly AnchorableSystem _anchorable;
+    private readonly ITileDefinitionManager _tileDefManager;
+    private readonly IConfigurationManager _configManager;
     private readonly BiomeSystem _biome;
     private readonly DungeonSystem _dungeon;
     private readonly SalvageSystem _salvage;
@@ -53,6 +57,8 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         IMapManager mapManager,
         IPrototypeManager protoManager,
         AnchorableSystem anchorable,
+        ITileDefinitionManager tileDefManager,
+        IConfigurationManager configManager,
         BiomeSystem biome,
         DungeonSystem dungeon,
         SalvageSystem salvage,
@@ -65,6 +71,8 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         _mapManager = mapManager;
         _prototypeManager = protoManager;
         _anchorable = anchorable;
+        _tileDefManager = tileDefManager;
+        _configManager = configManager;
         _biome = biome;
         _dungeon = dungeon;
         _salvage = salvage;
@@ -207,6 +215,13 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             await SpawnDungeonLoot(dungeon, missionBiome, lootProto, mapUid, grid, random, reservedTiles);
         }
 
+        // Handle Fugitives / Survivors
+        var survivorProb = _configManager.GetCVar(CCVars.SalvageExpeditionSurvivorProbability);
+        if (mission.Air == "Breathable" && random.NextDouble() < survivorProb)
+        {
+            SpawnOutpostSurvivor(dungeon, grid, random);
+        }
+
         return true;
     }
 
@@ -323,6 +338,22 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         // spawn less mobs than usual since there's megafauna to deal with too
         await SpawnMobsRandomRooms(mission, dungeon, faction, grid, random, 0.5f);
+    }
+
+    private async Task SpawnOutpostSurvivor(
+        Dungeon dungeon,
+        MapGridComponent grid,
+        Random random)
+    {
+        // spawn survivor in a random place
+        var roomIndex = random.Next(dungeon.Rooms.Count);
+        var room = dungeon.Rooms[roomIndex];
+        var tile = room.Tiles.ElementAt(random.Next(room.Tiles.Count));
+        var position = grid.GridTileToLocal(tile);
+        var fugitiveProb = _configManager.GetCVar(CCVars.SalvageExpeditionFugitiveProbability);
+        var prototype = random.NextDouble() < fugitiveProb ? "RandomHumanoidSpawnerSyndicateFugitive" : "RandomHumanoidSpawnerOutpostSurvivor";
+
+        _entManager.SpawnEntity(prototype, position);
     }
 
     private async Task SpawnMobsRandomRooms(SalvageMission mission, Dungeon dungeon, SalvageFactionPrototype faction, MapGridComponent grid, Random random, float scale = 1f)
