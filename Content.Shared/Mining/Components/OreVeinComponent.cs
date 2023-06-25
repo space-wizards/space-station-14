@@ -30,7 +30,7 @@ public sealed class OreVeinComponent : Component
     /// The weighted random prototype used for determining what ore will be dropped.
     /// Keyed to a specific tool.
     /// </summary>
-    [DataField("mappedTools", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<string, WeightedRandomPrototype>))]
+    [DataField("mappedTools")]
     public Dictionary<string, string>? MappedTools = new();
 
     /// <summary>
