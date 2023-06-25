@@ -46,5 +46,17 @@ namespace Content.Server.Objectives.Commands
             }
 
         }
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+            {
+                var playerMgr = IoCManager.Resolve<IPlayerManager>();
+                var options = playerMgr.ServerSessions.Select(c => c.Name).OrderBy(c => c).ToArray();
+                return CompletionResult.FromHintOptions(options, "<name/user ID>");
+            }
+
+            return CompletionResult.Empty;
+        }
     }
 }
