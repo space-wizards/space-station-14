@@ -10,7 +10,7 @@
   - type: Storage
     capacity: 60
   - type: Item
-    size: 35
+    size: 60
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     heldPrefix: firstaid
   - type: Tag
