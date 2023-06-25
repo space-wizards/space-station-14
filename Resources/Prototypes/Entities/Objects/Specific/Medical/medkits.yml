@@ -92,11 +92,11 @@
   - type: Sprite
     state: blackkit
   - type: Item
-    heldPrefix: blackkit  
+    heldPrefix: blackkit
     size: 50
   - type: Storage
     capacity: 50
-    
+
 - type: entity
   name: advanced combat medkit
   description: "For the even bigger weapons among us."
@@ -106,7 +106,7 @@
   - type: Sprite
     state: blackkit
   - type: Item
-    heldPrefix: advblackkit  
+    heldPrefix: advblackkit
     size: 60
   - type: Storage
     capacity: 60
