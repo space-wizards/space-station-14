@@ -165,6 +165,8 @@ ert-uplink-weaponcombat-weapontaser-name = { ent-WeaponTaser }
 ert-uplink-weaponcombat-weapontaser-desc = { ent-WeaponTaser.desc }
 ert-uplink-weaponnoncombat-weaponrevolvermateba-name = { ent-WeaponRevolverMateba }
 ert-uplink-weaponnoncombat-weaponrevolvermateba-desc = { ent-WeaponRevolverMateba.desc }
+ert-uplink-weaponcombat-weaponpulsesniper-name = { ent-WeaponPulseSniper }
+ert-uplink-weaponcombat-weaponpulsesniper-desc = { ent-WeaponPulseSniper.desc }
 
 
 ert-uplink-junitor-advmopitem-name = { ent-AdvMopItem }

@@ -42,7 +42,7 @@ namespace Content.Client.Credits
             TabContainer.SetTabTitle(LicensesTab, Loc.GetString("credits-window-licenses-tab"));
 
             PopulateContributors(Ss14ContributorsContainer);
-            PopulatePatrons(PatronsContainer);
+            //PopulatePatrons(PatronsContainer); //no patrons on imperial
             PopulateLicenses(LicensesContainer);
         }
 

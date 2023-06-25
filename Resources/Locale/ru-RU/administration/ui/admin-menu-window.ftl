@@ -2,7 +2,7 @@
 
 admin-menu-title = Меню
 admin-menu-admin-tab = Действия
-admin-menu-adminbus-tab = Вахтерство
+admin-menu-adminbus-tab = Маппинг
 admin-menu-atmos-tab = Атмос
 admin-menu-round-tab = Раунд
 admin-menu-server-tab = Сервер

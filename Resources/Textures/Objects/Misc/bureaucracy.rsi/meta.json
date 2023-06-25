@@ -118,6 +118,9 @@
             "name": "paper_stamp-cmo"
         },
         {
+            "name": "paper_stamp-coroner"
+        },
+        {
             "name": "paper_stamp-deny"
         },
         {
@@ -262,6 +265,9 @@
         },
         {
             "name": "stamp-cmo"
+        },
+        {
+            "name": "stamp-coroner"
         },
         {
             "name": "stamp-deny"

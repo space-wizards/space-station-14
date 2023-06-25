@@ -1,0 +1,20 @@
+#Секьюрити
+- type: entity
+  name: prisoner headset box
+  parent: BoxCardboard
+  id: BoxHeadsetPrisoner
+  description: A box of spare prisoner headsets.
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingHeadsetPrisoner
+          amount: 6
+    - type: Sprite
+      layers:
+        - state: box_command
+        - state: headset
+    - type: Storage
+      capacity: 60
+      whitelist:
+        components:
+          - Headset
