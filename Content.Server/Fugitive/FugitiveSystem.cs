@@ -75,7 +75,6 @@ public sealed class FugitiveSystem: EntitySystem
 
         // Assign traitor role
         _mindSystem.AddRole(mind, traitorRole);
-        traitorRule.Traitors.Add(traitorRole);
 
         // Change the faction
         _faction.RemoveFaction(entity, "NanoTrasen", false);
