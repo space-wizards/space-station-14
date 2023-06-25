@@ -26,21 +26,21 @@
   - quantity: 20
     weight: 3
     reagents:
-    - Ipecac
-    - Tricordrazine
+    - ChloralHydrate
     - Desoxyephedrine
     - Ephedrine
-    - Nocturine
-    - MuteToxin
-    - NorepinephricAcid
-    - ChloralHydrate
+    - Ipecac
     - Mold
+    - MuteToxin
+    - Nocturine
+    - NorepinephricAcid
     - Pax
+    - Tricordrazine
   - quantity: 20
     weight: 5
     reagents:
-    - Toxin
     - SpaceDrugs
+    - Toxin
 
 - type: entity
   name: strange pill

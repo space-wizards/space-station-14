@@ -30,7 +30,7 @@ public sealed class SolutionRandomFillSystem : EntitySystem
 
         if (!_proto.HasIndex<ReagentPrototype>(reagent))
         {
-            Logger.Error($"Tried to add invalid reagent Id {reagent} using SolutionRandomFill.");
+            Log.Error($"Tried to add invalid reagent Id {reagent} using SolutionRandomFill.");
             return;
         }
 

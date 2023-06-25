@@ -1,5 +1,7 @@
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Random;
 
@@ -8,7 +10,7 @@ namespace Content.Shared.Random;
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed class RandomFill
+public sealed class RandomFillSolution
 {
     /// <summary>
     ///     Quantity of listed reagents.
@@ -25,6 +27,6 @@ public sealed class RandomFill
     /// <summary>
     ///     Listed reagents that the weight and quantity apply to.
     /// </summary>
-    [DataField("reagents")]
+    [DataField("reagents", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
     public List<string> Reagents = new();
 }

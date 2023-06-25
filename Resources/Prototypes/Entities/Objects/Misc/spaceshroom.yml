@@ -18,13 +18,13 @@
   - type: Gatherable
     whitelist:
       tags:
-        - Hand
-        - Shovel
-        - BotanyHoe
-        - PlantSampleTaker
-        - BotanyScythe
         - BotanyHatchet
+        - BotanyHoe
+        - BotanyScythe
         - BotanyShovel
+        - Hand
+        - PlantSampleTaker
+        - Shovel
     mappedLoot:
       Hand: SpaceshroomByHand
       Shovel: SpaceshroomByTool

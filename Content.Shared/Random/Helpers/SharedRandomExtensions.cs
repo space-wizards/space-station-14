@@ -102,12 +102,12 @@ namespace Content.Shared.Random.Helpers
             throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
         }
 
-        public static RandomFill PickRandomFill(this WeightedRandomFillPrototype prototype, IRobustRandom? random = null)
+        public static RandomFillSolution PickRandomFill(this WeightedRandomFillPrototype prototype, IRobustRandom? random = null)
         {
             IoCManager.Resolve(ref random);
 
             var fills = prototype.Fills;
-            Dictionary<RandomFill, float> picks = new();
+            Dictionary<RandomFillSolution, float> picks = new();
 
             foreach (var fill in fills)
             {

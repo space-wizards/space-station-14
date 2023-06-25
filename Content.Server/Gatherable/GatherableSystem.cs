@@ -50,7 +50,6 @@ public sealed partial class GatherableSystem : EntitySystem
             BreakOnUserMove = true,
             MovementThreshold = 0.25f,
             DuplicateCondition = DuplicateConditions.SameTarget,
-            BlockDuplicate = true,
         };
 
         _doAfterSystem.TryStartDoAfter(doAfter);
@@ -61,14 +60,13 @@ public sealed partial class GatherableSystem : EntitySystem
         if (component.ToolWhitelist?.Tags?.Contains("Hand") == false)
             return;
 
-        var doAfter = new DoAfterArgs(args.User, TimeSpan.FromSeconds(component.harvestTimeByHand), new GatherableDoAfterEvent(byHand: true), uid, target: uid)
+        var doAfter = new DoAfterArgs(args.User, TimeSpan.FromSeconds(component.HarvestTimeByHand), new GatherableDoAfterEvent(byHand: true), uid, target: uid)
         {
             BreakOnDamage = true,
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             MovementThreshold = 0.25f,
             DuplicateCondition = DuplicateConditions.SameTarget,
-            BlockDuplicate = true,
         };
 
         _doAfterSystem.TryStartDoAfter(doAfter);

@@ -32,7 +32,7 @@ public sealed class GatherableComponent : Component
     ///     The amount of time in seconds it takes to complete the gathering action by hand.
     /// </summary>
     [DataField("harvestTimeByHand")]
-    public float harvestTimeByHand = 1.0f;
+    public float HarvestTimeByHand = 1.0f;
 
     /// <summary>
     ///     The radius of the circle that loot entities can be randomly spawned in when gathered.
