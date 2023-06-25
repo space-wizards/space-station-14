@@ -70,7 +70,7 @@ public sealed class RiggableSystem : EntitySystem
     {
         if (TryComp<RiggableComponent>(uid, out var riggableComp))
         {
-            riggableComp.IsRigged = _solutionsSystem.TryGetSolution(uid, "battery", out var solution)
+            riggableComp.IsRigged = _solutionsSystem.TryGetSolution(uid, RiggableComponent.SolutionName, out var solution)
                                     && solution.TryGetReagent("Plasma", out var plasma)
                                     && plasma >= 5;
         }
