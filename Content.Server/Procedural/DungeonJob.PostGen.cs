@@ -256,7 +256,9 @@ public sealed partial class DungeonJob
             if (i % 20 == 0)
             {
                 await SuspendIfOutOfTime();
-                ValidateResume();
+
+                if (!ValidateResume())
+                    return;
             }
         }
     }
@@ -726,7 +728,9 @@ public sealed partial class DungeonJob
                 if (validTiles.Count > 0)
                 {
                     await SuspendIfOutOfTime();
-                    ValidateResume();
+
+                    if (!ValidateResume())
+                        return;
                 }
 
                 validTiles.Clear();
@@ -782,8 +786,6 @@ public sealed partial class DungeonJob
             return;
 
         // TODO: Add in say 1/3 of edges back in to add some cyclic to it.
-
-        // TODO: Probably just need to BSP it I think as the default room packs are incompatible.
 
         var expansion = gen.Width - 2;
         // Okay so tl;dr is that we don't want to cut close to rooms as it might go from 3 width to 2 width suddenly
@@ -1181,7 +1183,9 @@ public sealed partial class DungeonJob
                 var otherConns = roomConnections.GetOrNew(otherRoom);
                 otherConns.Add(room);
                 await SuspendIfOutOfTime();
-                ValidateResume();
+
+                if (!ValidateResume())
+                    return;
             }
         }
     }

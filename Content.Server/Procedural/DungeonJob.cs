@@ -148,7 +148,9 @@ public sealed partial class DungeonJob : Job<Dungeon>
             }
 
             await SuspendIfOutOfTime();
-            ValidateResume();
+
+            if (!ValidateResume())
+                break;
         }
 
         _grid.CanSplit = true;
