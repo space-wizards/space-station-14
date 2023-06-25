@@ -113,9 +113,9 @@ public sealed partial class TTSSystem : EntitySystem
         if (!_prototypeManager.TryIndex<TTSVoicePrototype>(voiceId, out var protoVoice))
             return;
 
-        if (args.ObfuscatedMessage != null && !args.IsRadio)
+        if (args.ObfuscatedMessage != null)
         {
-            HandleWhisper(uid, args.Message, args.ObfuscatedMessage, protoVoice.Speaker);
+            HandleWhisper(uid, args.Message, protoVoice.Speaker, args.IsRadio);
             return;
         }
 
@@ -129,9 +129,11 @@ public sealed partial class TTSSystem : EntitySystem
         RaiseNetworkEvent(new PlayTTSEvent(uid, soundData, false), Filter.Pvs(uid));
     }
 
-    private async void HandleWhisper(EntityUid uid, string message, string obfMessage, string speaker)
+    private async void HandleWhisper(EntityUid uid, string message, string speaker, bool isRadio)
     {
-        var soundData = await GenerateTTS(message, speaker, true);
+        // If it's a whisper into a radio, generate speech without whisper
+        // attributes to prevent an additional speech synthesis event
+        var soundData = await GenerateTTS(message, speaker, isWhisper: !isRadio);
         if (soundData is null)
             return;
 

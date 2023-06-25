@@ -45,8 +45,9 @@
     outerClothing: ClothingOuterArmorBulletproof
     id: BlueShieldPDA
     ears: ClothingHeadsetAltCommand
-    pocket1: WeaponHKPhalanx
+    pocket1: WeaponAdvancedRevolver
     pocket2: HandheldCrewMonitor
     belt: ClothingBeltSecurityFilled
+    gloves: ClothingHandsGlovesCombat
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

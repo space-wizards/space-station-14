@@ -91,3 +91,5 @@ ent-BrigmedicPDA = brigmedic PDA
 ent-CluwnePDA = cluwne PDA
     .desc = Cursed cluwne PDA.
     .suffix = Unremoveable
+ent-BlueShieldPDA = blue shield PDA
+    .desc = Surprisingly, it's not blue.

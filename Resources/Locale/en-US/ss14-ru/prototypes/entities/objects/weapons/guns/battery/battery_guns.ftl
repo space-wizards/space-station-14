@@ -31,3 +31,5 @@ ent-WeaponAntiqueLaser = antique laser gun
     .desc = This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
 ent-WeaponAdvancedLaser = advanced laser gun
     .desc = An experimental laser gun with a self charging nuclear powered battery.
+ent-WeaponAdvancedRevolver = advanced laser revolver
+    .desc = Robust and powerful laserarm revolver for protecting the station heads. It's so badass that even the most hardened criminals would stop and praise it.

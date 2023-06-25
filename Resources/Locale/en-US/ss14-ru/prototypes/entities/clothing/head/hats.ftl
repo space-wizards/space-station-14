@@ -102,3 +102,5 @@ ent-ClothingHeadHatWatermelon = watermelon helmet
     .desc = A carelessly cut half of a watermelon, gutted from the inside, to be worn as a helmet. It can soften the blow to the head.
 ent-ClothingHeadHatHetmanHat = Hetman hat
     .desc = From the Zaporozhian Sich with love.
+ent-ClothingHeadHatBeretNavyBlue = navy blue officers beret
+    .desc = A navy blue beret adorned with the shield—a silver kite shield with an engraved sword—of the Nanotrasen security forces, announcing to the world that the wearer is a defender of Nanotrasen.
