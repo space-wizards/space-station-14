@@ -24,7 +24,7 @@ public sealed class LocalityLoaderSystem : BaseWorldSystem
             {
                 RaiseLocalEvent(uid, new LocalStructureLoadedEvent());
                 RemCompDeferred<LocalityLoaderComponent>(uid);
-                return;
+                continue;
             }
 
             var coords = GetChunkCoords(uid, xform);
