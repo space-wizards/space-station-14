@@ -474,7 +474,7 @@
   result: SolarTrackerElectronics
   completetime: 4
   materials:
-     Steel: 100
+     Steel: 150
      Glass: 600
 
 - type: latheRecipe
