@@ -94,6 +94,8 @@
   triggerHint: artifact-trigger-hint-water
   components:
   - type: Reactive
+    groups:
+      Acidic: [ Touch ]
     reactions:
     - reagents: [ Water ]
       methods: [ Touch ]

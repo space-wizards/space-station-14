@@ -378,6 +378,8 @@
     - type: GuideHelp
       guides:
       - Janitorial
+    - type: TileFrictionModifier
+      modifier: 0.4 # makes it slide 
 
 - type: entity
   id: FloorDrain
