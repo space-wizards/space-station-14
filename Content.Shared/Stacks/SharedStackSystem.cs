@@ -21,7 +21,6 @@ namespace Content.Shared.Stacks
         [Dependency] private readonly IViewVariablesManager _vvm = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
         [Dependency] protected readonly SharedHandsSystem Hands = default!;
-        [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] protected readonly SharedTransformSystem Xform = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -170,8 +169,6 @@ namespace Content.Shared.Stacks
             component.Count = amount;
             Dirty(component);
 
-            if (_prototype.TryIndex<StackPrototype>(component.StackTypeId, out var stackProto) && stackProto.ItemSize is { } size)
-                _item.SetSize(uid, amount * size);
             Appearance.SetData(uid, StackVisuals.Actual, component.Count);
             RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count));
         }

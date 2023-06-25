@@ -18,13 +18,14 @@ public sealed class StackTest
         var server = pairTracker.Pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();
+        var compFact = server.ResolveDependency<IComponentFactory>();
 
         Assert.Multiple(() =>
         {
             foreach (var entity in PoolManager.GetEntityPrototypes<StackComponent>(server))
             {
-                if (!entity.TryGetComponent<StackComponent>("Stack", out var stackComponent) ||
-                    !entity.TryGetComponent<ItemComponent>("Item", out var itemComponent))
+                if (!entity.TryGetComponent<StackComponent>(out var stackComponent, compFact) ||
+                    !entity.TryGetComponent<ItemComponent>(out var itemComponent, compFact))
                     continue;
 
                 if (!protoManager.TryIndex<StackPrototype>(stackComponent.StackTypeId, out var stackProto) ||

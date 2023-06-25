@@ -1,15 +1,18 @@
 using Content.Shared.CombatMode;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Item;
 
 public abstract class SharedItemSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
@@ -19,6 +22,7 @@ public abstract class SharedItemSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
         SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract);
+        SubscribeLocalEvent<ItemComponent, StackCountChangedEvent>(OnStackCountChanged);
 
         SubscribeLocalEvent<ItemComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<ItemComponent, ComponentHandleState>(OnHandleState);
@@ -72,6 +76,18 @@ public abstract class SharedItemSystem : EntitySystem
             return;
 
         args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
+    }
+
+    private void OnStackCountChanged(EntityUid uid, ItemComponent component, StackCountChangedEvent args)
+    {
+        if (!TryComp<StackComponent>(uid, out var stack))
+            return;
+
+        if (!_prototype.TryIndex<StackPrototype>(stack.StackTypeId, out var stackProto) ||
+            stackProto.ItemSize is not { } size)
+            return;
+
+        SetSize(uid, args.NewCount * size, component);
     }
 
     private void OnHandleState(EntityUid uid, ItemComponent component, ref ComponentHandleState args)
