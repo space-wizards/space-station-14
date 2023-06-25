@@ -1,6 +1,6 @@
 using Content.Client.AME.Components;
+using Content.Shared.AME;
 using Robust.Client.GameObjects;
-using static Content.Shared.AME.SharedAmeShieldComponent;
 
 namespace Content.Client.AME;
 

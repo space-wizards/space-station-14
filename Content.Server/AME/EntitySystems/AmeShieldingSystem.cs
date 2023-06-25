@@ -1,5 +1,5 @@
 using Content.Server.AME.Components;
-using static Content.Shared.AME.SharedAmeShieldComponent;
+using Content.Shared.AME;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.AME.EntitySystems;

@@ -1,6 +1,6 @@
 using Content.Client.AME.Components;
+using Content.Shared.AME;
 using Robust.Client.GameObjects;
-using static Content.Shared.AME.SharedAmeControllerComponent;
 
 namespace Content.Client.AME;
 
@@ -42,4 +42,3 @@ public enum AmeControllerVisualLayers : byte
 {
     Display
 }
-

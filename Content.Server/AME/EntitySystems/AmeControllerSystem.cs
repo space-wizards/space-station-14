@@ -17,7 +17,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using static Content.Shared.AME.SharedAmeControllerComponent;
 
 namespace Content.Server.AME.EntitySystems;
 
