@@ -102,7 +102,7 @@
   - type: Store
     preset: StorePresetUplink
     balance:
-      Telecrystal: 40
+      Telecrystal: 50 #Imperial balance
   - type: Tag
     tags:
     - NukeOpsUplink
