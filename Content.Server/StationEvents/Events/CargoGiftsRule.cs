@@ -1,20 +1,13 @@
 ﻿using System.Linq;
-using Content.Server.Anomaly;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
-using Content.Shared.Access.Components;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Cargo;
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.Database;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.StationEvents.Events;
 

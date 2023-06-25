@@ -1,5 +1,4 @@
 using Content.Shared.Cargo.Orders;
-using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

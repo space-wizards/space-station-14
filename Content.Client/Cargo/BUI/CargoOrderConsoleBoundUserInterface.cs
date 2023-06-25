@@ -1,5 +1,4 @@
 using Content.Client.Cargo.Systems;
-using Content.Shared.Cargo;
 using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Events;
