@@ -8,7 +8,7 @@
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: firstaid
   - type: Storage
-    capacity: 35
+    capacity: 60
   - type: Item
     size: 35
     sprite: Objects/Specific/Medical/firstaidkits.rsi
@@ -92,8 +92,8 @@
   - type: Sprite
     state: blackkit
   - type: Item
-    heldPrefix: blackkit  
+    heldPrefix: blackkit
     size: 50
   - type: Storage
     capacity: 50
-    
+

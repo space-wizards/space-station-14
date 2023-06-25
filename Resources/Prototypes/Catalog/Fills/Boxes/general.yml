@@ -191,6 +191,8 @@
   id: BoxHugHealing
   description: A special box for sensitive people.
   components:
+  - type: Storage
+    capacity: 60
   - type: Sprite
     layers:
       - state: box_hug

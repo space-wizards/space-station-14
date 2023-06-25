@@ -1,7 +1,6 @@
 using Content.Shared.CombatMode;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -29,7 +28,7 @@ public abstract class SharedItemSystem : EntitySystem
 
     public void SetSize(EntityUid uid, int size, ItemComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, false))
             return;
 
         component.Size = size;
