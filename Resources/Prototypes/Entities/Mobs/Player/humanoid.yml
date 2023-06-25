@@ -381,7 +381,7 @@
   id: SyndicateFugitive
   components:
     - type: Loadout
-      prototypes: [SyndicateFugitiveGear]
+      prototypes: [OutpostSurvivorGear]
     - type: GhostRole
       name: ghost-role-information-syndicate-fugitive-name
       description: ghost-role-information-syndicate-fugitive-description
