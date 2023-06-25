@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Flares no longer flicker., type: Tweak}
-  id: 3588
-  time: '2023-04-30T17:56:17.0000000+00:00'
 - author: PixelTK
   changes:
   - {message: 'Arachnids suffer less now from hunger decay, asphyxiation and slowdown
@@ -2939,3 +2934,10 @@ Entries:
       A single sheet of metal takes up less space than a stack of 30., type: Add}
   id: 4087
   time: '2023-06-25T15:44:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The salvage magnet can now pull in randomly generated asteroids stuffed
+      with ores., type: Add}
+  - {message: Salvages are much less likely to fail to be pulled in., type: Fix}
+  id: 4088
+  time: '2023-06-25T17:50:41.0000000+00:00'
