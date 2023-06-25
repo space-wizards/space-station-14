@@ -24,12 +24,12 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private readonly Dictionary<SlotFlags, List<string>> _data = new();
     private readonly Dictionary<SlotFlags, List<string>> _dataEVA = new();
-    
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<ChameleonClothingComponent, ComponentHandleState>(HandleState);
-    
+
         PrepareAllVariants();
         PrepareAllEVAVariants();
         _proto.PrototypesReloaded += OnProtoReloaded;
