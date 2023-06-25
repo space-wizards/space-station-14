@@ -138,7 +138,7 @@ public sealed class StaminaSystem : EntitySystem
             return;
 
         var damage = args.PushProbability * component.CritThreshold;
-        TakeStaminaDamage(uid, damage, component, source:args.Source);
+        TakeStaminaDamage(uid, damage, component, source: args.Source);
 
         // We need a better method of getting if the entity is going to resist stam damage, both this and the lines in the foreach at the end of OnHit() are awful
         if (!component.Critical)
@@ -198,7 +198,7 @@ public sealed class StaminaSystem : EntitySystem
         foreach (var (ent, comp) in toHit)
         {
             var oldDamage = comp.StaminaDamage;
-            TakeStaminaDamage(ent, damage / toHit.Count, comp, source:args.User, with:args.Weapon);
+            TakeStaminaDamage(ent, damage / toHit.Count, comp, source: args.User, with: args.Weapon);
             if (comp.StaminaDamage.Equals(oldDamage))
             {
                 _popup.PopupClient(Loc.GetString("stamina-resist"), ent, args.User);
@@ -388,4 +388,4 @@ public sealed class StaminaSystem : EntitySystem
 ///     Raised before stamina damage is dealt to allow other systems to cancel it.
 /// </summary>
 [ByRefEvent]
-public record struct BeforeStaminaDamageEvent(float Value, bool Cancelled=false);
+public record struct BeforeStaminaDamageEvent(float Value, bool Cancelled = false);
