@@ -1,27 +1,53 @@
 ﻿- type: vendingMachineInventory
   id: AmmoVendInventory
   startingInventory:
-    MagazineBoxCaselessRifle: 3
-    MagazineBoxCaselessRifleHighVelocity: 3
-    MagazineBoxCaselessRiflePractice: 3
-    MagazineBoxCaselessRifleRubber: 3
-
-    MagazineBoxLightRifleBig: 3
-    MagazineBoxLightRifleHighVelocity: 3
-    MagazineBoxLightRiflePractice: 3
-    MagazineBoxLightRifleRubber: 3
+    MagazineBoxPistol: 3
+    MagazineBoxPistolHighVelocity: 2
+    MagazineBoxPistolPractice: 4
+    MagazineBoxPistolRubber: 3
+    MagazinePistol: 4
+    MagazinePistolHighVelocity: 2
+    MagazinePistolPractice: 6
+    MagazinePistolRubber: 4
+    MagazinePistolSubMachineGun: 4
+    MagazinePistolSubMachineGunHighVelocity: 2
+    MagazinePistolSubMachineGunPractice: 6
+    MagazinePistolSubMachineGunRubber: 4
 
     MagazineBoxMagnum: 3
-    MagazineBoxMagnumHighVelocity: 3
-    MagazineBoxMagnumPractice: 3
+    MagazineBoxMagnumHighVelocity: 2
+    MagazineBoxMagnumPractice: 4
     MagazineBoxMagnumRubber: 3
-
-    MagazineBoxPistol: 3
-    MagazineBoxPistolHighVelocity: 3
-    MagazineBoxPistolPractice: 3
-    MagazineBoxPistolRubber: 3
+    SpeedLoaderMagnum: 4
+    SpeedLoaderMagnumHighVelocity: 2
+    SpeedLoaderMagnumPractice: 6
+    SpeedLoaderMagnumRubber: 4
 
     MagazineBoxRifle: 3
-    MagazineBoxRifleHighVelocity: 3
-    MagazineBoxRiflePractice: 3
+    MagazineBoxRifleHighVelocity: 2
+    MagazineBoxRiflePractice: 4
     MagazineBoxRifleRubber: 3
+    MagazineRifle: 4
+    MagazineRifleHighVelocity: 2
+    MagazineRiflePractice: 6
+    MagazineRifleRubber: 4
+
+    MagazineBoxLightRifle: 3
+    MagazineBoxLightRifleHighVelocity: 2
+    MagazineBoxLightRiflePractice: 4
+    MagazineBoxLightRifleRubber: 3
+    MagazineLightRifle: 4
+    MagazineLightRifleHighVelocity: 2
+    MagazineLightRiflePractice: 6
+    MagazineLightRifleRubber: 4
+
+  emaggedInventory:
+
+    MagazineBoxCaselessRifle: 3
+    MagazineBoxCaselessRifleHighVelocity: 2
+    MagazineBoxCaselessRiflePractice: 4
+    MagazineBoxCaselessRifleRubber: 3
+    MagazinePistolCaselessRifle: 4
+    MagazinePistolCaselessRifleHighVelocity: 2
+    MagazinePistolCaselessRiflePractice: 6
+    MagazinePistolCaselessRifleRubber: 4
