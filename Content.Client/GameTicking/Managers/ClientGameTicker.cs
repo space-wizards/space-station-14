@@ -73,6 +73,11 @@ namespace Content.Client.GameTicking.Managers
             _initialized = true;
         }
 
+        public override TimeSpan GetRoundStartTimeSpan()
+        {
+            return RoundStartTimeSpan;
+        }
+
         private void LateJoinStatus(TickerLateJoinStatusEvent message)
         {
             DisallowedLateJoin = message.Disallowed;

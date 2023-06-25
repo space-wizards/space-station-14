@@ -32,6 +32,8 @@ namespace Content.Shared.GameTicking
             _replay.RecordingStarted -= OnRecordingStart;
         }
 
+        public abstract TimeSpan GetRoundStartTimeSpan();
+
         private void OnRecordingStart(MappingDataNode metadata, List<object> events)
         {
             metadata["roundId"] = new ValueDataNode(RoundId.ToString());

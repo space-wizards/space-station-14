@@ -1,4 +1,3 @@
-using Content.Shared.Access.Systems;
 using Content.Shared.StationRecords;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -38,7 +37,22 @@ public sealed class AccessReaderComponent : Component
     /// </summary>
     [DataField("accessKeys")]
     public HashSet<StationRecordKey> AccessKeys = new();
+
+    /// <summary>
+    /// A list of past authentications
+    /// </summary>
+    [DataField("accessLog")]
+    public Queue<AccessRecord> AccessLog = new();
+
+    /// <summary>
+    /// A limit on the max size of <see cref="AccessLog"/>
+    /// </summary>
+    [DataField("accessLogLimit")]
+    public int AccessLogLimit = 100;
 }
+
+[Serializable, NetSerializable]
+public record struct AccessRecord(int AccessTime, string Accessor);
 
 [Serializable, NetSerializable]
 public sealed class AccessReaderComponentState : ComponentState

@@ -6,17 +6,22 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.GameTicking;
 using Robust.Shared.Prototypes;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.StationRecords;
 using Robust.Shared.GameStates;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Access.Systems
 {
     public sealed class AccessReaderSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly SharedGameTicker _gameTicker = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
@@ -115,9 +120,24 @@ namespace Content.Shared.Access.Systems
         /// </summary>
         /// <param name="accessTags">A list of access tags</param>
         /// <param name="reader">An access reader to check against</param>
-        public bool AreAccessTagsAllowed(ICollection<string> accessTags, AccessReaderComponent reader)
+        /// <param name="logAccess">Should successful access be logged</param>
+        public bool AreAccessTagsAllowed(IEnumerable<string> accessTags, AccessReaderComponent reader, bool logAccess = true)
         {
-            if (reader.DenyTags.Overlaps(accessTags))
+            var providedTags = new ProvidedAccess();
+            providedTags.AddAccessTags("", accessTags);
+
+            return AreAccessTagsAllowed(providedTags, reader, logAccess);
+        }
+
+        /// <summary>
+        /// Compares the given tags with the readers access list to see if it is allowed.
+        /// </summary>
+        /// <param name="accessTags">A list of access tags</param>
+        /// <param name="reader">An access reader to check against</param>
+        /// <param name="logAccess">Should successful access be logged</param>
+        public bool AreAccessTagsAllowed(ProvidedAccess accessTags, AccessReaderComponent reader, bool logAccess = true)
+        {
+            if (accessTags.HasAnyAccessTags(reader.DenyTags, this, logAccess ? reader : null) != null)
             {
                 // Sec owned by cargo.
 
@@ -127,7 +147,7 @@ namespace Content.Shared.Access.Systems
                 return false;
             }
 
-            return reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => a.IsSubsetOf(accessTags));
+            return reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => accessTags.HasAllAccessTags(a, this, logAccess ? reader : null) != null);
         }
 
         /// <summary>
@@ -159,9 +179,9 @@ namespace Content.Shared.Access.Systems
         /// </summary>
         /// <param name="uid">The entity that is being searched.</param>
         /// <param name="items">All of the items to search for access. If none are passed in, <see cref="FindPotentialAccessItems"/> will be used.</param>
-        public ICollection<string> FindAccessTags(EntityUid uid, HashSet<EntityUid>? items = null)
+        public ProvidedAccess FindAccessTags(EntityUid uid, HashSet<EntityUid>? items = null)
         {
-            HashSet<string>? tags = null;
+            ProvidedAccess? tags = null;
             var owned = false;
 
             items ??= FindPotentialAccessItems(uid);
@@ -171,7 +191,7 @@ namespace Content.Shared.Access.Systems
                 FindAccessTagsItem(ent, ref tags, ref owned);
             }
 
-            return (ICollection<string>?) tags ?? Array.Empty<string>();
+            return tags ?? new ProvidedAccess();
         }
 
         /// <summary>
@@ -200,7 +220,7 @@ namespace Content.Shared.Access.Systems
         ///     This version merges into a set or replaces the set.
         ///     If owned is false, the existing tag-set "isn't ours" and can't be merged with (is read-only).
         /// </summary>
-        private void FindAccessTagsItem(EntityUid uid, ref HashSet<string>? tags, ref bool owned)
+        private void FindAccessTagsItem(EntityUid uid, ref ProvidedAccess? tags, ref bool owned)
         {
             if (!FindAccessTagsItem(uid, out var targetTags))
             {
@@ -212,16 +232,17 @@ namespace Content.Shared.Access.Systems
                 // existing tags, so copy to make sure we own them
                 if (!owned)
                 {
-                    tags = new(tags);
+                    tags = new ProvidedAccess();
                     owned = true;
                 }
                 // then merge
-                tags.UnionWith(targetTags);
+                tags.AddAccessTags(targetTags);
             }
             else
             {
                 // no existing tags, so now they're ours
-                tags = targetTags;
+                tags = new ProvidedAccess();
+                tags.AddAccessTags(targetTags);
                 owned = false;
             }
         }
@@ -248,18 +269,19 @@ namespace Content.Shared.Access.Systems
         ///     Try to find <see cref="AccessComponent"/> on this item
         ///     or inside this item (if it's pda)
         /// </summary>
-        private bool FindAccessTagsItem(EntityUid uid, [NotNullWhen(true)] out HashSet<string>? tags)
+        private bool FindAccessTagsItem(EntityUid uid, [NotNullWhen(true)] out ProvidedAccess? tags)
         {
+            tags = new ProvidedAccess();
             if (TryComp(uid, out AccessComponent? access))
             {
-                tags = access.Tags;
+                tags.AddAccessTags(Identity.Name(uid, EntityManager), access.Tags);
                 return true;
             }
 
             if (TryComp(uid, out PdaComponent? pda) &&
                 pda.ContainedId?.Owner is {Valid: true} id)
             {
-                tags = EntityManager.GetComponent<AccessComponent>(id).Tags;
+                tags.AddAccessTags(Identity.Name(id, EntityManager), EntityManager.GetComponent<AccessComponent>(id).Tags);
                 return true;
             }
 
@@ -291,6 +313,96 @@ namespace Content.Shared.Access.Systems
 
             key = null;
             return false;
+        }
+
+        /// <summary>
+        /// Logs an access
+        /// </summary>
+        /// <param name="reader">The reader to log the access on</param>
+        /// <param name="provider">The accessor to log</param>
+        private void LogAccess(AccessReaderComponent? reader, string provider)
+        {
+            if (reader == null)
+                return;
+
+            if (reader.AccessLog.Count >= reader.AccessLogLimit)
+                reader.AccessLog.Dequeue();
+            reader.AccessLog.Enqueue(new AccessRecord((int) _gameTiming.CurTime.Subtract(_gameTicker.GetRoundStartTimeSpan()).TotalSeconds, provider));
+        }
+
+        public record ProvidedAccess()
+        {
+            private readonly Dictionary<string, HashSet<string>> _accesses = new();
+
+            public string? HasAnyAccessTags(string accessTag, AccessReaderSystem accessReaderSystem, AccessReaderComponent? reader = null)
+            {
+                foreach (var (provider, providedAccess) in _accesses)
+                {
+                    if (!providedAccess.Contains(accessTag))
+                        continue;
+
+                    accessReaderSystem.LogAccess(reader, provider);
+                    return provider;
+                }
+
+                return null;
+            }
+
+            public string? HasAnyAccessTags(IReadOnlyCollection<string> accessTags, AccessReaderSystem accessReaderSystem, AccessReaderComponent? reader = null)
+            {
+                foreach (var (provider, providedAccess) in _accesses)
+                {
+                    if (!providedAccess.Overlaps(accessTags))
+                        continue;
+
+                    accessReaderSystem.LogAccess(reader, provider);
+                    return provider;
+                }
+
+                return null;
+            }
+
+            public string? HasAllAccessTags(HashSet<string> accessTags, AccessReaderSystem accessReaderSystem, AccessReaderComponent? reader = null)
+            {
+                foreach (var (provider, providedAccess) in _accesses)
+                {
+                    if (!accessTags.IsSubsetOf(providedAccess))
+                        continue;
+
+                    accessReaderSystem.LogAccess(reader, provider);
+                    return provider;
+                }
+
+                return null;
+            }
+
+            public void AddAccessTags(string provider, IEnumerable<string> accessTags)
+            {
+                if (_accesses.TryGetValue(provider, out var access))
+                    access.UnionWith(accessTags);
+                else
+                    _accesses.Add(provider, new HashSet<string>(accessTags));
+            }
+
+            public void AddAccessTags(ProvidedAccess providedAccess)
+            {
+                foreach (var (provider, accessTags) in providedAccess._accesses)
+                {
+                    AddAccessTags(provider, accessTags);
+                }
+            }
+
+            public HashSet<string> AllTags()
+            {
+                var allTags = new HashSet<string>();
+
+                foreach (var (_, accessTags) in _accesses)
+                {
+                    allTags.UnionWith(accessTags);
+                }
+
+                return allTags;
+            }
         }
     }
 }

@@ -73,7 +73,7 @@ public sealed class RulesSystem : EntitySystem
                     foreach (var comp in _lookup.GetComponentsInRange<AccessReaderComponent>(xform.MapID,
                                  worldPos, access.Range))
                     {
-                        if (!_reader.AreAccessTagsAllowed(access.Access, comp) ||
+                        if (!_reader.AreAccessTagsAllowed(access.Access, comp, false) ||
                             access.Anchored &&
                             (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
                              !compXform.Anchored))

@@ -237,7 +237,7 @@ public sealed partial class EmergencyShuttleSystem
         var player = args.Session.AttachedEntity;
         if (player == null) return;
 
-        if (!_reader.FindAccessTags(player.Value).Contains(EmergencyRepealAllAccess))
+        if (_reader.FindAccessTags(player.Value).HasAnyAccessTags(EmergencyRepealAllAccess, _reader) == null)
         {
             _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), player.Value, PopupType.Medium);
             return;
