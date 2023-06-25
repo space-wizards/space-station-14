@@ -37,16 +37,17 @@ public sealed partial class MindTests
         var player = playerMan.ServerSessions.Single();
 
         EntityUid entity = default;
+        Mind mind = default!;
         await pair.Server.WaitPost(() =>
         {
             entity = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
-            mindSys.TransferTo(mindSys.CreateMind(player.UserId), entity);
+            mind = mindSys.CreateMind(player.UserId);
+            mindSys.TransferTo(mind, entity);
         });
 
         await PoolManager.RunTicksSync(pair, 5);
 
-        var mind = player.ContentData()?.Mind;
-        Assert.NotNull(mind);
+        Assert.That(player.ContentData()?.Mind, Is.EqualTo(mind));
         Assert.That(player.AttachedEntity, Is.EqualTo(entity));
         Assert.That(player.AttachedEntity, Is.EqualTo(mind.CurrentEntity), "Player is not attached to the mind's current entity.");
         Assert.That(entMan.EntityExists(mind.OwnedEntity), "The mind's current entity does not exist");

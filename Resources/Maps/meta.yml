@@ -66743,6 +66743,16 @@ entities:
     - pos: -42.5,-21.5
       parent: 5350
       type: Transform
+- proto: ComputerCargoBounty
+  entities:
+  - uid: 26608
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -33.5,12.5
+      parent: 5350
+      type: Transform
+    - nextPrintTime: 21.5667713
+      type: CargoBountyConsole
 - proto: ComputerCargoOrders
   entities:
   - uid: 5126
@@ -140688,7 +140698,7 @@ entities:
     - pos: 9.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -24455.395
+    - SecondsUntilStateChange: -24481.41
       state: Closing
       type: Door
     - inputs:
@@ -140703,7 +140713,7 @@ entities:
     - pos: 10.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -24455.395
+    - SecondsUntilStateChange: -24481.41
       state: Closing
       type: Door
     - inputs:
@@ -140718,7 +140728,7 @@ entities:
     - pos: 11.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -24455.395
+    - SecondsUntilStateChange: -24481.41
       state: Closing
       type: Door
     - inputs:
@@ -140733,7 +140743,7 @@ entities:
     - pos: 13.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -24455.395
+    - SecondsUntilStateChange: -24481.41
       state: Closing
       type: Door
     - inputs:
@@ -140748,7 +140758,7 @@ entities:
     - pos: 14.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -24455.395
+    - SecondsUntilStateChange: -24481.41
       state: Closing
       type: Door
     - inputs:
@@ -140763,7 +140773,7 @@ entities:
     - pos: 15.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -24455.395
+    - SecondsUntilStateChange: -24481.41
       state: Closing
       type: Door
     - inputs:
@@ -152320,7 +152330,7 @@ entities:
     - pos: 26.5,0.5
       parent: 5350
       type: Transform
-    - nextEmpEject: 93.5618203
+    - nextEmpEject: 93.5618202
       type: VendingMachine
 - proto: VendingMachineDetDrobe
   entities:
