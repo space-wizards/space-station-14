@@ -26,6 +26,7 @@
   - type: Tag
     tags:
     - NoSpinOnThrow
+    - Pie
 
 - type: entity
   parent: FoodInjectableBase # Not sliceable
@@ -148,9 +149,9 @@
         whitelist:
           components:
           - OnUseTimerTrigger
-        insertSound: 
+        insertSound:
           path: /Audio/Weapons/Guns/Empty/empty.ogg
-        ejectSound: 
+        ejectSound:
           path: /Audio/Weapons/Guns/Empty/empty.ogg
 # Tastes like pie, cream, banana.
 

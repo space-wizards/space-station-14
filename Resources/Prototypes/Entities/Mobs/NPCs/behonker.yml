@@ -29,7 +29,6 @@
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
           state: alive
-    - type: Appearance
     - type: DamageStateVisuals
       states:
         Alive:

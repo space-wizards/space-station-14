@@ -6,6 +6,7 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/medical.rsi
   - type: Item
+    size: 10
     sprite: Objects/Specific/Medical/medical.rsi
     heldPrefix: ointment
   # Inherited
@@ -17,6 +18,7 @@
   description: Used to treat those nasty burns. Less effective on caustic burns.
   parent: BaseHealingItem
   id: Ointment
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -47,16 +49,20 @@
 - type: entity
   id: Ointment1
   parent: Ointment
+  suffix: Single
   components:
   - type: Stack
     stackType: Ointment
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   name: bruise pack
   description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
   parent: BaseHealingItem
   id: Brutepack
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -82,16 +88,20 @@
 - type: entity
   id: Brutepack1
   parent: Brutepack
+  suffix: Single
   components:
   - type: Stack
     stackType: Brutepack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   name: blood pack
   description: Contains a groundbreaking universal blood replacement created by Nanotrasen's advanced medical science.
   parent: BaseHealingItem
   id: Bloodpack
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -120,6 +130,7 @@
   description: Some sterile gauze to wrap around bloody stumps.
   parent: BaseHealingItem
   id: Gauze
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -150,9 +161,12 @@
 - type: entity
   id: Gauze1
   parent: Gauze
+  suffix: Single
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   name: aloe cream
@@ -284,7 +298,7 @@
         reagents:
         - ReagentId: Bicaridine
           Quantity: 10
-          
+
 - type: entity
   name: romerol pill
   parent: Pill
@@ -362,8 +376,8 @@
         maxVol: 15
         reagents:
         - ReagentId: Bicaridine
-          Quantity: 15        
-          
+          Quantity: 15
+
 - type: entity
   name: ipecac syringe
   parent: BaseSyringe

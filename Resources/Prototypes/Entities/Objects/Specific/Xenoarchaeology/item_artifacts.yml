@@ -19,6 +19,9 @@
   - type: CollisionWake
     enabled: false
   - type: InteractionOutline
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
   - type: Fixtures
     fixtures:
       fix1:
@@ -175,6 +178,11 @@
   - type: Tag
     tags:
     - ArtifactFragment
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Artifexium
+        Quantity: 10
   - type: StaticPrice
     price: 250
   - type: GuideHelp
