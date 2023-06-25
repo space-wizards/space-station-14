@@ -1,4 +1,3 @@
-using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -6,63 +5,62 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Projectiles
+namespace Content.Shared.Projectiles;
+
+public abstract class SharedProjectileSystem : EntitySystem
 {
-    public abstract class SharedProjectileSystem : EntitySystem
+    public const string ProjectileFixture = "projectile";
+
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
+    public override void Initialize()
     {
-        public const string ProjectileFixture = "projectile";
+        base.Initialize();
+        SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
+        SubscribeLocalEvent<EmbeddableProjectileComponent, StartCollideEvent>(OnEmbedCollide);
+    }
 
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
+    private void OnEmbedCollide(EntityUid uid, EmbeddableProjectileComponent component, ref StartCollideEvent args)
+    {
+        if (!TryComp<ProjectileComponent>(uid, out var projectile))
+            return;
 
-        public override void Initialize()
+        _physics.SetLinearVelocity(uid, Vector2.Zero, body: args.OurBody);
+        _physics.SetBodyType(uid, BodyType.Static, body: args.OurBody);
+        _transform.SetParent(uid, args.OtherEntity);
+        var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon, args.OtherEntity);
+        RaiseLocalEvent(uid, ref ev);
+    }
+
+    private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
+    {
+        if (component.IgnoreShooter && args.OtherEntity == component.Shooter)
         {
-            base.Initialize();
-            SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
-            SubscribeLocalEvent<EmbeddableProjectileComponent, StartCollideEvent>(OnEmbedCollide);
-        }
-
-        private void OnEmbedCollide(EntityUid uid, EmbeddableProjectileComponent component, ref StartCollideEvent args)
-        {
-            if (!TryComp<ProjectileComponent>(uid, out var projectile))
-                return;
-
-            _physics.SetLinearVelocity(uid, Vector2.Zero, body: args.OurBody);
-            _physics.SetBodyType(uid, BodyType.Static, body: args.OurBody);
-            _transform.SetParent(uid, args.OtherEntity);
-            var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon, args.OtherEntity);
-            RaiseLocalEvent(uid, ref ev);
-        }
-
-        private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
-        {
-            if (component.IgnoreShooter && args.OtherEntity == component.Shooter)
-            {
-                args.Cancelled = true;
-            }
-        }
-
-        public void SetShooter(ProjectileComponent component, EntityUid uid)
-        {
-            if (component.Shooter == uid)
-                return;
-
-            component.Shooter = uid;
-            Dirty(component);
+            args.Cancelled = true;
         }
     }
 
-    [Serializable, NetSerializable]
-    public sealed class ImpactEffectEvent : EntityEventArgs
+    public void SetShooter(ProjectileComponent component, EntityUid uid)
     {
-        public string Prototype;
-        public EntityCoordinates Coordinates;
+        if (component.Shooter == uid)
+            return;
 
-        public ImpactEffectEvent(string prototype, EntityCoordinates coordinates)
-        {
-            Prototype = prototype;
-            Coordinates = coordinates;
-        }
+        component.Shooter = uid;
+        Dirty(component);
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class ImpactEffectEvent : EntityEventArgs
+{
+    public string Prototype;
+    public EntityCoordinates Coordinates;
+
+    public ImpactEffectEvent(string prototype, EntityCoordinates coordinates)
+    {
+        Prototype = prototype;
+        Coordinates = coordinates;
     }
 }
 
