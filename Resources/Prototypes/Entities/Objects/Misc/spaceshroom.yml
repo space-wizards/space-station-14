@@ -13,9 +13,10 @@
   - type: Transform
     anchored: true
   - type: InteractionOutline
-  - type: StaticPrice
+  - type: StaticPrice 
     price: 75
   - type: Gatherable
+    harvestTimeByHand: 2.0
     whitelist:
       tags:
         - BotanyHatchet
@@ -25,16 +26,12 @@
         - Hand
         - PlantSampleTaker
         - Shovel
-    mappedLoot:
-      Hand: SpaceshroomByHand
-      Shovel: SpaceshroomByTool
-      BotanyHoe: SpaceshroomByTool
-      PlantSampleTaker: SpaceshroomByTool
-      BotanyScythe: SpaceshroomByTool
-      BotanyHatchet: SpaceshroomByTool
-      BotanyShovel: SpaceshroomByTool
-    dropRadius: 0.9
-    harvestTimeByHand: 2.0
+  - type: OreVein
+    oreChance: 1.0
+    oreRarityPrototypeId: RandomSpaceshroomDistributionByTool
+    mappedTools:
+      Hand: RandomSpaceshroomDistributionByHand
+    radius: 0.9
   - type: Destructible
     thresholds:
     - trigger:
@@ -44,19 +41,27 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
 
-- type: entityLootTable
-  id: SpaceshroomByHand
-  entries:
-  - id: FoodSpaceshroom
-    amount: 2
-    maxAmount: 3
+- type: weightedRandom
+  id: RandomSpaceshroomDistributionByHand
+  weights:
+    OreSpaceshroomByHand: 1
 
-- type: entityLootTable
-  id: SpaceshroomByTool
-  entries:
-  - id: FoodSpaceshroom
-    amount: 3
-    maxAmount: 4
+- type: ore
+  id: OreSpaceshroomByHand
+  oreEntity: FoodSpaceshroom
+  minOreYield: 2
+  maxOreYield: 3
+
+- type: weightedRandom
+  id: RandomSpaceshroomDistributionByTool
+  weights:
+    OreSpaceshroomByTool: 1
+
+- type: ore 
+  id: OreSpaceshroomByTool
+  oreEntity: FoodSpaceshroom
+  minOreYield: 3
+  maxOreYield: 4
 
 # Object
 - type: entity

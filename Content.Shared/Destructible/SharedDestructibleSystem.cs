@@ -5,9 +5,11 @@ public abstract class SharedDestructibleSystem : EntitySystem
     /// <summary>
     ///     Force entity to be destroyed and deleted.
     /// </summary>
-    public void DestroyEntity(EntityUid owner)
+    public void DestroyEntity(EntityUid owner, EntityUid? gatherer = null)
     {
         var eventArgs = new DestructionEventArgs();
+
+        eventArgs.Gatherer = gatherer;
 
         RaiseLocalEvent(owner, eventArgs);
         QueueDel(owner);
@@ -28,7 +30,7 @@ public abstract class SharedDestructibleSystem : EntitySystem
 /// </summary>
 public sealed class DestructionEventArgs : EntityEventArgs
 {
-
+    public EntityUid? Gatherer { get; set; }
 }
 
 /// <summary>

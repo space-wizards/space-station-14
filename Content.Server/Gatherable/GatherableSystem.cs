@@ -1,7 +1,6 @@
 using Content.Server.Destructible;
 using Content.Server.Gatherable.Components;
 using Content.Shared.DoAfter;
-using Content.Shared.EntityList;
 using Content.Shared.Gatherable;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
@@ -13,12 +12,9 @@ namespace Content.Server.Gatherable;
 
 public sealed partial class GatherableSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -60,7 +56,7 @@ public sealed partial class GatherableSystem : EntitySystem
         if (component.ToolWhitelist?.Tags?.Contains("Hand") == false)
             return;
 
-        var doAfter = new DoAfterArgs(args.User, TimeSpan.FromSeconds(component.HarvestTimeByHand), new GatherableDoAfterEvent(byHand: true), uid, target: uid)
+        var doAfter = new DoAfterArgs(args.User, TimeSpan.FromSeconds(component.HarvestTimeByHand), new GatherableDoAfterEvent(), uid, target: uid)
         {
             BreakOnDamage = true,
             BreakOnTargetMove = true,
@@ -80,54 +76,18 @@ public sealed partial class GatherableSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
-        Gather(uid, args.Args.Used, component, tool?.GatheringSound, args.ByHand);
+        Gather(uid, args.Args.Used, component, tool?.GatheringSound);
         args.Handled = true;
     }
 
-    public void Gather(EntityUid gatheredUid, EntityUid? gatherer = null, GatherableComponent? component = null, SoundSpecifier? sound = null, bool isByHand = false)
+    public void Gather(EntityUid gatheredUid, EntityUid? gatherer, GatherableComponent? component = null, SoundSpecifier? sound = null)
     {
         if (!Resolve(gatheredUid, ref component))
             return;
 
         // Complete the gathering process
-        _destructible.DestroyEntity(gatheredUid);
+        _destructible.DestroyEntity(gatheredUid, gatherer);
         _audio?.PlayPvs(sound, gatheredUid);
-
-        // Spawn the loot!
-        if (component.MappedLoot == null)
-            return;
-
-        var pos = Transform(gatheredUid).MapPosition;
-
-        foreach (var (tag, table) in component.MappedLoot)
-        {
-            if (tag != "All")
-            {
-                // Exclude hand loot unless the hand is being used to gather
-                if (tag == "Hand")
-                {
-                    if (!isByHand)
-                        continue;
-                }
-                else
-                {
-                    if (isByHand)
-                        continue;
-
-                    if (gatherer != null && !_tagSystem.HasTag(gatherer.Value, tag))
-                        continue;
-                }
-            }
-
-            var getLoot = _prototypeManager.Index<EntityLootTablePrototype>(table);
-            var spawnLoot = getLoot.GetSpawns();
-
-            foreach (var loot in spawnLoot)
-            {
-                var spawnPos = pos.Offset(_random.NextVector2(component.DropRadius));
-                Spawn(loot, spawnPos);
-            }
-        }
     }
 }
 

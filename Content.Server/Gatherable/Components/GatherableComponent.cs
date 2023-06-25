@@ -14,31 +14,8 @@ public sealed class GatherableComponent : Component
     public EntityWhitelist? ToolWhitelist;
 
     /// <summary>
-    ///     YAML example below
-    ///     (Tag1, Tag2, LootTableID1, LootTableID2 are placeholders for example)
-    ///     --------------------
-    ///     whitelist:
-    ///       tags:
-    ///        - Tag1
-    ///        - Tag2
-    ///     mappedLoot:
-    ///       Tag1: LootTableID1
-    ///       Tag2: LootTableID2
-    /// </summary>
-    [DataField("mappedLoot")]
-    public Dictionary<string, string>? MappedLoot = new();
-
-    /// <summary>
     ///     The amount of time in seconds it takes to complete the gathering action by hand.
     /// </summary>
     [DataField("harvestTimeByHand")]
     public float HarvestTimeByHand = 1.0f;
-
-    /// <summary>
-    ///     The radius of the circle that loot entities can be randomly spawned in when gathered.
-    ///     Centered on the entity.
-    /// </summary>
-    [DataField("dropRadius")]
-    public float DropRadius = 0.3f;
-
 }

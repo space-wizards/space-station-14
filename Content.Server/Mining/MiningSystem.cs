@@ -3,6 +3,7 @@ using Content.Shared.Destructible;
 using Content.Shared.Mining;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -15,38 +16,71 @@ public sealed class MiningSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<OreVeinComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<OreVeinComponent, DestructionEventArgs>(OnDestruction);
     }
 
     private void OnDestruction(EntityUid uid, OreVeinComponent component, DestructionEventArgs args)
     {
-        if (component.CurrentOre == null)
+        if (!_random.Prob(component.OreChance))
             return;
 
-        var proto = _proto.Index<OrePrototype>(component.CurrentOre);
+        string? currentOre = null;
 
-        if (proto.OreEntity == null)
+        if (component.CurrentOre != null)
+        {
+            currentOre = component.CurrentOre;
+        }
+        else
+        {
+            string? weightedRandom = null;
+
+            if (component.MappedTools != null)
+            {
+                var gatherer = args.Gatherer;
+
+                foreach (var (toolTag, mappedWeightedRandom) in component.MappedTools)
+                {
+                    if (gatherer != null && _tagSystem.HasTag(gatherer.Value, toolTag) || gatherer == null && toolTag == "Hand" || toolTag == "All")
+                    {
+                        weightedRandom = mappedWeightedRandom;
+                        break;
+                    }
+                }
+            }
+
+            if (weightedRandom == null && component.OreRarityPrototypeId != null)
+            {
+                weightedRandom = component.OreRarityPrototypeId;
+            }
+
+            if (weightedRandom != null)
+            {
+                currentOre = _proto.Index<WeightedRandomPrototype>(weightedRandom).Pick(_random);
+            }
+        }
+
+        OrePrototype? proto = null;
+
+        if (currentOre != null)
+        {
+            proto = _proto.Index<OrePrototype>(currentOre);
+        }
+
+        if (proto?.OreEntity == null)
             return;
 
         var coords = Transform(uid).Coordinates;
-        var toSpawn = _random.Next(proto.MinOreYield, proto.MaxOreYield);
-        for (var i = 0; i < toSpawn; i++)
+        var amountToSpawn = _random.Next(proto.MinOreYield, proto.MaxOreYield);
+
+        for (var i = 0; i < amountToSpawn; i++)
         {
-            Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.2f)));
+            Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(component.Radius)));
         }
-    }
-
-    private void OnMapInit(EntityUid uid, OreVeinComponent component, MapInitEvent args)
-    {
-        if (component.CurrentOre != null || component.OreRarityPrototypeId == null || !_random.Prob(component.OreChance))
-            return;
-
-        component.CurrentOre = _proto.Index<WeightedRandomPrototype>(component.OreRarityPrototypeId).Pick(_random);
     }
 }
