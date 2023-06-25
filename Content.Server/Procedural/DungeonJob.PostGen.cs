@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.NodeContainer;
-using Content.Shared.Decals;
 using Content.Shared.Doors.Components;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;

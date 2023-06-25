@@ -11,18 +11,6 @@ namespace Content.Server.Procedural;
 
 public sealed partial class DungeonJob
 {
-    private async Task<Dungeon> GenerateBSPDungeon(BSPDunGen bsp, EntityUid gridUid, MapGridComponent grid, int seed)
-    {
-        // TODO:
-        var random = new Random(seed);
-
-        var rooms = new Queue<Box2i>();
-
-        var dungeonRotation = _dungeon.GetDungeonRotation(seed);
-        var dungeonTransform = Matrix3.CreateTransform(_position, dungeonRotation);
-        return new Dungeon();
-    }
-
     private async Task<Dungeon> GeneratePrefabDungeon(PrefabDunGen prefab, EntityUid gridUid, MapGridComponent grid, int seed)
     {
         var random = new Random(seed);
@@ -76,50 +64,7 @@ public sealed partial class DungeonJob
             roomA.Sort((x, y) =>
                 string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         }
-
-        // First we gather all of the edges for each roompack in the preset
-        // This allows us to determine which ones should connect from being adjacent
-        var edges = new HashSet<Vector2i>[gen.RoomPacks.Count];
-
-        for (var i = 0; i < gen.RoomPacks.Count; i++)
-        {
-            var pack = gen.RoomPacks[i];
-            var nodes = new HashSet<Vector2i>(pack.Width + 2 + pack.Height);
-
-            var rator = new Box2iEdgeEnumerator(pack, false);
-
-            while (rator.MoveNext(out var index))
-            {
-                nodes.Add(index);
-            }
-
-            edges[i] = nodes;
-        }
-
-        // Build up edge groups between each pack.
-        var connections = new Dictionary<int, Dictionary<int, HashSet<Vector2i>>>();
-
-        for (var i = 0; i < edges.Length; i++)
-        {
-            var nodes = edges[i];
-            var nodeConnections = connections.GetOrNew(i);
-
-            for (var j = i + 1; j < edges.Length; j++)
-            {
-                var otherNodes = edges[j];
-                var intersect = new HashSet<Vector2i>(nodes);
-
-                intersect.IntersectWith(otherNodes);
-
-                if (intersect.Count == 0)
-                    continue;
-
-                nodeConnections[j] = intersect;
-                var otherNodeConnections = connections.GetOrNew(j);
-                otherNodeConnections[i] = intersect;
-            }
-        }
-
+        
         var tiles = new List<(Vector2i, Tile)>();
         var dungeon = new Dungeon();
         var availablePacks = new List<DungeonRoomPackPrototype>();

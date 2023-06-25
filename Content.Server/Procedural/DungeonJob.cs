@@ -82,9 +82,6 @@ public sealed partial class DungeonJob : Job<Dungeon>
 
         switch (_gen.Generator)
         {
-            case BSPDunGen bsp:
-                dungeon = await GenerateBSPDungeon(bsp, _gridUid, _grid, _seed);
-                break;
             case PrefabDunGen prefab:
                 dungeon = await GeneratePrefabDungeon(prefab, _gridUid, _grid, _seed);
                 break;
