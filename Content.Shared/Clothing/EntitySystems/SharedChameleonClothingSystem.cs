@@ -87,6 +87,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
         return true;
     }
+    
     public bool IsValidEVATarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE)
     {
         // check if entity is valid
