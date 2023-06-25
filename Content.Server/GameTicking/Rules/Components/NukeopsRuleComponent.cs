@@ -27,7 +27,7 @@ public sealed class NukeopsRuleComponent : Component
     public int PlayersPerOperative = 6; // We need more nule ops
 
     [DataField("maxOps")]
-    public int MaxOperatives = 5;
+    public int MaxOperatives = 6;
 
     /// <summary>
     /// Whether or not all of the nuclear operatives dying will end the round. Used by LoneOpsSpawn event.
