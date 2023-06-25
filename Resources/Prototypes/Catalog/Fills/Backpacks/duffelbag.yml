@@ -214,6 +214,19 @@
         - id: ClothingShoesChameleon
 
 - type: entity
+  parent: ClothingBackpackDuffelChameleonEVABundle
+  id: ClothingBackpackDuffelChameleonEVABundleFill
+  nospawn: true
+  suffix: Fill, Chameleon
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingHeadHelmetEVAChameleon
+        - id: ClothingOuterHardsuitEVAChameleon
+        - id: ClothingMaskGasChameleon
+        - id: DoubleEmergencyOxygenTankFilled
+
+- type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateEVABundle
   name: syndicate EVA bundle

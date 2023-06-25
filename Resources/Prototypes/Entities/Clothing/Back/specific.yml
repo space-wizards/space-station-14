@@ -20,6 +20,27 @@
           type: ChameleonBoundUserInterface
 
 - type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelChameleonEVABundle
+  name: duffelbag
+  description: You wear this on your back and put items into it.
+  suffix: Chameleon
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/Back/Duffels/duffel.rsi
+    - type: ChameleonClothing
+      slot: [back]
+      default: ClothingBackpackDuffel
+    - type: UserInterface
+      interfaces:
+        - key: enum.StorageUiKey.Key
+          type: StorageBoundUserInterface
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface
+
+- type: entity
   parent: Clothing
   id: ClothingBackpackWaterTank
   name: backpack water tank

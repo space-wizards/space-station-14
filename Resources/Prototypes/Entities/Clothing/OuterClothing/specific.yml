@@ -18,3 +18,25 @@
       interfaces:
         - key: enum.ChameleonUiKey.Key
           type: ChameleonBoundUserInterface
+
+#Chameleon EVA
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterHardsuitEVAChameleon
+  name: syndicate EVA suit
+  description: "Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'"
+  suffix: Chameleon
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleonEVA" tag
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
+    - type: Clothing
+      sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
+    - type: ChameleonClothing
+      slot: [outerClothing]
+      default: ClothingOuterHardsuitSyndicate
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonEvaBoundUserInterface

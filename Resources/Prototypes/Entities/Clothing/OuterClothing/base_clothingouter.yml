@@ -75,6 +75,7 @@
   - type: Tag
     tags:
     - Hardsuit
+    - WhitelistChameleonEVA
 
 - type: entity
   abstract: true
@@ -92,3 +93,6 @@
     sprintModifier: 0.8
   - type: Item
     size: 80
+  - type: Tag
+    tags:
+    - WhitelistChameleonEVA

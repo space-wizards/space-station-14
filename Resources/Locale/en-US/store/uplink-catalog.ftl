@@ -203,6 +203,9 @@ uplink-eva-syndie-desc = A simple EVA suit that offers no protection other than 
 uplink-clothing-outer-hardsuit-juggernaut-name = Cybersun Juggernaut Suit
 uplink-clothing-outer-hardsuit-juggernaut-desc = Hyper resilient armor made of materials tested in the Tau chromosphere facility. The only thing that's going to be slowing you down is this suit... and tasers.
 
+uplink-chameleon-eva-name = Chameleon EVA Bundle
+uplink-chameleon-eva-desc = A version of the Syndicate EVA suit with state of the art chameleon technology. Contains a complimentary mask and oxygen tank.
+
 # Misc
 uplink-cyberpen-name = Cybersun Pen
 uplink-cyberpen-desc = Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.

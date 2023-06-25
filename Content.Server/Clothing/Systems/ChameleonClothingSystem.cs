@@ -30,6 +30,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     private void OnInit(EntityUid uid, ChameleonClothingComponent component, ComponentInit args)
     {
         SetSelectedPrototype(uid, component.SelectedId, true, component);
+        SetSelectedEVAPrototype(uid, component.SelectedId, true, component);
     }
 
     private void GetState(EntityUid uid, ChameleonClothingComponent component, ref ComponentGetState args)
@@ -48,7 +49,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         args.Verbs.Add(new InteractionVerb()
         {
             Text = Loc.GetString("chameleon-component-verb-text"),
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             Act = () => TryOpenUi(uid, args.User, component)
         });
     }
@@ -56,6 +57,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     private void OnSelected(EntityUid uid, ChameleonClothingComponent component, ChameleonPrototypeSelectedMessage args)
     {
         SetSelectedPrototype(uid, args.SelectedId, component: component);
+        SetSelectedEVAPrototype(uid, args.SelectedId, component: component);
     }
 
     private void TryOpenUi(EntityUid uid, EntityUid user, ChameleonClothingComponent? component = null)
@@ -76,6 +78,14 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         _uiSystem.TrySetUiState(uid, ChameleonUiKey.Key, state);
     }
 
+    private void UpdateEVAUi(EntityUid uid, ChameleonClothingComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        var stateEVA = new ChameleonEvaBoundUserInterfaceState(component.Slot, component.SelectedId);
+        _uiSystem.TrySetUiState(uid, ChameleonUiKey.Key, stateEVA);
+    }
     /// <summary>
     ///     Change chameleon items name, description and sprite to mimic other entity prototype.
     /// </summary>
@@ -100,6 +110,29 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         UpdateIdentityBlocker(uid, component, proto);
         UpdateVisuals(uid, component);
         UpdateUi(uid, component);
+        Dirty(component);
+    }
+    public void SetSelectedEVAPrototype(EntityUid uid, string? protoId, bool forceUpdate = false,
+        ChameleonClothingComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        // check that wasn't already selected
+        // forceUpdate on component init ignores this check
+        if (component.SelectedId == protoId && !forceUpdate)
+            return;
+
+        // make sure that it is valid change
+        if (string.IsNullOrEmpty(protoId) || !_proto.TryIndex(protoId, out EntityPrototype? proto))
+            return;
+        if (!IsValidEVATarget(proto, component.Slot))
+            return;
+        component.SelectedId = protoId;
+
+        UpdateIdentityBlocker(uid, component, proto);
+        UpdateVisuals(uid, component);
+        UpdateEVAUi(uid, component);
         Dirty(component);
     }
 

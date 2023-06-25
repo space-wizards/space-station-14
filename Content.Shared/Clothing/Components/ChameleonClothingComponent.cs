@@ -55,6 +55,19 @@ public sealed class ChameleonBoundUserInterfaceState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
+public sealed class ChameleonEvaBoundUserInterfaceState : BoundUserInterfaceState
+{
+    public readonly SlotFlags Slot;
+    public readonly string? SelectedId;
+
+    public ChameleonEvaBoundUserInterfaceState(SlotFlags slot, string? selectedId)
+    {
+        Slot = slot;
+        SelectedId = selectedId;
+    }
+}
+
+[Serializable, NetSerializable]
 public sealed class ChameleonPrototypeSelectedMessage : BoundUserInterfaceMessage
 {
     public readonly string SelectedId;

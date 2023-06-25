@@ -807,6 +807,16 @@
   categories:
   - UplinkArmor
 
+- type: listing
+  id: UplinkChameleonEva
+  name: uplink-chameleon-eva-name
+  description: uplink-chameleon-eva-desc
+  productEntity: ClothingBackpackDuffelChameleonEVABundleFill
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkArmor
+
 # Misc
 
 - type: listing

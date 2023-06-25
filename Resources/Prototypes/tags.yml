@@ -285,6 +285,9 @@
   id: WhitelistChameleon
 
 - type: Tag
+  id: WhitelistChameleonEVA
+
+- type: Tag
   id: FirelockElectronics
 
 - type: Tag

@@ -23,13 +23,15 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     private static readonly SlotFlags[] Slots = Enum.GetValues<SlotFlags>().Except(IgnoredSlots).ToArray();
 
     private readonly Dictionary<SlotFlags, List<string>> _data = new();
-
+    private readonly Dictionary<SlotFlags, List<string>> _dataEVA = new();
+    
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<ChameleonClothingComponent, ComponentHandleState>(HandleState);
-
+    
         PrepareAllVariants();
+        PrepareAllEVAVariants();
         _proto.PrototypesReloaded += OnProtoReloaded;
     }
 
@@ -42,6 +44,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     private void OnProtoReloaded(PrototypesReloadedEventArgs _)
     {
         PrepareAllVariants();
+        PrepareAllEVAVariants();
     }
 
     private void HandleState(EntityUid uid, ChameleonClothingComponent component, ref ComponentHandleState args)
@@ -79,6 +82,19 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         return set;
     }
 
+    public IEnumerable<string> GetValidEVATargets(SlotFlags slot)
+    {
+        var set = new HashSet<string>();
+        foreach (var availableSlot in _dataEVA.Keys)
+        {
+            if (slot.HasFlag(availableSlot))
+            {
+                set.UnionWith(_dataEVA[availableSlot]);
+            }
+        }
+        return set;
+    }
+
     private void PrepareAllVariants()
     {
         _data.Clear();
@@ -104,6 +120,35 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
                     _data.Add(slot, new List<string>());
                 }
                 _data[slot].Add(proto.ID);
+            }
+        }
+    }
+
+    private void PrepareAllEVAVariants()
+    {
+        _dataEVA.Clear();
+        var prototypes = _proto.EnumeratePrototypes<EntityPrototype>();
+
+        foreach (var proto in prototypes)
+        {
+            // check if this is valid clothing
+            if (!IsValidEVATarget(proto))
+                continue;
+            if (!proto.TryGetComponent(out ClothingComponent? item, _factory))
+                continue;
+
+            // sort item by their slot flags
+            // one item can be placed in several buckets
+            foreach (var slot in Slots)
+            {
+                if (!item.Slots.HasFlag(slot))
+                    continue;
+
+                if (!_dataEVA.ContainsKey(slot))
+                {
+                    _dataEVA.Add(slot, new List<string>());
+                }
+                _dataEVA[slot].Add(proto.ID);
             }
         }
     }

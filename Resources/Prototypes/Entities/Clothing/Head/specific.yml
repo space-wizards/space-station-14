@@ -18,3 +18,24 @@
       interfaces:
         - key: enum.ChameleonUiKey.Key
           type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetEVAChameleon
+  name: EVA helmet
+  description: An old-but-gold helmet designed for extravehicular activites. Infamous for making security officers paranoid.
+  suffix: Chameleon
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleonEVA" tag
+    - type: Sprite
+      sprite: Clothing/Head/Helmets/eva_syndicate.rsi
+    - type: Clothing
+      sprite: Clothing/Head/Helmets/eva_syndicate.rsi
+    - type: ChameleonClothing
+      slot: [HEAD]
+      default: ClothingHeadHelmetSyndicate
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonEvaBoundUserInterface

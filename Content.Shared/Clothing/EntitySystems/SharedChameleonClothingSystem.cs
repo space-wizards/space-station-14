@@ -87,4 +87,22 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
         return true;
     }
+    public bool IsValidEVATarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE)
+    {
+        // check if entity is valid
+        if (proto.Abstract)
+            return false;
+
+        // check if it is marked as valid chameleon target
+        if (!proto.TryGetComponent(out TagComponent? tags, _factory) || !tags.Tags.Contains("WhitelistChameleonEVA"))
+            return false;
+
+        // check if it's valid clothing
+        if (!proto.TryGetComponent("Clothing", out ClothingComponent? clothing))
+            return false;
+        if (!clothing.Slots.HasFlag(chameleonSlot))
+            return false;
+
+        return true;
+    }
 }
