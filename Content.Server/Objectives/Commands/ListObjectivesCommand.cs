@@ -11,8 +11,6 @@ namespace Content.Server.Objectives.Commands
     public sealed class ListObjectivesCommand : LocalizedCommands
     {
         public override string Command => "lsobjectives";
-        //public string Description => "Lists all objectives in a players mind.";
-        //public string Help => "lsobjectives [<username>]";
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
