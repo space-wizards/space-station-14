@@ -38,9 +38,9 @@ public sealed class JammerSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, RadioJammerComponent comp, ActivateInWorldEvent args)
     {
-        var activated = !HasComp<ActiveRadioJammerComponent>(uid) && 
+        var activated = !HasComp<ActiveRadioJammerComponent>(uid) &&
             _powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
-            battery.CurrentCharge > comp.Wattage;
+            battery.Charge > comp.Wattage;
         if (activated)
         {
             EnsureComp<ActiveRadioJammerComponent>(uid);

@@ -46,7 +46,7 @@ namespace Content.Server.Singularity.EntitySystems
             if (TryComp<BatteryComponent>(uid, out var batteryComponent))
             {
                 var charge = args.TotalRads * component.ChargeModifier;
-                batteryComponent.CurrentCharge += charge;
+                batteryComponent.Charge += charge;
             }
         }
 

@@ -168,7 +168,7 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/fill_battery.png")),
                     Act = () =>
                     {
-                        battery.CurrentCharge = battery.MaxCharge;
+                        battery.Charge = battery.MaxCharge;
                         Dirty(battery);
                     },
                     Impact = LogImpact.Medium,
@@ -184,7 +184,7 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/drain_battery.png")),
                     Act = () =>
                     {
-                        battery.CurrentCharge = 0;
+                        battery.Charge = 0;
                         Dirty(battery);
                     },
                     Impact = LogImpact.Medium,
@@ -614,7 +614,7 @@ public sealed partial class AdminVerbSystem
                         if (!HasComp<StationInfiniteBatteryTargetComponent>(ent))
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
-                        battery.CurrentCharge = battery.MaxCharge;
+                        battery.Charge = battery.MaxCharge;
                         Dirty(battery);
                     }
                 },
@@ -636,7 +636,7 @@ public sealed partial class AdminVerbSystem
                         if (!HasComp<StationInfiniteBatteryTargetComponent>(ent))
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
-                        battery.CurrentCharge = 0;
+                        battery.Charge = 0;
                         Dirty(battery);
                     }
                 },

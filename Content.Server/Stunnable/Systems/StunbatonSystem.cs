@@ -51,7 +51,7 @@ namespace Content.Server.Stunnable.Systems
 
             args.HitSoundOverride = component.StunSound;
 
-            if (battery.CurrentCharge < component.EnergyPerUse)
+            if (battery.Charge < component.EnergyPerUse)
             {
                 SoundSystem.Play(component.SparksSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), uid, AudioHelpers.WithVariation(0.25f));
                 TurnOff(uid, component);
@@ -78,7 +78,7 @@ namespace Content.Server.Stunnable.Systems
             args.PushMarkup(msg);
             if(TryComp<BatteryComponent>(uid, out var battery))
                 args.PushMarkup(Loc.GetString("stunbaton-component-on-examine-charge",
-                    ("charge", (int)((battery.CurrentCharge/battery.MaxCharge) * 100))));
+                    ("charge", (int)((battery.Charge/battery.MaxCharge) * 100))));
         }
 
         private void TurnOff(EntityUid uid, StunbatonComponent comp)
@@ -104,7 +104,7 @@ namespace Content.Server.Stunnable.Systems
                 return;
 
             var playerFilter = Filter.Pvs(comp.Owner, entityManager: EntityManager);
-            if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
+            if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.Charge < comp.EnergyPerUse)
             {
                 SoundSystem.Play(comp.TurnOnFailSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("stunbaton-component-low-charge"));

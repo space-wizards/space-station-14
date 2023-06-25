@@ -60,7 +60,7 @@ internal sealed class SmesSystem : EntitySystem
         if (!Resolve(uid, ref battery))
             return 0;
 
-        return ContentHelpers.RoundToLevels(battery.CurrentCharge, battery.MaxCharge, 6);
+        return ContentHelpers.RoundToLevels(battery.Charge, battery.MaxCharge, 6);
     }
 
     private ChargeState CalcChargeState(EntityUid uid, PowerNetworkBatteryComponent? netBattery = null)

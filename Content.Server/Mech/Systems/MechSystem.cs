@@ -104,7 +104,7 @@ public sealed class MechSystem : SharedMechSystem
         if (args.Container != component.BatterySlot || !TryComp<BatteryComponent>(args.Entity, out var battery))
             return;
 
-        component.Energy = battery.CurrentCharge;
+        component.Energy = battery.Charge;
         component.MaxEnergy = battery.MaxCharge;
 
         Dirty(component);
@@ -376,11 +376,11 @@ public sealed class MechSystem : SharedMechSystem
         if (!TryComp<BatteryComponent>(battery, out var batteryComp))
             return false;
 
-        batteryComp.CurrentCharge = batteryComp.CurrentCharge + delta.Float();
-        if (batteryComp.CurrentCharge != component.Energy) //if there's a discrepency, we have to resync them
+        batteryComp.Charge = batteryComp.Charge + delta.Float();
+        if (batteryComp.Charge != component.Energy) //if there's a discrepency, we have to resync them
         {
-            _sawmill.Debug($"Battery charge was not equal to mech charge. Battery {batteryComp.CurrentCharge}. Mech {component.Energy}");
-            component.Energy = batteryComp.CurrentCharge;
+            _sawmill.Debug($"Battery charge was not equal to mech charge. Battery {batteryComp.Charge}. Mech {component.Energy}");
+            component.Energy = batteryComp.Charge;
             Dirty(component);
         }
         _actionBlocker.UpdateCanMove(uid);
@@ -396,7 +396,7 @@ public sealed class MechSystem : SharedMechSystem
             return;
 
         component.BatterySlot.Insert(toInsert);
-        component.Energy = battery.CurrentCharge;
+        component.Energy = battery.Charge;
         component.MaxEnergy = battery.MaxCharge;
 
         _actionBlocker.UpdateCanMove(uid);

@@ -1,4 +1,5 @@
 ﻿using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 
@@ -9,6 +10,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 /// </summary>
 public sealed class ChargeBatteryArtifactSystem : EntitySystem
 {
+    [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     /// <inheritdoc/>
     public override void Initialize()
@@ -20,7 +22,8 @@ public sealed class ChargeBatteryArtifactSystem : EntitySystem
     {
         foreach (var battery in _lookup.GetComponentsInRange<BatteryComponent>(Transform(uid).MapPosition, component.Radius))
         {
-            battery.CurrentCharge = battery.MaxCharge;
+            var bUid = battery.Owner;
+            _battery.SetCharge(bUid, battery.MaxCharge, battery);
         }
     }
 }

@@ -386,7 +386,7 @@ namespace Content.IntegrationTests.Tests.Power
                 consumer = entityManager.GetComponent<PowerConsumerComponent>(consumerEnt);
 
                 battery.MaxCharge = startingCharge;
-                battery.CurrentCharge = startingCharge;
+                battery.Charge = startingCharge;
                 netBattery.MaxSupply = 400;
                 netBattery.SupplyRampRate = 400;
                 netBattery.SupplyRampTolerance = 100;
@@ -419,7 +419,7 @@ namespace Content.IntegrationTests.Tests.Power
 
                 // Trivial integral to calculate expected power spent.
                 const double spentExpected = (200 + 100) / 2.0 * 0.25;
-                Assert.That(battery.CurrentCharge, Is.EqualTo(startingCharge - spentExpected).Within(tickDev));
+                Assert.That(battery.Charge, Is.EqualTo(startingCharge - spentExpected).Within(tickDev));
             });
 
             // run for 0.75 seconds
@@ -435,7 +435,7 @@ namespace Content.IntegrationTests.Tests.Power
 
                 // Trivial integral to calculate expected power spent.
                 const double spentExpected = (400 + 100) / 2.0 * 0.75 + 400 * 0.25;
-                Assert.That(battery.CurrentCharge, Is.EqualTo(startingCharge - spentExpected).Within(tickDev));
+                Assert.That(battery.Charge, Is.EqualTo(startingCharge - spentExpected).Within(tickDev));
             });
 
             await pairTracker.CleanReturnAsync();
@@ -486,7 +486,7 @@ namespace Content.IntegrationTests.Tests.Power
                 supplier.SupplyRampTolerance = rampTol;
 
                 battery.MaxCharge = 100_000;
-                battery.CurrentCharge = 100_000;
+                battery.Charge = 100_000;
                 netBattery.MaxSupply = draw/2;
                 netBattery.SupplyRampRate = rampRate;
                 netBattery.SupplyRampTolerance = rampTol;
@@ -574,7 +574,7 @@ namespace Content.IntegrationTests.Tests.Power
             {
                 // half a second @ 500 W = 250
                 // 50% efficiency, so 125 J stored total.
-                Assert.That(battery.CurrentCharge, Is.EqualTo(125).Within(0.1));
+                Assert.That(battery.Charge, Is.EqualTo(125).Within(0.1));
                 Assert.That(supplier.CurrentSupply, Is.EqualTo(500).Within(0.1));
             });
 
@@ -627,7 +627,7 @@ namespace Content.IntegrationTests.Tests.Power
                 netBattery.SupplyRampTolerance = 400;
                 netBattery.SupplyRampRate = 100_000;
                 battery.MaxCharge = 100_000;
-                battery.CurrentCharge = 100_000;
+                battery.Charge = 100_000;
             });
 
             // Run some ticks so everything is stable.
@@ -648,7 +648,7 @@ namespace Content.IntegrationTests.Tests.Power
                 Assert.That(netBattery.SupplyRampPosition, Is.EqualTo(200).Within(0.1));
 
                 const int expectedSpent = 200;
-                Assert.That(battery.CurrentCharge, Is.EqualTo(battery.MaxCharge - expectedSpent).Within(tickDev));
+                Assert.That(battery.Charge, Is.EqualTo(battery.MaxCharge - expectedSpent).Within(tickDev));
             });
 
             await pairTracker.CleanReturnAsync();
@@ -702,7 +702,7 @@ namespace Content.IntegrationTests.Tests.Power
                 netBattery.SupplyRampRate = 100_000;
                 netBattery.Efficiency = 0.5f;
                 battery.MaxCharge = 1_000_000;
-                battery.CurrentCharge = 1_000_000;
+                battery.Charge = 1_000_000;
             });
 
             // Run some ticks so everything is stable.
@@ -721,7 +721,7 @@ namespace Content.IntegrationTests.Tests.Power
                 Assert.That(netBattery.SupplyRampPosition, Is.EqualTo(400).Within(0.1));
 
                 const int expectedSpent = 400;
-                Assert.That(battery.CurrentCharge, Is.EqualTo(battery.MaxCharge - expectedSpent).Within(tickDev));
+                Assert.That(battery.Charge, Is.EqualTo(battery.MaxCharge - expectedSpent).Within(tickDev));
             });
 
             await pairTracker.CleanReturnAsync();
@@ -888,8 +888,8 @@ namespace Content.IntegrationTests.Tests.Power
                 netBattery2.SupplyRampRate = 100_000;
                 battery1.MaxCharge = 100_000;
                 battery2.MaxCharge = 100_000;
-                battery1.CurrentCharge = 100_000;
-                battery2.CurrentCharge = 100_000;
+                battery1.Charge = 100_000;
+                battery2.Charge = 100_000;
             });
 
             // Run some ticks so everything is stable.
@@ -1039,7 +1039,7 @@ namespace Content.IntegrationTests.Tests.Power
                 netBattery.SupplyRampTolerance = 200;
                 netBattery.SupplyRampRate = 10;
                 battery.MaxCharge = 100_000;
-                battery.CurrentCharge = 100_000;
+                battery.Charge = 100_000;
             });
 
             // Run some ticks so everything is stable.
@@ -1165,7 +1165,7 @@ namespace Content.IntegrationTests.Tests.Power
                 generatorSupplier.MaxSupply = 1000;
                 generatorSupplier.SupplyRampTolerance = 1000;
 
-                apcBattery.CurrentCharge = 0;
+                apcBattery.Charge = 0;
             });
 
             server.RunTicks(5); //let run a few ticks for PowerNets to reevaluate and start charging apc
@@ -1173,7 +1173,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 Assert.That(substationNetBattery.CurrentSupply, Is.GreaterThan(0)); //substation should be providing power
-                Assert.That(apcBattery.CurrentCharge, Is.GreaterThan(0)); //apc battery should have gained charge
+                Assert.That(apcBattery.Charge, Is.GreaterThan(0)); //apc battery should have gained charge
             });
 
             await pairTracker.CleanReturnAsync();
@@ -1222,7 +1222,7 @@ namespace Content.IntegrationTests.Tests.Power
                 extensionCableSystem.SetReceiverReceptionRange(powerReceiverEnt, range);
 
                 battery.MaxCharge = 10000; //arbitrary nonzero amount of charge
-                battery.CurrentCharge = battery.MaxCharge; //fill battery
+                battery.Charge = battery.MaxCharge; //fill battery
 
                 receiver.Load = 1; //arbitrary small amount of power
             });

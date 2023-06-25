@@ -5,15 +5,14 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Power;
 using Content.Shared.PowerCell.Components;
-using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Power.EntitySystems;
 
-[UsedImplicitly]
-internal sealed class ChargerSystem : EntitySystem
+public sealed class ChargerSystem : EntitySystem
 {
+    [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly PowerCellSystem _cellSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
@@ -42,15 +41,17 @@ internal sealed class ChargerSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        foreach (var (_, charger, slotComp) in EntityManager.EntityQuery<ActiveChargerComponent, ChargerComponent, ItemSlotsComponent>())
+        var query = AllEntityQuery<ChargerComponent, ItemSlotsComponent>();
+
+        while (query.MoveNext(out var uid, out var charger, out var slotComp))
         {
-            if (!_itemSlotsSystem.TryGetSlot(charger.Owner, charger.SlotId, out ItemSlot? slot, slotComp))
+            if (!charger.Enabled || !_itemSlotsSystem.TryGetSlot(uid, charger.SlotId, out var slot, slotComp))
                 continue;
 
             if (charger.Status == CellChargerStatus.Empty || charger.Status == CellChargerStatus.Charged || !slot.HasItem)
                 continue;
 
-            TransferPower(charger.Owner, slot.Item!.Value, charger, frameTime);
+            TransferPower(uid, slot.Item!.Value, charger, frameTime);
         }
     }
 
@@ -125,11 +126,11 @@ internal sealed class ChargerSystem : EntitySystem
 
         if (component.Status == CellChargerStatus.Charging)
         {
-            AddComp<ActiveChargerComponent>(uid);
+            component.Enabled = true;
         }
         else
         {
-            RemComp<ActiveChargerComponent>(uid);
+            component.Enabled = false;
         }
 
         switch (component.Status)
@@ -177,10 +178,10 @@ internal sealed class ChargerSystem : EntitySystem
         if (!slot.HasItem)
             return CellChargerStatus.Empty;
 
-        if (!SearchForBattery(slot.Item!.Value, out BatteryComponent? heldBattery))
+        if (!SearchForBattery(slot.Item!.Value, out var heldBattery))
             return CellChargerStatus.Off;
 
-        if (heldBattery != null && Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)
+        if (Math.Abs(heldBattery.MaxCharge - heldBattery.Charge) < 0.01)
             return CellChargerStatus.Charged;
 
         return CellChargerStatus.Charging;
@@ -194,14 +195,18 @@ internal sealed class ChargerSystem : EntitySystem
         if (!receiverComponent.Powered)
             return;
 
-        if (!SearchForBattery(targetEntity, out BatteryComponent? heldBattery))
+        if (!SearchForBattery(targetEntity, out var heldBattery))
             return;
 
-        heldBattery.CurrentCharge += component.ChargeRate * frameTime;
+        // This does NOT align with targetEntity
+        var batteryUid = heldBattery.Owner;
+
+        _battery.SetCharge(batteryUid, heldBattery.Charge + component.ChargeRate * frameTime, heldBattery);
+
         // Just so the sprite won't be set to 99.99999% visibility
-        if (heldBattery.MaxCharge - heldBattery.CurrentCharge < 0.01)
+        if (heldBattery.MaxCharge - heldBattery.Charge < 0.01)
         {
-            heldBattery.CurrentCharge = heldBattery.MaxCharge;
+            _battery.SetCharge(batteryUid, heldBattery.MaxCharge, heldBattery);
         }
 
         UpdateStatus(uid, component);

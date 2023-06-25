@@ -73,7 +73,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
 
     private void OnMicrowaved(EntityUid uid, BatteryComponent component, BeingMicrowavedEvent args)
     {
-        if (component.CurrentCharge == 0)
+        if (component.Charge == 0)
             return;
 
         args.Handled = true;
@@ -117,7 +117,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         if (!Resolve(uid, ref battery))
             return;
 
-        var radius = MathF.Min(5, MathF.Sqrt(battery.CurrentCharge) / 9);
+        var radius = MathF.Min(5, MathF.Sqrt(battery.Charge) / 9);
 
         _explosionSystem.TriggerExplosive(uid, radius: radius, user:cause);
         QueueDel(uid);
@@ -194,7 +194,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
             return false;
         }
 
-        if (battery.CurrentCharge < charge)
+        if (battery.Charge < charge)
         {
             if (user != null)
                 _popup.PopupEntity(Loc.GetString("power-cell-insufficient"), uid, user.Value);
@@ -284,7 +284,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
 
     private void OnBatteryExamined(EntityUid uid, BatteryComponent component, ExaminedEvent args)
     {
-        var charge = component.CurrentCharge / component.MaxCharge * 100;
+        var charge = component.Charge / component.MaxCharge * 100;
         args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{charge:F0}")));
     }
 }

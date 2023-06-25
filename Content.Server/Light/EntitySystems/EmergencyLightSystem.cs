@@ -161,7 +161,7 @@ namespace Content.Server.Light.EntitySystems
             }
             else
             {
-                battery.CurrentCharge += component.ChargingWattage * frameTime * component.ChargingEfficiency;
+                battery.Charge += component.ChargingWattage * frameTime * component.ChargingEfficiency;
                 if (battery.IsFullyCharged)
                 {
                     if (TryComp(component.Owner, out ApcPowerReceiverComponent? receiver))

@@ -72,9 +72,9 @@ namespace Content.Server.PowerSink
                 if (!transform.Anchored)
                     continue;
 
-                battery.CurrentCharge += networkLoad.NetworkLoad.ReceivingPower / 1000;
+                battery.Charge += networkLoad.NetworkLoad.ReceivingPower / 1000;
 
-                var currentBatteryThreshold = battery.CurrentCharge / battery.MaxCharge;
+                var currentBatteryThreshold = battery.Charge / battery.MaxCharge;
 
                 // Check for warning message threshold
                 if (!component.SentImminentExplosionWarningMessage &&
@@ -96,7 +96,7 @@ namespace Content.Server.PowerSink
                 }
 
                 // Check for explosion
-                if (battery.CurrentCharge < battery.MaxCharge)
+                if (battery.Charge < battery.MaxCharge)
                     continue;
 
                 if (component.ExplosionTime == null)

@@ -108,10 +108,10 @@ namespace Content.Server.Light.EntitySystems
             if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery))
                 return null;
 
-            if (MathHelper.CloseToPercent(battery.CurrentCharge, 0) || component.Wattage > battery.CurrentCharge)
+            if (MathHelper.CloseToPercent(battery.Charge, 0) || component.Wattage > battery.Charge)
                 return 0;
 
-            return (byte?) ContentHelpers.RoundToNearestLevels(battery.CurrentCharge / battery.MaxCharge * 255, 255, HandheldLightComponent.StatusLevels);
+            return (byte?) ContentHelpers.RoundToNearestLevels(battery.Charge / battery.MaxCharge * 255, 255, HandheldLightComponent.StatusLevels);
         }
 
         private void OnRemove(EntityUid uid, HandheldLightComponent component, ComponentRemove args)
@@ -223,7 +223,7 @@ namespace Content.Server.Light.EntitySystems
             // To prevent having to worry about frame time in here.
             // Let's just say you need a whole second of charge before you can turn it on.
             // Simple enough.
-            if (component.Wattage > battery.CurrentCharge)
+            if (component.Wattage > battery.Charge)
             {
                 _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), uid);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), uid, user);
@@ -248,7 +248,7 @@ namespace Content.Server.Light.EntitySystems
 
             var appearanceComponent = EntityManager.GetComponentOrNull<AppearanceComponent>(uid);
 
-            var fraction = battery.CurrentCharge / battery.MaxCharge;
+            var fraction = battery.Charge / battery.MaxCharge;
             if (fraction >= 0.30)
             {
                 _appearance.SetData(uid, HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower, appearanceComponent);
