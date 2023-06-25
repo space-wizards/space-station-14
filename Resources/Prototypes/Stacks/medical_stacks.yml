@@ -46,4 +46,3 @@
   icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: regenerative-mesh}
   spawn: RegenerativeMesh
   maxCount: 10
-  
