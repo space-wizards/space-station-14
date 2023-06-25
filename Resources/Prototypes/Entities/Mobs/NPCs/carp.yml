@@ -14,7 +14,6 @@
         - SimpleHostile
     - type: Sprite
       drawdepth: Mobs
-      netsync: false
       sprite: Mobs/Aliens/Carps/space.rsi
       layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -41,7 +40,6 @@
     - type: Stamina
       excess: 100
     - type: MovementAlwaysTouching
-    - type: Appearance
     - type: DamageStateVisuals
       states:
         Alive:
@@ -155,3 +153,13 @@
     - type: GhostTakeoverAvailable
     - type: HTN
       rootTask: DragonCarpCompound
+
+- type: entity
+  id: MobCarpDungeon
+  parent: MobCarp
+  suffix: Dungeon
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 5

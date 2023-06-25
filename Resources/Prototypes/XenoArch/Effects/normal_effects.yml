@@ -302,8 +302,6 @@
   effectHint: artifact-effect-hint-biochemical
   components:
   - type: FoamArtifact
-    spreadDuration: 0.5
-    duration: 5
     reagents:
     - Dermaline
     - Arithrazine
@@ -433,8 +431,8 @@
   effectHint: artifact-effect-hint-biochemical
   components:
   - type: FoamArtifact
-    spreadDuration: 0.5
-    duration: 5
+    minFoamAmount: 20
+    maxFoamAmount: 30
     reagents:
     - Tritium
     - Plasma

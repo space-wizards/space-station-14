@@ -293,9 +293,16 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            if (string.IsNullOrEmpty(component.TrashPrototype))
-                EntityManager.QueueDeleteEntity(uid);
+            var ev = new BeforeFullyEatenEvent
+            {
+                User = args.User
+            };
+            RaiseLocalEvent(uid, ev);
+            if (ev.Cancelled)
+                return;
 
+            if (string.IsNullOrEmpty(component.TrashPrototype))
+                QueueDel(uid);
             else
                 DeleteAndSpawnTrash(component, uid, args.User);
         }

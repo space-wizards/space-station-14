@@ -9,7 +9,6 @@
     noRot: true
   - type: Sprite
     noRot: true
-    netsync: false
     sprite: Structures/Storage/closet.rsi
     layers:
     - state: generic
@@ -108,7 +107,6 @@
     noRot: false
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     noRot: false
     sprite: Structures/Storage/wall_locker.rsi
     layers:
@@ -165,7 +163,6 @@
   - type: AccessReader
   - type: Lock
   - type: Sprite
-    netsync: false
     sprite: Structures/Storage/wall_locker.rsi
     layers:
     - state: generic
@@ -183,10 +180,12 @@
 #I am terribly sorry for duplicating the closet almost-wholesale, but the game malds at me if I don't so here we are.
 - type: entity
   id: SuitStorageBase
-  parent: BaseStructureDynamic
+  parent: BaseStructure
   name: suit storage unit
   description: A fancy hi-tech storage unit made for storing space suits.
   components:
+  - type: Anchorable
+    delay: 2
   - type: StaticPrice
     price: 80
   - type: ResistLocker
@@ -194,7 +193,6 @@
     noRot: true
   - type: Sprite
     noRot: true
-    netsync: false
     sprite: Structures/Storage/suit_storage.rsi
     layers:
     - state: base
@@ -218,7 +216,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
-        density: 145
+        density: 350
         mask:
         - MachineMask
         layer:
@@ -238,13 +236,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 400
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 200
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]

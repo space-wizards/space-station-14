@@ -12,7 +12,6 @@
     intensitySlope: 1.5
   - type: Sprite
     sprite: Objects/Power/power_cells.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       powerCell:

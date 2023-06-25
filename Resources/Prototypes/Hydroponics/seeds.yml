@@ -9,8 +9,8 @@
     - WheatBushel
   lifespan: 25
   maturation: 6
-  production: 1
-  yield: 4
+  production: 3
+  yield: 3
   potency: 5
   idealLight: 8
   nutrientConsumption: 0.15
@@ -35,8 +35,8 @@
     - OatBushel
   lifespan: 25
   maturation: 6
-  production: 1
-  yield: 4
+  production: 3
+  yield: 3
   potency: 5
   idealLight: 8
   nutrientConsumption: 0.15
@@ -63,7 +63,7 @@
   lifespan: 50
   maturation: 6
   production: 6
-  yield: 3
+  yield: 2
   idealLight: 9
   waterConsumption: 6
   idealHeat: 298
@@ -88,8 +88,8 @@
     - FoodCarrot
   lifespan: 25
   maturation: 10
-  production: 1
-  yield: 5
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 3
   waterConsumption: 6
@@ -116,7 +116,7 @@
   lifespan: 55
   maturation: 6
   production: 6
-  yield: 4
+  yield: 3
   potency: 10
   idealLight: 8
   chemicals:
@@ -142,7 +142,7 @@
   lifespan: 55
   maturation: 6
   production: 6
-  yield: 4
+  yield: 3
   potency: 10
   idealLight: 8
   chemicals:
@@ -168,7 +168,7 @@
   lifespan: 55
   maturation: 6
   production: 6
-  yield: 4
+  yield: 3
   potency: 10
   idealLight: 8
   chemicals:
@@ -194,7 +194,7 @@
   lifespan: 55
   maturation: 6
   production: 6
-  yield: 4
+  yield: 3
   potency: 10
   idealLight: 8
   growthStages: 3
@@ -223,8 +223,8 @@
     - FoodPotato
   lifespan: 30
   maturation: 10
-  production: 1
-  yield: 4
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 4
   waterConsumption: 6
@@ -249,9 +249,9 @@
     - Sugarcane
   harvestRepeat: Repeat
   lifespan: 60
-  maturation: 3
+  maturation: 6
   production: 6
-  yield: 4
+  yield: 3
   potency: 10
   growthStages: 3
   idealHeat: 298
@@ -273,7 +273,7 @@
   lifespan: 80
   maturation: 15
   ligneous: true
-  production: 1
+  production: 3
   yield: 5
   potency: 1
   growthStages: 3
@@ -349,9 +349,9 @@
   productPrototypes:
     - FoodCabbage
   lifespan: 50
-  maturation: 3
+  maturation: 7
   production: 5
-  yield: 4
+  yield: 3
   potency: 10
   growthStages: 1
   chemicals:
@@ -374,9 +374,9 @@
   productPrototypes:
     - FoodGarlic
   lifespan: 25
-  maturation: 3
+  maturation: 8
   production: 5
-  yield: 6
+  yield: 3
   potency: 25
   growthStages: 3
   chemicals:
@@ -406,7 +406,7 @@
   lifespan: 55
   maturation: 6
   production: 6
-  yield: 5
+  yield: 3
   potency: 10
   idealLight: 6
   chemicals:
@@ -431,7 +431,7 @@
   lifespan: 25
   maturation: 8
   production: 6
-  yield: 3
+  yield: 2
   potency: 20
   growthStages: 3
   idealLight: 8
@@ -459,7 +459,7 @@
   lifespan: 25
   maturation: 8
   production: 6
-  yield: 3
+  yield: 2
   potency: 20
   growthStages: 3
   idealLight: 8
@@ -491,7 +491,7 @@
   lifespan: 25
   maturation: 8
   production: 6
-  yield: 3
+  yield: 2
   potency: 20
   growthStages: 3
   idealLight: 8
@@ -521,8 +521,8 @@
   productPrototypes:
     - FoodMushroom
   lifespan: 35
-  maturation: 7
-  production: 1
+  maturation: 10
+  production: 7
   yield: 5
   potency: 1
   growthStages: 3
@@ -618,7 +618,7 @@
   lifespan: 25
   maturation: 8
   production: 6
-  yield: 3
+  yield: 2
   potency: 20
   growthStages: 5
   idealLight: 8
@@ -643,7 +643,7 @@
   lifespan: 25
   maturation: 6
   production: 6
-  yield: 3
+  yield: 2
   potency: 20
   idealLight: 9
   idealHeat: 298
@@ -672,8 +672,8 @@
     - FoodPoppy
   lifespan: 25
   maturation: 10
-  production: 1
-  yield: 5
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 3
   waterConsumption: 6
@@ -698,8 +698,8 @@
     - FoodAloe
   lifespan: 25
   maturation: 10
-  production: 1
-  yield: 5
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 5
   waterConsumption: 6
@@ -724,8 +724,8 @@
     - FoodLingzhi
   lifespan: 25
   maturation: 10
-  production: 1
-  yield: 5
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 3
   waterConsumption: 6
@@ -750,8 +750,8 @@
     - FoodAmbrosiaVulgaris
   lifespan: 25
   maturation: 10
-  production: 1
-  yield: 5
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 6
   waterConsumption: 6
@@ -788,8 +788,8 @@
     - FoodGalaxythistle
   lifespan: 25
   maturation: 10
-  production: 1
-  yield: 5
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 3
   waterConsumption: 6
@@ -809,9 +809,9 @@
   productPrototypes:
     - FoodFlyAmanita
   lifespan: 25
-  maturation: 10
-  production: 1
-  yield: 5
+  maturation: 12
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 2
   waterConsumption: 6
@@ -862,8 +862,8 @@
     - RiceBushel
   lifespan: 25
   maturation: 6
-  production: 1
-  yield: 4
+  production: 3
+  yield: 3
   potency: 5
   growthStages: 4
   idealLight: 5
@@ -889,8 +889,8 @@
     - FoodSoybeans
   growthStages: 4
   lifespan: 25
-  maturation: 4
-  production: 4
+  maturation: 6
+  production: 6
   yield: 3
   potency: 5
   idealLight: 7
@@ -911,9 +911,9 @@
   productPrototypes:
     - FoodGrape
   lifespan: 50
-  maturation: 3
+  maturation: 6
   production: 5
-  yield: 4
+  yield: 3
   potency: 10
   growthStages: 2
   chemicals:
@@ -936,8 +936,8 @@
   productPrototypes:
     - FoodWatermelon
   lifespan: 55
-  maturation: 15
-  production: 1
+  maturation: 12
+  production: 3
   yield: 1
   potency: 1
   idealLight: 8

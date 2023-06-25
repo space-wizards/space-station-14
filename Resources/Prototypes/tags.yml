@@ -11,10 +11,16 @@
   id: AppraisalTool
 
 - type: Tag
+  id: ArtifactFragment
+
+- type: Tag
   id: ATVKeys
 
 - type: Tag
   id: Baguette
+
+- type: Tag
+  id: BaseballBat
 
 - type: Tag
   id: Bee
@@ -68,6 +74,12 @@
   id: BrassInstrument
 
 - type: Tag
+  id: Bread
+
+- type: Tag
+  id: Briefcase
+
+- type: Tag
   id: Brutepack
 
 - type: Tag
@@ -84,6 +96,9 @@
 
 - type: Tag
   id: Carrot
+
+- type: Tag
+  id: CarrotFries
 
 - type: Tag
   id: Carpet
@@ -161,6 +176,9 @@
 - type: Tag
   id: CluwneHorn
 
+- type: Tag #Ohioans die happy
+  id: Corn
+
 - type: Tag
   id: Crayon
 
@@ -208,6 +226,9 @@
 
 - type: Tag
   id: ComputerTelevisionCircuitboard
+
+- type: Tag
+  id: CubanCarp
 
 - type: Tag
   id: Debug
@@ -261,6 +282,9 @@
   id: ExplosivePassable
 
 - type: Tag
+  id: Figurine
+
+- type: Tag
   id: FireAlarm
 
 - type: Tag
@@ -303,6 +327,9 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
+  id: Galaxythistle
+
+- type: Tag
   id: GasScrubber
 
 - type: Tag
@@ -326,6 +353,28 @@
 - type: Tag
   id: GuideEmbeded
 
+
+- type: Tag
+  id: Hamster
+
+- type: Tag
+  id: HamtrCentralControlModule
+
+- type: Tag
+  id: HamtrPeripheralsControlModule
+
+- type: Tag
+  id: HamtrLArm
+
+- type: Tag
+  id: HamtrLLeg
+
+- type: Tag
+  id: HamtrRLeg
+
+- type: Tag
+  id: HamtrRArm
+
 - type: Tag
   id: Handcuffs
 
@@ -335,9 +384,6 @@
 
 - type: Tag
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
-
-- type: Tag
-  id: HardsuitEVA
 
 - type: Tag
   id: Head
@@ -391,6 +437,9 @@
   id: Ingot
 
 - type: Tag
+  id: InstantDoAfters
+
+- type: Tag
   id: IntercomElectronics
 
 - type: Tag
@@ -414,6 +463,12 @@
 
 - type: Tag
   id: LavaBrig
+
+- type: Tag
+  id: Lemon
+
+- type: Tag
+  id: Lime
 
 - type: Tag
   id: Machete
@@ -508,6 +563,9 @@
   id: Mop
 
 - type: Tag
+  id: Mouse
+
+- type: Tag
   id: Multitool
 
 - type: Tag
@@ -535,6 +593,9 @@
   id: PaintableAirlock
 
 - type: Tag
+  id: Pancake
+
+- type: Tag
   id: PercussionInstrument
 
 - type: Tag
@@ -542,6 +603,9 @@
 
 - type: Tag
   id: Pickaxe
+
+- type: Tag
+  id: Pie
 
 - type: Tag
   id: PillCanister
@@ -572,6 +636,9 @@
 
 - type: Tag
   id: Powerdrill
+
+- type: Tag
+  id: PrisonUniform
 
 - type: Tag
   id: ProximitySensor
@@ -635,6 +702,9 @@
   id: ShellShotgun
 
 - type: Tag
+  id: Shiv
+
+- type: Tag
   id: ShoesRequiredStepTriggerImmune
 
 - type: Tag
@@ -642,6 +712,9 @@
 
 - type: Tag
   id: SkeletonMotorcycleKeys
+
+- type: Tag
+  id: SmallMech
 
 - type: Tag
   id: Smokable
@@ -654,6 +727,9 @@
 
 - type: Tag
   id: SolarTrackerElectronics
+
+- type: Tag
+  id: Soup
 
 - type: Tag
   id: Spray
@@ -686,6 +762,9 @@
   id: SubdermalImplant
 
 - type: Tag
+  id: SuitEVA
+
+- type: Tag
   id: SurveillanceCameraMonitorCircuitboard
 
 - type: Tag
@@ -711,6 +790,9 @@
 
 - type: Tag
   id: TimerSignalElectronics
+
+- type: Tag
+  id: Toolbox
 
 - type: Tag
   id: Trash

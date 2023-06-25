@@ -22,6 +22,7 @@
       - id: PlushieAtmosian
       - id: PlushieDiona
       - id: PlushieXeno
+      - id: PlushieHampter
 
 - type: entity
   id: CrateFunInstrumentsVariety
@@ -236,7 +237,7 @@
       - id: ClothingOuterCoatPirate
       - id: ClothingShoesBootsLaceup
         amount: 2
-      - id: HatBandRed
+      - id: ClothingHeadBandRed
       - id: FoamCutlass
         amount: 2
 
