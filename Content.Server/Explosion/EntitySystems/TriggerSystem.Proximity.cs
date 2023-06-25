@@ -5,7 +5,10 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
+using Robust.Shared.Physics;
+using System.Linq;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -72,9 +75,36 @@ public sealed partial class TriggerSystem
             collisionLayer: (int) (CollisionGroup.MidImpassable | CollisionGroup.LowImpassable | CollisionGroup.HighImpassable));
     }
 
+    private bool ShouldCollideThroughWall(EntityUid uid, TriggerOnProximityComponent component,ref StartCollideEvent args)
+    {
+        if (component.TriggerBehindWall)
+            return true;
+
+
+        if (TryComp<TransformComponent>(uid, out var entTransform) &&
+                TryComp<TransformComponent>(args.OtherBody.Owner, out var otherTranform))
+        {
+            SharedPhysicsSystem physSystem = EntityManager.System<SharedPhysicsSystem>();
+
+            var startPos = otherTranform.MapPosition.Position;
+            var endPos = entTransform.MapPosition.Position;
+
+            float distance = (startPos - endPos).Length;
+
+            var rayRes = physSystem.IntersectRay(otherTranform.MapID, new CollisionRay(startPos, (endPos - startPos).Normalized, (int)CollisionGroup.Impassable), distance/2).ToList();
+
+            if (!rayRes.Any())
+                return true;
+        }
+        return false;
+    }
+
     private void OnProximityStartCollide(EntityUid uid, TriggerOnProximityComponent component, ref StartCollideEvent args)
     {
         if (args.OurFixture.ID != TriggerOnProximityComponent.FixtureID) return;
+
+        if (!ShouldCollideThroughWall(uid, component, ref args))
+            return;
 
         _activeProximities.Add(component);
         component.Colliding.Add(args.OtherBody);
