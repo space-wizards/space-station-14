@@ -30,7 +30,8 @@ ban-banned-permanent-appeal = This ban will only be removed via appeal. You can 
 ban-expires = This ban is for {$duration} minutes and will expire at {$time} UTC.
 ban-banned-1 = You, or another user of this computer or connection, are banned from playing here.
 ban-banned-2 = The ban reason is: "{$reason}"
-ban-banned-3 = Attempts to circumvent this ban such as creating a new account will be logged.
+ban-banned-3 = If you don't agree with the sanction, you can apeal it in our Discord: https://discord.gg/ss220
+ban-banned-4 = Attempts to circumvent this ban such as creating a new account will be logged.
 
 soft-player-cap-full = The server is full!
 panic-bunker-account-denied = This server is in panic bunker mode. New connections are not being accepted at this time. Try again later
