@@ -127,14 +127,11 @@
           prob: 0.25
         - id: StrangePill
           prob: 0.20
-<<<<<<< HEAD
         - id: ModularReceiver
           prob: 0.1
-=======
         - id: DrinkSpaceGlue
           prob: 0.20
 
->>>>>>> master
 - type: entity
   id: ClosetWallMaintenanceFilledRandom
   parent: ClosetWall
@@ -175,6 +172,8 @@
         - id: ClothingHandsGlovesColorYellowBudget
           prob: 0.25
         - id: StrangePill
+          prob: 0.20
+        - id: DrinkSpaceGlue
           prob: 0.20
         - id: ModularReceiver
           prob: 0.1

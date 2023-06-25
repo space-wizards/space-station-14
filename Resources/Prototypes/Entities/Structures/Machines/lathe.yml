@@ -85,9 +85,7 @@
       - GasAnalyzer
       - UtilityBelt
       - Pickaxe
-<<<<<<< HEAD
       - ModularReceiver
-=======
       - AppraisalTool
       - SheetRGlass
       - Beaker
@@ -113,7 +111,6 @@
       - SubstationMachineCircuitboard
       - CellRechargerCircuitboard
       - WeaponCapacitorRechargerCircuitboard
->>>>>>> master
   - type: StaticPrice
     price: 800
 
