@@ -140,8 +140,6 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: AccessReader
-    access: [["Armory"]]
 
 - type: entity
   parent: VendingMachine
