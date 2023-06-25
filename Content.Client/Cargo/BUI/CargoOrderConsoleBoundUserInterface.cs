@@ -2,6 +2,7 @@ using Content.Shared.Cargo;
 using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Events;
+using Content.Shared.Cargo.Orders;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;

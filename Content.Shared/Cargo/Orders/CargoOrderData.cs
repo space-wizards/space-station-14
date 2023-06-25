@@ -1,10 +1,10 @@
-using Robust.Shared.Serialization;
-using Content.Shared.Access.Components;
 using System.Text;
-namespace Content.Shared.Cargo
+using Robust.Shared.Serialization;
+
+namespace Content.Shared.Cargo.Orders
 {
     [NetSerializable, Serializable]
-    public sealed class CargoOrderData
+    public abstract class CargoOrderData
     {
         /// <summary>
         /// Price when the order was added.
@@ -15,16 +15,6 @@ namespace Content.Shared.Cargo
         /// A unique (arbitrary) ID which identifies this order.
         /// </summary>
         public readonly int OrderId;
-
-        /// <summary>
-        /// Entity to use as the order. Overrides <see cref="ProductId"/> and <see cref="OrderQuantity"/>
-        /// </summary>
-        public readonly EntityUid? OrderEntity;
-
-        /// <summary>
-        /// Prototype Id for the item to be created
-        /// </summary>
-        public readonly string ProductId;
 
         /// <summary>
         /// The number of items in the order. Not readonly, as it might change
@@ -44,24 +34,11 @@ namespace Content.Shared.Cargo
         public  bool Approved => Approver is not null;
         public string? Approver;
 
-        public CargoOrderData(int orderId, string productId, int price, int amount, string requester, string reason)
+        public CargoOrderData(int orderId, int price, int amount, string requester, string reason)
         {
             OrderId = orderId;
-            OrderEntity = null;
-            ProductId = productId;
             Price = price;
             OrderQuantity = amount;
-            Requester = requester;
-            Reason = reason;
-        }
-
-        public CargoOrderData(int orderId, EntityUid orderEntityUid, int price, string requester, string reason)
-        {
-            OrderId = orderId;
-            OrderEntity = orderEntityUid;
-            ProductId = "";
-            Price = price;
-            OrderQuantity = 1;
             Requester = requester;
             Reason = reason;
         }
