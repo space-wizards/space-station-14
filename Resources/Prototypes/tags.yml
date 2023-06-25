@@ -2,6 +2,9 @@
   id: EnergySword
 
 - type: Tag
+  id: ToySword
+
+- type: Tag
   id: AirAlarm
 
 - type: Tag
