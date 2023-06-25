@@ -19,10 +19,30 @@ namespace Content.Client.Options.UI.Tabs
         {
             0f,
             0.75f,
+            0.8f,
+            0.85f,
+            0.9f,
+            0.95f,
             1f,
+            1.05f,
+            1.1f,
+            1.15f,
+            1.20f,
             1.25f,
+            1.3f,
+            1.35f,
+            1.4f,
+            1.45f,
             1.50f,
+            1.55f,
+            1.6f,
+            1.65f,
+            1.7f,
             1.75f,
+            1.8f,
+            1.85f,
+            1.9f,
+            1.95f,
             2f
         };
 
@@ -46,10 +66,30 @@ namespace Content.Client.Options.UI.Tabs
             UIScaleOption.AddItem(Loc.GetString("ui-options-scale-auto",
                                                 ("scale", UserInterfaceManager.DefaultUIScale)));
             UIScaleOption.AddItem(Loc.GetString("ui-options-scale-75"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-80"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-85"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-90"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-95"));
             UIScaleOption.AddItem(Loc.GetString("ui-options-scale-100"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-105"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-110"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-115"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-120"));
             UIScaleOption.AddItem(Loc.GetString("ui-options-scale-125"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-130"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-135"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-140"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-145"));
             UIScaleOption.AddItem(Loc.GetString("ui-options-scale-150"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-155"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-160"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-165"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-170"));
             UIScaleOption.AddItem(Loc.GetString("ui-options-scale-175"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-180"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-185"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-190"));
+            UIScaleOption.AddItem(Loc.GetString("ui-options-scale-195"));
             UIScaleOption.AddItem(Loc.GetString("ui-options-scale-200"));
             UIScaleOption.OnItemSelected += OnUIScaleChanged;
 
