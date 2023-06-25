@@ -33,18 +33,18 @@ public abstract class SharedReflectSystem : EntitySystem
         SubscribeLocalEvent<HandsComponent, ProjectileReflectAttemptEvent>(OnHandReflectProjectile);
         SubscribeLocalEvent<HandsComponent, HitScanReflectAttemptEvent>(OnHandsReflectHitscan);
 
-        SubscribeLocalEvent<ReflectComponent, ProjectileCollideEvent>(OnReflectCollide);
+        SubscribeLocalEvent<ReflectComponent, ProjectileReflectAttemptEvent>(OnReflectCollide);
         SubscribeLocalEvent<ReflectComponent, HitScanReflectAttemptEvent>(OnReflectHitscan);
     }
 
-    private void OnReflectCollide(EntityUid uid, ReflectComponent component, ref ProjectileCollideEvent args)
+    private void OnReflectCollide(EntityUid uid, ReflectComponent component, ref ProjectileReflectAttemptEvent args)
     {
         if (args.Cancelled)
         {
             return;
         }
 
-        if (TryReflectProjectile(uid, args.OtherEntity, reflect: component))
+        if (TryReflectProjectile(uid, args.ProjUid, reflect: component))
             args.Cancelled = true;
     }
 

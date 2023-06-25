@@ -7,13 +7,13 @@ using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
+using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Rounding;
 using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
-using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -31,8 +31,6 @@ public sealed class StaminaSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
 
-    private const string CollideFixture = "projectile";
-
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
     /// </summary>
@@ -48,7 +46,7 @@ public sealed class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, ComponentHandleState>(OnStamHandleState);
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
-        SubscribeLocalEvent<StaminaDamageOnCollideComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnCollide);
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnHit);
     }
 
@@ -208,11 +206,9 @@ public sealed class StaminaSystem : EntitySystem
         }
     }
 
-    private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, ref StartCollideEvent args)
+    private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, ref ProjectileHitEvent args)
     {
-        if (!args.OurFixture.ID.Equals(CollideFixture)) return;
-
-        TakeStaminaDamage(args.OtherEntity, component.Damage, source:args.OurEntity);
+        TakeStaminaDamage(args.Target, component.Damage, source: uid);
     }
 
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
