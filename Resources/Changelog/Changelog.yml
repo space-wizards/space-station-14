@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Remove kvass., type: Remove}
-  id: 3587
-  time: '2023-04-30T07:16:15.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Flares no longer flicker., type: Tweak}
   id: 3588
   time: '2023-04-30T17:56:17.0000000+00:00'
@@ -2938,3 +2933,9 @@ Entries:
   - {message: Some little typos in guidebook, type: Fix}
   id: 4086
   time: '2023-06-24T20:07:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The size of an item now scales with the amount of items in a stack.
+      A single sheet of metal takes up less space than a stack of 30., type: Add}
+  id: 4087
+  time: '2023-06-25T15:44:37.0000000+00:00'
