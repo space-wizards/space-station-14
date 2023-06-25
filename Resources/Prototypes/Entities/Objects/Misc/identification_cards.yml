@@ -477,8 +477,8 @@
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
-    tags:
-    - Maintenance
+    groups:
+    - AllAccess
 
 - type: entity
   parent: IDCardStandard
