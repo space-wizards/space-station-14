@@ -2,7 +2,6 @@ using Robust.Shared.Audio;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Cluwne;
@@ -29,21 +28,33 @@ public sealed class CluwneComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float Cluwinification = 0.15f;
 
-    [DataField("cluwneRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
-    public readonly string CluwneRoleId = "Cluwne Beast";
-
+    /// <summary>
+    /// Should be true if this is a cluwne.
+    /// </summary>
     [DataField("isCluwne")]
     public bool IsCluwne = true;
 
+    /// <summary>
+    /// The autoemote sound to play.
+    /// </summary>
     [DataField("autoEmoteSound")]
     public readonly string AutoEmoteSound = "CluwneGiggle";
 
+    /// <summary>
+    /// If this is true then has a % chance to transform target into a cluwne when hit with melee.
+    /// </summary>
     [DataField("cluwneOnMelee")]
     public bool CluwneOnMelee = false;
 
+    /// <summary>
+    /// Portal proto id.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("portal", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Portal = "PortalGreeny";
 
+    /// <summary>
+    /// Should be true if this is cluwnebeast.
+    /// </summary>
     [DataField("isBeast")]
     public bool IsBeast = false;
 
@@ -64,4 +75,10 @@ public sealed class CluwneComponent : Component
 
     [DataField("cluwnesound")]
     public SoundSpecifier CluwneSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg");
+
+    /// <summary>
+    /// Portal sound for beast arrival.
+    /// </summary>
+    [DataField("arrivalSound")]
+    public SoundSpecifier ArrivalSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
 }

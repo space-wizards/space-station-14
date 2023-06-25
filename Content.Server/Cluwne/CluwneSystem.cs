@@ -14,14 +14,11 @@ using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cluwne;
 using Content.Shared.Interaction.Components;
-using Content.Shared.Stealth.Components;
 using Content.Server.Abilities.Mime;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
-using Content.Server.StationEvents.Components;
-using Content.Server.Chat.Managers;
 
 namespace Content.Server.Cluwne;
 
@@ -54,25 +51,13 @@ public sealed class CluwneSystem : EntitySystem
     private void OnMobState(EntityUid uid, CluwneComponent component, MobStateChangedEvent args)
     {
 
-        if (args.NewMobState == MobState.Alive && component.IsBeast == true)
-        {
-            EnsureComp<StealthOnMoveComponent>(uid);
-        }
-
-        if (args.NewMobState == MobState.Critical && component.IsBeast == true)
-        {
-            RemComp<StealthOnMoveComponent>(uid);
-        }
-
         if (args.NewMobState == MobState.Dead && component.IsBeast == true)
         {
-            RemComp<StealthOnMoveComponent>(uid);
             RemComp<AutoEmoteComponent>(uid);
         }
 
-
         if (args.NewMobState == MobState.Dead && component.IsCluwne)
-		{
+        {
             RemComp<CluwneComponent>(uid);
             RemComp<ClumsyComponent>(uid);
             RemComp<AutoEmoteComponent>(uid);
@@ -111,6 +96,7 @@ public sealed class CluwneSystem : EntitySystem
         {
             Spawn(component.Portal, Transform(uid).Coordinates);
             SetOutfitCommand.SetOutfit(uid, "CluwneBeastGear", EntityManager);
+            _audio.PlayPvs(component.ArrivalSound, uid);
         }
     }
 
