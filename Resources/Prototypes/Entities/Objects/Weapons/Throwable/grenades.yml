@@ -1,4 +1,3 @@
-# TODO probably needs a base grenade
 - type: entity
   abstract: true
   parent: BaseItem
@@ -90,7 +89,7 @@
 
 - type: entity
   name: syndicate minibomb
-  description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
+  description: A syndicate-manufactured explosive used to sow destruction and cause chaos.
   parent: GrenadeBase
   id: SyndieMiniBomb
   components:
@@ -101,9 +100,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Minibomb
-    totalIntensity: 200
-    intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
-    maxIntensity: 60
+    totalIntensity: 700
+    intensitySlope: 16 #If it's any lower then it feels really weak. If you're nerfing the minibomb, probably don't change just this value!
+    maxIntensity: 295 
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
