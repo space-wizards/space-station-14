@@ -1,0 +1,12 @@
+- type: entity #коронер печать патологоанатом rubber stamp
+  name: coroner rubber stamp
+  parent: RubberStampMime
+  id: RubberStampCoroner
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-coroner
+    stampState: "paper_stamp-coroner"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-coroner
+    netsync: false
