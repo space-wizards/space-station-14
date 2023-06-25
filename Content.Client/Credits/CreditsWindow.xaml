@@ -9,15 +9,15 @@
                           Margin="2 2 0 0">
                 <!-- Contributors get added here by code -->
             </BoxContainer>
-        </ScrollContainer>
-        <ScrollContainer Name="PatronsTab"
-                         HScrollEnabled="False">
-            <BoxContainer Name="PatronsContainer"
-                          Orientation="Vertical"
-                          Margin="2 2 0 0">
+        <!-- </ScrollContainer> -->
+        <!-- <ScrollContainer Name="PatronsTab" -->
+                         <!-- HScrollEnabled="False"> -->
+            <!-- <BoxContainer Name="PatronsContainer" -->
+                          <!-- Orientation="Vertical" -->
+                          <!-- Margin="2 2 0 0"> -->
                 <!-- Patrons get added here by code -->
-            </BoxContainer>
-        </ScrollContainer>
+            <!-- </BoxContainer> -->
+        <!-- </ScrollContainer> -->
         <ScrollContainer Name="LicensesTab"
                          HScrollEnabled="False">
             <BoxContainer Name="LicensesContainer"

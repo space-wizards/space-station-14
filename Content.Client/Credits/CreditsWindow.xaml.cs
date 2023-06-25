@@ -38,11 +38,11 @@ namespace Content.Client.Credits
             RobustXamlLoader.Load(this);
 
             TabContainer.SetTabTitle(Ss14ContributorsTab, Loc.GetString("credits-window-ss14contributorslist-tab"));
-            TabContainer.SetTabTitle(PatronsTab, Loc.GetString("credits-window-patrons-tab"));
+            //TabContainer.SetTabTitle(PatronsTab, Loc.GetString("credits-window-patrons-tab"));
             TabContainer.SetTabTitle(LicensesTab, Loc.GetString("credits-window-licenses-tab"));
 
             PopulateContributors(Ss14ContributorsContainer);
-            PopulatePatrons(PatronsContainer);
+            //PopulatePatrons(PatronsContainer);
             PopulateLicenses(LicensesContainer);
         }
 
