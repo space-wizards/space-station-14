@@ -59,10 +59,10 @@ public sealed class ContentReplayPlaybackManager
         _loadMan.LoadOverride += LoadOverride;
     }
 
-    private void LoadOverride(IWritableDirProvider dir, ResPath resPath)
+    private void LoadOverride(IReplayFileReader fileReader)
     {
         var screen = _stateMan.RequestStateChange<LoadingScreen<bool>>();
-        screen.Job = new ContentLoadReplayJob(1/60f, dir, resPath, _loadMan, screen);
+        screen.Job = new ContentLoadReplayJob(1/60f, fileReader, _loadMan, screen);
         screen.OnJobFinished += (_, e) => OnFinishedLoading(e);
     }
 
