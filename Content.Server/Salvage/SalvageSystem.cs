@@ -367,7 +367,6 @@ namespace Content.Server.Salvage
                 var salvXForm = Transform(ent);
                 _transform.SetParent(ent, salvXForm, _mapManager.GetMapEntityId(spawnLocation.MapId));
                 _transform.SetWorldPosition(salvXForm, spawnLocation.Position);
-                RaiseLocalEvent(ent, new LocalStructureLoadedEvent());
             }
             else if (salvageProto != null)
             {
