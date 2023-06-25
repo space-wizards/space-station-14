@@ -1,10 +1,12 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Launcher;
 using Content.Client.MainMenu;
+using Content.Client.Replay.Spectator;
 using Content.Client.Replay.UI.Loading;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
+using Content.Shared.GameWindow;
 using Content.Shared.Hands;
 using Content.Shared.Instruments;
 using Content.Shared.Popups;
@@ -16,6 +18,7 @@ using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
+using Robust.Client.Player;
 using Robust.Client.Replays.Loading;
 using Robust.Client.Replays.Playback;
 using Robust.Client.State;
@@ -38,6 +41,7 @@ public sealed class ContentReplayPlaybackManager
     [Dependency] private readonly IReplayPlaybackManager _playback = default!;
     [Dependency] private readonly IClientConGroupController _conGrp = default!;
     [Dependency] private readonly IClientAdminManager _adminMan = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     /// <summary>
     /// UI state to return to when stopping a replay or loading fails.
@@ -109,10 +113,13 @@ public sealed class ContentReplayPlaybackManager
         switch (message)
         {
             case BoundUserInterfaceMessage: // TODO REPLAYS refactor BUIs
-            case TickerJoinGameEvent: // Don't change UI state when player joins the game
-            case TickerJoinLobbyEvent:
+            case RequestWindowAttentionEvent:
                 // Mark as handled -- the event won't get raised.
                 return true;
+            case TickerJoinGameEvent:
+                if (!_entMan.EntityExists(_player.LocalPlayer?.ControlledEntity))
+                    _entMan.System<ReplaySpectatorSystem>().SetSpectatorPosition(default);
+                return false;
         }
 
         if (!skipEffects)
