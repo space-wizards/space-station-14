@@ -119,7 +119,7 @@ public sealed class ContentReplayPlaybackManager
             case TickerJoinGameEvent:
                 if (!_entMan.EntityExists(_player.LocalPlayer?.ControlledEntity))
                     _entMan.System<ReplaySpectatorSystem>().SetSpectatorPosition(default);
-                return false;
+                return true;
         }
 
         if (!skipEffects)
