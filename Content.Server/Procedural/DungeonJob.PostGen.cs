@@ -1,6 +1,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.NodeContainer;
+using Content.Shared.Decals;
+using Content.Shared.Doors.Components;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
@@ -337,6 +339,111 @@ public sealed partial class DungeonJob
                 }
 
                 break;
+            }
+        }
+    }
+
+    private async Task PostGen(CorridorDecalSkirtingPostGen decks, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
+    {
+        var directions = new ValueList<DirectionFlag>(4);
+        var pocketDirections = new ValueList<Direction>(4);
+        var doorQuery = _entManager.GetEntityQuery<DoorComponent>();
+        var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
+        var offset = new Vector2(-_grid.TileSize / 2f, -_grid.TileSize / 2f);
+        var color = decks.Color;
+
+        foreach (var tile in dungeon.CorridorTiles)
+        {
+            DebugTools.Assert(!dungeon.RoomTiles.Contains(tile));
+            directions.Clear();
+
+            // Do cardinals 1 step
+            // Do corners the other step
+            for (var i = 0; i < 4; i++)
+            {
+                var dir = (DirectionFlag) Math.Pow(2, i);
+                var neighbor = tile + dir.AsDir().ToIntVec();
+
+                var anc = _grid.GetAnchoredEntitiesEnumerator(neighbor);
+
+                while (anc.MoveNext(out var ent))
+                {
+                    if (!physicsQuery.TryGetComponent(ent, out var physics) ||
+                        !physics.CanCollide ||
+                        !physics.Hard ||
+                        doorQuery.HasComponent(ent.Value))
+                    {
+                        continue;
+                    }
+
+                    directions.Add(dir);
+                    break;
+                }
+            }
+
+            // Pockets
+            if (directions.Count == 0)
+            {
+                pocketDirections.Clear();
+
+                for (var i = 1; i < 5; i++)
+                {
+                    var dir = (Direction) (i * 2 - 1);
+                    var neighbor = tile + dir.ToIntVec();
+
+                    var anc = _grid.GetAnchoredEntitiesEnumerator(neighbor);
+
+                    while (anc.MoveNext(out var ent))
+                    {
+                        if (!physicsQuery.TryGetComponent(ent, out var physics) ||
+                            !physics.CanCollide ||
+                            !physics.Hard ||
+                            doorQuery.HasComponent(ent.Value))
+                        {
+                            continue;
+                        }
+
+                        pocketDirections.Add(dir);
+                        break;
+                    }
+                }
+
+                if (pocketDirections.Count == 1)
+                {
+                    if (decks.PocketDecals.TryGetValue(pocketDirections[0], out var cDir))
+                    {
+                        // Decals not being centered biting my ass again
+                        var gridPos = _grid.GridTileToLocal(tile).Offset(offset);
+                        _decals.TryAddDecal(cDir, gridPos, out _, color: color);
+                    }
+                }
+
+                continue;
+            }
+
+            if (directions.Count == 1)
+            {
+                if (decks.CardinalDecals.TryGetValue(directions[0], out var cDir))
+                {
+                    // Decals not being centered biting my ass again
+                    var gridPos = _grid.GridTileToLocal(tile).Offset(offset);
+                    _decals.TryAddDecal(cDir, gridPos, out _, color: color);
+                }
+
+                continue;
+            }
+
+            // Corners
+            if (directions.Count == 2)
+            {
+                // Auehghegueugegegeheh help me
+                var dirFlag = directions[0] | directions[1];
+
+                if (decks.CornerDecals.TryGetValue(dirFlag, out var cDir))
+                {
+                    var gridPos = _grid.GridTileToLocal(tile).Offset(offset);
+                    _decals.TryAddDecal(cDir, gridPos, out _, color: color);
+                }
             }
         }
     }

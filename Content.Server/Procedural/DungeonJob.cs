@@ -116,6 +116,9 @@ public sealed partial class DungeonJob : Job<Dungeon>
                 case CorridorPostGen cordor:
                     await PostGen(cordor, dungeon, _gridUid, _grid, random);
                     break;
+                case CorridorDecalSkirtingPostGen decks:
+                    await PostGen(decks, dungeon, _gridUid, _grid, random);
+                    break;
                 case EntranceFlankPostGen flank:
                     await PostGen(flank, dungeon, _gridUid, _grid, random);
                     break;
