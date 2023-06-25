@@ -301,3 +301,108 @@
                 SheetGlass:
                   min: 5
                   max: 5
+
+- type: entity
+  name: energy shield
+  parent: BaseItem
+  id: EnergyShield
+  description: Exotic energy shield, when folded, can even fit in your pocket.
+  components:
+    - type: ItemToggle
+      activatedDisarmMalus: 0.6
+      activateSound:
+        path: /Audio/Weapons/ebladeon.ogg
+      deActivateSound:
+        path: /Audio/Weapons/ebladeoff.ogg
+      offSize: 5
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/e_shield.rsi
+      layers:
+        - state: eshield-icon
+        - state: eshield-on
+          color: "#FFFFFF"
+          visible: false
+          shader: unshaded
+          map: [ "shield" ]
+    - type: Item
+      size: 5
+      sprite: Objects/Weapons/Melee/e_shield.rsi
+      heldPrefix: eshield
+    - type: UseDelay
+      delay: 0.5
+    - type: ToggleableLightVisuals
+      spriteLayer: shield
+      inhandVisuals:
+        left:
+          - state: inhand-left-shield
+            shader: unshaded
+        right:
+          - state: inhand-right-shield
+            shader: unshaded
+    - type: PointLight
+      netsync: false
+      enabled: false
+      radius: 1.5
+      energy: 2
+      color: blue
+    - type: Reflect
+      enabled: false
+      reflectProb: 0.95
+      reflects:
+        - Energy
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 1.0
+          Slash: 0.9
+          Piercing: 0.85
+          Heat: 0.6
+      activeBlockModifier:
+        coefficients:
+          Blunt: 1.2
+          Slash: 0.85
+          Piercing: 0.5
+          Heat: 0.4
+        flatReductions:
+          Heat: 1
+          Piercing: 1
+    - type: Appearance
+    - type: Damageable
+      damageContainer: Shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 180
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 150
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                BrokenEnergyShield:
+                  min: 1
+                  max: 1
+    - type: StaticPrice
+      price: 350
+
+- type: entity
+  name: broken energy shield
+  parent: BaseItem
+  id: BrokenEnergyShield
+  description: Something inside is burned out, it is no longer functional.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/e_shield.rsi
+      state: eshield-icon
+    - type: Item
+      sprite: Objects/Weapons/Melee/e_shield.rsi
+      size: 5
+      heldPrefix: eshield

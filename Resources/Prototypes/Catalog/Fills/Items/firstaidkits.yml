@@ -43,6 +43,8 @@
       - id: SyringeTranexamicAcid
       - id: PillIron
         amount: 5
+      - id: PillBicaridine
+        amount: 5
 
 - type: entity
   id: MedkitToxinFilled
@@ -111,6 +113,7 @@
       - id: HandheldHealthAnalyzer
       - id: SyringeEphedrine
       - id: SyringeTranexamicAcid
+      - id: SyringeBicaridine
       - id: AntiPoisonMedipen
       - id: Bloodpack
         amount: 2
