@@ -59,6 +59,11 @@ namespace Content.Shared.Cargo.Orders
 
         public abstract CargoOrderStringRepresentation ToPrettyString(EntityManager entityManager);
 
+        /// <summary>
+        /// Gets a duplicate of the order with a reduced, non-zero, amount
+        /// </summary>
+        /// <param name="amount">Amount to use for the new order</param>
+        /// <returns>The reduced duplicate order</returns>
         public abstract CargoOrderData GetReducedOrder(int amount);
     }
 }
