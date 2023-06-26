@@ -45,6 +45,32 @@
     price: 100
 
 - type: entity
+  name: combat baton
+  parent: BaseItem
+  id: Combatbaton
+  description: A rigid, steel-studded baton, meant to harm.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/combat_baton.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 17
+  - type: Item
+    size: 30
+  - type: Clothing
+    sprite: Objects\Weapons\Melee\combat_baton.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: DisarmMalus
+    malus: 0.225
+  - type: Appearance
+  - type: StaticPrice
+    price: 100
+
+- type: entity
   name: flash
   parent: BaseItem
   id: Flash
