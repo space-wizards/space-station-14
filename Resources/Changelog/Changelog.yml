@@ -1,9 +1,4 @@
 Entries:
-- author: MagnusCrowe
-  changes:
-  - {message: Added the paramedic role, type: Add}
-  id: 3592
-  time: '2023-05-01T07:13:57.0000000+00:00'
 - author: Nimfar
   changes:
   - {message: 'Three kinds of aggressive slimes, and their peaceful versions', type: Add}
@@ -2935,3 +2930,8 @@ Entries:
   - {message: Disallow tile placement close to other grids., type: Tweak}
   id: 4091
   time: '2023-06-26T03:00:17.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Add solar tracker electronics to the circuit printer, type: Add}
+  id: 4092
+  time: '2023-06-26T03:04:06.0000000+00:00'
