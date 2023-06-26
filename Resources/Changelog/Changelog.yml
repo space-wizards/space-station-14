@@ -1,27 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Remove kvass., type: Remove}
-  id: 3587
-  time: '2023-04-30T07:16:15.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Flares no longer flicker., type: Tweak}
-  id: 3588
-  time: '2023-04-30T17:56:17.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: 'Arachnids suffer less now from hunger decay, asphyxiation and slowdown
-      from damage.', type: Tweak}
-  - {message: Arachnids can now wear glasses.... somehow, type: Tweak}
-  id: 3589
-  time: '2023-05-01T01:05:25.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: Changed the side sprites of tactical vests to fix weird looking sprites
-      when wearing a rig and bandolier, type: Tweak}
-  id: 3590
-  time: '2023-05-01T02:16:29.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Entering your ringtone uplink code now locks and unlocks your uplink
@@ -2938,3 +2915,26 @@ Entries:
   - {message: Some little typos in guidebook, type: Fix}
   id: 4086
   time: '2023-06-24T20:07:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The size of an item now scales with the amount of items in a stack.
+      A single sheet of metal takes up less space than a stack of 30., type: Add}
+  id: 4087
+  time: '2023-06-25T15:44:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The salvage magnet can now pull in randomly generated asteroids stuffed
+      with ores., type: Add}
+  - {message: Salvages are much less likely to fail to be pulled in., type: Fix}
+  id: 4088
+  time: '2023-06-25T17:50:41.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed artifact rocks to spit out 2-3 fragments instead of 1, type: Tweak}
+  id: 4089
+  time: '2023-06-25T18:12:47.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added beachball to the arcade prizes!, type: Add}
+  id: 4090
+  time: '2023-06-26T02:07:02.0000000+00:00'

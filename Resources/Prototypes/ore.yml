@@ -32,6 +32,8 @@
 - type: ore
   id: OreArtifactFragment
   oreEntity: ArtifactFragment
+  minOreYield: 2
+  maxOreYield: 4
 
 - type: weightedRandom
   id: RandomOreDistributionStandard
