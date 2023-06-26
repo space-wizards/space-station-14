@@ -1,0 +1,27 @@
+- type: constructionGraph
+  id: DualToySword
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: DualToySword
+      completed:
+      - !type:GivePrototype
+        prototype: DualToySword
+      - !type:DeleteEntity
+      steps:
+      - tag: ToySword
+        name: toy sword
+        doAfter: 1
+
+  - node: DualToySword
+    edges:
+    - to: start
+      completed:
+      - !type:GivePrototype
+        prototype: ToySword
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Prying
+        doAfter: 1
