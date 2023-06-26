@@ -1,10 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: Changed the side sprites of tactical vests to fix weird looking sprites
-      when wearing a rig and bandolier, type: Tweak}
-  id: 3590
-  time: '2023-05-01T02:16:29.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Entering your ringtone uplink code now locks and unlocks your uplink
@@ -2939,3 +2933,8 @@ Entries:
   - {message: Changed artifact rocks to spit out 2-3 fragments instead of 1, type: Tweak}
   id: 4089
   time: '2023-06-25T18:12:47.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added beachball to the arcade prizes!, type: Add}
+  id: 4090
+  time: '2023-06-26T02:07:02.0000000+00:00'
