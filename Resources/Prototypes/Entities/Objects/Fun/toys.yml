@@ -853,6 +853,9 @@
       radius: 2
       energy: 2
       color: white
+    - type: Tag #Добавлено в оригинальный код
+      tags: 
+      - ToySword
     - type: Appearance
     - type: ToggleableLightVisuals
       spriteLayer: blade
@@ -869,6 +872,9 @@
       damage:
         types:
           Blunt: 0
+    - type: Construction #Добавлено в оригинальный код
+      graph: DualToySword
+      node: start
 
 - type: entity
   parent: BasePlushie
