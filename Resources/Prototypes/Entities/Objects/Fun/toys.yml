@@ -853,8 +853,8 @@
       radius: 2
       energy: 2
       color: white
-    - type: Tag
-      tags: #Добавлено в оригинальный код
+    - type: Tag #Добавлено в оригинальный код
+      tags: 
       - ToySword
     - type: Appearance
     - type: ToggleableLightVisuals
