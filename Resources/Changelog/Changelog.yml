@@ -1,10 +1,4 @@
 Entries:
-- author: lzk
-  changes:
-  - {message: Nuke agent role is now selected separately in the character customization
-      menu, type: Tweak}
-  id: 3596
-  time: '2023-05-01T14:20:56.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix up space cleaner and lots of changes to make it better., type: Tweak}
@@ -2937,3 +2931,9 @@ Entries:
       less sturdy.', type: Tweak}
   id: 4095
   time: '2023-06-26T20:33:50.0000000+00:00'
+- author: router
+  changes:
+  - {message: 'Added an alternative emotes prefix, \*. Note that it doesn''t get treated
+      any differently than the normal @ prefix.', type: Add}
+  id: 4096
+  time: '2023-06-26T21:20:09.0000000+00:00'
