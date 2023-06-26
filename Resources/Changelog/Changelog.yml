@@ -1,12 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Entering your ringtone uplink code now locks and unlocks your uplink
-      rather then directly opening it., type: Tweak}
-  - {message: 'When you set ringtone, if it is your uplink code it will not be saved.',
-    type: Tweak}
-  id: 3591
-  time: '2023-05-01T06:30:09.0000000+00:00'
 - author: MagnusCrowe
   changes:
   - {message: Added the paramedic role, type: Add}
@@ -2938,3 +2930,8 @@ Entries:
   - {message: Added beachball to the arcade prizes!, type: Add}
   id: 4090
   time: '2023-06-26T02:07:02.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Disallow tile placement close to other grids., type: Tweak}
+  id: 4091
+  time: '2023-06-26T03:00:17.0000000+00:00'
