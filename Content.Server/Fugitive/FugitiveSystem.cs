@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Fax;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.GameTicking;
@@ -12,7 +13,11 @@ using Content.Server.Objectives;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Roles;
 using Content.Shared.Roles;
+using Content.Shared.CCVar;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Configuration;
+using Robust.Shared.Random;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Fugitive;
 
@@ -24,6 +29,8 @@ public sealed class FugitiveSystem: EntitySystem
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] protected readonly GameTicker GameTicker = default!;
 
     public override void Initialize()
@@ -36,21 +43,28 @@ public sealed class FugitiveSystem: EntitySystem
     /// <summary>
     ///   When a mind is added to a fugitive, send wanted notices to all fax machines on all stations.
     /// </summary>
-    private void OnMindAdded(EntityUid entity, FugitiveComponent component, MindAddedMessage args)
+    private async void OnMindAdded(EntityUid entity, FugitiveComponent component, MindAddedMessage args)
     {
+        AddFugitiveRole(entity);
+
         if (component.WantedNoticeSent)
             return;
 
-        AddFugitiveRole(entity);
+        component.WantedNoticeSent = true;
+
+        // Give the fugitive a head start before sending wanted notices.
+        var minimumWantedNoticeDelay = _configManager.GetCVar(CCVars.SalvageExpeditionFugitiveWantedNoticeMinimumDelay);
+        var maximumWantedNoticeDelay = _configManager.GetCVar(CCVars.SalvageExpeditionFugitiveWantedNoticeMaximumDelay);
+        var delay = _random.Next(minimumWantedNoticeDelay, maximumWantedNoticeDelay);
+
+        // 15 minutes is the typical expedition mission time, so we'll use that as the default and add a random delay.
+        await Task.WhenAll(Timer.Delay(1000 * 60 * (15 + delay)));
 
         var stations = _stationSystem.GetStations();
         foreach (var station in stations)
         {
             SendWantedNotices(station, entity);
         }
-
-        component.WantedNoticeSent = true;
-
     }
 
     /// <summary>

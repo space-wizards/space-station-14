@@ -1395,6 +1395,18 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float>
             SalvageExpeditionFugitiveProbability = CVarDef.Create("salvage.expedition_fugitive_probability", 0.1f, CVar.SERVERONLY);
 
+        /// <summary>
+        ///   minimum minute delay between fugitive wanted notices.
+        /// </summary>
+        public static readonly CVarDef<int>
+            SalvageExpeditionFugitiveWantedNoticeMinimumDelay = CVarDef.Create("salvage.expedition_fugitive_wanted_notice_minimum_delay", 2, CVar.SERVERONLY);
+
+        /// <summary>
+        ///   maximum minute delay between fugitive wanted notices.
+        /// </summary>
+        public static readonly CVarDef<int>
+            SalvageExpeditionFugitiveWantedNoticeMaximumDelay = CVarDef.Create("salvage.expedition_fugitive_wanted_notice_maximum_delay", 10, CVar.SERVERONLY);
+
         /*
          * Flavor
          */
