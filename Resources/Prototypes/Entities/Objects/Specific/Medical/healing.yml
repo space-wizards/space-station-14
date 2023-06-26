@@ -96,6 +96,8 @@
   - type: Stack
     stackType: RegenerativeMesh
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   name: bruise pack
@@ -173,6 +175,8 @@
   - type: Stack
     stackType: MedicatedSuture
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   name: blood pack
