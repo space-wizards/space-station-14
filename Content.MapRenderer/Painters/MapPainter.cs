@@ -60,8 +60,9 @@ namespace Content.MapRenderer.Painters
 
             var tilePainter = new TilePainter(client, server);
             var entityPainter = new GridPainter(client, server);
-            MapGridComponent[] grids = null!;
+            (EntityUid Uid, MapGridComponent Grid)[] grids = null!;
             var xformQuery = sEntityManager.GetEntityQuery<TransformComponent>();
+            var xformSystem = sEntityManager.System<SharedTransformSystem>();
 
             await server.WaitPost(() =>
             {
@@ -73,12 +74,12 @@ namespace Content.MapRenderer.Painters
                 }
 
                 var mapId = sMapManager.GetAllMapIds().Last();
-                grids = sMapManager.GetAllMapGrids(mapId).ToArray();
+                grids = sMapManager.GetAllMapGrids(mapId).Select(o => (o.Owner, o)).ToArray();
 
                 foreach (var grid in grids)
                 {
-                    var gridXform = xformQuery.GetComponent(grid.Owner);
-                    gridXform.WorldRotation = Angle.Zero;
+                    var gridXform = xformQuery.GetComponent(grid.Uid);
+                    xformSystem.SetWorldRotation(gridXform, Angle.Zero);
                 }
             });
 
@@ -88,16 +89,16 @@ namespace Content.MapRenderer.Painters
             foreach (var grid in grids)
             {
                 // Skip empty grids
-                if (grid.LocalAABB.IsEmpty())
+                if (grid.Grid.LocalAABB.IsEmpty())
                 {
-                    Console.WriteLine($"Warning: Grid {grid.Owner} was empty. Skipping image rendering.");
+                    Console.WriteLine($"Warning: Grid {grid.Uid} was empty. Skipping image rendering.");
                     continue;
                 }
 
-                var tileXSize = grid.TileSize * TilePainter.TileImageSize;
-                var tileYSize = grid.TileSize * TilePainter.TileImageSize;
+                var tileXSize = grid.Grid.TileSize * TilePainter.TileImageSize;
+                var tileYSize = grid.Grid.TileSize * TilePainter.TileImageSize;
 
-                var bounds = grid.LocalAABB;
+                var bounds = grid.Grid.LocalAABB;
 
                 var left = bounds.Left;
                 var right = bounds.Right;
@@ -111,16 +112,16 @@ namespace Content.MapRenderer.Painters
 
                 await server.WaitPost(() =>
                 {
-                    tilePainter.Run(gridCanvas, grid);
-                    entityPainter.Run(gridCanvas, grid);
+                    tilePainter.Run(gridCanvas, grid.Uid, grid.Grid);
+                    entityPainter.Run(gridCanvas, grid.Uid, grid.Grid);
 
                     gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
                 });
 
                 var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas)
                 {
-                    GridUid = grid.Owner,
-                    Offset = xformQuery.GetComponent(grid.Owner).WorldPosition
+                    GridUid = grid.Uid,
+                    Offset = xformSystem.GetWorldPosition(grid.Uid),
                 };
 
                 yield return renderedImage;

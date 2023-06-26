@@ -16,7 +16,7 @@
   weight: 10
   startingGear: QuartermasterGear
   icon: "QuarterMaster"
-  supervisors: job-supervisors-hop
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - Cargo
