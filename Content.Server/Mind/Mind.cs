@@ -39,19 +39,19 @@ namespace Content.Server.Mind
         ///     The session ID of the player owning this mind.
         /// </summary>
         [ViewVariables, Access(typeof(MindSystem))]
-        public NetUserId? UserId { get; internal set; }
+        public NetUserId? UserId { get; set; }
 
         /// <summary>
         ///     The session ID of the original owner, if any.
         ///     May end up used for round-end information (as the owner may have abandoned Mind since)
         /// </summary>
-        [ViewVariables]
-        public NetUserId? OriginalOwnerUserId { get; }
+        [ViewVariables, Access(typeof(MindSystem))]
+        public NetUserId? OriginalOwnerUserId { get; set; }
 
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
 
-        [ViewVariables]
+        [ViewVariables, Access(typeof(MindSystem))]
         public EntityUid? VisitingEntity { get; set; }
 
         [ViewVariables]
@@ -78,8 +78,8 @@ namespace Content.Server.Mind
         ///     The entity currently owned by this mind.
         ///     Can be null.
         /// </summary>
-        [ViewVariables]
-        public EntityUid? OwnedEntity { get; internal set; }
+        [ViewVariables, Access(typeof(MindSystem))]
+        public EntityUid? OwnedEntity { get; set; }
 
         /// <summary>
         ///     An enumerable over all the roles this mind has.

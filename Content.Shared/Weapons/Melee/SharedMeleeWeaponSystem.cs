@@ -873,6 +873,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 // Unfortunately heat returns caustic group so can't just use the damagegroup in that instance.
                 case "Burn":
                 case "Heat":
+                case "Radiation":
                 case "Cold":
                     Audio.PlayPredicted(new SoundPathSpecifier("/Audio/Items/welder.ogg"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
                     break;
