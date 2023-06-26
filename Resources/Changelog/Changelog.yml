@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Camera rotation should be more responsive after recently traversing
-      a grid., type: Tweak}
-  id: 3594
-  time: '2023-05-01T08:29:35.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: RCD ammo can now be used partially without wasting any charges., type: Tweak}
@@ -2933,3 +2927,9 @@ Entries:
   - {message: Added taco and taco recipe!, type: Add}
   id: 4093
   time: '2023-06-26T03:05:08.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: The Head of Security's trenchcoat now clearly states it's armored.,
+    type: Tweak}
+  id: 4094
+  time: '2023-06-26T13:35:45.0000000+00:00'
