@@ -9,6 +9,9 @@
     sprite: Clothing/OuterClothing/Suits/eva.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva.rsi
+  - type: Tag
+    tags:
+    - SuitEVA
 
 #Syndicate EVA
 - type: entity

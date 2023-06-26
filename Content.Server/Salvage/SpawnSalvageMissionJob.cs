@@ -135,6 +135,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         expedition.EndTime = _timing.CurTime + mission.Duration;
         expedition.MissionParams = _missionParams;
         expedition.Difficulty = _missionParams.Difficulty;
+        expedition.Rewards = mission.Rewards;
 
         // Don't want consoles to have the incorrect name until refreshed.
         var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
@@ -216,14 +217,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             await SpawnDungeonLoot(dungeon, lootProto, mapUid, grid, random, reservedTiles);
         }
 
-        foreach (var (loot, count) in mission.Loot)
-        {
-            for (var i = 0; i < count; i++)
-            {
-                var lootProto = _prototypeManager.Index<SalvageLootPrototype>(loot);
-                await SpawnDungeonLoot(dungeon, lootProto, mapUid, grid, random, reservedTiles);
-            }
-        }
         return true;
     }
 
@@ -251,61 +244,9 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                         }
                     }
                     break;
-                // Spawns a cluster (like an ore vein) nearby.
-                case DungeonClusterLoot clusterLoot:
-                    await SpawnDungeonClusterLoot(dungeon!, clusterLoot, grid, random, reservedTiles);
-                    break;
             }
         }
     }
-
-    #region Loot
-
-    private async Task SpawnDungeonClusterLoot(
-        Dungeon dungeon,
-        DungeonClusterLoot loot,
-        MapGridComponent grid,
-        Random random,
-        List<Vector2i> reservedTiles)
-    {
-        var spawnTiles = new HashSet<Vector2i>();
-
-        for (var i = 0; i < loot.Points; i++)
-        {
-            var room = dungeon.Rooms[random.Next(dungeon.Rooms.Count)];
-            var clusterAmount = loot.ClusterAmount;
-            var spots = room.Tiles.ToList();
-            random.Shuffle(spots);
-
-            foreach (var spot in spots)
-            {
-                if (reservedTiles.Contains(spot))
-                    continue;
-
-                var anchored = grid.GetAnchoredEntitiesEnumerator(spot);
-
-                if (anchored.MoveNext(out _))
-                {
-                    continue;
-                }
-
-                clusterAmount--;
-                spawnTiles.Add(spot);
-
-                if (clusterAmount == 0)
-                    break;
-            }
-        }
-
-        foreach (var tile in spawnTiles)
-        {
-            await SuspendIfOutOfTime();
-            var proto = _prototypeManager.Index<WeightedRandomPrototype>(loot.Prototype).Pick(random);
-            _entManager.SpawnEntity(proto, grid.GridTileToLocal(tile));
-        }
-    }
-
-    #endregion
 
     #region Mission Specific
 

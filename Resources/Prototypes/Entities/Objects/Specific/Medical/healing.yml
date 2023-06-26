@@ -169,7 +169,7 @@
 
 # Pills
 - type: entity
-  name: dexalin pill
+  name: dexalin pill (10u)
   parent: Pill
   id: PillDexalin
   components:
@@ -182,7 +182,7 @@
           Quantity: 10
 
 - type: entity
-  name: dylovene pill
+  name: dylovene pill (10u)
   parent: Pill
   id: PillDylovene
   components:
@@ -195,7 +195,7 @@
           Quantity: 10
 
 - type: entity
-  name: hyronalin pill
+  name: hyronalin pill (10u)
   parent: Pill
   id: PillHyronalin
   components:
@@ -208,7 +208,7 @@
           Quantity: 10
 
 - type: entity
-  name: iron pill
+  name: iron pill (10u)
   parent: Pill
   id: PillIron
   components:
@@ -221,7 +221,7 @@
           Quantity: 10
 
 - type: entity
-  name: kelotane pill
+  name: kelotane pill (10u)
   parent: Pill
   id: PillKelotane
   components:
@@ -231,6 +231,19 @@
         maxVol: 20
         reagents:
         - ReagentId: Kelotane
+          Quantity: 10
+
+- type: entity
+  name: dermaline pill (10u)
+  parent: Pill
+  id: PillDermaline
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Dermaline
           Quantity: 10
 
 - type: entity
@@ -247,7 +260,7 @@
           Quantity: 15
 
 - type: entity
-  name: tricordrazine pill
+  name: tricordrazine pill (10u)
   parent: Pill
   id: PillTricordrazine
   components:

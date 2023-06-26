@@ -147,8 +147,8 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
                 ? "network-configurator-examine-mode-link"
                 : "network-configurator-examine-mode-list";
 
-            _label.SetMarkup(Loc.GetString("network-configurator-item-status-label",
-                ("mode", Loc.GetString(modeLocString)),
+            _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("network-configurator-item-status-label",
+                ("mode", Robust.Shared.Localization.Loc.GetString(modeLocString)),
                 ("keybinding", _keyBindingName)));
         }
     }
