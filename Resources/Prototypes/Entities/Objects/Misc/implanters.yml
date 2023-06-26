@@ -151,3 +151,21 @@
   components:
     - type: Implanter
       implant: MacroBombImplant
+
+- type: entity
+  id: CritRattleImplanter
+  name: crit rattle implanter
+  description: a single use implanter, the implant will inform anyone with access to the syndicate radio channel of your critical state.
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: CritRattleImplant
+
+- type: entity
+  id: DeathRattleImplanter
+  name: death rattle implanter
+  description: a single use implanter, the implant will start a fake bomb countdown and inform anyone with access to the syndicate radio channel of your death.
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: DeathRattleImplant

@@ -5,10 +5,13 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
+using Content.Server.Radio.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Payload.Components;
+using Robust.Shared.Prototypes;
+using Content.Shared.Radio;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Trigger;
@@ -53,6 +56,8 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly BodySystem _body = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly RadioSystem _radioSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -76,6 +81,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
             SubscribeLocalEvent<GibOnTriggerComponent, TriggerEvent>(HandleGibTrigger);
+            SubscribeLocalEvent<SubdermalImplantComponent, TriggerEvent>(HandleDeathRattleTrigger);
         }
 
         private void OnSpawnTrigger(EntityUid uid, SpawnOnTriggerComponent component, TriggerEvent args)
@@ -121,11 +127,25 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = true;
         }
 
+        private void HandleDeathRattleTrigger(EntityUid uid, SubdermalImplantComponent component, TriggerEvent args)
+        {
+            if (component.ImplantedEntity == null)
+                return;
+
+            var messageDead = Loc.GetString(component.messageDead, ("user", component.ImplantedEntity.Value));
+            var messageCrit = Loc.GetString(component.messageCrit, ("user", component.ImplantedEntity.Value));
+
+            if (messageDead != "")
+                _radioSystem.SendRadioMessage(uid, messageDead, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);
+            if (messageCrit != "")
+                _radioSystem.SendRadioMessage(uid, messageCrit, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);
+            args.Handled = true;
+        }
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, ref StartCollideEvent args)
         {
-			if(args.OurFixture.ID == component.FixtureID && (!component.IgnoreOtherNonHard || args.OtherFixture.Hard))
-				Trigger(component.Owner);
+            if (args.OurFixture.ID == component.FixtureID && (!component.IgnoreOtherNonHard || args.OtherFixture.Hard))
+                Trigger(component.Owner);
         }
 
         private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)

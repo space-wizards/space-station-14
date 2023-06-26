@@ -194,3 +194,36 @@
         - SubdermalImplant
         - HideContextMenu
         - MacroBomb
+
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: CritRattleImplant
+  name: crit rattle implant
+  description: sends a message to the Syndicate radio channel when you go unconscious.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      permanent: true
+      messageCrit: "deathrattle-implant-critical-message"
+    - type: TriggerOnMobstateChange
+      mobState: Critical
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: DeathRattleImplant
+  name: death rattle implant
+  description: triggers a fake bomb and sends a message to the Syndicate radio channel when you die.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      permanent: true
+      messageDead: "deathrattle-implant-dead-message"
+    - type: TriggerOnMobstateChange
+      mobState: Dead
+    - type: OnUseTimerTrigger
+      delay: 10
+      initialBeepDelay: 0
+      beepSound: /Audio/Machines/Nuke/general_beep.ogg
+      params:
+        volume: -2
