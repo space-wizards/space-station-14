@@ -30,14 +30,14 @@
       - id: Screwdriver
       - id: Crowbar
       - id: Wirecutter
-      - id: CableApcStack
-      - id: CableMVStack
+      - id: CableApcStack10
+      - id: CableMVStack10
       - id: trayScanner
         prob: 0.9
       - id: ClothingHandsGlovesColorYellow
         prob: 0.05
         orGroup: GlovesOrWires
-      - id: CableHVStack
+      - id: CableHVStack10
         orGroup: GlovesOrWires
 
 - type: entity

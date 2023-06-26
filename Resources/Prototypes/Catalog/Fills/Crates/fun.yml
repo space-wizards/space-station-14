@@ -261,6 +261,7 @@
       - id: VehicleUnicycleFolded
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
+      - id: BeachBall
 
 - type: entity
   id: CrateFunBikeHornImplants

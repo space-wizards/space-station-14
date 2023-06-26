@@ -100,7 +100,6 @@
       10: Dead
   - type: Stamina
     excess: 10
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -170,7 +169,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -215,7 +213,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: duck-0
-      sprite: Mobs/Animals/duck.rsi
+    sprite: Mobs/Animals/duck.rsi
   - type: Fixtures
     fixtures:
       fix1:
@@ -227,7 +225,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -266,12 +263,9 @@
   description: An adorable white duck, it's fluffy and soft!
   components:
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: duck-1
-      sprite: Mobs/Animals/duck.rsi
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -288,12 +282,9 @@
   description: An adorable brown duck, it's fluffy and soft!
   components:
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: duck-2
-      sprite: Mobs/Animals/duck.rsi
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -340,7 +331,6 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           butterfly: Rainbow
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -381,7 +371,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -453,7 +442,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -496,7 +484,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -551,7 +538,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goose
       sprite: Mobs/Animals/goose.rsi
-  - type: Appearance
   - type: Fixtures
     fixtures:
       fix1:
@@ -612,7 +598,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -656,7 +641,6 @@
         layer:
         - MobLayer
   - type: Physics
-  - type: Appearance
   - type: Inventory
     speciesId: kangaroo
     templateId: kangaroo
@@ -787,7 +771,6 @@
   - type: Body
     prototype: Primate
     requiredLegs: 1 # TODO: More than 1 leg
-  - type: Appearance
   - type: CreamPied
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
@@ -884,7 +867,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -914,6 +896,7 @@
     tags:
     - Trash
     - CannotSuicide
+    - Mouse
   - type: Respirator
     damage:
       types:
@@ -961,14 +944,11 @@
   id: MobMouse1
   components:
   - type: Sprite
-    drawdepth: SmallMobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-1
-      sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
     equippedPrefix: 1
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -977,22 +957,17 @@
         Base: dead-1
       Dead:
         Base: splat-1
-  - type: Bloodstream
-    bloodMaxVolume: 50
 
 - type: entity
   parent: MobMouse
   id: MobMouse2
   components:
   - type: Sprite
-    drawdepth: SmallMobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-2
-      sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    equippedPrefix: 1
-  - type: Appearance
+    equippedPrefix: 2
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1001,8 +976,6 @@
         Base: dead-2
       Dead:
         Base: splat-2
-  - type: Bloodstream
-    bloodMaxVolume: 50
 
 - type: entity
   name: lizard #Weh
@@ -1031,7 +1004,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1086,7 +1058,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1133,7 +1104,6 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1185,7 +1155,6 @@
         - FlyingMobMask
         layer:
         - FlyingMobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1232,7 +1201,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1289,7 +1257,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1407,7 +1374,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1470,7 +1436,7 @@
 
 - type: entity
   name: clown spider
-  parent: MobGiantSpider
+  parent: MobGiantSpiderAngry
   id: MobClownSpider
   description: Combines the two most terrifying things in existence, spiders and clowns.
   components:
@@ -1480,22 +1446,10 @@
       - map: ["enum.DamageStateVisualLayers.Base"]
         state: clown
         sprite: Mobs/Animals/clownspider.rsi
-    - type: Faction
-      factions:
-        - Xeno
-    - type: InputMover
-    - type: MobMover
-    - type: HTN
-      rootTask: SimpleHostileCompound
     - type: Butcherable
       spawned:
         - id: MaterialBananium1
           amount: 1
-    - type: GhostRole
-      makeSentient: true
-      name: ghost-role-information-giant-spider-name
-      description: ghost-role-information-giant-spider-description
-    - type: GhostTakeoverAvailable
     - type: DamageStateVisuals
       states:
         Alive:
@@ -1550,7 +1504,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: possum
     templateId: pet
@@ -1606,7 +1559,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: possum #close enough
     templateId: pet
@@ -1662,7 +1614,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: fox
     templateId: pet
@@ -1737,7 +1688,6 @@
         Base: corgi_dead
       Dead:
         Base: corgi_dead
-  - type: Appearance
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1770,7 +1720,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: narsian
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1832,7 +1781,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: puppy
-  - type: Appearance
   - type: Inventory
     speciesId: puppy
     templateId: pet
@@ -1873,7 +1821,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: cat
     templateId: pet
@@ -1916,12 +1863,9 @@
   description: Feline pet, very funny.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat2
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1930,9 +1874,6 @@
         Base: cat2_dead
       Dead:
         Base: cat2_dead
-  - type: Grammar
-    attributes:
-      gender: epicene
 
 - type: entity
   name: space cat
@@ -1941,12 +1882,9 @@
   description: Feline pet, prepared for the worst.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: spacecat
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1961,9 +1899,6 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
 
 - type: entity
   name: caracal cat
@@ -1972,12 +1907,10 @@
   description: Hilarious.
   components:
   - type: Sprite
-    drawdepth: Mobs
     sprite: Mobs/Pets/caracal.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: caracal_flop
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1986,9 +1919,6 @@
         Base: caracal_dead
       Dead:
         Base: caracal_dead
-  - type: Grammar
-    attributes:
-      gender: epicene
 
 - type: entity
   name: sloth
@@ -2017,7 +1947,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: sloth
     templateId: pet
@@ -2073,7 +2002,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: fox #close enough
     templateId: pet
@@ -2150,7 +2078,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 4
-  - type: Appearance
   - type: Inventory
     speciesId: hamster
     templateId: pet
@@ -2251,7 +2178,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: pig
     templateId: pet
