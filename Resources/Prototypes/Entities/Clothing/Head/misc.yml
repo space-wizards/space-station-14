@@ -172,3 +172,14 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/squiddy.rsi
   - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPrettyPinkBow
+  name: pretty pink bow
+  description: "You have an insatiable desire for pink."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/pretty-pink-bow.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/pretty-pink-bow.rsi
