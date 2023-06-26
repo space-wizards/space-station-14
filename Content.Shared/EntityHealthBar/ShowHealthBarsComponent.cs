@@ -1,5 +1,5 @@
 using Content.Shared.Damage.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.EntityHealthBar
 {
@@ -14,7 +14,7 @@ namespace Content.Shared.EntityHealthBar
         /// If not null, displays health bars of only that damage container.
         /// </summary>
 
-        [DataField("damageContainer", customTypeSerializer: typeof(PrototypeIdSerializer<DamageContainerPrototype>))]
-        public string? DamageContainer;
+        [DataField("damageContainers", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageContainerPrototype>))]
+        public List<string> DamageContainers = new();
     }
 }

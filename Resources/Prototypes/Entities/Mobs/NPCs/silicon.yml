@@ -266,9 +266,8 @@
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
 
-- type: entity
-  parent: MobSiliconBase
-  id: MobMimeBot
+    damageContainers: 
+    - Biological
   name: mimebot
   description: Why not give mimebot a friendly wave.
   components:

@@ -8,6 +8,8 @@
     sprite: Clothing/Eyes/Hud/diag.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/diag.rsi
+      damageContainers: 
+      - Inorganic
 
 - type: entity
   parent: ClothingEyesBase
@@ -21,7 +23,8 @@
     sprite: Clothing/Eyes/Hud/med.rsi
     component:
     - type: ShowHealthBars
-      damageContainer: Biological
+      damageContainers: 
+      - Biological
 
 - type: entity
   parent: ClothingEyesBase

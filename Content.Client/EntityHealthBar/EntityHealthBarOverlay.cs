@@ -24,7 +24,7 @@ public sealed class EntityHealthBarOverlay : Overlay
     private readonly Texture _barTexture;
     private readonly ShaderInstance _shader;
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
-    public string? DamageContainer;
+    public List<string> DamageContainers = new();
 
     public EntityHealthBarOverlay(IEntityManager entManager, IPrototypeManager protoManager)
     {
@@ -59,7 +59,7 @@ public sealed class EntityHealthBarOverlay : Overlay
                 continue;
             }
 
-            if (DamageContainer != null && dmg.DamageContainerID != DamageContainer)
+            if (dmg.DamageContainerID == null || !DamageContainers.Contains(dmg.DamageContainerID))
                 continue;
 
             var worldPosition = _transform.GetWorldPosition(xform);
