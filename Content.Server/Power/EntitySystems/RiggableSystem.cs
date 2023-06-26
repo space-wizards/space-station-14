@@ -55,14 +55,6 @@ public sealed class RiggableSystem : EntitySystem
         if (component.IsRigged)
         {
             _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(uid)} has been rigged up to explode when used.");
-
-            // Check if its the stun baton getting rigged
-            if (!TryComp<StunbatonComponent>(uid, out var stunbatonComponent))
-                return;
-
-            // If it is AND is activated - explode it
-            if (stunbatonComponent.Activated)
-                Explode(uid, battery, uid);
         }
     }
 

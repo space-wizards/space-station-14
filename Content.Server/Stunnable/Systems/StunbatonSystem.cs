@@ -1,3 +1,4 @@
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Events;
@@ -28,6 +29,7 @@ namespace Content.Server.Stunnable.Systems
 
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<StunbatonComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
             SubscribeLocalEvent<StunbatonComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
         }
@@ -129,6 +131,16 @@ namespace Content.Server.Stunnable.Systems
 
             SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
             comp.Activated = true;
+        }
+
+        // https://github.com/space-wizards/space-station-14/pull/17288#discussion_r1241213341
+        private void OnSolutionChange(EntityUid uid, StunbatonComponent component, SolutionChangedEvent args)
+        {
+            // Explode if baton is activated and rigged.
+            if (TryComp<RiggableComponent>(uid, out var riggable))
+                if (TryComp<BatteryComponent>(uid, out var battery))
+                    if (component.Activated && riggable.IsRigged)
+                        _riggableSystem.Explode(uid, battery);
         }
 
         private void SendPowerPulse(EntityUid target, EntityUid? user, EntityUid used)
