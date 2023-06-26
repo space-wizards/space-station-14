@@ -132,8 +132,15 @@ namespace Content.Server.Explosion.EntitySystems
             if (component.ImplantedEntity == null)
                 return;
 
-            var messageDead = Loc.GetString(component.messageDead, ("user", component.ImplantedEntity.Value));
-            var messageCrit = Loc.GetString(component.messageCrit, ("user", component.ImplantedEntity.Value));
+            var ownerXform = Transform(uid);
+
+            var pos =  ownerXform.MapPosition;
+            var x = (int) pos.X;
+            var y = (int) pos.Y;
+            var posText = $"({x}, {y})";
+
+            var messageDead = Loc.GetString(component.messageDead, ("user", component.ImplantedEntity.Value), ("position", posText));
+            var messageCrit = Loc.GetString(component.messageCrit, ("user", component.ImplantedEntity.Value), ("position", posText));
 
             if (messageDead != "")
                 _radioSystem.SendRadioMessage(uid, messageDead, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);

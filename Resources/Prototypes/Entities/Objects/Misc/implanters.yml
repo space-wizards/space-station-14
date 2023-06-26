@@ -155,7 +155,7 @@
 - type: entity
   id: CritRattleImplanter
   name: crit rattle implanter
-  description: a single use implanter, the implant will inform anyone with access to the syndicate radio channel of your critical state.
+  description: a single use implanter, the implant will inform anyone with access to the syndicate radio channel of your critical state and location.
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter

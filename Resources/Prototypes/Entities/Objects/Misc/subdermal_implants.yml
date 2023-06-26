@@ -200,7 +200,7 @@
   parent: BaseSubdermalImplant
   id: CritRattleImplant
   name: crit rattle implant
-  description: sends a message to the Syndicate radio channel when you go unconscious.
+  description: sends a message with your location to the syndicate radio channel when you lose consciousness.
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -213,7 +213,7 @@
   parent: BaseSubdermalImplant
   id: DeathRattleImplant
   name: death rattle implant
-  description: triggers a fake bomb and sends a message to the Syndicate radio channel when you die.
+  description: triggers a fake bomb and sends a message with your location to the syndicate radio channel when you die.
   noSpawn: true
   components:
     - type: SubdermalImplant

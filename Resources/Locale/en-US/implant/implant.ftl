@@ -29,5 +29,5 @@ open-uplink-implant-action-description = Opens the syndicate uplink embedded und
 
 ## Implanter Messages
 
-deathrattle-implant-dead-message = {$user} has died.
-deathrattle-implant-critical-message = {$user} went into a critical state, medical aid required.
+deathrattle-implant-dead-message = {$user} has died at {$position}.
+deathrattle-implant-critical-message = {$user} life signs critical, immediate assistance required at {$position}.
