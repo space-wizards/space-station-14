@@ -24,6 +24,14 @@ public sealed class StatusIconSystem : EntitySystem
         _configuration.OnValueChanged(CCVars.GlobalStatusIconsEnabled, OnGlobalStatusIconChanged, true);
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        _configuration.UnsubValueChanged(CCVars.LocalStatusIconsEnabled, OnLocalStatusIconChanged);
+        _configuration.UnsubValueChanged(CCVars.GlobalStatusIconsEnabled, OnGlobalStatusIconChanged);
+    }
+
     private void OnLocalStatusIconChanged(bool obj)
     {
         _localEnabled = obj;
@@ -38,16 +46,11 @@ public sealed class StatusIconSystem : EntitySystem
 
     private void UpdateOverlayVisible()
     {
+        if (_overlay.RemoveOverlay<StatusIconOverlay>())
+            return;
+
         if (_globalEnabled && _localEnabled)
-        {
-            if (!_overlay.HasOverlay<StatusIconOverlay>())
-                _overlay.AddOverlay(new StatusIconOverlay());
-        }
-        else
-        {
-            if (_overlay.HasOverlay<StatusIconOverlay>())
-                _overlay.RemoveOverlay<StatusIconOverlay>();
-        }
+            _overlay.AddOverlay(new StatusIconOverlay());
     }
 
     public List<StatusIconData> GetStatusIcons(EntityUid uid)
