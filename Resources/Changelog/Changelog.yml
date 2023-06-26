@@ -1,11 +1,4 @@
 Entries:
-- author: Nimfar
-  changes:
-  - {message: 'Three kinds of aggressive slimes, and their peaceful versions', type: Add}
-  - {message: 'A new event for the station, in which slimes come out of the vent scrubber.',
-    type: Add}
-  id: 3593
-  time: '2023-05-01T08:21:39.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Camera rotation should be more responsive after recently traversing
@@ -2935,3 +2928,8 @@ Entries:
   - {message: Add solar tracker electronics to the circuit printer, type: Add}
   id: 4092
   time: '2023-06-26T03:04:06.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added taco and taco recipe!, type: Add}
+  id: 4093
+  time: '2023-06-26T03:05:08.0000000+00:00'
