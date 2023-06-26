@@ -26,6 +26,7 @@
   - type: FingerprintMask
   - type: Tag
     tags:
+    - WhitelistChameleon
     - Kangaroo
 
 - type: entity

@@ -12,6 +12,7 @@
   - type: Tag
     tags:
     - HidesHair
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
@@ -147,3 +148,4 @@
   - type: Tag
     tags:
     - HidesHair
+    - WhitelistChameleon

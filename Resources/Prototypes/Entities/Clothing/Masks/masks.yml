@@ -165,6 +165,7 @@
   # for H.O.N.K. construction
   - type: Tag
     tags:
+    - WhitelistChameleon
     - ClownMask
 
 - type: entity

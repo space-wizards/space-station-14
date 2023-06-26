@@ -20,6 +20,7 @@
   - type: GroupExamine
   - type: Tag
     tags:
+    - WhitelistChameleon
     - Hardsuit
 
 - type: entity

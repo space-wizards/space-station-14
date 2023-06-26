@@ -11,6 +11,7 @@
     sprite: Clothing/OuterClothing/Suits/eva.rsi
   - type: Tag
     tags:
+    - WhitelistChameleon
     - SuitEVA
 
 #Syndicate EVA
