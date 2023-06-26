@@ -854,7 +854,7 @@
       energy: 2
       color: white
     - type: Tag
-      tags:
+      tags: #Добавлено в оригинальный код
       - ToySword
     - type: Appearance
     - type: ToggleableLightVisuals
@@ -872,7 +872,7 @@
       damage:
         types:
           Blunt: 0
-    - type: Construction
+    - type: Construction #Добавлено в оригинальный код
       graph: DualToySword
       node: start
 
