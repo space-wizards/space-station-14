@@ -66,8 +66,8 @@ public sealed class FloorTileSystem : EntitySystem
         // FTLing close is okay but this makes alignment too finnicky.
         // While you may already have a tile close you want to replace when we get half-tiles that may also be finnicky
         // so we're just gon with this for now.
-        const bool weh = true;
-        var state = (weh, location.EntityId);
+        const bool inRange = true;
+        var state = (inRange, location.EntityId);
         _mapManager.FindGridsIntersecting(map.MapId, new Box2(map.Position - 1f, map.Position + 1f), ref state,
             static (EntityUid entityUid, MapGridComponent grid, ref (bool weh, EntityUid EntityId) tuple) =>
             {
@@ -78,7 +78,7 @@ public sealed class FloorTileSystem : EntitySystem
                 return false;
             });
 
-        if (!state.weh)
+        if (!state.inRange)
         {
             if (_netManager.IsClient && _timing.IsFirstTimePredicted)
                 _popup.PopupEntity(Loc.GetString("invalid-floor-placement"), args.User);
