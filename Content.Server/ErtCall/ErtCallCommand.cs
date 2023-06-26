@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Content.Server.ErtCall;
 
-[AdminCommand(AdminFlags.SpawnErt)]
+[AdminCommand(AdminFlags.Admin)]
 public sealed class CallErt : LocalizedCommands
 {
     public string Description => Loc.GetString("callertcommand-desc");
