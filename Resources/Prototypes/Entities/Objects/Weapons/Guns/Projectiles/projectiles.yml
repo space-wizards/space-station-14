@@ -5,7 +5,6 @@
   - type: TimedDespawn
     lifetime: 0.4
   - type: Sprite
-    netsync: false
     drawdepth: Effects
     layers:
     - shader: unshaded
@@ -29,7 +28,6 @@
   - type: FlyBySound
   - type: Clickable
   - type: Sprite
-    netsync: false
     noRot: false
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
@@ -127,6 +125,24 @@
       path: /Audio/Weapons/Guns/Hits/snap.ogg
   - type: StaminaDamageOnCollide
     damage: 22 # 5 hits to stun sounds reasonable
+
+- type: entity
+  id: BaseBulletIncendiary
+  name: base bullet incendiary
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 14
+  - type: PointLight
+    enabled: true
+    color: "#ff4300"
+    radius: 2.0
+    energy: 7.0
+  - type: IgniteOnCollide
+    fireStacks: 1
 
 # Energy projectiles
 - type: entity

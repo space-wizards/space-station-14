@@ -18,6 +18,8 @@
       edges:
         - to: start
           completed:
+            - !type:AdminLog # Needs a log for start of attempt in addition to the completion log
+              message: "A grille was cut"
             - !type:SpawnPrototype
               prototype: PartRodMetal1
               amount: 2

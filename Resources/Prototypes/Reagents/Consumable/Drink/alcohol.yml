@@ -546,18 +546,6 @@
         amount: 0.15
 
 - type: reagent
-  id: Bilk
-  name: reagent-name-bilk
-  parent: BaseDrink
-  desc: reagent-desc-bilk
-  physicalDesc: reagent-physical-desc-bilky
-  flavor: alcohol
-  color: "#895C4C"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/glass_brown.rsi
-    state: icon
-
-- type: reagent
   id: BlackRussian
   name: reagent-name-black-russian
   parent: BaseAlcohol

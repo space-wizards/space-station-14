@@ -122,6 +122,26 @@
           amount: 10
 
 - type: entity
+  id: CrateServiceGuidebooks
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+      - id: BookSpaceEncyclopedia
+      - id: BookTheBookOfControl
+      - id: BookBartendersManual
+      - id: BookChefGaming
+      - id: BookLeafLoversSecret
+      - id: BookEngineersHandbook
+      - id: BookScientistsGuidebook
+      - id: BookSecurity
+      - id: BookHowToKeepStationClean
+      - id: BookHowToRockAndStone
+      - id: BookMedicalReferenceBook
+      - id: BookHowToSurvive
+      - id: BookChemicalCompendium
+
+- type: entity
   id: CrateServiceBox
   parent: CratePlastic
   components:

@@ -370,6 +370,7 @@
 - type: reagent
   id: VentCrud
   name: reagent-name-vent-crud
+  group: Toxins
   desc: reagent-desc-vent-crud
   physicalDesc: reagent-physical-desc-sticky
   flavor: bitter
@@ -385,6 +386,7 @@
 - type: reagent
   id: Corpium
   name: reagent-name-corpium
+  group: Toxins
   desc: reagent-desc-corpium
   physicalDesc: reagent-physical-desc-necrotic
   flavor: bitter
@@ -400,6 +402,7 @@
 - type: reagent
   id: UncookedAnimalProteins
   name: reagent-name-uncooked-animal-proteins
+  group: Foods
   desc: reagent-desc-uncooked-animal-proteins
   physicalDesc: reagent-physical-desc-clumpy
   flavor: bitter
@@ -424,6 +427,7 @@
 - type: reagent
   id: Allicin
   name: reagent-name-allicin
+  group: Foods
   desc: reagent-desc-allicin
   physicalDesc: reagent-physical-desc-pungent
   flavor: bitter
@@ -445,6 +449,7 @@
 - type: reagent
   id: Pax
   name: reagent-name-pax
+  group: Narcotics
   desc: reagent-desc-pax
   physicalDesc: reagent-physical-desc-soothing
   color: "#AAAAAA"
@@ -460,6 +465,7 @@
 - type: reagent
   id: Honk
   name: reagent-name-honk
+  group: Toxins
   desc: reagent-desc-honk
   physicalDesc: reagent-physical-desc-pungent
   flavor: bitter

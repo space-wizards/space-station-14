@@ -131,7 +131,6 @@
     anchored: true
   - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation_wall
@@ -238,7 +237,6 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation_wall

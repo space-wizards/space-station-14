@@ -38,6 +38,7 @@ namespace Content.IntegrationTests.Tests
 
             EntityUid generator = default;
             var entityMan = server.ResolveDependency<IEntityManager>();
+            var mapMan = server.ResolveDependency<IMapManager>();
 
             MapGridComponent grid1 = null;
             MapGridComponent grid2 = null;
@@ -45,8 +46,6 @@ namespace Content.IntegrationTests.Tests
             // Create grids
             await server.WaitAssertion(() =>
             {
-                var mapMan = IoCManager.Resolve<IMapManager>();
-
                 var mapId = testMap.MapId;
                 grid1 = mapMan.CreateGrid(mapId);
                 grid2 = mapMan.CreateGrid(mapId);

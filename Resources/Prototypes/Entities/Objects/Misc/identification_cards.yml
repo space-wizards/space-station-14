@@ -499,6 +499,7 @@
   - type: AgentIDCard
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
+    inHandsOnly: true
   - type: UserInterface
     interfaces:
       - key: enum.AgentIDCardUiKey.Key

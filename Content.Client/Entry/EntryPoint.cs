@@ -14,6 +14,7 @@ using Content.Client.Parallax.Managers;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
 using Content.Client.Radiation.Overlays;
+using Content.Client.Replay;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
 using Content.Client.Stylesheets;
@@ -26,12 +27,16 @@ using Content.Shared.Localizations;
 using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.Replays.Loading;
+using Robust.Client.Replays.Playback;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Replays;
 
 namespace Content.Client.Entry
 {
@@ -62,6 +67,10 @@ namespace Content.Client.Entry
         [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
         [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
         [Dependency] private readonly ContentLocalizationManager _contentLoc = default!;
+        [Dependency] private readonly ContentReplayPlaybackManager _playbackMan = default!;
+        [Dependency] private readonly IResourceManager _resourceManager = default!;
+        [Dependency] private readonly IReplayLoadManager _replayLoad = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
 
         public override void Init()
         {
@@ -131,6 +140,7 @@ namespace Content.Client.Entry
             _ghostKick.Initialize();
             _extendedDisconnectInformation.Initialize();
             _jobRequirements.Initialize();
+            _playbackMan.Initialize();
 
             //AUTOSCALING default Setup!
             _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);
@@ -154,7 +164,6 @@ namespace Content.Client.Entry
             _overlayManager.AddOverlay(new SingularityOverlay());
             _overlayManager.AddOverlay(new FlashOverlay());
             _overlayManager.AddOverlay(new RadiationPulseOverlay());
-
             _chatManager.Initialize();
             _clientPreferencesManager.Initialize();
             _euiManager.Initialize();
@@ -181,7 +190,20 @@ namespace Content.Client.Entry
         {
             // Fire off into state dependent on launcher or not.
 
-            if (_gameController.LaunchState.FromLauncher)
+            // Check if we're loading a replay via content bundle!
+            if (_configManager.GetCVar(CVars.LaunchContentBundle)
+                && _resourceManager.ContentFileExists(
+                    ReplayConstants.ReplayZipFolder.ToRootedPath() / ReplayConstants.FileMeta))
+            {
+                _logManager.GetSawmill("entry").Info("Loading content bundle replay from VFS!");
+
+                var reader = new ReplayFileReaderResources(
+                    _resourceManager,
+                    ReplayConstants.ReplayZipFolder.ToRootedPath());
+
+                _replayLoad.LoadAndStartReplay(reader);
+            }
+            else if (_gameController.LaunchState.FromLauncher)
             {
                 _stateManager.RequestStateChange<LauncherConnecting>();
                 var state = (LauncherConnecting) _stateManager.CurrentState;
