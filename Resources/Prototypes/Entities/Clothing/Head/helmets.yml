@@ -265,10 +265,10 @@
         Blunt: 1
         Slash: 1
         Piercing: 1
-        Heat: 0.3
+        Heat: 0.4
         Radiation: 1
   - type: PressureProtection
-    highPressureMultiplier: 0.3
+    highPressureMultiplier: 0.25
     lowPressureMultiplier: 1
   - type: IdentityBlocker
   - type: Tag
