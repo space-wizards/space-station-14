@@ -48,3 +48,17 @@
       amount: 2
     - id: MagazinePistol
       amount: 4
+
+- type: entity
+  id: CrateArmoryRevolverDeckard
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRevolverDeckard
+      amount: 1
+    - id: SpeedLoaderMagnum
+      amount: 3
+    - id: MagazineBoxMagnum
+      amount: 1
+

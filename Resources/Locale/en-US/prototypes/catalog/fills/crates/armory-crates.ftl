@@ -12,3 +12,6 @@ ent-CrateArmoryLaser = lasers crate
 
 ent-CrateArmoryPistols = pistols crate
     .desc = Contains two standard NT pistols with four mags. Requires Armory access to open.
+
+ent-CrateArmoryRevolverDeckard = deckard revolver crate
+    .desc = Contains a rare custom revolver and accessories for the best detectives investigating a murder case involving humanoid androids. To open, you need access to the Armory.

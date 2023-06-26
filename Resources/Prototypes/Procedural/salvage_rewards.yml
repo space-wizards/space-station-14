@@ -42,6 +42,7 @@
     # rare armor
     ClothingHeadHelmetSwat: 0.1
     # rare weapons
+    CrateArmoryRevolverDeckard: 0.2
     WeaponSubMachineGunC20r: 0.1
 
 - type: weightedRandom
