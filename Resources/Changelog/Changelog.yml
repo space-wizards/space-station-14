@@ -1,11 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: RCD ammo can now be used partially without wasting any charges., type: Tweak}
-  - {message: 'RCD is now partially predicted on clients, should be nicer to use.',
-    type: Tweak}
-  id: 3595
-  time: '2023-05-01T13:47:00.0000000+00:00'
 - author: lzk
   changes:
   - {message: Nuke agent role is now selected separately in the character customization
@@ -2933,3 +2926,14 @@ Entries:
     type: Tweak}
   id: 4094
   time: '2023-06-26T13:35:45.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: 'Following a lawsuit, some unshielded asbestos was removed from the
+      atmos hardsuit helmet due to health concerns. They are now less heat resistant.',
+    type: Tweak}
+  - {message: 'Nanotrasen has released a new model of atmos firesuit. This model is
+      very resistant to heat, and has a bit more protection against high pressure.
+      However, it is not rated for low pressure environments and its helmet is notably
+      less sturdy.', type: Tweak}
+  id: 4095
+  time: '2023-06-26T20:33:50.0000000+00:00'
