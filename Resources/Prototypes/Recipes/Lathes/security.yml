@@ -21,6 +21,14 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: Combatbaton
+  result: Combatbaton
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 300
+
+- type: latheRecipe
   id: WeaponLaserCarbine
   result: WeaponLaserCarbine
   completetime: 5
