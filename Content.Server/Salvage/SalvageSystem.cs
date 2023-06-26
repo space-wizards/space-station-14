@@ -336,47 +336,25 @@ namespace Content.Server.Salvage
         {
             var salvMap = _mapManager.CreateMap();
 
-            Box2 bounds;
-            EntityUid? salvageEnt = null;
-            SalvageMapPrototype? salvageProto = null;
+            EntityUid? salvageEnt;
             if (_random.Prob(component.AsteroidChance))
             {
                 var asteroidProto = _prototypeManager.Index<WeightedRandomPrototype>(component.AsteroidPool).Pick(_random);
                 salvageEnt = Spawn(asteroidProto, new MapCoordinates(0, 0, salvMap));
-                bounds = Comp<MapGridComponent>(salvageEnt.Value).LocalAABB;
             }
             else
             {
                 var forcedSalvage = _configurationManager.GetCVar(CCVars.SalvageForced);
-                salvageProto = string.IsNullOrWhiteSpace(forcedSalvage)
+                var salvageProto = string.IsNullOrWhiteSpace(forcedSalvage)
                     ? _random.Pick(_prototypeManager.EnumeratePrototypes<SalvageMapPrototype>().ToList())
                     : _prototypeManager.Index<SalvageMapPrototype>(forcedSalvage);
 
-                bounds = salvageProto.Bounds;
-            }
-
-            if (!TryGetSalvagePlacementLocation(uid, component, bounds, out var spawnLocation, out var spawnAngle))
-            {
-                Report(uid, component.SalvageChannel, "salvage-system-announcement-spawn-no-debris-available");
-                _mapManager.DeleteMap(salvMap);
-                return false;
-            }
-
-            if (salvageEnt is { } ent)
-            {
-                var salvXForm = Transform(ent);
-                _transform.SetParent(ent, salvXForm, _mapManager.GetMapEntityId(spawnLocation.MapId));
-                _transform.SetWorldPosition(salvXForm, spawnLocation.Position);
-            }
-            else if (salvageProto != null)
-            {
                 var opts = new MapLoadOptions
                 {
-                    Offset = spawnLocation.Position,
-                    Rotation = spawnAngle
+                    Offset = new Vector2(0, 0)
                 };
 
-                if (!_map.TryLoad(spawnLocation.MapId, salvageProto.MapPath.ToString(), out var roots, opts) ||
+                if (!_map.TryLoad(salvMap, salvageProto.MapPath.ToString(), out var roots, opts) ||
                     roots.FirstOrNull() is not { } root)
                 {
                     Report(uid, component.SalvageChannel, "salvage-system-announcement-spawn-debris-disintegrated");
@@ -386,10 +364,18 @@ namespace Content.Server.Salvage
 
                 salvageEnt = root;
             }
-            else
+
+            var bounds = Comp<MapGridComponent>(salvageEnt.Value).LocalAABB;
+            if (!TryGetSalvagePlacementLocation(uid, component, bounds, out var spawnLocation, out var spawnAngle))
             {
-                throw new InvalidOperationException("No asteroid generated and no salvage prototype present.");
+                Report(uid, component.SalvageChannel, "salvage-system-announcement-spawn-no-debris-available");
+                _mapManager.DeleteMap(salvMap);
+                return false;
             }
+
+            var salvXForm = Transform(salvageEnt.Value);
+            _transform.SetParent(salvageEnt.Value, salvXForm, _mapManager.GetMapEntityId(spawnLocation.MapId));
+            _transform.SetWorldPosition(salvXForm, spawnLocation.Position);
 
             component.AttachedEntity = salvageEnt;
             var gridcomp = EnsureComp<SalvageGridComponent>(salvageEnt.Value);
