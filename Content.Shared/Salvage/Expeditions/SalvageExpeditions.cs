@@ -1,10 +1,9 @@
-using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Salvage;
+namespace Content.Shared.Salvage.Expeditions;
 
 [Serializable, NetSerializable]
 public sealed class SalvageExpeditionConsoleState : BoundUserInterfaceState

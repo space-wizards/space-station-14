@@ -1,75 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: Changed the side sprites of tactical vests to fix weird looking sprites
-      when wearing a rig and bandolier, type: Tweak}
-  id: 3590
-  time: '2023-05-01T02:16:29.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Entering your ringtone uplink code now locks and unlocks your uplink
-      rather then directly opening it., type: Tweak}
-  - {message: 'When you set ringtone, if it is your uplink code it will not be saved.',
-    type: Tweak}
-  id: 3591
-  time: '2023-05-01T06:30:09.0000000+00:00'
-- author: MagnusCrowe
-  changes:
-  - {message: Added the paramedic role, type: Add}
-  id: 3592
-  time: '2023-05-01T07:13:57.0000000+00:00'
-- author: Nimfar
-  changes:
-  - {message: 'Three kinds of aggressive slimes, and their peaceful versions', type: Add}
-  - {message: 'A new event for the station, in which slimes come out of the vent scrubber.',
-    type: Add}
-  id: 3593
-  time: '2023-05-01T08:21:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Camera rotation should be more responsive after recently traversing
-      a grid., type: Tweak}
-  id: 3594
-  time: '2023-05-01T08:29:35.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: RCD ammo can now be used partially without wasting any charges., type: Tweak}
-  - {message: 'RCD is now partially predicted on clients, should be nicer to use.',
-    type: Tweak}
-  id: 3595
-  time: '2023-05-01T13:47:00.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: Nuke agent role is now selected separately in the character customization
-      menu, type: Tweak}
-  id: 3596
-  time: '2023-05-01T14:20:56.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix up space cleaner and lots of changes to make it better., type: Tweak}
-  id: 3597
-  time: '2023-05-01T14:25:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Cleanbots now mop floors rather than drain near them., type: Tweak}
-  id: 3598
-  time: '2023-05-01T14:30:15.0000000+00:00'
-- author: illersaver
-  changes:
-  - {message: Added vapes!, type: Add}
-  id: 3599
-  time: '2023-05-01T14:34:12.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - {message: 'Added strange pills, which contain a random reagent. These can be found
-      in maintenance.', type: Add}
-  id: 3600
-  time: '2023-05-01T14:43:31.0000000+00:00'
-- author: ProPandaBear
-  changes:
-  - {message: Increased toxin poison damage from 2 to 4., type: Tweak}
-  id: 3601
-  time: '2023-05-01T16:54:47.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Old NPC targeting has been ported to the new system and will prefer
@@ -2939,3 +2868,73 @@ Entries:
   - {message: Changed artifact rocks to spit out 2-3 fragments instead of 1, type: Tweak}
   id: 4089
   time: '2023-06-25T18:12:47.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added beachball to the arcade prizes!, type: Add}
+  id: 4090
+  time: '2023-06-26T02:07:02.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Disallow tile placement close to other grids., type: Tweak}
+  id: 4091
+  time: '2023-06-26T03:00:17.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Add solar tracker electronics to the circuit printer, type: Add}
+  id: 4092
+  time: '2023-06-26T03:04:06.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added taco and taco recipe!, type: Add}
+  id: 4093
+  time: '2023-06-26T03:05:08.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: The Head of Security's trenchcoat now clearly states it's armored.,
+    type: Tweak}
+  id: 4094
+  time: '2023-06-26T13:35:45.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: 'Following a lawsuit, some unshielded asbestos was removed from the
+      atmos hardsuit helmet due to health concerns. They are now less heat resistant.',
+    type: Tweak}
+  - {message: 'Nanotrasen has released a new model of atmos firesuit. This model is
+      very resistant to heat, and has a bit more protection against high pressure.
+      However, it is not rated for low pressure environments and its helmet is notably
+      less sturdy.', type: Tweak}
+  id: 4095
+  time: '2023-06-26T20:33:50.0000000+00:00'
+- author: router
+  changes:
+  - {message: 'Added an alternative emotes prefix, *. Note that it doesn''t get treated
+      any differently than the normal @ prefix.', type: Add}
+  id: 4096
+  time: '2023-06-26T21:20:09.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Nanotrasen has invested in higher quality grilles., type: Tweak}
+  - {message: The Hristov now does structural damage., type: Tweak}
+  id: 4097
+  time: '2023-06-27T01:19:09.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added crate with two prestigious EVA hardsuits to cargo catalog, type: Add}
+  id: 4098
+  time: '2023-06-27T04:45:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Refactored dungeon generation for salvage expeditions., type: Tweak}
+  id: 4099
+  time: '2023-06-27T09:17:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Remove the landing pad from expeditions., type: Tweak}
+  id: 4100
+  time: '2023-06-27T09:55:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Disable ambient music when expedition countdown starts. Also bumped
+      countdown volume a lot., type: Tweak}
+  id: 4101
+  time: '2023-06-27T11:28:52.0000000+00:00'
