@@ -1,9 +1,4 @@
 Entries:
-- author: illersaver
-  changes:
-  - {message: Added vapes!, type: Add}
-  id: 3599
-  time: '2023-05-01T14:34:12.0000000+00:00'
 - author: MisterMecky
   changes:
   - {message: 'Added strange pills, which contain a random reagent. These can be found
@@ -2938,3 +2933,8 @@ Entries:
   - {message: Added crate with two prestigious EVA hardsuits to cargo catalog, type: Add}
   id: 4098
   time: '2023-06-27T04:45:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Refactored dungeon generation for salvage expeditions., type: Tweak}
+  id: 4099
+  time: '2023-06-27T09:17:42.0000000+00:00'
