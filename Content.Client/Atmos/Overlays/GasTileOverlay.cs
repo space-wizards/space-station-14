@@ -1,3 +1,4 @@
+using Content.Client.Atmos.Components;
 using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -137,6 +138,9 @@ namespace Content.Client.Atmos.Overlays
 
         protected override void Draw(in OverlayDrawArgs args)
         {
+            if (args.MapId == MapId.Nullspace)
+                return;
+
             var drawHandle = args.WorldHandle;
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
             var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
@@ -151,7 +155,32 @@ namespace Content.Client.Atmos.Overlays
                 overlayQuery,
                 xformQuery);
 
-            _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds, ref gridState,
+            var mapUid = _mapManager.GetMapEntityId(args.MapId);
+
+            if (_entManager.TryGetComponent<MapAtmosphereComponent>(mapUid, out var atmos))
+            {
+                var bottomLeft = args.WorldAABB.BottomLeft.Floored();
+                var topRight = args.WorldAABB.TopRight.Ceiled();
+
+                for (var x = bottomLeft.X; x <= topRight.X; x++)
+                {
+                    for (var y = bottomLeft.Y; y <= topRight.Y; y++)
+                    {
+                        var tilePosition = new Vector2(x, y);
+
+                        for (var i = 0; i < atmos.OverlayData.Opacity.Length; i++)
+                        {
+                            var opacity = atmos.OverlayData.Opacity[i];
+
+                            if (opacity > 0)
+                                args.WorldHandle.DrawTexture(_frames[i][_frameCounter[i]], tilePosition, Color.White.WithAlpha(opacity));
+                        }
+                    }
+                }
+            }
+
+            // TODO: WorldBounds callback.
+            _mapManager.FindGridsIntersecting(args.MapId, args.WorldAABB, ref gridState,
                 static (EntityUid uid, MapGridComponent grid,
                     ref (Box2Rotated WorldBounds,
                         DrawingHandleWorld drawHandle,

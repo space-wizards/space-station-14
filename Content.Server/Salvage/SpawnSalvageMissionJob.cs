@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Parallax;
@@ -111,13 +112,13 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             var moles = new float[Atmospherics.AdjustedNumberOfGases];
             air.Gases.CopyTo(moles, 0);
             var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
-            atmos.Space = air.Space;
-            atmos.Mixture = new GasMixture(2500)
+            _entManager.System<AtmosphereSystem>().SetMapSpace(mapUid, air.Space, atmos);
+            _entManager.System<AtmosphereSystem>().SetMapGasMixture(mapUid, new GasMixture(2500)
             {
                 // TODO: temperature mods
                 Temperature = 293.15f,
                 Moles = moles,
-            };
+            }, atmos);
 
             if (mission.Color != null)
             {

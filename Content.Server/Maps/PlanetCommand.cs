@@ -86,7 +86,6 @@ public sealed class PlanetCommand : IConsoleCommand
         // Atmos
         var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
 
-        atmos.Space = false;
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;
         moles[(int) Gas.Nitrogen] = 82.10312f;
@@ -97,7 +96,7 @@ public sealed class PlanetCommand : IConsoleCommand
             Moles = moles,
         };
 
-        _entManager.System<AtmosphereSystem>().SetMapAtmosphere(mapUid, mixture, atmos);
+        _entManager.System<AtmosphereSystem>().SetMapAtmosphere(mapUid, false, mixture, atmos);
 
         _entManager.EnsureComponent<MapGridComponent>(mapUid);
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));
