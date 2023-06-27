@@ -6,6 +6,7 @@ using Content.Server.Decals;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Content.Shared.Procedural.PostGeneration;
+using Content.Shared.Tag;
 using Robust.Server.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -26,6 +27,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
     private readonly DungeonSystem _dungeon;
     private readonly EntityLookupSystem _lookup;
     private readonly SharedTransformSystem _transform;
+    private EntityQuery<TagComponent> _tagQuery;
 
     private readonly DungeonConfigPrototype _gen;
     private readonly int _seed;
@@ -66,6 +68,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
         _dungeon = dungeon;
         _lookup = lookup;
         _transform = transform;
+        _tagQuery = _entManager.GetEntityQuery<TagComponent>();
 
         _gen = gen;
         _grid = grid;

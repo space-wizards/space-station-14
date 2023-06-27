@@ -5,6 +5,9 @@
       - SalvageExperiment
     presets:
       - Bucket
+      - Wow
+      - SpaceShip
+      - Tall
   postGeneration:
     - !type:CorridorPostGen
       width: 3
@@ -85,6 +88,9 @@
       - LavaBrig
     presets:
       - Bucket
+      - Wow
+      - SpaceShip
+      - Tall
   postGeneration:
     - !type:CorridorPostGen
       width: 3

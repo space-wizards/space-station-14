@@ -8,7 +8,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 public sealed class CornerClutterPostGen : IPostDunGen
 {
     [DataField("chance")]
-    public float Chance = 0.25f;
+    public float Chance = 0.50f;
 
     /// <summary>
     /// The default starting bulbs

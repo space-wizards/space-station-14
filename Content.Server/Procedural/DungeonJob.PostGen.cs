@@ -25,6 +25,19 @@ public sealed partial class DungeonJob
     private const int CollisionMask = (int) CollisionGroup.Impassable;
     private const int CollisionLayer = (int) CollisionGroup.Impassable;
 
+    private bool HasWall(MapGridComponent grid, Vector2i tile)
+    {
+        var anchored = grid.GetAnchoredEntitiesEnumerator(tile);
+
+        while (anchored.MoveNext(out var uid))
+        {
+            if (_tagQuery.TryGetComponent(uid, out var tagComp) && tagComp.Tags.Contains("Wall"))
+                return true;
+        }
+
+        return false;
+    }
+
     private async Task PostGen(AutoCablingPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid,
         Random random)
     {
@@ -125,19 +138,9 @@ public sealed partial class DungeonJob
                 }
 
                 // Prefer tiles without walls on them
-                var enumerator = _grid.GetAnchoredEntitiesEnumerator(neighbor);
-
-                while (enumerator.MoveNext(out var ent))
+                if (HasWall(grid, neighbor))
                 {
-                    // If it's a wall then add a big cost for pathfinding.
-                    if (!tagQuery.TryGetComponent(ent, out var tags) ||
-                        !tags.Tags.Contains("Wall"))
-                    {
-                        continue;
-                    }
-
                     tileCost *= 20f;
-                    break;
                 }
 
                 var gScore = costSoFar[node] + tileCost;
@@ -294,40 +297,13 @@ public sealed partial class DungeonJob
             for (var i = 0; i < 4; i++)
             {
                 var dir = (Direction) (i * 2);
-                var dirEnumerator = _grid.GetAnchoredEntitiesEnumerator(tile + dir.ToIntVec());
-
-                blocked = false;
-
-                while (dirEnumerator.MoveNext(out var ent))
-                {
-                    if (!tagQuery.TryGetComponent(ent, out var tags) ||
-                        !tags.Tags.Contains("Wall"))
-                    {
-                        continue;
-                    }
-
-                    blocked = true;
-                    break;
-                }
+                blocked = HasWall(grid, tile + dir.ToIntVec());
 
                 if (!blocked)
                     continue;
-
-                blocked = false;
+                
                 var nextDir = (Direction) ((i + 1) * 2 % 8);
-                var nextDirEnumerator = _grid.GetAnchoredEntitiesEnumerator(tile + nextDir.ToIntVec());
-
-                while (nextDirEnumerator.MoveNext(out var ent))
-                {
-                    if (!tagQuery.TryGetComponent(ent, out var tags) ||
-                        !tags.Tags.Contains("Wall"))
-                    {
-                        continue;
-                    }
-
-                    blocked = true;
-                    break;
-                }
+                blocked = HasWall(grid, tile + nextDir.ToIntVec());
 
                 if (!blocked)
                     continue;
@@ -980,7 +956,7 @@ public sealed partial class DungeonJob
                     if (j == -width ||
                         j == width)
                     {
-                        if (_anchorable.TileFree(_grid, neighbor, CollisionLayer, CollisionMask))
+                        if (!HasWall(grid, neighbor))
                         {
                             isValid = false;
                             break;
