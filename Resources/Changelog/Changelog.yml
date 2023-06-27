@@ -1,10 +1,4 @@
 Entries:
-- author: MisterMecky
-  changes:
-  - {message: 'Added strange pills, which contain a random reagent. These can be found
-      in maintenance.', type: Add}
-  id: 3600
-  time: '2023-05-01T14:43:31.0000000+00:00'
 - author: ProPandaBear
   changes:
   - {message: Increased toxin poison damage from 2 to 4., type: Tweak}
@@ -2938,3 +2932,8 @@ Entries:
   - {message: Refactored dungeon generation for salvage expeditions., type: Tweak}
   id: 4099
   time: '2023-06-27T09:17:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Remove the landing pad from expeditions., type: Tweak}
+  id: 4100
+  time: '2023-06-27T09:55:21.0000000+00:00'
