@@ -6,15 +6,15 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Procedural.PostGeneration;
 
 /// <summary>
-/// If external areas are found will try to generate windows.
+/// Places tiles / entities onto room entrances.
 /// </summary>
-public sealed class ExternalWindowPostGen : IPostDunGen
+public sealed class RoomEntrancePostGen : IPostDunGen
 {
     [DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string?> Entities = new()
     {
-        "Grille",
-        "Window",
+        "CableApcExtension",
+        "AirlockGlass",
     };
 
     [DataField("tile", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
