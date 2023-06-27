@@ -2923,7 +2923,7 @@ Entries:
   time: '2023-06-26T20:33:50.0000000+00:00'
 - author: router
   changes:
-  - {message: 'Added an alternative emotes prefix, \*. Note that it doesn''t get treated
+  - {message: 'Added an alternative emotes prefix, *. Note that it doesn''t get treated
       any differently than the normal @ prefix.', type: Add}
   id: 4096
   time: '2023-06-26T21:20:09.0000000+00:00'
