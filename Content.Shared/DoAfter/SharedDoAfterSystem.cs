@@ -180,7 +180,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         if (!Resolve(args.User, ref comp))
         {
-            Logger.Error($"Attempting to start a doAfter with invalid user: {ToPrettyString(args.User)}.");
+            Log.Error($"Attempting to start a doAfter with invalid user: {ToPrettyString(args.User)}.");
             id = null;
             return false;
         }
@@ -317,7 +317,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         if (!comp.DoAfters.TryGetValue(id, out var doAfter))
         {
-            Logger.Error($"Attempted to cancel do after with an invalid id ({id}) on entity {ToPrettyString(entity)}");
+            Log.Error($"Attempted to cancel do after with an invalid id ({id}) on entity {ToPrettyString(entity)}");
             return;
         }
 
