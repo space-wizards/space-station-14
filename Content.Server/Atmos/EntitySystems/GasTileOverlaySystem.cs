@@ -335,7 +335,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 // Not all grids have atmospheres.
                 if (!TryComp(grid, out GasTileOverlayComponent? overlay))
-                    return;
+                    continue;
 
                 List<GasOverlayChunk> dataToSend = new();
                 ev.UpdatedChunks[grid] = dataToSend;
@@ -350,7 +350,9 @@ namespace Content.Server.Atmos.EntitySystems
                     if (previousChunks != null &&
                         previousChunks.Contains(index) &&
                         value.LastUpdate != curTick)
+                    {
                         continue;
+                    }
 
                     dataToSend.Add(value);
                 }

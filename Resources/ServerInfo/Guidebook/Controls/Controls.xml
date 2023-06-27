@@ -30,6 +30,8 @@ All items have an assigned size, some too large to fit into most or all containe
 
 To drop items, you can press [color=#a4885c][keybind="Drop"/][/color], and to drop them more violently (also known as throwing), you can press [color=#a4885c][keybind="ThrowItemInHand"/][/color].
 
+A slightly advanced way to manage your inventory is to use [color=#a4885c]Shift + B[/color]. If your active hand is currently empty, this hotkey will pull out the latest item that was put in your bag. If you have an item in your hand - samek hotkey will put said item into your bag.
+Hotkey [color=#a4885c]Shift + E[/color] works exactly the same, but uses your belt as storage.
 ## Actions
 To the left in your HUD there's a bar showing various actions you can take.
 You can hover over each one to see a name and description for the action that tells you what it is and how it works.
