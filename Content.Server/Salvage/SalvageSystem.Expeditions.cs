@@ -2,16 +2,15 @@ using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
-using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
-using Content.Shared.Random;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Examine;
 using Content.Shared.Salvage;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
 using System.Linq;
 using System.Threading;
+using Content.Shared.Salvage.Expeditions;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Salvage;
 
@@ -42,6 +41,7 @@ public sealed partial class SalvageSystem
 
         SubscribeLocalEvent<SalvageExpeditionComponent, ComponentShutdown>(OnExpeditionShutdown);
         SubscribeLocalEvent<SalvageExpeditionComponent, EntityUnpausedEvent>(OnExpeditionUnpaused);
+        SubscribeLocalEvent<SalvageExpeditionComponent, ComponentGetState>(OnExpeditionGetState);
 
         SubscribeLocalEvent<SalvageStructureComponent, ExaminedEvent>(OnStructureExamine);
 
@@ -49,6 +49,14 @@ public sealed partial class SalvageSystem
         _failedCooldown = _configurationManager.GetCVar(CCVars.SalvageExpeditionFailedCooldown);
         _configurationManager.OnValueChanged(CCVars.SalvageExpeditionCooldown, SetCooldownChange);
         _configurationManager.OnValueChanged(CCVars.SalvageExpeditionFailedCooldown, SetFailedCooldownChange);
+    }
+
+    private void OnExpeditionGetState(EntityUid uid, SalvageExpeditionComponent component, ref ComponentGetState args)
+    {
+        args.State = new SalvageExpeditionComponentState()
+        {
+            Stage = component.Stage
+        };
     }
 
     private void ShutdownExpeditions()
