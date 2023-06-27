@@ -31,7 +31,6 @@
   - type: Examiner
     skipChecks: true
   - type: Ghost
-    color: "#fff8"
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     channels:
