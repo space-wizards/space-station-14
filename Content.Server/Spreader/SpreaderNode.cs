@@ -1,4 +1,5 @@
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.Map.Components;
 
@@ -10,6 +11,8 @@ namespace Content.Server.Spreader;
 /// </summary>
 public sealed class SpreaderNode : Node
 {
+    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+
     /// <inheritdoc/>
     public override IEnumerable<Node> GetReachableNodes(TransformComponent xform, EntityQuery<NodeContainerComponent> nodeQuery, EntityQuery<TransformComponent> xformQuery,
         MapGridComponent? grid, IEntityManager entMan)
@@ -22,7 +25,7 @@ public sealed class SpreaderNode : Node
         foreach (var neighbor in neighbors)
         {
             if (!nodeQuery.TryGetComponent(neighbor, out var nodeContainer) ||
-                !nodeContainer.TryGetNode<SpreaderNode>(Name, out var neighborNode))
+                !_nodeContainer.TryGetNode<SpreaderNode>(nodeContainer, Name, out var neighborNode))
             {
                 continue;
             }

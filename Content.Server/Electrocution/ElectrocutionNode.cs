@@ -1,4 +1,5 @@
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.Map.Components;
 
@@ -7,6 +8,8 @@ namespace Content.Server.Electrocution
     [DataDefinition]
     public sealed class ElectrocutionNode : Node
     {
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+
         [DataField("cable")]
         public EntityUid CableEntity;
         [DataField("node")]
@@ -21,7 +24,7 @@ namespace Content.Server.Electrocution
             if (!nodeQuery.TryGetComponent(CableEntity, out var nodeContainer))
                 yield break;
 
-            if (nodeContainer.TryGetNode(NodeName, out Node? node))
+            if (_nodeContainer.TryGetNode(nodeContainer, NodeName, out Node? node))
                 yield return node;
         }
     }
