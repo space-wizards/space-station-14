@@ -6,7 +6,7 @@ namespace Content.Shared.StatusIcon.Components;
 /// This is used for noting if an entity is able to
 /// have StatusIcons displayed on them and inherent icons. (debug purposes)
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStatusIconSystem))]
 public sealed partial class StatusIconComponent : Component
 {
     /// <summary>

@@ -9,7 +9,7 @@ namespace Content.Client.StatusIcon;
 /// <summary>
 /// This handles rendering gathering and rendering icons on entities.
 /// </summary>
-public sealed class StatusIconSystem : EntitySystem
+public sealed class StatusIconSystem : SharedStatusIconSystem
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
