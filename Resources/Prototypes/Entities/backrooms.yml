@@ -702,7 +702,7 @@
     shoes: ClothingShoesColorWhite
     gloves: ClothingHandsGlovesColorWhite
     pocket1: BaseBackroomsRadio
-    pocket2: BookBackroms
+    pocket2: BookBackrooms
     mask: ClothingMaskSterile
 
 - type: listing
