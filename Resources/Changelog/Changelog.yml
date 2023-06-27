@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Cleanbots now mop floors rather than drain near them., type: Tweak}
-  id: 3598
-  time: '2023-05-01T14:30:15.0000000+00:00'
 - author: illersaver
   changes:
   - {message: Added vapes!, type: Add}
@@ -2938,3 +2933,8 @@ Entries:
   - {message: The Hristov now does structural damage., type: Tweak}
   id: 4097
   time: '2023-06-27T01:19:09.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added crate with two prestigious EVA hardsuits to cargo catalog, type: Add}
+  id: 4098
+  time: '2023-06-27T04:45:30.0000000+00:00'
