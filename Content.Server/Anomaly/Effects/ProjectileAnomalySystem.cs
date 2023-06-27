@@ -54,10 +54,10 @@ public sealed class ProjectileAnomalySystem : EntitySystem
                 priority.Add(entity);
         }
 
-        Logger.Debug($"shots: {projectileCount}");
+        Log.Debug($"shots: {projectileCount}");
         while (projectileCount > 0)
         {
-            Logger.Debug($"{projectileCount}");
+            Log.Debug($"{projectileCount}");
             var target = priority.Any()
                 ? _random.PickAndTake(priority)
                 : _random.Pick(inRange);

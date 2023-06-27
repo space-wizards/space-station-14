@@ -86,7 +86,7 @@ public sealed class ExplosionPrototype : IPrototype
     {
         if (_tileBreakChance.Length == 0 || _tileBreakChance.Length != _tileBreakIntensity.Length)
         {
-            Logger.Error($"Malformed tile break chance definitions for explosion prototype: {ID}");
+            Log.Error($"Malformed tile break chance definitions for explosion prototype: {ID}");
             return 0;
         }
 
