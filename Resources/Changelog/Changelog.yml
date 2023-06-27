@@ -1,9 +1,4 @@
 Entries:
-- author: ProPandaBear
-  changes:
-  - {message: Increased toxin poison damage from 2 to 4., type: Tweak}
-  id: 3601
-  time: '2023-05-01T16:54:47.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Old NPC targeting has been ported to the new system and will prefer
@@ -2937,3 +2932,9 @@ Entries:
   - {message: Remove the landing pad from expeditions., type: Tweak}
   id: 4100
   time: '2023-06-27T09:55:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Disable ambient music when expedition countdown starts. Also bumped
+      countdown volume a lot., type: Tweak}
+  id: 4101
+  time: '2023-06-27T11:28:52.0000000+00:00'
