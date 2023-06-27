@@ -21,8 +21,8 @@
     Plastic: 300
 
 - type: latheRecipe
-  id: Combatbaton
-  result: Combatbaton
+  id: Truncheon
+  result: Truncheon
   completetime: 2
   materials:
     Steel: 300
