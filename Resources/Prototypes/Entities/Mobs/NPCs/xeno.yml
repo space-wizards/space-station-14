@@ -72,7 +72,6 @@
     damage:
       groups:
         Brute: 6
-  - type: Appearance
   - type: DamageStateVisuals
     rotate: true
     states:
@@ -359,7 +358,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: purple_snake
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -419,7 +417,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: small_purple_snake
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:

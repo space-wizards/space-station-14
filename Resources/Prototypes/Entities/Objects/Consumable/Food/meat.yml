@@ -28,6 +28,10 @@
     size: 5
   - type: Temperature
     currentTemperature: 290
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Meaterial: 300
 
 - type: Tag
   id: Raw
