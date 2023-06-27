@@ -70,7 +70,7 @@ namespace Content.Server.Medical
                     _solutionContainer.UpdateChemicals(stomach.Comp.Owner, sol);
                 }
             }
-            // Adds a tiny amount of the chemstream along with vomit
+            // Adds a tiny amount of the chem stream from earlier along with vomit
             if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
             {
                 var chemMultiplier = 0.1;
