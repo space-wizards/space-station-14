@@ -6,17 +6,23 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Procedural.PostGeneration;
 
 /// <summary>
-/// If external areas are found will try to generate windows.
+/// Places the specified entities at junction areas.
 /// </summary>
-public sealed class ExternalWindowPostGen : IPostDunGen
+public sealed class JunctionPostGen : IPostDunGen
 {
-    [DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string?> Entities = new()
-    {
-        "Grille",
-        "Window",
-    };
+    /// <summary>
+    /// Width to check for junctions.
+    /// </summary>
+    [DataField("width")]
+    public int Width = 3;
 
     [DataField("tile", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
     public string Tile = "FloorSteel";
+
+    [DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public List<string?> Entities = new()
+    {
+        "CableApcExtension",
+        "AirlockGlass"
+    };
 }

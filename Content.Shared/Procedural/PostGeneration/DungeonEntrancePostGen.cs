@@ -8,7 +8,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// <summary>
 /// Selects [count] rooms and places external doors to them.
 /// </summary>
-public sealed class EntrancePostGen : IPostDunGen
+public sealed class DungeonEntrancePostGen : IPostDunGen
 {
     /// <summary>
     /// How many rooms we place doors on.
@@ -17,9 +17,10 @@ public sealed class EntrancePostGen : IPostDunGen
     public int Count = 1;
 
     [DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> Entities = new()
+    public List<string?> Entities = new()
     {
-        "AirlockGlass"
+        "CableApcExtension",
+        "AirlockGlass",
     };
 
     [DataField("tile", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
