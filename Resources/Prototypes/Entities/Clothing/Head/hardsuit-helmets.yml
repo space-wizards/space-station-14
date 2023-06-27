@@ -66,7 +66,7 @@
         Blunt: 0.90
         Slash: 0.90
         Piercing: 0.95
-        Heat: 0.2
+        Heat: 0.6
         Radiation: 0.5
   - type: TemperatureProtection
     coefficient: 0.005
