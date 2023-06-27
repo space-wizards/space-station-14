@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix up space cleaner and lots of changes to make it better., type: Tweak}
-  id: 3597
-  time: '2023-05-01T14:25:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Cleanbots now mop floors rather than drain near them., type: Tweak}
   id: 3598
   time: '2023-05-01T14:30:15.0000000+00:00'
@@ -2937,3 +2932,9 @@ Entries:
       any differently than the normal @ prefix.', type: Add}
   id: 4096
   time: '2023-06-26T21:20:09.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Nanotrasen has invested in higher quality grilles., type: Tweak}
+  - {message: The Hristov now does structural damage., type: Tweak}
+  id: 4097
+  time: '2023-06-27T01:19:09.0000000+00:00'
