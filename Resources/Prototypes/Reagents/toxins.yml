@@ -490,7 +490,6 @@
   group: Toxins
   desc: reagent-desc-lead
   physicalDesc: reagent-physical-desc-metallic
-  physicalDesc: reagent-physical-desc-nondescript
   color: "#5C6274"
   metabolisms:
     Poison:
