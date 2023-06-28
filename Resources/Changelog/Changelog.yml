@@ -1,13 +1,4 @@
 Entries:
-- author: Menshin
-  changes:
-  - {message: 'Despite clowns complains, Nanotrasen have recalled all magic zipties
-      that spawned myriads of themselves on removal and replaced them with plain ones.',
-    type: Fix}
-  - {message: Starting to uncuff someone (or self) now gives a popup feedback to observers
-      around., type: Tweak}
-  id: 3612
-  time: '2023-05-02T10:14:56.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: Round end zombie percentage is now calculated as = (infected humanoid
@@ -2935,3 +2926,8 @@ Entries:
   - {message: Maps now draw their atmospheric gasses., type: Add}
   id: 4111
   time: '2023-06-28T11:22:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Snow planets now have minerals and rocks on them., type: Add}
+  id: 4112
+  time: '2023-06-28T11:32:02.0000000+00:00'
