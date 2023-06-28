@@ -333,7 +333,7 @@ public abstract partial class SharedBuckleSystem
        if (!CanBuckle(buckleUid, userUid, strapUid, out var strapComp, buckleComp))
            return false;
 
-       var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, true);
+       var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, userUid, true);
        RaiseLocalEvent(attemptEvent.BuckledEntity, ref attemptEvent);
        RaiseLocalEvent(attemptEvent.StrapEntity, ref attemptEvent);
        if (attemptEvent.Cancelled)
@@ -407,7 +407,7 @@ public abstract partial class SharedBuckleSystem
             buckleComp.BuckledTo is not { } strapUid)
             return false;
 
-        var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, false);
+        var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, userUid, false);
         RaiseLocalEvent(attemptEvent.BuckledEntity, ref attemptEvent);
         RaiseLocalEvent(attemptEvent.StrapEntity, ref attemptEvent);
         if (attemptEvent.Cancelled)

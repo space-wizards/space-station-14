@@ -3,6 +3,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -75,6 +76,7 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<CuffableComponent, AttackAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, UseAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, InteractionAttemptEvent>(CheckAct);
+            SubscribeLocalEvent<CuffableComponent, BuckleAttemptEvent>(OnBuckleAttemptEvent);
 
             SubscribeLocalEvent<HandcuffComponent, AfterInteractEvent>(OnCuffAfterInteract);
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
@@ -132,6 +134,21 @@ namespace Content.Shared.Cuffs
         private void OnRejuvenate(EntityUid uid, CuffableComponent component, RejuvenateEvent args)
         {
             _container.EmptyContainer(component.Container, true);
+        }
+
+        private void OnBuckleAttemptEvent(EntityUid uid, CuffableComponent component, ref BuckleAttemptEvent args)
+        {
+            // If the buckler has all of their hands cuffed
+            if (TryComp<HandsComponent>(args.BucklingEntity, out var bucklingHands) &&
+                TryComp<CuffableComponent>(args.BuckledEntity, out var bucklingCuffs) &&
+                bucklingCuffs.CuffedHandCount == bucklingHands.Count)
+            {
+                if (!args.Cancelled) // Not sure if this check is needed. Goal is to prevent #17715 but moving to shared may be enough to do that
+                    // Message to the one attempting the (un)buckle, appearing on the entity attempting to be (un)buckled
+                    _popup.PopupEntity(Loc.GetString("handcuff-component-cuff-interrupt-buckled-message"), uid, args.BucklingEntity);
+
+                args.Cancelled = true;
+            }
         }
 
         private void OnCuffsRemovedFromContainer(EntityUid uid, CuffableComponent component, EntRemovedFromContainerMessage args)
