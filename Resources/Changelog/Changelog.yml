@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: You can now emag medibots to make them inject people with chloral hydrate
-      and space drugs!, type: Tweak}
-  id: 3610
-  time: '2023-05-02T08:00:58.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Added new sprites for bags in hand., type: Add}
@@ -2935,3 +2929,9 @@ Entries:
   - {message: Deckard revolver price increased to 1500, type: Tweak}
   id: 4109
   time: '2023-06-28T02:12:02.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: added space lube tube - use it on items to make them slip out of hands!,
+    type: Add}
+  id: 4110
+  time: '2023-06-28T02:48:06.0000000+00:00'
