@@ -4,12 +4,16 @@ using Content.Shared.Cuffs.Components;
 using Robust.Shared.GameStates;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.Components;
+using Robust.Shared.Network;
+using Content.Server.Popups;
 
 namespace Content.Server.Cuffs
 {
     [UsedImplicitly]
     public sealed class CuffableSystem : SharedCuffableSystem
     {
+        [Dependency] private readonly INetManager _netManager = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -48,6 +52,9 @@ namespace Content.Server.Cuffs
             if (TryComp<HandsComponent>(uid, out var hands) && component.CuffedHandCount == hands.Count)
             {
                 args.Cancelled = true;
+                var message = Loc.GetString("handcuff-component-cuff-interrupt-buckled-message");
+                if (_netManager.IsServer)
+                    _popupSystem.PopupEntity(message, uid);
             }
         }
     }
