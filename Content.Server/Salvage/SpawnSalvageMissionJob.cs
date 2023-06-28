@@ -206,13 +206,13 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             if (!lootProto.Guaranteed)
                 continue;
 
-            await SpawnDungeonLoot(dungeon, lootProto, mapUid, grid, random, reservedTiles);
+            await SpawnDungeonLoot(dungeon, missionBiome, lootProto, mapUid, grid, random, reservedTiles);
         }
 
         return true;
     }
 
-    private async Task SpawnDungeonLoot(Dungeon? dungeon, SalvageLootPrototype loot, EntityUid gridUid, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)
+    private async Task SpawnDungeonLoot(Dungeon? dungeon, SalvageBiomeMod biomeMod, SalvageLootPrototype loot, EntityUid gridUid, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)
     {
         for (var i = 0; i < loot.LootRules.Count; i++)
         {
@@ -222,9 +222,10 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             {
                 case BiomeMarkerLoot biomeLoot:
                     {
-                        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
+                        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome) &&
+                            biomeLoot.Prototype.TryGetValue(biomeMod.ID, out var mod))
                         {
-                            _biome.AddMarkerLayer(biome, biomeLoot.Prototype);
+                            _biome.AddMarkerLayer(biome, mod);
                         }
                     }
                     break;
