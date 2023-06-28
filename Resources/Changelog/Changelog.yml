@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Reduced how long it takes to restock a vendor., type: Tweak}
-  id: 3625
-  time: '2023-05-03T05:38:03.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: 'A normal slime will have a neutral label, and a separate description
@@ -2927,3 +2922,8 @@ Entries:
     type: Fix}
   id: 4124
   time: '2023-06-28T20:10:22.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Fixed slimes not being able to play sounds, type: Fix}
+  id: 4125
+  time: '2023-06-28T20:13:31.0000000+00:00'
