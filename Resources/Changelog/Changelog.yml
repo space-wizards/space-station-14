@@ -1,11 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: Round end zombie percentage is now calculated as = (infected humanoid
-      bodies) / (total humanoid bodies)., type: Tweak}
-  - {message: Round end zombie survivor list now shows more survivors., type: Tweak}
-  id: 3613
-  time: '2023-05-02T14:31:15.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Paused lights will no longer be in darkness by default., type: Tweak}
@@ -2931,3 +2924,8 @@ Entries:
   - {message: Snow planets now have minerals and rocks on them., type: Add}
   id: 4112
   time: '2023-06-28T11:32:02.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added walls to lava planets., type: Add}
+  id: 4113
+  time: '2023-06-28T12:57:40.0000000+00:00'
