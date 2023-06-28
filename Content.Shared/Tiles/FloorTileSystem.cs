@@ -60,13 +60,38 @@ public sealed class FloorTileSystem : EntitySystem
         var physicQuery = GetEntityQuery<PhysicsComponent>();
         var transformQuery = GetEntityQuery<TransformComponent>();
 
-        var tilePos = location.ToMapPos(EntityManager, _transform);
+        var map = location.ToMap(EntityManager, _transform);
+
+        // Disallow placement close to grids.
+        // FTLing close is okay but this makes alignment too finnicky.
+        // While you may already have a tile close you want to replace when we get half-tiles that may also be finnicky
+        // so we're just gon with this for now.
+        const bool inRange = true;
+        var state = (inRange, location.EntityId);
+        _mapManager.FindGridsIntersecting(map.MapId, new Box2(map.Position - 1f, map.Position + 1f), ref state,
+            static (EntityUid entityUid, MapGridComponent grid, ref (bool weh, EntityUid EntityId) tuple) =>
+            {
+                if (tuple.EntityId == entityUid)
+                    return true;
+
+                tuple.weh = false;
+                return false;
+            });
+
+        if (!state.inRange)
+        {
+            if (_netManager.IsClient && _timing.IsFirstTimePredicted)
+                _popup.PopupEntity(Loc.GetString("invalid-floor-placement"), args.User);
+
+            return;
+        }
+
         var userPos = transformQuery.GetComponent(args.User).Coordinates.ToMapPos(EntityManager, _transform);
-        var dir = userPos - tilePos;
+        var dir = userPos - map.Position;
         var canAccessCenter = false;
         if (dir.LengthSquared > 0.01)
         {
-            var ray = new CollisionRay(tilePos, dir.Normalized, (int) CollisionGroup.Impassable);
+            var ray = new CollisionRay(map.Position, dir.Normalized, (int) CollisionGroup.Impassable);
             var results = _physics.IntersectRay(locationMap.MapId, ray, dir.Length, returnOnFirstHit: true);
             canAccessCenter = !results.Any();
         }

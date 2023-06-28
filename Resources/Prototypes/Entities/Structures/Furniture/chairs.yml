@@ -268,7 +268,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 15
+        Blunt: 8
   - type: Construction
     graph: Seat
     node: chairFolding
