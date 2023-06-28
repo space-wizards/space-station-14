@@ -1,10 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Fixed an issue where wires could sometimes not be cut or pulsed in high-sec
-      doors., type: Fix}
-  id: 3606
-  time: '2023-05-02T00:40:31.0000000+00:00'
 - author: Mumohan
   changes:
   - {message: Syndicate discounted the fake capgun to please their clown and mime
@@ -2938,3 +2932,8 @@ Entries:
       welding something., type: Tweak}
   id: 4105
   time: '2023-06-28T01:46:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Crushers now leech 10 hp upon hitting damage marker targets., type: Add}
+  id: 4106
+  time: '2023-06-28T02:04:39.0000000+00:00'
