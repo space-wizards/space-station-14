@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Wide melee attacks are now also lag compensated., type: Add}
-  id: 3603
-  time: '2023-05-01T19:07:17.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: Now slimes can be a ghost role, type: Fix}
@@ -2937,3 +2932,8 @@ Entries:
       capacity., type: Fix}
   id: 4102
   time: '2023-06-28T00:30:03.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: 'Added more pirate accenting, yarr.', type: Add}
+  id: 4103
+  time: '2023-06-28T00:40:48.0000000+00:00'
