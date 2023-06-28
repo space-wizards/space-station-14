@@ -1,13 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Healing items (bruise packs, ointment, gauze) now work on dead creatures.',
-    type: Tweak}
-  - {message: Added defibrillators. Zap people who have recently died with these in
-      order to revive them. Make sure you patch up their body first!, type: Add}
-  - {message: Added defibrillators to the medical techfab., type: Add}
-  id: 3618
-  time: '2023-05-03T00:10:20.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix defib., type: Fix}
@@ -2934,3 +2925,8 @@ Entries:
   - {message: Salvages should be pulled in more reliably., type: Fix}
   id: 4117
   time: '2023-06-28T18:06:31.0000000+00:00'
+- author: DadeKuma
+  changes:
+  - {message: It's no longer possible to unbuckle if you are handcuffed, type: Fix}
+  id: 4118
+  time: '2023-06-28T18:09:04.0000000+00:00'
