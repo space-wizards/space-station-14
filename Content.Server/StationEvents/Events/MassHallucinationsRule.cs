@@ -13,7 +13,7 @@ public sealed class MassHallucinationsRule : StationEventSystem<MassHallucinatio
     protected override void Started(EntityUid uid, MassHallucinationsRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
-        var query = EntityQueryEnumerator<MindComponent>();
+        var query = EntityQueryEnumerator<MindContainerComponent>();
         while (query.MoveNext(out var ent, out _))
         {
             if (!HasComp<ParacusiaComponent>(ent))

@@ -20,6 +20,7 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Coordinates;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -228,14 +229,21 @@ public sealed partial class CargoSystem
 
     #region Station
 
-    private void SellPallets(EntityUid gridUid, out double amount)
+    private void SellPallets(EntityUid gridUid, EntityUid? station, out double amount)
     {
+        station ??= _station.GetOwningStation(gridUid);
         GetPalletGoods(gridUid, out var toSell, out amount);
 
         _sawmill.Debug($"Cargo sold {toSell.Count} entities for {amount}");
 
         foreach (var ent in toSell)
         {
+            if (station != null)
+            {
+                var ev = new EntitySoldEvent(station.Value, toSell);
+                RaiseLocalEvent(ref ev);
+            }
+
             Del(ent);
         }
     }
@@ -325,7 +333,7 @@ public sealed partial class CargoSystem
             return;
         }
 
-        SellPallets(gridUid, out var price);
+        SellPallets(gridUid, null, out var price);
         var stackPrototype = _protoMan.Index<StackPrototype>(component.CashType);
         _stack.Spawn((int)price, stackPrototype, uid.ToCoordinates());
         UpdatePalletConsoleInterface(uid);
@@ -359,7 +367,7 @@ public sealed partial class CargoSystem
 
         if (TryComp<StationBankAccountComponent>(stationUid, out var bank))
         {
-            SellPallets(uid, out var amount);
+            SellPallets(uid, stationUid, out var amount);
             bank.Balance += (int) amount;
         }
     }
@@ -424,3 +432,10 @@ public sealed partial class CargoSystem
         _console.RefreshShuttleConsoles();
     }
 }
+
+/// <summary>
+/// Event broadcast raised by-ref before it is sold and
+/// deleted but after the price has been calculated.
+/// </summary>
+[ByRefEvent]
+public readonly record struct EntitySoldEvent(EntityUid Station, HashSet<EntityUid> Sold);

@@ -356,6 +356,23 @@
         - FloraTreeSnow04
         - FloraTreeSnow05
         - FloraTreeSnow06
+    # Rock formations
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - FloorSnow
+      threshold: -0.15
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 0.05
+        lacunarity: 2
+        fractalType: FBm
+        octaves: 5
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
+      entities:
+        - WallRockSnow
     - !type:BiomeDummyLayer
       id: Loot
     - !type:BiomeTileLayer

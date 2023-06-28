@@ -1,6 +1,7 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Popups;
+using Content.Server.Tools.Components;
 using Content.Shared.Tools;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -31,6 +32,11 @@ namespace Content.Server.Tools
             base.Update(frameTime);
 
             UpdateWelders(frameTime);
+        }
+
+        protected override bool IsWelder(EntityUid uid)
+        {
+            return HasComp<WelderComponent>(uid);
         }
     }
 }

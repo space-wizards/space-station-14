@@ -237,7 +237,7 @@
       - id: ClothingOuterCoatPirate
       - id: ClothingShoesBootsLaceup
         amount: 2
-      - id: HatBandRed
+      - id: ClothingHeadBandRed
       - id: FoamCutlass
         amount: 2
 
@@ -261,3 +261,4 @@
       - id: VehicleUnicycleFolded
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
+      - id: BeachBall

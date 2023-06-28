@@ -93,7 +93,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     private void OnMapInit(EntityUid uid, MeleeWeaponComponent component, MapInitEvent args)
     {
         if (component.NextAttack > Timing.CurTime)
-            Logger.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
+            Log.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
 #endif
     }
 
@@ -873,6 +873,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 // Unfortunately heat returns caustic group so can't just use the damagegroup in that instance.
                 case "Burn":
                 case "Heat":
+                case "Radiation":
                 case "Cold":
                     Audio.PlayPredicted(new SoundPathSpecifier("/Audio/Items/welder.ogg"), target, user, AudioParams.Default.WithVariation(DamagePitchVariation));
                     break;
