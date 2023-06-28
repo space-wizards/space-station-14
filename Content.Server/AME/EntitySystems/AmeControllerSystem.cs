@@ -215,17 +215,17 @@ public sealed class AmeControllerSystem : EntitySystem
         if (!Resolve(uid, ref controller, ref appearance))
             return;
 
-        var newState = stability switch
-        {
-            < 10 => AmeControllerState.Fuck,
-            < 50 => AmeControllerState.Critical,
-            _ => AmeControllerState.On,
-        };
-
-        if (_appearanceSystem.TryGetData<AmeControllerState>(uid, AmeControllerVisuals.DisplayState, out var state, appearance) && state == newState)
-            return;
-
-        _appearanceSystem.SetData(uid, AmeControllerVisuals.DisplayState, state, appearance);
+        _appearanceSystem.SetData(
+            uid,
+            AmeControllerVisuals.DisplayState,
+            stability switch
+            {
+                < 10 => AmeControllerState.Fuck,
+                < 50 => AmeControllerState.Critical,
+                _ => AmeControllerState.On,
+            },
+            appearance
+        );
     }
 
     private void OnComponentStartup(EntityUid uid, AmeControllerComponent comp, ComponentStartup args)

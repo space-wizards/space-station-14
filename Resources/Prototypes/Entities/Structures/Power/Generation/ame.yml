@@ -14,7 +14,7 @@
     layers:
     - state: control
     - state: control_on
-      map: ["enum.AmeControllerVisualLayers.Display"]
+      map: ["display"]
       visible: false
   - type: Physics
   - type: Fixtures
@@ -61,7 +61,14 @@
     - key: enum.AmeControllerUiKey.Key
       type: AmeControllerBoundUserInterface
   - type: Appearance
-  - type: AmeControllerVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.AmeControllerVisuals.DisplayState:
+        display:
+          Off: { visible: false }
+          On: { state: control_on, visible: true }
+          Critical: { state: control_critical, visible: true }
+          Fuck: { state: control_fuck, visible: true }
   - type: NodeContainer
     examinable: true
     nodes:
@@ -115,10 +122,10 @@
     layers:
     - state: shield_0
     - state: core
-      map: ["enum.AmeShieldingVisualsLayer.Core"]
+      map: ["core"]
       visible: false
     - state: core_weak
-      map: ["enum.AmeShieldingVisualsLayer.CoreState"]
+      map: ["core_glow"]
       shader: unshaded
       visible: false
   - type: Physics
@@ -167,7 +174,17 @@
     energy: 0.5
     color: "#00AAFF"
   - type: Appearance
-  - type: AmeShieldingVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.AmeShieldVisuals.Core:
+        core:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AmeShieldVisuals.CoreState:
+        core_glow:
+          Off: { visible: false }
+          Weak: { state: core_weak, visible: true }
+          Strong: { state: core_strong, visible: true }
   - type: Construction
     graph: AmeShielding
     node: ameShielding
