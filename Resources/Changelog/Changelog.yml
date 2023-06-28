@@ -1,10 +1,4 @@
 Entries:
-- author: Ilya246
-  changes:
-  - {message: 'Nanotrasen changed the supplier of gas tanks to atmos, making them
-      harder to use as bombs.', type: Tweak}
-  id: 3616
-  time: '2023-05-02T22:12:09.0000000+00:00'
 - author: AJCM-git
   changes:
   - {message: Sprinting should be a little louder than walking, type: Tweak}
@@ -2932,3 +2926,11 @@ Entries:
     type: Tweak}
   id: 4115
   time: '2023-06-28T14:01:27.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: 'Added Lead, a tasteless, incredibly powerful but slow-acting poison
+      obtained in small amounts by grinding steel.', type: Add}
+  - {message: Grinding powercells now gives Zinc instead of Licoxide, type: Tweak}
+  - {message: Licoxide is now obtained through a combination of Zinc and Lead., type: Tweak}
+  id: 4116
+  time: '2023-06-28T17:53:56.0000000+00:00'
