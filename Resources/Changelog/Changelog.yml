@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: explosive grenades now beep on trigger exactly one time, type: Tweak}
-  id: 3615
-  time: '2023-05-02T15:13:40.0000000+00:00'
 - author: Ilya246
   changes:
   - {message: 'Nanotrasen changed the supplier of gas tanks to atmos, making them
@@ -2929,3 +2924,11 @@ Entries:
   - {message: The lsobjectives command now has autocompletion., type: Tweak}
   id: 4114
   time: '2023-06-28T13:47:46.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Hazardous and Extreme expeditions can have more dangerous modifiers,
+      of which temperature has been added.', type: Tweak}
+  - {message: Hazardous and Extreme expeditions give 4 and 5 rewards respectively.,
+    type: Tweak}
+  id: 4115
+  time: '2023-06-28T14:01:27.0000000+00:00'
