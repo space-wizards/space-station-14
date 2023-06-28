@@ -1,11 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: Fixed bomb suit explosion resistance values (50% for helmet and 80%
-      for suit - 90% in total - which is enough to survive minibomb explosion)., type: Fix}
-  - {message: You can now examine explosion resistance of armor., type: Add}
-  id: 3624
-  time: '2023-05-03T05:23:08.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Reduced how long it takes to restock a vendor., type: Tweak}
@@ -2928,3 +2921,9 @@ Entries:
       should now be more dull and subsequently weaker as a result., type: Tweak}
   id: 4123
   time: '2023-06-28T20:03:44.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Janitor trolley is functional again. Its storage is temporarily removed.,
+    type: Fix}
+  id: 4124
+  time: '2023-06-28T20:10:22.0000000+00:00'
