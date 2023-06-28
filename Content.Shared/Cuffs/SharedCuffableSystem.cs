@@ -145,7 +145,7 @@ namespace Content.Shared.Cuffs
             {
                 if (!args.Cancelled) // Not sure if this check is needed. Goal is to prevent #17715 but moving to shared may be enough to do that
                     // Message to the one attempting the (un)buckle, appearing on the entity attempting to be (un)buckled
-                    _popup.PopupEntity(Loc.GetString("handcuff-component-cuff-interrupt-buckled-message"), uid, args.BucklingEntity);
+                    _popup.PopupEntity(Loc.GetString("handcuff-component-cuffed-interrupt-you"), uid, args.BucklingEntity);
 
                 args.Cancelled = true;
             }
