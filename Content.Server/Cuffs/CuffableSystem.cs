@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Content.Shared.Cuffs.Components;
 using Robust.Shared.GameStates;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Hands.Components;
 
 namespace Content.Server.Cuffs
 {
@@ -44,7 +45,7 @@ namespace Content.Server.Cuffs
 
         private void OnBuckleAttemptEvent(EntityUid uid, CuffableComponent component, ref BuckleAttemptEvent args)
         {
-            if (component.CuffedHandCount > 0)
+            if (TryComp<HandsComponent>(uid, out var hands) && component.CuffedHandCount == hands.Count)
             {
                 args.Cancelled = true;
             }
