@@ -1,16 +1,4 @@
 Entries:
-- author: Mumohan
-  changes:
-  - {message: Syndicate discounted the fake capgun to please their clown and mime
-      agents, type: Tweak}
-  id: 3607
-  time: '2023-05-02T01:29:03.0000000+00:00'
-- author: brainfood1183
-  changes:
-  - {message: Treacherous scientists may now spend their TC on Omega Cartridges for
-      the CHIMP. Go APE., type: Add}
-  id: 3608
-  time: '2023-05-02T06:11:05.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Due to accessibility concerns, the Syndicate has added a dedicated
@@ -2937,3 +2925,14 @@ Entries:
   - {message: Crushers now leech 10 hp upon hitting damage marker targets., type: Add}
   id: 4106
   time: '2023-06-28T02:04:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed smoke reactions until someone makes a better system., type: Remove}
+  id: 4107
+  time: '2023-06-28T02:08:47.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: Vomit now only contains 10% of the reagents removed from the chem stream,
+    type: Tweak}
+  id: 4108
+  time: '2023-06-28T02:08:57.0000000+00:00'
