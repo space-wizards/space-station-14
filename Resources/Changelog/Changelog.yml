@@ -1,9 +1,4 @@
 Entries:
-- author: AJCM-git
-  changes:
-  - {message: Sprinting should be a little louder than walking, type: Tweak}
-  id: 3617
-  time: '2023-05-02T23:33:53.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Healing items (bruise packs, ointment, gauze) now work on dead creatures.',
@@ -2934,3 +2929,8 @@ Entries:
   - {message: Licoxide is now obtained through a combination of Zinc and Lead., type: Tweak}
   id: 4116
   time: '2023-06-28T17:53:56.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Salvages should be pulled in more reliably., type: Fix}
+  id: 4117
+  time: '2023-06-28T18:06:31.0000000+00:00'
