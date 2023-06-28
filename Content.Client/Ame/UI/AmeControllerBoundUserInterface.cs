@@ -1,17 +1,15 @@
-﻿using Content.Shared.Chemistry.Dispenser;
+﻿using Content.Shared.Ame;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using static Content.Shared.AME.SharedAMEControllerComponent;
 
-namespace Content.Client.AME.UI
+namespace Content.Client.Ame.UI
 {
     [UsedImplicitly]
-    public sealed class AMEControllerBoundUserInterface : BoundUserInterface
+    public sealed class AmeControllerBoundUserInterface : BoundUserInterface
     {
-        private AMEWindow? _window;
+        private AmeWindow? _window;
 
-        public AMEControllerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public AmeControllerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -19,7 +17,7 @@ namespace Content.Client.AME.UI
         {
             base.Open();
 
-            _window = new AMEWindow(this);
+            _window = new AmeWindow(this);
             _window.OnClose += Close;
             _window.OpenCentered();
         }
@@ -35,11 +33,11 @@ namespace Content.Client.AME.UI
         {
             base.UpdateState(state);
 
-            var castState = (AMEControllerBoundUserInterfaceState) state;
+            var castState = (AmeControllerBoundUserInterfaceState) state;
             _window?.UpdateState(castState); //Update window state
         }
 
-        public void ButtonPressed(UiButton button, int dispenseIndex = -1)
+        public void ButtonPressed(UiButton button)
         {
             SendMessage(new UiButtonPressedMessage(button));
         }
