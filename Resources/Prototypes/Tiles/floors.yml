@@ -79,7 +79,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemSteel
   heatCapacity: 10000
 
@@ -94,7 +93,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemSteel
   heatCapacity: 10000
 
@@ -109,7 +107,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemSteel
   heatCapacity: 10000
 
@@ -124,7 +121,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemSteel
   heatCapacity: 10000
 
@@ -169,7 +165,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemWhite
   heatCapacity: 10000
 
@@ -184,7 +179,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemWhite
   heatCapacity: 10000
 
@@ -199,7 +193,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemWhite
   heatCapacity: 10000
 
@@ -214,7 +207,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemWhite
   heatCapacity: 10000
 
@@ -229,7 +221,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemWhite
   heatCapacity: 10000
 
@@ -244,7 +235,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemWhite
   heatCapacity: 10000
 
@@ -259,7 +249,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemWhite
   heatCapacity: 10000
 
@@ -274,7 +263,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemWhite
   heatCapacity: 10000
 
@@ -289,7 +277,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemWhite
   heatCapacity: 10000
 
@@ -304,7 +291,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemWhite
   heatCapacity: 10000
 
@@ -375,7 +361,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemDark
   heatCapacity: 10000
 
@@ -390,7 +375,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemDark
   heatCapacity: 10000
 
@@ -405,7 +389,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemDark
   heatCapacity: 10000
 
@@ -420,7 +403,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemDark
   heatCapacity: 10000
 
@@ -435,7 +417,6 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepTile
-  friction: 0.25
   itemDrop: FloorTileItemDark
   heatCapacity: 10000
 
@@ -672,7 +653,7 @@
     collection: FootstepCarpet
   barestepSounds:
     collection: BarestepCarpet
-  friction: 0.40
+  friction: 0.25
   itemDrop: FloorTileItemArcadeBlue
   heatCapacity: 10000
 
@@ -687,7 +668,7 @@
     collection: FootstepCarpet
   barestepSounds:
     collection: BarestepCarpet
-  friction: 0.40
+  friction: 0.25
   itemDrop: FloorTileItemArcadeBlue2
   heatCapacity: 10000
 
@@ -702,7 +683,7 @@
     collection: FootstepCarpet
   barestepSounds:
     collection: BarestepCarpet
-  friction: 0.40
+  friction: 0.25
   itemDrop: FloorTileItemArcadeRed
   heatCapacity: 10000
 
@@ -717,7 +698,7 @@
     collection: FootstepCarpet
   barestepSounds:
     collection: BarestepCarpet
-  friction: 0.40
+  friction: 0.25
   itemDrop: FloorTileItemEighties
   heatCapacity: 10000
 
@@ -732,7 +713,7 @@
     collection: FootstepCarpet
   barestepSounds:
     collection: BarestepCarpet
-  friction: 0.40
+  friction: 0.25
   itemDrop: FloorTileItemCarpetClown
   heatCapacity: 10000
 
@@ -747,7 +728,7 @@
     collection: FootstepCarpet
   barestepSounds:
     collection: BarestepCarpet
-  friction: 0.40
+  friction: 0.25
   itemDrop: FloorTileItemCarpetOffice
   heatCapacity: 10000
 
@@ -762,7 +743,7 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepFloor
-  friction: 0.40
+  friction: 0.25
   itemDrop: FloorTileItemBoxing
   heatCapacity: 10000
 
@@ -777,7 +758,7 @@
   canCrowbar: true
   footstepSounds:
     collection: FootstepFloor
-  friction: 0.40
+  friction: 0.25
   itemDrop: FloorTileItemGym
   heatCapacity: 10000
 
@@ -1136,7 +1117,7 @@
   footstepSounds:
     collection: BarestepCarpet
   itemDrop: FloorTileItemFlesh
-  friction: 0.20 #slippy
+  friction: 0.05 #slippy
   heatCapacity: 10000
 
 - type: tile
