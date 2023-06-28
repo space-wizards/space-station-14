@@ -10,7 +10,6 @@ namespace Content.Shared.Maps;
 /// </summary>
 public sealed class TurfSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 

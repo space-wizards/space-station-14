@@ -78,7 +78,7 @@ public abstract class SharedItemSystem : EntitySystem
         args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
     }
 
-    private void OnStackCountChanged(EntityUid uid, ItemComponent component, StackCountChangedEvent args)
+    protected virtual void OnStackCountChanged(EntityUid uid, ItemComponent component, StackCountChangedEvent args)
     {
         if (!TryComp<StackComponent>(uid, out var stack))
             return;

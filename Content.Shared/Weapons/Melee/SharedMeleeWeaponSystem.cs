@@ -93,7 +93,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     private void OnMapInit(EntityUid uid, MeleeWeaponComponent component, MapInitEvent args)
     {
         if (component.NextAttack > Timing.CurTime)
-            Logger.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
+            Log.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
 #endif
     }
 

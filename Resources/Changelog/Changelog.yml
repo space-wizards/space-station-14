@@ -1,63 +1,4 @@
 Entries:
-- author: ProPandaBear
-  changes:
-  - {message: Increased toxin poison damage from 2 to 4., type: Tweak}
-  id: 3601
-  time: '2023-05-01T16:54:47.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Old NPC targeting has been ported to the new system and will prefer
-      the closest target over the weakest one much more., type: Fix}
-  - {message: NPC mice will now eat food., type: Add}
-  - {message: Runtime will now attack mice., type: Add}
-  id: 3602
-  time: '2023-05-01T18:57:11.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Wide melee attacks are now also lag compensated., type: Add}
-  id: 3603
-  time: '2023-05-01T19:07:17.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Now slimes can be a ghost role, type: Fix}
-  id: 3604
-  time: '2023-05-01T19:20:06.0000000+00:00'
-- author: TaralGit
-  changes:
-  - {message: Bulletproof and reflective armor now have proper sprites., type: Fix}
-  id: 3605
-  time: '2023-05-01T22:53:40.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed an issue where wires could sometimes not be cut or pulsed in high-sec
-      doors., type: Fix}
-  id: 3606
-  time: '2023-05-02T00:40:31.0000000+00:00'
-- author: Mumohan
-  changes:
-  - {message: Syndicate discounted the fake capgun to please their clown and mime
-      agents, type: Tweak}
-  id: 3607
-  time: '2023-05-02T01:29:03.0000000+00:00'
-- author: brainfood1183
-  changes:
-  - {message: Treacherous scientists may now spend their TC on Omega Cartridges for
-      the CHIMP. Go APE., type: Add}
-  id: 3608
-  time: '2023-05-02T06:11:05.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Due to accessibility concerns, the Syndicate has added a dedicated
-      uplink locking button. Setting ringtone to the code again still works though.',
-    type: Add}
-  id: 3609
-  time: '2023-05-02T07:53:10.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: You can now emag medibots to make them inject people with chloral hydrate
-      and space drugs!, type: Tweak}
-  id: 3610
-  time: '2023-05-02T08:00:58.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Added new sprites for bags in hand., type: Add}
@@ -2937,3 +2878,60 @@ Entries:
   - {message: Remove the landing pad from expeditions., type: Tweak}
   id: 4100
   time: '2023-06-27T09:55:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Disable ambient music when expedition countdown starts. Also bumped
+      countdown volume a lot., type: Tweak}
+  id: 4101
+  time: '2023-06-27T11:28:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed being able to use stacks to overload storage containers, type: Fix}
+  - {message: Fixed splitting stacks inside of storage not updating the available
+      capacity., type: Fix}
+  id: 4102
+  time: '2023-06-28T00:30:03.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: 'Added more pirate accenting, yarr.', type: Add}
+  id: 4103
+  time: '2023-06-28T00:40:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced folding chair damage., type: Tweak}
+  id: 4104
+  time: '2023-06-28T01:41:43.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Welders have been reworked to consume fuel when lit rather than after
+      welding something., type: Tweak}
+  id: 4105
+  time: '2023-06-28T01:46:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Crushers now leech 10 hp upon hitting damage marker targets., type: Add}
+  id: 4106
+  time: '2023-06-28T02:04:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Removed smoke reactions until someone makes a better system., type: Remove}
+  id: 4107
+  time: '2023-06-28T02:08:47.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: Vomit now only contains 10% of the reagents removed from the chem stream,
+    type: Tweak}
+  id: 4108
+  time: '2023-06-28T02:08:57.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: increased the rate of fire of the Deckard and Mateb revolvers, type: Tweak}
+  - {message: Deckard revolver price increased to 1500, type: Tweak}
+  id: 4109
+  time: '2023-06-28T02:12:02.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: added space lube tube - use it on items to make them slip out of hands!,
+    type: Add}
+  id: 4110
+  time: '2023-06-28T02:48:06.0000000+00:00'
