@@ -273,6 +273,18 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> GameTableBonk =
             CVarDef.Create("game.table_bonk", false, CVar.REPLICATED);
 
+        /// <summary>
+        /// Whether or not status icons are rendered for everyone.
+        /// </summary>
+        public static readonly CVarDef<bool> GlobalStatusIconsEnabled =
+            CVarDef.Create("game.global_status_icons_enabled", true, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Whether or not status icons are rendered on this specific client.
+        /// </summary>
+        public static readonly CVarDef<bool> LocalStatusIconsEnabled =
+            CVarDef.Create("game.local_status_icons_enabled", true, CVar.CLIENTONLY);
+
 #if EXCEPTION_TOLERANCE
         /// <summary>
         ///     Amount of times round start must fail before the server is shut down.
@@ -429,6 +441,12 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool>
             ConsoleLoginLocal = CVarDef.Create("console.loginlocal", true, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
+        /// Automatically log in the given user as host, equivalent to the <c>promotehost</c> command.
+        /// </summary>
+        public static readonly CVarDef<string> ConsoleLoginHostUser =
+            CVarDef.Create("console.login_host_user", "", CVar.ARCHIVE | CVar.SERVERONLY);
 
 
         /*

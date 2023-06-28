@@ -16,6 +16,9 @@
     RandomArtifactSpawner: 0.25
     # weighted down since it sells for a lot
     NuclearBombKeg: 0.1
+    # money
+    SpaceCash500: 0.5
+    SpaceCash1000: 0.25
 
 - type: weightedRandom
   id: SalvageRewardRare
@@ -27,14 +30,11 @@
     SheetUranium: 1.0
     CratePartsT3: 1.0
     CratePartsT3T4: 0.5
-    # things the expedition team might want
-    CrateEmergencyBruteKit: 0.5
-    CrateMedicalSupplies: 0.5
-    CrateSecurityRiot: 0.5
     # cloning boards
     CloningPodMachineCircuitboard: 0.5
     MedicalScannerMachineCircuitboard: 0.5
     CloningConsoleComputerCircuitboard: 0.5
+    BiomassReclaimerMachineCircuitboard: 0.5
     # basic weapons
     CrateArmorySMG: 0.25
     CrateArmoryLaser: 0.25
@@ -43,6 +43,10 @@
     ClothingHeadHelmetSwat: 0.1
     # rare weapons
     WeaponSubMachineGunC20r: 0.1
+    # money
+    SpaceCash500: 1.0
+    SpaceCash1000: 0.75
+    SpaceCash2500: 0.5
 
 - type: weightedRandom
   id: SalvageRewardEpic
@@ -50,14 +54,16 @@
     # rare machinery
     ResearchAndDevelopmentServerMachineCircuitboard: 1.0
     CratePartsT4: 1.0
+    PowerCellAntiqueProto: 0.25
     # rare weapons
     WeaponAdvancedLaser: 1.0
     WeaponLaserCannon: 1.0
     WeaponXrayCannon: 1.0
     WeaponSniperHristov: 1.0
-    # extremely rare weapons
-    GatfruitSeeds: 0.25
-    WeaponLauncherRocket: 0.1
     # rare chemicals
     CognizineChemistryBottle: 1.0
     OmnizineChemistryBottle: 1.0
+    # money
+    SpaceCash2500: 1.0
+    SpaceCash5000: 0.75
+    SpaceCash10000: 0.5

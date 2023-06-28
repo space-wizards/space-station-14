@@ -77,3 +77,13 @@
   cost: 1100
   category: Engineering
   group: market
+
+- type: cargoProduct
+  id: EvaKit
+  icon:
+    sprite: Clothing/Head/Helmets/eva.rsi
+    state: icon
+  product: CrateEvaKit
+  cost: 9500
+  category: Engineering
+  group: market

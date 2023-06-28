@@ -41,11 +41,11 @@
       sprite: Objects/Tools/lantern.rsi
       heldPrefix: off
     - type: PointLight
-      netsync: false
       enabled: false
       radius: 3
       energy: 2.5
       color: "#FFC458"
+      netsync: false
     - type: Appearance
     - type: ToggleableLightVisuals
     - type: PowerCellSlot

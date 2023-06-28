@@ -262,14 +262,14 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.90
-        Slash: 0.90
-        Piercing: 0.95
-        Heat: 0.5
-        Radiation: .95
+        Blunt: 1
+        Slash: 1
+        Piercing: 1
+        Heat: 0.4
+        Radiation: 1
   - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 1000
+    highPressureMultiplier: 0.25
+    lowPressureMultiplier: 1
   - type: IdentityBlocker
   - type: Tag
     tags:
