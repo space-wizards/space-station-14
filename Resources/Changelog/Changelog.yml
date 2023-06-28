@@ -1,13 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Thanks to new NT stomach medication, examining players no longer shows
-      them as perpetually bloated.', type: Fix}
-  - {message: 'Cold temperatures, body bags, and morgues now properly prevent rotting.',
-    type: Fix}
-  - {message: Zombies no longer passively produce miasma., type: Tweak}
-  id: 3621
-  time: '2023-05-03T04:57:47.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: 'Multiple lawsuits from entities beyond Time have led Nanotrasen to
@@ -2931,3 +2922,8 @@ Entries:
     type: Fix}
   id: 4120
   time: '2023-06-28T19:59:40.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: 'Fixed: dwarfs has no cough, sneeze etc sounds', type: Fix}
+  id: 4121
+  time: '2023-06-28T20:01:41.0000000+00:00'
