@@ -7,7 +7,7 @@ namespace Content.Shared.Atmos.Components;
 [NetworkedComponent]
 public abstract class SharedMapAtmosphereComponent : Component
 {
-    [DataField("overlayData")] public SharedGasTileOverlaySystem.GasOverlayData OverlayData;
+    [ViewVariables] public SharedGasTileOverlaySystem.GasOverlayData OverlayData;
 }
 
 [Serializable, NetSerializable]
