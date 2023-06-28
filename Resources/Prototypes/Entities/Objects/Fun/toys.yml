@@ -164,10 +164,9 @@
   - type: Sprite
     state: plushie_lamp
   - type: PointLight
-    netsync: false
     radius: 1.5
     energy: 2
-
+    netsync: false
 - type: entity
   parent: BasePlushie
   id: PlushieLizard #Weh!
@@ -941,11 +940,11 @@
     - type: UseDelay
       delay: 1.0
     - type: PointLight
-      netsync: false
       enabled: false
       radius: 2
       energy: 2
       color: white
+      netsync: false
     - type: Appearance
     - type: ToggleableLightVisuals
       spriteLayer: blade
