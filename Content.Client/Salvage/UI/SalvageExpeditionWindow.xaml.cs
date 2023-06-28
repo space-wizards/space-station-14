@@ -198,7 +198,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             var rewards = new Dictionary<string, int>();
             foreach (var reward in mission.Rewards)
             {
-                var name = _prototype.Index<EntityPrototype>(o.Key).Name;
+                var name = _prototype.Index<EntityPrototype>(reward).Name;
                 var count = rewards.GetOrNew(name);
                 count++;
                 rewards[name] = count;
