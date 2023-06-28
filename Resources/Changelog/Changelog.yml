@@ -1,14 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Old NPC targeting has been ported to the new system and will prefer
-      the closest target over the weakest one much more., type: Fix}
-  - {message: NPC mice will now eat food., type: Add}
-  - {message: Runtime will now attack mice., type: Add}
-  id: 3602
-  time: '2023-05-01T18:57:11.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Wide melee attacks are now also lag compensated., type: Add}
   id: 3603
   time: '2023-05-01T19:07:17.0000000+00:00'
@@ -2938,3 +2930,10 @@ Entries:
       countdown volume a lot., type: Tweak}
   id: 4101
   time: '2023-06-27T11:28:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed being able to use stacks to overload storage containers, type: Fix}
+  - {message: Fixed splitting stacks inside of storage not updating the available
+      capacity., type: Fix}
+  id: 4102
+  time: '2023-06-28T00:30:03.0000000+00:00'
