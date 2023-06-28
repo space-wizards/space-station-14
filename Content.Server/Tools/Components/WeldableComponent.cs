@@ -27,13 +27,6 @@ public sealed class WeldableComponent : SharedWeldableComponent
     public bool Weldable = true;
 
     /// <summary>
-    ///     How much fuel does it take to weld/unweld entity.
-    /// </summary>
-    [DataField("fuel")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float FuelConsumption = 3f;
-
-    /// <summary>
     ///     How much time does it take to weld/unweld entity.
     /// </summary>
     [DataField("time")]
