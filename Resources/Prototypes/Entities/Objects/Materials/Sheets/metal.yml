@@ -57,6 +57,18 @@
   - type: FloorTile
     outputs:
     - Plating
+  - type: Extractable
+    grindableSolutionName: steel
+  - type: SolutionContainerManager
+    solutions:
+      steel:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 22
+        - ReagentId: Carbon
+          Quantity: 2.5
+        - ReagentId: Lead
+          Quantity: 0.5
 
 - type: entity
   parent: SheetSteel
