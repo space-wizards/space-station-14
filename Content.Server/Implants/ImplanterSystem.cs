@@ -48,7 +48,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         }
         else
         {
-            if (!CanImplant(args.User, args.Target.Value, uid, component, out _, out _))
+            if (!CanImplant(args.User, args.Target.Value, uid, component, out _, out _, out _, out _))
                 return;
 
             //Implant self instantly, otherwise try to inject the target.

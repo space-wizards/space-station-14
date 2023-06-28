@@ -16,6 +16,7 @@ namespace Content.Shared.Implants.Components;
 public sealed class ImplanterComponent : Component
 {
     public const string ImplanterSlotId = "implanter_slot";
+    public const string ImplanterSlotId2 = "Implanter_slot2";
     public const string ImplantSlotId = "implant";
 
     /// <summary>
@@ -24,6 +25,13 @@ public sealed class ImplanterComponent : Component
     [ViewVariables]
     [DataField("implant", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? Implant;
+
+    /// <summary>
+    /// Used for implanters that start with two specific implants
+    /// </summary>
+    [ViewVariables]
+    [DataField("implant2", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? Implant2;
 
     /// <summary>
     /// The time it takes to implant someone else
@@ -69,6 +77,10 @@ public sealed class ImplanterComponent : Component
     [ViewVariables]
     [DataField("implanterSlot", required:true)]
     public ItemSlot ImplanterSlot = new();
+
+    [ViewVariables]
+    [DataField("implanterSlot2", required: true)]
+    public ItemSlot ImplanterSlot2 = new();
 
     public bool UiUpdateNeeded;
 }

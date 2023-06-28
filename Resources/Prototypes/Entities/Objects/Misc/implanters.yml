@@ -11,10 +11,17 @@
     - type: ContainerContainer
       containers:
         implanter_slot: !type:ContainerSlot { }
+        implanter_slot2: !type:ContainerSlot { }
     - type: Implanter
       currentMode: Draw
       implanterSlot:
         name: Implant
+        priority: 0
+        whitelist:
+          tags:
+            - SubdermalImplant
+      implanterSlot2:
+        name: Implant2
         priority: 0
         whitelist:
           tags:
@@ -82,6 +89,7 @@
   components:
     - type: Implanter
       implant: SadTromboneImplant
+      implant2: Empty
 
 - type: entity
   id: LightImplanter
@@ -91,6 +99,7 @@
   components:
     - type: Implanter
       implant: LightImplant
+      implant2: Empty
 
 #Security implanters
 
@@ -102,6 +111,7 @@
   components:
     - type: Implanter
       implant: TrackingImplant
+      implant2: Empty
 
 #Traitor implanters
 
@@ -113,6 +123,7 @@
   components:
     - type: Implanter
       implant: StorageImplant
+      implant2: Empty
 
 - type: entity
   id: FreedomImplanter
@@ -122,6 +133,7 @@
   components:
     - type: Implanter
       implant: FreedomImplant
+      implant2: Empty
 
 - type: entity
   id: UplinkImplanter
@@ -131,6 +143,7 @@
   components:
   - type: Implanter
     implant: UplinkImplant
+    implant2: Empty
 
 #Nuclear Operative/Special implanters
 
@@ -142,6 +155,7 @@
   components:
     - type: Implanter
       implant: MicroBombImplant
+      implant2: Empty
 
 - type: entity
   id: MacroBombImplanter
@@ -151,21 +165,14 @@
   components:
     - type: Implanter
       implant: MacroBombImplant
-
-- type: entity
-  id: CritRattleImplanter
-  name: crit rattle implanter
-  description: a single use implanter, the implant will inform anyone with access to the syndicate radio channel of your critical state and location.
-  parent: BaseImplantOnlyImplanter
-  components:
-    - type: Implanter
-      implant: CritRattleImplant
+      implant2: Empty
 
 - type: entity
   id: DeathRattleImplanter
-  name: death rattle implanter
+  name: Deathrattle implanter
   description: a single use implanter, the implant will start a fake bomb countdown and inform anyone with access to the syndicate radio channel of your death.
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
-      implant: DeathRattleImplant
+      implant: CritRattleImplant
+      implant2: DeathRattleImplant

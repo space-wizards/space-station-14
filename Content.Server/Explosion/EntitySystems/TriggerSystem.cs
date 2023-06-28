@@ -81,7 +81,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
             SubscribeLocalEvent<GibOnTriggerComponent, TriggerEvent>(HandleGibTrigger);
-            SubscribeLocalEvent<SubdermalImplantComponent, TriggerEvent>(HandleDeathRattleTrigger);
+            SubscribeLocalEvent<RattleComponent, TriggerEvent>(HandleRattleTrigger);
         }
 
         private void OnSpawnTrigger(EntityUid uid, SpawnOnTriggerComponent component, TriggerEvent args)
@@ -127,25 +127,26 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = true;
         }
 
-        private void HandleDeathRattleTrigger(EntityUid uid, SubdermalImplantComponent component, TriggerEvent args)
+        private void HandleRattleTrigger(EntityUid uid, RattleComponent component, TriggerEvent args)
         {
-            if (component.ImplantedEntity == null)
+            if (!TryComp<SubdermalImplantComponent?>(uid, out var owner))
                 return;
 
-            var ownerXform = Transform(uid);
+            if (owner.ImplantedEntity == null)
+                return;
 
-            var pos =  ownerXform.MapPosition;
+            // Gets location of the implant
+            var ownerXform = Transform(uid);
+            var pos = ownerXform.MapPosition;
             var x = (int) pos.X;
             var y = (int) pos.Y;
             var posText = $"({x}, {y})";
 
-            var messageDead = Loc.GetString(component.messageDead, ("user", component.ImplantedEntity.Value), ("position", posText));
-            var messageCrit = Loc.GetString(component.messageCrit, ("user", component.ImplantedEntity.Value), ("position", posText));
+            var message = Loc.GetString(component.Message, ("user", owner.ImplantedEntity.Value), ("position", posText));
 
-            if (messageDead != "")
-                _radioSystem.SendRadioMessage(uid, messageDead, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);
-            if (messageCrit != "")
-                _radioSystem.SendRadioMessage(uid, messageCrit, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);
+            // Sends a message to the radio channel specified by the implanter
+            _radioSystem.SendRadioMessage(uid, message, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);
+
             args.Handled = true;
         }
 

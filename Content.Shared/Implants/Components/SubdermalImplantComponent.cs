@@ -31,16 +31,6 @@ public sealed class SubdermalImplantComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("permanent")]
     public bool Permanent = false;
-
-    [DataField("radioChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
-    public string RadioChannel = "Syndicate";
-
-    [DataField("messageDead")]
-    public string messageDead = "";
-
-    [DataField("messageCrit")]
-    public string messageCrit = "";
-
 }
 
 /// <summary>
