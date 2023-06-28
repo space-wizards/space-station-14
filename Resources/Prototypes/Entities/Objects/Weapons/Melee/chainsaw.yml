@@ -1,0 +1,21 @@
+- type: entity
+  name: chainsaw
+  parent: BaseItem
+  id: Chainsaw
+  description: A chainsaw. Usually you use this for cutting down trees. There is a hole at the base for your hand.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/chainsaw.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 20
+        Blunt: 10
+    soundHit:
+        path: /Audio/Weapons/chainsaw.ogg
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/chainsaw.rsi
+  - type: DisarmMalus
