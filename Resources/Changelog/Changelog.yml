@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Added new sprites for bags in hand., type: Add}
-  id: 3611
-  time: '2023-05-02T08:24:37.0000000+00:00'
 - author: Menshin
   changes:
   - {message: 'Despite clowns complains, Nanotrasen have recalled all magic zipties
@@ -2935,3 +2930,8 @@ Entries:
     type: Add}
   id: 4110
   time: '2023-06-28T02:48:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Maps now draw their atmospheric gasses., type: Add}
+  id: 4111
+  time: '2023-06-28T11:22:03.0000000+00:00'
