@@ -140,7 +140,7 @@ namespace Content.Shared.Cuffs
         {
             // If the buckler has all of their hands cuffed
             if (TryComp<HandsComponent>(args.BucklingEntity, out var bucklingHands) &&
-                TryComp<CuffableComponent>(args.BuckledEntity, out var bucklingCuffs) &&
+                TryComp<CuffableComponent>(args.BucklingEntity, out var bucklingCuffs) &&
                 bucklingCuffs.CuffedHandCount == bucklingHands.Count)
             {
                 if (!args.Cancelled) // Not sure if this check is needed. Goal is to prevent #17715 but moving to shared may be enough to do that
