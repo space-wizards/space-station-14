@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared.AME;
+namespace Content.Shared.Ame;
 
 [Virtual]
 public class SharedAmeShieldComponent : Component

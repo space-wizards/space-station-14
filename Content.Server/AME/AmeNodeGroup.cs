@@ -1,6 +1,6 @@
 using System.Linq;
-using Content.Server.AME.Components;
-using Content.Server.AME.EntitySystems;
+using Content.Server.Ame.Components;
+using Content.Server.Ame.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
@@ -8,7 +8,7 @@ using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
-namespace Content.Server.AME;
+namespace Content.Server.Ame;
 
 /// <summary>
 /// Node group class for handling the Antimatter Engine's console and parts.

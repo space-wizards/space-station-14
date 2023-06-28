@@ -1,8 +1,8 @@
-using Content.Server.AME.Components;
-using Content.Shared.AME;
+using Content.Server.Ame.Components;
+using Content.Shared.Ame;
 using Robust.Server.GameObjects;
 
-namespace Content.Server.AME.EntitySystems;
+namespace Content.Server.Ame.EntitySystems;
 
 public sealed class AmeShieldingSystem : EntitySystem
 {

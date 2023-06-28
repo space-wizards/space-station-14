@@ -21,7 +21,7 @@ using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Administration;
-using Content.Shared.AME;
+using Content.Shared.Ame;
 using Content.Shared.Gravity;
 using Content.Shared.Localizations;
 using Robust.Client;

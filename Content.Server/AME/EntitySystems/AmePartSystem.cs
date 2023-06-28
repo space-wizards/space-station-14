@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.AME.Components;
+using Content.Server.Ame.Components;
 using Content.Server.Popups;
 using Content.Server.Tools;
 using Content.Shared.Database;
@@ -8,7 +8,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Map;
 
-namespace Content.Server.AME.EntitySystems;
+namespace Content.Server.Ame.EntitySystems;
 
 public sealed class AmePartSystem : EntitySystem
 {

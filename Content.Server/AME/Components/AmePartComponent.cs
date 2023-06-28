@@ -2,7 +2,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.AME.Components;
+namespace Content.Server.Ame.Components;
 
 /// <summary>
 /// Packaged AME machinery that can be deployed to construct an AME.

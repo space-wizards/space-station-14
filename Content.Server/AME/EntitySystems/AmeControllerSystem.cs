@@ -1,10 +1,10 @@
 using Content.Server.Administration.Logs;
-using Content.Server.AME.Components;
+using Content.Server.Ame.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Mind.Components;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
-using Content.Shared.AME;
+using Content.Shared.Ame;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -18,7 +18,7 @@ using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Content.Server.AME.EntitySystems;
+namespace Content.Server.Ame.EntitySystems;
 
 public sealed class AmeControllerSystem : EntitySystem
 {

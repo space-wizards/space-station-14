@@ -1,7 +1,7 @@
-﻿using Content.Server.AME.EntitySystems;
-using Content.Shared.AME;
+﻿using Content.Server.Ame.EntitySystems;
+using Content.Shared.Ame;
 
-namespace Content.Server.AME.Components;
+namespace Content.Server.Ame.Components;
 
 /// <summary>
 /// The component used to make an entity part of the bulk machinery of an AntiMatter Engine.

@@ -1,9 +1,9 @@
-using Content.Server.AME.EntitySystems;
-using Content.Shared.AME;
+using Content.Server.Ame.EntitySystems;
+using Content.Shared.Ame;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 
-namespace Content.Server.AME.Components;
+namespace Content.Server.Ame.Components;
 
 /// <summary>
 /// The component used to make an entity the controller/fuel injector port of an AntiMatter Engine. 

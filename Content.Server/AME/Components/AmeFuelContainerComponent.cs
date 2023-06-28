@@ -1,4 +1,4 @@
-namespace Content.Server.AME.Components;
+namespace Content.Server.Ame.Components;
 
 /// <summary>
 /// An antimatter containment cell used to handle the fuel for the AME.

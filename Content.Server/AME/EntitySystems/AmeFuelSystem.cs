@@ -1,7 +1,7 @@
-using Content.Server.AME.Components;
+using Content.Server.Ame.Components;
 using Content.Shared.Examine;
 
-namespace Content.Server.AME.EntitySystems;
+namespace Content.Server.Ame.EntitySystems;
 
 /// <summary>
 /// Adds fuel level info to examine on fuel jars and handles network state.

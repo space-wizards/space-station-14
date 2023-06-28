@@ -1,8 +1,8 @@
-﻿using Content.Shared.AME;
+﻿using Content.Shared.Ame;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.AME.UI
+namespace Content.Client.Ame.UI
 {
     [UsedImplicitly]
     public sealed class AmeControllerBoundUserInterface : BoundUserInterface
