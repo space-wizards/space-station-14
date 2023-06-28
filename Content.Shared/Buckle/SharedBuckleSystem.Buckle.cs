@@ -11,6 +11,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling.Events;
 using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
 using Content.Shared.Stunnable;
@@ -312,6 +313,12 @@ public abstract partial class SharedBuckleSystem
             return false;
         }
 
+        var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, userUid, true);
+        RaiseLocalEvent(attemptEvent.BuckledEntity, ref attemptEvent);
+        RaiseLocalEvent(attemptEvent.StrapEntity, ref attemptEvent);
+        if (attemptEvent.Cancelled)
+            return false;
+
         return true;
     }
 
@@ -331,12 +338,6 @@ public abstract partial class SharedBuckleSystem
             return false;
 
        if (!CanBuckle(buckleUid, userUid, strapUid, out var strapComp, buckleComp))
-           return false;
-
-       var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, true);
-       RaiseLocalEvent(attemptEvent.BuckledEntity, ref attemptEvent);
-       RaiseLocalEvent(attemptEvent.StrapEntity, ref attemptEvent);
-       if (attemptEvent.Cancelled)
            return false;
 
        if (!StrapTryAdd(strapUid, buckleUid, buckleComp, false, strapComp))
@@ -407,14 +408,14 @@ public abstract partial class SharedBuckleSystem
             buckleComp.BuckledTo is not { } strapUid)
             return false;
 
-        var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, false);
-        RaiseLocalEvent(attemptEvent.BuckledEntity, ref attemptEvent);
-        RaiseLocalEvent(attemptEvent.StrapEntity, ref attemptEvent);
-        if (attemptEvent.Cancelled)
-            return false;
-
         if (!force)
         {
+            var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, userUid, false);
+            RaiseLocalEvent(attemptEvent.BuckledEntity, ref attemptEvent);
+            RaiseLocalEvent(attemptEvent.StrapEntity, ref attemptEvent);
+            if (attemptEvent.Cancelled)
+                return false;
+
             if (_gameTiming.CurTime < buckleComp.BuckleTime + buckleComp.UnbuckleDelay)
                 return false;
 
