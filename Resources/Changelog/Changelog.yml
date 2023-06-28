@@ -1,15 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix defib., type: Fix}
-  id: 3619
-  time: '2023-05-03T01:32:07.0000000+00:00'
-- author: DjfjdfofdjfjD
-  changes:
-  - {message: 'Inaprovaline now works when you are in critical condition, not when
-      you have more than 100 dmg.', type: Fix}
-  id: 3620
-  time: '2023-05-03T03:44:31.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Thanks to new NT stomach medication, examining players no longer shows
@@ -2930,3 +2919,15 @@ Entries:
   - {message: It's no longer possible to unbuckle if you are handcuffed, type: Fix}
   id: 4118
   time: '2023-06-28T18:09:04.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Changed kukri knife icon and merc backpack sprite on player, type: Tweak}
+  id: 4119
+  time: '2023-06-28T19:59:30.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Modified the rewards and item amounts for several cargo bounties., type: Tweak}
+  - {message: Fixed the pie bounty and percussion bounty not being able to be complete.,
+    type: Fix}
+  id: 4120
+  time: '2023-06-28T19:59:40.0000000+00:00'
