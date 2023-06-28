@@ -1,13 +1,6 @@
 Entries:
 - author: deltanedas
   changes:
-  - {message: 'Due to accessibility concerns, the Syndicate has added a dedicated
-      uplink locking button. Setting ringtone to the code again still works though.',
-    type: Add}
-  id: 3609
-  time: '2023-05-02T07:53:10.0000000+00:00'
-- author: deltanedas
-  changes:
   - {message: You can now emag medibots to make them inject people with chloral hydrate
       and space drugs!, type: Tweak}
   id: 3610
@@ -2936,3 +2929,9 @@ Entries:
     type: Tweak}
   id: 4108
   time: '2023-06-28T02:08:57.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: increased the rate of fire of the Deckard and Mateb revolvers, type: Tweak}
+  - {message: Deckard revolver price increased to 1500, type: Tweak}
+  id: 4109
+  time: '2023-06-28T02:12:02.0000000+00:00'
