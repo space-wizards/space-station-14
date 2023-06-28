@@ -1,9 +1,4 @@
 Entries:
-- author: TaralGit
-  changes:
-  - {message: Bulletproof and reflective armor now have proper sprites., type: Fix}
-  id: 3605
-  time: '2023-05-01T22:53:40.0000000+00:00'
 - author: themias
   changes:
   - {message: Fixed an issue where wires could sometimes not be cut or pulsed in high-sec
@@ -2937,3 +2932,9 @@ Entries:
   - {message: Reduced folding chair damage., type: Tweak}
   id: 4104
   time: '2023-06-28T01:41:43.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Welders have been reworked to consume fuel when lit rather than after
+      welding something., type: Tweak}
+  id: 4105
+  time: '2023-06-28T01:46:49.0000000+00:00'
