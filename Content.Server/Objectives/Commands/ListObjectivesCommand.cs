@@ -21,14 +21,14 @@ namespace Content.Server.Objectives.Commands
             }
             else if (player == null || !IoCManager.Resolve<IPlayerManager>().TryGetPlayerDataByUsername(args[0], out data))
             {
-                shell.WriteLine(LocalizationManager.GetString("cmd-lsobjectives-player"));
+                shell.WriteError(LocalizationManager.GetString("shell-target-player-does-not-exist"));
                 return;
             }
 
             var mind = data.ContentData()?.Mind;
             if (mind == null)
             {
-                shell.WriteLine(LocalizationManager.GetString("cmd-lsobjectives-mind"));
+                shell.WriteError(LocalizationManager.GetString("shell-target-entity-does-not-have-message", ("missing", "mind")));
                 return;
             }
 
@@ -49,9 +49,7 @@ namespace Content.Server.Objectives.Commands
         {
             if (args.Length == 1)
             {
-                var playerMgr = IoCManager.Resolve<IPlayerManager>();
-                var options = playerMgr.ServerSessions.Select(c => c.Name).OrderBy(c => c).ToArray();
-                return CompletionResult.FromHintOptions(options, LocalizationManager.GetString("cmd-lsobjectives-hint"));
+                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), LocalizationManager.GetString("shell-argument-username-hint"));
             }
 
             return CompletionResult.Empty;
