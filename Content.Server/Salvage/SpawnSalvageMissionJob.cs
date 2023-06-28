@@ -115,8 +115,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             _entManager.System<AtmosphereSystem>().SetMapSpace(mapUid, air.Space, atmos);
             _entManager.System<AtmosphereSystem>().SetMapGasMixture(mapUid, new GasMixture(2500)
             {
-                // TODO: temperature mods
-                Temperature = 293.15f,
+                Temperature = mission.Temperature,
                 Moles = moles,
             }, atmos);
 

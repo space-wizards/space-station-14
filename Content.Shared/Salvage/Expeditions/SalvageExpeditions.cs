@@ -100,6 +100,7 @@ public sealed record SalvageMission(
     SalvageMissionType Mission,
     string Biome,
     string Air,
+    float Temperature,
     Color? Color,
     TimeSpan Duration,
     List<string> Rewards,
@@ -139,6 +140,11 @@ public sealed record SalvageMission(
     /// Air mixture to be used for the mission's planet.
     /// </summary>
     public readonly string Air = Air;
+
+    /// <summary>
+    /// Temperature of the planet's atmosphere.
+    /// </summary>
+    public readonly float Temperature = Temperature;
 
     /// <summary>
     /// Lighting color to be used (AKA outdoor lighting).
