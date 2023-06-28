@@ -1,9 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - {message: Now slimes can be a ghost role, type: Fix}
-  id: 3604
-  time: '2023-05-01T19:20:06.0000000+00:00'
 - author: TaralGit
   changes:
   - {message: Bulletproof and reflective armor now have proper sprites., type: Fix}
@@ -2937,3 +2932,8 @@ Entries:
   - {message: 'Added more pirate accenting, yarr.', type: Add}
   id: 4103
   time: '2023-06-28T00:40:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced folding chair damage., type: Tweak}
+  id: 4104
+  time: '2023-06-28T01:41:43.0000000+00:00'
