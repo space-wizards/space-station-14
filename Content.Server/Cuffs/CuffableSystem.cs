@@ -44,8 +44,7 @@ namespace Content.Server.Cuffs
 
         private void OnBuckleAttemptEvent(EntityUid uid, CuffableComponent component, ref BuckleAttemptEvent args)
         {
-            // one hand cuffed is able to unbuckle
-            if (component.CuffedHandCount == 2)
+            if (component.CuffedHandCount > 0)
             {
                 args.Cancelled = true;
             }
