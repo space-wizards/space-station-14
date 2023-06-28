@@ -8,8 +8,6 @@ namespace Content.Server.Electrocution
     [DataDefinition]
     public sealed class ElectrocutionNode : Node
     {
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-
         [DataField("cable")]
         public EntityUid CableEntity;
         [DataField("node")]
@@ -21,6 +19,8 @@ namespace Content.Server.Electrocution
             MapGridComponent? grid,
             IEntityManager entMan)
         {
+            var _nodeContainer = entMan.System<NodeContainerSystem>();
+
             if (!nodeQuery.TryGetComponent(CableEntity, out var nodeContainer))
                 yield break;
 

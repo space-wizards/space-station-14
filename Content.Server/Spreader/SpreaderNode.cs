@@ -11,7 +11,7 @@ namespace Content.Server.Spreader;
 /// </summary>
 public sealed class SpreaderNode : Node
 {
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    // [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
     /// <inheritdoc/>
     public override IEnumerable<Node> GetReachableNodes(TransformComponent xform, EntityQuery<NodeContainerComponent> nodeQuery, EntityQuery<TransformComponent> xformQuery,
@@ -21,6 +21,8 @@ public sealed class SpreaderNode : Node
             yield break;
 
         entMan.System<SpreaderSystem>().GetNeighbors(xform.Owner, Name, out _, out _, out var neighbors);
+
+        var _nodeContainer = entMan.System<NodeContainerSystem>();
 
         foreach (var neighbor in neighbors)
         {
