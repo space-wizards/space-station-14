@@ -35,7 +35,7 @@
   name: chat-radio-1
   keycode: '1'
   frequency: 1072
-  color: "#c7c7c7"
+  color: "#9c3117"
   longRange: true
 
 - type: radioChannel
@@ -43,7 +43,7 @@
   name: chat-radio-2
   keycode: '2'
   frequency: 1073
-  color: "#c7c7c7"
+  color: "#17549c"
   longRange: true
 
 - type: radioChannel
@@ -51,7 +51,7 @@
   name: chat-radio-3
   keycode: '3'
   frequency: 1074
-  color: "#c7c7c7"
+  color: "#19aa31"
   longRange: true
 
 - type: radioChannel
@@ -59,7 +59,7 @@
   name: chat-radio-4
   keycode: '4'
   frequency: 1075
-  color: "#c7c7c7"
+  color: "#c6c317"
   longRange: true
 
 - type: entity
@@ -173,3 +173,399 @@
   - type: Sprite
     layers:
     - state: crypt_gray
+
+- type: radioChannel
+  id: SSSP
+  name: chat-radio-sssp
+  keycode: 'з'
+  frequency: 1076
+  color: "#c63e17"
+  longRange: true
+
+- type: radioChannel
+  id: Ganza
+  name: chat-radio-ganza
+  keycode: 'г'
+  frequency: 1077
+  color: "#10417b"
+  longRange: true
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeySSSP
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - SSSP
+    defaultChannel: SSSP
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyGanza
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Ganza
+    defaultChannel: Ganza
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio5
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio5
+    defaultChannel: Radio5
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio6
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio6
+    defaultChannel: Radio6
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio7
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio7
+    defaultChannel: Radio7
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio8
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio8
+    defaultChannel: Radio8
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio9
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio9
+    defaultChannel: Radio9
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio10
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio10
+    defaultChannel: Radio10
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio11
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio11
+    defaultChannel: Radio11
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio12
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio12
+    defaultChannel: Radio12
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio13
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio13
+    defaultChannel: Radio13
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio14
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio14
+    defaultChannel: Radio14
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio15
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio15
+    defaultChannel: Radio15
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio16
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio16
+    defaultChannel: Radio16
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio17
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio17
+    defaultChannel: Radio17
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio18
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio18
+    defaultChannel: Radio18
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio19
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio19
+    defaultChannel: Radio19
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRadio20
+  name: encryption key
+  description: An encryption key
+  components:
+  - type: EncryptionKey
+    channels:
+    - Radio20
+    defaultChannel: Radio20
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+
+- type: radioChannel
+  id: Radio5
+  name: chat-radio-5
+  keycode: '5'
+  frequency: 1078
+  color: "#58b884"
+  longRange: true
+
+- type: radioChannel
+  id: Radio6
+  name: chat-radio-6
+  keycode: '6'
+  frequency: 1079
+  color: "#5e1bb8"
+  longRange: true
+
+- type: radioChannel
+  id: Radio7
+  name: chat-radio-7
+  keycode: '7'
+  frequency: 1080
+  color: "#b81ba6"
+  longRange: true
+
+- type: radioChannel
+  id: Radio8
+  name: chat-radio-8
+  keycode: '8'
+  frequency: 1081
+  color: "#6db81b"
+  longRange: true
+
+- type: radioChannel
+  id: Radio9
+  name: chat-radio-9
+  keycode: '9'
+  frequency: 1082
+  color: "#7690d9"
+  longRange: true
+
+- type: radioChannel
+  id: Radio10
+  name: chat-radio-10
+  keycode: ')'
+  frequency: 1083
+  color: "#455e05"
+  longRange: true
+
+- type: radioChannel
+  id: Radio11
+  name: chat-radio-11
+  keycode: '!'
+  frequency: 1084
+  color: "#685448"
+  longRange: true
+
+- type: radioChannel
+  id: Radio12
+  name: chat-radio-12
+  keycode: '"'
+  frequency: 1085
+  color: "#de976d"
+  longRange: true
+
+- type: radioChannel
+  id: Radio13
+  name: chat-radio-13
+  keycode: '№'
+  frequency: 1086
+  color: "#f68585"
+  longRange: true
+
+- type: radioChannel
+  id: Radio14
+  name: chat-radio-14
+  keycode: '$'
+  frequency: 1087
+  color: "#554b4b"
+  longRange: true
+
+- type: radioChannel
+  id: Radio15
+  name: chat-radio-15
+  keycode: '%'
+  frequency: 1088
+  color: "#8e8e8e"
+  longRange: true
+
+- type: radioChannel
+  id: Radio16
+  name: chat-radio-16
+  keycode: ':'
+  frequency: 1089
+  color: "#547397"
+  longRange: true
+
+- type: radioChannel
+  id: Radio17
+  name: chat-radio-17
+  keycode: '?'
+  frequency: 1090
+  color: "#ffffff"
+  longRange: true
+
+- type: radioChannel
+  id: Radio18
+  name: chat-radio-18
+  keycode: '*'
+  frequency: 1091
+  color: "#480f55"
+  longRange: true
+
+- type: radioChannel
+  id: Radio19
+  name: chat-radio-19
+  keycode: '('
+  frequency: 1092
+  color: "#59415e"
+  longRange: true
+
+- type: radioChannel
+  id: Radio20
+  name: chat-radio-20
+  keycode: '-'
+  frequency: 1093
+  color: "#58b884"
+  longRange: true
