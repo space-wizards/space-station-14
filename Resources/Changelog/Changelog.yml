@@ -1,18 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: 'Multiple lawsuits from entities beyond Time have led Nanotrasen to
-      fix the hole in reality caused by looking above and a little to the left of
-      a disabler lying on the floor. This should make the game around 500,000 times
-      better.', type: Fix}
-  id: 3622
-  time: '2023-05-03T05:07:23.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Overdosing is stronger and diphenhydramine and ethylredoxrazine now
-      have anti poison properties., type: Add}
-  id: 3623
-  time: '2023-05-03T05:21:21.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: Fixed bomb suit explosion resistance values (50% for helmet and 80%
@@ -2927,3 +2913,18 @@ Entries:
   - {message: 'Fixed: dwarfs has no cough, sneeze etc sounds', type: Fix}
   id: 4121
   time: '2023-06-28T20:01:41.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Pulling objects is generally faster on most surfaces., type: Tweak}
+  - {message: Crates and lockers are now lighter and can be dragged easier., type: Tweak}
+  - {message: You can drag objects while in space. Note that Newton's laws still apply
+      and you won't be getting anywhere., type: Tweak}
+  - {message: Dragging objects while on a grid in 0 gravity now works., type: Tweak}
+  id: 4122
+  time: '2023-06-28T20:03:16.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: The culprit sharpening everyone's rock guitars has been caught. They
+      should now be more dull and subsequently weaker as a result., type: Tweak}
+  id: 4123
+  time: '2023-06-28T20:03:44.0000000+00:00'
