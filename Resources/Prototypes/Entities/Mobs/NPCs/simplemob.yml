@@ -107,6 +107,7 @@
   - type: HeatResistance
   - type: CombatMode
   - type: Internals
+  - type: StatusIcon
   - type: StatusEffects
     allowed:
     - SlowedDown

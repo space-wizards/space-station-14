@@ -29,3 +29,36 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: fill
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkSpaceLube
+  name: space lube tube
+  description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
+  components:
+  - type: Drink
+    isOpen: false
+    openSounds:
+      collection: packetOpenSounds
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/lube-tube.rsi
+    layers:
+      - state: icon
+        map: [ "enum.SolutionContainerLayers.Base" ]
+      - state: fill1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+      - state: icon-front
+        map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: SpaceLube
+          Quantity: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill
+  - type: Lube
