@@ -8803,8 +8803,7 @@ entities:
       type: GridAtmosphere
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 1
-      type: SpreaderGrid
+    - type: SpreaderGrid
     - type: RadiationGridResistance
     - type: GasTileOverlay
     - type: GridPathfinding
@@ -8852,8 +8851,7 @@ entities:
       type: Fixtures
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 1
-      type: SpreaderGrid
+    - type: SpreaderGrid
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -14121,8 +14119,6 @@ entities:
     - pos: 48.3943,-12.201528
       parent: 60
       type: Transform
-    - nextAttack: 161.0343576
-      type: MeleeWeapon
 - proto: Bed
   entities:
   - uid: 181
@@ -30021,6 +30017,11 @@ entities:
   - uid: 19402
     components:
     - pos: 40.5,21.5
+      parent: 60
+      type: Transform
+  - uid: 19420
+    components:
+    - pos: -6.5,-53.5
       parent: 60
       type: Transform
   - uid: 19523
@@ -62683,8 +62684,6 @@ entities:
       type: MetaData
     - parent: 16058
       type: Transform
-    - nextSound: 48.5307176
-      type: EmitSoundOnCollide
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
@@ -63024,8 +63023,6 @@ entities:
       type: MetaData
     - parent: 16058
       type: Transform
-    - nextSound: 36.9343243
-      type: EmitSoundOnCollide
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
@@ -63206,8 +63203,6 @@ entities:
       type: MetaData
     - parent: 16058
       type: Transform
-    - nextSound: 30.2104655
-      type: EmitSoundOnCollide
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
@@ -64215,8 +64210,6 @@ entities:
       pos: 43.5,7.5
       parent: 60
       type: Transform
-    - nextPrintTime: 77.7319664
-      type: CargoBountyConsole
 - proto: ComputerCargoOrders
   entities:
   - uid: 11559
@@ -66154,15 +66147,11 @@ entities:
     - pos: 1.4690821,20.698902
       parent: 60
       type: Transform
-    - nextAttack: 628.9641548
-      type: MeleeWeapon
   - uid: 17782
     components:
     - pos: -38.55849,19.646065
       parent: 60
       type: Transform
-    - nextAttack: 7459.1546472
-      type: MeleeWeapon
   - uid: 19034
     components:
     - pos: 55.584682,10.512694
@@ -71095,8 +71084,6 @@ entities:
     - pos: 7.564135,-34.56689
       parent: 60
       type: Transform
-    - nextAttack: 1563.1370534
-      type: MeleeWeapon
   - uid: 3603
     components:
     - pos: 14.501785,-43.49535
@@ -71107,8 +71094,6 @@ entities:
     - pos: 7.470385,-34.37939
       parent: 60
       type: Transform
-    - nextAttack: 1562.2537236
-      type: MeleeWeapon
   - uid: 19510
     components:
     - pos: 55.63736,8.6202135
@@ -71308,8 +71293,6 @@ entities:
     - pos: -25.703217,-11.4913645
       parent: 60
       type: Transform
-    - nextAttack: 1228.9386562
-      type: MeleeWeapon
 - proto: DrinkShotGlass
   entities:
   - uid: 6388
@@ -112240,8 +112223,6 @@ entities:
     - pos: -9.77185,-12.8355055
       parent: 60
       type: Transform
-    - nextAttack: 3110.4589514
-      type: MeleeWeapon
 - proto: HydroponicsToolScythe
   entities:
   - uid: 2709
@@ -115809,15 +115790,11 @@ entities:
     - pos: 39.463963,-14.469561
       parent: 60
       type: Transform
-    - nextAttack: 2404.7225765
-      type: MeleeWeapon
   - uid: 9506
     components:
     - pos: -42.541046,12.473096
       parent: 60
       type: Transform
-    - nextAttack: 2579.6572133
-      type: MeleeWeapon
 - proto: NuclearBomb
   entities:
   - uid: 18448
@@ -116815,10 +116792,6 @@ entities:
     - pos: 24.518976,-12.53022
       parent: 60
       type: Transform
-    - nextAttack: 162.5511555
-      type: MeleeWeapon
-    - nextSound: 162.7511555
-      type: EmitSoundOnCollide
 - proto: PlushieLamp
   entities:
   - uid: 8144
@@ -116838,15 +116811,11 @@ entities:
     - pos: 46.525696,-16.770948
       parent: 60
       type: Transform
-    - nextAttack: 176.1781844
-      type: MeleeWeapon
   - uid: 2149
     components:
     - pos: 30.651426,-14.7669
       parent: 60
       type: Transform
-    - nextAttack: 280.3558487
-      type: MeleeWeapon
 - proto: PlushieNar
   entities:
   - uid: 14514
@@ -123936,8 +123905,6 @@ entities:
     - pos: -11.292416,-50.236473
       parent: 60
       type: Transform
-    - nextAttack: 996.6566437
-      type: MeleeWeapon
 - proto: Recycler
   entities:
   - uid: 4073
@@ -128345,8 +128312,6 @@ entities:
       type: MetaData
     - parent: 24143
       type: Transform
-    - nextAttack: 3922.3710184
-      type: MeleeWeapon
     - canCollide: False
       type: Physics
 - proto: Screwdriver
@@ -128362,8 +128327,6 @@ entities:
     - pos: -42.435337,-3.41123
       parent: 60
       type: Transform
-    - nextAttack: 1811.6269497
-      type: MeleeWeapon
   - uid: 11689
     components:
     - pos: 14.569388,-48.423794
@@ -140391,8 +140354,6 @@ entities:
     - pos: -38.574116,19.53669
       parent: 60
       type: Transform
-    - nextAttack: 7455.7047497
-      type: MeleeWeapon
 - proto: ToolboxElectricalFilled
   entities:
   - uid: 19
@@ -140420,8 +140381,6 @@ entities:
     - pos: -34.503784,11.589455
       parent: 60
       type: Transform
-    - nextAttack: 3075.5218955
-      type: MeleeWeapon
   - uid: 11688
     components:
     - pos: 12.553763,-50.43942
@@ -141083,8 +141042,6 @@ entities:
     - pos: -22.5,28.5
       parent: 60
       type: Transform
-    - nextEmpEject: 416.7982924
-      type: VendingMachine
 - proto: VendingMachineBooze
   entities:
   - uid: 2256
@@ -141194,8 +141151,6 @@ entities:
     - pos: 37.5,-30.5
       parent: 60
       type: Transform
-    - nextEmpEject: 1675.2439168
-      type: VendingMachine
 - proto: VendingMachineCigs
   entities:
   - uid: 3408
@@ -141542,8 +141497,6 @@ entities:
     - pos: -36.5,14.5
       parent: 60
       type: Transform
-    - nextEmpEject: 1711.8038946
-      type: VendingMachine
 - proto: VendingMachineSalvage
   entities:
   - uid: 13136
@@ -141757,8 +141710,6 @@ entities:
     - pos: -39.5,19.5
       parent: 60
       type: Transform
-    - nextEmpEject: 41.1344532
-      type: VendingMachine
 - proto: VendingMachineYouTool
   entities:
   - uid: 6551
@@ -157457,22 +157408,16 @@ entities:
     - pos: -28.5329,2.411416
       parent: 60
       type: Transform
-    - nextFire: 1062.8958829
-      type: Gun
   - uid: 13787
     components:
     - pos: -28.517275,2.708291
       parent: 60
       type: Transform
-    - nextFire: 1057.7012111
-      type: Gun
   - uid: 13788
     components:
     - pos: -28.517275,2.552041
       parent: 60
       type: Transform
-    - nextFire: 1058.617045
-      type: Gun
 - proto: WeaponSubMachineGunWt550
   entities:
   - uid: 21074
@@ -162597,8 +162542,6 @@ entities:
     - pos: 51.521786,-20.438395
       parent: 60
       type: Transform
-    - nextAttack: 476.1492185
-      type: MeleeWeapon
   - uid: 1556
     components:
     - pos: -27.517454,-11.308732
@@ -162619,8 +162562,6 @@ entities:
     - pos: -42.502525,-3.3658876
       parent: 60
       type: Transform
-    - nextAttack: 1996.5762099
-      type: MeleeWeapon
   - uid: 16066
     components:
     - pos: 4.583174,23.552982

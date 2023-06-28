@@ -90,10 +90,11 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             .GetMission(_missionParams.MissionType, _missionParams.Difficulty, _missionParams.Seed);
 
         var missionBiome = _prototypeManager.Index<SalvageBiomeMod>(mission.Biome);
+        BiomeComponent? biome = null;
 
         if (missionBiome.BiomePrototype != null)
         {
-            var biome = _entManager.AddComponent<BiomeComponent>(mapUid);
+            biome = _entManager.AddComponent<BiomeComponent>(mapUid);
             var biomeSystem = _entManager.System<BiomeSystem>();
             biomeSystem.SetTemplate(biome, _prototypeManager.Index<BiomeTemplatePrototype>(missionBiome.BiomePrototype));
             biomeSystem.SetSeed(biome, mission.Seed);
@@ -173,23 +174,13 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         List<Vector2i> reservedTiles = new();
 
-        // Setup the landing pad
-        var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
-        var tiles = new List<(Vector2i Indices, Tile Tile)>(landingPadExtents.X * landingPadExtents.Y * 2);
-
-        // Set the tiles themselves
-        var landingTile = new Tile(_tileDefManager["FloorSteel"].TileId);
-
         foreach (var tile in grid.GetTilesIntersecting(new Circle(Vector2.Zero, landingPadRadius), false))
         {
             if (!_biome.TryGetBiomeTile(mapUid, grid, tile.GridIndices, out _))
                 continue;
 
-            tiles.Add((tile.GridIndices, landingTile));
             reservedTiles.Add(tile.GridIndices);
         }
-
-        grid.SetTiles(tiles);
 
         // Mission setup
         switch (config)

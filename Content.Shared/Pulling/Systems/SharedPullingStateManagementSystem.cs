@@ -55,7 +55,7 @@ namespace Content.Shared.Pulling
 
             if (!TryComp<SharedPullerComponent?>(state.Puller.Value, out var comp))
             {
-                Logger.Error($"Pullable state for entity {ToPrettyString(uid)} had invalid puller entity {ToPrettyString(state.Puller.Value)}");
+                Log.Error($"Pullable state for entity {ToPrettyString(uid)} had invalid puller entity {ToPrettyString(state.Puller.Value)}");
                 // ensure it disconnects from any different puller, still
                 ForceDisconnectPullable(component);
                 return;

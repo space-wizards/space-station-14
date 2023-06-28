@@ -484,7 +484,7 @@ namespace Content.Server.Storage.EntitySystems
         /// <summary>
         ///     Verifies if an entity can be stored and if it fits
         /// </summary>
-        /// <param name="entity">The entity to check</param>
+        /// <param name="uid">The entity to check</param>
         /// <param name="reason">If returning false, the reason displayed to the player</param>
         /// <returns>true if it can be inserted, false otherwise</returns>
         public bool CanInsert(EntityUid uid, EntityUid insertEnt, out string? reason, ServerStorageComponent? storageComp = null)
@@ -523,16 +523,8 @@ namespace Content.Server.Storage.EntitySystems
             if (TryComp(insertEnt, out ItemComponent? itemComp) &&
                 itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
             {
-                // If this is a stack, we may be able to combine it with an existing stack in the storage.
-                // If so, no extra space would be used.
-                //
-                // TODO: This doesn't allow any sort of top-up behavior.
-                // You either combine the whole stack, or insert nothing.
-                if (!TryComp(insertEnt, out StackComponent? stackComp) || !CanCombineStacks(storageComp, stackComp))
-                {
-                    reason = "comp-storage-insufficient-capacity";
-                    return false;
-                }
+                reason = "comp-storage-insufficient-capacity";
+                return false;
             }
 
             reason = null;
