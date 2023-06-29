@@ -1,6 +1,7 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Components;
 using Content.Server.UserInterface;
+using Content.Shared.Access.Components;
 using Content.Shared.Research.Components;
 
 namespace Content.Server.Research.Systems;
@@ -18,8 +19,17 @@ public sealed partial class ResearchSystem
 
     private void OnConsoleUnlock(EntityUid uid, ResearchConsoleComponent component, ConsoleUnlockTechnologyMessage args)
     {
+        if (args.Session.AttachedEntity is not { } ent)
+            return;
+
         if (!this.IsPowered(uid, EntityManager))
             return;
+
+        if (TryComp<AccessReaderComponent>(uid, out var access) && !_accessReader.IsAllowed(ent, access))
+        {
+            _popup.PopupEntity(Loc.GetString("research-console-no-access-popup"), ent);
+            return;
+        }
 
         if (!UnlockTechnology(uid, args.Id))
             return;
