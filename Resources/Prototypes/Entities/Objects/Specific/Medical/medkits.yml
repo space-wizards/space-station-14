@@ -107,6 +107,6 @@
     state: blackkit
   - type: Item
     heldPrefix: advblackkit
-    size: 60
+    size: 70
   - type: Storage
-    capacity: 60
+    capacity: 70
