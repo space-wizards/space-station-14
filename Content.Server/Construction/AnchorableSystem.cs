@@ -90,7 +90,7 @@ namespace Content.Server.Construction
             {
                 var coordinates = xform.Coordinates.SnapToGrid(EntityManager, _mapManager);
 
-                if (DoesUnstackableCancel(uid, coordinates))
+                if (AnyUnstackable(uid, coordinates))
                 {
                     _popup.PopupEntity(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, args.User);
                     return;
@@ -206,7 +206,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            if (DoesUnstackableCancel(uid, transform.Coordinates))
+            if (AnyUnstackable(uid, transform.Coordinates))
             {
                 _popup.PopupEntity(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, userUid);
                 return;

@@ -14,9 +14,16 @@ namespace Content.Shared.Construction.EntitySystems;
 public abstract class SharedAnchorableSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tagSystem = default!;
+
+    protected EntityQuery<TagComponent> TagQuery;
+
+    public const string Unstackable = "Unstackable";
+
     public override void Initialize()
     {
         base.Initialize();
+
+        TagQuery = GetEntityQuery<TagComponent>();
 
         SubscribeLocalEvent<AnchorableComponent, InteractUsingEvent>(OnInteractUsing,
             before: new[] { typeof(ItemSlotsSystem) }, after: new[] { typeof(SharedConstructionSystem) });
@@ -46,21 +53,19 @@ public abstract class SharedAnchorableSystem : EntitySystem
         // TODO tool system is fixed now, make this actually shared.
     }
 
-    public bool AnyUnstackablesAnchoredAt(EntityCoordinates location, EntityQuery<TagComponent>? tagQuery = null)
+    public bool AnyUnstackablesAnchoredAt(EntityCoordinates location)
     {
         var gridUid = location.GetGridUid(EntityManager);
-        if (gridUid == null)
+
+        if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
 
-        if (!TryComp<MapGridComponent>(gridUid.Value, out var grid))
-            return false;
+        var enumerator = grid.GetAnchoredEntitiesEnumerator(grid.LocalToTile(location));
 
-        tagQuery ??= GetEntityQuery<TagComponent>();
-
-        foreach (var entity in grid.GetAnchoredEntities(location))
+        while (enumerator.MoveNext(out var entity))
         {
             // If we find another unstackable here, return true.
-            if (_tagSystem.HasTag(entity, "Unstackable", tagQuery.Value))
+            if (_tagSystem.HasTag(entity.Value, Unstackable, TagQuery))
             {
                 return true;
             }
@@ -69,13 +74,12 @@ public abstract class SharedAnchorableSystem : EntitySystem
         return false;
     }
 
-    public bool DoesUnstackableCancel(EntityUid uid, EntityCoordinates location)
+    public bool AnyUnstackable(EntityUid uid, EntityCoordinates location)
     {
-        var tagQuery = GetEntityQuery<TagComponent>();
         // If we are unstackable, iterate through any other entities anchored on the current square
-        if (_tagSystem.HasTag(uid, "Unstackable", tagQuery))
+        if (_tagSystem.HasTag(uid, Unstackable, TagQuery))
         {
-            return AnyUnstackablesAnchoredAt(location, tagQuery);
+            return AnyUnstackablesAnchoredAt(location);
         }
 
         return false;
