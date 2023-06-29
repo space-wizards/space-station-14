@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/8442af39ee82b813194f71db82edd2923d97818d, watercooler Taken from paradise at https://github.com/ParadiseSS13/Paradise/commit/ae2258d9235752ac6d80ec11e36553fe3b6ae59e",
+  "copyright": "Taken from tgstation at commit https://github.com/Skyrat-SS13/Skyrat-tg/commit/44cfb65dece652f7e1b200f5774732d5555ce82f, hightwattertank recolored by Morty. Degree of fullness made by SonicHDC (GitHub)",
   "size": {
     "x": 32,
     "y": 32
@@ -101,7 +101,13 @@
       "name": "highfueltank-2-7"
     },
     {
-      "name": "watercooler-2"
+      "name": "watercooler-2",
+	  "delays": [
+        [
+          1,
+          1
+        ]
+      ]
     },
     {
       "name": "watercooler-2-1"
