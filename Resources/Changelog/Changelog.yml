@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Flare pellets no longer apply fire stacks., type: Tweak}
-  id: 3635
-  time: '2023-05-04T02:46:03.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Goats and cows will now seek out and eat kudzu that is nearby., type: Add}
@@ -2922,3 +2917,9 @@ Entries:
     type: Add}
   id: 4134
   time: '2023-06-29T19:27:08.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Hamsters can now wear some clothing options. Hamsters have been resprited
+      by RamZ., type: Add}
+  id: 4135
+  time: '2023-06-29T22:36:20.0000000+00:00'
