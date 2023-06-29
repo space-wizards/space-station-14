@@ -228,7 +228,7 @@
   - type: Transform
     anchored: true
   - type: ApcPowerReceiver
-    powerLoad: 1500
+    powerLoad: 3000
   - type: ExtensionCableReceiver
   - type: AmbientSound
     range: 5

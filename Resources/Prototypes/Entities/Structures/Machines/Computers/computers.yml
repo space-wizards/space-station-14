@@ -767,7 +767,7 @@
     - map: ["computerLayerKeys"]
       state: generic_keys
   - type: ApcPowerReceiver
-    powerLoad: 3100 #We want this to fail first so I transferred most of the scanner and pod's power here. (3500 in total)
+    powerLoad: 3100 #We want this to fail first so I transferred most of the scanner and pod's power here. (4000 in total)
   - type: Computer
     board: CloningConsoleComputerCircuitboard
   - type: PointLight

@@ -25,7 +25,7 @@
   - type: Transform
     anchored: true
   - type: ApcPowerReceiver
-    powerLoad: 2500
+    powerLoad: 7500
   - type: ExtensionCableReceiver
   - type: Physics
     bodyType: Static

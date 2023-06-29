@@ -64,7 +64,7 @@
     BoardName: "CloningPod"
     LayoutId: CloningPod
   - type: ApcPowerReceiver
-    powerLoad: 200 #Receives most of its power from the console
+    powerLoad: 450 #Receives most of its power from the console
   - type: Appearance
   - type: GenericVisualizer
     visuals:
