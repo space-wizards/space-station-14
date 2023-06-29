@@ -31,6 +31,7 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/chickenhead.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -63,11 +64,12 @@
   name: pumpkin hat
   description: A jack o' lantern! Believed to ward off evil spirits.
   components:
-    - type: Sprite
-      sprite: Clothing/Head/Misc/pumpkin.rsi
-    - type: Clothing
-      sprite: Clothing/Head/Misc/pumpkin.rsi
-    - type: IngestionBlocker
+  - type: Sprite
+    sprite: Clothing/Head/Misc/pumpkin.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/pumpkin.rsi
+  - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -91,6 +93,7 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/richard.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -103,6 +106,7 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/skubhead.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -172,3 +176,4 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/squiddy.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
