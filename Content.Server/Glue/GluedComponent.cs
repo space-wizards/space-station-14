@@ -3,6 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.Glue;
 
 [RegisterComponent]
+[Access(typeof(GlueSystem))]
 public sealed class GluedComponent : Component
 {
     /// <summary>

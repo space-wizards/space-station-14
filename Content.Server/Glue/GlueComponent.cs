@@ -7,6 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Glue;
 
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(GlueSystem))]
 public sealed class GlueComponent : Component
 {
     /// <summary>
