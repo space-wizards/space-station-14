@@ -16,7 +16,7 @@ namespace Content.Shared.Implants.Components;
 public sealed class ImplanterComponent : Component
 {
     public const string ImplanterSlotId = "implanter_slot";
-    public const string ImplanterSlotId2 = "Implanter_slot2";
+    public const string ImplanterSlotId2 = "implanter_slot2";
     public const string ImplantSlotId = "implant";
 
     /// <summary>
