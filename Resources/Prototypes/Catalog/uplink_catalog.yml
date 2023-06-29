@@ -437,7 +437,7 @@
 - type: listing
   id: UplinkDeathRattle
   name: uplink-deathrattle-implant-name
-  descrition: uplink-deathrattle-implant-desc
+  description: uplink-deathrattle-implant-desc
   productEntity: BoxDeathRattleImplants
   cost:
     Telecrystal: 4
