@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: You can now examine light replacers to see how many lights are inside.,
-    type: Add}
-  - {message: Light replacers printed by lathes are no longer full of lights., type: Fix}
-  id: 3634
-  time: '2023-05-04T02:09:36.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Flare pellets no longer apply fire stacks., type: Tweak}
@@ -2923,3 +2916,9 @@ Entries:
   - {message: Added a new evacuation shuttle for Marathon, type: Add}
   id: 4133
   time: '2023-06-29T18:46:39.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Acoustic guitars are now smash-able. Keep in mind they're fragile.,
+    type: Add}
+  id: 4134
+  time: '2023-06-29T19:27:08.0000000+00:00'
