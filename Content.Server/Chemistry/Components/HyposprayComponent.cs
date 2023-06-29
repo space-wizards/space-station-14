@@ -21,6 +21,9 @@ namespace Content.Server.Chemistry.Components
         [DataField("injectSound")]
         public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
 
+        [DataField("canPenetrateHardsuits")]
+        public bool CanPenetrateHardsuits = true;
+
         public override ComponentState GetComponentState()
         {
             var solutionSys = _entMan.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();

@@ -1,14 +1,17 @@
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Atmos.Components;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 // using Content.Server.Weapons.Melee;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Timing;
@@ -18,6 +21,7 @@ namespace Content.Server.Chemistry.EntitySystems
     public sealed partial class ChemistrySystem
     {
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
 
         private void InitializeHypospray()
         {
@@ -70,6 +74,16 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (TryComp(uid, out UseDelayComponent? delayComp) && _useDelay.ActiveDelay(uid, delayComp))
                 return false;
+
+            if (!component.CanPenetrateHardsuits
+                && _inventory.TryGetSlotEntity((EntityUid) target, "head", out var headObject)
+                && HasComp<HypoProtectionComponent>(headObject)
+                && _inventory.TryGetSlotEntity((EntityUid) target, "outerClothing", out var suitObject)
+                && HasComp<HypoProtectionComponent>(suitObject) )
+            {
+                _popup.PopupCursor(Loc.GetString("hypospray-cant-inject-hardsuit", ("target", Identity.Entity(target.Value, _entMan))), user);
+                return false;
+            }
 
             string? msgFormat = null;
 

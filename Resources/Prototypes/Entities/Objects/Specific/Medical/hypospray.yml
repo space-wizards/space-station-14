@@ -18,6 +18,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    canPenetrateHardsuits: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice
@@ -252,3 +253,34 @@
     - id: Hypopen
     sound:
       path: /Audio/Effects/unwrap.ogg
+
+# Debug
+
+- type: entity
+  suffix: DEBUG
+  parent: BaseItem
+  id: DebugHyposprayCanPenetrate
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Medical/hypospray.rsi
+      state: hypo
+    - type: Item
+      sprite: Objects/Specific/Medical/hypospray.rsi
+    - type: SolutionContainerManager
+      solutions:
+        hypospray:
+          maxVol: 999999
+    - type: RefillableSolution
+      solution: hypospray
+    - type: ExaminableSolution
+      solution: hypospray
+    - type: Hypospray
+    - type: UseDelay
+      delay: 0
+
+- type: entity
+  parent: DebugHyposprayCanPenetrate
+  id: DebugHyposprayCannotPenetrate
+  components:
+    - type: Hypospray
+      canPenetrateHardsuits: false
