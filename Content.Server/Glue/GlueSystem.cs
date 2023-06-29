@@ -11,7 +11,7 @@ using Content.Shared.Interaction.Components;
 
 namespace Content.Server.Glue;
 
-public sealed class GlueSystem : EntitySystem
+public sealed class GlueSystem : SharedGlueSystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
