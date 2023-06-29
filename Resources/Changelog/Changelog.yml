@@ -1,18 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - {message: 'Adds a neutral faction Delicious, to Monkeys. Now they are not untouchable.
-      They are a delicacy for the antagas.', type: Add}
-  - {message: 'Adds a faction PetsNT for the cat Exception, Remilia and Cerberus.',
-    type: Add}
-  id: 3627
-  time: '2023-05-03T12:47:17.0000000+00:00'
-- author: Naive817
-  changes:
-  - {message: 'NT employees now know how to make damp rags from cloth, it can clean
-      up some mess but holds less liquid.', type: Add}
-  id: 3628
-  time: '2023-05-03T17:01:55.0000000+00:00'
 - author: notquitehadouken
   changes:
   - {message: The rot now consumes (dwarves)., type: Fix}
@@ -2926,3 +2912,14 @@ Entries:
   - {message: You can no longer unbuckle yourself while cuffed., type: Fix}
   id: 4126
   time: '2023-06-29T03:19:56.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: fixed lubed item displacement after smart equip, type: Fix}
+  id: 4127
+  time: '2023-06-29T09:36:09.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: beach and basketball balls are now heavier and has specific sound on
+      collide, type: Tweak}
+  id: 4128
+  time: '2023-06-29T09:36:53.0000000+00:00'
