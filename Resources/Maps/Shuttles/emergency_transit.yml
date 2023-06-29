@@ -335,12 +335,9 @@ entities:
   entities:
   - uid: 4
     components:
-    - anchored: True
-      pos: 12.5,-20.5
+    - pos: 12.5,-20.5
       parent: 2
       type: Transform
-    - bodyType: Static
-      type: Physics
 - proto: AirlockCommandLocked
   entities:
   - uid: 5
@@ -2210,6 +2207,12 @@ entities:
     - pos: 16.5,-15.5
       parent: 2
       type: Transform
+  - uid: 425
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 9.5,-20.5
+      parent: 2
+      type: Transform
 - proto: GasPipeBend
   entities:
   - uid: 214
@@ -2236,11 +2239,6 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 4.5,-2.5
-      parent: 2
-      type: Transform
-  - uid: 218
-    components:
-    - pos: 5.5,-2.5
       parent: 2
       type: Transform
   - uid: 219
@@ -2279,14 +2277,20 @@ entities:
       pos: 13.5,-1.5
       parent: 2
       type: Transform
-  - uid: 425
+  - uid: 360
     components:
     - rot: -1.5707963267948966 rad
-      pos: 16.5,-16.5
+      pos: 16.5,-17.5
       parent: 2
       type: Transform
     - enabled: True
       type: AmbientSound
+  - uid: 575
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 5.5,-1.5
+      parent: 2
+      type: Transform
 - proto: GasPipeStraight
   entities:
   - uid: 225
@@ -2597,6 +2601,18 @@ entities:
       pos: 10.5,-18.5
       parent: 2
       type: Transform
+  - uid: 293
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 5.5,-2.5
+      parent: 2
+      type: Transform
+  - uid: 599
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 16.5,-16.5
+      parent: 2
+      type: Transform
 - proto: GasPipeTJunction
   entities:
   - uid: 279
@@ -2694,10 +2710,10 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-  - uid: 293
+  - uid: 598
     components:
-    - rot: 3.141592653589793 rad
-      pos: 9.5,-20.5
+    - rot: -1.5707963267948966 rad
+      pos: 6.5,-1.5
       parent: 2
       type: Transform
     - enabled: False

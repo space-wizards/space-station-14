@@ -347,7 +347,6 @@ namespace Content.Server.Construction
                     if (validation)
                     {
                         // Then we only really need to check whether the tool entity has that quality or not.
-                        // TODO fuel consumption?
                         return _toolSystem.HasQuality(interactUsing.Used, toolInsertStep.Tool)
                             ? HandleResult.Validated
                             : HandleResult.False;
@@ -364,8 +363,7 @@ namespace Content.Server.Construction
                         TimeSpan.FromSeconds(toolInsertStep.DoAfter),
                         new [] { toolInsertStep.Tool },
                         new ConstructionInteractDoAfterEvent(interactUsing),
-                        out var doAfter,
-                        fuel: toolInsertStep.Fuel);
+                        out var doAfter);
 
                     return result && doAfter != null ? HandleResult.DoAfter : HandleResult.False;
                 }

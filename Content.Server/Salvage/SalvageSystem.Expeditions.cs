@@ -2,16 +2,15 @@ using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
-using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
-using Content.Shared.Random;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Examine;
 using Content.Shared.Salvage;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
 using System.Linq;
 using System.Threading;
+using Content.Shared.Salvage.Expeditions;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Salvage;
 
@@ -42,6 +41,7 @@ public sealed partial class SalvageSystem
 
         SubscribeLocalEvent<SalvageExpeditionComponent, ComponentShutdown>(OnExpeditionShutdown);
         SubscribeLocalEvent<SalvageExpeditionComponent, EntityUnpausedEvent>(OnExpeditionUnpaused);
+        SubscribeLocalEvent<SalvageExpeditionComponent, ComponentGetState>(OnExpeditionGetState);
 
         SubscribeLocalEvent<SalvageStructureComponent, ExaminedEvent>(OnStructureExamine);
 
@@ -49,6 +49,14 @@ public sealed partial class SalvageSystem
         _failedCooldown = _configurationManager.GetCVar(CCVars.SalvageExpeditionFailedCooldown);
         _configurationManager.OnValueChanged(CCVars.SalvageExpeditionCooldown, SetCooldownChange);
         _configurationManager.OnValueChanged(CCVars.SalvageExpeditionFailedCooldown, SetFailedCooldownChange);
+    }
+
+    private void OnExpeditionGetState(EntityUid uid, SalvageExpeditionComponent component, ref ComponentGetState args)
+    {
+        args.State = new SalvageExpeditionComponentState()
+        {
+            Stage = component.Stage
+        };
     }
 
     private void ShutdownExpeditions()
@@ -178,14 +186,14 @@ public sealed partial class SalvageSystem
         // Handle payout after expedition has finished
         if (expedition.Completed)
         {
-            _sawmill.Debug($"Completed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
+            Log.Debug($"Completed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + TimeSpan.FromSeconds(_cooldown);
             Announce(uid, Loc.GetString("salvage-expedition-mission-completed"));
             GiveRewards(expedition);
         }
         else
         {
-            _sawmill.Debug($"Failed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
+            Log.Debug($"Failed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + TimeSpan.FromSeconds(_failedCooldown);
             Announce(uid, Loc.GetString("salvage-expedition-mission-failed"));
         }
@@ -286,42 +294,12 @@ public sealed partial class SalvageSystem
             return;
         }
 
-        var ids = RewardsForDifficulty(comp.Difficulty);
-        foreach (var id in ids)
+        foreach (var reward in comp.Rewards)
         {
-            // pick a random reward to give
-            var rewards = _prototypeManager.Index<WeightedRandomPrototype>(id);
-            var reward = rewards.Pick(_random);
-
             var sender = Loc.GetString("cargo-gift-default-sender");
             var desc = Loc.GetString("salvage-expedition-reward-description");
             var dest = Loc.GetString("cargo-gift-default-dest");
             _cargo.AddAndApproveOrder(cargoDb, reward, 0, 1, sender, desc, dest);
-        }
-    }
-
-    /// <summary>
-    /// Get a list of WeightedRandomPrototype IDs with the rewards for a certain difficulty.
-    /// </summary>
-    private string[] RewardsForDifficulty(DifficultyRating rating)
-    {
-        var common = "SalvageRewardCommon";
-        var rare = "SalvageRewardRare";
-        var epic = "SalvageRewardEpic";
-        switch (rating)
-        {
-            case DifficultyRating.Minimal:
-                return new string[] { common, common, common };
-            case DifficultyRating.Minor:
-                return new string[] { common, common, rare };
-            case DifficultyRating.Moderate:
-                return new string[] { common, rare, rare };
-            case DifficultyRating.Hazardous:
-                return new string[] { rare, rare, epic };
-            case DifficultyRating.Extreme:
-                return new string[] { rare, epic, epic };
-            default:
-                throw new NotImplementedException();
         }
     }
 }

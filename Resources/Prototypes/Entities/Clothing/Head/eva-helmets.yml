@@ -9,6 +9,9 @@
     sprite: Clothing/Head/Helmets/eva.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/eva.rsi
+  - type: Tag
+    tags:
+    - HelmetEVA
 
 #Large EVA Helmet
 - type: entity

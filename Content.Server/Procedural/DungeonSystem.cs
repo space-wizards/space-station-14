@@ -15,7 +15,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Procedural;
 
-public sealed partial class DungeonSystem : EntitySystem
+public sealed partial class DungeonSystem : SharedDungeonSystem
 {
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IConsoleHost _console = default!;
@@ -150,6 +150,7 @@ public sealed partial class DungeonSystem : EntitySystem
         }
 
         var mapId = _mapManager.CreateMap();
+        _mapManager.AddUninitializedMap(mapId);
         _loader.Load(mapId, proto.AtlasPath.ToString());
         var mapUid = _mapManager.GetMapEntityId(mapId);
         _mapManager.SetMapPaused(mapId, true);
