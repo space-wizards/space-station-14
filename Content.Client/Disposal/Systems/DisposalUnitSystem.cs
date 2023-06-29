@@ -63,7 +63,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (state == null)
             return true;
 
-        foreach (var inter in userInterface.Interfaces)
+        foreach (var inter in userInterface.OpenInterfaces.Values)
         {
             if (inter is DisposalUnitBoundUserInterface boundInterface)
             {
