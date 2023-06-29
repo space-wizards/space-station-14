@@ -244,7 +244,7 @@
     contents:
       - id: SyringeCorpium
       - id: WeaponFlareGun
-      - id: BoxShotgunFlare
+      - id: BoxShotgunIncendiary
       - id: PillRomerol
         amount: 3
 

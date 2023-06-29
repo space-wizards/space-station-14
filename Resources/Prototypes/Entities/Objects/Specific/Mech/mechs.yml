@@ -154,7 +154,6 @@
   description: "An experimental mech which uses a neuralink to interface directly to a hamsters brain."
   components:
   - type: Sprite
-    netsync: false
     drawdepth: Mobs
     noRot: true
     sprite: Objects/Specific/Mech/mecha.rsi

@@ -65,9 +65,9 @@ public abstract class SharedSalvageSystem : EntitySystem
             case DifficultyRating.Moderate:
                 return 4;
             case DifficultyRating.Hazardous:
-                return 6;
-            case DifficultyRating.Extreme:
                 return 8;
+            case DifficultyRating.Extreme:
+                return 16;
             default:
                 throw new ArgumentOutOfRangeException(nameof(rating), rating, null);
         }
@@ -97,16 +97,23 @@ public abstract class SharedSalvageSystem : EntitySystem
         var rand = new System.Random(seed);
         var faction = GetMod<SalvageFactionPrototype>(rand, ref rating);
         var biome = GetMod<SalvageBiomeMod>(rand, ref rating);
-        var dungeon = GetDungeon(biome.ID, rand, ref rating);
+        var dungeon = GetBiomeMod<SalvageDungeonMod>(biome.ID, rand, ref rating);
         var mods = new List<string>();
 
-        var air = GetAir(biome.ID, rand, ref rating);
+        var air = GetBiomeMod<SalvageAirMod>(biome.ID, rand, ref rating);
         if (air.Description != string.Empty)
         {
             mods.Add(air.Description);
         }
 
-        var light = GetLight(biome.ID, rand, ref rating);
+        // only show the description if there is an atmosphere since wont matter otherwise
+        var temp = GetBiomeMod<SalvageTemperatureMod>(biome.ID, rand, ref rating);
+        if (temp.Description != string.Empty && !air.Space)
+        {
+            mods.Add(temp.Description);
+        }
+
+        var light = GetBiomeMod<SalvageLightMod>(biome.ID, rand, ref rating);
         if (light.Description != string.Empty)
         {
             mods.Add(light.Description);
@@ -124,60 +131,18 @@ public abstract class SharedSalvageSystem : EntitySystem
         }
 
         var rewards = GetRewards(difficulty, rand);
-        return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, air.ID, light.Color, duration, rewards, mods);
+        return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, air.ID, temp.Temperature, light.Color, duration, rewards, mods);
     }
 
-    // TODO: probably worth putting the biome whitelist thing in a common thing then having a getmod overload for it
-    public SalvageDungeonMod GetDungeon(string biome, System.Random rand, ref float rating)
+    public T GetBiomeMod<T>(string biome, System.Random rand, ref float rating) where T : class, IPrototype, IBiomeSpecificMod
     {
-        var mods = _proto.EnumeratePrototypes<SalvageDungeonMod>().ToList();
+        var mods = _proto.EnumeratePrototypes<T>().ToList();
         mods.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         rand.Shuffle(mods);
 
         foreach (var mod in mods)
         {
-            if (mod.BiomeMods?.Contains(biome) == false ||
-                mod.Cost > rating)
-            {
-                continue;
-            }
-
-            rating -= (int) mod.Cost;
-
-            return mod;
-        }
-
-        throw new InvalidOperationException();
-    }
-
-    public SalvageAirMod GetAir(string biome, System.Random rand, ref float rating)
-    {
-        var mods = _proto.EnumeratePrototypes<SalvageAirMod>().ToList();
-        mods.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
-        rand.Shuffle(mods);
-
-        foreach (var mod in mods)
-        {
-            if (mod.Biomes?.Contains(biome) == false || mod.Cost > rating)
-                continue;
-
-            rating -= mod.Cost;
-
-            return mod;
-        }
-
-        throw new InvalidOperationException();
-    }
-
-    public SalvageLightMod GetLight(string biome, System.Random rand, ref float rating)
-    {
-        var mods = _proto.EnumeratePrototypes<SalvageLightMod>().ToList();
-        mods.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
-        rand.Shuffle(mods);
-
-        foreach (var mod in mods)
-        {
-            if (mod.Biomes?.Contains(biome) == false || mod.Cost > rating)
+            if (mod.Cost > rating || (mod.Biomes != null && !mod.Biomes.Contains(biome)))
                 continue;
 
             rating -= mod.Cost;
@@ -238,9 +203,9 @@ public abstract class SharedSalvageSystem : EntitySystem
             case DifficultyRating.Moderate:
                 return new string[] { common, rare, rare };
             case DifficultyRating.Hazardous:
-                return new string[] { rare, rare, epic };
+                return new string[] { rare, rare, rare, epic };
             case DifficultyRating.Extreme:
-                return new string[] { rare, epic, epic };
+                return new string[] { rare, rare, epic, epic, epic };
             default:
                 throw new NotImplementedException();
         }

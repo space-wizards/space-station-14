@@ -121,17 +121,17 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 1000
+    highPressureMultiplier: 0.25
+    lowPressureMultiplier: 1
   - type: TemperatureProtection
-    coefficient: 0.01
+    coefficient: 0.005
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
   - type: Armor
     modifiers:
       coefficients:
         Slash: 0.9
-        Heat: 0.35
+        Heat: 0.15
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.75

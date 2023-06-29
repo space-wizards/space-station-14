@@ -16,18 +16,31 @@
         FloorAsteroidCoarseSand0:
           - id: WallRock
             prob: 0.5
-          - id: WallRockGold
-            prob: 0.01
-          - id: WallRockSilver
-            prob: 0.04
-          - id: WallRockPlasma
-            prob: 0.09
+            orGroup: rock
           - id: WallRockTin
-            prob: 0.2
-          - id: WallRockUranium
-            prob: 0.07
+            prob: 0.15
+            orGroup: rock
           - id: WallRockQuartz
-            prob: 0.2
+            prob: 0.15
+            orGroup: rock
+          - id: WallRockGold
+            prob: 0.05
+            orGroup: rock
+          - id: WallRockSilver
+            prob: 0.05
+            orGroup: rock
+          - id: WallRockPlasma
+            prob: 0.05
+            orGroup: rock
+          - id: WallRockUranium
+            prob: 0.02
+            orGroup: rock
+          - id: WallRockBananium
+            prob: 0.02
+            orGroup: rock
+          - id: WallRockArtifactFragment
+            prob: 0.01
+            orGroup: rock
     - type: GCAbleObject
       queue: SpaceDebris
     - type: IFF
@@ -74,3 +87,51 @@
     - type: BlobFloorPlanBuilder
       radius: 12
       floorPlacements: 36
+
+- type: entity
+  id: AsteroidSalvageSmall
+  parent: BaseAsteroidDebris
+  name: Salvage Asteroid Small
+  noSpawn: true
+  components:
+    - type: MapGrid
+    - type: BlobFloorPlanBuilder
+      blobDrawProb: 0.66
+      radius: 15
+      floorPlacements: 100
+
+- type: entity
+  id: AsteroidSalvageMedium
+  parent: BaseAsteroidDebris
+  name: Salvage Asteroid Medium
+  noSpawn: true
+  components:
+    - type: MapGrid
+    - type: BlobFloorPlanBuilder
+      blobDrawProb: 0.66
+      radius: 17
+      floorPlacements: 150
+
+- type: entity
+  id: AsteroidSalvageLarge
+  parent: BaseAsteroidDebris
+  name: Salvage Asteroid Large
+  noSpawn: true
+  components:
+    - type: MapGrid
+    - type: BlobFloorPlanBuilder
+      blobDrawProb: 0.66
+      radius: 20
+      floorPlacements: 200
+
+- type: entity
+  id: AsteroidSalvageHuge
+  parent: BaseAsteroidDebris
+  name: Salvage Asteroid Huge
+  noSpawn: true
+  components:
+    - type: MapGrid
+    - type: BlobFloorPlanBuilder
+      blobDrawProb: 0.66
+      radius: 23
+      floorPlacements: 250

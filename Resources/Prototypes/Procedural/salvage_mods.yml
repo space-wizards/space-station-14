@@ -48,14 +48,14 @@
   desc: Daylight
   color: "#D8B059"
   biomes:
-    - Grasslands
+  - Grasslands
 
 - type: salvageLightMod
   id: Lavalight
   desc: Daylight
   color: "#A34931"
   biomes:
-    - Lava
+  - Lava
 
 - type: salvageLightMod
   id: Evening
@@ -65,8 +65,8 @@
 - type: salvageLightMod
   id: Night
   desc: Night time
+  cost: 2
   color: null
-  cost: 1
 
 # Time mods -> at least 1 required
 - type: salvageTimeMod
@@ -89,7 +89,7 @@
 - type: salvageDungeonMod
   id: Experiment
   proto: Experiment
-  biomeMods:
+  biomes:
     - Caves
     #- LowDesert
     - Snow
@@ -98,7 +98,7 @@
 - type: salvageDungeonMod
   id: LavaBrig
   proto: LavaBrig
-  biomeMods:
+  biomes:
     - Lava
 
 # Air mixtures
@@ -195,3 +195,65 @@
   biomes:
   - Caves
   - Lava
+
+# Temperatures
+
+- type: salvageTemperatureMod
+  id: RoomTemp
+  biomes:
+  - Caves
+  #- LowDesert
+  - Grasslands
+
+- type: salvageTemperatureMod
+  id: Hot
+  temperature: 323.15 # 50C
+  biomes:
+  - Caves
+  #- LowDesert
+  - Grasslands
+  - Lava
+
+- type: salvageTemperatureMod
+  id: Burning
+  desc: High temperature
+  cost: 1
+  temperature: 423.15 # 200C
+  biomes:
+  - Caves
+  #- LowDesert
+  - Lava
+
+- type: salvageTemperatureMod
+  id: Melting
+  desc: Extreme heat
+  cost: 4
+  temperature: 1273.15 # 1000C hot hot hot
+  biomes:
+  - Lava
+
+- type: salvageTemperatureMod
+  id: Cold
+  temperature: 275.15 # 2C
+  biomes:
+  - Caves
+  #- LowDesert
+  - Grasslands
+  - Snow
+
+- type: salvageTemperatureMod
+  id: Tundra
+  desc: Low temperature
+  cost: 2
+  temperature: 263.15 # -40C
+  biomes:
+  - Caves
+  - Snow
+
+- type: salvageTemperatureMod
+  id: Frozen
+  desc: Extreme cold
+  cost: 3
+  temperature: 123.15 # -150C
+  biomes:
+  - Snow
