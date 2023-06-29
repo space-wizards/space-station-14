@@ -43,6 +43,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
     private ISawmill _sawmill = default!;
 

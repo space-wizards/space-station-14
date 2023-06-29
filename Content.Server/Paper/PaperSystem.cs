@@ -22,6 +22,7 @@ namespace Content.Server.Paper
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
         public override void Initialize()
         {
@@ -82,7 +83,7 @@ namespace Content.Server.Paper
 
             if (paperComp.StampedBy.Count > 0)
             {
-                string commaSeparated = string.Join(", ", paperComp.StampedBy);
+                var commaSeparated = string.Join(", ", paperComp.StampedBy);
                 args.PushMarkup(
                     Loc.GetString(
                         "paper-component-examine-detail-stamped-by", ("paper", uid), ("stamps", commaSeparated))
@@ -111,10 +112,11 @@ namespace Content.Server.Paper
             if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(uid, stampComp.StampedName, stampComp.StampState, paperComp))
             {
                 // successfully stamped, play popup
-                var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", Identity.Entity(args.User, EntityManager)),("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
-                    _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
-                var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
-                    _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, args.User);
+                var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(args.Target, EntityManager)), ("stamp", args.Used));
+                _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
+
+                var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", Identity.Entity(args.Target, EntityManager)), ("stamp", args.Used));
+                _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, args.User);
 
                 UpdateUserInterface(uid, paperComp);
             }
@@ -134,7 +136,7 @@ namespace Content.Server.Paper
                 _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Written, appearance);
 
             if (TryComp<MetaDataComponent>(uid, out var meta))
-                meta.EntityDescription = "";
+                _metaSystem.SetEntityDescription(uid, "", meta);
 
             if (args.Session.AttachedEntity != null)
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
@@ -193,7 +195,7 @@ namespace Content.Server.Paper
                 return;
 
             if (_uiSystem.TryGetUi(uid, PaperUiKey.Key, out var bui))
-                _uiSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode));
+                UserInterfaceSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode));
         }
     }
 

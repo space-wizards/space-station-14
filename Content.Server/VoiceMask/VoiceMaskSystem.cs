@@ -5,10 +5,8 @@ using Content.Shared.Actions;
 using Content.Shared.Database;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Preferences;
-using Content.Shared.Verbs;
 using Content.Shared.VoiceMask;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.VoiceMask;
 
@@ -87,7 +85,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         }
 
         if (_uiSystem.TryGetUi(owner, VoiceMaskUIKey.Key, out var bui))
-            _uiSystem.SetUiState(bui, new VoiceMaskBuiState(component.VoiceName));
+            UserInterfaceSystem.SetUiState(bui, new VoiceMaskBuiState(component.VoiceName));
     }
 }
 
