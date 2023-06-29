@@ -1,7 +1,6 @@
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Item;
-using Content.Shared.Glue;
 using Content.Shared.Interaction;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;

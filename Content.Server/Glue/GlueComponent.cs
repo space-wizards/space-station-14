@@ -2,10 +2,9 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Glue;
+namespace Content.Server.Glue;
 
 [RegisterComponent, NetworkedComponent]
 public sealed class GlueComponent : Component
