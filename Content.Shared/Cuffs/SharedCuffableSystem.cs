@@ -189,7 +189,9 @@ namespace Content.Shared.Cuffs
                 return;
 
             args.Cancelled = true;
-            var message = Loc.GetString("handcuff-component-cuff-interrupt-buckled-message");
+            var message = args.Buckling
+                ? Loc.GetString("handcuff-component-cuff-interrupt-buckled-message")
+                : Loc.GetString("handcuff-component-cuff-interrupt-unbuckled-message");
             if (_net.IsServer)
                 _popup.PopupEntity(message, uid, args.UserEntity);
         }
