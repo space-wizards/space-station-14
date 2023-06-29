@@ -1,5 +1,6 @@
 using Content.Shared.Power;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
@@ -14,8 +15,8 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
     private float _updateTimer = 0.0f;
     private const float UpdateTime = 1.0f;
 
-    [Dependency]
-    private UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
     public override void Update(float frameTime)
     {
@@ -48,7 +49,10 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
             return new PowerMonitoringConsoleEntry(md.EntityName, prototype, rate, isBattery);
         }
         // Right, so, here's what needs to be considered here.
-        var netQ = ncComp.GetNode<Node>("hv").NodeGroup as PowerNet;
+        if (!_nodeContainer.TryGetNode<Node>(ncComp, "hv", out var node))
+            return;
+
+        var netQ = node.NodeGroup as PowerNet;
         if (netQ != null)
         {
             foreach (PowerConsumerComponent pcc in netQ.Consumers)

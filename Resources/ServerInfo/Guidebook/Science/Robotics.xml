@@ -38,7 +38,7 @@
 </Box>
   [color=#a4885c]Mechs[/color] are giant behemoths of metal designed to carry out a variety of functions respective to their model. They are piloted by players and require power cells to function.
 
-  Each mech requires its own unique set of limbs and parts to create. These can be fabricated at the Exosuit Fabricator, the same as any other part, save for the required [color=#a4885c]circuit boards[/color], which are made at a [color=#a4885c]Circuit Board Imprinter[/color], which can normally be found in the science department.
+  Each mech requires its own unique set of limbs and parts to create. These can be fabricated at the Exosuit Fabricator, the same as any other part, save for the required [color=#a4885c]circuit boards[/color], which are made at a [color=#a4885c]Circuit Board Imprinter[/color], which can normally be found in the [textlink="science" link="Science"] department.
 <Box>
 <GuideEntityEmbed Entity="RipleyCentralElectronics" Caption="Ripley central controls module"/>
 </Box>
