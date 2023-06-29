@@ -11,6 +11,10 @@
   - type: BreathMask
   - type: IngestionBlocker
   - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskGas
@@ -167,6 +171,8 @@
   - type: Tag
     tags:
     - ClownMask
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskClownBase
@@ -201,6 +207,10 @@
     sprite: Clothing/Mask/mime.rsi
   - type: BreathMask
   - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -220,17 +230,17 @@
   name: muzzle
   description: To stop that awful noise.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/muzzle.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/muzzle.rsi
-    - type: IngestionBlocker
-    - type: AddAccentClothing
-      accent: ReplacementAccent
-      replacement: mumble
-    - type: Construction
-      graph: Muzzle
-      node: muzzle
+  - type: Sprite
+    sprite: Clothing/Mask/muzzle.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/muzzle.rsi
+  - type: IngestionBlocker
+  - type: AddAccentClothing
+    accent: ReplacementAccent
+    replacement: mumble
+  - type: Construction
+    graph: Muzzle
+    node: muzzle
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -326,6 +336,10 @@
   - type: Clothing
     sprite: Clothing/Mask/rat.rsi
   - type: BreathMask
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
   - type: IdentityBlocker
 
 - type: entity
