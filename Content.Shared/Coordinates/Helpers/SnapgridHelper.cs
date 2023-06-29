@@ -1,7 +1,7 @@
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
-namespace Content.Server.Coordinates.Helpers
+namespace Content.Shared.Coordinates.Helpers
 {
     public static class SnapgridHelper
     {
