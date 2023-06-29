@@ -1,9 +1,4 @@
 Entries:
-- author: notquitehadouken
-  changes:
-  - {message: The rot now consumes (dwarves)., type: Fix}
-  id: 3629
-  time: '2023-05-03T17:16:26.0000000+00:00'
 - author: themias
   changes:
   - {message: Mimes with unbroken vows can no longer scream or laugh., type: Fix}
@@ -2923,3 +2918,8 @@ Entries:
       collide, type: Tweak}
   id: 4128
   time: '2023-06-29T09:36:53.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Chemical crates can now be ordered from cargo., type: Add}
+  id: 4129
+  time: '2023-06-29T10:14:23.0000000+00:00'
