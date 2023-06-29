@@ -1,12 +1,6 @@
 Entries:
 - author: Nimfar11
   changes:
-  - {message: 'A normal slime will have a neutral label, and a separate description
-      in the ghost role.', type: Fix}
-  id: 3626
-  time: '2023-05-03T12:32:53.0000000+00:00'
-- author: Nimfar11
-  changes:
   - {message: 'Adds a neutral faction Delicious, to Monkeys. Now they are not untouchable.
       They are a delicacy for the antagas.', type: Add}
   - {message: 'Adds a faction PetsNT for the cat Exception, Remilia and Cerberus.',
@@ -2927,3 +2921,8 @@ Entries:
   - {message: Fixed slimes not being able to play sounds, type: Fix}
   id: 4125
   time: '2023-06-28T20:13:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer unbuckle yourself while cuffed., type: Fix}
+  id: 4126
+  time: '2023-06-29T03:19:56.0000000+00:00'
