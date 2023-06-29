@@ -152,7 +152,8 @@
 
 - type: entity
   parent: ClothingMaskBase
-  id: ClothingMaskClown
+  id: ClothingMaskClownBase
+  abstract: true
   name: clown wig and mask
   description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
   components:
@@ -166,6 +167,14 @@
   - type: Tag
     tags:
     - ClownMask
+
+- type: entity
+  parent: ClothingMaskClownBase
+  id: ClothingMaskClown
+  components:
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskBase
@@ -237,7 +246,7 @@
   - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingMaskClown
+  parent: ClothingMaskClownBase
   id: ClothingMaskCluwne
   name: cluwne face and hair
   suffix: Unremoveable
@@ -390,7 +399,7 @@
   - type: BreathMask
 
 - type: entity
-  parent: ClothingMaskClown
+  parent: ClothingMaskClownBase
   id: ClothingMaskSexyClown
   name: sexy clown mask
   description: Some naughty clowns think this is what the Honkmother looks like.
