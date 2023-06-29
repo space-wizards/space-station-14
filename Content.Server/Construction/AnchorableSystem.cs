@@ -1,13 +1,18 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Construction.Components;
+using Content.Server.Coordinates.Helpers;
 using Content.Server.Popups;
 using Content.Server.Pulling;
 
 using Content.Shared.Construction.Components;
+using Content.Shared.Construction.Conditions;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Tag;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools;
 
@@ -75,7 +80,15 @@ namespace Content.Server.Construction
             // TODO: Anchoring snaps rn anyway!
             if (component.Snap)
             {
-                _transform.SetCoordinates(uid, xform.Coordinates.SnapToGrid(EntityManager, _mapManager));
+                var coordinates = xform.Coordinates.SnapToGrid(EntityManager, _mapManager);
+
+                if (AnyUnstackable(uid, coordinates))
+                {
+                    _popup.PopupEntity(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, args.User);
+                    return;
+                }
+
+                _transform.SetCoordinates(uid, coordinates);
             }
 
             RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, used));
@@ -151,6 +164,12 @@ namespace Content.Server.Construction
                 !TileFree(transform.Coordinates, anchorBody))
             {
                 _popup.PopupEntity(Loc.GetString("anchorable-occupied"), uid, userUid);
+                return;
+            }
+
+            if (AnyUnstackable(uid, transform.Coordinates))
+            {
+                _popup.PopupEntity(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, userUid);
                 return;
             }
 

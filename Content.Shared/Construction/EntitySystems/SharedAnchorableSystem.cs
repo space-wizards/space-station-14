@@ -10,20 +10,30 @@ using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
+using Content.Shared.Tag;
+using Content.Shared.Tools.Components;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Construction.EntitySystems;
 
 public abstract class SharedAnchorableSystem : EntitySystem
 {
-
-    [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
+
+    protected EntityQuery<TagComponent> TagQuery;
+
+    public const string Unstackable = "Unstackable";
 
     public override void Initialize()
     {
         base.Initialize();
+
+        TagQuery = GetEntityQuery<TagComponent>();
 
         SubscribeLocalEvent<AnchorableComponent, InteractUsingEvent>(OnInteractUsing,
             before: new[] { typeof(ItemSlotsSystem) }, after: new[] { typeof(SharedConstructionSystem) });
@@ -128,7 +138,6 @@ public abstract class SharedAnchorableSystem : EntitySystem
         return !attempt.Cancelled;
     }
 
-
     protected bool TileFree(EntityCoordinates coordinates, PhysicsComponent anchorBody)
     {
         // Probably ignore CanCollide on the anchoring body?
@@ -167,7 +176,37 @@ public abstract class SharedAnchorableSystem : EntitySystem
     }
 
 
+    public bool AnyUnstackablesAnchoredAt(EntityCoordinates location)
+    {
+        var gridUid = location.GetGridUid(EntityManager);
 
+        if (!TryComp<MapGridComponent>(gridUid, out var grid))
+            return false;
+
+        var enumerator = grid.GetAnchoredEntitiesEnumerator(grid.LocalToTile(location));
+
+        while (enumerator.MoveNext(out var entity))
+        {
+            // If we find another unstackable here, return true.
+            if (_tagSystem.HasTag(entity.Value, Unstackable, TagQuery))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool AnyUnstackable(EntityUid uid, EntityCoordinates location)
+    {
+        // If we are unstackable, iterate through any other entities anchored on the current square
+        if (_tagSystem.HasTag(uid, Unstackable, TagQuery))
+        {
+            return AnyUnstackablesAnchoredAt(location);
+        }
+
+        return false;
+    }
 
     [Serializable, NetSerializable]
     protected sealed class TryUnanchorCompletedEvent : SimpleDoAfterEvent
