@@ -47,8 +47,9 @@ namespace Content.Client.Atmos.UI
 
         private void OnMixerOutputPressurePressed(string value)
         {
-            float pressure = float.TryParse(value, out var parsed) ? parsed : 0f;
-            if (pressure > MaxPressure) pressure = MaxPressure;
+            var pressure = float.TryParse(value, out var parsed) ? parsed : 0f;
+            if (pressure > MaxPressure)
+                pressure = MaxPressure;
 
             SendMessage(new GasMixerChangeOutputPressureMessage(pressure));
         }
@@ -56,11 +57,12 @@ namespace Content.Client.Atmos.UI
         private void OnMixerSetPercentagePressed(string value)
         {
             // We don't need to send both nodes because it's just 100.0f - node
-            float node = float.TryParse(value, out var parsed) ? parsed : 1.0f;
+            var node = float.TryParse(value, out var parsed) ? parsed : 1.0f;
 
             node = Math.Clamp(node, 0f, 100.0f);
 
-            if (_window is not null) node = _window.NodeOneLastEdited ? node : 100.0f - node;
+            if (_window is not null)
+                node = _window.NodeOneLastEdited ? node : 100.0f - node;
 
             SendMessage(new GasMixerChangeNodePercentageMessage(node));
         }

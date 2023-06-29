@@ -46,8 +46,9 @@ namespace Content.Client.Atmos.UI
 
         private void OnPumpTransferRatePressed(string value)
         {
-            float rate = float.TryParse(value, out var parsed) ? parsed : 0f;
-            if (rate > MaxTransferRate) rate = MaxTransferRate;
+            var rate = float.TryParse(value, out var parsed) ? parsed : 0f;
+            if (rate > MaxTransferRate)
+                rate = MaxTransferRate;
 
             SendMessage(new GasVolumePumpChangeTransferRateMessage(rate));
         }

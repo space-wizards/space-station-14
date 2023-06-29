@@ -77,7 +77,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
         component.Balance += balanceAdded;
         var query = EntityQueryEnumerator<CargoOrderConsoleComponent>();
 
-        while (query.MoveNext(out var oUid, out var oComp))
+        while (query.MoveNext(out var oUid, out var _))
         {
             if (!_uiSystem.IsUiOpen(oUid, CargoConsoleUiKey.Orders))
                 continue;
@@ -86,7 +86,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
             if (station != uid)
                 continue;
 
-            UpdateOrderState(oComp, station);
+            UpdateOrderState(oUid, station);
         }
     }
 }
