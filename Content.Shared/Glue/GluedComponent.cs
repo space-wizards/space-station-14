@@ -12,8 +12,8 @@ public sealed class GluedComponent : Component
     public string BeforeGluedEntityName = string.Empty;
 
     [DataField("until", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan Until = TimeSpan.Zero;
+    public TimeSpan Until;
 
     [DataField("duration", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan Duration = TimeSpan.Zero;
+    public TimeSpan Duration;
 }
