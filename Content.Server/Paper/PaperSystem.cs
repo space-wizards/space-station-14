@@ -101,7 +101,9 @@ namespace Content.Server.Paper
 
                 paperComp.Mode = PaperAction.Write;
                 UpdateUserInterface(uid, paperComp);
-                _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.Open(actor.PlayerSession);
+
+                if (_uiSystem.TryGetUi(uid, PaperUiKey.Key, out var bui))
+                    _uiSystem.OpenUi(bui, actor.PlayerSession);
                 return;
             }
 
@@ -190,7 +192,8 @@ namespace Content.Server.Paper
             if (!Resolve(uid, ref paperComp))
                 return;
 
-            _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.SetState(new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode));
+            if (_uiSystem.TryGetUi(uid, PaperUiKey.Key, out var bui))
+                _uiSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode));
         }
     }
 

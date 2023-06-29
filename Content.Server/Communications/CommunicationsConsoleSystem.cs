@@ -37,6 +37,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         private const int MaxMessageLength = 256;
         private const int MaxMessageNewlines = 2;
@@ -154,16 +155,15 @@ namespace Content.Server.Communications
                 }
             }
 
-            comp.UserInterface?.SetState(
-                new CommunicationsConsoleInterfaceState(
+            if (comp.UserInterface is not null)
+                _uiSystem.SetUiState(comp.UserInterface, new CommunicationsConsoleInterfaceState(
                     CanAnnounce(comp),
                     CanCallOrRecall(comp),
                     levels,
                     currentLevel,
                     currentDelay,
                     _roundEndSystem.ExpectedCountdownEnd
-                    )
-                );
+                ));
         }
 
         private bool CanAnnounce(CommunicationsConsoleComponent comp)

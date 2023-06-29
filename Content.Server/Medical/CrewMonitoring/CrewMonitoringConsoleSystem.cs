@@ -2,12 +2,13 @@ using System.Linq;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.SuitSensors;
+using Content.Server.PowerCell;
 using Content.Server.UserInterface;
 using Content.Shared.Medical.CrewMonitoring;
-using Robust.Shared.Map;
 using Content.Shared.Medical.SuitSensor;
+using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
-using Content.Server.PowerCell;
 
 namespace Content.Server.Medical.CrewMonitoring
 {
@@ -18,6 +19,7 @@ namespace Content.Server.Medical.CrewMonitoring
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly PowerCellSystem _cell = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
         {
@@ -60,14 +62,12 @@ namespace Content.Server.Medical.CrewMonitoring
             if (!Resolve(uid, ref component))
                 return;
 
-            var ui = component.Owner.GetUIOrNull(CrewMonitoringUIKey.Key);
-            if (ui == null)
+            if (!_uiSystem.TryGetUi(uid, CrewMonitoringUIKey.Key, out var bui))
                 return;
 
             // update all sensors info
             var allSensors = component.ConnectedSensors.Values.ToList();
-            var uiState = new CrewMonitoringState(allSensors, component.Snap, component.Precision);
-            ui.SetState(uiState);
+            _uiSystem.SetUiState(bui, new CrewMonitoringState(allSensors, component.Snap, component.Precision));
         }
     }
 }

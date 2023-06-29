@@ -286,7 +286,7 @@ namespace Content.Server.MachineLinking.System
         {
             if (_userInterfaceSystem.TryGetUi(linker.Owner, SignalLinkerUiKey.Key, out bui))
             {
-                bui.Open(actor.PlayerSession);
+                _userInterfaceSystem.OpenUi(bui, actor.PlayerSession);
                 return true;
             }
             return false;
@@ -309,8 +309,13 @@ namespace Content.Server.MachineLinking.System
                 }
             }
 
-            bui.SetState(new SignalPortsState($"{Name(transmitter.Owner)} ({transmitter.Owner})", outKeys,
-                $"{Name(receiver.Owner)} ({receiver.Owner})", inKeys, links));
+            _userInterfaceSystem.SetUiState(bui, new SignalPortsState(
+                $"{Name(transmitter.Owner)} ({transmitter.Owner})",
+                outKeys,
+                $"{Name(receiver.Owner)} ({receiver.Owner})",
+                inKeys,
+                links
+            ));
             return true;
 
         }

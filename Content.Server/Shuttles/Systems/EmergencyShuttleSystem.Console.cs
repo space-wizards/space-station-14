@@ -332,12 +332,16 @@ public sealed partial class EmergencyShuttleSystem
             auths.Add(auth);
         }
 
-        _uiSystem.GetUiOrNull(uid, EmergencyConsoleUiKey.Key)?.SetState(new EmergencyConsoleBoundUserInterfaceState()
-        {
-            EarlyLaunchTime = EarlyLaunchAuthorized ? _timing.CurTime + TimeSpan.FromSeconds(_consoleAccumulator) : null,
-            Authorizations = auths,
-            AuthorizationsRequired = component.AuthorizationsRequired,
-        });
+        if (_uiSystem.TryGetUi(uid, EmergencyConsoleUiKey.Key, out var bui))
+            _uiSystem.SetUiState(
+                bui,
+                new EmergencyConsoleBoundUserInterfaceState()
+                {
+                    EarlyLaunchTime = EarlyLaunchAuthorized ? _timing.CurTime + TimeSpan.FromSeconds(_consoleAccumulator) : null,
+                    Authorizations = auths,
+                    AuthorizationsRequired = component.AuthorizationsRequired,
+                }
+            );
     }
 
     private bool CheckForLaunch(EmergencyShuttleConsoleComponent component)

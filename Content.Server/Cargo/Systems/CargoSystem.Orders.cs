@@ -227,14 +227,14 @@ namespace Content.Server.Cargo.Systems
                 !TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase) ||
                 !TryComp<StationBankAccountComponent>(station, out var bankAccount)) return;
 
-            var state = new CargoConsoleInterfaceState(
-                MetaData(station.Value).EntityName,
-                GetOutstandingOrderCount(orderDatabase),
-                orderDatabase.Capacity,
-                bankAccount.Balance,
-                orderDatabase.Orders);
-
-            _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Orders)?.SetState(state);
+            if (_uiSystem.TryGetUi(component.Owner, CargoConsoleUiKey.Orders, out var bui))
+                _uiSystem.SetUiState(bui, new CargoConsoleInterfaceState(
+                    MetaData(station.Value).EntityName,
+                    GetOutstandingOrderCount(orderDatabase),
+                    orderDatabase.Capacity,
+                    bankAccount.Balance,
+                    orderDatabase.Orders
+                ));
         }
 
         private void ConsolePopup(ICommonSession session, string text) => _popup.PopupCursor(text, session);

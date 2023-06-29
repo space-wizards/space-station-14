@@ -470,13 +470,15 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         configurator.ActiveDeviceList = targetUid;
         Dirty(configurator);
-        _uiSystem.GetUiOrNull(configurator.Owner, NetworkConfiguratorUiKey.Configure)?.Open(actor.PlayerSession);
-        _uiSystem.TrySetUiState(
-            configurator.Owner,
-            NetworkConfiguratorUiKey.Configure,
-            new DeviceListUserInterfaceState(
+
+        if (!_uiSystem.TryGetUi(configurator.Owner, NetworkConfiguratorUiKey.Configure, out var bui))
+            return;
+
+        if (_uiSystem.OpenUi(bui, actor.PlayerSession))
+            _uiSystem.SetUiState(bui, new DeviceListUserInterfaceState(
                 _deviceListSystem.GetDeviceList(configurator.ActiveDeviceList.Value)
-                    .Select(v => (v.Key, MetaData(v.Value).EntityName)).ToHashSet()));
+                    .Select(v => (v.Key, MetaData(v.Value).EntityName)).ToHashSet()
+            ));
     }
 
     /// <summary>
@@ -504,7 +506,8 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             component.Devices.Remove(invalidDevice);
         }
 
-        _uiSystem.GetUiOrNull(uid, NetworkConfiguratorUiKey.List)?.SetState(new NetworkConfiguratorUserInterfaceState(devices));
+        if (_uiSystem.TryGetUi(uid, NetworkConfiguratorUiKey.List, out var bui))
+            _uiSystem.SetUiState(bui, new NetworkConfiguratorUserInterfaceState(devices));
     }
 
     /// <summary>

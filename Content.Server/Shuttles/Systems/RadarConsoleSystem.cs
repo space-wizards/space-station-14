@@ -43,12 +43,12 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
             }
         }
 
-        var radarState = new RadarConsoleBoundInterfaceState(
-            component.MaxRange,
-            coordinates,
-            angle,
-            new List<DockingInterfaceState>());
-
-        _uiSystem.GetUiOrNull(component.Owner, RadarConsoleUiKey.Key)?.SetState(radarState);
+        if (_uiSystem.TryGetUi(component.Owner, RadarConsoleUiKey.Key, out var bui))
+            _uiSystem.SetUiState(bui, new RadarConsoleBoundInterfaceState(
+                component.MaxRange,
+                coordinates,
+                angle,
+                new List<DockingInterfaceState>()
+            ));
     }
 }
