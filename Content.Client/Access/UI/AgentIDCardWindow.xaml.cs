@@ -7,16 +7,18 @@ namespace Content.Client.Access.UI
     [GenerateTypedNameReferences]
     public sealed partial class AgentIDCardWindow : DefaultWindow
     {
-        public event Action<string>? OnNameEntered;
-
-        public event Action<string>? OnJobEntered;
+        public event Action<string>? OnNameChanged;
+        public event Action<string>? OnJobChanged;
 
         public AgentIDCardWindow()
         {
             RobustXamlLoader.Load(this);
 
-            NameLineEdit.OnTextEntered += e => OnNameEntered?.Invoke(e.Text);
-            JobLineEdit.OnTextEntered += e => OnJobEntered?.Invoke(e.Text);
+            NameLineEdit.OnTextEntered += e => OnNameChanged?.Invoke(e.Text);
+            NameLineEdit.OnFocusExit += e => OnNameChanged?.Invoke(e.Text);
+
+            JobLineEdit.OnTextEntered += e => OnJobChanged?.Invoke(e.Text);
+            JobLineEdit.OnFocusExit += e => OnJobChanged?.Invoke(e.Text);
         }
 
         public void SetCurrentName(string name)

@@ -63,7 +63,7 @@ namespace Content.Shared.Disposal
             if (args.Handled)
                 return;
 
-            args.CanDrop = CanInsert(component, args.Dragged);
+            args.CanDrop = CanInsert(uid, component, args.Dragged);
             args.Handled = true;
         }
 
@@ -73,9 +73,9 @@ namespace Content.Shared.Disposal
             args.Handled = true;
         }
 
-        public virtual bool CanInsert(SharedDisposalUnitComponent component, EntityUid entity)
+        public virtual bool CanInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid entity)
         {
-            if (!EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
+            if (!EntityManager.GetComponent<TransformComponent>(uid).Anchored)
                 return false;
 
             // TODO: Probably just need a disposable tag.

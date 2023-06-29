@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -1080,6 +1081,7 @@ namespace Content.IntegrationTests.Tests.Power
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
+            var _nodeContainer = entityManager.System<NodeContainerSystem>();
             CableNode leftNode = default!;
             CableNode rightNode = default!;
             Node batteryInput = default!;
@@ -1107,11 +1109,17 @@ namespace Content.IntegrationTests.Tests.Power
                 var battery = entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 2));
                 var batteryNodeContainer = entityManager.GetComponent<NodeContainerComponent>(battery);
 
-                leftNode = entityManager.GetComponent<NodeContainerComponent>(leftEnt).GetNode<CableNode>("power");
-                rightNode = entityManager.GetComponent<NodeContainerComponent>(rightEnt).GetNode<CableNode>("power");
+                if (_nodeContainer.TryGetNode<CableNode>(entityManager.GetComponent<NodeContainerComponent>(leftEnt),
+                        "power", out var leftN))
+                    leftNode = leftN;
+                if (_nodeContainer.TryGetNode<CableNode>(entityManager.GetComponent<NodeContainerComponent>(rightEnt),
+                        "power", out var rightN))
+                    rightNode = rightN;
 
-                batteryInput = batteryNodeContainer.GetNode<Node>("input");
-                batteryOutput = batteryNodeContainer.GetNode<Node>("output");
+                if (_nodeContainer.TryGetNode<Node>(batteryNodeContainer, "input", out var nInput))
+                    batteryInput = nInput;
+                if (_nodeContainer.TryGetNode<Node>(batteryNodeContainer, "output", out var nOutput))
+                    batteryOutput = nOutput;
             });
 
             // Run ticks to allow node groups to update.

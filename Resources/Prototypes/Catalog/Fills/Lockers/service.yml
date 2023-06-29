@@ -94,7 +94,7 @@
         amount: 2
       - id: ClothingOuterApronBotanist
         amount: 2
-      - id: HatBandBotany
+      - id: ClothingHeadBandBotany
         amount: 2
       - id: HydroponicsToolClippers
       - id: ClothingBeltPlant

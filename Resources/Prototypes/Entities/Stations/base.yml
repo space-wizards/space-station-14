@@ -10,6 +10,7 @@
   components:
     - type: StationBankAccount
     - type: StationCargoOrderDatabase
+    - type: StationCargoBountyDatabase
 
 - type: entity
   id: BaseStationJobsSpawning

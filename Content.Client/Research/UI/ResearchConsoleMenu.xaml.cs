@@ -16,7 +16,6 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
 {
     public Action<string>? OnTechnologyCardPressed;
     public Action? OnServerButtonPressed;
-    public Action? OnSyncButtonPressed;
 
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -36,7 +35,6 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         Entity = entity;
 
         ServerButton.OnPressed += _ => OnServerButtonPressed?.Invoke();
-        SyncButton.OnPressed += _ => OnSyncButtonPressed?.Invoke();
 
         _entity.TryGetComponent(entity, out _technologyDatabase);
     }

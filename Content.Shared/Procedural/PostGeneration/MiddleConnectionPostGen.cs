@@ -26,7 +26,7 @@ public sealed class MiddleConnectionPostGen : IPostDunGen
     public string Tile = "FloorSteel";
 
     [DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> Entities = new()
+    public List<string?> Entities = new()
     {
         "CableApcExtension",
         "AirlockGlass"
@@ -35,5 +35,5 @@ public sealed class MiddleConnectionPostGen : IPostDunGen
     /// <summary>
     /// If overlap > 1 then what should spawn on the edges.
     /// </summary>
-    [DataField("edgeEntities")] public List<string>? EdgeEntities;
+    [DataField("edgeEntities")] public List<string?> EdgeEntities = new();
 }

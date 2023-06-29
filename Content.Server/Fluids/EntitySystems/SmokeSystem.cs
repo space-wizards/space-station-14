@@ -215,25 +215,7 @@ public sealed class SmokeSystem : EntitySystem
             if (reagentQuantity.Quantity == FixedPoint2.Zero)
                 continue;
 
-            var reagent = _prototype.Index<ReagentPrototype>(reagentQuantity.ReagentId);
-
-            // React with the tile the effect is on
-            // We don't multiply by solutionFraction here since the tile is only ever reacted once
-            if (!component.ReactedTile)
-            {
-                reagent.ReactionTile(tile, reagentQuantity.Quantity);
-                component.ReactedTile = true;
-            }
-
-            // Touch every entity on tile.
-            foreach (var entity in ents)
-            {
-                if (entity == uid)
-                    continue;
-
-                _reactive.ReactionEntity(entity, ReactionMethod.Touch, reagent,
-                    reagentQuantity.Quantity * solutionFraction, solution);
-            }
+            // NOOP, react with entities on the tile or whatever.
         }
 
         foreach (var entity in ents)
@@ -259,32 +241,8 @@ public sealed class SmokeSystem : EntitySystem
 
     private void ReactWithEntity(EntityUid entity, Solution solution, double solutionFraction)
     {
-        if (!TryComp<BloodstreamComponent>(entity, out var bloodstream))
-            return;
-
-        if (TryComp<InternalsComponent>(entity, out var internals) &&
-            _internals.AreInternalsWorking(internals))
-        {
-            return;
-        }
-
-        var cloneSolution = solution.Clone();
-        var transferAmount = FixedPoint2.Min(cloneSolution.Volume * solutionFraction, bloodstream.ChemicalSolution.AvailableVolume);
-        var transferSolution = cloneSolution.SplitSolution(transferAmount);
-
-        foreach (var reagentQuantity in transferSolution.Contents.ToArray())
-        {
-            if (reagentQuantity.Quantity == FixedPoint2.Zero)
-                continue;
-
-            _reactive.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
-        }
-
-        if (_blood.TryAddToChemicals(entity, transferSolution, bloodstream))
-        {
-            // Log solution addition by smoke
-            _logger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):target} was affected by smoke {SolutionContainerSystem.ToPrettyString(transferSolution)}");
-        }
+        // NOOP due to people complaining constantly.
+        return;
     }
 
     /// <summary>

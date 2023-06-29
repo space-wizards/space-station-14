@@ -44,7 +44,7 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatHoSTrench
-  name: head of security's trenchcoat
+  name: head of security's armored trenchcoat
   description: This trenchcoat was specifically designed for asserting superior authority.
   components:
   - type: Sprite
