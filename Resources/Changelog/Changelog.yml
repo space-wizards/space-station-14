@@ -1,10 +1,4 @@
 Entries:
-- author: Floofi
-  changes:
-  - {message: 'Added ''The Martinez'' as a reference to Cyberpunk 2077.  (1 Ice, 1
-      Lemon juice, 2 vodka, 2 cola)', type: Add}
-  id: 3633
-  time: '2023-05-03T22:23:44.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: You can now examine light replacers to see how many lights are inside.,
@@ -2924,3 +2918,8 @@ Entries:
     type: Add}
   id: 4132
   time: '2023-06-29T18:19:20.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Added a new evacuation shuttle for Marathon, type: Add}
+  id: 4133
+  time: '2023-06-29T18:46:39.0000000+00:00'
