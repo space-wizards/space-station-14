@@ -5,6 +5,9 @@ using Content.Shared.Glue;
 using Content.Shared.Interaction;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Hands;
+using Robust.Shared.Timing;
+using Content.Shared.Interaction.Components;
 
 namespace Content.Server.Glue;
 
@@ -13,12 +16,16 @@ public sealed class GlueSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<GlueComponent, AfterInteractEvent>(OnInteract);
+        SubscribeLocalEvent<GluedComponent, ComponentInit>(OnGluedInit);
+        SubscribeLocalEvent<GluedComponent, GotEquippedHandEvent>(OnHandPickUp);
     }
 
     // When glue bottle is used on item it will apply the glued and unremoveable components.
@@ -65,5 +72,35 @@ public sealed class GlueSystem : EntitySystem
             }
         }
         return false;
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<GluedComponent, UnremoveableComponent>();
+        while (query.MoveNext(out var uid, out var glue, out _))
+        {
+            if (_timing.CurTime < glue.Until)
+                continue;
+
+            _metaData.SetEntityName(uid, glue.BeforeGluedEntityName);
+            RemComp<UnremoveableComponent>(uid);
+            RemComp<GluedComponent>(uid);
+        }
+    }
+
+    private void OnGluedInit(EntityUid uid, GluedComponent component, ComponentInit args)
+    {
+        var meta = MetaData(uid);
+        var name = meta.EntityName;
+        component.BeforeGluedEntityName = meta.EntityName;
+        _metaData.SetEntityName(uid, Loc.GetString("glued-name-prefix", ("target", name)));
+    }
+
+    private void OnHandPickUp(EntityUid uid, GluedComponent component, GotEquippedHandEvent args)
+    {
+        EnsureComp<UnremoveableComponent>(uid);
+        component.Until = _timing.CurTime + component.Duration;
     }
 }
