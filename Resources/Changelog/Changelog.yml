@@ -1,14 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Mimes with unbroken vows can no longer scream or laugh., type: Fix}
-  id: 3630
-  time: '2023-05-03T17:24:00.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: HoP's airlocks on Moose now work with their door remote., type: Fix}
-  id: 3631
-  time: '2023-05-03T18:38:48.0000000+00:00'
 - author: lzk
   changes:
   - {message: 'Added four hawaiian shirts, aloha!', type: Add}
@@ -2923,3 +2913,13 @@ Entries:
   - {message: Chemical crates can now be ordered from cargo., type: Add}
   id: 4129
   time: '2023-06-29T10:14:23.0000000+00:00'
+- author: benevo
+  changes:
+  - {message: Added Anchorable client side predictions, type: Add}
+  id: 4130
+  time: '2023-06-29T12:35:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix cave ores., type: Fix}
+  id: 4131
+  time: '2023-06-29T12:36:28.0000000+00:00'
