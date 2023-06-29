@@ -178,6 +178,7 @@
   - type: Clothing
     sprite: Clothing/Mask/joy.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -316,6 +317,7 @@
   - type: Clothing
     sprite: Clothing/Mask/rat.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -328,6 +330,7 @@
   - type: Clothing
     sprite: Clothing/Mask/fox.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -340,6 +343,7 @@
   - type: Clothing
     sprite: Clothing/Mask/bee.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -352,6 +356,7 @@
   - type: Clothing
     sprite: Clothing/Mask/bear.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -364,6 +369,7 @@
   - type: Clothing
     sprite: Clothing/Mask/raven.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -376,6 +382,7 @@
   - type: Clothing
     sprite: Clothing/Mask/jackal.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -388,6 +395,7 @@
   - type: Clothing
     sprite: Clothing/Mask/bat.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskClown

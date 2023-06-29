@@ -474,6 +474,7 @@
     sprite: Clothing/Head/Hats/papersack.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/papersack.rsi
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -485,6 +486,7 @@
     sprite: Clothing/Head/Hats/papersacksmile.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/papersacksmile.rsi
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
