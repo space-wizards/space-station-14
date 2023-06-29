@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Glue;
+namespace Content.Shared.Glue;
 
 [RegisterComponent]
 public sealed class GluedComponent : Component
