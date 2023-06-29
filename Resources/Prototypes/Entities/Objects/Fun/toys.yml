@@ -811,12 +811,15 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: basketball
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: bask
   - type: TileFrictionModifier
-    modifier: 0.01
+    modifier: 0.5
 
 - type: entity
   parent: BaseItem
@@ -841,12 +844,15 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: beachball
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: beachb
   - type: TileFrictionModifier
-    modifier: 0.01
+    modifier: 0.05
 
 - type: entity
   parent: BaseItem
