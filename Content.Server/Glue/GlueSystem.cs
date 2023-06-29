@@ -46,11 +46,11 @@ public sealed class GlueSystem : SharedGlueSystem
         {
             args.Handled = true;
             _audio.PlayPvs(component.Squeeze, uid);
-            _popup.PopupEntity(Loc.GetString("glue-success", ("target", Identity.Entity(target, EntityManager))), args.User, args.User, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("glue-success", ("target", target)), args.User, args.User, PopupType.Medium);
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString("glue-failure", ("target", Identity.Entity(target, EntityManager))), args.User, args.User, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("glue-failure", ("target", target)), args.User, args.User, PopupType.Medium);
         }
     }
 
