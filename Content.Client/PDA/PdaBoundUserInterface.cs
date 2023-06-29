@@ -132,7 +132,7 @@ namespace Content.Client.PDA
 
         private PdaBorderColorComponent? GetBorderColorComponent()
         {
-            return _entityManager?.GetComponentOrNull<PdaBorderColorComponent>(Owner.Owner);
+            return _entityManager?.GetComponentOrNull<PdaBorderColorComponent>(Owner);
         }
     }
 }

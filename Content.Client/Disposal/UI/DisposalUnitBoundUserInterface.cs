@@ -14,14 +14,14 @@ namespace Content.Client.Disposal.UI
     [UsedImplicitly]
     public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
+        [ViewVariables]
         public MailingUnitWindow? MailingUnitWindow;
+
+        [ViewVariables]
         public DisposalUnitWindow? DisposalUnitWindow;
 
-        public DisposalUnitBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public DisposalUnitBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-            IoCManager.InjectDependencies(this);
         }
 
         private void ButtonPressed(UiButton button)
@@ -54,7 +54,7 @@ namespace Content.Client.Disposal.UI
 
                 MailingUnitWindow.TargetListContainer.OnItemSelected += TargetSelected;
             }
-            else if(UiKey is DisposalUnitUiKey)
+            else if (UiKey is DisposalUnitUiKey)
             {
                 DisposalUnitWindow = new DisposalUnitWindow();
 
@@ -76,8 +76,8 @@ namespace Content.Client.Disposal.UI
                 return;
             }
 
-            var entityId = Owner.Owner;
-            if (!_entityManager.TryGetComponent(entityId, out DisposalUnitComponent? component))
+            var entityId = Owner;
+            if (!EntMan.TryGetComponent<DisposalUnitComponent>(entityId, out var component))
                 return;
 
             switch (state)
@@ -93,7 +93,7 @@ namespace Content.Client.Disposal.UI
                     break;
             }
 
-            _entityManager.System<DisposalUnitSystem>().UpdateActive(entityId, true);
+            EntMan.System<DisposalUnitSystem>().UpdateActive(entityId, true);
         }
 
         protected override void Dispose(bool disposing)

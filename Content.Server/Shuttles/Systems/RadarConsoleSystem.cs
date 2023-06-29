@@ -19,32 +19,32 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
 
     private void OnRadarStartup(EntityUid uid, RadarConsoleComponent component, ComponentStartup args)
     {
-        UpdateState(component);
+        UpdateState(uid, component);
     }
 
-    protected override void UpdateState(RadarConsoleComponent component)
+    protected override void UpdateState(EntityUid uid, RadarConsoleComponent component)
     {
-        var xform = Transform(component.Owner);
+        var xform = Transform(uid);
         var onGrid = xform.ParentUid == xform.GridUid;
         EntityCoordinates? coordinates = onGrid ? xform.Coordinates : null;
         Angle? angle = onGrid ? xform.LocalRotation : null;
 
         // Use ourself I guess.
-        if (TryComp<IntrinsicUIComponent>(component.Owner, out var intrinsic))
+        if (TryComp<IntrinsicUIComponent>(uid, out var intrinsic))
         {
             foreach (var uiKey in intrinsic.UIs)
             {
                 if (uiKey.Key?.Equals(RadarConsoleUiKey.Key) == true)
                 {
-                    coordinates = new EntityCoordinates(component.Owner, Vector2.Zero);
+                    coordinates = new EntityCoordinates(uid, Vector2.Zero);
                     angle = Angle.Zero;
                     break;
                 }
             }
         }
 
-        if (_uiSystem.TryGetUi(component.Owner, RadarConsoleUiKey.Key, out var bui))
-            _uiSystem.SetUiState(bui, new RadarConsoleBoundInterfaceState(
+        if (_uiSystem.TryGetUi(uid, RadarConsoleUiKey.Key, out var bui))
+            UserInterfaceSystem.SetUiState(bui, new RadarConsoleBoundInterfaceState(
                 component.MaxRange,
                 coordinates,
                 angle,
