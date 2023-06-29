@@ -14,7 +14,7 @@ public sealed class DamageOnHitSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<DamageOnHitComponent, MeleeHitEvent>(DamageItem);
     }
-// Looks for a hit, then damages the held item an appropriate amount.
+    // Looks for a hit, then damages the held item an appropriate amount.
     private void DamageItem(EntityUid uid, DamageOnHitComponent component, MeleeHitEvent args)
     {
         _damageableSystem.TryChangeDamage(uid, component.Damage, component.IgnoreResistances);
