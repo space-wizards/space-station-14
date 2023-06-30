@@ -67,7 +67,7 @@ namespace Content.Server.Objectives.Conditions
                 foreach (var stationData in entMan.EntityQuery<StationEmergencyShuttleComponent>())
                 {
                     if (IsAgentOnShuttle(xform, stationData.EmergencyShuttle))
-                        {
+                    {
                         shuttleContainsAgent = true;
                         break;
                     }

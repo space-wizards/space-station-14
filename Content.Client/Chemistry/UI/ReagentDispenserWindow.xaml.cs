@@ -165,7 +165,7 @@ namespace Content.Client.Chemistry.UI
 
                 // Check if the reagent is being moused over. If so, color it green.
                 if (reagent.Id == highlightedReagentId)
-                    {
+                {
                     nameLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
                     quantityLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
                 }

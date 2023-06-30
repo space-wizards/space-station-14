@@ -221,7 +221,7 @@ namespace Content.Tools
                 {
                     oursEnt = (YamlMappingNode) YamlTools.CopyYamlNodes(MapOther.Entities[kvp.Key]);
                     if (!MapEntity(oursEnt))
-                        {
+                    {
                         Console.WriteLine("Unable to successfully import entity C/" + kvp.Key);
                         success = false;
                     } else {
@@ -303,7 +303,7 @@ namespace Content.Tools
         public bool MapEntityProperty(YamlMappingNode node, string property, string path)
         {
             if (node.Children.ContainsKey(property))
-                {
+            {
                 var prop = node[property];
                 if (prop is YamlScalarNode)
                     return MapEntityProperty((YamlScalarNode) prop, path + "/" + property);

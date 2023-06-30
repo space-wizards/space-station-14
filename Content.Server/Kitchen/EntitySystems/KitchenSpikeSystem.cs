@@ -110,7 +110,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
 
             if (component.PrototypesToSpawn?.Count > 0)
-                {
+            {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-knife-needed"), uid, args.User);
                 args.Handled = true;
             }

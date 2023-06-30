@@ -202,7 +202,7 @@ public sealed partial class AdminVerbSystem
                 {
                     int damageToDeal;
                     if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, MobState.Critical, out var criticalThreshold))
-                        {
+                    {
                         // We can't crit them so try killing them.
                         if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, MobState.Dead,
                                 out var deadThreshold))
@@ -507,7 +507,7 @@ public sealed partial class AdminVerbSystem
         }
 
         if (TryComp<InventoryComponent>(args.Target, out var inventory))
-            {
+        {
             Verb nyanify = new()
             {
                 Text = "Nyanify",
