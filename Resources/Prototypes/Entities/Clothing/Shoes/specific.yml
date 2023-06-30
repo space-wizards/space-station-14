@@ -41,12 +41,11 @@
     footstepSoundCollection:
       collection: FootstepClown
   - type: PointLight
-    netsync: false
     enabled: true
     radius: 3
     energy: 2
     color: "#FFD800"
-
+    netsync: false
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesCult

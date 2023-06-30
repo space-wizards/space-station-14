@@ -317,6 +317,10 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnSignalReceived(EntityUid uid, EmitterComponent component, ref SignalReceivedEvent args)
         {
+            // must anchor the emitter for signals to work
+            if (TryComp<PhysicsComponent>(uid, out var phys) && phys.BodyType != BodyType.Static)
+                return;
+
             if (args.Port == component.OffPort)
             {
                 SwitchOff(uid, component);

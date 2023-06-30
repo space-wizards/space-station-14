@@ -36,12 +36,12 @@
   - type: Appearance
   - type: Drain
     autoDrain: false
-
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: fill-
     solutionName: drainBuffer
-    autoDrain: false
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   id: ToiletDirtyWater

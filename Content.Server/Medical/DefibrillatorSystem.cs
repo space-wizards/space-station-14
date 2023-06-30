@@ -222,7 +222,7 @@ public sealed class DefibrillatorSystem : EntitySystem
             _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
             _mobThreshold.SetAllowRevives(target, false, thresholds);
 
-            if (TryComp<MindComponent>(target, out var mindComp) &&
+            if (TryComp<MindContainerComponent>(target, out var mindComp) &&
                 mindComp.Mind?.Session is { } playerSession)
             {
                 session = playerSession;

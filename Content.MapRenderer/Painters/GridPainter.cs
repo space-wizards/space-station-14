@@ -45,24 +45,24 @@ namespace Content.MapRenderer.Painters
             _decals = GetDecals();
         }
 
-        public void Run(Image gridCanvas, MapGridComponent grid)
+        public void Run(Image gridCanvas, EntityUid gridUid, MapGridComponent grid)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            if (!_entities.TryGetValue(grid.Owner, out var entities))
+            if (!_entities.TryGetValue(gridUid, out var entities))
             {
-                Console.WriteLine($"No entities found on grid {grid.Owner}");
+                Console.WriteLine($"No entities found on grid {gridUid}");
                 return;
             }
 
             // Decals are always painted before entities, and are also optional.
-            if (_decals.TryGetValue(grid.Owner, out var decals))
+            if (_decals.TryGetValue(gridUid, out var decals))
                 _decalPainter.Run(gridCanvas, CollectionsMarshal.AsSpan(decals));
 
 
             _entityPainter.Run(gridCanvas, entities);
-            Console.WriteLine($"{nameof(GridPainter)} painted grid {grid.Owner} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+            Console.WriteLine($"{nameof(GridPainter)} painted grid {gridUid} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
 
         private ConcurrentDictionary<EntityUid, List<EntityData>> GetEntities()
@@ -91,7 +91,7 @@ namespace Content.MapRenderer.Painters
                     var position = transform.LocalPosition;
 
                     var (x, y) = TransformLocalPosition(position, grid);
-                    var data = new EntityData(sprite, x, y);
+                    var data = new EntityData(entity, sprite, x, y);
 
                     components.GetOrAdd(transform.GridUid.Value, _ => new List<EntityData>()).Add(data);
                 }
@@ -108,21 +108,22 @@ namespace Content.MapRenderer.Painters
             stopwatch.Start();
 
             var decals = new Dictionary<EntityUid, List<DecalData>>();
+            var query = _sEntityManager.AllEntityQueryEnumerator<MapGridComponent>();
 
-            foreach (var grid in _sMapManager.GetAllGrids())
+            while (query.MoveNext(out var uid, out var grid))
             {
                 // TODO this needs to use the client entity manager because the client
                 // actually has the correct z-indices for decals for some reason when the server doesn't,
                 // BUT can't do that yet because the client hasn't actually received everything yet
                 // for some reason decal moment i guess.
-                if (_sEntityManager.TryGetComponent<DecalGridComponent>(grid.Owner, out var comp))
+                if (_sEntityManager.TryGetComponent<DecalGridComponent>(uid, out var comp))
                 {
                     foreach (var chunk in comp.ChunkCollection.ChunkCollection.Values)
                     {
                         foreach (var decal in chunk.Decals.Values)
                         {
                             var (x, y) = TransformLocalPosition(decal.Coordinates, grid);
-                            decals.GetOrNew(grid.Owner).Add(new DecalData(decal, x, y));
+                            decals.GetOrNew(uid).Add(new DecalData(decal, x, y));
                         }
                     }
                 }

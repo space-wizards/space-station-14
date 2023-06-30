@@ -71,7 +71,7 @@ namespace Content.Server.AirlockPainter
 
             if (!_prototypeManager.TryIndex<AirlockGroupPrototype>(airlock.Group, out var grp))
             {
-                Logger.Error("Group not defined: %s", airlock.Group);
+                Log.Error("Group not defined: %s", airlock.Group);
                 return;
             }
 

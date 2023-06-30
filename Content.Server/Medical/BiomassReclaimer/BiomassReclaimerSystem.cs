@@ -243,7 +243,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             // Reject souled bodies in easy mode.
             if (_configManager.GetCVar(CCVars.BiomassEasyMode) &&
                 HasComp<HumanoidAppearanceComponent>(dragged) &&
-                TryComp<MindComponent>(dragged, out var mindComp))
+                TryComp<MindContainerComponent>(dragged, out var mindComp))
             {
                 if (mindComp.Mind?.UserId != null && _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out _))
                     return false;

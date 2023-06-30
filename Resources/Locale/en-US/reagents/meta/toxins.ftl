@@ -57,3 +57,6 @@ reagent-desc-pax = A psychiatric drug which prevents the patient from directly h
 
 reagent-name-honk = honk
 reagent-desc-honk = A toxin found in bananium. Causes severe honking and internal bleeding, may also cause the patient to mutate.
+
+reagent-name-lead = lead
+reagent-desc-lead = A slow-acting but incredibly lethal toxin found in steel, albiet in trace amounts. Tasteless. 
