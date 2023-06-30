@@ -1,9 +1,4 @@
 Entries:
-- author: SonicDC
-  changes:
-  - {message: Changed the ability to paint glass airlocks!, type: Tweak}
-  id: 3642
-  time: '2023-05-04T18:31:16.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Cat crate have more types of cats, type: Tweak}
@@ -2926,3 +2921,8 @@ Entries:
       same time., type: Fix}
   id: 4141
   time: '2023-06-30T19:39:34.0000000+00:00'
+- author: kxvvv
+  changes:
+  - {message: Explosive pens are now linkable, type: Tweak}
+  id: 4142
+  time: '2023-06-30T19:47:47.0000000+00:00'
