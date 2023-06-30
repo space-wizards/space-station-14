@@ -1,16 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Brigmedic jumpsuit blueprints have been returned to the HOP. Ask your
-      local HOS if you wish to be security's in house doctor., type: Tweak}
-  id: 3639
-  time: '2023-05-04T14:19:49.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: 'Tarantulas have evolved (or devolved, however you see it) to have blue
-      blood instead of red.', type: Tweak}
-  id: 3640
-  time: '2023-05-04T18:26:20.0000000+00:00'
 - author: lzk
   changes:
   - {message: Mime's stamp now spawns in mime's satchel, type: Tweak}
@@ -2926,3 +2914,14 @@ Entries:
       for monitors in states where it is removed., type: Tweak}
   id: 4138
   time: '2023-06-30T19:26:13.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Cargo technicians will be able to access salvage on the extended gamemode.,
+    type: Tweak}
+  id: 4139
+  time: '2023-06-30T19:31:21.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Changed the price of most objects found in the construction menu., type: Tweak}
+  id: 4140
+  time: '2023-06-30T19:32:03.0000000+00:00'
