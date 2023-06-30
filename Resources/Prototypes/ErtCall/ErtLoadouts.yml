@@ -164,7 +164,7 @@
   id: ERTCallCBURNLeaderGearEVA
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBrown
-    back: ClothingBackpackCallERTCBURNFilled
+    back: ClothingBackpackCallERTCBURNFilledLeader
     mask: ClothingMaskGasExplorer
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetAltCentCom
@@ -172,13 +172,13 @@
     outerClothing: ClothingOuterHardsuitCBURNLeader
     shoes: ClothingShoesBootsCombatFilled
     id: CBURNPDA
-    pocket1: ERTUplinkLeader
+    pocket1: CBURNUplinkLeader
     #pocket2: WeaponLaserGun
     suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier
   innerclothingskirt: ClothingUniformJumpsuitColorBrown
-  satchel: ClothingBackpackCallERTCBURNFilled
-  duffelbag: ClothingBackpackCallERTCBURNFilled
+  satchel: ClothingBackpackCallERTCBURNFilledLeader
+  duffelbag: ClothingBackpackCallERTCBURNFilledLeader
 
 #Security
 - type: startingGear
@@ -193,7 +193,7 @@
     outerClothing: ClothingOuterHardsuitCBURN
     shoes: ClothingShoesBootsCombatFilled
     id: CBURNPDA
-    pocket1: ERTUplinkSecurity
+    pocket1: CBURNUplinkSecurity
     #pocket2: WeaponLaserGun
     suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier

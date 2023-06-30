@@ -16,6 +16,8 @@ ent-ClothingBeltDeadSquadFilled = Пояс с инструментами эск�
     .desc = Содержит инструменты, которые призваны помочь бойцу добраться до цели кратчайшим путём.
 ent-ClothingBackpackCallERTCBURNFilled = { ent-ClothingBackpackDuffelCBURN }
     .desc = { ent-ClothingBackpackDuffelCBURN.desc }
+ent-ClothingBackpackCallERTCBURNFilledLeader = { ent-ClothingBackpackDuffelCBURN }
+    .desc = { ent-ClothingBackpackDuffelCBURN.desc }
 
 ent-ClothingOuterHardsuitCBURNLeader = экзокостюм лидера отряда РХБЗЗ
     .desc = { ent-ClothingOuterHardsuitCBURN.desc }

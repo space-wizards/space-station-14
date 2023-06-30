@@ -167,6 +167,8 @@ ert-uplink-weaponnoncombat-weaponrevolvermateba-name = { ent-WeaponRevolverMateb
 ert-uplink-weaponnoncombat-weaponrevolvermateba-desc = { ent-WeaponRevolverMateba.desc }
 ert-uplink-weaponcombat-weaponpulsesniper-name = { ent-WeaponPulseSniper }
 ert-uplink-weaponcombat-weaponpulsesniper-desc = { ent-WeaponPulseSniper.desc }
+ert-uplink-weaponcombat-weaponshotgunbulldog-name = { ent-WeaponShotgunBulldog }
+ert-uplink-weaponcombat-weaponshotgunbulldog-desc = { ent-WeaponShotgunBulldog.desc }
 
 
 ert-uplink-junitor-advmopitem-name = { ent-AdvMopItem }
@@ -196,6 +198,8 @@ ert-uplink-utilities-handheldcrewmonitor-name = { ent-HandheldCrewMonitor }
 ert-uplink-utilities-handheldcrewmonitor-desc = { ent-HandheldCrewMonitor.desc }
 ert-uplink-utilities-clothingshoesbootsmag-name = { ent-ClothingShoesBootsMag }
 ert-uplink-utilities-clothingshoesbootsmag-desc = { ent-ClothingShoesBootsMag.desc }
+ert-uplink-utilities-crowbar-name = { ent-Crowbar }
+ert-uplink-utilities-crowbar-desc = { ent-Crowbar.desc }
 
 
 
