@@ -1,11 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: 'Air vents leak in vacuum, eventually (10-30 mins) re-pressurizing sealed,
-      spaced sections', type: Add}
-  - {message: Air vent pumps are limited to 2.0 * supply pressure at most, type: Add}
-  id: 3645
-  time: '2023-05-05T00:34:15.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fixed some rollebed interactions, including a possible crash.', type: Fix}
@@ -2927,3 +2920,8 @@ Entries:
   - {message: Added plungers, type: Add}
   id: 4144
   time: '2023-06-30T22:10:47.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fix issue with metamorphic glass name being reset, type: Fix}
+  id: 4145
+  time: '2023-06-30T22:57:28.0000000+00:00'
