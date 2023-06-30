@@ -16,11 +16,6 @@
     range: 4
     sound:
       path: /Audio/Weapons/chainsawidle.ogg
-  - type: IncreaseDamageOnWield
-    damage:
-      types:
-        Slash: 20
-        Blunt: 10
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/chainsaw.rsi
@@ -28,8 +23,8 @@
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 2
-        Blunt: 4
+        Slash: 3
+        Blunt: 3
     soundHit:
       path: /Audio/Weapons/chainsaw.ogg
       params: 
@@ -38,3 +33,22 @@
     size: 50
     sprite: Objects/Weapons/Melee/chainsaw.rsi
   - type: DisarmMalus
+  - type: ItemStatus
+  - type: RefillableSolution
+    solution: Welder
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 300
+        maxVol: 300
+  - type: Tool
+  - type: Welder
+    fuelConsumption: 1
+    fuelLitCost: 5
+    litMeleeDamageBonus:
+      types:
+        Slash: 20
+        Blunt: 2
+        Structural: 3
