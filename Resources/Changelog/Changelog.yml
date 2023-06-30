@@ -1,10 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: Mute people can no longer scream or vocalize emotes., type: Fix}
-  - {message: Lightweight drunk now applies to the drunk accent as well., type: Fix}
-  id: 3644
-  time: '2023-05-04T19:02:31.0000000+00:00'
 - author: tom-leys
   changes:
   - {message: 'Air vents leak in vacuum, eventually (10-30 mins) re-pressurizing sealed,
@@ -2926,3 +2920,10 @@ Entries:
   - {message: Fixed smg magazine sprite, type: Fix}
   id: 4143
   time: '2023-06-30T19:56:34.0000000+00:00'
+- author: Topy
+  changes:
+  - {message: Added the ability to empty a liquid container in a sink. If a sink reaches
+      max capacity it gets clogged, type: Add}
+  - {message: Added plungers, type: Add}
+  id: 4144
+  time: '2023-06-30T22:10:47.0000000+00:00'
