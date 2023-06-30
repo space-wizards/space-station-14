@@ -1,9 +1,9 @@
-﻿<windows:CharacterWindow
+<windows:CharacterWindow
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Character.Windows"
     Title="{Loc 'character-info-title'}"
-    MinWidth="400"
+    MinWidth="500"
     MinHeight="545">
     <ScrollContainer>
         <BoxContainer Orientation="Vertical">
