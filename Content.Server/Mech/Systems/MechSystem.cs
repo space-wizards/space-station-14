@@ -260,6 +260,7 @@ public sealed class MechSystem : SharedMechSystem
     {
         if (!Resolve(uid, ref component))
             return;
+
         user ??= component.PilotSlot.ContainedEntity;
         if (user == null)
             return;

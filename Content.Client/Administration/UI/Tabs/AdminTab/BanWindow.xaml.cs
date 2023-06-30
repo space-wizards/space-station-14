@@ -52,6 +52,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
         {
             if (!TryGetMinutes(obj.Text, out var minutes))
                 return;
+
             UpdateButtons(minutes);
         }
 

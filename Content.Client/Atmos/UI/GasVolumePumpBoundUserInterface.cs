@@ -41,6 +41,7 @@ namespace Content.Client.Atmos.UI
         {
             if (_window is null)
                 return;
+
             SendMessage(new GasVolumePumpToggleStatusMessage(_window.PumpStatus));
         }
 
@@ -73,6 +74,7 @@ namespace Content.Client.Atmos.UI
             base.Dispose(disposing);
             if (!disposing)
                 return;
+
             _window?.Dispose();
         }
     }

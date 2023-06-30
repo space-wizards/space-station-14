@@ -52,6 +52,7 @@ public abstract partial class InteractionTest
 
             if (!shouldSucceed)
                 return;
+
             var comp = CEntMan.GetComponent<ConstructionGhostComponent>(Target!.Value);
             ConstructionGhostId = comp.GhostId;
         });
@@ -392,6 +393,7 @@ public abstract partial class InteractionTest
         EntityUid newTarget = default;
         if (Target == null)
             return;
+
         var target = Target.Value;
 
         await RunTicks(5);

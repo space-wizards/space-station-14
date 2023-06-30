@@ -24,6 +24,7 @@ public partial class RadiationSystem
     {
         if (!component.Enabled)
             return;
+
         AddTile(uid, component);
     }
 
@@ -31,6 +32,7 @@ public partial class RadiationSystem
     {
         if (component.Enabled)
             return;
+
         RemoveTile(uid, component);
     }
 
@@ -81,6 +83,7 @@ public partial class RadiationSystem
             return;
         if (isEnabled == component.Enabled)
             return;
+
         component.Enabled = isEnabled;
 
         if (!component.Enabled)
@@ -120,6 +123,7 @@ public partial class RadiationSystem
         // check if blocker was placed on grid before component was removed
         if (component.CurrentPosition == null)
             return;
+
         var (gridId, tilePos) = component.CurrentPosition.Value;
 
         // try to remove
@@ -147,11 +151,13 @@ public partial class RadiationSystem
         // get grid
         if (!TryComp(gridUid, out RadiationGridResistanceComponent? resistance))
             return;
+
         var grid = resistance.ResistancePerTile;
 
         // subtract resistance from tile
         if (!grid.TryGetValue(tilePos, out var existingResistance))
             return;
+
         existingResistance -= radResistance;
 
         // remove tile from grid if no resistance left

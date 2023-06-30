@@ -381,6 +381,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
             case AtmosMonitorThresholdType.Gas:
                 if (gas == null || monitor.GasThresholds == null)
                     return;
+
                 monitor.GasThresholds[(Gas) gas] = threshold;
                 break;
         }

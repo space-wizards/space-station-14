@@ -104,6 +104,7 @@ namespace Content.Server.Light.EntitySystems
                     case SmokableState.Lit:
                         _item.SetHeldPrefix(component.Owner, "lit", item);
                         break;
+
                     default:
                         _item.SetHeldPrefix(component.Owner, "unlit", item);
                         break;

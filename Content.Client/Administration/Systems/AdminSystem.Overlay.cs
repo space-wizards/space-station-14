@@ -37,6 +37,7 @@ namespace Content.Client.Administration.Systems
         {
             if (_overlayManager.HasOverlay<AdminNameOverlay>())
                 return;
+
             _overlayManager.AddOverlay(_adminNameOverlay);
             OverlayEnabled?.Invoke();
         }

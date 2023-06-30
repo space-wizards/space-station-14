@@ -215,6 +215,7 @@ public sealed partial class BlockGame
         {
             if (_internalLevel == value)
                 return;
+
             _internalLevel = value;
             SendLevelUpdate();
         }
@@ -232,6 +233,7 @@ public sealed partial class BlockGame
         {
             if (_internalPoints == value)
                 return;
+
             _internalPoints = value;
             SendPointsUpdate();
         }

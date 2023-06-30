@@ -98,6 +98,7 @@ namespace Content.Server.Light.EntitySystems
                 case EmergencyLightState.Empty:
                     RemComp<ActiveEmergencyLightComponent>(uid);
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

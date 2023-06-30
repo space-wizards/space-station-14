@@ -16,6 +16,7 @@ public abstract partial class SharedMoverController
     {
         if (args.Current is not MobMoverComponentState state)
             return;
+
         component.GrabRangeVV = state.GrabRange;
         component.PushStrengthVV = state.PushStrength;
     }

@@ -35,6 +35,7 @@ public sealed class AnomalyGeneratorBoundUserInterface : BoundUserInterface
 
         if (state is not AnomalyGeneratorUserInterfaceState msg)
             return;
+
         _window?.UpdateState(msg);
     }
 

@@ -210,6 +210,7 @@ namespace Content.Server.PDA
             if (!TryComp(station, out AlertLevelComponent? alertComp) ||
                 alertComp.AlertLevels == null)
                 return;
+
             pda.StationAlertLevel = alertComp.CurrentLevel;
             if (alertComp.AlertLevels.Levels.TryGetValue(alertComp.CurrentLevel, out var details))
                 pda.StationAlertColor = details.Color;

@@ -70,6 +70,7 @@ public sealed class ElectricityAnomalySystem : EntitySystem
         {
             if (_timing.CurTime < elec.NextSecond)
                 continue;
+
             elec.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
 
             var owner = xform.Owner;

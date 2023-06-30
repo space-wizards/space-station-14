@@ -33,6 +33,7 @@ public abstract class SharedLatheSystem : EntitySystem
     {
         if (args.Current is not LatheComponentState state)
             return;
+
         component.MaterialUseMultiplier = state.MaterialUseMultiplier;
     }
 

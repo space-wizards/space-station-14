@@ -79,6 +79,7 @@ namespace Content.Client.NodeContainer
             var xform = _entityManager.GetComponent<TransformComponent>(node.Entity);
             if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 return;
+
             var gridTile = grid.TileIndicesFor(xform.Coordinates);
 
             var sb = new StringBuilder();

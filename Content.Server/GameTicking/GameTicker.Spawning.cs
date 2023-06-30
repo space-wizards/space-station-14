@@ -107,6 +107,7 @@ namespace Content.Server.GameTicking
 
             if (jobId != null && !_playTimeTrackings.IsAllowed(player, jobId))
                 return;
+
             SpawnPlayer(player, character, station, jobId, lateJoin);
         }
 

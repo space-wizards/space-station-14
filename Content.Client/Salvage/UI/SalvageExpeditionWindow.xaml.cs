@@ -100,6 +100,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                 case DifficultyRating.Extreme:
                     difficultyColor = Color.FromHex("#D381C996");
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

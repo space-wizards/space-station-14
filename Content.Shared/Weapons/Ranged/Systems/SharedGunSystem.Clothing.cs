@@ -19,6 +19,7 @@ public partial class SharedGunSystem
     {
         if (!TryGetClothingSlotEntity(uid, component, out var entity))
             return;
+
         RaiseLocalEvent(entity.Value, args);
     }
 
@@ -26,6 +27,7 @@ public partial class SharedGunSystem
     {
         if (!TryGetClothingSlotEntity(uid, component, out var entity))
             return;
+
         RaiseLocalEvent(entity.Value, ref args);
     }
 
@@ -47,6 +49,7 @@ public partial class SharedGunSystem
                 continue;
             if (component.ProviderWhitelist != null && !component.ProviderWhitelist.IsValid(e.Value, EntityManager))
                 continue;
+
             slotEntity = e;
         }
 

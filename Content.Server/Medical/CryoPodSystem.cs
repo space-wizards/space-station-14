@@ -87,6 +87,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
             metaDataQuery.TryGetComponent(cryoPod.Owner, out var metaDataComponent);
             if (curTime < cryoPod.NextInjectionTime + _metaDataSystem.GetPauseTime(cryoPod.Owner, metaDataComponent))
                 continue;
+
             cryoPod.NextInjectionTime = curTime + TimeSpan.FromSeconds(cryoPod.BeakerTransferTime);
 
             if (!itemSlotsQuery.TryGetComponent(cryoPod.Owner, out var itemSlotsComponent))

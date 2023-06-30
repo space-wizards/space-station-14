@@ -72,6 +72,7 @@ namespace Content.Client.Inventory
                     case DidUnequipEvent unequipped:
                         OnDidUnequip(component, unequipped);
                         break;
+
                     default:
                         throw new InvalidOperationException($"Received queued event of unknown type: {args.GetType()}");
                 }
@@ -91,6 +92,7 @@ namespace Content.Client.Inventory
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
+
             var update = new SlotSpriteUpdate(args.SlotGroup, args.Slot, null, false);
             OnSpriteUpdate?.Invoke(update);
         }
@@ -100,6 +102,7 @@ namespace Content.Client.Inventory
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
+
             var sprite = EntityManager.GetComponentOrNull<SpriteComponent>(args.Equipment);
             var update = new SlotSpriteUpdate(args.SlotGroup, args.Slot, sprite,
                 HasComp<ClientStorageComponent>(args.Equipment));

@@ -102,6 +102,7 @@ public sealed class WorldControllerSystem : EntitySystem
             var mapOrNull = xform.MapUid;
             if (mapOrNull is null)
                 continue;
+
             var map = mapOrNull.Value;
             if (!chunksToLoad.ContainsKey(map))
                 continue;
@@ -131,9 +132,11 @@ public sealed class WorldControllerSystem : EntitySystem
                 continue;
             if (ghostQuery.HasComponent(uid))
                 continue;
+
             var mapOrNull = xform.MapUid;
             if (mapOrNull is null)
                 continue;
+
             var map = mapOrNull.Value;
             if (!chunksToLoad.ContainsKey(map))
                 continue;

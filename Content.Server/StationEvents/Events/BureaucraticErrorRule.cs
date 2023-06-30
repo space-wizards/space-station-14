@@ -37,6 +37,7 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
             {
                 if (_stationJobs.IsJobUnlimited(chosenStation.Value, job))
                     continue;
+
                 _stationJobs.TrySetJobSlot(chosenStation.Value, job, 0);
             }
         }

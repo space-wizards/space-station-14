@@ -362,6 +362,7 @@ namespace Content.Client.ParticleAccelerator.UI
                 case 4:
                     newState = ParticleAcceleratorPowerState.Level3;
                     break;
+
                 default:
                     return;
             }

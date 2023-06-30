@@ -25,6 +25,7 @@ namespace Content.Server.Chemistry.ReagentEffects
             var entman = args.EntityManager;
             if (!entman.TryGetComponent(args.SolutionEntity, out HungerComponent? hunger))
                 return;
+
             entman.System<HungerSystem>().ModifyHunger(args.SolutionEntity, NutritionFactor * (float) args.Quantity, hunger);
         }
 

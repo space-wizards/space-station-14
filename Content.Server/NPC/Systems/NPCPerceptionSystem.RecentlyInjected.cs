@@ -15,6 +15,7 @@ public sealed partial class NPCPerceptionSystem
             entity.Accumulator += frameTime;
             if (entity.Accumulator < entity.RemoveTime.TotalSeconds)
                 continue;
+
             entity.Accumulator = 0;
 
             RemComp<NPCRecentlyInjectedComponent>(entity.Owner);

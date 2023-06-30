@@ -28,6 +28,7 @@ public sealed class GeigerItemControl : Control
 
         if (!_component.UiUpdateNeeded)
             return;
+
         Update();
     }
 

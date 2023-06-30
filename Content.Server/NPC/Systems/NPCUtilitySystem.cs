@@ -54,6 +54,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 case UtilityQueryFilter filter:
                     Filter(blackboard, ents, filter);
                     break;
+
                 default:
                     Add(blackboard, ents, query);
                     break;
@@ -269,6 +270,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                     entities.Add(ent);
                 }
                 break;
+
             default:
                 throw new NotImplementedException();
         }

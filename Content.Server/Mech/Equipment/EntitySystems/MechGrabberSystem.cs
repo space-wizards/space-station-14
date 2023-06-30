@@ -50,6 +50,7 @@ public sealed class MechGrabberSystem : EntitySystem
         if (!TryComp<MechEquipmentComponent>(uid, out var equipmentComponent) ||
             equipmentComponent.EquipmentOwner == null)
             return;
+
         var mech = equipmentComponent.EquipmentOwner.Value;
 
         var targetCoords = new EntityCoordinates(mech, component.DepositOffset);
@@ -90,6 +91,7 @@ public sealed class MechGrabberSystem : EntitySystem
         if (!TryComp<MechEquipmentComponent>(uid, out var equipmentComponent) ||
             equipmentComponent.EquipmentOwner == null)
             return;
+
         var mech = equipmentComponent.EquipmentOwner.Value;
 
         var allItems = new List<EntityUid>(component.ItemContainer.ContainedEntities);

@@ -179,6 +179,7 @@ namespace Content.Server.Ghost.Roles
         {
             if (_ghostRoles.ContainsValue(role))
                 return;
+
             _ghostRoles[role.Identifier = GetNextRoleIdentifier()] = role;
             UpdateAllEui();
 
@@ -188,6 +189,7 @@ namespace Content.Server.Ghost.Roles
         {
             if (!_ghostRoles.ContainsKey(role.Identifier) || _ghostRoles[role.Identifier] != role)
                 return;
+
             _ghostRoles.Remove(role.Identifier);
             UpdateAllEui();
         }
@@ -259,6 +261,7 @@ namespace Content.Server.Ghost.Roles
                 return;
             if (EntityManager.HasComponent<GhostComponent>(message.Entity))
                 return;
+
             CloseEui(message.Player);
         }
 

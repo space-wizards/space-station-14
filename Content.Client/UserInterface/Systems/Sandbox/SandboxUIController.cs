@@ -90,6 +90,7 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     {
         if (_window is { Disposed: false })
             return;
+
         _window = UIManager.CreateWindow<SandboxWindow>();
         _window.OnOpen += () => { SandboxButton!.Pressed = true; };
         _window.OnClose += () => { SandboxButton!.Pressed = false; };

@@ -172,6 +172,7 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         if (!TryComp<StoreComponent>(uid, out var store))
             return;
+
         _store.ToggleUi(uid, uid, store);
     }
 
@@ -203,6 +204,7 @@ public sealed partial class RevenantSystem : EntitySystem
 
             if (rev.Accumulator <= 1)
                 continue;
+
             rev.Accumulator -= 1;
 
             if (rev.Essence < rev.EssenceRegenCap)

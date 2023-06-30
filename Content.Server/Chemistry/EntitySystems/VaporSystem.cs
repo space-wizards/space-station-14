@@ -121,6 +121,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 {
                     if (reagentQuantity.Quantity == FixedPoint2.Zero)
                         continue;
+
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
 
                     var reaction =

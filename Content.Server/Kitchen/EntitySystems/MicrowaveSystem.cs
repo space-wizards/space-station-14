@@ -70,6 +70,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (!TryComp<MicrowaveComponent>(uid, out var microwaveComponent))
                 return;
+
             SetAppearance(microwaveComponent, MicrowaveVisualState.Cooking);
 
             microwaveComponent.PlayingStream =
@@ -80,6 +81,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (!TryComp<MicrowaveComponent>(uid, out var microwaveComponent))
                 return;
+
             SetAppearance(microwaveComponent, MicrowaveVisualState.Idle);
 
             microwaveComponent.PlayingStream?.Stop();
@@ -101,6 +103,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
                     continue;
+
                 foreach (var (_, solution) in solutions.Solutions)
                 {
                     if (solution.Temperature > component.TemperatureUpperThreshold)
@@ -288,6 +291,7 @@ namespace Content.Server.Kitchen.EntitySystems
             var ui = _userInterface.GetUiOrNull(uid, MicrowaveUiKey.Key);
             if (ui == null)
                 return;
+
             var state = new MicrowaveUpdateUserInterfaceState(
                 component.Storage.ContainedEntities.ToArray(),
                 HasComp<ActiveMicrowaveComponent>(uid),

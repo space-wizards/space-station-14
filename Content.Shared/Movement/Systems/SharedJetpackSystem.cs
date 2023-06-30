@@ -64,6 +64,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     {
         if (args.Current is not JetpackUserComponentState state)
             return;
+
         component.Jetpack = state.Jetpack;
     }
 
@@ -107,6 +108,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     {
         if (!RemComp<JetpackUserComponent>(uid))
             return;
+
         RemComp<RelayInputMoverComponent>(uid);
     }
 

@@ -238,6 +238,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     {
         if (!mind.OwnedEntity.HasValue)
             return;
+
         SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "PirateGear", EntityManager);
 
         var pirateRule = EntityQuery<PiratesRuleComponent>().FirstOrDefault();

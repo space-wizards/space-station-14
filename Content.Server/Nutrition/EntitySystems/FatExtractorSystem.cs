@@ -150,6 +150,7 @@ public sealed class FatExtractorSystem : EntitySystem
 
             if (_timing.CurTime < fat.NextUpdate)
                 continue;
+
             fat.NextUpdate += fat.UpdateTime;
 
             _hunger.ModifyHunger(occupant.Value, -fat.NutritionPerSecond);

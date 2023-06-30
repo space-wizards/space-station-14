@@ -451,6 +451,7 @@ namespace Content.Server.Physics.Controllers
                             case DirectionFlag.North:
                             case DirectionFlag.West:
                                 break;
+
                             default:
                                 continue;
                         }
@@ -479,6 +480,7 @@ namespace Content.Server.Physics.Controllers
                             case DirectionFlag.West:
                                 force.X -= thrust;
                                 break;
+
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }

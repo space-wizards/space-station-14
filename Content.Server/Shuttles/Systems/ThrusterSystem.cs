@@ -274,6 +274,7 @@ public sealed class ThrusterSystem : EntitySystem
                 DebugTools.Assert(!shuttleComponent.AngularThrusters.Contains(uid));
                 shuttleComponent.AngularThrusters.Add(uid);
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -327,6 +328,7 @@ public sealed class ThrusterSystem : EntitySystem
     {
         if (!Resolve(uid, ref xform))
             return;
+
         DisableThruster(uid, component, xform.GridUid, xform);
     }
 
@@ -363,6 +365,7 @@ public sealed class ThrusterSystem : EntitySystem
                 DebugTools.Assert(shuttleComponent.AngularThrusters.Contains(uid));
                 shuttleComponent.AngularThrusters.Remove(uid);
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }

@@ -116,6 +116,7 @@ namespace Content.Server.Salvage
 
             if (component.PreviousCharge == component.ChargeRemaining)
                 return;
+
             _appearanceSystem.SetData(uid, SalvageMagnetVisuals.ChargeState, component.ChargeRemaining);
             component.PreviousCharge = component.ChargeRemaining;
         }
@@ -139,6 +140,7 @@ namespace Content.Server.Salvage
 
                     if (magnetComponent.AttachedEntity != ev.EntityUid)
                         continue;
+
                     magnetComponent.AttachedEntity = null;
                     magnetComponent.MagnetState = MagnetState.Inactive;
                     return;
@@ -222,6 +224,7 @@ namespace Content.Server.Salvage
                     if (gotGrid)
                         args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", Math.Ceiling(remainingTime.TotalSeconds))));
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -231,6 +234,7 @@ namespace Content.Server.Salvage
         {
             if (args.Handled)
                 return;
+
             args.Handled = true;
             StartMagnet(uid, component, args.User);
             UpdateAppearance(uid, component);
@@ -262,6 +266,7 @@ namespace Content.Server.Salvage
                 case MagnetStateType.CoolingDown:
                     ShowPopup(uid, "salvage-system-report-cooling-down", user);
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -330,6 +335,7 @@ namespace Content.Server.Salvage
                 // Might be better like this, ghosts could stop it before
                 if (_mapManager.FindGridsIntersecting(finalCoords.MapId, box2Rot).Any())
                     continue;
+
                 coords = finalCoords;
                 return true;
             }
@@ -448,6 +454,7 @@ namespace Content.Server.Salvage
                 // They both need to be paused, or it doesn't make sense
                 if (MetaData(uid).EntityPaused)
                     continue;
+
                 state.CurrentTime += secondsPassed;
 
                 var deleteQueue = new RemQueue<EntityUid>();
@@ -460,6 +467,7 @@ namespace Content.Server.Salvage
                     UpdateChargeStateAppearance(magnet, state.CurrentTime, magnetComp);
                     if (magnetComp.MagnetState.Until > state.CurrentTime)
                         continue;
+
                     Transition(magnet, magnetComp, state.CurrentTime);
                     if (magnetComp.MagnetState.StateType == MagnetStateType.Inactive)
                     {

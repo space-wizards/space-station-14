@@ -68,6 +68,7 @@ namespace Content.Client.Lathe.UI
             base.Dispose(disposing);
             if (!disposing)
                 return;
+
             _menu?.Dispose();
             _queueMenu?.Dispose();
         }

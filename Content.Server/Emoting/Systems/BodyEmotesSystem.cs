@@ -22,6 +22,7 @@ public sealed class BodyEmotesSystem : EntitySystem
     {
         if (component.SoundsId == null)
             return;
+
         _proto.TryIndex(component.SoundsId, out component.Sounds);
     }
 

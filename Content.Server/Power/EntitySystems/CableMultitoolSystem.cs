@@ -73,6 +73,7 @@ namespace Content.Server.Power.EntitySystems
             {
                 if (!(node.Value.NodeGroup is IBasePowerNet))
                     continue;
+
                 var p = (IBasePowerNet) node.Value.NodeGroup;
                 var ps = _pnSystem.GetNetworkStatistics(p.NetworkNode);
 

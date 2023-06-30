@@ -72,6 +72,7 @@ public sealed class BotanySwabSystem : EntitySystem
             var old = plant.Seed;
             if (old == null)
                 return;
+
             plant.Seed = _mutationSystem.Cross(swab.SeedData, old); // Cross-pollenate
             swab.SeedData = old; // Transfer old plant pollen to swab
             _popupSystem.PopupEntity(Loc.GetString("botany-swab-to"), args.Args.Target.Value, args.Args.User);

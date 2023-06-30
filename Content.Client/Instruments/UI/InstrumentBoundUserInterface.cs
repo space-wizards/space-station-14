@@ -32,6 +32,7 @@ namespace Content.Client.Instruments.UI
             base.Dispose(disposing);
             if (!disposing)
                 return;
+
             _instrumentMenu?.Dispose();
         }
     }

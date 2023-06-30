@@ -53,6 +53,7 @@ public sealed class ChannelSelectorButton : Button
         // needed since we need EnableAllKeybinds - don't double-send both UI click and Use
         if (args.Function == EngineKeyFunctions.Use)
             return;
+
         base.KeyBindDown(args);
     }
 
@@ -65,6 +66,7 @@ public sealed class ChannelSelectorButton : Button
 
         if (SelectedChannel == channel)
             return;
+
         SelectedChannel = channel;
         OnChannelSelect?.Invoke(channel);
     }

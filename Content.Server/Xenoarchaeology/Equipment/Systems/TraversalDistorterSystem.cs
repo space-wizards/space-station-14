@@ -41,6 +41,7 @@ public sealed class TraversalDistorterSystem : EntitySystem
             return;
         if (_timing.CurTime < component.NextActivation)
             return;
+
         args.Handled = true;
         component.NextActivation = _timing.CurTime + component.ActivationDelay;
 

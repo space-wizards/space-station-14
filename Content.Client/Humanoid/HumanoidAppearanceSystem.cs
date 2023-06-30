@@ -370,6 +370,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         {
             if (!visible)
                 return;
+
             else
                 index = sprite.LayerMapReserveBlank(layer);
         }

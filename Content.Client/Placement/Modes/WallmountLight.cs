@@ -37,6 +37,7 @@ namespace Content.Client.Placement.Modes
                 case Direction.West:
                     offset = new Vector2(0f, 0.5f);
                     break;
+
                 default:
                     return;
             }

@@ -194,6 +194,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             case SalvageMissionType.Elimination:
                 await SetupElimination(mission, dungeon, mapUid, grid, random);
                 break;
+
             default:
                 throw new NotImplementedException();
         }

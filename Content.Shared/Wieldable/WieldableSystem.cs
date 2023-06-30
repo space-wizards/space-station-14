@@ -164,6 +164,7 @@ public sealed class WieldableSystem : EntitySystem
     {
         if (!CanWield(used, component, user))
             return;
+
         var ev = new BeforeWieldEvent();
         RaiseLocalEvent(used, ev);
 
@@ -259,6 +260,7 @@ public sealed class WieldableSystem : EntitySystem
     {
         if (!component.Wielded || uid != args.Unequipped)
             return;
+
         RaiseLocalEvent(uid, new ItemUnwieldedEvent(args.User, force: true), true);
     }
 

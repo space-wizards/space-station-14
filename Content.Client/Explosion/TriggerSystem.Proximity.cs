@@ -89,12 +89,14 @@ public sealed partial class TriggerSystem
                 // Don't interrupt the flash animation
                 if (_player.HasRunningAnimation(uid, player, AnimKey))
                     return;
+
                 _player.Stop(uid, player, AnimKey);
                 spriteComponent.LayerSetState(layer, "on");
                 break;
             case ProximityTriggerVisuals.Active:
                 if (_player.HasRunningAnimation(uid, player, AnimKey))
                     return;
+
                 _player.Play(uid, player, _flasherAnimation, AnimKey);
                 break;
             case ProximityTriggerVisuals.Off:

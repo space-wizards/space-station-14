@@ -114,6 +114,7 @@ public sealed class MenuButton : ContainerButton
     {
         if (_buttonIcon == null || _buttonLabel == null)
             return;
+
         switch (DrawMode)
         {
             case DrawModeEnum.Normal:

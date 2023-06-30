@@ -133,6 +133,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         var activeHand = handsComp.ActiveHand;
         if (activeHand == null)
             return;
+
         SetActiveHand(activeHand.Name);
     }
 
@@ -203,6 +204,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         {
             if (container.IsFull)
                 continue;
+
             return container;
         }
 

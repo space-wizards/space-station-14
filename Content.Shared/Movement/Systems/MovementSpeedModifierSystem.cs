@@ -33,6 +33,7 @@ namespace Content.Shared.Movement.Systems
         {
             if (args.Current is not MovementSpeedModifierComponentState state)
                 return;
+
             component.BaseWalkSpeed = state.BaseWalkSpeed;
             component.BaseSprintSpeed = state.BaseSprintSpeed;
             component.WalkSpeedModifier = state.WalkSpeedModifier;

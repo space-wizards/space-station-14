@@ -138,6 +138,7 @@ public sealed class CrematoriumSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
         args.SetHandled(SuicideKind.Heat);
 
         var victim = args.Victim;

@@ -221,6 +221,7 @@ public sealed partial class ArtifactSystem
 
         if (component.CurrentNodeId == null)
             return;
+
         var currentNode = GetNodeFromId(component.CurrentNodeId.Value, component);
 
         var trigger = _prototype.Index<ArtifactTriggerPrototype>(currentNode.Trigger);

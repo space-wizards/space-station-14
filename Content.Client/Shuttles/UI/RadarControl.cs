@@ -295,6 +295,7 @@ public sealed class RadarControl : MapGridControl
         {
             if (shown.Contains(ent))
                 continue;
+
             ClearLabel(ent);
         }
     }
@@ -313,6 +314,7 @@ public sealed class RadarControl : MapGridControl
     {
         if (!_iffControls.TryGetValue(uid, out var label))
             return;
+
         label.Dispose();
         _iffControls.Remove(uid);
     }
@@ -404,6 +406,7 @@ public sealed class RadarControl : MapGridControl
                         start = tileVec.Value + new Vector2(0f, grid.TileSize);
                         end = tileVec.Value;
                         break;
+
                     default:
                         throw new NotImplementedException();
                 }

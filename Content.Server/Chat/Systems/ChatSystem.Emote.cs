@@ -59,6 +59,7 @@ public partial class ChatSystem
     {
         if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
             return;
+
         TryEmoteWithChat(source, proto, range, hideLog, nameOverride);
     }
 
@@ -91,6 +92,7 @@ public partial class ChatSystem
     {
         if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
             return;
+
         TryEmoteWithoutChat(uid, proto);
     }
 

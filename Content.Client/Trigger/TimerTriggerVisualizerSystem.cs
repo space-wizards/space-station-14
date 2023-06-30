@@ -55,6 +55,7 @@ public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTrigger
             case TriggerVisualState.Unprimed:
                 args.Sprite.LayerSetState(TriggerVisualLayers.Base, comp.UnprimedSprite);
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }

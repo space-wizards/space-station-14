@@ -69,6 +69,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
             if (!system.Random.Prob(0.4f))
                 return;
+
             comp.Fingerprints = forensicsComponent.Fingerprints;
             comp.Fibers = forensicsComponent.Fibers;
         }

@@ -124,6 +124,7 @@ public sealed class BodySystem : SharedBodySystem
         Containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
         if (root.Part == null)
             return;
+
         var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
         var partComponent = Comp<BodyPartComponent>(bodyId);
         var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);

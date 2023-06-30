@@ -130,6 +130,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         {
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
+
             foreach (var player in ev.Players)
             {
                 if (!ev.Profiles.ContainsKey(player.UserId))

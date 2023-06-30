@@ -105,6 +105,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         // but don't have computer access and i have to do this without syntax
         if (args.Handled || args.User != args.Dragged && !HasComp<HandsComponent>(args.User))
             return;
+
         TryClimb(args.User, args.Dragged, uid, component);
     }
 
@@ -351,6 +352,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     {
         if (!args.Buckling)
             return;
+
         StopClimb(uid, component);
     }
 

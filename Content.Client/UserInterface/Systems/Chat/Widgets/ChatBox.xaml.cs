@@ -182,6 +182,7 @@ public partial class ChatBox : UIWidget
 
         if (!disposing)
             return;
+
         _controller.UnregisterChat(this);
         ChatInput.Input.OnTextEntered -= OnTextEntered;
         ChatInput.Input.OnKeyBindDown -= OnKeyBindDown;

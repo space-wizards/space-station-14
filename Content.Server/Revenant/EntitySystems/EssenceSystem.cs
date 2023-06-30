@@ -46,6 +46,7 @@ public sealed class EssenceSystem : EntitySystem
             case >= 90:
                 message = "revenant-soul-yield-high";
                 break;
+
             default:
                 message = "revenant-soul-yield-average";
                 break;

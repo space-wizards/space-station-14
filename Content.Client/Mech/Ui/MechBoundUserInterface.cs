@@ -42,6 +42,7 @@ public sealed class MechBoundUserInterface : BoundUserInterface
 
         if (state is not MechBoundUiState msg)
             return;
+
         UpdateEquipmentControls(msg);
         _menu?.UpdateMechStats();
         _menu?.UpdateEquipmentView();
@@ -57,6 +58,7 @@ public sealed class MechBoundUserInterface : BoundUserInterface
             var ui = GetEquipmentUi(ent);
             if (ui == null)
                 continue;
+
             foreach (var (attached, estate) in state.EquipmentStates)
             {
                 if (ent == attached)

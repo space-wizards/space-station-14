@@ -33,6 +33,7 @@ public sealed class LungSystem : EntitySystem
 
         if ((args.SlotFlags & component.AllowedSlots) != component.AllowedSlots)
             return;
+
         component.IsFunctional = true;
 
         if (TryComp(args.Equipee, out InternalsComponent? internals))
@@ -57,6 +58,7 @@ public sealed class LungSystem : EntitySystem
             var moles = lung.Air.Moles[i];
             if (moles <= 0)
                 continue;
+
             var reagent = _atmosphereSystem.GasReagents[i];
             if (reagent == null)
                 continue;

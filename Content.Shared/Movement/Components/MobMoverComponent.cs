@@ -29,6 +29,7 @@ namespace Content.Shared.Movement.Components
             {
                 if (MathHelper.CloseToPercent(_stepSoundDistance, value))
                     return;
+
                 _stepSoundDistance = value;
             }
         }
@@ -41,6 +42,7 @@ namespace Content.Shared.Movement.Components
             {
                 if (MathHelper.CloseToPercent(GrabRange, value))
                     return;
+
                 GrabRange = value;
                 Dirty();
             }
@@ -54,6 +56,7 @@ namespace Content.Shared.Movement.Components
             {
                 if (MathHelper.CloseToPercent(PushStrength, value))
                     return;
+
                 PushStrength = value;
                 Dirty();
             }

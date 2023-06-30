@@ -613,6 +613,7 @@ public sealed partial class AdminVerbSystem
                     {
                         if (!HasComp<StationInfiniteBatteryTargetComponent>(ent))
                             continue;
+
                         var battery = EnsureComp<BatteryComponent>(ent);
                         battery.CurrentCharge = battery.MaxCharge;
                         Dirty(battery);
@@ -635,6 +636,7 @@ public sealed partial class AdminVerbSystem
                     {
                         if (!HasComp<StationInfiniteBatteryTargetComponent>(ent))
                             continue;
+
                         var battery = EnsureComp<BatteryComponent>(ent);
                         battery.CurrentCharge = 0;
                         Dirty(battery);

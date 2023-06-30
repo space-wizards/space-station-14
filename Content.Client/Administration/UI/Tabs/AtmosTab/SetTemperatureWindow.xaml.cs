@@ -37,6 +37,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
         {
             if (_data == null)
                 return;
+
             var dataList = _data.ToList();
             var selectedGrid = dataList[GridOptions.SelectedId].Owner;
             IoCManager.Resolve<IClientConsoleHost>()

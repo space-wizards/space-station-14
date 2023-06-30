@@ -23,6 +23,7 @@ namespace Content.Client.Preferences.UI
         {
             if (Profile == null)
                 return;
+
             var name = HumanoidCharacterProfile.GetName(Profile.Species, Profile.Gender);
             SetName(name);
             UpdateNameEdit();

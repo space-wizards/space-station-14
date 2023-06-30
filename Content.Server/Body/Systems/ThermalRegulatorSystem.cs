@@ -60,6 +60,7 @@ public sealed class ThermalRegulatorSystem : EntitySystem
         {
             if (!_actionBlockerSys.CanSweat(uid))
                 return;
+
             _tempSys.ChangeHeat(uid, -Math.Min(targetHeat, comp.SweatHeatRegulation), true,
                 temperatureComponent);
         }
@@ -67,6 +68,7 @@ public sealed class ThermalRegulatorSystem : EntitySystem
         {
             if (!_actionBlockerSys.CanShiver(uid))
                 return;
+
             _tempSys.ChangeHeat(uid, Math.Min(targetHeat, comp.ShiveringHeatRegulation), true,
                 temperatureComponent);
         }

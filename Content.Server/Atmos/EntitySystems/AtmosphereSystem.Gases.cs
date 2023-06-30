@@ -303,6 +303,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                     if (!(mixture.GetMoles(i) < req))
                         continue;
+
                     doReaction = false;
                     break;
                 }

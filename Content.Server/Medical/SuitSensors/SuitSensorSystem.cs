@@ -197,6 +197,7 @@ namespace Content.Server.Medical.SuitSensors
                 case SuitSensorMode.SensorCords:
                     msg = "suit-sensor-examine-cords";
                     break;
+
                 default:
                     return;
             }
@@ -268,6 +269,7 @@ namespace Content.Server.Medical.SuitSensors
                 case SuitSensorMode.SensorCords:
                     name = "suit-sensor-mode-cords";
                     break;
+
                 default:
                     return "";
             }

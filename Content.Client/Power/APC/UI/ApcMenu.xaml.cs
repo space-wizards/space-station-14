@@ -67,6 +67,7 @@ namespace Content.Client.Power.APC.UI
                         ExternalPowerStateLabel.Text = Loc.GetString("apc-menu-power-state-good");
                         ExternalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

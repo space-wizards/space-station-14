@@ -89,6 +89,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
             case PrefabDunGen prefab:
                 dungeon = await GeneratePrefabDungeon(prefab, _gridUid, _grid, _seed);
                 break;
+
             default:
                 throw new NotImplementedException();
         }
@@ -144,6 +145,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
                 case WallMountPostGen wall:
                     await PostGen(wall, dungeon, _gridUid, _grid, random);
                     break;
+
                 default:
                     throw new NotImplementedException();
             }

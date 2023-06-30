@@ -63,6 +63,7 @@ namespace Content.Shared.Humanoid
                     yield return HumanoidVisualLayers.Chest;
                     yield return HumanoidVisualLayers.Tail;
                     break;
+
                 default:
                     yield break;
             }

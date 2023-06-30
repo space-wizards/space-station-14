@@ -140,6 +140,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (number++ < InvalidCoordinatesLagCheckIterations)
                     continue;
+
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -168,6 +169,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (number++ < LagCheckIterations)
                     continue;
+
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -191,6 +193,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (number++ < LagCheckIterations)
                     continue;
+
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -221,6 +224,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (number++ < LagCheckIterations)
                     continue;
+
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -256,6 +260,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (number++ < LagCheckIterations)
                     continue;
+
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -279,6 +284,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (number++ < LagCheckIterations)
                     continue;
+
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -302,6 +308,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (number++ < LagCheckIterations)
                     continue;
+
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -325,6 +332,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (number++ < LagCheckIterations)
                     continue;
+
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -350,6 +358,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (number++ < LagCheckIterations)
                     continue;
+
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)

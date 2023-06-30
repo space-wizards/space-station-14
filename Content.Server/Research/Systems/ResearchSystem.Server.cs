@@ -49,6 +49,7 @@ public sealed partial class ResearchSystem
 
         if (!CanRun(uid))
             return;
+
         ModifyServerPoints(uid, GetPointsPerSecond(uid, component) * time, component);
     }
 
@@ -161,6 +162,7 @@ public sealed partial class ResearchSystem
 
         if (!Resolve(uid, ref component))
             return;
+
         component.Points += points;
         var ev = new ResearchServerPointsChangedEvent(uid, component.Points, points);
         foreach (var client in component.Clients)

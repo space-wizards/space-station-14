@@ -75,6 +75,7 @@ public sealed partial class CargoSystem
             case CargoTelepadState.Teleporting:
                 if (_player.HasRunningAnimation(uid, TelepadBeamKey))
                     return;
+
                 _player.Stop(uid, player, TelepadIdleKey);
                 _player.Play(uid, player, CargoTelepadBeamAnimation, TelepadBeamKey);
                 break;
@@ -83,6 +84,7 @@ public sealed partial class CargoSystem
                 _player.Stop(uid, player, TelepadBeamKey);
                 _player.Stop(uid, player, TelepadIdleKey);
                 break;
+
             default:
                 sprite.LayerSetVisible(CargoTelepadLayers.Beam, true);
 

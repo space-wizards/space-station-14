@@ -245,6 +245,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     {
         if (!Resolve(uid, ref component, false))
             return;
+
         var ev = new GetMaterialWhitelistEvent(uid);
         RaiseLocalEvent(uid, ref ev);
         component.MaterialWhiteList = ev.Whitelist;
@@ -255,6 +256,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     {
         if (args.Handled || !component.InsertOnInteract)
             return;
+
         args.Handled = TryInsertMaterialEntity(args.User, args.Used, uid, component);
     }
 }

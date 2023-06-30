@@ -154,6 +154,7 @@ public sealed class WeatherOverlay : Overlay
             case SpriteSpecifier.Texture texture:
                 sprite = texture.GetTexture(_cache);
                 break;
+
             default:
                 throw new NotImplementedException();
         }

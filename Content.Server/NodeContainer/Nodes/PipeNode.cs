@@ -34,6 +34,7 @@ namespace Content.Server.NodeContainer.Nodes
         {
             if (pipeNode.NodeGroupID != NodeGroupID)
                 return;
+
             _alwaysReachable ??= new();
             _alwaysReachable.Add(pipeNode);
 

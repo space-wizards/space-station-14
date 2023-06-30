@@ -378,6 +378,7 @@ namespace Content.Client.Construction.UI
         {
             if (_uiManager.ActiveScreen == null)
                 return;
+
             CraftingAvailable = e.Available;
         }
 

@@ -33,6 +33,7 @@ namespace Content.Server.Containers
         {
             if (!EntityManager.TryGetComponent<IContainerManager>(uid, out var mComp))
                 return;
+
             var baseCoords = EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates;
             foreach (var v in component.Containers)
             {

@@ -30,6 +30,7 @@ public sealed class AnomalySystem : SharedAnomalySystem
     {
         if (args.Key != component.AnimationKey)
             return;
+
         _floating.FloatAnimation(uid, component.FloatingOffset, component.AnimationKey, component.AnimationTime);
     }
 

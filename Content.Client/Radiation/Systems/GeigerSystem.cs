@@ -58,6 +58,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
     {
         if (!Resolve(uid, ref component))
             return;
+
         UpdateGeigerSound(uid, component.IsEnabled, component.User, component.DangerLevel, true, component);
     }
 
@@ -84,6 +85,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         // check that that local player controls entity that is holding geiger counter
         if (_playerManager.LocalPlayer == null)
             return;
+
         var attachedEnt = _playerManager.LocalPlayer.Session.AttachedEntity;
         if (attachedEnt != user)
             return;

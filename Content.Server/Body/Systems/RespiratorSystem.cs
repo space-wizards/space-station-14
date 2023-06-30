@@ -54,6 +54,7 @@ namespace Content.Server.Body.Systems
 
                 if (respirator.AccumulatedFrametime < respirator.CycleDelay)
                     continue;
+
                 respirator.AccumulatedFrametime -= respirator.CycleDelay;
                 UpdateSaturation(respirator.Owner, -respirator.CycleDelay, respirator);
 

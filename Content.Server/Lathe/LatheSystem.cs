@@ -69,12 +69,14 @@ namespace Content.Server.Lathe
         {
             if (args.Storage != uid)
                 return;
+
             var materialWhitelist = new List<string>();
             var recipes =  GetAllBaseRecipes(component);
             foreach (var id in recipes)
             {
                 if (!_proto.TryIndex<LatheRecipePrototype>(id, out var proto))
                     continue;
+
                 foreach (var (mat, _) in proto.RequiredMaterials)
                 {
                     if (!materialWhitelist.Contains(mat))
@@ -198,6 +200,7 @@ namespace Content.Server.Lathe
             {
                 if (!component.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
                     continue;
+
                 args.Recipes.Add(recipe);
             }
         }

@@ -37,6 +37,7 @@ public partial class AtmosphereSystem
     {
         if (args.Handled || component.Mixture == null)
             return;
+
         args.Handled = true;
         args.Mixtures ??= new GasMixture?[args.Tiles.Count];
 

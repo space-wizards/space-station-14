@@ -106,6 +106,7 @@ public class DockingControl : Control
                         // It's called Jobseeker now.
                         if (!MathHelper.TryGetIntersecting(start, end, _range, out var newStart))
                             continue;
+
                         start = newStart.Value;
                     }
                     // otherwise vice versa
@@ -113,6 +114,7 @@ public class DockingControl : Control
                     {
                         if (!MathHelper.TryGetIntersecting(end, start, _range, out var newEnd))
                             continue;
+
                         end = newEnd.Value;
                     }
 
@@ -183,6 +185,7 @@ public class DockingControl : Control
                         // It's called Jobseeker now.
                         if (!MathHelper.TryGetIntersecting(start, end, _range, out var newStart))
                             continue;
+
                         start = newStart.Value;
                     }
                     // otherwise vice versa
@@ -190,6 +193,7 @@ public class DockingControl : Control
                     {
                         if (!MathHelper.TryGetIntersecting(end, start, _range, out var newEnd))
                             continue;
+
                         end = newEnd.Value;
                     }
 

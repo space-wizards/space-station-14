@@ -143,6 +143,7 @@ namespace Content.Server.GameTicking
                 _playerGameStatuses[playerUserId] = status;
                 if (!_playerManager.TryGetSessionById(playerUserId, out var playerSession))
                     continue;
+
                 RaiseNetworkEvent(GetStatusMsg(playerSession), playerSession.ConnectedClient);
             }
         }

@@ -47,6 +47,7 @@ namespace Content.Server.Administration.Commands
                     }
 
                     break;
+
                 default:
                     shell.WriteLine($"Invalid amount of arguments.{Help}");
                     return;

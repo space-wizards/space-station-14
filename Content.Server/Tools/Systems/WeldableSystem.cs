@@ -122,6 +122,7 @@ public sealed class WeldableSystem : EntitySystem
 
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
+
         _appearance.SetData(uid, WeldableVisuals.IsWelded, component.IsWelded, appearance);
     }
 
@@ -141,6 +142,7 @@ public sealed class WeldableSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
+
         component.WeldingTime = time;
     }
 }

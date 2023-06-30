@@ -48,6 +48,7 @@ namespace Content.Server.Speech
                 case '!':
                     contextSound = prototype.ExclaimSound.GetSound();
                     break;
+
                 default:
                     contextSound = prototype.SaySound.GetSound();
                     break;

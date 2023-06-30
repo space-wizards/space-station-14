@@ -44,6 +44,7 @@ public sealed class DepartmentBanCommand : IConsoleCommand
                 }
 
                 break;
+
             default:
                 shell.WriteError(Loc.GetString("cmd-roleban-arg-count"));
                 shell.WriteLine(Help);

@@ -55,6 +55,7 @@ public sealed partial class QuickDialogSystem : EntitySystem
             case QuickDialogButtonFlag.CancelButton:
                 _openDialogs[msg.DialogId].cancelAction.Invoke();
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }

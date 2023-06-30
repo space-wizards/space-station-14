@@ -72,6 +72,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
             var dist = (_transform.GetWorldPosition(xform, xformQuery) - _transform.GetWorldPosition(ent, xformQuery)).Length;
             if (dist >= (closestDistance ?? float.MaxValue))
                 continue;
+
             closestDistance = dist;
         }
 
@@ -151,6 +152,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
 
             if (_timing.CurTime < beeper.NextBeepTime)
                 continue;
+
             UpdateBeep(uid, beeper);
         }
     }

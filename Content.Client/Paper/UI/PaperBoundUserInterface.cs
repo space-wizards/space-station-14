@@ -66,6 +66,7 @@ namespace Content.Client.Paper.UI
             base.Dispose(disposing);
             if (!disposing)
                 return;
+
             _window?.Dispose();
         }
     }

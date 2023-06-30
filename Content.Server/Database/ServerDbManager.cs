@@ -289,6 +289,7 @@ namespace Content.Server.Database
                     var pgOptions = CreatePostgresOptions();
                     _db = new ServerDbPostgres(pgOptions, _cfg);
                     break;
+
                 default:
                     throw new InvalidDataException($"Unknown database engine {engine}.");
             }

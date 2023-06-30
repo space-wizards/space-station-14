@@ -22,6 +22,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         {
             if (!pinpointer.HasTarget)
                 continue;
+
             var eye = _eyeManager.CurrentEye;
             var angle = pinpointer.ArrowAngle + eye.Rotation;
 
@@ -32,6 +33,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                 case Distance.Far:
                     sprite.LayerSetRotation(PinpointerLayers.Screen, angle);
                     break;
+
                 default:
                     sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
                     break;

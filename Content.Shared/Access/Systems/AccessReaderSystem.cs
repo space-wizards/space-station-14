@@ -40,6 +40,7 @@ namespace Content.Shared.Access.Systems
         {
             if (args.Current is not AccessReaderComponentState state)
                 return;
+
             component.Enabled = state.Enabled;
             component.AccessKeys = new (state.AccessKeys);
             component.AccessLists = new (state.AccessLists);

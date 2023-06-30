@@ -336,6 +336,7 @@ public sealed class ClientClothingSystem : ClothingSystem
                 mask = clothing.FemaleMask;
                 prefix = "female_";
                 break;
+
             default:
                 mask = clothing.UnisexMask;
                 prefix = "unisex_";

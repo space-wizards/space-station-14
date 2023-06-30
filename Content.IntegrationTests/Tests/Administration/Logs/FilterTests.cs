@@ -67,6 +67,7 @@ public sealed class FilterTests
                     firstGuidStr = secondGuid.ToString();
                     secondGuidStr = firstGuid.ToString();
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(order), order, null);
             }

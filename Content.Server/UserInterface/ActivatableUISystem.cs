@@ -87,6 +87,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
             return;
         if (component.InHandsOnly)
             return;
+
         args.Handled = InteractUI(args.User, component);
     }
 
@@ -96,6 +97,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
             return;
         if (component.rightClickOnly)
             return;
+
         args.Handled = InteractUI(args.User, component);
     }
 
@@ -110,6 +112,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
             return;
         if (args.UiKey != component.Key)
             return;
+
         SetCurrentSingleUser(uid, null, component);
     }
 
@@ -180,6 +183,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
     {
         if (!Resolve(uid, ref aui, false))
             return;
+
         aui.UserInterface?.CloseAll();
     }
 
@@ -189,6 +193,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
             return;
         if (!aui.CloseOnHandDeselect)
             return;
+
         CloseAll(uid, aui);
     }
 }

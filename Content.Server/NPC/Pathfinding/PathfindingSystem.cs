@@ -108,6 +108,7 @@ namespace Content.Server.NPC.Pathfinding
                         case BFSPathRequest bfs:
                             results[i] = UpdateBFSPath(_random, bfs);
                             break;
+
                         default:
                             throw new NotImplementedException();
                     }
@@ -147,6 +148,7 @@ namespace Content.Server.NPC.Pathfinding
                         path.Tcs.SetResult(result);
                         SendRoute(path);
                         break;
+
                     default:
                         throw new NotImplementedException();
                 }

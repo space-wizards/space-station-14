@@ -159,6 +159,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
         if ((!snapMin && newValue < min)
         || (!snapMax && newValue > max))
             return;
+
         SetEnergy(uid, MathHelper.Clamp(newValue, min, max), singularity);
     }
 

@@ -49,6 +49,7 @@ public abstract class SharedPowerCellSystem : EntitySystem
 
         if (args.Container.ID != component.CellSlotId)
             return;
+
         _appearance.SetData(uid, PowerCellSlotVisuals.Enabled, true);
         RaiseLocalEvent(uid, new PowerCellChangedEvent(false), false);
     }
@@ -57,6 +58,7 @@ public abstract class SharedPowerCellSystem : EntitySystem
     {
         if (args.Container.ID != component.CellSlotId)
             return;
+
         _appearance.SetData(uid, PowerCellSlotVisuals.Enabled, false);
         RaiseLocalEvent(uid, new PowerCellChangedEvent(true), false);
     }

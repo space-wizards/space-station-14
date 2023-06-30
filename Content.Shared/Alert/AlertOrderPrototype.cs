@@ -46,6 +46,7 @@ namespace Content.Shared.Alert
                         case "category":
                             _categoryToIdx[Enum.Parse<AlertCategory>(alert)] = i++;
                             break;
+
                         default:
                             throw new ArgumentException();
                     }

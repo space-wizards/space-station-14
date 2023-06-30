@@ -92,6 +92,7 @@ public sealed partial class ResearchSystem
 
         if (!PrototypeManager.TryIndex<TechnologyPrototype>(technology, out var prototype))
             return;
+
         AddTechnology(uid, prototype, component);
     }
 
@@ -115,6 +116,7 @@ public sealed partial class ResearchSystem
         {
             if (component.UnlockedRecipes.Contains(unlock))
                 continue;
+
             component.UnlockedRecipes.Add(unlock);
         }
         Dirty(component);
@@ -172,6 +174,7 @@ public sealed partial class ResearchSystem
     {
         if (args.Server != null)
             return;
+
         component.MainDiscipline = null;
         component.CurrentTechnologyCards = new List<string>();
         component.SupportedDisciplines = new List<string>();

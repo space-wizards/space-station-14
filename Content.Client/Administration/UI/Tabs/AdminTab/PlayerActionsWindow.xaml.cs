@@ -37,6 +37,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
         {
             if (_selectedPlayer == null)
                 return;
+
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
                 $"kick \"{_selectedPlayer.Username}\" \"{CommandParsing.Escape(ReasonLine.Text)}\"");
         }
@@ -54,6 +55,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
         {
             if (_selectedPlayer == null)
                 return;
+
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
                 $"respawn \"{_selectedPlayer.Username}\"");
         }

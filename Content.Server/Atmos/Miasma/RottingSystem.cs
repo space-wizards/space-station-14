@@ -72,6 +72,7 @@ public sealed class RottingSystem : EntitySystem
     {
         if (args.NewMobState == MobState.Dead)
             return;
+
         RemCompDeferred(uid, component);
     }
 
@@ -141,6 +142,7 @@ public sealed class RottingSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
         args.Handled = component.CurrentTemperature > Atmospherics.T0C + 0.85f;
     }
 
@@ -153,6 +155,7 @@ public sealed class RottingSystem : EntitySystem
         {
             if (_timing.CurTime < perishable.NextPerishUpdate)
                 continue;
+
             perishable.NextPerishUpdate += perishable.PerishUpdateRate;
 
             if (IsRotten(uid) || !IsRotProgressing(uid, perishable))
@@ -171,10 +174,12 @@ public sealed class RottingSystem : EntitySystem
         {
             if (_timing.CurTime < rotting.NextRotUpdate) // This is where it starts to get noticable on larger animals, no need to run every second
                 continue;
+
             rotting.NextRotUpdate += rotting.RotUpdateRate;
 
             if (!IsRotProgressing(uid, perishable))
                 continue;
+
             rotting.TotalRotTime += rotting.RotUpdateRate;
 
             if (rotting.DealDamage)

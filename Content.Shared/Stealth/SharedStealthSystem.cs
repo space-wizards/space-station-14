@@ -36,6 +36,7 @@ public abstract class SharedStealthSystem : EntitySystem
         {
             if (source == uid)
                 return;
+
             source = Transform(source).ParentUid;
         }
         while (source.IsValid());

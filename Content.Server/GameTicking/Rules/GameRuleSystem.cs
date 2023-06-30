@@ -19,6 +19,7 @@ public abstract class GameRuleSystem<T> : EntitySystem where T : Component
     {
         if (!TryComp<GameRuleComponent>(uid, out var ruleData))
             return;
+
         Added(uid, component, ruleData, args);
     }
 
@@ -26,6 +27,7 @@ public abstract class GameRuleSystem<T> : EntitySystem where T : Component
     {
         if (!TryComp<GameRuleComponent>(uid, out var ruleData))
             return;
+
         Started(uid, component, ruleData, args);
     }
 
@@ -33,6 +35,7 @@ public abstract class GameRuleSystem<T> : EntitySystem where T : Component
     {
         if (!TryComp<GameRuleComponent>(uid, out var ruleData))
             return;
+
         Ended(uid, component, ruleData, args);
     }
 

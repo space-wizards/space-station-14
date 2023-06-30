@@ -24,6 +24,7 @@ public sealed class TemperatureArtifactSystem : EntitySystem
         var center = _atmosphereSystem.GetContainingMixture(uid, false, true);
         if (center == null)
             return;
+
         UpdateTileTemperature(component, center);
 
         if (component.AffectAdjacentTiles && transform.GridUid != null)

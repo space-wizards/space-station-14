@@ -190,6 +190,7 @@ public partial class RadiationSystem
             var point = line.Current;
             if (!resistanceMap.TryGetValue(point, out var resData))
                 continue;
+
             ray.Rads -= resData;
 
             // save data for debug

@@ -61,6 +61,7 @@ namespace Content.Server.Atmos
             {
                 if (Immutable)
                     return;
+
                 _temperature = MathF.Max(value, Atmospherics.TCMB);
             }
         }
@@ -186,6 +187,7 @@ namespace Content.Server.Atmos
         {
             if (Immutable)
                 return;
+
             sample.Moles.CopyTo(Moles, 0);
             Temperature = sample.Temperature;
         }
@@ -195,6 +197,7 @@ namespace Content.Server.Atmos
         {
             if (Immutable)
                 return;
+
             Array.Clear(Moles, 0, Atmospherics.TotalNumberOfGases);
         }
 
@@ -203,6 +206,7 @@ namespace Content.Server.Atmos
         {
             if (Immutable)
                 return;
+
             NumericsHelpers.Multiply(Moles, multiplier);
         }
 

@@ -260,6 +260,7 @@ namespace Content.Server.DeviceNetwork.Systems
         {
             if (!Resolve(uid, ref device, false))
                 return;
+
             var deviceNet = GetNetwork(device.DeviceNetId);
             deviceNet.Remove(device);
             device.CustomAddress = false;

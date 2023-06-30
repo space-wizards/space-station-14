@@ -47,6 +47,7 @@ namespace Content.Server.StationEvents.Events
 
             if (component.TimeUntilLeak > 0f)
                 return;
+
             component.TimeUntilLeak += component.LeakCooldown;
 
             if (!component.FoundTile ||

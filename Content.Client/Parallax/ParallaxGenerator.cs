@@ -209,6 +209,7 @@ namespace Content.Client.Parallax
                         case "ridged":
                             NoiseType = NoiseGenerator.NoiseType.Ridged;
                             break;
+
                         default:
                             throw new InvalidOperationException();
                     }
@@ -362,6 +363,7 @@ namespace Content.Client.Parallax
                         case "ridged":
                             MaskNoiseType = NoiseGenerator.NoiseType.Ridged;
                             break;
+
                         default:
                             throw new InvalidOperationException();
                     }

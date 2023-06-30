@@ -35,6 +35,7 @@ public sealed class DecalPlacerUIController : UIController, IOnStateExited<Gamep
     {
         if (_window == null)
             return;
+
         _window.Dispose();
         _window = null;
     }
@@ -69,6 +70,7 @@ public sealed class DecalPlacerUIController : UIController, IOnStateExited<Gamep
     {
         if (_window is { Disposed: false })
             return;
+
         _window = UIManager.CreateWindow<DecalPlacerWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterLeft);
         ReloadPrototypes();

@@ -28,6 +28,7 @@ internal sealed class ActivatableUIRequiresPowerSystem : EntitySystem
             return;
         if (TryComp<WiresPanelComponent>(uid, out var panel) && panel.Open)
             return;
+
         _popup.PopupCursor(Loc.GetString("base-computer-ui-component-not-powered", ("machine", uid)), args.User);
         args.Cancel();
     }

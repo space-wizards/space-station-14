@@ -46,6 +46,7 @@ sealed class TileReplaceCommand : IConsoleCommand
                 tileIdA = args[1];
                 tileIdB = args[2];
                 break;
+
             default:
                 shell.WriteLine(Help);
                 return;

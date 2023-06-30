@@ -60,6 +60,7 @@ public abstract class SharedDevourSystem : EntitySystem
                         BreakOnUserMove = true,
                     });
                     break;
+
                 default:
                     _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-fail-target-alive"), uid, uid);
                     break;

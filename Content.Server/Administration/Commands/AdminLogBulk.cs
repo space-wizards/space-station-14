@@ -32,6 +32,7 @@ public sealed class AdminLogBulk : IConsoleCommand
             case {Length: 2} when int.TryParse(args[0], out amount) &&
                                   bool.TryParse(args[1], out parallel):
                 break;
+
             default:
                 shell.WriteError(Help);
                 return;

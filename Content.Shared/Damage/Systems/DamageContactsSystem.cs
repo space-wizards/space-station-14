@@ -29,6 +29,7 @@ public sealed class DamageContactsSystem : EntitySystem
         {
             if (_timing.CurTime < damaged.NextSecond)
                 continue;
+
             damaged.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
 
             if (damaged.Damage != null)

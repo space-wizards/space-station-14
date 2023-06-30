@@ -41,6 +41,7 @@ public sealed class OpenAdminNotesCommand : IConsoleCommand
 
                 notedPlayer = dbGuid.UserId;
                 break;
+
             default:
                 shell.WriteError($"Invalid arguments.\n{Help}");
                 return;

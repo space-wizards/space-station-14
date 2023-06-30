@@ -129,6 +129,7 @@ public sealed class MachineFrameSystem : EntitySystem
 
                 if (!_container.TryRemoveFromContainer(args.Used) || !component.PartContainer.Insert(args.Used))
                     continue;
+
                 component.ComponentProgress[compName]++;
                 args.Handled = true;
                 return;
@@ -144,6 +145,7 @@ public sealed class MachineFrameSystem : EntitySystem
 
                 if (!_container.TryRemoveFromContainer(args.Used) || !component.PartContainer.Insert(args.Used))
                     continue;
+
                 component.TagProgress[tagName]++;
                 args.Handled = true;
                 return;

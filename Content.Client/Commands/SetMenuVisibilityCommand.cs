@@ -42,6 +42,7 @@ namespace Content.Client.Commands
                     case "all":
                         visibility |= MenuVisibility.All;
                         break;
+
                     default:
                         shell.WriteLine($"Unknown visibility argument '{arg}'. Only 'NoFov', 'InContainer', 'Invisible' or 'All' are valid. Provide no arguments to set to default.");
                         return false;

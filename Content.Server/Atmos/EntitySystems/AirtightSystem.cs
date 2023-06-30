@@ -147,6 +147,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var direction = (AtmosDirection) (1 << i);
                 if (!myDirection.IsFlagSet(direction))
                     continue;
+
                 var angle = direction.ToAngle();
                 angle += myAngle;
                 newAirBlockedDirs |= angle.ToAtmosDirectionCardinal();

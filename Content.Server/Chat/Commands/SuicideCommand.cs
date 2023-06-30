@@ -26,6 +26,7 @@ namespace Content.Server.Chat.Commands
 
             if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
                 return;
+
             var mind = player.ContentData()?.Mind;
 
             // This check also proves mind not-null for at the end when the mob is ghosted.

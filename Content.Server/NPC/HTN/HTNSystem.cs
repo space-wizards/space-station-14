@@ -361,6 +361,7 @@ public sealed class HTNSystem : EntitySystem
 
                     StartupTask(component.Plan.Tasks[component.Plan.Index], component.Blackboard, component.Plan.Effects[component.Plan.Index]);
                     break;
+
                 default:
                     throw new InvalidOperationException();
             }

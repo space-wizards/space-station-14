@@ -41,6 +41,7 @@ public sealed class MobThresholdSystem : EntitySystem
     {
         if (args.Current is not MobThresholdsComponentState state)
             return;
+
         component.Thresholds = new SortedDictionary<FixedPoint2, MobState>(state.UnsortedThresholds);
         component.TriggersAlerts = state.TriggersAlerts;
         component.CurrentThresholdState = state.CurrentThresholdState;
@@ -255,6 +256,7 @@ public sealed class MobThresholdSystem : EntitySystem
         {
             if (state != mobState)
                 continue;
+
             threshold.Thresholds.Remove(damageThreshold);
         }
         threshold.Thresholds[damage] = mobState;
@@ -287,6 +289,7 @@ public sealed class MobThresholdSystem : EntitySystem
     {
         if (!Resolve(uid, ref component, false))
             return;
+
         component.AllowRevives = val;
         Dirty(component);
         VerifyThresholds(uid, component);
@@ -372,6 +375,7 @@ public sealed class MobThresholdSystem : EntitySystem
     {
         if (!TryComp<MobStateComponent>(target, out var mobState))
             return;
+
         CheckThresholds(target, mobState, thresholds, args.Damageable);
         var ev = new MobThresholdChecked(target, mobState, thresholds, args.Damageable);
         RaiseLocalEvent(target, ref ev, true);
@@ -382,6 +386,7 @@ public sealed class MobThresholdSystem : EntitySystem
     {
         if (!TryComp<MobStateComponent>(target, out var mobState) || !TryComp<DamageableComponent>(target, out var damageable))
             return;
+
         CheckThresholds(target, mobState, thresholds, damageable);
         var ev = new MobThresholdChecked(target, mobState, thresholds, damageable);
         RaiseLocalEvent(target, ref ev, true);

@@ -64,6 +64,7 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
     {
         if (_isClientTyping == isClientTyping)
             return;
+
         _isClientTyping = isClientTyping;
 
         // check if player controls any pawn

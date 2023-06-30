@@ -98,6 +98,7 @@ public sealed partial class CargoSystem
 
         if (!_protoMan.TryIndex<CargoBountyPrototype>(bounty.Value.Bounty, out var bountyProtoype) ||!IsBountyComplete(container.Owner, bountyProtoype))
             return;
+
         args.Handled = true;
 
         component.Calculating = true;
@@ -210,6 +211,7 @@ public sealed partial class CargoSystem
             {
                 if (!entry.Whitelist.IsValid(entity, EntityManager))
                     continue;
+
                 count++;
                 temp.Add(entity);
 
@@ -303,6 +305,7 @@ public sealed partial class CargoSystem
         {
             if (bountyData.Id != id)
                 continue;
+
             bounty = bountyData;
             break;
         }
@@ -333,6 +336,7 @@ public sealed partial class CargoSystem
             {
                 if (_timing.CurTime < bounty.EndTime)
                     continue;
+
                 TryRemoveBounty(uid, bounty, bountyDatabase);
                 FillBountyDatabase(uid, bountyDatabase);
             }

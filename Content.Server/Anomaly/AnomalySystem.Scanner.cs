@@ -32,6 +32,7 @@ public sealed partial class AnomalySystem
         {
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
+
             _ui.TryCloseAll(uid, AnomalyScannerUiKey.Key);
         }
     }
@@ -43,6 +44,7 @@ public sealed partial class AnomalySystem
         {
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
+
             UpdateScannerUi(uid, component);
         }
     }
@@ -54,6 +56,7 @@ public sealed partial class AnomalySystem
         {
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
+
             UpdateScannerUi(uid, component);
         }
     }
@@ -65,6 +68,7 @@ public sealed partial class AnomalySystem
         {
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
+
             UpdateScannerUi(uid, component);
         }
     }

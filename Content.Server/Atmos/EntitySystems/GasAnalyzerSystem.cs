@@ -127,6 +127,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (message.Session.AttachedEntity is not {Valid: true})
                 return;
+
             DisableAnalyzer(uid, component);
         }
 

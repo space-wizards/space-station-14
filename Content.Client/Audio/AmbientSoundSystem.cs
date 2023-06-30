@@ -57,6 +57,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
         {
             if (_overlayEnabled == value)
                 return;
+
             _overlayEnabled = value;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
 

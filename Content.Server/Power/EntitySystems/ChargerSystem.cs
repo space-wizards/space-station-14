@@ -150,6 +150,7 @@ internal sealed class ChargerSystem : EntitySystem
                 receiver.Load = 0;
                 _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Charged, appearance);
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }

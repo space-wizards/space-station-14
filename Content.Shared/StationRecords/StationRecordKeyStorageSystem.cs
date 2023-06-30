@@ -21,6 +21,7 @@ public sealed class StationRecordKeyStorageSystem : EntitySystem
     {
         if (args.Current is not StationRecordKeyStorageComponentState state)
             return;
+
         component.Key = state.Key;
     }
 

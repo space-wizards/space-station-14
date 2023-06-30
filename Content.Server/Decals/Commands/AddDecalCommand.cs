@@ -93,6 +93,7 @@ namespace Content.Server.Decals.Commands
 
                             color = colorRaw;
                             break;
+
                         default:
                             shell.WriteError($"Unknown parameter key '{rawValue[0]}'.");
                             return;

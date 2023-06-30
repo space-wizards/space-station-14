@@ -22,6 +22,7 @@ public sealed partial class TriggerSystem
         var otherUID = args.OtherEntity;
         if (component.Colliding.ContainsKey(otherUID))
             return;
+
         component.Colliding.Add(otherUID, 0);
     }
 

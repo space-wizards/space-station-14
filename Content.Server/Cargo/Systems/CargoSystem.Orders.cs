@@ -176,6 +176,7 @@ namespace Content.Server.Cargo.Systems
             var orderDatabase = GetOrderDatabase(component);
             if (orderDatabase == null)
                 return;
+
             RemoveOrder(orderDatabase, args.OrderId);
         }
 
@@ -259,6 +260,7 @@ namespace Content.Server.Cargo.Systems
             {
                 if (!order.Approved)
                     continue;
+
                 amount += order.OrderQuantity - order.NumDispatched;
             }
 

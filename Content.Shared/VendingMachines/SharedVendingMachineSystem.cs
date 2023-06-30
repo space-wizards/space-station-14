@@ -97,6 +97,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             case InventoryType.Contraband:
                 inventory = component.ContrabandInventory;
                 break;
+
             default:
                 return;
         }

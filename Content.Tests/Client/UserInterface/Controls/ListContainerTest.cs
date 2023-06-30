@@ -103,6 +103,7 @@ public sealed class ListContainerTest : RobustUnitTest
         {
             if (child is not ListContainerButton)
                 continue;
+
             Assert.That(child.Height, Is.EqualTo(10));
         }
 

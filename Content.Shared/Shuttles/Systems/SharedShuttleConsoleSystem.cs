@@ -46,6 +46,7 @@ namespace Content.Shared.Shuttles.Systems
 
             if (component.Console == null)
                 return;
+
             args.Cancel();
         }
     }

@@ -110,6 +110,7 @@ public abstract class SharedResearchSystem : EntitySystem
             var proto = PrototypeManager.Index<TechnologyPrototype>(recipe);
             if (proto.Discipline != techDiscipline.ID)
                 continue;
+
             allUnlocked.Add(proto);
         }
 
@@ -136,6 +137,7 @@ public abstract class SharedResearchSystem : EntitySystem
                 component.MainDiscipline != null &&
                 techDiscipline.ID != component.MainDiscipline)
                 break;
+
             tier++;
         }
 
@@ -168,6 +170,7 @@ public abstract class SharedResearchSystem : EntitySystem
         var discipline = PrototypeManager.Index<TechDisciplinePrototype>(prototype.Discipline);
         if (prototype.Tier < discipline.LockoutTier)
             return;
+
         component.MainDiscipline = prototype.Discipline;
         Dirty(component);
     }

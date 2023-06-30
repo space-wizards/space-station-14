@@ -46,6 +46,7 @@ public partial class InventorySystem
         {
             if (!container.ContainedEntity.HasValue)
                 continue;
+
             RaiseLocalEvent(container.ContainedEntity.Value, ev, false);
         }
     }

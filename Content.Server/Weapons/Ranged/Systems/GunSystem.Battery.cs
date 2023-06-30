@@ -80,6 +80,7 @@ public sealed partial class GunSystem
             case ProjectileBatteryAmmoProviderComponent:
                 damageType = Loc.GetString("damage-projectile");
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }

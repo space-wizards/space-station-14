@@ -56,6 +56,7 @@ public sealed partial class RevenantSystem
     {
         if (args.Target == args.User || args.Target == null)
             return;
+
         var target = args.Target.Value;
 
         if (HasComp<PoweredLightComponent>(target))
@@ -101,6 +102,7 @@ public sealed partial class RevenantSystem
 
         if (!TryComp<EssenceComponent>(args.Args.Target, out var essence))
             return;
+
         essence.SearchComplete = true;
 
         string message;
@@ -112,6 +114,7 @@ public sealed partial class RevenantSystem
             case >= 90:
                 message = "revenant-soul-yield-high";
                 break;
+
             default:
                 message = "revenant-soul-yield-average";
                 break;
@@ -191,6 +194,7 @@ public sealed partial class RevenantSystem
 
         if (!_mobThresholdSystem.TryGetThresholdForState(args.Args.Target.Value, MobState.Dead, out var damage))
             return;
+
         DamageSpecifier dspec = new();
         dspec.DamageDict.Add("Poison", damage.Value);
         _damage.TryChangeDamage(args.Args.Target, dspec, true, origin: uid);
@@ -213,6 +217,7 @@ public sealed partial class RevenantSystem
         var xform = Transform(uid);
         if (!_mapManager.TryGetGrid(xform.GridUid, out var map))
             return;
+
         var tiles = map.GetTilesIntersecting(Box2.CenteredAround(xform.WorldPosition,
             (component.DefileRadius*2, component.DefileRadius))).ToArray();
 
@@ -222,6 +227,7 @@ public sealed partial class RevenantSystem
         {
             if (!tiles.TryGetValue(i, out var value))
                 continue;
+
             _tile.PryTile(value);
         }
 

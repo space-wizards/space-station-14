@@ -44,6 +44,7 @@ namespace Content.Server.Construction.Commands
 
                     gridId = id;
                     break;
+
                 default:
                     shell.WriteLine(Help);
                     return;

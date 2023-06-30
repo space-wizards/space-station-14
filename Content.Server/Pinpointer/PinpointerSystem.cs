@@ -34,6 +34,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     {
         if (!Resolve(uid, ref appearance))
             return;
+
         _appearance.SetData(uid, PinpointerVisuals.IsActive, pinpointer.IsActive, appearance);
         _appearance.SetData(uid, PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget, appearance);
     }

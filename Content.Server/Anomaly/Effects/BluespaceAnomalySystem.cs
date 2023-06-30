@@ -66,6 +66,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
     {
         if (!TryComp<PortalComponent>(uid, out var portal))
             return;
+
         portal.MaxRandomRadius = (component.MaxPortalRadius - component.MinPortalRadius) * args.Severity + component.MinPortalRadius;
     }
 }

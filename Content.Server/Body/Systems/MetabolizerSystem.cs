@@ -97,6 +97,7 @@ namespace Content.Server.Body.Systems
                 {
                     if (!Resolve(body, ref manager, false))
                         return;
+
                     _solutionContainerSystem.TryGetSolution(body, meta.SolutionName, out solution, manager);
                     solutionEntityUid = body;
                 }
@@ -105,6 +106,7 @@ namespace Content.Server.Body.Systems
             {
                 if (!Resolve(uid, ref manager, false))
                     return;
+
                 _solutionContainerSystem.TryGetSolution(uid, meta.SolutionName, out solution, manager);
                 solutionEntityUid = uid;
             }
@@ -135,6 +137,7 @@ namespace Content.Server.Body.Systems
                 // we're done here entirely if this is true
                 if (reagents >= meta.MaxReagentsProcessable)
                     return;
+
                 reagents += 1;
 
                 // loop over all our groups and see which ones apply

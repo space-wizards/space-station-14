@@ -17,6 +17,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         {
             if (_showAll == value)
                 return;
+
             _showAll = value;
 
             UpdateAll();

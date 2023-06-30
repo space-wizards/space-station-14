@@ -198,6 +198,7 @@ public sealed class RCDSystem : EntitySystem
                     _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {tile.GridUid}");
                 }
                 break;
+
             default:
                 args.Handled = true;
                 return; //I don't know why this would happen, but sure I guess. Get out of here invalid state!

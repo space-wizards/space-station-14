@@ -152,6 +152,7 @@ namespace Content.Client.Preferences.UI
             {
                 if (!int.TryParse(args.Text, out var newAge))
                     return;
+
                 SetAge(newAge);
             };
 
@@ -213,6 +214,7 @@ namespace Content.Client.Preferences.UI
             {
                 if (Profile is null)
                     return;
+
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithHairStyleName(newStyle.id));
                 IsDirty = true;
@@ -222,6 +224,7 @@ namespace Content.Client.Preferences.UI
             {
                 if (Profile is null)
                     return;
+
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithHairColor(newColor.marking.MarkingColors[0]));
                 UpdateCMarkingsHair();
@@ -232,6 +235,7 @@ namespace Content.Client.Preferences.UI
             {
                 if (Profile is null)
                     return;
+
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithFacialHairStyleName(newStyle.id));
                 IsDirty = true;
@@ -241,6 +245,7 @@ namespace Content.Client.Preferences.UI
             {
                 if (Profile is null)
                     return;
+
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithFacialHairColor(newColor.marking.MarkingColors[0]));
                 UpdateCMarkingsFacialHair();
@@ -251,6 +256,7 @@ namespace Content.Client.Preferences.UI
             {
                 if (Profile is null)
                     return;
+
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithHairStyleName(HairStyles.DefaultHairStyle)
                 );
@@ -263,6 +269,7 @@ namespace Content.Client.Preferences.UI
             {
                 if (Profile is null)
                     return;
+
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithFacialHairStyleName(HairStyles.DefaultFacialHairStyle)
                 );
@@ -346,6 +353,7 @@ namespace Content.Client.Preferences.UI
             {
                 if (Profile is null)
                     return;
+
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithEyeColor(newColor));
                 CMarkings.CurrentEyeColor = Profile.Appearance.EyeColor;
@@ -784,6 +792,7 @@ namespace Content.Client.Preferences.UI
                 case Sex.Female:
                     Profile = Profile?.WithGender(Gender.Female);
                     break;
+
                 default:
                     Profile = Profile?.WithGender(Gender.Epicene);
                     break;
@@ -1129,6 +1138,7 @@ namespace Content.Client.Preferences.UI
         {
             if (Profile is null)
                 return;
+
             UpdateNameEdit();
             UpdateFlavorTextEdit();
             UpdateSexControls();

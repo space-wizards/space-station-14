@@ -17,6 +17,7 @@ public sealed class SmokeVisualizerSystem : VisualizerSystem<SmokeVisualsCompone
             return;
         if (!AppearanceSystem.TryGetData<Color>(uid, SmokeVisuals.Color, out var color))
             return;
+
         args.Sprite.Color = color;
     }
 }

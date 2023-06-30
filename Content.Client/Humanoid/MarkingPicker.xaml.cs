@@ -402,6 +402,7 @@ public sealed partial class MarkingPicker : Control
     {
         if (_selectedMarking is null)
             return;
+
         var markingPrototype = (MarkingPrototype) _selectedMarking.Metadata!;
         int markingIndex = _currentMarkings.FindIndexOf(_selectedMarkingCategory, markingPrototype.ID);
 

@@ -55,6 +55,7 @@ public sealed class LockSystem : EntitySystem
     {
         if (args.Current is not LockComponentState state)
             return;
+
         component.Locked = state.Locked;
         component.LockOnClick = state.LockOnClick;
     }
@@ -233,6 +234,7 @@ public sealed class LockSystem : EntitySystem
     {
         if (!component.Locked || !component.BreakOnEmag)
             return;
+
         _audio.PlayPredicted(component.UnlockSound, uid, null, AudioParams.Default.WithVolume(-5));
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, false);
         RemComp<LockComponent>(uid); //Literally destroys the lock as a tell it was emagged

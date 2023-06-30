@@ -247,6 +247,7 @@ namespace Content.Shared.Cuffs
                 return;
             if (args.Handled)
                 return;
+
             args.Handled = true;
 
             var user = args.Args.User;
@@ -297,6 +298,7 @@ namespace Content.Shared.Cuffs
 
             if (args.Handled)
                 return;
+
             args.Handled = true;
 
             if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable))

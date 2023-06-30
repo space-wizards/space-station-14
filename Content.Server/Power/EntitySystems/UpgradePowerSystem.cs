@@ -42,6 +42,7 @@ public sealed class UpgradePowerSystem : EntitySystem
             case MachineUpgradeScalingType.Exponential:
                 load *= MathF.Pow(component.PowerDrawMultiplier, rating - 1);
                 break;
+
             default:
                 Logger.Error($"invalid power scaling type for {ToPrettyString(uid)}.");
                 load = 0;
@@ -81,6 +82,7 @@ public sealed class UpgradePowerSystem : EntitySystem
             case MachineUpgradeScalingType.Exponential:
                 supply *= MathF.Pow(component.PowerSupplyMultiplier, rating - 1);
                 break;
+
             default:
                 Logger.Error($"invalid power scaling type for {ToPrettyString(uid)}.");
                 supply = component.BaseSupplyRate;

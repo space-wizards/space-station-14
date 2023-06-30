@@ -71,6 +71,7 @@ public sealed partial class LatheMenu : DefaultWindow
         {
             if (!_prototypeManager.TryIndex(id, out MaterialPrototype? material))
                 continue;
+
             var name = Loc.GetString(material.Name);
             var mat = Loc.GetString("lathe-menu-material-display",
                 ("material", name), ("amount", amount));

@@ -93,6 +93,7 @@ namespace Content.Client.Nuke
                     secondMsg = Loc.GetString("nuke-user-interface-second-status-cooldown-time",
                         ("time", state.CooldownTime));
                     break;
+
                 default:
                     // shouldn't normally be here
                     firstMsg = Loc.GetString("nuke-user-interface-status-error");

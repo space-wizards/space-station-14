@@ -14,6 +14,7 @@ namespace Content.Server.Construction.Completions
         {
             if (string.IsNullOrEmpty(Container))
                 return;
+
             var containerSys = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
 
             if (!containerSys.TryGetContainer(uid, Container, out var container))

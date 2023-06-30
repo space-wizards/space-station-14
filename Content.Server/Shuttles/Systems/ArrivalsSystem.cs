@@ -140,6 +140,7 @@ public sealed class ArrivalsSystem : EntitySystem
                     shell.WriteLine(Loc.GetString("cmd-arrivals-forced", ("uid", ToPrettyString(uid))));
                 }
                 break;
+
             default:
                 shell.WriteError(Loc.GetString($"cmd-arrivals-invalid"));
                 break;

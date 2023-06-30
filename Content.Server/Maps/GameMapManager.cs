@@ -15,7 +15,7 @@ public sealed class GameMapManager : IGameMapManager
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    
+
     [ViewVariables(VVAccess.ReadOnly)]
     private readonly Queue<string> _previousMaps = new();
     [ViewVariables(VVAccess.ReadOnly)]
@@ -64,6 +64,7 @@ public sealed class GameMapManager : IGameMapManager
         {
             if (_previousMaps.Count >= _mapQueueDepth)
                 break;
+
             _previousMaps.Enqueue(map.ID);
         }
     }

@@ -64,6 +64,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             return;
         if (!TryComp(user, out ActorComponent? actor))
             return;
+
         _uiSystem.TryToggleUi(uid, ChameleonUiKey.Key, actor.PlayerSession);
     }
 
@@ -95,6 +96,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             return;
         if (!IsValidTarget(proto, component.Slot))
             return;
+
         component.SelectedId = protoId;
 
         UpdateIdentityBlocker(uid, component, proto);

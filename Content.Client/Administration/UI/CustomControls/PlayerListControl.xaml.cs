@@ -78,6 +78,7 @@ namespace Content.Client.Administration.UI.CustomControls
                 if (!string.IsNullOrEmpty(FilterLineEdit.Text)
                     && !displayName.ToLowerInvariant().Contains(FilterLineEdit.Text.Trim().ToLowerInvariant()))
                     continue;
+
                 _sortedPlayerList.Add(info);
             }
 

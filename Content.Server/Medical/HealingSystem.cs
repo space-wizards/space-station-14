@@ -63,6 +63,7 @@ public sealed class HealingSystem : EntitySystem
         {
             if (!TryComp<BloodstreamComponent>(uid, out var bloodstream))
                 return;
+
             var isBleeding = bloodstream.BleedAmount > 0;
             _bloodstreamSystem.TryModifyBleedAmount(uid, healing.BloodlossModifier);
             if (isBleeding != bloodstream.BleedAmount > 0)

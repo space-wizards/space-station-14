@@ -85,6 +85,7 @@ public sealed class MeleeOperator : HTNOperator
                     case CombatStatus.Normal:
                         status = HTNOperatorStatus.Continuing;
                         break;
+
                     default:
                         status = HTNOperatorStatus.Failed;
                         break;

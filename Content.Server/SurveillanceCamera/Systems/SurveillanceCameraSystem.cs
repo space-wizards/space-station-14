@@ -58,7 +58,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetName>(OnSetName);
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetNetwork>(OnSetNetwork);
         SubscribeLocalEvent<SurveillanceCameraComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
-        
+
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpDisabledRemoved>(OnEmpDisabledRemoved);
     }
@@ -279,6 +279,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             RaiseLocalEvent(camera, ref attemptEv);
             if (attemptEv.Cancelled)
                 return;
+
             component.Active = setting;
         }
         else

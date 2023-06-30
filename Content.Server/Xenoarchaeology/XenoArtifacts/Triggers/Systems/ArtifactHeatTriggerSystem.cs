@@ -49,6 +49,7 @@ public sealed class ArtifactHeatTriggerSystem : EntitySystem
     {
         if (!component.ActivateHotItems || !CheckHot(args.Used))
             return;
+
         _artifactSystem.TryActivateArtifact(uid, args.User);
     }
 
@@ -59,6 +60,7 @@ public sealed class ArtifactHeatTriggerSystem : EntitySystem
 
         if (!component.ActivateHotItems || !CheckHot(args.Used))
             return;
+
         args.Handled = _artifactSystem.TryActivateArtifact(uid, args.User);
     }
 

@@ -65,6 +65,7 @@ namespace Content.Server.Atmos
                     case AtmosDirection.South:
                         TransferDirectionSouth = value;
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(direction));
                 }

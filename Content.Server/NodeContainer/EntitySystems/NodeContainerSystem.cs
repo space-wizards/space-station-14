@@ -132,6 +132,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             {
                 if (node == null)
                     continue;
+
                 switch (node.NodeGroupID)
                 {
                     case NodeGroupID.HVPower:

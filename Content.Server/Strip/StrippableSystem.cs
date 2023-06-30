@@ -117,6 +117,7 @@ namespace Content.Server.Strip
             {
                 if (_userInterfaceSystem.SessionHasOpenUi(component.Owner, StrippingUiKey.Key, actor.PlayerSession))
                     return;
+
                 _userInterfaceSystem.TryOpen(component.Owner, StrippingUiKey.Key, actor.PlayerSession);
             }
         }

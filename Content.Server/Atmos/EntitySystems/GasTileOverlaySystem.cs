@@ -275,6 +275,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (AccumulatedFrameTime < _updateInterval)
                 return;
+
             AccumulatedFrameTime -= _updateInterval;
 
             var curTick = _gameTiming.CurTick;

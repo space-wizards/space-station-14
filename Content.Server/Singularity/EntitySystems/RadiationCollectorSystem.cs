@@ -55,6 +55,7 @@ namespace Content.Server.Singularity.EntitySystems
         {
             if (!Resolve(uid, ref component))
                 return;
+
             SetCollectorEnabled(uid, !component.Enabled, user, component);
         }
 
@@ -62,6 +63,7 @@ namespace Content.Server.Singularity.EntitySystems
         {
             if (!Resolve(uid, ref component))
                 return;
+
             component.Enabled = enabled;
 
             // Show message to the player

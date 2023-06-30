@@ -47,6 +47,7 @@ public abstract class SharedItemCabinetSystem : EntitySystem
     {
         if (args.Current is not ItemCabinetComponentState state)
             return;
+
         component.DoorSound = state.DoorSound;
         component.Opened = state.Opened;
         component.OpenState = state.OpenState;

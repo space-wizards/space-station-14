@@ -70,6 +70,7 @@ public sealed class ChannelFilterButton : ContainerButton
         // needed since we need EnableAllKeybinds - don't double-send both UI click and Use
         if (args.Function == EngineKeyFunctions.Use)
             return;
+
         base.KeyBindDown(args);
     }
 
@@ -77,6 +78,7 @@ public sealed class ChannelFilterButton : ContainerButton
     {
         if (_textureRect == null)
             return;
+
         switch (DrawMode)
         {
             case DrawModeEnum.Normal:

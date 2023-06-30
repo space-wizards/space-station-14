@@ -134,6 +134,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if (curTile.PressureDirection == AtmosDirection.Invalid
                         || !curTile.AdjacentBits.IsFlagSet(curTile.PressureDirection))
                         break;
+
                     curTile = curTile.AdjacentTiles[curTile.PressureDirection.ToIndex()]!;
                 }
 

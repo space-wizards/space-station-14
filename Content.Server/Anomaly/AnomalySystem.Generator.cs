@@ -167,6 +167,7 @@ public sealed partial class AnomalySystem
         {
             if (Timing.CurTime < active.EndTime)
                 continue;
+
             active.AudioStream?.Stop();
             OnGeneratingFinished(ent, gen);
         }

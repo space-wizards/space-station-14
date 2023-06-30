@@ -30,6 +30,7 @@ namespace Content.Shared.Access.Systems
         {
             if (args.Current is not IdCardConsoleComponentState state)
                 return;
+
             component.AccessLevels = state.AccessLevels;
         }
 

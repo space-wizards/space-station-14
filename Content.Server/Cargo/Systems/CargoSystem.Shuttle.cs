@@ -278,6 +278,7 @@ public sealed partial class CargoSystem
                 var price = _pricing.GetPrice(ent);
                 if (price == 0)
                     continue;
+
                 toSell.Add(ent);
                 amount += price;
             }

@@ -50,6 +50,7 @@ namespace Content.Shared.CombatMode
             {
                 if (_isInCombatMode == value)
                     return;
+
                 _isInCombatMode = value;
                 if (CombatToggleAction != null)
                     EntitySystem.Get<SharedActionsSystem>().SetToggled(CombatToggleAction, _isInCombatMode);
@@ -66,6 +67,7 @@ namespace Content.Shared.CombatMode
             {
                 if (_activeZone == value)
                     return;
+
                 _activeZone = value;
                 Dirty();
             }

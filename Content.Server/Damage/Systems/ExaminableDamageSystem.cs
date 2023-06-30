@@ -25,6 +25,7 @@ public sealed class ExaminableDamageSystem : EntitySystem
     {
         if (component.MessagesProtoId == null)
             return;
+
         component.MessagesProto = _prototype.Index<ExaminableDamagePrototype>(component.MessagesProtoId);
     }
 

@@ -37,6 +37,7 @@ namespace Content.Client.Research.UI
             base.Dispose(disposing);
             if (!disposing)
                 return;
+
             _menu?.Close();
         }
 

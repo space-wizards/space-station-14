@@ -78,6 +78,7 @@ public sealed class BeamSystem : SharedBeamSystem
 
         if (!TryComp<PhysicsComponent>(ent, out var physics) || !TryComp<BeamComponent>(ent, out var beam))
             return;
+
         FixturesComponent? manager = null;
         _fixture.TryCreateFixture(
             ent,

@@ -78,6 +78,7 @@ namespace Content.Shared.Gravity
 
             if (component.EnabledVV == state.Enabled)
                 return;
+
             component.EnabledVV = state.Enabled;
             var ev = new GravityChangedEvent(uid, component.EnabledVV);
             RaiseLocalEvent(uid, ref ev, true);

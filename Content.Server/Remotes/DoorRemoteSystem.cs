@@ -47,6 +47,7 @@ namespace Content.Server.Remotes
                     component.Mode = OperatingMode.OpenClose;
                     switchMessageId = "door-remote-switch-state-open-close";
                     break;
+
                 default:
                     throw new InvalidOperationException(
                         $"{nameof(DoorRemoteComponent)} had invalid mode {component.Mode}");
@@ -102,6 +103,7 @@ namespace Content.Server.Remotes
                     _airlock.ToggleEmergencyAccess(args.Target.Value, airlockComp);
                     _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
                     break;
+
                 default:
                     throw new InvalidOperationException(
                         $"{nameof(DoorRemoteComponent)} had invalid mode {component.Mode}");

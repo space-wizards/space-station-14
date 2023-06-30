@@ -296,6 +296,7 @@ namespace Content.Server.Voting.Managers
                 {
                     if (CanCallVote(player, v, out var _isAdmin, out var typeTimeSpan))
                         continue;
+
                     votesUnavailable.Add((v, typeTimeSpan));
                 }
                 msg.VotesUnavailable = votesUnavailable.ToArray();

@@ -17,6 +17,7 @@ namespace Content.Server.Administration.Commands
                 case 0:
                     shell.WriteLine($"Not enough arguments.\n{Help}");
                     break;
+
                 default:
                     var name = string.Join(" ", args);
                     var componentFactory = IoCManager.Resolve<IComponentFactory>();

@@ -57,6 +57,7 @@ public sealed class TextLinkTag : IMarkupTag
 
             if (current is not ILinkClickHandler handler)
                 continue;
+
             handler.HandleClick(link);
             return;
         }

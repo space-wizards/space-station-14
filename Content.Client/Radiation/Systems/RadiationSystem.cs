@@ -49,6 +49,7 @@ public sealed class RadiationSystem : EntitySystem
     {
         if (!_overlayMan.TryGetOverlay(out RadiationDebugOverlay? overlay))
             return;
+
         ResistanceGrids = ev.Grids;
     }
 }

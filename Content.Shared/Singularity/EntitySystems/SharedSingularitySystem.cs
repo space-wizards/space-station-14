@@ -151,6 +151,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     {
         if (!Resolve(uid, ref singularity, ref rads, logMissing: false))
             return;
+
         rads.Intensity = singularity.Level * singularity.RadsPerLevel;
     }
 

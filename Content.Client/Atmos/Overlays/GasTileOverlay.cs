@@ -135,6 +135,7 @@ namespace Content.Client.Atmos.Overlays
 
                 if (_fireTimer[i] < time)
                     continue;
+
                 _fireTimer[i] -= time;
                 _fireFrameCounter[i] = (frameCount + 1) % _fireFrames[i].Length;
             }

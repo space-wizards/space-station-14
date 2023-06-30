@@ -256,6 +256,7 @@ namespace Content.Client.Hands.Systems
 
             if (!hands.Hands.TryGetValue(args.Container.ID, out var hand))
                 return;
+
             UpdateHandVisuals(uid, args.Entity, hand);
             _stripSys.UpdateUi(uid);
 
@@ -274,6 +275,7 @@ namespace Content.Client.Hands.Systems
 
             if (!hands.Hands.TryGetValue(args.Container.ID, out var hand))
                 return;
+
             UpdateHandVisuals(uid, args.Entity, hand);
             _stripSys.UpdateUi(uid);
 

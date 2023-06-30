@@ -143,6 +143,7 @@ public static class PoolManager
         {
             if (Dead)
                 return;
+
             Dead = true;
             localPairs = Pairs.Keys.ToList();
         }

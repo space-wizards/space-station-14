@@ -55,6 +55,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     {
         if (args.Current is not MaterialReclaimerComponentState state)
             return;
+
         component.Powered = state.Powered;
         component.Enabled = state.Enabled;
         component.MaterialProcessRate = state.MaterialProcessRate;
@@ -87,6 +88,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
             return;
         if (!TryComp<MaterialReclaimerComponent>(uid, out var reclaimer))
             return;
+
         TryStartProcessItem(uid, args.OtherEntity, reclaimer);
     }
 
@@ -186,6 +188,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     {
         if (!Resolve(uid, ref component, false))
             return;
+
         component.Enabled = enabled;
         AmbientSound.SetAmbience(uid, enabled && component.Powered);
         Dirty(component);
@@ -249,6 +252,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         {
             if (Timing.CurTime < active.EndTime)
                 continue;
+
             TryFinishProcessItem(uid, reclaimer, active);
         }
     }

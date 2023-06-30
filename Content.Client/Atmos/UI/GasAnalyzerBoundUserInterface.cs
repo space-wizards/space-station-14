@@ -26,6 +26,7 @@ namespace Content.Client.Atmos.UI
                 return;
             if (message is not GasAnalyzerUserMessage cast)
                 return;
+
             _window.Populate(cast);
         }
 

@@ -225,6 +225,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 case SharedDisposalUnitComponent.UiButton.Power:
                     _power.TogglePower(uid, user: args.Session.AttachedEntity);
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException($"{ToPrettyString(player):player} attempted to hit a nonexistant button on {ToPrettyString(uid)}");
             }

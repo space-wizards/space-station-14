@@ -17,6 +17,7 @@ public abstract partial class SharedMoverController
     {
         if (args.Current is not FootstepModifierComponentState state)
             return;
+
         component.Sound = state.Sound;
     }
 

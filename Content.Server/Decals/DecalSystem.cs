@@ -438,6 +438,7 @@ namespace Content.Server.Decals
                 {
                     if (chunks.Contains(chunk))
                         continue;
+
                     elmo.Add(chunk);
                 }
 

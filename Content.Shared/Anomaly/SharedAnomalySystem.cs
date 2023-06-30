@@ -57,6 +57,7 @@ public abstract class SharedAnomalySystem : EntitySystem
     {
         if (args.Current is not AnomalyComponentState state)
             return;
+
         component.Severity = state.Severity;
         component.Stability = state.Stability;
         component.Health = state.Health;
@@ -97,6 +98,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         _damageable.TryChangeDamage(target, component.AnomalyContactDamage, true);
         if (!Timing.IsFirstTimePredicted || _net.IsServer)
             return;
+
         Audio.PlayPvs(component.AnomalyContactDamageSound, source);
         Popup.PopupEntity(Loc.GetString("anomaly-component-contact-damage"), target, target);
     }
@@ -223,6 +225,7 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         if (Terminating(uid) || _net.IsClient)
             return;
+
         QueueDel(uid);
     }
 
@@ -360,6 +363,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         {
             if (Timing.CurTime <= super.EndTime)
                 continue;
+
             DoAnomalySupercriticalEvent(ent, anom);
             RemComp(ent, super);
         }

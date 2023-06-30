@@ -34,6 +34,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
     {
         if (args.Handled || component.AttachedToSuit)
             return;
+
         args.Handled = true;
 
         SetEnabled(uid, component, !component.IsEnabled);

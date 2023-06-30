@@ -60,6 +60,7 @@ namespace Content.Server.Light.EntitySystems
 
                         break;
 
+
                     default:
                     case ExpendableLightState.Fading:
                         component.CurrentState = ExpendableLightState.Dead;
@@ -142,6 +143,7 @@ namespace Content.Server.Light.EntitySystems
                     break;
                 case ExpendableLightState.Fading:
                     break;
+
                 default:
                     _audio.PlayPvs(component.DieSound, uid);
                     break;
@@ -168,6 +170,7 @@ namespace Content.Server.Light.EntitySystems
         {
             if (args.Handled)
                 return;
+
             var isHotEvent = new IsHotEvent() {IsHot = true};
             RaiseLocalEvent(uid, isHotEvent);
             if (TryActivate(component))

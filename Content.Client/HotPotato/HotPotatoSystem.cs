@@ -19,6 +19,7 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
         {
             if (_timing.CurTime < comp.TargetTime)
                 continue;
+
             comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
             Spawn("HotPotatoEffect", Transform(uid).MapPosition.Offset(_random.NextVector2(0.25f)));
         }

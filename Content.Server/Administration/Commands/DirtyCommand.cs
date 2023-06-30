@@ -29,6 +29,7 @@ public sealed class DirtyCommand : IConsoleCommand
                 }
                 DirtyAll(entityManager, parsedTarget);
                 break;
+
             default:
                 shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
                 break;

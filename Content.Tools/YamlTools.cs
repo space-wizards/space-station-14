@@ -60,6 +60,7 @@ namespace Content.Tools
                         CopyYamlScalar(scalarA, scalarC);
                     // Console.WriteLine(path + " . " + ours + " || " + based + " || " + other);
                     break;
+
                 default:
                     throw new ArgumentException($"Unrecognized YAML node type at {path}: {other.GetType()}", nameof(other));
             }

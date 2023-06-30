@@ -199,6 +199,7 @@ public sealed partial class ChemistrySystem
                 component.ToggleState = SharedInjectorComponent.InjectorToggleMode.Inject;
                 msg = "injector-component-injecting-text";
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -312,7 +313,7 @@ public sealed partial class ChemistrySystem
 
         // Move units from attackSolution to targetSolution
         Solution removedSolution;
-        if (TryComp<StackComponent>(targetEntity, out var stack)) 
+        if (TryComp<StackComponent>(targetEntity, out var stack))
             removedSolution = _solutions.SplitStackSolution(injector, solution, realTransferAmount, stack.Count);
         else
           removedSolution = _solutions.SplitSolution(injector, solution, realTransferAmount);

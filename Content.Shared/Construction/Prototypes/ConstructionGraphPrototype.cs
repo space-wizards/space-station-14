@@ -137,6 +137,7 @@ namespace Content.Shared.Construction.Prototypes
                     var edgeNode = _nodes[edge.Target];
                     if (cameFrom.ContainsKey(edgeNode))
                         continue;
+
                     frontier.Enqueue(edgeNode);
                     cameFrom[edgeNode] = current;
                 }

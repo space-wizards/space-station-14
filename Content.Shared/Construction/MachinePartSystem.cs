@@ -23,6 +23,7 @@ namespace Content.Shared.Construction
         {
             if (!args.IsInDetailsRange)
                 return;
+
             args.PushMarkup(Loc.GetString("machine-board-component-on-examine-label"));
             foreach (var (part, amount) in component.Requirements)
             {
@@ -57,6 +58,7 @@ namespace Content.Shared.Construction
         {
             if (!args.IsInDetailsRange)
                 return;
+
             args.PushMarkup(Loc.GetString("machine-part-component-on-examine-rating-text", ("rating", component.Rating)));
             args.PushMarkup(Loc.GetString("machine-part-component-on-examine-type-text", ("type",
                 Loc.GetString(_prototype.Index<MachinePartPrototype>(component.PartType).Name))));

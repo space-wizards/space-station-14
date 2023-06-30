@@ -90,6 +90,7 @@ public sealed class SignalTimerSystem : EntitySystem
 
             if (timer.DoneSound == null)
                 continue;
+
             _audio.PlayPvs(timer.DoneSound, uid);
         }
     }

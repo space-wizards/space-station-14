@@ -113,6 +113,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         {
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
+
             InfectInitialPlayers(zombies);
         }
     }

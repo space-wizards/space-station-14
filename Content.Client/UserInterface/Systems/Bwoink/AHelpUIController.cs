@@ -77,6 +77,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     {
         if (UIHelper is not { IsOpen: true })
             return;
+
         EnsureUIHelper();
     }
 
@@ -111,6 +112,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     {
         if (AhelpButton == null || AhelpButton.Pressed == pressed)
             return;
+
         AhelpButton.StyleClasses.Remove(MenuButton.StyleClassRedTopButton);
         AhelpButton.Pressed = pressed;
     }
@@ -176,6 +178,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         EnsureUIHelper();
         if (UIHelper!.IsOpen)
             return;
+
         UIHelper!.Open(localPlayer.UserId, _discordRelayActive);
     }
 
@@ -184,6 +187,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         EnsureUIHelper();
         if (!UIHelper!.IsAdmin)
             return;
+
         UIHelper?.Open(userId, _discordRelayActive);
     }
 
@@ -458,6 +462,7 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
     {
         if (_window is { Disposed: false })
             return;
+
         _chatPanel = new BwoinkPanel(text => SendMessageAction?.Invoke(_ownerId, text));
         _chatPanel.RelayedToDiscordLabel.Visible = relayActive;
         _window = new DefaultWindow()

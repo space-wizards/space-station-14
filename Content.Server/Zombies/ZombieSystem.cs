@@ -146,6 +146,7 @@ namespace Content.Server.Zombies
         {
             if (component.EmoteSoundsId == null)
                 return;
+
             _protoManager.TryIndex(component.EmoteSoundsId, out component.EmoteSounds);
         }
 
@@ -154,6 +155,7 @@ namespace Content.Server.Zombies
             // always play zombie emote sounds and ignore others
             if (args.Handled)
                 return;
+
             args.Handled = _chat.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote);
         }
 

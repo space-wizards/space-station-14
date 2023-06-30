@@ -196,6 +196,7 @@ public sealed partial class FancyTree : Control
 
         if (depth == 0)
             return;
+
         depth--;
 
         foreach (var child in item.Body.Children)

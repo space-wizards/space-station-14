@@ -111,6 +111,7 @@ public sealed partial class AnomalySystem
 
             if (!args.Supercritical)
                 continue;
+
             _explosion.TriggerExplosive(ent);
         }
     }

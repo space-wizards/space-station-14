@@ -685,6 +685,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 role = component.MedicRoleProto;
                 gear = component.MedicStartGearPrototype;
                 break;
+
             default:
                 name = Loc.GetString("nukeops-role-operator") + " " + _random.PickAndTake(component.OperativeNames[component.NormalNames]);
                 role = component.OperativeRoleProto;
@@ -862,6 +863,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         {
             if (!mindComp.HasMind || !_mindSystem.TryGetSession(mindComp.Mind, out var session))
                 continue;
+
             component.OperativePlayers.Add(metaData.EntityName, session);
         }
 

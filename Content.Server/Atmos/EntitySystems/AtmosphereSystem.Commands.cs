@@ -105,6 +105,7 @@ public sealed partial class AtmosphereSystem
                {
                    if (!TryComp(entUid, out AtmosFixMarkerComponent? afm))
                        continue;
+
                    mixtureId = afm.Mode;
                    break;
                }

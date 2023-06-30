@@ -159,6 +159,7 @@ public sealed partial class SpaceVillainGame
             );
             if (PlayerChar.Invincible)
                 return;
+
             PlayerChar.Hp -= boomAmount;
             _turtleTracker--;
             return;
@@ -174,6 +175,7 @@ public sealed partial class SpaceVillainGame
             );
             if (PlayerChar.Invincible)
                 return;
+
             PlayerChar.Mp -= stealAmount;
             VillainChar.Mp += stealAmount;
             return;
@@ -200,6 +202,7 @@ public sealed partial class SpaceVillainGame
             );
         if (PlayerChar.Invincible)
             return;
+
         PlayerChar.Hp -= attackAmount;
     }
 

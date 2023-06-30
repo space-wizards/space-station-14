@@ -272,6 +272,7 @@ namespace Content.Server.Power.EntitySystems
                 // Find the closest provider
                 if (!xformQuery.TryGetComponent(entity, out var entityXform))
                     continue;
+
                 var distance = (entityXform.LocalPosition - xform.LocalPosition).Length;
                 if (distance >= closestDistanceFound)
                     continue;

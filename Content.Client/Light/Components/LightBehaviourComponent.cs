@@ -135,6 +135,7 @@ namespace Content.Client.Light.Components
                     case AnimationInterpolationMode.Cubic:
                         ApplyProperty(InterpolateCubic(EndValue, StartValue, EndValue, StartValue, interpolateValue * 2f));
                         break;
+
                     default:
                     case AnimationInterpolationMode.Nearest:
                         ApplyProperty(StartValue);
@@ -151,6 +152,7 @@ namespace Content.Client.Light.Components
                     case AnimationInterpolationMode.Cubic:
                         ApplyProperty(InterpolateCubic(StartValue, EndValue, StartValue, EndValue, (interpolateValue - 0.5f) * 2f));
                         break;
+
                     default:
                     case AnimationInterpolationMode.Nearest:
                         ApplyProperty(EndValue);
@@ -217,6 +219,7 @@ namespace Content.Client.Light.Components
                 case AnimationInterpolationMode.Cubic:
                     ApplyProperty(InterpolateCubic(end, start, end, start, interpolateValue));
                     break;
+
                 default:
                 case AnimationInterpolationMode.Nearest:
                     ApplyProperty(interpolateValue < 0.5f ? start : end);
@@ -280,6 +283,7 @@ namespace Content.Client.Light.Components
                 case AnimationInterpolationMode.Cubic:
                     ApplyProperty(InterpolateCubic(_randomValue1, _randomValue2, _randomValue3, _randomValue4, interpolateValue));
                     break;
+
                 default:
                 case AnimationInterpolationMode.Nearest:
                     ApplyProperty(interpolateValue < 0.5f ? _randomValue3 : _randomValue4);
@@ -334,6 +338,7 @@ namespace Content.Client.Light.Components
                                                                     ColorsToCycle[(_colorIndex + 3) % ColorsToCycle.Count],
                                                                     interpolateValue));
                     break;
+
                 default:
                 case AnimationInterpolationMode.Nearest:
                     ApplyProperty(ColorsToCycle[_colorIndex]);

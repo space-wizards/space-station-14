@@ -62,6 +62,7 @@ namespace Content.Server.Labels
             AddLabelTo(uid, handLabeler, target, out string? result);
             if (result == null)
                 return;
+
             _popupSystem.PopupEntity(result, args.User, args.User);
 
             // Log labeling

@@ -64,7 +64,7 @@ public sealed partial class DungeonJob
             roomA.Sort((x, y) =>
                 string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         }
-        
+
         var tiles = new List<(Vector2i, Tile)>();
         var dungeon = new Dungeon();
         var availablePacks = new List<DungeonRoomPackPrototype>();
@@ -417,6 +417,7 @@ public sealed partial class DungeonJob
                     case Direction.South:
                         entrancePos = new Vector2i(room.Bounds.Left + room.Bounds.Width / 2, room.Bounds.Bottom - 1);
                         break;
+
                     default:
                         throw new NotImplementedException();
                 }

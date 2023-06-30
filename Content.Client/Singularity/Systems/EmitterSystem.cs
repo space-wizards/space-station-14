@@ -40,18 +40,21 @@ public sealed class EmitterSystem : SharedEmitterSystem
             case EmitterVisualState.On:
                 if (component.OnState == null)
                     break;
+
                 args.Sprite.LayerSetVisible(layer, true);
                 args.Sprite.LayerSetState(layer, component.OnState);
                 break;
             case EmitterVisualState.Underpowered:
                 if (component.UnderpoweredState == null)
                     break;
+
                 args.Sprite.LayerSetVisible(layer, true);
                 args.Sprite.LayerSetState(layer, component.UnderpoweredState);
                 break;
             case EmitterVisualState.Off:
                 args.Sprite.LayerSetVisible(layer, false);
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }

@@ -44,6 +44,7 @@ public sealed class SignalTimerBoundUserInterface : BoundUserInterface
     {
         if (_window == null)
             return;
+
         SendMessage(new SignalTimerDelayChangedMessage(_window.GetDelay()));
     }
 
@@ -77,6 +78,7 @@ public sealed class SignalTimerBoundUserInterface : BoundUserInterface
         base.Dispose(disposing);
         if (!disposing)
             return;
+
         _window?.Dispose();
     }
 }

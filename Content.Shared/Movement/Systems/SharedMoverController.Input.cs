@@ -69,6 +69,7 @@ namespace Content.Shared.Movement.Systems
         {
             if (component.HeldMoveButtons == buttons)
                 return;
+
             component.HeldMoveButtons = buttons;
             Dirty(component);
         }

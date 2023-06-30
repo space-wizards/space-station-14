@@ -166,6 +166,7 @@ namespace Content.Server.Light.EntitySystems
 
                 if (Paused(uid))
                     continue;
+
                 TryUpdate(uid, handheld, frameTime);
             }
 

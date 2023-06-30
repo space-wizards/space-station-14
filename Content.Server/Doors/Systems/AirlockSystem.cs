@@ -178,6 +178,7 @@ namespace Content.Server.Doors.Systems
             {
                 if (HasComp<ToolForcePoweredComponent>(args.Tool))
                     return;
+
                 Popup.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-powered-message"), uid, args.User);
                 args.Cancel();
             }

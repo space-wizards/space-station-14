@@ -29,6 +29,7 @@ public sealed partial class ToolSystem
         var gridUid = args.Coordinates.GetGridUid(EntityManager);
         if (gridUid == null)
             return;
+
         var grid = _mapManager.GetGrid(gridUid.Value);
         var tile = grid.GetTileRef(args.Coordinates);
 

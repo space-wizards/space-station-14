@@ -458,6 +458,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
         else if (!_loocEnabled)
             return;
+
         var wrappedMessage = Loc.GetString("chat-manager-entity-looc-wrap-message",
             ("entityName", name),
             ("message", FormattedMessage.EscapeText(message)));
@@ -550,6 +551,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             var entRange = MessageRangeCheck(session, data, range);
             if (entRange == MessageRangeCheckResult.Disallowed)
                 continue;
+
             var entHideChat = entRange == MessageRangeCheckResult.HideChat;
             _chatManager.ChatMessageToOne(channel, message, wrappedMessage, source, entHideChat, session.ConnectedClient);
         }

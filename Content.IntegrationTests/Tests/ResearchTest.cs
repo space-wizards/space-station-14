@@ -64,6 +64,7 @@ public sealed class ResearchTest
 
                 if (!proto.TryGetComponent<LatheComponent>(out var lathe))
                     continue;
+
                 allLathes.Add(lathe);
             }
 

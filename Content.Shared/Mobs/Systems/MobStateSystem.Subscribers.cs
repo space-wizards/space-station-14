@@ -60,6 +60,7 @@ public partial class MobStateSystem
             case MobState.Invalid:
                 //unused
                 break;
+
             default:
                 throw new NotImplementedException();
         }
@@ -92,6 +93,7 @@ public partial class MobStateSystem
             case MobState.Invalid:
                 //unused;
                 break;
+
             default:
                 throw new NotImplementedException();
         }

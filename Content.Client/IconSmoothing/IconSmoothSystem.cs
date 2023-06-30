@@ -255,6 +255,7 @@ namespace Content.Client.IconSmoothing
                 case IconSmoothingMode.Diagonal:
                     CalculateNewSpriteDiagonal(grid, smooth, sprite, xform, smoothQuery);
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

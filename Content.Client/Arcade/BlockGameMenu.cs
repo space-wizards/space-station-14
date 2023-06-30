@@ -466,6 +466,7 @@ namespace Content.Client.Arcade
                 return;
             if (_gameOver)
                 return;
+
             TryPause();
         }
 
@@ -609,6 +610,7 @@ namespace Content.Client.Arcade
             _nextBlockGrid.RemoveAllChildren();
             if (blocks.Length == 0)
                 return;
+
             var columnCount = blocks.Max(b => b.Position.X) + 1;
             var rowCount = blocks.Max(b => b.Position.Y) + 1;
             _nextBlockGrid.Columns = columnCount;
@@ -632,6 +634,7 @@ namespace Content.Client.Arcade
             _holdBlockGrid.RemoveAllChildren();
             if (blocks.Length == 0)
                 return;
+
             var columnCount = blocks.Max(b => b.Position.X) + 1;
             var rowCount = blocks.Max(b => b.Position.Y) + 1;
             _holdBlockGrid.Columns = columnCount;

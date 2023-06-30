@@ -60,6 +60,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
             case LobbyState:
                 StartLobbyMusic();
                 break;
+
             default:
                 EndLobbyMusic();
                 break;

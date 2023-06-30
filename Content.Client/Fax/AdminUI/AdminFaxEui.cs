@@ -32,6 +32,7 @@ public sealed class AdminFaxEui : BaseEui
     {
         if (state is not AdminFaxEuiState cast)
             return;
+
         _window.PopulateFaxes(cast.Entries);
     }
 }

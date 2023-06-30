@@ -124,6 +124,7 @@ public sealed class ListContainer : Control
     {
         if (args.Button is not ListContainerButton button)
             return;
+
         _selected = button.Data;
         ItemPressed?.Invoke(args, button.Data);
     }
@@ -234,6 +235,7 @@ public sealed class ListContainer : Control
             {
                 if (child == _vScrollBar)
                     continue;
+
                 RemoveChild(child);
             }
 
@@ -312,6 +314,7 @@ public sealed class ListContainer : Control
             child.Measure(constraint);
             if (child == _vScrollBar)
                 continue;
+
             childSize = Vector2.ComponentMax(childSize, child.DesiredSize);
         }
 

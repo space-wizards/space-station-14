@@ -78,6 +78,7 @@ namespace Content.Server.Objectives.Conditions
                                 return 1;
                             if (!managerQuery.TryGetComponent(entity, out var containerManager))
                                 continue;
+
                             stack.Push(containerManager);
                         }
                     }

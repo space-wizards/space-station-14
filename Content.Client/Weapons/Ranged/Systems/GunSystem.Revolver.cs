@@ -30,6 +30,7 @@ public sealed partial class GunSystem
     {
         if (args.Control is not RevolverStatusControl control)
             return;
+
         control.Update(component.CurrentIndex, component.Chambers);
     }
 

@@ -73,11 +73,13 @@ public sealed class EntityAnomalySystem : EntitySystem
                     !body.Hard ||
                     (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
                     continue;
+
                 valid = false;
                 break;
             }
             if (!valid)
                 continue;
+
             amountCounter++;
             Spawn(_random.Pick(spawns), tileref.GridIndices.ToEntityCoordinates(xform.GridUid.Value, _map));
             if (amountCounter >= amount)

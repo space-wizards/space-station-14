@@ -75,6 +75,7 @@ public partial class InventorySystem : EntitySystem
         {
             if (!slotDef.Name.Equals(slot))
                 continue;
+
             slotDefinition = slotDef;
             return true;
         }

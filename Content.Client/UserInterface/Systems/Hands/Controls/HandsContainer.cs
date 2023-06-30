@@ -44,6 +44,7 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
         var button = GetButton(handName);
         if (button == null)
             return;
+
         base.RemoveButton(button);
         _grid.RemoveChild(button);
     }

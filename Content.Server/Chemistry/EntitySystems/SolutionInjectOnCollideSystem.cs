@@ -48,6 +48,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 {
                     if (!container.ContainedEntity.HasValue)
                         continue;
+
                     return;
                 }
             }

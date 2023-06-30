@@ -173,6 +173,7 @@ public sealed class AmeControllerSystem : EntitySystem
     {
         if (!Resolve(uid, ref controller))
             return;
+
         SetInjecting(uid, !controller.Injecting, user, controller);
     }
 

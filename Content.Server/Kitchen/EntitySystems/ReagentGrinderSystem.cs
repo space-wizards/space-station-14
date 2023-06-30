@@ -275,6 +275,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 case GrinderProgram.Juice when inputContainer.ContainedEntities.All(CanJuice):
                     sound = reagentGrinder.JuiceSound;
                     break;
+
                 default:
                     return;
             }

@@ -85,6 +85,7 @@ public abstract class ItemSlotUIContainer<T> : GridContainer, IItemslotUIContain
     {
         if (!Buttons.TryGetValue(slotName, out var button))
             return;
+
         RemoveButton(button);
     }
 

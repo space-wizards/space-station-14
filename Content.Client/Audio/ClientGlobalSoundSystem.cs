@@ -89,6 +89,7 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
     {
         if (!_eventAudio.TryGetValue(soundEvent.Type, out var stream))
             return;
+
         stream?.Stop();
         _eventAudio.Remove(soundEvent.Type);
     }
@@ -98,6 +99,7 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
         _adminAudioEnabled = enabled;
         if (_adminAudioEnabled)
             return;
+
         foreach (var stream in _adminAudio)
         {
             stream?.Stop();
@@ -110,6 +112,7 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
         _eventAudioEnabled = enabled;
         if (_eventAudioEnabled)
             return;
+
         foreach (var stream in _eventAudio)
         {
             stream.Value?.Stop();

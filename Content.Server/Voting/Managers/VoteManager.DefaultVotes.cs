@@ -39,6 +39,7 @@ namespace Content.Server.Voting.Managers
                 case StandardVoteType.Map:
                     CreateMapVote(initiator);
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(voteType), voteType, null);
             }

@@ -44,6 +44,7 @@ namespace Content.Server.Research.Systems
             {
                 if (server.Id != id)
                     continue;
+
                 serverUid = server.Owner;
                 serverComponent = server;
                 return true;
@@ -91,6 +92,7 @@ namespace Content.Server.Research.Systems
             {
                 if (server.NextUpdateTime > _timing.CurTime)
                     continue;
+
                 server.NextUpdateTime = _timing.CurTime + server.ResearchConsoleUpdateTime;
 
                 UpdateServer(server.Owner, (int) server.ResearchConsoleUpdateTime.TotalSeconds, server);

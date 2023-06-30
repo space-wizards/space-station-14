@@ -325,6 +325,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     {
         if (component.Rider == null)
             return;
+
         var rider = component.Rider.Value;
 
         args.Entities.Add(rider);

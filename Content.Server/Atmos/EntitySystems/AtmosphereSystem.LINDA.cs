@@ -33,6 +33,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var direction = (AtmosDirection) (1 << i);
                 if (!tile.AdjacentBits.IsFlagSet(direction))
                     continue;
+
                 var enemyTile = tile.AdjacentTiles[i];
 
                 // If the tile is null or has no air, we don't do anything for it.
@@ -40,6 +41,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
                 if (fireCount <= enemyTile.CurrentCycle)
                     continue;
+
                 Archive(enemyTile, fireCount);
 
                 var shouldShareAir = false;

@@ -220,6 +220,7 @@ namespace Content.Benchmarks
                     throw new EndOfStreamException();
                 if (read == wSpan.Length)
                     break;
+
                 wSpan = wSpan[read..];
             }
 
@@ -238,6 +239,7 @@ namespace Content.Benchmarks
                     throw new EndOfStreamException();
                 if (read == wSpan.Length)
                     break;
+
                 wSpan = wSpan[read..];
             }
 
@@ -256,6 +258,7 @@ namespace Content.Benchmarks
                     throw new EndOfStreamException();
                 if (read == wSpan.Length)
                     break;
+
                 wSpan = wSpan[read..];
             }
 

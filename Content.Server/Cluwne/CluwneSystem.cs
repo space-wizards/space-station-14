@@ -62,6 +62,7 @@ public sealed class CluwneSystem : EntitySystem
     {
         if (component.EmoteSoundsId == null)
             return;
+
         _prototypeManager.TryIndex(component.EmoteSoundsId, out EmoteSounds);
 
         var meta = MetaData(uid);
@@ -86,6 +87,7 @@ public sealed class CluwneSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
         args.Handled = _chat.TryPlayEmoteSound(uid, EmoteSounds, args.Emote);
 
         if (_robustRandom.Prob(component.GiggleRandomChance))

@@ -114,6 +114,7 @@ public sealed class PricingSystem : EntitySystem
             {
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var reagentProto))
                     continue;
+
                 price += (float) reagent.Quantity * reagentProto.PricePerUnit;
             }
         }

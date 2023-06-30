@@ -56,6 +56,7 @@ namespace Content.Server.AirlockPainter
         {
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
+
             DirtyUI(uid, component);
             component.Owner.GetUIOrNull(AirlockPainterUiKey.Key)?.Open(actor.PlayerSession);
             args.Handled = true;

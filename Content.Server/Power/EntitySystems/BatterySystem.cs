@@ -88,6 +88,7 @@ namespace Content.Server.Power.EntitySystems
                     continue;
                 if (batt.IsFullyCharged)
                     continue;
+
                 SetCharge(uid, batt.CurrentCharge + comp.AutoRechargeRate * frameTime, batt);
             }
         }

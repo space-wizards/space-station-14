@@ -369,6 +369,7 @@ public sealed partial class ShuttleSystem
                     RemComp<FTLComponent>(uid);
                     _console.RefreshShuttleConsoles(uid);
                     break;
+
                 default:
                     _sawmill.Error($"Found invalid FTL state {comp.State} for {uid}");
                     RemComp<FTLComponent>(uid);
@@ -453,6 +454,7 @@ public sealed partial class ShuttleSystem
         {
             if (!statusQuery.TryGetComponent(child, out var status))
                 continue;
+
             _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
         }
     }

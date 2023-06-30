@@ -48,6 +48,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     {
         if (args.Current is not ChameleonClothingComponentState state)
             return;
+
         component.SelectedId = state.SelectedId;
 
         UpdateVisuals(uid, component);

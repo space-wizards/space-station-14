@@ -160,6 +160,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         {
             if (!TryComp<AnalysisConsoleComponent>(port.Uid, out var analysis))
                 continue;
+
             component.Console = port.Uid;
             analysis.AnalyzerEntity = uid;
             return;
@@ -467,6 +468,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         if (!HasComp<ArtifactComponent>(otherEnt))
             return;
+
         component.Contacts.Remove(otherEnt);
 
         if (component.Console != null && Exists(component.Console))

@@ -117,6 +117,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
     {
         if (args.Container.Owner != component.Storage)
             return;
+
         RemComp(uid, component);
     }
 

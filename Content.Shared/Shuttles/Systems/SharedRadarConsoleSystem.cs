@@ -20,6 +20,7 @@ public abstract class SharedRadarConsoleSystem : EntitySystem
     {
         if (args.Current is not RadarConsoleComponentState state)
             return;
+
         component.MaxRange = state.Range;
     }
 
@@ -37,6 +38,7 @@ public abstract class SharedRadarConsoleSystem : EntitySystem
     {
         if (component.MaxRange.Equals(value))
             return;
+
         component.MaxRange = value;
         Dirty(component);
         UpdateState(component);

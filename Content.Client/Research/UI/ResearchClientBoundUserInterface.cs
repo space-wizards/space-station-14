@@ -36,6 +36,7 @@ namespace Content.Client.Research.UI
             base.UpdateState(state);
             if (state is not ResearchClientBoundInterfaceState rState)
                 return;
+
             _menu?.Populate(rState.ServerCount, rState.ServerNames, rState.ServerIds, rState.SelectedServerId);
         }
 
@@ -44,6 +45,7 @@ namespace Content.Client.Research.UI
             base.Dispose(disposing);
             if (!disposing)
                 return;
+
             _menu?.Dispose();
         }
     }

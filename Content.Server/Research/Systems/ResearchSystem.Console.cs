@@ -67,6 +67,7 @@ public sealed partial class ResearchSystem
     {
         if (!_uiSystem.IsUiOpen(uid, ResearchConsoleUiKey.Key))
             return;
+
         UpdateConsoleInterface(uid, component);
     }
 

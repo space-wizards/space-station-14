@@ -459,14 +459,17 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             case LightAttackEvent light:
                 if (!Blocker.CanAttack(user, light.Target))
                     return;
+
                 break;
             case DisarmAttackEvent disarm:
                 if (!Blocker.CanAttack(user, disarm.Target))
                     return;
+
                 break;
             default:
                 if (!Blocker.CanAttack(user))
                     return;
+
                 break;
         }
 
@@ -521,6 +524,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                     DoHeavyAttack(user, heavy, weaponUid, weapon, session);
                     animation = weapon.WideAnimation;
                     break;
+
                 default:
                     throw new NotImplementedException();
             }

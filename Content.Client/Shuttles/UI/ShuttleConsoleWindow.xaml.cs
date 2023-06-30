@@ -85,6 +85,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     {
         if (DockingScreen.ViewedDock == null)
             return;
+
         UndockPressed?.Invoke(DockingScreen.ViewedDock.Value);
     }
 
@@ -152,6 +153,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
             case Shared.Shuttles.Systems.FTLState.Arriving:
                 stateText = Loc.GetString("shuttle-console-ftl-arriving");
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }

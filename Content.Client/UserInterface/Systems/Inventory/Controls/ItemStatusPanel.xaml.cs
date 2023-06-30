@@ -54,6 +54,7 @@ public sealed partial class ItemStatusPanel : BoxContainer
                 flat = StyleBox.Margin.Left | StyleBox.Margin.Bottom;
                 textAlign = Label.AlignMode.Left;
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(location), location, null);
         }

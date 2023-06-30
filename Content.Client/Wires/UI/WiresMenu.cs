@@ -551,6 +551,7 @@ namespace Content.Client.Wires.UI
                     case StatusLightState.BlinkingSlow:
                         animation = _blinkingSlow;
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

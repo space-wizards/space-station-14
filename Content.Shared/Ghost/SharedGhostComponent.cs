@@ -16,6 +16,7 @@ namespace Content.Shared.Ghost
             {
                 if (_canGhostInteract == value)
                     return;
+
                 _canGhostInteract = value;
                 Dirty();
             }
@@ -36,6 +37,7 @@ namespace Content.Shared.Ghost
             {
                 if (_canReturnToBody == value)
                     return;
+
                 _canReturnToBody = value;
                 Dirty();
             }

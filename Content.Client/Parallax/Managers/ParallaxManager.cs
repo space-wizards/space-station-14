@@ -46,6 +46,7 @@ public sealed class ParallaxManager : IParallaxManager
 
         if (!_parallaxesLQ.ContainsKey(name))
             return;
+
         _parallaxesLQ.Remove(name);
         _parallaxesHQ.Remove(name);
     }

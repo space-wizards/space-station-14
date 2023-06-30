@@ -52,6 +52,7 @@ public sealed class StatValuesCommand : IConsoleCommand
             case "melee":
                 message = GetMelee();
                 break;
+
             default:
                 shell.WriteError(Loc.GetString("stat-values-invalid", ("arg", args[0])));
                 return;

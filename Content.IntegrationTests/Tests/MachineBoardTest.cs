@@ -44,6 +44,7 @@ public sealed class MachineBoardTest
             {
                 if (!p.TryGetComponent<MachineBoardComponent>(out var mbc))
                     continue;
+
                 var mId = mbc.Prototype;
 
                 Assert.Multiple(() =>
@@ -80,6 +81,7 @@ public sealed class MachineBoardTest
             {
                 if (!p.TryGetComponent<ComputerBoardComponent>(out var cbc))
                     continue;
+
                 var cId = cbc.Prototype;
 
                 Assert.Multiple(() =>

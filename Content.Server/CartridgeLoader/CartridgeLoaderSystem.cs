@@ -305,6 +305,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
                 if (component.ActiveProgram.HasValue)
                     RaiseLocalEvent(component.ActiveProgram.Value, new CartridgeUiReadyEvent(loaderUid));
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }

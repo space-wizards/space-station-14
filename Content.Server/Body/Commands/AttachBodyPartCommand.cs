@@ -69,6 +69,7 @@ namespace Content.Server.Body.Commands
 
                     bodyId = entityUid;
                     break;
+
                 default:
                     shell.WriteLine(Help);
                     return;

@@ -48,6 +48,7 @@ public sealed class HungerSystem : EntitySystem
     {
         if (args.Current is not HungerComponentState state)
             return;
+
         component.CurrentHunger = state.CurrentHunger;
         component.BaseDecayRate = state.BaseDecayRate;
         component.ActualDecayRate = state.ActualDecayRate;
@@ -101,6 +102,7 @@ public sealed class HungerSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
+
         SetHunger(uid, component.CurrentHunger + amount, component);
     }
 
@@ -114,6 +116,7 @@ public sealed class HungerSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
+
         component.CurrentHunger = Math.Clamp(amount,
             component.Thresholds[HungerThreshold.Dead],
             component.Thresholds[HungerThreshold.Overfed]);
@@ -129,6 +132,7 @@ public sealed class HungerSystem : EntitySystem
         var calculatedHungerThreshold = GetHungerThreshold(component);
         if (calculatedHungerThreshold == component.CurrentThreshold)
             return;
+
         component.CurrentThreshold = calculatedHungerThreshold;
         DoHungerThresholdEffects(uid, component);
         Dirty(component);
@@ -217,6 +221,7 @@ public sealed class HungerSystem : EntitySystem
         {
             if (_timing.CurTime < hunger.NextUpdateTime)
                 continue;
+
             hunger.NextUpdateTime = _timing.CurTime + hunger.UpdateRate;
 
             ModifyHunger(uid, -hunger.ActualDecayRate, hunger);

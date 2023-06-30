@@ -111,6 +111,7 @@ public abstract class SharedMechSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
         args.Handled = true;
         CycleEquipment(uid);
     }
@@ -119,6 +120,7 @@ public abstract class SharedMechSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
         args.Handled = true;
         TryEject(uid, component);
     }
@@ -190,6 +192,7 @@ public abstract class SharedMechSystem : EntitySystem
     {
         if (!RemComp<MechPilotComponent>(pilot))
             return;
+
         RemComp<RelayInputMoverComponent>(pilot);
         RemComp<InteractionRelayComponent>(pilot);
 

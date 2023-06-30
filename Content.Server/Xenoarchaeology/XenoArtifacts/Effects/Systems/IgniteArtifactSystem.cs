@@ -36,6 +36,7 @@ public sealed class IgniteArtifactSystem : EntitySystem
         {
             if (!flammable.TryGetComponent(target, out var fl))
                 continue;
+
             fl.FireStacks += _random.Next(component.MinFireStack, component.MaxFireStack);
             _flammable.Ignite(target, fl);
         }

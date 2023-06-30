@@ -26,6 +26,7 @@ public sealed class HyposprayStatusControl : Control
         base.FrameUpdate(args);
         if (!_parent.UiUpdateNeeded)
             return;
+
         Update();
     }
 

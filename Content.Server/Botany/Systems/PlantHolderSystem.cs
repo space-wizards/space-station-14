@@ -60,6 +60,7 @@ namespace Content.Server.Botany.Systems
             {
                 if (plantHolder.NextUpdate > _gameTiming.CurTime)
                     continue;
+
                 plantHolder.NextUpdate = _gameTiming.CurTime + plantHolder.UpdateDelay;
 
                 Update(plantHolder.Owner, plantHolder);

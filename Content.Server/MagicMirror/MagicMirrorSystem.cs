@@ -51,6 +51,7 @@ public sealed class MagicMirrorSystem : EntitySystem
             case MagicMirrorCategory.FacialHair:
                 category = MarkingCategories.FacialHair;
                 break;
+
             default:
                 return;
         }
@@ -77,6 +78,7 @@ public sealed class MagicMirrorSystem : EntitySystem
             case MagicMirrorCategory.FacialHair:
                 category = MarkingCategories.FacialHair;
                 break;
+
             default:
                 return;
         }
@@ -104,6 +106,7 @@ public sealed class MagicMirrorSystem : EntitySystem
             case MagicMirrorCategory.FacialHair:
                 category = MarkingCategories.FacialHair;
                 break;
+
             default:
                 return;
         }
@@ -130,6 +133,7 @@ public sealed class MagicMirrorSystem : EntitySystem
             case MagicMirrorCategory.FacialHair:
                 category = MarkingCategories.FacialHair;
                 break;
+
             default:
                 return;
         }

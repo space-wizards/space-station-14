@@ -33,6 +33,7 @@ public abstract class SharedWiresSystem : EntitySystem
     {
         if (args.Current is not WiresPanelComponentState state)
             return;
+
         component.Open = state.Open;
         component.Visible = state.Visible;
     }

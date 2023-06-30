@@ -21,6 +21,7 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
     {
         if (!Resolve(uid, ref component))
             return;
+
         state = state && component.On;
 
         if (TryComp(parent, out MovedByPressureComponent? movedByPressure))

@@ -223,6 +223,7 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         {
             if (state == null)
                 continue;
+
             sprite.LayerSetState(key, state);
         }
     }

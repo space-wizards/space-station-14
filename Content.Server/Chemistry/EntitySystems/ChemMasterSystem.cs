@@ -59,6 +59,7 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var bufferSolution))
                 return;
+
             var inputContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
             var outputContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
 
@@ -108,6 +109,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 case ChemMasterMode.Discard:
                     DiscardReagents(chemMaster, message.ReagentId, message.Amount.GetFixedPoint(), message.FromBuffer);
                     break;
+
                 default:
                     // Invalid mode.
                     return;

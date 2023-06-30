@@ -28,6 +28,7 @@ public sealed class NodeScannerSystem : EntitySystem
 
         if (args.Handled)
             return;
+
         args.Handled = true;
 
         var target = args.Target.Value;

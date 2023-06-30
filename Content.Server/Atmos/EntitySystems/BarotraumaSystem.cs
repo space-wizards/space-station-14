@@ -173,6 +173,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     if (!damageable.Damage.DamageDict.TryGetValue(barotraumaDamageType, out var damage))
                         continue;
+
                     totalDamage += damage;
                 }
                 if (totalDamage >= barotrauma.MaxDamage)

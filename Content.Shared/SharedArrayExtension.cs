@@ -15,6 +15,7 @@ public static class SharedArrayExtension
         var n = array.Length;
         if (n <= 1)
             return;
+
         IoCManager.Resolve(ref random);
 
         while (n > 1)

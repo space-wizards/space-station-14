@@ -385,6 +385,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             case BluespaceLockerDestroyType.Delete:
                 QueueDel(uid);
                 break;
+
             default:
             case BluespaceLockerDestroyType.DeleteComponent:
                 RemComp<BluespaceLockerComponent>(uid);

@@ -262,6 +262,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                     Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

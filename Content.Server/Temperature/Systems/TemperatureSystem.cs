@@ -57,6 +57,7 @@ namespace Content.Server.Temperature.Systems
 
             if (_accumulatedFrametime < UpdateInterval)
                 return;
+
             _accumulatedFrametime -= UpdateInterval;
 
             if (!ShouldUpdateDamage.Any())

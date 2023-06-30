@@ -119,6 +119,7 @@ namespace Content.Server.RoundEnd
 
             if (_countdownTokenSource != null)
                 return;
+
             _countdownTokenSource = new();
 
             if (requester != null)
@@ -185,6 +186,7 @@ namespace Content.Server.RoundEnd
 
             if (_countdownTokenSource == null)
                 return;
+
             _countdownTokenSource.Cancel();
             _countdownTokenSource = null;
 
@@ -212,6 +214,7 @@ namespace Content.Server.RoundEnd
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound)
                 return;
+
             LastCountdownStart = null;
             ExpectedCountdownEnd = null;
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
@@ -226,6 +229,7 @@ namespace Content.Server.RoundEnd
         {
             if (_gameTicker.RunLevel != GameRunLevel.PostRound)
                 return;
+
             Reset();
             _gameTicker.RestartRound();
         }

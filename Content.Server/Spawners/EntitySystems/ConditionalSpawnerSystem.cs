@@ -59,6 +59,7 @@ namespace Content.Server.Spawners.EntitySystems
             {
                 if (!_ticker.IsGameRuleActive(rule))
                     continue;
+
                 Spawn(uid, component);
                 return;
             }

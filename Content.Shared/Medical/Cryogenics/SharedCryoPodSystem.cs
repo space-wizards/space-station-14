@@ -51,6 +51,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
     {
         if (!Resolve(uid, ref cryoPod))
             return;
+
         var cryoPodEnabled = HasComp<ActiveCryoPodComponent>(uid);
         if (TryComp<SharedPointLightComponent>(uid, out var light))
         {
@@ -59,6 +60,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
 
         if (!Resolve(uid, ref appearance))
             return;
+
         _appearanceSystem.SetData(uid, CryoPodComponent.CryoPodVisuals.ContainsEntity, cryoPod.BodyContainer.ContainedEntity == null, appearance);
         _appearanceSystem.SetData(uid, CryoPodComponent.CryoPodVisuals.IsOn, cryoPodEnabled, appearance);
     }

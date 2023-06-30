@@ -184,6 +184,7 @@ public abstract class SharedBiomeSystem : EntitySystem
                         continue;
 
                     break;
+
                 default:
                     continue;
             }
@@ -244,6 +245,7 @@ public abstract class SharedBiomeSystem : EntitySystem
                         continue;
 
                     break;
+
                 default:
                     continue;
             }

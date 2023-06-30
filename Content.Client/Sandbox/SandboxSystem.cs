@@ -33,6 +33,7 @@ namespace Content.Client.Sandbox
             var currentStatus = _sandboxEnabled || _adminManager.IsActive();
             if (currentStatus == SandboxAllowed)
                 return;
+
             SandboxAllowed = currentStatus;
             if (SandboxAllowed)
             {

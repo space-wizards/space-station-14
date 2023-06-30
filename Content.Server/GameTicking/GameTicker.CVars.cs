@@ -40,6 +40,7 @@ namespace Content.Server.GameTicking
                 {
                     if (status == PlayerGameStatus.JoinedGame)
                         continue;
+
                     _playerGameStatuses[userId] =
                         LobbyEnabled ? PlayerGameStatus.NotReadyToPlay : PlayerGameStatus.ReadyToPlay;
                 }

@@ -68,6 +68,7 @@ public sealed class DefibrillatorSystem : EntitySystem
 
         if (!TryToggle(uid, component, args.User))
             return;
+
         args.Handled = true;
         _useDelay.BeginDelay(uid);
     }
@@ -81,6 +82,7 @@ public sealed class DefibrillatorSystem : EntitySystem
     {
         if (args.Handled || args.Target is not { } target)
             return;
+
         args.Handled = TryStartZap(uid, target, args.User, component);
     }
 

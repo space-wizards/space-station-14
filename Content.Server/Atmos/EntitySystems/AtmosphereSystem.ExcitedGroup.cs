@@ -101,6 +101,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 if (tile?.Air == null)
                     continue;
+
                 tile.Air.CopyFromMutable(combined);
                 InvalidateVisuals(tile.GridIndex, tile.GridIndices);
             }

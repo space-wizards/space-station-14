@@ -218,6 +218,7 @@ namespace Content.Shared.Stacks
 
                 if (!TryMergeStacks(uid, otherEnt, out _, stack, otherStack))
                     continue;
+
                 merged = true;
 
                 if (stack.Count <= 0)

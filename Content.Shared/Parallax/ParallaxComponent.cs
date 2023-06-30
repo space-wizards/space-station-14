@@ -22,6 +22,7 @@ public sealed partial class ParallaxComponent : Component
         {
             if (value.Equals(Parallax))
                 return;
+
             Parallax = value;
             IoCManager.Resolve<IEntityManager>().Dirty(this);
         }

@@ -189,6 +189,7 @@ public sealed partial class ArtifactSystem : EntitySystem
             var newNode = GetNewNode(uid, component);
             if (newNode == null)
                 return;
+
             EnterNode(uid, ref newNode, component);
         }
     }
@@ -279,6 +280,7 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         if (component.CurrentNodeId == null)
             return;
+
         var currentNode = GetNodeFromId(component.CurrentNodeId.Value, component);
 
         currentNode.NodeData[key] = value;

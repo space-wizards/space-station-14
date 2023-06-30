@@ -128,6 +128,7 @@ public sealed class DoorSystem : SharedDoorSystem
                 if (animPlayer != null && comp.EmaggingAnimation != default)
                     _animationSystem.Play(uid, animPlayer, (Animation)comp.EmaggingAnimation, DoorComponent.AnimationKey);
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException($"Invalid door visual state {state}");
         }

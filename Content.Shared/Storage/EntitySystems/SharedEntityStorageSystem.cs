@@ -69,6 +69,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     {
         if (args.Current is not EntityStorageComponentState state)
             return;
+
         component.Open = state.Open;
         component.Capacity = state.Capacity;
         component.IsCollidableWhenOpen = state.IsCollidableWhenOpen;
@@ -215,6 +216,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
+
         component.Open = false;
         Dirty(component);
 

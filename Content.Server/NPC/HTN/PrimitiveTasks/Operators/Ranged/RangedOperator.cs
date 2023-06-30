@@ -95,6 +95,7 @@ public sealed class RangedOperator : HTNOperator
                     case CombatStatus.Normal:
                         status = HTNOperatorStatus.Continuing;
                         break;
+
                     default:
                         status = HTNOperatorStatus.Failed;
                         break;

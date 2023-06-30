@@ -60,6 +60,7 @@ public sealed class QuickDialogSystem : EntitySystem
                     edit.IsValid += VerifyLongText;
                     edit.PlaceHolder = "Long text..";
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

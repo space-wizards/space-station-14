@@ -145,6 +145,7 @@ public sealed class RadioDeviceSystem : EntitySystem
     {
         if (args.Powered)
             return;
+
         SetMicrophoneEnabled(uid, false, component);
     }
 

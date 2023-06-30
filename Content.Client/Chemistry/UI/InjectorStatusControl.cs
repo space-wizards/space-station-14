@@ -27,6 +27,7 @@ public sealed class InjectorStatusControl : Control
         base.FrameUpdate(args);
         if (!_parent.UiUpdateNeeded)
             return;
+
         Update();
     }
 

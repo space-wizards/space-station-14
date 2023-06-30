@@ -35,6 +35,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         _updateDiff += frameTime;
         if (_updateDiff < UpdateRate)
             return;
+
         _updateDiff -= UpdateRate;
 
         var servers = EntityQueryEnumerator<CrewMonitoringServerComponent>();

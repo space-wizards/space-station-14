@@ -50,6 +50,7 @@ public sealed partial class GravitySystem : SharedGravitySystem
                     args.Sprite.LayerSetVisible(layer, true);
                     args.Sprite.LayerSetState(layer, comp.CoreActivatingState);
                     break;
+
                 default:
                     args.Sprite.LayerSetVisible(layer, true);
                     args.Sprite.LayerSetState(layer, comp.CoreActivatedState);

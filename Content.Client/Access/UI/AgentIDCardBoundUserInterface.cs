@@ -58,6 +58,7 @@ namespace Content.Client.Access.UI
             base.Dispose(disposing);
             if (!disposing)
                 return;
+
             _window?.Dispose();
         }
     }

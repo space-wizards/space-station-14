@@ -122,6 +122,7 @@ public sealed class RadiationDebugOverlay : Overlay
             {
                 if (!_mapManager.TryGetGrid(gridUid, out var grid))
                     continue;
+
                 var (destTile, _) = blockers.Last();
                 var destWorld = grid.GridTileToWorldPos(destTile);
                 handle.DrawLine(ray.Source, destWorld, Color.Red);

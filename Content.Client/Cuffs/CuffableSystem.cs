@@ -47,6 +47,7 @@ public sealed class CuffableSystem : SharedCuffableSystem
 
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
+
         var cuffed = cuffState.NumHandsCuffed > 0;
         sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, cuffed);
 
@@ -54,6 +55,7 @@ public sealed class CuffableSystem : SharedCuffableSystem
         // iconstate, or RSI. that also means we don't need to update the sprites.
         if (!cuffed)
             return;
+
         sprite.LayerSetColor(HumanoidVisualLayers.Handcuffs, cuffState.Color!.Value);
 
         if (!Equals(component.CurrentRSI, cuffState.RSI) && cuffState.RSI != null) // we don't want to keep loading the same RSI

@@ -182,6 +182,7 @@ public sealed class MagicSystem : EntitySystem
     {
         if (ev.Handled)
             return;
+
         ev.Handled = true;
         Speak(ev);
 

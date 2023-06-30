@@ -70,6 +70,7 @@ public sealed class StatusIconOverlay : Overlay
                 {
                     if (accOffsetL + texture.Height > sprite.Bounds.Height * EyeManager.PixelsPerMeter)
                         break;
+
                     accOffsetL += texture.Height;
                     yOffset = (bounds.Height + sprite.Offset.Y) / 2f - (float) accOffsetL / EyeManager.PixelsPerMeter;
                     xOffset = -(bounds.Width + sprite.Offset.X) / 2f;
@@ -78,6 +79,7 @@ public sealed class StatusIconOverlay : Overlay
                 {
                     if (accOffsetR + texture.Height > sprite.Bounds.Height * EyeManager.PixelsPerMeter)
                         break;
+
                     accOffsetR += texture.Height;
                     yOffset = (bounds.Height + sprite.Offset.Y) / 2f - (float) accOffsetR / EyeManager.PixelsPerMeter;
                     xOffset = (bounds.Width + sprite.Offset.X) / 2f - (float) texture.Width / EyeManager.PixelsPerMeter;

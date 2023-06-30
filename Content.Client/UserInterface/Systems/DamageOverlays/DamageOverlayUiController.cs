@@ -72,6 +72,7 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
 
         if (args.Target != _playerManager.LocalPlayer?.ControlledEntity)
             return;
+
         UpdateOverlays(args.Target, args.MobState, args.Damageable, args.Threshold);
     }
 
@@ -125,6 +126,7 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
                 if (!_mobThresholdSystem.TryGetDeadPercentage(entity,
                         FixedPoint2.Max(0.0, damageable.TotalDamage), out var critLevel))
                     return;
+
                 _overlay.CritLevel = critLevel.Value.Float();
 
                 _overlay.BruteLevel = 0;
