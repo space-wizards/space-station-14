@@ -1144,43 +1144,27 @@
           Quantity: 100
 
 - type: entity
-  parent: FoodProduceBase
+  parent: DrinkBase
   id: CrazyGlue
   name: crazy glue
   description:  A bottle of crazy glue manufactured by Honk! Co.
   components:
-  - type: FlavorProfile
-    flavors:
-      - glue
-  - type: Food
-    trash: CrazyGlueEmpty
+  - type: Drink
+    isOpen: false
+    openSounds:
+      collection: packetOpenSounds
   - type: Sprite
     sprite: Objects/Fun/glue.rsi
-    state: icon-0
+    state: icon
   - type: Appearance
   - type: Glue
+    consumptionUnit: 10
   - type: Item
     sprite: Objects/Fun/glue.rsi
   - type: SolutionContainerManager
     solutions:
-      food:
-        maxVol: 15
+      drink:
+        maxVol: 100
         reagents:
         - ReagentId: SpaceGlue
-          Quantity: 6
-
-- type: entity
-  name: empty crazy glue
-  parent: BaseItem
-  id: CrazyGlueEmpty
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/glue.rsi
-    state: icon-1
-  - type: Item
-    sprite: Objects/Fun/glue.rsi
-  - type: Tag
-    tags:
-    - Recyclable
-    - Trash
-  - type: SpaceGarbage
+          Quantity: 100
