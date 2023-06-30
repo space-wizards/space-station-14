@@ -44,13 +44,13 @@ public sealed class CluwneSystem : EntitySystem
     private void OnMobState(EntityUid uid, CluwneComponent component, MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Dead)
-		{
+        {
             RemComp<CluwneComponent>(uid);
             RemComp<ClumsyComponent>(uid);
             RemComp<AutoEmoteComponent>(uid);
             var damageSpec = new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Genetic"), 300);
             _damageableSystem.TryChangeDamage(uid, damageSpec);
-		}
+        }
     }
 
     public EmoteSoundsPrototype? EmoteSounds;

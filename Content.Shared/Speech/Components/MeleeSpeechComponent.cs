@@ -8,10 +8,10 @@ namespace Content.Shared.Speech.Components;
 public sealed partial class MeleeSpeechComponent : Component
 {
 
-	[ViewVariables(VVAccess.ReadWrite)]
-	[DataField("Battlecry")]
-	[AutoNetworkedField]
-	public string? Battlecry;
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("Battlecry")]
+    [AutoNetworkedField]
+    public string? Battlecry;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("MaxBattlecryLength")]

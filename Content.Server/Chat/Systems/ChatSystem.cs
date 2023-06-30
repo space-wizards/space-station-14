@@ -330,7 +330,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         RaiseLocalEvent(source, ev, true);
 
         // To avoid logging any messages sent by entities that are not players, like vendors, cloning, etc.
-		// Also doesn't log if hideLog is true.
+        // Also doesn't log if hideLog is true.
         if (!HasComp<ActorComponent>(source) || hideLog == true)
             return;
 

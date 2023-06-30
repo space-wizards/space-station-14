@@ -166,7 +166,7 @@ namespace Content.Server.PAI
                     if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
                     {
                         EntityManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
-						EntityManager.RemoveComponent<GhostRoleComponent>(uid);
+                        EntityManager.RemoveComponent<GhostRoleComponent>(uid);
                         _popupSystem.PopupEntity(Loc.GetString("pai-system-stopped-searching"), uid, args.User);
                         PAITurningOff(uid);
                     }

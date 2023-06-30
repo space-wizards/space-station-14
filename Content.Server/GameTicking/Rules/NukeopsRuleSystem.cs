@@ -442,9 +442,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                     prefList.Add(player);
                 }
                 if (profile.AntagPreferences.Contains(nukeops.MedicRoleProto))
-	            {
-	                medPrefList.Add(player);
-	            }
+                {
+                    medPrefList.Add(player);
+                }
                 if (profile.AntagPreferences.Contains(nukeops.CommanderRolePrototype))
                 {
                     cmdrPrefList.Add(player);

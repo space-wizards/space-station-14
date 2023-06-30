@@ -31,7 +31,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         SubscribeLocalEvent<CardboardBoxComponent, StorageAfterOpenEvent>(AfterStorageOpen);
         SubscribeLocalEvent<CardboardBoxComponent, StorageBeforeOpenEvent>(BeforeStorageOpen);
         SubscribeLocalEvent<CardboardBoxComponent, StorageAfterCloseEvent>(AfterStorageClosed);
-		SubscribeLocalEvent<CardboardBoxComponent, ActivateInWorldEvent>(OnInteracted);
+        SubscribeLocalEvent<CardboardBoxComponent, ActivateInWorldEvent>(OnInteracted);
         SubscribeLocalEvent<CardboardBoxComponent, InteractedNoHandEvent>(OnNoHandInteracted);
         SubscribeLocalEvent<CardboardBoxComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<CardboardBoxComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
@@ -39,19 +39,19 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         SubscribeLocalEvent<CardboardBoxComponent, DamageChangedEvent>(OnDamage);
     }
 
-	private void OnInteracted(EntityUid uid, CardboardBoxComponent component, ActivateInWorldEvent args)
+    private void OnInteracted(EntityUid uid, CardboardBoxComponent component, ActivateInWorldEvent args)
     {
-		if (!TryComp<EntityStorageComponent>(uid, out var box))
+        if (!TryComp<EntityStorageComponent>(uid, out var box))
             return;
 
         args.Handled = true;
         _storage.ToggleOpen(args.User, uid, box);
 
-		if (box.Contents.Contains(args.User) && !box.Open)
-		{
-			_mover.SetRelay(args.User, uid);
-			component.Mover = args.User;
-		}
+        if (box.Contents.Contains(args.User) && !box.Open)
+        {
+            _mover.SetRelay(args.User, uid);
+            component.Mover = args.User;
+        }
     }
 
     private void OnNoHandInteracted(EntityUid uid, CardboardBoxComponent component, InteractedNoHandEvent args)
@@ -65,8 +65,8 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 
     private void BeforeStorageOpen(EntityUid uid, CardboardBoxComponent component, ref StorageBeforeOpenEvent args)
     {
-		if (component.Quiet)
-			return;
+        if (component.Quiet)
+            return;
 
         //Play effect & sound
         if (component.Mover != null)
@@ -113,7 +113,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         if (component.Mover == null)
         {
             _mover.SetRelay(args.Entity, uid);
-			component.Mover = args.Entity;
+            component.Mover = args.Entity;
         }
     }
 

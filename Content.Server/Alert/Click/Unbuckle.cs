@@ -7,7 +7,7 @@ namespace Content.Server.Alert.Click
     /// <summary>
     /// Unbuckles if player is currently buckled.
     /// </summary>
-	[UsedImplicitly]
+    [UsedImplicitly]
     [DataDefinition]
     public sealed class Unbuckle : IAlertClick
     {
