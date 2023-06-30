@@ -28,7 +28,8 @@ namespace Content.Server.Objectives
                 return false;
             if (ReferenceEquals(this, other))
                 return true;
-            if (!Equals(Mind, other.Mind) || !Equals(Prototype, other.Prototype)) return false;
+            if (!Equals(Mind, other.Mind) || !Equals(Prototype, other.Prototype))
+                return false;
             if (_conditions.Count != other._conditions.Count)
                 return false;
             for (var i = 0; i < _conditions.Count; i++)
@@ -46,7 +47,8 @@ namespace Content.Server.Objectives
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            if (obj.GetType() != GetType()) return false;
+            if (obj.GetType() != GetType())
+                return false;
             return Equals((Objective) obj);
         }
 

@@ -20,7 +20,8 @@ namespace Content.Shared.Pulling.Systems
         private void OnRelayMoveInput(EntityUid uid, SharedPullableComponent component, ref MoveInputEvent args)
         {
             var entity = args.Entity;
-            if (_mobState.IsIncapacitated(entity) || !_blocker.CanMove(entity)) return;
+            if (_mobState.IsIncapacitated(entity) || !_blocker.CanMove(entity))
+                return;
 
             _pullSystem.TryStopPull(component);
         }

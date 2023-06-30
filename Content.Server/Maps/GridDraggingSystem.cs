@@ -50,10 +50,11 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
     private void OnRequestVelocity(GridDragVelocityRequest ev, EntitySessionEventArgs args)
     {
-        if (args.SenderSession is not IPlayerSession playerSession ||
-            !_admin.CanCommand(playerSession, CommandName) ||
-            !Exists(ev.Grid) ||
-            Deleted(ev.Grid)) return;
+        if (args.SenderSession is not IPlayerSession playerSession
+        || !_admin.CanCommand(playerSession, CommandName)
+        || !Exists(ev.Grid)
+        || Deleted(ev.Grid))
+            return;
 
         var gridBody = Comp<PhysicsComponent>(ev.Grid);
         _physics.SetLinearVelocity(ev.Grid, ev.LinearVelocity, body: gridBody);
@@ -62,10 +63,11 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
     private void OnRequestDrag(GridDragRequestPosition msg, EntitySessionEventArgs args)
     {
-        if (args.SenderSession is not IPlayerSession playerSession ||
-            !_admin.CanCommand(playerSession, CommandName) ||
-            !Exists(msg.Grid) ||
-            Deleted(msg.Grid)) return;
+        if (args.SenderSession is not IPlayerSession playerSession
+        || !_admin.CanCommand(playerSession, CommandName)
+        || !Exists(msg.Grid)
+        || Deleted(msg.Grid))
+            return;
 
         var gridXform = Transform(msg.Grid);
 

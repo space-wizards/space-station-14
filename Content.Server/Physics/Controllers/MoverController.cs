@@ -267,9 +267,10 @@ namespace Content.Server.Physics.Controllers
 
                 var gridId = xform.GridUid;
                 // This tries to see if the grid is a shuttle and if the console should work.
-                if (!_mapManager.TryGetGrid(gridId, out var grid) ||
-                    !EntityManager.TryGetComponent(grid.Owner, out ShuttleComponent? shuttleComponent) ||
-                    !shuttleComponent.Enabled) continue;
+                if (!_mapManager.TryGetGrid(gridId, out var grid)
+                || !EntityManager.TryGetComponent(grid.Owner, out ShuttleComponent? shuttleComponent)
+                || !shuttleComponent.Enabled)
+                    continue;
 
                 if (!newPilots.TryGetValue(shuttleComponent, out var pilots))
                 {
@@ -283,7 +284,8 @@ namespace Content.Server.Physics.Controllers
             // Reset inputs for non-piloted shuttles.
             foreach (var (shuttle, _) in _shuttlePilots)
             {
-                if (newPilots.ContainsKey(shuttle) || CanPilot(shuttle)) continue;
+                if (newPilots.ContainsKey(shuttle) || CanPilot(shuttle))
+                    continue;
 
                 _thruster.DisableLinearThrusters(shuttle);
             }
@@ -294,7 +296,8 @@ namespace Content.Server.Physics.Controllers
             // then do the movement input once for it.
             foreach (var (shuttle, pilots) in _shuttlePilots)
             {
-                if (Paused(shuttle.Owner) || CanPilot(shuttle) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
+                if (Paused(shuttle.Owner) || CanPilot(shuttle) || !TryComp(shuttle.Owner, out PhysicsComponent? body))
+                    continue;
 
                 var shuttleNorthAngle = Transform(body.Owner).WorldRotation;
 

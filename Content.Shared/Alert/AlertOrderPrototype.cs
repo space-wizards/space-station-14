@@ -74,7 +74,8 @@ namespace Content.Shared.Alert
 
         public int Compare(AlertPrototype? x, AlertPrototype? y)
         {
-            if ((x == null) && (y == null)) return 0;
+            if ((x == null) && (y == null))
+                return 0;
             if (x == null)
                 return 1;
             if (y == null)

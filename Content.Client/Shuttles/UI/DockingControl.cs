@@ -70,9 +70,10 @@ public class DockingControl : Control
             handle.DrawLine((MidPoint, MidPoint) - aExtent, (MidPoint, MidPoint) + aExtent, gridLines);
         }
 
-        if (Coordinates == null ||
-            Angle == null ||
-            !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform)) return;
+        if (Coordinates == null
+        || Angle == null
+        || !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform))
+            return;
 
         var rotation = Matrix3.CreateRotation(-Angle.Value + Math.PI);
         var matrix = Matrix3.CreateTranslation(-Coordinates.Value.Position);

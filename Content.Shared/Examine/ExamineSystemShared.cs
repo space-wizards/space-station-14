@@ -154,8 +154,9 @@ namespace Content.Shared.Examine
         public static bool InRangeUnOccluded<TState>(MapCoordinates origin, MapCoordinates other, float range,
             TState state, Func<EntityUid, TState, bool> predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
         {
-            if (other.MapId != origin.MapId ||
-                other.MapId == MapId.Nullspace) return false;
+            if (other.MapId != origin.MapId
+            || other.MapId == MapId.Nullspace)
+                    return false;
 
             var dir = other.Position - origin.Position;
             var length = dir.Length;

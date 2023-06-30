@@ -36,9 +36,10 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             var target = args.OtherEntity;
 
-            if (!args.OtherBody.Hard ||
-                !EntityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream) ||
-                !_solutionsSystem.TryGetInjectableSolution(component.Owner, out var solution)) return;
+            if (!args.OtherBody.Hard
+            || !EntityManager.TryGetComponent<BloodstreamComponent>(target, out var bloodstream)
+            || !_solutionsSystem.TryGetInjectableSolution(component.Owner, out var solution))
+                return;
 
             if (component.BlockSlots != 0x0 && TryComp<InventoryComponent>(target, out var inventory))
             {

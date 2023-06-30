@@ -208,8 +208,9 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         foreach (var slot in slots)
         {
-            if (!_inventorySystem.TryGetSlotContainer(uid, slot.Name, out var containerSlot, out _, component) ||
-                !containerSlot.ContainedEntity.HasValue) continue;
+            if (!_inventorySystem.TryGetSlotContainer(uid, slot.Name, out var containerSlot, out _, component)
+            || !containerSlot.ContainedEntity.HasValue)
+                continue;
 
             RenderEquipment(uid, containerSlot.ContainedEntity.Value, slot.Name, component, sprite);
         }

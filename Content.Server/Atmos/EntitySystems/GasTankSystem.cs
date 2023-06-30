@@ -54,8 +54,9 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGasTankToggleInternals(EntityUid uid, GasTankComponent component, GasTankToggleInternalsMessage args)
         {
-            if (args.Session is not IPlayerSession playerSession ||
-                playerSession.AttachedEntity is not {} player) return;
+            if (args.Session is not IPlayerSession playerSession
+            || playerSession.AttachedEntity is not {} player)
+                return;
 
             ToggleInternals(component);
         }

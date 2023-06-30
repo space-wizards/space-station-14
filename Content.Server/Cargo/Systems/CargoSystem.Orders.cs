@@ -226,9 +226,10 @@ namespace Content.Server.Cargo.Systems
 
         private void UpdateOrderState(CargoOrderConsoleComponent component, EntityUid? station)
         {
-            if (station == null ||
-                !TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase) ||
-                !TryComp<StationBankAccountComponent>(station, out var bankAccount)) return;
+            if (station == null
+            || !TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase)
+            || !TryComp<StationBankAccountComponent>(station, out var bankAccount))
+                return;
 
             var state = new CargoConsoleInterfaceState(
                 MetaData(station.Value).EntityName,

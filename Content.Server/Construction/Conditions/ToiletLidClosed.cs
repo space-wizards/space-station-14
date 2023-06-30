@@ -21,7 +21,8 @@ namespace Content.Server.Construction.Conditions
         {
             var entity = args.Examined;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ToiletComponent? toilet)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ToiletComponent? toilet))
+                return false;
             if (!toilet.LidOpen)
                 return false;
 

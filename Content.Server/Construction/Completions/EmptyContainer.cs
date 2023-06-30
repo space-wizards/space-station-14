@@ -21,8 +21,9 @@ namespace Content.Server.Construction.Completions
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager) ||
-                !containerManager.TryGetContainer(Container, out var container)) return;
+            if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager)
+            || !containerManager.TryGetContainer(Container, out var container))
+                return;
 
             var containerSys = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
             var handSys = entityManager.EntitySysManager.GetEntitySystem<HandsSystem>();

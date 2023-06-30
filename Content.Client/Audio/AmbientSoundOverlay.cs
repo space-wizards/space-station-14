@@ -33,8 +33,9 @@ public sealed class AmbientSoundOverlay : Overlay
 
         foreach (var ent in _lookup.GetEntitiesIntersecting(args.MapId, args.WorldBounds))
         {
-            if (!ambientQuery.TryGetComponent(ent, out var ambientSound) ||
-                !xformQuery.TryGetComponent(ent, out var xform)) continue;
+            if (!ambientQuery.TryGetComponent(ent, out var ambientSound)
+            || !xformQuery.TryGetComponent(ent, out var xform))
+                continue;
 
             if (ambientSound.Enabled)
             {

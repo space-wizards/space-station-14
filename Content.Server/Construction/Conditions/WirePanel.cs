@@ -23,7 +23,8 @@ namespace Content.Server.Construction.Conditions
         public bool DoExamine(ExaminedEvent args)
         {
             var entity = args.Examined;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<WiresPanelComponent>(entity, out var panel)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<WiresPanelComponent>(entity, out var panel))
+                return false;
 
             switch (Open)
             {

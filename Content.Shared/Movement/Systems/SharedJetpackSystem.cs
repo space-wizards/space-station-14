@@ -145,8 +145,9 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     public void SetEnabled(JetpackComponent component, bool enabled, EntityUid? user = null)
     {
-        if (IsEnabled(component.Owner) == enabled ||
-            enabled && !CanEnable(component)) return;
+        if (IsEnabled(component.Owner) == enabled
+        || enabled && !CanEnable(component))
+            return;
 
         if (enabled)
         {

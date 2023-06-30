@@ -49,16 +49,16 @@ public sealed class HolosignSystem : EntitySystem
 
     private int UsesRemaining(HolosignProjectorComponent component, BatteryComponent? battery = null)
     {
-        if (battery == null ||
-            component.ChargeUse == 0f) return 0;
+        if (battery == null || component.ChargeUse == 0f)
+            return 0;
 
         return (int) (battery.CurrentCharge / component.ChargeUse);
     }
 
     private int MaxUses(HolosignProjectorComponent component, BatteryComponent? battery = null)
     {
-        if (battery == null ||
-            component.ChargeUse == 0f) return 0;
+        if (battery == null || component.ChargeUse == 0f)
+            return 0;
 
         return (int) (battery.MaxCharge / component.ChargeUse);
     }

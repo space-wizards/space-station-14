@@ -276,8 +276,10 @@ namespace Content.Server.Atmos.EntitySystems
                 }
             }
 
-            if (!(temperatureDelta > Atmospherics.MinimumTemperatureToMove) &&
-                !(MathF.Abs(movedMoles) > Atmospherics.MinimumMolesDeltaToMove)) return 0f;
+            if (!(temperatureDelta > Atmospherics.MinimumTemperatureToMove)
+            && !(MathF.Abs(movedMoles) > Atmospherics.MinimumMolesDeltaToMove))
+                return 0f;
+
             var moles = receiver.TotalMoles;
             var theirMoles = sharer.TotalMoles;
 

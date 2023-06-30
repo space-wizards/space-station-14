@@ -32,9 +32,10 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.TryGetComponent<ServerStorageComponent>("Storage", out var storage) ||
-                        storage.Whitelist != null ||
-                        !proto.TryGetComponent<ItemComponent>("Item", out var item)) continue;
+                    if (!proto.TryGetComponent<ServerStorageComponent>("Storage", out var storage)
+                    || storage.Whitelist != null
+                    || !proto.TryGetComponent<ItemComponent>("Item", out var item))
+                        continue;
 
                     Assert.That(storage.StorageCapacityMax, Is.LessThanOrEqualTo(item.Size), $"Found storage arbitrage on {proto.ID}");
                 }

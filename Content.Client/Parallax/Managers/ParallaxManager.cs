@@ -59,7 +59,8 @@ public sealed class ParallaxManager : IParallaxManager
 
     public async Task LoadParallaxByName(string name)
     {
-        if (_parallaxesLQ.ContainsKey(name) || _loadingParallaxes.ContainsKey(name)) return;
+        if (_parallaxesLQ.ContainsKey(name) || _loadingParallaxes.ContainsKey(name))
+            return;
 
         // Cancel any existing load and setup the new cancellation token
         var token = new CancellationTokenSource();

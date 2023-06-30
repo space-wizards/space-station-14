@@ -45,7 +45,8 @@ public sealed class CharacterInfoSystem : EntitySystem
             // Get job title
             foreach (var role in mind.AllRoles)
             {
-                if (role.GetType() != typeof(Job)) continue;
+                if (role.GetType() != typeof(Job))
+                    continue;
 
                 jobTitle = role.Name;
                 break;

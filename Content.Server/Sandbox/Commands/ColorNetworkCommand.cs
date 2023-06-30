@@ -80,7 +80,8 @@ namespace Content.Server.Sandbox.Commands
 
             foreach (var x in group.Nodes)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<AtmosPipeColorComponent?>(x.Owner, out var atmosPipeColorComponent)) continue;
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<AtmosPipeColorComponent?>(x.Owner, out var atmosPipeColorComponent))
+                    continue;
 
                 EntitySystem.Get<AtmosPipeColorSystem>().SetColor(x.Owner, atmosPipeColorComponent, color);
             }
