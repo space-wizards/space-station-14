@@ -1,12 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Goats and cows will now seek out and eat kudzu that is nearby., type: Add}
-  - {message: 'Humans can now eat tendon kudzu. You need more stomachs to digest regular
-      kudzu, though.', type: Add}
-  - {message: Animal stomachs now have slightly lower capacity., type: Tweak}
-  id: 3636
-  time: '2023-05-04T02:49:26.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Remove Vector., type: Remove}
@@ -2923,3 +2915,13 @@ Entries:
       by RamZ., type: Add}
   id: 4135
   time: '2023-06-29T22:36:20.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: you can't eat crazy glue anymore but you can drink it, type: Tweak}
+  - {message: space glue tube can now also be used to glue items, type: Tweak}
+  - {message: items are glued for longer duration (10 seconds per unit), type: Tweak}
+  - {message: glue tubes can be used multiple times and can be refilled with space
+      glue, type: Tweak}
+  - {message: removed empty crazy glue, type: Remove}
+  id: 4136
+  time: '2023-06-30T19:07:45.0000000+00:00'
