@@ -60,7 +60,7 @@ namespace Content.Server.Advertise
             if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
                 _chat.TrySendInGameICMessage(advertise.Owner, Loc.GetString(_random.Pick(advertisements.Advertisements)), InGameICChatType.Speak, true);
 
-            if(refresh)
+            if (refresh)
                 RefreshTimer(uid, true, advertise);
         }
 
@@ -75,7 +75,7 @@ namespace Content.Server.Advertise
             if (attemptEvent.Cancelled)
                 return;
 
-            if(enabled)
+            if (enabled)
                 RefreshTimer(uid, !advertise.Enabled, advertise);
 
             advertise.Enabled = enabled;
@@ -83,14 +83,14 @@ namespace Content.Server.Advertise
 
         private void OnPowerReceiverEnableChangeAttempt(EntityUid uid, ApcPowerReceiverComponent component, AdvertiseEnableChangeAttemptEvent args)
         {
-            if(args.NewState && !component.Powered)
+            if (args.NewState && !component.Powered)
                 args.Cancel();
         }
 
         private void OnVendingEnableChangeAttempt(EntityUid uid, VendingMachineComponent component, AdvertiseEnableChangeAttemptEvent args)
         {
             // TODO: Improve this...
-            if(args.NewState && component.Broken)
+            if (args.NewState && component.Broken)
                 args.Cancel();
         }
 

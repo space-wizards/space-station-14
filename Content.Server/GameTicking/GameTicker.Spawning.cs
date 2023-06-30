@@ -150,7 +150,7 @@ namespace Content.Server.GameTicking
             restrictedRoles.UnionWith(getDisallowed);
 
             var jobBans = _roleBanManager.GetJobBans(player.UserId);
-            if(jobBans != null) restrictedRoles.UnionWith(jobBans);
+            if (jobBans != null) restrictedRoles.UnionWith(jobBans);
 
             // Pick best job best on prefs.
             jobId ??= _stationJobs.PickBestAvailableJobWithPriority(station, character.JobPriorities, true,

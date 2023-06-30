@@ -172,10 +172,10 @@ public sealed partial class CargoSystem
             return orders;
 
         var spaceRemaining = GetCargoSpace(shuttleUid);
-        for( var i = 0; i < component.Orders.Count && spaceRemaining > 0; i++)
+        for ( var i = 0; i < component.Orders.Count && spaceRemaining > 0; i++)
         {
             var order = component.Orders[i];
-            if(order.Approved)
+            if (order.Approved)
             {
                 var numToShip = order.OrderQuantity - order.NumDispatched;
                 if (numToShip > spaceRemaining)
@@ -311,7 +311,7 @@ public sealed partial class CargoSystem
         while (pads.Count > 0)
         {
             var coordinates = new EntityCoordinates(shuttleUid, xformQuery.GetComponent(_random.PickAndTake(pads).Entity).LocalPosition);
-            if(!FulfillOrder(orderDatabase, coordinates, shuttle.PrinterOutput))
+            if (!FulfillOrder(orderDatabase, coordinates, shuttle.PrinterOutput))
             {
                 break;
             }

@@ -24,7 +24,7 @@ public sealed partial class CableSystem
 
         if (component.CablePrototypeId == null) return;
 
-        if(!_mapManager.TryGetGrid(args.ClickLocation.GetGridUid(EntityManager), out var grid))
+        if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridUid(EntityManager), out var grid))
             return;
 
         var snapPos = grid.TileIndicesFor(args.ClickLocation);

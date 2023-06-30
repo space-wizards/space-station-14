@@ -55,7 +55,7 @@ namespace Content.IntegrationTests.Tests
                 var entityMetas = entityMan.EntityQuery<MetaDataComponent>(true).ToList();
                 foreach (var meta in entityMetas)
                 {
-                    if(!meta.EntityDeleted)
+                    if (!meta.EntityDeleted)
                         entityMan.DeleteEntity(meta.Owner);
                 }
 
@@ -95,7 +95,7 @@ namespace Content.IntegrationTests.Tests
                 var entityMetas = entityMan.EntityQuery<MetaDataComponent>(true).ToList();
                 foreach (var meta in entityMetas)
                 {
-                    if(!meta.EntityDeleted)
+                    if (!meta.EntityDeleted)
                         entityMan.DeleteEntity(meta.Owner);
                 }
 

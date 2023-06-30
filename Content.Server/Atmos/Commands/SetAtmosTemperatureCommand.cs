@@ -17,7 +17,7 @@ namespace Content.Server.Atmos.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 2) return;
-            if(!EntityUid.TryParse(args[0], out var gridId)
+            if (!EntityUid.TryParse(args[0], out var gridId)
                || !float.TryParse(args[1], out var temperature)) return;
 
             var mapMan = IoCManager.Resolve<IMapManager>();

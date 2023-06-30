@@ -230,7 +230,7 @@ namespace Content.Server.Decals
         protected override void DirtyChunk(EntityUid id, Vector2i chunkIndices, DecalChunk chunk)
         {
             chunk.LastModified = _timing.CurTick;
-            if(!_dirtyChunks.ContainsKey(id))
+            if (!_dirtyChunks.ContainsKey(id))
                 _dirtyChunks[id] = new HashSet<Vector2i>();
             _dirtyChunks[id].Add(chunkIndices);
         }

@@ -31,7 +31,7 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
                 continue;
             }
 
-            if(component.InvokeCounter > 0)
+            if (component.InvokeCounter > 0)
                 component.InvokeCounter--;
         }
     }

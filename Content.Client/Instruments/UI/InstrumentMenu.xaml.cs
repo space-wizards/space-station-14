@@ -124,10 +124,10 @@ namespace Content.Client.Instruments.UI
                     return;
 
                 MidiStopButtonOnPressed(null);
-                if(_owner.Instrument is {} instrument)
+                if (_owner.Instrument is {} instrument)
                     instrumentSystem.OpenInput(instrument.Owner, instrument);
             }
-            else  if(_owner.Instrument is {} instrument)
+            else  if (_owner.Instrument is {} instrument)
                 instrumentSystem.CloseInput(instrument.Owner, false, instrument);
         }
 

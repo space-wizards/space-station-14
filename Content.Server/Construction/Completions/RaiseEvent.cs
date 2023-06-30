@@ -20,10 +20,10 @@ namespace Content.Server.Construction.Completions
             if (Event == null || !Directed && !Broadcast)
                 return;
 
-            if(Directed)
+            if (Directed)
                 entityManager.EventBus.RaiseLocalEvent(uid, (object)Event);
 
-            if(Broadcast)
+            if (Broadcast)
                 entityManager.EventBus.RaiseEvent(EventSource.Local, (object)Event);
         }
     }

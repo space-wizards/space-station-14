@@ -259,7 +259,7 @@ namespace Content.Server.Construction
             if (node.Entity is {} newEntity && ChangeEntity(uid, userUid, newEntity, construction) != null)
                 return true;
 
-            if(performActions)
+            if (performActions)
                 PerformActions(uid, userUid, node.Actions);
 
             // An action might have deleted the entity... Account for this.
@@ -399,7 +399,7 @@ namespace Content.Server.Construction
             if (!_prototypeManager.TryIndex<ConstructionGraphPrototype>(graphId, out var graph))
                 return false;
 
-            if(GetNodeFromGraph(graph, nodeId) is not {})
+            if (GetNodeFromGraph(graph, nodeId) is not {})
                 return false;
 
             construction.Graph = graphId;

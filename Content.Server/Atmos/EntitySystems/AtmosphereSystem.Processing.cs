@@ -152,7 +152,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessTileEqualize(GridAtmosphereComponent atmosphere, GasTileOverlayComponent? visuals)
         {
-            if(!atmosphere.ProcessingPaused)
+            if (!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.ActiveTiles);
 
             var uid = atmosphere.Owner;
@@ -179,7 +179,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessActiveTiles(GridAtmosphereComponent atmosphere, GasTileOverlayComponent? visuals)
         {
-            if(!atmosphere.ProcessingPaused)
+            if (!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.ActiveTiles);
 
             var number = 0;
@@ -201,7 +201,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessExcitedGroups(GridAtmosphereComponent gridAtmosphere)
         {
-            if(!gridAtmosphere.ProcessingPaused)
+            if (!gridAtmosphere.ProcessingPaused)
                 gridAtmosphere.CurrentRunExcitedGroups = new Queue<ExcitedGroup>(gridAtmosphere.ExcitedGroups);
 
             var number = 0;
@@ -210,10 +210,10 @@ namespace Content.Server.Atmos.EntitySystems
                 excitedGroup.BreakdownCooldown++;
                 excitedGroup.DismantleCooldown++;
 
-                if(excitedGroup.BreakdownCooldown > Atmospherics.ExcitedGroupBreakdownCycles)
+                if (excitedGroup.BreakdownCooldown > Atmospherics.ExcitedGroupBreakdownCycles)
                     ExcitedGroupSelfBreakdown(gridAtmosphere, excitedGroup);
 
-                else if(excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
+                else if (excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
                     ExcitedGroupDismantle(gridAtmosphere, excitedGroup);
 
                 if (number++ < LagCheckIterations) continue;
@@ -230,7 +230,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessHighPressureDelta(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.ProcessingPaused)
+            if (!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.HighPressureDelta);
 
             // Note: This is still processed even if space wind is turned off since this handles playing the sounds.
@@ -264,7 +264,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessHotspots(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.ProcessingPaused)
+            if (!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.HotspotTiles);
 
             var number = 0;
@@ -286,7 +286,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessSuperconductivity(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.ProcessingPaused)
+            if (!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.SuperconductivityTiles);
 
             var number = 0;
@@ -308,7 +308,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessPipeNets(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.ProcessingPaused)
+            if (!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunPipeNet = new Queue<IPipeNet>(atmosphere.PipeNets);
 
             var number = 0;
@@ -330,7 +330,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessAtmosDevices(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.ProcessingPaused)
+            if (!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunAtmosDevices = new Queue<AtmosDeviceComponent>(atmosphere.AtmosDevices);
 
             var time = _gameTiming.CurTime;

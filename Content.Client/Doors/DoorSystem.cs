@@ -75,7 +75,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (args.Sprite == null || !_gameTiming.IsFirstTimePredicted)
             return;
 
-        if(!AppearanceSystem.TryGetData<DoorState>(uid, DoorVisuals.State, out var state, args.Component))
+        if (!AppearanceSystem.TryGetData<DoorState>(uid, DoorVisuals.State, out var state, args.Component))
             state = DoorState.Closed;
 
         if (AppearanceSystem.TryGetData<string>(uid, DoorVisuals.BaseRSI, out var baseRsi, args.Component))

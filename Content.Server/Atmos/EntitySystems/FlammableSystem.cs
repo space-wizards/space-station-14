@@ -311,7 +311,7 @@ namespace Content.Server.Atmos.EntitySystems
                     // TODO FLAMMABLE: further balancing
                     var damageScale = Math.Min((int)flammable.FireStacks, 5);
 
-                    if(TryComp(uid, out TemperatureComponent? temp))
+                    if (TryComp(uid, out TemperatureComponent? temp))
                         _temperatureSystem.ChangeHeat(uid, 12500 * damageScale, false, temp);
 
                     _damageableSystem.TryChangeDamage(uid, flammable.Damage * damageScale);
@@ -333,7 +333,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
                 }
 
-                if(transform.GridUid != null)
+                if (transform.GridUid != null)
                 {
                     _atmosphereSystem.HotspotExpose(transform.GridUid.Value,
                         _transformSystem.GetGridOrMapTilePosition(uid, transform),

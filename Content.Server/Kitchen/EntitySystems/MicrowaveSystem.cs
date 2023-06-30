@@ -227,7 +227,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnInteractUsing(EntityUid uid, MicrowaveComponent component, InteractUsingEvent args)
         {
-            if(args.Handled)
+            if (args.Handled)
                 return;
             if (!(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
             {
@@ -394,7 +394,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             var portions = 0;
 
-            if(component.CurrentCookTimerTime % recipe.CookTime != 0)
+            if (component.CurrentCookTimerTime % recipe.CookTime != 0)
             {
                 //can't be a multiple of this recipe
                 return (recipe, 0);

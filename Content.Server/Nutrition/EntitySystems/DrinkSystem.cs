@@ -69,7 +69,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private FixedPoint2 DrinkVolume(EntityUid uid, DrinkComponent? component = null)
         {
-            if(!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component))
                 return FixedPoint2.Zero;
 
             if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var sol))
@@ -80,7 +80,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public bool IsEmpty(EntityUid uid, DrinkComponent? component = null)
         {
-            if(!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component))
                 return true;
 
             return DrinkVolume(uid, component) <= 0;
@@ -119,7 +119,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void SetOpen(EntityUid uid, bool opened = false, DrinkComponent? component = null)
         {
-            if(!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component))
                 return;
 
             if (opened == component.Opened)

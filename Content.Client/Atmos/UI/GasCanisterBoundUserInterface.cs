@@ -24,7 +24,7 @@ namespace Content.Client.Atmos.UI
 
             _window = new GasCanisterWindow();
 
-            if(State != null)
+            if (State != null)
                 UpdateState(State);
 
             _window.OpenCentered();

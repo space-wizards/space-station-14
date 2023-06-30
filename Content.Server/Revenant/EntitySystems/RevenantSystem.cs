@@ -153,7 +153,7 @@ public sealed partial class RevenantSystem : EntitySystem
         var tileref = Transform(uid).Coordinates.GetTileRef();
         if (tileref != null)
         {
-            if(_physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count > 0)
+            if (_physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count > 0)
             {
                 _popup.PopupEntity(Loc.GetString("revenant-in-solid"), uid, uid);
                 return false;

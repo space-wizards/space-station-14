@@ -409,7 +409,7 @@ public sealed class MindSystem : EntitySystem
 
         var oldComp = mind.OwnedComponent;
         var oldEntity = mind.OwnedEntity;
-        if(oldComp != null && oldEntity != null)
+        if (oldComp != null && oldEntity != null)
             InternalEjectMind(oldEntity.Value, oldComp);
 
         SetOwnedEntity(mind, entity, component);

@@ -228,7 +228,7 @@ public sealed partial class GameTicker
             var ent = AddGameRule(rule);
 
             // Start rule if we're already in the middle of a round
-            if(RunLevel == GameRunLevel.InRound)
+            if (RunLevel == GameRunLevel.InRound)
                 StartGameRule(ent);
         }
     }

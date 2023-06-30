@@ -114,7 +114,7 @@ namespace Content.Server.Cargo.Systems
 
             // Find our order again. It might have been dispatched or approved already
             var order = orderDatabase.Orders.Find(order => (args.OrderId == order.OrderId) && !order.Approved);
-            if(order == null)
+            if (order == null)
             {
                 return;
             }
@@ -353,7 +353,7 @@ namespace Content.Server.Cargo.Systems
             orderOut = orderDB.Orders[orderIdx];
             orderOut.NumDispatched++;
 
-            if(orderOut.NumDispatched >= orderOut.OrderQuantity)
+            if (orderOut.NumDispatched >= orderOut.OrderQuantity)
             {
                 // Order is complete. Remove from the queue.
                 orderDB.Orders.RemoveAt(orderIdx);

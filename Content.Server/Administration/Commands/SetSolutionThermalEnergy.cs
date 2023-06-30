@@ -48,12 +48,12 @@ namespace Content.Server.Administration.Commands
 
             if (solution.GetHeatCapacity(null) <= 0.0f)
             {
-                if(quantity != 0.0f)
+                if (quantity != 0.0f)
                 {
                     shell.WriteLine($"Cannot set the thermal energy of a solution with 0 heat capacity to a non-zero number.");
                     return;
                 }
-            } else if(quantity <= 0.0f)
+            } else if (quantity <= 0.0f)
             {
                 shell.WriteLine($"Cannot set the thermal energy of a solution with heat capacity to a non-positive number.");
                 return;

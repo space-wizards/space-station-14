@@ -73,7 +73,7 @@ namespace Content.Shared.Jittering
             {
                 var jittering = EntityManager.GetComponent<JitteringComponent>(uid);
 
-                if(forceValueChange || jittering.Amplitude < amplitude)
+                if (forceValueChange || jittering.Amplitude < amplitude)
                     jittering.Amplitude = amplitude;
 
                 if (forceValueChange || jittering.Frequency < frequency)

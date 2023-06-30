@@ -29,7 +29,7 @@ namespace Content.Client.Atmos.UI
 
             _window = new GasMixerWindow();
 
-            if(State != null)
+            if (State != null)
                 UpdateState(State);
 
             _window.OpenCentered();

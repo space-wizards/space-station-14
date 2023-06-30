@@ -398,7 +398,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     private void OnMobStateChanged(EntityUid uid, NukeOperativeComponent component, MobStateChangedEvent ev)
     {
-        if(ev.NewMobState == MobState.Dead)
+        if (ev.NewMobState == MobState.Dead)
             CheckRoundShouldEnd();
     }
 
@@ -743,7 +743,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         }
 
         // TODO: This should spawn the nukies in regardless and transfer if possible; rest should go to shot roles.
-        for(var i = 0; i < spawnCount; i++)
+        for (var i = 0; i < spawnCount; i++)
         {
             var spawnDetails = GetOperativeSpawnDetails(i, component);
             var nukeOpsAntag = _prototypeManager.Index<AntagPrototype>(spawnDetails.Role);

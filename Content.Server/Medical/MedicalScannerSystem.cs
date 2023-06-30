@@ -212,7 +212,7 @@ namespace Content.Server.Medical
             _updateDif -= UpdateRate;
 
             var query = EntityQueryEnumerator<MedicalScannerComponent>();
-            while(query.MoveNext(out var uid, out var scanner))
+            while (query.MoveNext(out var uid, out var scanner))
             {
                 UpdateAppearance(uid, scanner);
             }

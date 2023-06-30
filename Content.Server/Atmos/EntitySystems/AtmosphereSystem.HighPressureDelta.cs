@@ -93,9 +93,9 @@ namespace Content.Server.Atmos.EntitySystems
             // TODO ATMOS finish this
 
             // Don't play the space wind sound on tiles that are on fire...
-            if(tile.PressureDifference > 15 && !tile.Hotspot.Valid)
+            if (tile.PressureDifference > 15 && !tile.Hotspot.Valid)
             {
-                if(_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound))
+                if (_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound))
                 {
                     var coordinates = tile.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager);
                     SoundSystem.Play(SpaceWindSound, Filter.Pvs(coordinates),

@@ -52,7 +52,7 @@ public sealed partial class ThresholdBoundControl : BoxContainer
 
     public void SetWarningState(AtmosAlarmType alarm)
     {
-        if(alarm == AtmosAlarmType.Normal)
+        if (alarm == AtmosAlarmType.Normal)
         {
             CBoundLabel.FontColorOverride = null;
         }

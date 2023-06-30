@@ -100,7 +100,7 @@ namespace Content.Server.Tools
             // Not enough fuel to lit welder.
             if (fuel == FixedPoint2.Zero || fuel < welder.FuelLitCost)
             {
-                if(user != null)
+                if (user != null)
                     _popupSystem.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), uid, user.Value);
                 return false;
             }

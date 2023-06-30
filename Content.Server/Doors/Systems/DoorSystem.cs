@@ -238,7 +238,7 @@ public sealed class DoorSystem : SharedDoorSystem
     }
     private void OnEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
     {
-        if(TryComp<AirlockComponent>(uid, out var airlockComponent))
+        if (TryComp<AirlockComponent>(uid, out var airlockComponent))
         {
             if (_bolts.IsBolted(uid) || !this.IsPowered(uid, EntityManager))
                 return;
@@ -264,7 +264,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (door.OpenSound != null)
             PlaySound(uid, door.OpenSound, AudioParams.Default.WithVolume(-5), user, predicted);
 
-        if(lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
+        if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
             _bolts.SetBoltsWithAudio(uid, doorBoltComponent, !doorBoltComponent.BoltsDown);
     }
 

@@ -90,7 +90,7 @@ namespace Content.Server.Animals.Systems
 
             args.Handled = true;
             var quantity = solution.Volume;
-            if(quantity == 0)
+            if (quantity == 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("udder-system-dry"), uid, args.Args.User);
                 return;

@@ -36,7 +36,7 @@ namespace Content.Server.Roles
         public override void Greet()
         {
             base.Greet();
-            
+
             var entityManager = IoCManager.Resolve<EntityManager>();
             var mindSystem = entityManager.System<MindSystem>();
 
@@ -46,7 +46,7 @@ namespace Content.Server.Roles
                 chatMgr.DispatchServerMessage(session, Loc.GetString("job-greet-introduce-job-name",
                     ("jobName", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Name))));
 
-                if(Prototype.RequireAdminNotify)
+                if (Prototype.RequireAdminNotify)
                     chatMgr.DispatchServerMessage(session, Loc.GetString("job-greet-important-disconnect-admin-notify"));
 
                 chatMgr.DispatchServerMessage(session, Loc.GetString("job-greet-supervisors-warning", ("jobName", Name), ("supervisors", Loc.GetString(Prototype.Supervisors))));

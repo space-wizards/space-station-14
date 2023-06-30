@@ -19,7 +19,7 @@ namespace Content.Server.Atmos.Commands
         {
             if (args.Length < 5) return;
 
-            if(!int.TryParse(args[0], out var x)
+            if (!int.TryParse(args[0], out var x)
                || !int.TryParse(args[1], out var y)
                || !EntityUid.TryParse(args[2], out var euid)
                || !(AtmosCommandUtils.TryParseGasID(args[3], out var gasId))

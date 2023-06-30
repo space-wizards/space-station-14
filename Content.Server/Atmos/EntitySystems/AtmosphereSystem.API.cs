@@ -26,7 +26,7 @@ public partial class AtmosphereSystem
                 return ev.Gas;
 
             // We need to get the parent now, so we need the transform... If the parent is invalid, we can't do much else.
-            if(!Resolve(uid, ref transform) || !transform.ParentUid.IsValid() || transform.MapUid == null)
+            if (!Resolve(uid, ref transform) || !transform.ParentUid.IsValid() || transform.MapUid == null)
                 return GetTileMixture(null, null, Vector2i.Zero, excite);
 
             // Give the parent entity a chance to handle the event...
@@ -36,7 +36,7 @@ public partial class AtmosphereSystem
                 return ev.Gas;
         }
         // Oops, we did a little bit of code duplication...
-        else if(!Resolve(uid, ref transform))
+        else if (!Resolve(uid, ref transform))
         {
             return GetTileMixture(null, null, Vector2i.Zero, excite);
         }
@@ -78,7 +78,7 @@ public partial class AtmosphereSystem
         var ev = new GetAllMixturesMethodEvent(gridUid, excite);
         RaiseLocalEvent(gridUid, ref ev);
 
-        if(!ev.Handled)
+        if (!ev.Handled)
             return Enumerable.Empty<GasMixture>();
 
         DebugTools.AssertNotNull(ev.Mixtures);
@@ -132,7 +132,7 @@ public partial class AtmosphereSystem
         var ev = new GetTileMixtureMethodEvent(gridUid, mapUid, tile, excite);
 
         // If we've been passed a grid, try to let it handle it.
-        if(gridUid.HasValue)
+        if (gridUid.HasValue)
         {
             DebugTools.Assert(_mapManager.IsGrid(gridUid.Value));
             RaiseLocalEvent(gridUid.Value, ref ev, false);
@@ -143,7 +143,7 @@ public partial class AtmosphereSystem
 
         // We either don't have a grid, or the event wasn't handled.
         // Let the map handle it instead, and also broadcast the event.
-        if(mapUid.HasValue)
+        if (mapUid.HasValue)
         {
             DebugTools.Assert(_mapManager.IsMap(mapUid.Value));
             RaiseLocalEvent(mapUid.Value, ref ev, true);

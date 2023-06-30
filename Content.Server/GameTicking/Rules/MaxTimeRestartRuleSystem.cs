@@ -20,7 +20,7 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRestartRule
     {
         base.Started(uid, component, gameRule, args);
 
-        if(GameTicker.RunLevel == GameRunLevel.InRound)
+        if (GameTicker.RunLevel == GameRunLevel.InRound)
             RestartTimer(component);
     }
 

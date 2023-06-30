@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
 
-            if(tile.ExcitedGroup != null)
+            if (tile.ExcitedGroup != null)
                 ExcitedGroupResetCooldowns(tile.ExcitedGroup);
 
             if ((tile.Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (tile.Hotspot.Volume <= 1f)
@@ -66,7 +66,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if (otherTile == null)
                             continue;
 
-                        if(!otherTile.Hotspot.Valid)
+                        if (!otherTile.Hotspot.Valid)
                             HotspotExpose(gridAtmosphere, otherTile, radiatedTemperature, Atmospherics.CellVolume/4);
                     }
                 }

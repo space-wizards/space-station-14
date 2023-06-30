@@ -101,7 +101,7 @@ namespace Content.Server.Ghost.Roles
                 !EntityManager.HasComponent<GhostComponent>(attached))
                 return;
 
-            if(_openUis.ContainsKey(session))
+            if (_openUis.ContainsKey(session))
                 CloseEui(session);
 
             var eui = _openUis[session] = new GhostRolesEui();
@@ -403,7 +403,7 @@ namespace Content.Server.Ghost.Roles
         public string Help => $"{Command}";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if(shell.Player != null)
+            if (shell.Player != null)
                 EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
             else
                 shell.WriteLine("You can only open the ghost roles UI on a client.");

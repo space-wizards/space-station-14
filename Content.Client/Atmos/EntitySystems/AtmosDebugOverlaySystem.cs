@@ -42,7 +42,7 @@ namespace Content.Client.Atmos.EntitySystems
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay<AtmosDebugOverlay>())
+            if (!overlayManager.HasOverlay<AtmosDebugOverlay>())
                 overlayManager.AddOverlay(new AtmosDebugOverlay(this));
         }
 

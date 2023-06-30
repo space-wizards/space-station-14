@@ -118,7 +118,7 @@ public sealed class WieldableSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        if(!component.Wielded)
+        if (!component.Wielded)
             AttemptWield(uid, component, args.User);
         else
             AttemptUnwield(uid, component, args.User);
@@ -129,7 +129,7 @@ public sealed class WieldableSystem : EntitySystem
         // Do they have enough hands free?
         if (!EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
         {
-            if(!quiet)
+            if (!quiet)
                 _popupSystem.PopupClient(Loc.GetString("wieldable-component-no-hands"), user, user);
             return false;
         }

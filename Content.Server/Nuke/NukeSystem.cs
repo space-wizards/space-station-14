@@ -243,7 +243,7 @@ namespace Content.Server.Nuke
 
         private void OnDoAfter(EntityUid uid, NukeComponent component, DoAfterEvent args)
         {
-            if(args.Handled || args.Cancelled)
+            if (args.Handled || args.Cancelled)
                 return;
 
             DisarmBomb(uid, component);

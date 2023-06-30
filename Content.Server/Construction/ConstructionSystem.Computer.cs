@@ -60,7 +60,7 @@ public sealed partial class ConstructionSystem
 
         var board = EntityManager.SpawnEntity(component.BoardPrototype, Transform(component.Owner).Coordinates);
 
-        if(!container.Insert(board))
+        if (!container.Insert(board))
             Logger.Warning($"Couldn't insert board {board} to computer {component.Owner}!");
     }
 }

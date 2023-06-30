@@ -100,7 +100,7 @@ namespace Content.Server.Decals.Commands
                 }
             }
 
-            if(EntitySystem.Get<DecalSystem>().TryAddDecal(args[0], coordinates, out var uid, color, rotation, zIndex))
+            if (EntitySystem.Get<DecalSystem>().TryAddDecal(args[0], coordinates, out var uid, color, rotation, zIndex))
             {
                 shell.WriteLine($"Successfully created decal {uid}.");
             }

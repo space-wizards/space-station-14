@@ -28,7 +28,7 @@ namespace Content.Server.Construction
             if (!_prototypeManager.TryIndex(msg.ConstructionId, out ConstructionPrototype? prototype))
                 return;
 
-            if(GetGuide(prototype) is {} guide)
+            if (GetGuide(prototype) is {} guide)
                 RaiseNetworkEvent(new ResponseConstructionGuide(msg.ConstructionId, guide), args.SenderSession.ConnectedClient);
         }
 
@@ -153,7 +153,7 @@ namespace Content.Server.Construction
             // Iterate until the penultimate node.
             var node = startNode;
             var index = 0;
-            while(node != targetNode)
+            while (node != targetNode)
             {
                 // Can't find path, therefore can't generate guide...
                 if (!node.TryGetEdge(path[index].Name, out var edge))
@@ -185,7 +185,7 @@ namespace Content.Server.Construction
                     node = path[index++];
 
                     // Add a bit of padding if there will be more steps after this.
-                    if(node != targetNode)
+                    if (node != targetNode)
                         entries.Add(new ConstructionGuideEntry());
 
                     continue;

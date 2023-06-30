@@ -85,7 +85,7 @@ public sealed class OrbitVisualsSystem : EntitySystem
     {
         if (args.Key == _orbitAnimationKey)
         {
-            if(EntityManager.TryGetComponent(uid, out AnimationPlayerComponent? animationPlayer))
+            if (EntityManager.TryGetComponent(uid, out AnimationPlayerComponent? animationPlayer))
                 animationPlayer.Play(GetOrbitAnimation(component), _orbitAnimationKey);
         }
     }

@@ -54,7 +54,7 @@ namespace Content.Client.Disposal.UI
 
                 MailingUnitWindow.TargetListContainer.OnItemSelected += TargetSelected;
             }
-            else if(UiKey is DisposalUnitUiKey)
+            else if (UiKey is DisposalUnitUiKey)
             {
                 DisposalUnitWindow = new DisposalUnitWindow();
 

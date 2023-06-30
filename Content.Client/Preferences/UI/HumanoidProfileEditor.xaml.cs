@@ -856,7 +856,7 @@ namespace Content.Client.Preferences.UI
 
         private void UpdateFlavorTextEdit()
         {
-            if(_flavorTextEdit != null)
+            if (_flavorTextEdit != null)
             {
                 _flavorTextEdit.Text = Profile?.FlavorText ?? "";
             }

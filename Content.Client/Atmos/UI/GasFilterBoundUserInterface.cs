@@ -27,7 +27,7 @@ namespace Content.Client.Atmos.UI
 
             _window = new GasFilterWindow(atmosSystem.Gases);
 
-            if(State != null)
+            if (State != null)
                 UpdateState(State);
 
             _window.OpenCentered();

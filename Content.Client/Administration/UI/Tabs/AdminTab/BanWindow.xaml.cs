@@ -30,7 +30,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
 
         private bool TryGetMinutes(string str, out uint minutes)
         {
-            if(string.IsNullOrWhiteSpace(str))
+            if (string.IsNullOrWhiteSpace(str))
             {
                 minutes = 0;
                 return true;

@@ -191,11 +191,11 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             var gasMixDict = new Dictionary<string, GasMixture?>();
 
-            if(_nodeContainer.TryGetNode(nodeContainer, component.InletName, out PipeNode? inlet))
+            if (_nodeContainer.TryGetNode(nodeContainer, component.InletName, out PipeNode? inlet))
                 gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-inlet"), inlet.Air);
-            if(_nodeContainer.TryGetNode(nodeContainer, component.FilterName, out PipeNode? filterNode))
+            if (_nodeContainer.TryGetNode(nodeContainer, component.FilterName, out PipeNode? filterNode))
                 gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-filter"), filterNode.Air);
-            if(_nodeContainer.TryGetNode(nodeContainer, component.OutletName, out PipeNode? outlet))
+            if (_nodeContainer.TryGetNode(nodeContainer, component.OutletName, out PipeNode? outlet))
                 gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-outlet"), outlet.Air);
 
             args.GasMixtures = gasMixDict;

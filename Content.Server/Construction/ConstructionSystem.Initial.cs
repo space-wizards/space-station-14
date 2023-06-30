@@ -63,7 +63,7 @@ namespace Content.Server.Construction
             {
                 while (containerSlotEnumerator.MoveNext(out var containerSlot))
                 {
-                    if(!containerSlot.ContainedEntity.HasValue) continue;
+                    if (!containerSlot.ContainedEntity.HasValue) continue;
                     if (EntityManager.TryGetComponent(containerSlot.ContainedEntity.Value, out ServerStorageComponent? storage))
                     {
                         foreach (var storedEntity in storage.StoredEntities!)
@@ -455,7 +455,7 @@ namespace Content.Server.Construction
 
             var edge = startNode.GetEdge(pathFind[0].Name);
 
-            if(edge == null)
+            if (edge == null)
                 throw new InvalidDataException($"Can't find edge from starting node to the next node in pathfinding! Recipe: {ev.PrototypeName}");
 
             var valid = false;

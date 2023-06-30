@@ -81,7 +81,7 @@ namespace Content.Server.Salvage
 
         private void OnRoundEnd(GameRunLevelChangedEvent ev)
         {
-            if(ev.New != GameRunLevel.InRound)
+            if (ev.New != GameRunLevel.InRound)
             {
                 _salvageGridStates.Clear();
             }
@@ -273,7 +273,7 @@ namespace Content.Server.Salvage
 
         private void SafeDeleteSalvage(EntityUid salvage)
         {
-            if(!EntityManager.TryGetComponent<TransformComponent>(salvage, out var salvageTransform))
+            if (!EntityManager.TryGetComponent<TransformComponent>(salvage, out var salvageTransform))
             {
                 Log.Error("Salvage entity was missing transform component");
                 return;

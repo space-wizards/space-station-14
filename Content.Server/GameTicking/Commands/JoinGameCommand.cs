@@ -63,7 +63,7 @@ namespace Content.Server.GameTicking.Commands
 
                 var station = new EntityUid(sid);
                 var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
-                if(stationJobs.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
+                if (stationJobs.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
                 {
                     shell.WriteLine($"{jobPrototype.LocalizedName} has no available slots.");
                     return;

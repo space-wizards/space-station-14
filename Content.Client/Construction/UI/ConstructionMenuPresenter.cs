@@ -58,7 +58,7 @@ namespace Content.Client.Construction.UI
                     else
                         _constructionView.OpenCentered();
 
-                    if(_selected != null)
+                    if (_selected != null)
                         PopulateInfo(_selected);
                 }
                 else

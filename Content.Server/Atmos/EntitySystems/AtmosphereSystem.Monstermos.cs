@@ -80,10 +80,10 @@ namespace Content.Server.Atmos.EntitySystems
                     if (!exploring.AdjacentBits.IsFlagSet(direction)) continue;
                     var adj = exploring.AdjacentTiles[j];
                     if (adj?.Air == null) continue;
-                    if(adj.MonstermosInfo.LastQueueCycle == queueCycle) continue;
+                    if (adj.MonstermosInfo.LastQueueCycle == queueCycle) continue;
                     adj.MonstermosInfo = new MonstermosInfo {LastQueueCycle = queueCycle};
 
-                    if(tileCount < Atmospherics.MonstermosHardTileLimit)
+                    if (tileCount < Atmospherics.MonstermosHardTileLimit)
                         _equalizeTiles[tileCount++] = adj;
 
                     if (adj.Space && MonstermosDepressurization)
@@ -441,7 +441,7 @@ namespace Content.Server.Atmos.EntitySystems
                     DebugTools.Assert(tile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
                     // If flood fill has already reached this tile, continue.
                     if (tile2.MonstermosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
-                    if(tile2.Space) continue;
+                    if (tile2.Space) continue;
                     tile2.MonstermosInfo.CurrentTransferDirection = direction.GetOpposite();
                     tile2.MonstermosInfo.CurrentTransferAmount = 0.0f;
                     tile2.PressureSpecificTarget = otherTile.PressureSpecificTarget;
@@ -532,7 +532,7 @@ namespace Content.Server.Atmos.EntitySystems
                 _physics.ApplyAngularImpulse(mapGrid.Owner, Vector2.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved, body: gridPhysics);
             }
 
-            if(tileCount > 10 && (totalMolesRemoved / tileCount) > 10)
+            if (tileCount > 10 && (totalMolesRemoved / tileCount) > 10)
                 _adminLog.Add(LogType.ExplosiveDepressurization, LogImpact.High,
                     $"Explosive depressurization removed {totalMolesRemoved} moles from {tileCount} tiles starting from position {tile.GridIndices:position} on grid ID {tile.GridIndex:grid}");
 
@@ -587,7 +587,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (!hasTransferDirs) return;
 
-            for(var i = 0; i < Atmospherics.Directions; i++)
+            for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
                 if (!tile.AdjacentBits.IsFlagSet(direction)) continue;
@@ -616,7 +616,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var direction = (AtmosDirection) (1 << i);
                 var amount = transferDirs[i];
                 // Since AdjacentBits is set, AdjacentTiles[i] wouldn't be null, and neither would its air.
-                if(amount < 0 && tile.AdjacentBits.IsFlagSet(direction))
+                if (amount < 0 && tile.AdjacentBits.IsFlagSet(direction))
                     FinalizeEq(gridAtmosphere, tile.AdjacentTiles[i]!, visuals);  // A bit of recursion if needed.
             }
         }

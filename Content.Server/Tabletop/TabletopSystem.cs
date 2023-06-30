@@ -85,7 +85,7 @@ namespace Content.Server.Tabletop
 
         private void OnPlayerDetached(EntityUid uid, TabletopGamerComponent component, PlayerDetachedEvent args)
         {
-            if(component.Tabletop.IsValid())
+            if (component.Tabletop.IsValid())
                 CloseSessionFor(args.Player, component.Tabletop);
         }
 
@@ -94,7 +94,7 @@ namespace Content.Server.Tabletop
             if (!EntityManager.TryGetComponent(uid, out ActorComponent? actor))
                 return;
 
-            if(component.Tabletop.IsValid())
+            if (component.Tabletop.IsValid())
                 CloseSessionFor(actor.PlayerSession, component.Tabletop);
         }
 

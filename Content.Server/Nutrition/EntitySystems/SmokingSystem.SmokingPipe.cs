@@ -63,7 +63,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!isHotEvent.IsHot)
                 return;
 
-            if(TryTransferReagents(component, smokable))
+            if (TryTransferReagents(component, smokable))
                 SetSmokableState(uid, SmokableState.Lit, smokable);
             args.Handled = true;
         }

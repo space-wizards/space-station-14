@@ -171,11 +171,11 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     public static Color ColorForAlarm(AtmosAlarmType curAlarm)
     {
-        if(curAlarm == AtmosAlarmType.Danger)
+        if (curAlarm == AtmosAlarmType.Danger)
         {
             return StyleNano.DangerousRedFore;
         }
-        else if(curAlarm == AtmosAlarmType.Warning)
+        else if (curAlarm == AtmosAlarmType.Warning)
         {
             return StyleNano.ConcerningOrangeFore;
         }

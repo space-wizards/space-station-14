@@ -109,7 +109,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void AddSwitchPowerVerb(EntityUid uid, PowerSwitchComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if(!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             if (!HasComp<HandsComponent>(args.User))

@@ -22,7 +22,7 @@ public sealed partial class ChemistrySystem
 
         var mixAttemptEvent = new MixingAttemptEvent(uid);
         RaiseLocalEvent(uid, ref mixAttemptEvent);
-        if(mixAttemptEvent.Cancelled)
+        if (mixAttemptEvent.Cancelled)
         {
             return;
         }

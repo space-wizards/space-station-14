@@ -72,7 +72,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="frameTime">The amount of time since the last set of updates.</param>
     public override void Update(float frameTime)
     {
-        if(!_timing.IsFirstTimePredicted)
+        if (!_timing.IsFirstTimePredicted)
             return;
 
         foreach(var singularity in EntityManager.EntityQuery<SingularityComponent>())
@@ -102,7 +102,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="singularity">The state of the singularity to update.</param>
     public void Update(EntityUid uid, TimeSpan frameTime, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
 
         singularity.LastUpdateTime = _timing.CurTime;
@@ -121,7 +121,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="singularity">The state of the singularity to set the energy of.</param>
     public void SetEnergy(EntityUid uid, float value, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
 
         var oldValue = singularity.Energy;
@@ -152,11 +152,11 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="singularity">The state of the singularity to adjust the energy of.</param>
     public void AdjustEnergy(EntityUid uid, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
 
         var newValue = singularity.Energy + delta;
-        if((!snapMin && newValue < min)
+        if ((!snapMin && newValue < min)
         || (!snapMax && newValue > max))
             return;
         SetEnergy(uid, MathHelper.Clamp(newValue, min, max), singularity);
@@ -171,7 +171,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="singularity">The state of the singularity to set the update period for.</param>
     public void SetUpdatePeriod(EntityUid uid, TimeSpan value, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
 
         if (MathHelper.CloseTo(singularity.TargetUpdatePeriod.TotalSeconds, value.TotalSeconds))

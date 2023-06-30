@@ -27,7 +27,7 @@ namespace Content.Server.Singularity.EntitySystems
         {
             var curTime = _gameTiming.CurTime;
 
-            if(curTime < component.CoolDownEnd)
+            if (curTime < component.CoolDownEnd)
                 return;
 
             ToggleCollector(uid, args.User, component);

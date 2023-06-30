@@ -12,7 +12,7 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
             return;
 
         // Handle APC screen overlay:
-        if(!AppearanceSystem.TryGetData<ApcChargeState>(uid, ApcVisuals.ChargeState, out var chargeState, args.Component))
+        if (!AppearanceSystem.TryGetData<ApcChargeState>(uid, ApcVisuals.ChargeState, out var chargeState, args.Component))
             chargeState = ApcChargeState.Lack;
 
         if (chargeState >= 0 && chargeState < ApcChargeState.NumStates)
@@ -22,7 +22,7 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
             // LockState does nothing currently. The backend doesn't exist.
             if (AppearanceSystem.TryGetData<byte>(uid, ApcVisuals.LockState, out var lockStates, args.Component))
             {
-                for(var i = 0; i < comp.LockIndicators; ++i)
+                for (var i = 0; i < comp.LockIndicators; ++i)
                 {
                     var layer = ((byte)ApcVisualLayers.LockIndicatorOverlayStart + i);
                     sbyte lockState = (sbyte)((lockStates >> (i << (sbyte)ApcLockState.LogWidth)) & (sbyte)ApcLockState.All);
@@ -34,7 +34,7 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
             // ChannelState does nothing currently. The backend doesn't exist.
             if (AppearanceSystem.TryGetData<byte>(uid, ApcVisuals.ChannelState, out var channelStates, args.Component))
             {
-                for(var i = 0; i < comp.ChannelIndicators; ++i)
+                for (var i = 0; i < comp.ChannelIndicators; ++i)
                 {
                     var layer = ((byte)ApcVisualLayers.ChannelIndicatorOverlayStart + i);
                     sbyte channelState = (sbyte)((channelStates >> (i << (sbyte)ApcChannelState.LogWidth)) & (sbyte)ApcChannelState.All);
@@ -50,12 +50,12 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
         {
             /// Overrides all of the lock and channel indicators.
             args.Sprite.LayerSetState(ApcVisualLayers.ChargeState, comp.EmaggedScreenState);
-            for(var i = 0; i < comp.LockIndicators; ++i)
+            for (var i = 0; i < comp.LockIndicators; ++i)
             {
                 var layer = ((byte)ApcVisualLayers.LockIndicatorOverlayStart + i);
                 args.Sprite.LayerSetVisible(layer, false);
             }
-            for(var i = 0; i < comp.ChannelIndicators; ++i)
+            for (var i = 0; i < comp.ChannelIndicators; ++i)
             {
                 var layer = ((byte)ApcVisualLayers.ChannelIndicatorOverlayStart + i);
                 args.Sprite.LayerSetVisible(layer, false);

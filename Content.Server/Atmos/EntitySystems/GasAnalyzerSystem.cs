@@ -88,7 +88,7 @@ namespace Content.Server.Atmos.EntitySystems
             component.Enabled = true;
             Dirty(component);
             UpdateAppearance(component);
-            if(!HasComp<ActiveGasAnalyzerComponent>(uid))
+            if (!HasComp<ActiveGasAnalyzerComponent>(uid))
                 AddComp<ActiveGasAnalyzerComponent>(uid);
             UpdateAnalyzer(uid, component);
         }
@@ -98,7 +98,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void OnDropped(EntityUid uid, GasAnalyzerComponent component, DroppedEvent args)
         {
-            if(args.User is { } userId && component.Enabled)
+            if (args.User is { } userId && component.Enabled)
                 _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
             DisableAnalyzer(uid, component, args.User);
         }
@@ -159,7 +159,7 @@ namespace Content.Server.Atmos.EntitySystems
                 // Check if position is out of range => don't update and disable
                 if (!component.LastPosition.Value.InRange(EntityManager, userPos, SharedInteractionSystem.InteractionRange))
                 {
-                    if(component.User is { } userId && component.Enabled)
+                    if (component.User is { } userId && component.Enabled)
                         _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
                     DisableAnalyzer(uid, component, component.User);
                     return false;
@@ -199,7 +199,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     foreach (var mixes in ev.GasMixtures)
                     {
-                        if(mixes.Value != null)
+                        if (mixes.Value != null)
                             gasMixList.Add(new GasMixEntry(mixes.Key, mixes.Value.Pressure, mixes.Value.Temperature, GenerateGasEntryArray(mixes.Value)));
                     }
 

@@ -90,7 +90,7 @@ namespace Content.Shared.Decals
             foreach (var (oldUid, newUid) in uidMap)
             {
                 var indices = uidChunkMap[oldUid];
-                if(!newDict.ContainsKey(indices))
+                if (!newDict.ContainsKey(indices))
                     newDict[indices] = new();
                 newDict[indices].Decals[newUid] = dictionary[indices].Decals[oldUid];
             }

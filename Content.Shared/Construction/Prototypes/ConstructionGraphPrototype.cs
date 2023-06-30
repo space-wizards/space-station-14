@@ -135,7 +135,7 @@ namespace Content.Shared.Construction.Prototypes
                 foreach (var edge in current.Edges)
                 {
                     var edgeNode = _nodes[edge.Target];
-                    if(cameFrom.ContainsKey(edgeNode)) continue;
+                    if (cameFrom.ContainsKey(edgeNode)) continue;
                     frontier.Enqueue(edgeNode);
                     cameFrom[edgeNode] = current;
                 }

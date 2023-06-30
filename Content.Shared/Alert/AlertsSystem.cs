@@ -112,7 +112,7 @@ public abstract class AlertsSystem : EntitySystem
     /// </summary>
     public void ClearAlertCategory(EntityUid euid, AlertCategory category)
     {
-        if(!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
+        if (!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
             return;
 
         var key = AlertKey.ForCategory(category);

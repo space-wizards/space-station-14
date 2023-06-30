@@ -34,7 +34,7 @@ namespace Content.Server.Administration.Commands
                 shell.WriteLine("You can't ghost here!");
                 return;
             }
-            
+
             var mindSystem = _entities.System<MindSystem>();
 
             if (mind.VisitingEntity != default && _entities.TryGetComponent<GhostComponent>(mind.VisitingEntity, out var oldGhostComponent))
@@ -56,7 +56,7 @@ namespace Content.Server.Administration.Commands
             if (canReturn)
             {
                 // TODO: Remove duplication between all this and "GamePreset.OnGhostAttempt()"...
-                if(!string.IsNullOrWhiteSpace(mind.CharacterName))
+                if (!string.IsNullOrWhiteSpace(mind.CharacterName))
                     _entities.GetComponent<MetaDataComponent>(ghost).EntityName = mind.CharacterName;
                 else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
                     _entities.GetComponent<MetaDataComponent>(ghost).EntityName = mind.Session.Name;

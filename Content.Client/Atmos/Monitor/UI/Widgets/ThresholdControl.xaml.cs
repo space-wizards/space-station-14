@@ -129,14 +129,14 @@ public sealed partial class ThresholdControl : BoxContainer
         var upperWarningState = AtmosAlarmType.Normal;
         var lowerWarningState = AtmosAlarmType.Normal;
 
-        if(alarm == AtmosAlarmType.Danger)
+        if (alarm == AtmosAlarmType.Danger)
         {
-            if(which == AtmosMonitorThresholdBound.Upper) upperDangerState = alarm;
+            if (which == AtmosMonitorThresholdBound.Upper) upperDangerState = alarm;
             else lowerDangerState = alarm;
         }
-        else if(alarm == AtmosAlarmType.Warning)
+        else if (alarm == AtmosAlarmType.Warning)
         {
-            if(which == AtmosMonitorThresholdBound.Upper) upperWarningState = alarm;
+            if (which == AtmosMonitorThresholdBound.Upper) upperWarningState = alarm;
             else lowerWarningState = alarm;
         }
 

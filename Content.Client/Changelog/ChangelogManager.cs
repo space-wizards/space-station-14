@@ -61,7 +61,7 @@ namespace Content.Client.Changelog
             MaxId = changelog.Max(c => c.Id);
 
             var path = new ResPath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}");
-            if(_resource.UserData.TryReadAllText(path, out var lastReadIdText))
+            if (_resource.UserData.TryReadAllText(path, out var lastReadIdText))
             {
                 LastReadId = int.Parse(lastReadIdText);
             }

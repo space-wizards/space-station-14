@@ -20,7 +20,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
     private void OnComponentStartup(EntityUid uid, AirlockComponent comp, ComponentStartup args)
     {
         // Has to be on component startup because we don't know what order components initialize in and running this before DoorComponent inits _will_ crash.
-        if(!TryComp<DoorComponent>(uid, out var door))
+        if (!TryComp<DoorComponent>(uid, out var door))
             return;
 
         if (comp.OpenUnlitVisible) // Otherwise there are flashes of the fallback sprite between clicking on the door and the door closing animation starting.
@@ -56,7 +56,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
             }
         };
 
-        if(!comp.AnimatePanel)
+        if (!comp.AnimatePanel)
             return;
 
         ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()

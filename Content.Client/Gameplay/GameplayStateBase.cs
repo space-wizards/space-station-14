@@ -154,7 +154,7 @@ namespace Content.Client.Gameplay
         protected virtual void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
         {
             // If there is no InputSystem, then there is nothing to forward to, and nothing to do here.
-            if(!_entitySystemManager.TryGetEntitySystem(out InputSystem? inputSys))
+            if (!_entitySystemManager.TryGetEntitySystem(out InputSystem? inputSys))
                 return;
 
             var kArgs = args.KeyEventArgs;

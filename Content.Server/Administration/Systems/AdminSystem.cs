@@ -110,7 +110,7 @@ namespace Content.Server.Administration.Systems
 
         private void OnAdminPermsChanged(AdminPermsChangedEventArgs obj)
         {
-            if(!obj.IsAdmin)
+            if (!obj.IsAdmin)
             {
                 RaiseNetworkEvent(new FullPlayerListEvent(), obj.Player.ConnectedClient);
                 return;
@@ -123,14 +123,14 @@ namespace Content.Server.Administration.Systems
         {
             // If disconnected then the player won't have a connected entity to get character name from.
             // The disconnected state gets sent by OnPlayerStatusChanged.
-            if(ev.Player.Status == SessionStatus.Disconnected) return;
+            if (ev.Player.Status == SessionStatus.Disconnected) return;
 
             UpdatePlayerList(ev.Player);
         }
 
         private void OnPlayerAttached(PlayerAttachedEvent ev)
         {
-            if(ev.Player.Status == SessionStatus.Disconnected) return;
+            if (ev.Player.Status == SessionStatus.Disconnected) return;
 
             _roundActivePlayers.Add(ev.Player.UserId);
             UpdatePlayerList(ev.Player);

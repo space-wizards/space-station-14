@@ -48,10 +48,10 @@ namespace Content.Client.Jittering
 
         private void OnAnimationCompleted(EntityUid uid, JitteringComponent jittering, AnimationCompletedEvent args)
         {
-            if(args.Key != _jitterAnimationKey)
+            if (args.Key != _jitterAnimationKey)
                 return;
 
-            if(EntityManager.TryGetComponent(uid, out AnimationPlayerComponent? animationPlayer)
+            if (EntityManager.TryGetComponent(uid, out AnimationPlayerComponent? animationPlayer)
             && EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
                 animationPlayer.Play(GetAnimation(jittering, sprite), _jitterAnimationKey);
         }

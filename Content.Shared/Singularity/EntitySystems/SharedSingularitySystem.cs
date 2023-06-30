@@ -78,7 +78,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="singularity">The state of the singularity to change the level of.</param>
     public void SetLevel(EntityUid uid, byte value, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
 
         value = MathHelper.Clamp(value, MinSingularityLevel, MaxSingularityLevel);
@@ -88,7 +88,7 @@ public abstract class SharedSingularitySystem : EntitySystem
 
         singularity.Level = value;
         UpdateSingularityLevel(uid, oldValue, singularity);
-        if(!EntityManager.Deleted(singularity.Owner))
+        if (!EntityManager.Deleted(singularity.Owner))
             EntityManager.Dirty(singularity);
     }
 
@@ -101,7 +101,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="singularity">The state of the singularity to change the radioactivity of.</param>
     public void SetRadsPerLevel(EntityUid uid, float value, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
 
         var oldValue = singularity.RadsPerLevel;
@@ -121,7 +121,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="singularity">The state of the singularity which's level has changed.</param>
     public void UpdateSingularityLevel(EntityUid uid, byte oldValue, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
 
         RaiseLocalEvent(uid, new SingularityLevelChangedEvent(singularity.Level, oldValue, singularity));
@@ -149,7 +149,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="rads">The state of the radioactivity of the singularity to update.</param>
     private void UpdateRadiation(EntityUid uid, SingularityComponent? singularity = null, RadiationSourceComponent? rads = null)
     {
-        if(!Resolve(uid, ref singularity, ref rads, logMissing: false))
+        if (!Resolve(uid, ref singularity, ref rads, logMissing: false))
             return;
         rads.Intensity = singularity.Level * singularity.RadsPerLevel;
     }

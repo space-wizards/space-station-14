@@ -141,7 +141,7 @@ public static class PoolManager
         List<Pair> localPairs;
         lock (PairLock)
         {
-            if(Dead)
+            if (Dead)
                 return;
             Dead = true;
             localPairs = Pairs.Keys.ToList();
@@ -443,7 +443,7 @@ public static class PoolManager
                     serverProtoManager.RemoveString(pair.Settings.ExtraPrototypes.Trim());
                 });
             }
-            if(!pair.Settings.NoClient)
+            if (!pair.Settings.NoClient)
             {
                 var clientProtoManager = pair.Client.ResolveDependency<IPrototypeManager>();
                 await pair.Client.WaitPost(() =>

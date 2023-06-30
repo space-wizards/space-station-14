@@ -89,7 +89,7 @@ namespace Content.Shared.Gravity
         private void OnGravityChange(ref GravityChangedEvent ev)
         {
             var alerts = AllEntityQuery<AlertsComponent, TransformComponent>();
-            while(alerts.MoveNext(out var uid, out var comp, out var xform))
+            while (alerts.MoveNext(out var uid, out var comp, out var xform))
             {
                 if (xform.GridUid != ev.ChangedGridIndex) continue;
 

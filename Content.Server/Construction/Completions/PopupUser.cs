@@ -19,7 +19,7 @@ namespace Content.Server.Construction.Completions
 
             var popupSystem = entityManager.EntitySysManager.GetEntitySystem<PopupSystem>();
 
-            if(Cursor)
+            if (Cursor)
                 popupSystem.PopupCursor(Loc.GetString(Text), userUid.Value);
             else
                 popupSystem.PopupEntity(Loc.GetString(Text), uid, userUid.Value);

@@ -282,7 +282,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (component.Integrity <= 0)
                 {
                     var environment = _atmosphereSystem.GetContainingMixture(component.Owner, false, true);
-                    if(environment != null)
+                    if (environment != null)
                         _atmosphereSystem.Merge(environment, component.Air);
 
                     _audioSys.Play(component.RuptureSound, Filter.Pvs(component.Owner), Transform(component.Owner).Coordinates, true, AudioParams.Default.WithVariation(0.125f));

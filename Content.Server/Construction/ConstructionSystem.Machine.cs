@@ -162,7 +162,7 @@ public sealed partial class ConstructionSystem
             {
                 var c = EntityManager.SpawnEntity(info.DefaultPrototype, Transform(uid).Coordinates);
 
-                if(!partContainer.Insert(c))
+                if (!partContainer.Insert(c))
                     throw new Exception($"Couldn't insert machine component part with default prototype '{compName}' to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}");
             }
         }
@@ -173,7 +173,7 @@ public sealed partial class ConstructionSystem
             {
                 var c = EntityManager.SpawnEntity(info.DefaultPrototype, Transform(uid).Coordinates);
 
-                if(!partContainer.Insert(c))
+                if (!partContainer.Insert(c))
                     throw new Exception($"Couldn't insert machine component part with default prototype '{tagName}' to machine with prototype {MetaData(uid).EntityPrototype?.ID ?? "N/A"}");
             }
         }

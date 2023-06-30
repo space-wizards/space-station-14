@@ -261,7 +261,7 @@ public partial class SharedBodySystem
             if (part.PartType == BodyPartType.Leg)
             {
                 UpdateMovementSpeed(oldBody);
-                if(!GetBodyChildrenOfType(oldBody, BodyPartType.Leg).Any())
+                if (!GetBodyChildrenOfType(oldBody, BodyPartType.Leg).Any())
                     Standing.Down(oldBody);
             }
 

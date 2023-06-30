@@ -507,7 +507,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
             var removedQuantity = solution.RemoveReagent(reagentId, quantity);
 
-            if(removedQuantity > 0)
+            if (removedQuantity > 0)
                 removedSolution.AddReagent(reagentId, removedQuantity);
         }
 
@@ -543,7 +543,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         var getMixableSolutionAttempt = new GetMixableSolutionAttemptEvent(uid);
         RaiseLocalEvent(uid, ref getMixableSolutionAttempt);
-        if(getMixableSolutionAttempt.MixedSolution != null)
+        if (getMixableSolutionAttempt.MixedSolution != null)
         {
             solution = getMixableSolutionAttempt.MixedSolution;
             return true;

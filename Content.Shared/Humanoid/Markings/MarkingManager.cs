@@ -108,7 +108,7 @@ namespace Content.Shared.Humanoid.Markings
 
         private void OnPrototypeReload(PrototypesReloadedEventArgs args)
         {
-            if(!args.ByType.TryGetValue(typeof(MarkingPrototype), out var set))
+            if (!args.ByType.TryGetValue(typeof(MarkingPrototype), out var set))
                 return;
 
 
@@ -181,7 +181,7 @@ namespace Content.Shared.Humanoid.Markings
                 alpha = 1f;
                 return false;
             }
-            
+
             alpha = sprite.LayerAlpha;
             return true;
         }

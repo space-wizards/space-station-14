@@ -21,7 +21,7 @@ namespace Content.Server.Construction.Completions
 
             foreach (var contained in container.ContainedEntities.ToArray())
             {
-                if(container.Remove(contained))
+                if (container.Remove(contained))
                     entityManager.QueueDeleteEntity(contained);
             }
         }

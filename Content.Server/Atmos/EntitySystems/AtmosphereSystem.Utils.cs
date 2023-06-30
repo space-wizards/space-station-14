@@ -89,7 +89,7 @@ public partial class AtmosphereSystem
 
         while (enumerator.MoveNext(out var airtight))
         {
-            if(airtight.AirBlocked)
+            if (airtight.AirBlocked)
                 value |= airtight.AirBlockedDirection;
         }
 

@@ -117,7 +117,7 @@ public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
             whichFailed = AtmosMonitorThresholdBound.Upper;
             return true;
         }
-        if(value <= LowerBound)
+        if (value <= LowerBound)
         {
             state = AtmosAlarmType.Danger;
             whichFailed = AtmosMonitorThresholdBound.Lower;

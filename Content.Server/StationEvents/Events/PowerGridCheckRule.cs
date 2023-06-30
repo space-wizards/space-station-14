@@ -48,7 +48,7 @@ namespace Content.Server.StationEvents.Events
 
                 if (TryComp(entity, out ApcComponent? apcComponent))
                 {
-                    if(!apcComponent.MainBreakerEnabled)
+                    if (!apcComponent.MainBreakerEnabled)
                         _apcSystem.ApcToggleBreaker(entity, apcComponent);
                 }
             }

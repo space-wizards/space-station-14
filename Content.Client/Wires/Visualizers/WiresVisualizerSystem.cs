@@ -12,7 +12,7 @@ namespace Content.Client.Wires.Visualizers
 
             var layer = args.Sprite.LayerMapReserveBlank(WiresVisualLayers.MaintenancePanel);
 
-            if(args.AppearanceData.TryGetValue(WiresVisuals.MaintenancePanelState, out var panelStateObject) &&
+            if (args.AppearanceData.TryGetValue(WiresVisuals.MaintenancePanelState, out var panelStateObject) &&
                 panelStateObject is bool panelState)
             {
                 args.Sprite.LayerSetVisible(layer, panelState);

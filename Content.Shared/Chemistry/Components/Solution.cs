@@ -403,7 +403,7 @@ namespace Content.Shared.Chemistry.Components
             {
                 var reagent = Contents[i];
 
-                if(reagent.ReagentId != reagentId)
+                if (reagent.ReagentId != reagentId)
                     continue;
 
                 var curQuantity = reagent.Quantity;

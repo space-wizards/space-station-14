@@ -76,7 +76,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="frameTime">The amount of time that has elapsed since the last cooldown update.</param>
     public override void Update(float frameTime)
     {
-        if(!_timing.IsFirstTimePredicted)
+        if (!_timing.IsFirstTimePredicted)
             return;
 
         foreach(var (eventHorizon, xform) in EntityManager.EntityQuery<EventHorizonComponent, TransformComponent>())
@@ -95,14 +95,14 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="xform">The transform of the event horizon.</param>
     public void Update(EntityUid uid, EventHorizonComponent? eventHorizon = null, TransformComponent? xform = null)
     {
-        if(!Resolve(uid, ref eventHorizon))
+        if (!Resolve(uid, ref eventHorizon))
             return;
 
         eventHorizon.LastConsumeWaveTime = _timing.CurTime;
         eventHorizon.NextConsumeWaveTime = eventHorizon.LastConsumeWaveTime + eventHorizon.TargetConsumePeriod;
         if (eventHorizon.BeingConsumedByAnotherEventHorizon)
             return;
-        if(!Resolve(uid, ref xform))
+        if (!Resolve(uid, ref xform))
             return;
 
         // Handle singularities some admin smited into a locker.
@@ -150,7 +150,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="outerContainer">The innermost container of the entity to consume that isn't also being consumed by the event horizon.</param>
     public bool AttemptConsumeEntity(EntityUid uid, EventHorizonComponent eventHorizon, IContainer? outerContainer = null)
     {
-        if(!CanConsumeEntity(uid, eventHorizon))
+        if (!CanConsumeEntity(uid, eventHorizon))
             return false;
 
         ConsumeEntity(uid, eventHorizon, outerContainer);
@@ -179,7 +179,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="eventHorizon">The event horizon component attached to the center entity.</param>
     public void ConsumeEntitiesInRange(EntityUid uid, float range, TransformComponent? xform = null, EventHorizonComponent? eventHorizon = null)
     {
-        if(!Resolve(uid, ref xform, ref eventHorizon))
+        if (!Resolve(uid, ref xform, ref eventHorizon))
             return;
 
         foreach(var entity in _lookup.GetEntitiesInRange(xform.MapPosition, range, flags: LookupFlags.Uncontained))
@@ -220,7 +220,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         {
             // Attempt to insert immune entities into innermost container at least as outer as outerContainer.
             var target_container = outerContainer;
-            while(target_container != null)
+            while (target_container != null)
             {
                 if (target_container.Insert(entity))
                     break;
@@ -300,7 +300,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     {
         foreach(var blockingEntity in grid.GetAnchoredEntities(tile.GridIndices))
         {
-            if(!CanConsumeEntity(blockingEntity, eventHorizon))
+            if (!CanConsumeEntity(blockingEntity, eventHorizon))
                 return false;
         }
         return true;
@@ -316,7 +316,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="eventHorizon">The event horizon component attached to the center entity.</param>
     public void ConsumeTilesInRange(EntityUid uid, float range, TransformComponent? xform, EventHorizonComponent? eventHorizon)
     {
-        if(!Resolve(uid, ref xform) || !Resolve(uid, ref eventHorizon))
+        if (!Resolve(uid, ref xform) || !Resolve(uid, ref eventHorizon))
             return;
 
         var mapPos = xform.MapPosition;
@@ -340,7 +340,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="eventHorizon">The event horizon component attached to the center entity.</param>
     public void ConsumeEverythingInRange(EntityUid uid, float range, TransformComponent? xform = null, EventHorizonComponent? eventHorizon = null)
     {
-        if(!Resolve(uid, ref xform, ref eventHorizon))
+        if (!Resolve(uid, ref xform, ref eventHorizon))
             return;
 
         ConsumeEntitiesInRange(uid, range, xform, eventHorizon);
@@ -361,7 +361,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="eventHorizon">The state of the event horizon to set the consume wave period for.</param>
     public void SetConsumePeriod(EntityUid uid, TimeSpan value, EventHorizonComponent? eventHorizon = null)
     {
-        if(!Resolve(uid, ref eventHorizon))
+        if (!Resolve(uid, ref eventHorizon))
             return;
 
         if (MathHelper.CloseTo(eventHorizon.TargetConsumePeriod.TotalSeconds, value.TotalSeconds))
@@ -402,7 +402,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="args">The event arguments.</param>
     public void PreventConsume<TComp>(EntityUid uid, TComp comp, EventHorizonAttemptConsumeEntityEvent args)
     {
-        if(!args.Cancelled)
+        if (!args.Cancelled)
             args.Cancel();
     }
 
@@ -417,7 +417,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     {
         if (args.Cancelled)
             return;
-        if(!args.EventHorizon.CanBreachContainment)
+        if (!args.EventHorizon.CanBreachContainment)
             PreventConsume(uid, comp, args);
     }
 
@@ -448,7 +448,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="args">The event arguments.</param>
     private void OnAnotherEventHorizonAttemptConsumeThisEventHorizon(EntityUid uid, EventHorizonComponent comp, EventHorizonAttemptConsumeEntityEvent args)
     {
-        if(!args.Cancelled && (args.EventHorizon == comp || comp.BeingConsumedByAnotherEventHorizon))
+        if (!args.Cancelled && (args.EventHorizon == comp || comp.BeingConsumedByAnotherEventHorizon))
             args.Cancel();
     }
 
@@ -496,7 +496,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
             return;
 
         var containerEntity = args.Args.Container.Owner;
-        if(!(EntityManager.EntityExists(containerEntity) && AttemptConsumeEntity(containerEntity, comp))) {
+        if (!(EntityManager.EntityExists(containerEntity) && AttemptConsumeEntity(containerEntity, comp))) {
             ConsumeEntitiesInContainer(uid, args.Args.Container, comp, args.Args.Container);
         }
     }

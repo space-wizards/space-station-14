@@ -56,7 +56,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="eventHorizon">The state of the event horizon to change the radius of.</param>
     public void SetRadius(EntityUid uid, float value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
     {
-        if(!Resolve(uid, ref eventHorizon))
+        if (!Resolve(uid, ref eventHorizon))
             return;
 
         var oldValue = eventHorizon.Radius;
@@ -79,7 +79,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="eventHorizon">The state of the event horizon to make (in)capable of breaching containment.</param>
     public void SetCanBreachContainment(EntityUid uid, bool value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
     {
-        if(!Resolve(uid, ref eventHorizon))
+        if (!Resolve(uid, ref eventHorizon))
             return;
 
         var oldValue = eventHorizon.CanBreachContainment;
@@ -102,7 +102,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="eventHorizon">The state of the event horizon with the fixture ID to change.</param>
     public void SetHorizonFixtureId(EntityUid uid, string? value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
     {
-        if(!Resolve(uid, ref eventHorizon))
+        if (!Resolve(uid, ref eventHorizon))
             return;
 
         var oldValue = eventHorizon.HorizonFixtureId;
@@ -123,7 +123,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="eventHorizon">The state of the event horizon associated with the fixture to update.</param>
     public void UpdateEventHorizonFixture(EntityUid uid, PhysicsComponent? physics = null, EventHorizonComponent? eventHorizon = null)
     {
-        if(!Resolve(uid, ref eventHorizon))
+        if (!Resolve(uid, ref eventHorizon))
             return;
 
         var fixtureId = eventHorizon.HorizonFixtureId;
@@ -167,7 +167,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="args">The event arguments.</param>
     private void OnPreventCollide(EntityUid uid, EventHorizonComponent comp, ref PreventCollideEvent args)
     {
-        if(!args.Cancelled)
+        if (!args.Cancelled)
             PreventCollide(uid, comp, ref args);
     }
 

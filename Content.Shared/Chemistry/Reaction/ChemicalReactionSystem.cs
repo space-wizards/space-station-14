@@ -63,7 +63,7 @@ namespace Content.Shared.Chemistry.Reaction
             var reagents = reaction.Reactants.Keys;
             foreach(var reagent in reagents)
             {
-                if(!_reactions.TryGetValue(reagent, out var cache))
+                if (!_reactions.TryGetValue(reagent, out var cache))
                 {
                     cache = new List<ReactionPrototype>();
                     _reactions.Add(reagent, cache);
@@ -110,13 +110,13 @@ namespace Content.Shared.Chemistry.Reaction
             {
                 lowestUnitReactions = FixedPoint2.Zero;
                 return false;
-            } else if(solution.Temperature > reaction.MaximumTemperature)
+            } else if (solution.Temperature > reaction.MaximumTemperature)
             {
                 lowestUnitReactions = FixedPoint2.Zero;
                 return false;
             }
 
-            if((mixerComponent == null && reaction.MixingCategories != null) ||
+            if ((mixerComponent == null && reaction.MixingCategories != null) ||
                 mixerComponent != null && reaction.MixingCategories != null && reaction.MixingCategories.Except(mixerComponent.ReactionTypes).Any())
             {
                 lowestUnitReactions = FixedPoint2.Zero;

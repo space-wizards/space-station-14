@@ -14,7 +14,7 @@ namespace Content.Server.Holiday.ShouldCelebrate
                 holiday.EndMonth = holiday.BeginMonth;
 
             // Holiday spans multiple months in one year.
-            if(holiday.EndMonth > holiday.BeginMonth)
+            if (holiday.EndMonth > holiday.BeginMonth)
             {
                 // In final month.
                 if (date.Month == (int) holiday.EndMonth && date.Day <= holiday.EndDay)

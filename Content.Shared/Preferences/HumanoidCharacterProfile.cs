@@ -287,16 +287,16 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile WithAntagPreference(string antagId, bool pref)
         {
             var list = new List<string>(_antagPreferences);
-            if(pref)
+            if (pref)
             {
-                if(!list.Contains(antagId))
+                if (!list.Contains(antagId))
                 {
                     list.Add(antagId);
                 }
             }
             else
             {
-                if(list.Contains(antagId))
+                if (list.Contains(antagId))
                 {
                     list.Remove(antagId);
                 }
@@ -309,16 +309,16 @@ namespace Content.Shared.Preferences
             var list = new List<string>(_traitPreferences);
 
             // TODO: Maybe just refactor this to HashSet? Same with _antagPreferences
-            if(pref)
+            if (pref)
             {
-                if(!list.Contains(traitId))
+                if (!list.Contains(traitId))
                 {
                     list.Add(traitId);
                 }
             }
             else
             {
-                if(list.Contains(traitId))
+                if (list.Contains(traitId))
                 {
                     list.Remove(traitId);
                 }

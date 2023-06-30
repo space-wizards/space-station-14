@@ -18,7 +18,7 @@ public sealed class EnsnareableSystem : SharedEnsnareableSystem
 
     private void OnComponentInit(EntityUid uid, EnsnareableComponent component, ComponentInit args)
     {
-        if(!TryComp<SpriteComponent>(uid, out var sprite))
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
         // TODO remove this, this should just be in yaml.

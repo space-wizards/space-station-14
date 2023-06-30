@@ -16,7 +16,7 @@ namespace Content.Server.Atmos.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 5) return;
-            if(!int.TryParse(args[0], out var x)
+            if (!int.TryParse(args[0], out var x)
                || !int.TryParse(args[1], out var y)
                || !EntityUid.TryParse(args[2], out var id)
                || !float.TryParse(args[3], out var amount)

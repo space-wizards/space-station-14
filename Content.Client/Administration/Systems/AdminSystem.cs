@@ -38,7 +38,7 @@ namespace Content.Client.Administration.Systems
 
         private void OnPlayerInfoChanged(PlayerInfoChangedEvent ev)
         {
-            if(ev.PlayerInfo == null) return;
+            if (ev.PlayerInfo == null) return;
 
             if (_playerList == null) _playerList = new();
 

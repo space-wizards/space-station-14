@@ -76,7 +76,7 @@ namespace Content.Server.Stunnable.Systems
                 ? Loc.GetString("comp-stunbaton-examined-on")
                 : Loc.GetString("comp-stunbaton-examined-off");
             args.PushMarkup(msg);
-            if(TryComp<BatteryComponent>(uid, out var battery))
+            if (TryComp<BatteryComponent>(uid, out var battery))
                 args.PushMarkup(Loc.GetString("stunbaton-component-on-examine-charge",
                     ("charge", (int)((battery.CurrentCharge/battery.MaxCharge) * 100))));
         }

@@ -44,7 +44,7 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
         if (args.Key != PoweredLightVisualsComponent.BlinkingAnimationKey)
             return;
 
-        if(!comp.IsBlinking)
+        if (!comp.IsBlinking)
             return;
 
         AnimationSystem.Play(uid, Comp<AnimationPlayerComponent>(uid), BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);

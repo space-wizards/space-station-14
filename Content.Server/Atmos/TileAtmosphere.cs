@@ -114,7 +114,7 @@ namespace Content.Server.Atmos
             Space = space;
             MolesArchived = Air != null ? new float[Atmospherics.AdjustedNumberOfGases] : null;
 
-            if(immutable)
+            if (immutable)
                 Air?.MarkImmutable();
         }
     }

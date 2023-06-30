@@ -60,12 +60,12 @@ internal sealed class RandomWalkController : VirtualController
     /// <param name="physics">The physics body associated with the random walker.</param>
     public void Update(EntityUid uid, RandomWalkComponent? randomWalk = null, PhysicsComponent? physics = null)
     {
-        if(!Resolve(uid, ref randomWalk))
+        if (!Resolve(uid, ref randomWalk))
             return;
 
         var curTime = _timing.CurTime;
         randomWalk.NextStepTime = curTime + TimeSpan.FromSeconds(_random.NextDouble(randomWalk.MinStepCooldown.TotalSeconds, randomWalk.MaxStepCooldown.TotalSeconds));
-        if(!Resolve(randomWalk.Owner, ref physics))
+        if (!Resolve(randomWalk.Owner, ref physics))
             return;
 
         var pushAngle = _random.NextAngle();

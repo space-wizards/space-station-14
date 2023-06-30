@@ -131,7 +131,7 @@ namespace Content.Server.Light.EntitySystems
 
 
             //removing a broken/burned bulb, so allow instant removal
-            if(TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
+            if (TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
             {
                 args.Handled = EjectBulb(uid, userUid, light) != null;
                 return;
