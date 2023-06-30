@@ -540,7 +540,7 @@
 
 - type: artifactEffect
   id: EffectSingulo
-  targetDepth: 8
+  targetDepth: 7
   effectHint: artifact-effect-hint-destruction
   components:
   - type: SpawnArtifact
