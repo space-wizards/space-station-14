@@ -1,9 +1,4 @@
 Entries:
-- author: lzk
-  changes:
-  - {message: Mime's stamp now spawns in mime's satchel, type: Tweak}
-  id: 3641
-  time: '2023-05-04T18:30:22.0000000+00:00'
 - author: SonicDC
   changes:
   - {message: Changed the ability to paint glass airlocks!, type: Tweak}
@@ -2925,3 +2920,9 @@ Entries:
   - {message: Changed the price of most objects found in the construction menu., type: Tweak}
   id: 4140
   time: '2023-06-30T19:32:03.0000000+00:00'
+- author: Vocal
+  changes:
+  - {message: Left-clicking a gas canister no longer unlock and open the UI at the
+      same time., type: Fix}
+  id: 4141
+  time: '2023-06-30T19:39:34.0000000+00:00'
