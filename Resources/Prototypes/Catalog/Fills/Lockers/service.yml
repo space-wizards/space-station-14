@@ -71,6 +71,8 @@
         amount: 2
       - id: FlashlightLantern
         amount: 2
+      - id: Plunger
+        amount: 2
 
 - type: entity
   id: ClosetLegalFilled

@@ -25,6 +25,16 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
 
     protected override void OnAppearanceChange(EntityUid uid, SolutionContainerVisualsComponent component, ref AppearanceChangeEvent args)
     {
+        // Check if the solution that was updated is the one set as represented
+        if (!string.IsNullOrEmpty(component.SolutionName))
+        {
+            if (AppearanceSystem.TryGetData<string>(uid, SolutionContainerVisuals.SolutionName, out var name,
+                args.Component) && name != component.SolutionName)
+            {
+                return;
+            }
+        }
+
         if (!AppearanceSystem.TryGetData<float>(uid, SolutionContainerVisuals.FillFraction, out var fraction, args.Component))
             return;
 

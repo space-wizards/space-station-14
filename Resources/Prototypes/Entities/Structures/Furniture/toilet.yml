@@ -22,6 +22,8 @@
       stash: !type:ContainerSlot {}
   - type: SolutionContainerManager
     solutions:
+      drainBuffer:
+        maxVol: 500
       toilet:
         maxVol: 250
   - type: Transform
@@ -32,6 +34,12 @@
     graph: Toilet
     node: toilet
   - type: Appearance
+  - type: Drain
+    autoDrain: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: fill-
+    solutionName: drainBuffer
   - type: StaticPrice
     price: 25
 
