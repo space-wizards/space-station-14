@@ -23,7 +23,7 @@ public sealed class SolutionRandomFillSystem : EntitySystem
     private void OnRandomSolutionFillMapInit(EntityUid uid, RandomFillSolutionComponent component, MapInitEvent args)
     {
         var target = _solutionsSystem.EnsureSolution(uid, component.Solution);
-        var pick = _proto.Index<WeightedRandomFillPrototype>(component.WeightedRandomId).Pick(_random);
+        var pick = _proto.Index<WeightedRandomFillSolutionPrototype>(component.WeightedRandomId).Pick(_random);
 
         var reagent = pick.reagent;
         var quantity = pick.quantity;

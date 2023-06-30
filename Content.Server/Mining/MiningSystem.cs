@@ -25,6 +25,13 @@ public sealed class MiningSystem : EntitySystem
         SubscribeLocalEvent<OreVeinComponent, DestructionEventArgs>(OnDestruction);
     }
 
+    private EntityUid? _gatheringTool;
+
+    public void SetGatherer(EntityUid? gatherer)
+    {
+        _gatheringTool = gatherer;
+    }
+
     private void OnDestruction(EntityUid uid, OreVeinComponent component, DestructionEventArgs args)
     {
         if (!_random.Prob(component.OreChance))
@@ -42,11 +49,9 @@ public sealed class MiningSystem : EntitySystem
 
             if (component.MappedTools != null)
             {
-                var gatherer = args.Gatherer;
-
                 foreach (var (toolTag, mappedWeightedRandom) in component.MappedTools)
                 {
-                    if (gatherer != null && _tagSystem.HasTag(gatherer.Value, toolTag) || gatherer == null && toolTag == "Hand" || toolTag == "All")
+                    if (_gatheringTool != null && _tagSystem.HasTag(_gatheringTool.Value, toolTag) || _gatherUser != null || toolTag == "All")
                     {
                         weightedRandom = mappedWeightedRandom;
                         break;
@@ -82,5 +87,13 @@ public sealed class MiningSystem : EntitySystem
         {
             Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(component.Radius)));
         }
+    }
+
+    private void OnMapInit(EntityUid uid, OreVeinComponent component, MapInitEvent args)
+    {
+        if (component.CurrentOre != null || component.OreRarityPrototypeId == null || !_random.Prob(component.OreChance))
+            return;
+
+        component.CurrentOre = _proto.Index<WeightedRandomPrototype>(component.OreRarityPrototypeId).Pick(_random);
     }
 }

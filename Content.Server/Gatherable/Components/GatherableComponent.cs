@@ -16,6 +16,6 @@ public sealed class GatherableComponent : Component
     /// <summary>
     ///     The amount of time in seconds it takes to complete the gathering action by hand.
     /// </summary>
-    [DataField("harvestTimeByHand")]
-    public float HarvestTimeByHand = 1.0f;
+    [DataField("harvestTime")]
+    public float HarvestTime = 1.0f;
 }

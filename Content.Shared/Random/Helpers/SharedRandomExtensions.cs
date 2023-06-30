@@ -77,7 +77,7 @@ namespace Content.Shared.Random.Helpers
             throw new InvalidOperationException($"Invalid weighted pick");
         }
 
-        public static (string reagent, FixedPoint2 quantity) Pick(this WeightedRandomFillPrototype prototype, IRobustRandom? random = null)
+        public static (string reagent, FixedPoint2 quantity) Pick(this WeightedRandomFillSolutionPrototype prototype, IRobustRandom? random = null)
         {
             var randomFill = prototype.PickRandomFill(random);
 
@@ -102,7 +102,7 @@ namespace Content.Shared.Random.Helpers
             throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
         }
 
-        public static RandomFillSolution PickRandomFill(this WeightedRandomFillPrototype prototype, IRobustRandom? random = null)
+        public static RandomFillSolution PickRandomFill(this WeightedRandomFillSolutionPrototype prototype, IRobustRandom? random = null)
         {
             IoCManager.Resolve(ref random);
 

@@ -16,7 +16,7 @@
   - type: StaticPrice 
     price: 75
   - type: Gatherable
-    harvestTimeByHand: 2.0
+    harvestTime: 2.0
     whitelist:
       tags:
         - BotanyHatchet
@@ -97,7 +97,7 @@
   - type: StaticPrice
     price: 20
 
-- type: weightedRandomFill
+- type: weightedRandomFillSolution
   id: RandomFillSpaceshroom
   fills:
   - quantity: 10

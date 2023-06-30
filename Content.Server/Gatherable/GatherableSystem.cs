@@ -1,5 +1,7 @@
 using Content.Server.Destructible;
 using Content.Server.Gatherable.Components;
+using Content.Server.Mining;
+using Content.Server.Mining.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Gatherable;
 using Content.Shared.Interaction;
@@ -15,6 +17,7 @@ public sealed partial class GatherableSystem : EntitySystem
     [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly MiningSystem _miningSystem = default!;
 
     public override void Initialize()
     {
@@ -56,7 +59,7 @@ public sealed partial class GatherableSystem : EntitySystem
         if (component.ToolWhitelist?.Tags?.Contains("Hand") == false)
             return;
 
-        var doAfter = new DoAfterArgs(args.User, TimeSpan.FromSeconds(component.HarvestTimeByHand), new GatherableDoAfterEvent(), uid, target: uid)
+        var doAfter = new DoAfterArgs(args.User, TimeSpan.FromSeconds(component.HarvestTime), new GatherableDoAfterEvent(), uid, target: uid)
         {
             BreakOnDamage = true,
             BreakOnTargetMove = true,
@@ -70,24 +73,28 @@ public sealed partial class GatherableSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, GatherableComponent component, GatherableDoAfterEvent args)
     {
-        if (TryComp<GatheringToolComponent>(args.Args.Used, out var tool))
-            tool.GatheringEntities.Remove(uid);
+        if (!TryComp<GatheringToolComponent>(args.Args.Used, out var tool))
+            return;
+
+        tool.GatheringEntities.Remove(uid);
 
         if (args.Handled || args.Cancelled)
             return;
 
-        Gather(uid, args.Args.Used, component, tool?.GatheringSound);
+        Gather(uid, args.Args.Used, component, tool.GatheringSound);
         args.Handled = true;
     }
 
-    public void Gather(EntityUid gatheredUid, EntityUid? gatherer, GatherableComponent? component = null, SoundSpecifier? sound = null)
+    public void Gather(EntityUid uid, EntityUid? gatheringTool, GatherableComponent? component = null, SoundSpecifier? sound = null)
     {
-        if (!Resolve(gatheredUid, ref component))
+        if (!Resolve(uid, ref component))
             return;
 
+        _miningSystem.SetGatherer(gatheringTool);
+
         // Complete the gathering process
-        _destructible.DestroyEntity(gatheredUid, gatherer);
-        _audio?.PlayPvs(sound, gatheredUid);
+        _destructible.DestroyEntity(uid, gatheringTool);
+        _audio?.PlayPvs(sound, uid);
     }
 }
 

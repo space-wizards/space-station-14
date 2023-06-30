@@ -9,8 +9,6 @@ public abstract class SharedDestructibleSystem : EntitySystem
     {
         var eventArgs = new DestructionEventArgs();
 
-        eventArgs.Gatherer = gatherer;
-
         RaiseLocalEvent(owner, eventArgs);
         QueueDel(owner);
     }
@@ -30,7 +28,6 @@ public abstract class SharedDestructibleSystem : EntitySystem
 /// </summary>
 public sealed class DestructionEventArgs : EntityEventArgs
 {
-    public EntityUid? Gatherer { get; set; }
 }
 
 /// <summary>

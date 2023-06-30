@@ -1,4 +1,4 @@
-- type: weightedRandomFill
+- type: weightedRandomFillSolution
   id: RandomFillStrangePill
   fills:
   - quantity: 20
