@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed some rollebed interactions, including a possible crash.', type: Fix}
-  id: 3646
-  time: '2023-05-05T07:27:15.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: 'Items with powercell slots now display charge (e.g. flashlights, handheld
@@ -2925,3 +2920,8 @@ Entries:
   - {message: Fix issue with metamorphic glass name being reset, type: Fix}
   id: 4145
   time: '2023-06-30T22:57:28.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: The AME controller increases and decreases in steps of 2 again., type: Tweak}
+  id: 4146
+  time: '2023-06-30T23:24:23.0000000+00:00'
