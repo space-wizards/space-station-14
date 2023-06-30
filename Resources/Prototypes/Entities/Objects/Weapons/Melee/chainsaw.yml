@@ -2,7 +2,7 @@
   name: chainsaw
   parent: BaseItem
   id: Chainsaw
-  description: A chainsaw. Usually you use this for cutting down trees.
+  description: A very large chainsaw. Usually you use this for cutting down trees... usually.
   components:
   - type: MeleeRequiresWield
   - type: Wieldable
