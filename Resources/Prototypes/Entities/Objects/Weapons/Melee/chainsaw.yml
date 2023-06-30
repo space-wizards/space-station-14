@@ -2,8 +2,25 @@
   name: chainsaw
   parent: BaseItem
   id: Chainsaw
-  description: A chainsaw. Usually you use this for cutting down trees. There is a hole at the base for your hand.
+  description: A chainsaw. Usually you use this for cutting down trees.
   components:
+  - type: MeleeRequiresWield
+  - type: Wieldable
+    wieldTime: 1
+    wieldSound: !type:SoundPathSpecifier
+      path: /Audio/Weapons/chainsawwield.ogg
+      params:
+        volume: -3
+  - type: AmbientSound
+    volume: -6
+    range: 4
+    sound:
+      path: /Audio/Weapons/chainsawidle.ogg
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Slash: 20
+        Blunt: 10
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/chainsaw.rsi
@@ -11,11 +28,13 @@
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 20
-        Blunt: 10
+        Slash: 2
+        Blunt: 4
     soundHit:
-        path: /Audio/Weapons/chainsaw.ogg
+      path: /Audio/Weapons/chainsaw.ogg
+      params: 
+        volume: -3
   - type: Item
-    size: 15
+    size: 50
     sprite: Objects/Weapons/Melee/chainsaw.rsi
   - type: DisarmMalus
