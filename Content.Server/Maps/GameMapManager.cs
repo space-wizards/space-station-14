@@ -162,9 +162,9 @@ public sealed class GameMapManager : IGameMapManager
 
     private bool IsMapEligible(GameMapPrototype map)
     {
-        return map.MaxPlayers >= _playerManager.PlayerCount &&
-               map.MinPlayers <= _playerManager.PlayerCount &&
-               map.Conditions.All(x => x.Check(map));
+        return map.MaxPlayers >= _playerManager.PlayerCount
+            && map.MinPlayers <= _playerManager.PlayerCount
+            && map.Conditions.All(x => x.Check(map));
     }
 
     private bool TryLookupMap(string gameMap, [NotNullWhen(true)] out GameMapPrototype? map)
@@ -189,20 +189,21 @@ public sealed class GameMapManager : IGameMapManager
         Logger.InfoS("mapsel", $"map queue: {string.Join(", ", _previousMaps)}");
 
         var eligible = CurrentlyEligibleMaps()
-            .Select(x => (proto: x, weight: GetMapRotationQueuePriority(x.ID)))
-            .OrderByDescending(x => x.weight)
+            .Select(x => (Proto: x, Weight: GetMapRotationQueuePriority(x.ID)))
+            .OrderByDescending(x => x.Weight)
             .ToArray();
 
-        Logger.InfoS("mapsel", $"eligible queue: {string.Join(", ", eligible.Select(x => (x.proto.ID, x.weight)))}");
+        Logger.InfoS("mapsel", $"eligible queue: {string.Join(", ", eligible.Select(x => (x.Proto.ID, x.Weight)))}");
 
         // YML "should" be configured with at least one fallback map
         Debug.Assert(eligible.Length != 0, $"couldn't select a map with {nameof(GetFirstInRotationQueue)}()! No eligible maps and no fallback maps!");
 
-        var weight = eligible[0].weight;
-        return eligible.Where(x => x.Item2 == weight)
-                       .OrderBy(x => x.proto.ID)
-                       .First()
-                       .proto;
+        var weight = eligible[0].Weight;
+        return eligible
+            .Where(x => x.Weight == weight)
+            .OrderBy(x => x.Proto.ID)
+            .First()
+            .Proto;
     }
 
     private void EnqueueMap(string mapProtoName)

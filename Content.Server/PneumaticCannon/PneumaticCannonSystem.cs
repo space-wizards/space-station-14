@@ -78,7 +78,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
             return;
 
         if (TryComp<StatusEffectsComponent>(args.User, out var status)
-           && component.Power == PneumaticCannonPower.High)
+        && component.Power == PneumaticCannonPower.High)
         {
             _stun.TryParalyze(args.User, TimeSpan.FromSeconds(component.HighPowerStunTime), true, status);
             Popup.PopupEntity(Loc.GetString("pneumatic-cannon-component-power-stun",

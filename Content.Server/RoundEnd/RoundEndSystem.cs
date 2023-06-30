@@ -142,8 +142,8 @@ namespace Content.Server.RoundEnd
             }
             else
             {
-               time = countdownTime.Minutes;
-               units = "eta-units-minutes";
+                time = countdownTime.Minutes;
+                units = "eta-units-minutes";
             }
 
             if (autoCall)

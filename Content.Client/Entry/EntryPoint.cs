@@ -175,8 +175,10 @@ namespace Content.Client.Entry
             {
                 if (args.NewLevel == ClientRunLevel.Initialize)
                 {
-                    SwitchToDefaultState(args.OldLevel == ClientRunLevel.Connected ||
-                                         args.OldLevel == ClientRunLevel.InGame);
+                    SwitchToDefaultState(
+                        args.OldLevel == ClientRunLevel.Connected ||
+                        args.OldLevel == ClientRunLevel.InGame
+                    );
                 }
             };
 

@@ -10,8 +10,8 @@ public sealed class HTNComponent : NPCComponent
     /// <summary>
     /// The base task to use for planning
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite),
-     DataField("rootTask", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<HTNCompoundTask>))]
+    [DataField("rootTask", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<HTNCompoundTask>))]
+    [ViewVariables(VVAccess.ReadWrite)]
     public string RootTask = default!;
 
     /// <summary>

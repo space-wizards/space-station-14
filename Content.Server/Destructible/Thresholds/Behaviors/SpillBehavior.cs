@@ -33,8 +33,8 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
             {
                 spillableSystem.TrySplashSpillAt(owner, coordinates, compSolution, out _, false, user: cause);
             }
-            else if (Solution != null &&
-                     solutionContainerSystem.TryGetSolution(owner, Solution, out var behaviorSolution))
+            else if (Solution != null
+            && solutionContainerSystem.TryGetSolution(owner, Solution, out var behaviorSolution))
             {
                 spillableSystem.TrySplashSpillAt(owner, coordinates, behaviorSolution, out _, user: cause);
             }

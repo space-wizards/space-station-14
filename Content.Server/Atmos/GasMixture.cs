@@ -244,10 +244,10 @@ namespace Content.Server.Atmos
             if (ReferenceEquals(this, other))
                 return true;
             return Moles.SequenceEqual(other.Moles)
-                   && _temperature.Equals(other._temperature)
-                   && ReactionResults.SequenceEqual(other.ReactionResults)
-                   && Immutable == other.Immutable
-                   && Volume.Equals(other.Volume);
+                && _temperature.Equals(other._temperature)
+                && ReactionResults.SequenceEqual(other.ReactionResults)
+                && Immutable == other.Immutable
+                && Volume.Equals(other.Volume);
         }
 
         [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]

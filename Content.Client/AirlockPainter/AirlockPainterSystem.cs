@@ -20,8 +20,8 @@ namespace Content.Client.AirlockPainter
             foreach (string style in Styles)
             {
                 string? iconPath = Groups
-                  .FindAll(x => x.StylePaths.ContainsKey(style))?
-                  .MaxBy(x => x.IconPriority)?.StylePaths[style];
+                    .FindAll(x => x.StylePaths.ContainsKey(style))?
+                    .MaxBy(x => x.IconPriority)?.StylePaths[style];
                 if (iconPath == null)
                 {
                     Entries.Add(new AirlockPainterEntry(style, null));

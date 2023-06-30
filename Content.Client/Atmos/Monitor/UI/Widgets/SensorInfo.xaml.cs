@@ -122,4 +122,4 @@ public sealed partial class SensorInfo : BoxContainer
         }
     }
 
- }
+}

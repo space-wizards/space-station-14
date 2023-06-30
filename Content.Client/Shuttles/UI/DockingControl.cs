@@ -141,8 +141,7 @@ public class DockingControl : Control
         // TODO: Getting some overdraw so need to fix that.
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
-        foreach (var grid in _mapManager.FindGridsIntersecting(gridXform.MapID,
-                     new Box2(worldPos - _range, worldPos + _range)))
+        foreach (var grid in _mapManager.FindGridsIntersecting(gridXform.MapID, new Box2(worldPos - _range, worldPos + _range)))
         {
             if (grid.Owner == GridEntity)
                 continue;

@@ -172,14 +172,14 @@ namespace Content.Client.Actions
 
         public void LinkAllActions(ActionsComponent? actions = null)
         {
-             var player = _playerManager.LocalPlayer?.ControlledEntity;
-             if (player == null || !Resolve(player.Value, ref actions, false))
-             {
-                 return;
-             }
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+            if (player == null || !Resolve(player.Value, ref actions, false))
+            {
+                return;
+            }
 
-             LinkActions?.Invoke(actions);
-             PlayerActions = actions;
+            LinkActions?.Invoke(actions);
+            PlayerActions = actions;
         }
 
         public override void Shutdown()

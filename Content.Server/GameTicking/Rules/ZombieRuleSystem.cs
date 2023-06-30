@@ -317,8 +317,15 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
                 // I went all the way to ChatManager.cs and all i got was this lousy T-shirt
                 // You got a free T-shirt!?!?
-                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message,
-                   wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Plum);
+                _chatManager.ChatMessageToOne(
+                    Shared.Chat.ChatChannel.Server,
+                    message,
+                    wrappedMessage,
+                    default,
+                    false,
+                    mind.Session.ConnectedClient,
+                    Color.Plum
+                );
             }
         }
     }

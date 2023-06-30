@@ -46,26 +46,26 @@ namespace Content.Server.Tabletop
 
         private void SpawnPieces(TabletopSession session, IEntityManager entityManager, string color, MapCoordinates left, float separation = 1f)
         {
-          var (mapId, x, y) = left;
-          // If white is being placed it must go from bottom->up
-          var reversed = (color == "White") ? 1 : -1;
+            var (mapId, x, y) = left;
+            // If white is being placed it must go from bottom->up
+            var reversed = (color == "White") ? 1 : -1;
 
-          for (int i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
-            var x_offset = i % 2;
-            if (reversed == -1)
-                x_offset = 1 - x_offset; // Flips it
+                var x_offset = i % 2;
+                if (reversed == -1)
+                    x_offset = 1 - x_offset; // Flips it
 
-            for (int j = 0; j < 8; j += 2)
-            {
-              // Prevents an extra piece on the middle row
-              if (x_offset + j > 8)
-                  continue;
+                for (var j = 0; j < 8; j += 2)
+                {
+                    // Prevents an extra piece on the middle row
+                    if (x_offset + j > 8)
+                        continue;
 
-              EntityUid tempQualifier4 = entityManager.SpawnEntity(color + "CheckerPiece", new MapCoordinates(x + (j + x_offset) * separation, y + i * reversed * separation, mapId));
-              session.Entities.Add(tempQualifier4);
+                    var tempQualifier4 = entityManager.SpawnEntity(color + "CheckerPiece", new MapCoordinates(x + (j + x_offset) * separation, y + i * reversed * separation, mapId));
+                    session.Entities.Add(tempQualifier4);
+                }
             }
-          }
         }
     }
 }

@@ -31,11 +31,11 @@ public partial class SharedBodySystem
 
     private bool CanInsertOrgan(EntityUid? organId, OrganSlot slot, OrganComponent? organ = null)
     {
-        return organId != null &&
-               slot.Child == null &&
-               Resolve(organId.Value, ref organ, false) &&
-               Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container) &&
-               container.CanInsert(organId.Value);
+        return organId != null
+            && slot.Child == null
+            && Resolve(organId.Value, ref organ, false)
+            && Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container)
+            && container.CanInsert(organId.Value);
     }
 
     private void OnOrganGetState(EntityUid uid, OrganComponent organ, ref ComponentGetState args)

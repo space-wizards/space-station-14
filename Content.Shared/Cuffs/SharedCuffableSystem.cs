@@ -577,10 +577,14 @@ namespace Content.Shared.Cuffs
 
             if (_net.IsServer)
             {
-                _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-observer",
-                 ("user", Identity.Name(user, EntityManager)), ("target", Identity.Name(target, EntityManager))),
-                 target, Filter.Pvs(target, entityManager: EntityManager)
-                .RemoveWhere(e => e.AttachedEntity == target || e.AttachedEntity == user), true);
+                _popup.PopupEntity(
+                    Loc.GetString(
+                        "cuffable-component-start-uncuffing-observer",
+                        ("user", Identity.Name(user, EntityManager)),
+                        ("target", Identity.Name(target, EntityManager))),
+                    target,
+                    Filter.Pvs(target, entityManager: EntityManager)
+                        .RemoveWhere(e => e.AttachedEntity == target || e.AttachedEntity == user), true);
 
                 if (target == user)
                 {

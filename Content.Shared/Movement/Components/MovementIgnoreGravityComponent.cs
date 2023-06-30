@@ -51,8 +51,9 @@ namespace Content.Shared.Movement.Components
             var transform = entityManager.GetComponent<TransformComponent>(entity);
             var gridId = transform.GridUid;
 
-            if ((entityManager.TryGetComponent<GravityComponent>(transform.GridUid, out var gravity) ||
-                 entityManager.TryGetComponent(transform.MapUid, out gravity)) && gravity.EnabledVV)
+            if ((entityManager.TryGetComponent<GravityComponent>(transform.GridUid, out var gravity)
+            || entityManager.TryGetComponent(transform.MapUid, out gravity))
+                && gravity.EnabledVV)
                 return false;
 
             if (gridId == null)

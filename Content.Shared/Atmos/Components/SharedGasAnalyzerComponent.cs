@@ -77,10 +77,7 @@ namespace Content.Shared.Atmos.Components
             public override string ToString()
             {
                 // e.g. "Plasma: 2000 mol"
-                return Loc.GetString(
-                    "gas-entry-info",
-                     ("gasName", Name),
-                     ("gasAmount", Amount));
+                return Loc.GetString("gas-entry-info", ("gasName", Name), ("gasAmount", Amount));
             }
         }
 

@@ -113,7 +113,7 @@ namespace Content.Server.Verbs
             else
             {
                 _adminLogger.Add(LogType.Verb, verb.Impact,
-                       $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target} while holding {ToPrettyString(holding.Value):held}");
+                        $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target} while holding {ToPrettyString(holding.Value):held}");
             }
         }
     }

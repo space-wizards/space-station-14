@@ -112,15 +112,15 @@ namespace Content.Shared.Disposal.Components
 
             public bool Equals(DisposalUnitBoundUserInterfaceState? other)
             {
-                if (ReferenceEquals(null, other))
+                if (other is null)
                     return false;
                 if (ReferenceEquals(this, other))
                     return true;
-                return UnitName == other.UnitName &&
-                       UnitState == other.UnitState &&
-                       Powered == other.Powered &&
-                       Engaged == other.Engaged &&
-                       FullPressureTime.Equals(other.FullPressureTime);
+                return UnitName == other.UnitName
+                    && UnitState == other.UnitState
+                    && Powered == other.Powered
+                    && Engaged == other.Engaged
+                    && FullPressureTime.Equals(other.FullPressureTime);
             }
         }
 

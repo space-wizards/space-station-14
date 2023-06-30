@@ -294,9 +294,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     {
         if (_mindSystem.TryGetSession(mind, out var session))
         {
-           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
-           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
-           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("", code))));
+            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
+            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
+            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("", code))));
         }
     }
 
@@ -365,8 +365,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
             var result = Loc.GetString("traitor-round-end-result", ("traitorCount", traitor.Traitors.Count));
 
-            result += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", traitor.Codewords))) +
-                      "\n";
+            result += "\n"
+                    + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", traitor.Codewords)))
+                    + "\n";
 
             foreach (var t in traitor.Traitors)
             {

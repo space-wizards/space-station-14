@@ -57,8 +57,8 @@ public sealed partial class DungeonJob
 
             while (anchored.MoveNext(out var anc))
             {
-                if (!nodeQuery.TryGetComponent(anc, out var nodeContainer) ||
-                   !nodeContainer.Nodes.ContainsKey("power"))
+                if (!nodeQuery.TryGetComponent(anc, out var nodeContainer)
+                || !nodeContainer.Nodes.ContainsKey("power"))
                 {
                     continue;
                 }
@@ -301,7 +301,7 @@ public sealed partial class DungeonJob
 
                 if (!blocked)
                     continue;
-                
+
                 var nextDir = (Direction) ((i + 1) * 2 % 8);
                 blocked = HasWall(grid, tile + nextDir.ToIntVec());
 

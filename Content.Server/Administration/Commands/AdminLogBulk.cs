@@ -29,8 +29,8 @@ public sealed class AdminLogBulk : IConsoleCommand
         switch (args)
         {
             case {Length: 1} when int.TryParse(args[0], out amount):
-            case {Length: 2} when int.TryParse(args[0], out amount) &&
-                                  bool.TryParse(args[1], out parallel):
+            case {Length: 2} when int.TryParse(args[0], out amount)
+                && bool.TryParse(args[1], out parallel):
                 break;
 
             default:

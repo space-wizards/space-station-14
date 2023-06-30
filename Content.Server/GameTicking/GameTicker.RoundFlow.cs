@@ -71,8 +71,8 @@ namespace Content.Server.GameTicking
         /// <returns></returns>
         public bool CanUpdateMap()
         {
-            return RunLevel == GameRunLevel.PreRoundLobby &&
-                   _roundStartTime - RoundPreloadTime > _gameTiming.CurTime;
+            return RunLevel == GameRunLevel.PreRoundLobby
+                && _roundStartTime - RoundPreloadTime > _gameTiming.CurTime;
         }
 
         /// <summary>

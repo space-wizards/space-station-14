@@ -239,9 +239,8 @@ public sealed class NavMapControl : MapGridControl
                     // North edge
                     if (relativeTile.Y == SharedNavMapSystem.ChunkSize - 1)
                     {
-                        neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(0, 1), out neighborChunk) &&
-                                      (neighborChunk.TileData &
-                                       SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
+                        neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(0, 1), out neighborChunk)
+                                && (neighborChunk.TileData & SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
                     }
                     else
                     {
@@ -257,9 +256,8 @@ public sealed class NavMapControl : MapGridControl
                     // East edge
                     if (relativeTile.X == SharedNavMapSystem.ChunkSize - 1)
                     {
-                        neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(1, 0), out neighborChunk) &&
-                                   (neighborChunk.TileData &
-                                    SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
+                        neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(1, 0), out neighborChunk)
+                                && (neighborChunk.TileData & SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
                     }
                     else
                     {
@@ -275,9 +273,8 @@ public sealed class NavMapControl : MapGridControl
                     // South edge
                     if (relativeTile.Y == 0)
                     {
-                        neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(0, -1), out neighborChunk) &&
-                                   (neighborChunk.TileData &
-                                    SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, SharedNavMapSystem.ChunkSize - 1))) != 0x0;
+                        neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(0, -1), out neighborChunk)
+                                && (neighborChunk.TileData & SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, SharedNavMapSystem.ChunkSize - 1))) != 0x0;
                     }
                     else
                     {
@@ -293,9 +290,8 @@ public sealed class NavMapControl : MapGridControl
                     // West edge
                     if (relativeTile.X == 0)
                     {
-                        neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(-1, 0), out neighborChunk) &&
-                                   (neighborChunk.TileData &
-                                    SharedNavMapSystem.GetFlag(new Vector2i(SharedNavMapSystem.ChunkSize - 1, relativeTile.Y))) != 0x0;
+                        neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(-1, 0), out neighborChunk)
+                                && (neighborChunk.TileData & SharedNavMapSystem.GetFlag(new Vector2i(SharedNavMapSystem.ChunkSize - 1, relativeTile.Y))) != 0x0;
                     }
                     else
                     {

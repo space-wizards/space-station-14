@@ -49,9 +49,9 @@ namespace Content.Server.Storage.EntitySystems
                     var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
 
                     // Calculate the average price of the possible spawned items
-                    args.Price += _pricing.GetPrice(protUid) *
-                                  (entry.SpawnProbability / group.CumulativeProbability) *
-                                  entry.GetAmount(getAverage: true);
+                    args.Price += _pricing.GetPrice(protUid)
+                                * (entry.SpawnProbability / group.CumulativeProbability)
+                                * entry.GetAmount(getAverage: true);
 
                     EntityManager.DeleteEntity(protUid);
                 }

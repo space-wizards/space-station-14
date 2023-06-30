@@ -35,9 +35,8 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
 
         CommandBinds.Builder
-            .Bind(ContentKeyFunctions.OpenCharacterMenu,
-                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-             .Register<CharacterUIController>();
+            .Bind(ContentKeyFunctions.OpenCharacterMenu, InputCmdHandler.FromDelegate(_ => ToggleWindow()))
+            .Register<CharacterUIController>();
     }
 
     public void OnStateExited(GameplayState state)

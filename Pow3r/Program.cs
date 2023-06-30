@@ -111,8 +111,8 @@ namespace Pow3r
             };
 
 
-            var openGLBased = _renderer == Renderer.OpenGL ||
-                              (_renderer == Renderer.Veldrid && _vdRenderer == VeldridRenderer.OpenGL);
+            var openGLBased = _renderer == Renderer.OpenGL
+                            || _renderer == Renderer.Veldrid && _vdRenderer == VeldridRenderer.OpenGL;
 
             if (openGLBased)
             {
@@ -254,7 +254,7 @@ namespace Pow3r
         private static void KeyCallback(KeyboardKeyEventArgs obj, bool down)
         {
             var io = ImGui.GetIO();
-            if (obj.Key ==Keys.Unknown)
+            if (obj.Key == Keys.Unknown)
                 return;
 
             var keyInt = (int) obj.Key;
@@ -322,8 +322,8 @@ namespace Pow3r
         {
             for (var i = 0; i < io.MouseDown.Count; i++)
             {
-                io.MouseDown[i] = _mouseJustPressed[i] ||
-                                  GLFW.GetMouseButton(_window.WindowPtr, (MouseButton) i) == InputAction.Press;
+                io.MouseDown[i] = _mouseJustPressed[i]
+                                || GLFW.GetMouseButton(_window.WindowPtr, (MouseButton) i) == InputAction.Press;
                 _mouseJustPressed[i] = false;
             }
 

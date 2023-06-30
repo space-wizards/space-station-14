@@ -12,7 +12,7 @@ public sealed class PriorityDockComponent : Component
     /// <summary>
     /// Tag to match on the docking request, if this dock is to be prioritised.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite),
-     DataField("tag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
+    [DataField("tag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
+    [ViewVariables(VVAccess.ReadWrite)]
     public string? Tag;
 }

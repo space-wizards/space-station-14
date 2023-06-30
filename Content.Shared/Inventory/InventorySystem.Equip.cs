@@ -89,7 +89,7 @@ public abstract partial class InventorySystem
     private void OnEntInserted(EntityUid uid, InventoryComponent component, EntInsertedIntoContainerMessage args)
     {
         if (!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
-           return;
+            return;
 
         var equippedEvent = new DidEquipEvent(uid, args.Entity, slotDef);
         RaiseLocalEvent(uid, equippedEvent, true);

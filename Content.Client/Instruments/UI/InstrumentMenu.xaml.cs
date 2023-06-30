@@ -157,8 +157,8 @@ namespace Content.Client.Instruments.UI
             instrumentEnt.Value.TryGetContainerMan(out var conMan);
 
             // If the instrument is handheld and we're not holding it, we return.
-            if ((instrument.Handheld && (conMan == null
-                                         || conMan.Owner != localPlayer.ControlledEntity))) return false;
+            if (instrument.Handheld && (conMan == null || conMan.Owner != localPlayer.ControlledEntity))
+                return false;
 
             var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
             if (!entSysMan.GetEntitySystem<ActionBlockerSystem>().CanInteract(localPlayer.ControlledEntity.Value, instrumentEnt))

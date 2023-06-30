@@ -251,7 +251,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
 
         if (monitor.PressureThreshold != null
             && monitor.PressureThreshold.CheckThreshold(air.Pressure, out var pressureState)
-           )
+        )
         {
             if (pressureState > state)
             {

@@ -44,8 +44,7 @@ public sealed class FluidSpill
         MapId mapId;
         EntityUid gridId = default;
 
-        /*
-         In this test, if o is spillage puddle and # are walls, we want to ensure all tiles are empty (`.`)
+        /* In this test, if o is spillage puddle and # are walls, we want to ensure all tiles are empty (`.`)
             . . .
             # . .
             o # .

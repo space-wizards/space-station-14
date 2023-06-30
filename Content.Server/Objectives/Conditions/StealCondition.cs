@@ -92,9 +92,9 @@ namespace Content.Server.Objectives.Conditions
 
         public bool Equals(IObjectiveCondition? other)
         {
-            return other is StealCondition stealCondition &&
-                   Equals(_mind, stealCondition._mind) &&
-                   _prototypeId == stealCondition._prototypeId;
+            return other is StealCondition stealCondition
+                && Equals(_mind, stealCondition._mind)
+                && _prototypeId == stealCondition._prototypeId;
         }
 
         public override bool Equals(object? obj)

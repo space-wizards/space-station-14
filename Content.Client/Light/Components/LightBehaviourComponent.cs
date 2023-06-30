@@ -265,7 +265,11 @@ namespace Content.Client.Light.Components
         }
 
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
-           object context, int prevKeyFrameIndex, float prevPlayingTime, float frameTime)
+            object context,
+            int prevKeyFrameIndex,
+            float prevPlayingTime,
+            float frameTime
+        )
         {
             var playingTime = prevPlayingTime + frameTime;
             var interpolateValue = playingTime / MaxTime;
@@ -319,7 +323,11 @@ namespace Content.Client.Light.Components
         }
 
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
-           object context, int prevKeyFrameIndex, float prevPlayingTime, float frameTime)
+            object context,
+            int prevKeyFrameIndex,
+            float prevPlayingTime,
+            float frameTime
+        )
         {
             var playingTime = prevPlayingTime + frameTime;
             var interpolateValue = playingTime / MaxTime;

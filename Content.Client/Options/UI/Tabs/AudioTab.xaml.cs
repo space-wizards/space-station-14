@@ -178,8 +178,16 @@ namespace Content.Client.Options.UI.Tabs
             var isRestartSoundsSame = RestartSoundsCheckBox.Pressed == _cfg.GetCVar(CCVars.RestartSoundsEnabled);
             var isEventSame = EventMusicCheckBox.Pressed == _cfg.GetCVar(CCVars.EventMusicEnabled);
             var isAdminSoundsSame = AdminSoundsCheckBox.Pressed == _cfg.GetCVar(CCVars.AdminSoundsEnabled);
-            var isEverythingSame = isMasterVolumeSame && isMidiVolumeSame && isAmbientVolumeSame && isAmbientMusicVolumeSame && isAmbientSoundsSame && isLobbySame && isRestartSoundsSame && isEventSame
-                                   && isAdminSoundsSame && isLobbyVolumeSame;
+            var isEverythingSame = isMasterVolumeSame
+                                && isMidiVolumeSame
+                                && isAmbientVolumeSame
+                                && isAmbientMusicVolumeSame
+                                && isAmbientSoundsSame
+                                && isLobbySame
+                                && isRestartSoundsSame
+                                && isEventSame
+                                && isAdminSoundsSame
+                                && isLobbyVolumeSame;
             ApplyButton.Disabled = isEverythingSame;
             ResetButton.Disabled = isEverythingSame;
             MasterVolumeLabel.Text =

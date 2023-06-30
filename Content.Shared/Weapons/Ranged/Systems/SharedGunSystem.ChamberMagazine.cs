@@ -68,9 +68,9 @@ public abstract partial class SharedGunSystem
 
     private bool TryInsertChamber(EntityUid uid, EntityUid ammo)
     {
-        return Containers.TryGetContainer(uid, ChamberSlot, out var container) &&
-               container is ContainerSlot slot &&
-               slot.Insert(ammo);
+        return Containers.TryGetContainer(uid, ChamberSlot, out var container)
+            && container is ContainerSlot slot
+            && slot.Insert(ammo);
     }
 
     private void OnChamberMagazineTakeAmmo(EntityUid uid, ChamberMagazineAmmoProviderComponent component, TakeAmmoEvent args)

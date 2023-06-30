@@ -54,8 +54,8 @@ namespace Content.Server.Atmos
                 switch (direction)
                 {
                     case AtmosDirection.East:
-                         TransferDirectionEast = value;
-                         break;
+                        TransferDirectionEast = value;
+                        break;
                     case AtmosDirection.West:
                         TransferDirectionWest = value;
                         break;

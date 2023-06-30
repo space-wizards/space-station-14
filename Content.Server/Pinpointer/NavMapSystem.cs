@@ -143,12 +143,11 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         while (enumerator.MoveNext(out var ent))
         {
-            if (!physicsQuery.TryGetComponent(ent, out var body) ||
-                !body.CanCollide ||
-                !body.Hard ||
-                body.BodyType != BodyType.Static ||
-                (!_tags.HasTag(ent.Value, "Wall", tagQuery) &&
-                 !_tags.HasTag(ent.Value, "Window", tagQuery)))
+            if (!physicsQuery.TryGetComponent(ent, out var body)
+            || !body.CanCollide
+            || !body.Hard
+            || body.BodyType != BodyType.Static
+            || !_tags.HasTag(ent.Value, "Wall", tagQuery) && !_tags.HasTag(ent.Value, "Window", tagQuery))
             {
                 continue;
             }

@@ -420,9 +420,9 @@ namespace Content.Server.Administration.Systems
         private IList<INetChannel> GetTargetAdmins()
         {
             return _adminManager.ActiveAdmins
-               .Where(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false)
-               .Select(p => p.ConnectedClient)
-               .ToList();
+                .Where(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false)
+                .Select(p => p.ConnectedClient)
+                .ToList();
         }
 
         private static string GenerateAHelpMessage(string username, string message, bool admin, bool noReceivers = false)

@@ -128,7 +128,7 @@ public sealed class RottingSystem : EntitySystem
         {
             >= 2 => "miasma-extremely-bloated",
             >= 1 => "miasma-bloated",
-               _ => "miasma-rotting"
+            _ => "miasma-rotting"
         };
         args.PushMarkup(Loc.GetString(description));
     }

@@ -136,8 +136,8 @@ namespace Content.Client.Storage.UI
                         {
                             HorizontalExpand = true,
                             ClipText = true,
-                            Text = _entityManager.GetComponent<MetaDataComponent>(Identity.Entity(entity, _entityManager)).EntityName +
-                                   (count > 1 ? $" x {count}" : string.Empty),
+                            Text = _entityManager.GetComponent<MetaDataComponent>(Identity.Entity(entity, _entityManager))
+                                .EntityName + (count > 1 ? $" x {count}" : string.Empty),
                         },
                         new Label
                         {

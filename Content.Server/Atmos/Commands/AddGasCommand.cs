@@ -21,10 +21,11 @@ namespace Content.Server.Atmos.Commands
                 return;
 
             if (!int.TryParse(args[0], out var x)
-               || !int.TryParse(args[1], out var y)
-               || !EntityUid.TryParse(args[2], out var euid)
-               || !(AtmosCommandUtils.TryParseGasID(args[3], out var gasId))
-               || !float.TryParse(args[4], out var moles)) return;
+                || !int.TryParse(args[1], out var y)
+                || !EntityUid.TryParse(args[2], out var euid)
+                || !AtmosCommandUtils.TryParseGasID(args[3], out var gasId)
+                || !float.TryParse(args[4], out var moles))
+                return;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
             if (!entMan.HasComponent<MapGridComponent>(euid))

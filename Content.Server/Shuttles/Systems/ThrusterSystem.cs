@@ -304,7 +304,9 @@ public sealed class ThrusterSystem : EntitySystem
         var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach (var dir in new[]
-                     { Direction.South, Direction.East, Direction.North, Direction.West })
+        {
+            Direction.South, Direction.East, Direction.North, Direction.West
+        })
         {
             var index = (int) dir / 2;
             var pop = shuttle.LinearThrusters[index];

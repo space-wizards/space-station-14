@@ -81,9 +81,8 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             return;
         }
 
-        if (msg.Reeling &&
-            (!TryComp<CombatModeComponent>(player, out var combatMode) ||
-             !combatMode.IsInCombatMode))
+        if (msg.Reeling
+        && (!TryComp<CombatModeComponent>(player, out var combatMode) || !combatMode.IsInCombatMode))
         {
             return;
         }

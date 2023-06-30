@@ -181,7 +181,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                 return true;
 
             if (args.BreakOnHandChange && (hands.ActiveHand?.Name != doAfter.InitialHand
-                                           || hands.ActiveHandEntity != doAfter.InitialItem))
+            || hands.ActiveHandEntity != doAfter.InitialItem))
             {
                 return true;
             }

@@ -316,7 +316,7 @@ public sealed partial class ChemistrySystem
         if (TryComp<StackComponent>(targetEntity, out var stack))
             removedSolution = _solutions.SplitStackSolution(injector, solution, realTransferAmount, stack.Count);
         else
-          removedSolution = _solutions.SplitSolution(injector, solution, realTransferAmount);
+            removedSolution = _solutions.SplitSolution(injector, solution, realTransferAmount);
 
         _reactiveSystem.DoEntityReaction(targetEntity, removedSolution, ReactionMethod.Injection);
 

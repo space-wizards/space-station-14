@@ -130,7 +130,7 @@ namespace Content.IntegrationTests.Tests
 
         private static string[] GetGameMapNames()
         {
-           Task<string[]> task;
+            Task<string[]> task;
             using (ExecutionContext.SuppressFlow())
             {
                 task = Task.Run(static async () =>

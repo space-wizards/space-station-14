@@ -29,7 +29,7 @@ public sealed partial class ChemistrySystem
 
         Solution? solution = null;
         if (!_solutions.TryGetMixableSolution(args.Target.Value, out solution))
-              return;
+            return;
 
         _popup.PopupEntity(Loc.GetString(component.MixMessage, ("mixed", Identity.Entity(args.Target.Value, EntityManager)), ("mixer", Identity.Entity(uid, EntityManager))), args.User, args.User);
 

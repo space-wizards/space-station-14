@@ -80,8 +80,8 @@ namespace Content.Client.Kitchen.UI
             var cookTime = cState.ActiveButtonIndex == 0
                 ? Loc.GetString("microwave-menu-instant-button")
                 : cState.CurrentCookTime.ToString();
-            _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                                                         ("time", cookTime));
+            _menu.CookTimeInfoLabel.Text =
+                Loc.GetString("microwave-bound-user-interface-cook-time-label", ("time", cookTime));
         }
 
         private void RefreshContentsDisplay(EntityUid[] containedSolids)

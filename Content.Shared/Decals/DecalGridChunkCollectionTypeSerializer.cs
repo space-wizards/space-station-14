@@ -199,11 +199,11 @@ namespace Content.Shared.Decals
 
             public bool Equals(DecalData other)
             {
-                return Id == other.Id &&
-                       Nullable.Equals(Color, other.Color) &&
-                       Angle.Equals(other.Angle) &&
-                       ZIndex == other.ZIndex &&
-                       Cleanable == other.Cleanable;
+                return Id == other.Id
+                    && Nullable.Equals(Color, other.Color)
+                    && Angle.Equals(other.Angle)
+                    && ZIndex == other.ZIndex
+                    && Cleanable == other.Cleanable;
             }
 
             public override bool Equals(object? obj)

@@ -21,7 +21,7 @@ public sealed class DepartmentPrototype : IPrototype
     [DataField("color", required: true)]
     public Color Color = default!;
 
-    [ViewVariables(VVAccess.ReadWrite),
-     DataField("roles", customTypeSerializer: typeof(PrototypeIdListSerializer<JobPrototype>))]
+    [DataField("roles", customTypeSerializer: typeof(PrototypeIdListSerializer<JobPrototype>))]
+    [ViewVariables(VVAccess.ReadWrite)]
     public List<string> Roles = new();
 }

@@ -373,7 +373,7 @@ public sealed class AirAlarmSystem : EntitySystem
         // remove it because otherwise it'll execute a now
         // invalid mode
         else if (controller.CurrentModeUpdater != null
-                 && controller.CurrentModeUpdater.NetOwner != origin)
+        && controller.CurrentModeUpdater.NetOwner != origin)
         {
             controller.CurrentModeUpdater = null;
         }

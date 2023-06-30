@@ -483,8 +483,8 @@ namespace Content.Shared.Preferences
                 .ToList();
 
             var traits = TraitPreferences
-                         .Where(prototypeManager.HasIndex<TraitPrototype>)
-                         .ToList();
+                .Where(prototypeManager.HasIndex<TraitPrototype>)
+                .ToList();
 
             Name = name;
             FlavorText = flavortext;

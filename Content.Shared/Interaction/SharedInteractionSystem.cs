@@ -708,8 +708,8 @@ namespace Content.Shared.Interaction
             Ignored combinedPredicate = e =>
             {
                 return e == target
-                       || (predicate?.Invoke(e) ?? false)
-                       || ignored.Contains(e);
+                    || (predicate?.Invoke(e) ?? false)
+                    || ignored.Contains(e);
             };
 
             return combinedPredicate;

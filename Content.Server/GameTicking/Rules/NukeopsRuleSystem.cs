@@ -604,8 +604,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             {
                 _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", nukeops.TargetStation.Value)));
 
-                 // Notificate player about new role assignment
-                 _audioSystem.PlayGlobal(component.GreetSoundNotification, playerSession);
+                // Notificate player about new role assignment
+                _audioSystem.PlayGlobal(component.GreetSoundNotification, playerSession);
             }
         }
     }
@@ -843,11 +843,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         base.Started(uid, component, gameRule, args);
         // TODO: Loot table or something
         foreach (var proto in new[]
-                 {
-                     component.CommanderStartGearPrototype,
-                     component.MedicStartGearPrototype,
-                     component.OperativeStartGearPrototype
-                 })
+        {
+            component.CommanderStartGearPrototype,
+            component.MedicStartGearPrototype,
+            component.OperativeStartGearPrototype
+        })
         {
             component.StartingGearPrototypes.Add(proto, _prototypeManager.Index<StartingGearPrototype>(proto));
         }

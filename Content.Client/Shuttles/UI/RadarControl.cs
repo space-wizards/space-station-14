@@ -201,10 +201,12 @@ public sealed class RadarControl : MapGridControl
         var shown = new HashSet<EntityUid>();
 
         // Draw other grids... differently
-        foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
-                     new Box2(mapPosition.Position - MaxRadarRange, mapPosition.Position + MaxRadarRange)))
+        foreach (var grid in _mapManager.FindGridsIntersecting(
+            mapPosition.MapId,
+            new Box2(mapPosition.Position - MaxRadarRange, mapPosition.Position + MaxRadarRange)
+        ))
         {
-            if (grid.Owner == ourGridId || !fixturesQuery.TryGetComponent(grid.Owner, out var fixturesComp))
+            if (grid.Owner == ourGridId || !fixturesQuery.HasComponent(grid.Owner))
                 continue;
 
             var gridBody = bodyQuery.GetComponent(grid.Owner);
@@ -238,9 +240,9 @@ public sealed class RadarControl : MapGridControl
             // Color.FromHex("#FFC000FF")
             // Hostile default: Color.Firebrick
 
-            if (ShowIFF &&
-                (iff == null && IFFComponent.ShowIFFDefault ||
-                 (iff.Flags & IFFFlags.HideLabel) == 0x0))
+            if (ShowIFF
+            && (iff == null && IFFComponent.ShowIFFDefault
+                || (iff.Flags & IFFFlags.HideLabel) == 0x0))
             {
                 var gridBounds = grid.LocalAABB;
                 Label label;

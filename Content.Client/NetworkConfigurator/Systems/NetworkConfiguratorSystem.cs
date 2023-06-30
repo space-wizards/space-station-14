@@ -45,8 +45,8 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     public bool ConfiguredListIsTracked(EntityUid uid, NetworkConfiguratorComponent? component = null)
     {
         return Resolve(uid, ref component)
-               && component.ActiveDeviceList != null
-               && HasComp<NetworkConfiguratorActiveLinkOverlayComponent>(component.ActiveDeviceList.Value);
+            && component.ActiveDeviceList != null
+            && HasComp<NetworkConfiguratorActiveLinkOverlayComponent>(component.ActiveDeviceList.Value);
     }
 
     /// <summary>

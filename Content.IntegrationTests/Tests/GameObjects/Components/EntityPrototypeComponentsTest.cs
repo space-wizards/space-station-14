@@ -28,8 +28,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
             var paths = sResourceManager.ContentFindFiles(prototypePath)
                 .ToList()
                 .AsParallel()
-                .Where(filePath => filePath.Extension == "yml" &&
-                                   !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
+                .Where(filePath => filePath.Extension == "yml"
+                                    && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
                 .ToArray();
 
             var cComponentFactory = client.ResolveDependency<IComponentFactory>();

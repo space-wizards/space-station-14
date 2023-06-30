@@ -694,8 +694,8 @@ public sealed class ChatUIController : UIController
     {
         radioChannel = null;
         return _player.LocalPlayer?.ControlledEntity is EntityUid { Valid: true } uid
-           && _chatSys != null
-           && _chatSys.TryProccessRadioMessage(uid, text, out _, out radioChannel, quiet: true);
+            && _chatSys != null
+            && _chatSys.TryProccessRadioMessage(uid, text, out _, out radioChannel, quiet: true);
     }
 
     public void UpdateSelectedChannel(ChatBox box)

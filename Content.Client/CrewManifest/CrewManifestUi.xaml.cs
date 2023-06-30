@@ -44,7 +44,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
         if (entries == null)
             return;
 
-       var entryList = SortEntries(entries);
+        var entryList = SortEntries(entries);
 
         foreach (var item in entryList)
         {

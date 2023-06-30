@@ -34,7 +34,7 @@ public sealed partial class NotekeeperUiFragment : BoxContainer
 
         foreach (var note in notes)
         {
-           AddNote(note);
+            AddNote(note);
         }
     }
 

@@ -122,8 +122,8 @@ namespace Content.Server.Temperature.Systems
             var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
             var tileHeatCapacity =
                 _atmosphereSystem.GetTileHeatCapacity(transform.GridUid, transform.MapUid.Value, position);
-            var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity /
-                                           (tileHeatCapacity + temperature.HeatCapacity));
+            var heat = temperatureDelta *
+                        (tileHeatCapacity * temperature.HeatCapacity / (tileHeatCapacity + temperature.HeatCapacity));
             ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
         }
 

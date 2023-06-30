@@ -38,7 +38,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         bool Ignored(EntityUid entity) => entity == target || entity == user || entity == dragged;
 
         args.CanDrop = _interactionSystem.InRangeUnobstructed(user, target, component.Range, predicate: Ignored)
-                       && _interactionSystem.InRangeUnobstructed(user, dragged, component.Range, predicate: Ignored);
+                    && _interactionSystem.InRangeUnobstructed(user, dragged, component.Range, predicate: Ignored);
         args.Handled = true;
     }
 }

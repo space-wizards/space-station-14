@@ -189,7 +189,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     private void DisconnectServer(EntityUid uid, CrewMonitoringServerComponent? server = null, DeviceNetworkComponent? device = null)
     {
         if (!Resolve(uid, ref server, ref device))
-         return;
+            return;
 
         server.SensorStatus.Clear();
         server.Active = false;

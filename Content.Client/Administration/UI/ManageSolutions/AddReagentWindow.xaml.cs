@@ -116,8 +116,8 @@ namespace Content.Client.Administration.UI.ManageSolutions
             ReagentList.Clear();
             foreach (var reagent in _prototypeManager.EnumeratePrototypes<ReagentPrototype>())
             {
-                if (!string.IsNullOrEmpty(filter) &&
-                   !reagent.ID.ToLowerInvariant().Contains(filter.Trim().ToLowerInvariant()))
+                if (!string.IsNullOrEmpty(filter)
+                && !reagent.ID.ToLowerInvariant().Contains(filter.Trim().ToLowerInvariant()))
                 {
                     continue;
                 }

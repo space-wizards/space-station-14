@@ -94,7 +94,7 @@ public sealed class LinkedEntitySystem : EntitySystem
             return false;
 
         var success = firstLink.LinkedEntities.Remove(second)
-                      && secondLink.LinkedEntities.Remove(first);
+                    && secondLink.LinkedEntities.Remove(first);
 
         _appearance.SetData(first, LinkedEntityVisuals.HasAnyLinks, firstLink.LinkedEntities.Any());
         _appearance.SetData(second, LinkedEntityVisuals.HasAnyLinks, secondLink.LinkedEntities.Any());

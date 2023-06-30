@@ -17,9 +17,8 @@ namespace Content.Server.Power.NodeGroups
 
                 foreach (var comp in entManager.GetComponents<IBaseNetConnectorComponent<TNetType>>(node.Owner))
                 {
-                    if ((comp.NodeId == null ||
-                         comp.NodeId == node.Name) &&
-                        (NodeGroupID) comp.Voltage == node.NodeGroupID)
+                    if ((comp.NodeId == null || comp.NodeId == node.Name)
+                    && (NodeGroupID) comp.Voltage == node.NodeGroupID)
                     {
                         newNetConnectorComponents.Add(comp);
                     }

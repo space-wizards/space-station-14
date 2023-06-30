@@ -259,14 +259,14 @@ public sealed partial class AdminLogsControl : Control
 
     private bool ShouldShowType(AdminLogTypeButton button)
     {
-        return button.Text != null &&
-               button.Text.Contains(TypeSearch.Text, StringComparison.OrdinalIgnoreCase);
+        return button.Text != null
+            && button.Text.Contains(TypeSearch.Text, StringComparison.OrdinalIgnoreCase);
     }
 
     private bool ShouldShowPlayer(AdminLogPlayerButton button)
     {
-        return button.Text != null &&
-               button.Text.Contains(PlayerSearch.Text, StringComparison.OrdinalIgnoreCase);
+        return button.Text != null
+            && button.Text.Contains(PlayerSearch.Text, StringComparison.OrdinalIgnoreCase);
     }
 
     private bool LogMatchesPlayerFilter(AdminLogLabel label)

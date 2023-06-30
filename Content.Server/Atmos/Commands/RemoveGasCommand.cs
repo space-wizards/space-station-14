@@ -18,10 +18,11 @@ namespace Content.Server.Atmos.Commands
             if (args.Length < 5)
                 return;
             if (!int.TryParse(args[0], out var x)
-               || !int.TryParse(args[1], out var y)
-               || !EntityUid.TryParse(args[2], out var id)
-               || !float.TryParse(args[3], out var amount)
-               || !bool.TryParse(args[4], out var ratio)) return;
+                || !int.TryParse(args[1], out var y)
+                || !EntityUid.TryParse(args[2], out var id)
+                || !float.TryParse(args[3], out var amount)
+                || !bool.TryParse(args[4], out var ratio))
+                return;
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var indices = new Vector2i(x, y);

@@ -22,8 +22,8 @@ public sealed partial class RechargeBasicEntityAmmoComponent : Component
         Params = AudioParams.Default.WithVolume(-5f)
     };
 
-    [ViewVariables(VVAccess.ReadWrite),
-     DataField("nextCharge", customTypeSerializer:typeof(TimeOffsetSerializer)),
-    AutoNetworkedField]
+    [AutoNetworkedField]
+    [DataField("nextCharge", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan? NextCharge;
 }

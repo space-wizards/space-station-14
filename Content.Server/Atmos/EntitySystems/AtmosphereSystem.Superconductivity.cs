@@ -66,7 +66,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return false;
 
             return !(GetHeatCapacity(tile.Air) < Atmospherics.MCellWithRatio)
-                   && ConsiderSuperconductivity(gridAtmosphere, tile);
+                && ConsiderSuperconductivity(gridAtmosphere, tile);
         }
 
         public void FinishSuperconduction(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
@@ -133,7 +133,7 @@ namespace Content.Server.Atmos.EntitySystems
                 && tile.HeatCapacity != 0f && other.HeatCapacity != 0f)
             {
                 var heat = conductionCoefficient * deltaTemperature *
-                           (tile.HeatCapacity * other.HeatCapacity / (tile.HeatCapacity + other.HeatCapacity));
+                            (tile.HeatCapacity * other.HeatCapacity / (tile.HeatCapacity + other.HeatCapacity));
 
                 tile.Temperature -= heat / tile.HeatCapacity;
                 other.Temperature += heat / other.HeatCapacity;

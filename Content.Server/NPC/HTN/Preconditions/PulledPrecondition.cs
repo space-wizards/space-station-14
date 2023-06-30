@@ -21,7 +21,7 @@ public sealed class PulledPrecondition : HTNPrecondition
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        return IsPulled && _pulling.IsPulled(owner) ||
-               !IsPulled && !_pulling.IsPulled(owner);
+        return IsPulled && _pulling.IsPulled(owner)
+            || !IsPulled && !_pulling.IsPulled(owner);
     }
 }

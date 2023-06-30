@@ -18,8 +18,8 @@ namespace Content.Client.Administration.UI.CustomControls
 
         protected virtual bool CanPress()
         {
-            return string.IsNullOrEmpty(Command) ||
-                   IoCManager.Resolve<IClientConGroupController>().CanCommand(Command.Split(' ')[0]);
+            return string.IsNullOrEmpty(Command)
+                || IoCManager.Resolve<IClientConGroupController>().CanCommand(Command.Split(' ')[0]);
         }
 
         protected override void EnteredTree()

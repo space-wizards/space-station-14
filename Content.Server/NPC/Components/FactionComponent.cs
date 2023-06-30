@@ -10,8 +10,8 @@ namespace Content.Server.NPC.Components
         /// <summary>
         /// Factions this entity is a part of.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite),
-         DataField("factions", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<FactionPrototype>))]
+        [DataField("factions", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<FactionPrototype>))]
+        [ViewVariables(VVAccess.ReadWrite)]
         public HashSet<string> Factions = new();
 
         /// <summary>

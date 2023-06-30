@@ -60,7 +60,7 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
         }
     }
 
-     #region Sending & Receiving
+    #region Sending & Receiving
     /// <summary>
     /// Sends a network payload directed at the sink entity.
     /// Just raises a <see cref="SignalReceivedEvent"/> without data if the source or the sink doesn't have a <see cref="DeviceNetworkComponent"/>

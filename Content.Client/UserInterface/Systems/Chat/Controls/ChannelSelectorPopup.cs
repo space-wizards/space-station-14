@@ -59,8 +59,8 @@ public sealed class ChannelSelectorPopup : Popup
     private bool IsPreferredAvailable()
     {
         var preferred = _chatUIController.MapLocalIfGhost(_chatUIController.GetPreferredChannel());
-        return _selectorStates.TryGetValue(preferred, out var selector) &&
-               !selector.IsHidden;
+        return _selectorStates.TryGetValue(preferred, out var selector)
+            && !selector.IsHidden;
     }
 
     public void SetChannels(ChatSelectChannel channels)

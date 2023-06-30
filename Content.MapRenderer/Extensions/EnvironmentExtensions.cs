@@ -13,8 +13,8 @@ namespace Content.MapRenderer.Extensions
 
         public static string GetVariableOrThrow(string key)
         {
-            return Environment.GetEnvironmentVariable(key) ??
-                   throw new ArgumentException($"No environment variable found with key {key}");
+            return Environment.GetEnvironmentVariable(key)
+                ?? throw new ArgumentException($"No environment variable found with key {key}");
         }
     }
 }

@@ -339,8 +339,8 @@ namespace Content.Client.Options.UI.Tabs
                 Priority = 0,
                 Type = bindType,
                 CanFocus = key == Keyboard.Key.MouseLeft
-                           || key == Keyboard.Key.MouseRight
-                           || key == Keyboard.Key.MouseMiddle,
+                        || key == Keyboard.Key.MouseRight
+                        || key == Keyboard.Key.MouseMiddle,
                 CanRepeat = false
             };
 

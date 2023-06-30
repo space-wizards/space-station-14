@@ -38,9 +38,9 @@ public sealed class DoorBoltSystem : SharedDoorBoltSystem
 
     public bool GetBoltLightsVisible(EntityUid uid, DoorBoltComponent component)
     {
-        return component.BoltLightsEnabled &&
-               component.BoltsDown &&
-               this.IsPowered(uid, EntityManager);
+        return component.BoltLightsEnabled
+            && component.BoltsDown
+            && this.IsPowered(uid, EntityManager);
     }
 
     public void SetBoltLightsEnabled(EntityUid uid, DoorBoltComponent component, bool value)

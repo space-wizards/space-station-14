@@ -45,10 +45,14 @@ public sealed class ConveyorController : SharedConveyorController
             var shape = new PolygonShape();
             shape.SetAsBox(0.55f, 0.55f);
 
-            _fixtures.TryCreateFixture(uid, shape, ConveyorFixture,
-                collisionLayer: (int) (CollisionGroup.LowImpassable | CollisionGroup.MidImpassable |
-                                       CollisionGroup.Impassable), hard: false, body: physics);
-
+            _fixtures.TryCreateFixture(
+                uid,
+                shape,
+                ConveyorFixture,
+                collisionLayer: (int) (CollisionGroup.LowImpassable | CollisionGroup.MidImpassable | CollisionGroup.Impassable),
+                hard: false,
+                body: physics
+            );
         }
     }
 

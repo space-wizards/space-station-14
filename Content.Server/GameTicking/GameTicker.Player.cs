@@ -40,14 +40,15 @@ namespace Content.Server.GameTicking
             switch (args.NewStatus)
             {
                 case SessionStatus.Connected:
-                {
                     AddPlayerToDb(args.Session.UserId.UserId);
 
                     // Always make sure the client has player data.
                     if (session.Data.ContentDataUncast == null)
                     {
-                        var data = new PlayerData(session.UserId, args.Session.Name);
-                        data.Mind = mind;
+                        var data = new PlayerData(session.UserId, args.Session.Name)
+                        {
+                            Mind = mind
+                        };
                         session.Data.ContentDataUncast = data;
                     }
 
@@ -56,8 +57,8 @@ namespace Content.Server.GameTicking
                     Timer.Spawn(0, args.Session.JoinGame);
 
                     var record = await _dbManager.GetPlayerRecordByUserId(args.Session.UserId);
-                    var firstConnection = record != null &&
-                                          Math.Abs((record.FirstSeenTime - record.LastSeenTime).TotalMinutes) < 1;
+                    var firstConnection = record != null
+                                        && Math.Abs((record.FirstSeenTime - record.LastSeenTime).TotalMinutes) < 1;
 
                     _chatManager.SendAdminAnnouncement(firstConnection
                         ? Loc.GetString("player-first-join-message", ("name", args.Session.Name))
@@ -70,10 +71,8 @@ namespace Content.Server.GameTicking
                     }
 
                     break;
-                }
 
                 case SessionStatus.InGame:
-                {
                     _userDb.ClientConnected(session);
 
                     if (mind == null)
@@ -103,17 +102,14 @@ namespace Content.Server.GameTicking
                     }
 
                     break;
-                }
 
                 case SessionStatus.Disconnected:
-                {
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
                     if (mind != null)
                         mind.Session = null;
 
                     _userDb.ClientDisconnected(session);
                     break;
-                }
             }
             //When the status of a player changes, update the server info text
             UpdateInfoText();

@@ -244,8 +244,8 @@ public sealed class FaxSystem : EntitySystem
             switch (command)
             {
                 case FaxConstants.FaxPingCommand:
-                    var isForSyndie = HasComp<EmaggedComponent>(uid) &&
-                                      args.Data.ContainsKey(FaxConstants.FaxSyndicateData);
+                    var isForSyndie = HasComp<EmaggedComponent>(uid)
+                                    && args.Data.ContainsKey(FaxConstants.FaxSyndicateData);
                     if (!isForSyndie && !component.ResponsePings)
                         return;
 
@@ -322,10 +322,10 @@ public sealed class FaxSystem : EntitySystem
             return;
 
         var isPaperInserted = component.PaperSlot.Item != null;
-        var canSend = isPaperInserted &&
-                      component.DestinationFaxAddress != null &&
-                      component.SendTimeoutRemaining <= 0 &&
-                      component.InsertingTimeRemaining <= 0;
+        var canSend = isPaperInserted
+                    && component.DestinationFaxAddress != null
+                    && component.SendTimeoutRemaining <= 0
+                    && component.InsertingTimeRemaining <= 0;
         var state = new FaxUiState(component.FaxName, component.KnownFaxes, canSend, isPaperInserted, component.DestinationFaxAddress);
         _userInterface.TrySetUiState(uid, FaxUiKey.Key, state);
     }

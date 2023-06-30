@@ -114,8 +114,8 @@ public sealed class StationRecordSet
     public bool HasRecordEntry<T>(StationRecordKey key)
     {
         return _keys.Contains(key)
-               && _tables.TryGetValue(typeof(T), out var table)
-               && table.ContainsKey(key);
+            && _tables.TryGetValue(typeof(T), out var table)
+            && table.ContainsKey(key);
     }
 
     /// <summary>

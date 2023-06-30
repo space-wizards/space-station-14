@@ -24,7 +24,6 @@ public sealed class RangedDamageSoundComponent : Component
     /// Specified sounds to apply when the entity takes damage with the specified type.
     /// Will fallback to defaults if none specified.
     /// </summary>
-    [DataField("soundTypes",
-         customTypeSerializer: typeof(PrototypeIdDictionarySerializer<SoundSpecifier, DamageTypePrototype>))]
+    [DataField("soundTypes", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<SoundSpecifier, DamageTypePrototype>))]
     public Dictionary<string, SoundSpecifier>? SoundTypes;
 }

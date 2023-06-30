@@ -430,7 +430,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             var pos = _transformSystem.GetWorldPosition(xform, transformQuery);
             _throwingSystem.TryThrow(
                 uid,
-                 pos - epicenter.Position,
+                pos - epicenter.Position,
                 physics,
                 xform,
                 projectileQuery,

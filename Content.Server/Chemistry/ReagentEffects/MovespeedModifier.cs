@@ -46,8 +46,8 @@ namespace Content.Server.Chemistry.ReagentEffects
             var status = args.EntityManager.EnsureComponent<MovespeedModifierMetabolismComponent>(args.SolutionEntity);
 
             // Only refresh movement if we need to.
-            var modified = !status.WalkSpeedModifier.Equals(WalkSpeedModifier) ||
-                           !status.SprintSpeedModifier.Equals(SprintSpeedModifier);
+            var modified = !status.WalkSpeedModifier.Equals(WalkSpeedModifier)
+                        || !status.SprintSpeedModifier.Equals(SprintSpeedModifier);
 
             status.WalkSpeedModifier = WalkSpeedModifier;
             status.SprintSpeedModifier = SprintSpeedModifier;

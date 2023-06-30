@@ -63,8 +63,8 @@ namespace Content.Shared.Chemistry.Reagent
             return Loc.GetString(ReagentEffectFormat, ("effect", effect), ("chance", Probability),
                 ("conditionCount", Conditions?.Length ?? 0),
                 ("conditions",
-                    ContentLocalizationManager.FormatList(Conditions?.Select(x => x.GuidebookExplanation(prototype)).ToList() ??
-                                                          new List<string>())));
+                    ContentLocalizationManager.FormatList(Conditions?.Select(x => x.GuidebookExplanation(prototype)).ToList()
+                    ?? new List<string>())));
         }
     }
 

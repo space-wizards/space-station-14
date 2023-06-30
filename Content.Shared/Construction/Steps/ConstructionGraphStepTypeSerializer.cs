@@ -51,11 +51,10 @@ namespace Content.Shared.Construction.Steps
             ISerializationContext? context = null,
             ISerializationManager.InstantiationDelegate<ConstructionGraphStep>? instanceProvider = null)
         {
-            var type = GetType(node) ??
-                       throw new ArgumentException(
-                           "Tried to convert invalid YAML node mapping to ConstructionGraphStep!");
+            var type = GetType(node)
+                    ?? throw new ArgumentException("Tried to convert invalid YAML node mapping to ConstructionGraphStep!");
 
-            return (ConstructionGraphStep)serializationManager.Read(type, node, hookCtx, context)!;
+            return (ConstructionGraphStep) serializationManager.Read(type, node, hookCtx, context)!;
         }
 
         public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,

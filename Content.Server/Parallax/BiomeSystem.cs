@@ -272,9 +272,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         {
             var pSession = (IPlayerSession) client;
 
-            if (xformQuery.TryGetComponent(pSession.AttachedEntity, out var xform) &&
-                _handledEntities.Add(pSession.AttachedEntity.Value) &&
-                 biomeQuery.TryGetComponent(xform.MapUid, out var biome))
+            if (xformQuery.TryGetComponent(pSession.AttachedEntity, out var xform)
+            && _handledEntities.Add(pSession.AttachedEntity.Value)
+            && biomeQuery.TryGetComponent(xform.MapUid, out var biome))
             {
                 var worldPos = _transform.GetWorldPosition(xform, xformQuery);
                 AddChunksInRange(biome, worldPos);

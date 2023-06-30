@@ -142,9 +142,10 @@ namespace Content.Server.Atmos.EntitySystems
         private byte GetOpacity(float moles, float molesVisible, float molesVisibleMax)
         {
             return (byte) (ContentHelpers.RoundToLevels(
-                MathHelper.Clamp01((moles - molesVisible) /
-                                   (molesVisibleMax - molesVisible)) * 255, byte.MaxValue,
-                _thresholds) * 255 / (_thresholds - 1));
+                MathHelper.Clamp01((moles - molesVisible) / (molesVisibleMax - molesVisible)) * 255,
+                byte.MaxValue,
+                _thresholds
+            ) * 255 / (_thresholds - 1));
         }
 
         public GasOverlayData GetOverlayData(GasMixture? mixture)
@@ -164,9 +165,10 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 opacity = (byte) (ContentHelpers.RoundToLevels(
-                    MathHelper.Clamp01((moles - gas.GasMolesVisible) /
-                                       (gas.GasMolesVisibleMax - gas.GasMolesVisible)) * 255, byte.MaxValue,
-                    _thresholds) * 255 / (_thresholds - 1));
+                    MathHelper.Clamp01((moles - gas.GasMolesVisible) / (gas.GasMolesVisibleMax - gas.GasMolesVisible)) * 255,
+                    byte.MaxValue,
+                    _thresholds
+                ) * 255 / (_thresholds - 1));
             }
 
             return data;

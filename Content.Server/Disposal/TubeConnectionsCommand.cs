@@ -45,9 +45,10 @@ namespace Content.Server.Disposal
 
             if (!_entities.TryGetComponent(id, out DisposalTubeComponent? tube))
             {
-                shell.WriteLine(Loc.GetString("shell-entity-with-uid-lacks-component",
-                                              ("uid", id),
-                                              ("componentName", nameof(DisposalTubeComponent))));
+                shell.WriteLine(Loc.GetString(
+                    "shell-entity-with-uid-lacks-component",
+                    ("uid", id),
+                    ("componentName", nameof(DisposalTubeComponent))));
                 return;
             }
 

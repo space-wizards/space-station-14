@@ -286,7 +286,7 @@ namespace Content.Client.Stylesheets
             var buttonTex = resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var topButtonBase = new StyleBoxTexture
             {
-             Texture = buttonTex,
+                Texture = buttonTex,
             };
             topButtonBase.SetPatchMargin(StyleBox.Margin.All, 10);
             topButtonBase.SetPadding(StyleBox.Margin.All, 0);
@@ -294,19 +294,19 @@ namespace Content.Client.Stylesheets
 
             var topButtonOpenRight = new StyleBoxTexture(topButtonBase)
             {
-             Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((0, 0), (14, 24))),
+                Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((0, 0), (14, 24))),
             };
             topButtonOpenRight.SetPatchMargin(StyleBox.Margin.Right, 0);
 
             var topButtonOpenLeft = new StyleBoxTexture(topButtonBase)
             {
-             Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((10, 0), (14, 24))),
+                Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((10, 0), (14, 24))),
             };
             topButtonOpenLeft.SetPatchMargin(StyleBox.Margin.Left, 0);
 
             var topButtonSquare = new StyleBoxTexture(topButtonBase)
             {
-             Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((10, 0), (3, 24))),
+                Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((10, 0), (3, 24))),
             };
             topButtonSquare.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
 

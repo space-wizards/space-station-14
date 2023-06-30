@@ -401,8 +401,9 @@ namespace Content.Server.MachineLinking.System
                         attached, PopupType.Medium);
                 }
                 else
-                { // something weird happened
-                  // TODO log error
+                {
+                    // something weird happened
+                    // TODO log error
                 }
             }
             else
@@ -519,8 +520,10 @@ namespace Content.Server.MachineLinking.System
                 return true;
 
             // TODO: As elsewhere don't use mappos inrange.
-            return Comp<TransformComponent>(transmitterComponent.Owner).MapPosition.InRange(
-                   Comp<TransformComponent>(receiverComponent.Owner).MapPosition, transmitterComponent.TransmissionRange);
+            return Comp<TransformComponent>(transmitterComponent.Owner).MapPosition
+                .InRange(
+                    Comp<TransformComponent>(receiverComponent.Owner).MapPosition,
+                    transmitterComponent.TransmissionRange);
         }
 
         private bool IsLinkerInteractable(EntityUid uid, SignalLinkerComponent linkerComponent)

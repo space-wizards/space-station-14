@@ -4,10 +4,10 @@ namespace Content.Shared.Throwing
     {
         public BeforeThrowEvent(EntityUid itemUid, Vector2 direction, float throwStrength,  EntityUid playerUid)
         {
-           ItemUid = itemUid;
-           Direction = direction;
-           ThrowStrength = throwStrength;
-           PlayerUid = playerUid;
+            ItemUid = itemUid;
+            Direction = direction;
+            ThrowStrength = throwStrength;
+            PlayerUid = playerUid;
         }
 
         public EntityUid ItemUid { get; set; }

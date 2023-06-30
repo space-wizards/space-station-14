@@ -20,9 +20,9 @@ namespace Content.Server.Objectives.Conditions
                 if (entity == default)
                     return false;
 
-                return EntityManager.TryGetComponent(entity, out MobStateComponent? mobState) &&
-                      MobStateSystem.IsAlive(entity.Value, mobState) &&
-                       mc.Mind != mind;
+                return EntityManager.TryGetComponent(entity, out MobStateComponent? mobState)
+                    && MobStateSystem.IsAlive(entity.Value, mobState)
+                    && mc.Mind != mind;
             }).Select(mc => mc.Mind).ToList();
 
             if (allHumans.Count == 0)

@@ -124,8 +124,8 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool TryAddTag(EntityUid entity, string id)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
-               AddTag(component, id);
+        return TryComp<TagComponent>(entity, out var component)
+            && AddTag(component, id);
     }
 
     /// <summary>
@@ -142,8 +142,8 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool TryAddTags(EntityUid entity, params string[] ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
-               AddTags(component, ids);
+        return TryComp<TagComponent>(entity, out var component)
+            && AddTags(component, ids);
     }
 
     /// <summary>
@@ -160,8 +160,8 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool TryAddTags(EntityUid entity, IEnumerable<string> ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
-               AddTags(component, ids);
+        return TryComp<TagComponent>(entity, out var component)
+            && AddTags(component, ids);
     }
 
     /// <summary>
@@ -175,8 +175,8 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasTag(EntityUid entity, string id)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
-               HasTag(component, id);
+        return TryComp<TagComponent>(entity, out var component)
+            && HasTag(component, id);
     }
 
     /// <summary>
@@ -184,8 +184,8 @@ public sealed class TagSystem : EntitySystem
     /// </summary>
     public bool HasTag(EntityUid entity, string id, EntityQuery<TagComponent> tagQuery)
     {
-        return tagQuery.TryGetComponent(entity, out var component) &&
-               HasTag(component, id);
+        return tagQuery.TryGetComponent(entity, out var component)
+            && HasTag(component, id);
     }
 
     /// <summary>
@@ -199,8 +199,8 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(EntityUid entity, params string[] ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
-               HasAllTags(component, ids);
+        return TryComp<TagComponent>(entity, out var component)
+            && HasAllTags(component, ids);
     }
 
     /// <summary>
@@ -214,8 +214,8 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(EntityUid entity, IEnumerable<string> ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
-               HasAllTags(component, ids);
+        return TryComp<TagComponent>(entity, out var component)
+            && HasAllTags(component, ids);
     }
 
     /// <summary>
@@ -229,8 +229,8 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(EntityUid entity, params string[] ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
-               HasAnyTag(component, ids);
+        return TryComp<TagComponent>(entity, out var component)
+            && HasAnyTag(component, ids);
     }
 
     /// <summary>
@@ -244,8 +244,8 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(EntityUid entity, IEnumerable<string> ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
-               HasAnyTag(component, ids);
+        return TryComp<TagComponent>(entity, out var component)
+            && HasAnyTag(component, ids);
     }
 
     /// <summary>
@@ -261,8 +261,8 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool RemoveTag(EntityUid entity, string id)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
-               RemoveTag(component, id);
+        return TryComp<TagComponent>(entity, out var component)
+            && RemoveTag(component, id);
     }
 
     /// <summary>
@@ -278,8 +278,8 @@ public sealed class TagSystem : EntitySystem
     /// </returns>
     public bool RemoveTags(EntityUid entity, params string[] ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
-               RemoveTags(component, ids);
+        return TryComp<TagComponent>(entity, out var component)
+            && RemoveTags(component, ids);
     }
 
     /// <summary>
@@ -295,8 +295,8 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool RemoveTags(EntityUid entity, IEnumerable<string> ids)
     {
-        return TryComp<TagComponent>(entity, out var component) &&
-               RemoveTags(component, ids);
+        return TryComp<TagComponent>(entity, out var component)
+            && RemoveTags(component, ids);
     }
 
     /// <summary>

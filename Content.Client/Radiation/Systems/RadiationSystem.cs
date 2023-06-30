@@ -38,8 +38,8 @@ public sealed class RadiationSystem : EntitySystem
         if (!_overlayMan.TryGetOverlay(out RadiationDebugOverlay? overlay))
             return;
 
-        var str = $"Radiation update: {ev.ElapsedTimeMs}ms with. Receivers: {ev.ReceiversCount}, " +
-                  $"Sources: {ev.SourcesCount}, Rays: {ev.Rays.Count}";
+        var str = $"Radiation update: {ev.ElapsedTimeMs}ms with. Receivers: {ev.ReceiversCount}, "
+                + $"Sources: {ev.SourcesCount}, Rays: {ev.Rays.Count}";
         Logger.Info(str);
 
         Rays = ev.Rays;

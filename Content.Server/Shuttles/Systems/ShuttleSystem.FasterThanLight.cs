@@ -153,7 +153,7 @@ public sealed partial class ShuttleSystem
         string? priorityTag = null)
     {
         if (!TrySetupFTL(shuttleUid, component, out var hyperspace))
-           return;
+            return;
 
         hyperspace.StartupTime = startupTime;
         hyperspace.TravelTime = hyperspaceTime;

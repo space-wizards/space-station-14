@@ -171,8 +171,8 @@ public sealed class FactionSystem : EntitySystem
         if (!Resolve(with, ref factionWith, false))
             return false;
 
-        return factionWith.Factions.All(x => IsFactionFriendly(target, x)) ||
-               factionWith.FriendlyFactions.Contains(target);
+        return factionWith.Factions.All(x => IsFactionFriendly(target, x))
+            || factionWith.FriendlyFactions.Contains(target);
     }
 
     public bool IsFactionHostile(string target, string with)
@@ -185,8 +185,8 @@ public sealed class FactionSystem : EntitySystem
         if (!Resolve(with, ref factionWith, false))
             return false;
 
-        return factionWith.Factions.All(x => IsFactionHostile(target, x)) ||
-               factionWith.HostileFactions.Contains(target);
+        return factionWith.Factions.All(x => IsFactionHostile(target, x))
+            || factionWith.HostileFactions.Contains(target);
     }
 
     public bool IsFactionNeutral(string target, string with)

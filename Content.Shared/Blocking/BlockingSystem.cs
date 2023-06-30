@@ -239,8 +239,9 @@ public sealed partial class BlockingSystem : EntitySystem
         //If the component blocking toggle isn't null, grab the users SharedBlockingUserComponent and PhysicsComponent
         //then toggle the action to false, unanchor the user, remove the hard fixture
         //and set the users bodytype back to their original type
-        if (component.BlockingToggleAction != null && TryComp<BlockingUserComponent>(user, out var blockingUserComponent)
-                                                     && TryComp<PhysicsComponent>(user, out var physicsComponent))
+        if (component.BlockingToggleAction != null
+        && TryComp<BlockingUserComponent>(user, out var blockingUserComponent)
+        && TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
             if (xform.Anchored)
                 _transformSystem.Unanchor(user, xform);

@@ -125,7 +125,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
                 // storing the drunk and stutter time so we can remove it independently from other effects additions
                 bloodstream.StatusTime += bloodstream.UpdateInterval * 2;
-            }   
+            }
             else if (!_mobStateSystem.IsDead(uid))
             {
                 // If they're healthy, we'll try and heal some bloodloss instead.
@@ -355,8 +355,9 @@ public sealed class BloodstreamSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        var max = component.BloodSolution.MaxVolume + component.BloodTemporarySolution.MaxVolume +
-                  component.ChemicalSolution.MaxVolume;
+        var max = component.BloodSolution.MaxVolume
+                + component.BloodTemporarySolution.MaxVolume
+                + component.ChemicalSolution.MaxVolume;
         var tempSol = new Solution() { MaxVolume = max };
 
         tempSol.AddSolution(component.BloodSolution, _prototypeManager);

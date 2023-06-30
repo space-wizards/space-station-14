@@ -50,7 +50,7 @@ public abstract class AlertsSystem : EntitySystem
     public bool IsShowingAlertCategory(EntityUid euid, AlertCategory alertCategory)
     {
         return EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent)
-               && alertsComponent.Alerts.ContainsKey(AlertKey.ForCategory(alertCategory));
+            && alertsComponent.Alerts.ContainsKey(AlertKey.ForCategory(alertCategory));
     }
 
     public bool TryGetAlertState(EntityUid euid, AlertKey key, out AlertState alertState)
@@ -93,7 +93,11 @@ public abstract class AlertsSystem : EntitySystem
             alertsComponent.Alerts.Remove(alert.AlertKey);
 
             alertsComponent.Alerts[alert.AlertKey] = new AlertState
-                { Cooldown = cooldown, Severity = severity, Type = alertType };
+            {
+                Cooldown = cooldown,
+                Severity = severity,
+                Type = alertType
+            };
 
             AfterShowAlert(alertsComponent);
 
@@ -101,9 +105,7 @@ public abstract class AlertsSystem : EntitySystem
         }
         else
         {
-            Log.Error("Unable to show alert {0}, please ensure this alertType has" +
-                                   " a corresponding YML alert prototype",
-                alertType);
+            Log.Error("Unable to show alert {alertType}, please ensure this alertType has a corresponding YML alert prototype");
         }
     }
 
@@ -206,8 +208,8 @@ public abstract class AlertsSystem : EntitySystem
         {
             if (!_typeToAlert.TryAdd(alert.AlertType, alert))
             {
-                Log.Error("Found alert with duplicate alertType {0} - all alerts must have" +
-                          " a unique alerttype, this one will be skipped", alert.AlertType);
+                Log.Error("Found alert with duplicate alertType {0} - all alerts must have"
+                            + " a unique alerttype, this one will be skipped", alert.AlertType);
             }
         }
     }
@@ -229,8 +231,7 @@ public abstract class AlertsSystem : EntitySystem
 
         if (!IsShowingAlert(player.Value, msg.Type))
         {
-            Log.Debug("User {0} attempted to" +
-                                   " click alert {1} which is not currently showing for them",
+            Log.Debug("User {0} attempted to click alert {1} which is not currently showing for them",
                 EntityManager.GetComponent<MetaDataComponent>(player.Value).EntityName, msg.Type);
             return;
         }

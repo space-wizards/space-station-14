@@ -23,7 +23,7 @@ namespace Content.Server.Atmos.Reactions
                 temperatureScale = 1f;
             else
                 temperatureScale = (temperature - Atmospherics.PlasmaMinimumBurnTemperature) /
-                                   (Atmospherics.PlasmaUpperTemperature - Atmospherics.PlasmaMinimumBurnTemperature);
+                                    (Atmospherics.PlasmaUpperTemperature - Atmospherics.PlasmaMinimumBurnTemperature);
 
             if (temperatureScale > 0)
             {
@@ -36,9 +36,11 @@ namespace Content.Server.Atmos.Reactions
                 // Supersaturation makes tritium.
                 var oxyRatio = initialOxygenMoles / initialPlasmaMoles;
                 // Efficiency of reaction decreases from 1% Plasma to 3% plasma:
-                var supersaturation = Math.Clamp((oxyRatio - Atmospherics.SuperSaturationEnds) /
-                                                 (Atmospherics.SuperSaturationThreshold -
-                                                  Atmospherics.SuperSaturationEnds), 0.0f, 1.0f);
+                var supersaturation = Math.Clamp(
+                    (oxyRatio - Atmospherics.SuperSaturationEnds) / (Atmospherics.SuperSaturationThreshold - Atmospherics.SuperSaturationEnds),
+                    0.0f,
+                    1.0f
+                );
 
                 if (initialOxygenMoles > initialPlasmaMoles * Atmospherics.PlasmaOxygenFullburn)
                     plasmaBurnRate = initialPlasmaMoles * temperatureScale / Atmospherics.PlasmaBurnRateDelta;

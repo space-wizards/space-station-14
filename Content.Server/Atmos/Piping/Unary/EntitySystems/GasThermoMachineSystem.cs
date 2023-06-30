@@ -132,9 +132,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (Loc.TryGetString("gas-thermomachine-system-examined", out var str,
                         ("machineName", thermoMachine.Mode == ThermoMachineMode.Freezer ? "freezer" : "heater"),
                         ("tempColor", thermoMachine.Mode == ThermoMachineMode.Freezer ? "deepskyblue" : "red"),
-                        ("temp", Math.Round(thermoMachine.TargetTemperature,2))
-               ))
-
+                        ("temp", Math.Round(thermoMachine.TargetTemperature, 2))
+            ))
                 args.PushMarkup(str);
         }
     }

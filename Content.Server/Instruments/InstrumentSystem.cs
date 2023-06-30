@@ -185,9 +185,9 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 instrument.DirtyRenderer = false;
             }
 
-            if (instrument.RespectMidiLimits &&
-                (instrument.BatchesDropped >= MaxMidiBatchesDropped
-                 || instrument.LaggedBatches >= MaxMidiLaggedBatches))
+            if (instrument.RespectMidiLimits
+            && (instrument.BatchesDropped >= MaxMidiBatchesDropped
+                || instrument.LaggedBatches >= MaxMidiLaggedBatches))
             {
                 if (instrument.InstrumentPlayer?.AttachedEntity is {Valid: true} mob)
                 {

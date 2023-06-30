@@ -94,8 +94,10 @@ public sealed class MindSystem : EntitySystem
         if (_userMinds.TryGetValue(user, out mind))
         {
             DebugTools.Assert(mind.UserId == user);
-            DebugTools.Assert(_playerManager.GetPlayerData(user).ContentData() is not {} data
-                              || data.Mind == mind);
+            DebugTools.Assert(
+                _playerManager.GetPlayerData(user).ContentData() is not { } data
+                || data.Mind == mind
+            );
             return true;
         }
 
@@ -425,9 +427,9 @@ public sealed class MindSystem : EntitySystem
             RemComp<VisitingMindComponent>(entity!.Value);
         }
         else if (mind.VisitingEntity != null
-              && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
-                  || !TryComp(mind.VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
-                  || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
+            && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
+                || !TryComp(mind.VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
+                || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
         {
             RemoveVisitingEntity(mind);
         }

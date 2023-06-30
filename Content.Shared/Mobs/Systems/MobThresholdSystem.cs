@@ -138,7 +138,7 @@ public sealed class MobThresholdSystem : EntitySystem
             return false;
 
         return TryGetThresholdForState(target, MobState.Critical, out threshold, thresholdComponent)
-               || TryGetThresholdForState(target, MobState.Dead, out threshold, thresholdComponent);
+            || TryGetThresholdForState(target, MobState.Dead, out threshold, thresholdComponent);
     }
 
     /// <summary>
@@ -344,27 +344,21 @@ public sealed class MobThresholdSystem : EntitySystem
         switch (currentMobState)
         {
             case MobState.Alive:
-            {
                 var severity = _alerts.GetMinSeverity(AlertType.HumanHealth);
                 if (TryGetIncapPercentage(target, damageable.TotalDamage, out var percentage))
                 {
-                    severity = (short) MathF.Floor(percentage.Value.Float() *
-                                                   _alerts.GetSeverityRange(AlertType.HumanHealth));
+                    severity = (short) MathF.Floor(percentage.Value.Float()
+                                * _alerts.GetSeverityRange(AlertType.HumanHealth));
                     severity += _alerts.GetMinSeverity(AlertType.HumanHealth);
                 }
                 _alerts.ShowAlert(target, AlertType.HumanHealth, severity);
                 break;
-            }
             case MobState.Critical:
-            {
                 _alerts.ShowAlert(target, AlertType.HumanCrit);
                 break;
-            }
             case MobState.Dead:
-            {
                 _alerts.ShowAlert(target, AlertType.HumanDead);
                 break;
-            }
             case MobState.Invalid:
             default:
                 throw new ArgumentOutOfRangeException(nameof(currentMobState), currentMobState, null);

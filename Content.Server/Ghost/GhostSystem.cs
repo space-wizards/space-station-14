@@ -220,8 +220,8 @@ namespace Content.Server.Ghost
             if (TryComp(msg.Target, out WarpPointComponent? warp) && warp.Follow
                 || HasComp<MobStateComponent>(msg.Target))
             {
-                 _followerSystem.StartFollowingEntity(ghost.Owner, msg.Target);
-                 return;
+                _followerSystem.StartFollowingEntity(ghost.Owner, msg.Target);
+                return;
             }
 
             var xform = Transform(ghost.Owner);

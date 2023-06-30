@@ -48,8 +48,9 @@ public sealed class GCQueueSystem : EntitySystem
                 continue;
 
             queueWatch.Restart();
-            while (queueWatch.Elapsed < proto.MaximumTickTime && queue.Count >= proto.MinDepthToProcess &&
-                   overallWatch.Elapsed < _maximumProcessTime)
+            while (queueWatch.Elapsed < proto.MaximumTickTime
+                    && queue.Count >= proto.MinDepthToProcess
+                    && overallWatch.Elapsed < _maximumProcessTime)
             {
                 var e = queue.Dequeue();
                 if (!Deleted(e))

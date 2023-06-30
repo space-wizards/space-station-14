@@ -536,9 +536,9 @@ namespace Content.Server.Physics.Controllers
 
         private bool CanPilot(ShuttleComponent shuttle)
         {
-            return TryComp<FTLComponent>(shuttle.Owner, out var ftl) &&
-                   (ftl.State & (FTLState.Starting | FTLState.Travelling | FTLState.Arriving)) != 0x0 ||
-                   HasComp<PreventPilotComponent>(shuttle.Owner);
+            return TryComp<FTLComponent>(shuttle.Owner, out var ftl)
+                && (ftl.State & (FTLState.Starting | FTLState.Travelling | FTLState.Arriving)) != 0x0
+                || HasComp<PreventPilotComponent>(shuttle.Owner);
         }
 
     }

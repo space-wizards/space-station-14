@@ -939,9 +939,10 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             var date = DateTime.Now.Subtract(TimeSpan.FromDays(days));
 
-            await foreach (var log in db.DbContext.UploadedResourceLog
-                               .Where(l => date > l.Date)
-                               .AsAsyncEnumerable())
+            await foreach (var log in
+                db.DbContext.UploadedResourceLog
+                    .Where(l => date > l.Date)
+                    .AsAsyncEnumerable())
             {
                 db.DbContext.UploadedResourceLog.Remove(log);
             }

@@ -45,21 +45,21 @@ public sealed class PathPoly : IEquatable<PathPoly>
 
     public bool IsEquivalent(PathPoly other)
     {
-        return GraphUid.Equals(other.GraphUid) &&
-               ChunkOrigin.Equals(other.ChunkOrigin) &&
-               TileIndex == other.TileIndex &&
-               Data.IsEquivalent(other.Data) &&
-               Box.Equals(other.Box);
+        return GraphUid.Equals(other.GraphUid)
+            && ChunkOrigin.Equals(other.ChunkOrigin)
+            && TileIndex == other.TileIndex
+            && Data.IsEquivalent(other.Data)
+            && Box.Equals(other.Box);
     }
 
     public bool Equals(PathPoly? other)
     {
-        return other != null &&
-               GraphUid.Equals(other.GraphUid) &&
-               ChunkOrigin.Equals(other.ChunkOrigin) &&
-               TileIndex == other.TileIndex &&
-               Data.Equals(other.Data) &&
-               Box.Equals(other.Box);
+        return other != null
+            && GraphUid.Equals(other.GraphUid)
+            && ChunkOrigin.Equals(other.ChunkOrigin)
+            && TileIndex == other.TileIndex
+            && Data.Equals(other.Data)
+            && Box.Equals(other.Box);
     }
 
     public override bool Equals(object? obj)

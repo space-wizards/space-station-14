@@ -108,9 +108,9 @@ namespace Content.Server.Animals.Systems
 
         private void AddMilkVerb(EntityUid uid, UdderComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (args.Using == null ||
-                 !args.CanInteract ||
-                 !EntityManager.HasComponent<RefillableSolutionComponent>(args.Using.Value))
+            if (args.Using == null
+            || !args.CanInteract
+            || !EntityManager.HasComponent<RefillableSolutionComponent>(args.Using.Value))
                 return;
 
             AlternativeVerb verb = new()

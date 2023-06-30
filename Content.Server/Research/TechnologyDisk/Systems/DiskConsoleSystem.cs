@@ -86,8 +86,8 @@ public sealed class DiskConsoleSystem : EntitySystem
             totalPoints = server.Points;
         }
 
-        var canPrint = !(TryComp<DiskConsolePrintingComponent>(uid, out var printing) && printing.FinishTime >= _timing.CurTime) &&
-                       totalPoints >= component.PricePerDisk;
+        var canPrint = !(TryComp<DiskConsolePrintingComponent>(uid, out var printing) && printing.FinishTime >= _timing.CurTime)
+                    && totalPoints >= component.PricePerDisk;
 
         var state = new DiskConsoleBoundUserInterfaceState(totalPoints, component.PricePerDisk, canPrint);
         _ui.TrySetUiState(uid, DiskConsoleUiKey.Key, state);

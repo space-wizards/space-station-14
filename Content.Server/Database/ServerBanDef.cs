@@ -72,12 +72,13 @@ namespace Content.Server.Database
                     expires = loc.GetString("ban-banned-permanent");
             }
 
-            return $"""
-                   {loc.GetString("ban-banned-1")}
-                   {loc.GetString("ban-banned-2", ("reason", Reason))}
-                   {expires}
-                   {loc.GetString("ban-banned-3")}
-                   """;
+            return
+            $"""
+                {loc.GetString("ban-banned-1")}
+                {loc.GetString("ban-banned-2", ("reason", Reason))}
+                {expires}
+                {loc.GetString("ban-banned-3")}
+            """;
         }
     }
 }

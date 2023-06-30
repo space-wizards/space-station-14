@@ -48,7 +48,7 @@ public sealed class PowerWireAction : BaseWireAction
     private bool AllWiresMended(EntityUid owner)
     {
         return WiresSystem.TryGetData<int?>(owner, PowerWireActionKey.CutWires, out var cut)
-               && cut == 0;
+            && cut == 0;
     }
 
     // I feel like these two should be within ApcPowerReceiverComponent at this point.

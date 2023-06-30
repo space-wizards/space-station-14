@@ -226,8 +226,8 @@ public sealed class ClientClothingSystem : ClothingSystem
         InventoryComponent? inventory = null, SpriteComponent? sprite = null, ClothingComponent? clothingComponent = null,
         InventorySlotsComponent? inventorySlots = null)
     {
-        if (!Resolve(equipee, ref inventory, ref sprite, ref inventorySlots) ||
-           !Resolve(equipment, ref clothingComponent, false))
+        if (!Resolve(equipee, ref inventory, ref sprite, ref inventorySlots)
+        || !Resolve(equipment, ref clothingComponent, false))
         {
             return;
         }

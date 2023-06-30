@@ -91,10 +91,11 @@ namespace Content.Server.Chemistry.EntitySystems
             var target = args.Target!.Value;
 
             //Special case for reagent tanks, because normally clicking another container will give solution, not take it.
-            if (component.CanReceive  && !EntityManager.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
-                                      && _solutionContainerSystem.TryGetDrainableSolution(target, out var targetDrain) // target must be drainable
-                                      && EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refillComp)
-                                      && _solutionContainerSystem.TryGetRefillableSolution(uid, out var ownerRefill, refillable: refillComp))
+            if (component.CanReceive
+                && !EntityManager.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
+                && _solutionContainerSystem.TryGetDrainableSolution(target, out var targetDrain) // target must be drainable
+                && EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refillComp)
+                && _solutionContainerSystem.TryGetRefillableSolution(uid, out var ownerRefill, refillable: refillComp))
 
             {
 
@@ -121,8 +122,9 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             // if target is refillable, and owner is drainable
-            if (component.CanSend && _solutionContainerSystem.TryGetRefillableSolution(target, out var targetRefill)
-                                  && _solutionContainerSystem.TryGetDrainableSolution(uid, out var ownerDrain))
+            if (component.CanSend
+                && _solutionContainerSystem.TryGetRefillableSolution(target, out var targetRefill)
+                && _solutionContainerSystem.TryGetDrainableSolution(uid, out var ownerDrain))
             {
                 var transferAmount = component.TransferAmount;
 

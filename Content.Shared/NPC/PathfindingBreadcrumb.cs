@@ -71,17 +71,17 @@ public struct PathfindingData : IEquatable<PathfindingData>
 
     public bool IsEquivalent(PathfindingData other)
     {
-        return CollisionLayer.Equals(other.CollisionLayer) &&
-               CollisionMask.Equals(other.CollisionMask) &&
-               Flags.Equals(other.Flags);
+        return CollisionLayer.Equals(other.CollisionLayer)
+            && CollisionMask.Equals(other.CollisionMask)
+            && Flags.Equals(other.Flags);
     }
 
     public bool Equals(PathfindingData other)
     {
-        return CollisionLayer.Equals(other.CollisionLayer) &&
-               CollisionMask.Equals(other.CollisionMask) &&
-               Flags.Equals(other.Flags) &&
-               Damage.Equals(other.Damage);
+        return CollisionLayer.Equals(other.CollisionLayer)
+            && CollisionMask.Equals(other.CollisionMask)
+            && Flags.Equals(other.Flags)
+            && Damage.Equals(other.Damage);
     }
 
     public override bool Equals(object? obj)

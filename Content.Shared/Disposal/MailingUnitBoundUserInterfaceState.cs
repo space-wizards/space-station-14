@@ -26,9 +26,9 @@ public sealed class MailingUnitBoundUserInterfaceState : BoundUserInterfaceState
         if (ReferenceEquals(this, other))
             return true;
         return DisposalState.Equals(other.DisposalState)
-               && Target == other.Target
-               && TargetList.Equals(other.TargetList)
-               && Tag == other.Tag;
+            && Target == other.Target
+            && TargetList.Equals(other.TargetList)
+            && Tag == other.Tag;
     }
 
     public override bool Equals(object? other)

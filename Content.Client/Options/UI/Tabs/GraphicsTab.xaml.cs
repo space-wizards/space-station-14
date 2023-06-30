@@ -150,13 +150,17 @@ namespace Content.Client.Options.UI.Tabs
                 _cfg.SetCVar(CCVars.HudTheme, HudThemeOption.SelectedId);
             }
 
-            _cfg.SetCVar(CVars.DisplayWindowMode,
-                         (int) (FullscreenCheckBox.Pressed ? WindowMode.Fullscreen : WindowMode.Windowed));
+            _cfg.SetCVar(
+                CVars.DisplayWindowMode,
+                (int) (FullscreenCheckBox.Pressed ? WindowMode.Fullscreen : WindowMode.Windowed)
+            );
             _cfg.SetCVar(CVars.DisplayUIScale, UIScaleOptions[UIScaleOption.SelectedId]);
             _cfg.SetCVar(CCVars.ViewportStretch, ViewportStretchCheckBox.Pressed);
             _cfg.SetCVar(CCVars.ViewportFixedScaleFactor, (int) ViewportScaleSlider.Value);
-            _cfg.SetCVar(CCVars.ViewportSnapToleranceMargin,
-                         IntegerScalingCheckBox.Pressed ? CCVars.ViewportSnapToleranceMargin.DefaultValue : 0);
+            _cfg.SetCVar(
+                CCVars.ViewportSnapToleranceMargin,
+                IntegerScalingCheckBox.Pressed ? CCVars.ViewportSnapToleranceMargin.DefaultValue : 0
+            );
             _cfg.SetCVar(CCVars.ViewportScaleRender, !ViewportLowResCheckBox.Pressed);
             _cfg.SetCVar(CCVars.ParallaxLowQuality, ParallaxLowQualityCheckBox.Pressed);
             _cfg.SetCVar(CCVars.HudHeldItemShow, ShowHeldItemCheckBox.Pressed);
@@ -202,21 +206,21 @@ namespace Content.Client.Options.UI.Tabs
             var isWidthSame = (int) ViewportWidthSlider.Value == _cfg.GetCVar(CCVars.ViewportWidth);
             var isLayoutSame = HudLayoutOption.SelectedMetadata is string opt && opt == _cfg.GetCVar(CCVars.UILayout);
 
-            ApplyButton.Disabled = isVSyncSame &&
-                                   isFullscreenSame &&
-                                   isLightingQualitySame &&
-                                   isUIScaleSame &&
-                                   isVPStretchSame &&
-                                   isVPScaleSame &&
-                                   isIntegerScalingSame &&
-                                   isVPResSame &&
-                                   isPLQSame &&
-                                   isHudThemeSame &&
-                                   isShowHeldItemSame &&
-                                   isCombatModeIndicatorsSame &&
-                                   isFpsCounterVisibleSame &&
-                                   isWidthSame &&
-                                   isLayoutSame;
+            ApplyButton.Disabled = isVSyncSame
+                                && isFullscreenSame
+                                && isLightingQualitySame
+                                && isUIScaleSame
+                                && isVPStretchSame
+                                && isVPScaleSame
+                                && isIntegerScalingSame
+                                && isVPResSame
+                                && isPLQSame
+                                && isHudThemeSame
+                                && isShowHeldItemSame
+                                && isCombatModeIndicatorsSame
+                                && isFpsCounterVisibleSame
+                                && isWidthSame
+                                && isLayoutSame;
         }
 
         private bool ConfigIsFullscreen =>

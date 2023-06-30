@@ -54,10 +54,12 @@ namespace Content.Server.Construction.Conditions
                 if (amount == 0)
                     continue;
 
-                args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
-                                           ("amount", amount),
-                                           ("elementName", Loc.GetString(part)))
-                                       + "\n");
+                args.Message.AddMarkup(
+                    Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                        ("amount", amount),
+                        ("elementName", Loc.GetString(part)))
+                    + "\n"
+                );
             }
 
             foreach (var (material, required) in machineFrame.MaterialRequirements)
@@ -67,10 +69,12 @@ namespace Content.Server.Construction.Conditions
                 if (amount == 0)
                     continue;
 
-                args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
-                                           ("amount", amount),
-                                           ("elementName", Loc.GetString(material)))
-                                       + "\n");
+                args.Message.AddMarkup(
+                    Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                        ("amount", amount),
+                        ("elementName", Loc.GetString(material)))
+                    + "\n"
+                );
             }
 
             foreach (var (compName, info) in machineFrame.ComponentRequirements)
@@ -80,10 +84,12 @@ namespace Content.Server.Construction.Conditions
                 if (amount == 0)
                     continue;
 
-                args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
-                                                ("amount", info.Amount),
-                                                ("elementName", Loc.GetString(info.ExamineName)))
-                                  + "\n");
+                args.Message.AddMarkup(
+                    Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                        ("amount", info.Amount),
+                        ("elementName", Loc.GetString(info.ExamineName)))
+                    + "\n"
+                );
             }
 
             foreach (var (tagName, info) in machineFrame.TagRequirements)
@@ -93,10 +99,12 @@ namespace Content.Server.Construction.Conditions
                 if (amount == 0)
                     continue;
 
-                args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
-                                           ("amount", info.Amount),
-                                           ("elementName", Loc.GetString(info.ExamineName)))
-                                       + "\n");
+                args.Message.AddMarkup(
+                    Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                        ("amount", info.Amount),
+                        ("elementName", Loc.GetString(info.ExamineName)))
+                    + "\n"
+                );
             }
 
             return true;

@@ -62,8 +62,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             }
 
-            return HasComp<ItemComponent>(toInsert) ||
-                   HasComp<BodyComponent>(toInsert);
+            return HasComp<ItemComponent>(toInsert)
+                || HasComp<BodyComponent>(toInsert);
         }
 
         public void ExitDisposals(EntityUid uid, DisposalHolderComponent? holder = null, TransformComponent? holderTransform = null)

@@ -56,9 +56,9 @@ namespace Content.Client.Administration
                 }
 
                 var lineoffset = new Vector2(0f, 11f);
-                var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
-                                                                  new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
-                                                                      aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
+                var screenCoordinates = _eyeManager.WorldToScreen(
+                    aabb.Center + new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(aabb.TopRight - aabb.Center)
+                ) + new Vector2(1f, 7f);
                 if (playerInfo.Antag)
                 {
                     args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", Color.OrangeRed);

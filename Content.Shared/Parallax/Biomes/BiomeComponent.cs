@@ -30,8 +30,8 @@ public sealed partial class BiomeComponent : Component
     /// <remarks>
     /// This is really just here for prototype reload support.
     /// </remarks>
-    [ViewVariables(VVAccess.ReadWrite),
-     DataField("template", customTypeSerializer: typeof(PrototypeIdSerializer<BiomeTemplatePrototype>))]
+    [DataField("template", customTypeSerializer: typeof(PrototypeIdSerializer<BiomeTemplatePrototype>))]
+    [ViewVariables(VVAccess.ReadWrite)]
     public string? Template;
 
     /// <summary>

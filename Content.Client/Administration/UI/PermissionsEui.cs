@@ -364,8 +364,7 @@ namespace Content.Client.Administration.UI
                 if (data is { } dat)
                 {
                     var name = dat.UserName ?? dat.UserId.ToString();
-                    Title = Loc.GetString("permissions-eui-edit-admin-window-edit-admin-label",
-                                          ("admin", name));
+                    Title = Loc.GetString("permissions-eui-edit-admin-window-edit-admin-label", ("admin", name));
 
                     nameControl = new Label { Text = name };
                 }

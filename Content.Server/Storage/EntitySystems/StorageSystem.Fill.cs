@@ -28,7 +28,7 @@ public sealed partial class StorageSystem
 
             // handle depending on storage component, again this should be unified after ECS
             if (entityStorageComp != null && _entityStorage.Insert(ent, uid))
-               continue;
+                continue;
 
             if (serverStorageComp != null && Insert(uid, ent, serverStorageComp, false))
                 continue;

@@ -187,9 +187,9 @@ public sealed partial class NPCSteeringSystem
         }
         // Stuck detection
         // Check if we have moved further than the movespeed * stuck time.
-        else if (AntiStuck &&
-                 ourCoordinates.TryDistance(EntityManager, steering.LastStuckCoordinates, out var stuckDistance) &&
-                 stuckDistance < NPCSteeringComponent.StuckDistance)
+        else if (AntiStuck
+                && ourCoordinates.TryDistance(EntityManager, steering.LastStuckCoordinates, out var stuckDistance)
+                && stuckDistance < NPCSteeringComponent.StuckDistance)
         {
             var stuckTime = _timing.CurTime - steering.LastStuckTime;
             // Either 1 second or how long it takes to move the stuck distance + buffer if we're REALLY slow.

@@ -221,8 +221,8 @@ namespace Content.Shared.FixedPoint
 
         public override readonly bool Equals(object? obj)
         {
-            return obj is FixedPoint2 unit &&
-                   Value == unit.Value;
+            return obj is FixedPoint2 unit
+                && Value == unit.Value;
         }
 
         public override readonly int GetHashCode()

@@ -432,7 +432,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             UpdateLinkUiState(configuratorUid, configurator.ActiveDeviceLink.Value, targetUid.Value, activeSource, targetSink);
         }
         else if (TryComp(configurator.ActiveDeviceLink, out DeviceLinkSinkComponent? activeSink)
-                 && TryComp(targetUid, out DeviceLinkSourceComponent? targetSource))
+                && TryComp(targetUid, out DeviceLinkSourceComponent? targetSource))
         {
             UpdateLinkUiState(configuratorUid, targetUid.Value, configurator.ActiveDeviceLink.Value, targetSource, activeSink);
         }

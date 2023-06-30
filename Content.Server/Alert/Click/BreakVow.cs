@@ -13,10 +13,10 @@ namespace Content.Server.Alert.Click
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
 
-           if (entManager.TryGetComponent<MimePowersComponent?>(player, out var mimePowers))
-           {
+            if (entManager.TryGetComponent<MimePowersComponent?>(player, out var mimePowers))
+            {
                 entManager.System<MimePowersSystem>().BreakVow(player, mimePowers);
-           }
+            }
         }
     }
 }

@@ -11,13 +11,12 @@ namespace Content.Shared.Speech
     [RegisterComponent, NetworkedComponent]
     public sealed class SpeechComponent : Component
     {
-        [DataField("enabled"), Access(typeof(SpeechSystem),
-             Friend = AccessPermissions.ReadWrite,
-             Other = AccessPermissions.Read)]
+        [Access(typeof(SpeechSystem), Friend = AccessPermissions.ReadWrite, Other = AccessPermissions.Read)]
+        [DataField("enabled")]
         public bool Enabled = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("speechSounds", customTypeSerializer:typeof(PrototypeIdSerializer<SpeechSoundsPrototype>))]
+        [DataField("speechSounds", customTypeSerializer: typeof(PrototypeIdSerializer<SpeechSoundsPrototype>))]
         public string? SpeechSounds;
 
         [DataField("audioParams")]

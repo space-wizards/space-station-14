@@ -92,8 +92,10 @@ public sealed class SpraySystem : EntitySystem
 
         for (var i = 0; i < amount; i++)
         {
-            var rotation = new Angle(diffAngle + Angle.FromDegrees(spread * i) -
-                                     Angle.FromDegrees(spread * (amount - 1) / 2));
+            var rotation = new Angle(
+                diffAngle
+                + Angle.FromDegrees(spread * i)
+                - Angle.FromDegrees(spread * (amount - 1) / 2));
 
             // Calculate the destination for the vapor cloud. Limit to the maximum spray distance.
             var target = userMapPos

@@ -109,9 +109,9 @@ namespace Content.Server.Contests
             var massMultiplier = massWeight / weightTotal;
             var stamMultiplier = stamWeight / weightTotal;
 
-            return DamageContest(roller, target) * damageMultiplier +
-                   MassContest(roller, target) * massMultiplier +
-                   StaminaContest(roller, target) * stamMultiplier;
+            return DamageContest(roller, target) * damageMultiplier
+                    + MassContest(roller, target) * massMultiplier
+                    + StaminaContest(roller, target) * stamMultiplier;
         }
 
         /// <summary>

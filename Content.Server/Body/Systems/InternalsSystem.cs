@@ -187,9 +187,9 @@ public sealed class InternalsSystem : EntitySystem
 
     public bool AreInternalsWorking(InternalsComponent component)
     {
-        return TryComp(component.BreathToolEntity, out BreathToolComponent? breathTool) &&
-               breathTool.IsFunctional &&
-               TryComp(component.GasTankEntity, out GasTankComponent? _);
+        return TryComp(component.BreathToolEntity, out BreathToolComponent? breathTool)
+            && breathTool.IsFunctional
+            && TryComp(component.GasTankEntity, out GasTankComponent? _);
     }
 
     private short GetSeverity(InternalsComponent component)

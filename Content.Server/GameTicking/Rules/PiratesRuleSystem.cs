@@ -185,7 +185,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 
             // Forgive me for hardcoding prototypes
             foreach (var (_, meta, xform) in
-                     EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
+                EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
             {
                 if (meta.EntityPrototype?.ID != "SpawnPointPirates" || xform.ParentUid != pirates.PirateShip)
                     continue;

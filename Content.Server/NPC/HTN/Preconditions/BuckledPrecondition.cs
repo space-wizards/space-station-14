@@ -21,7 +21,7 @@ public sealed class BuckledPrecondition : HTNPrecondition
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        return IsBuckled && _buckle.IsBuckled(owner) ||
-               !IsBuckled && !_buckle.IsBuckled(owner);
+        return IsBuckled && _buckle.IsBuckled(owner)
+            || !IsBuckled && !_buckle.IsBuckled(owner);
     }
 }

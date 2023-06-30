@@ -381,9 +381,12 @@ namespace Content.Client.ParticleAccelerator.UI
             _assembled = uiState.Assembled;
             UpdateUI(uiState.Assembled, uiState.InterfaceBlock, uiState.Enabled,
                 uiState.WirePowerBlock);
-            _statusLabel.Text = Loc.GetString("particle-accelerator-control-menu-status-label",
-                                              ("status", Loc.GetString(uiState.Assembled ? "particle-accelerator-control-menu-status-operational" :
-                                                                                           "particle-accelerator-control-menu-status-incomplete")));
+            _statusLabel.Text = Loc.GetString(
+                "particle-accelerator-control-menu-status-label",
+                ("status", Loc.GetString(uiState.Assembled
+                    ? "particle-accelerator-control-menu-status-operational"
+                    : "particle-accelerator-control-menu-status-incomplete"))
+            );
             UpdatePowerState(uiState.State, uiState.Enabled, uiState.Assembled,
                 uiState.MaxLevel);
             UpdatePreview(uiState);

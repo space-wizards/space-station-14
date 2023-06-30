@@ -103,8 +103,8 @@ public sealed class EncryptionKeySystem : EntitySystem
             TryInsertKey(uid, component, args);
         }
         else if (TryComp<ToolComponent>(args.Used, out var tool)
-                 && tool.Qualities.Contains(component.KeysExtractionMethod)
-                 && component.KeyContainer.ContainedEntities.Count > 0) // dont block deconstruction
+        && tool.Qualities.Contains(component.KeysExtractionMethod)
+        && component.KeyContainer.ContainedEntities.Count > 0) // dont block deconstruction
         {
             args.Handled = true;
             TryRemoveKey(uid, component, args, tool);

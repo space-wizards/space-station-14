@@ -362,9 +362,8 @@ namespace Content.Server.Nuke
             if (EntityManager.TryGetComponent(uid, out TransformComponent? transform))
                 anchored = transform.Anchored;
 
-            var allowArm = component.DiskSlot.HasItem &&
-                           (component.Status == NukeStatus.AWAIT_ARM ||
-                            component.Status == NukeStatus.ARMED);
+            var allowArm = component.DiskSlot.HasItem
+                        && (component.Status == NukeStatus.AWAIT_ARM || component.Status == NukeStatus.ARMED);
 
             var state = new NukeUiState
             {

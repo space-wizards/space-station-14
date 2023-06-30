@@ -21,10 +21,14 @@ public sealed class RulesSystem : EntitySystem
             switch (rule)
             {
                 case AlwaysTrueRule:
+                    TransformComponent? xform; // Can't use curly braces for scope because that's linted against.
+                    EntityQuery<TransformComponent> xformQuery;
+                    bool found;
+                    Vector2 worldPos;
+                    int count;
                     break;
                 case GridInRangeRule griddy:
-                {
-                    if (!TryComp<TransformComponent>(uid, out var xform))
+                    if (!TryComp(uid, out xform))
                     {
                         return false;
                     }
@@ -34,52 +38,48 @@ public sealed class RulesSystem : EntitySystem
                         return !griddy.Inverted;
                     }
 
-                    var worldPos = _transform.GetWorldPosition(xform);
+                    worldPos = _transform.GetWorldPosition(xform);
 
                     foreach (var _ in _mapManager.FindGridsIntersecting(
-                                 xform.MapID,
-                                 new Box2(worldPos - griddy.Range, worldPos + griddy.Range)))
+                        xform.MapID,
+                        new Box2(worldPos - griddy.Range, worldPos + griddy.Range)))
                     {
                         return !griddy.Inverted;
                     }
 
                     break;
-                }
                 case InSpaceRule:
-                {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    if (!TryComp(uid, out xform) ||
                         xform.GridUid != null)
                     {
                         return false;
                     }
 
                     break;
-                }
                 case NearbyAccessRule access:
-                {
-                    var xformQuery = GetEntityQuery<TransformComponent>();
+                    xformQuery = GetEntityQuery<TransformComponent>();
 
-                    if (!xformQuery.TryGetComponent(uid, out var xform) ||
+                    if (!xformQuery.TryGetComponent(uid, out xform) ||
                         xform.MapUid == null)
                     {
                         return false;
                     }
 
-                    var found = false;
-                    var worldPos = _transform.GetWorldPosition(xform, xformQuery);
-                    var count = 0;
+                    found = false;
+                    worldPos = _transform.GetWorldPosition(xform, xformQuery);
+                    count = 0;
 
                     // TODO: Update this when we get the callback version
-                    foreach (var comp in _lookup.GetComponentsInRange<AccessReaderComponent>(xform.MapID,
-                                 worldPos, access.Range))
+                    foreach (var comp in _lookup.GetComponentsInRange<AccessReaderComponent>(
+                        xform.MapID,
+                        worldPos,
+                        access.Range
+                    ))
                     {
-                        if (!_reader.AreAccessTagsAllowed(access.Access, comp) ||
-                            access.Anchored &&
-                            (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
-                             !compXform.Anchored))
-                        {
+                        if (!_reader.AreAccessTagsAllowed(access.Access, comp)
+                        || access.Anchored
+                        && (!xformQuery.TryGetComponent(comp.Owner, out var compXform) || !compXform.Anchored))
                             continue;
-                        }
 
                         count++;
 
@@ -94,33 +94,32 @@ public sealed class RulesSystem : EntitySystem
                         return false;
 
                     break;
-                }
                 case NearbyComponentsRule nearbyComps:
-                {
-                    var xformQuery = GetEntityQuery<TransformComponent>();
+                    xformQuery = GetEntityQuery<TransformComponent>();
 
-                    if (!xformQuery.TryGetComponent(uid, out var xform) ||
+                    if (!xformQuery.TryGetComponent(uid, out xform) ||
                         xform.MapUid == null)
                     {
                         return false;
                     }
 
-                    var found = false;
-                    var worldPos = _transform.GetWorldPosition(xform);
-                    var count = 0;
+                    found = false;
+                    worldPos = _transform.GetWorldPosition(xform);
+                    count = 0;
 
                     foreach (var compType in nearbyComps.Components.Values)
                     {
                         // TODO: Update this when we get the callback version
-                        foreach (var comp in _lookup.GetComponentsInRange(compType.Component.GetType(), xform.MapID,
-                                     worldPos, nearbyComps.Range))
+                        foreach (var comp in _lookup.GetComponentsInRange(
+                            compType.Component.GetType(),
+                            xform.MapID,
+                            worldPos,
+                            nearbyComps.Range
+                        ))
                         {
-                            if (nearbyComps.Anchored &&
-                                (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
-                                 !compXform.Anchored))
-                            {
+                            if (nearbyComps.Anchored
+                            && (!xformQuery.TryGetComponent(comp.Owner, out var compXform) || !compXform.Anchored))
                                 continue;
-                            }
 
                             count++;
 
@@ -139,18 +138,16 @@ public sealed class RulesSystem : EntitySystem
                         return false;
 
                     break;
-                }
                 case NearbyEntitiesRule entity:
-                {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    if (!TryComp<TransformComponent>(uid, out xform) ||
                         xform.MapUid == null)
                     {
                         return false;
                     }
 
-                    var found = false;
-                    var worldPos = _transform.GetWorldPosition(xform);
-                    var count = 0;
+                    found = false;
+                    worldPos = _transform.GetWorldPosition(xform);
+                    count = 0;
 
                     foreach (var ent in _lookup.GetEntitiesInRange(xform.MapID, worldPos, entity.Range))
                     {
@@ -170,10 +167,8 @@ public sealed class RulesSystem : EntitySystem
                         return false;
 
                     break;
-                }
                 case NearbyTilesPercentRule tiles:
-                {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    if (!TryComp(uid, out xform) ||
                         !TryComp<MapGridComponent>(xform.GridUid, out var grid))
                     {
                         return false;
@@ -183,14 +178,13 @@ public sealed class RulesSystem : EntitySystem
                     var tileCount = 0;
                     var matchingTileCount = 0;
 
-                    foreach (var tile in grid.GetTilesIntersecting(new Circle(_transform.GetWorldPosition(xform),
-                                 tiles.Range)))
+                    foreach (var tile in grid.GetTilesIntersecting(new Circle(_transform.GetWorldPosition(xform), tiles.Range)))
                     {
                         // Only consider collidable anchored (for reasons some subfloor stuff has physics but non-collidable)
                         if (tiles.IgnoreAnchored)
                         {
                             var gridEnum = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
-                            var found = false;
+                            found = false;
 
                             while (gridEnum.MoveNext(out var ancUid))
                             {
@@ -220,10 +214,8 @@ public sealed class RulesSystem : EntitySystem
                         return false;
 
                     break;
-                }
                 case OnMapGridRule:
-                {
-                    if (!TryComp<TransformComponent>(uid, out var xform) ||
+                    if (!TryComp(uid, out xform) ||
                         xform.GridUid != xform.MapUid ||
                         xform.MapUid == null)
                     {
@@ -231,7 +223,6 @@ public sealed class RulesSystem : EntitySystem
                     }
 
                     break;
-                }
                 default:
                     throw new NotImplementedException();
             }

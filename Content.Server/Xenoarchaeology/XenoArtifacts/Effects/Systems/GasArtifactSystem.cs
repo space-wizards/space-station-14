@@ -26,8 +26,9 @@ public sealed class GasArtifactSystem : EntitySystem
 
         if (component.SpawnTemperature == null)
         {
-            var temp = args.RandomSeed % component.MaxRandomTemperature - component.MinRandomTemperature +
-                       component.MinRandomTemperature;
+            var temp = args.RandomSeed % component.MaxRandomTemperature
+                        - component.MinRandomTemperature
+                        + component.MinRandomTemperature;
             component.SpawnTemperature = temp;
         }
     }

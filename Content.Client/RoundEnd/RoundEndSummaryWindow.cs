@@ -69,10 +69,12 @@ namespace Content.Client.RoundEnd
 
             //Duration
             var roundTimeLabel = new RichTextLabel();
-            roundTimeLabel.SetMarkup(Loc.GetString("round-end-summary-window-duration-label",
-                                                   ("hours", roundDuration.Hours),
-                                                   ("minutes", roundDuration.Minutes),
-                                                   ("seconds", roundDuration.Seconds)));
+            roundTimeLabel.SetMarkup(Loc.GetString(
+                "round-end-summary-window-duration-label",
+                ("hours", roundDuration.Hours),
+                ("minutes", roundDuration.Minutes),
+                ("seconds", roundDuration.Seconds)
+            ));
             roundEndSummaryContainer.AddChild(roundTimeLabel);
 
             //Round end text
@@ -141,9 +143,10 @@ namespace Content.Client.RoundEnd
                     if (playerInfo.Observer)
                     {
                         playerInfoText.SetMarkup(
-                            Loc.GetString("round-end-summary-window-player-info-if-observer-text",
-                                          ("playerOOCName", playerInfo.PlayerOOCName),
-                                          ("playerICName", playerInfo.PlayerICName)));
+                            Loc.GetString(
+                                "round-end-summary-window-player-info-if-observer-text",
+                                ("playerOOCName", playerInfo.PlayerOOCName),
+                                ("playerICName", playerInfo.PlayerICName)));
                     }
                     else
                     {

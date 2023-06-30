@@ -39,7 +39,7 @@ public abstract class SharedCartridgeLoaderSystem : EntitySystem
 
         foreach (var program in loader.InstalledPrograms)
         {
-               EntityManager.QueueDeleteEntity(program);
+            EntityManager.QueueDeleteEntity(program);
         }
     }
 

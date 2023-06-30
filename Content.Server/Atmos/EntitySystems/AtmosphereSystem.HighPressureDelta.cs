@@ -208,15 +208,16 @@ namespace Content.Server.Atmos.EntitySystems
             var moveProb = 100f;
 
             if (component.PressureResistance > 0)
-                moveProb = MathF.Abs((pressureDifference / component.PressureResistance * MovedByPressureComponent.ProbabilityBasePercent) -
-                                     MovedByPressureComponent.ProbabilityOffset);
+                moveProb = MathF.Abs(
+                    MovedByPressureComponent.ProbabilityBasePercent * pressureDifference / component.PressureResistance
+                    - MovedByPressureComponent.ProbabilityOffset
+                );
 
             // Can we yeet the thing (due to probability, strength, etc.)
-            if (moveProb > MovedByPressureComponent.ProbabilityOffset && _robustRandom.Prob(MathF.Min(moveProb / 100f, 1f))
-                                                                      && !float.IsPositiveInfinity(component.MoveResist)
-                                                                      && (physics.BodyType != BodyType.Static
-                                                                          && (maxForce >= (component.MoveResist * MovedByPressureComponent.MoveForcePushRatio)))
-                || (physics.BodyType == BodyType.Static && (maxForce >= (component.MoveResist * MovedByPressureComponent.MoveForceForcePushRatio))))
+            if (moveProb > MovedByPressureComponent.ProbabilityOffset
+            && _robustRandom.Prob(MathF.Min(moveProb / 100f, 1f))
+            && !float.IsPositiveInfinity(component.MoveResist)
+            && maxForce >= component.MoveResist * (physics.BodyType == BodyType.Static ? MovedByPressureComponent.MoveForceForcePushRatio : MovedByPressureComponent.MoveForcePushRatio))
             {
                 if (HasComp<MobStateComponent>(uid))
                 {

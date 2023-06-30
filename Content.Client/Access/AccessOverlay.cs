@@ -31,8 +31,7 @@ public sealed class AccessOverlay : Overlay
         var readerQuery = _entityManager.GetEntityQuery<AccessReaderComponent>();
         var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
 
-        foreach (var ent in _lookup.GetEntitiesIntersecting(args.MapId, args.WorldAABB,
-                         LookupFlags.Static | LookupFlags.Approximate))
+        foreach (var ent in _lookup.GetEntitiesIntersecting(args.MapId, args.WorldAABB, LookupFlags.Static | LookupFlags.Approximate))
         {
             if (!readerQuery.TryGetComponent(ent, out var reader) ||
                 !xformQuery.TryGetComponent(ent, out var xform))
