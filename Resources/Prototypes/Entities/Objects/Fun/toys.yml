@@ -164,10 +164,9 @@
   - type: Sprite
     state: plushie_lamp
   - type: PointLight
-    netsync: false
     radius: 1.5
     energy: 2
-
+    netsync: false
 - type: entity
   parent: BasePlushie
   id: PlushieLizard #Weh!
@@ -812,12 +811,15 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: basketball
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: bask
   - type: TileFrictionModifier
-    modifier: 0.01
+    modifier: 0.5
 
 - type: entity
   parent: BaseItem
@@ -842,12 +844,15 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: beachball
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: beachb
   - type: TileFrictionModifier
-    modifier: 0.01
+    modifier: 0.05
 
 - type: entity
   parent: BaseItem
@@ -941,11 +946,11 @@
     - type: UseDelay
       delay: 1.0
     - type: PointLight
-      netsync: false
       enabled: false
       radius: 2
       energy: 2
       color: white
+      netsync: false
     - type: Appearance
     - type: ToggleableLightVisuals
       spriteLayer: blade
@@ -1139,43 +1144,27 @@
           Quantity: 100
 
 - type: entity
-  parent: FoodProduceBase
+  parent: DrinkBase
   id: CrazyGlue
   name: crazy glue
   description:  A bottle of crazy glue manufactured by Honk! Co.
   components:
-  - type: FlavorProfile
-    flavors:
-      - glue
-  - type: Food
-    trash: CrazyGlueEmpty
+  - type: Drink
+    isOpen: false
+    openSounds:
+      collection: packetOpenSounds
   - type: Sprite
     sprite: Objects/Fun/glue.rsi
-    state: icon-0
+    state: icon
   - type: Appearance
   - type: Glue
+    consumptionUnit: 10
   - type: Item
     sprite: Objects/Fun/glue.rsi
   - type: SolutionContainerManager
     solutions:
-      food:
-        maxVol: 15
+      drink:
+        maxVol: 100
         reagents:
         - ReagentId: SpaceGlue
-          Quantity: 6
-
-- type: entity
-  name: empty crazy glue
-  parent: BaseItem
-  id: CrazyGlueEmpty
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/glue.rsi
-    state: icon-1
-  - type: Item
-    sprite: Objects/Fun/glue.rsi
-  - type: Tag
-    tags:
-    - Recyclable
-    - Trash
-  - type: SpaceGarbage
+          Quantity: 100

@@ -19,6 +19,7 @@
       - state: icon-front
         map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: Appearance
+  - type: Glue
   - type: SolutionContainerManager
     solutions:
       drink:
