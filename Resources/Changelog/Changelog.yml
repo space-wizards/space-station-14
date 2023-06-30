@@ -1,15 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Remove Vector., type: Remove}
-  - {message: Add Drozd., type: Add}
-  id: 3637
-  time: '2023-05-04T03:35:33.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Removed brigmedic., type: Remove}
-  id: 3638
-  time: '2023-05-04T10:08:01.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Brigmedic jumpsuit blueprints have been returned to the HOP. Ask your
@@ -2925,3 +2914,15 @@ Entries:
   - {message: removed empty crazy glue, type: Remove}
   id: 4136
   time: '2023-06-30T19:07:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Increased the danger of most artifact effects and added some new ones.,
+    type: Tweak}
+  id: 4137
+  time: '2023-06-30T19:25:34.0000000+00:00'
+- author: Jesse
+  changes:
+  - {message: Changed Sprites for Computers in de/construction to not have the glass
+      for monitors in states where it is removed., type: Tweak}
+  id: 4138
+  time: '2023-06-30T19:26:13.0000000+00:00'
