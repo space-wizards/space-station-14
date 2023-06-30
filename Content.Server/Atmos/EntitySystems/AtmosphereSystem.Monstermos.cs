@@ -484,7 +484,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var otherTile = _depressurizeProgressionOrder[i];
                 if (otherTile?.Air == null)
-                    { continue;}
+                    continue;
                 if (otherTile.MonstermosInfo.CurrentTransferDirection == AtmosDirection.Invalid)
                     continue;
                 gridAtmosphere.HighPressureDelta.Add(otherTile);
