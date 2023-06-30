@@ -9,9 +9,16 @@
   id: Burn
   damageTypes:
     - Heat
+    - EMHeat
     - Shock
     - Cold
     - Caustic
+
+- type: damageGroup
+  id: Heat
+  damageTypes:
+    - Heat
+    - EMHeat
 
 # Airloss (sometimes called oxyloss)
 # Caused by asphyxiation or bloodloss.

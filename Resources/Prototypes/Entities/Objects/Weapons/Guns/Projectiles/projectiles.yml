@@ -179,7 +179,7 @@
   - type: Projectile
     damage:
       types:
-        Heat: 5
+        EMHeat: 5
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     soundForce: true
@@ -225,7 +225,7 @@
     impactEffect: BulletImpactEffectDisabler
     damage:
       types:
-        Heat: 5
+        EMHeat: 5
     soundHit:
       path: "/Audio/Weapons/tap.ogg"
     soundForce: true
@@ -265,7 +265,7 @@
     impactEffect: BulletImpactEffectDisabler
     damage:
       types:
-        Heat: 1
+        EMHeat: 1
     soundHit:
       path: "/Audio/Weapons/tap.ogg"
     soundForce: true
@@ -299,7 +299,7 @@
 #   soundHit:  Waiting on serv3
     damage:
       types:
-        Heat: 14
+        EMHeat: 14
   - type: Tag
     tags:
     - EmitterBolt
@@ -395,7 +395,7 @@
   - type: Projectile
     damage:
       types:
-        Heat: 5
+        EMHeat: 5
   - type: TimedDespawn
     lifetime: 3
 
@@ -475,7 +475,7 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Heat: 20
+        EMHeat: 20
 
 # Launcher projectiles (grenade / rocket)
 - type: entity

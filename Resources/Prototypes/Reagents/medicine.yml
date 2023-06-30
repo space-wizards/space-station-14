@@ -213,7 +213,7 @@
             max: 150.0
           damage:
             types:
-             Cellular: -2 
+             Cellular: -2
 
 - type: reagent
   id: Dermaline
@@ -229,9 +229,10 @@
       - !type:HealthChange
         damage:
           types:
-            Heat: -1.5
             Shock: -1.5
             Cold: -1.5
+          groups:
+            Heat: -1.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -388,7 +389,7 @@
         - !type:ReagentThreshold
           min: 30
         damage:
-          types:
+          groups:
            Heat: 2
       - !type:Jitter
         conditions:
@@ -445,9 +446,10 @@
       - !type:HealthChange
         damage:
           types:
-            Heat: -0.33
             Shock: -0.33
             Cold: -0.33
+          groups:
+            Heat: -0.33
       - !type:SatiateThirst
         factor: -10
         conditions:
@@ -509,7 +511,7 @@
       - !type:HealthChange
         probability: 0.3
         damage:
-          types:
+          groups:
             Heat: 0.5
       - !type:HealthChange
         conditions:
@@ -712,9 +714,9 @@
         damage:
           groups:
             Brute: -1
+            Heat: -0.33
           types:
             Poison: -0.5 ##Should be about what it was when it healed the toxin group
-            Heat: -0.33
             Shock: -0.33
             Cold: -0.33
 
@@ -891,7 +893,7 @@
         - !type:ReagentThreshold
           min: 16
         damage:
-          types:
+          groups:
             Heat: 2
       - !type:Jitter
         conditions:

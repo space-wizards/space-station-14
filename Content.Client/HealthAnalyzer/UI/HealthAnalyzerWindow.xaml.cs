@@ -40,28 +40,28 @@ namespace Content.Client.HealthAnalyzer.UI
                 text.Append($"\n{Loc.GetString("health-analyzer-window-entity-damage-total-text", ("amount", damageable.TotalDamage))}\n");
 
                 HashSet<string> shownTypes = new();
+                HashSet<string> shownGroups = new();
+                HashSet<string> nestedGroups = new();
 
                 var protos = IoCManager.Resolve<IPrototypeManager>();
+
+                // See what groups should be nested, i.e. if type and group have same id
+                foreach (var damageTypeId in damagePerType.Keys)
+                {
+                    if (damagePerGroup.ContainsKey(damageTypeId))
+                    {
+                        nestedGroups.Add(damageTypeId);
+                    }
+                }
 
                 // Show the total damage and type breakdown for each damage group.
                 foreach (var (damageGroupId, damageAmount) in damagePerGroup)
                 {
-                    text.Append($"\n{Loc.GetString("health-analyzer-window-damage-group-text", ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)), ("amount", damageAmount))}");
-                    // Show the damage for each type in that group.
-                    var group = protos.Index<DamageGroupPrototype>(damageGroupId);
-                    foreach (var type in group.DamageTypes)
+                    if (!nestedGroups.Contains(damageGroupId))
                     {
-                        if (damagePerType.TryGetValue(type, out var typeAmount))
-                        {
-                            // If damage types are allowed to belong to more than one damage group, they may appear twice here. Mark them as duplicate.
-                            if (!shownTypes.Contains(type))
-                            {
-                                shownTypes.Add(type);
-                                text.Append($"\n- {Loc.GetString("health-analyzer-window-damage-type-text", ("damageType", Loc.GetString("health-analyzer-window-damage-type-" + type)), ("amount", typeAmount))}");
-                            }
-                        }
+                        PopulateNest(text, protos, damagePerType, damagePerGroup, shownTypes, shownGroups, nestedGroups, "", damageGroupId, damageAmount);
+                        text.AppendLine();
                     }
-                    text.AppendLine();
                 }
                 Diagnostics.Text = text.ToString();
                 SetSize = (250, 600);
@@ -70,6 +70,33 @@ namespace Content.Client.HealthAnalyzer.UI
             {
                 Diagnostics.Text = Loc.GetString("health-analyzer-window-no-patient-data-text");
                 SetSize = (250, 100);
+            }
+        }
+        private void PopulateNest(StringBuilder text, IPrototypeManager protos, IReadOnlyDictionary<string, FixedPoint2> damagePerType, IReadOnlyDictionary<string, FixedPoint2> damagePerGroup, HashSet<string> shownTypes, HashSet<string> shownGroups, HashSet<string> nestedGroups, string indent, string damageGroupId, FixedPoint2 damageAmount)
+        {
+            shownGroups.Add(damageGroupId);
+            text.Append($"\n{indent}{Loc.GetString("health-analyzer-window-damage-group-text", ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)), ("amount", damageAmount))}");
+            // Show the damage for each type in that group.
+            var group = protos.Index<DamageGroupPrototype>(damageGroupId);
+            foreach (var typeId in group.DamageTypes)
+            {
+                if (nestedGroups.Contains(typeId) && !shownGroups.Contains(typeId))
+                {
+                    PopulateNest(text, protos, damagePerType, damagePerGroup, shownTypes, shownGroups, nestedGroups, "- " + indent, typeId, damagePerGroup[typeId]);
+                }
+                else if (damagePerType.TryGetValue(typeId, out var typeAmount))
+                {
+                    // If damage types are allowed to belong to more than one damage group, they may appear twice here. Mark them as duplicate.
+                    if (!shownTypes.Contains(typeId))
+                    {
+                        shownTypes.Add(typeId);
+                        var typeProto = protos.Index<DamageTypePrototype>(typeId);
+                        if (!typeProto.Hidden)
+                        {
+                            text.Append($"\n{indent}- {Loc.GetString("health-analyzer-window-damage-type-text", ("damageType", Loc.GetString("health-analyzer-window-damage-type-" + typeId)), ("amount", typeAmount))}");
+                        }
+                    }
+                }
             }
         }
     }

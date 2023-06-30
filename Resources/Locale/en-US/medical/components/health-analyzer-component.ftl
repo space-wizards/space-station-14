@@ -10,8 +10,11 @@ health-analyzer-window-damage-type-Blunt = Blunt
 health-analyzer-window-damage-type-Slash = Slash
 health-analyzer-window-damage-type-Piercing = Piercing
 
+health-analyzer-window-damage-group-Heat = Heat
+
 health-analyzer-window-damage-group-Burn = Burn
-health-analyzer-window-damage-type-Heat = Heat
+health-analyzer-window-damage-type-Heat = Contact Heat
+health-analyzer-window-damage-type-EMHeat = Electro Magnetic Heat
 health-analyzer-window-damage-type-Shock = Shock
 health-analyzer-window-damage-type-Cold = Cold
 health-analyzer-window-damage-type-Caustic = Caustic

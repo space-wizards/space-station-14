@@ -11,8 +11,8 @@
   id: Inorganic
   supportedGroups:
     - Brute
-  supportedTypes:
     - Heat
+  supportedTypes:
     - Shock
     - Structural # this probably should be in separate container
 
@@ -20,7 +20,6 @@
   id: Shield
   supportedGroups:
     - Brute
-  supportedTypes:
     - Heat
 
 - type: damageContainer

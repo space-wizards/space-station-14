@@ -51,11 +51,13 @@
     solution: chemicals
   - type: IdExaminable
   - type: HealthExaminable
-    examinableTypes:
+    examinableDamages:
+      groups:
+      - Heat
+      types:
       - Blunt
       - Slash
       - Piercing
-      - Heat
       - Shock
   - type: Bloodstream
     bloodlossDamage:

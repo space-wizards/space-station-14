@@ -1,8 +1,10 @@
 ﻿using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Verbs;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.HealthExaminable;
@@ -10,6 +12,7 @@ namespace Content.Server.HealthExaminable;
 public sealed class HealthExaminableSystem : EntitySystem
 {
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -47,45 +50,20 @@ public sealed class HealthExaminableSystem : EntitySystem
         var msg = new FormattedMessage();
 
         var first = true;
-        foreach (var type in component.ExaminableTypes)
+        foreach (var group in component.ExaminableDamageSpecifiers.Groups)
+        {
+            DamageGroupPrototype damageGroup = _prototypeManager.Index<DamageGroupPrototype>(group);
+            if (!damage.Damage.TryGetDamageInGroup(damageGroup, out var dmg))
+                continue;
+
+            CreateMarkupPerDmg(uid, component, group, dmg, msg, ref first);
+        }
+        foreach (var type in component.ExaminableDamageSpecifiers.Types)
         {
             if (!damage.Damage.DamageDict.TryGetValue(type, out var dmg))
                 continue;
 
-            if (dmg == FixedPoint2.Zero)
-                continue;
-
-            FixedPoint2 closest = FixedPoint2.Zero;
-
-            string chosenLocStr = string.Empty;
-            foreach (var threshold in component.Thresholds)
-            {
-                var str = $"health-examinable-{component.LocPrefix}-{type}-{threshold}";
-                var tempLocStr = Loc.GetString($"health-examinable-{component.LocPrefix}-{type}-{threshold}", ("target", Identity.Entity(uid, EntityManager)));
-
-                // i.e., this string doesn't exist, because theres nothing for that threshold
-                if (tempLocStr == str)
-                    continue;
-
-                if (dmg > threshold && threshold > closest)
-                {
-                    chosenLocStr = tempLocStr;
-                    closest = threshold;
-                }
-            }
-
-            if (closest == FixedPoint2.Zero)
-                continue;
-
-            if (!first)
-            {
-                msg.PushNewline();
-            }
-            else
-            {
-                first = false;
-            }
-            msg.AddMarkup(chosenLocStr);
+            CreateMarkupPerDmg(uid, component, type, dmg, msg, ref first);
         }
 
         if (msg.IsEmpty)
@@ -97,6 +75,44 @@ public sealed class HealthExaminableSystem : EntitySystem
         RaiseLocalEvent(uid, new HealthBeingExaminedEvent(msg), true);
 
         return msg;
+    }
+
+    private void CreateMarkupPerDmg(EntityUid uid, HealthExaminableComponent component, string type, FixedPoint2 dmg, FormattedMessage msg, ref bool first)
+    {
+        if (dmg == FixedPoint2.Zero)
+           return;
+
+        FixedPoint2 closest = FixedPoint2.Zero;
+
+        string chosenLocStr = string.Empty;
+        foreach (var threshold in component.Thresholds)
+        {
+            var str = $"health-examinable-{component.LocPrefix}-{type}-{threshold}";
+            var tempLocStr = Loc.GetString($"health-examinable-{component.LocPrefix}-{type}-{threshold}", ("target", Identity.Entity(uid, EntityManager)));
+
+            // i.e., this string doesn't exist, because theres nothing for that threshold
+            if (tempLocStr == str)
+                continue;
+
+            if (dmg > threshold && threshold > closest)
+            {
+                chosenLocStr = tempLocStr;
+                closest = threshold;
+            }
+        }
+
+        if (closest == FixedPoint2.Zero)
+            return;
+
+        if (!first)
+        {
+            msg.PushNewline();
+        }
+        else
+        {
+            first = false;
+        }
+        msg.AddMarkup(chosenLocStr);
     }
 }
 

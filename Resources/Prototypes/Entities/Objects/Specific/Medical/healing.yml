@@ -32,10 +32,11 @@
       - Biological
     damage:
       types:
-        Heat: -5
         Cold: -5
         Shock: -5
         Caustic: -1.5
+      groups:
+        Heat: -5
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
     healingEndSound:

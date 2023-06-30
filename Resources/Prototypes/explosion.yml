@@ -50,7 +50,7 @@
   damagePerIntensity:
     types:
       Radiation: 5
-      Heat: 4
+      EMHeat: 4
       Blunt: 3
       Piercing: 3
   lightColor: Green

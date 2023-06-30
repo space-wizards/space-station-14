@@ -42,12 +42,14 @@
     factions:
     - SimpleNeutral
   - type: HealthExaminable
-    examinableTypes:
-    - Blunt
-    - Slash
-    - Piercing
-    - Heat
-    - Shock
+    examinableDamages:
+      groups:
+      - Heat
+      types:
+      - Blunt
+      - Slash
+      - Piercing
+      - Shock
   - type: MovedByPressure
   - type: Physics
     bodyType: KinematicController # Same for all inheritors

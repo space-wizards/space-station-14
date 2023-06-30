@@ -22,5 +22,11 @@ namespace Content.Shared.Damage.Prototypes
         /// </summary>
         [DataField("armorFlatPrice")]
         public double ArmorPriceFlat { get; set; }
+
+        /// <summary>
+        /// If not displayed to the user
+        /// </summary>
+        [DataField("hidden")]
+        public bool Hidden { get; set; } = false;
     }
 }

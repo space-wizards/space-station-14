@@ -26,12 +26,14 @@
     baseWalkSpeed : 4
     baseSprintSpeed : 4
   - type: HealthExaminable
-    examinableTypes:
-    - Blunt
-    - Slash
-    - Piercing
-    - Heat
-    - Shock
+    examinableDamages:
+      groups:
+      - Heat
+      types:
+      - Blunt
+      - Slash
+      - Piercing
+      - Shock
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     damage:

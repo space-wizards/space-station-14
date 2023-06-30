@@ -18,26 +18,35 @@
   id: Blunt
   armorCoefficientPrice: 2
   armorFlatPrice: 10
-  
+
 - type: damageType
   id: Cellular
   armorCoefficientPrice: 5
   armorFlatPrice: 30
-  
+
 - type: damageType
   id: Caustic
   armorCoefficientPrice: 5
   armorFlatPrice: 30
-  
+
 - type: damageType
   id: Cold
   armorCoefficientPrice: 2.5
   armorFlatPrice: 20
 
+# Electromagnetically induced heat, e.g. laser, nuclear flash, induction
+- type: damageType
+  id: EMHeat
+  armorCoefficientPrice: 2.5
+  armorFlatPrice: 20
+  hidden: true
+
+# Conducted heat, e.g. fire, air, welders
 - type: damageType
   id: Heat
   armorCoefficientPrice: 2.5
   armorFlatPrice: 20
+  hidden: true
 
 - type: damageType
   id: Piercing

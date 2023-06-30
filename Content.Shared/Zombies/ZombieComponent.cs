@@ -130,6 +130,7 @@ namespace Content.Shared.Zombies
                 { "Slash", -0.2 },
                 { "Piercing", -0.2 },
                 { "Heat", -0.2 },
+                { "EMHeat", -0.2 },
                 { "Cold", -0.2 },
                 { "Shock", -0.2 },
             }

@@ -10,8 +10,8 @@ public sealed class HealthExaminableComponent : Component
     public List<FixedPoint2> Thresholds = new()
         { FixedPoint2.New(10), FixedPoint2.New(25), FixedPoint2.New(50), FixedPoint2.New(75) };
 
-    [DataField("examinableTypes", required: true, customTypeSerializer:typeof(PrototypeIdHashSetSerializer<DamageTypePrototype>))]
-    public HashSet<string> ExaminableTypes = default!;
+    [DataField("examinableDamages", required: true)]
+    public ExaminableDamageSpecifier ExaminableDamageSpecifiers = default!;
 
     /// <summary>
     ///     Health examine text is automatically generated through creating loc string IDs, in the form:
@@ -20,4 +20,13 @@ public sealed class HealthExaminableComponent : Component
     /// </summary>
     [DataField("locPrefix")]
     public string LocPrefix = "carbon";
+}
+
+[DataDefinition]
+public sealed class ExaminableDamageSpecifier
+{
+    [DataField("types", readOnly: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<DamageTypePrototype>))]
+    public HashSet<string> Types { get; set; } = new();
+    [DataField("groups", readOnly: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<DamageGroupPrototype>))]
+    public HashSet<string> Groups { get; set; } = new();
 }
