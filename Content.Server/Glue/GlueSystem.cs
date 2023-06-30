@@ -64,10 +64,10 @@ public sealed class GlueSystem : SharedGlueSystem
 
         if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
         {
-            var quantity = solution.RemoveReagent(component.Reagent, component.Consumption);
+            var quantity = solution.RemoveReagent(component.Reagent, component.ConsumptionUnit);
             if (quantity > 0)
             {
-                EnsureComp<GluedComponent>(target).Duration = quantity.Double() * component.Duration;
+                EnsureComp<GluedComponent>(target).Duration = quantity.Double() * component.DurationPerUnit;
                 return true;
             }
         }

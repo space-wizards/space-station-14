@@ -31,12 +31,12 @@ public sealed class GlueComponent : Component
     /// <summary>
     /// Reagent consumption per use.
     /// </summary>
-    [DataField("consumption"), ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 Consumption = FixedPoint2.New(3);
+    [DataField("consumptionUnit"), ViewVariables(VVAccess.ReadWrite)]
+    public FixedPoint2 ConsumptionUnit = FixedPoint2.New(5);
 
     /// <summary>
     /// Duration per unit
     /// </summary>
-    [DataField("duration"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan Duration = TimeSpan.FromSeconds(10);
+    [DataField("durationPerUnit"), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan DurationPerUnit = TimeSpan.FromSeconds(6);
 }
