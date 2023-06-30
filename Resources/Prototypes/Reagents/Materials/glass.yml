@@ -28,7 +28,7 @@
   name: materials-reinforced-plasma-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: rpglass }
   color: "#8c4069"
-  price: 0.66 # 2-2-1 mix of plasma, glass, and metal.
+  price: 0.40 # 1-1-0.5 mix of plasma, glass, and metal.
 
 - type: material
   id: UraniumGlass

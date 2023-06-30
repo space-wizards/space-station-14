@@ -1,5 +1,5 @@
-﻿using Content.Server.Coordinates.Helpers;
-using Content.Server.Decals;
+﻿using Content.Server.Decals;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Robust.Shared.Map;

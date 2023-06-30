@@ -235,14 +235,15 @@
           visible: false
     - type: Rotatable
     - type: InteractionOutline
-    - type: Storage
-      popup: false
-      capacity: 80
-      blacklist: # there is exclusive item slots for that
-        tags:
-          - Mop
-          - TrashBag
-          - Bucket
+    # Removing storage until OnInteractUsing logic resolved
+    #- type: Storage
+    #  popup: false
+    #  capacity: 80
+    #  blacklist: # there is exclusive item slots for that
+    #    tags:
+    #      - Mop
+    #      - TrashBag
+    #      - Bucket
     - type: ItemSlots
       slots:
         mop_slot:

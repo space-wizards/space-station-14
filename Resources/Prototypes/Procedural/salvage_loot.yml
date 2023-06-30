@@ -7,6 +7,7 @@
   loots:
     - !type:BiomeMarkerLoot
       proto:
+        Caves: OreTin
         Grasslands: OreTin
         Lava: BasaltOreTin
         Snow: SnowOreTin
@@ -18,6 +19,7 @@
   loots:
     - !type:BiomeMarkerLoot
       proto:
+        Caves: OreQuartz
         Grasslands: OreQuartz
         Lava: BasaltOreQuartz
         Snow: SnowOreQuartz
@@ -30,6 +32,7 @@
   loots:
     - !type:BiomeMarkerLoot
       proto:
+        Caves: OreGold
         Grasslands: OreGold
         Lava: BasaltOreGold
         Snow: SnowOreGold
@@ -41,6 +44,7 @@
   loots:
     - !type:BiomeMarkerLoot
       proto:
+        Caves: OreSilver
         Grasslands: OreSilver
         Lava: BasaltOreSilver
         Snow: SnowOreSilver
@@ -53,6 +57,7 @@
   loots:
     - !type:BiomeMarkerLoot
       proto:
+        Caves: OrePlasma
         Grasslands: OrePlasma
         Lava: BasaltOrePlasma
         Snow: SnowOrePlasma
@@ -64,6 +69,7 @@
   loots:
     - !type:BiomeMarkerLoot
       proto:
+        Caves: OreUranium
         Grasslands: OreUranium
         Lava: BasaltOreUranium
         Snow: SnowOreUranium
@@ -75,6 +81,7 @@
   loots:
     - !type:BiomeMarkerLoot
       proto:
+        Caves: OreBananium
         Grasslands: OreBananium
         Lava: BasaltOreBananium
         Snow: SnowOreBananium
@@ -86,6 +93,7 @@
   loots:
     - !type:BiomeMarkerLoot
       proto:
+        Caves: OreArtifactFragment
         Grasslands: OreArtifactFragment
         Lava: BasaltOreArtifactFragment
         Snow: SnowOreArtifactFragment
