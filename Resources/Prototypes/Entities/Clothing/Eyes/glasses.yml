@@ -169,4 +169,5 @@
     modifiers:
       coefficients:
         Heat: 0.95
+        EMHeat: 0.95
   - type: GroupExamine

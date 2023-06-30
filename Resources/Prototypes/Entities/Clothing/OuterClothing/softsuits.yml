@@ -105,6 +105,7 @@
       coefficients:
         Slash: 0.95
         Heat: 0.90
+        EMHeat: 0.90
         Radiation: 0.75
         Caustic: 0.5
   - type: GroupExamine

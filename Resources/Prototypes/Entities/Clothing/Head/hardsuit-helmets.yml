@@ -20,6 +20,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+        EMHeat: 0.9
         Radiation: 0.9
         Caustic: 0.9
 
@@ -67,6 +68,7 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.6
+        EMHeat: 0.6
         Radiation: 0.5
   - type: TemperatureProtection
     coefficient: 0.005
@@ -194,6 +196,7 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+        EMHeat: 0.95
         Radiation: 0.90
         Caustic: 0.90
   - type: PressureProtection
@@ -343,6 +346,7 @@
         Slash: 0.8
         Piercing: 0.8
         Heat: 0.8
+        EMHeat: 0.8
         Radiation: 0.5
 
 #Cybersun Juggernaut Hardsuit
@@ -387,6 +391,7 @@
         Slash: 0.8
         Piercing: 0.8
         Heat: 0.2
+        EMHeat: 0.4
         Radiation: 0.5
 
 #Syndicate Commander Hardsuit
@@ -413,6 +418,7 @@
         Slash: 0.6
         Piercing: 0.6
         Heat: 0.8
+        EMHeat: 0.8
         Radiation: 0.5
 
 #Wizard Hardsuit
@@ -593,6 +599,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.1
+        EMHeat: 0.2
         Shock: 0.1
         Cold: 0.2
         Radiation: 0.2

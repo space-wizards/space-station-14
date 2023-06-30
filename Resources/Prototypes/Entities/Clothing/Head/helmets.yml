@@ -16,6 +16,7 @@
         Slash: 0.8
         Piercing: 0.9
         Heat: 0.8
+        EMHeat: 0.8
   - type: Tag
     tags:
     - HamsterWearable
@@ -63,6 +64,7 @@
         Slash: 0.70
         Piercing: 0.80
         Heat: 0.80
+        EMHeat: 0.80
         Radiation: 0.80
   - type: ExplosionResistance
     damageCoefficient: 0.75
@@ -139,6 +141,7 @@
         Slash: 0.8
         Piercing: 0.9
         Heat: 0.8
+        EMHeat: 0.8
 
 #SCAF Helmet
 - type: entity
@@ -241,6 +244,7 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.65
+        EMHeat: 0.85
         Radiation: 1
   - type: IdentityBlocker
   - type: Tag
@@ -270,6 +274,7 @@
         Slash: 1
         Piercing: 1
         Heat: 0.4
+        EMHeat: 0.6
         Radiation: 1
   - type: PressureProtection
     highPressureMultiplier: 0.25
@@ -298,3 +303,4 @@
         Slash: 0.5
         Piercing: 0.5
         Heat: 0.9
+        EMHeat: 0.9
