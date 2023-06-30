@@ -20,9 +20,11 @@ public sealed partial class CableSystem
 
     private void OnCablePlacerAfterInteract(EntityUid uid, CablePlacerComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach) return;
+        if (args.Handled || !args.CanReach)
+            return;
 
-        if (component.CablePrototypeId == null) return;
+        if (component.CablePrototypeId == null)
+            return;
 
         if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridUid(EntityManager), out var grid))
             return;

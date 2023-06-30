@@ -68,13 +68,15 @@ public sealed class ChannelFilterButton : ContainerButton
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
     {
         // needed since we need EnableAllKeybinds - don't double-send both UI click and Use
-        if (args.Function == EngineKeyFunctions.Use) return;
+        if (args.Function == EngineKeyFunctions.Use)
+            return;
         base.KeyBindDown(args);
     }
 
     private void UpdateChildColors()
     {
-        if (_textureRect == null) return;
+        if (_textureRect == null)
+            return;
         switch (DrawMode)
         {
             case DrawModeEnum.Normal:

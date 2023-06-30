@@ -22,8 +22,10 @@ internal sealed class ActivatableUIRequiresPowerSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, ActivatableUIRequiresPowerComponent component, ActivatableUIOpenAttemptEvent args)
     {
-        if (args.Cancelled) return;
-        if (this.IsPowered(uid, EntityManager)) return;
+        if (args.Cancelled)
+            return;
+        if (this.IsPowered(uid, EntityManager))
+            return;
         if (TryComp<WiresPanelComponent>(uid, out var panel) && panel.Open)
             return;
         _popup.PopupCursor(Loc.GetString("base-computer-ui-component-not-powered", ("machine", uid)), args.User);

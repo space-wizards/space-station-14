@@ -17,7 +17,8 @@ public sealed class DragonSystem : EntitySystem
         if (args.Current is not DragonRiftComponentState state)
             return;
 
-        if (component.State == state.State) return;
+        if (component.State == state.State)
+            return;
 
         component.State = state.State;
         TryComp<SpriteComponent>(uid, out var sprite);

@@ -442,10 +442,12 @@ namespace Content.Server.Salvage
             // Keep track of time, and state per grid
             foreach (var (uid, state) in _salvageGridStates)
             {
-                if (state.ActiveMagnets.Count == 0) continue;
+                if (state.ActiveMagnets.Count == 0)
+                    continue;
                 // Not handling the case where the salvage we spawned got paused
                 // They both need to be paused, or it doesn't make sense
-                if (MetaData(uid).EntityPaused) continue;
+                if (MetaData(uid).EntityPaused)
+                    continue;
                 state.CurrentTime += secondsPassed;
 
                 var deleteQueue = new RemQueue<EntityUid>();
@@ -456,7 +458,8 @@ namespace Content.Server.Salvage
                         continue;
 
                     UpdateChargeStateAppearance(magnet, state.CurrentTime, magnetComp);
-                    if (magnetComp.MagnetState.Until > state.CurrentTime) continue;
+                    if (magnetComp.MagnetState.Until > state.CurrentTime)
+                        continue;
                     Transition(magnet, magnetComp, state.CurrentTime);
                     if (magnetComp.MagnetState.StateType == MagnetStateType.Inactive)
                     {

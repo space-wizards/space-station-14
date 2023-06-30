@@ -78,7 +78,8 @@ public sealed class AtmosAlarmableSystem : EntitySystem
 
     private void OnPacketRecv(EntityUid uid, AtmosAlarmableComponent component, DeviceNetworkPacketEvent args)
     {
-        if (component.IgnoreAlarms) return;
+        if (component.IgnoreAlarms)
+            return;
 
         if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
             return;

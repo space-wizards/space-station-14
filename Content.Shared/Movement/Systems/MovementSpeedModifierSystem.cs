@@ -31,7 +31,8 @@ namespace Content.Shared.Movement.Systems
 
         private void OnHandleState(EntityUid uid, MovementSpeedModifierComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not MovementSpeedModifierComponentState state) return;
+            if (args.Current is not MovementSpeedModifierComponentState state)
+                return;
             component.BaseWalkSpeed = state.BaseWalkSpeed;
             component.BaseSprintSpeed = state.BaseSprintSpeed;
             component.WalkSpeedModifier = state.WalkSpeedModifier;

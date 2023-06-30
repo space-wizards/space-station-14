@@ -30,7 +30,8 @@ namespace Content.Server.Database
                 .AsSingleQuery()
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId);
 
-            if (prefs is null) return null;
+            if (prefs is null)
+                return null;
 
             var maxSlot = prefs.Profiles.Max(p => p.Slot) + 1;
             var profiles = new Dictionary<int, ICharacterProfile>(maxSlot);
@@ -187,7 +188,8 @@ namespace Content.Server.Database
                 {
                     var parsed = Marking.ParseFromDbString(marking);
 
-                    if (parsed is null) continue;
+                    if (parsed is null)
+                        continue;
 
                     markings.Add(parsed);
                 }

@@ -72,7 +72,8 @@ namespace Content.Server.Atmos.EntitySystems
 
             var tileSize = excitedGroup.Tiles.Count;
 
-            if (excitedGroup.Disposed) return;
+            if (excitedGroup.Disposed)
+                return;
 
             if (tileSize == 0)
             {
@@ -98,7 +99,8 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var tile in excitedGroup.Tiles)
             {
-                if (tile?.Air == null) continue;
+                if (tile?.Air == null)
+                    continue;
                 tile.Air.CopyFromMutable(combined);
                 InvalidateVisuals(tile.GridIndex, tile.GridIndices);
             }

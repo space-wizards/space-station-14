@@ -238,7 +238,8 @@ namespace Content.Server.Strip
             _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):user} is trying to place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s {slot} slot");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
-            if (result != DoAfterStatus.Finished) return;
+            if (result != DoAfterStatus.Finished)
+                return;
 
             DebugTools.Assert(userHands.ActiveHand?.HeldEntity == held);
 
@@ -303,7 +304,8 @@ namespace Content.Server.Strip
             _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):user} is trying to place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s hands");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
-            if (result != DoAfterStatus.Finished) return;
+            if (result != DoAfterStatus.Finished)
+                return;
 
             _handsSystem.TryDrop(user, checkActionBlocker: false, handsComp: userHands);
             _handsSystem.TryPickup(target, held, handName, checkActionBlocker: false, animateUser: true, handsComp: hands);
@@ -378,7 +380,8 @@ namespace Content.Server.Strip
             _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):user} is trying to strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
-            if (result != DoAfterStatus.Finished) return;
+            if (result != DoAfterStatus.Finished)
+                return;
 
             if (!_inventorySystem.TryUnequip(user, component.Owner, slot))
                 return;
@@ -449,7 +452,8 @@ namespace Content.Server.Strip
                 $"{ToPrettyString(user):user} is trying to strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
-            if (result != DoAfterStatus.Finished) return;
+            if (result != DoAfterStatus.Finished)
+                return;
 
             _handsSystem.TryDrop(target, item, checkActionBlocker: false, handsComp: hands);
             _handsSystem.PickupOrDrop(user, item, handsComp: userHands);

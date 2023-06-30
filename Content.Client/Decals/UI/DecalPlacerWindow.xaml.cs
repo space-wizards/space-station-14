@@ -159,7 +159,8 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
 
     private void ButtonOnPressed(ButtonEventArgs obj)
     {
-        if (obj.Button.Name == null) return;
+        if (obj.Button.Name == null)
+            return;
 
         _selected = obj.Button.Name;
         UpdateDecalPlacementInfo();

@@ -23,7 +23,8 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     private static void OnCrayonHandleState(EntityUid uid, CrayonComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not CrayonComponentState state) return;
+        if (args.Current is not CrayonComponentState state)
+            return;
 
         component.Color = state.Color;
         component.SelectedState = state.State;

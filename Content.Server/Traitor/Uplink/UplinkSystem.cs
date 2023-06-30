@@ -72,7 +72,8 @@ namespace Content.Server.Traitor.Uplink
             {
                 while (containerSlotEnumerator.MoveNext(out var pdaUid))
                 {
-                    if (!pdaUid.ContainedEntity.HasValue) continue;
+                    if (!pdaUid.ContainedEntity.HasValue)
+                        continue;
 
                     if (HasComp<PdaComponent>(pdaUid.ContainedEntity.Value) || HasComp<StoreComponent>(pdaUid.ContainedEntity.Value))
                         return pdaUid.ContainedEntity.Value;

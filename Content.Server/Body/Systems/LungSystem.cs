@@ -31,7 +31,8 @@ public sealed class LungSystem : EntitySystem
     private void OnGotEquipped(EntityUid uid, BreathToolComponent component, GotEquippedEvent args)
     {
 
-        if ((args.SlotFlags & component.AllowedSlots) != component.AllowedSlots) return;
+        if ((args.SlotFlags & component.AllowedSlots) != component.AllowedSlots)
+            return;
         component.IsFunctional = true;
 
         if (TryComp(args.Equipee, out InternalsComponent? internals))
@@ -57,7 +58,8 @@ public sealed class LungSystem : EntitySystem
             if (moles <= 0)
                 continue;
             var reagent = _atmosphereSystem.GasReagents[i];
-            if (reagent == null) continue;
+            if (reagent == null)
+                continue;
 
             var amount = moles * Atmospherics.BreathMolesToReagentMultiplier;
             _solutionContainerSystem.TryAddReagent(uid, lung.LungSolution, reagent, amount, out _);

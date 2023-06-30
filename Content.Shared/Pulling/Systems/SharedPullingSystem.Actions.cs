@@ -98,7 +98,8 @@ namespace Content.Shared.Pulling
             var msg = new StopPullingEvent(user);
             RaiseLocalEvent(pullable.Owner, msg, true);
 
-            if (msg.Cancelled) return false;
+            if (msg.Cancelled)
+                return false;
 
             // Stop pulling confirmed!
 

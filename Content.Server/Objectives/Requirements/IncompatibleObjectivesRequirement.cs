@@ -14,7 +14,8 @@ namespace Content.Server.Objectives.Requirements
             {
                 foreach (var incompatibleObjective in _incompatibleObjectives)
                 {
-                    if (incompatibleObjective == objective.Prototype.ID) return false;
+                    if (incompatibleObjective == objective.Prototype.ID)
+                        return false;
                 }
             }
 

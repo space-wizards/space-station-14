@@ -28,7 +28,8 @@ namespace Content.Server.Alert.Commands
             if (args.Length > 1)
             {
                 var target = args[1];
-                if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
+                if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity))
+                    return;
             }
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))

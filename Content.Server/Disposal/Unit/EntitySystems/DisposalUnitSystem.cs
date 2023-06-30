@@ -586,7 +586,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private TimeSpan EstimatedFullPressure(DisposalUnitComponent component)
         {
-            if (component.State == SharedDisposalUnitComponent.PressureState.Ready) return TimeSpan.Zero;
+            if (component.State == SharedDisposalUnitComponent.PressureState.Ready)
+                return TimeSpan.Zero;
 
             var currentTime = GameTiming.CurTime;
             var pressure = component.Pressure;

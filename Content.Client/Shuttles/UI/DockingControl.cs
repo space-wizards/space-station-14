@@ -104,13 +104,15 @@ public class DockingControl : Control
                     if (startOut)
                     {
                         // It's called Jobseeker now.
-                        if (!MathHelper.TryGetIntersecting(start, end, _range, out var newStart)) continue;
+                        if (!MathHelper.TryGetIntersecting(start, end, _range, out var newStart))
+                            continue;
                         start = newStart.Value;
                     }
                     // otherwise vice versa
                     else if (endOut)
                     {
-                        if (!MathHelper.TryGetIntersecting(end, start, _range, out var newEnd)) continue;
+                        if (!MathHelper.TryGetIntersecting(end, start, _range, out var newEnd))
+                            continue;
                         end = newEnd.Value;
                     }
 
@@ -179,13 +181,15 @@ public class DockingControl : Control
                     if (startOut)
                     {
                         // It's called Jobseeker now.
-                        if (!MathHelper.TryGetIntersecting(start, end, _range, out var newStart)) continue;
+                        if (!MathHelper.TryGetIntersecting(start, end, _range, out var newStart))
+                            continue;
                         start = newStart.Value;
                     }
                     // otherwise vice versa
                     else if (endOut)
                     {
-                        if (!MathHelper.TryGetIntersecting(end, start, _range, out var newEnd)) continue;
+                        if (!MathHelper.TryGetIntersecting(end, start, _range, out var newEnd))
+                            continue;
                         end = newEnd.Value;
                     }
 
@@ -200,7 +204,8 @@ public class DockingControl : Control
                 {
                     var position = matty.Transform(dock.Coordinates.Position);
 
-                    if (position.Length > _range - 0.8f) continue;
+                    if (position.Length > _range - 0.8f)
+                        continue;
 
                     var otherDockRotation = Matrix3.CreateRotation(dock.Angle);
 

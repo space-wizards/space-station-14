@@ -350,7 +350,8 @@ public abstract partial class InventorySystem
 
         removedItem = slotContainer.ContainedEntity;
 
-        if (!removedItem.HasValue) return false;
+        if (!removedItem.HasValue)
+            return false;
 
         if (!force && !CanUnequip(actor, target, slot, out var reason, slotContainer, slotDefinition, inventory))
         {

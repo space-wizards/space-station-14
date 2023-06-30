@@ -46,7 +46,8 @@ namespace Content.Client.Crayon.UI
         {
             // Clear
             Grid.RemoveAllChildren();
-            if (_decals == null) return;
+            if (_decals == null)
+                return;
 
             var filter = Search.Text;
             foreach (var (decal, tex) in _decals)
@@ -86,7 +87,8 @@ namespace Content.Client.Crayon.UI
 
         private void ButtonOnPressed(ButtonEventArgs obj)
         {
-            if (obj.Button.Name == null) return;
+            if (obj.Button.Name == null)
+                return;
 
             Owner.Select(obj.Button.Name);
             _selected = obj.Button.Name;

@@ -15,7 +15,8 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         get => _enableShuttlePosition;
         set
         {
-            if (_enableShuttlePosition == value) return;
+            if (_enableShuttlePosition == value)
+                return;
 
             _enableShuttlePosition = value;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
@@ -45,7 +46,8 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
     private void OnShuttlePosMessage(EmergencyShuttlePositionMessage ev)
     {
-        if (_overlay == null) return;
+        if (_overlay == null)
+            return;
 
         _overlay.StationUid = ev.StationUid;
         _overlay.Position = ev.Position;
@@ -71,7 +73,8 @@ public sealed class EmergencyShuttleOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (Position == null || !_entManager.TryGetComponent<TransformComponent>(StationUid, out var xform)) return;
+        if (Position == null || !_entManager.TryGetComponent<TransformComponent>(StationUid, out var xform))
+            return;
 
         args.WorldHandle.SetTransform(xform.WorldMatrix);
         args.WorldHandle.DrawRect(Position.Value, Color.Red.WithAlpha(100));

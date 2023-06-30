@@ -25,7 +25,8 @@ namespace Content.Server.Construction.Conditions
             var entMan = IoCManager.Resolve<IEntityManager>();
             var entity = args.Examined;
 
-            if (!entMan.TryGetComponent(entity, out EntityStorageComponent? entityStorage)) return false;
+            if (!entMan.TryGetComponent(entity, out EntityStorageComponent? entityStorage))
+                return false;
 
             var metaData = entMan.GetComponent<MetaDataComponent>(entity);
 

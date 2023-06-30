@@ -67,7 +67,8 @@ namespace Content.Shared.Movement.Systems
 
         protected void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
         {
-            if (component.HeldMoveButtons == buttons) return;
+            if (component.HeldMoveButtons == buttons)
+                return;
             component.HeldMoveButtons = buttons;
             Dirty(component);
         }
@@ -336,7 +337,8 @@ namespace Content.Shared.Movement.Systems
                 return;
             }
 
-            if (moverComp == null) return;
+            if (moverComp == null)
+                return;
 
             SetSprinting(moverComp, subTick, walking);
         }
@@ -437,7 +439,8 @@ namespace Content.Shared.Movement.Systems
 
         private void ResetSubtick(InputMoverComponent component)
         {
-            if (Timing.CurTick <= component.LastInputTick) return;
+            if (Timing.CurTick <= component.LastInputTick)
+                return;
 
             component.CurTickWalkMovement = Vector2.Zero;
             component.CurTickSprintMovement = Vector2.Zero;
@@ -502,7 +505,8 @@ namespace Content.Shared.Movement.Systems
 
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null)
+                    return false;
 
                 if (full.State != BoundKeyState.Up)
                     return false;
@@ -523,7 +527,8 @@ namespace Content.Shared.Movement.Systems
 
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null)
+                    return false;
 
                 if (full.State != BoundKeyState.Up)
                     return false;
@@ -546,7 +551,8 @@ namespace Content.Shared.Movement.Systems
 
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null)
+                    return false;
 
                 _controller.HandleDirChange(session.AttachedEntity.Value, _dir, message.SubTick, full.State == BoundKeyState.Down);
                 return false;
@@ -564,7 +570,8 @@ namespace Content.Shared.Movement.Systems
 
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null)
+                    return false;
 
                 _controller.HandleRunChange(session.AttachedEntity.Value, full.SubTick, full.State == BoundKeyState.Down);
                 return false;
@@ -613,7 +620,8 @@ namespace Content.Shared.Movement.Systems
 
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null)
+                    return false;
 
                 _controller.HandleShuttleInput(session.AttachedEntity.Value, _button, full.SubTick, full.State == BoundKeyState.Down);
                 return false;

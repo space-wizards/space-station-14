@@ -146,7 +146,8 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void PerformHotspotExposure(TileAtmosphere tile)
         {
-            if (tile.Air == null || !tile.Hotspot.Valid) return;
+            if (tile.Air == null || !tile.Hotspot.Valid)
+                return;
 
             tile.Hotspot.Bypassing = tile.Hotspot.SkippedFirstProcess && tile.Hotspot.Volume > tile.Air.Volume*0.95f;
 

@@ -23,7 +23,8 @@ namespace Content.Server.Chemistry.TileReactions
 
         public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
         {
-            if (reactVolume < 5) return FixedPoint2.Zero;
+            if (reactVolume < 5)
+                return FixedPoint2.Zero;
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 

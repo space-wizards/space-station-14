@@ -92,7 +92,8 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
 
             layer.Visible &= visible;
 
-            if (!visible) continue;
+            if (!visible)
+                continue;
 
             layer.Color = color;
         }

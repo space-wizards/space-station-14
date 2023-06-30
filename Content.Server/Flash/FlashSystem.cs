@@ -108,7 +108,8 @@ namespace Content.Server.Flash
 
         public void Flash(EntityUid target, EntityUid? user, EntityUid? used, float flashDuration, float slowTo, bool displayPopup = true, FlashableComponent? flashable = null)
         {
-            if (!Resolve(target, ref flashable, false)) return;
+            if (!Resolve(target, ref flashable, false))
+                return;
 
             var attempt = new FlashAttemptEvent(target, user, used);
             RaiseLocalEvent(target, attempt, true);

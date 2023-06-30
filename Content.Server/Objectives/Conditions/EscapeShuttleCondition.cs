@@ -66,7 +66,8 @@ namespace Content.Server.Objectives.Conditions
                 // Any emergency shuttle counts for this objective.
                 foreach (var stationData in entMan.EntityQuery<StationEmergencyShuttleComponent>())
                 {
-                    if (IsAgentOnShuttle(xform, stationData.EmergencyShuttle)) {
+                    if (IsAgentOnShuttle(xform, stationData.EmergencyShuttle))
+                        {
                         shuttleContainsAgent = true;
                         break;
                     }
@@ -85,8 +86,10 @@ namespace Content.Server.Objectives.Conditions
 
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((EscapeShuttleCondition) obj);
         }

@@ -39,7 +39,8 @@ public sealed partial class GunSystem
 
     private void OnChamberMagazineAmmoUpdate(EntityUid uid, ChamberMagazineAmmoProviderComponent component, UpdateAmmoCounterEvent args)
     {
-        if (args.Control is not ChamberMagazineStatusControl control) return;
+        if (args.Control is not ChamberMagazineStatusControl control)
+            return;
 
         var chambered = GetChamberEntity(uid);
         var magEntity = GetMagazineEntity(uid);

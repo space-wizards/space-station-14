@@ -94,7 +94,8 @@ namespace Content.Client.Decals
         {
             foreach (var (gridId, updatedGridChunks) in ev.Data)
             {
-                if (updatedGridChunks.Count == 0) continue;
+                if (updatedGridChunks.Count == 0)
+                    continue;
 
                 if (!TryComp(gridId, out DecalGridComponent? gridComp))
                 {
@@ -108,7 +109,8 @@ namespace Content.Client.Decals
             // Now we'll cull old chunks out of range as the server will send them to us anyway.
             foreach (var (gridId, chunks) in ev.RemovedChunks)
             {
-                if (chunks.Count == 0) continue;
+                if (chunks.Count == 0)
+                    continue;
 
                 if (!TryComp(gridId, out DecalGridComponent? gridComp))
                 {
@@ -160,7 +162,8 @@ namespace Content.Client.Decals
 
             foreach (var index in chunks)
             {
-                if (!chunkCollection.TryGetValue(index, out var chunk)) continue;
+                if (!chunkCollection.TryGetValue(index, out var chunk))
+                    continue;
 
                 foreach (var decalId  in chunk.Decals.Keys)
                 {

@@ -31,12 +31,15 @@ namespace Content.Server.Atmos.EntitySystems
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
-                if (!tile.AdjacentBits.IsFlagSet(direction)) continue;
+                if (!tile.AdjacentBits.IsFlagSet(direction))
+                    continue;
                 var enemyTile = tile.AdjacentTiles[i];
 
                 // If the tile is null or has no air, we don't do anything for it.
-                if (enemyTile?.Air == null) continue;
-                if (fireCount <= enemyTile.CurrentCycle) continue;
+                if (enemyTile?.Air == null)
+                    continue;
+                if (fireCount <= enemyTile.CurrentCycle)
+                    continue;
                 Archive(enemyTile, fireCount);
 
                 var shouldShareAir = false;
@@ -219,7 +222,8 @@ namespace Content.Server.Atmos.EntitySystems
                 var thisValue = receiver.Moles[i];
                 var sharerValue = sharer.Moles[i];
                 var delta = (thisValue - sharerValue) / (atmosAdjacentTurfs + 1);
-                if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles)) continue;
+                if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles))
+                    continue;
                 if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
                 {
                     var gasHeatCapacity = delta * GasSpecificHeats[i];
@@ -233,8 +237,10 @@ namespace Content.Server.Atmos.EntitySystems
                     }
                 }
 
-                if (!receiver.Immutable) receiver.Moles[i] -= delta;
-                if (!sharer.Immutable) sharer.Moles[i] += delta;
+                if (!receiver.Immutable)
+                    receiver.Moles[i] -= delta;
+                if (!sharer.Immutable)
+                    sharer.Moles[i] += delta;
                 movedMoles += delta;
                 absMovedMoles += MathF.Abs(delta);
             }

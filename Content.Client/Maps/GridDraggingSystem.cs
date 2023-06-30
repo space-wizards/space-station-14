@@ -58,7 +58,8 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
     private void StopDragging()
     {
-        if (_dragging == null) return;
+        if (_dragging == null)
+            return;
 
         if (_lastMousePosition != null && TryComp<TransformComponent>(_dragging.Value, out var xform) &&
             TryComp<PhysicsComponent>(_dragging.Value, out var body) &&
@@ -82,7 +83,8 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
     {
         base.Update(frameTime);
 
-        if (!Enabled || !_gameTiming.IsFirstTimePredicted) return;
+        if (!Enabled || !_gameTiming.IsFirstTimePredicted)
+            return;
 
         var state = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
 
@@ -117,7 +119,8 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
         var localToWorld = xform.WorldMatrix.Transform(_localPosition);
 
-        if (localToWorld.EqualsApprox(mousePos.Position, 0.01f)) return;
+        if (localToWorld.EqualsApprox(mousePos.Position, 0.01f))
+            return;
 
         var requestedGridOrigin = mousePos.Position - xform.WorldRotation.RotateVec(_localPosition);
         _lastMousePosition = new MapCoordinates(requestedGridOrigin, mousePos.MapId);

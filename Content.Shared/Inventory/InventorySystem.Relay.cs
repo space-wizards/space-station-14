@@ -44,7 +44,8 @@ public partial class InventorySystem
         var ev = new InventoryRelayedEvent<T>(args);
         while (containerEnumerator.MoveNext(out var container))
         {
-            if (!container.ContainedEntity.HasValue) continue;
+            if (!container.ContainedEntity.HasValue)
+                continue;
             RaiseLocalEvent(container.ContainedEntity.Value, ev, false);
         }
     }

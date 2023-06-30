@@ -28,8 +28,10 @@ namespace Content.Server.Administration.Commands
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!entityManager.EntitySysManager.TryGetEntitySystem<EntityStorageSystem>(out var entstorage)) return;
-            if (!entityManager.TryGetComponent<TransformComponent>(entityUid, out var transform)) return;
+            if (!entityManager.EntitySysManager.TryGetEntitySystem<EntityStorageSystem>(out var entstorage))
+                return;
+            if (!entityManager.TryGetComponent<TransformComponent>(entityUid, out var transform))
+                return;
 
             var parent = transform.ParentUid;
 

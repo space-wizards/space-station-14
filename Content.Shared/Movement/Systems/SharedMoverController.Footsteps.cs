@@ -15,7 +15,8 @@ public abstract partial class SharedMoverController
 
     private void OnFootHandleState(EntityUid uid, FootstepModifierComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not FootstepModifierComponentState state) return;
+        if (args.Current is not FootstepModifierComponentState state)
+            return;
         component.Sound = state.Sound;
     }
 

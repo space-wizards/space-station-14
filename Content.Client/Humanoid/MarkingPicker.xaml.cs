@@ -400,11 +400,13 @@ public sealed partial class MarkingPicker : Control
 
     private void ColorChanged(int colorIndex)
     {
-        if (_selectedMarking is null) return;
+        if (_selectedMarking is null)
+            return;
         var markingPrototype = (MarkingPrototype) _selectedMarking.Metadata!;
         int markingIndex = _currentMarkings.FindIndexOf(_selectedMarkingCategory, markingPrototype.ID);
 
-        if (markingIndex < 0) return;
+        if (markingIndex < 0)
+            return;
 
         _selectedMarking.IconModulate = _currentMarkingColors[colorIndex];
 
@@ -417,7 +419,8 @@ public sealed partial class MarkingPicker : Control
 
     private void MarkingAdd()
     {
-        if (_selectedUnusedMarking is null) return;
+        if (_selectedUnusedMarking is null)
+            return;
 
         if (_currentMarkings.PointsLeft(_selectedMarkingCategory) == 0 && !Forced)
         {
@@ -483,7 +486,8 @@ public sealed partial class MarkingPicker : Control
 
     private void MarkingRemove()
     {
-        if (_selectedMarking is null) return;
+        if (_selectedMarking is null)
+            return;
 
         var marking = (MarkingPrototype) _selectedMarking.Metadata!;
 

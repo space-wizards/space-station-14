@@ -44,7 +44,8 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
         foreach (var target in targetList)
         {
             var station = StationSystem.GetOwningStation(target.Owner);
-            if (station == null) continue;
+            if (station == null)
+                continue;
             stationsToNotify.Add((EntityUid) station);
         }
         foreach (var station in stationsToNotify)

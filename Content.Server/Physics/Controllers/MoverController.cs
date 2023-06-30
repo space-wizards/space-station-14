@@ -153,7 +153,8 @@ namespace Content.Server.Physics.Controllers
 
         private void ResetSubtick(PilotComponent component)
         {
-            if (Timing.CurTick <= component.LastInputTick) return;
+            if (Timing.CurTick <= component.LastInputTick)
+                return;
 
             component.CurTickStrafeMovement = Vector2.Zero;
             component.CurTickRotationMovement = 0f;
@@ -164,7 +165,8 @@ namespace Content.Server.Physics.Controllers
 
         protected override void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state)
         {
-            if (!TryComp<PilotComponent>(uid, out var pilot) || pilot.Console == null) return;
+            if (!TryComp<PilotComponent>(uid, out var pilot) || pilot.Console == null)
+                return;
 
             ResetSubtick(pilot);
 
@@ -260,7 +262,8 @@ namespace Content.Server.Physics.Controllers
                     consoleEnt = cargoConsole.Entity;
                 }
 
-                if (!TryComp<TransformComponent>(consoleEnt, out var xform)) continue;
+                if (!TryComp<TransformComponent>(consoleEnt, out var xform))
+                    continue;
 
                 var gridId = xform.GridUid;
                 // This tries to see if the grid is a shuttle and if the console should work.

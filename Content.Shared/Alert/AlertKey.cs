@@ -42,7 +42,8 @@ public struct AlertKey
     public override int GetHashCode()
     {
         // use only alert category if we have one
-        if (AlertCategory.HasValue) return AlertCategory.GetHashCode();
+        if (AlertCategory.HasValue)
+            return AlertCategory.GetHashCode();
         return AlertType.GetHashCode();
     }
 

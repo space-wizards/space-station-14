@@ -85,8 +85,10 @@ namespace Content.Client.Lobby.UI
             base.Dispose(disposing);
             _preferencesManager.OnServerDataLoaded -= UpdateUI;
 
-            if (!disposing) return;
-            if (_previewDummy != null) _entityManager.DeleteEntity(_previewDummy.Value);
+            if (!disposing)
+                return;
+            if (_previewDummy != null)
+                _entityManager.DeleteEntity(_previewDummy.Value);
             _previewDummy = default;
         }
 

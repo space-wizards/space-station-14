@@ -15,7 +15,8 @@ public sealed partial class GunSystem
 
     private void OnMagazineVisualsInit(EntityUid uid, MagazineVisualsComponent component, ComponentInit args)
     {
-        if (!TryComp<SpriteComponent>(uid, out var sprite)) return;
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
+            return;
 
         if (sprite.LayerMapTryGet(GunVisualLayers.Mag, out _))
         {
@@ -38,7 +39,8 @@ public sealed partial class GunSystem
         // 3. Otherwise just do mag / unshaded as is
         var sprite = args.Sprite;
 
-        if (sprite == null) return;
+        if (sprite == null)
+            return;
 
         if (!args.AppearanceData.TryGetValue(AmmoVisuals.MagLoaded, out var magloaded) ||
             magloaded is true)

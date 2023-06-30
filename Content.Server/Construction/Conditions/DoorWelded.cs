@@ -26,7 +26,8 @@ namespace Content.Server.Construction.Conditions
 
             var entMan = IoCManager.Resolve<IEntityManager>();
 
-            if (!entMan.TryGetComponent(entity, out DoorComponent? door)) return false;
+            if (!entMan.TryGetComponent(entity, out DoorComponent? door))
+                return false;
 
             var isWelded = door.State == DoorState.Welded;
             if (isWelded != Welded)

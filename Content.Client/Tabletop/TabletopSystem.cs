@@ -64,7 +64,8 @@ namespace Content.Client.Tabletop
                 return;
 
             // If there is no player entity, return
-            if (_playerManager.LocalPlayer is not { ControlledEntity: { } playerEntity }) return;
+            if (_playerManager.LocalPlayer is not { ControlledEntity: { } playerEntity })
+                return;
 
             if (!CanSeeTable(playerEntity, _table))
             {
@@ -74,7 +75,8 @@ namespace Content.Client.Tabletop
             }
 
             // If no entity is being dragged or no viewport is clicked, return
-            if (_draggedEntity == null || _viewport == null) return;
+            if (_draggedEntity == null || _viewport == null)
+                return;
 
             if (!CanDrag(playerEntity, _draggedEntity.Value, out var draggableComponent))
             {
@@ -96,7 +98,8 @@ namespace Content.Client.Tabletop
 
             // Clamp coordinates to viewport
             var clampedCoords = ClampPositionToViewport(coords, _viewport);
-            if (clampedCoords.Equals(MapCoordinates.Nullspace)) return;
+            if (clampedCoords.Equals(MapCoordinates.Nullspace))
+                return;
 
             // Move the entity locally every update
             EntityManager.GetComponent<TransformComponent>(_draggedEntity.Value).WorldPosition = clampedCoords.Position;
@@ -148,7 +151,8 @@ namespace Content.Client.Tabletop
 
         private void HandleComponentState(EntityUid uid, TabletopDraggableComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not TabletopDraggableComponentState state) return;
+            if (args.Current is not TabletopDraggableComponentState state)
+                return;
 
             component.DraggingPlayer = state.DraggingPlayer;
         }
@@ -265,10 +269,12 @@ namespace Content.Client.Tabletop
         /// <returns>Coordinates clamped to the viewport.</returns>
         private static MapCoordinates ClampPositionToViewport(MapCoordinates coordinates, ScalingViewport viewport)
         {
-            if (coordinates == MapCoordinates.Nullspace) return MapCoordinates.Nullspace;
+            if (coordinates == MapCoordinates.Nullspace)
+                return MapCoordinates.Nullspace;
 
             var eye = viewport.Eye;
-            if (eye == null) return MapCoordinates.Nullspace;
+            if (eye == null)
+                return MapCoordinates.Nullspace;
 
             var size = (Vector2) viewport.ViewportSize / EyeManager.PixelsPerMeter; // Convert to tiles instead of pixels
             var eyePosition = eye.Position.Position;

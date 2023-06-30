@@ -210,7 +210,8 @@ public sealed class StaminaSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, ref StartCollideEvent args)
     {
-        if (!args.OurFixture.ID.Equals(CollideFixture)) return;
+        if (!args.OurFixture.ID.Equals(CollideFixture))
+            return;
 
         TakeStaminaDamage(args.OtherEntity, component.Damage, source:args.OurEntity);
     }

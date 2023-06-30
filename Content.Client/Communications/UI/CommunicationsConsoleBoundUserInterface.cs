@@ -110,7 +110,8 @@ namespace Content.Client.Communications.UI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing) return;
+            if (!disposing)
+                return;
 
             _menu?.Dispose();
         }

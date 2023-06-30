@@ -39,14 +39,16 @@ namespace Content.Client.Atmos.UI
 
         private void OnToggleStatusButtonPressed()
         {
-            if (_window is null) return;
+            if (_window is null)
+                return;
             SendMessage(new GasVolumePumpToggleStatusMessage(_window.PumpStatus));
         }
 
         private void OnPumpTransferRatePressed(string value)
         {
             float rate = float.TryParse(value, out var parsed) ? parsed : 0f;
-            if (rate > MaxTransferRate) rate = MaxTransferRate;
+            if (rate > MaxTransferRate)
+                rate = MaxTransferRate;
 
             SendMessage(new GasVolumePumpChangeTransferRateMessage(rate));
         }
@@ -69,7 +71,8 @@ namespace Content.Client.Atmos.UI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing) return;
+            if (!disposing)
+                return;
             _window?.Dispose();
         }
     }

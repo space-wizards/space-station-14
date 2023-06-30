@@ -14,7 +14,8 @@ public abstract partial class SharedMoverController
 
     private void OnMobHandleState(EntityUid uid, MobMoverComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not MobMoverComponentState state) return;
+        if (args.Current is not MobMoverComponentState state)
+            return;
         component.GrabRangeVV = state.GrabRange;
         component.PushStrengthVV = state.PushStrength;
     }

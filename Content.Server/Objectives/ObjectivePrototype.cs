@@ -38,14 +38,16 @@ namespace Content.Server.Objectives
         {
             foreach (var requirement in _requirements)
             {
-                if (!requirement.CanBeAssigned(mind)) return false;
+                if (!requirement.CanBeAssigned(mind))
+                    return false;
             }
 
             if (!CanBeDuplicateAssignment)
             {
                 foreach (var objective in mind.AllObjectives)
                 {
-                    if (objective.Prototype.ID == ID) return false;
+                    if (objective.Prototype.ID == ID)
+                        return false;
                 }
             }
 

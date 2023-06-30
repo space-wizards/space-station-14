@@ -47,7 +47,8 @@ namespace Content.Server.Atmos
         {
             get
             {
-                if (Volume <= 0) return 0f;
+                if (Volume <= 0)
+                    return 0f;
                 return TotalMoles * Atmospherics.R * Temperature / Volume;
             }
         }
@@ -58,7 +59,8 @@ namespace Content.Server.Atmos
             get => _temperature;
             set
             {
-                if (Immutable) return;
+                if (Immutable)
+                    return;
                 _temperature = MathF.Max(value, Atmospherics.TCMB);
             }
         }
@@ -182,7 +184,8 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void CopyFromMutable(GasMixture sample)
         {
-            if (Immutable) return;
+            if (Immutable)
+                return;
             sample.Moles.CopyTo(Moles, 0);
             Temperature = sample.Temperature;
         }
@@ -190,14 +193,16 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clear()
         {
-            if (Immutable) return;
+            if (Immutable)
+                return;
             Array.Clear(Moles, 0, Atmospherics.TotalNumberOfGases);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Multiply(float multiplier)
         {
-            if (Immutable) return;
+            if (Immutable)
+                return;
             NumericsHelpers.Multiply(Moles, multiplier);
         }
 
@@ -230,8 +235,10 @@ namespace Content.Server.Atmos
 
         public bool Equals(GasMixture? other)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
+            if (ReferenceEquals(null, other))
+                return false;
+            if (ReferenceEquals(this, other))
+                return true;
             return Moles.SequenceEqual(other.Moles)
                    && _temperature.Equals(other._temperature)
                    && ReactionResults.SequenceEqual(other.ReactionResults)

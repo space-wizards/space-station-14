@@ -73,9 +73,11 @@ namespace Content.Shared.Gravity
 
         private void OnHandleState(EntityUid uid, GravityComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not GravityComponentState state) return;
+            if (args.Current is not GravityComponentState state)
+                return;
 
-            if (component.EnabledVV == state.Enabled) return;
+            if (component.EnabledVV == state.Enabled)
+                return;
             component.EnabledVV = state.Enabled;
             var ev = new GravityChangedEvent(uid, component.EnabledVV);
             RaiseLocalEvent(uid, ref ev, true);
@@ -91,7 +93,8 @@ namespace Content.Shared.Gravity
             var alerts = AllEntityQuery<AlertsComponent, TransformComponent>();
             while (alerts.MoveNext(out var uid, out var comp, out var xform))
             {
-                if (xform.GridUid != ev.ChangedGridIndex) continue;
+                if (xform.GridUid != ev.ChangedGridIndex)
+                    continue;
 
                 if (!ev.HasGravity)
                 {

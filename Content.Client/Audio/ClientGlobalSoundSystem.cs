@@ -63,7 +63,8 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
 
     private void PlayAdminSound(AdminSoundEvent soundEvent)
     {
-        if (!_adminAudioEnabled) return;
+        if (!_adminAudioEnabled)
+            return;
 
         var stream = _audio.PlayGlobal(soundEvent.Filename, Filter.Local(), false, soundEvent.AudioParams);
         _adminAudio.Add(stream);
@@ -72,7 +73,8 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
     private void PlayStationEventMusic(StationEventMusicEvent soundEvent)
     {
         // Either the cvar is disabled or it's already playing
-        if (!_eventAudioEnabled || _eventAudio.ContainsKey(soundEvent.Type)) return;
+        if (!_eventAudioEnabled || _eventAudio.ContainsKey(soundEvent.Type))
+            return;
 
         var stream = _audio.PlayGlobal(soundEvent.Filename, Filter.Local(), false, soundEvent.AudioParams);
         _eventAudio.Add(soundEvent.Type, stream);
@@ -85,7 +87,8 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
 
     private void StopStationEventMusic(StopStationEventMusic soundEvent)
     {
-        if (!_eventAudio.TryGetValue(soundEvent.Type, out var stream)) return;
+        if (!_eventAudio.TryGetValue(soundEvent.Type, out var stream))
+            return;
         stream?.Stop();
         _eventAudio.Remove(soundEvent.Type);
     }
@@ -93,7 +96,8 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
     private void ToggleAdminSound(bool enabled)
     {
         _adminAudioEnabled = enabled;
-        if (_adminAudioEnabled) return;
+        if (_adminAudioEnabled)
+            return;
         foreach (var stream in _adminAudio)
         {
             stream?.Stop();
@@ -104,7 +108,8 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
     private void ToggleStationEventMusic(bool enabled)
     {
         _eventAudioEnabled = enabled;
-        if (_eventAudioEnabled) return;
+        if (_eventAudioEnabled)
+            return;
         foreach (var stream in _eventAudio)
         {
             stream.Value?.Stop();

@@ -27,7 +27,8 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
         foreach (var (active, comp, gasTank) in EntityQuery<ActiveJetpackComponent, JetpackComponent, GasTankComponent>())
         {
-            if (_timing.CurTime < active.TargetTime) continue;
+            if (_timing.CurTime < active.TargetTime)
+                continue;
 
             active.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(active.EffectCooldown);
             var air = _gasTank.RemoveAir(gasTank, comp.MoleUsage);

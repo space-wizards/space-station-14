@@ -159,7 +159,8 @@ namespace Content.Shared.Atmos
             for (var i = 0; i < PipeDirections; i++)
             {
                 var currentPipeDirection = (PipeDirection) (1 << i);
-                if (!pipeDirection.HasFlag(currentPipeDirection)) continue;
+                if (!pipeDirection.HasFlag(currentPipeDirection))
+                    continue;
                 var angle = currentPipeDirection.ToAngle();
                 angle += diff;
                 newPipeDir |= angle.GetCardinalDir().ToPipeDirection();

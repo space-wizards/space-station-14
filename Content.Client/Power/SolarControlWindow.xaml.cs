@@ -29,7 +29,8 @@ namespace Content.Client.Power
         {
             PanelRotation.OnTextEntered += text => {
                 double value;
-                if (!double.TryParse((string?) text.Text, out value)) return;
+                if (!double.TryParse((string?) text.Text, out value))
+                    return;
 
                 SolarControlConsoleAdjustMessage msg = new()
                 {
@@ -44,7 +45,8 @@ namespace Content.Client.Power
             };
             PanelVelocity.OnTextEntered += text => {
                 double value;
-                if (!double.TryParse((string?) text.Text, out value)) return;
+                if (!double.TryParse((string?) text.Text, out value))
+                    return;
 
                 SolarControlConsoleAdjustMessage msg = new()
                 {

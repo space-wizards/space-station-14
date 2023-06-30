@@ -293,7 +293,8 @@ public sealed class RadarControl : MapGridControl
 
         foreach (var (ent, _) in _iffControls)
         {
-            if (shown.Contains(ent)) continue;
+            if (shown.Contains(ent))
+                continue;
             ClearLabel(ent);
         }
     }
@@ -310,7 +311,8 @@ public sealed class RadarControl : MapGridControl
 
     private void ClearLabel(EntityUid uid)
     {
-        if (!_iffControls.TryGetValue(uid, out var label)) return;
+        if (!_iffControls.TryGetValue(uid, out var label))
+            return;
         label.Dispose();
         _iffControls.Remove(uid);
     }
@@ -330,7 +332,8 @@ public sealed class RadarControl : MapGridControl
                 var position = state.Coordinates.Position;
                 var uiPosition = matrix.Transform(position);
 
-                if (uiPosition.Length > WorldRange - DockScale) continue;
+                if (uiPosition.Length > WorldRange - DockScale)
+                    continue;
 
                 var color = HighlightedDock == ent ? state.HighlightedColor : state.Color;
 

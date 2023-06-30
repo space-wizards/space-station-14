@@ -12,24 +12,28 @@ public sealed class HLine : Container
     {
         get
         {
-            if (_line.PanelOverride is StyleBoxFlat styleBox) return styleBox.BackgroundColor;
+            if (_line.PanelOverride is StyleBoxFlat styleBox)
+                return styleBox.BackgroundColor;
             return null;
         }
         set
         {
-            if (_line.PanelOverride is StyleBoxFlat styleBox) styleBox.BackgroundColor = value!.Value;
+            if (_line.PanelOverride is StyleBoxFlat styleBox)
+                styleBox.BackgroundColor = value!.Value;
         }
     }
 
     public float? Thickness {
         get
         {
-            if (_line.PanelOverride is StyleBoxFlat styleBox) return styleBox.ContentMarginTopOverride;
+            if (_line.PanelOverride is StyleBoxFlat styleBox)
+                return styleBox.ContentMarginTopOverride;
             return null;
         }
         set
         {
-            if (_line.PanelOverride is StyleBoxFlat styleBox) styleBox.ContentMarginTopOverride = value!.Value;
+            if (_line.PanelOverride is StyleBoxFlat styleBox)
+                styleBox.ContentMarginTopOverride = value!.Value;
         }
     }
 

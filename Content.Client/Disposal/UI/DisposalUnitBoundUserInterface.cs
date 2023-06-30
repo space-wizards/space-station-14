@@ -100,7 +100,8 @@ namespace Content.Client.Disposal.UI
         {
             base.Dispose(disposing);
 
-            if (!disposing) return;
+            if (!disposing)
+                return;
 
             MailingUnitWindow?.Dispose();
             DisposalUnitWindow?.Dispose();

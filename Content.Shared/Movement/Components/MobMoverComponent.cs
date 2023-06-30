@@ -27,7 +27,8 @@ namespace Content.Shared.Movement.Components
             get => _stepSoundDistance;
             set
             {
-                if (MathHelper.CloseToPercent(_stepSoundDistance, value)) return;
+                if (MathHelper.CloseToPercent(_stepSoundDistance, value))
+                    return;
                 _stepSoundDistance = value;
             }
         }
@@ -38,7 +39,8 @@ namespace Content.Shared.Movement.Components
             get => GrabRange;
             set
             {
-                if (MathHelper.CloseToPercent(GrabRange, value)) return;
+                if (MathHelper.CloseToPercent(GrabRange, value))
+                    return;
                 GrabRange = value;
                 Dirty();
             }
@@ -50,7 +52,8 @@ namespace Content.Shared.Movement.Components
             get => PushStrength;
             set
             {
-                if (MathHelper.CloseToPercent(PushStrength, value)) return;
+                if (MathHelper.CloseToPercent(PushStrength, value))
+                    return;
                 PushStrength = value;
                 Dirty();
             }

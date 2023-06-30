@@ -80,7 +80,8 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
         {
             var newValue = Wraparound(e.Value);
 
-            if (e.Value == newValue) return;
+            if (e.Value == newValue)
+                return;
 
             RotationSpin.OverrideValue(newValue);
         }
@@ -107,7 +108,8 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
 
         private void OnSubmitButtonPressed(BaseButton.ButtonEventArgs obj)
         {
-            if (MapPath.Text.Length == 0) return;
+            if (MapPath.Text.Length == 0)
+                return;
 
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
                 $"loadbp {MapOptions.SelectedId} \"{MapPath.Text}\" {XCoordinate.Value} {YCoordinate.Value} {RotationSpin.Value}");

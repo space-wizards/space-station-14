@@ -72,7 +72,8 @@ namespace Content.Client.Kitchen.UI
             _menu?.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
             RefreshContentsDisplay(cState.ContainedSolids);
 
-            if (_menu == null) return;
+            if (_menu == null)
+                return;
 
             var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
             currentlySelectedTimeButton.Pressed = true;
@@ -87,7 +88,8 @@ namespace Content.Client.Kitchen.UI
         {
             _reagents.Clear();
 
-            if (_menu == null) return;
+            if (_menu == null)
+                return;
 
             _solids.Clear();
             _menu.IngredientsList.Clear();

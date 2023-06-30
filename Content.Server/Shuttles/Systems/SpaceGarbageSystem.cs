@@ -18,12 +18,14 @@ public sealed class SpaceGarbageSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, SpaceGarbageComponent component, ref StartCollideEvent args)
     {
-        if (args.OtherBody.BodyType != BodyType.Static) return;
+        if (args.OtherBody.BodyType != BodyType.Static)
+            return;
 
         var ourXform = Transform(uid);
         var otherXform = Transform(args.OtherEntity);
 
-        if (ourXform.GridUid == otherXform.GridUid) return;
+        if (ourXform.GridUid == otherXform.GridUid)
+            return;
 
         QueueDel(uid);
     }

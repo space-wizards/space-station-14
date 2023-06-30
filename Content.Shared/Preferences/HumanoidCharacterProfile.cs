@@ -336,17 +336,28 @@ namespace Content.Shared.Preferences
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
-            if (maybeOther is not HumanoidCharacterProfile other) return false;
-            if (Name != other.Name) return false;
-            if (Age != other.Age) return false;
-            if (Sex != other.Sex) return false;
-            if (Gender != other.Gender) return false;
-            if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
-            if (Clothing != other.Clothing) return false;
-            if (Backpack != other.Backpack) return false;
-            if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
-            if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
-            if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false;
+            if (maybeOther is not HumanoidCharacterProfile other)
+                return false;
+            if (Name != other.Name)
+                return false;
+            if (Age != other.Age)
+                return false;
+            if (Sex != other.Sex)
+                return false;
+            if (Gender != other.Gender)
+                return false;
+            if (PreferenceUnavailable != other.PreferenceUnavailable)
+                return false;
+            if (Clothing != other.Clothing)
+                return false;
+            if (Backpack != other.Backpack)
+                return false;
+            if (!_jobPriorities.SequenceEqual(other._jobPriorities))
+                return false;
+            if (!_antagPreferences.SequenceEqual(other._antagPreferences))
+                return false;
+            if (!_traitPreferences.SequenceEqual(other._traitPreferences))
+                return false;
             return Appearance.MemberwiseEquals(other.Appearance);
         }
 

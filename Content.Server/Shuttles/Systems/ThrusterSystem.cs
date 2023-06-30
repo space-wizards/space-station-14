@@ -325,7 +325,8 @@ public sealed class ThrusterSystem : EntitySystem
 
     public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
     {
-        if (!Resolve(uid, ref xform)) return;
+        if (!Resolve(uid, ref xform))
+            return;
         DisableThruster(uid, component, xform.GridUid, xform);
     }
 

@@ -14,7 +14,8 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
-            if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out FlammableComponent? flammable)) return;
+            if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out FlammableComponent? flammable))
+                return;
 
             var flammableSystem = EntitySystem.Get<FlammableSystem>();
             flammableSystem.Extinguish(args.SolutionEntity, flammable);

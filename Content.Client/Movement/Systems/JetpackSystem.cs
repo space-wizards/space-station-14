@@ -43,7 +43,8 @@ public sealed class JetpackSystem : SharedJetpackSystem
     {
         base.Update(frameTime);
 
-        if (!_timing.IsFirstTimePredicted) return;
+        if (!_timing.IsFirstTimePredicted)
+            return;
 
         foreach (var comp in EntityQuery<ActiveJetpackComponent>())
         {

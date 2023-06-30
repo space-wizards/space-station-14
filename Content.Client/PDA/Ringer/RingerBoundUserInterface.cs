@@ -27,7 +27,8 @@ namespace Content.Client.PDA.Ringer
 
             _menu.SetRingerButton.OnPressed += _ =>
             {
-                if (!TryGetRingtone(out var ringtone)) return;
+                if (!TryGetRingtone(out var ringtone))
+                    return;
 
                 SendMessage(new RingerSetRingtoneMessage(ringtone));
             };

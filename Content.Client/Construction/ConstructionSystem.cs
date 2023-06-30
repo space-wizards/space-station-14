@@ -80,7 +80,8 @@ namespace Content.Client.Construction
 
         private void HandleConstructionGhostExamined(EntityUid uid, ConstructionGhostComponent component, ExaminedEvent args)
         {
-            if (component.Prototype == null) return;
+            if (component.Prototype == null)
+                return;
 
             args.PushMarkup(Loc.GetString(
                 "construction-ghost-examine-message",

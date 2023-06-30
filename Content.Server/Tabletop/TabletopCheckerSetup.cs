@@ -53,12 +53,14 @@ namespace Content.Server.Tabletop
           for (int i = 0; i < 3; i++)
             {
             var x_offset = i % 2;
-            if (reversed == -1) x_offset = 1 - x_offset; // Flips it
+            if (reversed == -1)
+                x_offset = 1 - x_offset; // Flips it
 
             for (int j = 0; j < 8; j += 2)
             {
               // Prevents an extra piece on the middle row
-              if (x_offset + j > 8) continue;
+              if (x_offset + j > 8)
+                  continue;
 
               EntityUid tempQualifier4 = entityManager.SpawnEntity(color + "CheckerPiece", new MapCoordinates(x + (j + x_offset) * separation, y + i * reversed * separation, mapId));
               session.Entities.Add(tempQualifier4);

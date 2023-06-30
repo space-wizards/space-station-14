@@ -32,7 +32,8 @@ namespace Content.Server.NodeContainer.Nodes
 
         public void AddAlwaysReachable(PipeNode pipeNode)
         {
-            if (pipeNode.NodeGroupID != NodeGroupID) return;
+            if (pipeNode.NodeGroupID != NodeGroupID)
+                return;
             _alwaysReachable ??= new();
             _alwaysReachable.Add(pipeNode);
 
@@ -42,7 +43,8 @@ namespace Content.Server.NodeContainer.Nodes
 
         public void RemoveAlwaysReachable(PipeNode pipeNode)
         {
-            if (_alwaysReachable == null) return;
+            if (_alwaysReachable == null)
+                return;
 
             _alwaysReachable.Remove(pipeNode);
 

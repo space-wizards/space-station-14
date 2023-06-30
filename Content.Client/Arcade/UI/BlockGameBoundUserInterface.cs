@@ -45,7 +45,8 @@ public sealed class BlockGameBoundUserInterface : BoundUserInterface
                 _menu?.SetUsability(userMessage.IsPlayer);
                 break;
             case BlockGameMessages.BlockGameSetScreenMessage statusMessage:
-                if (statusMessage.IsStarted) _menu?.SetStarted();
+                if (statusMessage.IsStarted)
+                    _menu?.SetStarted();
                 _menu?.SetScreen(statusMessage.Screen);
                 if (statusMessage is BlockGameMessages.BlockGameGameOverScreenMessage gameOverScreenMessage)
                     _menu?.SetGameoverInfo(gameOverScreenMessage.FinalScore, gameOverScreenMessage.LocalPlacement, gameOverScreenMessage.GlobalPlacement);

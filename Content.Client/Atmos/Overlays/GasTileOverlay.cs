@@ -76,7 +76,8 @@ namespace Content.Client.Atmos.Overlays
                         var rsi = resourceCache.GetResource<RSIResource>(animated.RsiPath).RSI;
                         var stateId = animated.RsiState;
 
-                        if (!rsi.TryGetState(stateId, out var state)) continue;
+                        if (!rsi.TryGetState(stateId, out var state))
+                            continue;
 
                         _frames[i] = state.GetFrames(RSI.State.Direction.South);
                         _frameDelays[i] = state.GetDelays();
@@ -108,7 +109,8 @@ namespace Content.Client.Atmos.Overlays
             for (var i = 0; i < _gasCount; i++)
             {
                 var delays = _frameDelays[i];
-                if (delays.Length == 0) continue;
+                if (delays.Length == 0)
+                    continue;
 
                 var frameCount = _frameCounter[i];
                 _timer[i] += args.DeltaSeconds;
@@ -124,13 +126,15 @@ namespace Content.Client.Atmos.Overlays
             for (var i = 0; i < FireStates; i++)
             {
                 var delays = _fireFrameDelays[i];
-                if (delays.Length == 0) continue;
+                if (delays.Length == 0)
+                    continue;
 
                 var frameCount = _fireFrameCounter[i];
                 _fireTimer[i] += args.DeltaSeconds;
                 var time = delays[frameCount];
 
-                if (_fireTimer[i] < time) continue;
+                if (_fireTimer[i] < time)
+                    continue;
                 _fireTimer[i] -= time;
                 _fireFrameCounter[i] = (frameCount + 1) % _fireFrames[i].Length;
             }

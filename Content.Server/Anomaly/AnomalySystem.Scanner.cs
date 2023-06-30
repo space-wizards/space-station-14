@@ -96,7 +96,8 @@ public sealed partial class AnomalySystem
         Popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid);
         UpdateScannerWithNewAnomaly(uid, args.Args.Target.Value, component);
 
-        if (TryComp<ActorComponent>(args.Args.User, out var actor)) _ui.TryOpen(uid, AnomalyScannerUiKey.Key, actor.PlayerSession);
+        if (TryComp<ActorComponent>(args.Args.User, out var actor))
+            _ui.TryOpen(uid, AnomalyScannerUiKey.Key, actor.PlayerSession);
 
         args.Handled = true;
     }

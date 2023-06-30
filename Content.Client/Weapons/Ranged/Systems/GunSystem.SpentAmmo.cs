@@ -14,7 +14,8 @@ public sealed partial class GunSystem
     private void OnSpentAmmoAppearance(EntityUid uid, SpentAmmoVisualsComponent component, ref AppearanceChangeEvent args)
     {
         var sprite = args.Sprite;
-        if (sprite == null) return;
+        if (sprite == null)
+            return;
 
         if (!args.AppearanceData.TryGetValue(AmmoVisuals.Spent, out var varSpent))
         {

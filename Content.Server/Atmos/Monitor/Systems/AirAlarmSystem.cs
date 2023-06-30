@@ -266,7 +266,8 @@ public sealed class AirAlarmSystem : EntitySystem
     private void OnUpdateAlarmMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmModeMessage args)
     {
         var addr = string.Empty;
-        if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn)) addr = netConn.Address;
+        if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
+            addr = netConn.Address;
         if (AccessCheck(uid, args.Session.AttachedEntity, component))
             SetMode(uid, addr, args.Mode, false);
         else

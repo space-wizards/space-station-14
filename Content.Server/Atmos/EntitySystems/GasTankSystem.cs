@@ -120,7 +120,8 @@ namespace Content.Server.Atmos.EntitySystems
 
             _timer += frameTime;
 
-            if (_timer < TimerDelay) return;
+            if (_timer < TimerDelay)
+                return;
             _timer -= TimerDelay;
 
             foreach (var gasTank in EntityManager.EntityQuery<GasTankComponent>())
@@ -234,8 +235,10 @@ namespace Content.Server.Atmos.EntitySystems
         private InternalsComponent? GetInternalsComponent(GasTankComponent component, EntityUid? owner = null)
         {
             owner ??= component.User;
-            if (Deleted(component.Owner)) return null;
-            if (owner != null) return CompOrNull<InternalsComponent>(owner.Value);
+            if (Deleted(component.Owner))
+                return null;
+            if (owner != null)
+                return CompOrNull<InternalsComponent>(owner.Value);
             return _containers.TryGetContainingContainer(component.Owner, out var container)
                 ? CompOrNull<InternalsComponent>(container.Owner)
                 : null;

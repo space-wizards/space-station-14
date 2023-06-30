@@ -110,7 +110,8 @@ namespace Content.IntegrationTests.Tests
                 {
                     await PoolManager.RunTicksSync(pairTracker.Pair, 5);
                 }
-                if (timeout.IsCompleted) throw new TimeoutException("Event took too long to trigger");
+                if (timeout.IsCompleted)
+                    throw new TimeoutException("Event took too long to trigger");
             }
 
             // Need to clean self up

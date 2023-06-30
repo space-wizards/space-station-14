@@ -110,7 +110,8 @@ namespace Content.Shared.Damage
 
             foreach (var entry in newDamage.DamageDict)
             {
-                if (entry.Value <= 0) continue;
+                if (entry.Value <= 0)
+                    continue;
 
                 float newValue = entry.Value.Float();
 

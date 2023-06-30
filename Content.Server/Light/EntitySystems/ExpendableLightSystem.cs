@@ -43,7 +43,8 @@ namespace Content.Server.Light.EntitySystems
 
         private void UpdateLight(ExpendableLightComponent component, float frameTime)
         {
-            if (!component.Activated) return;
+            if (!component.Activated)
+                return;
 
             component.StateExpiryTime -= frameTime;
 
@@ -107,7 +108,8 @@ namespace Content.Server.Light.EntitySystems
 
         private void UpdateVisualizer(ExpendableLightComponent component, AppearanceComponent? appearance = null)
         {
-            if (!Resolve(component.Owner, ref appearance, false)) return;
+            if (!Resolve(component.Owner, ref appearance, false))
+                return;
 
             _appearance.SetData(appearance.Owner, ExpendableLightVisuals.State, component.CurrentState, appearance);
 
@@ -164,7 +166,8 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnExpLightUse(EntityUid uid, ExpendableLightComponent component, UseInHandEvent args)
         {
-            if (args.Handled) return;
+            if (args.Handled)
+                return;
             var isHotEvent = new IsHotEvent() {IsHot = true};
             RaiseLocalEvent(uid, isHotEvent);
             if (TryActivate(component))

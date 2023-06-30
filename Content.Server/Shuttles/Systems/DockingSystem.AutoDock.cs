@@ -110,7 +110,8 @@ public sealed partial class DockingSystem
         var player = args.Session.AttachedEntity;
 
         // TODO: Validation
-        if (player == null || !TryComp<AutoDockComponent>(args.DockEntity, out var comp)) return;
+        if (player == null || !TryComp<AutoDockComponent>(args.DockEntity, out var comp))
+            return;
 
         comp.Requesters.Remove(player.Value);
 

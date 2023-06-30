@@ -124,7 +124,8 @@ namespace Content.Server.Ghost.Roles
 
         public void CloseEui(IPlayerSession session)
         {
-            if (!_openUis.ContainsKey(session)) return;
+            if (!_openUis.ContainsKey(session))
+                return;
 
             _openUis.Remove(session, out var eui);
 
@@ -176,7 +177,8 @@ namespace Content.Server.Ghost.Roles
 
         public void RegisterGhostRole(GhostRoleComponent role)
         {
-            if (_ghostRoles.ContainsValue(role)) return;
+            if (_ghostRoles.ContainsValue(role))
+                return;
             _ghostRoles[role.Identifier = GetNextRoleIdentifier()] = role;
             UpdateAllEui();
 
@@ -184,19 +186,22 @@ namespace Content.Server.Ghost.Roles
 
         public void UnregisterGhostRole(GhostRoleComponent role)
         {
-            if (!_ghostRoles.ContainsKey(role.Identifier) || _ghostRoles[role.Identifier] != role) return;
+            if (!_ghostRoles.ContainsKey(role.Identifier) || _ghostRoles[role.Identifier] != role)
+                return;
             _ghostRoles.Remove(role.Identifier);
             UpdateAllEui();
         }
 
         public void Takeover(IPlayerSession player, uint identifier)
         {
-            if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
+            if (!_ghostRoles.TryGetValue(identifier, out var role))
+                return;
 
             var ev = new TakeGhostRoleEvent(player);
             RaiseLocalEvent(role.Owner, ref ev);
 
-            if (!ev.TookRole) return;
+            if (!ev.TookRole)
+                return;
 
             if (player.AttachedEntity != null)
                 _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
@@ -206,15 +211,18 @@ namespace Content.Server.Ghost.Roles
 
         public void Follow(IPlayerSession player, uint identifier)
         {
-            if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
-            if (player.AttachedEntity == null) return;
+            if (!_ghostRoles.TryGetValue(identifier, out var role))
+                return;
+            if (player.AttachedEntity == null)
+                return;
 
             _followerSystem.StartFollowingEntity(player.AttachedEntity.Value, role.Owner);
         }
 
         public void GhostRoleInternalCreateMindAndTransfer(IPlayerSession player, EntityUid roleUid, EntityUid mob, GhostRoleComponent? role = null)
         {
-            if (!Resolve(roleUid, ref role)) return;
+            if (!Resolve(roleUid, ref role))
+                return;
 
             DebugTools.AssertNotNull(player.ContentData());
 
@@ -247,8 +255,10 @@ namespace Content.Server.Ghost.Roles
         private void OnPlayerAttached(PlayerAttachedEvent message)
         {
             // Close the session of any player that has a ghost roles window open and isn't a ghost anymore.
-            if (!_openUis.ContainsKey(message.Player)) return;
-            if (EntityManager.HasComponent<GhostComponent>(message.Entity)) return;
+            if (!_openUis.ContainsKey(message.Player))
+                return;
+            if (EntityManager.HasComponent<GhostComponent>(message.Entity))
+                return;
             CloseEui(message.Player);
         }
 

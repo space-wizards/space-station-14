@@ -16,17 +16,20 @@ public sealed partial class GunSystem
 
     private void OnRevolverEntRemove(EntityUid uid, RevolverAmmoProviderComponent component, EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != RevolverContainer) return;
+        if (args.Container.ID != RevolverContainer)
+            return;
 
         // See ChamberMagazineAmmoProvider
-        if (!args.Entity.IsClientSide()) return;
+        if (!args.Entity.IsClientSide())
+            return;
 
         QueueDel(args.Entity);
     }
 
     private void OnRevolverAmmoUpdate(EntityUid uid, RevolverAmmoProviderComponent component, UpdateAmmoCounterEvent args)
     {
-        if (args.Control is not RevolverStatusControl control) return;
+        if (args.Control is not RevolverStatusControl control)
+            return;
         control.Update(component.CurrentIndex, component.Chambers);
     }
 

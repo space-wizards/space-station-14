@@ -358,7 +358,8 @@ public sealed class DragDropSystem : SharedDragDropSystem
             // check if it's able to be dropped on by current dragged entity
             var valid = ValidDragDrop(user, _draggedEntity.Value, entity);
 
-            if (valid != true) continue;
+            if (valid != true)
+                continue;
 
             if (!_interactionSystem.InRangeUnobstructed(user, entity)
                 || !_interactionSystem.InRangeUnobstructed(user, _draggedEntity.Value))

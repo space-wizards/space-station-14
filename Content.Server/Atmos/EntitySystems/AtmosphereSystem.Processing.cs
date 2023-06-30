@@ -138,7 +138,8 @@ namespace Content.Server.Atmos.EntitySystems
                         AddActiveTile(atmosphere, otherTile);
                 }
 
-                if (number++ < InvalidCoordinatesLagCheckIterations) continue;
+                if (number++ < InvalidCoordinatesLagCheckIterations)
+                    continue;
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -165,7 +166,8 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 EqualizePressureInZone(mapGridComp, atmosphere, tile, atmosphere.UpdateCounter, visuals);
 
-                if (number++ < LagCheckIterations) continue;
+                if (number++ < LagCheckIterations)
+                    continue;
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -187,7 +189,8 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 ProcessCell(atmosphere, tile, atmosphere.UpdateCounter, visuals);
 
-                if (number++ < LagCheckIterations) continue;
+                if (number++ < LagCheckIterations)
+                    continue;
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -216,7 +219,8 @@ namespace Content.Server.Atmos.EntitySystems
                 else if (excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
                     ExcitedGroupDismantle(gridAtmosphere, excitedGroup);
 
-                if (number++ < LagCheckIterations) continue;
+                if (number++ < LagCheckIterations)
+                    continue;
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -250,7 +254,8 @@ namespace Content.Server.Atmos.EntitySystems
                 tile.PressureSpecificTarget = null;
                 atmosphere.HighPressureDelta.Remove(tile);
 
-                if (number++ < LagCheckIterations) continue;
+                if (number++ < LagCheckIterations)
+                    continue;
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -272,7 +277,8 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 ProcessHotspot(atmosphere, hotspot);
 
-                if (number++ < LagCheckIterations) continue;
+                if (number++ < LagCheckIterations)
+                    continue;
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -294,7 +300,8 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 Superconduct(atmosphere, superconductivity);
 
-                if (number++ < LagCheckIterations) continue;
+                if (number++ < LagCheckIterations)
+                    continue;
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -316,7 +323,8 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 pipenet.Update();
 
-                if (number++ < LagCheckIterations) continue;
+                if (number++ < LagCheckIterations)
+                    continue;
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
@@ -340,7 +348,8 @@ namespace Content.Server.Atmos.EntitySystems
                 RaiseLocalEvent(device.Owner, _updateEvent, false);
                 device.LastProcess = time;
 
-                if (number++ < LagCheckIterations) continue;
+                if (number++ < LagCheckIterations)
+                    continue;
                 number = 0;
                 // Process the rest next time.
                 if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)

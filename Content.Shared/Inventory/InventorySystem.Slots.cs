@@ -52,7 +52,8 @@ public partial class InventorySystem : EntitySystem
             return false;
         }
 
-        if (container is not ContainerSlot containerSlotChecked) return false;
+        if (container is not ContainerSlot containerSlotChecked)
+            return false;
 
         containerSlot = containerSlotChecked;
         return true;
@@ -72,7 +73,8 @@ public partial class InventorySystem : EntitySystem
 
         foreach (var slotDef in templatePrototype.Slots)
         {
-            if (!slotDef.Name.Equals(slot)) continue;
+            if (!slotDef.Name.Equals(slot))
+                continue;
             slotDefinition = slotDef;
             return true;
         }
@@ -105,7 +107,8 @@ public partial class InventorySystem : EntitySystem
 
     public SlotDefinition[] GetSlots(EntityUid uid, InventoryComponent? inventoryComponent = null)
     {
-        if (!Resolve(uid, ref inventoryComponent)) throw new InvalidOperationException();
+        if (!Resolve(uid, ref inventoryComponent))
+            throw new InvalidOperationException();
         return _prototypeManager.Index<InventoryTemplatePrototype>(inventoryComponent.TemplateId).Slots;
     }
 

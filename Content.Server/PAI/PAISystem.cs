@@ -114,7 +114,8 @@ namespace Content.Server.PAI
             }
 
             //  Stop instrument
-            if (EntityManager.TryGetComponent<InstrumentComponent>(uid, out var instrument)) _instrumentSystem.Clean(uid, instrument);
+            if (EntityManager.TryGetComponent<InstrumentComponent>(uid, out var instrument))
+                _instrumentSystem.Clean(uid, instrument);
             if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metadata))
             {
                 var proto = metadata.EntityPrototype;

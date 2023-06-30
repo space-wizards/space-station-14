@@ -59,7 +59,8 @@ namespace Content.Server.PDA.Ringer
         private void OnSetRingtone(EntityUid uid, RingerComponent ringer, RingerSetRingtoneMessage args)
         {
             // Client sent us an updated ringtone so set it to that.
-            if (args.Ringtone.Length != RingtoneLength) return;
+            if (args.Ringtone.Length != RingtoneLength)
+                return;
 
             var ev = new BeforeRingtoneSetEvent(args.Ringtone);
             RaiseLocalEvent(uid, ref ev);

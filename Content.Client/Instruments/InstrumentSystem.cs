@@ -323,7 +323,8 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
                 instrument.SentWithinASec = 0;
             }
 
-            if (instrument.MidiEventBuffer.Count == 0) continue;
+            if (instrument.MidiEventBuffer.Count == 0)
+                continue;
 
             var max = instrument.RespectMidiLimits ?
                 Math.Min(MaxMidiEventsPerBatch, MaxMidiEventsPerSecond - instrument.SentWithinASec)

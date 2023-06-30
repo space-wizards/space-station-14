@@ -212,7 +212,8 @@ namespace Content.Server.DeviceNetwork.Systems
             if (!Resolve(uid, ref device, false))
                 return;
 
-            if (device.ReceiveFrequency == frequency) return;
+            if (device.ReceiveFrequency == frequency)
+                return;
 
             var deviceNet = GetNetwork(device.DeviceNetId);
             deviceNet.Remove(device);
@@ -231,7 +232,8 @@ namespace Content.Server.DeviceNetwork.Systems
             if (!Resolve(uid, ref device, false))
                 return;
 
-            if (device.ReceiveAll == receiveAll) return;
+            if (device.ReceiveAll == receiveAll)
+                return;
 
             var deviceNet = GetNetwork(device.DeviceNetId);
             deviceNet.Remove(device);
@@ -244,7 +246,8 @@ namespace Content.Server.DeviceNetwork.Systems
             if (!Resolve(uid, ref device, false))
                 return;
 
-            if (device.Address == address && device.CustomAddress) return;
+            if (device.Address == address && device.CustomAddress)
+                return;
 
             var deviceNet = GetNetwork(device.DeviceNetId);
             deviceNet.Remove(device);

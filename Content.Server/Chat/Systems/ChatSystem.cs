@@ -82,7 +82,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private void OnLoocEnabledChanged(bool val)
     {
-        if (_loocEnabled == val) return;
+        if (_loocEnabled == val)
+            return;
 
         _loocEnabled = val;
         _chatManager.DispatchServerAnnouncement(
@@ -91,7 +92,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private void OnDeadLoocEnabledChanged(bool val)
     {
-        if (_deadLoocEnabled == val) return;
+        if (_deadLoocEnabled == val)
+            return;
 
         _deadLoocEnabled = val;
         _chatManager.DispatchServerAnnouncement(
@@ -277,7 +279,8 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
         }
 
-        if (!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
+        if (!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp))
+            return;
 
         var filter = _stationSystem.GetInStation(stationDataComp);
 
@@ -422,7 +425,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private void SendEntityEmote(EntityUid source, string action, ChatTransmitRange range, string? nameOverride, bool hideLog = false, bool checkEmote = true)
     {
-        if (!_actionBlocker.CanEmote(source)) return;
+        if (!_actionBlocker.CanEmote(source))
+            return;
 
         // get the entity's apparent name (if no override provided).
         string name = FormattedMessage.EscapeText(nameOverride ?? Identity.Name(source, EntityManager));
@@ -449,9 +453,11 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (_adminManager.IsAdmin(player))
         {
-            if (!_adminLoocEnabled) return;
+            if (!_adminLoocEnabled)
+                return;
         }
-        else if (!_loocEnabled) return;
+        else if (!_loocEnabled)
+            return;
         var wrappedMessage = Loc.GetString("chat-manager-entity-looc-wrap-message",
             ("entityName", name),
             ("message", FormattedMessage.EscapeText(message)));

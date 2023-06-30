@@ -46,7 +46,8 @@ namespace Content.Shared.Whitelist
 
         public void UpdateRegistrations()
         {
-            if (Components == null) return;
+            if (Components == null)
+                return;
 
             var compfact = IoCManager.Resolve<IComponentFactory>();
             _registrations = new List<ComponentRegistration>();

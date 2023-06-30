@@ -58,8 +58,10 @@ namespace Content.Client.Examine
 
         public override void Update(float frameTime)
         {
-            if (_examineTooltipOpen is not {Visible: true}) return;
-            if (!_examinedEntity.Valid || !_playerEntity.Valid) return;
+            if (_examineTooltipOpen is not {Visible: true})
+                return;
+            if (!_examinedEntity.Valid || !_playerEntity.Valid)
+                return;
 
             if (!CanExamine(_playerEntity, _examinedEntity))
                 CloseTooltip();

@@ -15,7 +15,8 @@ namespace Content.Client.Administration.Systems
         {
             get
             {
-                if (_playerList != null) return _playerList.Values.ToList();
+                if (_playerList != null)
+                    return _playerList.Values.ToList();
 
                 return new List<PlayerInfo>();
             }
@@ -38,9 +39,11 @@ namespace Content.Client.Administration.Systems
 
         private void OnPlayerInfoChanged(PlayerInfoChangedEvent ev)
         {
-            if (ev.PlayerInfo == null) return;
+            if (ev.PlayerInfo == null)
+                return;
 
-            if (_playerList == null) _playerList = new();
+            if (_playerList == null)
+                _playerList = new();
 
             _playerList[ev.PlayerInfo.SessionId] = ev.PlayerInfo;
             PlayerListChanged?.Invoke(_playerList.Values.ToList());

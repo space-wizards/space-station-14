@@ -188,7 +188,8 @@ namespace Content.Server.Administration.Systems
                         Category = VerbCategory.Admin,
                         Act = () =>
                         {
-                            if (!TryComp<ActorComponent>(args.Target, out var actor)) return;
+                            if (!TryComp<ActorComponent>(args.Target, out var actor))
+                                return;
 
                             _console.ExecuteCommand(player, $"respawn {actor.PlayerSession.Name}");
                         },
@@ -247,11 +248,11 @@ namespace Content.Server.Administration.Systems
                     Act = () =>
                     {
                         MakeSentientCommand.MakeSentient(args.Target, EntityManager);
-                        
+
                         var mind = player.ContentData()?.Mind;
                         if (mind == null)
                             return;
-                        
+
                         _mindSystem.TransferTo(mind, args.Target, ghostCheckOverride: true);
                     },
                     Impact = LogImpact.High,

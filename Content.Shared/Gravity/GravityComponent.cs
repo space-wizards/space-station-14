@@ -17,7 +17,8 @@ namespace Content.Shared.Gravity
             get => Enabled;
             set
             {
-                if (Enabled == value) return;
+                if (Enabled == value)
+                    return;
                 Enabled = value;
                 var ev = new GravityChangedEvent(Owner, value);
                 IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ref ev);

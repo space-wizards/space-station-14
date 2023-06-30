@@ -88,7 +88,8 @@ public sealed class AtmosMonitorSystem : EntitySystem
 
     private void BeforePacketRecv(EntityUid uid, AtmosMonitorComponent component, BeforePacketSentEvent args)
     {
-        if (!component.NetEnabled) args.Cancel();
+        if (!component.NetEnabled)
+            args.Cancel();
     }
 
     private void OnPacketRecv(EntityUid uid, AtmosMonitorComponent component, DeviceNetworkPacketEvent args)
@@ -225,9 +226,11 @@ public sealed class AtmosMonitorSystem : EntitySystem
     // of the monitor, it is set in the Alert call.
     private void UpdateState(EntityUid uid, GasMixture? air, AtmosMonitorComponent? monitor = null)
     {
-        if (air == null) return;
+        if (air == null)
+            return;
 
-        if (!Resolve(uid, ref monitor)) return;
+        if (!Resolve(uid, ref monitor))
+            return;
 
         var state = AtmosAlarmType.Normal;
         HashSet<AtmosMonitorThresholdType> alarmTypes = new(monitor.TrippedThresholds);
@@ -300,7 +303,8 @@ public sealed class AtmosMonitorSystem : EntitySystem
     /// <param name="alarms">The alarms that caused this alarm state.</param>
     public void Alert(EntityUid uid, AtmosAlarmType state, HashSet<AtmosMonitorThresholdType>? alarms = null, AtmosMonitorComponent? monitor = null)
     {
-        if (!Resolve(uid, ref monitor)) return;
+        if (!Resolve(uid, ref monitor))
+            return;
 
         monitor.LastAlarmState = state;
         monitor.TrippedThresholds = alarms ?? monitor.TrippedThresholds;
@@ -333,7 +337,8 @@ public sealed class AtmosMonitorSystem : EntitySystem
     /// </remarks>
     private void BroadcastAlertPacket(AtmosMonitorComponent monitor, TagComponent? tags = null)
     {
-        if (!monitor.NetEnabled) return;
+        if (!monitor.NetEnabled)
+            return;
 
         if (!Resolve(monitor.Owner, ref tags, false))
         {
@@ -362,7 +367,8 @@ public sealed class AtmosMonitorSystem : EntitySystem
     /// <param name="gas">Gas, if applicable.</param>
     public void SetThreshold(EntityUid uid, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null, AtmosMonitorComponent? monitor = null)
     {
-        if (!Resolve(uid, ref monitor)) return;
+        if (!Resolve(uid, ref monitor))
+            return;
 
         switch (type)
         {
@@ -373,7 +379,8 @@ public sealed class AtmosMonitorSystem : EntitySystem
                 monitor.TemperatureThreshold = threshold;
                 break;
             case AtmosMonitorThresholdType.Gas:
-                if (gas == null || monitor.GasThresholds == null) return;
+                if (gas == null || monitor.GasThresholds == null)
+                    return;
                 monitor.GasThresholds[(Gas) gas] = threshold;
                 break;
         }

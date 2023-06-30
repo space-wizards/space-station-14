@@ -18,7 +18,8 @@ namespace Content.Client.Disposal.Components
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (curState is not DisposalUnitComponentState state) return;
+            if (curState is not DisposalUnitComponentState state)
+                return;
 
             RecentlyEjected = state.RecentlyEjected;
         }

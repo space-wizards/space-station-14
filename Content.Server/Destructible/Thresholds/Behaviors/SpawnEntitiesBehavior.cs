@@ -36,7 +36,8 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     ? minMax.Min
                     : system.Random.Next(minMax.Min, minMax.Max + 1);
 
-                if (count == 0) continue;
+                if (count == 0)
+                    continue;
 
                 if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
                 {

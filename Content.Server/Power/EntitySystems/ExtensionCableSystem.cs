@@ -52,7 +52,8 @@ namespace Content.Server.Power.EntitySystems
             // If grid deleting no need to update power.
             if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
-                if (MetaData(grid.Owner).EntityLifeStage > EntityLifeStage.MapInitialized) return;
+                if (MetaData(grid.Owner).EntityLifeStage > EntityLifeStage.MapInitialized)
+                    return;
             }
 
             Disconnect(uid, provider);
@@ -129,7 +130,8 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var entity in nearbyEntities)
             {
-                if (entity == owner) continue;
+                if (entity == owner)
+                    continue;
 
                 if (EntityManager.IsQueuedForDeletion(entity) || MetaData(entity).EntityLifeStage > EntityLifeStage.MapInitialized)
                     continue;
@@ -228,9 +230,11 @@ namespace Content.Server.Power.EntitySystems
 
         private void TryFindAndSetProvider(ExtensionCableReceiverComponent receiver, TransformComponent? xform = null)
         {
-            if (!receiver.Connectable) return;
+            if (!receiver.Connectable)
+                return;
 
-            if (!TryFindAvailableProvider(receiver.Owner, receiver.ReceptionRange, out var provider, xform)) return;
+            if (!TryFindAvailableProvider(receiver.Owner, receiver.ReceptionRange, out var provider, xform))
+                return;
 
             receiver.Provider = provider;
             provider.LinkedReceivers.Add(receiver);

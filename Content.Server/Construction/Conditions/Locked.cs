@@ -25,7 +25,8 @@ namespace Content.Server.Construction.Conditions
             var entMan = IoCManager.Resolve<IEntityManager>();
             var entity = args.Examined;
 
-            if (!entMan.TryGetComponent(entity, out LockComponent? lockcomp)) return false;
+            if (!entMan.TryGetComponent(entity, out LockComponent? lockcomp))
+                return false;
 
             switch (IsLocked)
             {

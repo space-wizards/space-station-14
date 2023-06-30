@@ -111,11 +111,14 @@ namespace Content.Server.RoundEnd
 
         public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true, bool autoCall = false)
         {
-            if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
+            if (_gameTicker.RunLevel != GameRunLevel.InRound)
+                return;
 
-            if (checkCooldown && _cooldownTokenSource != null) return;
+            if (checkCooldown && _cooldownTokenSource != null)
+                return;
 
-            if (_countdownTokenSource != null) return;
+            if (_countdownTokenSource != null)
+                return;
             _countdownTokenSource = new();
 
             if (requester != null)
@@ -175,10 +178,13 @@ namespace Content.Server.RoundEnd
 
         public void CancelRoundEndCountdown(EntityUid? requester = null, bool checkCooldown = true)
         {
-            if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
-            if (checkCooldown && _cooldownTokenSource != null) return;
+            if (_gameTicker.RunLevel != GameRunLevel.InRound)
+                return;
+            if (checkCooldown && _cooldownTokenSource != null)
+                return;
 
-            if (_countdownTokenSource == null) return;
+            if (_countdownTokenSource == null)
+                return;
             _countdownTokenSource.Cancel();
             _countdownTokenSource = null;
 
@@ -204,7 +210,8 @@ namespace Content.Server.RoundEnd
 
         public void EndRound()
         {
-            if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
+            if (_gameTicker.RunLevel != GameRunLevel.InRound)
+                return;
             LastCountdownStart = null;
             ExpectedCountdownEnd = null;
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
@@ -217,7 +224,8 @@ namespace Content.Server.RoundEnd
 
         private void AfterEndRoundRestart()
         {
-            if (_gameTicker.RunLevel != GameRunLevel.PostRound) return;
+            if (_gameTicker.RunLevel != GameRunLevel.PostRound)
+                return;
             Reset();
             _gameTicker.RestartRound();
         }

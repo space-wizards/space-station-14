@@ -75,7 +75,8 @@ namespace Content.Server.Sandbox.Commands
         {
             var group = nodeContainerComponent.Nodes[nodeGroupId.ToString().ToLower()].NodeGroup;
 
-            if (group == null) return;
+            if (group == null)
+                return;
 
             foreach (var x in group.Nodes)
             {

@@ -44,7 +44,8 @@ namespace Content.Shared.Shuttles.Systems
             if (component.LifeStage > ComponentLifeStage.Running)
                 return;
 
-            if (component.Console == null) return;
+            if (component.Console == null)
+                return;
             args.Cancel();
         }
     }

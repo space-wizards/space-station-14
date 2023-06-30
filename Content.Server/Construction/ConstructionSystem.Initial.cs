@@ -63,7 +63,8 @@ namespace Content.Server.Construction
             {
                 while (containerSlotEnumerator.MoveNext(out var containerSlot))
                 {
-                    if (!containerSlot.ContainedEntity.HasValue) continue;
+                    if (!containerSlot.ContainedEntity.HasValue)
+                        continue;
                     if (EntityManager.TryGetComponent(containerSlot.ContainedEntity.Value, out ServerStorageComponent? storage))
                     {
                         foreach (var storedEntity in storage.StoredEntities!)

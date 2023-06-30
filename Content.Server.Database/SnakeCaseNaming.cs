@@ -103,7 +103,8 @@ namespace Content.Server.Database
             return regex.Replace(
                 name,
                 (Match match) => {
-                    if (match.Index == 0 && (match.Value == "FK" || match.Value == "PK" ||  match.Value == "IX")) {
+                    if (match.Index == 0 && (match.Value == "FK" || match.Value == "PK" ||  match.Value == "IX"))
+                        {
                         return match.Value;
                     }
                     if (match.Value == "HWI")

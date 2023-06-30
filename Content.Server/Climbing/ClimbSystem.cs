@@ -393,7 +393,8 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         var velocity = (to - from).Length;
 
-        if (velocity <= 0.0f) return;
+        if (velocity <= 0.0f)
+            return;
 
         // Since there are bodies with different masses:
         // mass * 10 seems enough to move entity

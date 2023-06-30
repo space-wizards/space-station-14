@@ -26,7 +26,8 @@ namespace Content.Server.Construction.Conditions
 
             var entMan = IoCManager.Resolve<IEntityManager>();
 
-            if (!entMan.TryGetComponent(entity, out DoorBoltComponent? airlock)) return false;
+            if (!entMan.TryGetComponent(entity, out DoorBoltComponent? airlock))
+                return false;
 
             if (airlock.BoltsDown != Value)
             {

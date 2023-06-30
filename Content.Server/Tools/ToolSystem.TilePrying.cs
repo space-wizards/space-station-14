@@ -27,7 +27,8 @@ public sealed partial class ToolSystem
 
     private void OnTilePryingAfterInteract(EntityUid uid, TilePryingComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach || (args.Target != null && !HasComp<PuddleComponent>(args.Target))) return;
+        if (args.Handled || !args.CanReach || (args.Target != null && !HasComp<PuddleComponent>(args.Target)))
+            return;
 
         if (TryPryTile(uid, args.User, component, args.ClickLocation))
             args.Handled = true;

@@ -50,7 +50,8 @@ namespace Content.Shared.Administration
 
             buffer.Write(Admin != null);
 
-            if (Admin == null) return;
+            if (Admin == null)
+                return;
 
             buffer.Write(Admin.Active);
             buffer.WritePadBits();

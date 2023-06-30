@@ -38,7 +38,8 @@ public sealed class SlipperySystem : EntitySystem
 
     private void OnSlipperyHandleState(EntityUid uid, SlipperyComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not SlipperyComponentState state) return;
+        if (args.Current is not SlipperyComponentState state)
+            return;
 
         component.ParalyzeTime = state.ParalyzeTime;
         component.LaunchForwardsMultiplier = state.LaunchForwardsMultiplier;

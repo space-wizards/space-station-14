@@ -44,7 +44,8 @@ namespace Content.Server.Atmos.EntitySystems
             // If the grid is deleting no point updating atmos.
             if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
-                if (MetaData(grid.Owner).EntityLifeStage > EntityLifeStage.MapInitialized) return;
+                if (MetaData(grid.Owner).EntityLifeStage > EntityLifeStage.MapInitialized)
+                    return;
             }
 
             SetAirblocked(uid, airtight, false, xform);
@@ -99,7 +100,8 @@ namespace Content.Server.Atmos.EntitySystems
             if (airtight.AirBlocked == airblocked)
                 return;
 
-            if (!Resolve(airtight.Owner, ref xform)) return;
+            if (!Resolve(airtight.Owner, ref xform))
+                return;
 
             airtight.AirBlocked = airblocked;
             UpdatePosition(airtight, xform);
@@ -109,7 +111,8 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void UpdatePosition(AirtightComponent airtight, TransformComponent? xform = null)
         {
-            if (!Resolve(airtight.Owner, ref xform)) return;
+            if (!Resolve(airtight.Owner, ref xform))
+                return;
 
             if (!xform.Anchored || !_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 return;
@@ -142,7 +145,8 @@ namespace Content.Server.Atmos.EntitySystems
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
-                if (!myDirection.IsFlagSet(direction)) continue;
+                if (!myDirection.IsFlagSet(direction))
+                    continue;
                 var angle = direction.ToAngle();
                 angle += myAngle;
                 newAirBlockedDirs |= angle.ToAtmosDirectionCardinal();

@@ -451,7 +451,8 @@ public sealed partial class ShuttleSystem
 
         foreach (var child in toKnock)
         {
-            if (!statusQuery.TryGetComponent(child, out var status)) continue;
+            if (!statusQuery.TryGetComponent(child, out var status))
+                continue;
             _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
         }
     }

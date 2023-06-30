@@ -21,7 +21,8 @@ namespace Content.Server.Shuttles.Components
             [Obsolete("Use the system method")]
             set
             {
-                if (_enabled == value) return;
+                if (_enabled == value)
+                    return;
                 _enabled = value;
 
                 var system = EntitySystem.Get<ThrusterSystem>();

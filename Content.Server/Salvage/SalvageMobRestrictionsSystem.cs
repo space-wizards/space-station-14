@@ -53,8 +53,10 @@ public sealed class SalvageMobRestrictionsSystem : EntitySystem
         var damageQuery = GetEntityQuery<DamageableComponent>();
         foreach (var target in component.MobsToKill)
         {
-            if (Deleted(target, metaQuery)) continue;
-            if (_mobStateSystem.IsDead(target)) continue; // DONT WASTE BIOMASS
+            if (Deleted(target, metaQuery))
+                continue;
+            if (_mobStateSystem.IsDead(target))
+                continue; // DONT WASTE BIOMASS
             if (bodyQuery.TryGetComponent(target, out var body))
             {
                 // Just because.

@@ -164,7 +164,8 @@ namespace Content.Server.Light.EntitySystems
                     continue;
                 }
 
-                if (Paused(uid)) continue;
+                if (Paused(uid))
+                    continue;
                 TryUpdate(uid, handheld, frameTime);
             }
 

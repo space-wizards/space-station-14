@@ -50,8 +50,10 @@ namespace Content.Client.Chemistry.UI
         /// <param name="inventory">Reagents which can be dispensed by this dispenser</param>
         public void UpdateReagentsList(List<string> inventory)
         {
-            if (ChemicalList == null) return;
-            if (inventory == null) return;
+            if (ChemicalList == null)
+                return;
+            if (inventory == null)
+                return;
 
             ChemicalList.Children.Clear();
 
@@ -162,7 +164,8 @@ namespace Content.Client.Chemistry.UI
                 };
 
                 // Check if the reagent is being moused over. If so, color it green.
-                if (reagent.Id == highlightedReagentId) {
+                if (reagent.Id == highlightedReagentId)
+                    {
                     nameLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
                     quantityLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
                 }

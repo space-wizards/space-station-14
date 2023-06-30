@@ -70,7 +70,8 @@ namespace Content.Server.Bed
 
                 bedComponent.NextHealTime += TimeSpan.FromSeconds(bedComponent.HealTime);
 
-                if (strapComponent.BuckledEntities.Count == 0) continue;
+                if (strapComponent.BuckledEntities.Count == 0)
+                    continue;
 
                 foreach (var healedEntity in strapComponent.BuckledEntities)
                 {

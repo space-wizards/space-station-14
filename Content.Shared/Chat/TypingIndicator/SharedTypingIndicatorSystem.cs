@@ -12,7 +12,7 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
     ///     Default ID of <see cref="TypingIndicatorPrototype"/>
     /// </summary>
     public const string InitialIndicatorId = "default";
-    
+
     public override void Initialize()
     {
         base.Initialize();
@@ -25,9 +25,10 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
         if (!TryComp<ClothingComponent>(uid, out var clothing) ||
             !TryComp<TypingIndicatorComponent>(args.Equipee, out var indicator))
             return;
-        
+
         var isCorrectSlot = clothing.Slots.HasFlag(args.SlotFlags);
-        if (!isCorrectSlot) return;
+        if (!isCorrectSlot)
+            return;
 
         indicator.Prototype = component.Prototype;
     }

@@ -436,7 +436,8 @@ namespace Content.Server.Decals
                 // Get individual stale chunks.
                 foreach (var chunk in oldIndices)
                 {
-                    if (chunks.Contains(chunk)) continue;
+                    if (chunks.Contains(chunk))
+                        continue;
                     elmo.Add(chunk);
                 }
 

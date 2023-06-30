@@ -237,14 +237,22 @@ namespace Content.Shared.Humanoid
 
         public bool MemberwiseEquals(ICharacterAppearance maybeOther)
         {
-            if (maybeOther is not HumanoidCharacterAppearance other) return false;
-            if (HairStyleId != other.HairStyleId) return false;
-            if (!HairColor.Equals(other.HairColor)) return false;
-            if (FacialHairStyleId != other.FacialHairStyleId) return false;
-            if (!FacialHairColor.Equals(other.FacialHairColor)) return false;
-            if (!EyeColor.Equals(other.EyeColor)) return false;
-            if (!SkinColor.Equals(other.SkinColor)) return false;
-            if (!Markings.SequenceEqual(other.Markings)) return false;
+            if (maybeOther is not HumanoidCharacterAppearance other)
+                return false;
+            if (HairStyleId != other.HairStyleId)
+                return false;
+            if (!HairColor.Equals(other.HairColor))
+                return false;
+            if (FacialHairStyleId != other.FacialHairStyleId)
+                return false;
+            if (!FacialHairColor.Equals(other.FacialHairColor))
+                return false;
+            if (!EyeColor.Equals(other.EyeColor))
+                return false;
+            if (!SkinColor.Equals(other.SkinColor))
+                return false;
+            if (!Markings.SequenceEqual(other.Markings))
+                return false;
             return true;
         }
     }

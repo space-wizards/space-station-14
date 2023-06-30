@@ -38,7 +38,8 @@ namespace Content.Server.Construction.Conditions
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (string.IsNullOrEmpty(Component)) return false;
+            if (string.IsNullOrEmpty(Component))
+                return false;
 
             var type = IoCManager.Resolve<IComponentFactory>().GetRegistration(Component).Type;
 

@@ -74,8 +74,10 @@ namespace Content.Shared.Alert
         public int Compare(AlertPrototype? x, AlertPrototype? y)
         {
             if ((x == null) && (y == null)) return 0;
-            if (x == null) return 1;
-            if (y == null) return -1;
+            if (x == null)
+                return 1;
+            if (y == null)
+                return -1;
             var idx = GetOrderIndex(x);
             var idy = GetOrderIndex(y);
             if (idx == -1 && idy == -1)
@@ -85,8 +87,10 @@ namespace Content.Shared.Alert
                 return (int)x.AlertType - (int)y.AlertType;
             }
 
-            if (idx == -1) return 1;
-            if (idy == -1) return -1;
+            if (idx == -1)
+                return 1;
+            if (idy == -1)
+                return -1;
             var result = idx - idy;
             // not strictly necessary (we don't care about ones that go at the same index)
             // but it makes the sort stable

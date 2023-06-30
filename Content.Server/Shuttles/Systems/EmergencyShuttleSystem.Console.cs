@@ -235,7 +235,8 @@ public sealed partial class EmergencyShuttleSystem
     private void OnEmergencyRepealAll(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleRepealAllMessage args)
     {
         var player = args.Session.AttachedEntity;
-        if (player == null) return;
+        if (player == null)
+            return;
 
         if (!_reader.FindAccessTags(player.Value).Contains(EmergencyRepealAllAccess))
         {
@@ -255,7 +256,8 @@ public sealed partial class EmergencyShuttleSystem
     private void OnEmergencyRepeal(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleRepealMessage args)
     {
         var player = args.Session.AttachedEntity;
-        if (player == null) return;
+        if (player == null)
+            return;
 
         if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard.Owner, uid))
         {
@@ -264,7 +266,8 @@ public sealed partial class EmergencyShuttleSystem
         }
 
         // TODO: This is fucking bad
-        if (!component.AuthorizedEntities.Remove(MetaData(idCard.Owner).EntityName)) return;
+        if (!component.AuthorizedEntities.Remove(MetaData(idCard.Owner).EntityName))
+            return;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL by {args.Session:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
@@ -276,7 +279,8 @@ public sealed partial class EmergencyShuttleSystem
     private void OnEmergencyAuthorize(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleAuthorizeMessage args)
     {
         var player = args.Session.AttachedEntity;
-        if (player == null) return;
+        if (player == null)
+            return;
 
         if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard.Owner, uid))
         {
@@ -285,7 +289,8 @@ public sealed partial class EmergencyShuttleSystem
         }
 
         // TODO: This is fucking bad
-        if (!component.AuthorizedEntities.Add(MetaData(idCard.Owner).EntityName)) return;
+        if (!component.AuthorizedEntities.Add(MetaData(idCard.Owner).EntityName))
+            return;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch AUTH by {args.Session:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
@@ -354,7 +359,8 @@ public sealed partial class EmergencyShuttleSystem
     /// </summary>
     public bool EarlyLaunch()
     {
-        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= _authorizeTime) return false;
+        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= _authorizeTime)
+            return false;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
         _consoleAccumulator = _authorizeTime;
@@ -367,7 +373,8 @@ public sealed partial class EmergencyShuttleSystem
 
     private void AnnounceLaunch()
     {
-        if (_announced) return;
+        if (_announced)
+            return;
 
         _announced = true;
         _chatSystem.DispatchGlobalAnnouncement(

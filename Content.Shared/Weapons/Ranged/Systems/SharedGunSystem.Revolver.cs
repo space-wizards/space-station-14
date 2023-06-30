@@ -261,7 +261,8 @@ public partial class SharedGunSystem
 
             if (slot == null)
             {
-                if (chamber == null) continue;
+                if (chamber == null)
+                    continue;
 
                 // Too lazy to make a new method don't sue me.
                 if (!_netManager.IsClient)

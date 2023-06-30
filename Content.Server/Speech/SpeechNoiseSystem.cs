@@ -24,13 +24,15 @@ namespace Content.Server.Speech
 
         private void OnEntitySpoke(EntityUid uid, SpeechComponent component, EntitySpokeEvent args)
         {
-            if (component.SpeechSounds == null) return;
+            if (component.SpeechSounds == null)
+                return;
 
             var currentTime = _gameTiming.CurTime;
             var cooldown = TimeSpan.FromSeconds(component.SoundCooldownTime);
 
             // Ensure more than the cooldown time has passed since last speaking
-            if (currentTime - component.LastTimeSoundPlayed < cooldown) return;
+            if (currentTime - component.LastTimeSoundPlayed < cooldown)
+                return;
 
             // Play speech sound
             string contextSound;
@@ -55,7 +57,8 @@ namespace Content.Server.Speech
             int uppercaseCount = 0;
             for (int i = 0; i < message.Length; i++)
             {
-                if (char.IsUpper(message[i])) uppercaseCount++;
+                if (char.IsUpper(message[i]))
+                    uppercaseCount++;
             }
             if (uppercaseCount > (message.Length / 2))
             {

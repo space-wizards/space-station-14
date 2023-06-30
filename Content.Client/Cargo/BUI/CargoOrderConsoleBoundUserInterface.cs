@@ -101,7 +101,8 @@ namespace Content.Client.Cargo.BUI
 
         private void Populate(List<CargoOrderData> orders)
         {
-            if (_menu == null) return;
+            if (_menu == null)
+                return;
 
             _menu.PopulateProducts();
             _menu.PopulateCategories();
@@ -130,7 +131,8 @@ namespace Content.Client.Cargo.BUI
         {
             base.Dispose(disposing);
 
-            if (!disposing) return;
+            if (!disposing)
+                return;
 
             _menu?.Dispose();
             _orderMenu?.Dispose();

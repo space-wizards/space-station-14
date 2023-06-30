@@ -85,7 +85,8 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        if (!disposing) return;
+        if (!disposing)
+            return;
 
         _listMenu?.Dispose();
         _configurationMenu?.Dispose();

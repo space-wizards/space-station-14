@@ -102,7 +102,8 @@ namespace Content.Server.Sandbox
                 return;
 
             var player = _playerManager.GetSessionByChannel(args.SenderSession.ConnectedClient);
-            if (player.AttachedEntity == null) return;
+            if (player.AttachedEntity == null)
+                return;
 
             _ticker.Respawn(player);
         }

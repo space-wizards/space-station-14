@@ -162,7 +162,8 @@ namespace Content.Benchmarks
 				var bytesReadLeft = Math.Min(buf.Length, bytesLeft);
 				var writeSlice = buf.Slice(writeBufStart, bytesReadLeft - writeBufStart);
 				var bytesInBuffer = stream.Read(writeSlice);
-				if (bytesInBuffer == 0) throw new EndOfStreamException();
+				if (bytesInBuffer == 0)
+				    throw new EndOfStreamException();
 
 				var readFromStream = bytesInBuffer + writeBufStart;
 				var final = readFromStream == bytesLeft;

@@ -46,7 +46,8 @@ namespace Content.Shared.Research.Prototypes
         {
             get
             {
-                if (_name.Trim().Length != 0) return _name;
+                if (_name.Trim().Length != 0)
+                    return _name;
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
                 protoMan.TryIndex(Result, out EntityPrototype? prototype);
                 if (prototype?.Name != null)
@@ -63,7 +64,8 @@ namespace Content.Shared.Research.Prototypes
         {
             get
             {
-                if (_description.Trim().Length != 0) return _description;
+                if (_description.Trim().Length != 0)
+                    return _description;
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
                 protoMan.TryIndex(Result, out EntityPrototype? prototype);
                 if (prototype?.Description != null)

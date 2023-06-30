@@ -63,7 +63,8 @@ namespace Content.IntegrationTests.Tests.Construction
                 {
                     foreach (var action in node.Actions)
                     {
-                        if (IsValid(action, protoMan, out var prototype)) continue;
+                        if (IsValid(action, protoMan, out var prototype))
+                            continue;
 
                         valid = false;
                         message.Append($"Invalid entity prototype \"{prototype}\" on graph action in node \"{node.Name}\" of graph \"{graph.ID}\"\n");
@@ -73,7 +74,8 @@ namespace Content.IntegrationTests.Tests.Construction
                     {
                         foreach (var action in edge.Completed)
                         {
-                            if (IsValid(action, protoMan, out var prototype)) continue;
+                            if (IsValid(action, protoMan, out var prototype))
+                                continue;
 
                             valid = false;
                             message.Append($"Invalid entity prototype \"{prototype}\" on graph action in edge \"{edge.Target}\" of node \"{node.Name}\" of graph \"{graph.ID}\"\n");
@@ -129,7 +131,8 @@ namespace Content.IntegrationTests.Tests.Construction
                 {
                     foreach (var edge in node.Edges)
                     {
-                        if (graph.Nodes.ContainsKey(edge.Target)) continue;
+                        if (graph.Nodes.ContainsKey(edge.Target))
+                            continue;
 
                         valid = false;
                         message.Append($"Invalid target \"{edge.Target}\" in edge on node \"{node.Name}\" of graph \"{graph.ID}\"\n");

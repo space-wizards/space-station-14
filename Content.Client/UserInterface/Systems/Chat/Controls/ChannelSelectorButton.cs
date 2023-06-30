@@ -51,7 +51,8 @@ public sealed class ChannelSelectorButton : Button
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
     {
         // needed since we need EnableAllKeybinds - don't double-send both UI click and Use
-        if (args.Function == EngineKeyFunctions.Use) return;
+        if (args.Function == EngineKeyFunctions.Use)
+            return;
         base.KeyBindDown(args);
     }
 
@@ -62,7 +63,8 @@ public sealed class ChannelSelectorButton : Button
             _channelSelectorPopup.Close();
         }
 
-        if (SelectedChannel == channel) return;
+        if (SelectedChannel == channel)
+            return;
         SelectedChannel = channel;
         OnChannelSelect?.Invoke(channel);
     }

@@ -17,7 +17,8 @@ public sealed class CameraRecoilSystem : SharedCameraRecoilSystem
 
     public override void KickCamera(EntityUid uid, Vector2 recoil, CameraRecoilComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false)) return;
+        if (!Resolve(uid, ref component, false))
+            return;
 
         // Use really bad math to "dampen" kicks when we're already kicked.
         var existing = component.CurrentKick.Length;

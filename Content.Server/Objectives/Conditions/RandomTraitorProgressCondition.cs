@@ -39,7 +39,8 @@ namespace Content.Server.Objectives.Conditions
                 traitors.Remove(traitor);
             }
 
-            if (traitors.Count == 0) return new EscapeShuttleCondition{}; //You were made a traitor by admins, and are the first/only.
+            if (traitors.Count == 0)
+                return new EscapeShuttleCondition{}; //You were made a traitor by admins, and are the first/only.
             return new RandomTraitorProgressCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Mind };
         }
 
@@ -111,8 +112,10 @@ namespace Content.Server.Objectives.Conditions
 
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
             return obj is RandomTraitorProgressCondition alive && alive.Equals(this);
         }
 

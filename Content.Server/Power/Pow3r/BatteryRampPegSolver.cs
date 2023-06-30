@@ -15,8 +15,10 @@ namespace Content.Server.Power.Pow3r
 
             public override int Compare(Network? x, Network? y)
             {
-                if (x!.Height == y!.Height) return 0;
-                if (x!.Height > y!.Height) return 1;
+                if (x!.Height == y!.Height)
+                    return 0;
+                if (x!.Height > y!.Height)
+                    return 1;
                 return -1;
             }
         }

@@ -75,7 +75,8 @@ namespace Content.Server.Storage.Components
             set
             {
                 _occludesLight = value;
-                if (Storage != null) Storage.OccludesLight = value;
+                if (Storage != null)
+                    Storage.OccludesLight = value;
             }
         }
 

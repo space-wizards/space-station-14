@@ -83,7 +83,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     private void OnUndockPressed(BaseButton.ButtonEventArgs args)
     {
-        if (DockingScreen.ViewedDock == null) return;
+        if (DockingScreen.ViewedDock == null)
+            return;
         UndockPressed?.Invoke(DockingScreen.ViewedDock.Value);
     }
 

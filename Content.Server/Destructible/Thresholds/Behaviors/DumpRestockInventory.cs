@@ -38,7 +38,8 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
             {
                 var toSpawn = (int) Math.Round(count * Percent);
 
-                if (toSpawn == 0) continue;
+                if (toSpawn == 0)
+                    continue;
 
                 if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
                 {

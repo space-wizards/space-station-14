@@ -54,7 +54,8 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.TryGetComponent<StorageFillComponent>("StorageFill", out var storage)) continue;
+                    if (!proto.TryGetComponent<StorageFillComponent>("StorageFill", out var storage))
+                        continue;
 
                     foreach (var entry in storage.Contents)
                     {

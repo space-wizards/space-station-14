@@ -48,9 +48,11 @@ namespace Content.Client.Light
 
         private void HandleCompState(EntityUid uid, EmergencyLightComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not EmergencyLightComponentState state) return;
+            if (args.Current is not EmergencyLightComponentState state)
+                return;
 
-            if (component.Enabled == state.Enabled) return;
+            if (component.Enabled == state.Enabled)
+                return;
 
             var playerComponent = component.Owner.EnsureComponent<AnimationPlayerComponent>();
 
@@ -78,7 +80,8 @@ namespace Content.Client.Light
 
         private void PlayAnimation(EmergencyLightComponent component)
         {
-            if (!component.Enabled) return;
+            if (!component.Enabled)
+                return;
 
             var playerComponent = component.Owner.EnsureComponent<AnimationPlayerComponent>();
 

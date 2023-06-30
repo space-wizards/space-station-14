@@ -28,7 +28,8 @@ public sealed class ThermalRegulatorSystem : EntitySystem
     /// </summary>
     private void ProcessThermalRegulation(EntityUid uid, ThermalRegulatorComponent comp)
     {
-        if (!EntityManager.TryGetComponent(uid, out TemperatureComponent? temperatureComponent)) return;
+        if (!EntityManager.TryGetComponent(uid, out TemperatureComponent? temperatureComponent))
+            return;
 
         var totalMetabolismTempChange = comp.MetabolismHeat - comp.RadiatedHeat;
 
@@ -57,13 +58,15 @@ public sealed class ThermalRegulatorSystem : EntitySystem
 
         if (temperatureComponent.CurrentTemperature > comp.NormalBodyTemperature)
         {
-            if (!_actionBlockerSys.CanSweat(uid)) return;
+            if (!_actionBlockerSys.CanSweat(uid))
+                return;
             _tempSys.ChangeHeat(uid, -Math.Min(targetHeat, comp.SweatHeatRegulation), true,
                 temperatureComponent);
         }
         else
         {
-            if (!_actionBlockerSys.CanShiver(uid)) return;
+            if (!_actionBlockerSys.CanShiver(uid))
+                return;
             _tempSys.ChangeHeat(uid, Math.Min(targetHeat, comp.ShiveringHeatRegulation), true,
                 temperatureComponent);
         }

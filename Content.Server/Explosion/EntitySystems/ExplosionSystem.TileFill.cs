@@ -166,7 +166,8 @@ public sealed partial class ExplosionSystem : EntitySystem
                     maxIntensityIndex++;
             }
 
-            if (remainingIntensity <= 0) break;
+            if (remainingIntensity <= 0)
+                break;
 
             // Next, we will add a new iteration of tiles
 

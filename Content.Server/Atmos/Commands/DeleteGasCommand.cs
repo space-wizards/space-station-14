@@ -136,7 +136,8 @@ namespace Content.Server.Atmos.Commands
             {
                 foreach (var tile in atmosphereSystem.GetAllMixtures(gridId.Value, true))
                 {
-                    if (tile.Immutable) continue;
+                    if (tile.Immutable)
+                        continue;
 
                     tiles++;
                     moles += tile.TotalMoles;
@@ -148,7 +149,8 @@ namespace Content.Server.Atmos.Commands
             {
                 foreach (var tile in atmosphereSystem.GetAllMixtures(gridId.Value, true))
                 {
-                    if (tile.Immutable) continue;
+                    if (tile.Immutable)
+                        continue;
 
                     tiles++;
                     moles += tile.TotalMoles;

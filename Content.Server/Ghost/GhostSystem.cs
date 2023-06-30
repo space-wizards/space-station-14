@@ -256,7 +256,8 @@ namespace Content.Server.Ghost
             {
                 if (player.AttachedEntity is {Valid: true} attached)
                 {
-                    if (attached == except) continue;
+                    if (attached == except)
+                        continue;
 
                     TryComp<MindContainerComponent>(attached, out var mind);
 

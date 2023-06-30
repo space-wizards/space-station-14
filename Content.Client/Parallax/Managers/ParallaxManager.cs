@@ -44,7 +44,8 @@ public sealed class ParallaxManager : IParallaxManager
             return;
         }
 
-        if (!_parallaxesLQ.ContainsKey(name)) return;
+        if (!_parallaxesLQ.ContainsKey(name))
+            return;
         _parallaxesLQ.Remove(name);
         _parallaxesHQ.Remove(name);
     }
@@ -88,7 +89,8 @@ public sealed class ParallaxManager : IParallaxManager
 
             _loadingParallaxes.Remove(name, out _);
 
-            if (token.Token.IsCancellationRequested) return;
+            if (token.Token.IsCancellationRequested)
+                return;
 
             _parallaxesLQ[name] = layers[1];
             _parallaxesHQ[name] = layers[0];

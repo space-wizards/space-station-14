@@ -273,7 +273,8 @@ public sealed class MagicSystem : EntitySystem
 
         var transform = Transform(args.Performer);
 
-        if (transform.MapID != args.Target.GetMapId(EntityManager)) return;
+        if (transform.MapID != args.Target.GetMapId(EntityManager))
+            return;
 
         _transformSystem.SetCoordinates(args.Performer, args.Target);
         transform.AttachToGridOrMap();

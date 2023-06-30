@@ -566,7 +566,8 @@ we are just going to end this here to save a lot of time. This is the exception 
         var mapManager = server.ResolveDependency<IMapManager>();
         var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
-        if (settings.NoServer) throw new Exception("Cannot setup test map without server");
+        if (settings.NoServer)
+            throw new Exception("Cannot setup test map without server");
         var mapData = new TestMapData();
         await server.WaitPost(() =>
         {
@@ -793,16 +794,26 @@ public sealed class PoolSettings
     /// <returns>If we can skip cleaning it up</returns>
     public bool CanFastRecycle(PoolSettings nextSettings)
     {
-        if (Dirty) return false;
-        if (Destructive || nextSettings.Destructive) return false;
-        if (NotConnected != nextSettings.NotConnected) return false;
-        if (InLobby != nextSettings.InLobby) return false;
-        if (DisableInterpolate != nextSettings.DisableInterpolate) return false;
-        if (nextSettings.DummyTicker) return false;
-        if (Map != nextSettings.Map) return false;
-        if (NoLoadContent != nextSettings.NoLoadContent) return false;
-        if (nextSettings.Fresh) return false;
-        if (ExtraPrototypes != nextSettings.ExtraPrototypes) return false;
+        if (Dirty)
+            return false;
+        if (Destructive || nextSettings.Destructive)
+            return false;
+        if (NotConnected != nextSettings.NotConnected)
+            return false;
+        if (InLobby != nextSettings.InLobby)
+            return false;
+        if (DisableInterpolate != nextSettings.DisableInterpolate)
+            return false;
+        if (nextSettings.DummyTicker)
+            return false;
+        if (Map != nextSettings.Map)
+            return false;
+        if (NoLoadContent != nextSettings.NoLoadContent)
+            return false;
+        if (nextSettings.Fresh)
+            return false;
+        if (ExtraPrototypes != nextSettings.ExtraPrototypes)
+            return false;
         return true;
     }
 

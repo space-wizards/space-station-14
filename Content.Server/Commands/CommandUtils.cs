@@ -19,10 +19,12 @@ namespace Content.Server.Commands
             string usernameOrId, IPlayerSession performer, [NotNullWhen(true)] out IPlayerSession? session)
         {
             var plyMgr = IoCManager.Resolve<IPlayerManager>();
-            if (plyMgr.TryGetSessionByUsername(usernameOrId, out session)) return true;
+            if (plyMgr.TryGetSessionByUsername(usernameOrId, out session))
+                return true;
             if (Guid.TryParse(usernameOrId, out var targetGuid))
             {
-                if (plyMgr.TryGetSessionById(new NetUserId(targetGuid), out session)) return true;
+                if (plyMgr.TryGetSessionById(new NetUserId(targetGuid), out session))
+                    return true;
                 shell.WriteLine("Unable to find user with that name/id.");
                 return false;
             }
@@ -39,7 +41,8 @@ namespace Content.Server.Commands
             string usernameOrId, IPlayerSession performer, out EntityUid attachedEntity)
         {
             attachedEntity = default;
-            if (!TryGetSessionByUsernameOrId(shell, usernameOrId, performer, out var session)) return false;
+            if (!TryGetSessionByUsernameOrId(shell, usernameOrId, performer, out var session))
+                return false;
             if (session.AttachedEntity == null)
             {
                 shell.WriteLine("User has no attached entity.");

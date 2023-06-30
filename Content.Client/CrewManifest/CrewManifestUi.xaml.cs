@@ -41,7 +41,8 @@ public sealed partial class CrewManifestUi : DefaultWindow
         StationNameContainer.Visible = entries != null;
         StationName.Text = name;
 
-        if (entries == null) return;
+        if (entries == null)
+            return;
 
        var entryList = SortEntries(entries);
 

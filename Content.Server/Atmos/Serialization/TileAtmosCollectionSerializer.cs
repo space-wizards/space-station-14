@@ -115,7 +115,8 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
 
         foreach (var (gridIndices, tile) in value)
         {
-            if (tile.Air == null) continue;
+            if (tile.Air == null)
+                continue;
 
             var mixIndex = uniqueMixes.IndexOf(tile.Air);
 

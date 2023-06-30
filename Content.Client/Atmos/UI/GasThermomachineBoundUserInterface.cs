@@ -41,7 +41,8 @@ namespace Content.Client.Atmos.UI
 
         private void OnToggleStatusButtonPressed()
         {
-            if (_window is null) return;
+            if (_window is null)
+                return;
 
             _window.SetActive(!_window.Active);
             SendMessage(new GasThermomachineToggleMessage());
@@ -85,7 +86,8 @@ namespace Content.Client.Atmos.UI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing) return;
+            if (!disposing)
+                return;
             _window?.Dispose();
         }
     }

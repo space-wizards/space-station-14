@@ -43,14 +43,16 @@ namespace Content.Client.Atmos.UI
 
         private void OnToggleStatusButtonPressed()
         {
-            if (_window is null) return;
+            if (_window is null)
+                return;
             SendMessage(new GasMixerToggleStatusMessage(_window.MixerStatus));
         }
 
         private void OnMixerOutputPressurePressed(string value)
         {
             float pressure = float.TryParse(value, out var parsed) ? parsed : 0f;
-            if (pressure > MaxPressure) pressure = MaxPressure;
+            if (pressure > MaxPressure)
+                pressure = MaxPressure;
 
             SendMessage(new GasMixerChangeOutputPressureMessage(pressure));
         }
@@ -62,7 +64,8 @@ namespace Content.Client.Atmos.UI
 
             node = Math.Clamp(node, 0f, 100.0f);
 
-            if (_window is not null) node = _window.NodeOneLastEdited ? node : 100.0f - node;
+            if (_window is not null)
+                node = _window.NodeOneLastEdited ? node : 100.0f - node;
 
             SendMessage(new GasMixerChangeNodePercentageMessage(node));
         }
@@ -86,7 +89,8 @@ namespace Content.Client.Atmos.UI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing) return;
+            if (!disposing)
+                return;
             _window?.Dispose();
         }
     }

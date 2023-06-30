@@ -67,7 +67,8 @@ public sealed class ClientAlertsSystem : AlertsSystem
     private void ClientAlertsHandleState(EntityUid uid, AlertsComponent component, ref ComponentHandleState args)
     {
         var componentAlerts = (args.Current as AlertsComponentState)?.Alerts;
-        if (componentAlerts == null) return;
+        if (componentAlerts == null)
+            return;
 
         component.Alerts = new(componentAlerts);
 

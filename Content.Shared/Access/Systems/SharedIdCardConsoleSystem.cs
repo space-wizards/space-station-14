@@ -28,7 +28,8 @@ namespace Content.Shared.Access.Systems
 
         private void OnHandleState(EntityUid uid, IdCardConsoleComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not IdCardConsoleComponentState state) return;
+            if (args.Current is not IdCardConsoleComponentState state)
+                return;
             component.AccessLevels = state.AccessLevels;
         }
 

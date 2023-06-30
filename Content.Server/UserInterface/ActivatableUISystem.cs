@@ -83,15 +83,19 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private void OnActivate(EntityUid uid, ActivatableUIComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled) return;
-        if (component.InHandsOnly) return;
+        if (args.Handled)
+            return;
+        if (component.InHandsOnly)
+            return;
         args.Handled = InteractUI(args.User, component);
     }
 
     private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
     {
-        if (args.Handled) return;
-        if (component.rightClickOnly) return;
+        if (args.Handled)
+            return;
+        if (component.rightClickOnly)
+            return;
         args.Handled = InteractUI(args.User, component);
     }
 
@@ -102,8 +106,10 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private void OnUIClose(EntityUid uid, ActivatableUIComponent component, BoundUIClosedEvent args)
     {
-        if (args.Session != component.CurrentSingleUser) return;
-        if (args.UiKey != component.Key) return;
+        if (args.Session != component.CurrentSingleUser)
+            return;
+        if (args.UiKey != component.Key)
+            return;
         SetCurrentSingleUser(uid, null, component);
     }
 
@@ -115,19 +121,23 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (aui.RequireHands && !HasComp<HandsComponent>(user))
             return false;
 
-        if (!EntityManager.TryGetComponent(user, out ActorComponent? actor)) return false;
+        if (!EntityManager.TryGetComponent(user, out ActorComponent? actor))
+            return false;
 
-        if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return false;
+        if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession))
+            return false;
 
         var ui = aui.UserInterface;
-        if (ui == null) return false;
+        if (ui == null)
+            return false;
 
         if (aui.SingleUser && (aui.CurrentSingleUser != null) && (actor.PlayerSession != aui.CurrentSingleUser))
         {
             // If we get here, supposedly, the object is in use.
             // Check with BUI that it's ACTUALLY in use just in case.
             // Since this could brick the object if it goes wrong.
-            if (ui.SubscribedSessions.Count != 0) return false;
+            if (ui.SubscribedSessions.Count != 0)
+                return false;
         }
 
         // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
@@ -136,7 +146,8 @@ public sealed partial class ActivatableUISystem : EntitySystem
         var uae = new UserOpenActivatableUIAttemptEvent(user, aui.Owner);
         RaiseLocalEvent(user, uae, false);
         RaiseLocalEvent((aui).Owner, oae, false);
-        if (oae.Cancelled || uae.Cancelled) return false;
+        if (oae.Cancelled || uae.Cancelled)
+            return false;
 
         // Give the UI an opportunity to prepare itself if it needs to do anything
         // before opening
@@ -167,13 +178,15 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     public void CloseAll(EntityUid uid, ActivatableUIComponent? aui = null)
     {
-        if (!Resolve(uid, ref aui, false)) return;
+        if (!Resolve(uid, ref aui, false))
+            return;
         aui.UserInterface?.CloseAll();
     }
 
     private void OnHandDeselected(EntityUid uid, ActivatableUIComponent? aui, HandDeselectedEvent args)
     {
-        if (!Resolve(uid, ref aui, false)) return;
+        if (!Resolve(uid, ref aui, false))
+            return;
         if (!aui.CloseOnHandDeselect)
             return;
         CloseAll(uid, aui);

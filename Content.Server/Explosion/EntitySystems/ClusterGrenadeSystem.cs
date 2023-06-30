@@ -43,7 +43,8 @@ public sealed class ClusterGrenadeSystem : EntitySystem
 
     private void OnClugUsing(EntityUid uid, ClusterGrenadeComponent component, InteractUsingEvent args)
     {
-        if (args.Handled) return;
+        if (args.Handled)
+            return;
 
         // TODO: Should use whitelist.
         if (component.GrenadesContainer.ContainedEntities.Count >= component.MaxGrenades ||
@@ -126,7 +127,8 @@ public sealed class ClusterGrenadeSystem : EntitySystem
 
     private void UpdateAppearance(EntityUid uid, ClusterGrenadeComponent component)
     {
-        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance)) return;
+        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
+            return;
 
         _appearance.SetData(uid, ClusterGrenadeVisuals.GrenadesCounter, component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount, appearance);
     }

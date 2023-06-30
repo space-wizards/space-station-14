@@ -643,7 +643,8 @@ namespace Content.Client.Preferences.UI
 
         private void OnSkinColorOnValueChanged()
         {
-            if (Profile is null) return;
+            if (Profile is null)
+                return;
 
             var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
 
@@ -1126,7 +1127,8 @@ namespace Content.Client.Preferences.UI
 
         public void UpdateControls()
         {
-            if (Profile is null) return;
+            if (Profile is null)
+                return;
             UpdateNameEdit();
             UpdateFlavorTextEdit();
             UpdateSexControls();

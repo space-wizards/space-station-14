@@ -28,7 +28,8 @@ public partial class AtmosphereSystem
 
         // Pay more for gas canisters that are more pure
         float purity = 1;
-        if (totalMoles > 0) {
+        if (totalMoles > 0)
+            {
             purity = maxComponent / totalMoles;
         }
 

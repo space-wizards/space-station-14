@@ -79,7 +79,8 @@ namespace Content.Server.Cargo.Systems
 
                 foreach (var comp in EntityQuery<CargoOrderConsoleComponent>())
                 {
-                    if (!_uiSystem.IsUiOpen(comp.Owner, CargoConsoleUiKey.Orders)) continue;
+                    if (!_uiSystem.IsUiOpen(comp.Owner, CargoConsoleUiKey.Orders))
+                        continue;
 
                     var station = _station.GetOwningStation(comp.Owner);
                     UpdateOrderState(comp, station);
@@ -173,7 +174,8 @@ namespace Content.Server.Cargo.Systems
         private void OnRemoveOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleRemoveOrderMessage args)
         {
             var orderDatabase = GetOrderDatabase(component);
-            if (orderDatabase == null) return;
+            if (orderDatabase == null)
+                return;
             RemoveOrder(orderDatabase, args.OrderId);
         }
 
@@ -255,7 +257,8 @@ namespace Content.Server.Cargo.Systems
 
             foreach (var order in component.Orders)
             {
-                if (!order.Approved) continue;
+                if (!order.Approved)
+                    continue;
                 amount += order.OrderQuantity - order.NumDispatched;
             }
 
@@ -335,7 +338,8 @@ namespace Content.Server.Cargo.Systems
 
         public void ClearOrders(StationCargoOrderDatabaseComponent component)
         {
-            if (component.Orders.Count == 0) return;
+            if (component.Orders.Count == 0)
+                return;
 
             component.Orders.Clear();
             Dirty(component);

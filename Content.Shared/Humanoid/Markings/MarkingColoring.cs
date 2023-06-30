@@ -3,7 +3,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Humanoid.Markings;
 
 /// <summary>
-///     Default colors for marking 
+///     Default colors for marking
 /// </summary>
 [DataDefinition]
 public sealed class MarkingColors
@@ -65,7 +65,7 @@ public static class MarkingColoring
                     colors.Add(defaultColor);
                     continue;
                 }
-            
+
                 // All specified layers must be colored separately, all unspecified must depend on default coloring
                 if (prototype.Coloring.Layers.TryGetValue(name, out var layerColoring))
                 {
@@ -96,7 +96,7 @@ public sealed class LayerColoringDefinition
     /// </summary>
     [DataField("fallbackTypes")]
     public List<LayerColoringType> FallbackTypes = new() {};
-    
+
     /// <summary>
     ///     Color that will be used if coloring type and fallback type will return nil
     /// </summary>
@@ -111,7 +111,8 @@ public sealed class LayerColoringDefinition
             foreach (var type in FallbackTypes)
             {
                 color = type.GetColor(skin, eyes, markingSet);
-                if (color != null) break;
+                if (color != null)
+                    break;
             }
         }
         return color ?? FallbackColor;

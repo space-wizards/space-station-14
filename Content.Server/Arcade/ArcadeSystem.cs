@@ -43,11 +43,13 @@ namespace Content.Server.Arcade
                 return GetPlacement(highScoreEntries, entry);
             }
 
-            if (highScoreEntries.Min(e => e.Score) >= entry.Score) return null;
+            if (highScoreEntries.Min(e => e.Score) >= entry.Score)
+                return null;
 
             var lowestHighscore = highScoreEntries.Min();
 
-            if (lowestHighscore == null) return null;
+            if (lowestHighscore == null)
+                return null;
 
             highScoreEntries.Remove(lowestHighscore);
             highScoreEntries.Add(entry);

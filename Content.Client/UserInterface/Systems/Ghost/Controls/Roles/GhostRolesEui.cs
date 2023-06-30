@@ -61,7 +61,8 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
         {
             base.HandleState(state);
 
-            if (state is not GhostRolesEuiState ghostState) return;
+            if (state is not GhostRolesEuiState ghostState)
+                return;
             _window.ClearEntries();
 
             var groupedRoles = ghostState.GhostRoles.GroupBy(

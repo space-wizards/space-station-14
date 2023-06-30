@@ -164,7 +164,8 @@ namespace Content.Server.Bible
             {
                 Act = () =>
                 {
-                    if (!TryComp<TransformComponent>(args.User, out var userXform)) return;
+                    if (!TryComp<TransformComponent>(args.User, out var userXform))
+                        return;
 
                     AttemptSummon(component, args.User, userXform);
                 },

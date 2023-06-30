@@ -207,7 +207,8 @@ namespace Content.Server.Communications
 
         private void OnSelectAlertLevelMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleSelectAlertLevelMessage message)
         {
-            if (message.Session.AttachedEntity is not {Valid: true} mob) return;
+            if (message.Session.AttachedEntity is not {Valid: true} mob)
+                return;
             if (!CanUse(mob, uid))
             {
                 _popupSystem.PopupCursor(Loc.GetString("comms-console-permission-denied"), message.Session, PopupType.Medium);
@@ -284,8 +285,10 @@ namespace Content.Server.Communications
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)
         {
-            if (!CanCallOrRecall(comp)) return;
-            if (message.Session.AttachedEntity is not {Valid: true} mob) return;
+            if (!CanCallOrRecall(comp))
+                return;
+            if (message.Session.AttachedEntity is not {Valid: true} mob)
+                return;
             if (!CanUse(mob, uid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
@@ -297,8 +300,10 @@ namespace Content.Server.Communications
 
         private void OnRecallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleRecallEmergencyShuttleMessage message)
         {
-            if (!CanCallOrRecall(comp)) return;
-            if (message.Session.AttachedEntity is not {Valid: true} mob) return;
+            if (!CanCallOrRecall(comp))
+                return;
+            if (message.Session.AttachedEntity is not {Valid: true} mob)
+                return;
             if (!CanUse(mob, uid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);

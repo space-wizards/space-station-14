@@ -162,9 +162,11 @@ namespace Content.Shared.Examine
 
             // If range specified also check it
             // TODO: This rounding check is here because the API is kinda eh
-            if (range > 0f && length > range + 0.01f) return false;
+            if (range > 0f && length > range + 0.01f)
+                return false;
 
-            if (MathHelper.CloseTo(length, 0)) return true;
+            if (MathHelper.CloseTo(length, 0))
+                return true;
 
             if (length > MaxRaycastRange)
             {
@@ -179,9 +181,11 @@ namespace Content.Shared.Examine
             var rayResults = occluderSystem
                 .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false).ToList();
 
-            if (rayResults.Count == 0) return true;
+            if (rayResults.Count == 0)
+                return true;
 
-            if (!ignoreInsideBlocker) return false;
+            if (!ignoreInsideBlocker)
+                return false;
 
             foreach (var result in rayResults)
             {

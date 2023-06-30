@@ -13,7 +13,8 @@ public sealed class ShowAccessReadersCommand : IConsoleCommand
     {
         var collection = IoCManager.Instance;
 
-        if (collection == null) return;
+        if (collection == null)
+            return;
 
         var overlay = collection.Resolve<IOverlayManager>();
 

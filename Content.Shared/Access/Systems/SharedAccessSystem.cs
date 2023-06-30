@@ -21,7 +21,8 @@ namespace Content.Shared.Access.Systems
 
         private void OnAccessHandleState(EntityUid uid, AccessComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not AccessComponentState state) return;
+            if (args.Current is not AccessComponentState state)
+                return;
 
             // Don't do = because prediction and refs
             component.Tags.Clear();

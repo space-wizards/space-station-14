@@ -41,7 +41,8 @@ namespace Content.Client.Atmos.UI
 
         private void OnToggleStatusButtonPressed()
         {
-            if (_window is null) return;
+            if (_window is null)
+                return;
             SendMessage(new GasFilterToggleStatusMessage(_window.FilterStatus));
         }
 
@@ -54,14 +55,16 @@ namespace Content.Client.Atmos.UI
 
         private void OnSelectGasPressed()
         {
-            if (_window is null) return;
+            if (_window is null)
+                return;
             if (_window.SelectedGas is null)
             {
                 SendMessage(new GasFilterSelectGasMessage(null));
             }
             else
             {
-                if (!int.TryParse(_window.SelectedGas, out var gas)) return;
+                if (!int.TryParse(_window.SelectedGas, out var gas))
+                    return;
                 SendMessage(new GasFilterSelectGasMessage(gas));
             }
         }
@@ -95,7 +98,8 @@ namespace Content.Client.Atmos.UI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing) return;
+            if (!disposing)
+                return;
             _window?.Dispose();
         }
     }

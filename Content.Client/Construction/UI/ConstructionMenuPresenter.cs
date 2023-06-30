@@ -91,8 +91,10 @@ namespace Content.Client.Construction.UI
             _constructionView.BuildButtonToggled += (_, b) => BuildButtonToggled(b);
             _constructionView.EraseButtonToggled += (_, b) =>
             {
-                if (_constructionSystem is null) return;
-                if (b) _placementManager.Clear();
+                if (_constructionSystem is null)
+                    return;
+                if (b)
+                    _placementManager.Clear();
                 _placementManager.ToggleEraserHijacked(new ConstructionPlacementHijack(_constructionSystem, null));
                 _constructionView.EraseButtonPressed = b;
             };
@@ -134,7 +136,8 @@ namespace Content.Client.Construction.UI
             }
 
             _selected = (ConstructionPrototype) item.Metadata!;
-            if (_placementManager.IsActive && !_placementManager.Eraser) UpdateGhostPlacement();
+            if (_placementManager.IsActive && !_placementManager.Eraser)
+                UpdateGhostPlacement();
             PopulateInfo(_selected);
         }
 
@@ -257,7 +260,8 @@ namespace Content.Client.Construction.UI
         {
             if (pressed)
             {
-                if (_selected == null) return;
+                if (_selected == null)
+                    return;
 
                 // not bound to a construction system
                 if (_constructionSystem is null)
@@ -311,12 +315,14 @@ namespace Content.Client.Construction.UI
 
         private void OnSystemLoaded(object? sender, SystemChangedArgs args)
         {
-            if (args.System is ConstructionSystem system) SystemBindingChanged(system);
+            if (args.System is ConstructionSystem system)
+                SystemBindingChanged(system);
         }
 
         private void OnSystemUnloaded(object? sender, SystemChangedArgs args)
         {
-            if (args.System is ConstructionSystem) SystemBindingChanged(null);
+            if (args.System is ConstructionSystem)
+                SystemBindingChanged(null);
         }
 
         private void SystemBindingChanged(ConstructionSystem? newSystem)

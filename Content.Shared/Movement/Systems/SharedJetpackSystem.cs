@@ -62,7 +62,8 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void OnJetpackUserHandleState(EntityUid uid, JetpackUserComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not JetpackUserComponentState state) return;
+        if (args.Current is not JetpackUserComponentState state)
+            return;
         component.Jetpack = state.Jetpack;
     }
 
@@ -104,7 +105,8 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void RemoveUser(EntityUid uid)
     {
-        if (!RemComp<JetpackUserComponent>(uid)) return;
+        if (!RemComp<JetpackUserComponent>(uid))
+            return;
         RemComp<RelayInputMoverComponent>(uid);
     }
 
@@ -160,7 +162,8 @@ public abstract class SharedJetpackSystem : EntitySystem
         }
 
         // Can't activate if no one's using.
-        if (user == null && enabled) return;
+        if (user == null && enabled)
+            return;
 
         if (user != null)
         {

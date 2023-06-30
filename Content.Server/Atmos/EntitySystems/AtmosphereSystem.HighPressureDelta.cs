@@ -39,11 +39,13 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
                 }
 
-                if (Paused(uid, metadata)) continue;
+                if (Paused(uid, metadata))
+                    continue;
 
                 comp.Accumulator += frameTime;
 
-                if (comp.Accumulator < 2f) continue;
+                if (comp.Accumulator < 2f)
+                    continue;
 
                 // Reset it just for VV reasons even though it doesn't matter
                 comp.Accumulator = 0f;
@@ -72,7 +74,8 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void AddMobMovedByPressure(MovedByPressureComponent component, PhysicsComponent body)
         {
-            if (!TryComp<FixturesComponent>(component.Owner, out var fixtures)) return;
+            if (!TryComp<FixturesComponent>(component.Owner, out var fixtures))
+                return;
 
             _physics.SetBodyStatus(body, BodyStatus.InAir);
 
@@ -147,7 +150,8 @@ namespace Content.Server.Atmos.EntitySystems
                     !pressure.Enabled)
                     continue;
 
-                if (_containers.IsEntityInContainer(entity, metas.GetComponent(entity))) continue;
+                if (_containers.IsEntityInContainer(entity, metas.GetComponent(entity)))
+                    continue;
 
                 var pressureMovements = EnsureComp<MovedByPressureComponent>(entity);
                 if (pressure.LastHighPressureMovementAirCycle < gridAtmosphere.UpdateCounter)
@@ -194,7 +198,8 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref physics, false))
                 return;
 
-            if (!Resolve(uid, ref xform)) return;
+            if (!Resolve(uid, ref xform))
+                return;
 
             // TODO ATMOS stuns?
 

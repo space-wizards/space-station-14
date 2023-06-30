@@ -69,7 +69,8 @@ public sealed class ExplosionSpaceTileFlood : ExplosionTileFlood
     {
         foreach (var edge in blocker.BlockingGridEdges)
         {
-            if (edge.Grid == null) continue;
+            if (edge.Grid == null)
+                continue;
 
             if (!GridJump.TryGetValue(edge.Grid.Value, out var set))
             {
@@ -131,7 +132,7 @@ public sealed class ExplosionSpaceTileFlood : ExplosionTileFlood
             if (EnteredBlockedTiles.Contains(tile))
                 return;
 
-            // Did the explosion already attempt to enter this tile from some other direction? 
+            // Did the explosion already attempt to enter this tile from some other direction?
             if (!UnenteredBlockedTiles.Add(tile))
                 return;
 
@@ -144,7 +145,7 @@ public sealed class ExplosionSpaceTileFlood : ExplosionTileFlood
         if (!EnteredBlockedTiles.Add(tile))
             return;
 
-        // Did the explosion already attempt to enter this tile from some other direction? 
+        // Did the explosion already attempt to enter this tile from some other direction?
         if (UnenteredBlockedTiles.Contains(tile))
         {
             NewFreedTiles.Add(tile);

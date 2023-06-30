@@ -135,9 +135,11 @@ namespace Content.Shared.Humanoid.Markings
 
         public static Marking? ParseFromDbString(string input)
         {
-            if (input.Length == 0) return null;
+            if (input.Length == 0)
+                return null;
             var split = input.Split('@');
-            if (split.Length != 2) return null;
+            if (split.Length != 2)
+                return null;
             List<Color> colorList = new();
             foreach (string color in split[1].Split(','))
                 colorList.Add(Color.FromHex(color));

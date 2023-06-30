@@ -23,7 +23,8 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
         // Brain no worky rn so this was just easier.
         foreach (var key in new []{ DamageStateVisualLayers.Base, DamageStateVisualLayers.BaseUnshaded })
         {
-            if (!sprite.LayerMapTryGet(key, out _)) continue;
+            if (!sprite.LayerMapTryGet(key, out _))
+                continue;
 
             sprite.LayerSetVisible(key, false);
         }
@@ -31,7 +32,8 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
         foreach (var (key, state) in layers)
         {
             // Inheritance moment.
-            if (!sprite.LayerMapTryGet(key, out _)) continue;
+            if (!sprite.LayerMapTryGet(key, out _))
+                continue;
 
             sprite.LayerSetVisible(key, true);
             sprite.LayerSetState(key, state);

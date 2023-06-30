@@ -16,7 +16,8 @@ namespace Content.Server.Atmos.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length < 3) return;
+            if (args.Length < 3)
+                return;
             if (!EntityUid.TryParse(args[0], out var gridId)
                || !(AtmosCommandUtils.TryParseGasID(args[1], out var gasId))
                || !float.TryParse(args[2], out var moles)) return;

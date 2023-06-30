@@ -34,14 +34,16 @@ namespace Content.Client.Research.UI
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (state is not ResearchClientBoundInterfaceState rState) return;
+            if (state is not ResearchClientBoundInterfaceState rState)
+                return;
             _menu?.Populate(rState.ServerCount, rState.ServerNames, rState.ServerIds, rState.SelectedServerId);
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing) return;
+            if (!disposing)
+                return;
             _menu?.Dispose();
         }
     }

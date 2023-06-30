@@ -36,7 +36,8 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnRadiation(EntityUid uid, RadiationCollectorComponent component, OnIrradiatedEvent args)
         {
-            if (!component.Enabled) return;
+            if (!component.Enabled)
+                return;
 
             // No idea if this is even vaguely accurate to the previous logic.
             // The maths is copied from that logic even though it works differently.

@@ -135,7 +135,8 @@ namespace Content.Server.Light.EntitySystems
 
         public void SetState(EmergencyLightComponent component, EmergencyLightState state)
         {
-            if (component.State == state) return;
+            if (component.State == state)
+                return;
 
             component.State = state;
             RaiseLocalEvent(component.Owner, new EmergencyLightEvent(component, state));

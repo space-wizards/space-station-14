@@ -40,7 +40,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void HandleCollide(EntityUid uid, VaporComponent component, ref StartCollideEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? contents)) return;
+            if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? contents))
+                return;
 
             foreach (var value in contents.Solutions.Values)
             {
@@ -118,7 +119,8 @@ namespace Content.Server.Chemistry.EntitySystems
                 var tile = gridComp.GetTileRef(xform.Coordinates.ToVector2i(EntityManager, _mapManager));
                 foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
-                    if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
+                    if (reagentQuantity.Quantity == FixedPoint2.Zero)
+                        continue;
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
 
                     var reaction =

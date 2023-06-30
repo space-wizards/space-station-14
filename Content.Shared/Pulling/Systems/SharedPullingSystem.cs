@@ -186,7 +186,8 @@ namespace Content.Shared.Pulling
 
             if (TryComp(message.Entity, out SharedPullerComponent? puller))
             {
-                if (puller.Pulling == null) return;
+                if (puller.Pulling == null)
+                    return;
 
                 if (!TryComp(puller.Pulling.Value, out SharedPullableComponent? pulling))
                     return;

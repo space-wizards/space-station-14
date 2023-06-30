@@ -46,7 +46,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
                 while (containerEnumerator.MoveNext(out var container))
                 {
-                    if (!container.ContainedEntity.HasValue) continue;
+                    if (!container.ContainedEntity.HasValue)
+                        continue;
                     return;
                 }
             }

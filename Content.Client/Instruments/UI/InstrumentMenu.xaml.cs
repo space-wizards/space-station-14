@@ -88,7 +88,8 @@ namespace Content.Client.Instruments.UI
             // The following checks are only in place to prevent players from playing MIDI songs locally.
             // There are equivalents for these checks on the server.
 
-            if (file == null) return;
+            if (file == null)
+                return;
 
             /*if (!_midiManager.IsMidiFile(filename))
             {
@@ -127,7 +128,7 @@ namespace Content.Client.Instruments.UI
                 if (_owner.Instrument is {} instrument)
                     instrumentSystem.OpenInput(instrument.Owner, instrument);
             }
-            else  if (_owner.Instrument is {} instrument)
+            else if (_owner.Instrument is {} instrument)
                 instrumentSystem.CloseInput(instrument.Owner, false, instrument);
         }
 
@@ -145,7 +146,8 @@ namespace Content.Client.Instruments.UI
             var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
 
             // If we don't have a player or controlled entity, we return.
-            if (localPlayer?.ControlledEntity == null) return false;
+            if (localPlayer?.ControlledEntity == null)
+                return false;
 
             // By default, allow an instrument to play itself and skip all other checks
             if (localPlayer.ControlledEntity == instrumentEnt)
@@ -188,14 +190,16 @@ namespace Content.Client.Instruments.UI
         private void PlaybackSliderSeek(Range _)
         {
             // Do not seek while still grabbing.
-            if (PlaybackSlider.Grabbed || _owner.Instrument is not {} instrument) return;
+            if (PlaybackSlider.Grabbed || _owner.Instrument is not {} instrument)
+                return;
 
             EntitySystem.Get<InstrumentSystem>().SetPlayerTick(instrument.Owner, (int)Math.Ceiling(PlaybackSlider.Value), instrument);
         }
 
         private void PlaybackSliderKeyUp(GUIBoundKeyEventArgs args)
         {
-            if (args.Function != EngineKeyFunctions.UIClick || _owner.Instrument is not {} instrument) return;
+            if (args.Function != EngineKeyFunctions.UIClick || _owner.Instrument is not {} instrument)
+                return;
 
             EntitySystem.Get<InstrumentSystem>().SetPlayerTick(instrument.Owner, (int)Math.Ceiling(PlaybackSlider.Value), instrument);
         }
@@ -204,7 +208,8 @@ namespace Content.Client.Instruments.UI
         {
             base.FrameUpdate(args);
 
-            if (_owner.Instrument == null) return;
+            if (_owner.Instrument == null)
+                return;
 
             if (!_owner.Instrument.IsMidiOpen)
             {
@@ -213,7 +218,8 @@ namespace Content.Client.Instruments.UI
                 return;
             }
 
-            if (PlaybackSlider.Grabbed) return;
+            if (PlaybackSlider.Grabbed)
+                return;
 
             PlaybackSlider.MaxValue = _owner.Instrument.PlayerTotalTick;
             PlaybackSlider.SetValueWithoutEvent(_owner.Instrument.PlayerTick);
