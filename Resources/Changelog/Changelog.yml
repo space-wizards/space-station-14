@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Cat crate have more types of cats, type: Tweak}
-  id: 3643
-  time: '2023-05-04T19:00:51.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: Mute people can no longer scream or vocalize emotes., type: Fix}
@@ -2926,3 +2921,8 @@ Entries:
   - {message: Explosive pens are now linkable, type: Tweak}
   id: 4142
   time: '2023-06-30T19:47:47.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Fixed smg magazine sprite, type: Fix}
+  id: 4143
+  time: '2023-06-30T19:56:34.0000000+00:00'
