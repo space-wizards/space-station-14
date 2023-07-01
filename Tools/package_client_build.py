@@ -9,31 +9,9 @@ import argparse
 
 from typing import List, Optional
 
-try:
-    from colorama import init, Fore, Style
-    init()
-
-except ImportError:
-    # Just give an empty string for everything, no colored logging.
-    class ColorDummy(object):
-        def __getattr__(self, name):
-            return ""
-
-    Fore = ColorDummy()
-    Style = ColorDummy()
-
+from package_lib import Fore, Style, SHARED_IGNORED_RESOURCES
 
 p = os.path.join
-
-SHARED_IGNORED_RESOURCES = {
-    "ss13model.7z",
-    "ResourcePack.zip",
-    "buildResourcePack.py",
-    "CONTENT_GOES_HERE",
-    ".gitignore",
-    ".directory",
-    ".DS_Store"
-}
 
 CLIENT_IGNORED_RESOURCES = {
     "Maps",

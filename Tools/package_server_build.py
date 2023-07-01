@@ -10,18 +10,7 @@ import argparse
 
 from typing import List, Optional
 
-try:
-    from colorama import init, Fore, Style
-    init()
-
-except ImportError:
-    # Just give an empty string for everything, no colored logging.
-    class ColorDummy(object):
-        def __getattr__(self, name):
-            return ""
-
-    Fore = ColorDummy()
-    Style = ColorDummy()
+from package_lib import Fore, Style, SHARED_IGNORED_RESOURCES
 
 class PlatformReg:
     def __init__(self, rid: str, target_os: str, build_by_default: bool):
@@ -44,12 +33,6 @@ PLATFORMS = [
 
 PLATFORM_RIDS = {x.rid for x in PLATFORMS}
 PLATFORM_RIDS_DEFAULT = {x.rid for x in filter(lambda val: val.build_by_default, PLATFORMS)}
-
-SHARED_IGNORED_RESOURCES = {
-    ".gitignore",
-    ".directory",
-    ".DS_Store"
-}
 
 SERVER_IGNORED_RESOURCES = {
     "Textures",
@@ -110,12 +93,16 @@ def main() -> None:
 
     parser.add_argument("--hybrid-acz",
                         action="store_true",
-                        help="Creates a 'Hybrid ACZ' build that contains an embedded Content.Client.zip the server hosts.")
+                        help="Dummy; Hybrid ACZ builds are default.")
+
+    parser.add_argument("--no-hybrid-acz",
+                        action="store_true",
+                        help="Disables 'Hybrid ACZ' build. Hybrid ACZ builds contain an embedded Content.Client.zip that the server hosts. " + Fore.YELLOW + "You usually want this!" + Style.RESET_ALL)
 
     args = parser.parse_args()
     platforms = args.platform
     skip_build = args.skip_build
-    hybrid_acz = args.hybrid_acz
+    hybrid_acz = not args.no_hybrid_acz
 
     if not platforms:
         platforms = PLATFORM_RIDS_DEFAULT
