@@ -1,3 +1,4 @@
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Utility;
 
@@ -21,7 +22,18 @@ public sealed class SurviveCondition : IObjectiveCondition
 
     public float Difficulty => 0.5f;
 
-    public float Progress => (_mind?.CharacterDeadIC ?? true) ? 0f : 1f;
+    public float Progress
+    {
+        get
+        {
+            if (_mind == null)
+                return 0f;
+
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var mindSystem = entMan.System<MindSystem>();
+            return mindSystem.IsCharacterDeadIc(_mind) ? 0f : 1f;
+        }
+    }
 
     public bool Equals(IObjectiveCondition? other)
     {

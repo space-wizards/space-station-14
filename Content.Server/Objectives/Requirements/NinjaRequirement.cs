@@ -1,3 +1,4 @@
+﻿using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Roles;
 
@@ -8,6 +9,8 @@ public sealed class NinjaRequirement : IObjectiveRequirement
 {
     public bool CanBeAssigned(Mind.Mind mind)
     {
-        return mind.HasRole<NinjaRole>();
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+        var mindSystem = entityManager.System<MindSystem>();
+        return mindSystem.HasRole<NinjaRole>(mind);
     }
 }

@@ -31,7 +31,7 @@ public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
         var gridUid = StationSystem.GetLargestGrid(stationData);
         if (gridUid == null || !TryComp<MapGridComponent>(gridUid, out var grid))
         {
-            Sawmill.Warn("Chosen station has no grids, cannot spawn space ninja!");
+            Sawmill.Warning("Chosen station has no grids, cannot spawn space ninja!");
             return;
         }
 
@@ -47,9 +47,6 @@ public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
         var position = _transform.GetWorldPosition(xform) + location;
         var coords = new MapCoordinates(position, xform.MapID);
         Sawmill.Info($"Creating ninja spawnpoint at {coords}");
-        var spawner = Spawn("SpawnPointGhostSpaceNinja", coords);
-
-        // tell the player where the station is when they pick the role
-        _ninja.SetNinjaSpawnerData(spawner, gridUid.Value);
+        Spawn("SpawnPointGhostSpaceNinja", coords);
     }
 }

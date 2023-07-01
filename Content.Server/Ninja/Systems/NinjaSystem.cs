@@ -8,6 +8,7 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Roles.Events;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Popups;
@@ -40,18 +41,19 @@ namespace Content.Server.Ninja.Systems;
 public sealed class NinjaSystem : SharedNinjaSystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
+    [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
@@ -128,7 +130,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     public bool GetNinjaRole(EntityUid uid, [NotNullWhen(true)] out NinjaRole? role)
     {
         role = null;
-        if (!TryComp<MindComponent>(uid, out var mind))
+        if (!TryComp<MindContainerComponent>(uid, out var mind))
             return false;
 
         return GetNinjaRole(mind.Mind, out role);
@@ -286,7 +288,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// </summary>
     private void OnNinjaMindAdded(EntityUid uid, NinjaComponent comp, MindAddedMessage args)
     {
-        if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
+        if (TryComp<MindContainerComponent>(uid, out var mind) && mind.Mind != null)
             GreetNinja(mind.Mind);
     }
 
@@ -295,7 +297,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// </summary>
     private void GreetNinja(Mind.Mind mind)
     {
-        if (!mind.TryGetSession(out var session) || mind.OwnedEntity == null)
+        if (!_mind.TryGetSession(mind, out var session) || mind.OwnedEntity == null)
             return;
 
         // make sure to enable the traitor rule for the sweet greentext
@@ -309,7 +311,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
         var config = RuleConfig();
         var role = new NinjaRole(mind, _proto.Index<AntagPrototype>("SpaceNinja"));
-        mind.AddRole(role);
+        _mind.AddRole(mind, role);
         _traitorRule.AddToTraitors(traitorRule, role);
         foreach (var objective in config.Objectives)
         {
@@ -369,7 +371,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     {
         if (_proto.TryIndex<ObjectivePrototype>(name, out var objective))
         {
-            mind.TryAddObjective(objective);
+            _mind.TryAddObjective(mind, objective);
         }
         else
         {
