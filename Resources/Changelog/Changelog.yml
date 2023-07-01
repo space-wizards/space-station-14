@@ -1,15 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: Fixed fire extinguisher not working., type: Fix}
-  id: 3648
-  time: '2023-05-05T12:48:38.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: The Chief Space Dragon has re-authorized space carp to be friendly to
-      their petters., type: Fix}
-  id: 3649
-  time: '2023-05-05T13:03:47.0000000+00:00'
 - author: Jackal298
   changes:
   - {message: 'After detectives complained about the weakness of the .45 magnum cartridge,
@@ -1205,7 +1194,7 @@ Entries:
   - {message: partially full syringe contents now easier to see, type: Fix}
   id: 3854
   time: '2023-05-23T19:06:36.0000000+00:00'
-- author: "0x6273"
+- author: '0x6273'
   changes:
   - {message: Artifacts now retain their monetary value after extracting points.,
     type: Tweak}
@@ -1365,7 +1354,7 @@ Entries:
   - {message: Station Map has been resprited and can now be constructed., type: Add}
   id: 3881
   time: '2023-05-28T06:42:41.0000000+00:00'
-- author: "0x6273"
+- author: '0x6273'
   changes:
   - {message: Emitters and APEs can now be controlled with device linking., type: Add}
   id: 3882
@@ -2026,7 +2015,7 @@ Entries:
       EVA helmets.', type: Tweak}
   id: 3994
   time: '2023-06-15T02:15:22.0000000+00:00'
-- author: "0x6273"
+- author: '0x6273'
   changes:
   - {message: Pre-filled non-engineering utility belts now come with a network configurator.,
     type: Tweak}
@@ -2536,7 +2525,7 @@ Entries:
   - {message: Chemist PDA's can now analyze patient health., type: Tweak}
   id: 4080
   time: '2023-06-24T12:11:48.0000000+00:00'
-- author: "0x6273"
+- author: '0x6273'
   changes:
   - {message: 'Hotplates no longer use itemslots, which means you can see and interact
       with the beaker while it''s being heated.', type: Tweak}
@@ -2924,3 +2913,14 @@ Entries:
   - {message: MRP rules updated., type: Tweak}
   id: 4147
   time: '2023-07-01T00:15:04.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: 'The Cargo Telepad has been significantly improved, teleporting orders
+      over 4x faster.', type: Tweak}
+  id: 4148
+  time: '2023-07-01T19:00:33.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: Windoors can now be bolted through the network system., type: Tweak}
+  id: 4149
+  time: '2023-07-01T19:00:53.0000000+00:00'
