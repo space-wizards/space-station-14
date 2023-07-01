@@ -321,11 +321,12 @@ public sealed class NinjaSystem : SharedNinjaSystem
         // choose spider charge detonation point
         // currently based on warp points, something better could be done (but would likely require mapping work)
         var warps = new List<EntityUid>();
-        var query = EntityQueryEnumerator<WarpPointComponent>();
-        while (query.MoveNext(out var warpUid, out var warp))
+        var query = EntityQueryEnumerator<WarpPointComponent, TransformComponent>();
+        var map = Transform(mind.OwnedEntity.Value).MapID;
+        while (query.MoveNext(out var warpUid, out var warp, out var xform))
         {
-            // won't be asked to detonate the nuke disk or singularity
-            if (warp.Location != null && !HasComp<PhysicsComponent>(warpUid))
+            // won't be asked to detonate the nuke disk or singularity or centcomm
+            if (warp.Location != null && !HasComp<PhysicsComponent>(warpUid) && xform.MapID == map)
                 warps.Add(warpUid);
         }
 

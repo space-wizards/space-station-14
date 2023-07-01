@@ -19,6 +19,7 @@
   issuer: spiderclan
   requirements:
   - !type:NinjaRequirement {}
+  - !type:SpiderChargeTargetRequirement {}
   conditions:
   - !type:SpiderChargeCondition {}
 

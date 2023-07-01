@@ -199,7 +199,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         if (!handled)
             return;
 
-        Popup.PopupClient(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.Medium);
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} doorjacked {ToPrettyString(target):target}");
     }
 
