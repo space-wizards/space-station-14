@@ -12,7 +12,7 @@ public sealed class AddPolymorphActionCommand : IConsoleCommand
 
     public string Description => Loc.GetString("add-polymorph-action-command-description");
 
-    public string Help => Loc.GetString("add-polymorph-action-command-help");
+    public string Help => Loc.GetString("add-polymorph-action-command-help-text");
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {

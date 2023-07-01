@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Server.Medical;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
@@ -16,6 +17,9 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// How many units of hunger to add each time we vomit
         [DataField("hungerAmount")]
         public float HungerAmount = -40f;
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => Loc.GetString("reagent-effect-guidebook-chem-vomit", ("chance", Probability));
 
         public override void Effect(ReagentEffectArgs args)
         {

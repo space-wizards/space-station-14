@@ -67,17 +67,28 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<DrinkComponent, ConsumeDoAfterEvent>(OnDoAfter);
         }
 
+        private FixedPoint2 DrinkVolume(EntityUid uid, DrinkComponent? component = null)
+        {
+            if(!Resolve(uid, ref component))
+                return FixedPoint2.Zero;
+
+            if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var sol))
+                return FixedPoint2.Zero;
+
+            return sol.Volume;
+        }
+
         public bool IsEmpty(EntityUid uid, DrinkComponent? component = null)
         {
             if(!Resolve(uid, ref component))
                 return true;
 
-            return _solutionContainerSystem.DrainAvailable(uid) <= 0;
+            return DrinkVolume(uid, component) <= 0;
         }
 
         private void OnExamined(EntityUid uid, DrinkComponent component, ExaminedEvent args)
         {
-            if (!component.Opened || !args.IsInDetailsRange)
+            if (!component.Opened || !args.IsInDetailsRange || !component.Examinable)
                 return;
 
             var color = IsEmpty(uid, component) ? "gray" : "yellow";
@@ -89,7 +100,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 if (TryComp<ExaminableSolutionComponent>(uid, out var comp))
                 {
                     //provide exact measurement for beakers
-                    args.Message.AddMarkup($" - {Loc.GetString("drink-component-on-examine-exact-volume", ("amount", _solutionContainerSystem.DrainAvailable(uid)))}");
+                    args.Message.AddMarkup($" - {Loc.GetString("drink-component-on-examine-exact-volume", ("amount", DrinkVolume(uid, component)))}");
                 }
                 else
                 {
@@ -160,7 +171,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 component.Opened = true;
                 UpdateAppearance(component);
 
-                var solution = _solutionContainerSystem.Drain(uid, interactions, interactions.Volume);
+                var solution = _solutionContainerSystem.SplitSolution(uid, interactions, interactions.Volume);
                 _puddleSystem.TrySpillAt(uid, solution, out _);
 
                 _audio.PlayPvs(_audio.GetSound(component.BurstSound), uid, AudioParams.Default.WithVolume(-4));
@@ -203,7 +214,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            var drainAvailable = _solutionContainerSystem.DrainAvailable((component).Owner);
+            var drainAvailable = DrinkVolume((component.Owner), component);
             _appearanceSystem.SetData(component.Owner, FoodVisuals.Visual, drainAvailable.Float(), appearance);
             _appearanceSystem.SetData(component.Owner, DrinkCanStateVisual.Opened, component.Opened, appearance);
         }
@@ -311,7 +322,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             var transferAmount = FixedPoint2.Min(component.TransferAmount, solution.Volume);
-            var drained = _solutionContainerSystem.Drain(uid, solution, transferAmount);
+            var drained = _solutionContainerSystem.SplitSolution(uid, solution, transferAmount);
             var forceDrink = args.User != args.Target;
 
             args.Handled = true;

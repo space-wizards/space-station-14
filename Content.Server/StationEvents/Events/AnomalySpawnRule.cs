@@ -24,9 +24,9 @@ public sealed class AnomalySpawnRule : StationEventSystem<AnomalySpawnRuleCompon
     {
         base.Started(uid, component, gameRule, args);
 
-        if (StationSystem.Stations.Count == 0)
-            return; // No stations
-        var chosenStation = RobustRandom.Pick(StationSystem.Stations.ToList());
+        if (!TryGetRandomStation(out var chosenStation))
+            return;
+
         if (!TryComp<StationDataComponent>(chosenStation, out var stationData))
             return;
 

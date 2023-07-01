@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     layers:
     - state: icon
     - state: light-icon
@@ -14,11 +13,11 @@
   - type: Clothing
     equippedPrefix: off
   - type: PointLight
-    netsync: false
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     radius: 3
+    netsync: false
   - type: Appearance
   - type: HandheldLight
     addPrefix: false

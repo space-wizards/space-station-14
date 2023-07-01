@@ -53,7 +53,7 @@ public static class PoolManager
         (CCVars.NPCMaxUpdates.Name,           "999999"),
         (CVars.ThreadParallelCount.Name,      "1"),
         (CCVars.GameRoleTimers.Name,          "false"),
-        (CCVars.CargoShuttles.Name,           "false"),
+        (CCVars.GridFill.Name,                "false"),
         (CCVars.ArrivalsShuttles.Name,        "false"),
         (CCVars.EmergencyShuttleEnabled.Name, "false"),
         (CCVars.ProcgenPreload.Name,          "false"),
@@ -559,18 +559,22 @@ we are just going to end this here to save a lot of time. This is the exception 
     public static async Task<TestMapData> CreateTestMap(PairTracker pairTracker)
     {
         var server = pairTracker.Pair.Server;
+
+        await server.WaitIdleAsync();
+
         var settings = pairTracker.Pair.Settings;
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
+
         if (settings.NoServer) throw new Exception("Cannot setup test map without server");
         var mapData = new TestMapData();
         await server.WaitPost(() =>
         {
-            var mapManager = IoCManager.Resolve<IMapManager>();
             mapData.MapId = mapManager.CreateMap();
             mapData.MapUid = mapManager.GetMapEntityId(mapData.MapId);
             mapData.MapGrid = mapManager.CreateGrid(mapData.MapId);
             mapData.GridUid = mapData.MapGrid.Owner;
             mapData.GridCoords = new EntityCoordinates(mapData.GridUid, 0, 0);
-            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
             var plating = tileDefinitionManager["Plating"];
             var platingTile = new Tile(plating.TileId);
             mapData.MapGrid.SetTile(mapData.GridCoords, platingTile);

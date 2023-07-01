@@ -6,11 +6,11 @@
   - type: AccessReader
   - type: Lock
   - type: Sprite
-    netsync: false
     sprite: Structures/Storage/closet.rsi
     noRot: true
     layers:
     - state: generic
+      map: ["enum.StorageVisualLayers.Base"]
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked

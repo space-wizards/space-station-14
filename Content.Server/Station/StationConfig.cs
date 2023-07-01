@@ -1,30 +1,19 @@
 ﻿using Content.Server.Maps.NameGenerators;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Station;
 
 /// <summary>
-/// A config for a station. Specifies name and job slots.
-/// This is the only part of stations a downstream should ideally need to modify directly.
+/// A config for a station. Specifies name and component modifications.
 /// </summary>
-/// <remarks>
-/// Forks should not directly edit existing parts of this class.
-/// Make a new partial for your fancy new feature, it'll save you time later.
-/// </remarks>
 [DataDefinition, PublicAPI]
-public sealed partial class StationConfig
+public sealed class StationConfig
 {
-    /// <summary>
-    /// The name template to use for the station.
-    /// If there's a name generator this should follow it's required format.
-    /// </summary>
-    [DataField("mapNameTemplate", required: true)]
-    public string StationNameTemplate { get; } = default!;
+    [DataField("stationProto", required: true)]
+    public string StationPrototype = default!;
 
-    /// <summary>
-    /// Name generator to use for the station, if any.
-    /// </summary>
-    [DataField("nameGenerator")]
-    public StationNameGenerator? NameGenerator { get; }
+    [DataField("components", required: true)]
+    public ComponentRegistry StationComponentOverrides = default!;
 }
 

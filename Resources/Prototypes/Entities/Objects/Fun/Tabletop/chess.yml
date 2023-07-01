@@ -33,7 +33,6 @@
   components:
   - type: TabletopDraggable
   - type: Sprite
-    netsync: false
     noRot: true
   - type: Appearance
 

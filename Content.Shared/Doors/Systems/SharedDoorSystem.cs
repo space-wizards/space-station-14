@@ -464,7 +464,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
     private void PreventCollision(EntityUid uid, DoorComponent component, ref PreventCollideEvent args)
     {
-        if (component.CurrentlyCrushing.Contains(args.BodyB.Owner))
+        if (component.CurrentlyCrushing.Contains(args.OtherEntity))
         {
             args.Cancelled = true;
         }
@@ -653,7 +653,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
             case DoorState.Welded:
                 // A welded door? This should never have been active in the first place.
-                Logger.Error($"Welded door was in the list of active doors. Door: {ToPrettyString(door.Owner)}");
+                Log.Error($"Welded door was in the list of active doors. Door: {ToPrettyString(door.Owner)}");
                 break;
         }
     }

@@ -36,8 +36,3 @@
   - /Audio/Weapons/ebladeoff.ogg
   - /Audio/Weapons/ebladeon.ogg
   - /Audio/Weapons/eblade1.ogg
-
-- type: soundCollection
-  id: TrollMeeting
-  files:
-  - /Audio/Misc/emergency_meeting.ogg

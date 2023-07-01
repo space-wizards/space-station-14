@@ -9,7 +9,6 @@
     - Disposal
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/disposal.rsi
     snapCardinals: true
     layers:
@@ -73,7 +72,7 @@
     containers:
       DisposalUnit: !type:Container
   - type: StaticPrice
-    price: 100
+    price: 62
   - type: PowerSwitch
 
 - type: entity
@@ -100,7 +99,6 @@
   description: A pneumatic mail delivery unit.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/disposal.rsi
     layers:
       - state: conmailing
@@ -135,6 +133,8 @@
     transmitFrequencyId: MailingUnit
   - type: WiredNetworkConnection
   - type: Configuration
+    config:
+      tag:
   - type: Appearance
   - type: UserInterface
     interfaces:

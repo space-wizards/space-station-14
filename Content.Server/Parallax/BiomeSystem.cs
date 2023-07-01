@@ -54,6 +54,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         SubscribeLocalEvent<BiomeComponent, ComponentStartup>(OnBiomeStartup);
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
         SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
+        SubscribeLocalEvent<ShuttleFlattenEvent>(OnShuttleFlatten);
         _configManager.OnValueChanged(CVars.NetMaxUpdateRange, SetLoadRange, true);
         InitializeCommands();
         _proto.PrototypesReloaded += ProtoReload;
@@ -198,6 +199,39 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         Preload(targetMapUid, biome, targetArea);
     }
 
+    private void OnShuttleFlatten(ref ShuttleFlattenEvent ev)
+    {
+        if (!TryComp<BiomeComponent>(ev.MapUid, out var biome) ||
+            !TryComp<MapGridComponent>(ev.MapUid, out var grid))
+        {
+            return;
+        }
+
+        var tiles = new List<(Vector2i Index, Tile Tile)>();
+
+        foreach (var aabb in ev.AABBs)
+        {
+            for (var x = Math.Floor(aabb.Left); x <= Math.Ceiling(aabb.Right); x++)
+            {
+                for (var y = Math.Floor(aabb.Bottom); y <= Math.Ceiling(aabb.Top); y++)
+                {
+                    var index = new Vector2i((int) x, (int) y);
+                    var chunk = SharedMapSystem.GetChunkIndices(index, ChunkSize);
+
+                    var mod = biome.ModifiedTiles.GetOrNew(chunk * ChunkSize);
+
+                    if (!mod.Add(index) || !TryGetBiomeTile(index, biome.Layers, biome.Noise, grid, out var tile))
+                        continue;
+
+                    // If we flag it as modified then the tile is never set so need to do it ourselves.
+                    tiles.Add((index, tile.Value));
+                }
+            }
+        }
+
+        grid.SetTiles(tiles);
+    }
+
     /// <summary>
     /// Preloads biome for the specified area.
     /// </summary>
@@ -328,7 +362,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         var loadedMarkers = component.LoadedMarkers;
         var spawnSet = new HashSet<Vector2i>();
         var spawns = new List<Vector2i>();
-        var frontier = new Queue<Vector2i>();
+        var frontier = new ValueList<Vector2i>();
 
         foreach (var (layer, chunks) in markers)
         {
@@ -392,11 +426,14 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     }
 
                     // BFS search
-                    frontier.Enqueue(point);
+                    frontier.Add(point);
                     var groupCount = layerProto.GroupCount;
 
-                    while (frontier.TryDequeue(out var node) && groupCount > 0)
+                    while (frontier.Count > 0 && groupCount > 0)
                     {
+                        var frontierIndex = _random.Next(frontier.Count);
+                        var node = frontier[frontierIndex];
+                        frontier.RemoveSwap(frontierIndex);
                         var enumerator = grid.GetAnchoredEntitiesEnumerator(node);
 
                         if (enumerator.MoveNext(out _))
@@ -429,7 +466,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                                 if (!spawnSet.Contains(neighbor))
                                     continue;
 
-                                frontier.Enqueue(neighbor);
+                                frontier.Add(neighbor);
                                 // Rather than doing some uggo remove check on the list we'll defer it until later
                                 spawnSet.Remove(neighbor);
                             }
