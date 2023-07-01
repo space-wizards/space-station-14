@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Shared.CombatMode;
@@ -37,7 +38,7 @@ public sealed partial class NPCCombatSystem
 
             var idealDistance = weapon.Range * 1.5f;
             var obstacleDirection = pointB - args.WorldPosition;
-            var obstacleDistance = obstacleDirection.Length;
+            var obstacleDistance = obstacleDirection.Length();
 
             if (obstacleDistance > idealDistance || obstacleDistance == 0f)
             {
@@ -47,7 +48,7 @@ public sealed partial class NPCCombatSystem
 
             args.Steering.CanSeek = false;
             obstacleDirection = args.OffsetRotation.RotateVec(obstacleDirection);
-            var norm = obstacleDirection.Normalized;
+            var norm = obstacleDirection.Normalized();
 
             var weight = (obstacleDistance <= args.AgentRadius
                 ? 1f

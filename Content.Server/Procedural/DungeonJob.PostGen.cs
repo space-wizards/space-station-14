@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server.NodeContainer;
 using Content.Shared.Doors.Components;
@@ -301,7 +302,7 @@ public sealed partial class DungeonJob
 
                 if (!blocked)
                     continue;
-                
+
                 var nextDir = (Direction) ((i + 1) * 2 % 8);
                 blocked = HasWall(grid, tile + nextDir.ToIntVec());
 

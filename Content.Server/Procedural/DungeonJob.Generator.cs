@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Shared.Decals;
 using Content.Shared.Procedural;
@@ -64,7 +65,7 @@ public sealed partial class DungeonJob
             roomA.Sort((x, y) =>
                 string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         }
-        
+
         var tiles = new List<(Vector2i, Tile)>();
         var dungeon = new Dungeon();
         var availablePacks = new List<DungeonRoomPackPrototype>();

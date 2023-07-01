@@ -6,7 +6,6 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
-using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Client.NetworkConfigurator;
 

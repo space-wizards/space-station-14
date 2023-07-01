@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Interaction;
 using Content.Shared.Audio;
 using Content.Shared.Jittering;
@@ -162,7 +163,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         {
             if (!CanGib(uid, args.Climber, component))
             {
-                Vector2 direction = (_robustRandom.Next(-2, 2), _robustRandom.Next(-2, 2));
+                var direction = new Vector2(_robustRandom.Next(-2, 2), _robustRandom.Next(-2, 2));
                 _throwing.TryThrow(args.Climber, direction, 0.5f);
                 return;
             }

@@ -1,4 +1,5 @@
-﻿using Content.Shared.Gravity;
+﻿using System.Numerics;
+using Content.Shared.Gravity;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Rotatable;
@@ -163,9 +164,9 @@ namespace Content.Server.Physics.Controllers
                 var ownerPosition = pullableXform.MapPosition.Position;
 
                 var diff = movingPosition - ownerPosition;
-                var diffLength = diff.Length;
+                var diffLength = diff.Length();
 
-                if (diffLength < MaximumSettleDistance && physics.LinearVelocity.Length < MaximumSettleVelocity)
+                if (diffLength < MaximumSettleDistance && physics.LinearVelocity.Length() < MaximumSettleVelocity)
                 {
                     PhysicsSystem.SetLinearVelocity(pullableEnt, Vector2.Zero, body: physics);
                     _pullableSystem.StopMoveTo(pullable);
@@ -176,9 +177,9 @@ namespace Content.Server.Physics.Controllers
                 var impulseModifier = MathHelper.Lerp(AccelModifierLow, AccelModifierHigh, impulseModifierLerp);
                 var multiplier = diffLength < 1 ? impulseModifier * diffLength : impulseModifier;
                 // Note the implication that the real rules of physics don't apply to pulling control.
-                var accel = diff.Normalized * multiplier;
+                var accel = diff.Normalized() * multiplier;
                 // Now for the part where velocity gets shutdown...
-                if (diffLength < SettleShutdownDistance && physics.LinearVelocity.Length >= SettleMinimumShutdownVelocity)
+                if (diffLength < SettleShutdownDistance && physics.LinearVelocity.Length() >= SettleMinimumShutdownVelocity)
                 {
                     // Shutdown velocity increases as we get closer to centre
                     var scaling = (SettleShutdownDistance - diffLength) / SettleShutdownDistance;

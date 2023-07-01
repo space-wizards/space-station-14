@@ -37,11 +37,11 @@ public sealed class ListeningSystem : EntitySystem
         foreach (var (listener, xform) in EntityQuery<ActiveListenerComponent, TransformComponent>())
         {
             if (xform.MapID != sourceXform.MapID)
-                return;
+                continue;
 
             // range checks
             // TODO proper speech occlusion
-            var distance = (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).LengthSquared;
+            var distance = (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).LengthSquared();
             if (distance > listener.Range * listener.Range)
                 continue;
 

@@ -110,13 +110,13 @@ namespace Content.Client.UserInterface.Controls
             MinSize = (DefaultButtonSize, DefaultButtonSize);
             AddChild(ButtonRect = new TextureRect
             {
-                TextureScale = (2, 2),
+                TextureScale = new Vector2(2, 2),
                 MouseFilter = MouseFilterMode.Stop
             });
             AddChild(HighlightRect = new TextureRect
             {
                 Visible = false,
-                TextureScale = (2, 2),
+                TextureScale = new Vector2(2, 2),
                 MouseFilter = MouseFilterMode.Ignore
             });
 
@@ -174,7 +174,7 @@ namespace Content.Client.UserInterface.Controls
 
             AddChild(BlockedRect = new TextureRect
             {
-                TextureScale = (2, 2),
+                TextureScale = new Vector2(2, 2),
                 MouseFilter = MouseFilterMode.Stop,
                 Visible = false
             });

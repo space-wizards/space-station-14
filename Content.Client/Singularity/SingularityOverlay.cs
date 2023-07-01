@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Singularity.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
@@ -30,9 +31,9 @@ namespace Content.Client.Singularity
             _shader.SetParameter("maxDistance", MaxDistance * EyeManager.PixelsPerMeter);
         }
 
-        private Vector2[] _positions = new Vector2[MaxCount];
-        private float[] _intensities = new float[MaxCount];
-        private float[] _falloffPowers = new float[MaxCount];
+        private readonly Vector2[] _positions = new Vector2[MaxCount];
+        private readonly float[] _intensities = new float[MaxCount];
+        private readonly float[] _falloffPowers = new float[MaxCount];
         private int _count = 0;
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)

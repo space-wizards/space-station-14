@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Examine;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
@@ -114,7 +115,7 @@ public sealed partial class NPCSteeringSystem
         var direction = targetMap.Position - ourMap.Position;
 
         // Are we in range
-        if (direction.Length <= arrivalDistance)
+        if (direction.Length() <= arrivalDistance)
         {
             // Node needs some kind of special handling like access or smashing.
             if (steering.CurrentPath.TryPeek(out var node) && !node.Data.IsFreeSpace)
@@ -232,13 +233,13 @@ public sealed partial class NPCSteeringSystem
             return false;
         }
 
-        var input = direction.Normalized;
+        var input = direction.Normalized();
         var tickMovement = moveSpeed * frameTime;
 
         // We have the input in world terms but need to convert it back to what movercontroller is doing.
         input = offsetRot.RotateVec(input);
-        var norm = input.Normalized;
-        var weight = MapValue(direction.Length, tickMovement * 0.5f, tickMovement * 0.75f);
+        var norm = input.Normalized();
+        var weight = MapValue(direction.Length(), tickMovement * 0.5f, tickMovement * 0.75f);
 
         ApplySeek(interest, norm, weight);
 
@@ -246,7 +247,7 @@ public sealed partial class NPCSteeringSystem
         if (weight > 0f && body.LinearVelocity.LengthSquared() > 0f)
         {
             const float sameDirectionWeight = 0.1f;
-            norm = body.LinearVelocity.Normalized;
+            norm = body.LinearVelocity.Normalized();
 
             ApplySeek(interest, norm, sameDirectionWeight);
         }
@@ -311,7 +312,7 @@ public sealed partial class NPCSteeringSystem
         // Then don't consider pruning.
         var goal = nodes.Last().Coordinates.ToMap(EntityManager, _transform);
         var canPrune =
-            _interaction.InRangeUnobstructed(mapCoordinates, goal, (goal.Position - mapCoordinates.Position).Length + 0.1f, mask);
+            _interaction.InRangeUnobstructed(mapCoordinates, goal, (goal.Position - mapCoordinates.Position).Length() + 0.1f, mask);
 
         while (nodes.TryPeek(out var node))
         {
@@ -422,7 +423,7 @@ public sealed partial class NPCSteeringSystem
                 // Welp
                 if (obstacleDirection == Vector2.Zero)
                 {
-                    obstacleDirection = Vector2.One.Normalized;
+                    obstacleDirection = Vector2.One.Normalized();
                 }
             }
             else
@@ -431,7 +432,7 @@ public sealed partial class NPCSteeringSystem
             }
 
             obstacleDirection = offsetRot.RotateVec(obstacleDirection);
-            var norm = obstacleDirection.Normalized;
+            var norm = obstacleDirection.Normalized();
 
             for (var i = 0; i < InterestDirections; i++)
             {
@@ -515,7 +516,7 @@ public sealed partial class NPCSteeringSystem
             }
 
             obstacleDirection = offsetRot.RotateVec(obstacleDirection);
-            var norm = obstacleDirection.Normalized;
+            var norm = obstacleDirection.Normalized();
             weight *= 0.25f;
 
             for (var i = 0; i < InterestDirections; i++)

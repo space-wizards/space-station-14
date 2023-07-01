@@ -205,7 +205,7 @@ namespace Content.Server.Hands.Systems
             if (direction == Vector2.Zero)
                 return true;
 
-            direction = direction.Normalized * Math.Min(direction.Length, hands.ThrowRange);
+            direction = direction.Normalized() * Math.Min(direction.Length(), hands.ThrowRange);
 
             var throwStrength = hands.ThrowForceMultiplier;
 

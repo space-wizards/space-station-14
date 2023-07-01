@@ -64,7 +64,7 @@ namespace Content.Server.Abilities.Mime
 
             var xform = Transform(uid);
             // Get the tile in front of the mime
-            var offsetValue = xform.LocalRotation.ToWorldVec().Normalized;
+            var offsetValue = xform.LocalRotation.ToWorldVec().Normalized();
             var coords = xform.Coordinates.Offset(offsetValue).SnapToGrid(EntityManager);
             var tile = coords.GetTileRef();
             if (tile == null)

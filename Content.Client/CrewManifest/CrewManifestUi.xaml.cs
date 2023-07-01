@@ -146,7 +146,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
                 {
                     var icon = new TextureRect()
                     {
-                        TextureScale = (2, 2),
+                        TextureScale = new Vector2(2, 2),
                         Stretch = TextureRect.StretchMode.KeepCentered
                     };
 

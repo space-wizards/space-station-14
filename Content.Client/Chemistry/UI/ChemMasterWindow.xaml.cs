@@ -68,7 +68,7 @@ namespace Content.Client.Chemistry.UI
                 TextureRect pillTypeTexture = new TextureRect
                 {
                     Texture = specifier.Frame0(),
-                    TextureScale = (1.75f, 1.75f),
+                    TextureScale = new Vector2(1.75f, 1.75f),
                     Stretch = TextureRect.StretchMode.KeepCentered,
                 };
 

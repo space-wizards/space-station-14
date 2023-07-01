@@ -50,7 +50,7 @@ public sealed class MenuButton : ContainerButton
         TooltipDelay = CustomTooltipDelay;
         _buttonIcon = new TextureRect()
         {
-            TextureScale = (0.5f, 0.5f),
+            TextureScale = new Vector2(0.5f, 0.5f),
             HorizontalAlignment = HAlignment.Center,
             VerticalAlignment = VAlignment.Center,
             VerticalExpand = true,

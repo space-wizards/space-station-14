@@ -478,7 +478,7 @@ public sealed partial class GunSystem
                     box.AddChild(new TextureRect
                     {
                         Texture = texture,
-                        TextureScale = (scale, scale),
+                        TextureScale = new Vector2(scale, scale),
                         ModulateSelfOverride = Color.LimeGreen,
                     });
                 }
