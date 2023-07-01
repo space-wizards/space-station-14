@@ -1,0 +1,4 @@
+- type: sinkPort
+  id: WeaponInputPort
+  name: signal-port-name-weapons-input
+  description: signal-port-name-weapons-input-description

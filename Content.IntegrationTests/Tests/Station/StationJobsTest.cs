@@ -42,25 +42,30 @@ public sealed class StationJobsTest
 
 - type: job
   id: TAssistant
+  setPreference: true
   playTimeTracker: Dummy
 
 - type: job
   id: TMime
+  setPreference: true
   weight: 20
   playTimeTracker: Dummy
 
 - type: job
   id: TClown
+  setPreference: true
   weight: -10
   playTimeTracker: Dummy
 
 - type: job
   id: TCaptain
+  setPreference: true
   weight: 10
   playTimeTracker: Dummy
 
 - type: job
   id: TChaplain
+  setPreference: true
   playTimeTracker: Dummy
 ";
 

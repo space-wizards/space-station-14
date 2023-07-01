@@ -1,0 +1,37 @@
+- type: entity
+  id: FTLGenericMissile
+  name: missile
+  parent: BaseItem
+  description: A missile designed to be fired by missile launchers.
+  components:
+    - type: Item
+      size: 60
+    - type: MultiHandedItem
+    - type: FTLAmmo
+      prototype: GenericMissile
+      tag: FTLMissile
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+      state: rpg
+    - type: StaticPrice
+      price: 150
+
+- type: entity
+  parent: FTLGenericMissile
+  id: FTLIncendiaryMissile
+  name: incendiary missile
+  description: A missile designed to flame up rooms.
+  components:
+    - type: Item
+      size: 60
+    - type: MultiHandedItem
+    - type: FTLAmmo
+      prototype: IncendiaryMissile
+      tag: FTLMissile
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+      state: rpg
+    - type: StaticPrice
+      price: 150

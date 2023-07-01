@@ -1,0 +1,8 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
+                      xmlns:weapons="clr-namespace:Content.Client._FTL.Weapons"
+                      Title="{Loc 'station-map-window-title'}"
+                      Resizable="False">
+    <weapons:WeaponMapControl Name="TargetingMapScreen"/>
+</controls:FancyWindow>

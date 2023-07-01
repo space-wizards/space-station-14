@@ -1,0 +1,5 @@
+- type: sourcePort
+  id: WeaponOutputPort
+  name: signal-port-name-weapons-output
+  description: signal-port-name-weapons-output-description
+  defaultLinks: [ WeaponInputPort ]

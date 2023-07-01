@@ -12,20 +12,12 @@ tilemap:
 entities:
 - proto: ""
   entities:
-  - uid: 1
-    components:
-    - type: MetaData
-    - type: Transform
-    - type: Map
-    - type: PhysicsMap
-    - type: Broadphase
-    - type: OccluderTree
-    - type: LoadedMap
   - uid: 2
     components:
-    - type: MetaData
+    - name: Kestrel
+      type: MetaData
     - pos: -0.4375,-0.375
-      parent: 1
+      parent: invalid
       type: Transform
     - chunks:
         0,0:
@@ -147,7 +139,8 @@ entities:
           -1,-8:
             0: 65535
           -1,-7:
-            0: 65535
+            0: 63487
+            2: 2048
           -1,-6:
             0: 65535
           -1,-5:
@@ -206,12 +199,30 @@ entities:
           - 0
           - 0
           - 0
+        - volume: 2500
+          temperature: 293.14996
+          moles:
+          - 20.078888
+          - 75.53487
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
         chunkSize: 4
       type: GridAtmosphere
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - id: Kestrel
       type: BecomesStation
+    - type: FTLShipHealth
+    - group: ""
+      type: NameIdentifier
 - proto: AirlockAtmospherics
   entities:
   - uid: 204
@@ -2546,6 +2557,13 @@ entities:
       pos: 0.5,-0.5
       parent: 2
       type: Transform
+- proto: ClosetBombFilled
+  entities:
+  - uid: 813
+    components:
+    - pos: 0.5,-22.5
+      parent: 2
+      type: Transform
 - proto: ClothingBeltSheathFilled
   entities:
   - uid: 736
@@ -2557,6 +2575,13 @@ entities:
       type: EmitSoundOnCollide
 - proto: ClothingBeltUtilityFilled
   entities:
+  - uid: 1
+    components:
+    - pos: 1.5187781,-26.510267
+      parent: 2
+      type: Transform
+    - nextSound: 31.5723844
+      type: EmitSoundOnCollide
   - uid: 413
     components:
     - pos: -1.4764618,-28.41355
@@ -2776,12 +2801,121 @@ entities:
       pos: 2.5,-32.5
       parent: 2
       type: Transform
+- proto: FTLArtemisMarkIWeaponSilo
+  entities:
+  - uid: 798
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -0.5,-26.5
+      parent: 2
+      type: Transform
+    - links:
+      - 789
+      type: DeviceLinkSink
 - proto: FTLComputerPowerControl
   entities:
   - uid: 795
     components:
     - rot: -1.5707963267948966 rad
       pos: 6.5,-29.5
+      parent: 2
+      type: Transform
+- proto: FTLGenericMissile
+  entities:
+  - uid: 799
+    components:
+    - pos: 0.5242295,-26.295605
+      parent: 2
+      type: Transform
+    - nextSound: 153.972072
+      type: EmitSoundOnCollide
+  - uid: 800
+    components:
+    - pos: 0.5242295,-26.21748
+      parent: 2
+      type: Transform
+    - nextSound: 153.3926171
+      type: EmitSoundOnCollide
+  - uid: 802
+    components:
+    - pos: 0.5242295,-26.389355
+      parent: 2
+      type: Transform
+    - nextSound: 155.3698255
+      type: EmitSoundOnCollide
+  - uid: 803
+    components:
+    - pos: 0.5242295,-26.46748
+      parent: 2
+      type: Transform
+    - nextSound: 155.8231235
+      type: EmitSoundOnCollide
+  - uid: 804
+    components:
+    - pos: 0.45458376,-26.540314
+      parent: 2
+      type: Transform
+    - nextSound: 156.9724127
+      type: EmitSoundOnCollide
+  - uid: 805
+    components:
+    - pos: 0.5086045,-26.608105
+      parent: 2
+      type: Transform
+    - nextSound: 158.2731824
+      type: EmitSoundOnCollide
+  - uid: 806
+    components:
+    - pos: 0.5086045,-26.639355
+      parent: 2
+      type: Transform
+    - nextSound: 159.9229592
+      type: EmitSoundOnCollide
+  - uid: 807
+    components:
+    - pos: 0.49297953,-26.74873
+      parent: 2
+      type: Transform
+    - nextSound: 161.5259371
+      type: EmitSoundOnCollide
+  - uid: 808
+    components:
+    - pos: 0.49297953,-26.733105
+      parent: 2
+      type: Transform
+    - nextSound: 162.1328865
+      type: EmitSoundOnCollide
+- proto: FTLWeaponTargetingPad
+  entities:
+  - uid: 789
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -2.5,-23.5
+      parent: 2
+      type: Transform
+    - linkedPorts:
+        798:
+        - WeaponOutputPort: WeaponInputPort
+      registeredSinks:
+        WeaponOutputPort:
+        - 798
+      type: DeviceLinkSource
+  - uid: 791
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -2.5,-22.5
+      parent: 2
+      type: Transform
+  - uid: 796
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 3.5,-22.5
+      parent: 2
+      type: Transform
+  - uid: 797
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 3.5,-23.5
       parent: 2
       type: Transform
 - proto: GasMixerFlipped
@@ -4404,7 +4538,7 @@ entities:
     - pos: -1.5,-15.5
       parent: 2
       type: Transform
-    - SecondsUntilStateChange: -859.3729
+    - SecondsUntilStateChange: -1594.6321
       state: Opening
       type: Door
   - uid: 431
@@ -5242,6 +5376,19 @@ entities:
   - uid: 449
     components:
     - pos: 1.5,-0.5
+      parent: 2
+      type: Transform
+- proto: TableReinforced
+  entities:
+  - uid: 801
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 0.5,-26.5
+      parent: 2
+      type: Transform
+  - uid: 811
+    components:
+    - pos: 1.5,-26.5
       parent: 2
       type: Transform
 - proto: TelecomServer
@@ -6306,6 +6453,32 @@ entities:
   - uid: 323
     components:
     - pos: -5.5,-15.5
+      parent: 2
+      type: Transform
+- proto: WindoorSecure
+  entities:
+  - uid: 809
+    components:
+    - pos: 0.5,-25.5
+      parent: 2
+      type: Transform
+  - uid: 810
+    components:
+    - pos: -1.5,-25.5
+      parent: 2
+      type: Transform
+- proto: WindowReinforcedDirectional
+  entities:
+  - uid: 814
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 1.5,-26.5
+      parent: 2
+      type: Transform
+  - uid: 815
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 1.5,-26.5
       parent: 2
       type: Transform
 ...

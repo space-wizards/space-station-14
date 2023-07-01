@@ -1,0 +1,82 @@
+- type: entity
+  parent: BaseStructure
+  id: BaseFTLWeapon
+  name: base weapon
+  abstract: true
+  description: Better be careful with whatever the fuck you're doing with this thing.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: FTLWeapon
+    - type: InteractionOutline
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Sprite
+      netsync: false
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 1000
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: UserInterface
+      interfaces:
+        - key: enum.WeaponTargetingUiKey.Key
+          type: WeaponTargetingBoundUserInterface
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: BasicDevice
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: DeviceLinkSink
+      ports:
+        - WeaponInputPort
+
+- type: entity
+  parent: BaseFTLWeapon
+  id: BaseFTLWeaponSilo
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: _FTL/silo.rsi
+      layers:
+        - state: closed
+        - state: tray
+          offset: 0, -1
+          map: [ "enum.StorageVisualLayers.Door" ]
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+    - type: FTLWeaponSilo
+    - type: EntityStorage
+      isCollidableWhenOpen: true
+      showContents: false
+      capacity: 1
+      enteringOffset: 0, -1
+      closeSound:
+        path: /Audio/Items/deconstruct.ogg
+      openSound:
+        path: /Audio/Items/deconstruct.ogg
+    - type: Appearance
+      visuals:
+        - type: StorageVisualizer
+          state: closed
+          state_alt: open
+          state_open: tray
+
+- type: entity
+  parent: BaseFTLWeaponSilo
+  id: FTLArtemisMarkIWeaponSilo
+  name: artemis mk.1 weapon silo
+  placement:
+    mode: SnapgridCenter
