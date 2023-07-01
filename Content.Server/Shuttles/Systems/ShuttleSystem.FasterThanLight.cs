@@ -30,8 +30,8 @@ public sealed partial class ShuttleSystem
 
     private MapId? _hyperSpaceMap;
 
-    public const float DefaultStartupTime = 5.5f;
-    public const float DefaultTravelTime = 20f;
+    public const float DefaultStartupTime = 60f;
+    public const float DefaultTravelTime = 30f;
     public const float DefaultArrivalTime = 5f;
     private const float FTLCooldown = 10f;
     private const float ShuttleFTLRange = 100f;
@@ -164,6 +164,8 @@ public sealed partial class ShuttleSystem
         _console.RefreshShuttleConsoles();
         var ev = new FTLRequestEvent(_mapManager.GetMapEntityId(coordinates.ToMap(EntityManager, _transform).MapId));
         RaiseLocalEvent(shuttleUid, ref ev, true);
+
+        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jump-jumped-message"), colorOverride: Color.Gold);
     }
 
     /// <summary>
@@ -188,6 +190,8 @@ public sealed partial class ShuttleSystem
         hyperspace.Dock = dock;
         hyperspace.PriorityTag = priorityTag;
         _console.RefreshShuttleConsoles();
+        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jump-soon-message"), colorOverride: Color.Gold);
+
     }
 
     private bool TrySetupFTL(EntityUid uid, ShuttleComponent shuttle, [NotNullWhen(true)] out FTLComponent? component)
@@ -239,6 +243,7 @@ public sealed partial class ShuttleSystem
             {
                 // Startup time has elapsed and in hyperspace.
                 case FTLState.Starting:
+                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jumped-message"), colorOverride: Color.Gold);
                     DoTheDinosaur(xform);
 
                     comp.State = FTLState.Travelling;
@@ -261,7 +266,7 @@ public sealed partial class ShuttleSystem
                         _physics.SetAngularDamping(body, 0f);
                     }
 
-                    SetDockBolts(uid, true);
+                    SetDockBolts(uid, false);
                     _console.RefreshShuttleConsoles(uid);
                     var target = comp.TargetUid != null ? new EntityCoordinates(comp.TargetUid.Value, Vector2.Zero) : comp.TargetCoordinates;
 
@@ -291,6 +296,7 @@ public sealed partial class ShuttleSystem
                     break;
                 // Arrived
                 case FTLState.Arriving:
+                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jump-arrival-message"), colorOverride: Color.Gold);
                     DoTheDinosaur(xform);
                     SetDockBolts(uid, false);
                     SetDocks(uid, true);

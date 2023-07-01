@@ -1,4 +1,5 @@
 using Content.Server.Body.Systems;
+using Content.Server.Chat.Systems;
 using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
@@ -39,6 +40,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly ThrusterSystem _thruster = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
 
     private ISawmill _sawmill = default!;
 
