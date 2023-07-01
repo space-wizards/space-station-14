@@ -96,11 +96,11 @@ def main() -> None:
 
     parser.add_argument("--hybrid-acz",
                         action="store_true",
-                        help="Dummy; Hybrid ACZ builds are default.")
+                        help="Does nothing; Hybrid ACZ builds are default. Hybrid ACZ builds contain an embedded Content.Client.zip that the server hosts.")
 
     parser.add_argument("--no-hybrid-acz",
                         action="store_true",
-                        help="Disables 'Hybrid ACZ' build. Hybrid ACZ builds contain an embedded Content.Client.zip that the server hosts. " + Fore.YELLOW + "You usually want this!" + Style.RESET_ALL)
+                        help="Disables 'Hybrid ACZ' build. " + Fore.YELLOW + "You shouldn't supply this flag unless you have your own way of shipping the client data, such as a Robust.CDN server." + Style.RESET_ALL)
 
     args = parser.parse_args()
     platforms = args.platform
