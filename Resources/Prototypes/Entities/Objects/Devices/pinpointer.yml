@@ -54,3 +54,12 @@
   - type: Pinpointer
     updateTargetName: true
     canRetarget: true
+
+- type: entity
+  name: pinpointer
+  id: PinpointerStation
+  parent: PinpointerBase
+  components:
+  - type: Pinpointer
+    component: StationData
+    targetName: the station

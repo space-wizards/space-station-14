@@ -9,7 +9,6 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Mind.Components;
-using Content.Server.Ninja.Components;
 using Content.Server.Objectives;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -60,7 +59,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
         base.Initialize();
 
         SubscribeLocalEvent<NinjaComponent, ComponentStartup>(OnNinjaStartup);
-        SubscribeLocalEvent<NinjaComponent, GhostRoleSpawnerUsedEvent>(OnNinjaSpawned);
         SubscribeLocalEvent<NinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
 
         SubscribeLocalEvent<DoorComponent, DoorEmaggedEvent>(OnDoorEmagged);
@@ -85,7 +83,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
         // prevent double ninja'ing
         var user = mind.OwnedEntity.Value;
-        if (HasComp<NinjaComponent>(user) || HasComp<NinjaSpawnerDataComponent>(user))
+        if (HasComp<NinjaComponent>(user))
             return;
 
         AddComp<NinjaComponent>(user);
@@ -169,16 +167,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
         {
             _alerts.ClearAlert(uid, AlertType.SuitPower);
         }
-    }
-
-    /// <summary>
-    /// Set the station grid on an entity, either ninja spawner or the ninja itself.
-    /// Used to tell a ghost that takes ninja role where the station is.
-    /// </summary>
-    public void SetNinjaSpawnerData(EntityUid uid, EntityUid grid)
-    {
-        var comp = EnsureComp<NinjaSpawnerDataComponent>(uid);
-        comp.Grid = grid;
     }
 
     /// <summary>
@@ -273,17 +261,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
     }
 
     /// <summary>
-    /// Inherit spawner's station grid and set the ninja's to it.
-    /// </summary>
-    private void OnNinjaSpawned(EntityUid uid, NinjaComponent comp, GhostRoleSpawnerUsedEvent args)
-    {
-        if (TryComp<NinjaSpawnerDataComponent>(args.Spawner, out var data))
-        {
-            SetNinjaSpawnerData(uid, data.Grid);
-        }
-    }
-
-    /// <summary>
     /// Add configured implants to the ninja.
     /// </summary>
     /// <remarks>
@@ -355,17 +332,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
         _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
-
-        if (TryComp<NinjaSpawnerDataComponent>(mind.OwnedEntity, out var data) && data.Grid != EntityUid.Invalid)
-        {
-            var gridPos = _transform.GetWorldPosition(data.Grid);
-            var ninjaPos = _transform.GetWorldPosition(mind.OwnedEntity.Value);
-            var vector = gridPos - ninjaPos;
-            var direction = vector.GetDir();
-            var position = $"({(int) gridPos.X}, {(int) gridPos.Y})";
-            var msg = Loc.GetString("ninja-role-greeting-direction", ("direction", direction), ("position", position));
-            _chatMan.DispatchServerMessage(session, msg);
-        }
     }
 
     /// <summary>
@@ -402,8 +368,12 @@ public sealed class NinjaSystem : SharedNinjaSystem
     private void AddObjective(Mind.Mind mind, string name)
     {
         if (_proto.TryIndex<ObjectivePrototype>(name, out var objective))
+        {
             mind.TryAddObjective(objective);
+        }
         else
+        {
             Logger.Error($"Ninja has unknown objective prototype: {name}");
+        }
     }
 }
