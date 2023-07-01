@@ -1,3 +1,12 @@
+[color=#ffd700]Here's a quick recap of the rules I changed :[/color]
+
+[color=#00ff66]- Antagonists are allowed to kill as they see fit. They are allowed to cause massive station damage early into the round, like exploding AME and releasing singulo, even if the round has just started.[/color]
+[color=#00ff66]- Department strikes, revolutions (ex: cargonia and any variation thereof), riots, cults, and any other type are allowed for everyone, just note that there's a risk for sec to use lethals on you, or for cap to call ERT.[/color]
+[color=#00ff66]- As a head, you can willingly and openly cooperate with terrorists/antagonists. You can give away your objective items. However, note that this is an IC illegal activity and security will arrest you. If you are HoS or security is bad at their job, cap is allowed to call for ERT.[/color]
+[color=#00ff66]- As a head, you are allowed to hire random crew to be your bodyguards or promote random to Captain or a Head of Staff at random. However, this will be at your own risk.[/color]
+
+
+
 [color=#ff0000]YOU MUST BE AT LEAST 16 YEARS OF AGE TO PLAY ON WIZARD'S DEN SERVERS. ANY USERS SUSPECTED OF BEING UNDER 16 YEARS OF AGE WILL BE BANNED UNTIL THEY ARE OF AGE.[/color]
 
 [color=#ff0000]DISCONNECTING FROM OR IGNORING/EVADING ADMIN-HELPS WILL RESULT IN AN APPEAL ONLY BAN.[/color]
@@ -38,7 +47,7 @@ This is the "short" form of the rules, which has all the information any regular
     - [color=#ff0000]The arrivals station, shuttle, and general arrivals docking area are completely off-limits to any hostile activity, including activity by antagonists. Attacking newly spawned players in these areas or damaging/sabotaging these areas is strictly forbidden.[/color]
     - Do not intentionally make other players' lives hell for your own amusement.
     - [color=#ff0000]THE ROUND IS NOT OVER UNTIL THE END-ROUND SUMMARY APPEARS. KILLING SOMEONE FOR NO REASON BEFORE THIS WILL BE HANDLED ACCORDINGLY.[/color]
-    - Antagonists have a lot of leeway with this rule and may kill/sabotage as they see fit, however if your behavior degrades the experience for the majority of the server you will be told to stop. Antagonists are still forbidden from causing massive station damage early into the round (less than 30 minutes) and are forbidden from needlessly prolonging rounds.
+    - Antagonists have a lot of leeway with this rule and may kill/sabotage as they see fit. [color=#ffd700]Antagonists are allowed to cause massive station damage early into the round, like exploding AME and releasing singulo.[/color]
 
 [color=#a4885c]13.[/color] Don't harass or target players across rounds for actions in prior rounds or for actions outside of the game (this is referred to as "Metagrudging".)
     - Annoying players for IC reasons in the current round is fine; doing it across rounds or as a ghost role after they kill you is not.
@@ -46,12 +55,12 @@ This is the "short" form of the rules, which has all the information any regular
 [color=#a4885c]14.[/color] Don't use information gained from outside your character's knowledge to gain an advantage (this is referred to as "Metagaming").
     - Using information you gain from outside your own character (such as spectating while a ghost, metacomms, or other means) to your advantage is strictly forbidden. You remember all events up until you fall unconscious, even after cloning. If you take a ghost role, unless otherwise stated, you DO NOT REMEMBER ANYTHING from your past life.
 
-[color=#a4885c]15.[/color] Follow escalation rules and don't murder someone for slipping you, use common sense. Do not make Cargonia.
+[color=#a4885c]15.[/color] Follow escalation rules and don't murder someone for slipping you, use common sense. [color=#ffd700]You can make Cargonia.[/color]
     - You can defend yourself to the extent of protecting your own life.
     - Security may use less-lethal force to effect arrests of criminals.
     - Don't outright leave people to die if you get in a fight, make an effort to heal them or bring them to Medbay.
     - Adminhelp the situation if you think someone is over-escalating.
-    - Department strikes, revolutions (ex: cargonia and any variation thereof), riots, cults, and any other type of similar largely disruptive behavior are strictly forbidden. These activities are generally antagonist-only and all players regardless of antagonist status must obtain admin permission before engaging in this behavior (you are extremely unlikely to get permission).
+    [color=#ffd700]- Department strikes, revolutions (ex: cargonia and any variation thereof), riots, cults, and any other type are allowed.[/color]
 
 [color=#a4885c]16.[/color] Don't immediately ghost or suicide from your role if you do not get antagonist (referred to as "Antag-rolling") or from head roles without notifying your chain of command or administrators.
     - This is not fair to other players actually waiting patiently for an antagonist round. Alternatively, if you do not want to play an antagonist or do not want to cause conflict, do not opt-in for antagonist roles.
@@ -71,10 +80,10 @@ If you regularly play Security or Command roles and got this far, we applaud you
 
 [color=#a4885c]19.[/color] Command and Security are held to a higher standard of play.
     - Be competent in your job and department. Failure to know the basics of your department is liable to result in a job ban.
-    - Do not willingly and openly cooperate with terrorists/antagonists. Do not give away your objective items. Some leeway is given to making deals with antagonists if the deal benefits the safety or situation of the station as a whole and not just yourself.
+    [color=#ffd700]- You can willingly and openly cooperate with terrorists/antagonists. You can give away your objective items. However, know that this is an illegal activity and security will arrest you. If you are HoS or security is bad at their job, ERT will be sent.[/color]
     - Uphold the Law & maintain order. Do not engage in lawbreaking activity or troublemaker behavior. Security is expected to intervene into criminal activity where possible. Heads of Staff are at minimum expected to report criminal activity to Security.
     - Do not immediately abandon your position as a Command role and go do whatever you want instead of managing your department/the station. Do not abuse your position or use it to make arbitrary choices to the detriment of the station.
-    - Do not hire random crew to be your bodyguards or promote random to Captain or a Head of Staff at random. If you need bodyguards, talk to your security department. If you need a new Command role, talk to the personnel in that related department.
+    [color=#ffd700]- You are allowed to hire random crew to be your bodyguards or promote random to Captain or a Head of Staff at random. However, this will be at your own risk.[/color]
     - '''Do not abandon the station during Nuclear Operatives. You are supposed to protect the station, not let operatives kill everyone on it without a fight.'''
 
 [color=#a4885c]20.[/color] Security/Command should try to remain non-lethal and effect arrests, except in the following special circumstances, where they may choose to use lethal force:
@@ -93,3 +102,8 @@ Security/Command will be expected to answer for use of lethal force. Security/Co
     - Executions must be for a permabriggable crime and approved by the Captain/Acting Captain, who will answer for approving it alongside Security's chain of command. Those who willingly attempt to damage/destroy or escape from the permabrig may be executed.
     - Detainees in the brig have the right to know what they are being charged with, as well as basic medical aid, at least to the point they are no longer at risk of dying.
     As there is no space law, Security/Command acts to maintain the safety of the station and its inhabitants, as well as Nanotrasen assets.
+
+
+
+
+[color=#ff0000]Be careful, Apocalypse is a station know for being the most dangerous of all, Central Command won't hesitate to send ERT. Have fun ![/color]
