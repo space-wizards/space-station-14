@@ -25,3 +25,6 @@
   - type: Construction
     graph: WoodenBat
     node: bat
+  - type: Tag
+    tags:
+    - BaseballBat

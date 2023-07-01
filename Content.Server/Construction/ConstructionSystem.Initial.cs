@@ -107,8 +107,8 @@ namespace Content.Server.Construction
             // But I'd rather do this shit than risk having collisions with other containers.
             Container GetContainer(string name)
             {
-                if (containers.ContainsKey(name))
-                    return containers[name];
+                if (containers.TryGetValue(name, out var container1))
+                    return container1;
 
                 while (true)
                 {
@@ -154,6 +154,7 @@ namespace Content.Server.Construction
             var failed = false;
 
             var steps = new List<ConstructionGraphStep>();
+            var used = new HashSet<EntityUid>();
 
             foreach (var step in edge.Steps)
             {
@@ -169,6 +170,9 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
+                            if (used.Contains(entity))
+                                continue;
+
                             // TODO allow taking from several stacks.
                             // Also update crafting steps to check if it works.
                             var splitStack = _stackSystem.Split(entity, materialStep.Amount, user.ToCoordinates(0, 0), stack);
@@ -182,7 +186,7 @@ namespace Content.Server.Construction
                                     continue;
                             }
                             else if (!GetContainer(materialStep.Store).Insert(splitStack.Value))
-                                    continue;
+                                continue;
 
                             handled = true;
                             break;
@@ -191,9 +195,12 @@ namespace Content.Server.Construction
                         break;
 
                     case ArbitraryInsertConstructionGraphStep arbitraryStep:
-                        foreach (var entity in EnumerateNearby(user))
+                        foreach (var entity in new HashSet<EntityUid>(EnumerateNearby(user)))
                         {
                             if (!arbitraryStep.EntityValid(entity, EntityManager, _factory))
+                                continue;
+
+                            if (used.Contains(entity))
                                 continue;
 
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
@@ -205,6 +212,7 @@ namespace Content.Server.Construction
                                 continue;
 
                             handled = true;
+                            used.Add(entity);
                             break;
                         }
 

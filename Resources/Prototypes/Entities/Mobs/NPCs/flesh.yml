@@ -31,7 +31,6 @@
       75: Dead
   - type: Stamina
     excess: 50
-  - type: Appearance
   - type: Butcherable
     spawned:
     - id: FoodMeat

@@ -16,7 +16,6 @@ namespace Content.Shared.Interaction
     public sealed class RotateToFaceSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         /// <summary>

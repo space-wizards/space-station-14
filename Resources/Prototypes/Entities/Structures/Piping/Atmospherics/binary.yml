@@ -6,6 +6,9 @@
     mode: SnapgridCenter
   components:
   - type: AtmosDevice
+  - type: Tag
+    tags:
+      - Unstackable
   - type: SubFloorHide
     blockInteractions: false
     blockAmbience: false

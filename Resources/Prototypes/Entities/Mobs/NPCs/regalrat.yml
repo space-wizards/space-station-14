@@ -73,7 +73,6 @@
       Parched: 150
       Dead: 0
     baseDecayRate: 0.1
-  - type: Appearance
   - type: DamageStateVisuals
     rotate: true
     states:
@@ -245,7 +244,6 @@
       Parched: 150
       Dead: 0
     baseDecayRate: 0.1
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:

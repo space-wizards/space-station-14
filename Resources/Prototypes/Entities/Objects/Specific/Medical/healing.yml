@@ -6,6 +6,7 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/medical.rsi
   - type: Item
+    size: 10
     sprite: Objects/Specific/Medical/medical.rsi
     heldPrefix: ointment
   # Inherited
@@ -17,6 +18,7 @@
   description: Used to treat those nasty burns. Less effective on caustic burns.
   parent: BaseHealingItem
   id: Ointment
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -47,16 +49,20 @@
 - type: entity
   id: Ointment1
   parent: Ointment
+  suffix: Single
   components:
   - type: Stack
     stackType: Ointment
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   name: bruise pack
   description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
   parent: BaseHealingItem
   id: Brutepack
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -82,16 +88,20 @@
 - type: entity
   id: Brutepack1
   parent: Brutepack
+  suffix: Single
   components:
   - type: Stack
     stackType: Brutepack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   name: blood pack
   description: Contains a groundbreaking universal blood replacement created by Nanotrasen's advanced medical science.
   parent: BaseHealingItem
   id: Bloodpack
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -120,6 +130,7 @@
   description: Some sterile gauze to wrap around bloody stumps.
   parent: BaseHealingItem
   id: Gauze
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -150,9 +161,12 @@
 - type: entity
   id: Gauze1
   parent: Gauze
+  suffix: Single
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   name: aloe cream
@@ -169,7 +183,7 @@
 
 # Pills
 - type: entity
-  name: dexalin pill
+  name: dexalin pill (10u)
   parent: Pill
   id: PillDexalin
   components:
@@ -182,7 +196,7 @@
           Quantity: 10
 
 - type: entity
-  name: dylovene pill
+  name: dylovene pill (10u)
   parent: Pill
   id: PillDylovene
   components:
@@ -195,7 +209,7 @@
           Quantity: 10
 
 - type: entity
-  name: hyronalin pill
+  name: hyronalin pill (10u)
   parent: Pill
   id: PillHyronalin
   components:
@@ -208,7 +222,7 @@
           Quantity: 10
 
 - type: entity
-  name: iron pill
+  name: iron pill (10u)
   parent: Pill
   id: PillIron
   components:
@@ -221,7 +235,7 @@
           Quantity: 10
 
 - type: entity
-  name: kelotane pill
+  name: kelotane pill (10u)
   parent: Pill
   id: PillKelotane
   components:
@@ -231,6 +245,19 @@
         maxVol: 20
         reagents:
         - ReagentId: Kelotane
+          Quantity: 10
+
+- type: entity
+  name: dermaline pill (10u)
+  parent: Pill
+  id: PillDermaline
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Dermaline
           Quantity: 10
 
 - type: entity
@@ -247,7 +274,7 @@
           Quantity: 15
 
 - type: entity
-  name: tricordrazine pill
+  name: tricordrazine pill (10u)
   parent: Pill
   id: PillTricordrazine
   components:
@@ -257,6 +284,19 @@
         maxVol: 20
         reagents:
         - ReagentId: Tricordrazine
+          Quantity: 10
+
+- type: entity
+  name: bicaridine pill (10u)
+  parent: Pill
+  id: PillBicaridine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Bicaridine
           Quantity: 10
 
 - type: entity
@@ -323,6 +363,19 @@
         maxVol: 15
         reagents:
         - ReagentId: Spaceacillin
+          Quantity: 15
+
+- type: entity
+  name: bicaridine syringe
+  parent: BaseSyringe
+  id: SyringeBicaridine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Bicaridine
           Quantity: 15
 
 - type: entity

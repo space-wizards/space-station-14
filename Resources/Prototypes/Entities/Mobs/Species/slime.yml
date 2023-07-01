@@ -18,9 +18,9 @@
     speechSounds: Slime
   - type: Vocal
     sounds:
-      Male: UnisexSlime
-      Female: UnisexSlime
-      Unsexed: UnisexSlime
+      Male: MaleSlime
+      Female: FemaleSlime
+      Unsexed: MaleSlime
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime

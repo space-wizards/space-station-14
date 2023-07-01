@@ -55,6 +55,8 @@
     - state: mag-unshaded-3
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Gun
+    fireRate: 2
   - type: RevolverAmmoProvider
     capacity: 5
     chambers: [ True, True, True, True, True ]
@@ -64,6 +66,8 @@
     steps: 4
     zeroVisible: true
   - type: Appearance
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   name: Inspector
@@ -91,6 +95,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Gun
+    fireRate: 2
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
 
