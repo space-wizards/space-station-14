@@ -2,62 +2,61 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 using Content.Shared.Doors.Electronics;
 
-namespace Content.Client.Doors.Electronics
+namespace Content.Client.Doors.Electronics;
+
+public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
 {
-    public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
+    private DoorElectronicsConfigurationMenu? _window;
+
+    public DoorElectronicsBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+    }
 
-        private DoorElectronicsConfigurationMenu? _window;
+    protected override void Open()
+    {
+        base.Open();
+        List<string> accessLevels;
 
-        public DoorElectronicsBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        if (_entityManager.TryGetComponent<DoorElectronicsComponent>(Owner.Owner, out var doorElectronics))
         {
+            accessLevels = doorElectronics.AccessLevels;
+            accessLevels.Sort();
+        }
+        else
+        {
+            accessLevels = new List<string>();
+            Logger.ErrorS(SharedDoorElectronicsSystem.Sawmill, $"No DoorElectronicsComponent component found for {_entityManager.ToPrettyString(Owner.Owner)}!");
         }
 
-        protected override void Open()
-        {
-            base.Open();
-            List<string> accessLevels;
+        _window = new DoorElectronicsConfigurationMenu(this, accessLevels, _prototypeManager);
+        _window.OnClose += Close;
+        _window.OpenCentered();
 
-            if (_entityManager.TryGetComponent<DoorElectronicsComponent>(Owner.Owner, out var doorElectronics))
-            {
-                accessLevels = doorElectronics.AccessLevels;
-                accessLevels.Sort();
-            }
-            else
-            {
-                accessLevels = new List<string>();
-                Logger.ErrorS(SharedDoorElectronicsSystem.Sawmill, $"No DoorElectronicsComponent component found for {_entityManager.ToPrettyString(Owner.Owner)}!");
-            }
+        SendMessage(new SharedDoorElectronicsComponent.RefreshUiMessage());
+    }
 
-            _window = new DoorElectronicsConfigurationMenu(this, accessLevels, _prototypeManager);
-            _window.OnClose += Close;
-            _window.OpenCentered();
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
 
-            SendMessage(new SharedDoorElectronicsComponent.RefreshUiMessage());
-        }
+        var castState = (SharedDoorElectronicsComponent.ConfigurationState) state;
 
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
+        _window?.UpdateState(castState);
+    }
 
-            var castState = (SharedDoorElectronicsComponent.ConfigurationState) state;
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing) return;
 
-            _window?.UpdateState(castState);
-        }
+        _window?.Dispose();
+    }
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-
-            _window?.Dispose();
-        }
-
-        public void UpdateConfiguration(List<string> newAccessList)
-        {
-            SendMessage(new SharedDoorElectronicsComponent.UpdateConfigurationMessage(newAccessList));
-        }
+    public void UpdateConfiguration(List<string> newAccessList)
+    {
+        SendMessage(new SharedDoorElectronicsComponent.UpdateConfigurationMessage(newAccessList));
     }
 }

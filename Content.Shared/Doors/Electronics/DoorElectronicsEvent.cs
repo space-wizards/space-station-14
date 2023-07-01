@@ -1,10 +1,9 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Doors.Electronics
+namespace Content.Shared.Doors.Electronics;
+
+[Serializable, NetSerializable]
+public enum DoorElectronicsConfigurationUiKey : byte
 {
-    [Serializable, NetSerializable]
-    public enum DoorElectronicsConfigurationUiKey : byte
-    {
-        Key
-    }
+    Key
 }
