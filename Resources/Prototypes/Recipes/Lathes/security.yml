@@ -87,8 +87,34 @@
   result: RiotShield
   completetime: 4
   materials:
-    Steel: 400
-    Glass: 400
+    Steel: 500
+    Glass: 500
+
+- type: latheRecipe
+  id: RiotLaserShield
+  result: RiotLaserShield
+  completetime: 4
+  materials:
+    Glass: 500
+    Plasma: 1000
+
+- type: latheRecipe
+  id: RiotBulletShield
+  result: RiotBulletShield
+  completetime: 4
+  materials:
+    Steel: 500
+    Plasteel: 1000
+
+- type: latheRecipe
+  id: ClothingOuterArmorReflective
+  result: ClothingOuterArmorReflective
+  completetime: 4
+  materials:
+    Glass: 500
+    Steel: 500
+    Plasma: 1000
+
 
 - type: latheRecipe
   id: Flash

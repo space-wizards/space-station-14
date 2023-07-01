@@ -11,6 +11,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
+using Content.Shared.Inventory;
 
 namespace Content.Shared.Weapons.Reflect;
 
@@ -26,6 +27,7 @@ public abstract class SharedReflectSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
@@ -107,10 +109,28 @@ public abstract class SharedReflectSystem : EntitySystem
 
     private void OnHandsReflectHitscan(EntityUid uid, HandsComponent hands, ref HitScanReflectAttemptEvent args)
     {
-        if (args.Reflected || hands.ActiveHandEntity == null)
+        if (args.Reflected)
+            return;
+
+        if (_inventory.TryGetSlotEntity(uid, "outerClothing", out var suit))
+            OnArmourReflectHitscan(suit, ref args);
+
+        if (hands.ActiveHandEntity == null)
             return;
 
         if (TryReflectHitscan(hands.ActiveHandEntity.Value, args.Shooter, args.SourceItem, args.Direction, out var dir))
+        {
+            args.Direction = dir.Value;
+            args.Reflected = true;
+        }
+    }
+
+    private void OnArmourReflectHitscan(EntityUid? suit, ref HitScanReflectAttemptEvent args)
+    {
+        if (suit == null)
+            return;
+
+        if (TryReflectHitscan(suit.Value, args.Shooter, args.SourceItem, args.Direction, out var dir))
         {
             args.Direction = dir.Value;
             args.Reflected = true;
