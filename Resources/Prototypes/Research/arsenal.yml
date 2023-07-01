@@ -85,6 +85,20 @@
   - MagazineBoxLightRifleRubber
   - MagazineBoxRifleRubber
 
+- type: technology
+  id: AdvancedShielding
+  name: research-technology-advanced-shields
+  icon:
+    sprite: Clothing/OuterClothing/Armor/armor_reflec.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - ClothingOuterArmorReflective
+  - RiotLaserShield
+  - RiotBulletShield
+
 # Tier 2
 
 - type: technology
