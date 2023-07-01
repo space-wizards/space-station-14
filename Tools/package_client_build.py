@@ -9,7 +9,10 @@ import argparse
 
 from typing import List, Optional
 
+import package_lib
 from package_lib import Fore, Style, SHARED_IGNORED_RESOURCES
+
+package_lib.init("package_client_build")
 
 p = os.path.join
 

@@ -10,7 +10,10 @@ import argparse
 
 from typing import List, Optional
 
+import package_lib
 from package_lib import Fore, Style, SHARED_IGNORED_RESOURCES
+
+package_lib.init("package_server_build")
 
 class PlatformReg:
     def __init__(self, rid: str, target_os: str, build_by_default: bool):
