@@ -30,10 +30,10 @@ public sealed partial class ShuttleSystem
 
     private MapId? _hyperSpaceMap;
 
-    public const float DefaultStartupTime = 60f;
-    public const float DefaultTravelTime = 30f;
+    public const float DefaultStartupTime = 5.5f;
+    public const float DefaultTravelTime = 60f;
     public const float DefaultArrivalTime = 5f;
-    private const float FTLCooldown = 10f;
+    private const float FTLCooldown = 30f;
     private const float ShuttleFTLRange = 100f;
 
     /// <summary>
@@ -243,7 +243,7 @@ public sealed partial class ShuttleSystem
             {
                 // Startup time has elapsed and in hyperspace.
                 case FTLState.Starting:
-                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jumped-message"), colorOverride: Color.Gold);
+                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jump-jumped-message"), colorOverride: Color.Gold);
                     DoTheDinosaur(xform);
 
                     comp.State = FTLState.Travelling;
