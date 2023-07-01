@@ -59,16 +59,6 @@
     - Radio8
     - Radio9
     - Radio10
-    - Radio11
-    - Radio12
-    - Radio13
-    - Radio14
-    - Radio15
-    - Radio16
-    - Radio17
-    - Radio18
-    - Radio19
-    - Radio20
 # Imperial custom channels end
     globalReceive: true
   - type: Sprite
