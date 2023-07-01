@@ -30,7 +30,7 @@
         coefficients:
           Blunt: 0.5
           Slash: 0.5
-          Piercing: 1.2
+          Piercing: 1.3
           Heat: 2
       activeBlockModifier:
         coefficients:
