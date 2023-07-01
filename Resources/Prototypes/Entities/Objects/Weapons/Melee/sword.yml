@@ -74,6 +74,7 @@
     slots:
     - Back
     - Belt
+  - type: Reflect
 
 - type: entity
   name: machete
