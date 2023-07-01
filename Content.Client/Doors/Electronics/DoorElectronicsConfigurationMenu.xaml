@@ -1,0 +1,7 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:ui="clr-namespace:Content.Client.UserInterface"
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+    <GridContainer Name="AccessLevelGrid" Columns="5" HorizontalAlignment="Center">
+
+    </GridContainer>
+</controls:FancyWindow>

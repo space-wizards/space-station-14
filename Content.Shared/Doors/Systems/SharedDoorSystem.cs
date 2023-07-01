@@ -10,6 +10,7 @@ using Content.Shared.Physics;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -31,6 +32,7 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] private readonly OccluderSystem _occluder = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -499,7 +501,18 @@ public abstract class SharedDoorSystem : EntitySystem
             TryComp<FirelockComponent>(uid, out var firelock))
             return false;
 
-        if (!Resolve(uid, ref access, false))
+        Resolve(uid, ref access, false);
+
+        if (_containerSystem.TryGetContainer(uid, "board", out var boardContainer))
+        {
+            foreach (var entity in boardContainer.ContainedEntities)
+            {
+                if (TryComp<AccessReaderComponent>(entity, out var newAccess) && newAccess.AccessLists.Count != 0)
+                    access = newAccess;
+            }
+        }
+
+        if (access == null)
             return true;
 
         var isExternal = access.AccessLists.Any(list => list.Contains("External"));
