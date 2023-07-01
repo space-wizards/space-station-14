@@ -172,6 +172,17 @@ public sealed class NinjaSystem : SharedNinjaSystem
     }
 
     /// <summary>
+    /// Returns whether the suit battery is at least 99% charged, basically full.
+    /// </summary>
+    public bool IsBatteryFull(EntityUid uid)
+    {
+        if (!GetNinjaBattery(uid, out var _, out var battery))
+            return false;
+
+        return battery.CurrentCharge / battery.MaxCharge >= 0.99f;
+    }
+
+    /// <summary>
     /// Get the battery component in a ninja's suit, if it's worn.
     /// </summary>
     public bool GetNinjaBattery(EntityUid user, [NotNullWhen(true)] out EntityUid? uid, [NotNullWhen(true)] out BatteryComponent? battery)

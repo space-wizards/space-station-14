@@ -15,6 +15,23 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
     [Dependency] private readonly NinjaSystem _ninja = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<NinjaDrainComponent, DoAfterAttemptEvent<DrainDoAfterEvent>>(OnDrainDoAfterAttempt);
+    }
+
+    /// <summary>
+    /// Let the drain doafter stop repeating once suit battery is full
+    /// </summary>
+    private void OnDrainDoAfterAttempt(EntityUid uid, NinjaDrainComponent comp, DoAfterAttemptEvent<DrainDoAfterEvent> args)
+    {
+        var user = args.DoAfter.Args.User;
+        if (_ninja.IsBatteryFull(user))
+            args.Cancel();
+    }
+
     /// <inheritdoc/>
     protected override void OnDrain(EntityUid uid, NinjaDrainComponent comp, InteractionAttemptEvent args)
     {
@@ -29,7 +46,8 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         {
             BreakOnUserMove = true,
             MovementThreshold = 0.5f,
-            CancelDuplicate = false
+            CancelDuplicate = false,
+            AttemptFrequency = AttemptFrequency.StartAndEnd
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
@@ -48,7 +66,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
             || !TryComp<TechnologyDatabaseComponent>(target, out var database))
             return;
 
-        var gained = _ninja.Download(uid, database.UnlockedTechnologies);
+        var gained = _ninja.Download(user, database.UnlockedTechnologies);
         var str = gained == 0
             ? Loc.GetString("ninja-download-fail")
             : Loc.GetString("ninja-download-success", ("count", gained), ("server", target));
