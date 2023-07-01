@@ -101,10 +101,13 @@
                 SheetPGlass:
                   min: 2
                   max: 2
+    - type: StaticPrice
+      price: 100
     - type: Reflect
       reflects:
         - Energy
       reflectProb: 0.5
+
 
 - type: entity
   name: riot bullet shield
