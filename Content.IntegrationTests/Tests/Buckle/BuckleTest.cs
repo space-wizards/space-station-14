@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server.Body.Systems;
 using Content.Shared.Buckle;
@@ -160,7 +161,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.False(buckle.Buckled);
 
                 // Move away from the chair
-                entityManager.GetComponent<TransformComponent>(human).WorldPosition += (1000, 1000);
+                entityManager.GetComponent<TransformComponent>(human).WorldPosition += new Vector2(1000, 1000);
 
                 // Out of range
                 Assert.False(buckleSystem.TryBuckle(human, human, chair, buckleComp: buckle));
@@ -169,7 +170,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
                 // Move near the chair
                 entityManager.GetComponent<TransformComponent>(human).WorldPosition =
-                    entityManager.GetComponent<TransformComponent>(chair).WorldPosition + (0.5f, 0);
+                    entityManager.GetComponent<TransformComponent>(chair).WorldPosition + new Vector2(0.5f, 0);
 
                 // In range
                 Assert.True(buckleSystem.TryBuckle(human, human, chair, buckleComp: buckle));
@@ -190,7 +191,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckleSystem.TryBuckle(human, human, chair, buckleComp: buckle));
 
                 // Move away from the chair
-                entityManager.GetComponent<TransformComponent>(human).WorldPosition += (1, 0);
+                entityManager.GetComponent<TransformComponent>(human).WorldPosition += new Vector2(1, 0);
             });
 
             await server.WaitRunTicks(1);
@@ -325,7 +326,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 // Move the buckled entity away
-                entityManager.GetComponent<TransformComponent>(human).WorldPosition += (100, 0);
+                entityManager.GetComponent<TransformComponent>(human).WorldPosition += new Vector2(100, 0);
             });
 
             await PoolManager.WaitUntil(server, () => !buckle.Buckled, 10);
@@ -335,7 +336,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             await server.WaitAssertion(() =>
             {
                 // Move the now unbuckled entity back onto the chair
-                entityManager.GetComponent<TransformComponent>(human).WorldPosition -= (100, 0);
+                entityManager.GetComponent<TransformComponent>(human).WorldPosition -= new Vector2(100, 0);
 
                 // Buckle
                 Assert.True(buckleSystem.TryBuckle(human, human, chair, buckleComp: buckle));

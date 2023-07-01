@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
         private const float InteractionRangeDivided15 = InteractionRange / 1.5f;
 
-        private readonly (float, float) _interactionRangeDivided15X = (InteractionRangeDivided15, 0f);
+        private readonly Vector2 _interactionRangeDivided15X = new(InteractionRangeDivided15, 0f);
 
         private const float InteractionRangeDivided15Times3 = InteractionRangeDivided15 * 3;
 

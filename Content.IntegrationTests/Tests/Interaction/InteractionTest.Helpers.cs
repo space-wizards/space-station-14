@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Numerics;
 using System.Reflection;
 using System.Threading.Tasks;
 using Content.Client.Chemistry.UI;
@@ -529,7 +530,7 @@ public abstract partial class InteractionTest
         await Server.WaitPost(() =>
         {
             // Get all entities left behind by deconstruction
-            entities = lookup.GetEntitiesIntersecting(MapId, Box2.CentredAroundZero((10, 10)), flags);
+            entities = lookup.GetEntitiesIntersecting(MapId, Box2.CentredAroundZero(new Vector2(10, 10)), flags);
 
             var xformQuery = SEntMan.GetEntityQuery<TransformComponent>();
 

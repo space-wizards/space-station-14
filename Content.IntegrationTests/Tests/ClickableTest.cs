@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Client.Clickable;
 using NUnit.Framework;
@@ -73,7 +74,7 @@ namespace Content.IntegrationTests.Tests
             await client.WaitPost(() =>
             {
                 var sprite = spriteQuery.GetComponent(entity);
-                sprite.Scale = (scale, scale);
+                sprite.Scale = new Vector2(scale, scale);
 
                 // these tests currently all assume player eye is 0
                 eyeManager.CurrentEye.Rotation = 0;
@@ -81,7 +82,7 @@ namespace Content.IntegrationTests.Tests
                 var pos = clientEntManager.GetComponent<TransformComponent>(entity).WorldPosition;
                 var clickable = clientEntManager.GetComponent<ClickableComponent>(entity);
 
-                hit = clickable.CheckClick(sprite, xformQuery.GetComponent(entity), xformQuery, (clickPosX, clickPosY) + pos, eye, out _, out _, out _);
+                hit = clickable.CheckClick(sprite, xformQuery.GetComponent(entity), xformQuery, new Vector2(clickPosX, clickPosY) + pos, eye, out _, out _, out _);
             });
 
             await server.WaitPost(() =>

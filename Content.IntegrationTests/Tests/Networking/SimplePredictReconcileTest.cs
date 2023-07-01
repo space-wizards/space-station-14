@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
@@ -69,7 +70,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Spawn dummy component entity.
                 var map = sMapManager.CreateMap();
                 var player = sPlayerManager.ServerSessions.Single();
-                serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates((0, 0), map));
+                serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates(new Vector2(0, 0), map));
                 serverComponent = sEntityManager.AddComponent<PredictionTestComponent>(serverEnt);
 
                 // Make client "join game" so they receive game state updates.
