@@ -5,7 +5,6 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
 using Content.IntegrationTests;
 using Content.Server.Maps;
-using Robust.Benchmarks.Configs;
 using Robust.Shared.Prototypes;
 
 namespace Content.Benchmarks
