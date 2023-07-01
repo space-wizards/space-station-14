@@ -1,0 +1,21 @@
+- type: entity
+  id: Thruster_small
+  parent: [ BaseThruster, ConstructibleMachine ]
+  components:
+  - type: Thruster
+  - type: Machine
+    board: ThrusterMachineCircuitboard
+  - type: Sprite
+    sprite: Structures/Shuttles/thruster_small.rsi
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+      visible: false
+    - state: thrust_burn_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+      shader: unshaded
+      visible: false
+      offset: 0, 1
