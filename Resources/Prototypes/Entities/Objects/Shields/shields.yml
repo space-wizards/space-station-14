@@ -98,7 +98,7 @@
                 SheetSteel:
                   min: 2
                   max: 2
-                PlasmaGlass:
+                SheetPGlass:
                   min: 2
                   max: 2
     - type: Reflect
