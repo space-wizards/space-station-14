@@ -1,12 +1,6 @@
 Entries:
 - author: Slava0135
   changes:
-  - {message: 'Items with powercell slots now display charge (e.g. flashlights, handheld
-      monitors and etc.)', type: Add}
-  id: 3647
-  time: '2023-05-05T12:44:22.0000000+00:00'
-- author: Slava0135
-  changes:
   - {message: Fixed fire extinguisher not working., type: Fix}
   id: 3648
   time: '2023-05-05T12:48:38.0000000+00:00'
@@ -2925,3 +2919,8 @@ Entries:
   - {message: The AME controller increases and decreases in steps of 2 again., type: Tweak}
   id: 4146
   time: '2023-06-30T23:24:23.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: MRP rules updated., type: Tweak}
+  id: 4147
+  time: '2023-07-01T00:15:04.0000000+00:00'
