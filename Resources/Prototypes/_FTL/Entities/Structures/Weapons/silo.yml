@@ -68,11 +68,17 @@
       openSound:
         path: /Audio/Items/deconstruct.ogg
     - type: Appearance
+    - type: GenericVisualizer
       visuals:
-        - type: StorageVisualizer
-          state: closed
-          state_alt: open
-          state_open: tray
+        enum.StorageVisuals.Open:
+          # basic open.close layer:
+          enum.MorgueVisualLayers.Base:
+            True: { state: open }
+            False: { state: closed }
+          # show/hide morgue tray:
+          enum.StorageVisualLayers.Door:
+            True: { visible: true }
+            False: { visible: false }
 
 - type: entity
   parent: BaseFTLWeaponSilo
