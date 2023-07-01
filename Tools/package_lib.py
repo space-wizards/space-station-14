@@ -68,10 +68,6 @@ def init(tool):
     if not _are_we_in_correct_directory():
         print(Fore.RED + "For an unknown reason, Content.Shared/Content.Shared.csproj is missing. Continuing regardless." + Style.RESET_ALL)
     try:
-        os.stat("Content.Shared/Content.Shared.csproj")
-    except FileNotFoundError:
-        print(Fore.RED + "For an unknown reason, Content.Shared/Content.Shared.csproj is missing. Continuing regardless." + Style.RESET_ALL)
-    try:
         os.stat(".git")
     except FileNotFoundError:
         print(Fore.YELLOW + tool + " was executed with a non-Git source tree.")
