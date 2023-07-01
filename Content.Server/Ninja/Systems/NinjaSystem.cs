@@ -313,10 +313,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
         var role = new NinjaRole(mind, _proto.Index<AntagPrototype>("SpaceNinja"));
         _mind.AddRole(mind, role);
         _traitorRule.AddToTraitors(traitorRule, role);
-        foreach (var objective in config.Objectives)
-        {
-            AddObjective(mind, objective);
-        }
 
         // choose spider charge detonation point
         // currently based on warp points, something better could be done (but would likely require mapping work)
@@ -332,6 +328,12 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
         if (warps.Count > 0)
             role.SpiderChargeTarget = _random.Pick(warps);
+
+        // assign objectives - must happen after spider charge target so that the obj requirement works
+        foreach (var objective in config.Objectives)
+        {
+            AddObjective(mind, objective);
+        }
 
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
         _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
