@@ -162,7 +162,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
         if (GetNinjaBattery(uid, out var _, out var battery))
         {
-             var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, battery.CurrentCharge), battery.MaxCharge, 7);
+             var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, battery.CurrentCharge), battery.MaxCharge, 8);
             _alerts.ShowAlert(uid, AlertType.SuitPower, (short) severity);
         }
         else
