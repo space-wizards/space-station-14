@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-﻿using Robust.Shared.Random;
+using System.Numerics;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Worldgen.Tools;
@@ -121,7 +122,7 @@ public sealed class PoissonDiskSampler
                  j < Math.Min(settings.GridHeight, qIndex.Y + 3) && !tooClose;
                  j++)
             {
-                if (state.Grid[i, j].HasValue && (state.Grid[i, j]!.Value - q).Length < settings.MinimumDistance)
+                if (state.Grid[i, j].HasValue && (state.Grid[i, j]!.Value - q).Length() < settings.MinimumDistance)
                     tooClose = true;
             }
 

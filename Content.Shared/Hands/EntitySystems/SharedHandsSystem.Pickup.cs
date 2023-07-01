@@ -112,7 +112,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             var itemPos = Transform(entity).MapPosition;
 
             if (itemPos.MapId == xform.MapID
-                && (itemPos.Position - xform.MapPosition.Position).Length <= MaxAnimationRange
+                && (itemPos.Position - xform.MapPosition.Position).Length() <= MaxAnimationRange
                 && MetaData(entity).VisibilityMask == MetaData(uid).VisibilityMask) // Don't animate aghost pickups.
             {
                 var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, EntityManager);

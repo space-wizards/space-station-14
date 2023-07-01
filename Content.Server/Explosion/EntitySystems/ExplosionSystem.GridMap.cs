@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -200,19 +201,19 @@ public sealed partial class ExplosionSystem : EntitySystem
                 }
 
                 // check north
-                if (edge.Box.Contains(tileCenter + (0, tileSize / 2f)))
+                if (edge.Box.Contains(tileCenter + new Vector2(0, tileSize / 2f)))
                     data.UnblockedDirections &= ~AtmosDirection.North;
 
                 // check south
-                if (edge.Box.Contains(tileCenter + (0, -tileSize / 2f)))
+                if (edge.Box.Contains(tileCenter + new Vector2(0, -tileSize / 2f)))
                     data.UnblockedDirections &= ~AtmosDirection.South;
 
                 // check east
-                if (edge.Box.Contains(tileCenter + (tileSize / 2f, 0)))
+                if (edge.Box.Contains(tileCenter + new Vector2(tileSize / 2f, 0)))
                     data.UnblockedDirections &= ~AtmosDirection.East;
 
                 // check west
-                if (edge.Box.Contains(tileCenter + (-tileSize / 2f, 0)))
+                if (edge.Box.Contains(tileCenter + new Vector2(-tileSize / 2f, 0)))
                     data.UnblockedDirections &= ~AtmosDirection.West;
             }
         }
@@ -382,7 +383,7 @@ public sealed class BlockedSpaceTile
         {
             Tile = tile;
             Grid = grid;
-            Box = new(Box2.CenteredAround(center, (size, size)), angle, center);
+            Box = new(Box2.CenteredAround(center, new Vector2(size, size)), angle, center);
         }
     }
 }

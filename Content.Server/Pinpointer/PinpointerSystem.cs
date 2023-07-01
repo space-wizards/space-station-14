@@ -1,6 +1,7 @@
 using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
 using System.Linq;
+using System.Numerics;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
 using Content.Shared.IdentityManagement;
@@ -198,7 +199,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
     private Distance CalculateDistance(Vector2 vec, PinpointerComponent pinpointer)
     {
-        var dist = vec.Length;
+        var dist = vec.Length();
         if (dist <= pinpointer.ReachedDistance)
             return Distance.Reached;
         else if (dist <= pinpointer.CloseDistance)

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Decals;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Shuttles.Events;
