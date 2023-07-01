@@ -192,7 +192,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
-    netsync: false
     layers:
     - state: icon
       map: [ "enum.ToggleVisuals.Layer" ]

@@ -176,6 +176,7 @@
   - type: Tag
     tags:
     - HidesHair
+  - type: IngestionBlocker
   - type: IdentityBlocker
 
 #Templar Helmet
