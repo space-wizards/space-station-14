@@ -187,7 +187,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 
                 if (left == right)
                 {
-                    handle.DrawLine((0, y1), (PixelWidth, y2), Color.Cyan);
+                    handle.DrawLine(new Vector2(0, y1), new Vector2(PixelWidth, y2), Color.Cyan);
                     continue;
                 }
 

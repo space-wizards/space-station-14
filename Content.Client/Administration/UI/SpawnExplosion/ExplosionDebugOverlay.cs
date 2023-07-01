@@ -169,7 +169,7 @@ public sealed class ExplosionDebugOverlay : Overlay
 
             foreach (var tile in tiles)
             {
-                var centre = ((Vector2) tile + 0.5f) * tileSize;
+                var centre = (tile + Vector2Helpers.Half) * tileSize;
 
                 // is the center of this tile visible to the user?
                 if (!gridBounds.Contains(centre))

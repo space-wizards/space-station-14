@@ -34,7 +34,9 @@ public abstract class MapGridControl : Control
     /// </summary>
     public float MaxRadarRange { get; private set; } = 256f * 10f;
 
-    protected Vector2 MidpointVector2 => new Vector2(MidPoint, MidPoint);
+    public Vector2 MaxRadarRangeVector => new Vector2(MaxRadarRange, MaxRadarRange);
+
+    protected Vector2 MidpointVector => new Vector2(MidPoint, MidPoint);
 
     protected int MidPoint => SizeFull / 2;
     protected int SizeFull => (int) ((UIDisplayRadius + MinimapMargin) * 2 * UIScale);

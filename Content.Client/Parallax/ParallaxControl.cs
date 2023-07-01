@@ -23,7 +23,7 @@ public sealed class ParallaxControl : Control
     {
         IoCManager.InjectDependencies(this);
 
-        Offset = (_random.Next(0, 1000), _random.Next(0, 1000));
+        Offset = new Vector2(_random.Next(0, 1000), _random.Next(0, 1000));
         RectClipContent = true;
         _parallaxManager.LoadParallaxByName("FastSpace");
     }
@@ -55,7 +55,7 @@ public sealed class ParallaxControl : Control
                 {
                     for (var y = -scaledOffset.Y; y < ourSize.Y; y += texSize.Y)
                     {
-                        handle.DrawTextureRect(tex, UIBox2.FromDimensions((x, y), texSize));
+                        handle.DrawTextureRect(tex, UIBox2.FromDimensions(new Vector2(x, y), texSize));
                     }
                 }
             }

@@ -62,7 +62,7 @@ public sealed class PuddleOverlay : Overlay
 
             foreach (var debugOverlayData in _debugOverlaySystem.GetData(mapGrid.Owner))
             {
-                var centre = ((Vector2) debugOverlayData.Pos + 0.5f) * mapGrid.TileSize;
+                var centre = (debugOverlayData.Pos + Vector2Helpers.Half) * mapGrid.TileSize;
 
                 // is the center of this tile visible
                 if (!gridBounds.Contains(centre))
@@ -94,7 +94,7 @@ public sealed class PuddleOverlay : Overlay
 
             foreach (var debugOverlayData in _debugOverlaySystem.GetData(mapGrid.Owner))
             {
-                var centre = ((Vector2) debugOverlayData.Pos + 0.5f) * mapGrid.TileSize;
+                var centre = (debugOverlayData.Pos + Vector2Helpers.Half) * mapGrid.TileSize;
 
                 // // is the center of this tile visible
                 if (!gridBounds.Contains(centre))

@@ -62,7 +62,7 @@ public sealed class MeleeArcOverlay : Overlay
         if (diff.Equals(Vector2.Zero))
             return;
 
-        diff = diff.Normalized() * Math.Min(weapon.Range, diff.Length);
+        diff = diff.Normalized() * Math.Min(weapon.Range, diff.Length());
         args.WorldHandle.DrawLine(playerPos.Position, playerPos.Position + diff, Color.Aqua);
 
         if (weapon.Angle.Theta == 0)

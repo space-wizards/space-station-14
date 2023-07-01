@@ -337,6 +337,6 @@ public sealed class NavMapControl : MapGridControl
 
     private Vector2 Scale(Vector2 position)
     {
-        return position * MinimapScale + MidpointVector2;
+        return position * MinimapScale + MidpointVector;
     }
 }

@@ -11,7 +11,7 @@ public abstract class SharedPathfindingSystem : EntitySystem
     public const byte SubStep = 4;
 
     public const byte ChunkSize = 8;
-    private static readonly Vector2 ChunkSizeVec = new(ChunkSize, ChunkSize);
+    public static readonly Vector2 ChunkSizeVec = new(ChunkSize, ChunkSize);
 
     /// <summary>
     /// We won't do points on edges so we'll offset them slightly.

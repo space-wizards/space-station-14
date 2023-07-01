@@ -20,9 +20,14 @@ public class DockingControl : Control
 
     private float _range = 8f;
     private float _rangeSquared = 0f;
+
+    private Vector2 RangeVector => new Vector2(_range, _range);
+
     private const float GridLinesDistance = 32f;
 
     private int MidPoint => SizeFull / 2;
+    private Vector2 MidPointVector => new Vector2(MidPoint, MidPoint);
+
     private int SizeFull => (int) (MapGridControl.UIDisplayRadius * 2 * UIScale);
     private int ScaledMinimapRadius => (int) (MapGridControl.UIDisplayRadius * UIScale);
     private float MinimapScale => _range != 0 ? ScaledMinimapRadius / _range : 0f;
@@ -52,8 +57,8 @@ public class DockingControl : Control
 
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
 
-        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
-        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
+        handle.DrawCircle(new Vector2(MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
+        handle.DrawCircle(new Vector2(MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
 
         var gridLines = new Color(0.08f, 0.08f, 0.08f);
         var gridLinesRadial = 8;
@@ -61,14 +66,14 @@ public class DockingControl : Control
 
         for (var i = 1; i < gridLinesEquatorial + 1; i++)
         {
-            handle.DrawCircle((MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
+            handle.DrawCircle(new Vector2(MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
         }
 
         for (var i = 0; i < gridLinesRadial; i++)
         {
             Angle angle = (Math.PI / gridLinesRadial) * i;
             var aExtent = angle.ToVec() * ScaledMinimapRadius;
-            handle.DrawLine((MidPoint, MidPoint) - aExtent, (MidPoint, MidPoint) + aExtent, gridLines);
+            handle.DrawLine(new Vector2(MidPoint, MidPoint) - aExtent, new Vector2(MidPoint, MidPoint) + aExtent, gridLines);
         }
 
         if (Coordinates == null ||
@@ -105,13 +110,17 @@ public class DockingControl : Control
                     if (startOut)
                     {
                         // It's called Jobseeker now.
-                        if (!MathHelper.TryGetIntersecting(start, end, _range, out var newStart)) continue;
+                        if (!MathHelper.TryGetIntersecting(start, end, _range, out var newStart))
+                            continue;
+
                         start = newStart.Value;
                     }
                     // otherwise vice versa
                     else if (endOut)
                     {
-                        if (!MathHelper.TryGetIntersecting(end, start, _range, out var newEnd)) continue;
+                        if (!MathHelper.TryGetIntersecting(end, start, _range, out var newEnd))
+                            continue;
+
                         end = newEnd.Value;
                     }
 
@@ -139,7 +148,7 @@ public class DockingControl : Control
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
         foreach (var grid in _mapManager.FindGridsIntersecting(gridXform.MapID,
-                     new Box2(worldPos - _range, worldPos + _range)))
+                     new Box2(worldPos - RangeVector, worldPos + RangeVector)))
         {
             if (grid.Owner == GridEntity)
                 continue;
@@ -253,6 +262,6 @@ public class DockingControl : Control
 
     private Vector2 ScalePosition(Vector2 value)
     {
-        return value * MinimapScale + MidPoint;
+        return value * MinimapScale + MidPointVector;
     }
 }

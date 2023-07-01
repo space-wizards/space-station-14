@@ -37,6 +37,8 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     private int _maxAmbientCount;
     private bool _overlayEnabled;
     private float _maxAmbientRange;
+    private Vector2 MaxAmbientVector => new(_maxAmbientRange, _maxAmbientRange);
+
     private float _cooldown;
     private TimeSpan _targetTime = TimeSpan.Zero;
     private float _ambienceVolume = 0.0f;
@@ -267,7 +269,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
 
         var pos = mapPos.Position;
         var state = new QueryState(pos, playerXform, query);
-        var worldAabb = new Box2(pos - _maxAmbientRange, pos + _maxAmbientRange);
+        var worldAabb = new Box2(pos - MaxAmbientVector, pos + MaxAmbientVector);
         _treeSys.QueryAabb(ref state, Callback, mapPos.MapId, worldAabb);
 
         // Add in range ambiences
