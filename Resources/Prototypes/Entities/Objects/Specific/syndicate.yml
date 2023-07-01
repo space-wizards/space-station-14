@@ -107,7 +107,7 @@
   - type: Store
     preset: StorePresetUplink
     balance:
-      Telecrystal: 40
+      Telecrystal: 60
   - type: Tag
     tags:
     - NukeOpsUplink
