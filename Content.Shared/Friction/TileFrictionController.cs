@@ -77,7 +77,7 @@ namespace Content.Shared.Friction
 
                 if (!xformQuery.TryGetComponent(uid, out var xform))
                 {
-                    Logger.ErrorS("physics", $"Unable to get transform for {ToPrettyString(body.Owner)} in tilefrictioncontroller");
+                    Log.Error($"Unable to get transform for {ToPrettyString(body.Owner)} in tilefrictioncontroller");
                     continue;
                 }
 

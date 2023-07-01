@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Parallax;
@@ -90,10 +91,11 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             .GetMission(_missionParams.MissionType, _missionParams.Difficulty, _missionParams.Seed);
 
         var missionBiome = _prototypeManager.Index<SalvageBiomeMod>(mission.Biome);
+        BiomeComponent? biome = null;
 
         if (missionBiome.BiomePrototype != null)
         {
-            var biome = _entManager.AddComponent<BiomeComponent>(mapUid);
+            biome = _entManager.AddComponent<BiomeComponent>(mapUid);
             var biomeSystem = _entManager.System<BiomeSystem>();
             biomeSystem.SetTemplate(biome, _prototypeManager.Index<BiomeTemplatePrototype>(missionBiome.BiomePrototype));
             biomeSystem.SetSeed(biome, mission.Seed);
@@ -110,13 +112,12 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             var moles = new float[Atmospherics.AdjustedNumberOfGases];
             air.Gases.CopyTo(moles, 0);
             var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
-            atmos.Space = air.Space;
-            atmos.Mixture = new GasMixture(2500)
+            _entManager.System<AtmosphereSystem>().SetMapSpace(mapUid, air.Space, atmos);
+            _entManager.System<AtmosphereSystem>().SetMapGasMixture(mapUid, new GasMixture(2500)
             {
-                // TODO: temperature mods
-                Temperature = 293.15f,
+                Temperature = mission.Temperature,
                 Moles = moles,
-            };
+            }, atmos);
 
             if (mission.Color != null)
             {
@@ -173,23 +174,13 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         List<Vector2i> reservedTiles = new();
 
-        // Setup the landing pad
-        var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
-        var tiles = new List<(Vector2i Indices, Tile Tile)>(landingPadExtents.X * landingPadExtents.Y * 2);
-
-        // Set the tiles themselves
-        var landingTile = new Tile(_tileDefManager["FloorSteel"].TileId);
-
         foreach (var tile in grid.GetTilesIntersecting(new Circle(Vector2.Zero, landingPadRadius), false))
         {
             if (!_biome.TryGetBiomeTile(mapUid, grid, tile.GridIndices, out _))
                 continue;
 
-            tiles.Add((tile.GridIndices, landingTile));
             reservedTiles.Add(tile.GridIndices);
         }
-
-        grid.SetTiles(tiles);
 
         // Mission setup
         switch (config)
@@ -214,13 +205,13 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             if (!lootProto.Guaranteed)
                 continue;
 
-            await SpawnDungeonLoot(dungeon, lootProto, mapUid, grid, random, reservedTiles);
+            await SpawnDungeonLoot(dungeon, missionBiome, lootProto, mapUid, grid, random, reservedTiles);
         }
 
         return true;
     }
 
-    private async Task SpawnDungeonLoot(Dungeon? dungeon, SalvageLootPrototype loot, EntityUid gridUid, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)
+    private async Task SpawnDungeonLoot(Dungeon? dungeon, SalvageBiomeMod biomeMod, SalvageLootPrototype loot, EntityUid gridUid, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)
     {
         for (var i = 0; i < loot.LootRules.Count; i++)
         {
@@ -230,9 +221,10 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             {
                 case BiomeMarkerLoot biomeLoot:
                     {
-                        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
+                        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome) &&
+                            biomeLoot.Prototype.TryGetValue(biomeMod.ID, out var mod))
                         {
-                            _biome.AddMarkerLayer(biome, biomeLoot.Prototype);
+                            _biome.AddMarkerLayer(biome, mod);
                         }
                     }
                     break;

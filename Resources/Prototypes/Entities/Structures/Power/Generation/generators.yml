@@ -100,11 +100,11 @@
     sound:
       path: /Audio/Ambience/Objects/hdd_buzz.ogg
   - type: PointLight
-    netsync: false
     radius: 1.5
     energy: 1.6
     color: "#3db83b"
     castShadows: false
+    netsync: false
   - type: Fixtures
   - type: Transform
     anchored: true
@@ -217,6 +217,8 @@
   - type: Construction
     graph: WallmountGenerator
     node: generator
+  - type: StaticPrice
+    price: 14
 
 - type: entity
   parent: BaseGeneratorWallmount
@@ -230,6 +232,8 @@
   - type: Construction
     graph: WallmountGenerator
     node: APU
+  - type: StaticPrice
+    price: 38
 
 # RTG - no fuel requirement
 

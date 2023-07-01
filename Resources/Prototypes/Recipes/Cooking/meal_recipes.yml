@@ -1585,3 +1585,15 @@
   solids:
     FoodMeatLizard: 1
     FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodMealTaco
+  name: taco recipe
+  result: FoodMealTaco
+  time: 10
+  solids:
+    FoodDoughSlice: 1
+    FoodTomato: 1
+    FoodOnionSlice: 2
+    FoodCheeseSlice: 1
+    FoodMeatCutlet: 1
