@@ -1,0 +1,5 @@
+# TODO: when nukie guidebook is merged add this as a child to Antagonists when resolving conflict
+- type: guideEntry
+  id: SpaceNinja
+  name: guide-entry-space-ninja
+  text: /ServerInfo/Guidebook/Antagonist/SpaceNinja.xml

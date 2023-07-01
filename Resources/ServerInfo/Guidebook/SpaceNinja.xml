@@ -1,0 +1,35 @@
+<Document>
+# Space Ninja
+
+The Space Ninja is a ghost role randomly available mid-late game. If you pick it you will be given your gear, your objectives and the greeting.
+
+As a ninja you are employed by the spider clan to sabotage the station. You fight with a ninja's honor so that means no guns, those are for cowards.
+
+## Gear
+
+<Box>
+<GuideEntityEmbed Entity="ClothingHandsGlovesSpaceNinja" Caption="ninja gloves"/>
+<GuideEntityEmbed Entity="ClothingOuterSuitSpaceNinja" Captain="ninja suit"/>
+<GuideEntityEmbed Entity="SpiderCharge" Caption="spider clan charge"/>
+<GuideEntityEmbed Entity="EnergyKatana" Captain="energy katana"/>
+</Box>
+
+Your single most important item is your suit, without it none of your abilities would work.
+Your suit requires power to function, its internal battery can be replaced by clicking on it **with a better one**.
+
+Next in line is the gloves which, once turned on with the action, can do various cool things:
+- emagging doors
+- draining power from apcs, substations, smeses
+- shocking people chasing you
+- completing some objectives like calling in a threat or stealing research data.
+
+Your spider clan charge in your pocket can be used only in its designated area. Arm it by planting on a wall or something then get out.
+
+Your energy katana lets you teleport to anywhere you can see, can be teleported into your hand and is about as dangerous as an energy sword and a katana combined.
+
+You also start with a microbomb implant so if you still fail miserably, you won't have tiders looting your sweet noslips.
+
+## todo
+uh copy paste the rest of my wiki
+
+</Document>
