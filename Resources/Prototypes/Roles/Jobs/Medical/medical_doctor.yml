@@ -20,7 +20,7 @@
 - type: startingGear
   id: DoctorGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    jumpsuit: UniformScrubsColorBlue
     back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesColorWhite
     outerClothing: ClothingOuterCoatLab
