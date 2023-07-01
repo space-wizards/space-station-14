@@ -72,7 +72,7 @@ namespace Content.Server.Physics.Controllers
             UpdatePulledRotation(uid, pullable);
 
             if (args.NewPosition.EntityId == args.OldPosition.EntityId &&
-                (args.NewPosition.Position - args.OldPosition.Position).LengthSquared < MinimumMovementDistance * MinimumMovementDistance)
+                (args.NewPosition.Position - args.OldPosition.Position).LengthSquared() < MinimumMovementDistance * MinimumMovementDistance)
                 return;
 
             if (TryComp<PhysicsComponent>(pullable, out var physics))
@@ -98,7 +98,7 @@ namespace Content.Server.Physics.Controllers
             var pulledData = TransformSystem.GetWorldPositionRotation(pulledXform, xforms);
 
             var dir = pullerData.WorldPosition - pulledData.WorldPosition;
-            if (dir.LengthSquared > ThresholdRotDistance * ThresholdRotDistance)
+            if (dir.LengthSquared() > ThresholdRotDistance * ThresholdRotDistance)
             {
                 var oldAngle = pulledData.WorldRotation;
                 var newAngle = Angle.FromWorldVec(dir);

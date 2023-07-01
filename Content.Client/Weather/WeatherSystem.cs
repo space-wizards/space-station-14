@@ -125,7 +125,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 var entPos = _transform.GetWorldPosition(entXform);
                 var sourceRelative = nearestNode.Value.ToMap(EntityManager).Position - entPos;
 
-                if (sourceRelative.LengthSquared > 1f)
+                if (sourceRelative.LengthSquared() > 1f)
                 {
                     occlusion = _physics.IntersectRayPenetration(entXform.MapID,
                         new CollisionRay(entPos, sourceRelative.Normalized, _audio.OcclusionCollisionMask),

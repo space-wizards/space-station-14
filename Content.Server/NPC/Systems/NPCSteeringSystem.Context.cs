@@ -127,7 +127,7 @@ public sealed partial class NPCSteeringSystem
                 lock (_obstacles)
                 {
                     // We're still coming to a stop so wait for the do_after.
-                    if (body.LinearVelocity.LengthSquared > 0.01f)
+                    if (body.LinearVelocity.LengthSquared() > 0.01f)
                     {
                         return true;
                     }
@@ -243,7 +243,7 @@ public sealed partial class NPCSteeringSystem
         ApplySeek(interest, norm, weight);
 
         // Prefer our current direction
-        if (weight > 0f && body.LinearVelocity.LengthSquared > 0f)
+        if (weight > 0f && body.LinearVelocity.LengthSquared() > 0f)
         {
             const float sameDirectionWeight = 0.1f;
             norm = body.LinearVelocity.Normalized;

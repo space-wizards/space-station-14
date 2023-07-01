@@ -90,7 +90,7 @@ public sealed class PoissonDiskSampler
 
             var p = new Vector2((float) xr, (float) yr);
             if (settings.RejectionSqDistance != null &&
-                (settings.Center - p).LengthSquared > settings.RejectionSqDistance)
+                (settings.Center - p).LengthSquared() > settings.RejectionSqDistance)
                 continue;
 
             var index = Denormalize(p, settings.TopLeft, settings.CellSize);
@@ -109,7 +109,7 @@ public sealed class PoissonDiskSampler
         if (q.X >= settings.TopLeft.X && q.X < settings.LowerRight.X &&
             q.Y > settings.TopLeft.Y && q.Y < settings.LowerRight.Y &&
             (settings.RejectionSqDistance == null ||
-             (settings.Center - q).LengthSquared <= settings.RejectionSqDistance))
+             (settings.Center - q).LengthSquared() <= settings.RejectionSqDistance))
         {
             var qIndex = Denormalize(q, settings.TopLeft, settings.CellSize);
             var tooClose = false;

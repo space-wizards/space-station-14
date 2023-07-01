@@ -89,8 +89,8 @@ public class DockingControl : Control
                     var start = matrix.Transform(poly.Vertices[i]);
                     var end = matrix.Transform(poly.Vertices[(i + 1) % poly.VertexCount]);
 
-                    var startOut = start.LengthSquared > _rangeSquared;
-                    var endOut = end.LengthSquared > _rangeSquared;
+                    var startOut = start.LengthSquared() > _rangeSquared;
+                    var endOut = end.LengthSquared() > _rangeSquared;
 
                     // We need to draw to the radar border so we'll cap the range,
                     // but if none of the verts are in range then just leave it.
@@ -164,8 +164,8 @@ public class DockingControl : Control
                     var start = matty.Transform(startPos);
                     var end = matty.Transform(endPos);
 
-                    var startOut = start.LengthSquared > _rangeSquared;
-                    var endOut = end.LengthSquared > _rangeSquared;
+                    var startOut = start.LengthSquared() > _rangeSquared;
+                    var endOut = end.LengthSquared() > _rangeSquared;
 
                     // We need to draw to the radar border so we'll cap the range,
                     // but if none of the verts are in range then just leave it.

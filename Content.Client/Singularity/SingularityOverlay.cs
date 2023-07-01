@@ -49,7 +49,7 @@ namespace Content.Client.Singularity
                 var mapPos = xform.WorldPosition;
 
                 // is the distortion in range?
-                if ((mapPos - args.WorldAABB.ClosestPoint(mapPos)).LengthSquared > MaxDistance * MaxDistance)
+                if ((mapPos - args.WorldAABB.ClosestPoint(mapPos)).LengthSquared() > MaxDistance * MaxDistance)
                     continue;
 
                 // To be clear, this needs to use "inside-viewport" pixels.

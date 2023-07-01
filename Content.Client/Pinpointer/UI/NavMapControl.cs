@@ -153,7 +153,7 @@ public sealed class NavMapControl : MapGridControl
             var frameTime = Timing.FrameTime;
             var diff = _offset * (float) frameTime.TotalSeconds;
 
-            if (_offset.LengthSquared < _recenterMinimum)
+            if (_offset.LengthSquared() < _recenterMinimum)
             {
                 _offset = Vector2.Zero;
                 _recentering = false;

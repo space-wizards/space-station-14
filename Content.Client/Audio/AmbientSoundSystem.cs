@@ -250,7 +250,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
                     ? xform.LocalPosition - playerXform.LocalPosition
                     : xform.WorldPosition - mapPos.Position;
 
-                if (distance.LengthSquared < comp.Range * comp.Range)
+                if (distance.LengthSquared() < comp.Range * comp.Range)
                     continue;
             }
 

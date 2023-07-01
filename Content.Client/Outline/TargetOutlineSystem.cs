@@ -159,7 +159,7 @@ public sealed class TargetOutlineSystem : EntitySystem
             {
                 var origin = Transform(player).WorldPosition;
                 var target = Transform(entity).WorldPosition;
-                valid = (origin - target).LengthSquared <= Range;
+                valid = (origin - target).LengthSquared() <= Range;
             }
 
             if (sprite.PostShader != null &&
