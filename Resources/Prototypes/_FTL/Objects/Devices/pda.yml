@@ -1,0 +1,11 @@
+- type: entity
+  parent: BasePDA
+  id: PilotPDA
+  name: pilot PDA
+  description: Full of arrogance.
+  components:
+    - type: Pda
+      id: PilotIDCard
+      state: pda
+    - type: PdaBorderColor
+      borderColor: "#717059"

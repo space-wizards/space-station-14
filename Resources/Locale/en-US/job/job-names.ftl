@@ -43,6 +43,7 @@ job-name-ertmedic = ERT Medic
 job-name-ertjanitor = ERT Janitor
 job-name-boxer = Boxer
 job-name-zookeeper = Zookeeper
+job-name-pilot = Pilot
 
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = Atmospheric Technician
@@ -76,6 +77,7 @@ JobMime = Mime
 JobMusician = Musician
 JobParamedic = Paramedic
 JobPassenger = Assistant
+JobPilot = Pilot
 JobPsychologist = Psychologist
 JobQuartermaster = Quartermaster
 JobReporter = Reporter

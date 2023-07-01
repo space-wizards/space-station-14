@@ -1,0 +1,23 @@
+- type: job
+  id: Pilot
+  name: job-name-pilot
+  playTimeTracker: JobPilot
+  startingGear: PilotGear
+  icon: "Captain"
+  supervisors: job-supervisors-captain
+  setPreference: true
+  accessGroups:
+    - AllAccess
+
+- type: startingGear
+  id: PilotGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPilot
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesColorWhite
+    id: PilotPDA
+    ears: ClothingHeadsetAltCommand
+    pocket1: WeaponRevolverDeckard
+  innerclothingskirt: ClothingUniformJumpsuitPilot
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

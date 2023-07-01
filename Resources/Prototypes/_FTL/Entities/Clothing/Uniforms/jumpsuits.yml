@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPilot
+  name: pilot jumpsuit
+  description: An oddly clean jumpsuit for such a messy job.
+  components:
+    - type: Sprite
+      sprite: _FTL/Clothing/Uniforms/Jumpsuit/pilot.rsi
+    - type: Clothing
+      sprite: _FTL/Clothing/Uniforms/Jumpsuit/pilot.rsi

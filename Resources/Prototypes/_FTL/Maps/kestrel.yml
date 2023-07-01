@@ -19,10 +19,11 @@
             CargoTechnician: [ 2, 2 ]
             Passenger: [ -1, -1 ]
             Captain: [ 1, 1 ]
-            StationEngineer: [ 3, 3 ]
+            Pilot: [ 1, 1 ]
+            StationEngineer: [ 2, 2 ]
             ChiefMedicalOfficer: [ 1, 1 ]
             MedicalDoctor: [ 3, 3 ]
             HeadOfSecurity: [ 1, 1 ]
             SecurityOfficer: [ 3, 3 ]
-            AtmosphericTechnician: [ 2, 2 ]
-            # SalvageSpecialist: [ 2, 2 ] One day
+            AtmosphericTechnician: [ 1, 1 ]
+            # SalvageSpecialist: [ 2, 2 ] # One day

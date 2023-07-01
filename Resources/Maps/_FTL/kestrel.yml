@@ -115,8 +115,8 @@ entities:
             20: 6,-26
             21: 5,-26
             22: -6,-26
-            24: -4,-26
-            25: -5,-26
+            23: -4,-26
+            24: -5,-26
       type: DecalGrid
     - version: 2
       data:
@@ -203,13 +203,13 @@ entities:
             0: 65535
           1,-9:
             0: 61440
-            1: 119
+            1: 1911
           -2,-9:
             0: 57344
-            1: 204
+            1: 3276
           -1,-9:
             0: 65262
-            1: 17
+            1: 273
           -1,-10:
             0: 57344
           1,-2:
@@ -1393,6 +1393,11 @@ entities:
   - uid: 793
     components:
     - pos: 4.5,-30.5
+      parent: 2
+      type: Transform
+  - uid: 863
+    components:
+    - pos: 2.5,-31.5
       parent: 2
       type: Transform
 - proto: CableMV
@@ -3616,6 +3621,13 @@ entities:
       type: AmbientSound
     - color: '#FF0000FF'
       type: AtmosPipeColor
+- proto: GeneratorPlasma
+  entities:
+  - uid: 862
+    components:
+    - pos: 2.5,-31.5
+      parent: 2
+      type: Transform
 - proto: GeneratorUranium
   entities:
   - uid: 768
@@ -4618,6 +4630,13 @@ entities:
   - uid: 782
     components:
     - pos: -2.5,-14.5
+      parent: 2
+      type: Transform
+- proto: SpawnPointPilot
+  entities:
+  - uid: 861
+    components:
+    - pos: 0.5,-0.5
       parent: 2
       type: Transform
 - proto: SpawnPointSecurityOfficer
