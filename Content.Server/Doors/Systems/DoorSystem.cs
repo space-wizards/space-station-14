@@ -284,9 +284,6 @@ public sealed class DoorSystem : SharedDoorSystem
     }
 }
 
-public sealed class PryFinishedEvent : EntityEventArgs { }
-public sealed class PryCancelledEvent : EntityEventArgs { }
-
 /// <summary>
 /// Event raised when a door is emagged, either with an emag or a Space Ninja's doorjack ability.
 /// Used to track doors for ninja's objective.
