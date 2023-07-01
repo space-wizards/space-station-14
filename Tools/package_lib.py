@@ -28,9 +28,9 @@ SHARED_IGNORED_RESOURCES = {
 
 def print_pycmd_for_platform(script, args):
     if IS_WINDOWS:
-        print(Fore.GREEN + "E:\\ilo\\space-station-14\\> py -3 " + (" ").join(args) + Style.RESET_ALL)
+        print(Fore.GREEN + "E:\\ilo\\space-station-14\\> py -3 " + script + " " + (" ").join(args) + Style.RESET_ALL)
     else:
-        print(Fore.GREEN + "jan@ilo:~/space-station-14$ python3 " + (" ").join(args) + Style.RESET_ALL)
+        print(Fore.GREEN + "jan@ilo:~/space-station-14$ python3 " + script + " " + (" ").join(args) + Style.RESET_ALL)
 
 def diagnose_installation(tool):
     try:
