@@ -1105,7 +1105,7 @@ namespace Content.Shared.CCVar
         /// Whether the arrivals shuttle is enabled.
         /// </summary>
         public static readonly CVarDef<bool> ArrivalsShuttles =
-            CVarDef.Create("shuttle.arrivals", true, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.arrivals", false, CVar.SERVERONLY);
 
         /// <summary>
         /// The map to use for the arrivals station.
@@ -1129,7 +1129,7 @@ namespace Content.Shared.CCVar
         /// Whether to automatically spawn escape shuttles.
         /// </summary>
         public static readonly CVarDef<bool> GridFill =
-            CVarDef.Create("shuttle.grid_fill", true, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.grid_fill", false, CVar.SERVERONLY);
 
         /*
          * Emergency
