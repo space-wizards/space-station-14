@@ -1,6 +1,8 @@
 using System.Threading;
 using Content.Server.Fluids.Components;
 using Content.Server.Tools.Components;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
@@ -44,6 +46,17 @@ public sealed partial class ToolSystem
         }
 
         var tile = grid.GetTileRef(args.Coordinates);
+        if (args.Used != null)
+        {
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(args.User):actor} used {ToPrettyString(args.Used.Value):tool} to pry {_tileDefinitionManager[tile.Tile.TypeId].Name} at {ToPrettyString(tile.GridUid):grid} {tile.GridPosition()}");
+        }
+        else
+        {
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(args.User):actor} pried {_tileDefinitionManager[tile.Tile.TypeId].Name} at {ToPrettyString(tile.GridUid):grid} {tile.GridPosition()}");
+        }
+
         _tile.PryTile(tile);
     }
 

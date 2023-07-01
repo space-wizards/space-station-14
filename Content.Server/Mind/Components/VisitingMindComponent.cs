@@ -3,14 +3,8 @@ namespace Content.Server.Mind.Components
     [RegisterComponent]
     public sealed class VisitingMindComponent : Component
     {
-        [ViewVariables] public Mind Mind { get; set; } = default!;
-
-        protected override void OnRemove()
-        {
-            base.OnRemove();
-
-            Mind?.UnVisit();
-        }
+        [ViewVariables]
+        public Mind? Mind;
     }
 
     public sealed class MindUnvisitedMessage : EntityEventArgs
