@@ -374,4 +374,9 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     {
         return Round(_currentRoundId);
     }
+
+    public Task<int> CountLogs(int round)
+    {
+        return _db.CountAdminLogs(round);
+    }
 }

@@ -6,11 +6,17 @@
   maxPlayers: 35
   stations:
     Cluster:
-      mapNameTemplate: '{0} Cluster Station {1}'
-      nameGenerator:
-        !type:NanotrasenNameGenerator
-        prefixCreator: '14'
-      overflowJobs:
-        - Passenger
-      availableJobs:
-        Passenger: [ -1, -1 ]
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_transit.yml
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Cluster Station {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          overflowJobs:
+            - Passenger
+          availableJobs:
+            Passenger: [ -1, -1 ]

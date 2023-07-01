@@ -9,7 +9,6 @@
     trash: FoodKebabSkewer
   - type: Sprite
     sprite: Objects/Consumable/Food/skewer.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:

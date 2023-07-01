@@ -16,7 +16,10 @@ namespace Content.IntegrationTests.Tests.Networking
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
-            await client.WaitPost(() => IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand("disconnect"));
+            var host = client.ResolveDependency<IClientConsoleHost>();
+            var netManager = client.ResolveDependency<IClientNetManager>();
+
+            await client.WaitPost(() => host.ExecuteCommand("disconnect"));
 
             // Run some ticks for the disconnect to complete and such.
             await PoolManager.RunTicksSync(pairTracker.Pair, 5);
@@ -26,7 +29,7 @@ namespace Content.IntegrationTests.Tests.Networking
             // Reconnect.
             client.SetConnectTarget(server);
 
-            await client.WaitPost(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
+            await client.WaitPost(() => netManager.ClientConnect(null, 0, null));
 
             // Run some ticks for the handshake to complete and such.
             await PoolManager.RunTicksSync(pairTracker.Pair, 10);

@@ -7,7 +7,6 @@
   components:
   - type: VendingMachineRestock
   - type: Sprite
-    netsync: false
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     layers:
     - state: base
@@ -103,6 +102,7 @@
     - SciDrobeInventory
     - SecDrobeInventory
     - ViroDrobeInventory
+    - WinterDrobeInventory
   - type: Sprite
     layers:
     - state: base

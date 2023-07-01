@@ -58,6 +58,21 @@
         - Knife
 
 - type: entity
+  parent: ClothingShoesStorageBase
+  id: ClothingShoesBootsMerc
+  name: mercenary boots
+  description: Boots that have gone through many conflicts and that have proven their combat reliability.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/mercboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/mercboots.rsi
+  - type: Storage
+    whitelist:
+      tags:
+        - Knife
+
+- type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsLaceup
   name: laceup shoes

@@ -29,6 +29,16 @@
   group: market
 
 - type: cargoProduct
+  id: EmergencyInternalsLarge
+  icon:
+    sprite: Clothing/Mask/breath.rsi
+    state: icon
+  product: CrateEmergencyInternalsLarge
+  cost: 2000
+  category: Emergency
+  group: market
+
+- type: cargoProduct
   id: EmergencyRadiation
   icon:
     sprite: Structures/Wallmounts/signs.rsi

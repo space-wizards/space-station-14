@@ -45,6 +45,7 @@
       type: AirAlarmBoundUserInterface
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+  - type: WiresPanel
   - type: Wires
     BoardName: "Air Alarm"
     LayoutId: AirAlarm

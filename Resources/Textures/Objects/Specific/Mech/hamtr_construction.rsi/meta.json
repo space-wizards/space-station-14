@@ -1,0 +1,101 @@
+{
+  "copyright" : "Made by brainfood1183 (github) for ss14",
+  "license" : "CC-BY-SA-3.0",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "hamtr_chassis"
+    },
+    {
+      "name": "hamtr_harness"
+    },
+    {
+      "name": "hamtr_harness+o"
+    },
+    {
+      "name": "hamtr_r_arm"
+    },
+    {
+      "name": "hamtr_r_arm+o"
+    },
+    {
+      "name": "hamtr_l_arm"
+    },
+    {
+      "name": "hamtr_l_arm+o"
+    },
+    {
+      "name": "hamtr_r_leg"
+    },
+    {
+      "name": "hamtr_r_leg+o"
+    },
+    {
+      "name": "hamtr_l_leg"
+    },
+    {
+      "name": "hamtr_l_leg+o"
+    },
+    {
+      "name": "hamtr0"
+    },
+    {
+      "name": "hamtr1"
+    },
+    {
+      "name": "hamtr2"
+    },
+    {
+      "name": "hamtr3"
+    },
+    {
+      "name": "hamtr4"
+    },
+    {
+      "name": "hamtr5"
+    },
+    {
+      "name": "hamtr6"
+    },
+    {
+      "name": "hamtr7"
+    },
+    {
+      "name": "hamtr8"
+    },
+    {
+      "name": "hamtr9"
+    },
+    {
+      "name": "hamtr10"
+    },
+    {
+      "name": "hamtr11"
+    },
+    {
+      "name": "hamtr12"
+    },
+    {
+      "name": "hamtr13"
+    },
+    {
+      "name": "hamtr14"
+    },
+    {
+      "name": "hamtr15"
+    },
+    {
+      "name": "hamtr16"
+    },
+    {
+      "name": "hamtr17"
+    },
+    {
+      "name": "hamtr18"
+    }
+  ]
+}
