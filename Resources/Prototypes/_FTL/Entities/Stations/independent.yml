@@ -1,0 +1,15 @@
+- type: entity
+  id: StandardIndependentStation
+  parent:
+    - BaseStation
+    - BaseStationCargo
+    - BaseStationJobsSpawning
+    - BaseStationRecords
+    - BaseStationShuttles
+    - BaseStationAlertLevels
+    - BaseStationExpeditions
+    - BaseStationAllEventsEligible
+  noSpawn: true
+  components:
+    - type: Transform
+    - type: NavMap

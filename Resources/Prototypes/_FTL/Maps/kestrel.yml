@@ -5,7 +5,7 @@
   minPlayers: 0
   stations:
     Kestrel:
-      stationProto: StandardNanotrasenStation
+      stationProto: StandardIndependentStation
       components:
         - type: StationNameSetup
           mapNameTemplate: '{0} Kestrel {1}'
