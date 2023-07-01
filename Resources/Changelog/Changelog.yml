@@ -1,10 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: 'After detectives complained about the weakness of the .45 magnum cartridge,
-      NT upgraded the cartridge to a higher lethal force.', type: Tweak}
-  id: 3650
-  time: '2023-05-05T13:10:05.0000000+00:00'
 - author: brainfood1183
   changes:
   - {message: Mimebots can now be constructed., type: Add}
@@ -2924,3 +2918,9 @@ Entries:
   - {message: Windoors can now be bolted through the network system., type: Tweak}
   id: 4149
   time: '2023-07-01T19:00:53.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'Shutters are able to be closed again on windoors, tables, flaps and
+      windows.', type: Fix}
+  id: 4150
+  time: '2023-07-01T19:19:04.0000000+00:00'
