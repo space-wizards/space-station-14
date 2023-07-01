@@ -347,7 +347,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             var distance = delta.Length;
             var effect = 5 * MathF.Pow(totalIntensity, 0.5f) * (1 - distance / range);
             if (effect > 0.01f)
-                _recoilSystem.KickCamera(uid, -delta.Normalized * effect);
+                _recoilSystem.KickCamera(uid, -delta.Normalized() * effect);
         }
     }
 

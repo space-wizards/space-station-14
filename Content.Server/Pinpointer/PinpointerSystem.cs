@@ -118,7 +118,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             if (!xformQuery.TryGetComponent(comp.Owner, out var compXform) || compXform.MapID != mapId)
                 continue;
 
-            var dist = (_transform.GetWorldPosition(compXform, xformQuery) - worldPos).LengthSquared;
+            var dist = (_transform.GetWorldPosition(compXform, xformQuery) - worldPos).LengthSquared();
             l.TryAdd(dist, comp.Owner);
         }
 

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Shared.Timing;
@@ -33,6 +34,8 @@ public abstract class MapGridControl : Control
     /// </summary>
     public float MaxRadarRange { get; private set; } = 256f * 10f;
 
+    protected Vector2 MidpointVector2 => new Vector2(MidPoint, MidPoint);
+
     protected int MidPoint => SizeFull / 2;
     protected int SizeFull => (int) ((UIDisplayRadius + MinimapMargin) * 2 * UIScale);
     protected int ScaledMinimapRadius => (int) (UIDisplayRadius * UIScale);
@@ -43,7 +46,7 @@ public abstract class MapGridControl : Control
     public MapGridControl(float minRange, float maxRange, float range)
     {
         IoCManager.InjectDependencies(this);
-        SetSize = (SizeFull, SizeFull);
+        SetSize = new Vector2(SizeFull, SizeFull);
         RectClipContent = true;
         MouseFilter = MouseFilterMode.Stop;
         ActualRadarRange = WorldRange;

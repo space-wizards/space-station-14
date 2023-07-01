@@ -384,7 +384,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         var from = Transform(uid).WorldPosition;
         var to = Transform(target).WorldPosition;
-        var (x, y) = (to - from).Normalized;
+        var (x, y) = (to - from).Normalized();
 
         if (MathF.Abs(x) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
             to = new Vector2(from.X, to.Y);
@@ -398,7 +398,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         // Since there are bodies with different masses:
         // mass * 10 seems enough to move entity
         // instead of launching cats like rockets against the walls with constant impulse value.
-        _physics.ApplyLinearImpulse(uid, (to - from).Normalized * velocity * physics.Mass * 10, body: physics);
+        _physics.ApplyLinearImpulse(uid, (to - from).Normalized() * velocity * physics.Mass * 10, body: physics);
         _physics.SetBodyType(uid, BodyType.Dynamic, body: physics);
         climbing.OwnerIsTransitioning = true;
         _actionBlockerSystem.UpdateCanMove(uid);
