@@ -294,7 +294,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // and using that for the grid look-up, we will just arbitrarily fudge the lookup size to be twice the diameter.
 
         radius *= 4;
-        box = Box2.CenteredAround(epicenter.Position, (radius, radius));
+        box = Box2.CenteredAround(epicenter.Position, new Vector2(radius, radius));
         var mapGrids = _mapManager.FindGridsIntersecting(epicenter.MapId, box).ToList();
         var grids = mapGrids.Select(x => x.Owner).ToList();
 

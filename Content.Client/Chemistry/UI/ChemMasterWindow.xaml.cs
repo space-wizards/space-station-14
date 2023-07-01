@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chemistry;
@@ -59,7 +60,7 @@ namespace Content.Client.Chemistry.UI
                 {
                     Access = AccessLevel.Public,
                     StyleClasses = { styleBase },
-                    MaxSize = (42, 28),
+                    MaxSize = new Vector2(42, 28),
                     Group = pillTypeGroup
                 };
 

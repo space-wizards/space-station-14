@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Shared.CCVar;
 using NUnit.Framework;

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Pointing.Components;
 
 namespace Content.Client.Pointing.Components;

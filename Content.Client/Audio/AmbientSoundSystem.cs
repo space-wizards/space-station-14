@@ -211,7 +211,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
             ? xform.LocalPosition - state.Player.LocalPosition
             : xform.WorldPosition - state.MapPos;
 
-        var range = delta.Length;
+        var range = delta.Length();
         if (range >= ambientComp.Range)
             return true;
 

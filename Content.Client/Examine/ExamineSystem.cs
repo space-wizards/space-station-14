@@ -14,6 +14,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using System.Linq;
+using System.Numerics;
 using System.Threading;
 using Content.Shared.Eye.Blinding.Components;
 using Robust.Client;
@@ -209,7 +210,7 @@ namespace Content.Client.Examine
                 hBox.AddChild(new SpriteView
                 {
                     Sprite = sprite, OverrideDirection = Direction.South,
-                    SetSize = (32, 32),
+                    SetSize = new Vector2(32, 32),
                     Margin = new Thickness(2, 0, 2, 0),
                 });
             }

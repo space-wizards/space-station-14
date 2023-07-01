@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.CombatMode;
 using Content.Shared.Weapons.Melee;
 using Robust.Client.Graphics;

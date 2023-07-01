@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Parallax;
 using Content.Shared.Weather;
 using OpenToolkit.Graphics.ES11;

@@ -1,4 +1,5 @@
-﻿using Content.Server.Decals;
+﻿using System.Numerics;
+using Content.Server.Decals;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Decals;
 using Content.Shared.Maps;

@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;

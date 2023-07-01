@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using Content.Client.Computer;
 using Content.Shared.Solar;
 using JetBrains.Annotations;
@@ -104,7 +105,7 @@ namespace Content.Client.Power
 
         public SolarControlNotARadar()
         {
-            MinSize = (SizeFull, SizeFull);
+            MinSize = new Vector2(SizeFull, SizeFull);
         }
 
         public void UpdateState(SolarControlConsoleBoundInterfaceState ls)

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Body.Systems;
 using Content.Server.Climbing.Components;
 using Content.Server.Interaction;
@@ -391,9 +392,10 @@ public sealed class ClimbSystem : SharedClimbSystem
         else if (MathF.Abs(y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
             to = new Vector2(to.X, from.Y);
 
-        var velocity = (to - from).Length;
+        var velocity = (to - from).Length();
 
-        if (velocity <= 0.0f) return;
+        if (velocity <= 0.0f)
+            return;
 
         // Since there are bodies with different masses:
         // mass * 10 seems enough to move entity

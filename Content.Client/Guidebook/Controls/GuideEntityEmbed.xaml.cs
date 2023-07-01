@@ -160,7 +160,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         }
         else
         {
-            Scale = (2, 2);
+            Scale = new Vector2(2, 2);
         }
 
         if (args.TryGetValue("Interactive", out var interactive))

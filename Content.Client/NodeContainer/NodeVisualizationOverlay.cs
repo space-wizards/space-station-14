@@ -146,7 +146,7 @@ namespace Content.Client.NodeContainer
                 var lCursorBox = invMatrix.TransformBox(cursorBox);
                 foreach (var (pos, list) in gridDict)
                 {
-                    var centerPos = (Vector2) pos + grid.TileSize / 2f;
+                    var centerPos = (Vector2) pos + grid.TileSizeHalfVector;
                     list.Sort(NodeDisplayComparer.Instance);
 
                     var offset = -(list.Count - 1) * nodeOffset / 2;

@@ -76,7 +76,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
         _matrix.R1C2 = size / 2;
         _matrix *= transform.WorldMatrix * Matrix3.Invert(spaceMatrix);
         var relativeAngle = transform.WorldRotation - spaceAngle;
-        _offset = relativeAngle.RotateVec((size / 4, size / 4));
+        _offset = relativeAngle.RotateVec(new Vector2(size / 4, size / 4));
     }
 
     public override void InitTile(Vector2i initialTile)

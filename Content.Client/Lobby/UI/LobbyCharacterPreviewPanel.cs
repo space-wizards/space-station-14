@@ -96,7 +96,7 @@ namespace Content.Client.Lobby.UI
             {
                 Sprite = _entityManager.GetComponent<SpriteComponent>(entity),
                 OverrideDirection = direction,
-                Scale = (2, 2)
+                Scale = new Vector2(2, 2)
             };
         }
 

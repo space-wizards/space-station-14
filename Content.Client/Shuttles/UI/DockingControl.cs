@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Shuttles.BUIStates;
 using Robust.Client.Graphics;
@@ -42,7 +43,7 @@ public class DockingControl : Control
         _entManager = IoCManager.Resolve<IEntityManager>();
         _mapManager = IoCManager.Resolve<IMapManager>();
         _rangeSquared = _range * _range;
-        MinSize = (SizeFull, SizeFull);
+        MinSize = new Vector2(SizeFull, SizeFull);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -200,7 +201,8 @@ public class DockingControl : Control
                 {
                     var position = matty.Transform(dock.Coordinates.Position);
 
-                    if (position.Length > _range - 0.8f) continue;
+                    if (position.Length() > _range - 0.8f)
+                        continue;
 
                     var otherDockRotation = Matrix3.CreateRotation(dock.Angle);
 

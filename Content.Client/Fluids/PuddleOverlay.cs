@@ -1,4 +1,5 @@
-﻿using Content.Shared.FixedPoint;
+﻿using System.Numerics;
+using Content.Shared.FixedPoint;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
