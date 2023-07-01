@@ -76,7 +76,7 @@ public sealed class ListContainer : Control
         {
             ListContainerButton control = new(data[0]);
             GenerateItem?.Invoke(data[0], control);
-            control.Measure(Vector2.Infinity);
+            control.Measure(Vector2Helpers.Infinity);
             _itemHeight = control.DesiredSize.Y;
             control.Dispose();
         }

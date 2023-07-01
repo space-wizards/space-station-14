@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
@@ -674,7 +675,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         var userPos = TransformSystem.GetWorldPosition(userXform);
         var direction = targetMap.Position - userPos;
-        var distance = Math.Min(component.Range, direction.Length);
+        var distance = Math.Min(component.Range, direction.Length());
 
         var damage = GetDamage(meleeUid, user, component) * GetModifier(meleeUid, user, component, false);
         var entities = ev.Entities;
@@ -932,7 +933,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         var invMatrix = TransformSystem.GetInvWorldMatrix(userXform);
         var localPos = invMatrix.Transform(coordinates.Position);
 
-        if (localPos.LengthSquared <= 0f)
+        if (localPos.LengthSquared() <= 0f)
             return;
 
         localPos = userXform.LocalRotation.RotateVec(localPos);
@@ -941,8 +942,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         const float bufferLength = 0.2f;
         var visualLength = length - bufferLength;
 
-        if (localPos.Length > visualLength)
-            localPos = localPos.Normalized * visualLength;
+        if (localPos.Length() > visualLength)
+            localPos = localPos.Normalized() * visualLength;
 
         DoLunge(user, angle, localPos, animation);
     }

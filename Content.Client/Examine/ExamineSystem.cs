@@ -231,7 +231,7 @@ namespace Content.Client.Examine
                 });
             }
 
-            panel.Measure(Vector2.Infinity);
+            panel.Measure(Vector2Helpers.Infinity);
             var size = Vector2.ComponentMax((minWidth, 0), panel.DesiredSize);
 
             _examineTooltipOpen.Open(UIBox2.FromDimensions(_popupPos.Position, size));

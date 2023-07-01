@@ -80,7 +80,7 @@ namespace Content.Client.Chat.UI
 
             ForceRunStyleUpdate();
 
-            bubble.Measure(Vector2.Infinity);
+            bubble.Measure(Vector2Helpers.Infinity);
             ContentSize = bubble.DesiredSize;
             _verticalOffsetAchieved = -ContentSize.Y;
         }

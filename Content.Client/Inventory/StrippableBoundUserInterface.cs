@@ -139,7 +139,7 @@ namespace Content.Client.Inventory
 
             // TODO fix layout container measuring (its broken atm).
             // _strippingMenu.InvalidateMeasure();
-            // _strippingMenu.Contents.Measure(Vector2.Infinity);
+            // _strippingMenu.Contents.Measure(Vector2Helpers.Infinity);
 
             // TODO allow windows to resize based on content's desired size
 

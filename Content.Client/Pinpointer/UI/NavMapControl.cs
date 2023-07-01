@@ -87,7 +87,7 @@ public sealed class NavMapControl : MapGridControl
         };
 
         AddChild(topContainer);
-        topPanel.Measure(Vector2.Infinity);
+        topPanel.Measure(Vector2Helpers.Infinity);
 
         _recenter.OnPressed += args =>
         {
