@@ -1205,7 +1205,7 @@ Entries:
   - {message: partially full syringe contents now easier to see, type: Fix}
   id: 3854
   time: '2023-05-23T19:06:36.0000000+00:00'
-- author: 25203
+- author: "0x6273"
   changes:
   - {message: Artifacts now retain their monetary value after extracting points.,
     type: Tweak}
@@ -1365,7 +1365,7 @@ Entries:
   - {message: Station Map has been resprited and can now be constructed., type: Add}
   id: 3881
   time: '2023-05-28T06:42:41.0000000+00:00'
-- author: 25203
+- author: "0x6273"
   changes:
   - {message: Emitters and APEs can now be controlled with device linking., type: Add}
   id: 3882
@@ -2026,7 +2026,7 @@ Entries:
       EVA helmets.', type: Tweak}
   id: 3994
   time: '2023-06-15T02:15:22.0000000+00:00'
-- author: 25203
+- author: "0x6273"
   changes:
   - {message: Pre-filled non-engineering utility belts now come with a network configurator.,
     type: Tweak}
@@ -2536,7 +2536,7 @@ Entries:
   - {message: Chemist PDA's can now analyze patient health., type: Tweak}
   id: 4080
   time: '2023-06-24T12:11:48.0000000+00:00'
-- author: 25203
+- author: "0x6273"
   changes:
   - {message: 'Hotplates no longer use itemslots, which means you can see and interact
       with the beaker while it''s being heated.', type: Tweak}
