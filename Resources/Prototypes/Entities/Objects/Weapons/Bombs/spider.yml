@@ -30,11 +30,11 @@
         - Anchorable
         - Item
         - Body
-  - type: Explosive # Powerful explosion in a medium radius. Will break underplating.
+  - type: Explosive # Powerful explosion in a large radius. Will break underplating.
     explosionType: DemolitionCharge
     totalIntensity: 60
     intensitySlope: 10
-    maxIntensity: 60
+    maxIntensity: 120
     canCreateVacuum: true
   - type: ExplodeOnTrigger
   - type: StickyVisualizer
