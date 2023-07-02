@@ -1,7 +1,9 @@
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
-using Robust.Shared.Serialization.Manager;
 using Content.Shared.Tag;
+using Robust.Shared.Serialization.Manager;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Shared.SimpleStation14.Clothing;
 
@@ -24,11 +26,7 @@ public sealed class ClothingGrantingSystem : EntitySystem
 
         if (!clothing.Slots.HasFlag(args.SlotFlags)) return;
 
-        if (component.Components.Count > 1)
-        {
-            Logger.Error("Although a component registry supports multiple components, we cannot bookkeep more than 1 component for ClothingGrantComponent at this time.");
-            return;
-        }
+        component.IsActive = true;
 
         foreach (var (name, data) in component.Components)
         {
@@ -41,9 +39,7 @@ public sealed class ClothingGrantingSystem : EntitySystem
 
             var temp = (object) newComp;
             _serializationManager.CopyTo(data.Component, ref temp);
-            EntityManager.AddComponent(args.Equipee, (Component)temp!);
-
-            component.IsActive = true;
+            EntityManager.AddComponent(args.Equipee, (Component) temp!);
         }
     }
 
@@ -55,7 +51,12 @@ public sealed class ClothingGrantingSystem : EntitySystem
         {
             var newComp = (Component) _componentFactory.GetComponent(name);
 
-            RemComp(args.Equipee, newComp.GetType());
+            var allGrantComponents = EntityManager.GetComponents<ClothingGrantComponentComponent>(args.Equipee);
+
+            if (allGrantComponents.Where(x => x!.IsActive).Count(x => x!.Components.ContainsKey(name)) <= 1)
+            {
+                RemComp(args.Equipee, newComp.GetType());
+            }
         }
 
         component.IsActive = false;
