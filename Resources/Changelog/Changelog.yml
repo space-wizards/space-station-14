@@ -1,9 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - {message: Mimebots can now be constructed., type: Add}
-  id: 3651
-  time: '2023-05-05T13:15:49.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: You can't pry blast doors anymore, type: Tweak}
@@ -2924,3 +2919,11 @@ Entries:
       windows.', type: Fix}
   id: 4150
   time: '2023-07-01T19:19:04.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: added rare immovable rod event that can happen late in the game and
+      can literally cut through entire station, type: Add}
+  - {message: immovable rods now move on spawn by default, type: Fix}
+  - {message: you can now warp to immovable rod as ghost, type: Tweak}
+  id: 4151
+  time: '2023-07-02T13:40:07.0000000+00:00'
