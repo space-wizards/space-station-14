@@ -22,6 +22,9 @@ namespace Content.Server.Speech.Components
         /// </summary>
         [DataField("wordReplacements")]
         public Dictionary<string, string>? WordReplacements;
+
+        [DataField("selectable")]
+        public bool Selectable = false;
     }
 
     /// <summary>

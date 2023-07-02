@@ -25,6 +25,7 @@
 
 - type: accent
   id: dwarf
+  selectable: true
   wordReplacements:
     accent-dwarf-words-1: accent-dwarf-words-replace-1
     accent-dwarf-words-2: accent-dwarf-words-replace-2

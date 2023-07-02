@@ -85,6 +85,15 @@
                                     </BoxContainer>
                                 </prefUi:HighlightedContainer>
                             </BoxContainer>
+                            <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+                                <!-- Accent -->
+                                <prefUi:HighlightedContainer>
+                                    <BoxContainer Orientation="Horizontal">
+                                        <Label Text="{Loc 'humanoid-profile-editor-accent-label'}" />
+                                        <OptionButton Name="CAccentButton" />
+                                    </BoxContainer>
+                                </prefUi:HighlightedContainer>
+                            </BoxContainer>
                             <!-- Skin -->
                             <prefUi:HighlightedContainer>
                                 <BoxContainer HorizontalExpand="True" Orientation="Vertical">

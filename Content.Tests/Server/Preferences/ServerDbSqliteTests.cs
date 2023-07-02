@@ -46,6 +46,7 @@ namespace Content.Tests.Server.Preferences
                 "The biggest boy around.",
                 "Human",
                 21,
+                AccentPreference.Default,
                 Sex.Male,
                 Gender.Epicene,
                 new HumanoidCharacterAppearance(

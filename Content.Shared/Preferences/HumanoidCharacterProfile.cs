@@ -36,6 +36,7 @@ namespace Content.Shared.Preferences
             string flavortext,
             string species,
             int age,
+            AccentPreference accent,
             Sex sex,
             Gender gender,
             HumanoidCharacterAppearance appearance,
@@ -50,6 +51,7 @@ namespace Content.Shared.Preferences
             FlavorText = flavortext;
             Species = species;
             Age = age;
+            Accent = accent;
             Sex = sex;
             Gender = gender;
             Appearance = appearance;
@@ -67,7 +69,7 @@ namespace Content.Shared.Preferences
             Dictionary<string, JobPriority> jobPriorities,
             List<string> antagPreferences,
             List<string> traitPreferences)
-            : this(other.Name, other.FlavorText, other.Species, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack,
+            : this(other.Name, other.FlavorText, other.Species, other.Age, other.Accent, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack,
                 jobPriorities, other.PreferenceUnavailable, antagPreferences, traitPreferences)
         {
         }
@@ -83,6 +85,7 @@ namespace Content.Shared.Preferences
             string flavortext,
             string species,
             int age,
+            AccentPreference accent,
             Sex sex,
             Gender gender,
             HumanoidCharacterAppearance appearance,
@@ -92,7 +95,7 @@ namespace Content.Shared.Preferences
             PreferenceUnavailableMode preferenceUnavailable,
             IReadOnlyList<string> antagPreferences,
             IReadOnlyList<string> traitPreferences)
-            : this(name, flavortext, species, age, sex, gender, appearance, clothing, backpack, new Dictionary<string, JobPriority>(jobPriorities),
+            : this(name, flavortext, species, age, accent, sex, gender, appearance, clothing, backpack, new Dictionary<string, JobPriority>(jobPriorities),
                 preferenceUnavailable, new List<string>(antagPreferences), new List<string>(traitPreferences))
         {
         }
@@ -107,6 +110,7 @@ namespace Content.Shared.Preferences
             "",
             SharedHumanoidAppearanceSystem.DefaultSpecies,
             18,
+            AccentPreference.Default,
             Sex.Male,
             Gender.Male,
             new HumanoidCharacterAppearance(),
@@ -134,6 +138,7 @@ namespace Content.Shared.Preferences
                 "",
                 species,
                 18,
+                AccentPreference.Default,
                 Sex.Male,
                 Gender.Male,
                 HumanoidCharacterAppearance.DefaultWithSpecies(species),
@@ -180,7 +185,7 @@ namespace Content.Shared.Preferences
 
             var name = GetName(species, gender);
 
-            return new HumanoidCharacterProfile(name, "", species, age, sex, gender, HumanoidCharacterAppearance.Random(species, sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
+            return new HumanoidCharacterProfile(name, "", species, age, AccentPreference.Default, sex, gender, HumanoidCharacterAppearance.Random(species, sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High},
@@ -193,6 +198,9 @@ namespace Content.Shared.Preferences
 
         [DataField("age")]
         public int Age { get; private set; }
+
+        [DataField("accent")]
+        public AccentPreference Accent { get; private set; }
 
         [DataField("sex")]
         public Sex Sex { get; private set; }
@@ -224,6 +232,11 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile WithAge(int age)
         {
             return new(this) { Age = age };
+        }
+
+        public HumanoidCharacterProfile WithAccent(AccentPreference accent)
+        {
+            return new(this) { Accent = accent };
         }
 
         public HumanoidCharacterProfile WithSex(Sex sex)
@@ -339,6 +352,7 @@ namespace Content.Shared.Preferences
             if (maybeOther is not HumanoidCharacterProfile other) return false;
             if (Name != other.Name) return false;
             if (Age != other.Age) return false;
+            if (Accent != other.Accent) return false;
             if (Sex != other.Sex) return false;
             if (Gender != other.Gender) return false;
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
@@ -367,6 +381,8 @@ namespace Content.Shared.Preferences
                 Sex.Unsexed => Sex.Unsexed,
                 _ => Sex.Male // Invalid enum values.
             };
+
+            var accent = Enum.IsDefined(Accent) ? Accent : Preferences.AccentPreference.Default;
 
             // ensure the species can be that sex and their age fits the founds
             var age = Age;
@@ -478,6 +494,7 @@ namespace Content.Shared.Preferences
             Name = name;
             FlavorText = flavortext;
             Age = age;
+            Accent = accent;
             Sex = sex;
             Gender = gender;
             Appearance = appearance;

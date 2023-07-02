@@ -9,6 +9,7 @@ humanoid-profile-editor-sex-unsexed-text = None
 humanoid-profile-editor-age-label = Age:
 humanoid-profile-editor-skin-color-label = Skin color:
 humanoid-profile-editor-species-label = Species:
+humanoid-profile-editor-accent-label = Accent:
 humanoid-profile-editor-pronouns-label = Pronouns:
 humanoid-profile-editor-pronouns-male-text = He / Him
 humanoid-profile-editor-pronouns-female-text = She / Her

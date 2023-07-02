@@ -78,6 +78,8 @@ namespace Content.Client.Preferences.UI
         private readonly List<JobPrioritySelector> _jobPriorities;
         private OptionButton _preferenceUnavailableButton => CPreferenceUnavailableButton;
         private readonly Dictionary<string, BoxContainer> _jobCategories;
+
+        private readonly Array _accentList;
         // Mildly hacky, as I don't trust prototype order to stay consistent and don't want the UI to break should a new one get added mid-edit. --moony
         private readonly List<SpeciesPrototype> _speciesList;
         private readonly List<AntagPreferenceSelector> _antagPreferences;
@@ -190,6 +192,16 @@ namespace Content.Client.Preferences.UI
             };
 
             #endregion Species
+
+            #region Accent
+
+            _accentList = Enum.GetValuesAsUnderlyingType<AccentPreference>();
+            foreach (var accent in _accentList)
+            {
+                //TODO: actually write this next session
+            }
+
+            #endregion
 
             #region Skin
 
@@ -768,6 +780,12 @@ namespace Content.Client.Preferences.UI
         private void SetAge(int newAge)
         {
             Profile = Profile?.WithAge(newAge);
+            IsDirty = true;
+        }
+
+        private void SetAccent(AccentPreference newAccent)
+        {
+            Profile = Profile?.WithAccent(newAccent);
             IsDirty = true;
         }
 
