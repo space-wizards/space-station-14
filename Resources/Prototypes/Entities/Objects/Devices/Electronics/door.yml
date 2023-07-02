@@ -15,10 +15,6 @@
     - type: DoorElectronics
     - type: StaticPrice
       price: 55
-    - type: ActivatableUI
-      key: enum.DoorElectronicsConfigurationUiKey.Key
-      inHandsOnly: true
-      closeOnHandDeselect: false
     - type: UserInterface
       interfaces:
       - key: enum.DoorElectronicsConfigurationUiKey.Key

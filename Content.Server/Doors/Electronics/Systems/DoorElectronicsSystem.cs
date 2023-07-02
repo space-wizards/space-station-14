@@ -1,7 +1,9 @@
 using System.Linq;
 using Content.Shared.Access.Components;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Electronics;
+using Content.Shared.Interaction;
 using Content.Server.Doors.Electronics;
 using Robust.Server.GameObjects;
 
@@ -16,6 +18,7 @@ public sealed class DoorElectronicsSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<DoorElectronicsComponent, SharedDoorElectronicsComponent.UpdateConfigurationMessage>(OnChangeConfiguration);
         SubscribeLocalEvent<DoorElectronicsComponent, SharedDoorElectronicsComponent.RefreshUiMessage>(OnRefreshUi);
+        SubscribeLocalEvent<DoorElectronicsComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
     public void UpdateUserInterface(EntityUid uid, DoorElectronicsComponent component)
@@ -61,5 +64,21 @@ public sealed class DoorElectronicsSystem : EntitySystem
                              SharedDoorElectronicsComponent.RefreshUiMessage args)
     {
         UpdateUserInterface(uid, component);
+    }
+
+    private void OnInteractUsing(EntityUid uid, DoorElectronicsComponent component, InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<NetworkConfiguratorComponent>(args.Used, out var networkConfigurator))
+            return;
+
+        if (!TryComp(args.User, out ActorComponent? actor))
+            return;
+
+        args.Handled = true;
+
+        _uiSystem.TryOpen(uid, DoorElectronicsConfigurationUiKey.Key, actor.PlayerSession);
     }
 }
