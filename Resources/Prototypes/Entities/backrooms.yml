@@ -1,6 +1,7 @@
 - type: entity
   name: Loot Spawner
   id: BackroomsSpawner
+  suffix: BACKROOMS
   parent: MarkerBase
   components:
     - type: Sprite
@@ -24,13 +25,66 @@
         - Backroomstal1
         - Backroomstal1
       chance: 0.028
-      offset: 0.2
+      offset: 0.4
+
+- type: entity
+  name: Loot Spawner periodic
+  id: BackroomsSpawnerForPeriodic
+  suffix: BACKROOMS
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+    - type: RandomSpawner
+      prototypes:
+        - SheetSteel
+        - SheetSteel
+        - SheetPlasteel
+        - SheetGlass
+        - PartRodMetal
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+        - Backroomstal1
+      chance: 0.012
+      offset: 0.4
+
+- type: entity
+  name: Timer spawner
+  id: BackroomsTimedSpawner
+  parent: MarkerBase
+  suffix: BACKROOMS
+  components:
+    - type: Sprite
+      layers:
+      - state: blue
+    - type: Timer
+    - type: TimedSpawner
+      prototypes:
+      - BackroomsSpawnerForPeriodic
+      chance: 0.55
+      intervalSeconds: 300
+      minimumEntitiesSpawned: 2
+      maximumEntitiesSpawned: 16
 
 - type: storePreset
   id: StorePresetBackrooms
   storeName: store-preset-backrooms
   categories:
-  - Backrooms
+  - BackroomsEquip
+  - BackroomsWeapon
+  - BackroomsBuild
+  - BackroomsExit
+  - BackroomsSome
+  - BackroomsHum
+  - BackroomsArmor
   currencyWhitelist:
   - Backrooms
 
@@ -122,9 +176,39 @@
   canWithdraw: true
 
 - type: storeCategory
-  id: Backrooms
-  name: backrooms-category
+  id: BackroomsEquip
+  name: backrooms-category-equip
   priority: 0
+
+- type: storeCategory
+  id: BackroomsWeapon
+  name: backrooms-category-weapon
+  priority: 1
+
+- type: storeCategory
+  id: BackroomsBuild
+  name: backrooms-category-build
+  priority: 2
+
+- type: storeCategory
+  id: BackroomsExit
+  name: backrooms-category-exit
+  priority: 4
+
+- type: storeCategory
+  id: BackroomsSome
+  name: backrooms-category-some
+  priority: 3
+
+- type: storeCategory
+  id: BackroomsHum
+  name: backrooms-category-hum
+  priority: 5
+
+- type: storeCategory
+  id: BackroomsArmor
+  name: backrooms-category-armor
+  priority: 6
 
 - type: listing
   id: WeaponShotgunDoubleBarreledBackrooms
@@ -132,7 +216,7 @@
   cost:
     Backrooms: 26
   categories:
-  - Backrooms
+  - BackroomsWeapon
 
 - type: listing
   id: BoxLethalshotBackrooms
@@ -140,7 +224,7 @@
   cost:
     Backrooms: 8
   categories:
-  - Backrooms
+  - BackroomsWeapon
 
 - type: listing
   id: WeaponRevolverRaxaBackrooms
@@ -148,7 +232,7 @@
   cost:
     Backrooms: 30
   categories:
-  - Backrooms
+  - BackroomsWeapon
 
 - type: listing
   id: WeaponShotgunHandmadeBackrooms
@@ -156,7 +240,7 @@
   cost:
     Backrooms: 18
   categories:
-  - Backrooms
+  - BackroomsWeapon
 
 - type: listing
   id: WeaponDisablerBackrooms
@@ -164,7 +248,7 @@
   cost:
     Backrooms: 32
   categories:
-  - Backrooms
+  - BackroomsWeapon
 
 - type: listing
   id: WeaponMakeshiftLaserBackrooms
@@ -172,7 +256,7 @@
   cost:
     Backrooms: 28
   categories:
-  - Backrooms
+  - BackroomsWeapon
 
 - type: listing
   id: WeaponCapacitorRechargerBackrooms
@@ -180,7 +264,7 @@
   cost:
     Backrooms: 8
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: ClothingHandsGlovesColorYellowBackrooms
@@ -188,7 +272,7 @@
   cost:
     Backrooms: 2
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: GeneratorPlasmaBackrooms
@@ -196,7 +280,7 @@
   cost:
     Backrooms: 6
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: ClothingOuterBioVirologyBackrooms
@@ -204,7 +288,7 @@
   cost:
     Backrooms: 1
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: ClothingHeadHatHoodBioVirologyBackrooms
@@ -212,7 +296,7 @@
   cost:
     Backrooms: 1
   categories:
-  - Backrooms
+  - BackroomsArmor
 
 - type: listing
   id: ClothingOuterArmorBulletproofBackrooms
@@ -220,7 +304,7 @@
   cost:
     Backrooms: 14
   categories:
-  - Backrooms
+  - BackroomsArmor
 
 - type: listing
   id: ClothingOuterArmorRiotBackrooms
@@ -228,7 +312,7 @@
   cost:
     Backrooms: 14
   categories:
-  - Backrooms
+  - BackroomsArmor
 
 - type: listing
   id: ClothingOuterArmorHeavyBackrooms
@@ -236,7 +320,7 @@
   cost:
     Backrooms: 68
   categories:
-  - Backrooms
+  - BackroomsArmor
 
 - type: listing
   id: CombatKnifeBackrooms
@@ -244,7 +328,7 @@
   cost:
     Backrooms: 5
   categories:
-  - Backrooms
+  - BackroomsWeapon
 
 - type: listing
   id: GauzeBackrooms
@@ -252,7 +336,7 @@
   cost:
     Backrooms: 1
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: BrutepackBackrooms
@@ -260,7 +344,7 @@
   cost:
     Backrooms: 2
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: OintmentBackrooms
@@ -268,7 +352,7 @@
   cost:
     Backrooms: 2
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: KitchenMicrowaveBackrooms
@@ -276,7 +360,7 @@
   cost:
     Backrooms: 7
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: StasisBedBackrooms
@@ -284,7 +368,7 @@
   cost:
     Backrooms: 9
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: SubstationBasicBackrooms
@@ -292,7 +376,7 @@
   cost:
     Backrooms: 8
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: APCBasicBackrooms
@@ -300,7 +384,7 @@
   cost:
     Backrooms: 4
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: CableHVStackBackrooms
@@ -308,7 +392,7 @@
   cost:
     Backrooms: 3
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: CableApcStackBackrooms
@@ -316,7 +400,7 @@
   cost:
     Backrooms: 3
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: CableMVStackBackrooms
@@ -324,7 +408,7 @@
   cost:
     Backrooms: 3
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: WaterTankFullBackrooms
@@ -332,7 +416,7 @@
   cost:
     Backrooms: 6
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: MagazineBoxMagnumBackrooms
@@ -340,7 +424,7 @@
   cost:
     Backrooms: 8
   categories:
-  - Backrooms
+  - BackroomsWeapon
 
 - type: listing
   id: BoxMREBackrooms
@@ -348,7 +432,7 @@
   cost:
     Backrooms: 3
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: MagazineBoxLightRifleBackrooms
@@ -356,7 +440,7 @@
   cost:
     Backrooms: 8
   categories:
-  - Backrooms
+  - BackroomsWeapon
 
 - type: listing
   id: WeaponSniperMosinBackrooms
@@ -364,7 +448,7 @@
   cost:
     Backrooms: 34
   categories:
-  - Backrooms
+  - BackroomsWeapon
 
 - type: listing
   id: HandcuffsBackrooms
@@ -372,7 +456,7 @@
   cost:
     Backrooms: 4
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: PersonalAIBackrooms
@@ -380,7 +464,7 @@
   cost:
     Backrooms: 6
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: CrowbarBackrooms
@@ -388,7 +472,7 @@
   cost:
     Backrooms: 3
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: WrenchBackrooms
@@ -396,7 +480,7 @@
   cost:
     Backrooms: 3
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: ScrewdriverBackrooms
@@ -404,7 +488,7 @@
   cost:
     Backrooms: 2
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: WirecutterBackrooms
@@ -412,7 +496,7 @@
   cost:
     Backrooms: 2
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: WelderBackrooms
@@ -420,7 +504,7 @@
   cost:
     Backrooms: 4
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: MultitoolBackrooms
@@ -428,7 +512,7 @@
   cost:
     Backrooms: 3
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: CrateHydroponicsSeedsBackrooms
@@ -436,7 +520,7 @@
   cost:
     Backrooms: 10
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: CrateHydroponicsSeedsMedicinalBackrooms
@@ -444,7 +528,7 @@
   cost:
     Backrooms: 17
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: CrateHydroponicsSeedsExoticBackrooms
@@ -452,7 +536,7 @@
   cost:
     Backrooms: 15
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: SeedExtractorBackrooms
@@ -460,7 +544,7 @@
   cost:
     Backrooms: 11
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: ShovelBackrooms
@@ -468,7 +552,7 @@
   cost:
     Backrooms: 4
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: HydroponicsToolClippersBackrooms
@@ -476,7 +560,7 @@
   cost:
     Backrooms: 4
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: HydroponicsToolMiniHoeBackrooms
@@ -484,7 +568,7 @@
   cost:
     Backrooms: 4
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: RobustHarvestChemistryBottleBackrooms
@@ -492,7 +576,7 @@
   cost:
     Backrooms: 4
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: BucketBackrooms
@@ -500,7 +584,7 @@
   cost:
     Backrooms: 3
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: MopBucketBackrooms
@@ -508,7 +592,7 @@
   cost:
     Backrooms: 3
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: MopItemBackrooms
@@ -516,7 +600,7 @@
   cost:
     Backrooms: 4
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: WeldingFuelTankFullBackrooms
@@ -524,7 +608,7 @@
   cost:
     Backrooms: 7
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: FlareBackrooms
@@ -532,7 +616,7 @@
   cost:
     Backrooms: 1
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: AcousticGuitarInstrumentBackrooms
@@ -540,15 +624,15 @@
   cost:
     Backrooms: 4
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: AltarConvertMaintBackrooms
   productEntity: AltarConvertMaint
   cost:
-    Backrooms: 180
+    Backrooms: 100
   categories:
-  - Backrooms
+  - BackroomsExit
 
 - type: listing
   id: HandheldHealthAnalyzerBackrooms
@@ -556,7 +640,7 @@
   cost:
     Backrooms: 9
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: MedkitFilledBackrooms
@@ -564,7 +648,7 @@
   cost:
     Backrooms: 16
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: ClothingBeltMilitaryWebbingBackrooms
@@ -572,7 +656,7 @@
   cost:
     Backrooms: 9
   categories:
-  - Backrooms
+  - BackroomsArmor
 
 - type: listing
   id: ClothingBeltBandolierBackrooms
@@ -580,7 +664,7 @@
   cost:
     Backrooms: 7
   categories:
-  - Backrooms
+  - BackroomsArmor
 
 - type: listing
   id: PowerCellSmallBackrooms
@@ -588,7 +672,7 @@
   cost:
     Backrooms: 2
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: BaseBallBatBackrooms
@@ -596,7 +680,7 @@
   cost:
     Backrooms: 5
   categories:
-  - Backrooms
+  - BackroomsWeapon
 
 - type: listing
   id: PaperBackrooms
@@ -604,7 +688,7 @@
   cost:
     Backrooms: 1
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: OmnizineChemistryBottleBackrooms
@@ -612,7 +696,7 @@
   cost:
     Backrooms: 10
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: BoxBeakerBackrooms
@@ -620,7 +704,7 @@
   cost:
     Backrooms: 7
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: BodyBag_FoldedBackrooms
@@ -628,7 +712,7 @@
   cost:
     Backrooms: 2
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: SheetPlasma1Backrooms
@@ -636,7 +720,7 @@
   cost:
     Backrooms: 6
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: lanternBackrooms
@@ -644,7 +728,7 @@
   cost:
     Backrooms: 5
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: GrenadeFlashBangBackrooms
@@ -652,7 +736,7 @@
   cost:
     Backrooms: 3
   categories:
-  - Backrooms
+  - BackroomsExit
 
 - type: listing
   id: FlashlightLanternBackrooms
@@ -660,7 +744,7 @@
   cost:
     Backrooms: 4
   categories:
-  - Backrooms
+  - BackroomsExit
 
 - type: listing
   id: KitchenReagentGrinderBackrooms
@@ -668,7 +752,7 @@
   cost:
     Backrooms: 7
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: BloodpackBackrooms
@@ -676,7 +760,7 @@
   cost:
     Backrooms: 2
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: ClothingEyesHudMedicalBackrooms
@@ -684,7 +768,7 @@
   cost:
     Backrooms: 13
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: PenBackrooms
@@ -692,7 +776,7 @@
   cost:
     Backrooms: 1
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: startingGear
   id: BackroomsGear
@@ -702,8 +786,9 @@
     shoes: ClothingShoesColorWhite
     gloves: ClothingHandsGlovesColorWhite
     pocket1: BaseBackroomsRadio
-    pocket2: BookBackroms
+    pocket2: BookBackrooms
     mask: ClothingMaskSterile
+    head: ClothingHeadHatPaper
 
 - type: listing
   id: GasAnalyzerBackrooms
@@ -711,7 +796,7 @@
   cost:
     Backrooms: 4
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: CrayonBoxBackrooms
@@ -719,7 +804,7 @@
   cost:
     Backrooms: 3
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: DefibrillatorBackrooms
@@ -727,7 +812,7 @@
   cost:
     Backrooms: 18
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
   id: MaterialClothBackrooms
@@ -735,15 +820,15 @@
   cost:
     Backrooms: 2
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: BlastDoorOpenBackrooms
   productEntity: BlastDoorOpen
   cost:
-    Backrooms: 14
+    Backrooms: 9
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: ClothingEyesGlassesMesonBackrooms
@@ -751,31 +836,23 @@
   cost:
     Backrooms: 7
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
-  id: hydroponicsTray
+  id: hydroponicsTrayBackrooms
   productEntity: hydroponicsTray
   cost:
     Backrooms: 5
   categories:
-  - Backrooms
+  - BackroomsEquip
 
 - type: listing
-  id: HandheldGPSBasic
+  id: HandheldGPSBasicBackrooms
   productEntity: HandheldGPSBasic
   cost:
     Backrooms: 6
   categories:
-  - Backrooms
-
-- type: listing
-  id: RadioHandheld
-  productEntity: RadioHandheld
-  cost:
-    Backrooms: 9
-  categories:
-  - Backrooms
+  - BackroomsExit
 
 - type: entity
   parent: BookBase
@@ -796,7 +873,7 @@
   cost:
     Backrooms: 10
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: ToyRubberDuckBackrooms
@@ -804,23 +881,23 @@
   cost:
     Backrooms: 2
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
   id: VendingMachineChemicalsBackrooms
   productEntity: VendingMachineChemicals
   cost:
-    Backrooms: 36
+    Backrooms: 26
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
-  id: chem_master
+  id: chem_masterBackrooms
   productEntity: chem_master
   cost:
     Backrooms: 15
   categories:
-  - Backrooms
+  - BackroomsBuild
 
 - type: listing
   id: EphedrineChemistryBottleBackrooms
@@ -828,12 +905,76 @@
   cost:
     Backrooms: 7
   categories:
-  - Backrooms
+  - BackroomsSome
 
 - type: listing
-  id: ChemistryHotplate
+  id: ChemistryHotplateBackrooms
   productEntity: ChemistryHotplate
   cost:
     Backrooms: 6
   categories:
-  - Backrooms
+  - BackroomsBuild
+
+- type: listing
+  id: FloorDrainBackrooms
+  productEntity: FloorDrain
+  cost:
+    Backrooms: 3
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: StunbatonBackrooms
+  productEntity: Stunbaton
+  cost:
+    Backrooms: 24
+  categories:
+  - BackroomsWeapon
+
+- type: listing
+  id: AirlockBackrooms
+  productEntity: Airlock
+  cost:
+    Backrooms: 5
+  categories:
+  - BackroomsBuild
+
+- type: listing
+  id: ClothingHeadsetPrisonerBackrooms
+  productEntity: ClothingHeadsetPrisoner
+  cost:
+    Backrooms: 10
+  categories:
+  - BackroomsHum
+
+- type: listing
+  id: EncryptionKeyRadio1Backrooms
+  productEntity: EncryptionKeyRadio1
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsHum
+
+- type: listing
+  id: EncryptionKeyRadio2Backrooms
+  productEntity: EncryptionKeyRadio2
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsHum
+
+- type: listing
+  id: EncryptionKeyRadio3Backrooms
+  productEntity: EncryptionKeyRadio3
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsHum
+
+- type: listing
+  id: EncryptionKeyRadio4Backrooms
+  productEntity: EncryptionKeyRadio4
+  cost:
+    Backrooms: 4
+  categories:
+  - BackroomsHum
