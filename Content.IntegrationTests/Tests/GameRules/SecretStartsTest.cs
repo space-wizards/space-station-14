@@ -37,7 +37,7 @@ public sealed class SecretStartsTest
         {
             foreach (var rule in gameTicker.GetAddedGameRules())
             {
-                Assert.That(gameTicker.GetActiveGameRules().Contains(rule));
+                Assert.That(gameTicker.GetActiveGameRules(), Does.Contain(rule));
             }
 
             // End all rules
