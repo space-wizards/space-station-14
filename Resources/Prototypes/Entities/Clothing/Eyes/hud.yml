@@ -8,6 +8,11 @@
     sprite: Clothing/Eyes/Hud/diag.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/diag.rsi
+  - type: ClothingGrantComponent
+    component:
+    - type: ShowHealthBars
+      damageContainers: 
+      - Inorganic
 
 - type: entity
   parent: ClothingEyesBase
@@ -19,6 +24,11 @@
     sprite: Clothing/Eyes/Hud/med.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/med.rsi
+  - type: ClothingGrantComponent
+    component:
+    - type: ShowHealthBars
+      damageContainers: 
+      - Biological
 
 - type: entity
   parent: ClothingEyesBase
