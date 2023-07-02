@@ -15,10 +15,10 @@ public sealed class WallConstruction : InteractionTest
     {
         await StartConstruction(Wall);
         await Interact(Steel, 2);
-        Assert.IsNull(Hands.ActiveHandEntity);
+        Assert.That(Hands.ActiveHandEntity, Is.Null);
         AssertPrototype(Girder);
         await Interact(Steel, 2);
-        Assert.IsNull(Hands.ActiveHandEntity);
+        Assert.That(Hands.ActiveHandEntity, Is.Null);
         AssertPrototype(WallSolid);
     }
 
@@ -33,4 +33,3 @@ public sealed class WallConstruction : InteractionTest
         await AssertEntityLookup((Steel, 4));
     }
 }
-
