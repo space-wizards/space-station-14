@@ -19,6 +19,7 @@ using Robust.Client.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
@@ -99,6 +100,7 @@ public abstract partial class InteractionTest
     protected InteractionTestSystem STestSystem = default!;
     protected SharedTransformSystem Transform = default!;
     protected ActorSystem Actor = default!;
+    protected ISawmill SLogger = default!;
 
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
@@ -109,6 +111,7 @@ public abstract partial class InteractionTest
     protected ConstructionSystem CConSys = default!;
     protected ExamineSystem ExamineSys = default!;
     protected InteractionTestSystem CTestSystem = default!;
+    protected ISawmill CLogger = default!;
 
     // player components
     protected HandsComponent Hands = default!;
@@ -155,6 +158,7 @@ public abstract partial class InteractionTest
         STestSystem = SEntMan.System<InteractionTestSystem>();
         Stack = SEntMan.System<StackSystem>();
         Actor = SEntMan.System<ActorSystem>();
+        SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
 
         // client dependencies
         CEntMan = Client.ResolveDependency<IEntityManager>();
@@ -165,6 +169,7 @@ public abstract partial class InteractionTest
         CTestSystem = CEntMan.System<InteractionTestSystem>();
         CConSys = CEntMan.System<ConstructionSystem>();
         ExamineSys = CEntMan.System<ExamineSystem>();
+        CLogger = Client.ResolveDependency<ILogManager>().RootSawmill;
 
         // Setup map.
         MapData = await PoolManager.CreateTestMap(PairTracker);
