@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Network;
 
 namespace Content.IntegrationTests.Tests.Networking
 {
