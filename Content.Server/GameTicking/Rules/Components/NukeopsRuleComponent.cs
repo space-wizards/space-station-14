@@ -24,10 +24,10 @@ public sealed class NukeopsRuleComponent : Component
     ///     This INCLUDES the operatives. So a value of 3 is satisfied by 2 players & 1 operative
     /// </summary>
     [DataField("playersPerOperative")]
-    public int PlayersPerOperative = 6; // We need more nule ops
+    public int PlayersPerOperative = 10;
 
     [DataField("maxOps")]
-    public int MaxOperatives = 6;
+    public int MaxOperatives = 5;
 
     /// <summary>
     /// Whether or not all of the nuclear operatives dying will end the round. Used by LoneOpsSpawn event.
@@ -84,7 +84,7 @@ public sealed class NukeopsRuleComponent : Component
     public WinType WinType = WinType.Neutral;
 
     [DataField("winConditions")]
-    public List<WinCondition> WinConditions = new ();
+    public List<WinCondition> WinConditions = new();
 
     public MapId? NukiePlanet;
 
@@ -98,7 +98,7 @@ public sealed class NukeopsRuleComponent : Component
     ///     Cached starting gear prototypes.
     /// </summary>
     [DataField("startingGearPrototypes")]
-    public readonly Dictionary<string, StartingGearPrototype> StartingGearPrototypes = new ();
+    public readonly Dictionary<string, StartingGearPrototype> StartingGearPrototypes = new();
 
     /// <summary>
     ///     Cached operator name prototypes.

@@ -913,7 +913,7 @@
   description: ert-uplink-weaponcombat-weaponshotgunkammerer-desc
   productEntity: WeaponShotgunKammerer
   cost:
-    BlueSpaceCube: 10
+    BlueSpaceCube: 8
   categories:
   - ERTUplinkWeaponCombat
   conditions:
@@ -921,6 +921,22 @@
       whitelist:
         tags:
           - ErtUplinkCombat
+
+- type: listing
+  id: ErtCallUplinkWeaponShotgunBulldog
+  name: ert-uplink-weaponcombat-weaponshotgunbulldog-name
+  description: ert-uplink-weaponcombat-weaponshotgunbulldog-desc
+  productEntity: WeaponShotgunBulldog
+  cost:
+    BlueSpaceCube: 12
+  categories:
+  - ERTUplinkWeaponCombat
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - ErtUplinkCombat
+          - ErtUplinkCBURN
 
 # - type: listing
 #   id: ErtCallUplinkWeaponRifleAk
@@ -1081,5 +1097,15 @@
   productEntity: ClothingShoesBootsMag
   cost:
     BlueSpaceCube: 2
+  categories:
+  - ERTUplinkUtilities
+
+- type: listing
+  id: ErtCallUplinkCrowbar
+  name: ert-uplink-utilities-crowbar-name
+  description: ert-uplink-utilities-crowbar-desc
+  productEntity: Crowbar
+  cost:
+    BlueSpaceCube: 1
   categories:
   - ERTUplinkUtilities

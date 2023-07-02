@@ -7,23 +7,25 @@ using Content.Server.Administration;
 using Robust.Shared.Prototypes;
 using System.Linq;
 
-namespace Content.Server.ErtCall;
-
-public sealed class CallErtSystem : EntitySystem
+namespace Content.Server.ErtCall
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly MapLoaderSystem _map = default!;
 
-    public bool SpawnErt(ErtCallPresetPrototype preset)
+    public sealed class CallErtSystem : EntitySystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly MapLoaderSystem _map = default!;
 
-        var shuttleMap = _mapManager.CreateMap();
-        var options = new MapLoadOptions
+        public bool SpawnErt(ErtCallPresetPrototype preset)
         {
-            LoadMap = true,
-        };
 
-        return(_map.TryLoad(shuttleMap, preset.Path, out _, options));
+            var shuttleMap = _mapManager.CreateMap();
+            var options = new MapLoadOptions
+            {
+                LoadMap = true,
+            };
+
+            return (_map.TryLoad(shuttleMap, preset.Path, out _, options));
+        }
     }
 }
 

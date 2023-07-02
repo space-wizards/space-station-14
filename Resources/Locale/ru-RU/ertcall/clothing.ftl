@@ -1,13 +1,13 @@
 ent-ClothingBackpackCallERTLeaderFilled = { ent-ClothingBackpackERTLeader }
-    .desc = { ClothingBackpackERTLeader.desc }
+    .desc = { ent-ClothingBackpackERTLeader.desc }
 ent-ClothingBackpackCallERTSecurityFilled = { ent-ClothingBackpackERTSecurity }
-    .desc = { ClothingBackpackERTSecurity.desc }
+    .desc = { ent-ClothingBackpackERTSecurity.desc }
 ent-ClothingBackpackCallERTMedicalFilled = { ent-ClothingBackpackERTMedical }
-    .desc = { ClothingBackpackERTMedical.desc }
+    .desc = { ent-ClothingBackpackERTMedical.desc }
 ent-ClothingBackpackCallERTEngineerFilled = { ent-ClothingBackpackERTEngineer }
-    .desc = { ClothingBackpackERTEngineer.desc }
+    .desc = { ent-ClothingBackpackERTEngineer.desc }
 ent-ClothingBackpackCallERTJanitorFilled = { ent-ClothingBackpackERTJanitor }
-    .desc = { ClothingBackpackERTJanitor.desc }
+    .desc = { ent-ClothingBackpackERTJanitor.desc }
 ent-ClothingBackpackDeadSquadSecurity = Сумка эскадрона смерти
     .desc = Предназначена лля хранения смертельно опасных вещей
 ent-ClothingBackpackDeadSquadSecurityFilled = { ent-ClothingBackpackDeadSquadSecurity }
@@ -15,6 +15,8 @@ ent-ClothingBackpackDeadSquadSecurityFilled = { ent-ClothingBackpackDeadSquadSec
 ent-ClothingBeltDeadSquadFilled = Пояс с инструментами эскадрона смерти
     .desc = Содержит инструменты, которые призваны помочь бойцу добраться до цели кратчайшим путём.
 ent-ClothingBackpackCallERTCBURNFilled = { ent-ClothingBackpackDuffelCBURN }
+    .desc = { ent-ClothingBackpackDuffelCBURN.desc }
+ent-ClothingBackpackCallERTCBURNFilledLeader = { ent-ClothingBackpackDuffelCBURN }
     .desc = { ent-ClothingBackpackDuffelCBURN.desc }
 
 ent-ClothingOuterHardsuitCBURNLeader = экзокостюм лидера отряда РХБЗЗ

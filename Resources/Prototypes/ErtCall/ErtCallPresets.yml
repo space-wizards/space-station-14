@@ -18,6 +18,16 @@
   path: "Maps/Shuttles/ERTPresets/dartCBURN.yml"
   desc: "1 лидер, 6 бойцов, 1 мед"
 
+- type: ertCall
+  id: ERT-Small-Security
+  path: "Maps/Shuttles/ERTPresets/ertDagger.yml"
+  desc: "1 лидер, 4 бойца"
+
+- type: ertCall
+  id: ERT-Janitor
+  path: "Maps/Shuttles/ERTPresets/junitorERT.yml"
+  desc: "1 лидер, 4 уборщика"
+
 
 
 

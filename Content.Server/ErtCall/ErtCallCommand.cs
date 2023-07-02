@@ -6,6 +6,8 @@ using Content.Shared.Administration;
 using Content.Server.Administration;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.ErtCall;
 
@@ -36,6 +38,7 @@ public sealed class CallErt : LocalizedCommands
         if (args.Length == 0)
         {
             shell.WriteError(Loc.GetString("callertcommand-error-args0"));
+            SoundSystem.Play("/Audio/Corvax/Adminbuse/noert.ogg", Filter.Broadcast(), AudioParams.Default.WithVolume(-2f));
             return;
         }
         if (args.Length > 1)
@@ -45,14 +48,15 @@ public sealed class CallErt : LocalizedCommands
         }
         var ertSpawnSystem = IoCManager.Resolve<IEntityManager>().System<CallErtSystem>();
         var protoId = args[0];
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            if (!prototypeManager.TryIndex<ErtCallPresetPrototype>(protoId, out var proto))
-            {
-                shell.WriteError(Loc.GetString("callertcommand-error-prest-not-found", ("protoid", protoId)));
-                return;
-            }
+        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+        if (!prototypeManager.TryIndex<ErtCallPresetPrototype>(protoId, out var proto))
+        {
+            shell.WriteError(Loc.GetString("callertcommand-error-prest-not-found", ("protoid", protoId)));
+            return;
+        }
         if (ertSpawnSystem.SpawnErt(proto))
         {
+            SoundSystem.Play("/Audio/Corvax/Adminbuse/yesert.ogg", Filter.Broadcast(), AudioParams.Default.WithVolume(-5f));
             shell.WriteLine(Loc.GetString("callertcommand-preset-loaded", ("protoid", protoId)));
             return;
         }

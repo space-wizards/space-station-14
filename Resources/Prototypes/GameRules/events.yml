@@ -35,7 +35,7 @@
   noSpawn: true
   components:
     - type: StationEvent
-      weight: 0
+      weight: 1
       reoccurrenceDelay: 5
       earliestStart: 1
       duration: 1
@@ -82,7 +82,7 @@
   noSpawn: true
   components:
     - type: StationEvent
-      weight: 5
+      weight: 2
       duration: 1
       earliestStart: 45
       minimumPlayers: 20
@@ -128,7 +128,7 @@
   - type: StationEvent
     earliestStart: 15
     minimumPlayers: 15
-    weight: 5
+    weight: 7
     startDelay: 50
     duration: 240
   - type: KudzuGrowthRule
@@ -140,7 +140,7 @@
   components:
   - type: StationEvent
     earliestStart: 30
-    weight: 5
+    weight: 7
     minimumPlayers: 20
     startAnnouncement: station-event-meteor-swarm-start-announcement
     endAnnouncement: station-event-meteor-swarm-end-announcement
@@ -305,7 +305,7 @@
   components:
     - type: StationEvent
       earliestStart: 50
-      weight: 2.5
+      weight: 0.1
       duration: 1
     - type: ZombieRule
 
@@ -316,7 +316,7 @@
   components:
     - type: StationEvent
       earliestStart: 55
-      weight: 5
+      weight: 2
       minimumPlayers: 10
       reoccurrenceDelay: 25
       duration: 1
