@@ -31,7 +31,7 @@ public sealed class GhostRoleTests
     [Test]
     public async Task TakeRoleAndReturn()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings {ExtraPrototypes = Prototypes});
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
         var server = pairTracker.Pair.Server;
         var client = pairTracker.Pair.Client;
 
