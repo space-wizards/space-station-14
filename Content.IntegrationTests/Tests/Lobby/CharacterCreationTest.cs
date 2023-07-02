@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Content.Client.Lobby;
 using Content.Client.Preferences;
@@ -18,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Lobby
         [Test]
         public async Task CreateDeleteCreateTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{InLobby = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { InLobby = true });
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
@@ -34,7 +33,7 @@ namespace Content.IntegrationTests.Tests.Lobby
 
             await PoolManager.WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, 600);
 
-            Assert.NotNull(clientNetManager.ServerChannel);
+            Assert.That(clientNetManager.ServerChannel, Is.Not.Null);
 
             var clientNetId = clientNetManager.ServerChannel.UserId;
             HumanoidCharacterProfile profile = null;
@@ -45,9 +44,12 @@ namespace Content.IntegrationTests.Tests.Lobby
 
                 var clientCharacters = clientPrefManager.Preferences?.Characters;
                 Assert.That(clientCharacters, Is.Not.Null);
-                Assert.That(clientCharacters.Count, Is.EqualTo(1));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(clientCharacters, Has.Count.EqualTo(1));
 
-                Assert.That(clientStateManager.CurrentState, Is.TypeOf<LobbyState>());
+                    Assert.That(clientStateManager.CurrentState, Is.TypeOf<LobbyState>());
+                });
 
                 profile = HumanoidCharacterProfile.Random();
                 clientPrefManager.CreateCharacter(profile);
@@ -55,7 +57,7 @@ namespace Content.IntegrationTests.Tests.Lobby
                 clientCharacters = clientPrefManager.Preferences?.Characters;
 
                 Assert.That(clientCharacters, Is.Not.Null);
-                Assert.That(clientCharacters.Count, Is.EqualTo(2));
+                Assert.That(clientCharacters, Has.Count.EqualTo(2));
                 Assert.That(clientCharacters[1].MemberwiseEquals(profile));
             });
 
@@ -65,7 +67,7 @@ namespace Content.IntegrationTests.Tests.Lobby
             {
                 var serverCharacters = serverPrefManager.GetPreferences(clientNetId).Characters;
 
-                Assert.That(serverCharacters.Count, Is.EqualTo(2));
+                Assert.That(serverCharacters, Has.Count.EqualTo(2));
                 Assert.That(serverCharacters[1].MemberwiseEquals(profile));
             });
 
@@ -96,7 +98,7 @@ namespace Content.IntegrationTests.Tests.Lobby
                 var clientCharacters = clientPrefManager.Preferences?.Characters;
 
                 Assert.That(clientCharacters, Is.Not.Null);
-                Assert.That(clientCharacters.Count, Is.EqualTo(2));
+                Assert.That(clientCharacters, Has.Count.EqualTo(2));
                 Assert.That(clientCharacters[1].MemberwiseEquals(profile));
             });
 
@@ -106,7 +108,7 @@ namespace Content.IntegrationTests.Tests.Lobby
             {
                 var serverCharacters = serverPrefManager.GetPreferences(clientNetId).Characters;
 
-                Assert.That(serverCharacters.Count, Is.EqualTo(2));
+                Assert.That(serverCharacters, Has.Count.EqualTo(2));
                 Assert.That(serverCharacters[1].MemberwiseEquals(profile));
             });
             await pairTracker.CleanReturnAsync();
