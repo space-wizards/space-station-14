@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Ghost;
@@ -9,7 +8,6 @@ using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Roles;
-using Content.Server.Traitor;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -17,11 +15,9 @@ using Content.Shared.Roles;
 using NUnit.Framework;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using IPlayerManager = Robust.Server.Player.IPlayerManager;
 
@@ -59,7 +55,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestCreateAndTransferMindToNewEntity()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -85,7 +81,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestReplaceMind()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -103,8 +99,11 @@ public sealed partial class MindTests
 
             var mind2 = mindSystem.CreateMind(null);
             mindSystem.TransferTo(mind2, entity);
-            Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind2));
-            Assert.That(mind.OwnedEntity != entity);
+            Assert.Multiple(() =>
+            {
+                Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind2));
+                Assert.That(mind.OwnedEntity, Is.Not.EqualTo(entity));
+            });
         });
 
         await pairTracker.CleanReturnAsync();
@@ -113,7 +112,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestEntityDeadWhenGibbed()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true, ExtraPrototypes = Prototypes });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -133,8 +132,11 @@ public sealed partial class MindTests
             mind = mindSystem.CreateMind(null);
 
             mindSystem.TransferTo(mind, entity);
-            Assert.That(mindSystem.GetMind(entity, mindContainerComp), Is.EqualTo(mind));
-            Assert.That(!mindSystem.IsCharacterDeadPhysically(mind));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mindSystem.GetMind(entity, mindContainerComp), Is.EqualTo(mind));
+                Assert.That(!mindSystem.IsCharacterDeadPhysically(mind));
+            });
         });
 
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
@@ -164,7 +166,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestMindTransfersToOtherEntity()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -185,8 +187,11 @@ public sealed partial class MindTests
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
 
             mindSystem.TransferTo(mind, targetEntity);
-            Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(null));
-            Assert.That(mindSystem.GetMind(targetEntity), Is.EqualTo(mind));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(null));
+                Assert.That(mindSystem.GetMind(targetEntity), Is.EqualTo(mind));
+            });
         });
 
         await pairTracker.CleanReturnAsync();
@@ -214,8 +219,11 @@ public sealed partial class MindTests
 
             mind = mindSystem.CreateMind(null);
             mindSystem.TransferTo(mind, entity);
-            Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
-            Assert.That(mindComp.HasMind);
+            Assert.Multiple(() =>
+            {
+                Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
+                Assert.That(mindComp.HasMind);
+            });
         });
 
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
@@ -223,12 +231,18 @@ public sealed partial class MindTests
         await server.WaitAssertion(() =>
         {
             mindSystem.SetUserId(mind, userId);
-            Assert.That(mind.UserId, Is.EqualTo(userId));
-            Assert.That(originalMind.UserId, Is.EqualTo(null));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mind.UserId, Is.EqualTo(userId));
+                Assert.That(originalMind.UserId, Is.EqualTo(null));
+            });
 
             mindSystem.SetUserId(originalMind, userId);
-            Assert.That(mind.UserId, Is.EqualTo(null));
-            Assert.That(originalMind.UserId, Is.EqualTo(userId));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mind.UserId, Is.EqualTo(null));
+                Assert.That(originalMind.UserId, Is.EqualTo(userId));
+            });
         });
 
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
@@ -239,7 +253,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestAddRemoveHasRoles()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -258,32 +272,47 @@ public sealed partial class MindTests
             mindSystem.TransferTo(mind, entity);
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
 
-            Assert.That(!mindSystem.HasRole<TraitorRole>(mind));
-            Assert.That(!mindSystem.HasRole<Job>(mind));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mindSystem.HasRole<TraitorRole>(mind), Is.False);
+                Assert.That(mindSystem.HasRole<Job>(mind), Is.False);
+            });
 
             var traitorRole = new TraitorRole(mind, new AntagPrototype());
 
             mindSystem.AddRole(mind, traitorRole);
 
-            Assert.That(mindSystem.HasRole<TraitorRole>(mind));
-            Assert.That(!mindSystem.HasRole<Job>(mind));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mindSystem.HasRole<TraitorRole>(mind));
+                Assert.That(mindSystem.HasRole<Job>(mind), Is.False);
+            });
 
             var jobRole = new Job(mind, new JobPrototype());
 
             mindSystem.AddRole(mind, jobRole);
 
-            Assert.That(mindSystem.HasRole<TraitorRole>(mind));
-            Assert.That(mindSystem.HasRole<Job>(mind));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mindSystem.HasRole<TraitorRole>(mind));
+                Assert.That(mindSystem.HasRole<Job>(mind));
+            });
 
             mindSystem.RemoveRole(mind, traitorRole);
 
-            Assert.That(!mindSystem.HasRole<TraitorRole>(mind));
-            Assert.That(mindSystem.HasRole<Job>(mind));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mindSystem.HasRole<TraitorRole>(mind), Is.False);
+                Assert.That(mindSystem.HasRole<Job>(mind));
+            });
 
             mindSystem.RemoveRole(mind, jobRole);
 
-            Assert.That(!mindSystem.HasRole<TraitorRole>(mind));
-            Assert.That(!mindSystem.HasRole<Job>(mind));
+            Assert.Multiple(() =>
+            {
+                Assert.That(mindSystem.HasRole<TraitorRole>(mind), Is.False);
+                Assert.That(mindSystem.HasRole<Job>(mind), Is.False);
+            });
         });
 
         await pairTracker.CleanReturnAsync();
@@ -304,7 +333,7 @@ public sealed partial class MindTests
 
         EntityUid entity = default!;
         Mind mind = default!;
-        IPlayerSession player = playerMan.ServerSessions.Single();
+        var player = playerMan.ServerSessions.Single();
 
         await server.WaitAssertion(() =>
         {
@@ -333,7 +362,7 @@ public sealed partial class MindTests
 
         await server.WaitAssertion(() =>
         {
-            Assert.That(mind.OwnedEntity != null);
+            Assert.That(mind.OwnedEntity, Is.Not.Null);
 
             mob = entMan.SpawnEntity(null, new MapCoordinates());
 
@@ -349,9 +378,12 @@ public sealed partial class MindTests
         await server.WaitAssertion(() =>
         {
             var m = player.ContentData()?.Mind;
-            Assert.That(m, Is.Not.EqualTo(null));
-            Assert.That(m!.OwnedEntity, Is.EqualTo(mob));
-            Assert.That(m, Is.Not.EqualTo(mind));
+            Assert.That(m, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(m!.OwnedEntity, Is.EqualTo(mob));
+                Assert.That(m, Is.Not.EqualTo(mind));
+            });
         });
 
         await pairTracker.CleanReturnAsync();
@@ -376,11 +408,11 @@ public sealed partial class MindTests
 
         var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
-        EntityUid entity = default!;
+        //EntityUid entity = default!;
         EntityUid mouse = default!;
         EntityUid ghost = default!;
         Mind mind = default!;
-        IPlayerSession player = playerMan.ServerSessions.Single();
+        var player = playerMan.ServerSessions.Single();
 
         await server.WaitAssertion(() =>
         {
@@ -399,7 +431,7 @@ public sealed partial class MindTests
             Assert.That(data?.Mind, Is.Not.EqualTo(null));
             mind = data!.Mind!;
 
-            Assert.That(mind.OwnedEntity != null);
+            Assert.That(mind.OwnedEntity, Is.Not.Null);
 
             mouse = entMan.SpawnEntity("MobMouse", new MapCoordinates());
         });
@@ -423,10 +455,10 @@ public sealed partial class MindTests
         await server.WaitAssertion(() =>
         {
             var data = player.ContentData()!;
-            Assert.That(data.Mind!.OwnedEntity == mouse);
+            Assert.That(data.Mind!.OwnedEntity, Is.EqualTo(mouse));
 
             serverConsole.ExecuteCommand(player, "aghost");
-            Assert.That(player.AttachedEntity != null);
+            Assert.That(player.AttachedEntity, Is.Not.Null);
             ghost = player.AttachedEntity!.Value;
         });
 
@@ -434,8 +466,8 @@ public sealed partial class MindTests
 
         await server.WaitAssertion(() =>
         {
-            Assert.That(player.AttachedEntity != null);
-            Assert.That(ghost == player.AttachedEntity!.Value);
+            Assert.That(player.AttachedEntity, Is.Not.Null);
+            Assert.That(player.AttachedEntity!.Value, Is.EqualTo(ghost));
         });
 
         await pairTracker.CleanReturnAsync();
