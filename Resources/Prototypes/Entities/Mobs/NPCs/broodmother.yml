@@ -52,8 +52,8 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Piercing: 20
-        Poison: 12
+        Piercing: 14
+        Poison: 8
   - type: Loadout  
     prototypes: [BroodGear]
   - type: Inventory
