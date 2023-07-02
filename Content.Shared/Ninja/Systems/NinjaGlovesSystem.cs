@@ -200,6 +200,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             return;
 
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} doorjacked {ToPrettyString(target):target}");
+        _ninja.Doorjacked(user);
     }
 
     /// <summary>

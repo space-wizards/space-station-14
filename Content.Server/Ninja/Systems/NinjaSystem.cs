@@ -62,8 +62,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
         SubscribeLocalEvent<NinjaComponent, ComponentStartup>(OnNinjaStartup);
         SubscribeLocalEvent<NinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
-
-        SubscribeLocalEvent<DoorComponent, DoorEmaggedEvent>(OnDoorEmagged);
     }
 
     public override void Update(float frameTime)
@@ -205,6 +203,14 @@ public sealed class NinjaSystem : SharedNinjaSystem
         return GetNinjaBattery(user, out var uid, out var battery) && _battery.TryUseCharge(uid.Value, charge, battery);
     }
 
+    /// <inheritdoc/>
+    public override void Doorjacked(EntityUid uid)
+    {
+        // make sure it's a ninja doorjacking it
+        if (GetNinjaRole(uid, out var role))
+            role.DoorsJacked++;
+    }
+
     /// <summary>
     /// Completes the objective, makes announcement and adds rule of a random threat.
     /// </summary>
@@ -306,6 +312,9 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// <summary>
     /// Set up everything for ninja to work and send the greeting message/sound.
     /// </summary>
+    /// <remarks>
+    /// Currently this adds the ninja to traitors, this should be removed when objectives are separated from traitors.
+    /// </remarks>
     private void GreetNinja(Mind.Mind mind)
     {
         if (!_mind.TryGetSession(mind, out var session) || mind.OwnedEntity == null)
@@ -323,6 +332,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
         var config = RuleConfig();
         var role = new NinjaRole(mind, _proto.Index<AntagPrototype>("SpaceNinja"));
         _mind.AddRole(mind, role);
+        // TODO: when objectives are not tied to traitor roles, remove this
         _traitorRule.AddToTraitors(traitorRule, role);
 
         // choose spider charge detonation point
@@ -348,16 +358,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
         _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
-    }
-
-    /// <summary>
-    /// Handle greentext when a door is emagged.
-    /// </summary>
-    private void OnDoorEmagged(EntityUid uid, DoorComponent door, ref DoorEmaggedEvent args)
-    {
-        // make sure it's a ninja doorjacking it
-        if (GetNinjaRole(args.UserUid, out var role))
-            role.DoorsJacked++;
     }
 
     /// <summary>

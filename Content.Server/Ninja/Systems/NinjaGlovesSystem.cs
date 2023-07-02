@@ -82,7 +82,6 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
             || !HasComp<CommunicationsConsoleComponent>(target))
             return;
 
-
         // can only do it once
         if (role.CalledInThreat)
         {
