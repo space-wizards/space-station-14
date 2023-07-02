@@ -35,6 +35,7 @@ namespace Content.Shared.Preferences
             string name,
             string flavortext,
             string species,
+            string accent,
             int age,
             Sex sex,
             Gender gender,
@@ -49,6 +50,7 @@ namespace Content.Shared.Preferences
             Name = name;
             FlavorText = flavortext;
             Species = species;
+            Accent = accent;
             Age = age;
             Sex = sex;
             Gender = gender;
