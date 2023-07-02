@@ -61,8 +61,8 @@
                     <Button Name="RefreshButton" Access="Public" Text="{Loc admin-logs-refresh}" StyleClasses="ButtonSquare"/>
                     <Button Name="NextButton" Access="Public" Text="{Loc admin-logs-next}" StyleClasses="OpenLeft"/>
                 </BoxContainer>
-                <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
-                    <BoxContainer Name="LogsContainer" Access="Public" Orientation="Vertical" VerticalExpand="True"/>
+                <ScrollContainer Name="AdminLogsScrollContainer" Access="Public" VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+                    <TextEdit Name="AdminLogsTextEdit" Access="Public" VerticalExpand="True"/>
                 </ScrollContainer>
             </BoxContainer>
         </BoxContainer>
