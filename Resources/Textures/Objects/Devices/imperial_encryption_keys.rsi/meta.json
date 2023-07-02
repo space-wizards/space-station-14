@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by DSC@300074782328750080 for Space Station 14 and modified by dantanat",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {"name": "crypt_gray"},
+    {"name": "crypt_rusted"},
+    {"name": "crypt_gold"},
+    {"name": "crypt_orange"},
+    {"name": "crypt_silver"},
+    {"name": "crypt_red"},
+    {"name": "crypt_blue"},
+    {"name": "expedition_label"},
+    {"name": "cult_label"},
+    {"name": "military_label"},
+    {"name": "sssp_label"},
+    {"name": "ganza_label"},
+    {"name": "shadow_label"},
+    {"name": "1_label"},
+    {"name": "2_label"},
+    {"name": "3_label"},
+    {"name": "4_label"},
+    {"name": "5_label"},
+    {"name": "6_label"},
+    {"name": "7_label"},
+    {"name": "8_label"},
+    {"name": "9_label"},
+    {"name": "10_label"}
+  ]
+}
