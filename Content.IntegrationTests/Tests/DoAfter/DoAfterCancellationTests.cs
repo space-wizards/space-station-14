@@ -18,7 +18,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
     public async Task CancelWallDeconstruct()
     {
         await StartDeconstruction(WallConstruction.WallSolid);
-        await Interact(Weld, awaitDoAfters:false);
+        await Interact(Weld, awaitDoAfters: false);
 
         // Failed do-after has no effect
         await CancelDoAfters();
@@ -30,7 +30,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
 
         // Repeat for wrenching interaction
         AssertAnchored();
-        await Interact(Wrench, awaitDoAfters:false);
+        await Interact(Wrench, awaitDoAfters: false);
         await CancelDoAfters();
         AssertAnchored();
         AssertPrototype(WallConstruction.Girder);
@@ -39,7 +39,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
 
         // Repeat for screwdriver interaction.
         AssertDeleted(false);
-        await Interact(Screw, awaitDoAfters:false);
+        await Interact(Screw, awaitDoAfters: false);
         await CancelDoAfters();
         AssertDeleted(false);
         await Interact(Screw);
@@ -50,13 +50,13 @@ public sealed class DoAfterCancellationTests : InteractionTest
     public async Task CancelWallConstruct()
     {
         await StartConstruction(WallConstruction.Wall);
-        await Interact(Steel, 5, awaitDoAfters:false);
+        await Interact(Steel, 5, awaitDoAfters: false);
         await CancelDoAfters();
         Assert.That(Target.HasValue && Target.Value.IsClientSide());
 
         await Interact(Steel, 5);
         AssertPrototype(WallConstruction.Girder);
-        await Interact(Steel, 5, awaitDoAfters:false);
+        await Interact(Steel, 5, awaitDoAfters: false);
         await CancelDoAfters();
         AssertPrototype(WallConstruction.Girder);
 
@@ -68,7 +68,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
     public async Task CancelTilePry()
     {
         await SetTile(Floor);
-        await Interact(Pry, awaitDoAfters:false);
+        await Interact(Pry, awaitDoAfters: false);
         await CancelDoAfters();
         await AssertTile(Floor);
 
@@ -80,7 +80,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
     public async Task CancelRepeatedTilePry()
     {
         await SetTile(Floor);
-        await Interact(Pry, awaitDoAfters:false);
+        await Interact(Pry, awaitDoAfters: false);
         await RunTicks(1);
         Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
         await AssertTile(Floor);
@@ -102,35 +102,56 @@ public sealed class DoAfterCancellationTests : InteractionTest
         await SpawnTarget(WeldableTests.Locker);
         var comp = Comp<WeldableComponent>();
 
-        Assert.That(comp.Weldable, Is.True);
-        Assert.That(comp.IsWelded, Is.False);
+        Assert.Multiple(() =>
+        {
+            Assert.That(comp.Weldable, Is.True);
+            Assert.That(comp.IsWelded, Is.False);
+        });
 
-        await Interact(Weld, awaitDoAfters:false);
+        await Interact(Weld, awaitDoAfters: false);
         await RunTicks(1);
-        Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
-        Assert.That(comp.IsWelded, Is.False);
+        Assert.Multiple(() =>
+        {
+            Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
+            Assert.That(comp.IsWelded, Is.False);
+        });
 
         // Second DoAfter cancels the first.
         // Not using helper, because it runs too many ticks & causes the do-after to finish.
         await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
-        Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
-        Assert.That(comp.IsWelded, Is.False);
+        Assert.Multiple(() =>
+        {
+            Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
+            Assert.That(comp.IsWelded, Is.False);
+        });
 
         // Third do after will work fine
         await Interact(Weld);
-        Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
-        Assert.That(comp.IsWelded, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
+            Assert.That(comp.IsWelded, Is.True);
+        });
 
         // Repeat test for un-welding
-        await Interact(Weld, awaitDoAfters:false);
+        await Interact(Weld, awaitDoAfters: false);
         await RunTicks(1);
-        Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
-        Assert.That(comp.IsWelded, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
+            Assert.That(comp.IsWelded, Is.True);
+        });
         await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
-        Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
-        Assert.That(comp.IsWelded, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
+            Assert.That(comp.IsWelded, Is.True);
+        });
         await Interact(Weld);
-        Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
-        Assert.That(comp.IsWelded, Is.False);
+        Assert.Multiple(() =>
+        {
+            Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
+            Assert.That(comp.IsWelded, Is.False);
+        });
     }
 }
