@@ -44,6 +44,22 @@
   - type: BreakerFlipRule
 
 - type: entity
+  id: BroodMigration
+  parent: SpiderSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    earliestStart: 30
+    minimumPlayers: 35
+    weight: 5
+    duration: 50
+  - type: VentCrittersRule
+    entries:
+      - id: Broodmother
+        amount: 1
+        maxAmount: 1
+
+- type: entity
   id: BureaucraticError
   parent: BaseGameRule
   noSpawn: true
