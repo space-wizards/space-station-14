@@ -1,4 +1,5 @@
 ﻿using Content.Server.Station.Components;
+using Robust.Shared.Utility.TUnion;
 
 namespace Content.Server.Station.Systems;
 
@@ -20,7 +21,7 @@ public sealed class StationNameSystem : EntitySystem
         if (!HasComp<StationDataComponent>(uid))
             return;
 
-        _station.RenameStation(uid, GenerateStationName(component), false);
+        _station.RenameStation(uid, GenerateStationName(component), false).Expect();
     }
 
     /// <summary>

@@ -4,6 +4,7 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
 using Robust.Shared.Random;
+using Robust.Shared.Utility.TUnion;
 
 namespace Content.Server.Spawners.EntitySystems;
 
@@ -70,6 +71,7 @@ public sealed class SpawnPointSystem : EntitySystem
             return;
         }
 
-        Logger.ErrorS("spawning", "No spawn points were available!");
+        // Ah shoot.
+        args.Errors += new NoneWithComponents<SpawnPointComponent>();
     }
 }

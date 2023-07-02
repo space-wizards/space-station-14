@@ -1,5 +1,6 @@
 ﻿using Content.Server.Worldgen.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Utility.TUnion;
 
 namespace Content.Server.Worldgen.Systems;
 
@@ -33,7 +34,13 @@ public sealed class LocalityLoaderSystem : BaseWorldSystem
             {
                 for (var j = -1; j < 2 && !done; j++)
                 {
-                    var chunk = GetOrCreateChunk(coords + (i, j), xform.MapUid!.Value, controller);
+                    var chunk = GetOrCreateChunk(coords + (i, j), xform.MapUid!.Value, controller).ReportErr(Log);
+                    if (chunk is null)
+                    {
+                        done = true;
+                        continue;
+                    }
+
                     if (!loadedQuery.TryGetComponent(chunk, out var loaded) || loaded.Loaders is null)
                         continue;
 

@@ -41,7 +41,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (_availableJobsDirty)
         {
             _cachedAvailableJobs = GenerateJobsAvailableEvent();
-            RaiseNetworkEvent(_cachedAvailableJobs, Filter.Empty().AddPlayers(_playerManager.ServerSessions));
+            RaiseNetworkEvent(_cachedAvailableJobs, Filter.Broadcast());
             _availableJobsDirty = false;
         }
     }
@@ -109,6 +109,7 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <inheritdoc cref="TryAdjustJobSlot(Robust.Shared.GameObjects.EntityUid,string,int,bool,bool,Content.Server.Station.Components.StationJobsComponent?)"/>
     /// <param name="station">Station to adjust the job slot on.</param>
     /// <param name="job">Job to adjust.</param>
+    ///
     /// <param name="amount">Amount to adjust by.</param>
     /// <param name="createSlot">Whether or not it should create the slot if it doesn't exist.</param>
     /// <param name="clamp">Whether or not to clamp to zero if you'd remove more jobs than are available.</param>

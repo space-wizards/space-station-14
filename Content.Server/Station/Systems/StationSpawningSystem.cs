@@ -24,6 +24,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.TUnion;
 
 namespace Content.Server.Station.Systems;
 
@@ -74,6 +75,12 @@ public sealed class StationSpawningSystem : EntitySystem
         RaiseLocalEvent(ev);
 
         DebugTools.Assert(ev.SpawnResult is {Valid: true} or null);
+
+        if (ev.Errors is { } err)
+        {
+            Log.Error($"Ran into issue(s) during spawning {profile?.Name} with job {job?.Name} on {station}:");
+            Log.Error(err.Describe());
+        }
 
         return ev.SpawnResult;
     }
@@ -248,6 +255,10 @@ public sealed class PlayerSpawningEvent : EntityEventArgs
     /// The entity spawned, if any. You should set this if you succeed at spawning the character, and leave it alone if it's not null.
     /// </summary>
     public EntityUid? SpawnResult;
+    /// <summary>
+    /// Any problems that occurred during spawning. Add new ones with +=. These will be reported without tearing down anything.
+    /// </summary>
+    public IError? Errors;
     /// <summary>
     /// The job to use, if any.
     /// </summary>

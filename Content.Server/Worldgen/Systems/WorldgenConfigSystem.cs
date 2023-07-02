@@ -74,7 +74,7 @@ public sealed class WorldgenConfigSystem : EntitySystem
             return;
 
         var target = _map.GetMapEntityId(_gameTicker.DefaultMap);
-        Logger.Debug($"Trying to configure {_gameTicker.DefaultMap}, aka {ToPrettyString(target)} aka {target}");
+        Log.Debug($"Trying to configure {_gameTicker.DefaultMap}, aka {ToPrettyString(target)} aka {target}");
         var cfg = _proto.Index<WorldgenConfigPrototype>(_worldgenConfig);
 
         cfg.Apply(target, _ser, EntityManager); // Apply the config to the map.

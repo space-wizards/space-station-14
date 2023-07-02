@@ -27,7 +27,7 @@ public sealed class PoolManagerTestEventHandler
         _ = Task.Delay(HardStopTimeLimit).ContinueWith(_ =>
         {
             var deathReport = PoolManager.DeathReport();
-            Environment.FailFast($"Tests took way too ;\n Death Report:\n{deathReport}");
+            Environment.FailFast($"Tests took way too ;\n Death ReportErr:\n{deathReport}");
         });
     }
 

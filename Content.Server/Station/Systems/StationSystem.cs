@@ -15,6 +15,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.TUnion;
 
 namespace Content.Server.Station.Systems;
 
@@ -35,8 +36,6 @@ public sealed class StationSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private ISawmill _sawmill = default!;
-
     private bool _randomStationOffset;
     private bool _randomStationRotation;
     private float _maxRandomStationOffset;
@@ -44,8 +43,6 @@ public sealed class StationSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        _sawmill = _logManager.GetSawmill("station");
-
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
         SubscribeLocalEvent<PreGameMapLoad>(OnPreGameMapLoad);
         SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
@@ -63,7 +60,7 @@ public sealed class StationSystem : EntitySystem
 
     private void OnStationSplitEvent(EntityUid uid, StationMemberComponent component, ref PostGridSplitEvent args)
     {
-        AddGridToStation(component.Station, args.Grid); // Add the new grid as a member.
+        AddGridToStation(component.Station, args.Grid).Expect(); // Add the new grid as a member.
     }
 
     private void OnStationGridDeleted(EntityUid uid, StationMemberComponent component, ComponentShutdown args)
@@ -96,8 +93,7 @@ public sealed class StationSystem : EntitySystem
 
         var metaData = MetaData(uid);
         RaiseLocalEvent(new StationInitializedEvent(uid));
-        _sawmill.Info($"Set up station {metaData.EntityName} ({uid}).");
-
+        Log.Info($"Set up station {metaData.EntityName} ({uid}).");
     }
 
     private void OnStationDeleted(EntityUid uid, StationDataComponent component, ComponentShutdown args)
@@ -153,7 +149,7 @@ public sealed class StationSystem : EntitySystem
         {
             // Oh jeez, no stations got loaded.
             // We'll yell about it, but the thing this used to do with creating a dummy is kinda pointless now.
-            _sawmill.Error($"There were no station grids for {ev.GameMap.ID}!");
+            Log.Error($"There were no station grids for {ev.GameMap.ID}!");
         }
 
         foreach (var (id, gridIds) in dict)
@@ -164,7 +160,7 @@ public sealed class StationSystem : EntitySystem
                 stationConfig = ev.GameMap.Stations[id];
             else
             {
-                _sawmill.Error($"The station {id} in map {ev.GameMap.ID} does not have an associated station config!");
+                Log.Error($"The station {id} in map {ev.GameMap.ID} does not have an associated station config!");
                 continue;
             }
 
@@ -292,17 +288,17 @@ public sealed class StationSystem : EntitySystem
         // Use overrides for setup.
         var station = EntityManager.SpawnEntity(stationConfig.StationPrototype, MapCoordinates.Nullspace, stationConfig.StationComponentOverrides);
 
-        if (name is not null)
-            RenameStation(station, name, false);
-
         DebugTools.Assert(HasComp<StationDataComponent>(station), "Stations should have StationData in their prototype.");
+
+        if (name is not null)
+            RenameStation(station, name, false).Expect();
 
         var data = Comp<StationDataComponent>(station);
         name ??= MetaData(station).EntityName;
 
         foreach (var grid in gridIds ?? Array.Empty<EntityUid>())
         {
-            AddGridToStation(station, grid, null, data, name);
+            AddGridToStation(station, grid, null, data, name).Expect();
         }
 
         var ev = new StationPostInitEvent();
@@ -320,12 +316,15 @@ public sealed class StationSystem : EntitySystem
     /// <param name="stationData">Resolve pattern, station data component of station.</param>
     /// <param name="name">The name to assign to the grid if any.</param>
     /// <exception cref="ArgumentException">Thrown when mapGrid or station are not a grid or station, respectively.</exception>
-    public void AddGridToStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null, StationDataComponent? stationData = null, string? name = null)
+    [MustUseReturnValue]
+    public
+        OneOf<None, IError>
+        AddGridToStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null, StationDataComponent? stationData = null, string? name = null)
     {
         if (!Resolve(mapGrid, ref gridComponent))
-            throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(mapGrid));
+            return new(new MissingComponents<MapGridComponent>());
         if (!Resolve(station, ref stationData))
-            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+            return new(new MissingComponents<StationDataComponent>());
 
         if (!string.IsNullOrEmpty(name))
             MetaData(mapGrid).EntityName = name;
@@ -336,7 +335,9 @@ public sealed class StationSystem : EntitySystem
 
         RaiseLocalEvent(station, new StationGridAddedEvent(mapGrid, false), true);
 
-        _sawmill.Info($"Adding grid {mapGrid} to station {Name(station)} ({station})");
+        Log.Info($"Adding grid {mapGrid} to station {Name(station)} ({station})");
+
+        return new(new None());
     }
 
     /// <summary>
@@ -347,18 +348,23 @@ public sealed class StationSystem : EntitySystem
     /// <param name="gridComponent">Resolve pattern, grid component of mapGrid.</param>
     /// <param name="stationData">Resolve pattern, station data component of station.</param>
     /// <exception cref="ArgumentException">Thrown when mapGrid or station are not a grid or station, respectively.</exception>
-    public void RemoveGridFromStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null, StationDataComponent? stationData = null)
+    [MustUseReturnValue]
+    public
+        OneOf<None, IError>
+        RemoveGridFromStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null, StationDataComponent? stationData = null)
     {
         if (!Resolve(mapGrid, ref gridComponent))
-            throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(mapGrid));
+            return new(new MissingComponents<MapGridComponent>());
         if (!Resolve(station, ref stationData))
-            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+            return new(new MissingComponents<StationDataComponent>());
 
         RemComp<StationMemberComponent>(mapGrid);
         stationData.Grids.Remove(mapGrid);
 
         RaiseLocalEvent(station, new StationGridRemovedEvent(mapGrid), true);
-        _sawmill.Info($"Removing grid {mapGrid} from station {Name(station)} ({station})");
+        Log.Info($"Removing grid {mapGrid} from station {Name(station)} ({station})");
+
+        return new(new None());
     }
 
     /// <summary>
@@ -370,10 +376,13 @@ public sealed class StationSystem : EntitySystem
     /// <param name="stationData">Resolve pattern, station data component of station.</param>
     /// <param name="metaData">Resolve pattern, metadata component of station.</param>
     /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
-    public void RenameStation(EntityUid station, string name, bool loud = true, StationDataComponent? stationData = null, MetaDataComponent? metaData = null)
+    [MustUseReturnValue]
+    public
+        OneOfValue<None, MissingComponents<StationDataComponent>>
+        RenameStation(EntityUid station, string name, bool loud = true, StationDataComponent? stationData = null, MetaDataComponent? metaData = null)
     {
         if (!Resolve(station, ref stationData, ref metaData))
-            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+            return new(new MissingComponents<StationDataComponent>());
 
         var oldName = metaData.EntityName;
         metaData.EntityName = name;
@@ -384,6 +393,8 @@ public sealed class StationSystem : EntitySystem
         }
 
         RaiseLocalEvent(station, new StationRenamedEvent(oldName, name), true);
+
+        return new(new None());
     }
 
     /// <summary>
@@ -428,7 +439,6 @@ public sealed class StationSystem : EntitySystem
 
         if (xform.GridUid == EntityUid.Invalid)
         {
-            Logger.Debug("A");
             return null;
         }
 
@@ -449,7 +459,7 @@ public sealed class StationSystem : EntitySystem
     /// Returns the first station that has a grid in a certain map.
     /// If the map has no stations, null is returned instead.
     /// </summary>
-    /// </remarks
+    /// <remarks>
     /// If there are multiple stations on a map it is probably arbitrary which one is returned.
     /// </remarks>
     public EntityUid? GetStationInMap(MapId map)
@@ -552,3 +562,10 @@ public sealed class StationRenamedEvent : EntityEventArgs
     }
 }
 
+public readonly record struct StationHasNoGrids(EntityUid Station) : IError
+{
+    public string Describe()
+    {
+        return $"The station {Station} has no grids when at least one was expected.";
+    }
+}

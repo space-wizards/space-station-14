@@ -35,7 +35,7 @@ public sealed class BiomeSelectionSystem : BaseWorldSystem
             return;
         }
 
-        Logger.Error($"Biome selection ran out of biomes to select? See biomes list: {component.Biomes}");
+        Log.Error($"Biome selection ran out of biomes to select? See biomes list: {component.Biomes}");
     }
 
     private void OnBiomeSelectionStartup(EntityUid uid, BiomeSelectionComponent component, ComponentStartup args)
@@ -43,8 +43,8 @@ public sealed class BiomeSelectionSystem : BaseWorldSystem
         // surely this can't be THAAAAAAAAAAAAAAAT bad right????
         var sorted = component.Biomes
             .Select(x => (Id: x, _proto.Index<BiomePrototype>(x).Priority))
-            .OrderByDescending(x => x.Priority)
-            .Select(x => x.Id)
+            .OrderByDescending(static x => x.Priority)
+            .Select(static x => x.Id)
             .ToList();
 
         component.Biomes = sorted; // my hopes and dreams rely on this being pre-sorted by priority.

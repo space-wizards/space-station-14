@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Utility.TUnion;
 
 namespace Content.Server.Worldgen.Systems.Debris;
 
@@ -20,16 +21,13 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
     [Dependency] private readonly NoiseIndexSystem _noiseIndex = default!;
     [Dependency] private readonly PoissonDiskSampler _sampler = default!;
     [Dependency] private readonly TransformSystem _xformSys = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    private ISawmill _sawmill = default!;
 
     /// <inheritdoc />
     public override void Initialize()
     {
-        _sawmill = _logManager.GetSawmill("world.debris.feature_placer");
         SubscribeLocalEvent<DebrisFeaturePlacerControllerComponent, WorldChunkLoadedEvent>(OnChunkLoaded);
         SubscribeLocalEvent<DebrisFeaturePlacerControllerComponent, WorldChunkUnloadedEvent>(OnChunkUnloaded);
         SubscribeLocalEvent<OwnedDebrisComponent, ComponentShutdown>(OnDebrisShutdown);
@@ -63,15 +61,15 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
 
         if (xform.MapUid != ownerXform.MapUid)
         {
-            _sawmill.Error($"Somehow debris {uid} left it's expected map! Unparenting it to avoid issues.");
+            Log.Error($"Somehow debris {uid} left it's expected map! Unparenting it to avoid issues.");
             RemCompDeferred<OwnedDebrisComponent>(uid);
             placer.OwnedDebris.Remove(component.LastKey);
             return;
         }
 
         placer.OwnedDebris.Remove(component.LastKey);
-        var newChunk = GetOrCreateChunk(GetChunkCoords(uid), xform.MapUid!.Value);
-        if (newChunk is null || !TryComp<DebrisFeaturePlacerControllerComponent>(newChunk, out var newPlacer))
+        var newChunk = GetOrCreateChunk(GetChunkCoords(uid), xform.MapUid!.Value).Expect();
+        if (!TryComp<DebrisFeaturePlacerControllerComponent>(newChunk, out var newPlacer))
         {
             // Whelp.
             RemCompDeferred<OwnedDebrisComponent>(uid);
@@ -79,7 +77,7 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
         }
 
         newPlacer.OwnedDebris[_xformSys.GetWorldPosition(xform)] = uid; // Change our owner.
-        component.OwningController = newChunk.Value;
+        component.OwningController = newChunk;
     }
 
     /// <summary>
@@ -128,7 +126,7 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
             case 0:
                 return;
             case > 1:
-                _sawmill.Warning($"Got more than one possible debris type from {uid}. List: {string.Join(", ", l)}");
+                Log.Warning($"Got more than one possible debris type from {uid}. List: {string.Join(", ", l)}");
                 break;
         }
 
@@ -222,7 +220,7 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
         }
 
         if (failures > 0)
-            _sawmill.Error($"Failed to place {failures} debris at chunk {args.Chunk}");
+            Log.Error($"Failed to place {failures} debris at chunk {args.Chunk}");
     }
 
     /// <summary>

@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility.TUnion;
 
 namespace Content.Server.Worldgen.Systems;
 
@@ -16,16 +17,12 @@ public sealed class WorldControllerSystem : EntitySystem
 {
     [Dependency] private readonly TransformSystem _xformSys = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
 
     private const int PlayerLoadRadius = 2;
-
-    private ISawmill _sawmill = default!;
 
     /// <inheritdoc />
     public override void Initialize()
     {
-        _sawmill = _logManager.GetSawmill("world");
         SubscribeLocalEvent<LoadedChunkComponent, ComponentStartup>(OnChunkLoadedCore);
         SubscribeLocalEvent<LoadedChunkComponent, ComponentShutdown>(OnChunkUnloadedCore);
         SubscribeLocalEvent<WorldChunkComponent, ComponentShutdown>(OnChunkShutdown);
@@ -102,6 +99,7 @@ public sealed class WorldControllerSystem : EntitySystem
             var mapOrNull = xform.MapUid;
             if (mapOrNull is null)
                 continue;
+
             var map = mapOrNull.Value;
             if (!chunksToLoad.ContainsKey(map))
                 continue;
@@ -168,7 +166,7 @@ public sealed class WorldControllerSystem : EntitySystem
         }
 
         if (chunksUnloaded > 0)
-            _sawmill.Debug($"Queued {chunksUnloaded} chunks for unload.");
+            Log.Debug($"Queued {chunksUnloaded} chunks for unload.");
 
         if (chunksToLoad.All(x => x.Value.Count == 0))
             return;
@@ -182,23 +180,23 @@ public sealed class WorldControllerSystem : EntitySystem
             var controller = controllerQuery.GetComponent(map);
             foreach (var (chunk, loaders) in chunks)
             {
-                var ent = GetOrCreateChunk(chunk, map, controller); // Ensure everything loads.
-                LoadedChunkComponent? c = null;
-                if (ent is not null && !loadedQuery.TryGetComponent(ent.Value, out c))
+                // We cannot possibly be in a scenario here where the map we're looking at has no controller.
+                var ent = GetOrCreateChunk(chunk, map, controller).Expect();
+
+                if (!loadedQuery.TryGetComponent(ent, out var loadedChunk))
                 {
-                    c = AddComp<LoadedChunkComponent>(ent.Value);
+                    loadedChunk = AddComp<LoadedChunkComponent>(ent);
                     count += 1;
                 }
 
-                if (c is not null)
-                    c.Loaders = loaders;
+                loadedChunk.Loaders = loaders;
             }
         }
 
         if (count > 0)
         {
             var timeSpan = _gameTiming.RealTime - startTime;
-            _sawmill.Debug($"Loaded {count} chunks in {timeSpan.TotalMilliseconds:N2}ms.");
+            Log.Debug($"Loaded {count} chunks in {timeSpan.TotalMilliseconds:N2}ms.");
         }
     }
 
@@ -209,15 +207,18 @@ public sealed class WorldControllerSystem : EntitySystem
     /// <param name="map">Map the chunk is in.</param>
     /// <param name="controller">The controller this chunk belongs to.</param>
     /// <returns>A chunk, if available.</returns>
-    [Pure]
-    public EntityUid? GetOrCreateChunk(Vector2i chunk, EntityUid map, WorldControllerComponent? controller = null)
+    [MustUseReturnValue]
+    public
+        OneOfValue<EntityUid, MissingComponents<WorldControllerComponent>>
+        GetOrCreateChunk(Vector2i chunk, EntityUid map, WorldControllerComponent? controller = null)
     {
         if (!Resolve(map, ref controller))
-            throw new Exception($"Tried to use {ToPrettyString(map)} as a world map, without actually being one.");
+            return new(new MissingComponents<WorldControllerComponent>(map));
 
         if (controller.Chunks.TryGetValue(chunk, out var ent))
-            return ent;
-        return CreateChunkEntity(chunk, map, controller);
+            return new(ent);
+
+        return new(CreateChunkEntity(chunk, map, controller));
     }
 
     /// <summary>
@@ -241,7 +242,7 @@ public sealed class WorldControllerSystem : EntitySystem
     {
         if (!TryComp<WorldChunkComponent>(chunk, out var chunkComponent))
         {
-            _sawmill.Error($"Chunk {ToPrettyString(chunk)} is missing WorldChunkComponent.");
+            Log.Error($"Chunk {ToPrettyString(chunk)} is missing WorldChunkComponent.");
             return;
         }
 
