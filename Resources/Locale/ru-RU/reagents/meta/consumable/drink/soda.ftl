@@ -37,7 +37,7 @@ reagent-desc-space-up = На вкус как пробоина в корпусе 
 reagent-name-starkist = cтаркист
 reagent-desc-starkist = Сладкий безалкогольный напиток со вкусом апельсина.
 
-reagent-name-fourteen-loko = aоуртин локо
+reagent-name-fourteen-loko = фоуртин локо
 reagent-desc-fourteen-loko = Сильно переработанная жидкая субстанция, едва ли соответствующая межгалактическим стандартам безопасности для безалкогольного напитка.
 
 reagent-name-shamblers-juice = cок Шамблер
