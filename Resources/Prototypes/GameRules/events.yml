@@ -348,3 +348,18 @@
       - id: SpawnPointGhostCluwneBeast
         amount: 1
         maxAmount: 1
+
+- type: entity
+  id: ImmovableRodSpawnr
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-immovable-rod-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 1
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 20
+  - type: ImmovableRodRule

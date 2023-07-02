@@ -14,7 +14,6 @@ namespace Content.Client.Atmos.UI
     {
 
         private GasFilterWindow? _window;
-        private const float MaxTransferRate = Atmospherics.MaxTransferRate;
 
         public GasFilterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -49,7 +48,6 @@ namespace Content.Client.Atmos.UI
         private void OnFilterTransferRatePressed(string value)
         {
             float rate = float.TryParse(value, out var parsed) ? parsed : 0f;
-            if (rate > MaxTransferRate) rate = MaxTransferRate;
 
             SendMessage(new GasFilterChangeRateMessage(rate));
         }
