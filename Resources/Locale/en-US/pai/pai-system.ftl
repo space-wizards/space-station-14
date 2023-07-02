@@ -15,3 +15,5 @@ pai-system-stopped-searching = The device stopped searching for a pAI.
 
 pai-system-pai-name = { CAPITALIZE(THE($owner)) }'s pAI
 
+pai-system-cartridge-cant-insert = Can't insert cartridge
+

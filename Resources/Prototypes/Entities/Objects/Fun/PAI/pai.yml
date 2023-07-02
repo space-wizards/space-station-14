@@ -57,3 +57,7 @@
           Off: { state: pai-off-overlay }
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
+  - type: ItemSlots
+    slots:
+      cartridgeSlot:
+        whitelistFailpopup: pai-system-cartridge-cant-insert

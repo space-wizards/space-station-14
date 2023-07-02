@@ -1,0 +1,30 @@
+﻿# list of current pai cartridges more to come :)
+
+- type: entity
+  parent: BaseItem
+  id: BasePaiCartridge
+  abstract: true
+  componets:
+
+- type: entity
+  parent: BasePaiCartridge
+  id: EmptyPaiCartridge
+  name: empty pai cartridge
+  description: An empty pai cartridge, maybe you need to load it with something?
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/paicartridge.rsi
+    layers:
+      - state: cartridge-empty
+
+- type: entity
+  parent: BasePaiCartridge
+  id: AtmosPaiCartridge
+  name: atmos pai cartridge
+  description: An atmos pai cartridge, allows accurate gas analysis.
+  components:
+    - type: Sprite
+      sprite: Objects/Fun/paicartridge.rsi
+      layers:
+        - state: cartridge-atmos
+
