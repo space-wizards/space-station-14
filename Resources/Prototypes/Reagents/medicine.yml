@@ -574,6 +574,9 @@
           types:
             Poison: 0.5
       - !type:CureZombieInfection
+          conditions:
+            - !type:ReagentThreshold
+              min: 10
 
 - type: reagent
   id: PulpedBananaPeel

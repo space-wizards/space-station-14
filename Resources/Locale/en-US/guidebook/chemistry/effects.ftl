@@ -313,13 +313,13 @@ reagent-effect-guidebook-cure-zombie-infection =
     { $chance ->
         [1] Cures
         *[other] cure
-    } an ongoing zombie infection.
+    } an ongoing zombie infection
 
 reagent-effect-guidebook-cause-zombie-infection =
     { $chance ->
         [1] Gives
         *[other] give
-    } an individual the zombie infection.
+    } an individual the zombie infection
 
 reagent-effect-guidebook-missing =
     { $chance ->
