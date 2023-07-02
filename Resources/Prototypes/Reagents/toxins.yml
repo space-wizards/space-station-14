@@ -398,6 +398,7 @@
           damage:
             types:
               Cellular: 1
+        - !type:CauseZombieInfection
 
 - type: reagent
   id: UncookedAnimalProteins
