@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Commands
         [TestCase(false)]
         public async Task RestartRoundAfterStart(bool lobbyEnabled)
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings(){Dirty = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() { Dirty = true });
             var server = pairTracker.Pair.Server;
 
             var configManager = server.ResolveDependency<IConfigurationManager>();
@@ -54,7 +54,7 @@ namespace Content.IntegrationTests.Tests.Commands
             {
                 var tickAfterRestart = entityManager.CurrentTick;
 
-                Assert.That(tickBeforeRestart < tickAfterRestart);
+                Assert.That(tickBeforeRestart, Is.LessThan(tickAfterRestart));
             });
 
             await PoolManager.RunTicksSync(pairTracker.Pair, 5);
