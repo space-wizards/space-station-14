@@ -27,6 +27,13 @@ namespace Content.Server.DeviceLinking.Components
         public bool State;
 
         [DataField("clickSound")]
-        public SoundSpecifier ClickSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
+        public SoundSpecifier ClickSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg")
+        {
+            Params = new AudioParams()
+            {
+                Volume = 8f,
+                Variation = 0.125f
+            }
+        };
     }
 }
