@@ -1,8 +1,6 @@
 #nullable enable
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.Fluids.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry.Components;
@@ -75,8 +73,10 @@ public sealed class FluidSpill
             var grid = mapManager.GetGrid(gridId);
             var solution = new Solution("Blood", FixedPoint2.New(100));
             var tileRef = grid.GetTileRef(puddleOrigin);
+#pragma warning disable NUnit2045 // Interdependent tests
             Assert.That(puddleSystem.TrySpillAt(tileRef, solution, out _), Is.True);
             Assert.That(GetPuddle(entityManager, grid, puddleOrigin), Is.Not.Null);
+#pragma warning restore NUnit2045
         });
 
         var sTimeToWait = (int) Math.Ceiling(2f * gameTiming.TickRate);
@@ -87,8 +87,11 @@ public sealed class FluidSpill
             var grid = mapManager.GetGrid(gridId);
             var puddle = GetPuddle(entityManager, grid, puddleOrigin);
 
+
+#pragma warning disable NUnit2045 // Interdependent tests
             Assert.That(puddle, Is.Not.Null);
             Assert.That(puddleSystem.CurrentVolume(puddle!.Owner, puddle), Is.EqualTo(FixedPoint2.New(100)));
+#pragma warning restore NUnit2045
 
             for (var x = 0; x < 3; x++)
             {
