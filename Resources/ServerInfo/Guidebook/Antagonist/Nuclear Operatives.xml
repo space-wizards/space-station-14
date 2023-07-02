@@ -18,7 +18,7 @@ Your team may contain varying amounts of three different roles:
 <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieElite" Caption="Agent Hardsuit"/>
 </Box> 
 
-- There are one to three [color=#a4885c]Nuclear Operatives[/color], who have the normal blood red hardsuit.
+- Regular [color=#a4885c]Nuclear Operatives[/color], who have the normal blood red hardsuit.
 <Box>
 <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndie" Caption="Blood Red Hardsuit"/>
 </Box>
