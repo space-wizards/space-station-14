@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests.Materials
         [Test]
         public async Task MaterialPrototypeSpawnsStackMaterial()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
 
