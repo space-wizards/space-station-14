@@ -1,11 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: It's now possible to block doorways with shields., type: Tweak}
-  - {message: 'doors won''t close if there are anchored entities inside (e.g. walls,
-      vendomats, closets and etc...)', type: Tweak}
-  id: 3656
-  time: '2023-05-05T15:14:33.0000000+00:00'
 - author: themias
   changes:
   - {message: You can no longer puff empty vapes., type: Fix}
@@ -2920,3 +2913,11 @@ Entries:
   - {message: Attempting to uncuff yourself damages you slightly, type: Tweak}
   id: 4155
   time: '2023-07-03T21:30:09.0000000+00:00'
+- author: dmnct
+  changes:
+  - {message: Added fun!, type: Add}
+  - {message: Removed fun!, type: Remove}
+  - {message: Changed fun!, type: Tweak}
+  - {message: Fixed fun!, type: Fix}
+  id: 4156
+  time: '2023-07-03T21:31:53.0000000+00:00'
