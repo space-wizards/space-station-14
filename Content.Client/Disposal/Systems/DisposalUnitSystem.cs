@@ -1,9 +1,9 @@
-using Content.Client.Disposal.Components;
 using Content.Client.Disposal.UI;
 using Content.Shared.Disposal;
+using Content.Shared.Disposal.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Animations;
-using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
+using static Content.Shared.Disposal.Components.DisposalUnitComponent;
 
 namespace Content.Client.Disposal.Systems;
 
@@ -12,9 +12,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly AnimationPlayerSystem _animationSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    private const string AnimationKey = "disposal_unit_animation";
 
-    private readonly List<EntityUid> _pressuringDisposals = new();
+    private const string AnimationKey = "disposal_unit_animation";
 
     public override void Initialize()
     {
@@ -92,10 +91,13 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         disposalUnit.FlushAnimation = new Animation
         {
             Length = TimeSpan.FromSeconds(disposalUnit.FlushTime),
-            AnimationTracks = {
-                new AnimationTrackSpriteFlick {
+            AnimationTracks =
+            {
+                new AnimationTrackSpriteFlick
+                {
                     LayerKey = DisposalUnitVisualLayers.BaseFlush,
-                    KeyFrames = {
+                    KeyFrames =
+                    {
                         // Play the flush animation
                         new AnimationTrackSpriteFlick.KeyFrame(flushState, 0),
                         // Return to base state (though, depending on how the unit is

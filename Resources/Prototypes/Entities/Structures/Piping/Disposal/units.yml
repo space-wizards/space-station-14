@@ -84,9 +84,6 @@
     graph: DisposalMachine
     node: disposal_unit
   - type: DisposalUnit
-    flushSound:
-      path: /Audio/Machines/disposalflush.ogg
-    flushTime: 2
   - type: UserInterface
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
@@ -123,9 +120,6 @@
   - type: DisposalUnit
     autoEngageEnabled: false
     mobsCanEnter: false
-    flushSound:
-      path: /Audio/Machines/disposalflush.ogg
-    flushTime: 2
   - type: MailingUnit
   - type: DeviceNetwork
     deviceNetId: Wired
