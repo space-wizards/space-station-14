@@ -43,7 +43,7 @@ public sealed class CuffableComponent : Component
     /// Damage is applied to someone when they try to uncuff themselves.
     /// </summary>
     [DataField("damageOnResist"), ViewVariables(VVAccess.ReadWrite)]
-    public float DamageOnResist = 1f;
+    public float DamageOnResist = 3f;
 
 }
 
