@@ -6,6 +6,7 @@
     <cc:ProgressTextureRect Name="ProgressTexture" VerticalAlignment="Top" Access="Public" Margin="0 8 0 0"/>
     <Control MinSize="10 0"/>
     <BoxContainer Orientation="Vertical">
-        <Label Name="Title" Access="Public"/>
+        <RichTextLabel Name="Title" Access="Public" SetWidth="325" HorizontalAlignment="Left"/>
+        <RichTextLabel Name="Description" Access="Public" SetWidth="325" HorizontalAlignment="Left"/>
     </BoxContainer>
 </controls:ObjectiveConditionsControl>

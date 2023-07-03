@@ -94,29 +94,6 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     private void DeactivateButton() => CharacterButton!.Pressed = false;
     private void ActivateButton() => CharacterButton!.Pressed = true;
 
-    private const int MaxObjectiveLineLength = 38;
-    private string WordWrap(string inputText, int lineLength)
-    {
-        if (inputText.Length <= lineLength)
-            return inputText;
-
-        string[] stringSplit = inputText.Split(' ');
-        int charCounter = 0;
-        string finalString = "";
-
-        for (int i = 0; i < stringSplit.Length; i++)
-        {
-           finalString += stringSplit[i] + " ";
-           charCounter += stringSplit[i].Length;
-
-            if (charCounter > lineLength){
-                finalString += "\n";
-                charCounter = 0;
-            }
-        }
-        return finalString;
-    }
-
     private void CharacterUpdated(CharacterData data)
     {
         if (_window == null)
@@ -148,8 +125,13 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
                 var conditionControl = new ObjectiveConditionsControl();
                 conditionControl.ProgressTexture.Texture = condition.SpriteSpecifier.Frame0();
                 conditionControl.ProgressTexture.Progress = condition.Progress;
+                var titleMessage = new FormattedMessage();
+                var descriptionMessage = new FormattedMessage();
+                titleMessage.AddText(condition.Title);
+                descriptionMessage.AddText(condition.Description);
 
-                conditionControl.Title.Text = WordWrap(condition.Title + " " + condition.Description, MaxObjectiveLineLength) + "\n";
+                conditionControl.Title.SetMessage(titleMessage);
+                conditionControl.Description.SetMessage(descriptionMessage);
 
                 objectiveControl.AddChild(conditionControl);
             }
