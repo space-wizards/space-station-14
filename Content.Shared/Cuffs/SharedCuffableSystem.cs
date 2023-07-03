@@ -5,6 +5,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
@@ -41,6 +42,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
+        [Dependency] private readonly DamageableSystem _damageSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -572,6 +574,13 @@ namespace Content.Shared.Cuffs
 
             if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
                 return;
+
+            _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is trying to uncuff {ToPrettyString(target)}");
+
+            if (isOwner)
+            {
+                _damageSystem.TryChangeDamage(target, cuffable.DamageOnResist, true, false);
+            }
 
             if (_net.IsServer)
             {
