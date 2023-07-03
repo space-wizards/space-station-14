@@ -7,7 +7,6 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitRecruitNT
   name: recruit jumpsuit
-  prefix: Ship Versus Ship
   description: A classy grey jumpsuit with blue trims. Perfect for the dignified helper.
   components:
   - type: Sprite
@@ -20,7 +19,6 @@
   id: ClothingUniformJumpsuitRecruitSyndie
   name: syndicate recuit jumpsuit
   description: A dubious,, dark-grey jumpsuit. As if passengers weren't dubious enough already.
-  prefix: Ship Versus Ship
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/recruit_syndie.rsi
@@ -44,7 +42,6 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitRepairmanSyndie
   name: syndicate repairman jumpsuit
-  prefix: Ship Versus Ship
   description: Functional, fashionable, and badass. Nanotrasen's engineers wish they could look as good as this.
   components:
   - type: Sprite
@@ -57,7 +54,6 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitParamedicNT
   name: paramedic jumpsuit
-  prefix: Ship Versus Ship
   description: A basic white & blue jumpsuit made for Nanotrasen paramedics stationed in combat sectors.
   components:
   - type: Sprite
@@ -69,7 +65,6 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitParamedicSyndie
   name: syndicate paramedic jumpsuit
-  prefix: Ship Versus Ship
   description: For some reason, wearing this makes you feel like you're awfully close to violating the Geneva Convention.
   components:
   - type: Sprite
@@ -83,7 +78,6 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitChiefEngineerNT
   name: chief engineer jumpsuit
-  prefix: Ship Versus Ship
   description: It is often joked that the role of the combat-sector Chief Engineer is where the actual, logistically-minded engineers are promoted to. Good luck.
   components:
   - type: Sprite
@@ -95,7 +89,6 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitChiefEngineerSyndie
   name: syndicate chief engineer jumpsuit
-  prefix: Ship Versus Ship
   description: An evil-looking jumpsuit with a reflective vest & red undershirt. #TODO: Write a better description for this once Ship vs. Ship is real and actual player habits begin forming
   components:
   - type: Sprite
