@@ -582,7 +582,7 @@ namespace Content.Shared.Cuffs
 
             if (isOwner)
             {
-                _damageSystem.TryChangeDamage(target, new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Blunt"), cuffable.DamageOnResist), true, false);
+                _damageSystem.TryChangeDamage(target, new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Brute"), cuffable.DamageOnResist), true, false);
             }
 
             if (_net.IsServer)
