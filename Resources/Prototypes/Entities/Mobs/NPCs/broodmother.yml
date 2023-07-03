@@ -192,10 +192,7 @@
     rules: "Grow into a full-fledged defender of the nest."
   - type: Polymorphable
     innatePolymorphs: [ EggToBroodServant ]
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
+
 
 #polymorph egg
 - type: polymorph
