@@ -30,7 +30,6 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitRepairmanNT
   name: repairman jumpsuit
-  prefix: Ship Versus Ship
   description: A jumpsuit that reminds you of a certain crew-sector work position. Hopefully, you won't have to do the same job as THOSE freaks.
   components:
   - type: Sprite
