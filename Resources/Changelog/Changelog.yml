@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: You can't pry blast doors anymore, type: Tweak}
-  id: 3652
-  time: '2023-05-05T13:16:23.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Clown scientists have shared their experimental technology with Nanotrasen,
@@ -2927,3 +2922,8 @@ Entries:
   - {message: you can now warp to immovable rod as ghost, type: Tweak}
   id: 4151
   time: '2023-07-02T13:40:07.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Fixed Hamlet sprite error on revival., type: Fix}
+  id: 4152
+  time: '2023-07-03T07:59:29.0000000+00:00'
