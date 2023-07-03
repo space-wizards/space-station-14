@@ -1,15 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: ID Card Console now requires the privileged ID have the access being
-      granted., type: Tweak}
-  - {message: 'The ID Card Console is no longer access locked, all cards can use it.',
-    type: Tweak}
-  - {message: 'The HoP has had additional accesses added to their card so they can
-      continue to function as normal. This does NOT include head accesses, they can
-      no longer grant access to captain''s office for example.', type: Tweak}
-  id: 3655
-  time: '2023-05-05T13:56:54.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: It's now possible to block doorways with shields., type: Tweak}
@@ -2926,3 +2915,8 @@ Entries:
   - {message: Artifacts now make noises when activated., type: Add}
   id: 4154
   time: '2023-07-03T11:14:27.0000000+00:00'
+- author: noudoit
+  changes:
+  - {message: Attempting to uncuff yourself damages you slightly, type: Tweak}
+  id: 4155
+  time: '2023-07-03T21:30:09.0000000+00:00'
