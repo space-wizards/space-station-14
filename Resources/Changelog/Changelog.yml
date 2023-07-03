@@ -1,9 +1,4 @@
 Entries:
-- author: Ilushkins33
-  changes:
-  - {message: Stuttering during blood loss, type: Add}
-  id: 3654
-  time: '2023-05-05T13:46:52.0000000+00:00'
 - author: moony
   changes:
   - {message: ID Card Console now requires the privileged ID have the access being
@@ -2926,3 +2921,8 @@ Entries:
   - {message: You can now speak on your department's radio channel using .X, type: Tweak}
   id: 4153
   time: '2023-07-03T08:55:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifacts now make noises when activated., type: Add}
+  id: 4154
+  time: '2023-07-03T11:14:27.0000000+00:00'
