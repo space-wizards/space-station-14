@@ -18,8 +18,11 @@ public sealed class WeldableTests : InteractionTest
         await SpawnTarget(Locker);
         var comp = Comp<WeldableComponent>();
 
-        Assert.That(comp.Weldable, Is.True);
-        Assert.That(comp.IsWelded, Is.False);
+        Assert.Multiple(() =>
+        {
+            Assert.That(comp.Weldable, Is.True);
+            Assert.That(comp.IsWelded, Is.False);
+        });
 
         await Interact(Weld);
         Assert.That(comp.IsWelded, Is.True);
