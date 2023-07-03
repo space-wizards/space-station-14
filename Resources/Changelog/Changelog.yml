@@ -1,16 +1,6 @@
 Entries:
 - author: themias
   changes:
-  - {message: You can no longer puff empty vapes., type: Fix}
-  id: 3657
-  time: '2023-05-05T17:48:48.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix suit sensors not being set for latejoins., type: Fix}
-  id: 3658
-  time: '2023-05-05T17:51:58.0000000+00:00'
-- author: themias
-  changes:
   - {message: Handheld crew monitors and station maps now use battery charge, type: Fix}
   id: 3659
   time: '2023-05-05T17:52:40.0000000+00:00'
@@ -2921,3 +2911,14 @@ Entries:
   - {message: Fixed fun!, type: Fix}
   id: 4156
   time: '2023-07-03T21:31:53.0000000+00:00'
+- author: Geekyhobo
+  changes:
+  - {message: Nukie bundle prices have been adjusted for balance, type: Tweak}
+  id: 4157
+  time: '2023-07-03T21:33:53.0000000+00:00'
+- author: Jesse
+  changes:
+  - {message: Ale color more towards a Pale Ale color with foam and bubbles!, type: Tweak}
+  - {message: Fixed up the dingle line formatting of the Meta file, type: Fix}
+  id: 4158
+  time: '2023-07-03T21:34:26.0000000+00:00'
