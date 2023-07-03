@@ -2080,7 +2080,7 @@
     baseSprintSpeed : 4
   - type: Inventory
     speciesId: hamster
-    templateId: pet
+    templateId: hamster
   - type: InventorySlots
   - type: Strippable
   - type: UserInterface

@@ -193,7 +193,7 @@ namespace Content.Shared.Pulling
 
             // Don't allow setting a MovingTo if there's no puller.
             // The other half of this guarantee (shutting down a MovingTo if the puller goes away) is enforced in ForceRelationship.
-            if ((pullable.Puller == null) && (movingTo != null))
+            if (pullable.Puller == null && movingTo != null)
             {
                 return;
             }
