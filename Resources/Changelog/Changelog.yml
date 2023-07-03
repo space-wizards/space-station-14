@@ -1,14 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Handheld crew monitors and station maps now use battery charge, type: Fix}
-  id: 3659
-  time: '2023-05-05T17:52:40.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Lighters now consume less fuel when lighting them., type: Tweak}
-  id: 3660
-  time: '2023-05-06T01:03:14.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Some station events will no longer start instantly., type: Fix}
@@ -2922,3 +2912,15 @@ Entries:
   - {message: Fixed up the dingle line formatting of the Meta file, type: Fix}
   id: 4158
   time: '2023-07-03T21:34:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The pyroclastic anomaly's ignition has gained otherworldly properties
+      and now permeates through solid structures., type: Add}
+  id: 4159
+  time: '2023-07-03T21:35:57.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: The pyroclastic anomaly's supercritical gas now ignores structures.,
+    type: Tweak}
+  id: 4160
+  time: '2023-07-03T21:36:23.0000000+00:00'
