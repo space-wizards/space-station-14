@@ -35,10 +35,8 @@
       1000: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      500: 0.8
-      750: 0.7
-  - type: FlashImmunity
-  - type: EyeProtection
+      500: 0.7
+      750: 0.8
   - type: GhostTakeoverAvailable
   - type: GhostRole
     name: A huge spider!
@@ -52,12 +50,8 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Piercing: 14
-        Poison: 8
-  - type: Loadout  
-    prototypes: [BroodGear]
-  - type: Inventory
-    templateId: brood
+        Piercing: 35
+        Poison: 12
   - type: Spider
     webActionName: BroodWebAction
   - type: EggLayer
@@ -122,9 +116,9 @@
       750: 0.7
   - type: GhostTakeoverAvailable
   - type: GhostRole
-    name: Маленький паук!
-    description: Готов травить!
-    rules: "Защищай матерь, трави не матерь."
+    name: Little spider!
+    description: Ready to poision!
+    rules: "Protect your mother. Don't poison your mother."
   - type: MeleeWeapon
     hidden: true
     angle: 0
@@ -160,59 +154,6 @@
   serverEvent: !type:SpiderWebActionEvent
   useDelay: 20
   priority: -5
-
-
-#broodgear
-- type: startingGear
-  id: BroodGear
-  suffix: brood
-  equipment:
-    shoes: BroodPaws
-    jumpsuit: 
-    outerClothing: 
-    gloves: 
-    neck: 
-    mask: 
-    eyes: 
-    ears: 
-    head: 
-    pocket1: 
-    pocket2: 
-    suitstorage: 
-    id: 
-    belt: 
-    back: 
-
-
-#slotbroodgear
-- type: inventoryTemplate
-  id: brood
-  slots:
-    - name: shoes
-      slotTexture: shoes
-      slotFlags: FEET
-      stripTime: 3
-      uiWindowPos: 1,3
-      strippingWindowPos: 1,3
-      displayName: Shoes
-
-
-#broodpaws for speed at the moment
-- type: entity
-  parent: ClothingShoesStorageBase
-  id: BroodPaws
-  name: brood paws
-  suffix: dont mapping!
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/Boots/combatboots.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/Boots/combatboots.rsi
-  - type: ClothingSpeedModifier
-    walkModifier: 1.7
-    sprintModifier: 1.7
-  - type: Visibility
-    layer: 5
 
 
 #broodegg
