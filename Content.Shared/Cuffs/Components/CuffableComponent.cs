@@ -38,6 +38,13 @@ public sealed class CuffableComponent : Component
     /// </summary>
     [DataField("canStillInteract"), ViewVariables(VVAccess.ReadWrite)]
     public bool CanStillInteract = true;
+
+    /// <summary>
+    /// Damage is applied to someone when they try to uncuff themselves.
+    /// </summary>
+    [DataField("damageOnResist"), ViewVariables(VVAccess.ReadWrite)]
+    public float DamageOnResist = 1f;
+
 }
 
 [Serializable, NetSerializable]
