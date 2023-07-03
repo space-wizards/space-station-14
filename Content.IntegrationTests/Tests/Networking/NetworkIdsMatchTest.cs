@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.IntegrationTests.Tests.Networking
 {
     [TestFixture]
-    sealed class NetworkIdsMatchTest
+    public sealed class NetworkIdsMatchTest
     {
         [Test]
         public async Task TestConnect()
@@ -27,10 +27,10 @@ namespace Content.IntegrationTests.Tests.Networking
             });
             Assert.Multiple(() =>
             {
-                Assert.That(clientNetComps.Count, Is.EqualTo(serverNetComps.Count));
+                Assert.That(clientNetComps, Has.Count.EqualTo(serverNetComps.Count));
 
                 // Checks that at least Metadata and Transform are registered.
-                Assert.That(clientNetComps.Count, Is.GreaterThanOrEqualTo(2));
+                Assert.That(clientNetComps, Has.Count.GreaterThanOrEqualTo(2));
             });
 
             Assert.Multiple(() =>
