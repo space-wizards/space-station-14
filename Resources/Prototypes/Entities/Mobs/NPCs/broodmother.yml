@@ -2,7 +2,6 @@
 - type: entity
   name: brood
   parent: SimpleMobBase
-  suffix: brood
   id: Broodmother
   description: Mega huge and mega scary spider!
   components:
@@ -89,7 +88,6 @@
 - type: entity
   name: brood servant
   parent: SimpleMobBase
-  suffix: brood
   id: BroodServant
   description: Mega small and mega scary spider!
   components:
@@ -161,7 +159,6 @@
   id: BroodServantEgg
   parent: EggSpider
   name: spider egg
-  suffix: brood
   description: It looks disgusting.
   components:
   - type: Sprite
