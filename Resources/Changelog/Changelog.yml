@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Some station events will no longer start instantly., type: Fix}
-  id: 3661
-  time: '2023-05-06T01:24:16.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: EMP now temporarily disables headsets/cameras/APCs and makes vendomats
@@ -2924,3 +2919,13 @@ Entries:
     type: Tweak}
   id: 4160
   time: '2023-07-03T21:36:23.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added unique ERT helmets for each ERT type., type: Add}
+  - {message: Removed the alternate security helmets (the ones with an abundance of
+      hueshifting.), type: Remove}
+  - {message: Riot helmets are now better than the standard Security helmet at resisting
+      blunt and slash., type: Tweak}
+  - {message: Fixed a single missing pixel on all EVA helmet inhands., type: Fix}
+  id: 4161
+  time: '2023-07-03T23:24:28.0000000+00:00'
