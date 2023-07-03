@@ -61,7 +61,7 @@ namespace Content.IntegrationTests.Tests
             await server.WaitPost(() =>
             {
                 var ent = serverEntManager.SpawnEntity(prototype, testMap.GridCoords);
-                serverEntManager.GetComponent<TransformComponent>(ent).WorldRotation = angle;
+                serverEntManager.System<SharedTransformSystem>().SetWorldRotation(ent, angle);
                 entity = ent;
             });
 
@@ -78,7 +78,7 @@ namespace Content.IntegrationTests.Tests
                 // these tests currently all assume player eye is 0
                 eyeManager.CurrentEye.Rotation = 0;
 
-                var pos = clientEntManager.GetComponent<TransformComponent>(entity).WorldPosition;
+                var pos = clientEntManager.System<SharedTransformSystem>().GetWorldPosition(entity);
                 var clickable = clientEntManager.GetComponent<ClickableComponent>(entity);
 
                 hit = clickable.CheckClick(sprite, xformQuery.GetComponent(entity), xformQuery, (clickPosX, clickPosY) + pos, eye, out _, out _, out _);
