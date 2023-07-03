@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Clown scientists have shared their experimental technology with Nanotrasen,
-      use at your own risk. HONK!', type: Add}
-  id: 3653
-  time: '2023-05-05T13:21:13.0000000+00:00'
 - author: Ilushkins33
   changes:
   - {message: Stuttering during blood loss, type: Add}
@@ -2927,3 +2921,8 @@ Entries:
   - {message: Fixed Hamlet sprite error on revival., type: Fix}
   id: 4152
   time: '2023-07-03T07:59:29.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: You can now speak on your department's radio channel using .X, type: Tweak}
+  id: 4153
+  time: '2023-07-03T08:55:08.0000000+00:00'
