@@ -73,6 +73,9 @@
       ignoreWhitelist:
         components:
             - IgnoreSpiderWeb
+    - type: FastContacts
+      walkSpeedModifier: 2
+      sprintSpeedModifier: 2
 
 - type: entity
   id: SpiderWebClown
