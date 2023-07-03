@@ -53,6 +53,6 @@ public sealed class GasProducerAnomalyComponent : Component
     /// <summary>
     /// The the amount the tempurature should be modified by (negative for decreasing temp)
     /// </summary>
-    [DataField("tempSet")]
-    public float tempSet = 0;
+    [DataField("tempChange")]
+    public float tempChange = 0;
 }

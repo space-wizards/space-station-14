@@ -30,7 +30,7 @@ public sealed class GasProducerAnomalySystem : EntitySystem
         if (!component.ReleaseOnMaxSeverity)
             return;
 
-        ReleaseGas(uid, component.ReleasedGas, component.SuperCriticalMoleAmount, component.spawnRadius, component.tileCount, component.tempSet);
+        ReleaseGas(uid, component.ReleasedGas, component.SuperCriticalMoleAmount, component.spawnRadius, component.tileCount, component.tempChange);
     }
 
     public override void Update(float frameTime)
@@ -46,7 +46,7 @@ public sealed class GasProducerAnomalySystem : EntitySystem
             // Yes this is unused code since there are no anomalies that
             // release gas passively *yet*, but since I'm here I figured
             // I'd save someone some time and just add it for the future
-            ReleaseGas(ent, comp.ReleasedGas, comp.PassiveMoleAmount * frameTime, comp.spawnRadius, comp.tileCount, comp.tempSet);
+            ReleaseGas(ent, comp.ReleasedGas, comp.PassiveMoleAmount * frameTime, comp.spawnRadius, comp.tileCount, comp.tempChange);
         }
     }
 
@@ -68,7 +68,7 @@ public sealed class GasProducerAnomalySystem : EntitySystem
         if (mixture != null) 
         {
             mixture.AdjustMoles(gas, mols);
-            mixture.Temperature = temp;
+            mixture.Temperature += temp;
         }
             
         if (count == 0) 
@@ -84,7 +84,7 @@ public sealed class GasProducerAnomalySystem : EntitySystem
                 continue;
 
             mix.AdjustMoles(gas, mols);
-            mix.Temperature = temp;
+            mix.Temperature += temp;
 
             if (amountCounter >= count)
                 return;
