@@ -23,8 +23,8 @@ public sealed class DisposalDoAfterEvent : SimpleDoAfterEvent
 public abstract class SharedDisposalUnitSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] protected readonly MetaDataSystem Metadata = default!;
+    [Dependency] private   readonly MobStateSystem _mobState = default!;
 
     protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 
@@ -40,7 +40,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     /// <returns></returns>
     public DisposalsPressureState GetState(EntityUid uid, DisposalUnitComponent component, MetaDataComponent? metadata = null)
     {
-        var nextPressure = _metadata.GetPauseTime(uid, metadata) + component.NextPressurized;
+        var nextPressure = Metadata.GetPauseTime(uid, metadata) + component.NextPressurized;
 
         if (nextPressure > GameTiming.CurTime)
         {
@@ -63,7 +63,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!Resolve(uid, ref metadata))
             return 0f;
 
-        var pauseTime = _metadata.GetPauseTime(uid, metadata);
+        var pauseTime = Metadata.GetPauseTime(uid, metadata);
         return MathF.Min(1f,
             (float) (GameTiming.CurTime - pauseTime - component.NextPressurized).TotalSeconds / PressurePerSecond);
     }

@@ -96,7 +96,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             // Verbs to flush the unit
             AlternativeVerb flushVerb = new()
             {
-                Act = () => Engage(uid, component),
+                Act = () => ManualEngage(uid, component),
                 Text = Loc.GetString("disposal-flush-verb-get-data-text"),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
                 Priority = 1,
@@ -232,7 +232,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         if (component.Engaged)
         {
-            Engage(uid, component);
+            ManualEngage(uid, component);
         }
         else
         {
@@ -315,7 +315,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         if (component.Engaged && !TryFlush(uid, component))
         {
-            TryQueueEngage(uid, component);
+            QueueAutomaticEngage(uid, component);
         }
     }
 
@@ -509,7 +509,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     public void UpdateInterface(EntityUid uid, DisposalUnitComponent component, bool powered)
     {
-        var stateString = Loc.GetString($"disposal-unit-state-{component.State}");
+        var compState = GetState(uid, component);
+        var stateString = Loc.GetString($"disposal-unit-state-{compState}");
         var state = new DisposalUnitComponent.DisposalUnitBoundUserInterfaceState(Name(uid), stateString, EstimatedFullPressure(component), powered, component.Engaged);
         _ui.TrySetUiState(uid, DisposalUnitComponent.DisposalUnitUiKey.Key, state);
 
@@ -519,7 +520,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     private TimeSpan EstimatedFullPressure(DisposalUnitComponent component)
     {
-        if (component.State == DisposalsPressureState.Ready) return TimeSpan.Zero;
+        if (component.State == DisposalsPressureState.Ready)
+            return TimeSpan.Zero;
 
         var currentTime = GameTiming.CurTime;
         var pressure = component.Pressure;
@@ -539,7 +541,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             return;
         }
 
-        if (!Comp<TransformComponent>(uid).Anchored)
+        if (!Transform(uid).Anchored)
         {
             _appearance.SetData(uid, DisposalUnitComponent.Visuals.VisualState, DisposalUnitComponent.VisualState.UnAnchored, appearance);
             _appearance.SetData(uid, DisposalUnitComponent.Visuals.Handle, DisposalUnitComponent.HandleState.Normal, appearance);
@@ -547,7 +549,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             return;
         }
 
-        _appearance.SetData(uid, DisposalUnitComponent.Visuals.VisualState, component.Pressure < 1 ? DisposalUnitComponent.VisualState.Charging : DisposalUnitComponent.VisualState.Anchored, appearance);
+        var state = GetState(uid, component);
+        _appearance.SetData(uid, DisposalUnitComponent.Visuals.VisualState, state == DisposalsPressureState.Pressurizing ? DisposalUnitComponent.VisualState.Charging : DisposalUnitComponent.VisualState.Anchored, appearance);
 
         _appearance.SetData(uid, DisposalUnitComponent.Visuals.Handle, component.Engaged
             ? DisposalUnitComponent.HandleState.Engaged
@@ -570,7 +573,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             lightState |= DisposalUnitComponent.LightStates.Full;
         }
 
-        if (component.Pressure < 1)
+        if (state == DisposalsPressureState.Pressurizing)
         {
             lightState |= DisposalUnitComponent.LightStates.Charging;
         }
@@ -611,7 +614,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                && Comp<TransformComponent>(unit).Anchored;
     }
 
-    public void Engage(EntityUid uid, DisposalUnitComponent component)
+    public void ManualEngage(EntityUid uid, DisposalUnitComponent component, MetaDataComponent? metadata = null)
     {
         component.Engaged = true;
         UpdateVisualState(uid, component);
@@ -619,16 +622,27 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         if (CanFlush(uid, component))
         {
-            component.NextFlush = _gameTiming.CurTime + component.FlushDelay;
-            EnsureComp<ActiveDisposalUnitComponent>(uid);
+            if (!Resolve(uid, ref metadata))
+                return;
+
+            var pauseTime = Metadata.GetPauseTime(uid, metadata);
+            var nextEngage = (GameTiming.CurTime - pauseTime).TotalSeconds + component.FlushTime;
+            component.NextFlush = TimeSpan.FromSeconds(Math.Min((component.NextFlush ?? TimeSpan.MaxValue).TotalSeconds, nextEngage));
         }
     }
 
     public void Disengage(EntityUid uid, DisposalUnitComponent component)
     {
         component.Engaged = false;
+
+        if (component.Container.ContainedEntities.Count == 0)
+        {
+            component.NextFlush = null;
+        }
+
         UpdateVisualState(uid, component);
         UpdateInterface(uid, component, component.Powered);
+        Dirty(component);
     }
 
     /// <summary>
@@ -639,6 +653,12 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         foreach (var entity in component.Container.ContainedEntities.ToArray())
         {
             Remove(uid, component, entity);
+        }
+
+        if (!component.Engaged)
+        {
+            component.NextFlush = null;
+            Dirty(component);
         }
     }
 
@@ -653,19 +673,20 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     /// <summary>
     /// If something is inserted (or the likes) then we'll queue up an automatic flush in the future.
     /// </summary>
-    public void TryQueueEngage(EntityUid uid, DisposalUnitComponent component, MetaDataComponent? metadata = null)
+    public void QueueAutomaticEngage(EntityUid uid, DisposalUnitComponent component, MetaDataComponent? metadata = null)
     {
         if (component.Deleted || !component.AutomaticEngage || !component.Powered && component.Container.ContainedEntities.Count == 0)
         {
             return;
         }
 
-        var pauseTime = _metadata.GetPauseTime(uid, metadata);
+        var pauseTime = Metadata.GetPauseTime(uid, metadata);
         var automaticTime = GameTiming.CurTime + component.AutomaticEngageTime - pauseTime;
         var flushTime = TimeSpan.FromSeconds(Math.Min((component.NextFlush ?? TimeSpan.MaxValue).TotalSeconds, automaticTime.TotalSeconds));
 
         component.NextFlush = flushTime;
         component.AutoFlushing = true;
+        Dirty(component);
     }
 
     public void AfterInsert(EntityUid uid, DisposalUnitComponent component, EntityUid inserted, EntityUid? user = null)
@@ -676,7 +697,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (user != inserted && user != null)
             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user.Value):player} inserted {ToPrettyString(inserted)} into {ToPrettyString(uid)}");
 
-        TryQueueEngage(uid, component);
+        QueueAutomaticEngage(uid, component);
 
         if (TryComp(inserted, out ActorComponent? actor))
         {

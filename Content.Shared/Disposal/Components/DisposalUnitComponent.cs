@@ -59,10 +59,6 @@ public sealed class DisposalUnitComponent : Component
     [DataField("autoEngageTime"), AutoNetworkedField]
     public readonly TimeSpan AutomaticEngageTime = TimeSpan.FromSeconds(30);
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("flushDelay")]
-    public readonly TimeSpan FlushDelay = TimeSpan.FromSeconds(3);
-
     /// <summary>
     ///     Delay from trying to enter disposals ourselves.
     /// </summary>
@@ -81,28 +77,23 @@ public sealed class DisposalUnitComponent : Component
     /// </summary>
     [ViewVariables] public Container Container = default!;
 
-    [ViewVariables, DataField("powered"), AutoNetworkedField] public bool Powered = false;
+    [ViewVariables, DataField("powered"), AutoNetworkedField]
+    public bool Powered = false;
 
     /// <summary>
     /// Was the disposals unit engaged for a manual flush.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("engaged"), AutoNetworkedField]
-    public bool Engaged { get; set; }
+    public bool Engaged;
 
     [DataField("air")]
-    public GasMixture Air { get; set; } = new(Atmospherics.CellVolume);
+    public GasMixture Air = new(Atmospherics.CellVolume);
 
     /// <summary>
     /// Next time this unit will flush. Is the lesser of <see cref="FlushDelay"/> and <see cref="AutomaticEngageTime"/>
     /// </summary>
-    [ViewVariables, DataField("nextFlush"), AutoNetworkedField]
+    [ViewVariables, DataField("nextFlush", customTypeSerializer:typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan? NextFlush;
-
-    /// <summary>
-    /// Is the unit automatically flushing (i.e. is something inside).
-    /// </summary>
-    [ViewVariables, DataField("autoFlushing"), AutoNetworkedField]
-    public bool AutoFlushing;
 
     [Serializable, NetSerializable]
     public enum Visuals : byte
@@ -129,6 +120,7 @@ public sealed class DisposalUnitComponent : Component
     }
 
     [Serializable, NetSerializable]
+    [Flags]
     public enum LightStates : byte
     {
         Off = 0,
