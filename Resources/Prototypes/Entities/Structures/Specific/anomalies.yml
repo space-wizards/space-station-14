@@ -74,7 +74,7 @@
     releaseOnMaxSeverity: true
     spawnRadius: 3
     tileCount: 5
-    tempSet: 550
+    tempChange: 550
 
 - type: entity
   id: AnomalyGravity
