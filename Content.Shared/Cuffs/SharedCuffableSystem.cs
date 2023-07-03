@@ -579,14 +579,7 @@ namespace Content.Shared.Cuffs
 
             if (isOwner)
             {
-                var uncuffDamage = new DamageSpecifier()
-                {
-                    DamageDict = new()
-                    {
-                        { "Blunt", cuffable.DamageOnResist }
-                    }
-                };
-                _damageSystem.TryChangeDamage(target, uncuffDamage, true, false);
+                _damageSystem.TryChangeDamage(target, cuffable.DamageOnResist, true, false);
             }
 
             if (_net.IsServer)

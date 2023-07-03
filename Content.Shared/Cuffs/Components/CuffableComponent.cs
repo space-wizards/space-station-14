@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -43,8 +44,13 @@ public sealed class CuffableComponent : Component
     /// Damage is applied to someone when they try to uncuff themselves.
     /// </summary>
     [DataField("damageOnResist"), ViewVariables(VVAccess.ReadWrite)]
-    public float DamageOnResist = 3f;
-
+    public DamageSpecifier DamageOnResist = new()
+    {
+        DamageDict = new()
+             {
+                 { "Blunt", 3.0 },
+             }
+    };
 }
 
 [Serializable, NetSerializable]
