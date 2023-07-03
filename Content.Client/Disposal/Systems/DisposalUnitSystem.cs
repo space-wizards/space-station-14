@@ -130,7 +130,10 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (state == VisualState.Flushing)
         {
             // TODO: Need some kind of visual state to represent it
-            // If we are in this state
+            // Okay so there's the flush engage timer and the initial flush timer
+            // if we're inside the initial flush timer then play the animation, otherwise just uhhh skip it.
+
+            // TODO: Look at cleaning up the above potentially.
 
             if (!_animationSystem.HasRunningAnimation(uid, AnimationKey))
             {
@@ -138,14 +141,14 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             }
         }
 
-        if (!_appearanceSystem.TryGetData<HandleState>(uid, Visuals.Handle, out var handleState))
+        if (!_appearanceSystem.TryGetData<HandleState>(uid, Visuals.Handle, out var handleState, appearance))
         {
             handleState = HandleState.Normal;
         }
 
         sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayEngaged, handleState != HandleState.Normal);
 
-        if (!_appearanceSystem.TryGetData<LightStates>(uid, Visuals.Light, out var lightState))
+        if (!_appearanceSystem.TryGetData<LightStates>(uid, Visuals.Light, out var lightState, appearance))
         {
             lightState = LightStates.Off;
         }
