@@ -23,59 +23,38 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         SubscribeLocalEvent<DisposalUnitComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    public void UpdateActive(EntityUid disposalEntity, bool active)
-    {
-        if (active)
-        {
-            if (!_pressuringDisposals.Contains(disposalEntity))
-                _pressuringDisposals.Add(disposalEntity);
-        }
-        else
-        {
-            _pressuringDisposals.Remove(disposalEntity);
-        }
-    }
-
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
-        for (var i = _pressuringDisposals.Count - 1; i >= 0; i--)
-        {
-            var disposal = _pressuringDisposals[i];
-            if (!UpdateInterface(disposal))
-                continue;
 
-            _pressuringDisposals.RemoveAt(i);
+        var query = EntityQueryEnumerator<DisposalUnitComponent, ClientUserInterfaceComponent>();
+
+        while (query.MoveNext(out var uid, out var comp, out var ui))
+        {
+            UpdateInterface(uid, comp, ui);
         }
     }
 
-    private bool UpdateInterface(EntityUid disposalUnit)
+    private void UpdateInterface(EntityUid uid, DisposalUnitComponent component, ClientUserInterfaceComponent ui)
     {
-        if (!TryComp(disposalUnit, out DisposalUnitComponent? component) || component.Deleted)
-            return true;
-        if (component.Deleted)
-            return true;
-        if (!TryComp(disposalUnit, out ClientUserInterfaceComponent? userInterface))
-            return true;
-
         var state = component.UiState;
-        if (state == null)
-            return true;
 
-        foreach (var inter in userInterface.Interfaces)
+        if (state == null)
+            return;
+
+        foreach (var inter in ui.Interfaces)
         {
             if (inter is DisposalUnitBoundUserInterface boundInterface)
             {
-                return boundInterface.UpdateWindowState(state) != false;
+                boundInterface.UpdateWindowState(state);
+                return;
             }
         }
-
-        return true;
     }
 
     private void OnComponentInit(EntityUid uid, DisposalUnitComponent disposalUnit, ComponentInit args)
     {
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
+        if (!TryComp<SpriteComponent>(uid, out var sprite) || !TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
         if (!sprite.LayerMapTryGet(DisposalUnitVisualLayers.Base, out var baseLayerIdx))
@@ -90,7 +69,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         // Setup the flush animation to play
         disposalUnit.FlushAnimation = new Animation
         {
-            Length = TimeSpan.FromSeconds(disposalUnit.FlushTime),
+            Length = disposalUnit.FlushDelay,
             AnimationTracks =
             {
                 new AnimationTrackSpriteFlick
@@ -101,9 +80,9 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                         // Play the flush animation
                         new AnimationTrackSpriteFlick.KeyFrame(flushState, 0),
                         // Return to base state (though, depending on how the unit is
-                        // configured we might get an appearence change event telling
+                        // configured we might get an appearance change event telling
                         // us to go to charging state)
-                        new AnimationTrackSpriteFlick.KeyFrame(originalBaseState, disposalUnit.FlushTime)
+                        new AnimationTrackSpriteFlick.KeyFrame(originalBaseState, (float) disposalUnit.FlushDelay.TotalSeconds)
                     }
                 },
             }
@@ -114,31 +93,31 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             disposalUnit.FlushAnimation.AnimationTracks.Add(
                 new AnimationTrackPlaySound
                 {
-                    KeyFrames = {
+                    KeyFrames =
+                    {
                         new AnimationTrackPlaySound.KeyFrame(_audioSystem.GetSound(disposalUnit.FlushSound), 0)
                     }
                 });
         }
 
         EnsureComp<AnimationPlayerComponent>(uid);
-
-        UpdateState(uid, disposalUnit, sprite);
+        UpdateState(uid, disposalUnit, sprite, appearance);
     }
 
     private void OnAppearanceChange(EntityUid uid, DisposalUnitComponent unit, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
-        {
             return;
-        }
 
-        UpdateState(uid, unit, args.Sprite);
+        UpdateState(uid, unit, args.Sprite, args.Component);
     }
 
-    // Update visuals and tick animation
-    private void UpdateState(EntityUid uid, DisposalUnitComponent unit, SpriteComponent sprite)
+    /// <summary>
+    /// Update visuals and tick animation
+    /// </summary>
+    private void UpdateState(EntityUid uid, DisposalUnitComponent unit, SpriteComponent sprite, AppearanceComponent appearance)
     {
-        if (!_appearanceSystem.TryGetData<VisualState>(uid, Visuals.VisualState, out var state))
+        if (!_appearanceSystem.TryGetData<VisualState>(uid, Visuals.VisualState, out var state, appearance))
         {
             return;
         }
@@ -150,6 +129,9 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         if (state == VisualState.Flushing)
         {
+            // TODO: Need some kind of visual state to represent it
+            // If we are in this state
+
             if (!_animationSystem.HasRunningAnimation(uid, AnimationKey))
             {
                 _animationSystem.Play(uid, unit.FlushAnimation, AnimationKey);

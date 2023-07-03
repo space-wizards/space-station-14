@@ -362,6 +362,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     /// </summary>
     private void Update(EntityUid uid, DisposalUnitComponent component, MetaDataComponent metadata, float frameTime)
     {
+
+
         if (component.NextFlush != null)
         {
             if (component.NextFlush.Value < GameTiming.CurTime)
@@ -370,8 +372,15 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             }
         }
 
-        UpdateVisualState(uid, component);
-        UpdateInterface(uid, component, component.Powered);
+        var state = GetState(uid, component, metadata);
+
+        if (component.LastState != state)
+        {
+            component.LastState = state;
+            UpdateVisualState(uid, component);
+            UpdateInterface(uid, component, component.Powered);
+            Dirty(component);
+        }
 
         Box2? disposalsBounds = null;
         var count = component.RecentlyEjected.Count;
@@ -388,7 +397,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             }
         }
 
-        for (var i = component.RecentlyEjected.Count - 1; i >= 0; i--)
+        for (var i = 0; i < component.RecentlyEjected.Count; i++)
         {
             var ejectedId = component.RecentlyEjected[i];
             if (HasComp<PhysicsComponent>(ejectedId))
@@ -401,7 +410,9 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                 {
                     continue;
                 }
+
                 component.RecentlyEjected.RemoveAt(i);
+                i--;
             }
         }
 
@@ -453,9 +464,9 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             return false;
         }
 
-        component.NextFlush = TimeSpan.MaxValue;
+        component.NextFlush += component.AutomaticEngageTime;
 
-        //Allows the MailingUnitSystem to add tags or prevent flushing
+        // Allows the MailingUnitSystem to add tags or prevent flushing
         var beforeFlushArgs = new BeforeDisposalFlushEvent();
         RaiseLocalEvent(uid, beforeFlushArgs);
 
@@ -490,19 +501,12 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         _disposalTubeSystem.TryInsert(entry, component, beforeFlushArgs.Tags);
 
-        component.NextFlush = TimeSpan.MaxValue;
-
-        if (!component.DisablePressure)
-        {
-            component.Pressure = 0;
-            component.State = DisposalsPressureState.Pressurizing;
-        }
-
+        component.NextFlush = null;
         component.Engaged = false;
 
-        HandleStateChange(uid, component, true);
         UpdateVisualState(uid, component, true);
         UpdateInterface(uid, component, component.Powered);
+        Dirty(component);
 
         return true;
     }
@@ -511,22 +515,25 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         var compState = GetState(uid, component);
         var stateString = Loc.GetString($"disposal-unit-state-{compState}");
-        var state = new DisposalUnitComponent.DisposalUnitBoundUserInterfaceState(Name(uid), stateString, EstimatedFullPressure(component), powered, component.Engaged);
+        var state = new DisposalUnitComponent.DisposalUnitBoundUserInterfaceState(Name(uid), stateString, EstimatedFullPressure(uid, component), powered, component.Engaged);
         _ui.TrySetUiState(uid, DisposalUnitComponent.DisposalUnitUiKey.Key, state);
 
         var stateUpdatedEvent = new DisposalUnitUIStateUpdatedEvent(state);
         RaiseLocalEvent(uid, stateUpdatedEvent);
     }
 
-    private TimeSpan EstimatedFullPressure(DisposalUnitComponent component)
+    /// <summary>
+    /// Returns the estimated time when the disposal unit will be back to full pressure.
+    /// </summary>
+    private TimeSpan EstimatedFullPressure(EntityUid uid, DisposalUnitComponent component)
     {
-        if (component.State == DisposalsPressureState.Ready)
+        if (component.NextPressurized < GameTiming.CurTime)
             return TimeSpan.Zero;
 
+        var pausedTime = Metadata.GetPauseTime(uid);
         var currentTime = GameTiming.CurTime;
-        var pressure = component.Pressure;
 
-        return TimeSpan.FromSeconds(currentTime.TotalSeconds + (1.0f - pressure) / PressurePerSecond);
+        return component.NextPressurized + pausedTime - currentTime;
     }
 
     public void UpdateVisualState(EntityUid uid, DisposalUnitComponent component)
@@ -591,8 +598,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         if (component.Container.ContainedEntities.Count == 0)
         {
-            component.AutoFlushing = false;
-
             // If not manually engaged then reset the flushing entirely.
             if (!component.Engaged)
             {
@@ -620,15 +625,15 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         UpdateVisualState(uid, component);
         UpdateInterface(uid, component, component.Powered);
 
-        if (CanFlush(uid, component))
-        {
-            if (!Resolve(uid, ref metadata))
-                return;
+        if (!CanFlush(uid, component))
+            return;
 
-            var pauseTime = Metadata.GetPauseTime(uid, metadata);
-            var nextEngage = (GameTiming.CurTime - pauseTime).TotalSeconds + component.FlushTime;
-            component.NextFlush = TimeSpan.FromSeconds(Math.Min((component.NextFlush ?? TimeSpan.MaxValue).TotalSeconds, nextEngage));
-        }
+        if (!Resolve(uid, ref metadata))
+            return;
+
+        var pauseTime = Metadata.GetPauseTime(uid, metadata);
+        var nextEngage = (GameTiming.CurTime - pauseTime).TotalSeconds + component.ManualFlushTime;
+        component.NextFlush = TimeSpan.FromSeconds(Math.Min((component.NextFlush ?? TimeSpan.MaxValue).TotalSeconds, nextEngage));
     }
 
     public void Disengage(EntityUid uid, DisposalUnitComponent component)
@@ -685,7 +690,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         var flushTime = TimeSpan.FromSeconds(Math.Min((component.NextFlush ?? TimeSpan.MaxValue).TotalSeconds, automaticTime.TotalSeconds));
 
         component.NextFlush = flushTime;
-        component.AutoFlushing = true;
         Dirty(component);
     }
 

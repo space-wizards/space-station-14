@@ -18,6 +18,12 @@ public sealed class DisposalUnitComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("soundFlush"), AutoNetworkedField]
     public SoundSpecifier? FlushSound = new SoundPathSpecifier("/Audio/Machines/disposalflush.ogg");
 
+    /// <summary>
+    /// Last state for this disposals unit.
+    /// </summary>
+    [DataField("lastState"), AutoNetworkedField]
+    public DisposalsPressureState LastState;
+
     // TODO: Just make this use vaulting.
     /// <summary>
     /// We'll track whatever just left disposals so we know what collision we need to ignore until they stop intersecting our BB.
@@ -35,7 +41,13 @@ public sealed class DisposalUnitComponent : Component
     /// How long it takes to flush a disposals unit manually.
     /// </summary>
     [DataField("flushTime")]
-    public readonly float FlushTime = 2f;
+    public TimeSpan ManualFlushTime = TimeSpan.FromSeconds(2);
+
+    /// <summary>
+    /// How long it takes from the start of a flush animation to return the sprite to normal.
+    /// </summary>
+    [DataField("flushDelay")]
+    public TimeSpan FlushDelay = TimeSpan.FromSeconds(3);
 
     [DataField("mobsCanEnter")]
     public bool MobsCanEnter = true;
