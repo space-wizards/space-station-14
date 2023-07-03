@@ -285,6 +285,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> LocalStatusIconsEnabled =
             CVarDef.Create("game.local_status_icons_enabled", true, CVar.CLIENTONLY);
 
+        /// <summary>
+        /// Whether or not coordinates on the Debug overlay should only be available to admins.
+        /// </summary>
+        public static readonly CVarDef<bool> DebugCoordinatesAdminOnly =
+            CVarDef.Create("game.debug_coordinates_admin_only", false, CVar.SERVER | CVar.REPLICATED);
+
 #if EXCEPTION_TOLERANCE
         /// <summary>
         ///     Amount of times round start must fail before the server is shut down.
