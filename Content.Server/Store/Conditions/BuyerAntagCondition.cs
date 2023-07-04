@@ -1,4 +1,5 @@
 using Content.Server.Mind.Components;
+using Content.Server.Roles;
 using Content.Server.Traitor;
 using Content.Shared.Roles;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
@@ -28,14 +29,14 @@ public sealed class BuyerAntagCondition : ListingCondition
     {
         var ent = args.EntityManager;
 
-        if (!ent.TryGetComponent<MindComponent>(args.Buyer, out var mind) || mind.Mind == null)
+        if (!ent.TryGetComponent<MindContainerComponent>(args.Buyer, out var mind) || mind.Mind == null)
             return true;
 
         if (Blacklist != null)
         {
             foreach (var role in mind.Mind.AllRoles)
             {
-                if (role is not TraitorRole blacklistantag)
+                if (role is not AntagonistRole blacklistantag)
                     continue;
 
                 if (Blacklist.Contains(blacklistantag.Prototype.ID))
@@ -48,7 +49,7 @@ public sealed class BuyerAntagCondition : ListingCondition
             var found = false;
             foreach (var role in mind.Mind.AllRoles)
             {
-                if (role is not TraitorRole antag)
+                if (role is not AntagonistRole antag)
                     continue;
 
                 if (Whitelist.Contains(antag.Prototype.ID))

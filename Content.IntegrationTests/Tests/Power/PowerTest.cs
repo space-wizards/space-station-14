@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -484,7 +485,7 @@ namespace Content.IntegrationTests.Tests.Power
                 supplier.MaxSupply = draw/2;
                 supplier.SupplyRampRate = rampRate;
                 supplier.SupplyRampTolerance = rampTol;
-                
+
                 battery.MaxCharge = 100_000;
                 battery.CurrentCharge = 100_000;
                 netBattery.MaxSupply = draw/2;
@@ -817,7 +818,7 @@ namespace Content.IntegrationTests.Tests.Power
 
         /// <summary>
         ///     Checks that if there is insufficient supply to meet demand, generators will run at full power instead of
-        ///     having generators and batteries sharing the load. 
+        ///     having generators and batteries sharing the load.
         /// </summary>
         [Test]
         public async Task TestSupplyPrioritized()
@@ -1080,6 +1081,7 @@ namespace Content.IntegrationTests.Tests.Power
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
+            var _nodeContainer = entityManager.System<NodeContainerSystem>();
             CableNode leftNode = default!;
             CableNode rightNode = default!;
             Node batteryInput = default!;
@@ -1107,11 +1109,17 @@ namespace Content.IntegrationTests.Tests.Power
                 var battery = entityManager.SpawnEntity("FullBatteryDummy", grid.ToCoordinates(0, 2));
                 var batteryNodeContainer = entityManager.GetComponent<NodeContainerComponent>(battery);
 
-                leftNode = entityManager.GetComponent<NodeContainerComponent>(leftEnt).GetNode<CableNode>("power");
-                rightNode = entityManager.GetComponent<NodeContainerComponent>(rightEnt).GetNode<CableNode>("power");
+                if (_nodeContainer.TryGetNode<CableNode>(entityManager.GetComponent<NodeContainerComponent>(leftEnt),
+                        "power", out var leftN))
+                    leftNode = leftN;
+                if (_nodeContainer.TryGetNode<CableNode>(entityManager.GetComponent<NodeContainerComponent>(rightEnt),
+                        "power", out var rightN))
+                    rightNode = rightN;
 
-                batteryInput = batteryNodeContainer.GetNode<Node>("input");
-                batteryOutput = batteryNodeContainer.GetNode<Node>("output");
+                if (_nodeContainer.TryGetNode<Node>(batteryNodeContainer, "input", out var nInput))
+                    batteryInput = nInput;
+                if (_nodeContainer.TryGetNode<Node>(batteryNodeContainer, "output", out var nOutput))
+                    batteryOutput = nOutput;
             });
 
             // Run ticks to allow node groups to update.
@@ -1189,28 +1197,37 @@ namespace Content.IntegrationTests.Tests.Power
             var extensionCableSystem = entityManager.EntitySysManager.GetEntitySystem<ExtensionCableSystem>();
             PowerNetworkBatteryComponent apcNetBattery = default!;
             ApcPowerReceiverComponent receiver = default!;
+            ApcPowerReceiverComponent unpoweredReceiver = default!;
 
             await server.WaitAssertion(() =>
             {
                 var map = mapManager.CreateMap();
                 var grid = mapManager.CreateGrid(map);
 
+                const int range = 5;
+
                 // Power only works when anchored
-                for (var i = 0; i < 3; i++)
+                for (var i = 0; i < range; i++)
                 {
                     grid.SetTile(new Vector2i(0, i), new Tile(1));
                 }
 
                 var apcEnt = entityManager.SpawnEntity("ApcDummy", grid.ToCoordinates(0, 0));
                 var apcExtensionEnt = entityManager.SpawnEntity("CableApcExtension", grid.ToCoordinates(0, 0));
-                var powerReceiverEnt = entityManager.SpawnEntity("ApcPowerReceiverDummy", grid.ToCoordinates(0, 2));
 
+                // Create a powered receiver in range (range is 0 indexed)
+                var powerReceiverEnt = entityManager.SpawnEntity("ApcPowerReceiverDummy", grid.ToCoordinates(0, range - 1));
                 receiver = entityManager.GetComponent<ApcPowerReceiverComponent>(powerReceiverEnt);
+
+                // Create an unpowered receiver outside range
+                var unpoweredReceiverEnt = entityManager.SpawnEntity("ApcPowerReceiverDummy", grid.ToCoordinates(0, range));
+                unpoweredReceiver = entityManager.GetComponent<ApcPowerReceiverComponent>(unpoweredReceiverEnt);
+
                 var battery = entityManager.GetComponent<BatteryComponent>(apcEnt);
                 apcNetBattery = entityManager.GetComponent<PowerNetworkBatteryComponent>(apcEnt);
 
-                extensionCableSystem.SetProviderTransferRange(apcExtensionEnt, 5);
-                extensionCableSystem.SetReceiverReceptionRange(powerReceiverEnt, 5);
+                extensionCableSystem.SetProviderTransferRange(apcExtensionEnt, range);
+                extensionCableSystem.SetReceiverReceptionRange(powerReceiverEnt, range);
 
                 battery.MaxCharge = 10000; //arbitrary nonzero amount of charge
                 battery.CurrentCharge = battery.MaxCharge; //fill battery
@@ -1220,13 +1237,17 @@ namespace Content.IntegrationTests.Tests.Power
 
             server.RunTicks(1); //let run a tick for ApcNet to process power
 
-            await server.WaitAssertion(() =>
-            {
-                Assert.That(receiver.Powered);
-                Assert.That(apcNetBattery.CurrentSupply, Is.EqualTo(1).Within(0.1));
+            await server.WaitAssertion(() => {
+                Assert.Multiple(() =>
+                {
+                    Assert.That(receiver.Powered, "Receiver in range should be powered");
+                    Assert.That(!unpoweredReceiver.Powered, "Out of range receiver should not be powered");
+                    Assert.That(apcNetBattery.CurrentSupply, Is.EqualTo(1).Within(0.1));
+                });
             });
 
             await pairTracker.CleanReturnAsync();
         }
+
     }
 }

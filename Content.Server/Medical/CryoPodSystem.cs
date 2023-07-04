@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
@@ -9,6 +10,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Climbing;
 using Content.Server.Medical.Components;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
@@ -17,6 +19,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
@@ -46,6 +49,8 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
     public override void Initialize()
     {
@@ -110,14 +115,15 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         }
     }
 
-    public override void EjectBody(EntityUid uid, CryoPodComponent? cryoPodComponent)
+    public override EntityUid? EjectBody(EntityUid uid, CryoPodComponent? cryoPodComponent)
     {
         if (!Resolve(uid, ref cryoPodComponent))
-            return;
+            return null;
         if (cryoPodComponent.BodyContainer.ContainedEntity is not {Valid: true} contained)
-            return;
+            return null;
         base.EjectBody(uid, cryoPodComponent);
         _climbSystem.ForciblySetClimbing(contained, uid);
+        return contained;
     }
 
     #region Interaction
@@ -143,7 +149,15 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
-        InsertBody(uid, args.Args.Target.Value, component);
+        if (InsertBody(uid, args.Args.Target.Value, component))
+        {
+            if (!TryComp(uid, out CryoPodAirComponent? cryoPodAir))
+                _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                    $"{ToPrettyString(args.User)} inserted {ToPrettyString(args.Args.Target.Value)} into {ToPrettyString(uid)}");
+
+            _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                $"{ToPrettyString(args.User)} inserted {ToPrettyString(args.Args.Target.Value)} into {ToPrettyString(uid)} which contains gas: {cryoPodAir!.Air.ToPrettyString():gasMix}");
+        }
         args.Handled = true;
     }
 
@@ -219,7 +233,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
             return;
 
-        if (!nodeContainer.TryGetNode(cryoPod.PortName, out PortablePipeNode? portNode))
+        if (!_nodeContainer.TryGetNode(nodeContainer, cryoPod.PortName, out PortablePipeNode? portNode))
             return;
 
         if (!TryComp(uid, out CryoPodAirComponent? cryoPodAir))
@@ -242,7 +256,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         // If it's connected to a port, include the port side
         if (TryComp(uid, out NodeContainerComponent? nodeContainer))
         {
-            if(nodeContainer.TryGetNode(component.PortName, out PipeNode? port))
+            if (_nodeContainer.TryGetNode(nodeContainer, component.PortName, out PipeNode? port))
                 gasMixDict.Add(component.PortName, port.Air);
         }
         args.GasMixtures = gasMixDict;

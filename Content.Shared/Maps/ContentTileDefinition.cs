@@ -33,7 +33,8 @@ namespace Content.Shared.Maps
 
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 
-        [DataField("baseTurfs")] public List<string> BaseTurfs { get; } = new();
+        [DataField("baseTurf")]
+        public string BaseTurf { get; } = string.Empty;
 
         [DataField("canCrowbar")] public bool CanCrowbar { get; private set; }
 
@@ -49,7 +50,7 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("barestepSounds")] public SoundSpecifier? BarestepSounds { get; } = new SoundCollectionSpecifier("BarestepHard");
 
-        [DataField("friction")] public float Friction { get; set; } = 0.3f;
+        [DataField("friction")] public float Friction { get; set; } = 0.2f;
 
         [DataField("variants")] public byte Variants { get; set; } = 1;
 

@@ -496,13 +496,14 @@
   id: AgentIDCard
   suffix: Agent
   components:
-    - type: AgentIDCard
-    - type: ActivatableUI
-      key: enum.AgentIDCardUiKey.Key
-    - type: UserInterface
-      interfaces:
-        - key: enum.AgentIDCardUiKey.Key
-          type: AgentIDCardBoundUserInterface
+  - type: AgentIDCard
+  - type: ActivatableUI
+    key: enum.AgentIDCardUiKey.Key
+    inHandsOnly: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.AgentIDCardUiKey.Key
+        type: AgentIDCardBoundUserInterface
 
 - type: entity
   parent: IDCardStandard

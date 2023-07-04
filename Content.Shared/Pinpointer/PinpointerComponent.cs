@@ -12,7 +12,7 @@ namespace Content.Shared.Pinpointer;
 public sealed partial class PinpointerComponent : Component
 {
     // TODO: Type serializer oh god
-    [DataField("component")]
+    [DataField("component"), ViewVariables(VVAccess.ReadWrite)]
     public string? Component;
 
     [DataField("mediumDistance"), ViewVariables(VVAccess.ReadWrite)]
@@ -30,19 +30,34 @@ public sealed partial class PinpointerComponent : Component
     [DataField("precision"), ViewVariables(VVAccess.ReadWrite)]
     public double Precision = 0.09;
 
+    /// <summary>
+    ///     Name to display of the target being tracked.
+    /// </summary>
+    [DataField("targetName"), ViewVariables(VVAccess.ReadWrite)]
+    public string? TargetName;
+
+    /// <summary>
+    ///     Whether or not the target name should be updated when the target is updated.
+    /// </summary>
+    [DataField("updateTargetName"), ViewVariables(VVAccess.ReadWrite)]
+    public bool UpdateTargetName;
+
+    /// <summary>
+    ///     Whether or not the target can be reassigned.
+    /// </summary>
+    [DataField("canRetarget"), ViewVariables(VVAccess.ReadWrite)]
+    public bool CanRetarget;
+
     [ViewVariables]
     public EntityUid? Target = null;
 
-    [ViewVariables]
-    [AutoNetworkedField]
+    [ViewVariables, AutoNetworkedField]
     public bool IsActive = false;
 
-    [ViewVariables]
-    [AutoNetworkedField]
+    [ViewVariables, AutoNetworkedField]
     public Angle ArrowAngle;
 
-    [ViewVariables]
-    [AutoNetworkedField]
+    [ViewVariables, AutoNetworkedField]
     public Distance DistanceToTarget = Distance.Unknown;
 
     [ViewVariables]

@@ -56,7 +56,7 @@ public sealed class NetworkConfiguratorComponent : Component
     public SoundSpecifier SoundNoAccess = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
     [DataField("soundSwitchMode")]
-    public SoundSpecifier SoundSwitchMode = new SoundPathSpecifier("/Audio/Machines/beep.ogg");
+    public SoundSpecifier SoundSwitchMode = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg");
 }
 
 [Serializable, NetSerializable]

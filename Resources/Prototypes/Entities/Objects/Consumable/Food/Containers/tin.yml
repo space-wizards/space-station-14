@@ -13,7 +13,6 @@
         maxVol: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
-    netsync: false
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
@@ -41,7 +40,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
-    netsync: false
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet

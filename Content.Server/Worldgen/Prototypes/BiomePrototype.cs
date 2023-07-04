@@ -41,7 +41,7 @@ public sealed class BiomePrototype : IPrototype, IInheritingPrototype
     /// </summary>
     [DataField("chunkComponents")]
     [AlwaysPushInheritance]
-    public EntityPrototype.ComponentRegistry ChunkComponents { get; } = new();
+    public ComponentRegistry ChunkComponents { get; } = new();
 
     //TODO: Get someone to make this a method on componentregistry that does it Correctly.
     /// <summary>

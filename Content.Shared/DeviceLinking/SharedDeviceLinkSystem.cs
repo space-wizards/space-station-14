@@ -1,3 +1,5 @@
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
@@ -9,6 +11,8 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    private ISawmill _sawmill = default!;
 
     public const string InvokedPort = "link_port";
 
@@ -19,6 +23,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         SubscribeLocalEvent<DeviceLinkSinkComponent, ComponentStartup>(OnSinkStartup);
         SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentRemove>(OnSourceRemoved);
         SubscribeLocalEvent<DeviceLinkSinkComponent, ComponentRemove>(OnSinkRemoved);
+        _sawmill = Logger.GetSawmill("devicelink");
     }
 
     #region Link Validation
@@ -102,9 +107,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// </summary>
     private void OnSourceRemoved(EntityUid uid, DeviceLinkSourceComponent component, ComponentRemove args)
     {
+        var query = GetEntityQuery<DeviceLinkSinkComponent>();
         foreach (var sinkUid in component.LinkedPorts.Keys)
         {
-            RemoveSinkFromSource(uid, sinkUid, component);
+            if (query.TryGetComponent(sinkUid, out var sink))
+                RemoveSinkFromSourceInternal(uid, sinkUid, component, sink);
         }
     }
 
@@ -113,9 +120,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// </summary>
     private void OnSinkRemoved(EntityUid sinkUid, DeviceLinkSinkComponent sinkComponent, ComponentRemove args)
     {
+        var query = GetEntityQuery<DeviceLinkSourceComponent>();
         foreach (var linkedSource in sinkComponent.LinkedSources)
         {
-            RemoveSinkFromSource(linkedSource, sinkUid, null, sinkComponent);
+            if (query.TryGetComponent(sinkUid, out var source))
+                RemoveSinkFromSourceInternal(linkedSource, sinkUid, source, sinkComponent);
         }
     }
 
@@ -249,6 +258,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         if (!Resolve(sourceUid, ref sourceComponent) || !Resolve(sinkUid, ref sinkComponent))
             return;
 
+        if (userId != null)
+            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{ToPrettyString(userId.Value):actor} is linking defaults between {ToPrettyString(sourceUid):source} and {ToPrettyString(sinkUid):sink}");
+        else
+            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"linking defaults between {ToPrettyString(sourceUid):source} and {ToPrettyString(sinkUid):sink}");
+
         var sourcePorts = GetSourcePorts(sourceUid, sourceComponent);
         var defaults = GetDefaults(sourcePorts);
         SaveLinks(userId, sourceUid, sinkUid, defaults, sourceComponent, sinkComponent);
@@ -310,6 +324,20 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     }
 
     /// <summary>
+    /// Removes every link from the given sink
+    /// </summary>
+    public void RemoveAllFromSink(EntityUid sinkUid, DeviceLinkSinkComponent? sinkComponent = null)
+    {
+        if (!Resolve(sinkUid, ref sinkComponent))
+            return;
+
+        foreach (var sourceUid in sinkComponent.LinkedSources)
+        {
+            RemoveSinkFromSource(sourceUid, sinkUid, null, sinkComponent);
+        }
+    }
+
+    /// <summary>
     /// Removes all links between a source and a sink
     /// </summary>
     public void RemoveSinkFromSource(
@@ -318,8 +346,37 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         DeviceLinkSourceComponent? sourceComponent = null,
         DeviceLinkSinkComponent? sinkComponent = null)
     {
-        if (!Resolve(sourceUid, ref sourceComponent, false) || !Resolve(sinkUid, ref sinkComponent, false))
+        if (Resolve(sourceUid, ref sourceComponent, false) && Resolve(sinkUid, ref sinkComponent, false))
+        {
+            RemoveSinkFromSourceInternal(sourceUid, sinkUid, sourceComponent, sinkComponent);
             return;
+        }
+
+        if (sourceComponent == null && sinkComponent == null)
+        {
+            // Both were deleted?
+            return;
+        }
+
+        if (sourceComponent == null)
+        {
+            _sawmill.Error($"Attempted to remove link between {ToPrettyString(sourceUid)} and {ToPrettyString(sinkUid)}, but the source component was missing.");
+            sinkComponent!.LinkedSources.Remove(sourceUid);
+        }
+        else
+        {
+            _sawmill.Error($"Attempted to remove link between {ToPrettyString(sourceUid)} and {ToPrettyString(sinkUid)}, but the sink component was missing.");
+            sourceComponent.LinkedPorts.Remove(sourceUid);
+        }
+    }
+
+    private void RemoveSinkFromSourceInternal(
+        EntityUid sourceUid,
+        EntityUid sinkUid,
+        DeviceLinkSourceComponent sourceComponent,
+        DeviceLinkSinkComponent sinkComponent)
+    {
+        // This function gets called on component removal. Beware that TryComp & Resolve may return false.
 
         if (sourceComponent.LinkedPorts.TryGetValue(sinkUid, out var ports))
         {
@@ -364,6 +421,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
         if (linkedPorts.Contains((source, sink)))
         {
+            if (userId != null)
+                _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{ToPrettyString(userId.Value):actor} unlinked {ToPrettyString(sourceUid):source} {source} and {ToPrettyString(sinkUid):sink} {sink}");
+            else
+                _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"unlinked {ToPrettyString(sourceUid):source} {source} and {ToPrettyString(sinkUid):sink} {sink}");
+
             RaiseLocalEvent(sourceUid, new PortDisconnectedEvent(source));
             RaiseLocalEvent(sinkUid, new PortDisconnectedEvent(sink));
 
@@ -448,6 +510,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
     private void SendNewLinkEvent(EntityUid? user, EntityUid sourceUid, string source, EntityUid sinkUid, string sink)
     {
+        if (user != null)
+            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{ToPrettyString(user.Value):actor} linked {ToPrettyString(sourceUid):source} {source} and {ToPrettyString(sinkUid):sink} {sink}");
+        else
+            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"linked {ToPrettyString(sourceUid):source} {source} and {ToPrettyString(sinkUid):sink} {sink}");
+
         var newLinkEvent = new NewLinkEvent(user, sourceUid, source, sinkUid, sink);
         RaiseLocalEvent(sourceUid, newLinkEvent);
         RaiseLocalEvent(sinkUid, newLinkEvent);

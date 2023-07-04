@@ -6,6 +6,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
+using Content.Server.Weapons.Melee;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
@@ -37,6 +38,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedJitteringSystem _jittering = default!;
+    [Dependency] private readonly MeleeWeaponSystem _meleeWeapon = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedStutteringSystem _stuttering = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -46,6 +48,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
     private const string StatusEffectKey = "Electrocution";
     private const string DamageType = "Shock";
@@ -161,12 +164,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!electrified.OnAttacked)
             return;
 
-        //Dont shock if the attacker used a toy
-        if (EntityManager.TryGetComponent<MeleeWeaponComponent>(args.Used, out var meleeWeaponComponent))
-        {
-            if (meleeWeaponComponent.Damage.Total == 0)
+            if (_meleeWeapon.GetDamage(args.Used, args.User).Total == 0)
                 return;
-        }
 
         TryDoElectrifiedAct(uid, args.User, 1, electrified);
     }
@@ -267,7 +266,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         Node? TryNode(string? id)
         {
             if (id != null &&
-                nodeContainer.TryGetNode<Node>(id, out var tryNode) &&
+                _nodeContainer.TryGetNode<Node>(nodeContainer, id, out var tryNode) &&
                 tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: > 0 } })
             {
                 return tryNode;
@@ -314,8 +313,17 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return true;
 
         var electrocutionEntity = Spawn($"VirtualElectrocutionLoad{node.NodeGroupID}", sourceTransform.Coordinates);
-        var electrocutionNode = Comp<NodeContainerComponent>(electrocutionEntity).GetNode<ElectrocutionNode>("electrocution");
+
+        var nodeContainer = Comp<NodeContainerComponent>(electrocutionEntity);
+
+        if (!_nodeContainer.TryGetNode<ElectrocutionNode>(nodeContainer, "electrocution", out var electrocutionNode))
+            return false;
+
         var electrocutionComponent = Comp<ElectrocutionComponent>(electrocutionEntity);
+
+        // This shows up in the power monitor.
+        // Yes. Yes exactly.
+        MetaData(electrocutionEntity).EntityName = MetaData(uid).EntityName;
 
         electrocutionNode.CableEntity = sourceUid;
         electrocutionNode.NodeName = node.Name;

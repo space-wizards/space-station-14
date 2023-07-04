@@ -340,7 +340,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             }
         }
 
-        var ev = new StorageOpenAttemptEvent(silent);
+        var ev = new StorageOpenAttemptEvent(user, silent);
         RaiseLocalEvent(target, ref ev, true);
 
         return !ev.Cancelled;

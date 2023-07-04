@@ -2,9 +2,9 @@
   parent: BasePDA
   id: CoronerPDA
   name: coroner PDA
-  description: 
+  description:
   components:
-    - type: PDA
+    - type: Pda
       id: CoronerIDCard
       state: pda-coroner
     - type: Icon

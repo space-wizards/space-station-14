@@ -99,19 +99,19 @@
   id: BoxPDA
   description: A box of spare PDA microcomputers.
   components:
-    - type: StorageFill
-      contents:
-        - id: PassengerPDA
-          amount: 6
-    - type: Sprite
-      layers:
-        - state: box_command
-        - state: pda
-    - type: Storage
-      capacity: 60
-      whitelist:
-        components:
-          - PDA
+  - type: StorageFill
+    contents:
+      - id: PassengerPDA
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box_command
+      - state: pda
+  - type: Storage
+    capacity: 60
+    whitelist:
+      components:
+        - Pda
 
 - type: entity
   name: ID card box
@@ -191,19 +191,21 @@
   id: BoxHugHealing
   description: A special box for sensitive people.
   components:
-    - type: Sprite
-      layers:
-        - state: box_hug
-        - state: heart
-    - type: Item
-      heldPrefix: hug
-    - type: StorageFill
-      contents:
-        - id: Brutepack
-          amount: 6
-    - type: Tag
-      tags:
-        - BoxHug
+  - type: Storage
+    capacity: 30
+  - type: Sprite
+    layers:
+      - state: box_hug
+      - state: heart
+  - type: Item
+    heldPrefix: hug
+  - type: StorageFill
+    contents:
+      - id: Brutepack
+        amount: 3
+  - type: Tag
+    tags:
+      - BoxHug
 
 - type: entity
   name: inflatable wall box

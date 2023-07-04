@@ -3,6 +3,7 @@ using Content.Shared.Pinpointer;
 using System.Linq;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Pinpointer;
 
@@ -16,12 +17,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         base.Initialize();
         SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
-    }
-
-    private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
-    {
-        TogglePinpointer(uid, component);
-        LocateTarget(uid, component);
     }
 
     public bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
@@ -43,6 +38,14 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         _appearance.SetData(uid, PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget, appearance);
     }
 
+    private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
+    {
+        TogglePinpointer(uid, component);
+
+        if (!component.CanRetarget)
+            LocateTarget(uid, component);
+    }
+
     private void OnLocateTarget(ref FTLCompletedEvent ev)
     {
         // This feels kind of expensive, but it only happens once per hyperspace jump
@@ -50,8 +53,12 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         // todo: ideally, you would need to raise this event only on jumped entities
         // this code update ALL pinpointers in game
         var query = EntityQueryEnumerator<PinpointerComponent>();
+
         while (query.MoveNext(out var uid, out var pinpointer))
         {
+            if (pinpointer.CanRetarget)
+                continue;
+
             LocateTarget(uid, pinpointer);
         }
     }
@@ -189,7 +196,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         return dir;
     }
 
-    private static Distance CalculateDistance(Vector2 vec, PinpointerComponent pinpointer)
+    private Distance CalculateDistance(Vector2 vec, PinpointerComponent pinpointer)
     {
         var dist = vec.Length;
         if (dist <= pinpointer.ReachedDistance)

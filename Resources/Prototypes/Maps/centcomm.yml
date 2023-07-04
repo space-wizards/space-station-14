@@ -5,11 +5,10 @@
   minPlayers: 10
   stations:
     centcomm:
-      mapNameTemplate: '{0} Central Command {1}'
-      nameGenerator:
-        !type:NanotrasenNameGenerator
-        prefixCreator: 'TG'
-      overflowJobs:
-        - Passenger
-      availableJobs:
-        Passenger: [ 0, 1 ]
+      stationProto: NanotrasenCentralCommand
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Central Command {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'TG'
