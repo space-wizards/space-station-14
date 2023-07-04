@@ -94,7 +94,8 @@ namespace Content.Client.HealthOverlay.UI
                     CritBar.Visible = true;
                 }
 
-                if (mobThresholdSystem.TryGetThresholdForState(Entity, MobState.Dead, out var threshold))
+                if (mobThresholdSystem.TryGetThresholdForState(Entity, MobState.Critical, out var threshold) ||
+                    mobThresholdSystem.TryGetThresholdForState(Entity, MobState.Dead, out threshold))
                 {
                     HealthBar.Ratio = 1 - ((FixedPoint2) (damageable.TotalDamage / threshold)).Float();
                     HealthBar.Visible = true;
