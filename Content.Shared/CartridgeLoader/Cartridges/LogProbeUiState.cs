@@ -1,5 +1,4 @@
-﻿using Content.Shared.Access.Components;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
