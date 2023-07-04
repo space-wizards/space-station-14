@@ -25,7 +25,7 @@
   result: WeaponLaserCarbine
   completetime: 8
   materials:
-    Steel: 100
+    Steel: 2000
     Glass: 800
     Plastic: 500
 
