@@ -289,7 +289,7 @@ namespace Content.Shared.CCVar
         /// Whether or not coordinates on the Debug overlay should only be available to admins.
         /// </summary>
         public static readonly CVarDef<bool> DebugCoordinatesAdminOnly =
-            CVarDef.Create("game.debug_coordinates_admin_only", false, CVar.SERVER | CVar.REPLICATED);
+            CVarDef.Create("game.debug_coordinates_admin_only", true, CVar.SERVER | CVar.REPLICATED);
 
 #if EXCEPTION_TOLERANCE
         /// <summary>
