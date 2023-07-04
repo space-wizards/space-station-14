@@ -14,7 +14,7 @@ public sealed class ResearchTest
     [Test]
     public async Task DisciplineValidTierPrerequesitesTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings {NoClient = true});
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();
@@ -34,10 +34,12 @@ public sealed class ResearchTest
                     if (tech.Tier == 1)
                         continue;
 
-                    Assert.That(tech.Tier, Is.GreaterThan(0), $"Technology {tech} has invalid tier {tech.Tier}.");
-
-                    Assert.That(discipline.TierPrerequisites.ContainsKey(tech.Tier),
-                        $"Discipline {discipline.ID} does not have a TierPrerequisites definition for tier {tech.Tier}");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(tech.Tier, Is.GreaterThan(0), $"Technology {tech} has invalid tier {tech.Tier}.");
+                        Assert.That(discipline.TierPrerequisites.ContainsKey(tech.Tier),
+                            $"Discipline {discipline.ID} does not have a TierPrerequisites definition for tier {tech.Tier}");
+                    });
                 }
             }
         });
@@ -48,7 +50,7 @@ public sealed class ResearchTest
     [Test]
     public async Task AllTechPrintableTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings {NoClient = true});
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();
