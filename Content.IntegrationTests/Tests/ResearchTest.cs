@@ -23,25 +23,25 @@ public sealed class ResearchTest
         {
             var allTechs = protoManager.EnumeratePrototypes<TechnologyPrototype>().ToList();
 
-            foreach (var discipline in protoManager.EnumeratePrototypes<TechDisciplinePrototype>())
+            Assert.Multiple(() =>
             {
-                foreach (var tech in allTechs)
+                foreach (var discipline in protoManager.EnumeratePrototypes<TechDisciplinePrototype>())
                 {
-                    if (tech.Discipline != discipline.ID)
-                        continue;
-
-                    // we ignore these, anyways
-                    if (tech.Tier == 1)
-                        continue;
-
-                    Assert.Multiple(() =>
+                    foreach (var tech in allTechs)
                     {
+                        if (tech.Discipline != discipline.ID)
+                            continue;
+
+                        // we ignore these, anyways
+                        if (tech.Tier == 1)
+                            continue;
+
                         Assert.That(tech.Tier, Is.GreaterThan(0), $"Technology {tech} has invalid tier {tech.Tier}.");
                         Assert.That(discipline.TierPrerequisites.ContainsKey(tech.Tier),
                             $"Discipline {discipline.ID} does not have a TierPrerequisites definition for tier {tech.Tier}");
-                    });
+                    }
                 }
-            }
+            });
         });
 
         await pairTracker.CleanReturnAsync();
@@ -81,13 +81,16 @@ public sealed class ResearchTest
                 }
             }
 
-            foreach (var tech in protoManager.EnumeratePrototypes<TechnologyPrototype>())
+            Assert.Multiple(() =>
             {
-                foreach (var recipe in tech.RecipeUnlocks)
+                foreach (var tech in protoManager.EnumeratePrototypes<TechnologyPrototype>())
                 {
-                    Assert.That(latheTechs, Does.Contain(recipe), $"Recipe \"{recipe}\" cannot be unlocked on any lathes.");
+                    foreach (var recipe in tech.RecipeUnlocks)
+                    {
+                        Assert.That(latheTechs, Does.Contain(recipe), $"Recipe \"{recipe}\" cannot be unlocked on any lathes.");
+                    }
                 }
-            }
+            });
         });
 
         await pairTracker.CleanReturnAsync();
