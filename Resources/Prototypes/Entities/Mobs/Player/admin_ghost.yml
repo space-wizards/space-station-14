@@ -33,6 +33,7 @@
   - type: Access
     groups:
     - AllAccess
+    bypassLogging: true
   - type: UserInterface
     interfaces:
       - key: enum.SolarControlConsoleUiKey.Key

@@ -20,6 +20,9 @@ namespace Content.Shared.Access.Components
         /// </summary>
         [DataField("groups", readOnly: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessGroupPrototype>))]
         public readonly HashSet<string> Groups = new();
+
+        [DataField("bypassLogging")] [ViewVariables(VVAccess.ReadWrite)]
+        public bool BypassLogging;
     }
 
     /// <summary>
