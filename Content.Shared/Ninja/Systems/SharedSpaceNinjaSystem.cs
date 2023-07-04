@@ -53,15 +53,6 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     }
 
     /// <summary>
-    /// Drain power from a target battery into the ninja's suit battery, returning whether it succeeded.
-    /// Serverside only, client assumes success.
-    /// </summary>
-    public virtual bool TryDrainPower(EntityUid user, NinjaDrainComponent drain, EntityUid target)
-    {
-        return true;
-    }
-
-    /// <summary>
     /// Gets the user's battery and tries to use some charge from it, returning true if successful.
     /// Serverside only.
     /// </summary>

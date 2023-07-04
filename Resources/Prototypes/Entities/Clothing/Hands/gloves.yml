@@ -213,9 +213,9 @@
   - type: Thieving
     stripTimeReduction: 1
     stealthy: true
+  # TODO: remove these when theyre moved onto the player
   - type: NinjaGloves
   - type: NinjaDoorjack
-  - type: NinjaDrain
   - type: NinjaStun
   - type: NinjaDownload
   - type: NinjaTerror

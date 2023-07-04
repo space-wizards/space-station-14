@@ -81,29 +81,6 @@ public sealed class NinjaStunComponent : Component
 }
 
 /// <summary>
-/// Component for draining power from APCs/substations/SMESes, when gloves are enabled.
-/// </summary>
-[RegisterComponent]
-public sealed class NinjaDrainComponent : Component
-{
-    /// <summary>
-    /// Conversion rate between joules in a device and joules added to suit.
-    /// Should be very low since powercells store nothing compared to even an APC.
-    /// </summary>
-    [DataField("drainEfficiency")]
-    public float DrainEfficiency = 0.001f;
-
-    /// <summary>
-    /// Time that the do after takes to drain charge from a battery, in seconds
-    /// </summary>
-    [DataField("drainTime")]
-    public float DrainTime = 1f;
-
-    [DataField("sparkSound")]
-    public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
-}
-
-/// <summary>
 /// Component for downloading research nodes from a R&D server, when gloves are enabled.
 /// Requirement for greentext.
 /// </summary>

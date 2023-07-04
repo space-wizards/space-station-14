@@ -170,17 +170,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     }
 
     /// <summary>
-    /// Returns whether the suit battery is at least 99% charged, basically full.
-    /// </summary>
-    public bool IsBatteryFull(EntityUid uid)
-    {
-        if (!GetNinjaBattery(uid, out var _, out var battery))
-            return false;
-
-        return battery.CurrentCharge / battery.MaxCharge >= 0.99f;
-    }
-
-    /// <summary>
     /// Get the battery component in a ninja's suit, if it's worn.
     /// </summary>
     public bool GetNinjaBattery(EntityUid user, [NotNullWhen(true)] out EntityUid? uid, [NotNullWhen(true)] out BatteryComponent? battery)
@@ -225,46 +214,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         var threat = _random.Pick(config.Threats);
         _gameTicker.StartGameRule(threat.Rule, out _);
         _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: false, colorOverride: Color.Red);
-    }
-
-    /// <inheritdoc/>
-    public override bool TryDrainPower(EntityUid user, NinjaDrainComponent drain, EntityUid target)
-    {
-        if (!GetNinjaBattery(user, out var uid, out var suitBattery))
-            // took suit off or something, ignore draining
-            return false;
-
-        if (!TryComp<BatteryComponent>(target, out var battery) || !TryComp<PowerNetworkBatteryComponent>(target, out var pnb))
-            return false;
-
-        if (suitBattery.IsFullyCharged)
-        {
-            _popup.PopupEntity(Loc.GetString("ninja-drain-full"), user, user, PopupType.Medium);
-            return false;
-        }
-
-        if (MathHelper.CloseToPercent(battery.CurrentCharge, 0))
-        {
-            _popup.PopupEntity(Loc.GetString("ninja-drain-empty", ("battery", target)), user, user, PopupType.Medium);
-            return false;
-        }
-
-        var available = battery.CurrentCharge;
-        var required = suitBattery.MaxCharge - suitBattery.CurrentCharge;
-        // higher tier storages can charge more
-        var maxDrained = pnb.MaxSupply * drain.DrainTime;
-        var input = Math.Min(Math.Min(available, required / drain.DrainEfficiency), maxDrained);
-        if (_battery.TryUseCharge(target, input, battery))
-        {
-            var output = input * drain.DrainEfficiency;
-            _battery.SetCharge(uid.Value, suitBattery.CurrentCharge + output, suitBattery);
-            _popup.PopupEntity(Loc.GetString("ninja-drain-success", ("battery", target)), user, user);
-            Spawn("EffectSparks", Transform(target).Coordinates);
-            _audio.PlayPvs(drain.SparkSound, target);
-            return true;
-        }
-
-        return false;
     }
 
     /// <summary>

@@ -32,11 +32,11 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] protected readonly SharedInteractionSystem Interaction = default!;
     [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly TagSystem _tags = default!;
@@ -48,19 +48,19 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
         SubscribeLocalEvent<NinjaGlovesComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<NinjaGlovesComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<NinjaGlovesComponent, ToggleActionEvent>(OnToggleAction);
         SubscribeLocalEvent<NinjaGlovesComponent, GotUnequippedEvent>(OnUnequipped);
 
+        // TODO: EmagProvider
         SubscribeLocalEvent<NinjaDoorjackComponent, InteractionAttemptEvent>(OnDoorjack);
 
+        // TODO: StunProvider
         SubscribeLocalEvent<NinjaStunComponent, InteractionAttemptEvent>(OnStun);
 
-        SubscribeLocalEvent<NinjaDrainComponent, InteractionAttemptEvent>(OnDrain);
-        SubscribeLocalEvent<NinjaDrainComponent, DrainDoAfterEvent>(OnDrainDoAfter);
-
+        // TODO: maybe move into r&d server???
         SubscribeLocalEvent<NinjaDownloadComponent, InteractionAttemptEvent>(OnDownload);
         SubscribeLocalEvent<NinjaDownloadComponent, DownloadDoAfterEvent>(OnDownloadDoAfter);
 
+        // TODO: move into comms
         SubscribeLocalEvent<NinjaTerrorComponent, InteractionAttemptEvent>(OnTerror);
         SubscribeLocalEvent<NinjaTerrorComponent, TerrorDoAfterEvent>(OnTerrorDoAfter);
     }
@@ -76,9 +76,11 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             comp.User = null;
             Dirty(comp);
 
-            _appearance.SetData(uid, ToggleVisuals.Toggled, false);
+            Appearance.SetData(uid, ToggleVisuals.Toggled, false);
             RemComp<InteractionRelayComponent>(user);
             Popup.PopupClient(Loc.GetString("ninja-gloves-off"), user, user);
+
+            RemComp<BatteryDrainerComponent>(user);
         }
     }
 
@@ -89,46 +91,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     private void OnGetItemActions(EntityUid uid, NinjaGlovesComponent comp, GetItemActionsEvent args)
     {
         args.Actions.Add(comp.ToggleAction);
-    }
-
-    /// <summary>
-    /// Toggle gloves, if the user is a ninja wearing a ninja suit.
-    /// </summary>
-    private void OnToggleAction(EntityUid uid, NinjaGlovesComponent comp, ToggleActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Handled = true;
-
-        var user = args.Performer;
-        // need to wear suit to enable gloves
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
-            || ninja.Suit == null
-            || !HasComp<NinjaSuitComponent>(ninja.Suit.Value))
-        {
-            Popup.PopupEntity(Loc.GetString("ninja-gloves-not-wearing-suit"), user, user);
-            return;
-        }
-
-        var enabling = comp.User == null;
-        _appearance.SetData(uid, ToggleVisuals.Toggled, enabling);
-        var message = Loc.GetString(enabling ? "ninja-gloves-on" : "ninja-gloves-off");
-        Popup.PopupEntity(message, user, user);
-
-        if (enabling)
-        {
-            comp.User = user;
-            _ninja.AssignGloves(ninja, uid);
-            // set up interaction relay for handling glove abilities, comp.User is used to see the actual user of the events
-            // FIXME: probably breaks if ninja goes in ripley and exits, pretty minor but its reason to move away from relay if possible
-            _interaction.SetRelay(user, uid, EnsureComp<InteractionRelayComponent>(user));
-            Dirty(comp);
-        }
-        else
-        {
-            DisableGloves(uid, comp);
-        }
     }
 
     /// <summary>
@@ -174,7 +136,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             user = gloves.User.Value;
             target = args.Target.Value;
 
-            if (_interaction.InRangeUnobstructed(user, target))
+            if (Interaction.InRangeUnobstructed(user, target))
                 return true;
         }
 
@@ -229,25 +191,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         // not holding hands with target so insuls don't matter
         _electrocution.TryDoElectrocution(target, uid, comp.StunDamage, comp.StunTime, false, ignoreInsulation: true);
         _useDelay.BeginDelay(uid);
-    }
-
-    /// <summary>
-    /// Start do after for draining a power source.
-    /// Can't predict PNBC existing so only done on server.
-    /// </summary>
-    protected virtual void OnDrain(EntityUid uid, NinjaDrainComponent comp, InteractionAttemptEvent args) { }
-
-    /// <summary>
-    /// Drain power from a power source (on server) and repeat if it succeeded.
-    /// Client will predict always succeeding since power is serverside.
-    /// </summary>
-    private void OnDrainDoAfter(EntityUid uid, NinjaDrainComponent comp, DrainDoAfterEvent args)
-    {
-        if (args.Cancelled || args.Handled || args.Target == null)
-            return;
-
-        // repeat if there is still power to drain
-        args.Repeat = _ninja.TryDrainPower(args.User, comp, args.Target.Value);
     }
 
     /// <summary>

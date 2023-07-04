@@ -3,11 +3,13 @@ using Content.Server.DoAfter;
 using Content.Server.Ninja.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
+using Content.Shared.Toggleable;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -19,38 +21,52 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NinjaDrainComponent, DoAfterAttemptEvent<DrainDoAfterEvent>>(OnDrainDoAfterAttempt);
+        SubscribeLocalEvent<NinjaGlovesComponent, ToggleActionEvent>(OnToggleAction);
     }
 
     /// <summary>
-    /// Let the drain doafter stop repeating once suit battery is full
+    /// Toggle gloves, if the user is a ninja wearing a ninja suit.
     /// </summary>
-    private void OnDrainDoAfterAttempt(EntityUid uid, NinjaDrainComponent comp, DoAfterAttemptEvent<DrainDoAfterEvent> args)
+    private void OnToggleAction(EntityUid uid, NinjaGlovesComponent comp, ToggleActionEvent args)
     {
-        var user = args.DoAfter.Args.User;
-        if (_ninja.IsBatteryFull(user))
-            args.Cancel();
-    }
-
-    /// <inheritdoc/>
-    protected override void OnDrain(EntityUid uid, NinjaDrainComponent comp, InteractionAttemptEvent args)
-    {
-        if (!GloveCheck(uid, args, out var gloves, out var user, out var target)
-            || !HasComp<PowerNetworkBatteryComponent>(target))
+        if (args.Handled)
             return;
 
-        // nicer for spam-clicking to not open apc ui, and when draining starts, so cancel the ui action
-        args.Cancel();
+        args.Handled = true;
 
-        var doAfterArgs = new DoAfterArgs(user, comp.DrainTime, new DrainDoAfterEvent(), target: target, used: uid, eventTarget: uid)
+        var user = args.Performer;
+        // need to wear suit to enable gloves
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
+            || ninja.Suit == null
+            || !HasComp<NinjaSuitComponent>(ninja.Suit.Value))
         {
-            BreakOnUserMove = true,
-            MovementThreshold = 0.5f,
-            CancelDuplicate = false,
-            AttemptFrequency = AttemptFrequency.StartAndEnd
-        };
+            Popup.PopupEntity(Loc.GetString("ninja-gloves-not-wearing-suit"), user, user);
+            return;
+        }
 
-        _doAfter.TryStartDoAfter(doAfterArgs);
+        var enabling = comp.User == null;
+        Appearance.SetData(uid, ToggleVisuals.Toggled, enabling);
+        var message = Loc.GetString(enabling ? "ninja-gloves-on" : "ninja-gloves-off");
+        Popup.PopupEntity(message, user, user);
+
+        if (enabling)
+        {
+            comp.User = user;
+            _ninja.AssignGloves(ninja, uid);
+            // set up interaction relay for handling glove abilities, comp.User is used to see the actual user of the events
+            // TODO: remove, bad
+            Interaction.SetRelay(user, uid, EnsureComp<InteractionRelayComponent>(user));
+            Dirty(comp);
+
+            // TODO: put the BatteryUid part in its own component
+            var drainer = EnsureComp<BatteryDrainerComponent>(user);
+            if (_ninja.GetNinjaBattery(user, out var battery, out var _))
+                drainer.BatteryUid = battery;
+        }
+        else
+        {
+            DisableGloves(uid, comp);
+        }
     }
 
     /// <inheritdoc/>
