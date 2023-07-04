@@ -1,38 +1,3 @@
-#Basic armor vest
-#Sec's other armor vests are actually in vests.yml, for whatever reason.
-- type: entity
-  parent: ClothingOuterBase
-  id: ClothingOuterArmorBasic
-  name: armor vest
-  description: A Type I armored vest that provides decent protection against most types of damage.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Vests/security.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/security.rsi
-  - type: Armor #Based on /tg/ but slightly compensated to fit the fact that armor stacks in SS14.
-    modifiers:
-      coefficients:
-        Blunt: 0.70
-        Slash: 0.70
-        Piercing: 0.80
-        Heat: 0.80
-  - type: ExplosionResistance
-    damageCoefficient: 0.90
-
-#Alternate / slim basic armor vest
-- type: entity
-  parent: ClothingOuterArmorBasic
-  id: ClothingOuterArmorBasicSlim
-  name: armor vest
-  suffix: slim
-  description: A slim Type I armored vest that provides decent protection against most types of damage.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Vests/security_slim.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/security_slim.rsi
-
 #Web vest
 - type: entity
   parent: ClothingOuterStorageBase
@@ -75,26 +40,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
-- type: entity
-  parent: ClothingOuterBase
-  id: ClothingOuterVestKevlar
-  name: kevlar vest
-  description: An armor vest made of synthetic fibers.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Vests/kevlar.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/kevlar.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.4
-        Heat: 0.9
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
-
+#Detective's vest
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterVestDetective
@@ -115,6 +61,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
+#Hazard vest
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterVestHazard
@@ -126,6 +73,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/hazard.rsi
 
+#Bartender vest
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterVest
