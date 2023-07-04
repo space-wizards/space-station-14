@@ -10,6 +10,20 @@
       - id: Screwdriver
       - id: Wirecutter
       - id: Welder
+      - id: NetworkConfigurator
+
+- type: entity
+  id: ClothingBeltUtilityEngineering
+  parent: ClothingBeltUtility
+  suffix: Engineering
+  components:
+  - type: StorageFill
+    contents:
+      - id: Crowbar
+      - id: Wrench
+      - id: Screwdriver
+      - id: Wirecutter
+      - id: Welder
       - id: Multitool
 
 - type: entity
@@ -61,9 +75,9 @@
       - id: Brutepack
         amount: 2
       - id: Ointment
-        amount: 2
+        amount: 1
       - id: Bloodpack
-        amount: 2
+        amount: 1
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
 

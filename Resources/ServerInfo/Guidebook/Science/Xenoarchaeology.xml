@@ -4,7 +4,7 @@
 
 ## Артефакты
 <Box>
-<GuideEntityEmbed Entity="SimpleXenoArtifact" Caption=""/>
+<GuideEntityEmbed Entity="ComplexXenoArtifact" Caption=""/>
 <GuideEntityEmbed Entity="SimpleXenoArtifactItem" Caption=""/>
 </Box>
 Артефакты представляют собой случайно сгенерированные структуры-графы. Они состоят из узлов, соединенных друг с другом краями, обход которых является главной целью ученых, работающих над ними.
@@ -25,5 +25,10 @@
 Чтобы всё настроить, достаточно связать их с помощью мультитула, положить артефакт на анализатор, и нажать кнопку [color=#a4885c]Сканировать[/color].
 
 При помощи консоли вы можете извлекать очки исследований из артефактов используя кнопку [color=#a4885c]Разрушить[/color]. Количество получаемых вами очков зависит от того, сколько узлов артефакта было активировано.
+
+## Assembling Artifacts
+<GuideEntityEmbed Entity="ArtifactFragment" Caption="Artifact Fragment"/>
+
+It is possible to gather multiple artifact fragments and assemble them into a working artifact. You can ask for these from Salvage, they usually find these while mining asteroids or on Expeditions.
 
 </Document>

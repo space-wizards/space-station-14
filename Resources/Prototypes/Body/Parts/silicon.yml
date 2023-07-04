@@ -25,61 +25,58 @@
   name: "left borg arm"
   parent: PartSilicon
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Silicon/drone.rsi
-      state: "l_hand"
-    - type: Icon
-      sprite: Mobs/Silicon/drone.rsi
-      state: "l_hand"
-    - type: BodyPart
-      partType: Hand
-      symmetry: Left
-    - type: Tag
-      tags:
-        - Trash
-        - BorgArm
+  - type: Sprite
+    sprite: Mobs/Silicon/drone.rsi
+    state: "l_hand"
+  - type: Icon
+    sprite: Mobs/Silicon/drone.rsi
+    state: "l_hand"
+  - type: BodyPart
+    partType: Hand
+    symmetry: Left
+  - type: Tag
+    tags:
+    - Trash
+    - BorgArm
 
 - type: entity
   id: RightArmBorg
   name: "right borg arm"
   parent: PartSilicon
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Silicon/drone.rsi
-      state: "r_hand"
-    - type: Icon
-      sprite: Mobs/Silicon/drone.rsi
-      state: "r_hand"
-    - type: BodyPart
-      partType: Hand
-      symmetry: Right
-    - type: Tag
-      tags:
-        - Trash
-        - BorgArm
+  - type: Sprite
+    sprite: Mobs/Silicon/drone.rsi
+    state: "r_hand"
+  - type: Icon
+    sprite: Mobs/Silicon/drone.rsi
+    state: "r_hand"
+  - type: BodyPart
+    partType: Hand
+    symmetry: Right
+  - type: Tag
+    tags:
+    - Trash
+    - BorgArm
 
 - type: entity
   id: LeftLegBorg
   name: "left borg leg"
   parent: PartSilicon
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Silicon/borg.rsi
-      state: "l_leg"
-    - type: Icon
-      sprite: Mobs/Silicon/borg.rsi
-      state: "l_leg"
-    - type: BodyPart
-      partType: Leg
-      symmetry: Left
-    - type: Tag
-      tags:
-        - Trash
-        - BorgLeg
-        - BorgLeftLeg
+  - type: Sprite
+    sprite: Mobs/Silicon/borg.rsi
+    state: "l_leg"
+  - type: Icon
+    sprite: Mobs/Silicon/borg.rsi
+    state: "l_leg"
+  - type: BodyPart
+    partType: Leg
+    symmetry: Left
+  - type: Tag
+    tags:
+    - Trash
+    - BorgLeg
+    - BorgLeftLeg
 
 - type: entity
   id: RightLegBorg
@@ -87,7 +84,6 @@
   parent: PartSilicon
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Silicon/borg.rsi
     state: "r_leg"
   - type: Icon
@@ -108,7 +104,6 @@
   parent: PartSilicon
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Specific/Borg/head.rsi
     state: "light_borg_head"
   - type: Icon

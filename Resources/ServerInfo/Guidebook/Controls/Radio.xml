@@ -21,4 +21,6 @@
 
   Осмотрев стандартную инженерную гарнитуру, вы увидите префиксы для [color=#32cd32]общего[/color] и [color=#f37746]инженерного[/color] радиоканалов.
 
+  It is also possible to use [color=#a4885c]:h[/color]. This hotkey will automatically default to your department radio channel. For an example if you're Captain, then [color=#a4885c]:h[/color] will default to [color=#a4885c]:c[/color]
+
 </Document>

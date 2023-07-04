@@ -19,4 +19,17 @@ public abstract class SharedPathfindingSystem : EntitySystem
     {
         return new Vector2(index.X, index.Y) / SubStep+ (chunk) * ChunkSize + StepOffset;
     }
+
+    public static float ManhattanDistance(Vector2i start, Vector2i end)
+    {
+        var distance = end - start;
+        return Math.Abs(distance.X) + Math.Abs(distance.Y);
+    }
+
+    public static float OctileDistance(Vector2i start, Vector2i end)
+    {
+        var diff = start - end;
+        var ab = Vector2.Abs(diff);
+        return ab.X + ab.Y + (1.41f - 2) * Math.Min(ab.X, ab.Y);
+    }
 }

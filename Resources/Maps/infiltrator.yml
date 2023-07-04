@@ -449,8 +449,6 @@ entities:
       type: IFF
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 2319.9379624
-      type: GridPathfinding
     - type: RadiationGridResistance
     - nextShake: 0
       shakeTimes: 10
@@ -2669,35 +2667,11 @@ entities:
       pos: -0.5,-3.5
       parent: 73
       type: Transform
-- proto: ClosetEmergencyFilledRandom
-  entities:
-  - uid: 599
-    components:
-    - pos: 0.5,-23.5
-      parent: 73
-      type: Transform
-  - uid: 600
-    components:
-    - pos: 0.5,-24.5
-      parent: 73
-      type: Transform
 - proto: ClothingBackpackDuffelSyndicateFilledMedical
   entities:
   - uid: 669
     components:
     - pos: -3.5044222,-6.293252
-      parent: 73
-      type: Transform
-- proto: ClothingHeadHelmetSyndicate
-  entities:
-  - uid: 689
-    components:
-    - pos: -6.5,-17.5
-      parent: 73
-      type: Transform
-  - uid: 692
-    components:
-    - pos: 5.5,-17.5
       parent: 73
       type: Transform
 - proto: ClothingHeadsetAltSyndicate
@@ -2722,18 +2696,6 @@ entities:
       name: commander mantle
       type: MetaData
     - pos: 4.5259347,-5.370554
-      parent: 73
-      type: Transform
-- proto: ClothingOuterHardsuitSyndicate
-  entities:
-  - uid: 426
-    components:
-    - pos: -6.5,-17.5
-      parent: 73
-      type: Transform
-  - uid: 697
-    components:
-    - pos: 5.5,-17.5
       parent: 73
       type: Transform
 - proto: ComfyChair
@@ -4412,16 +4374,6 @@ entities:
     - pos: -1.5,-23.5
       parent: 73
       type: Transform
-  - uid: 567
-    components:
-    - pos: 5.5,-17.5
-      parent: 73
-      type: Transform
-  - uid: 576
-    components:
-    - pos: -6.5,-17.5
-      parent: 73
-      type: Transform
   - uid: 633
     components:
     - pos: -6.5,-22.5
@@ -4841,6 +4793,28 @@ entities:
   - uid: 219
     components:
     - pos: -3.5,-19.5
+      parent: 73
+      type: Transform
+- proto: SuitStorageEVASyndicate
+  entities:
+  - uid: 426
+    components:
+    - pos: 0.5,-24.5
+      parent: 73
+      type: Transform
+  - uid: 565
+    components:
+    - pos: 0.5,-23.5
+      parent: 73
+      type: Transform
+  - uid: 567
+    components:
+    - pos: 5.5,-17.5
+      parent: 73
+      type: Transform
+  - uid: 576
+    components:
+    - pos: -6.5,-17.5
       parent: 73
       type: Transform
 - proto: SyndicateComputerComms
@@ -5887,108 +5861,6 @@ entities:
     - pos: 4.5,-18.5
       parent: 73
       type: Transform
-- proto: WeaponTurretSyndicate
-  entities:
-  - uid: 565
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: -1.5,-19.5
-      parent: 73
-      type: Transform
-  - uid: 679
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: -4.5,-17.5
-      parent: 73
-      type: Transform
-  - uid: 690
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: -2.5,-3.5
-      parent: 73
-      type: Transform
-  - uid: 718
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: 3.5,-17.5
-      parent: 73
-      type: Transform
-  - uid: 755
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: 4.5,-21.5
-      parent: 73
-      type: Transform
-    - nextFire: 37.8931074
-      type: Gun
-  - uid: 756
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: -1.5,-13.5
-      parent: 73
-      type: Transform
-    - nextFire: 44.7217834
-      type: Gun
-  - uid: 757
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: -0.5,-0.5
-      parent: 73
-      type: Transform
-    - nextFire: 101.0544664
-      type: Gun
-  - uid: 758
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: 5.5,-10.5
-      parent: 73
-      type: Transform
-    - nextFire: 103.1766873
-      type: Gun
-  - uid: 762
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: -6.5,-10.5
-      parent: 73
-      type: Transform
-    - nextFire: 104.1658995
-      type: Gun
-  - uid: 763
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: 7.5,-24.5
-      parent: 73
-      type: Transform
-    - nextFire: 148.513018
-      type: Gun
-  - uid: 764
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: -8.5,-24.5
-      parent: 73
-      type: Transform
-    - nextFire: 149.7572906
-      type: Gun
-  - uid: 765
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: -0.5,-27.5
-      parent: 73
-      type: Transform
-    - nextFire: 318.2270979
-      type: Gun
 - proto: WindoorSecure
   entities:
   - uid: 713

@@ -4,7 +4,6 @@
   noSpawn: true
   components:
   - type: Sprite
-    netsync: false
     drawdepth: Effects
     layers:
     - shader: unshaded

@@ -10,6 +10,7 @@ using Content.Client.Chemistry.UI;
 using Content.Client.Construction;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Gravity;
 using Content.Server.Power.Components;
@@ -493,7 +494,7 @@ public abstract partial class InteractionTest
         var pos = (coords ?? TargetCoords).ToMap(SEntMan, Transform);
         await Server.WaitPost(() =>
         {
-            if (MapMan.TryFindGridAt(pos, out var grid))
+            if (MapMan.TryFindGridAt(pos, out _, out var grid))
                 tile = grid.GetTileRef(coords ?? TargetCoords).Tile;
         });
 
@@ -663,7 +664,7 @@ public abstract partial class InteractionTest
 
         await Server.WaitPost(() =>
         {
-            if (grid != null || MapMan.TryFindGridAt(pos, out grid))
+            if (grid != null || MapMan.TryFindGridAt(pos, out var gridUid, out grid))
             {
                 grid.SetTile(coords ?? TargetCoords, tile);
                 return;
@@ -673,11 +674,12 @@ public abstract partial class InteractionTest
                 return;
 
             grid = MapMan.CreateGrid(MapData.MapId);
-            var gridXform = SEntMan.GetComponent<TransformComponent>(grid.Owner);
+            gridUid = grid.Owner;
+            var gridXform = SEntMan.GetComponent<TransformComponent>(gridUid);
             Transform.SetWorldPosition(gridXform, pos.Position);
             grid.SetTile(coords ?? TargetCoords, tile);
 
-            if (!MapMan.TryFindGridAt(pos, out grid))
+            if (!MapMan.TryFindGridAt(pos, out _, out grid))
                 Assert.Fail("Failed to create grid?");
         });
         await AssertTile(proto, coords);
@@ -926,17 +928,16 @@ public abstract partial class InteractionTest
         var target = uid ?? MapData.MapUid;
         await Server.WaitPost(() =>
         {
+            var atmosSystem = SEntMan.System<AtmosphereSystem>();
             var atmos = SEntMan.EnsureComponent<MapAtmosphereComponent>(target);
-            atmos.Space = false;
             var moles = new float[Atmospherics.AdjustedNumberOfGases];
             moles[(int) Gas.Oxygen] = 21.824779f;
             moles[(int) Gas.Nitrogen] = 82.10312f;
-
-            atmos.Mixture = new GasMixture(2500)
+            atmosSystem.SetMapAtmosphere(target, false, new GasMixture(2500)
             {
                 Temperature = 293.15f,
                 Moles = moles,
-            };
+            }, atmos);
         });
     }
 

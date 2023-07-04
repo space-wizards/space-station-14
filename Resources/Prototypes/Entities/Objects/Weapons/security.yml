@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/stunbaton.rsi
-    netsync: false
     layers:
     - state: stunbaton_off
       map: [ "enum.ToggleVisuals.Layer" ]
@@ -106,7 +105,6 @@
           radius: 2
     - type: Anchorable
     - type: Sprite
-      netsync: false
       sprite: Objects/Weapons/pflash.rsi
       layers:
         - state: "off"

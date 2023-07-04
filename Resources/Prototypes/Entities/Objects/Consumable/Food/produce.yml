@@ -5,15 +5,14 @@
   id: ProduceBase
   abstract: true
   components:
-    - type: SolutionContainerManager
-    - type: Sprite
-      netsync: false
-      state: produce
-    - type: Produce
-    - type: PotencyVisuals
-    - type: Appearance
-    - type: Extractable
-      grindableSolutionName: food
+  - type: SolutionContainerManager
+  - type: Sprite
+    state: produce
+  - type: Produce
+  - type: PotencyVisuals
+  - type: Appearance
+  - type: Extractable
+    grindableSolutionName: food
 
 # For produce that can be immediately eaten
 
@@ -22,15 +21,14 @@
   id: FoodProduceBase
   abstract: true
   components:
-    - type: SolutionContainerManager
-    - type: Sprite
-      netsync: false
-      state: produce
-    - type: Produce
-    - type: PotencyVisuals
-    - type: Appearance
-    - type: Extractable
-      grindableSolutionName: food
+  - type: SolutionContainerManager
+  - type: Sprite
+    state: produce
+  - type: Produce
+  - type: PotencyVisuals
+  - type: Appearance
+  - type: Extractable
+    grindableSolutionName: food
 
 # Subclasses
 
@@ -336,27 +334,30 @@
   id: FoodLemon
   description: When life gives you lemons, be grateful they aren't limes.
   components:
-    - type: FlavorProfile
-      flavors:
-        - sour
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 9
-          reagents:
-            - ReagentId: Nutriment
-              Quantity: 5
-            - ReagentId: Vitamin
-              Quantity: 4
-    - type: Sprite
-      sprite: Objects/Specific/Hydroponics/lemon.rsi
-    - type: Produce
-      seedId: lemon
-    - type: Extractable
-      juiceSolution:
+  - type: FlavorProfile
+    flavors:
+      - sour
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 9
         reagents:
-          - ReagentId: JuiceLemon
-            Quantity: 10
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lemon.rsi
+  - type: Produce
+    seedId: lemon
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceLemon
+        Quantity: 10
+  - type: Tag
+    tags:
+    - Lemon
 
 - type: entity
   name: lime
@@ -364,18 +365,21 @@
   id: FoodLime
   description: Cures Space Scurvy, allows you to act like a Space Pirate.
   components:
-    - type: FlavorProfile
-      flavors:
-        - sour
-    - type: Sprite
-      sprite: Objects/Specific/Hydroponics/lime.rsi
-    - type: Produce
-      seedId: lime
-    - type: Extractable
-      juiceSolution:
-        reagents:
-          - ReagentId: JuiceLime
-            Quantity: 10
+  - type: FlavorProfile
+    flavors:
+      - sour
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lime.rsi
+  - type: Produce
+    seedId: lime
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceLime
+        Quantity: 10
+  - type: Tag
+    tags:
+    - Lime
 
 - type: entity
   name: orange
@@ -588,6 +592,9 @@
           Quantity: 15
         - ReagentId: Nutriment
           Quantity: 5
+  - type: Tag
+    tags:
+    - Corn
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
@@ -609,7 +616,6 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
     state: cob
-    netsync: false
   - type: Item
     size: 1
   - type: Tag
@@ -703,18 +709,17 @@
   id: ProduceSliceBase
   abstract: true
   components:
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 3
-          reagents:
-            - ReagentId: Nutriment
-              Quantity: 2
-    - type: Sprite
-      netsync: false
-      state: slice
-    - type: Extractable
-      grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+  - type: Sprite
+    state: slice
+  - type: Extractable
+    grindableSolutionName: food
 
 - type: entity
   name: pineapple slice
@@ -835,27 +840,27 @@
   id: FoodPoppy
   description: A flower with extracts often used in the production of medicine
   components:
-    - type: FlavorProfile
-      flavors:
-        - medicine
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 12
-          reagents:
-            - ReagentId: Nutriment
-              Quantity: 2
-            - ReagentId: Bicaridine
-              Quantity: 10
-    - type: Sprite
-      sprite: Objects/Specific/Hydroponics/poppy.rsi
-    - type: Produce
-      seedId: poppy
-    - type: Extractable
-      grindableSolutionName: food
-    - type: Tag
-      tags:
-        - Flower
+  - type: FlavorProfile
+    flavors:
+      - medicine
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 22
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Bicaridine
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/poppy.rsi
+  - type: Produce
+    seedId: poppy
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Flower
 
 - type: entity
   name: lingzhi
@@ -889,35 +894,35 @@
   id: FoodAmbrosiaVulgaris
   description: A medicinal plant. May make you feel a little funny.
   components:
-    - type: FlavorProfile
-      flavors:
-        - leafy
-        - medicine
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 26
-          reagents:
-            - ReagentId: Bicaridine
-              Quantity: 10
-            - ReagentId: Kelotane
-              Quantity: 10
-            - ReagentId: Nutriment
-              Quantity: 2
-            - ReagentId: Desoxyephedrine
-              Quantity: 2
-            - ReagentId: Vitamin
-              Quantity: 2
-    - type: Sprite
-      sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
-    - type: Produce
-      seedId: ambrosiaVulgaris
-    - type: Extractable
-      grindableSolutionName: food
-    - type: Clothing
-      sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
-      slots:
-        - HEAD
+  - type: FlavorProfile
+    flavors:
+      - leafy
+      - medicine
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 24
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 5
+        - ReagentId: Kelotane
+          Quantity: 5
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Desoxyephedrine
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 2
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+  - type: Produce
+    seedId: ambrosiaVulgaris
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+    slots:
+    - HEAD
 
 - type: entity
   name: galaxythistle
@@ -925,22 +930,25 @@
   id: FoodGalaxythistle
   description: A medicinal plant used for its antitoxin.
   components:
-    - type: FlavorProfile
-      flavors:
-        - medicine
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 25
-          reagents:
-            - ReagentId: Stellibinin
-              Quantity: 25
-    - type: Sprite
-      sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
-    - type: Produce
-      seedId: galaxythistle
-    - type: Extractable
-      grindableSolutionName: food
+  - type: FlavorProfile
+    flavors:
+      - medicine
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Stellibinin
+          Quantity: 25
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
+  - type: Produce
+    seedId: galaxythistle
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Galaxythistle
 
 - type: entity
   name: fly amanita

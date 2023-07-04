@@ -14,6 +14,7 @@ entities:
   - uid: 173
     components:
     - type: MetaData
+      name: Cargo shuttle
     - pos: 2.2710133,-2.4148211
       parent: invalid
       type: Transform
@@ -37,10 +38,10 @@ entities:
       fixedRotation: False
       bodyType: Dynamic
       type: Physics
-
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
+    - type: CargoShuttle
     - chunkCollection:
         version: 2
         nodes:

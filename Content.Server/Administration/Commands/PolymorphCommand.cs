@@ -14,7 +14,7 @@ public sealed class PolymorphCommand : IConsoleCommand
 
     public string Description => Loc.GetString("polymorph-command-description");
 
-    public string Help => Loc.GetString("polymorph-command-help");
+    public string Help => Loc.GetString("polymorph-command-help-text");
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {

@@ -1,4 +1,4 @@
-﻿using Content.Server.Traitor;
+﻿using Content.Server.Roles;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;
@@ -10,7 +10,6 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent, Access(typeof(TraitorRuleSystem))]
 public sealed class TraitorRuleComponent : Component
 {
-    public readonly SoundSpecifier AddedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
     public List<TraitorRole> Traitors = new();
 
     [DataField("traitorPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
@@ -29,4 +28,10 @@ public sealed class TraitorRuleComponent : Component
     public SelectionState SelectionStatus = SelectionState.WaitingForSpawn;
     public TimeSpan AnnounceAt = TimeSpan.Zero;
     public Dictionary<IPlayerSession, HumanoidCharacterProfile> StartCandidates = new();
+
+    /// <summary>
+    ///     Path to antagonist alert sound.
+    /// </summary>
+    [DataField("greetSoundNotification")]
+    public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 }

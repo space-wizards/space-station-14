@@ -54,3 +54,5 @@
     - enum.DamageStateVisualLayers.Base:
         datadisk_base: Sixteen
   - type: TechnologyDisk
+  - type: StaticPrice
+    price: 50

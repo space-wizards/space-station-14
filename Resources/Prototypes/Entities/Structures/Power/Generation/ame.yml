@@ -1,5 +1,5 @@
 - type: entity
-  id: AMEController
+  id: AmeController
   name: AME controller
   description: It's a controller for the antimatter engine.
   placement:
@@ -8,10 +8,14 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    netsync: false
     snapCardinals: true
     sprite: Structures/Power/Generation/ame.rsi
     state: control
+    layers:
+    - state: control
+    - state: control_on
+      map: ["display"]
+      visible: false
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -45,19 +49,26 @@
     noRot: true
   - type: Anchorable
   - type: Pullable
-  - type: AMEController
+  - type: AmeController
   - type: Explosive
     explosionType: Default
     intensitySlope: 5
     maxIntensity: 60
   - type: ActivatableUI
-    key: enum.AMEControllerUiKey.Key
+    key: enum.AmeControllerUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.AMEControllerUiKey.Key
-      type: AMEControllerBoundUserInterface
+    - key: enum.AmeControllerUiKey.Key
+      type: AmeControllerBoundUserInterface
   - type: Appearance
-  - type: AMEControllerVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.AmeControllerVisuals.DisplayState:
+        display:
+          Off: { visible: false }
+          On: { state: control_on, visible: true }
+          Critical: { state: control_critical, visible: true }
+          Fuck: { state: control_fuck, visible: true }
   - type: NodeContainer
     examinable: true
     nodes:
@@ -73,14 +84,21 @@
     supplyRate: 0
   - type: ContainerContainer
     containers:
-      AMEController-fuelJarContainer: !type:ContainerSlot {}
+      AmeFuel: !type:ContainerSlot {}
   - type: GuideHelp
     guides: [ AME, Power ]
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: input
+    mediumVoltageNode: ame
 
 - type: entity
   noSpawn: true
-  parent: AMEController
-  id: AMEControllerUnanchored
+  parent: AmeController
+  id: AmeControllerUnanchored
   suffix: Unanchored
   components:
   - type: Transform
@@ -89,7 +107,7 @@
     bodyType: Dynamic
 
 - type: entity
-  id: AMEShielding
+  id: AmeShielding
   name: AME shielding
   description: Keeps the antimatter in and the matter out.
   placement:
@@ -98,10 +116,18 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    netsync: false
     drawdepth: Walls
     sprite: Structures/Power/Generation/ame.rsi
     state: shield_0
+    layers:
+    - state: shield_0
+    - state: core
+      map: ["core"]
+      visible: false
+    - state: core_weak
+      map: ["core_glow"]
+      shader: unshaded
+      visible: false
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -136,7 +162,7 @@
     mode: CardinalFlags
     base: shield_
     key: ame_shield
-  - type: AMEShield
+  - type: AmeShield
   - type: NodeContainer
     nodes:
       ame:
@@ -148,9 +174,25 @@
     energy: 0.5
     color: "#00AAFF"
   - type: Appearance
-  - type: AMEShieldingVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.AmeShieldVisuals.Core:
+        core:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AmeShieldVisuals.CoreState:
+        core_glow:
+          Off: { visible: false }
+          Weak: { state: core_weak, visible: true }
+          Strong: { state: core_strong, visible: true }
   - type: Construction
-    graph: AMEShielding
+    graph: AmeShielding
     node: ameShielding
   - type: GuideHelp
     guides: [ AME, Power ]
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: ame

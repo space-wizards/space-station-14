@@ -31,10 +31,13 @@ public sealed partial class DragonSystem
     {
         base.Started(uid, component, gameRule, args);
 
-        if (!_station.Stations.Any())
+        var eligible = EntityQuery<StationEventEligibleComponent>().Select(x => x.Owner).ToList();
+
+        if (!eligible.Any())
             return;
 
-        var station = _random.Pick(_station.Stations);
+        var station = _random.Pick(eligible);
+
         if (_station.GetLargestGrid(EntityManager.GetComponent<StationDataComponent>(station)) is not { } grid)
             return;
 
