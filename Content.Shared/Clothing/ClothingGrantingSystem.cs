@@ -1,11 +1,10 @@
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Tag;
+using Content.Shared.SimpleStation14.Clothing;
 using Robust.Shared.Serialization.Manager;
-using System.Collections.Generic;
 using System.Linq;
 
-namespace Content.Shared.SimpleStation14.Clothing;
+namespace Content.Shared.Clothing;
 
 public sealed class ClothingGrantingSystem : EntitySystem
 {
