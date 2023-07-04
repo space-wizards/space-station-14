@@ -2,6 +2,7 @@ using Content.Shared.Movement.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Content.Shared.Spider;
 
 namespace Content.Shared.Movement.Systems;
 
@@ -84,6 +85,14 @@ public sealed class SlowContactsSystem : EntitySystem
         {
             if (!TryComp<SlowContactsComponent>(ent, out var slowContactsComponent))
                 continue;
+
+            if (HasComp<SpiderComponent>(uid) & HasComp<SpiderWebObjectComponent>(ent))
+            {
+                walkSpeed = Math.Max(walkSpeed, slowContactsComponent.SpiderWalkSpeedModifier);
+                sprintSpeed = Math.Max(sprintSpeed, slowContactsComponent.SpiderSprintSpeedModifier);
+                remove = false;
+                continue;
+            }
 
             if (slowContactsComponent.IgnoreWhitelist != null && slowContactsComponent.IgnoreWhitelist.IsValid(uid))
                 continue;

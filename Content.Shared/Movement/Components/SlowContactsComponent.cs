@@ -17,6 +17,14 @@ public sealed partial class SlowContactsComponent : Component
     [DataField("sprintSpeedModifier"), ViewVariables(VVAccess.ReadWrite)]
     public float SprintSpeedModifier = 1.0f;
 
+    [DataField("spiderWalkSpeedModifier"), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public float SpiderWalkSpeedModifier = 1.5f;
+
+    [AutoNetworkedField]
+    [DataField("spiderSprintSpeedModifier"), ViewVariables(VVAccess.ReadWrite)]
+    public float SpiderSprintSpeedModifier = 1.5f;
+
     [DataField("ignoreWhitelist")]
     public EntityWhitelist? IgnoreWhitelist;
 }
