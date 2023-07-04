@@ -192,6 +192,7 @@
     rules: "Grow into a full-fledged defender of the nest."
   - type: Polymorphable
     innatePolymorphs: [ EggToBroodServant ]
+  - type: Actions
 
 
 #polymorph egg
