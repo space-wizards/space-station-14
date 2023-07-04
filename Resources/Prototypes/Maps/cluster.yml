@@ -1,7 +1,7 @@
-- type: gameMap
+﻿- type: gameMap
   id: Cluster
   mapName: 'Cluster'
-  mapPath: /Maps/cluster_imperial.yml
+  mapPath: /Maps/cluster.yml
   minPlayers: 0
   maxPlayers: 35
   stations:

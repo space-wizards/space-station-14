@@ -3613,13 +3613,6 @@ entities:
         - 0
         - 0
       type: EntityStorage
-- proto: LockerBrigmedicFilled
-  entities:
-  - uid: 111
-    components:
-    - pos: -4.5,2.5
-      parent: 179
-      type: Transform
 - proto: LockerChemistry
   entities:
   - uid: 127
@@ -4823,13 +4816,6 @@ entities:
   - uid: 140
     components:
     - pos: 3.5,7.5
-      parent: 179
-      type: Transform
-- proto: SpawnPointBrigmedic
-  entities:
-  - uid: 87
-    components:
-    - pos: -3.5,2.5
       parent: 179
       type: Transform
 - proto: SpawnPointCaptain

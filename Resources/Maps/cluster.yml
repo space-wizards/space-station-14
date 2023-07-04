@@ -3381,8 +3381,7 @@ entities:
           -2,-4:
             0: 65535
           -1,-4:
-            0: 57343
-            1: 8192
+            0: 65535
           -8,-3:
             0: 65535
           -8,-2:
@@ -28687,32 +28686,6 @@ entities:
     - pos: -2.5,-12.5
       parent: 1
       type: Transform
-    - fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.25,-0.48
-            - 0.25,-0.48
-            - 0.25,0.48
-            - -0.25,0.48
-          mask:
-          - Impassable
-          - MidImpassable
-          - LowImpassable
-          layer:
-          - BulletImpassable
-          - Opaque
-          density: 145
-          hard: True
-          restitution: 0
-          friction: 0.4
-      type: Fixtures
-    - open: True
-      removedMasks: 20
-      type: EntityStorage
-    - isPlaceable: True
-      type: PlaceableSurface
   - uid: 8843
     components:
     - pos: 5.5,-12.5
@@ -30418,7 +30391,6 @@ entities:
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
-          ent: null
       type: ContainerContainer
 - proto: CrateEngineeringCableBulk
   entities:
@@ -30763,13 +30735,6 @@ entities:
     components:
     - anchored: False
       pos: 23.5,10.5
-      parent: 1
-      type: Transform
-- proto: descente_1
-  entities:
-  - uid: 10643
-    components:
-    - pos: 5.5,-0.5
       parent: 1
       type: Transform
 - proto: DeskBell
@@ -37881,20 +37846,6 @@ entities:
   - uid: 5985
     components:
     - pos: 1.2974858,10.5533285
-      parent: 1
-      type: Transform
-- proto: FrostyApple_2
-  entities:
-  - uid: 10642
-    components:
-    - pos: -18.5,0.5
-      parent: 1
-      type: Transform
-- proto: FrostyApple_3
-  entities:
-  - uid: 12609
-    components:
-    - pos: -13.5,-27.5
       parent: 1
       type: Transform
 - proto: GasAnalyzer
@@ -58255,55 +58206,6 @@ entities:
     - pos: 40.50406,21.498663
       parent: 1
       type: Transform
-- proto: kamish_1
-  entities:
-  - uid: 11943
-    components:
-    - pos: 22.5,-19.5
-      parent: 1
-      type: Transform
-- proto: kamish_10
-  entities:
-  - uid: 7681
-    components:
-    - pos: 6.5,7.5
-      parent: 1
-      type: Transform
-- proto: kamish_2
-  entities:
-  - uid: 10640
-    components:
-    - pos: -2.5,-10.5
-      parent: 1
-      type: Transform
-- proto: kamish_3
-  entities:
-  - uid: 11952
-    components:
-    - pos: -10.5,17.5
-      parent: 1
-      type: Transform
-- proto: kamish_4
-  entities:
-  - uid: 12622
-    components:
-    - pos: 18.5,-2.5
-      parent: 1
-      type: Transform
-- proto: kamish_8
-  entities:
-  - uid: 12623
-    components:
-    - pos: 6.5,30.5
-      parent: 1
-      type: Transform
-- proto: KEEYN_3
-  entities:
-  - uid: 11941
-    components:
-    - pos: 27.5,11.5
-      parent: 1
-      type: Transform
 - proto: KitchenKnife
   entities:
   - uid: 6013
@@ -61260,68 +61162,6 @@ entities:
     - pos: 16.5,-2.5
       parent: 1
       type: Transform
-- proto: PosterImperialLogo
-  entities:
-  - uid: 12610
-    components:
-    - pos: -24.5,4.5
-      parent: 1
-      type: Transform
-  - uid: 12611
-    components:
-    - pos: 43.5,12.5
-      parent: 1
-      type: Transform
-  - uid: 12612
-    components:
-    - pos: 43.5,17.5
-      parent: 1
-      type: Transform
-  - uid: 12613
-    components:
-    - pos: 40.5,5.5
-      parent: 1
-      type: Transform
-  - uid: 12614
-    components:
-    - pos: 24.5,4.5
-      parent: 1
-      type: Transform
-  - uid: 12615
-    components:
-    - pos: 9.5,17.5
-      parent: 1
-      type: Transform
-  - uid: 12616
-    components:
-    - pos: -3.5,-10.5
-      parent: 1
-      type: Transform
-  - uid: 12617
-    components:
-    - pos: -0.5,-16.5
-      parent: 1
-      type: Transform
-  - uid: 12618
-    components:
-    - pos: -0.5,-31.5
-      parent: 1
-      type: Transform
-  - uid: 12619
-    components:
-    - pos: -1.5,-6.5
-      parent: 1
-      type: Transform
-  - uid: 12620
-    components:
-    - pos: 3.5,26.5
-      parent: 1
-      type: Transform
-  - uid: 12621
-    components:
-    - pos: -5.5,18.5
-      parent: 1
-      type: Transform
 - proto: PosterLegitCarbonDioxide
   entities:
   - uid: 11973
@@ -64112,6 +63952,21 @@ entities:
     - pos: 2.5,22.5
       parent: 1
       type: Transform
+  - uid: 11941
+    components:
+    - pos: 6.5,7.5
+      parent: 1
+      type: Transform
+  - uid: 11942
+    components:
+    - pos: -3.5,0.5
+      parent: 1
+      type: Transform
+  - uid: 11943
+    components:
+    - pos: -2.5,-10.5
+      parent: 1
+      type: Transform
   - uid: 11944
     components:
     - pos: 9.5,-10.5
@@ -64127,6 +63982,11 @@ entities:
     - pos: 17.5,0.5
       parent: 1
       type: Transform
+  - uid: 11947
+    components:
+    - pos: 28.5,4.5
+      parent: 1
+      type: Transform
   - uid: 11948
     components:
     - pos: 39.5,0.5
@@ -64140,6 +64000,11 @@ entities:
   - uid: 11951
     components:
     - pos: 40.5,24.5
+      parent: 1
+      type: Transform
+  - uid: 11952
+    components:
+    - pos: -18.5,0.5
       parent: 1
       type: Transform
   - uid: 11953
@@ -71297,27 +71162,6 @@ entities:
       name: dataknife
       type: MetaData
     - pos: -19.460943,-48.42677
-      parent: 1
-      type: Transform
-- proto: Swebit_1
-  entities:
-  - uid: 10641
-    components:
-    - pos: 28.5,4.5
-      parent: 1
-      type: Transform
-- proto: Swebit_2
-  entities:
-  - uid: 11947
-    components:
-    - pos: 25.5,-2.5
-      parent: 1
-      type: Transform
-- proto: Swebit_3
-  entities:
-  - uid: 11942
-    components:
-    - pos: -20.5,12.5
       parent: 1
       type: Transform
 - proto: SyringeSpaceacillin
@@ -82956,7 +82800,7 @@ entities:
       pos: 1.5,10.5
       parent: 1
       type: Transform
-    - location: бар
+    - location: bar
       type: WarpPoint
   - uid: 12046
     components:
@@ -82964,7 +82808,7 @@ entities:
       pos: -1.5,29.5
       parent: 1
       type: Transform
-    - location: мостик
+    - location: bridge
       type: WarpPoint
   - uid: 12047
     components:
@@ -82972,7 +82816,7 @@ entities:
       pos: -6.5,52.5
       parent: 1
       type: Transform
-    - location: ядро ИИ
+    - location: ai sat
       type: WarpPoint
   - uid: 12048
     components:
@@ -82980,7 +82824,7 @@ entities:
       pos: -17.5,10.5
       parent: 1
       type: Transform
-    - location: медотдел
+    - location: med
       type: WarpPoint
   - uid: 12049
     components:
@@ -82988,7 +82832,7 @@ entities:
       pos: -16.5,-3.5
       parent: 1
       type: Transform
-    - location: рнд
+    - location: sci
       type: WarpPoint
   - uid: 12050
     components:
@@ -82996,7 +82840,7 @@ entities:
       pos: 20.5,-6.5
       parent: 1
       type: Transform
-    - location: инженерия
+    - location: engi
       type: WarpPoint
   - uid: 12051
     components:
@@ -83004,7 +82848,7 @@ entities:
       pos: 37.5,-10.5
       parent: 1
       type: Transform
-    - location: атмос
+    - location: atmos
       type: WarpPoint
   - uid: 12052
     components:
@@ -83012,7 +82856,7 @@ entities:
       pos: 27.5,34.5
       parent: 1
       type: Transform
-    - location: заброшенный эвакуационный док
+    - location: abandoned evac dock
       type: WarpPoint
   - uid: 12053
     components:
@@ -83020,7 +82864,7 @@ entities:
       pos: 21.5,13.5
       parent: 1
       type: Transform
-    - location: бриг
+    - location: sec
       type: WarpPoint
   - uid: 12054
     components:
@@ -83028,7 +82872,7 @@ entities:
       pos: 42.5,31.5
       parent: 1
       type: Transform
-    - location: суд
+    - location: courthouse
       type: WarpPoint
   - uid: 12055
     components:
@@ -83036,7 +82880,7 @@ entities:
       pos: 45.5,10.5
       parent: 1
       type: Transform
-    - location: прибытие
+    - location: arrivals
       type: WarpPoint
   - uid: 12056
     components:
@@ -83044,7 +82888,7 @@ entities:
       pos: 15.5,-25.5
       parent: 1
       type: Transform
-    - location: карго
+    - location: cargo
       type: WarpPoint
   - uid: 12057
     components:
@@ -83052,7 +82896,7 @@ entities:
       pos: -8.5,-25.5
       parent: 1
       type: Transform
-    - location: дормы
+    - location: dorms
       type: WarpPoint
   - uid: 12058
     components:
@@ -83060,7 +82904,7 @@ entities:
       pos: -40.5,8.5
       parent: 1
       type: Transform
-    - location: эвакуция
+    - location: evac
       type: WarpPoint
 - proto: WaterCooler
   entities:
@@ -83353,13 +83197,6 @@ entities:
   - uid: 9709
     components:
     - pos: -28.5,13.5
-      parent: 1
-      type: Transform
-- proto: Willy_Bown_1
-  entities:
-  - uid: 10639
-    components:
-    - pos: -3.5,0.5
       parent: 1
       type: Transform
 - proto: Windoor

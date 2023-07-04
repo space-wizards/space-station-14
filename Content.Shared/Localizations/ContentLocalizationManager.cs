@@ -45,8 +45,8 @@ namespace Content.Shared.Localizations
              */
             var cultureEn = new CultureInfo("en-US");
 
-            _loc.AddFunction(cultureEn, "MAKEPLURAL", FormatMakePlural);
-            _loc.AddFunction(cultureEn, "MANY", FormatMany);
+            _loc.AddFunction(culture, "MAKEPLURAL", FormatMakePlural); //!
+            _loc.AddFunction(culture, "MANY", FormatMany);             //!
         }
 
         private ILocValue FormatMany(LocArgs args)

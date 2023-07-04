@@ -76610,6 +76610,13 @@ entities:
     - pos: -15.657842,47.202713
       parent: 8364
       type: Transform
+- proto: ClothingShoesSpaceNinja
+  entities:
+  - uid: 1225
+    components:
+    - pos: 30.33621,-71.6811
+      parent: 8364
+      type: Transform
 - proto: ClothingUnderSocksBee
   entities:
   - uid: 5179
