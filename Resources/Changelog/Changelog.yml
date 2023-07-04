@@ -1,65 +1,6 @@
 Entries:
 - author: Slava0135
   changes:
-  - {message: You can't pry blast doors anymore, type: Tweak}
-  id: 3652
-  time: '2023-05-05T13:16:23.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Clown scientists have shared their experimental technology with Nanotrasen,
-      use at your own risk. HONK!', type: Add}
-  id: 3653
-  time: '2023-05-05T13:21:13.0000000+00:00'
-- author: Ilushkins33
-  changes:
-  - {message: Stuttering during blood loss, type: Add}
-  id: 3654
-  time: '2023-05-05T13:46:52.0000000+00:00'
-- author: moony
-  changes:
-  - {message: ID Card Console now requires the privileged ID have the access being
-      granted., type: Tweak}
-  - {message: 'The ID Card Console is no longer access locked, all cards can use it.',
-    type: Tweak}
-  - {message: 'The HoP has had additional accesses added to their card so they can
-      continue to function as normal. This does NOT include head accesses, they can
-      no longer grant access to captain''s office for example.', type: Tweak}
-  id: 3655
-  time: '2023-05-05T13:56:54.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: It's now possible to block doorways with shields., type: Tweak}
-  - {message: 'doors won''t close if there are anchored entities inside (e.g. walls,
-      vendomats, closets and etc...)', type: Tweak}
-  id: 3656
-  time: '2023-05-05T15:14:33.0000000+00:00'
-- author: themias
-  changes:
-  - {message: You can no longer puff empty vapes., type: Fix}
-  id: 3657
-  time: '2023-05-05T17:48:48.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix suit sensors not being set for latejoins., type: Fix}
-  id: 3658
-  time: '2023-05-05T17:51:58.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Handheld crew monitors and station maps now use battery charge, type: Fix}
-  id: 3659
-  time: '2023-05-05T17:52:40.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Lighters now consume less fuel when lighting them., type: Tweak}
-  id: 3660
-  time: '2023-05-06T01:03:14.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Some station events will no longer start instantly., type: Fix}
-  id: 3661
-  time: '2023-05-06T01:24:16.0000000+00:00'
-- author: Slava0135
-  changes:
   - {message: EMP now temporarily disables headsets/cameras/APCs and makes vendomats
       throw items for 60 seconds., type: Add}
   - {message: Broken bulbs are not affected by EMP., type: Fix}
@@ -2927,3 +2868,64 @@ Entries:
   - {message: you can now warp to immovable rod as ghost, type: Tweak}
   id: 4151
   time: '2023-07-02T13:40:07.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Fixed Hamlet sprite error on revival., type: Fix}
+  id: 4152
+  time: '2023-07-03T07:59:29.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: You can now speak on your department's radio channel using .X, type: Tweak}
+  id: 4153
+  time: '2023-07-03T08:55:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifacts now make noises when activated., type: Add}
+  id: 4154
+  time: '2023-07-03T11:14:27.0000000+00:00'
+- author: noudoit
+  changes:
+  - {message: Attempting to uncuff yourself damages you slightly, type: Tweak}
+  id: 4155
+  time: '2023-07-03T21:30:09.0000000+00:00'
+- author: dmnct
+  changes:
+  - {message: Added fun!, type: Add}
+  - {message: Removed fun!, type: Remove}
+  - {message: Changed fun!, type: Tweak}
+  - {message: Fixed fun!, type: Fix}
+  id: 4156
+  time: '2023-07-03T21:31:53.0000000+00:00'
+- author: Geekyhobo
+  changes:
+  - {message: Nukie bundle prices have been adjusted for balance, type: Tweak}
+  id: 4157
+  time: '2023-07-03T21:33:53.0000000+00:00'
+- author: Jesse
+  changes:
+  - {message: Ale color more towards a Pale Ale color with foam and bubbles!, type: Tweak}
+  - {message: Fixed up the dingle line formatting of the Meta file, type: Fix}
+  id: 4158
+  time: '2023-07-03T21:34:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The pyroclastic anomaly's ignition has gained otherworldly properties
+      and now permeates through solid structures., type: Add}
+  id: 4159
+  time: '2023-07-03T21:35:57.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: The pyroclastic anomaly's supercritical gas now ignores structures.,
+    type: Tweak}
+  id: 4160
+  time: '2023-07-03T21:36:23.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added unique ERT helmets for each ERT type., type: Add}
+  - {message: Removed the alternate security helmets (the ones with an abundance of
+      hueshifting.), type: Remove}
+  - {message: Riot helmets are now better than the standard Security helmet at resisting
+      blunt and slash., type: Tweak}
+  - {message: Fixed a single missing pixel on all EVA helmet inhands., type: Fix}
+  id: 4161
+  time: '2023-07-03T23:24:28.0000000+00:00'
