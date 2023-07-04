@@ -17,6 +17,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Robust.Shared.Player; //Imperial admin alert sounds
+using Content.Server.Administration.Managers; //Imperial admin alert sounds
 
 namespace Content.Server.Ame.EntitySystems;
 
@@ -31,6 +33,7 @@ public sealed class AmeControllerSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!; //Imperial admin alert sounds
 
     public override void Initialize()
     {
@@ -201,7 +204,10 @@ public sealed class AmeControllerSystem : EntitySystem
             safeLimit = group.CoreCount * 2;
 
         if (oldValue <= safeLimit && value > safeLimit)
-            _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}", mindContainer);
+        {
+            _chatManager.SendAdminAlert(user.Value, Loc.GetString("admin-alert-ame-over-limit", ("injection-amount", controller.InjectionAmount)), mindContainer);
+            SoundSystem.Play("/Audio/Effects/ame_overloading_admin_alert.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), AudioParams.Default.WithVolume(-4f));//Imperial admin alert sounds
+        }
     }
 
     public void AdjustInjectionAmount(EntityUid uid, int delta, int min = 0, int max = int.MaxValue, EntityUid? user = null, AmeControllerComponent? controller = null)
