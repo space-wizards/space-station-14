@@ -65,12 +65,18 @@ public sealed class AccessReaderComponentState : ComponentState
 
     public HashSet<StationRecordKey> AccessKeys;
 
-    public AccessReaderComponentState(bool enabled, HashSet<string> denyTags, List<HashSet<string>> accessLists, HashSet<StationRecordKey> accessKeys)
+    public Queue<AccessRecord> AccessLog;
+
+    public int AccessLogLimit;
+
+    public AccessReaderComponentState(bool enabled, HashSet<string> denyTags, List<HashSet<string>> accessLists, HashSet<StationRecordKey> accessKeys, Queue<AccessRecord> accessLog, int accessLogLimit)
     {
         Enabled = enabled;
         DenyTags = denyTags;
         AccessLists = accessLists;
         AccessKeys = accessKeys;
+        AccessLog = accessLog;
+        AccessLogLimit = accessLogLimit;
     }
 }
 

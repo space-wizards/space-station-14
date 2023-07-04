@@ -38,7 +38,7 @@ namespace Content.Shared.Access.Systems
         private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)
         {
             args.State = new AccessReaderComponentState(component.Enabled, component.DenyTags, component.AccessLists,
-                component.AccessKeys);
+                component.AccessKeys, component.AccessLog, component.AccessLogLimit);
         }
 
         private void OnHandleState(EntityUid uid, AccessReaderComponent component, ref ComponentHandleState args)
@@ -49,6 +49,8 @@ namespace Content.Shared.Access.Systems
             component.AccessKeys = new (state.AccessKeys);
             component.AccessLists = new (state.AccessLists);
             component.DenyTags = new (state.DenyTags);
+            component.AccessLog = new(state.AccessLog);
+            component.AccessLogLimit = state.AccessLogLimit;
         }
 
         private void OnLinkAttempt(EntityUid uid, AccessReaderComponent component, LinkAttemptEvent args)
