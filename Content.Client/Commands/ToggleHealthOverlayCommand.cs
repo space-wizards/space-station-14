@@ -1,6 +1,5 @@
-﻿using Content.Client.HealthOverlay;
+using Content.Client.HealthOverlay;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Commands
 {
@@ -14,8 +13,9 @@ namespace Content.Client.Commands
         {
             var system = EntitySystem.Get<HealthOverlaySystem>();
             system.Enabled = !system.Enabled;
+            system.AddDamageContainers(args);
 
-            shell.WriteLine($"Health overlay system {(system.Enabled ? "enabled" : "disabled")}.");
+            shell.WriteLine($"{nameof(HealthOverlaySystem)} {(system.Enabled ? "enabled" : "disabled")}.");
         }
     }
 }

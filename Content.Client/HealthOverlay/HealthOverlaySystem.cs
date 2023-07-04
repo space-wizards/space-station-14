@@ -1,17 +1,12 @@
-using System.Collections.Generic;
 using Content.Client.HealthOverlay.UI;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs.Components;
-using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.HealthOverlay
 {
-    [UsedImplicitly]
     public sealed class HealthOverlaySystem : EntitySystem
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -20,6 +15,7 @@ namespace Content.Client.HealthOverlay
         private readonly Dictionary<EntityUid, HealthOverlayGui> _guis = new();
         private EntityUid? _attachedEntity;
         private bool _enabled;
+        private List<string> _damageContainers = new();
 
         public bool Enabled
         {
@@ -38,6 +34,16 @@ namespace Content.Client.HealthOverlay
                     gui.SetVisibility(value);
                 }
             }
+        }
+
+        public void ClearDamageContainers()
+        {
+            _damageContainers.Clear();
+        }
+
+        public void AddDamageContainers(IEnumerable<string> damageContainerIds)
+        {
+            _damageContainers.AddRange(damageContainerIds);
         }
 
         public override void Initialize()
@@ -80,12 +86,14 @@ namespace Content.Client.HealthOverlay
 
             var viewBox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
 
-            foreach (var (mobState, _) in EntityManager.EntityQuery<MobStateComponent, DamageableComponent>())
+            foreach (var (mobState, damageable) in EntityManager.EntityQuery<MobStateComponent, DamageableComponent>())
             {
                 var entity = mobState.Owner;
 
                 if (_entities.GetComponent<TransformComponent>(ent).MapID != _entities.GetComponent<TransformComponent>(entity).MapID ||
-                    !viewBox.Contains(_entities.GetComponent<TransformComponent>(entity).WorldPosition))
+                    !viewBox.Contains(_entities.GetComponent<TransformComponent>(entity).WorldPosition) ||
+                    damageable.DamageContainerID == null ||
+                    !_damageContainers.Contains(damageable.DamageContainerID))
                 {
                     if (_guis.TryGetValue(entity, out var oldGui))
                     {
