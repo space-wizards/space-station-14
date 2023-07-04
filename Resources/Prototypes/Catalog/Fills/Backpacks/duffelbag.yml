@@ -48,11 +48,12 @@
   parent: ClothingBackpackDuffelSyndicateAmmoBundle
   id: ClothingBackpackDuffelSyndicateFilledShotgun
   name: Bulldog bundle
-  description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
+  description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 3 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
   components:
   - type: StorageFill
     contents:
       - id: WeaponShotgunBulldog
+      - id: MagazineShotgun
       - id: MagazineShotgun
       - id: MagazineShotgunBeanbag
 #     - id: ThermalImagingGoggles

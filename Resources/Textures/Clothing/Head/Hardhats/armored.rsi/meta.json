@@ -10,24 +10,31 @@
     {
       "name": "icon"
     },
+	{
+      "name": "light-icon"
+    },
     {
-      "name": "equipped-HELMET",
+      "name": "off-equipped-HELMET",
       "directions": 4
     },
     {
-      "name": "light-equipped-HELMET",
+      "name": "off-inhand-left",
       "directions": 4
     },
     {
-      "name": "lighton-equipped-HELMET",
+      "name": "off-inhand-right",
       "directions": 4
     },
     {
-      "name": "inhand-left",
+      "name": "on-equipped-HELMET",
       "directions": 4
     },
     {
-      "name": "inhand-right",
+      "name": "on-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "on-inhand-right",
       "directions": 4
     }
   ]
