@@ -1,0 +1,19 @@
+﻿ent-ClothingUniformBlushieldOfficer = форма офицера "Синий щит"
+    .desc = Удобная форма повышенной прочности.
+    .suffix = { "" }
+ent-ClothingOuterHardsuitBlueshield = скафандр офицера "Синий щит"
+    .desc = Прочный скафандр с большим уровнем защиты.
+    .suffix = { "" }
+ent-ClothingOuterVestKevlarBlueshield = жилет офицера "Синий щит"
+    .desc = Бронежилет, созданный из улучшенных синтетических материалов повышенной прочности.
+    .suffix = { "" }
+ent-ClothingHeadHelmetHardsuitBlueshield = шлем скафандра офицера "Синий щит"
+    .desc = Шлем скафандра офицера синего щита.
+    .suffix = { "" }
+ent-ClothingHeadHatBlueshieldBeret = берет офицера "Синий щит"
+    .desc = Выглядит стильно.
+    .suffix = { "" }
+ent-ClothingBackpackBlueshieldOfficerFilled = Сумка офицера "Синий щит"
+    .desc = Специальная сумка офицера "Синий щит"
+    .suffix = { "" }
+

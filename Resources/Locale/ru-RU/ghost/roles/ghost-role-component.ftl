@@ -141,3 +141,9 @@ ghost-role-information-cburn-agent-description = Высококвалифици�
 
 ghost-role-information-centcom-official-name = Представитель Центком
 ghost-role-information-centcom-official-description = Инспектируйте станцию, пишите служебные характеристики на руководителей, разжалуйте капитана.
+
+ghost-role-information-SyndicateAgent-name = Агент Синдиката
+ghost-role-information-SyndicateAgent-description = Кому-то нужно подкрепление. Вы, первый человек, которого синдикат сможет отправить к ним, помогите им.
+
+ghost-role-information-LoneOps-name = Одинокий Оперативник
+ghost-role-information-LoneOps-description = Вы одинокий ядерный оперативник. Уничтожите станцию!

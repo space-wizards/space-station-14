@@ -35,6 +35,8 @@ salvage-expedition-difficulty-Hazardous = Опасный
 salvage-expedition-difficulty-Extreme = Экстримальный
 
 # Runner
+salvage-expedition-not-all-present = Не все утилизаторы вернулись на шаттл!
+
 salvage-expedition-announcement-countdown-minutes = {$duration} минут осталось до завершения экспедиции.
 salvage-expedition-announcement-countdown-seconds = {$duration} секунд, осталось до завершения экспедиции.
 salvage-expedition-announcement-dungeon = Подземелье находится {$direction}.

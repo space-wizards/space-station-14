@@ -1,7 +1,7 @@
 # Used internally by the THE() function.
 zzzz-the =
     { PROPER($ent) ->
-       *[false] the { $ent }
+       *[false] { $ent }
         [true] { $ent }
     }
 # Used internally by the SUBJECT() function.
@@ -53,8 +53,10 @@ zzzz-conjugate-be =
 # Used internally by the CONJUGATE-HAVE() function.
 zzzz-conjugate-have =
     { GENDER($ent) ->
-        [epicene] have
-       *[other] has
+        [male] имеет
+        [female] имеет
+        [epicene] имеют
+       *[neuter] имеет
     }
 # Used internally by the CONJUGATE-BASIC() function.
 zzzz-conjugate-basic =

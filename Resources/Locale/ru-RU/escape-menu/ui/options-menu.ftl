@@ -29,6 +29,7 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 ## Graphics menu
 
 ui-options-show-held-item = Показать удерживаемый элемент рядом с курсором?
+ui-options-show-combat-mode-indicators = Показывать индикаторы боевого режима?
 ui-options-vsync = Вертикальная синхронизация
 ui-options-fullscreen = Полный экран
 ui-options-lighting-label = Качество освещения:
@@ -92,6 +93,9 @@ ui-options-function-walk = Идти
 ui-options-function-camera-rotate-left = Повернуть налево
 ui-options-function-camera-rotate-right = Повернуть направо
 ui-options-function-camera-reset = Сбросить камеру
+ui-options-function-zoom-in = Приблизить
+ui-options-function-zoom-out = Отдалить
+ui-options-function-reset-zoom = Сбросить масштаб
 
 ui-options-function-use = Использовать
 ui-options-function-use-secondary = Вторичное использование
@@ -139,6 +143,8 @@ ui-options-function-window-close-all = Закрыть все окна
 ui-options-function-window-close-recent = Закрыть текущее окно
 ui-options-function-show-escape-menu = Переключить игровое меню
 ui-options-function-escape-context = Закрыть текущее окно или переключить игровое меню
+ui-options-function-focus-emote = Писать в чат (Эмоции)
+ui-options-function-focus-looc-window = Писать в чат (LOOC)
 
 ui-options-function-take-screenshot = Сделать скриншот
 ui-options-function-take-screenshot-no-ui = Сделать скриншот (без интерфейса)
@@ -149,6 +155,7 @@ ui-options-function-editor-grid-place = Размещать в сетке
 ui-options-function-editor-line-place = Размещать в линию
 ui-options-function-editor-rotate-object = Повернуть
 ui-options-function-editor-copy-object = Копировать
+ui-options-function-editor-flip-object = Подбросить
 
 ui-options-function-open-abilities-menu = Открыть меню действий
 ui-options-function-show-debug-console = Открыть консоль
