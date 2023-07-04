@@ -29,6 +29,7 @@
       BlueSpaceCube: 0
 
 #Leader
+#ERT
 - type: entity
   parent: BaseERTUplink
   id: ERTUplinkLeader
@@ -57,6 +58,7 @@
   #     - ErtUplinkCombat
 
 #Security
+#ERT
 - type: entity
   parent: BaseERTUplink
   id: ERTUplinkSecurity
@@ -98,7 +100,35 @@
   #   tags:
   #     - ErtUplinkCombat
 #ERT END
+
 #CBURN START
+- type: entity
+  parent: BaseERTUplink
+  id: CBURNUplinkLeader
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkPreset
+    balance:
+      BlueSpaceCube: 30
+  - type: Tag
+    tags:
+      - ErtUplinkCombat
+      - ErtUplinkCBURN
+
+- type: entity
+  parent: BaseERTUplink
+  id: CBURNUplinkSecurity
+  suffix: ERT
+  components:
+  - type: Store
+    preset: ErtCallUplinkSecurityPreset
+    balance:
+      BlueSpaceCube: 20
+  - type: Tag
+    tags:
+      - ErtUplinkCombat
+      - ErtUplinkCBURN
 
 #CBURN END
 

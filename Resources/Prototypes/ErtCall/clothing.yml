@@ -54,6 +54,18 @@
     - type: StorageFill
       contents:
         - id: BoxSurvival
+        - id: PillRomerol
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffelCBURN
+  id: ClothingBackpackCallERTCBURNFilledLeader
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: PillRomerol
+        - id: PinpointerNuclear
 
 - type: entity
   parent: ClothingOuterHardsuitBase

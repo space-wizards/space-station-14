@@ -10,8 +10,8 @@ suit-sensor-mode-state = Датчики костюма: {$mode}
 
 ## Components
 
-suit-sensor-component-unknown-name = Нету данных
-suit-sensor-component-unknown-job = Нету данныъ
+suit-sensor-component-unknown-name = Нет данных
+suit-sensor-component-unknown-job = Нет данных
 
 ## Examine
 
