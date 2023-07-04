@@ -19,15 +19,16 @@ public sealed class LogErrorTest
         var client = pairTracker.Pair.Client;
 
         var cfg = server.ResolveDependency<IConfigurationManager>();
+        var logmill = server.ResolveDependency<ILogManager>().RootSawmill;
 
         // Default cvar is properly configured
         Assert.That(cfg.GetCVar(RTCVars.FailureLogLevel), Is.EqualTo(LogLevel.Error));
 
         // Warnings don't cause tests to fail.
-        await server.WaitPost(() => Logger.Warning("test"));
+        await server.WaitPost(() => logmill.Warning("test"));
 
         // But errors do
-        await server.WaitPost(() => Assert.Throws<AssertionException>(() => Logger.Error("test")));
-        await client.WaitPost(() => Assert.Throws<AssertionException>(() => Logger.Error("test")));
+        await server.WaitPost(() => Assert.Throws<AssertionException>(() => logmill.Error("test")));
+        await client.WaitPost(() => Assert.Throws<AssertionException>(() => logmill.Error("test")));
     }
 }
