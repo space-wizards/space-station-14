@@ -1,23 +1,39 @@
+#Basic armor vest
+#Sec's other armor vests are actually in vests.yml, for whatever reason.
 - type: entity
-  parent: ClothingOuterStorageBase #web vest so it should have some pockets for ammo
-  id: ClothingOuterVestWebMerc
-  name: merc web vest
-  description: A high-quality armored vest made from a hard synthetic material. It's surprisingly flexible and light, despite formidable armor plating.
+  parent: ClothingOuterBase
+  id: ClothingOuterArmorBasic
+  name: armor vest
+  description: A Type I armored vest that provides decent protection against most types of damage.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
+    sprite: Clothing/OuterClothing/Vests/security.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
-  - type: Armor
+    sprite: Clothing/OuterClothing/Vests/security.rsi
+  - type: Armor #Based on /tg/ but slightly compensated to fit the fact that armor stacks in SS14.
     modifiers:
       coefficients:
-        Blunt: 0.7 #slightly better overall protection but slightly worse than kevlar against bullets seems sensible
-        Slash: 0.7
-        Piercing: 0.5
-        Heat: 0.9
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.80
+        Heat: 0.80
   - type: ExplosionResistance
-    damageCoefficient: 0.9
-    
+    damageCoefficient: 0.90
+
+#Alternate / slim basic armor vest
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterArmorBasicSlim
+  name: armor vest
+  suffix: slim
+  description: A slim Type I armored vest that provides decent protection against most types of damage.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/security_slim.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/security_slim.rsi
+
+#Web vest
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterVestWeb
@@ -34,6 +50,27 @@
         Blunt: 0.6 #ballistic plates = better protection
         Slash: 0.6
         Piercing: 0.3
+        Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+
+#Mercenary web vest
+- type: entity
+  parent: ClothingOuterStorageBase #web vest so it should have some pockets for ammo
+  id: ClothingOuterVestWebMerc
+  name: merc web vest
+  description: A high-quality armored vest made from a hard synthetic material. It's surprisingly flexible and light, despite formidable armor plating.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7 #slightly better overall protection but slightly worse than bulletproof armor against bullets seems sensible
+        Slash: 0.7
+        Piercing: 0.5
         Heat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
