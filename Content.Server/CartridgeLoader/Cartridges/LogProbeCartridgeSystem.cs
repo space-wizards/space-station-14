@@ -39,7 +39,6 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
             return;
 
         //Play scanning sound with slightly randomized pitch
-        //Why is there no NextFloat(float min, float max)???
         var audioParams = AudioParams.Default.WithVolume(-2f).WithPitchScale((float)_random.Next(12, 21) / 10);
         _audioSystem.PlayEntity(component.SoundScan, args.InteractEvent.User, target, audioParams);
         _popupSystem.PopupCursor(Loc.GetString("log-probe-scan", ("device", target)), args.InteractEvent.User);

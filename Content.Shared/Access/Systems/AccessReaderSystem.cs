@@ -334,6 +334,13 @@ namespace Content.Shared.Access.Systems
         {
             private readonly Dictionary<string, HashSet<string>> _accesses = new();
 
+            /// <summary>
+            /// Attempts to check for any access tag
+            /// </summary>
+            /// <param name="accessTag">Tag to check for</param>
+            /// <param name="accessReaderSystem"></param>
+            /// <param name="reader"><see cref="AccessReaderComponent"/> to log the access to</param>
+            /// <returns>The name of the matching access provider if the access check passes</returns>
             public string? HasAnyAccessTags(string accessTag, AccessReaderSystem accessReaderSystem, AccessReaderComponent? reader = null)
             {
                 foreach (var (provider, providedAccess) in _accesses)
@@ -348,6 +355,13 @@ namespace Content.Shared.Access.Systems
                 return null;
             }
 
+            /// <summary>
+            /// Attempts to check for any access tags
+            /// </summary>
+            /// <param name="accessTags">Tags to check for</param>
+            /// <param name="accessReaderSystem"></param>
+            /// <param name="reader"><see cref="AccessReaderComponent"/> to log the access to</param>
+            /// <returns>The name of the matching access provider if the access check passes</returns>
             public string? HasAnyAccessTags(IReadOnlyCollection<string> accessTags, AccessReaderSystem accessReaderSystem, AccessReaderComponent? reader = null)
             {
                 foreach (var (provider, providedAccess) in _accesses)
@@ -362,6 +376,13 @@ namespace Content.Shared.Access.Systems
                 return null;
             }
 
+            /// <summary>
+            /// Attempts to check for all access tags
+            /// </summary>
+            /// <param name="accessTags">Tags to check for</param>
+            /// <param name="accessReaderSystem"></param>
+            /// <param name="reader"><see cref="AccessReaderComponent"/> to log the access to</param>
+            /// <returns>The name of the matching access provider if the access check passes</returns>
             public string? HasAllAccessTags(HashSet<string> accessTags, AccessReaderSystem accessReaderSystem, AccessReaderComponent? reader = null)
             {
                 foreach (var (provider, providedAccess) in _accesses)
@@ -376,6 +397,11 @@ namespace Content.Shared.Access.Systems
                 return null;
             }
 
+            /// <summary>
+            /// Adds access tags to the list of providable tags
+            /// </summary>
+            /// <param name="provider">Provider of the tagss</param>
+            /// <param name="accessTags">Tags being provided</param>
             public void AddAccessTags(string provider, IEnumerable<string> accessTags)
             {
                 if (_accesses.TryGetValue(provider, out var access))
@@ -384,6 +410,9 @@ namespace Content.Shared.Access.Systems
                     _accesses.Add(provider, new HashSet<string>(accessTags));
             }
 
+            /// <summary>
+            /// Merges <paramref name="providedAccess"/>
+            /// </summary>
             public void AddAccessTags(ProvidedAccess providedAccess)
             {
                 foreach (var (provider, accessTags) in providedAccess._accesses)
@@ -392,6 +421,10 @@ namespace Content.Shared.Access.Systems
                 }
             }
 
+            /// <summary>
+            /// Gets all providable tags
+            /// </summary>
+            /// <returns>Every access tag that can be provided</returns>
             public HashSet<string> AllTags()
             {
                 var allTags = new HashSet<string>();
