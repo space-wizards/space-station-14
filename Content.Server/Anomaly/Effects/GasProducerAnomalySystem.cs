@@ -3,6 +3,9 @@ using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
+using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -13,6 +16,8 @@ public sealed class GasProducerAnomalySystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
+    [Dependency] private readonly IMapManager _map = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -25,7 +30,7 @@ public sealed class GasProducerAnomalySystem : EntitySystem
         if (!component.ReleaseOnMaxSeverity)
             return;
 
-        ReleaseGas(uid, component.ReleasedGas, component.SuperCriticalMoleAmount);
+        ReleaseGas(uid, component.ReleasedGas, component.SuperCriticalMoleAmount, component.spawnRadius, component.tileCount, component.tempChange);
     }
 
     public override void Update(float frameTime)
@@ -41,35 +46,49 @@ public sealed class GasProducerAnomalySystem : EntitySystem
             // Yes this is unused code since there are no anomalies that
             // release gas passively *yet*, but since I'm here I figured
             // I'd save someone some time and just add it for the future
-            ReleaseGas(ent, comp.ReleasedGas, comp.PassiveMoleAmount * frameTime);
+            ReleaseGas(ent, comp.ReleasedGas, comp.PassiveMoleAmount * frameTime, comp.spawnRadius, comp.tileCount, comp.tempChange);
         }
     }
 
-    private void ReleaseGas(EntityUid uid, Gas gas, float amount)
+    private void ReleaseGas(EntityUid uid, Gas gas, float mols, float radius, int count, float temp) 
     {
         var xform = Transform(uid);
-        var grid = xform.GridUid;
-        var map = xform.MapUid;
 
-        var indices = _xform.GetGridOrMapTilePosition(uid, xform);
-        var mixture = _atmosphere.GetTileMixture(grid, map, indices, true);
-
-        if (mixture == null)
+        if (!_map.TryGetGrid(xform.GridUid, out var grid))
             return;
 
-        mixture.AdjustMoles(gas, amount);
+        var localpos = xform.Coordinates.Position;
+        var tilerefs = grid.GetLocalTilesIntersecting(
+            new Box2(localpos + (-radius, -radius), localpos + (radius, radius))).ToArray();
 
-        if (grid is { })
+        if (tilerefs.Length == 0)
+            return;
+
+        var mixture = _atmosphere.GetTileMixture(xform.GridUid, xform.MapUid, _xform.GetGridOrMapTilePosition(uid, xform), true);
+        if (mixture != null) 
         {
-            foreach (var ind in _atmosphere.GetAdjacentTiles(grid.Value, indices))
-            {
-                var mix = _atmosphere.GetTileMixture(grid, map, ind, true);
+            mixture.AdjustMoles(gas, mols);
+            mixture.Temperature += temp;
+        }
+            
+        if (count == 0) 
+            return;
 
-                if (mix is not { })
-                    continue;
+        _random.Shuffle(tilerefs);
+        var amountCounter = 0;
+        foreach (var tileref in tilerefs)
+        {
+            var mix = _atmosphere.GetTileMixture(xform.GridUid, xform.MapUid, tileref.GridIndices, true);
+            amountCounter++;
+            if (mix is not { })
+                continue;
 
-                mix.AdjustMoles(gas, amount);
-            }
+            mix.AdjustMoles(gas, mols);
+            mix.Temperature += temp;
+
+            if (amountCounter >= count)
+                return;
         }
     }
 }
+
