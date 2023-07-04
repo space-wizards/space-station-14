@@ -15,7 +15,7 @@ namespace Content.Server.StationEvents.Events;
 /// </summary>
 public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
 {
-    [Dependency] private readonly NinjaSystem _ninja = default!;
+    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     protected override void Started(EntityUid uid, NinjaSpawnRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)

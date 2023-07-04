@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.GameTicking.Rules.Components;
 
-[RegisterComponent, Access(typeof(NinjaSystem))]
+[RegisterComponent, Access(typeof(SpaceNinjaSystem))]
 public sealed class NinjaRuleComponent : Component
 {
     /// <summary>

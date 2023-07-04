@@ -23,7 +23,7 @@ public sealed class SpiderChargeCondition : IObjectiveCondition
         get
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            if (!NinjaSystem.GetNinjaRole(_mind, out var role)
+            if (!SpaceNinjaSystem.GetNinjaRole(_mind, out var role)
                 || role.SpiderChargeTarget == null
                 || !entMan.TryGetComponent<WarpPointComponent>(role.SpiderChargeTarget, out var warp)
                 || warp.Location == null)
@@ -42,7 +42,7 @@ public sealed class SpiderChargeCondition : IObjectiveCondition
     {
         get
         {
-            if (!NinjaSystem.GetNinjaRole(_mind, out var role))
+            if (!SpaceNinjaSystem.GetNinjaRole(_mind, out var role))
                 return 0f;
 
             return role.SpiderChargeDetonated ? 1f : 0f;

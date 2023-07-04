@@ -15,7 +15,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 {
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly new NinjaSystem _ninja = default!;
+    [Dependency] private readonly new SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -31,7 +31,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         SubscribeLocalEvent<NinjaSuitComponent, NinjaEmpEvent>(OnEmp);
     }
 
-    protected override void NinjaEquippedSuit(EntityUid uid, NinjaSuitComponent comp, EntityUid user, NinjaComponent ninja)
+    protected override void NinjaEquippedSuit(EntityUid uid, NinjaSuitComponent comp, EntityUid user, SpaceNinjaComponent ninja)
     {
         base.NinjaEquippedSuit(uid, comp, user, ninja);
 
@@ -100,7 +100,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     {
         args.Handled = true;
         var user = args.Performer;
-        if (!TryComp<NinjaComponent>(user, out var ninja) || ninja.Katana == null)
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.Katana == null)
             return;
 
         // 1% charge per tile

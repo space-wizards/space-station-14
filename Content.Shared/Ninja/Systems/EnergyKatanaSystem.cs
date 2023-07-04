@@ -23,7 +23,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedNinjaSystem _ninja = default!;
+    [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -46,7 +46,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
 
         // check if ninja already has a katana bound
         var user = args.Equipee;
-        if (!TryComp<NinjaComponent>(user, out var ninja) || ninja.Katana != null)
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.Katana != null)
             return;
 
         // bind it
@@ -64,7 +64,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
 
         var user = args.Performer;
         args.Handled = true;
-        if (!TryComp<NinjaComponent>(user, out var ninja) || ninja.Katana == null)
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.Katana == null)
             return;
 
         var uid = ninja.Katana.Value;

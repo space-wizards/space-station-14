@@ -24,7 +24,7 @@ public sealed class TerrorCondition : IObjectiveCondition
     {
         get
         {
-            if (!NinjaSystem.GetNinjaRole(_mind, out var role))
+            if (!SpaceNinjaSystem.GetNinjaRole(_mind, out var role))
                 return 0f;
 
             return role.CalledInThreat ? 1f : 0f;

@@ -13,7 +13,7 @@ namespace Content.Server.Ninja.Systems;
 
 public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
-    [Dependency] private readonly NinjaSystem _ninja = default!;
+    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
 
     public override void Initialize()
     {
@@ -62,7 +62,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         var user = args.User;
         var target = args.Target;
 
-        if (!TryComp<NinjaComponent>(user, out var ninja)
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
             || !TryComp<TechnologyDatabaseComponent>(target, out var database))
             return;
 

@@ -9,8 +9,8 @@ namespace Content.Shared.Ninja.Components;
 /// Contains ids of all ninja equipment.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedNinjaSystem))]
-public sealed partial class NinjaComponent : Component
+[Access(typeof(SharedSpaceNinjaSystem))]
+public sealed partial class SpaceNinjaComponent : Component
 {
     /// <summary>
     /// Grid entity of the station the ninja was spawned around. Set if spawned naturally by the event.

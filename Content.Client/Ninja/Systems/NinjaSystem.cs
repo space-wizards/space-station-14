@@ -7,6 +7,6 @@ namespace Content.Client.Ninja.Systems;
 /// All functionality is in shared and server.
 /// Only exists to prevent crashing.
 /// </summary>
-public sealed class NinjaSystem : SharedNinjaSystem
+public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 {
 }

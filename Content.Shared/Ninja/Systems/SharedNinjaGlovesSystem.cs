@@ -37,7 +37,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     [Dependency] protected readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedNinjaSystem _ninja = default!;
+    [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
@@ -103,7 +103,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
         var user = args.Performer;
         // need to wear suit to enable gloves
-        if (!TryComp<NinjaComponent>(user, out var ninja)
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
             || ninja.Suit == null
             || !HasComp<NinjaSuitComponent>(ninja.Suit.Value))
         {
@@ -165,7 +165,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             && gloves.User != null
             && _timing.IsFirstTimePredicted
             && !_combatMode.IsInCombatMode(gloves.User)
-            && TryComp<NinjaComponent>(gloves.User, out var ninja)
+            && TryComp<SpaceNinjaComponent>(gloves.User, out var ninja)
             && ninja.Suit != null
             && !_useDelay.ActiveDelay(ninja.Suit.Value)
             && TryComp<HandsComponent>(gloves.User, out var hands)

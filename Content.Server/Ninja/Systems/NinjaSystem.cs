@@ -38,7 +38,7 @@ using System.Linq;
 
 namespace Content.Server.Ninja.Systems;
 
-public sealed class NinjaSystem : SharedNinjaSystem
+public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
@@ -60,13 +60,13 @@ public sealed class NinjaSystem : SharedNinjaSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NinjaComponent, ComponentStartup>(OnNinjaStartup);
-        SubscribeLocalEvent<NinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
+        SubscribeLocalEvent<SpaceNinjaComponent, ComponentStartup>(OnNinjaStartup);
+        SubscribeLocalEvent<SpaceNinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
     }
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<NinjaComponent>();
+        var query = EntityQueryEnumerator<SpaceNinjaComponent>();
         while (query.MoveNext(out var uid, out var ninja))
         {
             UpdateNinja(uid, ninja, frameTime);
@@ -83,10 +83,10 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
         // prevent double ninja'ing
         var user = mind.OwnedEntity.Value;
-        if (HasComp<NinjaComponent>(user))
+        if (HasComp<SpaceNinjaComponent>(user))
             return;
 
-        AddComp<NinjaComponent>(user);
+        AddComp<SpaceNinjaComponent>(user);
         SetOutfitCommand.SetOutfit(user, "SpaceNinjaGear", EntityManager);
         GreetNinja(mind);
     }
@@ -150,7 +150,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// <summary>
     /// Update the alert for the ninja's suit power indicator.
     /// </summary>
-    public void SetSuitPowerAlert(EntityUid uid, NinjaComponent? comp = null)
+    public void SetSuitPowerAlert(EntityUid uid, SpaceNinjaComponent? comp = null)
     {
         if (!Resolve(uid, ref comp, false) || comp.Deleted || comp.Suit == null)
         {
@@ -185,7 +185,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// </summary>
     public bool GetNinjaBattery(EntityUid user, [NotNullWhen(true)] out EntityUid? uid, [NotNullWhen(true)] out BatteryComponent? battery)
     {
-        if (TryComp<NinjaComponent>(user, out var ninja)
+        if (TryComp<SpaceNinjaComponent>(user, out var ninja)
             && ninja.Suit != null
             && _powerCell.TryGetBatteryFromSlot(ninja.Suit.Value, out uid, out battery))
         {
@@ -270,7 +270,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// <summary>
     /// Set up ninja when created.
     /// </summary>
-    private void OnNinjaStartup(EntityUid uid, NinjaComponent comp, ComponentStartup args)
+    private void OnNinjaStartup(EntityUid uid, SpaceNinjaComponent comp, ComponentStartup args)
     {
         // start with internals on, only when spawned by event. antag control ninja won't do this due to component add order.
         _internals.ToggleInternals(uid, uid, true);
@@ -303,7 +303,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// <summary>
     /// Greets the ninja when a ghost takes over a ninja, if that happens.
     /// </summary>
-    private void OnNinjaMindAdded(EntityUid uid, NinjaComponent comp, MindAddedMessage args)
+    private void OnNinjaMindAdded(EntityUid uid, SpaceNinjaComponent comp, MindAddedMessage args)
     {
         if (TryComp<MindContainerComponent>(uid, out var mind) && mind.Mind != null)
             GreetNinja(mind.Mind);
@@ -363,7 +363,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// <summary>
     /// Handle constant power drains from passive usage and cloak.
     /// </summary>
-    private void UpdateNinja(EntityUid uid, NinjaComponent ninja, float frameTime)
+    private void UpdateNinja(EntityUid uid, SpaceNinjaComponent ninja, float frameTime)
     {
         if (ninja.Suit == null || !TryComp<NinjaSuitComponent>(ninja.Suit, out var suit))
             return;

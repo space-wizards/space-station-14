@@ -15,7 +15,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
-    [Dependency] protected readonly SharedNinjaSystem _ninja = default!;
+    [Dependency] protected readonly SharedSpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
     [Dependency] protected readonly UseDelaySystem _useDelay = default!;
 
@@ -36,7 +36,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     private void OnEquipped(EntityUid uid, NinjaSuitComponent comp, GotEquippedEvent args)
     {
         var user = args.Equipee;
-        if (!TryComp<NinjaComponent>(user, out var ninja))
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja))
             return;
 
         NinjaEquippedSuit(uid, comp, user, ninja);
@@ -69,7 +69,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     /// Called when a suit is equipped by a space ninja.
     /// In the future it might be changed to an explicit activation toggle/verb like gloves are.
     /// </summary>
-    protected virtual void NinjaEquippedSuit(EntityUid uid, NinjaSuitComponent comp, EntityUid user, NinjaComponent ninja)
+    protected virtual void NinjaEquippedSuit(EntityUid uid, NinjaSuitComponent comp, EntityUid user, SpaceNinjaComponent ninja)
     {
         // mark the user as wearing this suit, used when being attacked among other things
         _ninja.AssignSuit(ninja, uid);
@@ -135,7 +135,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     protected virtual void UserUnequippedSuit(EntityUid uid, NinjaSuitComponent comp, EntityUid user)
     {
         // mark the user as not wearing a suit
-        if (TryComp<NinjaComponent>(user, out var ninja))
+        if (TryComp<SpaceNinjaComponent>(user, out var ninja))
         {
             _ninja.AssignSuit(ninja, null);
             // disable glove abilities
@@ -155,7 +155,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     /// </summary>
     private void OnSetCloakedMessage(SetCloakedMessage msg)
     {
-        if (TryComp<NinjaComponent>(msg.User, out var ninja) && TryComp<NinjaSuitComponent>(ninja.Suit, out var suit))
+        if (TryComp<SpaceNinjaComponent>(msg.User, out var ninja) && TryComp<NinjaSuitComponent>(ninja.Suit, out var suit))
         {
             suit.Cloaked = msg.Cloaked;
             SetCloaked(msg.User, msg.Cloaked);

@@ -34,7 +34,7 @@ public sealed class DoorjackCondition : IObjectiveCondition
             if (_target == 0)
                 return 1f;
 
-            if (!NinjaSystem.GetNinjaRole(_mind, out var role))
+            if (!SpaceNinjaSystem.GetNinjaRole(_mind, out var role))
                 return 0f;
 
             return (float) role.DoorsJacked / (float) _target;

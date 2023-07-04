@@ -7,7 +7,7 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Ninja.Systems;
 
-public abstract class SharedNinjaSystem : EntitySystem
+public abstract class SharedSpaceNinjaSystem : EntitySystem
 {
     [Dependency] protected readonly SharedNinjaSuitSystem _suit = default!;
     [Dependency] protected readonly SharedPopupSystem _popup = default!;
@@ -16,14 +16,14 @@ public abstract class SharedNinjaSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NinjaComponent, AttackedEvent>(OnNinjaAttacked);
-        SubscribeLocalEvent<NinjaComponent, ShotAttemptedEvent>(OnShotAttempted);
+        SubscribeLocalEvent<SpaceNinjaComponent, AttackedEvent>(OnNinjaAttacked);
+        SubscribeLocalEvent<SpaceNinjaComponent, ShotAttemptedEvent>(OnShotAttempted);
     }
 
     /// <summary>
     /// Sets the station grid entity that the ninja was spawned near.
     /// </summary>
-    public void SetStationGrid(NinjaComponent comp, EntityUid? grid)
+    public void SetStationGrid(SpaceNinjaComponent comp, EntityUid? grid)
     {
         comp.StationGrid = grid;
     }
@@ -31,7 +31,7 @@ public abstract class SharedNinjaSystem : EntitySystem
     /// <summary>
     /// Set the ninja's worn suit entity
     /// </summary>
-    public void AssignSuit(NinjaComponent comp, EntityUid? suit)
+    public void AssignSuit(SpaceNinjaComponent comp, EntityUid? suit)
     {
         comp.Suit = suit;
     }
@@ -39,7 +39,7 @@ public abstract class SharedNinjaSystem : EntitySystem
     /// <summary>
     /// Set the ninja's worn gloves entity
     /// </summary>
-    public void AssignGloves(NinjaComponent comp, EntityUid? gloves)
+    public void AssignGloves(SpaceNinjaComponent comp, EntityUid? gloves)
     {
         comp.Gloves = gloves;
     }
@@ -47,7 +47,7 @@ public abstract class SharedNinjaSystem : EntitySystem
     /// <summary>
     /// Bind a katana entity to a ninja, letting it be recalled and dash.
     /// </summary>
-    public void BindKatana(NinjaComponent comp, EntityUid? katana)
+    public void BindKatana(SpaceNinjaComponent comp, EntityUid? katana)
     {
         comp.Katana = katana;
     }
@@ -81,7 +81,7 @@ public abstract class SharedNinjaSystem : EntitySystem
     /// <summary>
     /// Handle revealing ninja if cloaked when attacked.
     /// </summary>
-    private void OnNinjaAttacked(EntityUid uid, NinjaComponent comp, AttackedEvent args)
+    private void OnNinjaAttacked(EntityUid uid, SpaceNinjaComponent comp, AttackedEvent args)
     {
         if (comp.Suit != null && TryComp<NinjaSuitComponent>(comp.Suit, out var suit) && suit.Cloaked)
         {
@@ -92,7 +92,7 @@ public abstract class SharedNinjaSystem : EntitySystem
     /// <summary>
     /// Require ninja to fight with HONOR, no guns!
     /// </summary>
-    private void OnShotAttempted(EntityUid uid, NinjaComponent comp, ref ShotAttemptedEvent args)
+    private void OnShotAttempted(EntityUid uid, SpaceNinjaComponent comp, ref ShotAttemptedEvent args)
     {
         _popup.PopupClient(Loc.GetString("gun-disabled"), uid, uid);
         args.Cancel();

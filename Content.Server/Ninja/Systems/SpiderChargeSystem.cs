@@ -9,7 +9,7 @@ namespace Content.Server.Ninja.Systems;
 
 public sealed class SpiderChargeSystem : EntitySystem
 {
-    [Dependency] private readonly NinjaSystem _ninja = default!;
+    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
