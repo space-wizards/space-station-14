@@ -16,20 +16,20 @@ public sealed class AccessReaderComponent : Component
     /// Whether or not the accessreader is enabled.
     /// If not, it will always let people through.
     /// </summary>
-    [DataField("enabled")]
+    [DataField("enabled")] [ViewVariables(VVAccess.ReadWrite)]
     public bool Enabled = true;
 
     /// <summary>
     ///     The set of tags that will automatically deny an allowed check, if any of them are present.
     /// </summary>
-    [DataField("denyTags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
+    [DataField("denyTags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))] [ViewVariables(VVAccess.ReadWrite)]
     public HashSet<string> DenyTags = new();
 
     /// <summary>
     ///     List of access lists to check allowed against. For an access check to pass
     ///     there has to be an access list that is a subset of the access in the checking list.
     /// </summary>
-    [DataField("access")]
+    [DataField("access")] [ViewVariables(VVAccess.ReadWrite)]
     public List<HashSet<string>> AccessLists = new();
 
     /// <summary>
@@ -47,7 +47,7 @@ public sealed class AccessReaderComponent : Component
     /// <summary>
     /// A limit on the max size of <see cref="AccessLog"/>
     /// </summary>
-    [DataField("accessLogLimit")]
+    [DataField("accessLogLimit")] [ViewVariables(VVAccess.ReadWrite)]
     public int AccessLogLimit = 100;
 }
 
