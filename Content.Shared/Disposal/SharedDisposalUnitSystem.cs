@@ -38,9 +38,9 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     /// <param name="component"></param>
     /// <param name="metadata"></param>
     /// <returns></returns>
-    public DisposalsPressureState GetState(EntityUid uid, DisposalUnitComponent component, MetaDataComponent? metadata = null)
+    public DisposalsPressureState GetState(EntityUid uid, SharedDisposalUnitComponent component, MetaDataComponent? metadata = null)
     {
-        var nextPressure = Metadata.GetPauseTime(uid, metadata) + component.NextPressurized;
+        var nextPressure = Metadata.GetPauseTime(uid, metadata) + component.NextPressurized - GameTiming.CurTime;
         var pressurizeTime = 1f / PressurePerSecond;
         var pressurizeDuration = pressurizeTime - component.FlushDelay.TotalSeconds;
 
@@ -49,7 +49,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return DisposalsPressureState.Flushed;
         }
 
-        if (nextPressure > GameTiming.CurTime)
+        if (nextPressure > TimeSpan.Zero)
         {
             return DisposalsPressureState.Pressurizing;
         }
@@ -57,15 +57,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         return DisposalsPressureState.Ready;
     }
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<DisposalUnitComponent, PreventCollideEvent>(OnPreventCollide);
-        SubscribeLocalEvent<DisposalUnitComponent, CanDropTargetEvent>(OnCanDragDropOn);
-        SubscribeLocalEvent<DisposalUnitComponent, GotEmaggedEvent>(OnEmagged);
-    }
-
-    public float GetPressure(EntityUid uid, DisposalUnitComponent component, MetaDataComponent? metadata = null)
+    public float GetPressure(EntityUid uid, SharedDisposalUnitComponent component, MetaDataComponent? metadata = null)
     {
         if (!Resolve(uid, ref metadata))
             return 0f;
@@ -75,7 +67,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             (float) (GameTiming.CurTime - pauseTime - component.NextPressurized).TotalSeconds / PressurePerSecond);
     }
 
-    private void OnPreventCollide(EntityUid uid, DisposalUnitComponent component,
+    protected void OnPreventCollide(EntityUid uid, SharedDisposalUnitComponent component,
         ref PreventCollideEvent args)
     {
         var otherBody = args.OtherEntity;
@@ -94,7 +86,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         }
     }
 
-    private void OnCanDragDropOn(EntityUid uid, DisposalUnitComponent component, ref CanDropTargetEvent args)
+    protected void OnCanDragDropOn(EntityUid uid, SharedDisposalUnitComponent component, ref CanDropTargetEvent args)
     {
         if (args.Handled)
             return;
@@ -103,13 +95,13 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnEmagged(EntityUid uid, DisposalUnitComponent component, ref GotEmaggedEvent args)
+    protected void OnEmagged(EntityUid uid, SharedDisposalUnitComponent component, ref GotEmaggedEvent args)
     {
         component.DisablePressure = true;
         args.Handled = true;
     }
 
-    public virtual bool CanInsert(EntityUid uid, DisposalUnitComponent component, EntityUid entity)
+    public virtual bool CanInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid entity)
     {
         if (!EntityManager.GetComponent<TransformComponent>(uid).Anchored)
             return false;
@@ -137,5 +129,5 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     /// <summary>
     /// TODO: Proper prediction
     /// </summary>
-    public abstract void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, DisposalUnitComponent? disposal = null);
+    public abstract void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null);
 }

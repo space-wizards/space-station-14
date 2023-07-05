@@ -26,5 +26,5 @@ public sealed class MailingUnitComponent : Component
     [DataField("tag")]
     public string? Tag;
 
-    public DisposalUnitComponent.DisposalUnitBoundUserInterfaceState? DisposalUnitInterfaceState;
+    public SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState? DisposalUnitInterfaceState;
 }

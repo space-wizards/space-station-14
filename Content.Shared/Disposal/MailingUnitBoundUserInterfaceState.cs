@@ -9,9 +9,9 @@ public sealed class MailingUnitBoundUserInterfaceState : BoundUserInterfaceState
     public string? Target;
     public List<string> TargetList;
     public string? Tag;
-    public DisposalUnitComponent.DisposalUnitBoundUserInterfaceState DisposalState;
+    public SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState DisposalState;
 
-    public MailingUnitBoundUserInterfaceState(DisposalUnitComponent.DisposalUnitBoundUserInterfaceState disposalState, string? target, List<string> targetList, string? tag)
+    public MailingUnitBoundUserInterfaceState(SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState disposalState, string? target, List<string> targetList, string? tag)
     {
         DisposalState = disposalState;
         Target = target;

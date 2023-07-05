@@ -1,8 +1,12 @@
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
+using Content.Shared.DragDrop;
+using Content.Shared.Emag.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Animations;
-using static Content.Shared.Disposal.Components.DisposalUnitComponent;
+using Robust.Client.Graphics;
+using Robust.Shared.Physics.Events;
+using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Client.Disposal.Systems;
 
@@ -18,24 +22,28 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<DisposalUnitComponent, PreventCollideEvent>(OnPreventCollide);
+        SubscribeLocalEvent<DisposalUnitComponent, CanDropTargetEvent>(OnCanDragDropOn);
+        SubscribeLocalEvent<DisposalUnitComponent, GotEmaggedEvent>(OnEmagged);
+
         SubscribeLocalEvent<DisposalUnitComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DisposalUnitComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, DisposalUnitComponent? disposal = null)
+    public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
     {
         return;
     }
 
-    private void OnComponentInit(EntityUid uid, DisposalUnitComponent disposalUnit, ComponentInit args)
+    private void OnComponentInit(EntityUid uid, SharedDisposalUnitComponent sharedDisposalUnit, ComponentInit args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite) || !TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
-        UpdateState(uid, disposalUnit, sprite, appearance);
+        UpdateState(uid, sharedDisposalUnit, sprite, appearance);
     }
 
-    private void OnAppearanceChange(EntityUid uid, DisposalUnitComponent unit, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(EntityUid uid, SharedDisposalUnitComponent unit, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
@@ -46,7 +54,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     /// <summary>
     /// Update visuals and tick animation
     /// </summary>
-    private void UpdateState(EntityUid uid, DisposalUnitComponent unit, SpriteComponent sprite, AppearanceComponent appearance)
+    private void UpdateState(EntityUid uid, SharedDisposalUnitComponent unit, SpriteComponent sprite, AppearanceComponent appearance)
     {
         if (!_appearanceSystem.TryGetData<VisualState>(uid, Visuals.VisualState, out var state, appearance))
         {
@@ -62,11 +70,10 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (state == VisualState.Flushing)
         {
             if (!_animationSystem.HasRunningAnimation(uid, AnimationKey) &&
-                sprite.LayerMapTryGet(DisposalUnitVisualLayers.Base, out var baseLayerIdx) &&
-                sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseFlush, out var flushLayerIdx))
+                sprite.LayerMapTryGet(DisposalUnitVisualLayers.Base, out var baseLayerIdx))
             {
                 var originalBaseState = sprite.LayerGetState(baseLayerIdx);
-                var flushState = sprite.LayerGetState(flushLayerIdx);
+                var flushState = new RSI.StateId("disposal-flush");
 
                 // Setup the flush animation to play
                 var anim = new Animation

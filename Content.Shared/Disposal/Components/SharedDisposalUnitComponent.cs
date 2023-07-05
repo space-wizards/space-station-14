@@ -7,8 +7,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Disposal.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class DisposalUnitComponent : Component
+[NetworkedComponent]
+public abstract class SharedDisposalUnitComponent : Component
 {
     public const string ContainerId = "disposals";
 
@@ -97,9 +97,6 @@ public sealed partial class DisposalUnitComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("engaged"), AutoNetworkedField]
     public bool Engaged;
-
-    [DataField("air")]
-    public GasMixture Air = new(Atmospherics.CellVolume);
 
     /// <summary>
     /// Next time this unit will flush. Is the lesser of <see cref="FlushDelay"/> and <see cref="AutomaticEngageTime"/>

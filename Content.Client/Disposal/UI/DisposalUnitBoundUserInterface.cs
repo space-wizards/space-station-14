@@ -4,7 +4,7 @@ using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using static Content.Shared.Disposal.Components.DisposalUnitComponent;
+using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Client.Disposal.UI
 {
@@ -78,10 +78,6 @@ namespace Content.Client.Disposal.UI
                 return;
             }
 
-            var entityId = Owner.Owner;
-            if (!_entityManager.TryGetComponent(entityId, out DisposalUnitComponent? component))
-                return;
-
             switch (state)
             {
                 case MailingUnitBoundUserInterfaceState mailingUnitState:
@@ -98,17 +94,11 @@ namespace Content.Client.Disposal.UI
         {
             base.Dispose(disposing);
 
-            if (!disposing) return;
+            if (!disposing)
+                return;
 
             MailingUnitWindow?.Dispose();
             DisposalUnitWindow?.Dispose();
-        }
-
-        public bool? UpdateWindowState(DisposalUnitBoundUserInterfaceState state)
-        {
-            return UiKey is DisposalUnitUiKey
-                ? DisposalUnitWindow?.UpdateState(state)
-                : MailingUnitWindow?.UpdatePressure(state.FullPressureTime);
         }
     }
 }

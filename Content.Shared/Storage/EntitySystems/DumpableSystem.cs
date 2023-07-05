@@ -36,7 +36,7 @@ public sealed class DumpableSystem : EntitySystem
         if (!args.CanReach || args.Handled)
             return;
 
-        if (!HasComp<DisposalUnitComponent>(args.Target) && !HasComp<PlaceableSurfaceComponent>(args.Target))
+        if (!HasComp<SharedDisposalUnitComponent>(args.Target) && !HasComp<PlaceableSurfaceComponent>(args.Target))
             return;
 
         StartDoAfter(uid, args.Target.Value, args.User, component);
@@ -71,7 +71,7 @@ public sealed class DumpableSystem : EntitySystem
         if (!TryComp<SharedStorageComponent>(uid, out var storage) || storage.StoredEntities == null || storage.StoredEntities.Count == 0)
             return;
 
-        if (HasComp<DisposalUnitComponent>(args.Target))
+        if (HasComp<SharedDisposalUnitComponent>(args.Target))
         {
             UtilityVerb verb = new()
             {
@@ -136,7 +136,7 @@ public sealed class DumpableSystem : EntitySystem
         if (args.Args.Target == null)
             return;
 
-        if (HasComp<DisposalUnitComponent>(args.Args.Target.Value))
+        if (HasComp<SharedDisposalUnitComponent>(args.Args.Target.Value))
         {
             foreach (var entity in dumpQueue)
             {
