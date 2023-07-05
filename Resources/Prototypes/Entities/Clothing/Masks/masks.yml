@@ -347,6 +347,21 @@
   - type: BreathMask
 
 - type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskNeckGaiter
+  name: neck gaiter
+  description: Stylish neck gaiter for your neck, can protect from the cosmic wind?...
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/neckgaiter.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/neckgaiter.rsi
+  - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
   parent: ClothingMaskClown
   id: ClothingMaskSexyClown
   name: sexy clown mask
