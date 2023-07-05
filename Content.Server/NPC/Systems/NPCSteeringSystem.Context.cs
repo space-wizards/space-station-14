@@ -46,7 +46,6 @@ public sealed partial class NPCSteeringSystem
         Angle offsetRot,
         float moveSpeed,
         float[] interest,
-        EntityQuery<PhysicsComponent> bodyQuery,
         float frameTime,
         ref bool forceSteer)
     {
@@ -132,7 +131,7 @@ public sealed partial class NPCSteeringSystem
                         return true;
                     }
 
-                    status = TryHandleFlags(uid, steering, node, bodyQuery);
+                    status = TryHandleFlags(uid, steering, node);
                 }
 
                 // TODO: Need to handle re-pathing in case the target moves around.
@@ -202,7 +201,7 @@ public sealed partial class NPCSteeringSystem
                 // A) NPCs get stuck on non-anchored static bodies still (e.g. closets)
                 // B) NPCs still try to move in locked containers (e.g. cow, hamster)
                 // and I don't want to spam grafana even harder than it gets spammed rn.
-                _sawmill.Debug($"NPC {ToPrettyString(uid)} found stuck at {ourCoordinates}");
+                Log.Debug($"NPC {ToPrettyString(uid)} found stuck at {ourCoordinates}");
                 steering.Status = SteeringStatus.NoPath;
                 return false;
             }
@@ -380,10 +379,7 @@ public sealed partial class NPCSteeringSystem
         int layer,
         int mask,
         TransformComponent xform,
-        float[] danger,
-        List<Vector2> dangerPoints,
-        EntityQuery<PhysicsComponent> bodyQuery,
-        EntityQuery<TransformComponent> xformQuery)
+        float[] danger)
     {
         var objectRadius = 0.15f;
         var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
@@ -392,7 +388,7 @@ public sealed partial class NPCSteeringSystem
         {
             // TODO: If we can access the door or smth.
             if (ent == uid ||
-                !bodyQuery.TryGetComponent(ent, out var otherBody) ||
+                !_physicsQuery.TryGetComponent(ent, out var otherBody) ||
                 !otherBody.Hard ||
                 !otherBody.CanCollide ||
                 (mask & otherBody.CollisionLayer) == 0x0 &&
@@ -401,7 +397,7 @@ public sealed partial class NPCSteeringSystem
                 continue;
             }
 
-            var xformB = xformQuery.GetComponent(ent);
+            var xformB = _xformQuery.GetComponent(ent);
 
             if (!_physics.TryGetNearest(uid, ent, out var pointA, out var pointB, out var distance, xform, xformB))
             {
@@ -417,18 +413,15 @@ public sealed partial class NPCSteeringSystem
             // Inside each other so just use worldPos
             if (distance == 0f)
             {
-                obstacleDirection = _transform.GetWorldPosition(xformB, xformQuery) - worldPos;
-
-                // Welp
-                if (obstacleDirection == Vector2.Zero)
-                {
-                    obstacleDirection = Vector2.One.Normalized;
-                }
+                obstacleDirection = _transform.GetWorldPosition(xformB) - worldPos;
             }
             else
             {
                 weight = distance / detectionRadius;
             }
+
+            if (obstacleDirection == Vector2.Zero)
+                continue;
 
             obstacleDirection = offsetRot.RotateVec(obstacleDirection);
             var norm = obstacleDirection.Normalized;
@@ -458,9 +451,7 @@ public sealed partial class NPCSteeringSystem
         int mask,
         PhysicsComponent body,
         TransformComponent xform,
-        float[] danger,
-        EntityQuery<PhysicsComponent> bodyQuery,
-        EntityQuery<TransformComponent> xformQuery)
+        float[] danger)
     {
         var objectRadius = 0.25f;
         var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
@@ -472,7 +463,7 @@ public sealed partial class NPCSteeringSystem
         {
             // TODO: If we can access the door or smth.
             if (ent == uid ||
-                !bodyQuery.TryGetComponent(ent, out var otherBody) ||
+                !_physicsQuery.TryGetComponent(ent, out var otherBody) ||
                 !otherBody.Hard ||
                 !otherBody.CanCollide ||
                 (mask & otherBody.CollisionLayer) == 0x0 &&
@@ -485,7 +476,7 @@ public sealed partial class NPCSteeringSystem
                 continue;
             }
 
-            var xformB = xformQuery.GetComponent(ent);
+            var xformB = _xformQuery.GetComponent(ent);
 
             if (!_physics.TryGetNearest(uid, ent, out var pointA, out var pointB, out var distance, xform, xformB))
             {
@@ -501,7 +492,7 @@ public sealed partial class NPCSteeringSystem
             // Inside each other so just use worldPos
             if (distance == 0f)
             {
-                obstacleDirection = _transform.GetWorldPosition(xformB, xformQuery) - worldPos;
+                obstacleDirection = _transform.GetWorldPosition(xformB) - worldPos;
 
                 // Welp
                 if (obstacleDirection == Vector2.Zero)

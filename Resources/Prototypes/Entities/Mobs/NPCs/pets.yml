@@ -445,7 +445,7 @@
     sprite: Mobs/Pets/hamlet.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: hamlet
+      state: hamster-0
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
