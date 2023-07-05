@@ -133,3 +133,5 @@ ent-FloorTileItemSteelMaint = стальной технический пол
 ent-FloorTileItemGratingMaint = решётчатый технический пол
     .desc = { ent-FloorTileItemBase.desc }
     .suffix = { "" }
+ent-FloorTileItemFlesh = пол из плоти
+    .desc = { ent-FloorTileItemBase.desc }

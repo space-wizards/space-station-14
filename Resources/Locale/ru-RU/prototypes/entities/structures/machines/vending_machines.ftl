@@ -196,3 +196,5 @@ ent-VendingMachineSustenance = Продовольственный автомат
 ent-VendingMachineChemicals = ХимТорг
     .desc = Вероятно, это не кофемашина.
     .suffix = { "" }
+ent-VendingMachineWinter = ЗимнеШкаф
+    .desc = Лучшее место, чтобы насладиться холодом!

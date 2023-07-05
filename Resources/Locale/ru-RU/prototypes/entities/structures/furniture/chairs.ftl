@@ -37,3 +37,5 @@ ent-ChairFolding = раскладной стул
 ent-ChairFoldingSpawnFolded = { ent-ChairFolding }
     .suffix = Сложенный
     .desc = { ent-ChairFolding.desc }
+ent-ChairMeat = мясной стул
+    .desc = Неприятно потный.

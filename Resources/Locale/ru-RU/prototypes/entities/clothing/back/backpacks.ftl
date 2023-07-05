@@ -66,3 +66,5 @@ ent-ClothingBackpackIan = рюкзак Иана
     .suffix = { "" }
 ent-ClothingBackpackBrigmedic = рюкзак бригмедика
     .desc = Очень стерильный рюкзак
+ent-ClothingBackpackMerc = рюкзак наёмника
+    .desc = Надежный боевой рюкзак, побывавший во многих опасных местах.

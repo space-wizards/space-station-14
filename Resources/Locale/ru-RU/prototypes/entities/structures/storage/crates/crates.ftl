@@ -73,3 +73,6 @@ ent-CratePirate = пиратский сундкук
 ent-CrateChemistrySecure = защищённый химический ящик
     .desc = { ent-CrateBaseWeldable.desc }
     .suffix = { "" }
+ent-CrateToyBox = коробка игрушек
+    .desc = Коробка, переполненная весельем.
+    .suffix = Пустой

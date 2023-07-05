@@ -28,3 +28,5 @@ ent-CartridgeAnomalousParticleZeta = картридж (Зета-частица)
 ent-CartridgeAnomalousParticleOmega = картридж (Омега-частица)
     .desc = { ent-BaseAnomalousCartridge }
     .suffix = { "" }
+ent-CartridgeMagnumIncendiary = патрон (.45 магнум зажигательный)
+    .desc = { ent-BaseCartridgeMagnum.desc }

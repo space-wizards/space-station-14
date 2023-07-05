@@ -104,7 +104,7 @@
 # Air mixtures
 - type: salvageAirMod
   id: Space
-  desc: No atmosphere
+  desc: Нет атмосферы
   space: true
   cost: 1
   biomes:
@@ -125,7 +125,7 @@
 - type: salvageAirMod
   id: Sleepy
   cost: 1
-  desc: Dangerous atmosphere
+  desc: Опасная атмосфера
   gases:
   - 21.824779 # oxygen
   - 72.10312 # nitrogen
@@ -145,7 +145,7 @@
 - type: salvageAirMod
   id: Poisoned
   cost: 2
-  desc: Dangerous atmosphere
+  desc: Опасная атмосфера
   gases:
   - 21.824779 # oxygen
   - 77.10312 # nitrogen
@@ -160,7 +160,7 @@
 - type: salvageAirMod
   id: Poison
   cost: 3
-  desc: Toxic atmosphere
+  desc: Токсичная атмосфера
   gases:
   - 21.824779 # oxygen
   - 0
@@ -173,7 +173,7 @@
 - type: salvageAirMod
   id: Plasma
   cost: 4
-  desc: Toxic atmosphere
+  desc: Токсичная атмосфера
   gases:
   - 0
   - 0
@@ -186,7 +186,7 @@
 - type: salvageAirMod
   id: Burnable
   cost: 5
-  desc: Volatile atmosphere
+  desc: Нестабильная атмосфера
   gases:
   - 21.824779 # oxygen
   - 0
@@ -216,7 +216,7 @@
 
 - type: salvageTemperatureMod
   id: Burning
-  desc: High temperature
+  desc: Высокая температура
   cost: 1
   temperature: 423.15 # 200C
   biomes:
@@ -226,7 +226,7 @@
 
 - type: salvageTemperatureMod
   id: Melting
-  desc: Extreme heat
+  desc: Экстремальная жара
   cost: 4
   temperature: 1273.15 # 1000C hot hot hot
   biomes:
@@ -243,7 +243,7 @@
 
 - type: salvageTemperatureMod
   id: Tundra
-  desc: Low temperature
+  desc: Низкая температура
   cost: 2
   temperature: 263.15 # -40C
   biomes:
@@ -252,7 +252,7 @@
 
 - type: salvageTemperatureMod
   id: Frozen
-  desc: Extreme cold
+  desc: Экстремальный холод
   cost: 3
   temperature: 123.15 # -150C
   biomes:

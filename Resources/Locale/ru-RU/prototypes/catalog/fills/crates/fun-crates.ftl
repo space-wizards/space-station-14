@@ -48,3 +48,7 @@ ent-CrateFunBoxing = Боксёрский ящик
 
 ent-CrateFunWaterGuns = Ящик с водяным пистолетом
     .desc = Специальное летнее предложение с множеством ярких водяных пистолетов. Вода не включена.
+
+ent-CrateFunToyBox = { ent-CrateToyBox }
+    .suffix = { "Заполненный" }
+    .desc = { ent-CrateToyBox.desc }
