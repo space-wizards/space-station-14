@@ -13,28 +13,5 @@ namespace Content.Server.NodeContainer
         [DataField("nodes", readOnly: true)] public Dictionary<string, Node> Nodes { get; } = new();
 
         [DataField("examinable")] public bool Examinable = false;
-
-        public T GetNode<T>(string identifier) where T : Node
-        {
-            return (T) Nodes[identifier];
-        }
-
-        public bool TryGetNode<T>(string? identifier, [NotNullWhen(true)] out T? node) where T : Node
-        {
-            if (identifier == null)
-            {
-                node = null;
-                return false;
-            }
-
-            if (Nodes.TryGetValue(identifier, out var n) && n is T t)
-            {
-                node = t;
-                return true;
-            }
-
-            node = null;
-            return false;
-        }
     }
 }

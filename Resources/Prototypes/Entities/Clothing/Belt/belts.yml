@@ -37,6 +37,8 @@
         - Welder
         - PowerCell
         - Geiger
+        - TrayScanner
+        - GasAnalyzer
   - type: ItemMapper
     mapLayers:
       drill:
@@ -110,6 +112,8 @@
         - Handcuff
         - PowerCell
         - Geiger
+        - TrayScanner
+        - GasAnalyzer
   - type: ItemMapper
     mapLayers:
       drill:
@@ -234,6 +238,7 @@
   - type: Clothing
     sprite: Clothing/Belt/medical.rsi
   - type: Storage
+    capacity: 60
     whitelist:
       tags:
         - Wrench
@@ -307,6 +312,7 @@
         - PlantSampleTaker
         - PlantBGone
         - Bottle
+        - Syringe
         - CigPack
       components:
         - Seed

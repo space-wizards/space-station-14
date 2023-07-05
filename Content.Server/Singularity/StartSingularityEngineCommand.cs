@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Server.ParticleAccelerator.Components;
+using Content.Server.ParticleAccelerator.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Server.Singularity.EntitySystems;
 using Content.Shared.Administration;
@@ -44,12 +45,18 @@ namespace Content.Server.Singularity
             }
 
             // Setup PA
-            foreach (var comp in entityManager.EntityQuery<ParticleAcceleratorControlBoxComponent>())
+            var paSystem = entitySystemManager.GetEntitySystem<ParticleAcceleratorSystem>();
+            var paQuery = entityManager.EntityQueryEnumerator<ParticleAcceleratorControlBoxComponent>();
+            while (paQuery.MoveNext(out var paId, out var paControl))
             {
-                comp.RescanParts();
-                comp.SetStrength(ParticleAcceleratorPowerState.Level0);
-                comp.SwitchOn();
+                paSystem.RescanParts(paId, controller: paControl);
+                if (!paControl.Assembled)
+                    continue;
+
+                paSystem.SetStrength(paId, ParticleAcceleratorPowerState.Level0, comp: paControl);
+                paSystem.SwitchOn(paId, comp: paControl);
             }
+
             shell.WriteLine("Done!");
         }
     }

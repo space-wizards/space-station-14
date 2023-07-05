@@ -46,7 +46,6 @@ public sealed partial class NPCSteeringSystem
         Angle offsetRot,
         float moveSpeed,
         float[] interest,
-        EntityQuery<PhysicsComponent> bodyQuery,
         float frameTime,
         ref bool forceSteer)
     {
@@ -132,7 +131,7 @@ public sealed partial class NPCSteeringSystem
                         return true;
                     }
 
-                    status = TryHandleFlags(uid, steering, node, bodyQuery);
+                    status = TryHandleFlags(uid, steering, node);
                 }
 
                 // TODO: Need to handle re-pathing in case the target moves around.
@@ -202,7 +201,7 @@ public sealed partial class NPCSteeringSystem
                 // A) NPCs get stuck on non-anchored static bodies still (e.g. closets)
                 // B) NPCs still try to move in locked containers (e.g. cow, hamster)
                 // and I don't want to spam grafana even harder than it gets spammed rn.
-                _sawmill.Debug($"NPC {ToPrettyString(uid)} found stuck at {ourCoordinates}");
+                Log.Debug($"NPC {ToPrettyString(uid)} found stuck at {ourCoordinates}");
                 steering.Status = SteeringStatus.NoPath;
                 return false;
             }
@@ -380,18 +379,16 @@ public sealed partial class NPCSteeringSystem
         int layer,
         int mask,
         TransformComponent xform,
-        float[] danger,
-        List<Vector2> dangerPoints,
-        EntityQuery<PhysicsComponent> bodyQuery,
-        EntityQuery<TransformComponent> xformQuery)
+        float[] danger)
     {
-        var detectionRadius = MathF.Max(1f, agentRadius);
+        var objectRadius = 0.15f;
+        var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Static))
         {
             // TODO: If we can access the door or smth.
             if (ent == uid ||
-                !bodyQuery.TryGetComponent(ent, out var otherBody) ||
+                !_physicsQuery.TryGetComponent(ent, out var otherBody) ||
                 !otherBody.Hard ||
                 !otherBody.CanCollide ||
                 (mask & otherBody.CollisionLayer) == 0x0 &&
@@ -400,31 +397,34 @@ public sealed partial class NPCSteeringSystem
                 continue;
             }
 
-            if (!_physics.TryGetNearestPoints(uid, ent, out var pointA, out var pointB, xform, xformQuery.GetComponent(ent)))
-                continue;
+            var xformB = _xformQuery.GetComponent(ent);
 
-            var obstacleDirection = pointB - pointA;
-            var obstableDistance = obstacleDirection.Length;
-
-            if (obstableDistance > detectionRadius)
-                continue;
-
-            // Fallback to worldpos if we're colliding.
-            if (obstableDistance == 0f)
+            if (!_physics.TryGetNearest(uid, ent, out var pointA, out var pointB, out var distance, xform, xformB))
             {
-                obstacleDirection = pointB - worldPos;
-                obstableDistance = obstacleDirection.Length;
-
-                if (obstableDistance == 0f)
-                    continue;
-
-                obstableDistance = agentRadius;
+                continue;
             }
 
-            dangerPoints.Add(pointB);
+            if (distance > detectionRadius)
+                continue;
+
+            var weight = 1f;
+            var obstacleDirection = pointB - pointA;
+
+            // Inside each other so just use worldPos
+            if (distance == 0f)
+            {
+                obstacleDirection = _transform.GetWorldPosition(xformB) - worldPos;
+            }
+            else
+            {
+                weight = distance / detectionRadius;
+            }
+
+            if (obstacleDirection == Vector2.Zero)
+                continue;
+
             obstacleDirection = offsetRot.RotateVec(obstacleDirection);
             var norm = obstacleDirection.Normalized;
-            var weight = obstableDistance <= agentRadius ? 1f : (detectionRadius - obstableDistance) / detectionRadius;
 
             for (var i = 0; i < InterestDirections; i++)
             {
@@ -451,11 +451,10 @@ public sealed partial class NPCSteeringSystem
         int mask,
         PhysicsComponent body,
         TransformComponent xform,
-        float[] danger,
-        EntityQuery<PhysicsComponent> bodyQuery,
-        EntityQuery<TransformComponent> xformQuery)
+        float[] danger)
     {
-        var detectionRadius = MathF.Max(0.35f, agentRadius + 0.1f);
+        var objectRadius = 0.25f;
+        var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
         var ourVelocity = body.LinearVelocity;
         var factionQuery = GetEntityQuery<FactionComponent>();
         factionQuery.TryGetComponent(uid, out var ourFaction);
@@ -464,7 +463,7 @@ public sealed partial class NPCSteeringSystem
         {
             // TODO: If we can access the door or smth.
             if (ent == uid ||
-                !bodyQuery.TryGetComponent(ent, out var otherBody) ||
+                !_physicsQuery.TryGetComponent(ent, out var otherBody) ||
                 !otherBody.Hard ||
                 !otherBody.CanCollide ||
                 (mask & otherBody.CollisionLayer) == 0x0 &&
@@ -477,23 +476,38 @@ public sealed partial class NPCSteeringSystem
                 continue;
             }
 
-            var xformB = xformQuery.GetComponent(ent);
+            var xformB = _xformQuery.GetComponent(ent);
 
-            if (!_physics.TryGetNearestPoints(uid, ent, out _, out var pointB, xform, xformB))
+            if (!_physics.TryGetNearest(uid, ent, out var pointA, out var pointB, out var distance, xform, xformB))
             {
                 continue;
             }
 
-            var obstacleDirection = pointB - worldPos;
-            var obstableDistance = obstacleDirection.Length;
-
-            if (obstableDistance > detectionRadius || obstableDistance == 0f)
+            if (distance > detectionRadius)
                 continue;
+
+            var weight = 1f;
+            var obstacleDirection = pointB - pointA;
+
+            // Inside each other so just use worldPos
+            if (distance == 0f)
+            {
+                obstacleDirection = _transform.GetWorldPosition(xformB) - worldPos;
+
+                // Welp
+                if (obstacleDirection == Vector2.Zero)
+                {
+                    obstacleDirection = _random.NextAngle().ToVec();
+                }
+            }
+            else
+            {
+                weight = distance / detectionRadius;
+            }
 
             obstacleDirection = offsetRot.RotateVec(obstacleDirection);
             var norm = obstacleDirection.Normalized;
-            var weight = obstableDistance <= agentRadius ? 1f : (detectionRadius - obstableDistance) / detectionRadius;
-            weight *= 1f;
+            weight *= 0.25f;
 
             for (var i = 0; i < InterestDirections; i++)
             {

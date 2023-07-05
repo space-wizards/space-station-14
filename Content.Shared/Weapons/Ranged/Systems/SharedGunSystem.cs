@@ -98,7 +98,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     private void OnMapInit(EntityUid uid, GunComponent component, MapInitEvent args)
     {
         if (component.NextFire > Timing.CurTime)
-            Logger.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
+            Log.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
 
         DebugTools.Assert((component.AvailableModes & component.SelectedMode) != 0x0);
 #endif
@@ -221,8 +221,13 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var curTime = Timing.CurTime;
 
-        // Maybe Raise an event for this? CanAttack doesn't seem appropriate.
-        if (TryComp<MeleeWeaponComponent>(gunUid, out var melee) && melee.NextAttack > curTime)
+        // check if anything wants to prevent shooting
+        var prevention = new ShotAttemptedEvent
+        {
+            User = user
+        };
+        RaiseLocalEvent(gunUid, ref prevention);
+        if (prevention.Cancelled)
             return;
 
         // Need to do this to play the clicking sound for empty automatic weapons

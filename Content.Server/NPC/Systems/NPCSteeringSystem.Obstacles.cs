@@ -33,7 +33,7 @@ public sealed partial class NPCSteeringSystem
      */
 
 
-    private SteeringObstacleStatus TryHandleFlags(EntityUid uid, NPCSteeringComponent component, PathPoly poly, EntityQuery<PhysicsComponent> bodyQuery)
+    private SteeringObstacleStatus TryHandleFlags(EntityUid uid, NPCSteeringComponent component, PathPoly poly)
     {
         DebugTools.Assert(!poly.Data.IsFreeSpace);
         // TODO: Store PathFlags on the steering comp
@@ -71,7 +71,7 @@ public sealed partial class NPCSteeringSystem
 
             var obstacleEnts = new List<EntityUid>();
 
-            GetObstacleEntities(poly, mask, layer, bodyQuery, obstacleEnts);
+            GetObstacleEntities(poly, mask, layer, obstacleEnts);
             var isDoor = (poly.Data.Flags & PathfindingBreadcrumbFlag.Door) != 0x0;
             var isAccessRequired = (poly.Data.Flags & PathfindingBreadcrumbFlag.Access) != 0x0;
 
@@ -157,8 +157,7 @@ public sealed partial class NPCSteeringSystem
         return SteeringObstacleStatus.Completed;
     }
 
-    private void GetObstacleEntities(PathPoly poly, int mask, int layer, EntityQuery<PhysicsComponent> bodyQuery,
-        List<EntityUid> ents)
+    private void GetObstacleEntities(PathPoly poly, int mask, int layer, List<EntityUid> ents)
     {
         // TODO: Can probably re-use this from pathfinding or something
         if (!_mapManager.TryGetGrid(poly.GraphUid, out var grid))
@@ -168,7 +167,7 @@ public sealed partial class NPCSteeringSystem
 
         foreach (var ent in grid.GetLocalAnchoredEntities(poly.Box))
         {
-            if (!bodyQuery.TryGetComponent(ent, out var body) ||
+            if (!_physicsQuery.TryGetComponent(ent, out var body) ||
                 !body.Hard ||
                 !body.CanCollide ||
                 (body.CollisionMask & layer) == 0x0 && (body.CollisionLayer & mask) == 0x0)

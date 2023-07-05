@@ -1,7 +1,7 @@
 using Content.Server.Popups;
-using Content.Server.Coordinates.Helpers;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Physics;
 using Content.Shared.Doors.Components;
 using Content.Shared.Maps;

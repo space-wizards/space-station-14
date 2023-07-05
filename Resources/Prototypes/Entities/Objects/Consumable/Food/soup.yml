@@ -15,7 +15,6 @@
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
-    netsync: false
   - type: DamageOnLand
     damage:
       types:
@@ -35,6 +34,9 @@
         Blunt: 0
   - type: Damageable
     damageContainer: Inorganic
+  - type: Tag
+    tags:
+    - Soup
   - type: Destructible
     thresholds:
     - trigger:

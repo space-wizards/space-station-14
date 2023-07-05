@@ -26,7 +26,7 @@ public sealed partial class WieldableComponent : Component
     public bool Wielded = false;
 
     [DataField("wieldedInhandPrefix")]
-    public string WieldedInhandPrefix = "wielded";
+    public string? WieldedInhandPrefix = "wielded";
 
     public string? OldInhandPrefix = null;
 

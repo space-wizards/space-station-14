@@ -178,14 +178,22 @@ namespace Content.Client.Paper.UI
         public void Populate(SharedPaperComponent.PaperBoundUserInterfaceState state)
         {
             bool isEditing = state.Mode == SharedPaperComponent.PaperAction.Write;
+            bool wasEditing = InputContainer.Visible;
             InputContainer.Visible = isEditing;
 
             var msg = new FormattedMessage();
             msg.AddMarkupPermissive(state.Text);
 
-            Input.TextRope = Rope.Leaf.Empty;
-            Input.CursorPosition = new TextEdit.CursorPos();
-            Input.InsertAtCursor(msg.ToString());
+            if (!wasEditing)
+            {
+                // We can get repeated messages with state.Mode == Write if another
+                // player opens the UI for reading. In this case, don't update the
+                // text input, as this player is currently writing new text and we
+                // don't want to lose any text they already input.
+                Input.TextRope = Rope.Leaf.Empty;
+                Input.CursorPosition = new TextEdit.CursorPos();
+                Input.InsertAtCursor(msg.ToString());
+            }
 
             for (var i = 0; i <= state.StampedBy.Count * 3 + 1; i++)
             {

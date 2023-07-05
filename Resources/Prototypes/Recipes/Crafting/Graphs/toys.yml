@@ -6,10 +6,16 @@
       edges:
         - to: plushie
           steps:
-            - prototype: PlushieGhost
-              name: a ghost plushie
-            - prototype: Ectoplasm
+            - tag: PlushieGhost
+              name: ghost soft toy
+              icon:
+                sprite: Mobs/Ghosts/ghost_human.rsi
+                state: icon
+            - tag: Ectoplasm
               name: ectoplasm
+              icon:
+                sprite: Mobs/Ghosts/revenant.rsi
+                state: ectoplasm
               doAfter: 10
     - node: plushie
       entity: PlushieGhostRevenant

@@ -10,6 +10,7 @@
   components:
     - type: StationBankAccount
     - type: StationCargoOrderDatabase
+    - type: StationCargoBountyDatabase
 
 - type: entity
   id: BaseStationJobsSpawning
@@ -30,6 +31,15 @@
   abstract: true
   components:
     - type: StationArrivals
+
+- type: entity
+  id: BaseStationShuttles
+  abstract: true
+  components:
+    - type: GridSpawn
+      paths:
+        - /Maps/Shuttles/cargo.yml
+        - /Maps/Shuttles/mining.yml
 
 - type: entity
   id: BaseStationCentcomm

@@ -134,7 +134,17 @@
         conditions:
         - !type:OrganType
           type: Plant
-
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Plant
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 1
+            Burn: 2
+            Poison: 1
 - type: reagent
   id: WeedKiller
   name: reagent-name-weed-killer

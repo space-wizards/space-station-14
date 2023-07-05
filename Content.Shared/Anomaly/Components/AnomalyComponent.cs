@@ -112,7 +112,7 @@ public sealed class AnomalyComponent : Component
     /// This is more likely to trend upwards than donwards, because that's funny
     /// </remarks>
     [DataField("pulseStabilityVariation")]
-    public Vector2 PulseStabilityVariation = (-0.125f, 0.20f);
+    public Vector2 PulseStabilityVariation = (-0.1f, 0.15f);
 
     /// <summary>
     /// The sound played when an anomaly pulses
@@ -175,14 +175,14 @@ public sealed class AnomalyComponent : Component
     /// The minimum amount of research points generated per second
     /// </summary>
     [DataField("minPointsPerSecond")]
-    public int MinPointsPerSecond;
+    public int MinPointsPerSecond = 10;
 
     /// <summary>
     /// The maximum amount of research points generated per second
     /// This doesn't include the point bonus for being unstable.
     /// </summary>
     [DataField("maxPointsPerSecond")]
-    public int MaxPointsPerSecond = 75;
+    public int MaxPointsPerSecond = 80;
 
     /// <summary>
     /// The multiplier applied to the point value for the

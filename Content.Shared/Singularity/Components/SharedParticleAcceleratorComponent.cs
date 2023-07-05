@@ -22,13 +22,13 @@ namespace Content.Shared.Singularity.Components
     }
 
     [NetSerializable, Serializable]
-    public enum ParticleAcceleratorPowerState
+    public enum ParticleAcceleratorPowerState : byte
     {
         Standby = ParticleAcceleratorVisualState.Powered,
         Level0 = ParticleAcceleratorVisualState.Level0,
         Level1 = ParticleAcceleratorVisualState.Level1,
         Level2 = ParticleAcceleratorVisualState.Level2,
-        Level3 = ParticleAcceleratorVisualState.Level3
+        Level3 = ParticleAcceleratorVisualState.Level3,
     }
 
     public enum ParticleAcceleratorVisualLayers
@@ -56,9 +56,9 @@ namespace Content.Shared.Singularity.Components
         public int PowerReceive;
 
         //dont need a bool for the controlbox because... this is sent to the controlbox :D
-        public bool EmitterLeftExists;
-        public bool EmitterCenterExists;
-        public bool EmitterRightExists;
+        public bool EmitterStarboardExists;
+        public bool EmitterForeExists;
+        public bool EmitterPortExists;
         public bool PowerBoxExists;
         public bool FuelChamberExists;
         public bool EndCapExists;
@@ -67,16 +67,16 @@ namespace Content.Shared.Singularity.Components
         public ParticleAcceleratorPowerState MaxLevel;
         public bool WirePowerBlock;
 
-        public ParticleAcceleratorUIState(bool assembled, bool enabled, ParticleAcceleratorPowerState state, int powerReceive, int powerDraw, bool emitterLeftExists, bool emitterCenterExists, bool emitterRightExists, bool powerBoxExists, bool fuelChamberExists, bool endCapExists, bool interfaceBlock, ParticleAcceleratorPowerState maxLevel, bool wirePowerBlock)
+        public ParticleAcceleratorUIState(bool assembled, bool enabled, ParticleAcceleratorPowerState state, int powerReceive, int powerDraw, bool emitterStarboardExists, bool emitterForeExists, bool emitterPortExists, bool powerBoxExists, bool fuelChamberExists, bool endCapExists, bool interfaceBlock, ParticleAcceleratorPowerState maxLevel, bool wirePowerBlock)
         {
             Assembled = assembled;
             Enabled = enabled;
             State = state;
             PowerDraw = powerDraw;
             PowerReceive = powerReceive;
-            EmitterLeftExists = emitterLeftExists;
-            EmitterCenterExists = emitterCenterExists;
-            EmitterRightExists = emitterRightExists;
+            EmitterStarboardExists = emitterStarboardExists;
+            EmitterForeExists = emitterForeExists;
+            EmitterPortExists = emitterPortExists;
             PowerBoxExists = powerBoxExists;
             FuelChamberExists = fuelChamberExists;
             EndCapExists = endCapExists;

@@ -7,7 +7,6 @@
   - type: Item
     size: 6
   - type: Sprite
-    netsync: false
     drawdepth: SmallObjects # I guess body bags need appear above a coroner's table?
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     layers:
@@ -104,7 +103,6 @@
   description: This used to be something, but now it's not.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/materials.rsi
     state: ash
   - type: Tag
@@ -131,12 +129,12 @@
   description: Much less deadly in this form.
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Ghosts/revenant.rsi
       state: ectoplasm
     - type: Tag
       tags:
         - Trash
+        - Ectoplasm
     - type: SolutionContainerManager
       solutions:
         food:

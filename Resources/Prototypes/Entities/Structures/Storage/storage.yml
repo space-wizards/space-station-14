@@ -18,7 +18,6 @@
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
     state: rack
-    netsync: false
     snapCardinals: true
   - type: Fixtures
     fixtures:
@@ -58,4 +57,4 @@
         acts: [ "Destruction" ]
   - type: Climbable
   - type: StaticPrice
-    price: 150
+    price: 22

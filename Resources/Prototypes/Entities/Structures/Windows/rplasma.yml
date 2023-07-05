@@ -64,7 +64,6 @@
     - Window
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Windows/directional.rsi
     state: plasma_reinforced_window
   - type: Icon

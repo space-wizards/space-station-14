@@ -87,3 +87,31 @@
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 0.5
+
+- type: reagent
+  id: Fat
+  name: reagent-name-fat
+  group: Biological
+  desc: reagent-desc-fat
+  flavor: terrible
+  color: "#d8d8b0"
+  physicalDesc: reagent-physical-desc-exotic-smelling
+  slippery: false
+
+- type: reagent
+  id: Vomit
+  name: reagent-name-vomit
+  group: Biological
+  desc: reagent-desc-vomit
+  flavor: terrible
+  color: "#87ab08"
+  physicalDesc: reagent-physical-desc-pungent
+  slippery: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 0.5
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1

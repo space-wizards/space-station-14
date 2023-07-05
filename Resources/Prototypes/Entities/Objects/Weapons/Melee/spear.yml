@@ -10,7 +10,6 @@
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
-    netsync: false
     state: spear
   - type: MeleeWeapon
     damage:
@@ -23,7 +22,7 @@
       types:
         Piercing: 15
   - type: Item
-    size: 25
+    size: 95
   - type: Clothing
     quickEquip: false
     slots:
@@ -90,7 +89,6 @@
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/reinforced_spear.rsi
-    netsync: false
     state: spear
   - type: MeleeWeapon
     damage:
@@ -103,7 +101,7 @@
       types:
         Piercing: 18
   - type: Item
-    size: 25
+    size: 95
   - type: Clothing
     quickEquip: false
     slots:
@@ -170,7 +168,6 @@
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/plasma_spear.rsi
-    netsync: false
     state: spear
   - type: MeleeWeapon
     damage:
@@ -183,7 +180,7 @@
       types:
         Piercing: 21
   - type: Item
-    size: 25
+    size: 95
   - type: Clothing
     quickEquip: false
     slots:
@@ -250,7 +247,6 @@
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/uranium_spear.rsi
-    netsync: false
     state: spear
   - type: MeleeWeapon
     damage:
@@ -265,7 +261,7 @@
         Piercing: 12
         Radiation: 9
   - type: Item
-    size: 25
+    size: 95
   - type: Clothing
     quickEquip: false
     slots:

@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/hypospray.rsi
     state: combat_hypo
-    netsync: false
   - type: GuardianCreator
     guardianProto: MobHoloparasiteGuardian
 
