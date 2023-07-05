@@ -27,6 +27,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
@@ -758,6 +759,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             _ui.TryClose(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, actor.PlayerSession);
         }
 
+        // Maybe do pullable instead? Eh still fine.
+        Joints.RecursiveClearJoints(inserted);
         UpdateVisualState(uid, component);
     }
 }

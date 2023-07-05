@@ -10,6 +10,7 @@ using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -25,11 +26,20 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly MetaDataSystem Metadata = default!;
     [Dependency] private   readonly MobStateSystem _mobState = default!;
+    [Dependency] protected readonly SharedJointSystem Joints = default!;
 
     protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 
+    protected EntityQuery<TransformComponent> XformQuery;
+
     // Percentage
     public const float PressurePerSecond = 0.05f;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        XformQuery = GetEntityQuery<TransformComponent>();
+    }
 
     /// <summary>
     /// Gets the current pressure state of a disposals unit.
