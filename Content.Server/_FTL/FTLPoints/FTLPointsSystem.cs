@@ -90,7 +90,24 @@ public sealed class FTLPointsSystem : EntitySystem
                 "KettleStation",
                 "Default",
                 "Blank",
-                "BagelStation"
+                "BagelStation",
+                "Blue_Nebula_01",
+                "Blue_Nebula_02",
+                "Blue_Nebula_03",
+                "Blue_Nebula_04",
+                "Green_Nebula_01",
+                "Green_Nebula_02",
+                "Green_Nebula_03",
+                "Green_Nebula_04",
+                "Green_Nebula_06",
+                "Green_Nebula_07",
+                "Green_Nebula_08",
+                "Purple_Nebula_01",
+                "Purple_Nebula_02",
+                "Purple_Nebula_03",
+                "Purple_Nebula_04",
+                "Purple_Nebula_05",
+                "Purple_Nebula_08"
             };
             var parallax = EnsureComp<ParallaxComponent>(mapUid);
             parallax.Parallax = _random.Pick(parallaxes);
