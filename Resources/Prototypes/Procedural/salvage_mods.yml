@@ -104,7 +104,7 @@
 # Air mixtures
 - type: salvageAirMod
   id: Space
-  desc: No atmosphere
+  desc: Нет атмосферы
   space: true
   cost: 1
   biomes:
