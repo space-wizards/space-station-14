@@ -445,7 +445,9 @@ public abstract class SharedDoorSystem : EntitySystem
             if (otherPhysics == physics)
                 continue;
 
-            if (!otherPhysics.CanCollide)
+            //TODO: Make only shutters ignore these objects upon colliding instead of all airlocks
+            // Excludes Glasslayer for windows, GlassAirlockLayer for windoors, TableLayer for tables
+            if (!otherPhysics.CanCollide || otherPhysics.CollisionLayer == (int) CollisionGroup.GlassLayer || otherPhysics.CollisionLayer == (int) CollisionGroup.GlassAirlockLayer || otherPhysics.CollisionLayer == (int) CollisionGroup.TableLayer)
                 continue;
 
             //If the colliding entity is a slippable item ignore it by the airlock

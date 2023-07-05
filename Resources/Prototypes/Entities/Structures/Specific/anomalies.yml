@@ -72,6 +72,9 @@
   - type: GasProducerAnomaly
     releasedGas: 3
     releaseOnMaxSeverity: true
+    spawnRadius: 3
+    tileCount: 5
+    tempChange: 550
 
 - type: entity
   id: AnomalyGravity
@@ -227,3 +230,4 @@
   - type: GasProducerAnomaly
     releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
     releaseOnMaxSeverity: true
+    spawnRadius: 0
