@@ -6,12 +6,18 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client.UserInterface.Controls
 {
+    /// <summary>
+    /// A generic container which can layer multiple styleboxes over/under the contents
+    /// of the child controls. Use the foreground stylebox and background stylebox properties
+    /// to configure these layers. This is useful for displaying additional effects such
+    /// as shadows or highlights around controls.
+    /// </summary>
     [GenerateTypedNameReferences]
-    public partial class ForegroundImageContainer : Container //<todo.eoin Rename this
+    public partial class LayeredImageContainer : Container
     {
         // The least amount of margin that a child needs to have to avoid drawing under
         // undesirable parts of the images. Children can add larger margins if desired
-        public const string StylePropertyContentMargin = "MinimumContentMargin"; //<todo.eoin Rename
+        public const string StylePropertyMinimumContentMargin = "MinimumContentMargin";
 
         // The stylebox used to draw the foreground
         public const string StylePropertyForegroundStyleBox = "ForegroundStyleBox";
@@ -35,7 +41,7 @@ namespace Content.Client.UserInterface.Controls
             set => ForegroundContainer.ModulateSelfOverride = value;
         }
 
-        public ForegroundImageContainer()
+        public LayeredImageContainer()
         {
             RobustXamlLoader.Load(this);
             XamlChildren = ContentsContainer.Children;
@@ -53,7 +59,7 @@ namespace Content.Client.UserInterface.Controls
                 ForegroundContainer.ModulateSelfOverride = foregroundModulate;
             }
 
-            if (TryGetStyleProperty<Thickness>(StylePropertyContentMargin, out var contentMargin))
+            if (TryGetStyleProperty<Thickness>(StylePropertyMinimumContentMargin, out var contentMargin))
             {
                 ContentsContainer.Margin = contentMargin;
             }

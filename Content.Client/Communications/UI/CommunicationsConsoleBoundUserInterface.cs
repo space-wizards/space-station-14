@@ -103,7 +103,6 @@ namespace Content.Client.Communications.UI
 
             if (_menu != null)
             {
-                //<todo.eoin Tidy this up
                 _menu.UpdateCountdown();
                 _menu.UpdateAlertLevels(commsState.AlertLevels, commsState.AlertColors, CurrentLevel);
                 _menu.AlertLevelSelectable = AlertLevelSelectable;

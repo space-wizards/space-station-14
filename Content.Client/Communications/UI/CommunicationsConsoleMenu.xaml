@@ -11,46 +11,46 @@
         <!-- First column: Announcements and station alert level controls -->
         <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="12 12 6 12">
             <!-- Announcement controls -->
-            <ui:ForegroundImageContainer StyleClasses="SquareOutlineShadow"
+            <ui:LayeredImageContainer StyleClasses="SquareOutlineShadow"
                 VerticalExpand="True"
                 VerticalAlignment="Top"
                 Margin="0 0 0 6">
 
-                <ui:ForegroundImageContainer StyleClasses="SquareBevelHighlight">
+                <ui:LayeredImageContainer StyleClasses="SquareBevelHighlight">
                     <PanelContainer StyleClasses="PanelBackgroundBaseDark">
                         <BoxContainer Orientation="Vertical" Margin="12">
-                            <ui:ForegroundImageContainer
+                            <ui:LayeredImageContainer
                                 StyleClasses="PanelMountHighlight"
                                 HorizontalAlignment="Stretch"
                                 VerticalExpand="True"
                                 VerticalAlignment="Stretch">
-                                 <ui:ForegroundImageContainer
+                                 <ui:LayeredImageContainer
                                     StyleClasses="PanelMountBase"
                                     HorizontalAlignment="Stretch"
                                     VerticalExpand="True"
                                     VerticalAlignment="Stretch">
                                     <TextEdit Name="MessageInput" MinHeight="100" Margin="6" />
-                                 </ui:ForegroundImageContainer>
-                            </ui:ForegroundImageContainer>
+                                 </ui:LayeredImageContainer>
+                            </ui:LayeredImageContainer>
                             <ui:HSpacer Spacing="10"/>
-                            <ui:ForegroundImageContainer StyleClasses="AngleRectOutlineShadow">
-                                <ui:ForegroundImageContainer StyleClasses="AngleRectBevel">
+                            <ui:LayeredImageContainer StyleClasses="AngleRectOutlineShadow">
+                                <ui:LayeredImageContainer StyleClasses="AngleRectBevel">
                                     <Button Name="AnnounceButton" Access="Public"
                                         Text="{Loc 'comms-console-menu-announcement-button'}" />
-                                </ui:ForegroundImageContainer>
-                            </ui:ForegroundImageContainer>
+                                </ui:LayeredImageContainer>
+                            </ui:LayeredImageContainer>
                         </BoxContainer>
                     </PanelContainer>
-                </ui:ForegroundImageContainer>
-            </ui:ForegroundImageContainer>
+                </ui:LayeredImageContainer>
+            </ui:LayeredImageContainer>
 
-            <ui:ForegroundImageContainer StyleClasses="SquareOutlineShadow">
-                <ui:ForegroundImageContainer
+            <ui:LayeredImageContainer StyleClasses="SquareOutlineShadow">
+                <ui:LayeredImageContainer
                     StyleClasses="SquareBevelHighlight"
                     VerticalExpand="True"
                     VerticalAlignment="Bottom">
                     <PanelContainer StyleClasses="PanelBackgroundBaseDark">
-                        <ui:ForegroundImageContainer StyleClasses="BracketedContainerEmbossed"
+                        <ui:LayeredImageContainer StyleClasses="BracketedContainerEmbossed"
                             HorizontalAlignment="Center"
                             Margin="0 6 0 6">
                             <BoxContainer Orientation="Vertical">
@@ -59,17 +59,17 @@
                                     HorizontalAlignment="Center" />
                                 <GridContainer Columns="2">
                                     <!-- Row with alert level light and label -->
-                                    <ui:ForegroundImageContainer
+                                    <ui:LayeredImageContainer
                                         StyleClasses="PanelMountHighlightSmall" SetSize="60 35">
-                                        <ui:ForegroundImageContainer
+                                        <ui:LayeredImageContainer
                                             StyleClasses="PanelMountBaseSmall"
                                             HorizontalExpand="True" VerticalExpand="True">
                                             <TextureButton Name="AlertLevelLight"
                                                 TexturePath="/Textures/Interface/Nano/square.png"
                                                 HorizontalAlignment="Stretch"
                                                 VerticalAlignment="Stretch" />
-                                        </ui:ForegroundImageContainer>
-                                    </ui:ForegroundImageContainer>
+                                        </ui:LayeredImageContainer>
+                                    </ui:LayeredImageContainer>
 
                                     <Label Name="CurrentAlertLabel" HorizontalAlignment="Center"/>
 
@@ -89,35 +89,35 @@
                                     </PanelContainer>
 
                                     <!-- Row with controls to change alert level -->
-                                    <ui:ForegroundImageContainer StyleClasses="AngleRectOutlineShadow" Margin="6">
-                                        <ui:ForegroundImageContainer StyleClasses="AngleRectBevel">
+                                    <ui:LayeredImageContainer StyleClasses="AngleRectOutlineShadow" Margin="6">
+                                        <ui:LayeredImageContainer StyleClasses="AngleRectBevel">
                                             <OptionButton Name="AlertLevelOptions" MinWidth="100" Access="Public" VerticalAlignment="Center"/>
-                                        </ui:ForegroundImageContainer>
-                                    </ui:ForegroundImageContainer>
+                                        </ui:LayeredImageContainer>
+                                    </ui:LayeredImageContainer>
 
-                                    <ui:ForegroundImageContainer StyleClasses="AngleRectOutlineShadow" Margin="6">
-                                        <ui:ForegroundImageContainer StyleClasses="AngleRectBevel">
+                                    <ui:LayeredImageContainer StyleClasses="AngleRectOutlineShadow" Margin="6">
+                                        <ui:LayeredImageContainer StyleClasses="AngleRectBevel">
                                             <Button Name="SetAlertLevelButton" Access="Public" Text="{Loc 'comms-console-menu-set-alert-button-label'}" />
-                                        </ui:ForegroundImageContainer>
-                                    </ui:ForegroundImageContainer>
+                                        </ui:LayeredImageContainer>
+                                    </ui:LayeredImageContainer>
                                 </GridContainer>
                             </BoxContainer>
-                        </ui:ForegroundImageContainer>
+                        </ui:LayeredImageContainer>
                     </PanelContainer>
-                </ui:ForegroundImageContainer>
-            </ui:ForegroundImageContainer>
+                </ui:LayeredImageContainer>
+            </ui:LayeredImageContainer>
         </BoxContainer>
 
         <!-- Second column: Shuttle state indicators and call/recall buttons -->
         <Control Margin="6 12 12 12">
-            <ui:ForegroundImageContainer StyleClasses="SquareBevelHighlight" Margin="6 0 0 0">
+            <ui:LayeredImageContainer StyleClasses="SquareBevelHighlight" Margin="6 0 0 0">
                 <ui:StripeBack
                     HasTopEdge="False" HasBottomEdge="False"
                     StyleClasses="StripeWarning" HorizontalExpand="False"
                     HorizontalAlignment="Center">
 
                     <BoxContainer Orientation="Vertical" HorizontalAlignment="Stretch">
-                        <ui:ForegroundImageContainer
+                        <ui:LayeredImageContainer
                             StyleClasses="AngleRectEmbedded"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Top"
@@ -125,16 +125,16 @@
                                 <PanelContainer StyleClasses="AngleRect"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch">
-                                    <ui:ForegroundImageContainer Margin="4" StyleClasses="BracketedContainerEmbossed">
+                                    <ui:LayeredImageContainer Margin="4" StyleClasses="BracketedContainerEmbossed">
                                         <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center" VerticalExpand="True">
                                             <Label Text="{Loc 'comms-console-menu-call-shuttle'}" />
                                             <ui:HSpacer Spacing="12"/>
-                                            <ui:ForegroundImageContainer
+                                            <ui:LayeredImageContainer
                                                 StyleClasses="PanelMountHighlight"
                                                 HorizontalAlignment="Center"
                                                 SetSize="80 80"
                                                 VerticalAlignment="Center">
-                                                 <ui:ForegroundImageContainer
+                                                 <ui:LayeredImageContainer
                                                     StyleClasses="PanelMountBase"
                                                     HorizontalAlignment="Center"
                                                     SetSize="80 80"
@@ -142,29 +142,29 @@
                                                     <TextureButton Name="EmergencyShuttleCallButton" Access="Public"
                                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                                         StyleClasses="TemptingRedButton" />
-                                                </ui:ForegroundImageContainer>
-                                            </ui:ForegroundImageContainer>
+                                                </ui:LayeredImageContainer>
+                                            </ui:LayeredImageContainer>
                                         </BoxContainer>
-                                    </ui:ForegroundImageContainer>
+                                    </ui:LayeredImageContainer>
                                 </PanelContainer>
-                        </ui:ForegroundImageContainer>
+                        </ui:LayeredImageContainer>
 
                         <!-- This contains the shuttle state indicators -->
-                        <ui:ForegroundImageContainer
+                        <ui:LayeredImageContainer
                             Name="EmbeddedShuttleState"
                             Margin="12"
                             StyleClasses="AngleRectEmbedded"
                             VerticalAlignment="Center">
                             <PanelContainer StyleClasses="AngleRect">
-                                <ui:ForegroundImageContainer Margin="4" StyleClasses="BracketedContainerEmbossed">
+                                <ui:LayeredImageContainer Margin="4" StyleClasses="BracketedContainerEmbossed">
                                     <BoxContainer Orientation="Vertical">
                                         <!-- "Shuttle is incoming" light in here -->
                                         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Stretch">
                                             <Label Text="{Loc 'comms-shuttle-incoming-label'}" VerticalAlignment="Center" />
                                             <ui:VSpacer Spacing="12"/>
                                             <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                                <ui:ForegroundImageContainer StyleClasses="PanelMountHighlightSmall" Margin="0 0 4 0" >
-                                                     <ui:ForegroundImageContainer
+                                                <ui:LayeredImageContainer StyleClasses="PanelMountHighlightSmall" Margin="0 0 4 0" >
+                                                     <ui:LayeredImageContainer
                                                         StyleClasses="PanelMountBaseSmall"
                                                         HorizontalExpand="True"
                                                         HorizontalAlignment="Right">
@@ -172,8 +172,8 @@
                                                             StyleClasses="LightUnlit"
                                                             HorizontalAlignment="Stretch"
                                                             VerticalAlignment="Stretch"/>
-                                                    </ui:ForegroundImageContainer>
-                                                </ui:ForegroundImageContainer>
+                                                    </ui:LayeredImageContainer>
+                                                </ui:LayeredImageContainer>
                                             </BoxContainer>
                                         </BoxContainer>
 
@@ -183,11 +183,11 @@
                                         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                                             <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" VerticalAlignment="Center"/>
                                             <ui:VSpacer Spacing="12"/>
-                                            <ui:ForegroundImageContainer
+                                            <ui:LayeredImageContainer
                                                 StyleClasses="PanelMountHighlight"
                                                 HorizontalExpand="True"
                                                 HorizontalAlignment="Right">
-                                                 <ui:ForegroundImageContainer StyleClasses="PanelMountBase" VerticalExpand="True">
+                                                 <ui:LayeredImageContainer StyleClasses="PanelMountBase" VerticalExpand="True">
                                                     <PanelContainer
                                                         StyleClasses="PanelBackgroundBaseDark"
                                                         HorizontalAlignment="Stretch"
@@ -195,44 +195,44 @@
                                                         Margin="0 4 0 0">
                                                         <Label Name="CountdownLabel" StyleClasses="LabelLCDBig" Margin="2"/>
                                                     </PanelContainer>
-                                                </ui:ForegroundImageContainer>
-                                            </ui:ForegroundImageContainer>
+                                                </ui:LayeredImageContainer>
+                                            </ui:LayeredImageContainer>
                                         </BoxContainer>
                                     </BoxContainer>
-                                </ui:ForegroundImageContainer>
+                                </ui:LayeredImageContainer>
                             </PanelContainer>
-                        </ui:ForegroundImageContainer>
+                        </ui:LayeredImageContainer>
 
                         <!-- Button to recall shuttle -->
-                        <ui:ForegroundImageContainer Margin="12"
+                        <ui:LayeredImageContainer Margin="12"
                                 StyleClasses="AngleRectEmbedded"
                                 VerticalAlignment="Bottom"
                                 VerticalExpand="True">
                             <PanelContainer StyleClasses="AngleRect">
-                                <ui:ForegroundImageContainer Margin="4" StyleClasses="BracketedContainerEmbossed">
+                                <ui:LayeredImageContainer Margin="4" StyleClasses="BracketedContainerEmbossed">
                                     <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
                                         <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
                                         <ui:HSpacer Spacing="12"/>
-                                        <ui:ForegroundImageContainer
+                                        <ui:LayeredImageContainer
                                             StyleClasses="PanelMountHighlight"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center">
-                                             <ui:ForegroundImageContainer
+                                             <ui:LayeredImageContainer
                                                 StyleClasses="PanelMountBase"
                                                 HorizontalAlignment="Center"
                                                 MinSize="80 80"
                                                 VerticalAlignment="Center">
                                                 <TextureButton Name="EmergencyShuttleRecallButton" Access="Public"
                                                     StyleClasses="TemptingRedButton" />
-                                            </ui:ForegroundImageContainer>
-                                        </ui:ForegroundImageContainer>
+                                            </ui:LayeredImageContainer>
+                                        </ui:LayeredImageContainer>
                                     </BoxContainer>
-                                </ui:ForegroundImageContainer>
+                                </ui:LayeredImageContainer>
                             </PanelContainer>
-                        </ui:ForegroundImageContainer>
+                        </ui:LayeredImageContainer>
                     </BoxContainer>
                 </ui:StripeBack>
-            </ui:ForegroundImageContainer>
+            </ui:LayeredImageContainer>
         </Control>
     </BoxContainer>
 </ui:FancyWindow>
