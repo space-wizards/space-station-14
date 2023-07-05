@@ -41,6 +41,17 @@
       "name": "lino"
     },
     {
+      "name": "meat"
+    },
+    {
+      "name": "meat-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "meat-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "mime"
     },
     {

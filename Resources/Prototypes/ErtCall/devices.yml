@@ -4,10 +4,10 @@
   name: dead squad PDA
   description: Oh no ...
   components:
-    - type: PDA
+    - type: Pda
       id: DeadSquadIDCard
       state: pda-bartender
-    - type: PDABorderColor
+    - type: PdaBorderColor
       borderColor: "#242424"
       accentHColor: "#447987"
     - type: Icon

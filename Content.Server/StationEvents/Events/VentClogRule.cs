@@ -22,9 +22,8 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
     {
         base.Started(uid, component, gameRule, args);
 
-        if (StationSystem.Stations.Count == 0)
+        if (!TryGetRandomStation(out var chosenStation))
             return;
-        var chosenStation = RobustRandom.Pick(StationSystem.Stations.ToList());
 
         // TODO: "safe random" for chems. Right now this includes admin chemicals.
         var allReagents = PrototypeManager.EnumeratePrototypes<ReagentPrototype>()

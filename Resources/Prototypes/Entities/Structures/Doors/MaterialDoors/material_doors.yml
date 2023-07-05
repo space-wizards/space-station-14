@@ -7,7 +7,6 @@
   components:
   - type: InteractionOutline
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/MineralDoors/metal_door.rsi
     layers:
     - state: closed
@@ -139,7 +138,6 @@
   description: A door, where will it lead?
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/MineralDoors/wood_door.rsi
     layers:
     - state: closed
@@ -177,7 +175,6 @@
   description: A door, where will it lead?
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/MineralDoors/paper_door.rsi
     layers:
     - state: closed
@@ -201,7 +198,6 @@
   description: A door, where will it lead?
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/MineralDoors/plasma_door.rsi
     layers:
     - state: closed
@@ -228,7 +224,6 @@
   description: A door, where will it lead?
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/MineralDoors/gold_door.rsi
     layers:
     - state: closed
@@ -244,7 +239,6 @@
   description: A door, where will it lead?
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/MineralDoors/silver_door.rsi
     layers:
     - state: closed
@@ -260,7 +254,6 @@
   description: A door, where will it lead?
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/MineralDoors/bananium_door.rsi
     layers:
     - state: closed

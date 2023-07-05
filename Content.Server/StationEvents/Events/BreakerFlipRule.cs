@@ -26,9 +26,8 @@ public sealed class BreakerFlipRule : StationEventSystem<BreakerFlipRuleComponen
     {
         base.Started(uid, component, gameRule, args);
 
-        if (StationSystem.Stations.Count == 0)
+        if (!TryGetRandomStation(out var chosenStation))
             return;
-        var chosenStation = RobustRandom.Pick(StationSystem.Stations.ToList());
 
         var stationApcs = new List<ApcComponent>();
         foreach (var (apc, transform) in EntityQuery<ApcComponent, TransformComponent>())

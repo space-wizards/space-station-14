@@ -159,6 +159,15 @@
     - type: Sprite
       sprite: Clothing/Back/Backpacks/salvage.rsi
 
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackMerc
+  name: merc bag
+  description: A backpack that has been in many dangerous places, a reliable combat backpack.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Backpacks/merc.rsi
+
 #ERT
 - type: entity
   parent: ClothingBackpack
@@ -238,9 +247,9 @@
 - type: entity
   parent: ClothingBackpackClown
   id: ClothingBackpackCluwne
-  name: cursed giggles von honkerton
+  name: jiggles von jonkerton
   suffix: Unremoveable
-  description: Cursed giggles von honkerton backpack.
+  description: It's a backpack made by Jonk! Co.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/cluwne.rsi

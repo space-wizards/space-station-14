@@ -11,6 +11,10 @@
   - type: BreathMask
   - type: IngestionBlocker
   - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskGas
@@ -18,10 +22,10 @@
   name: security gas mask
   description: A standard issue Security gas mask.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/gassecurity.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/gassecurity.rsi
+  - type: Sprite
+    sprite: Clothing/Mask/gassecurity.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gassecurity.rsi
 
 - type: entity
   parent: ClothingMaskGas
@@ -29,13 +33,13 @@
   name: syndicate gas mask
   description: A close-fitting tactical mask that can be connected to an air supply.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/gassyndicate.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/gassyndicate.rsi
-    - type: FlashImmunity
-    - type: EyeProtection
-      protectionTime: 5
+  - type: Sprite
+    sprite: Clothing/Mask/gassyndicate.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gassyndicate.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
 
 - type: entity
   parent: ClothingMaskGas
@@ -43,14 +47,14 @@
   name: atmospheric gas mask
   description: Improved gas mask utilized by atmospheric technicians. It's flameproof!
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/gasatmos.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/gasatmos.rsi
-    - type: Armor
-      modifiers:
-        coefficients:
-          Heat: 0.80
+  - type: Sprite
+    sprite: Clothing/Mask/gasatmos.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gasatmos.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.80
 
 - type: entity
   parent: ClothingMaskGasAtmos
@@ -84,17 +88,17 @@
   name: explorer gas mask
   description: A military-grade gas mask that can be connected to an air supply.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/gasexplorer.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/gasexplorer.rsi
-    - type: Armor
-      modifiers:
-        coefficients:
-          Blunt: 0.90
-          Slash: 0.90
-          Piercing: 0.95
-          Heat: 0.95
+  - type: Sprite
+    sprite: Clothing/Mask/gasexplorer.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gasexplorer.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.95
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -119,15 +123,15 @@
   name: military-style medical mask
   description: A medical mask with a small layer of protection against damage and viruses, similar to the one used in the medical units of the first corporate war.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/medicalsecurity.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/medicalsecurity.rsi
-    - type: Armor
-      modifiers:
-        coefficients:
-          Blunt: 0.95
-          Slash: 0.95
+  - type: Sprite
+    sprite: Clothing/Mask/medicalsecurity.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/medicalsecurity.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -152,7 +156,8 @@
 
 - type: entity
   parent: ClothingMaskBase
-  id: ClothingMaskClown
+  id: ClothingMaskClownBase
+  abstract: true
   name: clown wig and mask
   description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
   components:
@@ -166,6 +171,16 @@
   - type: Tag
     tags:
     - ClownMask
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingMaskClownBase
+  id: ClothingMaskClown
+  components:
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskBase
@@ -173,11 +188,12 @@
   name: joy mask
   description: Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/joy.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/joy.rsi
-    - type: BreathMask
+  - type: Sprite
+    sprite: Clothing/Mask/joy.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/joy.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -185,12 +201,16 @@
   name: mime mask
   description: The traditional mime's mask. It has an eerie facial posture.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/mime.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/mime.rsi
-    - type: BreathMask
-    - type: IdentityBlocker
+  - type: Sprite
+    sprite: Clothing/Mask/mime.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/mime.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -210,17 +230,17 @@
   name: muzzle
   description: To stop that awful noise.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/muzzle.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/muzzle.rsi
-    - type: IngestionBlocker
-    - type: AddAccentClothing
-      accent: ReplacementAccent
-      replacement: mumble
-    - type: Construction
-      graph: Muzzle
-      node: muzzle
+  - type: Sprite
+    sprite: Clothing/Mask/muzzle.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/muzzle.rsi
+  - type: IngestionBlocker
+  - type: AddAccentClothing
+    accent: ReplacementAccent
+    replacement: mumble
+  - type: Construction
+    graph: Muzzle
+    node: muzzle
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -237,19 +257,19 @@
   - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingMaskClown
+  parent: ClothingMaskClownBase
   id: ClothingMaskCluwne
   name: cluwne face and hair
   suffix: Unremoveable
   description: Cursed cluwne face and hair.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/cluwne.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/cluwne.rsi
-    - type: Unremoveable
-    - type: AddAccentClothing
-      accent: StutteringAccent
+  - type: Sprite
+    sprite: Clothing/Mask/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/cluwne.rsi
+  - type: Unremoveable
+  - type: AddAccentClothing
+    accent: StutteringAccent
 
 - type: entity
   parent: ClothingMaskGasExplorer
@@ -257,10 +277,53 @@
   name: swat gas mask
   description: A elite issue Security gas mask.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/swat.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/swat.rsi
+  - type: Sprite
+    sprite: Clothing/Mask/swat.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/swat.rsi
+
+- type: entity
+  parent: ClothingMaskGasExplorer
+  id: ClothingMaskGasMerc
+  name: mercenary gas mask
+  description: Slightly outdated, but reliable military-style gas mask.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/merc.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/merc.rsi
+
+- type: entity
+  parent: ClothingMaskGasExplorer
+  id: ClothingMaskGasERT
+  name: ert gas mask
+  description: The gas mask of the elite squad of the ERT.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/ert.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/ert.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+
+- type: entity
+  parent: ClothingMaskGasERT
+  id: ClothingMaskGasDeathSquad
+  name: death squad gas mask
+  description: A unique gas mask for the NT's most elite squad.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/squadron.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/squadron.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.80
+        Piercing: 0.90
+        Heat: 0.90
 
 - type: entity
   parent: ClothingMaskBase
@@ -268,11 +331,16 @@
   name: rat mask
   description: A mask of a rat that looks like a rat. Perhaps they will take you for a fellow rat.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/rat.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/rat.rsi
-    - type: BreathMask
+  - type: Sprite
+    sprite: Clothing/Mask/rat.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/rat.rsi
+  - type: BreathMask
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -280,11 +348,12 @@
   name: fox mask
   description: What does the fox say?
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/fox.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/fox.rsi
-    - type: BreathMask
+  - type: Sprite
+    sprite: Clothing/Mask/fox.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/fox.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -292,11 +361,12 @@
   name: bee mask
   description: For the queen!
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/bee.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/bee.rsi
-    - type: BreathMask
+  - type: Sprite
+    sprite: Clothing/Mask/bee.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/bee.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -304,11 +374,12 @@
   name: bear mask
   description: I'm a cloudy, cloudy, cloudy, I'm not a bear at all.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/bear.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/bear.rsi
-    - type: BreathMask
+  - type: Sprite
+    sprite: Clothing/Mask/bear.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/bear.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -316,11 +387,12 @@
   name: raven mask
   description: Where I am, death... or glitter.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/raven.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/raven.rsi
-    - type: BreathMask
+  - type: Sprite
+    sprite: Clothing/Mask/raven.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/raven.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -328,11 +400,12 @@
   name: jackal mask
   description: It is better not to turn your back to the owner of the mask, it may bite.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/jackal.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/jackal.rsi
-    - type: BreathMask
+  - type: Sprite
+    sprite: Clothing/Mask/jackal.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/jackal.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -345,9 +418,10 @@
   - type: Clothing
     sprite: Clothing/Mask/bat.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingMaskClown
+  parent: ClothingMaskClownBase
   id: ClothingMaskSexyClown
   name: sexy clown mask
   description: Some naughty clowns think this is what the Honkmother looks like.

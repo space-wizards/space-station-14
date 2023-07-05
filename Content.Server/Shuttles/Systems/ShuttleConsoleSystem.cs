@@ -1,7 +1,9 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Shuttle.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Server.Station.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
@@ -11,6 +13,7 @@ using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
+using Content.Shared.Movement.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
@@ -21,15 +24,17 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
-public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
+public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
+    [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
 
     public override void Initialize()
     {
@@ -41,6 +46,10 @@ public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         SubscribeLocalEvent<ShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnConsoleUIOpenAttempt);
         SubscribeLocalEvent<ShuttleConsoleComponent, ShuttleConsoleFTLRequestMessage>(OnDestinationMessage);
         SubscribeLocalEvent<ShuttleConsoleComponent, BoundUIClosedEvent>(OnConsoleUIClose);
+
+        SubscribeLocalEvent<DroneConsoleComponent, ConsoleShuttleEvent>(OnCargoGetConsole);
+        SubscribeLocalEvent<DroneConsoleComponent, AfterActivatableUIOpenEvent>(OnDronePilotConsoleOpen);
+        SubscribeLocalEvent<DroneConsoleComponent, BoundUIClosedEvent>(OnDronePilotConsoleClose);
 
         SubscribeLocalEvent<DockEvent>(OnDock);
         SubscribeLocalEvent<UndockEvent>(OnUndock);
@@ -62,7 +71,8 @@ public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         RefreshShuttleConsoles();
     }
 
-    private void OnDestinationMessage(EntityUid uid, ShuttleConsoleComponent component, ShuttleConsoleFTLRequestMessage args)
+    private void OnDestinationMessage(EntityUid uid, ShuttleConsoleComponent component,
+        ShuttleConsoleFTLRequestMessage args)
     {
         if (!TryComp<FTLDestinationComponent>(args.Destination, out var dest))
         {
@@ -150,7 +160,7 @@ public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// </summary>
     private void OnConsoleUIClose(EntityUid uid, ShuttleConsoleComponent component, BoundUIClosedEvent args)
     {
-        if ((ShuttleConsoleUiKey) args.UiKey != ShuttleConsoleUiKey.Key ||
+        if ((ShuttleConsoleUiKey)args.UiKey != ShuttleConsoleUiKey.Key ||
             args.Session.AttachedEntity is not { } user)
         {
             return;
@@ -165,13 +175,15 @@ public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         RemovePilot(user);
     }
 
-    private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
+    private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component,
+        ActivatableUIOpenAttemptEvent args)
     {
         if (!TryPilot(args.User, uid))
             args.Cancel();
     }
 
-    private void OnConsoleAnchorChange(EntityUid uid, ShuttleConsoleComponent component, ref AnchorStateChangedEvent args)
+    private void OnConsoleAnchorChange(EntityUid uid, ShuttleConsoleComponent component,
+        ref AnchorStateChangedEvent args)
     {
         UpdateState(uid);
     }
@@ -391,10 +403,7 @@ public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             return;
         }
 
-        if (TryComp<SharedEyeComponent>(entity, out var eye))
-        {
-            eye.Zoom = component.Zoom;
-        }
+        _eyeSystem.SetZoom(entity, component.Zoom, ignoreLimits:true);
 
         component.SubscribedPilots.Add(pilotComponent);
 
@@ -415,11 +424,7 @@ public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         pilotComponent.Console = null;
         pilotComponent.Position = null;
-
-        if (TryComp<SharedEyeComponent>(pilotUid, out var eye))
-        {
-            eye.Zoom = new(1.0f, 1.0f);
-        }
+        _eyeSystem.ResetZoom(pilotUid);
 
         if (!helmsman.SubscribedPilots.Remove(pilotComponent))
             return;

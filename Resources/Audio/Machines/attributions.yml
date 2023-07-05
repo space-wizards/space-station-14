@@ -27,3 +27,8 @@
   license: "CC-BY-4.0"
   copyright: "Created by AUDACITIER (freesound), converted to MONO and .ogg and edited by EmoGarbage404 (github)."
   source: "https://freesound.org/people/AUDACITIER/sounds/629196/"
+
+- files: ["quickbeep.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by BasedUser#2215 on discord"
+  source: "https://discord.com/channels/310555209753690112/536955542913024015/1066824680188690452"

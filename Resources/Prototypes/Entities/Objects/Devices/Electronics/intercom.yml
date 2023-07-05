@@ -11,4 +11,5 @@
     tags:
       - DroneUsable
       - IntercomElectronics
-
+  - type: StaticPrice
+    price: 55

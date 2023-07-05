@@ -30,6 +30,8 @@
 
 Чтобы бросить предмет нажмите [color=#a4885c][keybind="Drop"/][/color], а чтобы бросить его сильнее (проще говоря, кинуть), вы можете нажать [color=#a4885c][keybind="ThrowItemInHand"/][/color].
 
+A slightly advanced way to manage your inventory is to use [color=#a4885c]Shift + B[/color]. If your active hand is currently empty, this hotkey will pull out the latest item that was put in your bag. If you have an item in your hand - samek hotkey will put said item into your bag.
+Hotkey [color=#a4885c]Shift + E[/color] works exactly the same, but uses your belt as storage.
 ## Действия
 В левой части вашего экрана находится панель, на которой представлены различные действия, которые вы можете совершить.
 Наведя курсор на любое из них, вы увидите название и описание действия, рассказывающие что это такое и как оно работает.

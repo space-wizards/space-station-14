@@ -3,10 +3,12 @@ using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
+using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Traitor;
 using Content.Server.Zombies;
@@ -40,6 +42,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     public override void Initialize()
     {
@@ -91,7 +94,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 {
                     var meta = MetaData(survivor);
                     var username = string.Empty;
-                    if (TryComp<MindComponent>(survivor, out var mindcomp))
+                    if (TryComp<MindContainerComponent>(survivor, out var mindcomp))
                         if (mindcomp.Mind != null && mindcomp.Mind.Session != null)
                             username = mindcomp.Mind.Session.Name;
 
@@ -164,7 +167,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             var minPlayers = _cfg.GetCVar(CCVars.ZombieMinPlayers);
             if (!ev.Forced && ev.Players.Length < minPlayers)
             {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("zombie-not-enough-ready-players", ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers)));
+                _chatManager.SendAdminAnnouncement(Loc.GetString("zombie-not-enough-ready-players",
+                    ("readyPlayersCount", ev.Players.Length),
+                    ("minimumPlayers", minPlayers)));
                 ev.Cancel();
                 continue;
             }
@@ -283,8 +288,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             }
 
             DebugTools.AssertNotNull(mind.OwnedEntity);
-
-            mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(component.PatientZeroPrototypeID)));
+            _mindSystem.AddRole(mind, new ZombieRole(mind, _prototypeManager.Index<AntagPrototype>(component.PatientZeroPrototypeID)));
 
             var inCharacterName = string.Empty;
             // Create some variation between the times of each zombie, relative to the time of the group as a whole.

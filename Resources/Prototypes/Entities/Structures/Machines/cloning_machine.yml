@@ -13,7 +13,6 @@
     ports:
       - CloningPodReceiver
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/cloning.rsi
     snapCardinals: true
     layers:
@@ -60,6 +59,7 @@
   - type: MaterialStorage
     materialWhiteList:
     - Biomass
+  - type: WiresPanel
   - type: Wires
     BoardName: "CloningPod"
     LayoutId: CloningPod
@@ -82,3 +82,6 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       clonepod-bodyContainer: !type:ContainerSlot
+  - type: GuideHelp
+    guides:
+    - Cloning
