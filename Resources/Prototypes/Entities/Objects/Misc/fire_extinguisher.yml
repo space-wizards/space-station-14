@@ -30,9 +30,9 @@
     spraySound:
       path: /Audio/Effects/extinguish.ogg
     sprayedPrototype: ExtinguisherSpray
-    vaporAmount: 3
+    vaporAmount: 10
     vaporSpread: 90
-    sprayVelocity: 2.0
+    sprayVelocity: 5.0
   - type: FireExtinguisher
     hasSafety: true
   - type: MeleeWeapon

@@ -1,14 +1,24 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Created by Just-a-Unity-Dev on GitHub",
+    "copyright": "heat.png created by akirrer (726701301244624997) on discord",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
         {
-            "name": "heat"
+            "name": "heat",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
         }
     ]
 }
