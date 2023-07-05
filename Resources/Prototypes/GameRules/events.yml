@@ -230,14 +230,11 @@
   - type: VentCrittersRule
     entries:
     - id: MobMouse
-      amount: 4
-      maxAmount: 12
+      prob: 0.02
     - id: MobMouse1
-      amount: 4
-      maxAmount: 12
+      prob: 0.02
     - id: MobMouse2
-      amount: 4
-      maxAmount: 12
+      prob: 0.02
 
 - type: entity
   id: SlimesSpawn
@@ -251,15 +248,12 @@
     duration: 60
   - type: VentCrittersRule
     entries:
-      - id: MobAdultSlimesBlueAngry
-        amount: 6
-        maxAmount: 10
-      - id: MobAdultSlimesGreenAngry
-        amount: 6
-        maxAmount: 10
-      - id: MobAdultSlimesYellowAngry
-        amount: 6
-        maxAmount: 10
+    - id: MobAdultSlimesBlueAngry
+      prob: 0.02
+    - id: MobAdultSlimesGreenAngry
+      prob: 0.02
+    - id: MobAdultSlimesYellowAngry
+      prob: 0.02
 
 - type: entity
   id: SpiderSpawn
@@ -273,9 +267,8 @@
     duration: 60
   - type: VentCrittersRule
     entries:
-      - id: MobGiantSpiderAngry
-        amount: 4
-        maxAmount: 8
+    - id: MobGiantSpiderAngry
+      prob: 0.05
 
 - type: entity
   id: SpiderClownSpawn
@@ -289,9 +282,8 @@
     duration: 60
   - type: VentCrittersRule
     entries:
-      - id: MobClownSpider
-        amount: 4
-        maxAmount: 8
+    - id: MobClownSpider
+      prob: 0.05
 
 - type: entity
   id: ZombieOutbreak
