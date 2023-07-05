@@ -42,7 +42,7 @@
 
 #Detective's vest
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterArmorBasic
   id: ClothingOuterVestDetective
   name: detective's vest
   description: A hard-boiled private investigator's armored vest.
@@ -51,15 +51,6 @@
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.75
-        Heat: 0.9
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
 
 #Hazard vest
 - type: entity
@@ -73,7 +64,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/hazard.rsi
 
-#Bartender vest
+#(Bartender) vest
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterVest
