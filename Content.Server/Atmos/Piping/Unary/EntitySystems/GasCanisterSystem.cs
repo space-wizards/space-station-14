@@ -38,7 +38,7 @@ public sealed class GasCanisterSystem : EntitySystem
 
         SubscribeLocalEvent<GasCanisterComponent, ComponentStartup>(OnCanisterStartup);
         SubscribeLocalEvent<GasCanisterComponent, AtmosDeviceUpdateEvent>(OnCanisterUpdated);
-        SubscribeLocalEvent<GasCanisterComponent, ActivateInWorldEvent>(OnCanisterActivate);
+        SubscribeLocalEvent<GasCanisterComponent, ActivateInWorldEvent>(OnCanisterActivate, after: new[] { typeof(LockSystem) });
         SubscribeLocalEvent<GasCanisterComponent, InteractHandEvent>(OnCanisterInteractHand);
         SubscribeLocalEvent<GasCanisterComponent, InteractUsingEvent>(OnCanisterInteractUsing);
         SubscribeLocalEvent<GasCanisterComponent, EntInsertedIntoContainerMessage>(OnCanisterContainerInserted);
@@ -228,6 +228,11 @@ public sealed class GasCanisterSystem : EntitySystem
             return;
 
         if (CheckLocked(uid, component, args.User))
+            return;
+
+        // Needs to be here so the locked check still happens if the canister
+        // is locked and you don't have permissions
+        if (args.Handled)
             return;
 
         _ui.TryOpen(uid, GasCanisterUiKey.Key, actor.PlayerSession);

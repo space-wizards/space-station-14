@@ -317,6 +317,26 @@
                 path: /Audio/Effects/metalbreak.ogg
     - type: ItemMapper
       mapLayers:
+        cart_plunger:
+          whitelist:
+            tags:
+              - Plunger
+        cart_mop:
+          whitelist:
+            tags:
+              - Mop
+        cart_garbage:
+          whitelist:
+            tags:
+              - TrashBag
+        cart_replacer:
+          whitelist:
+            components:
+              - LightReplacer
+        cart_spray:
+          whitelist:
+            tags:
+              - Spray
         cart_sign1: # this is like stack of floor signs
           minCount: 1
           whitelist:
@@ -337,26 +357,10 @@
           whitelist:
             tags:
               - WetFloorSign
-        cart_spray:
-          whitelist:
-            tags:
-              - Spray
-        cart_garbage:
-          whitelist:
-            tags:
-              - TrashBag
-        cart_replacer:
-          whitelist:
-            components:
-              - LightReplacer
         cart_bucket:
           whitelist:
             tags:
               - Bucket
-        cart_mop:
-          whitelist:
-            tags:
-              - Mop
       sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
     - type: Appearance
     - type: SolutionContainerVisuals
@@ -392,7 +396,11 @@
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Objects/Specific/Janitorial/drain.rsi
-      state: icon
+      layers:
+      - state: icon
+      - map: [ "enum.SolutionContainerLayers.Fill" ]
+        state: fill-1
+        visible: false
     - type: InteractionOutline
     - type: Clickable
     - type: Transform
@@ -400,13 +408,18 @@
     - type: Physics
       bodyType: Static
       canCollide: false
-    - type: Drain
     - type: AmbientSound
       enabled: false
       volume: -8
       range: 8
       sound:
         path: /Audio/Ambience/Objects/drain.ogg
+    - type: Drain
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 1
+      fillBaseName: fill-
+      solutionName: drainBuffer
     - type: SolutionContainerManager
       solutions:
         drainBuffer:
@@ -433,6 +446,24 @@
             - !type:PlaySoundBehavior
               sound:
                 path: /Audio/Effects/metalbreak.ogg
+
+- type: entity
+  name: plunger
+  id: Plunger
+  parent: BaseItem
+  description: A plunger with a red plastic suction-cup and a wooden handle. Used to unclog drains.
+  components:
+    - type: Tag
+      tags:
+        - Plunger
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Specific/Janitorial/janitorial.rsi
+      state: plunger
+    - type: Item
+      sprite: Objects/Specific/Janitorial/janitorial.rsi
+      heldPrefix: plunger
+    - type: ItemCooldown
     - type: GuideHelp
       guides:
       - Janitorial

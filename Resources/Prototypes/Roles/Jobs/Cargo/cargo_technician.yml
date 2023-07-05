@@ -10,6 +10,8 @@
   - Cargo
   - Maintenance
   - External
+  extendedAccess:
+  - Salvage
 
 - type: startingGear
   id: CargoTechGear

@@ -24,6 +24,9 @@
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
+  - type: Tag
+    tags:
+    - SuitEVA
 
 #Emergency EVA
 - type: entity
@@ -58,6 +61,9 @@
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
+  - type: Tag
+    tags:
+    - SuitEVA
 
 #NTSRA Voidsuit / Ancient Voidsuit
 - type: entity

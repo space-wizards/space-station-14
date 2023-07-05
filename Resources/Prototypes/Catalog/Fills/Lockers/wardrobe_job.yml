@@ -159,7 +159,7 @@
        - id: ClothingBackpackSecurity
        - id: ClothingShoesBootsJack
        - id: ClothingEyesGlassesSecurity
-       - id: ClothingHeadHelmetHelmetOld
+       - id: ClothingHeadHelmetBasic
        - id: ClothingOuterVestKevlar
        - id: ClothingUniformJumpskirtSec
 
