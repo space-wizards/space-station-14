@@ -127,7 +127,8 @@
                                     VerticalAlignment="Stretch">
                                     <ui:LayeredImageContainer Margin="4" StyleClasses="BracketedContainerEmbossed">
                                         <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center" VerticalExpand="True">
-                                            <Label Text="{Loc 'comms-console-menu-call-shuttle'}" />
+                                            <Label Text="{Loc 'comms-console-menu-call-shuttle'}"
+                                                HorizontalAlignment="Center"/>
                                             <ui:HSpacer Spacing="12"/>
                                             <ui:LayeredImageContainer
                                                 StyleClasses="PanelMountHighlight"
@@ -211,7 +212,8 @@
                             <PanelContainer StyleClasses="AngleRect">
                                 <ui:LayeredImageContainer Margin="4" StyleClasses="BracketedContainerEmbossed">
                                     <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
-                                        <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
+                                        <Label Text="{Loc 'comms-console-menu-recall-shuttle'}"
+                                            HorizontalAlignment="Center" />
                                         <ui:HSpacer Spacing="12"/>
                                         <ui:LayeredImageContainer
                                             StyleClasses="PanelMountHighlight"
