@@ -32,7 +32,7 @@ namespace Content.IntegrationTests.Tests.Networking
     // the tick where the server *should* have, but did not, acknowledge the state change.
     // Finally, we run two events inside the prediction area to ensure reconciling does for incremental stuff.
     [TestFixture]
-    public sealed class SimplePredictReconcileTest
+    public sealed class SystemPredictReconcileTest
     {
         [Test]
         public async Task Test()
@@ -55,13 +55,13 @@ namespace Content.IntegrationTests.Tests.Networking
             //cfg.SetCVar(CVars.NetLogging, true);
 
             EntityUid serverEnt = default;
-            PredictionTestComponent serverComponent = default!;
-            PredictionTestComponent clientComponent = default!;
+            SystemPredictionTestComponent serverComponent = default!;
+            SystemPredictionTestComponent clientComponent = default!;
 
             var serverSystem = server.ResolveDependency<IEntitySystemManager>()
-                .GetEntitySystem<PredictionTestEntitySystem>();
+                .GetEntitySystem<SystemPredictionTestEntitySystem>();
             var clientSystem = client.ResolveDependency<IEntitySystemManager>()
-                .GetEntitySystem<PredictionTestEntitySystem>();
+                .GetEntitySystem<SystemPredictionTestEntitySystem>();
 
             await server.WaitPost(() =>
             {
@@ -69,7 +69,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 var map = sMapManager.CreateMap();
                 var player = sPlayerManager.ServerSessions.Single();
                 serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates((0, 0), map));
-                serverComponent = sEntityManager.AddComponent<PredictionTestComponent>(serverEnt);
+                serverComponent = sEntityManager.AddComponent<SystemPredictionTestComponent>(serverEnt);
 
                 // Make client "join game" so they receive game state updates.
                 player.JoinGame();
@@ -87,7 +87,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             await client.WaitPost(() =>
             {
-                clientComponent = cEntityManager.GetComponent<PredictionTestComponent>(serverEnt);
+                clientComponent = cEntityManager.GetComponent<SystemPredictionTestComponent>(serverEnt);
             });
 
             Assert.Multiple(() =>
@@ -393,7 +393,8 @@ namespace Content.IntegrationTests.Tests.Networking
         }
 
         [NetworkedComponent()]
-        public sealed class PredictionTestComponent : Component
+        [Access(typeof(SystemPredictionTestEntitySystem))]
+        public sealed class SystemPredictionTestComponent : Component
         {
             private bool _foo;
             public bool Foo
@@ -405,34 +406,10 @@ namespace Content.IntegrationTests.Tests.Networking
                     Dirty();
                 }
             }
-
-            public override ComponentState GetComponentState()
-            {
-                return new PredictionComponentState(Foo);
-            }
-
-            public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-            {
-                if (curState is not PredictionComponentState state)
-                    return; // curState????
-
-                Foo = state.Foo;
-            }
-
-            [Serializable, NetSerializable]
-            private sealed class PredictionComponentState : ComponentState
-            {
-                public bool Foo { get; }
-
-                public PredictionComponentState(bool foo)
-                {
-                    Foo = foo;
-                }
-            }
         }
 
         [Reflect(false)]
-        public sealed class PredictionTestEntitySystem : EntitySystem
+        public sealed class SystemPredictionTestEntitySystem : EntitySystem
         {
             public bool Allow { get; set; } = true;
 
@@ -448,11 +425,13 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 SubscribeNetworkEvent<SetFooMessage>(HandleMessage);
                 SubscribeLocalEvent<SetFooMessage>(HandleMessage);
+                SubscribeLocalEvent<SystemPredictionTestComponent, ComponentGetState>(OnGetState);
+                SubscribeLocalEvent<SystemPredictionTestComponent, ComponentHandleState>(OnHandleState);
             }
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
             {
-                var component = EntityManager.GetComponent<PredictionTestComponent>(message.Uid);
+                var component = EntityManager.GetComponent<SystemPredictionTestComponent>(message.Uid);
                 var old = component.Foo;
                 if (Allow)
                 {
@@ -460,6 +439,30 @@ namespace Content.IntegrationTests.Tests.Networking
                 }
 
                 EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo, message.NewFoo));
+            }
+
+            private void OnGetState(EntityUid uid, SystemPredictionTestComponent comp, ref ComponentGetState args)
+            {
+                args.State = new SystemPredictionComponentState(comp.Foo);
+            }
+
+            private void OnHandleState(EntityUid uid, SystemPredictionTestComponent comp, ref ComponentHandleState args)
+            {
+                if (args.Current is not SystemPredictionComponentState state)
+                    return;
+
+                comp.Foo = state.Foo;
+            }
+
+            [Serializable, NetSerializable]
+            private sealed class SystemPredictionComponentState : ComponentState
+            {
+                public bool Foo { get; }
+
+                public SystemPredictionComponentState(bool foo)
+                {
+                    Foo = foo;
+                }
             }
         }
 
