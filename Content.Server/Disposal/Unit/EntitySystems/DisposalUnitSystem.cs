@@ -26,8 +26,8 @@ using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
@@ -56,6 +56,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<DisposalUnitComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<DisposalUnitComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<DisposalUnitComponent, CanDropTargetEvent>(OnCanDragDropOn);
         SubscribeLocalEvent<DisposalUnitComponent, GotEmaggedEvent>(OnEmagged);
@@ -82,6 +83,19 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         SubscribeLocalEvent<DisposalUnitComponent, DisposalDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<DisposalUnitComponent, SharedDisposalUnitComponent.UiButtonPressedMessage>(OnUiButtonPressed);
+    }
+
+    private void OnGetState(EntityUid uid, DisposalUnitComponent component, ref ComponentGetState args)
+    {
+        args.State = new DisposalUnitComponentState(
+            component.FlushSound,
+            component.State,
+            component.NextPressurized,
+            component.AutomaticEngageTime,
+            component.NextFlush,
+            component.Powered,
+            component.Engaged,
+            component.RecentlyEjected);
     }
 
     private void OnUnpaused(EntityUid uid, SharedDisposalUnitComponent component, ref EntityUnpausedEvent args)
@@ -370,10 +384,10 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     private void UpdateState(EntityUid uid, DisposalsPressureState state, SharedDisposalUnitComponent component, MetaDataComponent metadata)
     {
-        if (component.LastState == state)
+        if (component.State == state)
             return;
 
-        component.LastState = state;
+        component.State = state;
         UpdateVisualState(uid, component);
         UpdateInterface(uid, component, component.Powered);
         Dirty(component, metadata);

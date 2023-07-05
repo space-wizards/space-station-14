@@ -1,4 +1,3 @@
-using Content.Shared.Atmos;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -15,26 +14,26 @@ public abstract class SharedDisposalUnitComponent : Component
     /// <summary>
     /// Sounds played upon the unit flushing.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundFlush"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundFlush")]
     public SoundSpecifier? FlushSound = new SoundPathSpecifier("/Audio/Machines/disposalflush.ogg");
 
     /// <summary>
-    /// Last state for this disposals unit.
+    /// State for this disposals unit.
     /// </summary>
-    [DataField("lastState"), AutoNetworkedField]
-    public DisposalsPressureState LastState;
+    [DataField("state")]
+    public DisposalsPressureState State;
 
     // TODO: Just make this use vaulting.
     /// <summary>
     /// We'll track whatever just left disposals so we know what collision we need to ignore until they stop intersecting our BB.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, DataField("recentlyEjected")]
     public readonly List<EntityUid> RecentlyEjected = new();
 
     /// <summary>
     /// Next time the disposal unit will be pressurized.
     /// </summary>
-    [DataField("nextPressurized", customTypeSerializer:typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField("nextPressurized", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextPressurized = TimeSpan.Zero;
 
     /// <summary>
@@ -68,7 +67,7 @@ public abstract class SharedDisposalUnitComponent : Component
     public bool AutomaticEngage = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("autoEngageTime"), AutoNetworkedField]
+    [DataField("autoEngageTime")]
     public TimeSpan AutomaticEngageTime = TimeSpan.FromSeconds(30);
 
     /// <summary>
@@ -89,19 +88,20 @@ public abstract class SharedDisposalUnitComponent : Component
     /// </summary>
     [ViewVariables] public Container Container = default!;
 
-    [ViewVariables, DataField("powered"), AutoNetworkedField]
+    // TODO: Network power shit instead fam.
+    [ViewVariables, DataField("powered")]
     public bool Powered;
 
     /// <summary>
     /// Was the disposals unit engaged for a manual flush.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("engaged"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("engaged")]
     public bool Engaged;
 
     /// <summary>
     /// Next time this unit will flush. Is the lesser of <see cref="FlushDelay"/> and <see cref="AutomaticEngageTime"/>
     /// </summary>
-    [ViewVariables, DataField("nextFlush", customTypeSerializer:typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [ViewVariables, DataField("nextFlush", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan? NextFlush;
 
     [Serializable, NetSerializable]

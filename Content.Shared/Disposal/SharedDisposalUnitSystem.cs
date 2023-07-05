@@ -8,6 +8,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -30,16 +31,8 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 
-    protected EntityQuery<TransformComponent> XformQuery;
-
     // Percentage
     public const float PressurePerSecond = 0.05f;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        XformQuery = GetEntityQuery<TransformComponent>();
-    }
 
     /// <summary>
     /// Gets the current pressure state of a disposals unit.
@@ -140,4 +133,29 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     /// TODO: Proper prediction
     /// </summary>
     public abstract void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null);
+
+    [Serializable, NetSerializable]
+    protected sealed class DisposalUnitComponentState : ComponentState
+    {
+        public SoundSpecifier? FlushSound;
+        public DisposalsPressureState State;
+        public TimeSpan NextPressurized;
+        public TimeSpan AutomaticEngageTime;
+        public TimeSpan? NextFlush;
+        public bool Powered;
+        public bool Engaged;
+        public List<EntityUid> RecentlyEjected;
+
+        public DisposalUnitComponentState(SoundSpecifier? flushSound, DisposalsPressureState state, TimeSpan nextPressurized, TimeSpan automaticEngageTime, TimeSpan? nextFlush, bool powered, bool engaged, List<EntityUid> recentlyEjected)
+        {
+            FlushSound = flushSound;
+            State = state;
+            NextPressurized = nextPressurized;
+            AutomaticEngageTime = automaticEngageTime;
+            NextFlush = nextFlush;
+            Powered = powered;
+            Engaged = engaged;
+            RecentlyEjected = recentlyEjected;
+        }
+    }
 }

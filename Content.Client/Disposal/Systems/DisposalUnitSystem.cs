@@ -5,6 +5,7 @@ using Content.Shared.Emag.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Events;
 using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
@@ -22,12 +23,29 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<DisposalUnitComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<DisposalUnitComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<DisposalUnitComponent, CanDropTargetEvent>(OnCanDragDropOn);
         SubscribeLocalEvent<DisposalUnitComponent, GotEmaggedEvent>(OnEmagged);
 
         SubscribeLocalEvent<DisposalUnitComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DisposalUnitComponent, AppearanceChangeEvent>(OnAppearanceChange);
+    }
+
+    private void OnHandleState(EntityUid uid, DisposalUnitComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not DisposalUnitComponentState state)
+            return;
+
+        component.FlushSound = state.FlushSound;
+        component.State = state.State;
+        component.NextPressurized = state.NextPressurized;
+        component.AutomaticEngageTime = state.AutomaticEngageTime;
+        component.NextFlush = state.NextFlush;
+        component.Powered = state.Powered;
+        component.Engaged = state.Engaged;
+        component.RecentlyEjected.Clear();
+        component.RecentlyEjected.AddRange(state.RecentlyEjected);
     }
 
     public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
