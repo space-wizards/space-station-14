@@ -31,6 +31,7 @@ namespace Content.IntegrationTests.Tests.Networking
     // This means the client is forced to reset it once it gets to the server tick where the server didn't do anything.
     // the tick where the server *should* have, but did not, acknowledge the state change.
     // Finally, we run two events inside the prediction area to ensure reconciling does for incremental stuff.
+    // TODO: This test relies on the EC version of component state handling. Remove in favor of the other two tests for the ECS and auto versions.
     [TestFixture]
     public sealed class SimplePredictReconcileTest
     {
@@ -406,7 +407,7 @@ namespace Content.IntegrationTests.Tests.Networking
             public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
             {
                 if (curState is not PredictionComponentState state)
-                    return; // curState????
+                    return;
 
                 Foo = state.Foo;
                 Dirty();
