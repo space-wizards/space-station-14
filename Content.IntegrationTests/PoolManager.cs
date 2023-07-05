@@ -109,7 +109,9 @@ public static class PoolManager
         {
             IoCManager.Resolve<IEntitySystemManager>()
                 .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
+            IoCManager.Resolve<IComponentFactory>().RegisterClass<AutoPredictReconcileTest.AutoPredictionTestComponent>();
             IoCManager.Resolve<IComponentFactory>().RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
+            IoCManager.Resolve<IComponentFactory>().RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
             IoCManager.Register<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
             IoCManager.Register<InteractionSystemTests.TestInteractionSystem>();
             IoCManager.Register<DeviceNetworkTestSystem>();
@@ -213,7 +215,11 @@ public static class PoolManager
                     IoCManager.Resolve<IEntitySystemManager>()
                         .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
                     IoCManager.Resolve<IComponentFactory>()
+                        .RegisterClass<AutoPredictReconcileTest.AutoPredictionTestComponent>();
+                    IoCManager.Resolve<IComponentFactory>()
                         .RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
+                    IoCManager.Resolve<IComponentFactory>()
+                        .RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
                     IoCManager.Register<IParallaxManager, DummyParallaxManager>(true);
                     IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
                     IoCManager.Resolve<IConfigurationManager>()
