@@ -1,5 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -12,6 +13,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
@@ -395,8 +397,18 @@ namespace Content.IntegrationTests.Tests.Networking
         [Access(typeof(PredictionTestEntitySystem))]
         public sealed class PredictionTestComponent : Component
         {
+            private bool _foo;
             [AutoNetworkedField]
-            public bool Foo;
+            public bool Foo
+            {
+                get => _foo;
+                set
+                {
+                    Logger.Debug($"{(Owner.IsClientSide() ? "Client" : "Server")} Foo set ({_foo} -> {value}) at\n{Environment.StackTrace}");
+                    _foo = value;
+                    Dirty();
+                }
+            }
         }
 
         [Reflect(false)]
@@ -416,7 +428,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 SubscribeNetworkEvent<SetFooMessage>(HandleMessage);
                 SubscribeLocalEvent<SetFooMessage>(HandleMessage);
-                SubscribeLocalEvent<PredictionTestComponent, AfterAutoHandleStateEvent>(AfterAutoHandleState);
+                // SubscribeLocalEvent<PredictionTestComponent, AfterAutoHandleStateEvent>(AfterAutoHandleState);
             }
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
@@ -426,7 +438,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 if (Allow)
                 {
                     component.Foo = message.NewFoo;
-                    Dirty(message.Uid, component);
+                    // Dirty(message.Uid, component);
                 }
 
                 EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo, message.NewFoo));
@@ -434,7 +446,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             private void AfterAutoHandleState(EntityUid uid, PredictionTestComponent comp, ref AfterAutoHandleStateEvent args)
             {
-                Dirty(uid, comp);
+                // Dirty(uid, comp);
             }
         }
 
