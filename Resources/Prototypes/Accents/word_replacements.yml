@@ -1,4 +1,4 @@
-﻿# Accents that work off of word replacements.
+# Accents that work off of word replacements.
 
 # this is kind of dumb but localization demands it.
 # i guess you could just specify the prefix ('mobster') and count and let the system fill it
@@ -210,3 +210,112 @@
     accent-pirate-replaced-30: accent-pirate-replacement-30
     accent-pirate-replaced-31: accent-pirate-replacement-31
     accent-pirate-replaced-32: accent-pirate-replacement-32
+
+- type: accent
+  id: archaic
+  wordReplacements:
+    accent-archaic-replaced-1: accent-archaic-replacement-1
+    accent-archaic-replaced-2: accent-archaic-replacement-2
+    accent-archaic-replaced-3: accent-archaic-replacement-3
+    accent-archaic-replaced-4: accent-archaic-replacement-4
+    accent-archaic-replaced-5: accent-archaic-replacement-5
+    accent-archaic-replaced-6: accent-archaic-replacement-6
+    accent-archaic-replaced-7: accent-archaic-replacement-7
+    accent-archaic-replaced-8: accent-archaic-replacement-8
+    accent-archaic-replaced-9: accent-archaic-replacement-9
+    accent-archaic-replaced-10: accent-archaic-replacement-10
+    accent-archaic-replaced-11: accent-archaic-replacement-11
+    accent-archaic-replaced-12: accent-archaic-replacement-12
+    accent-archaic-replaced-13: accent-archaic-replacement-13
+    accent-archaic-replaced-14: accent-archaic-replacement-14
+    accent-archaic-replaced-15: accent-archaic-replacement-15
+    accent-archaic-replaced-16: accent-archaic-replacement-16
+    accent-archaic-replaced-17: accent-archaic-replacement-17
+    accent-archaic-replaced-18: accent-archaic-replacement-18
+    accent-archaic-replaced-19: accent-archaic-replacement-19
+    accent-archaic-replaced-20: accent-archaic-replacement-20
+    accent-archaic-replaced-21: accent-archaic-replacement-21
+    accent-archaic-replaced-22: accent-archaic-replacement-22
+    accent-archaic-replaced-23: accent-archaic-replacement-23
+    accent-archaic-replaced-24: accent-archaic-replacement-24
+    accent-archaic-replaced-25: accent-archaic-replacement-25
+    accent-archaic-replaced-26: accent-archaic-replacement-26
+    accent-archaic-replaced-27: accent-archaic-replacement-27
+    accent-archaic-replaced-28: accent-archaic-replacement-28
+    accent-archaic-replaced-29: accent-archaic-replacement-29
+    accent-archaic-replaced-30: accent-archaic-replacement-30
+    accent-archaic-replaced-31: accent-archaic-replacement-31
+    accent-archaic-replaced-32: accent-archaic-replacement-32
+    accent-archaic-replaced-33: accent-archaic-replacement-33
+    accent-archaic-replaced-34: accent-archaic-replacement-34
+    accent-archaic-replaced-35: accent-archaic-replacement-35
+    accent-archaic-replaced-36: accent-archaic-replacement-36
+    accent-archaic-replaced-37: accent-archaic-replacement-37
+    accent-archaic-replaced-38: accent-archaic-replacement-38
+    accent-archaic-replaced-39: accent-archaic-replacement-39
+    accent-archaic-replaced-40: accent-archaic-replacement-40
+    accent-archaic-replaced-41: accent-archaic-replacement-41
+    accent-archaic-replaced-42: accent-archaic-replacement-42
+    accent-archaic-replaced-43: accent-archaic-replacement-43
+    accent-archaic-replaced-44: accent-archaic-replacement-44
+    accent-archaic-replaced-45: accent-archaic-replacement-45
+    accent-archaic-replaced-46: accent-archaic-replacement-46
+    accent-archaic-replaced-47: accent-archaic-replacement-47
+    accent-archaic-replaced-48: accent-archaic-replacement-48
+    accent-archaic-replaced-49: accent-archaic-replacement-49
+    accent-archaic-replaced-50: accent-archaic-replacement-50
+    accent-archaic-replaced-51: accent-archaic-replacement-51
+    accent-archaic-replaced-52: accent-archaic-replacement-52
+    accent-archaic-replaced-53: accent-archaic-replacement-53
+    accent-archaic-replaced-54: accent-archaic-replacement-54
+    accent-archaic-replaced-55: accent-archaic-replacement-55
+    accent-archaic-replaced-56: accent-archaic-replacement-56
+    accent-archaic-replaced-57: accent-archaic-replacement-57
+    accent-archaic-replaced-58: accent-archaic-replacement-58
+    accent-archaic-replaced-59: accent-archaic-replacement-59
+    accent-archaic-replaced-60: accent-archaic-replacement-60
+    accent-archaic-replaced-61: accent-archaic-replacement-61
+    accent-archaic-replaced-62: accent-archaic-replacement-62
+    accent-archaic-replaced-63: accent-archaic-replacement-63
+    accent-archaic-replaced-64: accent-archaic-replacement-64
+    accent-archaic-replaced-65: accent-archaic-replacement-65
+    accent-archaic-replaced-66: accent-archaic-replacement-66
+    accent-archaic-replaced-67: accent-archaic-replacement-67
+    accent-archaic-replaced-68: accent-archaic-replacement-68
+    accent-archaic-replaced-69: accent-archaic-replacement-69
+    accent-archaic-replaced-70: accent-archaic-replacement-70
+    accent-archaic-replaced-71: accent-archaic-replacement-71
+    accent-archaic-replaced-72: accent-archaic-replacement-72
+    accent-archaic-replaced-73: accent-archaic-replacement-73
+    accent-archaic-replaced-74: accent-archaic-replacement-74
+    accent-archaic-replaced-75: accent-archaic-replacement-75
+    accent-archaic-replaced-76: accent-archaic-replacement-76
+    accent-archaic-replaced-77: accent-archaic-replacement-77
+    accent-archaic-replaced-78: accent-archaic-replacement-78
+    accent-archaic-replaced-79: accent-archaic-replacement-79
+    accent-archaic-replaced-80: accent-archaic-replacement-80
+    accent-archaic-replaced-81: accent-archaic-replacement-81
+    accent-archaic-replaced-82: accent-archaic-replacement-82
+    accent-archaic-replaced-83: accent-archaic-replacement-83
+    accent-archaic-replaced-84: accent-archaic-replacement-84
+    accent-archaic-replaced-85: accent-archaic-replacement-85
+    accent-archaic-replaced-86: accent-archaic-replacement-86
+    accent-archaic-replaced-87: accent-archaic-replacement-87
+    accent-archaic-replaced-88: accent-archaic-replacement-88
+    accent-archaic-replaced-89: accent-archaic-replacement-89
+    accent-archaic-replaced-90: accent-archaic-replacement-90
+    accent-archaic-replaced-91: accent-archaic-replacement-91
+    accent-archaic-replaced-92: accent-archaic-replacement-92
+    accent-archaic-replaced-93: accent-archaic-replacement-93
+    accent-archaic-replaced-94: accent-archaic-replacement-94
+    accent-archaic-replaced-95: accent-archaic-replacement-95
+    accent-archaic-replaced-96: accent-archaic-replacement-96
+    accent-archaic-replaced-97: accent-archaic-replacement-97
+    accent-archaic-replaced-98: accent-archaic-replacement-98
+    accent-archaic-replaced-99: accent-archaic-replacement-99
+    accent-archaic-replaced-100: accent-archaic-replacement-100
+    accent-archaic-replaced-101: accent-archaic-replacement-101
+    accent-archaic-replaced-102: accent-archaic-replacement-102
+
+
+
