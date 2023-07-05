@@ -1,9 +1,0 @@
-ent-SecurityBorgBody = каркас охранного борга
-    .desc = Главная часть охранного борга.
-    .suffix = { "" }
-ent-MedicalBorgBody = каркас медицинского борга
-    .desc = Главная часть медицинского борга.
-    .suffix = { "" }
-ent-EngineeringBorgBody = каркас инженерного борга
-    .desc = Главная часть инженерного борга.
-    .suffix = { "" }
