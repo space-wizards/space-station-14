@@ -1,10 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Cigarette pack and matchbox sizes were downed to 5, type: Tweak}
-  - {message: Matchbox inventory size was adjusted, type: Tweak}
-  id: 3674
-  time: '2023-05-06T07:27:50.0000000+00:00'
 - author: Fireheart
   changes:
   - {message: 'Improved paperwork interface, enabling fillable forms to be created
@@ -2937,3 +2931,9 @@ Entries:
       You can find them in the armory instead., type: Remove}
   id: 4173
   time: '2023-07-05T23:03:16.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: 'Cargo''s coupons have expired, and weapons of all kinds are now about
+      3x more expensive. EVA Suits are cheaper out of pity.', type: Tweak}
+  id: 4174
+  time: '2023-07-05T23:16:10.0000000+00:00'
