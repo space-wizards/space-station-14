@@ -187,7 +187,7 @@ namespace Content.IntegrationTests.Tests.Body
                 Assert.That(mixture.TotalMoles, Is.GreaterThan(0));
                 Assert.That(entityManager.HasComponent<BodyComponent>(human), Is.True);
                 Assert.That(entityManager.TryGetComponent(human, out respirator), Is.True);
-                Assert.That(respirator.SuffocationCycles, Is.GreaterThan(respirator.SuffocationCycleThreshold));
+                Assert.That(respirator.SuffocationCycles, Is.LessThanOrEqualTo(respirator.SuffocationCycleThreshold));
 #pragma warning restore NUnit2045
             });
 

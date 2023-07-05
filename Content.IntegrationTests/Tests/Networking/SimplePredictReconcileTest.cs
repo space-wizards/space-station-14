@@ -416,6 +416,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 SubscribeNetworkEvent<SetFooMessage>(HandleMessage);
                 SubscribeLocalEvent<SetFooMessage>(HandleMessage);
+                SubscribeLocalEvent<PredictionTestComponent, AfterAutoHandleStateEvent>(AfterAutoHandleState);
             }
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
@@ -429,6 +430,11 @@ namespace Content.IntegrationTests.Tests.Networking
                 }
 
                 EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo, message.NewFoo));
+            }
+
+            private void AfterAutoHandleState(EntityUid uid, PredictionTestComponent comp, ref AfterAutoHandleStateEvent args)
+            {
+                Dirty(uid, comp);
             }
         }
 

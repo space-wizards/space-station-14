@@ -71,7 +71,7 @@ public sealed partial class MindTests
         Assert.Multiple(() =>
         {
             Assert.That(entMan.Deleted(entity));
-            Assert.That(mind.OwnedEntity, Is.Not.Null);
+            Assert.That(mind.OwnedEntity, Is.Null);
         });
 
         // Reconnect
@@ -149,9 +149,8 @@ public sealed partial class MindTests
         Assert.Multiple(() =>
         {
             Assert.That(GetMind(pair), Is.EqualTo(mind));
-            Assert.That(!entMan.Deleted(original), Is.False);
-            Assert.That(!entMan.Deleted(visiting), Is.False);
-            Assert.That(mind.CurrentEntity, Is.EqualTo(visiting));
+            Assert.That(entMan.Deleted(original), Is.False);
+            Assert.That(entMan.Deleted(visiting), Is.False);
             Assert.That(mind.CurrentEntity, Is.EqualTo(visiting));
         });
 
