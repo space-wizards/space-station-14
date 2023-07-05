@@ -30,3 +30,6 @@ ent-CrateServiceTheatre = Ящик театрального снаряжения
 
 ent-CrateServiceBox = Ящик коробок
     .desc = Содержит в себе 6 коробок.
+
+ent-CrateServiceGuidebooks = ящик руководств
+    .desc = Содержит руководства.

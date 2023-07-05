@@ -13,3 +13,5 @@ ent-CartridgeRiflePractice = патрон (.20 винтовочный учебн
 ent-CartridgeRifleRubber = патрон (.20 винтовочный резиновый)
     .desc = { ent-BaseCartridgeRifle.desc }
     .suffix = { "" }
+ent-CartridgeRifleIncendiary = патрон (.20 винтовочный зажигательный)
+    .desc = { ent-BaseCartridgeRifle.desc }

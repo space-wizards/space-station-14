@@ -88,3 +88,5 @@ ent-WallSolidDiagonal = обычная стена
 ent-WallPlastitaniumDiagonal = пластитановая стена
     .desc = { ent-BaseWall.desc }
     .suffix = диагональная
+ent-WallMeat = мясная стена
+    .desc = Липко.

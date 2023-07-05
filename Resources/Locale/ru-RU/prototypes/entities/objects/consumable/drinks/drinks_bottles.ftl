@@ -88,3 +88,5 @@ ent-DrinkMilkCarton = молоко
 ent-DrinkSoyMilkCarton = соевое молоко
     .desc = Белая и питательная соевая вкуснятина!
     .suffix = { "" }
+ent-DrinkBeerBottleFull = пиво
+    .desc = Алкогольный напиток, приготовленный из солодовых зерен, хмеля, дрожжей и воды.

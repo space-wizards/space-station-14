@@ -60,3 +60,5 @@ ent-ClothingHeadHelmetHardsuitClown = шлем скафандра клоуна
     .desc = Шлем скафандра клоуна.
 ent-ClothingHeadHelmetHardsuitBrigmedic = шлем скафандра бригмедика
     .desc = Шлем скафандра бригмедика.
+ent-ClothingHeadHelmetHardsuitBasic = базовый шлем скафандра
+    .desc = Базовый шлем скафандра, обеспечивающий незначительную защиту от большинства источников повреждений.
