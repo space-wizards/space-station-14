@@ -1,14 +1,6 @@
 Entries:
 - author: tom-leys
   changes:
-  - {message: Meat Kudzu (from anomoly) takes heat damage. Try unleashing a plasma
-      canister near it, type: Tweak}
-  - {message: 'Meat Kudzu spreads slightly more slowly, takes visible damage, has
-      growth prevented by damage.', type: Tweak}
-  id: 3670
-  time: '2023-05-06T05:08:51.0000000+00:00'
-- author: tom-leys
-  changes:
   - {message: 'Fixed firelocks not lighting up when blocking fire, space, or pressure.',
     type: Fix}
   id: 3671
@@ -2923,3 +2915,11 @@ Entries:
   - {message: Syndicate objectives are more readable, type: Tweak}
   id: 4169
   time: '2023-07-05T00:33:11.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'The Emergency Shuttle will now take 20 minutes to arrive on green alert,
+      and 10 minutes to arrive on blue alert.', type: Tweak}
+  - {message: Alert levels above blue no longer decrease the amount of time it takes
+      to leave., type: Tweak}
+  id: 4170
+  time: '2023-07-05T04:38:09.0000000+00:00'
