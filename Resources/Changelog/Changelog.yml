@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Wet floor holosign lifetime increased from 30 to 90 seconds, type: Tweak}
-  id: 3672
-  time: '2023-05-06T06:44:38.0000000+00:00'
 - author: Tunguso4ka
   changes:
   - {message: Uranium sheets is now edible., type: Add}
@@ -2922,3 +2917,10 @@ Entries:
   - {message: puddles can no longer appear on space tiles (lattice), type: Tweak}
   id: 4171
   time: '2023-07-05T13:59:49.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Nanotrasen has begun issuing authentic Italian mustaches to all chefs,
+      allowing Chefs across the world to unify and unleash their true cooking prowess.
+      Or something like that.', type: Add}
+  id: 4172
+  time: '2023-07-05T22:59:19.0000000+00:00'
