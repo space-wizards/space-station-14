@@ -1,34 +1,4 @@
 Entries:
-- author: freeman2651
-  changes:
-  - {message: A minor update to rules., type: Tweak}
-  id: 3665
-  time: '2023-05-06T02:11:44.0000000+00:00'
-- author: Kit0vras
-  changes:
-  - {message: added random book generation to bookshelves., type: Add}
-  - {message: added construction for bookshelves., type: Add}
-  - {message: 'Changed the bookshelf - now it can store books, paper, folders and
-      the rest of the bureaucracy.', type: Tweak}
-  id: 3666
-  time: '2023-05-06T02:20:02.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed zombies being able to speak., type: Fix}
-  id: 3667
-  time: '2023-05-06T04:18:56.0000000+00:00'
-- author: AsikKEsel
-  changes:
-  - {message: 'Added uranium glass and uranium window. Don''t worry, scientists reduce
-      radioactive emissions by 97.4% with RadAbsorb', type: Add}
-  id: 3668
-  time: '2023-05-06T04:47:19.0000000+00:00'
-- author: Arteben
-  changes:
-  - {message: Added additional indicators for the combat mode!, type: Add}
-  - {message: Changed the translation for the settings option!, type: Tweak}
-  id: 3669
-  time: '2023-05-06T05:06:42.0000000+00:00'
 - author: tom-leys
   changes:
   - {message: Meat Kudzu (from anomoly) takes heat damage. Try unleashing a plasma
@@ -2926,3 +2896,30 @@ Entries:
       when hidden, type: Fix}
   id: 4164
   time: '2023-07-05T00:29:58.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: windows can now again be placed next to other windows, type: Fix}
+  id: 4165
+  time: '2023-07-05T00:31:10.0000000+00:00'
+- author: gagarinten
+  changes:
+  - {message: Balanced a laser carbine craft, type: Tweak}
+  id: 4166
+  time: '2023-07-05T00:31:20.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: 'Due to improvements in Glass Airlock quality control, half the glass
+      will no longer be lost on disassembly.', type: Fix}
+  id: 4167
+  time: '2023-07-05T00:31:36.0000000+00:00'
+- author: Raitononai
+  changes:
+  - {message: NanoTrasen has begun hiring employees with Archaic accents to help expand
+      employee diversity. Forsooth!, type: Add}
+  id: 4168
+  time: '2023-07-05T00:32:22.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: Syndicate objectives are more readable, type: Tweak}
+  id: 4169
+  time: '2023-07-05T00:33:11.0000000+00:00'
