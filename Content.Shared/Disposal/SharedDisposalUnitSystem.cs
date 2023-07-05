@@ -41,6 +41,13 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     public DisposalsPressureState GetState(EntityUid uid, DisposalUnitComponent component, MetaDataComponent? metadata = null)
     {
         var nextPressure = Metadata.GetPauseTime(uid, metadata) + component.NextPressurized;
+        var pressurizeTime = 1f / PressurePerSecond;
+        var pressurizeDuration = pressurizeTime - component.FlushDelay.TotalSeconds;
+
+        if (nextPressure.TotalSeconds > pressurizeDuration)
+        {
+            return DisposalsPressureState.Flushed;
+        }
 
         if (nextPressure > GameTiming.CurTime)
         {

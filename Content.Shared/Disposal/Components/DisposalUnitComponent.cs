@@ -205,5 +205,14 @@ public sealed class DisposalUnitComponent : Component
 public enum DisposalsPressureState : byte
 {
     Ready,
+
+    /// <summary>
+    /// Has been flushed recently within FlushDelay.
+    /// </summary>
+    Flushed,
+
+    /// <summary>
+    /// FlushDelay has elapsed and now we're transitioning back to Ready.
+    /// </summary>
     Pressurizing
 }

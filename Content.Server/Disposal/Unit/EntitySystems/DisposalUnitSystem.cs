@@ -311,7 +311,11 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         UpdateInterface(uid, component, args.Powered);
 
         if (!args.Powered)
+        {
+            component.NextFlush = null;
+            Dirty(component);
             return;
+        }
 
         if (component.Engaged && !TryFlush(uid, component))
         {
@@ -362,8 +366,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     /// </summary>
     private void Update(EntityUid uid, DisposalUnitComponent component, MetaDataComponent metadata, float frameTime)
     {
-
-
         if (component.NextFlush != null)
         {
             if (component.NextFlush.Value < GameTiming.CurTime)
@@ -536,12 +538,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         return component.NextPressurized + pausedTime - currentTime;
     }
 
-    public void UpdateVisualState(EntityUid uid, DisposalUnitComponent component)
-    {
-        UpdateVisualState(uid, component, false);
-    }
-
-    public void UpdateVisualState(EntityUid uid, DisposalUnitComponent component, bool flush)
+    public void UpdateVisualState(EntityUid uid, DisposalUnitComponent component, bool flush = false)
     {
         if (!TryComp(uid, out AppearanceComponent? appearance))
         {
@@ -557,7 +554,19 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         }
 
         var state = GetState(uid, component);
-        _appearance.SetData(uid, DisposalUnitComponent.Visuals.VisualState, state == DisposalsPressureState.Pressurizing ? DisposalUnitComponent.VisualState.Charging : DisposalUnitComponent.VisualState.Anchored, appearance);
+
+        switch (state)
+        {
+            case DisposalsPressureState.Flushed:
+                _appearance.SetData(uid, DisposalUnitComponent.Visuals.VisualState, DisposalUnitComponent.VisualState.Flushing, appearance);
+                break;
+            case DisposalsPressureState.Pressurizing:
+                _appearance.SetData(uid, DisposalUnitComponent.Visuals.VisualState, DisposalUnitComponent.VisualState.Charging, appearance);
+                break;
+            case DisposalsPressureState.Ready:
+                _appearance.SetData(uid, DisposalUnitComponent.Visuals.VisualState, DisposalUnitComponent.VisualState.Anchored, appearance);
+                break;
+        }
 
         _appearance.SetData(uid, DisposalUnitComponent.Visuals.Handle, component.Engaged
             ? DisposalUnitComponent.HandleState.Engaged
@@ -570,10 +579,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         }
 
         var lightState = DisposalUnitComponent.LightStates.Off;
-        if (flush)
-        {
-            _appearance.SetData(uid, DisposalUnitComponent.Visuals.VisualState, DisposalUnitComponent.VisualState.Flushing, appearance);
-        }
 
         if (component.Container.ContainedEntities.Count > 0)
         {
@@ -632,8 +637,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             return;
 
         var pauseTime = Metadata.GetPauseTime(uid, metadata);
-        var nextEngage = (GameTiming.CurTime - pauseTime).TotalSeconds + component.ManualFlushTime;
-        component.NextFlush = TimeSpan.FromSeconds(Math.Min((component.NextFlush ?? TimeSpan.MaxValue).TotalSeconds, nextEngage));
+        var nextEngage = GameTiming.CurTime - pauseTime + component.ManualFlushTime;
+        component.NextFlush = TimeSpan.FromSeconds(Math.Min((component.NextFlush ?? TimeSpan.MaxValue).TotalSeconds, nextEngage.TotalSeconds));
     }
 
     public void Disengage(EntityUid uid, DisposalUnitComponent component)

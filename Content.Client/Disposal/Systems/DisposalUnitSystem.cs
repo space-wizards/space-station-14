@@ -1,4 +1,3 @@
-using Content.Client.Disposal.UI;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Robust.Client.GameObjects;
@@ -23,84 +22,11 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         SubscribeLocalEvent<DisposalUnitComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    public override void FrameUpdate(float frameTime)
-    {
-        base.FrameUpdate(frameTime);
-
-        var query = EntityQueryEnumerator<DisposalUnitComponent, ClientUserInterfaceComponent>();
-
-        while (query.MoveNext(out var uid, out var comp, out var ui))
-        {
-            UpdateInterface(uid, comp, ui);
-        }
-    }
-
-    private void UpdateInterface(EntityUid uid, DisposalUnitComponent component, ClientUserInterfaceComponent ui)
-    {
-        var state = component.UiState;
-
-        if (state == null)
-            return;
-
-        foreach (var inter in ui.Interfaces)
-        {
-            if (inter is DisposalUnitBoundUserInterface boundInterface)
-            {
-                boundInterface.UpdateWindowState(state);
-                return;
-            }
-        }
-    }
-
     private void OnComponentInit(EntityUid uid, DisposalUnitComponent disposalUnit, ComponentInit args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite) || !TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
-        if (!sprite.LayerMapTryGet(DisposalUnitVisualLayers.Base, out var baseLayerIdx))
-            return; // Couldn't find the "normal" layer to return to after flush animation
-
-        if (!sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseFlush, out var flushLayerIdx))
-            return; // Couldn't find the flush animation layer
-
-        var originalBaseState = sprite.LayerGetState(baseLayerIdx);
-        var flushState = sprite.LayerGetState(flushLayerIdx);
-
-        // Setup the flush animation to play
-        disposalUnit.FlushAnimation = new Animation
-        {
-            Length = disposalUnit.FlushDelay,
-            AnimationTracks =
-            {
-                new AnimationTrackSpriteFlick
-                {
-                    LayerKey = DisposalUnitVisualLayers.BaseFlush,
-                    KeyFrames =
-                    {
-                        // Play the flush animation
-                        new AnimationTrackSpriteFlick.KeyFrame(flushState, 0),
-                        // Return to base state (though, depending on how the unit is
-                        // configured we might get an appearance change event telling
-                        // us to go to charging state)
-                        new AnimationTrackSpriteFlick.KeyFrame(originalBaseState, (float) disposalUnit.FlushDelay.TotalSeconds)
-                    }
-                },
-            }
-        };
-
-        if (disposalUnit.FlushSound != null)
-        {
-            disposalUnit.FlushAnimation.AnimationTracks.Add(
-                new AnimationTrackPlaySound
-                {
-                    KeyFrames =
-                    {
-                        new AnimationTrackPlaySound.KeyFrame(_audioSystem.GetSound(disposalUnit.FlushSound), 0)
-                    }
-                });
-        }
-
-        EnsureComp<AnimationPlayerComponent>(uid);
         UpdateState(uid, disposalUnit, sprite, appearance);
     }
 
@@ -127,18 +53,56 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseCharging, state == VisualState.Charging);
         sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseFlush, state == VisualState.Flushing);
 
+        // This is a transient state so not too worried about replaying in range.
         if (state == VisualState.Flushing)
         {
-            // TODO: Need some kind of visual state to represent it
-            // Okay so there's the flush engage timer and the initial flush timer
-            // if we're inside the initial flush timer then play the animation, otherwise just uhhh skip it.
-
-            // TODO: Look at cleaning up the above potentially.
-
-            if (!_animationSystem.HasRunningAnimation(uid, AnimationKey))
+            if (!_animationSystem.HasRunningAnimation(uid, AnimationKey) &&
+                sprite.LayerMapTryGet(DisposalUnitVisualLayers.Base, out var baseLayerIdx) &&
+                sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseFlush, out var flushLayerIdx))
             {
-                _animationSystem.Play(uid, unit.FlushAnimation, AnimationKey);
+                var originalBaseState = sprite.LayerGetState(baseLayerIdx);
+                var flushState = sprite.LayerGetState(flushLayerIdx);
+
+                // Setup the flush animation to play
+                var anim = new Animation
+                {
+                    Length = unit.FlushDelay,
+                    AnimationTracks =
+                    {
+                        new AnimationTrackSpriteFlick
+                        {
+                            LayerKey = DisposalUnitVisualLayers.BaseFlush,
+                            KeyFrames =
+                            {
+                                // Play the flush animation
+                                new AnimationTrackSpriteFlick.KeyFrame(flushState, 0),
+                                // Return to base state (though, depending on how the unit is
+                                // configured we might get an appearance change event telling
+                                // us to go to charging state)
+                                new AnimationTrackSpriteFlick.KeyFrame(originalBaseState, (float) unit.FlushDelay.TotalSeconds)
+                            }
+                        },
+                    }
+                };
+
+                if (unit.FlushSound != null)
+                {
+                    anim.AnimationTracks.Add(
+                        new AnimationTrackPlaySound
+                        {
+                            KeyFrames =
+                            {
+                                new AnimationTrackPlaySound.KeyFrame(_audioSystem.GetSound(unit.FlushSound), 0)
+                            }
+                        });
+                }
+
+                _animationSystem.Play(uid, anim, AnimationKey);
             }
+        }
+        else
+        {
+            _animationSystem.Stop(uid, AnimationKey);
         }
 
         if (!_appearanceSystem.TryGetData<HandleState>(uid, Visuals.Handle, out var handleState, appearance))
