@@ -1,6 +1,6 @@
-using Content.Client.Disposal.Components;
 using Content.Client.Disposal.Systems;
 using Content.Shared.Disposal;
+using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
@@ -16,7 +16,9 @@ namespace Content.Client.Disposal.UI
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
+        // What are you doing here
         public MailingUnitWindow? MailingUnitWindow;
+
         public DisposalUnitWindow? DisposalUnitWindow;
 
         public DisposalUnitBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
@@ -84,16 +86,12 @@ namespace Content.Client.Disposal.UI
             {
                 case MailingUnitBoundUserInterfaceState mailingUnitState:
                     MailingUnitWindow?.UpdateState(mailingUnitState);
-                    component.UiState = mailingUnitState.DisposalState;
                     break;
 
                 case DisposalUnitBoundUserInterfaceState disposalUnitState:
                     DisposalUnitWindow?.UpdateState(disposalUnitState);
-                    component.UiState = disposalUnitState;
                     break;
             }
-
-            _entityManager.System<DisposalUnitSystem>().UpdateActive(entityId, true);
         }
 
         protected override void Dispose(bool disposing)

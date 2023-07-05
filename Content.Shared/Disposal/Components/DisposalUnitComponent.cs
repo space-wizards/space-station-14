@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Disposal.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed class DisposalUnitComponent : Component
+public sealed partial class DisposalUnitComponent : Component
 {
     public const string ContainerId = "disposals";
 
@@ -69,7 +69,7 @@ public sealed class DisposalUnitComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("autoEngageTime"), AutoNetworkedField]
-    public readonly TimeSpan AutomaticEngageTime = TimeSpan.FromSeconds(30);
+    public TimeSpan AutomaticEngageTime = TimeSpan.FromSeconds(30);
 
     /// <summary>
     ///     Delay from trying to enter disposals ourselves.
@@ -90,7 +90,7 @@ public sealed class DisposalUnitComponent : Component
     [ViewVariables] public Container Container = default!;
 
     [ViewVariables, DataField("powered"), AutoNetworkedField]
-    public bool Powered = false;
+    public bool Powered;
 
     /// <summary>
     /// Was the disposals unit engaged for a manual flush.

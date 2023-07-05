@@ -80,7 +80,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     private void OnUnpaused(EntityUid uid, DisposalUnitComponent component, ref EntityUnpausedEvent args)
     {
         if (component.NextFlush != null)
-            component.NextFlush += args.PausedTime;
+            component.NextFlush = component.NextFlush.Value + args.PausedTime;
 
         component.NextPressurized += args.PausedTime;
     }
@@ -177,7 +177,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         args.Handled = true;
     }
 
-    public void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, DisposalUnitComponent? disposal = null)
+    public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, DisposalUnitComponent? disposal = null)
     {
         if (!Resolve(uid, ref disposal))
             return;
@@ -381,7 +381,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             component.LastState = state;
             UpdateVisualState(uid, component);
             UpdateInterface(uid, component, component.Powered);
-            Dirty(component);
+            Dirty(component, metadata);
         }
 
         Box2? disposalsBounds = null;
@@ -419,7 +419,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         }
 
         if (count != component.RecentlyEjected.Count)
-            Dirty(component);
+            Dirty(component, metadata);
     }
 
     public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid? userId, DisposalUnitComponent? unit = null)
@@ -466,9 +466,9 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             return false;
         }
 
-        component.NextFlush += component.AutomaticEngageTime;
+        if (component.NextFlush != null)
+            component.NextFlush = component.NextFlush.Value + component.AutomaticEngageTime;
 
-        // Allows the MailingUnitSystem to add tags or prevent flushing
         var beforeFlushArgs = new BeforeDisposalFlushEvent();
         RaiseLocalEvent(uid, beforeFlushArgs);
 
@@ -484,7 +484,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         var coords = xform.Coordinates;
         var entry = grid.GetLocal(coords)
-            .FirstOrDefault(entity => HasComp<DisposalEntryComponent>(entity));
+            .FirstOrDefault(HasComp<DisposalEntryComponent>);
 
         if (entry == default)
         {
