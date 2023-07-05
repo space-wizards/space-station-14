@@ -45,7 +45,7 @@ traitor-role-greeting =
     You are a syndicate agent.
     Your objectives and codewords are listed in the character menu.
     Use the uplink loaded into your PDA to buy the tools you'll need for this mission.
-    Death to Nanotrasen!
+    Death to CoreGov!
 traitor-role-codewords =
     The codewords are:
     {$codewords}.

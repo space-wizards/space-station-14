@@ -13,3 +13,4 @@
   components:
     - type: Transform
     - type: NavMap
+    - type: ShipTracker

@@ -1,5 +1,5 @@
 ent-CrateServiceJanitorialSupplies = Janitorial supplies crate
-    .desc = Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, broom, spray cleaner, rag, and trash bag.
+    .desc = Fight back against dirt and grime with CoreGov's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, broom, spray cleaner, rag, and trash bag.
 
 ent-CrateServiceReplacementLights = Replacement lights crate
     .desc = May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs.
@@ -27,7 +27,7 @@ ent-CrateServiceGuidebooks = Guidebooks crate
 
 ent-CrateServiceBox = Boxes crate
     .desc = Contains 6 empty multipurpose boxes.
-    
+
 ent-CrateJanitorBiosuit = Janitor bio suit crate
     .desc = Contains 2 biohazard suits to ensure that no disease will distract you from cleaning.
 

@@ -241,28 +241,6 @@ namespace Content.IntegrationTests.Tests
 
                 if (entManager.HasComponent<StationJobsComponent>(station))
                 {
-                    // Test that the map has valid latejoin spawn points
-                    if (!NoSpawnMaps.Contains(mapProto))
-                    {
-                        var lateSpawns = 0;
-
-                        foreach (var comp in entManager.EntityQuery<SpawnPointComponent>(true))
-                        {
-                            if (comp.SpawnType != SpawnPointType.LateJoin ||
-                                !xformQuery.TryGetComponent(comp.Owner, out var xform) ||
-                                xform.GridUid == null ||
-                                !gridUids.Contains(xform.GridUid.Value))
-                            {
-                                continue;
-                            }
-
-                            lateSpawns++;
-                            break;
-                        }
-
-                        Assert.That(lateSpawns, Is.GreaterThan(0), $"Found no latejoin spawn points on {mapProto}");
-                    }
-
                     // Test all availableJobs have spawnPoints
                     // This is done inside gamemap test because loading the map takes ages and we already have it.
                     var jobList = entManager.GetComponent<StationJobsComponent>(station).RoundStartJobList

@@ -33,7 +33,8 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
     [Dependency] private readonly DeviceLinkSystem _deviceLinkSystem = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly FTLShipHealthSystem _shipHealthSystem = default!;
+    [Dependency] private readonly ShipTrackerSystem _shipTrackerSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -89,10 +90,10 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
         var targetGrid = (EntityUid) args.Data["targetGrid"];
         var weaponPad = (EntityUid) args.Data["weaponPad"];
 
-        TryFireWeapon(uid, component, targetGrid, weaponPad, coordinates);
+        TryFireWeapon(uid, component, targetGrid, coordinates, weaponPad);
     }
 
-    private void TryFireWeapon(EntityUid uid, FTLWeaponComponent component, EntityUid targetGrid, EntityUid weaponPad, EntityCoordinates coordinates)
+    public void TryFireWeapon(EntityUid uid, FTLWeaponComponent component, EntityUid targetGrid, EntityCoordinates coordinates, EntityUid? weaponPad)
     {
         TryComp<FTLWeaponSiloComponent>(uid, out var siloComponent);
         var ammoPrototypeString = "";
@@ -106,7 +107,6 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
                     TryComp<FTLAmmoComponent>(entity, out var ammoComponent);
                     if (ammoComponent != null)
                     {
-                        Logger.Debug(ammoComponent.Prototype);
                         ammoPrototypeString = ammoComponent.Prototype;
                     }
                     _entityManager.DeleteEntity(entity);
@@ -118,22 +118,27 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
             ammoPrototypeString = component.Prototype;
         }
 
-        var localeMessage = "weapon-pad-message-hit-text";
+        var localeMessage = "weapon-pad-message-miss-text";
         if (ammoPrototypeString == "")
         {
             _audioSystem.PlayPvs(component.CooldownSound, uid);
             return;
         }
         var ammoPrototype = _prototypeManager.Index<FTLAmmoType>(ammoPrototypeString);
-        TryComp<FTLShipHealthComponent>(targetGrid, out var shipHealthComponent);
-        if (shipHealthComponent != null && _shipHealthSystem.TryDamageShip(shipHealthComponent, ammoPrototype))
+        TryComp<ShipTrackerComponent>(targetGrid, out var shipHealthComponent);
+        if (shipHealthComponent != null)
         {
-            _entityManager.SpawnEntity(ammoPrototype.Prototype, coordinates);
-            localeMessage = "weapon-pad-message-miss-text";
-        }
-        _chatSystem.TrySendInGameICMessage(weaponPad, Loc.GetString(localeMessage), InGameICChatType.Speak, false);
+            if (_shipTrackerSystem.TryDamageShip(shipHealthComponent, ammoPrototype))
+            {
+                _entityManager.SpawnEntity(ammoPrototype.BulletPrototype, coordinates);
+                localeMessage = "weapon-pad-message-hit-text";
+            }
 
+            if (weaponPad.HasValue)
+                _popupSystem.PopupEntity(Loc.GetString(localeMessage, ("hull", shipHealthComponent.HullAmount), ("maxHull", shipHealthComponent.HullCapacity), ("shields", shipHealthComponent.ShieldAmount)), weaponPad.Value);
+        }
         _audioSystem.PlayPvs(component.FireSound, uid);
+
         component.CanBeUsed = false;
         TryCooldownWeapon(uid, component);
     }
@@ -224,7 +229,7 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
 
         var comp = EnsureComp<WeaponTargetingUserComponent>(args.Session.AttachedEntity.Value);
         // collect grids
-        var grids = EntityQuery<FTLShipHealthComponent>().Select(x => x.Owner).ToList();
+        var grids = EntityQuery<ShipTrackerComponent>().Select(x => x.Owner).ToList();
         var state = new WeaponTargetingUserInterfaceState(component.CanFire, grids);
         foreach (var grid in grids)
         {

@@ -1,0 +1,130 @@
+# alcoholic
+- type: listing
+  id: BartenderDrinkBeer
+  name: bartender-drink-beer-name
+  description: bartender-drink-beer-desc
+  productEntity: DrinkBeerglass
+  cost:
+    Credits: 3
+  categories:
+    - BartenderDrinks
+
+- type: listing
+  id: BartenderDrinkVodka
+  name: bartender-drink-vodka-name
+  description: bartender-drink-vodka-desc
+  productEntity: DrinkVodkaGlass
+  cost:
+    Credits: 20
+  categories:
+    - BartenderDrinks
+
+- type: listing
+  id: BartenderDrinkAle
+  name: bartender-drink-ale-name
+  description: bartender-drink-ale-desc
+  productEntity: DrinkAleGlass
+  cost:
+    Credits: 15
+  categories:
+    - BartenderDrinks
+
+- type: listing
+  id: BartenderDrinkBlueCuracao
+  name: bartender-drink-blue-curacao-name
+  description: bartender-drink-blue-curacao-desc
+  productEntity: DrinkBlueCuracaoGlass
+  cost:
+    Credits: 25
+  categories:
+    - BartenderDrinks
+
+- type: listing
+  id: BartenderDrinkRum
+  name: bartender-drink-rum-name
+  description: bartender-drink-rum-desc
+  productEntity: DrinkRumGlass
+  cost:
+    Credits: 15
+  categories:
+    - BartenderDrinks
+
+- type: listing
+  id: BartenderDrinkGin
+  name: bartender-drink-gin-name
+  description: bartender-drink-gin-desc
+  productEntity: DrinkGinGlass
+  cost:
+    Credits: 10
+  categories:
+    - BartenderDrinks
+
+- type: listing
+  id: BartenderDrinkTequila
+  name: bartender-drink-tequila-name
+  description: bartender-drink-tequila-desc
+  productEntity: DrinkTequilaGlass
+  cost:
+    Credits: 20
+  categories:
+    - BartenderDrinks
+
+- type: listing
+  id: BartenderDrinkWine
+  name: bartender-drink-wine-name
+  description: bartender-drink-wine-desc
+  productEntity: DrinkWineGlass
+  cost:
+    Credits: 40
+  categories:
+    - BartenderDrinks
+
+- type: listing
+  id: BartenderDrinkWhiskey
+  name: bartender-drink-whiskey-name
+  description: bartender-drink-whiskey-desc
+  productEntity: DrinkWhiskeyGlass
+  cost:
+    Credits: 20
+  categories:
+    - BartenderDrinks
+
+- type: listing
+  id: BartenderDrinkWhiskeySoda
+  name: bartender-drink-whiskey-soda-name
+  description: bartender-drink-whiskey-soda-desc
+  productEntity: DrinkWhiskeySodaGlass
+  cost:
+    Credits: 25
+  categories:
+    - BartenderDrinks
+
+- type: listing
+  id: BartenderDrinkLongIslandIcedtea
+  name: bartender-drink-long-island-iced-tea-name
+  description: bartender-drink-long-island-iced-tea-desc
+  productEntity: DrinkLongIslandIcedTeaGlass
+  cost:
+    Credits: 15
+  categories:
+    - BartenderDrinks
+
+- type: listing
+  id: BartenderDrinkMoonshine
+  name: bartender-drink-moonshine-name
+  description: bartender-drink-moonshine-desc
+  productEntity: DrinkMoonshineGlass
+  cost:
+    Credits: 10
+  categories:
+    - BartenderDrinks
+
+- type: listing
+  id: BartenderRepairShip
+  name: bartender-drink-repair-ship-name
+  description: bartender-drink-repair-ship-desc
+  productEntity: RepairOnInitObject
+  cost:
+    Credits: 5000
+  categories:
+    - BartenderDrinks

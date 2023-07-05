@@ -3,7 +3,20 @@
   bypassShield: true
   hullMin: 3
   hullMax: 6
-  prototype: BulletRocket
+  prototype: ExplosionMissile
+
+- type: ftlAmmo
+  id: GenericLaser
+  hullMin: 2
+  hullMax: 4
+  hitTimes: 3
+  prototype: ExplosionLaser
+
+- type: ftlAmmo
+  id: DebugDestroy
+  bypassShield: true
+  hullMin: 1000
+  hullMax: 1000
 
 - type: ftlAmmo
   id: IncendiaryMissile

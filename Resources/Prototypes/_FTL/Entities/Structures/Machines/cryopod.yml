@@ -1,0 +1,41 @@
+- type: entity
+  id: MachineSleeperCryopod
+  parent: BaseMachine
+  name: cryopod
+  description: Perfect for a 100,000 year nap.
+  suffix: Spawns
+  components:
+    - type: Sprite
+      sprite: _FTL/Structures/Machines/cryopod.rsi
+      layers:
+        - state: closed
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        cryo:
+          density: 25
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.5,0.25,0.5"
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:ChangeConstructionNodeBehavior
+              node: machineFrame
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: MaterialStorage
+    - type: Appearance
+    - type: Climbable
+    - type: SleeperCryopod
+    - type: ContainerContainer
+      containers:
+        body_container: !type:ContainerSlot

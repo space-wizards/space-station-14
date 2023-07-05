@@ -20,8 +20,8 @@ public sealed partial class WeaponTargetingWindow : FancyWindow
 
         TargetingMapScreen.OnWeaponMapFire += args =>
         {
-            if (mapUid != null)
-                _owner.FireWeapon(args, mapUid.Value);
+            if (TargetingMapScreen.MapUid != null)
+                _owner.FireWeapon(args, TargetingMapScreen.MapUid.Value);
         };
 
         if (trackedEntity != null)

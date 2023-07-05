@@ -1,0 +1,14 @@
+- type: storeCategory
+  id: BartenderDrinks
+  name: store-category-alcoholic-drinks
+  priority: 2
+
+- type: storeCategory
+  id: BartenderNonAlcoholic
+  name: store-category-alcoholic-drinks
+  priority: 1
+- type: storeCategory
+
+  id: BartenderUtility
+  name: store-category-utility
+  priority: 0

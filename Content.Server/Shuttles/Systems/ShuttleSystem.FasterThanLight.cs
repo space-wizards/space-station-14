@@ -190,8 +190,7 @@ public sealed partial class ShuttleSystem
         hyperspace.Dock = dock;
         hyperspace.PriorityTag = priorityTag;
         _console.RefreshShuttleConsoles();
-        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jump-soon-message"), colorOverride: Color.Gold);
-
+        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jump-soon-message", ("destination", MetaData(target).EntityName)), colorOverride: Color.Gold);
     }
 
     private bool TrySetupFTL(EntityUid uid, ShuttleComponent shuttle, [NotNullWhen(true)] out FTLComponent? component)

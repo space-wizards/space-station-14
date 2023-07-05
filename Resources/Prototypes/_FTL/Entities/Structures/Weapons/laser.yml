@@ -1,0 +1,27 @@
+- type: entity
+  parent: BaseFTLWeapon
+  id: BaseFTLWeaponLaser
+  abstract: true
+  name: laser
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: _FTL/silo.rsi
+      layers:
+        - state: closed
+
+- type: entity
+  parent: BaseFTLWeaponLaser
+  id: FTLWeaponBurstLaserMkI
+  name: burst laser mk. 1
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: _FTL/silo.rsi
+      layers:
+        - state: closed
+    - type: FTLWeapon
+      cooldownTime: 3
+      prototype: GenericLaser

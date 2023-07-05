@@ -1,0 +1,10 @@
+- type: gamePreset
+  id: Exploration
+  alias:
+    - xplor
+  name: exploration-title
+  showInVote: false #2boring2vote
+  description: exploration-description
+  rules:
+    - BasicStationEventScheduler
+    - EndOnShipDestruction

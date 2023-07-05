@@ -7,6 +7,8 @@
     Kestrel:
       stationProto: StandardIndependentStation
       components:
+        - type: NavMap
+        - type: ShipTracker
         - type: StationNameSetup
           mapNameTemplate: '{0} Kestrel {1}'
           nameGenerator:

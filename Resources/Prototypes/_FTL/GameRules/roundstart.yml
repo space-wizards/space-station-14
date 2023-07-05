@@ -1,0 +1,6 @@
+- type: entity
+  id: EndOnShipDestruction
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: EndOnShipDestruction

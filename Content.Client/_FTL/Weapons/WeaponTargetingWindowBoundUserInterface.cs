@@ -43,7 +43,6 @@ public sealed class WeaponTargetingBoundUserInterface : BoundUserInterface
 
         if (state is not WeaponTargetingUserInterfaceState msg)
             return;
-        Logger.Debug(msg.MapUids[0].ToString());
         _window?.UpdateState(msg);
     }
 

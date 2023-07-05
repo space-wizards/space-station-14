@@ -1,0 +1,45 @@
+- type: entity
+  id: BartendingPad
+  name: drinks pad
+  description: It's a pad, to order drinks! Don't forget to withdraw your cash from it, though.
+  suffix: Wall
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: InteractionOutline
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Sprite
+      sprite: Structures/Machines/station_map.rsi
+      drawdepth: WallMountedItems
+      layers:
+        - state: station_map0
+        - state: unshaded
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+          shader: unshaded
+    - type: WallMount
+      arc: 360
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: Store
+      preset: StorePresetBartender
+      balance:
+        Credits: 0
+    - type: UserInterface
+      interfaces:
+        - key: enum.StoreUiKey.Key
+          type: StoreBoundUserInterface
+    - type: ActivatableUI
+      key: enum.StoreUiKey.Key

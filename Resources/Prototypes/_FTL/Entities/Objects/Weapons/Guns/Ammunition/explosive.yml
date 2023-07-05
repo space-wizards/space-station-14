@@ -5,7 +5,7 @@
   description: A missile designed to be fired by missile launchers.
   components:
     - type: Item
-      size: 60
+      size: 999
     - type: MultiHandedItem
     - type: FTLAmmo
       prototype: GenericMissile
@@ -16,6 +16,35 @@
       state: rpg
     - type: StaticPrice
       price: 150
+    - type: DamageOnLand
+      ignoreResistances: true
+      damage:
+        types:
+          Blunt: 5
+    - type: DamageOtherOnHit
+      damage:
+        types:
+          Blunt: 5
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 100
+      intensitySlope: 15
+      totalIntensity: 200
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 5
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:ExplodeBehavior
 
 - type: entity
   parent: FTLGenericMissile
@@ -23,15 +52,16 @@
   name: incendiary missile
   description: A missile designed to flame up rooms.
   components:
-    - type: Item
-      size: 60
-    - type: MultiHandedItem
     - type: FTLAmmo
       prototype: IncendiaryMissile
       tag: FTLMissile
-    - type: Sprite
-      netsync: false
-      sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-      state: rpg
-    - type: StaticPrice
-      price: 150
+
+- type: entity
+  parent: FTLGenericMissile
+  id: FTLDebugMissile
+  name: debug missile
+  description: A missile designed to debug.
+  components:
+    - type: FTLAmmo
+      prototype: DebugDestroy
+      tag: FTLMissile

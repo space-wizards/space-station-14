@@ -1,0 +1,62 @@
+- type: ftlPoint
+  id: StationPoint
+  tag: ship-ftl-tag-base
+  probability: 0.9
+  effects:
+    - !type:SpawnMapEffect
+
+- type: ftlPoint
+  id: LoDangerPoint
+  tag: ship-ftl-tag-unknown
+  probability: 0.4
+  effects:
+    - !type:SpawnMapEffect
+      mapPaths:
+        - /Maps/_FTL/small-drone-easy.yml
+
+- type: ftlPoint
+  id: HiDangerPoint
+  tag: ship-ftl-tag-unknown
+  probability: 0.8
+  effects:
+    - !type:SpawnMapEffect
+      mapPaths:
+        - /Maps/_FTL/small-drone-easy.yml
+        - /Maps/_FTL/small-drone-tough.yml
+        - /Maps/_FTL/cargo-vessel.yml
+
+- type: ftlPoint
+  id: ConfDangerPoint
+  tag: ship-ftl-tag-danger
+  effects:
+    - !type:SpawnMapEffect
+      mapPaths:
+        - /Maps/_FTL/small-drone-tough.yml
+        - /Maps/_FTL/cargo-vessel.yml
+
+- type: ftlPoint
+  id: PlanetPoint
+  tag: ship-ftl-tag-planet
+  effects:
+    - !type:ToPlanetEffect
+
+- type: ftlPoint
+  id: StarPoint
+  tag: ship-ftl-tag-star # these and NoDangerPoint are the exact same just with a difference in tag
+  effects: []
+
+- type: ftlPoint
+  id: NoDangerPoint
+  tag: ship-ftl-tag-unknown # these and StarPoint are the exact same just with a difference in tag
+  effects: []
+
+- type: weightedRandom
+  id: FTLPoints
+  weights:
+    StationPoint: 0.5
+    NoDangerPoint: 5
+    LoDangerPoint: 7
+    HiDangerPoint: 3
+    ConfDangerPoint: 3
+    StarPoint: 1
+    PlanetPoint: 1

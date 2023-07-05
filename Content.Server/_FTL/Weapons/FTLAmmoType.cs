@@ -14,15 +14,33 @@ public sealed class FTLAmmoType : IPrototype
     [IdDataField]
     public string ID { get; } = default!;
 
+    /// <summary>
+    /// Does it bypass shields?
+    /// </summary>
     [DataField("bypassShield")]
     public bool ShieldPiercing { get; set; } = false;
 
+    /// <summary>
+    /// Minimum hull damage
+    /// </summary>
     [DataField("hullMin")]
     public int HullDamageMin { get; set; } = 1;
 
+    /// <summary>
+    /// Maximum hull damage
+    /// </summary>
     [DataField("hullMax")]
     public int HullDamageMax { get; set; } = 3;
 
+    /// <summary>
+    /// How many times will it hit?
+    /// </summary>
+    [DataField("hitTimes")]
+    public int HitTimes { get; set; } = 1;
+
+    /// <summary>
+    /// Entity prototype that is spawned
+    /// </summary>
     [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Prototype { get; set; } = "";
+    public string BulletPrototype { get; set; } = "";
 }

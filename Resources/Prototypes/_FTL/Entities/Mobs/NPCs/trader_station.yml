@@ -1,0 +1,14 @@
+- type: entity
+  parent: MobHuman
+  id: MobHumanTraderBartender
+  name: bartender
+  suffix: NPC
+  components:
+  - type: RandomHumanoidSpawner
+    settings: TraderBartender
+
+- type: randomHumanoidSettings
+  id: TraderBartender
+  components:
+  - type: Loadout
+    prototypes: [ BartenderGear ]

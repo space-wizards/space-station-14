@@ -1,0 +1,9 @@
+- type: storePreset
+  id: StorePresetBartender
+  storeName: Bartender
+  categories:
+    - BartenderDrinks
+    - BartenderNonAlcoholic
+    - BartenderUtility
+  currencyWhitelist:
+    - Credits

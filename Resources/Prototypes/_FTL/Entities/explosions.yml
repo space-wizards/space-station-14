@@ -1,0 +1,23 @@
+- type: entity
+  id: ExplosionMissile
+  noSpawn: true
+  components:
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 40
+      intensitySlope: 6
+      totalIntensity: 200
+      maxTileBreak: 1
+    - type: ExplodeOnInit
+
+- type: entity
+  id: ExplosionLaser
+  noSpawn: true
+  components:
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 20
+      intensitySlope: 5
+      totalIntensity: 1
+      maxTileBreak: 0
+    - type: ExplodeOnInit
