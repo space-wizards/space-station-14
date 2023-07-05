@@ -16,3 +16,5 @@ ent-ClothingShoesBootsCombat = армейские ботинки
 ent-ClothingShoesBootsLaceup = шнурованные туфли
     .desc = Последний писк моды, и поставляются сразу отполированными!
     .suffix = { "" }
+ent-ClothingShoesBootsMerc = ботинки наёмника
+    .desc = Ботинки, прошедшие через множество конфликтов и доказавшие свою боевую надежность.

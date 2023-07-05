@@ -28,3 +28,6 @@ ent-ClothingBeltWandFilled = { ent-ClothingBeltWand }
 ent-ClothingBeltParamedicFilled = { ent-ClothingBeltMedical }
     .suffix = Заполненный
     .desc = { ent-ClothingBeltMedical.desc }
+ent-ClothingBeltUtilityEngineering = { ent-ClothingBeltUtility }
+    .suffix = Инженерный
+    .desc = { ent-ClothingBeltUtility.desc }

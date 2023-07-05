@@ -10,7 +10,6 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - PowerDrill #todo remove this once we have advanced tools
   - MiningDrill
   - OreProcessorMachineCircuitboard
 
@@ -69,6 +68,7 @@
   - GeneratorUraniumMachineCircuitboard
   - PowerComputerCircuitboard #the actual solar panel itself should be in here
   - SolarControlComputerCircuitboard
+  - SolarTrackerElectronics
   - EmitterCircuitboard
 
 - type: technology
@@ -85,6 +85,18 @@
   - GasRecyclerMachineCircuitboard
 
 # Tier 2
+
+- type: technology
+  id: Grappling
+  name: research-technology-grappling
+  icon:
+    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+    state: base
+  discipline: Industrial
+  tier: 2
+  cost: 5000
+  recipeUnlocks:
+    - WeaponGrapplingGun
 
 - type: technology
   id: RapidConstruction
@@ -159,6 +171,20 @@
   - PowerCellHigh
   technologyPrerequisites:
   - AdvancedPowercells
+
+- type: technology
+  id: AdvancedToolsTechnology
+  name: research-technology-advanced-tools
+  icon:
+    sprite: Objects/Tools/welder_experimental.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+    - WelderExperimental
+    - PowerDrill
+    - JawsOfLife
 
 # Tier 3
 

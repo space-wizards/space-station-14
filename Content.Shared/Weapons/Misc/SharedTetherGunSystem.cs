@@ -7,6 +7,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Throwing;
 using Content.Shared.Toggleable;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
@@ -16,16 +17,18 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Misc;
 
-public abstract class SharedTetherGunSystem : EntitySystem
+public abstract partial class SharedTetherGunSystem : EntitySystem
 {
     [Dependency] private   readonly INetManager _netManager = default!;
     [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private   readonly MobStateSystem _mob = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private   readonly SharedAudioSystem _audio = default!;
+    [Dependency] private   readonly SharedContainerSystem _container = default!;
     [Dependency] private   readonly SharedJointSystem _joints = default!;
     [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
+    [Dependency] private   readonly ThrowingSystem _throwing = default!;
     [Dependency] private   readonly ThrownItemSystem _thrown = default!;
 
     private const string TetherJoint = "tether";
@@ -42,6 +45,8 @@ public abstract class SharedTetherGunSystem : EntitySystem
 
         SubscribeLocalEvent<TetheredComponent, BuckleAttemptEvent>(OnTetheredBuckleAttempt);
         SubscribeLocalEvent<TetheredComponent, UpdateCanMoveEvent>(OnTetheredUpdateCanMove);
+
+        InitializeForce();
     }
 
     private void OnTetheredBuckleAttempt(EntityUid uid, TetheredComponent component, ref BuckleAttemptEvent args)
@@ -115,7 +120,8 @@ public abstract class SharedTetherGunSystem : EntitySystem
         gun = null;
 
         if (!TryComp<HandsComponent>(user, out var hands) ||
-            !TryComp(hands.ActiveHandEntity, out gun))
+            !TryComp(hands.ActiveHandEntity, out gun) ||
+            _container.IsEntityInContainer(user))
         {
             return false;
         }
@@ -129,18 +135,19 @@ public abstract class SharedTetherGunSystem : EntitySystem
         StopTether(uid, component);
     }
 
-    public void TryTether(EntityUid gun, EntityUid target, EntityUid? user, TetherGunComponent? component = null)
+    public bool TryTether(EntityUid gun, EntityUid target, EntityUid? user, BaseForceGunComponent? component = null)
     {
         if (!Resolve(gun, ref component))
-            return;
+            return false;
 
         if (!CanTether(gun, component, target, user))
-            return;
+            return false;
 
         StartTether(gun, component, target, user);
+        return true;
     }
 
-    protected virtual bool CanTether(EntityUid uid, TetherGunComponent component, EntityUid target, EntityUid? user)
+    protected virtual bool CanTether(EntityUid uid, BaseForceGunComponent component, EntityUid target, EntityUid? user)
     {
         if (HasComp<TetheredComponent>(target) || !TryComp<PhysicsComponent>(target, out var physics))
             return false;
@@ -160,7 +167,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
         return true;
     }
 
-    protected virtual void StartTether(EntityUid gunUid, TetherGunComponent component, EntityUid target, EntityUid? user,
+    protected virtual void StartTether(EntityUid gunUid, BaseForceGunComponent component, EntityUid target, EntityUid? user,
         PhysicsComponent? targetPhysics = null, TransformComponent? targetXform = null)
     {
         if (!Resolve(target, ref targetPhysics, ref targetXform))
@@ -212,7 +219,7 @@ public abstract class SharedTetherGunSystem : EntitySystem
         Dirty(component);
     }
 
-    protected virtual void StopTether(EntityUid gunUid, TetherGunComponent component, bool transfer = false)
+    protected virtual void StopTether(EntityUid gunUid, BaseForceGunComponent component, bool land = true, bool transfer = false)
     {
         if (component.Tethered == null)
             return;
@@ -229,8 +236,11 @@ public abstract class SharedTetherGunSystem : EntitySystem
 
         if (TryComp<PhysicsComponent>(component.Tethered, out var targetPhysics))
         {
-            var thrown = EnsureComp<ThrownItemComponent>(component.Tethered.Value);
-            _thrown.LandComponent(component.Tethered.Value, thrown, targetPhysics);
+            if (land)
+            {
+                var thrown = EnsureComp<ThrownItemComponent>(component.Tethered.Value);
+                _thrown.LandComponent(component.Tethered.Value, thrown, targetPhysics, true);
+            }
 
             _physics.SetBodyStatus(targetPhysics, BodyStatus.OnGround);
             _physics.SetSleepingAllowed(component.Tethered.Value, targetPhysics, true);

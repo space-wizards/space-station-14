@@ -21,28 +21,30 @@
   suffix: Filled
   parent: MedkitBurn
   components:
-    - type: StorageFill
-      contents:
-        - id: SyringeInaprovaline
-        - id: Ointment
-          amount: 4
-        - id: PillKelotane
-          amount: 5
+  - type: StorageFill
+    contents:
+      - id: SyringeInaprovaline
+      - id: Ointment
+        amount: 4
+      - id: PillDermaline
+        amount: 5
 
 - type: entity
   id: MedkitBruteFilled
   suffix: Filled
   parent: MedkitBrute
   components:
-    - type: StorageFill
-      contents:
-        - id: Brutepack
-          amount: 2 # TO DO: Advanced brute pack
-        - id: Gauze
-        - id: Bloodpack
-        - id: SyringeTranexamicAcid
-        - id: PillIron
-          amount: 5
+  - type: StorageFill
+    contents:
+      - id: Brutepack
+        amount: 2 # TO DO: Advanced brute pack
+      - id: Gauze
+      - id: Bloodpack
+      - id: SyringeTranexamicAcid
+      - id: PillIron
+        amount: 5
+      - id: PillBicaridine
+        amount: 5
 
 - type: entity
   id: MedkitToxinFilled
@@ -64,14 +66,14 @@
   suffix: Filled
   parent: MedkitO2
   components:
-    - type: StorageFill
-      contents:
-        - id: ClothingMaskBreathMedical
-        - id: EmergencyOxygenTank
-        - id: EmergencyMedipen
-        - id: SyringeInaprovaline
-        - id: PillDexalin
-          amount: 7
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskBreathMedical
+      - id: EmergencyOxygenTankFilled
+      - id: EmergencyMedipen
+      - id: SyringeInaprovaline
+      - id: PillDexalin
+        amount: 7
 
 - type: entity
   id: MedkitRadiationFilled
@@ -106,16 +108,17 @@
   suffix: Filled
   parent: MedkitCombat
   components:
-    - type: StorageFill
-      contents:
-        - id: HandheldHealthAnalyzer
-        - id: SyringeEphedrine
-        - id: SyringeTranexamicAcid
-        - id: AntiPoisonMedipen
-        - id: Bloodpack
-          amount: 2
-        - id: PillTricordrazine
-          amount: 2
+  - type: StorageFill
+    contents:
+      - id: HandheldHealthAnalyzer
+      - id: SyringeEphedrine
+      - id: SyringeTranexamicAcid
+      - id: SyringeBicaridine
+      - id: AntiPoisonMedipen
+      - id: Bloodpack
+        amount: 2
+      - id: PillTricordrazine
+        amount: 2
 
 - type: entity
   id: StimkitFilled

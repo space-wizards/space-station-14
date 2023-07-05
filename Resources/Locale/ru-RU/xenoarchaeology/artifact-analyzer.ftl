@@ -4,8 +4,8 @@ analysis-console-scan-button = Сканировать
 analysis-console-scan-tooltip-info = Сканируйте артефакты, чтобы получить данные об их структуре.
 analysis-console-print-button = Печать
 analysis-console-print-tooltip-info = Распечатать актуальную информацию об артефакте.
-analysis-console-destroy-button = Разрушить
-analysis-console-destroy-button-info = Уничтожайте артефакты, чтобы получить очки исследований в зависимости от того, сколько их было разблокировано.
+analysis-console-destroy-button = Извлечь Очки
+analysis-console-destroy-button-info = Извлеките очки исследования из артефакта для изучения технологий.
 
 analysis-console-info-no-scanner = Анализатор не подключен! Пожалуйста, подключите его с помощью мультитула.
 analysis-console-info-no-artifact = Артефакт не найден! Поместите артефакт на платформу, затем просканируйте для получения данных.

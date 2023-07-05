@@ -15,3 +15,12 @@ ent-CrateFoodBarSupply = Ящик барных принадлежностей
 
 ent-CrateFoodKvassTank = Ящик с бочкой кваса
     .desc = Цистерна с освежающим квасом, который так помогает в жару.
+
+ent-CrateFoodSoftdrinks = Ящик напитков
+    .desc = Ящик напитков.
+
+ent-CrateFoodSoftdrinksLarge = Ящик напитков (большой)
+    .desc = { ent-CrateFoodSoftdrinks.desc }
+
+ent-CrateFoodPizzaLarge = Экстренная доставка пиццы (большой)
+    .desc = Внесите свой вклад в борьбу с голодом на станции, доставляя пиццу в отделы с недостаточным финансированием!

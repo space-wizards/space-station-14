@@ -11,6 +11,7 @@
     - type: RandomSpawner
       rarePrototypes:
         - FoamBlade
+        - PlushieGhost
       rareChance: 0.03
       prototypes:
         - PlushieBee

@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.EUI;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
@@ -270,13 +271,12 @@ public sealed class CrewManifestCommand : IConsoleCommand
         }
 
         var stations = _entityManager
-            .System<StationSystem>()
-            .Stations
-            .Select(station =>
+            .EntityQuery<StationDataComponent>()
+            .Select(stationData =>
             {
-                var meta = _entityManager.GetComponent<MetaDataComponent>(station);
+                var meta = _entityManager.GetComponent<MetaDataComponent>(stationData.Owner);
 
-                return new CompletionOption(station.ToString(), meta.EntityName);
+                return new CompletionOption(stationData.Owner.ToString(), meta.EntityName);
             });
 
         return CompletionResult.FromHintOptions(stations, null);

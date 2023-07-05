@@ -49,6 +49,22 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: Brutepack
+  result: Brutepack1
+  completetime: 1
+  materials:
+    Steel: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: Ointment
+  result: Ointment1
+  completetime: 1
+  materials:
+    Glass: 25
+    Plastic: 25
+
+- type: latheRecipe
   id: HandheldCrewMonitor
   result: HandheldCrewMonitorEmpty
   completetime: 2

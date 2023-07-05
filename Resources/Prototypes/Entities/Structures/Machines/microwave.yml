@@ -40,7 +40,6 @@
         layer:
         - TabletopMachineLayer
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/microwave.rsi
     drawdepth: SmallObjects
     snapCardinals: true
@@ -67,3 +66,6 @@
       microwave_entity_container: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: GuideHelp
+    guides:
+    - Chef

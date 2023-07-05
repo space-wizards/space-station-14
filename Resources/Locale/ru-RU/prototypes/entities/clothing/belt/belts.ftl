@@ -52,3 +52,5 @@ ent-ClothingBeltWand = пояс для палочек
 ent-ClothingBeltSalvageWebbing = жилет утилизтора
     .desc = Универсальная система разгрузки для работы в космосе.
     .suffix = { "" }
+ent-ClothingBeltMercWebbing = РПС наёмника
+    .desc = Идеально подходит для хранения всего: от патронов до оружия и предметов боевой необходимости.

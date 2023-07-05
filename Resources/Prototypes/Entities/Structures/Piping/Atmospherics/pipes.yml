@@ -30,7 +30,6 @@
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     drawdepth: ThinPipe
-    netsync: false
     visible: false
   - type: Appearance
   - type: PipeColorVisuals

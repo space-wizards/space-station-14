@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
     state: cart-y
-    netsync: false
   - type: Icon
     sprite: Objects/Devices/cartridge.rsi
     state: cart-y
@@ -29,7 +28,6 @@
     - type: Sprite
       sprite: Objects/Devices/cartridge.rsi
       state: cart-y
-      netsync: false
     - type: Icon
       sprite: Objects/Devices/cartridge.rsi
       state: cart-y
