@@ -64,15 +64,13 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Unanchored, state == VisualState.UnAnchored);
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Base, state == VisualState.Anchored);
         sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseCharging, state == VisualState.Charging);
-        sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseFlush, state == VisualState.Flushing);
+        sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseFlush, state is VisualState.Flushing or VisualState.Charging);
 
         // This is a transient state so not too worried about replaying in range.
         if (state == VisualState.Flushing)
         {
-            if (!_animationSystem.HasRunningAnimation(uid, AnimationKey) &&
-                sprite.LayerMapTryGet(DisposalUnitVisualLayers.Base, out var baseLayerIdx))
+            if (!_animationSystem.HasRunningAnimation(uid, AnimationKey))
             {
-                var originalBaseState = sprite.LayerGetState(baseLayerIdx);
                 var flushState = new RSI.StateId("disposal-flush");
 
                 // Setup the flush animation to play
@@ -91,7 +89,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                                 // Return to base state (though, depending on how the unit is
                                 // configured we might get an appearance change event telling
                                 // us to go to charging state)
-                                new AnimationTrackSpriteFlick.KeyFrame(originalBaseState, (float) unit.FlushDelay.TotalSeconds)
+                                new AnimationTrackSpriteFlick.KeyFrame("disposal-charging", (float) unit.FlushDelay.TotalSeconds)
                             }
                         },
                     }
@@ -111,6 +109,10 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
                 _animationSystem.Play(uid, anim, AnimationKey);
             }
+        }
+        else if (state == VisualState.Charging)
+        {
+            sprite.LayerSetState(DisposalUnitVisualLayers.BaseFlush, new RSI.StateId("disposal-charging"));
         }
         else
         {

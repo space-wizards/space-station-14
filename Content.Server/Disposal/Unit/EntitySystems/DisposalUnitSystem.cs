@@ -629,11 +629,11 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             lightState |= SharedDisposalUnitComponent.LightStates.Full;
         }
 
-        if (state == DisposalsPressureState.Pressurizing)
+        if (state is DisposalsPressureState.Pressurizing or DisposalsPressureState.Flushed)
         {
             lightState |= SharedDisposalUnitComponent.LightStates.Charging;
         }
-        else if (!component.Engaged)
+        else
         {
             lightState |= SharedDisposalUnitComponent.LightStates.Ready;
         }
@@ -670,19 +670,20 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     public void ManualEngage(EntityUid uid, SharedDisposalUnitComponent component, MetaDataComponent? metadata = null)
     {
+        component.Engaged = true;
+        UpdateVisualState(uid, component);
+        UpdateInterface(uid, component, component.Powered);
+        Dirty(component);
+
         if (!CanFlush(uid, component))
             return;
 
         if (!Resolve(uid, ref metadata))
             return;
 
-        component.Engaged = true;
         var pauseTime = Metadata.GetPauseTime(uid, metadata);
         var nextEngage = GameTiming.CurTime - pauseTime + component.ManualFlushTime;
         component.NextFlush = TimeSpan.FromSeconds(Math.Min((component.NextFlush ?? TimeSpan.MaxValue).TotalSeconds, nextEngage.TotalSeconds));
-        UpdateVisualState(uid, component);
-        UpdateInterface(uid, component, component.Powered);
-        Dirty(component);
     }
 
     public void Disengage(EntityUid uid, SharedDisposalUnitComponent component)
