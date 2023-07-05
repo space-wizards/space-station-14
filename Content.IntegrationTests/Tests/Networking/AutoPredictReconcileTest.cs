@@ -397,17 +397,8 @@ namespace Content.IntegrationTests.Tests.Networking
         [Access(typeof(AutoPredictionTestEntitySystem))]
         public sealed class AutoPredictionTestComponent : Component
         {
-            private bool _foo;
             [AutoNetworkedField]
-            public bool Foo
-            {
-                get => _foo;
-                set
-                {
-                    _foo = value;
-                    Dirty();
-                }
-            }
+            public bool Foo;
         }
 
         [Reflect(false)]
@@ -427,6 +418,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 SubscribeNetworkEvent<SetFooMessage>(HandleMessage);
                 SubscribeLocalEvent<SetFooMessage>(HandleMessage);
+                SubscribeLocalEvent<AutoPredictionTestComponent, AfterAutoHandleStateEvent>(AfterAutoHandleState);
             }
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
@@ -436,10 +428,15 @@ namespace Content.IntegrationTests.Tests.Networking
                 if (Allow)
                 {
                     component.Foo = message.NewFoo;
-                    // Dirty(message.Uid, component);
+                    Dirty(message.Uid, component);
                 }
 
                 EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo, message.NewFoo));
+            }
+
+            private void AfterAutoHandleState(EntityUid uid, AutoPredictionTestComponent comp, ref AfterAutoHandleStateEvent args)
+            {
+                Dirty(uid, comp);
             }
         }
 

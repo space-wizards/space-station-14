@@ -393,18 +393,10 @@ namespace Content.IntegrationTests.Tests.Networking
         }
 
         [NetworkedComponent()]
+        [Access(typeof(PredictionTestEntitySystem))]
         public sealed class PredictionTestComponent : Component
         {
-            private bool _foo;
-            public bool Foo
-            {
-                get => _foo;
-                set
-                {
-                    _foo = value;
-                    Dirty();
-                }
-            }
+            public bool Foo;
 
             public override ComponentState GetComponentState()
             {
@@ -417,6 +409,7 @@ namespace Content.IntegrationTests.Tests.Networking
                     return; // curState????
 
                 Foo = state.Foo;
+                Dirty();
             }
 
             [Serializable, NetSerializable]
@@ -457,6 +450,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 if (Allow)
                 {
                     component.Foo = message.NewFoo;
+                    Dirty(message.Uid, component);
                 }
 
                 EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo, message.NewFoo));
