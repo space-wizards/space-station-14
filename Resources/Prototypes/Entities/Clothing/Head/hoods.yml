@@ -128,7 +128,6 @@
     modifiers:
       coefficients:
         Heat: 0.95
-        EMHeat: 0.8
         Radiation: 0.65
 
 - type: entity

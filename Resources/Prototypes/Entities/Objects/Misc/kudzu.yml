@@ -162,7 +162,6 @@
         types:
           Slash: -0.5
           Heat: -1.0
-          EMHeat: -1.0
           Cold: -1.0
           Blunt: -0.5 # Needs to be balanced (approx 3x) with vacuum damage to stall but not kill Kudzu
     - type: Temperature

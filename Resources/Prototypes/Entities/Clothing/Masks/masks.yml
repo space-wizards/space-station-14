@@ -55,7 +55,6 @@
     modifiers:
       coefficients:
         Heat: 0.80
-        EMHeat: 0.95
 
 - type: entity
   parent: ClothingMaskGasAtmos
@@ -100,7 +99,6 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.95
-        EMHeat: 0.95
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -326,7 +324,6 @@
         Slash: 0.80
         Piercing: 0.90
         Heat: 0.90
-        EMHeat: 0.90
 
 - type: entity
   parent: ClothingMaskBase

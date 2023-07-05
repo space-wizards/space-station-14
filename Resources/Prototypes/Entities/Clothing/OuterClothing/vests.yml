@@ -15,10 +15,9 @@
         Slash: 0.7
         Piercing: 0.5
         Heat: 0.9
-        EMHeat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
-
+    
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterVestWeb
@@ -36,7 +35,6 @@
         Slash: 0.6
         Piercing: 0.3
         Heat: 0.9
-        EMHeat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
@@ -57,7 +55,6 @@
         Slash: 0.9
         Piercing: 0.4
         Heat: 0.9
-        EMHeat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
@@ -78,7 +75,6 @@
         Slash: 0.8
         Piercing: 0.75
         Heat: 0.9
-        EMHeat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
 

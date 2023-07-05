@@ -15,7 +15,6 @@
         Slash: 0.8
         Piercing: 0.8
         Heat: 0.8
-        EMHeat: 0.8
 
 - type: entity
   parent: ClothingUniformBase

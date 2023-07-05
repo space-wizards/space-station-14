@@ -77,7 +77,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
-
+    
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterChef
@@ -350,7 +350,6 @@
         Slash: 0.8
         Piercing: 0.6 #slightly less bulletproof than wardens normal coat
         Heat: 0.75
-        EMHeat: 0.75
 
 - type: entity
   parent: ClothingOuterWinterCoat

@@ -153,7 +153,6 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.90
-        EMHeat: 0.90
         Radiation: 0.25
   - type: GroupExamine
   - type: IngestionBlocker

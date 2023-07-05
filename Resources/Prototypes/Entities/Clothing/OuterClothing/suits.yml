@@ -15,7 +15,6 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.75
-        EMHeat: 0.8
   - type: ExplosionResistance
     damageCoefficient: 0.2
   - type: GroupExamine
@@ -38,7 +37,6 @@
       coefficients:
         Slash: 0.9
         Heat: 0.5
-        EMHeat: 0.8
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
@@ -58,7 +56,6 @@
     modifiers:
       coefficients:
         Heat: 0.90
-        EMHeat: 0.50
         Radiation: 0.05
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/rad.rsi
@@ -81,7 +78,6 @@
         Slash: 0.6
         Piercing: 0.6
         Heat: 0.6
-        EMHeat: 0.6
 
 - type: entity
   parent: ClothingOuterBase
@@ -136,7 +132,6 @@
       coefficients:
         Slash: 0.9
         Heat: 0.15
-        EMHeat: 0.7
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.75

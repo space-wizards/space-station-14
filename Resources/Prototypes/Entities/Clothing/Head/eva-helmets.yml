@@ -36,7 +36,7 @@
     sprite: Clothing/Head/Helmets/eva_syndicate.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/eva_syndicate.rsi
-
+ 
 #Cosmonaut Helmet
 - type: entity
   parent: ClothingHeadEVAHelmetBase
@@ -67,7 +67,6 @@
       coefficients:
         Slash: 0.95
         Heat: 0.90
-        EMHeat: 0.90
         Radiation: 0.75
 
 #Ancient Void Helmet
