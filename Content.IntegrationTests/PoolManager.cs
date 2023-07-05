@@ -108,9 +108,13 @@ public static class PoolManager
         options.BeforeStart += () =>
         {
             IoCManager.Resolve<IEntitySystemManager>()
-                .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
+                .LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
             IoCManager.Resolve<IComponentFactory>().RegisterClass<AutoPredictReconcileTest.AutoPredictionTestComponent>();
+            IoCManager.Resolve<IEntitySystemManager>()
+                .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
             IoCManager.Resolve<IComponentFactory>().RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
+            IoCManager.Resolve<IEntitySystemManager>()
+                .LoadExtraSystemType<SystemPredictReconcileTest.SystemPredictionTestEntitySystem>();
             IoCManager.Resolve<IComponentFactory>().RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
             IoCManager.Register<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
             IoCManager.Register<InteractionSystemTests.TestInteractionSystem>();
@@ -213,13 +217,17 @@ public static class PoolManager
                 ClientBeforeIoC = () =>
                 {
                     IoCManager.Resolve<IEntitySystemManager>()
-                        .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
+                        .LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
                     IoCManager.Resolve<IComponentFactory>()
                         .RegisterClass<AutoPredictReconcileTest.AutoPredictionTestComponent>();
-                    IoCManager.Resolve<IComponentFactory>()
-                        .RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
+                    IoCManager.Resolve<IEntitySystemManager>()
+                        .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
+                    IoCManager.Resolve<IEntitySystemManager>()
+                        .LoadExtraSystemType<SystemPredictReconcileTest.SystemPredictionTestEntitySystem>();
                     IoCManager.Resolve<IComponentFactory>()
                         .RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
+                    IoCManager.Resolve<IComponentFactory>()
+                        .RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
                     IoCManager.Register<IParallaxManager, DummyParallaxManager>(true);
                     IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
                     IoCManager.Resolve<IConfigurationManager>()
