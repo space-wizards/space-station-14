@@ -395,7 +395,7 @@ namespace Content.IntegrationTests.Tests.Networking
         [NetworkedComponent()]
         [AutoGenerateComponentState]
         [Access(typeof(AutoPredictionTestEntitySystem))]
-        public sealed class AutoPredictionTestComponent : Component
+        public partial class AutoPredictionTestComponent : Component
         {
             [AutoNetworkedField]
             public bool Foo;
