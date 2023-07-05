@@ -1,10 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: 'Fixed firelocks not lighting up when blocking fire, space, or pressure.',
-    type: Fix}
-  id: 3671
-  time: '2023-05-06T05:54:36.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Wet floor holosign lifetime increased from 30 to 90 seconds, type: Tweak}
@@ -2923,3 +2917,8 @@ Entries:
       to leave., type: Tweak}
   id: 4170
   time: '2023-07-05T04:38:09.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: puddles can no longer appear on space tiles (lattice), type: Tweak}
+  id: 4171
+  time: '2023-07-05T13:59:49.0000000+00:00'
