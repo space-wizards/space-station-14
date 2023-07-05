@@ -517,17 +517,36 @@ namespace Content.Client.Stylesheets
             };
             squareShadowStyleBox.SetPatchMargin(StyleBox.Margin.All, 8.0f);
 
-            var panelMountBorderStyleBox = new StyleBoxTexture
+            var panelMountBaseTex = resCache.GetTexture("/Textures/Interface/CommsConsole/PanelMountBase.svg.96dpi.png");
+            var panelMountHighlightTex = resCache.GetTexture("/Textures/Interface/CommsConsole/PanelMountHighlight.svg.96dpi.png");
+            var panelMountBaseStyleBox = new StyleBoxTexture
             {
-                Texture = resCache.GetTexture("/Textures/Interface/CommsConsole/PanelMountBorder.svg.96dpi.png"),
+                Texture = panelMountBaseTex,
                 PatchMarginLeft = 16,
                 PatchMarginTop = 16,
                 PatchMarginRight = 24,
                 PatchMarginBottom = 24
             };
-            var panelMountBorderSmallStyleBox = new StyleBoxTexture
+            var panelMountHighlightStyleBox = new StyleBoxTexture
             {
-                Texture = resCache.GetTexture("/Textures/Interface/CommsConsole/PanelMountBorder.svg.96dpi.png"),
+                Texture = panelMountHighlightTex,
+                PatchMarginLeft = 16,
+                PatchMarginTop = 16,
+                PatchMarginRight = 24,
+                PatchMarginBottom = 24
+            };
+            var panelMountBaseSmallStyleBox = new StyleBoxTexture
+            {
+                Texture = panelMountBaseTex,
+                TextureScale = new Vector2(0.5f, 0.5f),
+                PatchMarginLeft = 16,
+                PatchMarginTop = 16,
+                PatchMarginRight = 24,
+                PatchMarginBottom = 24
+            };
+            var panelMountHighlightSmallStyleBox = new StyleBoxTexture
+            {
+                Texture = panelMountHighlightTex,
                 TextureScale = new Vector2(0.5f, 0.5f),
                 PatchMarginLeft = 16,
                 PatchMarginTop = 16,
@@ -1427,14 +1446,24 @@ namespace Content.Client.Stylesheets
                     .Prop(ForegroundImageContainer.StylePropertyBackgroundStyleBox, squareShadowStyleBox)
                     .Prop(ForegroundImageContainer.StylePropertyBackgroundModulate, new Color(0, 0, 0, 0.2f))
                     .Prop(ForegroundImageContainer.StylePropertyContentMargin, new Thickness(0, 0, 8, 8)),
+
                  // Adds a raised border with rounded corners around a UI element
-                Element<ForegroundImageContainer>().Class("PanelMountBorder")
-                    .Prop(ForegroundImageContainer.StylePropertyForegroundStyleBox, panelMountBorderStyleBox)
-                    .Prop(ForegroundImageContainer.StylePropertyContentMargin, new Thickness(10, 10, 16, 16)),
-                 // Adds a thin raised border with rounded corners around a UI element
-                Element<ForegroundImageContainer>().Class("PanelMountBorderSmall")
-                    .Prop(ForegroundImageContainer.StylePropertyForegroundStyleBox, panelMountBorderSmallStyleBox)
-                    .Prop(ForegroundImageContainer.StylePropertyContentMargin, new Thickness(5, 5, 8, 8)),
+                Element<ForegroundImageContainer>().Class("PanelMountBase")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundStyleBox, panelMountBaseStyleBox)
+                    .Prop(ForegroundImageContainer.StylePropertyContentMargin, new Thickness(10, 10, 16, 16))
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundModulate, Color.FromHex("#25252a")),
+                // Highlights and shadows for the PanelMountBase
+                Element<ForegroundImageContainer>().Class("PanelMountHighlight")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundStyleBox, panelMountHighlightStyleBox),
+                // A thin version of the PanelMountBase
+                Element<ForegroundImageContainer>().Class("PanelMountBaseSmall")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundStyleBox, panelMountBaseSmallStyleBox)
+                    .Prop(ForegroundImageContainer.StylePropertyContentMargin, new Thickness(5, 5, 8, 8))
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundModulate, Color.FromHex("#25252a")),
+                // Highlights and shadows for the PanelMountBaseSmall
+                Element<ForegroundImageContainer>().Class("PanelMountHighlightSmall")
+                    .Prop(ForegroundImageContainer.StylePropertyForegroundStyleBox, panelMountHighlightSmallStyleBox),
+
                 // Highlight top-left and darken top-right of an anglerect
                 Element<ForegroundImageContainer>().Class("AngleRectBevel")
                     .Prop(ForegroundImageContainer.StylePropertyForegroundStyleBox, angleRectBevelHighlightStyleBox)

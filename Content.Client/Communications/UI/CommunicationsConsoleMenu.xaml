@@ -20,11 +20,17 @@
                     <PanelContainer StyleClasses="PanelBackgroundBaseDark">
                         <BoxContainer Orientation="Vertical" Margin="12">
                             <ui:ForegroundImageContainer
-                                StyleClasses="PanelMountBorder"
+                                StyleClasses="PanelMountHighlight"
                                 HorizontalAlignment="Stretch"
                                 VerticalExpand="True"
                                 VerticalAlignment="Stretch">
-                                <TextEdit Name="MessageInput" MinHeight="100" Margin="6" />
+                                 <ui:ForegroundImageContainer
+                                    StyleClasses="PanelMountBase"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalExpand="True"
+                                    VerticalAlignment="Stretch">
+                                    <TextEdit Name="MessageInput" MinHeight="100" Margin="6" />
+                                 </ui:ForegroundImageContainer>
                             </ui:ForegroundImageContainer>
                             <ui:HSpacer Spacing="10"/>
                             <ui:ForegroundImageContainer StyleClasses="AngleRectOutlineShadow">
@@ -54,15 +60,15 @@
                                 <GridContainer Columns="2">
                                     <!-- Row with alert level light and label -->
                                     <ui:ForegroundImageContainer
-                                        StyleClasses="PanelMountBorderSmall"
-                                        HorizontalAlignment="Center"
-                                        Margin="6 6 6 2"
-                                        SetSize="60 35"
-                                        VerticalAlignment="Center">
-                                        <TextureButton Name="AlertLevelLight"
-                                            TexturePath="/Textures/Interface/Nano/square.png"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Stretch" />
+                                        StyleClasses="PanelMountHighlightSmall" SetSize="60 35">
+                                        <ui:ForegroundImageContainer
+                                            StyleClasses="PanelMountBaseSmall"
+                                            HorizontalExpand="True" VerticalExpand="True">
+                                            <TextureButton Name="AlertLevelLight"
+                                                TexturePath="/Textures/Interface/Nano/square.png"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch" />
+                                        </ui:ForegroundImageContainer>
                                     </ui:ForegroundImageContainer>
 
                                     <Label Name="CurrentAlertLabel" HorizontalAlignment="Center"/>
@@ -124,13 +130,19 @@
                                             <Label Text="{Loc 'comms-console-menu-call-shuttle'}" />
                                             <ui:HSpacer Spacing="12"/>
                                             <ui:ForegroundImageContainer
-                                                StyleClasses="PanelMountBorder"
+                                                StyleClasses="PanelMountHighlight"
                                                 HorizontalAlignment="Center"
                                                 SetSize="80 80"
                                                 VerticalAlignment="Center">
-                                                <TextureButton Name="EmergencyShuttleCallButton" Access="Public"
-                                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                    StyleClasses="TemptingRedButton" />
+                                                 <ui:ForegroundImageContainer
+                                                    StyleClasses="PanelMountBase"
+                                                    HorizontalAlignment="Center"
+                                                    SetSize="80 80"
+                                                    VerticalAlignment="Center">
+                                                    <TextureButton Name="EmergencyShuttleCallButton" Access="Public"
+                                                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                                        StyleClasses="TemptingRedButton" />
+                                                </ui:ForegroundImageContainer>
                                             </ui:ForegroundImageContainer>
                                         </BoxContainer>
                                     </ui:ForegroundImageContainer>
@@ -151,15 +163,16 @@
                                             <Label Text="{Loc 'comms-shuttle-incoming-label'}" VerticalAlignment="Center" />
                                             <ui:VSpacer Spacing="12"/>
                                             <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                                <ui:ForegroundImageContainer
-                                                    Margin="0 0 4 0"
-                                                    StyleClasses="PanelMountBorderSmall"
-                                                    HorizontalExpand="True"
-                                                    HorizontalAlignment="Right">
-                                                    <TextureButton Name="ShuttleIncomingLight"
-                                                        StyleClasses="LightUnlit"
-                                                        HorizontalAlignment="Stretch"
-                                                        VerticalAlignment="Stretch"/>
+                                                <ui:ForegroundImageContainer StyleClasses="PanelMountHighlightSmall" Margin="0 0 4 0" >
+                                                     <ui:ForegroundImageContainer
+                                                        StyleClasses="PanelMountBaseSmall"
+                                                        HorizontalExpand="True"
+                                                        HorizontalAlignment="Right">
+                                                        <TextureButton Name="ShuttleIncomingLight"
+                                                            StyleClasses="LightUnlit"
+                                                            HorizontalAlignment="Stretch"
+                                                            VerticalAlignment="Stretch"/>
+                                                    </ui:ForegroundImageContainer>
                                                 </ui:ForegroundImageContainer>
                                             </BoxContainer>
                                         </BoxContainer>
@@ -171,15 +184,18 @@
                                             <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" VerticalAlignment="Center"/>
                                             <ui:VSpacer Spacing="12"/>
                                             <ui:ForegroundImageContainer
-                                                StyleClasses="PanelMountBorder"
+                                                StyleClasses="PanelMountHighlight"
                                                 HorizontalExpand="True"
                                                 HorizontalAlignment="Right">
-                                                <PanelContainer
-                                                    StyleClasses="PanelBackgroundBaseDark"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Stretch">
-                                                    <Label Name="CountdownLabel" StyleClasses="LabelLCDBig" Margin="2"/>
-                                                </PanelContainer>
+                                                 <ui:ForegroundImageContainer StyleClasses="PanelMountBase" VerticalExpand="True">
+                                                    <PanelContainer
+                                                        StyleClasses="PanelBackgroundBaseDark"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        Margin="0 4 0 0">
+                                                        <Label Name="CountdownLabel" StyleClasses="LabelLCDBig" Margin="2"/>
+                                                    </PanelContainer>
+                                                </ui:ForegroundImageContainer>
                                             </ui:ForegroundImageContainer>
                                         </BoxContainer>
                                     </BoxContainer>
@@ -198,12 +214,17 @@
                                         <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
                                         <ui:HSpacer Spacing="12"/>
                                         <ui:ForegroundImageContainer
-                                            StyleClasses="PanelMountBorder"
+                                            StyleClasses="PanelMountHighlight"
                                             HorizontalAlignment="Center"
-                                            MinSize="80 80"
                                             VerticalAlignment="Center">
-                                            <TextureButton Name="EmergencyShuttleRecallButton" Access="Public"
-                                                StyleClasses="TemptingRedButton" />
+                                             <ui:ForegroundImageContainer
+                                                StyleClasses="PanelMountBase"
+                                                HorizontalAlignment="Center"
+                                                MinSize="80 80"
+                                                VerticalAlignment="Center">
+                                                <TextureButton Name="EmergencyShuttleRecallButton" Access="Public"
+                                                    StyleClasses="TemptingRedButton" />
+                                            </ui:ForegroundImageContainer>
                                         </ui:ForegroundImageContainer>
                                     </BoxContainer>
                                 </ui:ForegroundImageContainer>
