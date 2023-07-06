@@ -26,7 +26,8 @@
       - !type:AddToSolutionReaction
         solution: cube
   - type: Rehydratable
-    target: MobMonkey
+    target:
+    - MobMonkey
   - type: CollisionWake
     enabled: false
   - type: Fixtures
@@ -69,7 +70,8 @@
       - !type:AddToSolutionReaction
         solution: plushie
   - type: Rehydratable
-    target: MobCarp
+    target:
+    - MobCarp
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -128,7 +130,15 @@
       - !type:AddToSolutionReaction
         solution: cube
   - type: Rehydratable
-    target: MobBearSpace
+    target:
+    - MobRatServant
+    - MobCarpHolo
+    - MobXenoRavager
+    - MobAngryBee
+    - MobAdultSlimesYellowAngry
+    - MobGiantSpiderAngry
+    - MobBearSpace
+    - MobPurpleSnake
   - type: CollisionWake
     enabled: false
   - type: Fixtures

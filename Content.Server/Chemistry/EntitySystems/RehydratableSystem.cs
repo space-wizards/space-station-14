@@ -32,13 +32,9 @@ public sealed class RehydratableSystem : EntitySystem
     {
         _popups.PopupEntity(Loc.GetString("rehydratable-component-expands-message", ("owner", uid)), uid);
 
-        var target = new EntityUid();
-        var randomMob = _random.Next(0, 8);
-        string[] randomList = { "MobRatServant", "MobCarpHolo", "MobXenoRavager", "MobAngryBee", "MobAdultSlimesYellowAngry", "MobGiantSpiderAngry", "MobBearSpace", "MobPurpleSnake" };
+        var randomMob = _random.Next(0, comp.TargetPrototype.Count);
 
-        if (comp.TargetPrototype == "MobBearSpace")
-            target = Spawn(randomList[randomMob], Transform(uid).Coordinates);
-        else target = Spawn(comp.TargetPrototype, Transform(uid).Coordinates);
+        var target = Spawn(comp.TargetPrototype[randomMob], Transform(uid).Coordinates);
 
         Transform(target).AttachToGridOrMap();
         var ev = new GotRehydratedEvent(target);

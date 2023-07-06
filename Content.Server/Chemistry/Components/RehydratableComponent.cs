@@ -28,8 +28,8 @@ public sealed class RehydratableComponent : Component
     /// <summary>
     /// The entity to create when hydrated.
     /// </summary>
-    [DataField("target", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string? TargetPrototype = default!;
+    [DataField("target"), ViewVariables(VVAccess.ReadWrite)]
+    public List<string> TargetPrototype = new();
 }
 
 /// <summary>
