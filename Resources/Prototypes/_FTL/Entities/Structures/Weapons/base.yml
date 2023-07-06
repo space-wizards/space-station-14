@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseStructure
-  id: BaseFTLWeapon
+  id: BaseWeaponNaval
   name: base weapon
   abstract: true
   description: Better be careful with whatever the fuck you're doing with this thing.

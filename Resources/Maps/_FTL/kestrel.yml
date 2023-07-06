@@ -2834,7 +2834,7 @@ entities:
       pos: 2.5,-32.5
       parent: 2
       type: Transform
-- proto: FTLArtemisMarkIWeaponSilo
+- proto: ArtemisMarkIWeaponSilo
   entities:
   - uid: 84
     components:
@@ -2849,7 +2849,7 @@ entities:
       pos: -2.5,-8.5
       parent: 2
       type: Transform
-- proto: FTLGenericMissile
+- proto: GenericMissile
   entities:
   - uid: 46
     components:
@@ -2881,14 +2881,14 @@ entities:
     - pos: 0.51024693,-22.584433
       parent: 2
       type: Transform
-- proto: FTLWeaponBurstLaserMkI
+- proto: WeaponBurstLaserMkI
   entities:
   - uid: 808
     components:
     - pos: 1.5,-22.5
       parent: 2
       type: Transform
-- proto: FTLWeaponTargetingPad
+- proto: WeaponTargetingPad
   entities:
   - uid: 789
     components:

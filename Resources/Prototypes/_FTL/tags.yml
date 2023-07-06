@@ -1,2 +1,11 @@
 - type: Tag
   id: FTLMissile
+
+- type: Tag
+  id: FTLAmmoTierOne
+
+- type: Tag
+  id: FTLAmmoTierTwo
+
+- type: Tag
+  id: FTLAmmoTierThree

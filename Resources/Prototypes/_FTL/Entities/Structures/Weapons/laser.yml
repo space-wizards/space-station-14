@@ -1,27 +1,118 @@
 - type: entity
-  parent: BaseFTLWeapon
-  id: BaseFTLWeaponLaser
+  parent: BaseWeaponNaval
+  id: BaseWeaponLaser
   abstract: true
   name: laser
   placement:
     mode: SnapgridCenter
   components:
     - type: Sprite
-      sprite: _FTL/silo.rsi
+      sprite: _FTL/Structures/Weapons/silo.rsi
       layers:
         - state: closed
 
 - type: entity
-  parent: BaseFTLWeaponLaser
-  id: FTLWeaponBurstLaserMkI
+  parent: BaseWeaponNaval
+  id: BaseWeaponLaserTierTwo
+  abstract: true
+  name: laser
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: _FTL/Structures/Weapons/silot2.rsi
+      layers:
+        - state: closed
+
+- type: entity
+  parent: BaseWeaponNaval
+  id: BaseWeaponLaserTierThree
+  abstract: true
+  name: laser
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: _FTL/Structures/Weapons/silot3.rsi
+      layers:
+        - state: closed
+
+# Tier 1
+- type: entity
+  parent: BaseWeaponLaser
+  id: WeaponBasicLaser
+  name: basic laser
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: _FTL/Structures/Weapons/silo.rsi
+      layers:
+        - state: closed
+    - type: FTLWeapon
+      cooldownTime: 5
+      prototype: GenericLaser
+
+- type: entity
+  parent: BaseWeaponLaser
+  id: WeaponDualLaser
+  name: dual laser
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: _FTL/Structures/Weapons/silo.rsi
+      layers:
+        - state: closed
+    - type: FTLWeapon
+      cooldownTime: 5
+      prototype: DualLaser
+
+- type: entity
+  parent: BaseWeaponLaser
+  id: WeaponBurstLaserMkI
   name: burst laser mk. 1
   placement:
     mode: SnapgridCenter
   components:
     - type: Sprite
-      sprite: _FTL/silo.rsi
+      sprite: _FTL/Structures/Weapons/silo.rsi
       layers:
         - state: closed
     - type: FTLWeapon
+      cooldownTime: 4
+      prototype: BurstLaser
+
+- type: entity
+  parent: WeaponBurstLaserMkI
+  id: WeaponBurstLaserMkII
+  name: burst laser mk. 2
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeapon
       cooldownTime: 3
-      prototype: GenericLaser
+
+# Tier 2
+
+- type: entity
+  parent: BaseWeaponLaserTierTwo
+  id: WeaponBurstLaserMkIII
+  name: burst laser mk. 3
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeapon
+      cooldownTime: 5
+      prototype: BurstLaserMk3
+
+- type: entity
+  parent: BaseWeaponLaserTierTwo
+  id: WeaponHeavyLaserMkI
+  name: burst laser mk. 1
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeapon
+      cooldownTime: 5
+      prototype: HeavyLaserMk1

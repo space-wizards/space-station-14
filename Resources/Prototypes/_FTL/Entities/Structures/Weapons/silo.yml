@@ -1,14 +1,15 @@
 - type: entity
-  parent: BaseFTLWeapon
-  id: BaseFTLWeaponSilo
+  parent: BaseWeaponNaval
+  id: BaseWeaponSilo
   abstract: true
   placement:
     mode: SnapgridCenter
   components:
     - type: Sprite
-      sprite: _FTL/silo.rsi
+      sprite: _FTL/Structures/Weapons/silo.rsi
       layers:
         - state: closed
+          map: ["enum.MorgueVisualLayers.Base"]
         - state: tray
           offset: 0, -1
           map: [ "enum.StorageVisualLayers.Door" ]
@@ -39,8 +40,152 @@
             False: { visible: false }
 
 - type: entity
-  parent: BaseFTLWeaponSilo
-  id: FTLArtemisMarkIWeaponSilo
+  parent: BaseWeaponSilo
+  id: BaseWeaponSiloTierTwo
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: _FTL/Structures/Weapons/silot2.rsi
+
+- type: entity
+  parent: BaseWeaponSilo
+  id: BaseWeaponSiloTierThree
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: _FTL/Structures/Weapons/silot3.rsi
+
+# Tier 1
+- type: entity
+  parent: BaseWeaponSilo
+  id: BasicMissileSilo
+  name: basic weapon silo
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeaponSilo
+      ammoWhitelist:
+        tags:
+          - FTLAmmoTierOne
+    - type: FTLWeapon
+      cooldownTime: 10
+      prototype: GenericMissile
+
+- type: entity
+  parent: BaseWeaponSilo
+  id: ArtemisMarkIWeaponSilo
   name: artemis mk.1 weapon silo
   placement:
     mode: SnapgridCenter
+  components:
+    - type: FTLWeaponSilo
+      ammoWhitelist:
+        tags:
+          - FTLAmmoTierOne
+    - type: FTLWeapon
+      cooldownTime: 5
+      prototype: ArtemisMark1
+
+- type: entity
+  parent: BaseWeaponSilo
+  id: ArtemisMarkIIWeaponSilo
+  name: artemis mk.2 weapon silo
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeaponSilo
+      ammoWhitelist:
+        tags:
+          - FTLAmmoTierOne
+    - type: FTLWeapon
+      cooldownTime: 5
+      prototype: ArtemisMark2
+
+# Tier 2
+- type: entity
+  parent: BaseWeaponSiloTierTwo
+  id: SwarmMarkOneMissileSilo
+  name: swarm mk.1 weapon silo
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeapon
+      cooldownTime: 15
+      prototype: SwarmMark1
+
+- type: entity
+  parent: BaseWeaponSiloTierTwo
+  id: HoleMarkOneMissileSilo
+  name: hole mk.1 weapon silo
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeapon
+      cooldownTime: 15
+      prototype: HoleMissileMark1
+
+- type: entity
+  parent: BaseWeaponSiloTierTwo
+  id: PunchMarkOneMissileSilo
+  name: punch mk.1 weapon silo
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeapon
+      cooldownTime: 15
+      prototype: PunchMissileMark1
+
+# Tier 3
+- type: entity
+  parent: BaseWeaponSiloTierThree
+  id: RailgunWeaponSilo
+  name: railgun weapon silo
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: _FTL/Structures/Weapons/silot3.rsi
+    - type: FTLWeaponSilo
+      ammoWhitelist:
+        tags:
+          - FTLAmmoTierThree
+    - type: FTLWeapon
+      cooldownTime: 60
+      prototype: RailgunLaser
+
+- type: entity
+  parent: BaseWeaponSiloTierThree
+  id: SwarmMarkTwoMissileSilo
+  name: swarm mk.2 weapon silo
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeapon
+      cooldownTime: 15
+      prototype: SwarmMark2
+
+- type: entity
+  parent: BaseWeaponSiloTierThree
+  id: HoleMarkTwoMissileSilo
+  name: hole mk.2 weapon silo
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeapon
+      cooldownTime: 15
+      prototype: HoleMissileMark2
+
+- type: entity
+  parent: BaseWeaponSiloTierThree
+  id: PunchMarkTwoMissileSilo
+  name: punch mk.2 weapon silo
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeapon
+      cooldownTime: 15
+      prototype: PunchMissileMark2

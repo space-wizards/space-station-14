@@ -1,0 +1,39 @@
+# Tier 1
+- type: entity
+  parent: BaseWeaponSilo
+  id: IncendiaryMissileSilo
+  name: incendiary missile silo
+  description: It's hot!
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeaponSilo
+      ammoWhitelist:
+        tags:
+          - FTLAmmoTierOne
+    - type: FTLWeapon
+      cooldownTime: 5
+      prototype: IncendiaryMissile
+
+- type: entity
+  parent: BaseWeaponLaserTierTwo
+  id: WeaponFlakGunMkI
+  name: flak mk. 1
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeapon
+      cooldownTime: 15
+      prototype: FlakMk1
+
+- type: entity
+  parent: WeaponFlakGunMkI
+  id: WeaponFlakGunMkII
+  name: flak mk. 2
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: FTLWeapon
+      cooldownTime: 15
+      prototype: FlakMk2
+

@@ -1,5 +1,5 @@
 - type: entity
-  id: FTLGenericMissile
+  id: GenericMissile
   name: missile
   parent: BaseItem
   description: A missile designed to be fired by missile launchers.
@@ -8,28 +8,29 @@
       size: 999
     - type: MultiHandedItem
     - type: FTLAmmo
-      prototype: GenericMissile
-      tag: FTLMissile
     - type: Sprite
       netsync: false
       sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
       state: rpg
+    - type: Tag
+      tags:
+        - FTLAmmoTierOne
     - type: StaticPrice
       price: 150
     - type: DamageOnLand
       ignoreResistances: true
       damage:
         types:
-          Blunt: 5
+          Blunt: 10
     - type: DamageOtherOnHit
       damage:
         types:
-          Blunt: 5
+          Blunt: 10
     - type: Explosive
       explosionType: Default
-      maxIntensity: 100
-      intensitySlope: 15
-      totalIntensity: 200
+      maxIntensity: 5
+      intensitySlope: 25
+      totalIntensity: 100
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -37,7 +38,7 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 5
+            damage: 60
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -47,21 +48,37 @@
             - !type:ExplodeBehavior
 
 - type: entity
-  parent: FTLGenericMissile
-  id: FTLIncendiaryMissile
+  parent: GenericMissile
+  id: TierTwoMissile
+  name: tier two missile
+  description: A missile designed for both tier 1 and tier 2 weapons.
+  components:
+    - type: Tag
+      tags:
+        - FTLAmmoTierTwo
+
+- type: entity
+  parent: TierTwoMissile
+  id: TierThreeMissile
+  name: tier three missile
+  description: A missile designed for tier 1, 2 and 3 weapons.
+  components:
+    - type: Tag
+      tags:
+        - FTLAmmoTierThree
+
+- type: entity
+  parent: GenericMissile
+  id: IncendiaryMissile
   name: incendiary missile
   description: A missile designed to flame up rooms.
   components:
     - type: FTLAmmo
-      prototype: IncendiaryMissile
-      tag: FTLMissile
 
 - type: entity
-  parent: FTLGenericMissile
-  id: FTLDebugMissile
+  parent: GenericMissile
+  id: DebugMissile
   name: debug missile
   description: A missile designed to debug.
   components:
     - type: FTLAmmo
-      prototype: DebugDestroy
-      tag: FTLMissile

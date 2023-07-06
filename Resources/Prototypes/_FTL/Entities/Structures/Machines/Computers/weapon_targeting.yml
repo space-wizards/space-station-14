@@ -1,5 +1,5 @@
 - type: entity
-  id: FTLWeaponTargetingPadBroken
+  id: WeaponTargetingPadBroken
   name: weapon targeting pad
   description: A targeting pad used for targeting and firing.
   suffix: Wall broken
@@ -29,9 +29,9 @@
               acts: [ "Destruction" ]
 
 - type: entity
-  id: FTLWeaponTargetingPad
+  id: WeaponTargetingPad
   name: weapon targeting pad
-  parent: FTLWeaponTargetingPadBroken
+  parent: WeaponTargetingPadBroken
   suffix: Wall
   placement:
     mode: SnapgridCenter

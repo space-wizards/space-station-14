@@ -1,3 +1,4 @@
+# Missile
 - type: ftlAmmo
   id: GenericMissile
   bypassShield: true
@@ -6,11 +7,67 @@
   prototype: ExplosionMissile
 
 - type: ftlAmmo
-  id: GenericLaser
+  id: HoleMissileMark1
   hullMin: 2
+  hullMax: 5
+  prototype: ExplosionHole
+
+- type: ftlAmmo
+  id: PunchMissileMark1
+  bypassShield: true
+  hullMin: 0
+  hullMax: 0
+  prototype: ExplosionPunch
+
+- type: ftlAmmo
+  id: SwarmMark1
+  bypassShield: true
+  hullMin: 3
   hullMax: 4
   hitTimes: 3
-  prototype: ExplosionLaser
+  prototype: ExplosionArtemisMkII
+
+- type: ftlAmmo
+  id: HoleMissileMark2
+  hullMin: 4
+  hullMax: 8
+  prototype: ExplosionHole
+
+- type: ftlAmmo
+  id: PunchMissileMark2
+  bypassShield: true
+  hullMin: 3
+  hullMax: 6
+  prototype: ExplosionPunch
+
+- type: ftlAmmo
+  id: SwarmMark2
+  bypassShield: true
+  hullMin: 6
+  hullMax: 9
+  hitTimes: 3
+  prototype: ExplosionArtemisMkII
+
+- type: ftlAmmo
+  id: IncendiaryMissile
+  bypassShield: true
+  hullMin: 0
+  hullMax: 0
+  prototype: FTLFire
+
+- type: ftlAmmo
+  id: ArtemisMark1
+  bypassShield: true
+  hullMin: 3
+  hullMax: 6
+  prototype: ExplosionArtemisMkI
+
+- type: ftlAmmo
+  id: ArtemisMark2
+  bypassShield: true
+  hullMin: 4
+  hullMax: 7
+  prototype: ExplosionArtemisMkII
 
 - type: ftlAmmo
   id: DebugDestroy
@@ -19,8 +76,63 @@
   hullMax: 1000
 
 - type: ftlAmmo
-  id: IncendiaryMissile
-  bypassShield: true
-  hullMin: 0
-  hullMax: 0
-  prototype: FTLFire
+  id: RailgunLaser # I know this is a "laser" but its silofed, so...
+  hullMin: 10
+  hullMax: 20
+  noShields: true
+  prototype: ExplosionRailgun
+
+# Laser
+- type: ftlAmmo
+  id: GenericLaser
+  hullMin: 2
+  hullMax: 4
+  prototype: ExplosionLaser
+
+- type: ftlAmmo
+  id: DualLaser
+  hullMin: 2
+  hullMax: 4
+  hitTimes: 2
+  prototype: ExplosionLaser
+
+- type: ftlAmmo
+  id: BurstLaser
+  hullMin: 2
+  hullMax: 5
+  hitTimes: 3
+  prototype: ExplosionLaser
+
+- type: ftlAmmo
+  id: BurstLaserMk3
+  hullMin: 5
+  hullMax: 8
+  hitTimes: 3
+  prototype: ExplosionLaser
+
+- type: ftlAmmo
+  id: HeavyLaserMk1
+  hullMin: 7
+  hullMax: 12
+  prototype: ExplosionLaser
+
+- type: ftlAmmo
+  id: HeavyLaserMk2
+  hullMin: 9
+  hullMax: 13
+  hitTimes: 2
+  prototype: ExplosionLaser
+
+- type: ftlAmmo
+  id: FlakMk1
+  hullMin: 3
+  hullMax: 4
+  hitTimes: 4
+  prototype: ExplosionLaser
+
+- type: ftlAmmo
+  id: FlakMk2
+  hullMin: 3
+  hullMax: 4
+  hitTimes: 8
+  prototype: ExplosionLaser

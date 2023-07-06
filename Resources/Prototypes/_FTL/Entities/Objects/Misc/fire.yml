@@ -66,6 +66,9 @@
     - type: AtmosExposed
     - type: Kudzu
       growthTickChance: 0.3
+    - type: AmbientHeater
+      targetTemperature: 473.15
+      heatPerSecond: 10.0
     - type: GrowingKudzu
     - type: SlowContacts
       walkSpeedModifier: 0.75

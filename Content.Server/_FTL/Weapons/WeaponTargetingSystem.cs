@@ -12,6 +12,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Storage.Components;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -35,6 +36,7 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly ShipTrackerSystem _shipTrackerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -96,21 +98,24 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
     public void TryFireWeapon(EntityUid uid, FTLWeaponComponent component, EntityUid targetGrid, EntityCoordinates coordinates, EntityUid? weaponPad)
     {
         TryComp<FTLWeaponSiloComponent>(uid, out var siloComponent);
-        var ammoPrototypeString = "";
+        string? ammoPrototypeString = null;
 
-        if (siloComponent != null)
+        if (siloComponent != null && siloComponent.ContainedEntities != null)
         {
-            if (siloComponent.ContainedEntities != null)
+            foreach (var entity in siloComponent.ContainedEntities)
             {
-                foreach (var entity in siloComponent.ContainedEntities)
+                if (ammoPrototypeString == null)
                 {
-                    TryComp<FTLAmmoComponent>(entity, out var ammoComponent);
-                    if (ammoComponent != null)
+                    if (siloComponent.AmmoWhitelist != null && !siloComponent.AmmoWhitelist.IsValid(entity))
                     {
-                        ammoPrototypeString = ammoComponent.Prototype;
+                        _popupSystem.PopupCoordinates(Loc.GetString("weapon-popup-incorrect-ammo-message"), Transform(entity).Coordinates);
+                        _entityManager.DeleteEntity(entity);
+                        continue;
                     }
-                    _entityManager.DeleteEntity(entity);
+                    ammoPrototypeString = component.Prototype;
                 }
+
+                _entityManager.DeleteEntity(entity);
             }
         }
         else
@@ -119,7 +124,7 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
         }
 
         var localeMessage = "weapon-pad-message-miss-text";
-        if (ammoPrototypeString == "")
+        if (ammoPrototypeString == null)
         {
             _audioSystem.PlayPvs(component.CooldownSound, uid);
             return;

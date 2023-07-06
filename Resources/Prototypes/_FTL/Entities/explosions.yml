@@ -1,5 +1,19 @@
+# Missiles
+- type: entity
+  id: BaseExplosion
+  abstract: true
+  components:
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 20
+      intensitySlope: 5
+      totalIntensity: 10
+      maxTileBreak: 1
+    - type: ExplodeOnInit
+
 - type: entity
   id: ExplosionMissile
+  parent: BaseExplosion
   noSpawn: true
   components:
     - type: Explosive
@@ -8,16 +22,76 @@
       intensitySlope: 6
       totalIntensity: 200
       maxTileBreak: 1
-    - type: ExplodeOnInit
 
 - type: entity
+  id: ExplosionHole
+  parent: BaseExplosion
+  noSpawn: true
+  components:
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 250
+      intensitySlope: 100
+      totalIntensity: 100
+      maxTileBreak: 1
+
+- type: entity
+  id: ExplosionPunch
+  parent: ExplosionHole
+  noSpawn: true
+  components:
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 250
+      intensitySlope: 5
+      totalIntensity: 100
+      maxTileBreak: 0
+
+- type: entity
+  id: ExplosionArtemisMkI
+  parent: BaseExplosion
+  noSpawn: true
+  components:
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 40
+      intensitySlope: 5
+      totalIntensity: 200
+      maxTileBreak: 0
+
+- type: entity
+  id: ExplosionArtemisMkII
+  parent: BaseExplosion
+  noSpawn: true
+  components:
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 80
+      intensitySlope: 3
+      totalIntensity: 400
+      maxTileBreak: 0
+
+# Lasers
+- type: entity
   id: ExplosionLaser
+  parent: BaseExplosion
   noSpawn: true
   components:
     - type: Explosive
       explosionType: Default
       maxIntensity: 20
       intensitySlope: 5
-      totalIntensity: 1
+      totalIntensity: 15
       maxTileBreak: 0
-    - type: ExplodeOnInit
+
+- type: entity
+  id: ExplosionRailgun
+  parent: BaseExplosion
+  noSpawn: true
+  components:
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 20
+      intensitySlope: 5
+      totalIntensity: 15
+      maxTileBreak: 0

@@ -9,9 +9,5 @@ namespace Content.Server._FTL.Weapons;
 [RegisterComponent]
 public sealed class FTLAmmoComponent : Component
 {
-    [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<FTLAmmoType>))]
-    public string Prototype { get; set; } = "";
 
-    [DataField("tag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
-    public string Tag = default!;
 }

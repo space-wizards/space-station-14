@@ -1,3 +1,5 @@
+using Content.Shared.Whitelist;
+
 namespace Content.Server._FTL.Weapons;
 
 /// <summary>
@@ -8,4 +10,7 @@ public sealed class FTLWeaponSiloComponent : Component
 {
     // Used solely as a work around so that openattemptevent can be used on afteropen
     public List<EntityUid>? ContainedEntities;
+
+    [DataField("ammoWhitelist")]
+    public EntityWhitelist? AmmoWhitelist { get; set; }
 }

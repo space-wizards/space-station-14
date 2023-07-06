@@ -7,6 +7,8 @@ weapon-control-ui-button-fire-text = Fire
 weapon-pad-message-hit-text = INCOMING PING: Projectile hit confirmed. Hull: {$hull}/{$maxHull} | Shields: {$shields}
 weapon-pad-message-miss-text = INCOMING PING: Projectile miss confirmed. Hull: {$hull}/{$maxHull} | Shields: {$shields}
 
+weapon-popup-incorrect-ammo-message = BEEP! Incorrect ammunition type loaded. It has been safely discarded.
+
 signal-port-name-weapons-output = Weapon Output Port
 signal-port-name-weapons-output-description = Link the output port to the input port here.
 

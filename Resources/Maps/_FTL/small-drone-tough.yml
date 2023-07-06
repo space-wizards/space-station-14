@@ -356,7 +356,7 @@ entities:
     - pos: 0.5,0.5
       parent: 2
       type: Transform
-- proto: FTLArtemisMarkIWeaponSilo
+- proto: ArtemisMarkIWeaponSilo
   entities:
   - uid: 174
     components:
@@ -364,7 +364,7 @@ entities:
       pos: -4.5,0.5
       parent: 2
       type: Transform
-- proto: FTLWeaponBurstLaserMkI
+- proto: WeaponBurstLaserMkI
   entities:
   - uid: 1
     components:

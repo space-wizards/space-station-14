@@ -97,12 +97,15 @@ public sealed class ShipTrackerSystem : EntitySystem
         for (var i = 0; i < prototype.HitTimes; i++)
         {
             ship.TimeSinceLastAttack = 0f;
-            if (ship.ShieldAmount <= 0 || prototype.ShieldPiercing)
+            if ((prototype.NoShields && ship.ShieldAmount <= 0) || !prototype.NoShields)
             {
-                // damage hull
-                ship.HullAmount -= _random.Next(prototype.HullDamageMin, prototype.HullDamageMax);
-                hit = true;
-                continue;
+                if (ship.ShieldAmount <= 0 || prototype.ShieldPiercing)
+                {
+                    // damage hull
+                    ship.HullAmount -= _random.Next(prototype.HullDamageMin, prototype.HullDamageMax);
+                    hit = true;
+                    continue;
+                }
             }
             ship.ShieldAmount--;
             ship.TimeSinceLastShieldRegen = 0f; // reset the shield timer

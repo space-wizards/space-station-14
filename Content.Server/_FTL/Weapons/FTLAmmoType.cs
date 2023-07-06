@@ -18,7 +18,13 @@ public sealed class FTLAmmoType : IPrototype
     /// Does it bypass shields?
     /// </summary>
     [DataField("bypassShield")]
-    public bool ShieldPiercing { get; set; } = false;
+    public bool ShieldPiercing { get; set; }
+
+    /// <summary>
+    /// Will it only attack when shields are down?
+    /// </summary>
+    [DataField("noShields")]
+    public bool NoShields { get; set; }
 
     /// <summary>
     /// Minimum hull damage

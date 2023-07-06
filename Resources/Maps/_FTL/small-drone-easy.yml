@@ -354,7 +354,7 @@ entities:
     - pos: 0.5,0.5
       parent: 2
       type: Transform
-- proto: FTLWeaponBurstLaserMkI
+- proto: WeaponBurstLaserMkI
   entities:
   - uid: 1
     components:
