@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager;
 
 namespace Content.Tests.Shared.Alert
@@ -14,6 +15,10 @@ namespace Content.Tests.Shared.Alert
     public sealed class ServerAlertsComponentTests : ContentUnitTest
     {
         private const string PROTOTYPES = @"
+- type: entity
+  id: AlertsTestDummy
+  components:
+  - type: Alerts
 - type: alert
   id: LowPressure
   category: Pressure
@@ -41,13 +46,12 @@ namespace Content.Tests.Shared.Alert
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
             prototypeManager.ResolveResults();
 
-            var entSys = IoCManager.Resolve<IEntitySystemManager>();
-            entSys.LoadExtraSystemType<ServerAlertsSystem>();
-            var alertsSystem = entSys.GetEntitySystem<AlertsSystem>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            entMan.EntitySysManager.LoadExtraSystemType<ServerAlertsSystem>();
+            var alertsSystem = entMan.System<AlertsSystem>();
 
-            var alertsComponent = new AlertsComponent();
-            var alertsEntity = alertsComponent.Owner;
-            alertsComponent = IoCManager.InjectDependencies(alertsComponent);
+            var alertsEntity = entMan.SpawnEntity("AlertsTestDummy", MapCoordinates.Nullspace);
+            Assert.That(entMan.TryGetComponent<AlertsComponent>(alertsEntity, out var alertsComponent));
 
             AlertPrototype lowPressure = default!;
             AlertPrototype highPressure = default!;
@@ -71,6 +75,8 @@ namespace Content.Tests.Shared.Alert
             alertsSystem.ClearAlertCategory(alertsEntity, AlertCategory.Pressure);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.That(alertState.Alerts, Has.Count.EqualTo(0));
+
+            entMan.DeleteEntity(alertsEntity);
         }
     }
 }
