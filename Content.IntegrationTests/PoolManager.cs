@@ -104,24 +104,21 @@ public static class PoolManager
 
         options.BeforeStart += () =>
         {
-            IoCManager.Resolve<IEntitySystemManager>()
-                .LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
-            IoCManager.Resolve<IComponentFactory>().RegisterClass<AutoPredictionTestComponent>();
-            IoCManager.Resolve<IEntitySystemManager>()
-                .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
-            IoCManager.Resolve<IComponentFactory>().RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
-            IoCManager.Resolve<IEntitySystemManager>()
-                .LoadExtraSystemType<SystemPredictReconcileTest.SystemPredictionTestEntitySystem>();
-            IoCManager.Resolve<IComponentFactory>().RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
+            var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
+            var compFactory = IoCManager.Resolve<IComponentFactory>();
+            entSysMan.LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
+            compFactory.RegisterClass<AutoPredictionTestComponent>();
+            entSysMan.LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
+            compFactory.RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
+            entSysMan.LoadExtraSystemType<SystemPredictReconcileTest.SystemPredictionTestEntitySystem>();
+            compFactory.RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
             IoCManager.Register<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
             IoCManager.Register<InteractionSystemTests.TestInteractionSystem>();
             IoCManager.Register<DeviceNetworkTestSystem>();
-            IoCManager.Resolve<IEntitySystemManager>()
-                .LoadExtraSystemType<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
-            IoCManager.Resolve<IEntitySystemManager>()
-                .LoadExtraSystemType<InteractionSystemTests.TestInteractionSystem>();
-            IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
-            IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestDestructibleListenerSystem>();
+            entSysMan.LoadExtraSystemType<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
+            entSysMan.LoadExtraSystemType<InteractionSystemTests.TestInteractionSystem>();
+            entSysMan.LoadExtraSystemType<DeviceNetworkTestSystem>();
+            entSysMan.LoadExtraSystemType<TestDestructibleListenerSystem>();
             IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
             IoCManager.Resolve<IConfigurationManager>()
                 .OnValueChanged(RTCVars.FailureLogLevel, value => logHandler.FailureLevel = value, true);
@@ -213,18 +210,14 @@ public static class PoolManager
             {
                 ClientBeforeIoC = () =>
                 {
-                    IoCManager.Resolve<IEntitySystemManager>()
-                        .LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
-                    IoCManager.Resolve<IComponentFactory>()
-                        .RegisterClass<AutoPredictionTestComponent>();
-                    IoCManager.Resolve<IEntitySystemManager>()
-                        .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
-                    IoCManager.Resolve<IEntitySystemManager>()
-                        .LoadExtraSystemType<SystemPredictReconcileTest.SystemPredictionTestEntitySystem>();
-                    IoCManager.Resolve<IComponentFactory>()
-                        .RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
-                    IoCManager.Resolve<IComponentFactory>()
-                        .RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
+                    var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
+                    var compFactory = IoCManager.Resolve<IComponentFactory>();
+                    entSysMan.LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
+                    compFactory.RegisterClass<AutoPredictionTestComponent>();
+                    entSysMan.LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
+                    compFactory.RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
+                    entSysMan.LoadExtraSystemType<SystemPredictReconcileTest.SystemPredictionTestEntitySystem>();
+                    compFactory.RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
                     IoCManager.Register<IParallaxManager, DummyParallaxManager>(true);
                     IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
                     IoCManager.Resolve<IConfigurationManager>()
@@ -589,10 +582,7 @@ we are just going to end this here to save a lot of time. This is the exception 
             mapData.MapId = mapManager.CreateMap();
             mapData.MapUid = mapManager.GetMapEntityId(mapData.MapId);
             mapData.MapGrid = mapManager.CreateGrid(mapData.MapId);
-            // The API does not provide a way to get the Uid of the above grid other than this.
-            mapData.GridUid = entityManager.GetComponent<TransformComponent>(mapData.MapUid)
-                .ChildEntities
-                .First((ent) => entityManager.GetComponent<MapGridComponent>(ent) == mapData.MapGrid);
+            mapData.GridUid = mapData.MapGrid.Owner; // Fixing this requires an engine PR.
             mapData.GridCoords = new EntityCoordinates(mapData.GridUid, 0, 0);
             var plating = tileDefinitionManager["Plating"];
             var platingTile = new Tile(plating.TileId);
@@ -828,10 +818,9 @@ public sealed class PoolSettings
     // Prototype hot reload is not available outside TOOLS builds,
     // so we can't pool test instances that use ExtraPrototypes without TOOLS.
 #if TOOLS
-    // Shuts up the warning that Omnisharp throws b/c it can't see both branches of the if/else/endif.
-#pragma warning disable
+#pragma warning disable CA1822 // Can't be marked as static b/c the other branch exists but Omnisharp can't see both.
     private bool NoToolsExtraPrototypes => false;
-#pragma warning restore
+#pragma warning restore CA1822
 #else
     private bool NoToolsExtraPrototypes => !string.IsNullOrEmpty(ExtraPrototypes);
 #endif
