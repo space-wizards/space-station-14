@@ -56,7 +56,7 @@ public sealed partial class VehicleComponent : Component
     public InstantAction HornAction = new()
     {
         UseDelay = TimeSpan.FromSeconds(3.4),
-        Icon = new SpriteSpecifier.Texture(new ("Objects/Fun/bikehorn.rsi/icon.png")),
+        Icon = new SpriteSpecifier.Texture(new("Objects/Fun/bikehorn.rsi/icon.png")),
         DisplayName = "action-name-honk",
         Description = "action-desc-honk",
         Event = new HonkActionEvent(),

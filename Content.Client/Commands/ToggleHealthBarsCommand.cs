@@ -1,6 +1,8 @@
-﻿using Robust.Client.Player;
+using Robust.Client.Player;
 using Robust.Shared.Console;
 using Content.Shared.EntityHealthBar;
+using System.Linq;
+using Content.Client.EntityHealthBar;
 
 namespace Content.Client.Commands
 {
@@ -11,7 +13,7 @@ namespace Content.Client.Commands
 
         public string Command => "togglehealthbars";
         public string Description => "Toggles a health bar above mobs.";
-        public string Help => $"Usage: {Command}";
+        public string Help => $"Usage: {Command} [<DamageContainerId>]";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -29,14 +31,18 @@ namespace Content.Client.Commands
                 return;
             }
 
-            if (!_entityManager.TryGetComponent<ShowHealthBarsComponent>(playerEntity, out var glassComp))
+            var showHealthBarsSystem = EntitySystem.Get<ShowHealthBarsSystem>();
+            if (!_entityManager.HasComponent<ShowHealthBarsComponent>(playerEntity))
             {
-                _entityManager.AddComponent<ShowHealthBarsComponent>((EntityUid) playerEntity);
-                shell.WriteLine("Enabled health overlay.");
+                var showHealthBarsComponent = _entityManager.AddComponent<ShowHealthBarsComponent>((EntityUid) playerEntity);
+                showHealthBarsComponent.DamageContainers = args.ToList();
+                showHealthBarsSystem.ApplyOverlays(showHealthBarsComponent);
+                shell.WriteLine($"Enabled health overlay for DamageContainers: {string.Join(", ", args)}.");
                 return;
             }
 
             _entityManager.RemoveComponent<ShowHealthBarsComponent>((EntityUid) playerEntity);
+            showHealthBarsSystem.RemoveOverlay();
             shell.WriteLine("Disabled health overlay.");
             return;
         }

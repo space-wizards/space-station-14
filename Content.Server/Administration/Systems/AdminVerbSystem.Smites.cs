@@ -541,6 +541,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Cluwne",
                 Category = VerbCategory.Smite,
+
                 Icon = new SpriteSpecifier.Rsi(new ("/Textures/Clothing/Mask/cluwne.rsi"), "icon"),
 
                 Act = () =>

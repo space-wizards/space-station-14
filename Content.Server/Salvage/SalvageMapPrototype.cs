@@ -11,7 +11,7 @@ public sealed class SalvageMapPrototype : IPrototype
     /// <summary>
     /// Relative directory path to the given map, i.e. `Maps/Salvage/template.yml`
     /// </summary>
-    [DataField("mapPath", required: true)] public ResPath MapPath { get; } = default!;
+    [DataField("mapPath", required: true)] public ResPath MapPath;
 
     /// <summary>
     /// Name for admin use

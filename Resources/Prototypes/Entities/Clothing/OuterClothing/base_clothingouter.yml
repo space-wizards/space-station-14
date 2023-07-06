@@ -74,7 +74,7 @@
   - type: GroupExamine
   - type: Tag
     tags:
-      - Hardsuit
+    - Hardsuit
 
 - type: entity
   abstract: true
