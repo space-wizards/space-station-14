@@ -4,14 +4,12 @@
   name: containment field generator
   description: A machine that generates a containment field when powered by an emitter. Keeps the Singularity docile.
   components:
-  - type: Transform
-    noRot: true
   - type: Fixtures
     fixtures:
       fix1:
         shape:
-          !type:PhysShapeAabb
-          bounds: "-0.30,-0.45,0.30,0.45"
+          !type:PhysShapeCircle
+          radius: 0.4
         density: 190
         mask:
         - FullTileMask
