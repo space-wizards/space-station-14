@@ -10,10 +10,8 @@ namespace Content.Shared.EntityHealthBar
     public sealed class ShowHealthBarsComponent : Component
     {
         /// <summary>
-        /// If null, displays all health bars.
-        /// If not null, displays health bars of only that damage container.
+        /// Displays health bars of the damage containers.
         /// </summary>
-
         [DataField("damageContainers", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageContainerPrototype>))]
         public List<string> DamageContainers = new();
     }
