@@ -127,10 +127,10 @@ namespace Content.Tests.Shared.Chemistry
 
         [Test]
         [TestCase(10.1f, 2.5f, "25.25")]
-        public void FloatMultiply (float aFloat, float b, string expected)
+        public void FloatMultiply(float aFloat, float b, string expected)
         {
             var a = FixedPoint2.New(aFloat);
-            var result = a*b;
+            var result = a * b;
             Assert.That($"{result}", Is.EqualTo(expected));
         }
 
@@ -172,8 +172,11 @@ namespace Content.Tests.Shared.Chemistry
         {
             var parameter = FixedPoint2.New(a);
             var comparison = FixedPoint2.New(b);
-            Assert.That(parameter.Equals(comparison), Is.EqualTo(comparison.Equals(parameter)));
-            Assert.That(comparison.Equals(parameter), Is.EqualTo(expected));
+            Assert.Multiple(() =>
+            {
+                Assert.That(parameter.Equals(comparison), Is.EqualTo(comparison.Equals(parameter)));
+                Assert.That(comparison.Equals(parameter), Is.EqualTo(expected));
+            });
         }
     }
 }
