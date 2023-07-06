@@ -36,7 +36,7 @@ public sealed class RehydratableSystem : EntitySystem
         var randomMob = _random.Next(0, 8);
         string[] randomList = { "MobRatServant", "MobCarpHolo", "MobXenoRavager", "MobAngryBee", "MobAdultSlimesYellowAngry", "MobGiantSpiderAngry", "MobBearSpace", "MobPurpleSnake" };
 
-        if (comp.TargetPrototype == "Random")
+        if (comp.TargetPrototype == "MobBearSpace")
             target = Spawn(randomList[randomMob], Transform(uid).Coordinates);
         else target = Spawn(comp.TargetPrototype, Transform(uid).Coordinates);
 

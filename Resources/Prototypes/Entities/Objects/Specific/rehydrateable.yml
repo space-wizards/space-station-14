@@ -128,7 +128,7 @@
       - !type:AddToSolutionReaction
         solution: cube
   - type: Rehydratable
-    target: Random
+    target: MobBearSpace
   - type: CollisionWake
     enabled: false
   - type: Fixtures
