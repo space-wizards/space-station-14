@@ -1,11 +1,9 @@
 #nullable enable
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.Server.Body.Systems;
 using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Stack;
 using Content.Server.Tools;
@@ -14,12 +12,12 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using NUnit.Framework;
-using Robust.Client.GameObjects;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
@@ -99,22 +97,25 @@ public abstract partial class InteractionTest
     protected ToolSystem ToolSys = default!;
     protected InteractionTestSystem STestSystem = default!;
     protected SharedTransformSystem Transform = default!;
+    protected ActorSystem Actor = default!;
+    protected ISawmill SLogger = default!;
 
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
     protected IGameTiming CTiming = default!;
     protected IUserInterfaceManager UiMan = default!;
     protected IInputManager InputManager = default!;
-    protected InputSystem InputSystem = default!;
+    protected Robust.Client.GameObjects.InputSystem InputSystem = default!;
     protected ConstructionSystem CConSys = default!;
     protected ExamineSystem ExamineSys = default!;
     protected InteractionTestSystem CTestSystem = default!;
+    protected ISawmill CLogger = default!;
 
     // player components
     protected HandsComponent Hands = default!;
     protected DoAfterComponent DoAfters = default!;
 
-    public float TickPeriod => (float)STiming.TickPeriod.TotalSeconds;
+    public float TickPeriod => (float) STiming.TickPeriod.TotalSeconds;
 
 
     // Simple mob that has one hand and can perform misc interactions.
@@ -137,7 +138,7 @@ public abstract partial class InteractionTest
     [SetUp]
     public virtual async Task Setup()
     {
-        PairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = TestPrototypes});
+        PairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = TestPrototypes });
 
         // server dependencies
         SEntMan = Server.ResolveDependency<IEntityManager>();
@@ -151,19 +152,22 @@ public abstract partial class InteractionTest
         ToolSys = SEntMan.System<ToolSystem>();
         DoAfterSys = SEntMan.System<SharedDoAfterSystem>();
         Transform = SEntMan.System<SharedTransformSystem>();
-        SConstruction = SEntMan.System<Content.Server.Construction.ConstructionSystem>();
+        SConstruction = SEntMan.System<Server.Construction.ConstructionSystem>();
         STestSystem = SEntMan.System<InteractionTestSystem>();
         Stack = SEntMan.System<StackSystem>();
+        Actor = SEntMan.System<ActorSystem>();
+        SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
 
         // client dependencies
         CEntMan = Client.ResolveDependency<IEntityManager>();
         UiMan = Client.ResolveDependency<IUserInterfaceManager>();
         CTiming = Client.ResolveDependency<IGameTiming>();
         InputManager = Client.ResolveDependency<IInputManager>();
-        InputSystem = CEntMan.System<InputSystem>();
+        InputSystem = CEntMan.System<Robust.Client.GameObjects.InputSystem>();
         CTestSystem = CEntMan.System<InteractionTestSystem>();
         CConSys = CEntMan.System<ConstructionSystem>();
         ExamineSys = CEntMan.System<ExamineSystem>();
+        CLogger = Client.ResolveDependency<ILogManager>().RootSawmill;
 
         // Setup map.
         MapData = await PoolManager.CreateTestMap(PairTracker);
@@ -189,7 +193,7 @@ public abstract partial class InteractionTest
 
             old = cPlayerMan.LocalPlayer.ControlledEntity;
             Player = SEntMan.SpawnEntity(PlayerPrototype, PlayerCoords);
-            ServerSession.AttachToEntity(Player);
+            Actor.Attach(Player, ServerSession);
             Hands = SEntMan.GetComponent<HandsComponent>(Player);
             DoAfters = SEntMan.GetComponent<DoAfterComponent>(Player);
         });
@@ -220,8 +224,11 @@ public abstract partial class InteractionTest
 
         // Final player asserts/checks.
         await PoolManager.ReallyBeIdle(PairTracker.Pair, 5);
-        Assert.That(cPlayerMan.LocalPlayer.ControlledEntity, Is.EqualTo(Player));
-        Assert.That(sPlayerMan.GetSessionByUserId(ClientSession.UserId).AttachedEntity, Is.EqualTo(Player));
+        Assert.Multiple(() =>
+        {
+            Assert.That(cPlayerMan.LocalPlayer.ControlledEntity, Is.EqualTo(Player));
+            Assert.That(sPlayerMan.GetSessionByUserId(ClientSession.UserId).AttachedEntity, Is.EqualTo(Player));
+        });
     }
 
     [TearDown]
@@ -231,4 +238,3 @@ public abstract partial class InteractionTest
         await PairTracker.CleanReturnAsync();
     }
 }
-

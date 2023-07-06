@@ -1,12 +1,8 @@
 #nullable enable
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Threading.Tasks;
-using Content.Client.Chemistry.UI;
 using Content.Client.Construction;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
@@ -19,15 +15,11 @@ using Content.Shared.Atmos;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Gravity;
 using Content.Shared.Item;
-using NUnit.Framework;
-using OpenToolkit.GraphicsLibraryFramework;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
@@ -67,7 +59,7 @@ public abstract partial class InteractionTest
         Assert.That(ProtoMan.Index<ConstructionPrototype>(prototype).Type, Is.EqualTo(ConstructionType.Item));
 
         // Please someone purge async construction code
-        Task<bool> task =default!;
+        Task<bool> task = default!;
         await Server.WaitPost(() => task = SConstruction.TryStartItemConstruction(prototype, Player));
 
         Task? tickTask = null;
@@ -119,18 +111,18 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task DeleteHeldEntity()
     {
-        if (Hands.ActiveHandEntity is {} held)
+        if (Hands.ActiveHandEntity is { } held)
         {
             await Server.WaitPost(() =>
             {
                 Assert.That(HandSys.TryDrop(Player, null, false, true, Hands));
                 SEntMan.DeleteEntity(held);
-                Logger.Debug($"Deleting held entity");
+                SLogger.Debug($"Deleting held entity");
             });
         }
 
         await RunTicks(1);
-        Assert.That(Hands.ActiveHandEntity == null);
+        Assert.That(Hands.ActiveHandEntity, Is.Null);
     }
 
     /// <summary>
@@ -140,7 +132,9 @@ public abstract partial class InteractionTest
     /// Automatically enables welders.
     /// </remarks>
     protected async Task<EntityUid?> PlaceInHands(string? id, int quantity = 1, bool enableWelder = true)
-        => await PlaceInHands(id == null ? null : (id, quantity), enableWelder);
+    {
+        return await PlaceInHands(id == null ? null : (id, quantity), enableWelder);
+    }
 
     /// <summary>
     /// Place an entity prototype into the players hand. Deletes any currently held entity.
@@ -161,12 +155,12 @@ public abstract partial class InteractionTest
         if (entity == null || string.IsNullOrWhiteSpace(entity.Prototype))
         {
             await RunTicks(1);
-            Assert.That(Hands.ActiveHandEntity == null);
+            Assert.That(Hands.ActiveHandEntity, Is.Null);
             return null;
         }
 
         // spawn and pick up the new item
-        EntityUid item = await SpawnEntity(entity, PlayerCoords);
+        var item = await SpawnEntity(entity, PlayerCoords);
         WelderComponent? welder = null;
 
         await Server.WaitPost(() =>
@@ -234,7 +228,7 @@ public abstract partial class InteractionTest
         });
 
         await RunTicks(1);
-        Assert.IsNull(Hands.ActiveHandEntity);
+        Assert.That(Hands.ActiveHandEntity, Is.Null);
     }
 
     #region Interact
@@ -244,7 +238,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task UseInHand()
     {
-        if (Hands.ActiveHandEntity is not {} target)
+        if (Hands.ActiveHandEntity is not { } target)
         {
             Assert.Fail("Not holding any entity");
             return;
@@ -263,7 +257,9 @@ public abstract partial class InteractionTest
     /// Empty strings imply empty hands.
     /// </remarks>
     protected async Task Interact(string id, int quantity = 1, bool shouldSucceed = true, bool awaitDoAfters = true)
-        => await Interact((id, quantity), shouldSucceed, awaitDoAfters);
+    {
+        await Interact((id, quantity), shouldSucceed, awaitDoAfters);
+    }
 
     /// <summary>
     /// Place an entity prototype into the players hand and interact with the given entity (or target position)
@@ -406,7 +402,7 @@ public abstract partial class InteractionTest
                 Assert.That(CTestSystem.Ghosts.TryGetValue(ConstructionGhostId, out newTarget),
                     $"Failed to get construction entity from ghost Id");
 
-                await Client.WaitPost(() => Logger.Debug($"Construction ghost {ConstructionGhostId} became entity {newTarget}"));
+                await Client.WaitPost(() => CLogger.Debug($"Construction ghost {ConstructionGhostId} became entity {newTarget}"));
                 Target = newTarget;
             }
         }
@@ -414,7 +410,7 @@ public abstract partial class InteractionTest
         if (STestSystem.EntChanges.TryGetValue(Target.Value, out newTarget))
         {
             await Server.WaitPost(
-                () => Logger.Debug($"Construction entity {Target.Value} changed to {newTarget}"));
+                () => SLogger.Debug($"Construction entity {Target.Value} changed to {newTarget}"));
 
             Target = newTarget;
         }
@@ -449,8 +445,12 @@ public abstract partial class InteractionTest
 
         var sXform = SEntMan.GetComponent<TransformComponent>(target.Value);
         var cXform = CEntMan.GetComponent<TransformComponent>(target.Value);
-        Assert.That(sXform.Anchored, Is.EqualTo(anchored));
-        Assert.That(cXform.Anchored, Is.EqualTo(anchored));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(sXform.Anchored, Is.EqualTo(anchored));
+            Assert.That(cXform.Anchored, Is.EqualTo(anchored));
+        });
     }
 
     protected void AssertDeleted(bool deleted = true, EntityUid? target = null)
@@ -462,8 +462,11 @@ public abstract partial class InteractionTest
             return;
         }
 
-        Assert.That(SEntMan.Deleted(target), Is.EqualTo(deleted));
-        Assert.That(CEntMan.Deleted(target), Is.EqualTo(deleted));
+        Assert.Multiple(() =>
+        {
+            Assert.That(SEntMan.Deleted(target), Is.EqualTo(deleted));
+            Assert.That(CEntMan.Deleted(target), Is.EqualTo(deleted));
+        });
     }
 
     /// <summary>
@@ -490,7 +493,7 @@ public abstract partial class InteractionTest
             ? Tile.Empty
             : new Tile(TileMan[proto].TileId);
 
-        Tile tile = Tile.Empty;
+        var tile = Tile.Empty;
         var pos = (coords ?? TargetCoords).ToMap(SEntMan, Transform);
         await Server.WaitPost(() =>
         {
@@ -685,7 +688,7 @@ public abstract partial class InteractionTest
         await AssertTile(proto, coords);
     }
 
-    protected async Task Delete(EntityUid  uid)
+    protected async Task Delete(EntityUid uid)
     {
         await Server.WaitPost(() => SEntMan.DeleteEntity(uid));
         await RunTicks(5);
@@ -699,10 +702,14 @@ public abstract partial class InteractionTest
     }
 
     protected int SecondsToTicks(float seconds)
-        => (int) Math.Ceiling(seconds / TickPeriod);
+    {
+        return (int) Math.Ceiling(seconds / TickPeriod);
+    }
 
     protected async Task RunSeconds(float seconds)
-        => await RunTicks(SecondsToTicks(seconds));
+    {
+        await RunTicks(SecondsToTicks(seconds));
+    }
 
     #endregion
 
@@ -710,7 +717,7 @@ public abstract partial class InteractionTest
     /// <summary>
     ///     Sends a bui message using the given bui key.
     /// </summary>
-    protected async Task SendBui(Enum key, BoundUserInterfaceMessage msg, EntityUid? target = null)
+    protected async Task SendBui(Enum key, BoundUserInterfaceMessage msg, EntityUid? _ = null)
     {
         if (!TryGetBui(key, out var bui))
             return;
@@ -724,7 +731,7 @@ public abstract partial class InteractionTest
     /// <summary>
     ///     Sends a bui message using the given bui key.
     /// </summary>
-    protected async Task CloseBui(Enum key, EntityUid? target = null)
+    protected async Task CloseBui(Enum key, EntityUid? _ = null)
     {
         if (!TryGetBui(key, out var bui))
             return;
@@ -782,11 +789,11 @@ public abstract partial class InteractionTest
     protected async Task ClickControl(Control control)
     {
         var screenCoords = new ScreenCoordinates(
-            control.GlobalPixelPosition + control.PixelSize/2,
+            control.GlobalPixelPosition + control.PixelSize / 2,
             control.Window?.Id ?? default);
 
         var relativePos = screenCoords.Position / control.UIScale - control.GlobalPosition;
-        var relativePixelPos =  screenCoords.Position - control.GlobalPixelPosition;
+        var relativePixelPos = screenCoords.Position - control.GlobalPixelPosition;
 
         var args = new GUIBoundKeyEventArgs(
             EngineKeyFunctions.UIClick,
@@ -836,9 +843,9 @@ public abstract partial class InteractionTest
         }
 
         var window = GetWindow<TWindow>();
-        var control = (field?.GetValue(window) ?? prop?.GetValue(window)) as Control;
+        var fieldOrProp = field?.GetValue(window) ?? prop?.GetValue(window);
 
-        if (control == null)
+        if (fieldOrProp is not Control control)
         {
             Assert.Fail($"{name} was null or was not a control.");
             return default!;

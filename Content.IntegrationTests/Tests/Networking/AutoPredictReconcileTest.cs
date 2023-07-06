@@ -10,9 +10,9 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Reflection;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Networking
@@ -28,9 +28,8 @@ namespace Content.IntegrationTests.Tests.Networking
     // This means the client is forced to reset it once it gets to the server tick where the server didn't do anything.
     // the tick where the server *should* have, but did not, acknowledge the state change.
     // Finally, we run two events inside the prediction area to ensure reconciling does for incremental stuff.
-    // TODO: This test relies on the EC version of component state handling. Remove in favor of the other two tests for the ECS and auto versions.
     [TestFixture]
-    public sealed class SimplePredictReconcileTest
+    public sealed class AutoPredictReconcileTest
     {
         [Test]
         public async Task Test()
@@ -53,13 +52,13 @@ namespace Content.IntegrationTests.Tests.Networking
             //cfg.SetCVar(CVars.NetLogging, true);
 
             EntityUid serverEnt = default;
-            PredictionTestComponent serverComponent = default!;
-            PredictionTestComponent clientComponent = default!;
+            AutoPredictionTestComponent serverComponent = default!;
+            AutoPredictionTestComponent clientComponent = default!;
 
             var serverSystem = server.ResolveDependency<IEntitySystemManager>()
-                .GetEntitySystem<PredictionTestEntitySystem>();
+                .GetEntitySystem<AutoPredictionTestEntitySystem>();
             var clientSystem = client.ResolveDependency<IEntitySystemManager>()
-                .GetEntitySystem<PredictionTestEntitySystem>();
+                .GetEntitySystem<AutoPredictionTestEntitySystem>();
 
             await server.WaitPost(() =>
             {
@@ -67,7 +66,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 var map = sMapManager.CreateMap();
                 var player = sPlayerManager.ServerSessions.Single();
                 serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates((0, 0), map));
-                serverComponent = sEntityManager.AddComponent<PredictionTestComponent>(serverEnt);
+                serverComponent = sEntityManager.AddComponent<AutoPredictionTestComponent>(serverEnt);
 
                 // Make client "join game" so they receive game state updates.
                 player.JoinGame();
@@ -85,7 +84,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             await client.WaitPost(() =>
             {
-                clientComponent = cEntityManager.GetComponent<PredictionTestComponent>(serverEnt);
+                clientComponent = cEntityManager.GetComponent<AutoPredictionTestComponent>(serverEnt);
             });
 
             Assert.Multiple(() =>
@@ -390,40 +389,8 @@ namespace Content.IntegrationTests.Tests.Networking
             await pairTracker.CleanReturnAsync();
         }
 
-        [NetworkedComponent()]
-        [Access(typeof(PredictionTestEntitySystem))]
-        public sealed class PredictionTestComponent : Component
-        {
-            public bool Foo;
-
-            public override ComponentState GetComponentState()
-            {
-                return new PredictionComponentState(Foo);
-            }
-
-            public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-            {
-                if (curState is not PredictionComponentState state)
-                    return;
-
-                Foo = state.Foo;
-                Dirty();
-            }
-
-            [Serializable, NetSerializable]
-            private sealed class PredictionComponentState : ComponentState
-            {
-                public bool Foo { get; }
-
-                public PredictionComponentState(bool foo)
-                {
-                    Foo = foo;
-                }
-            }
-        }
-
         [Reflect(false)]
-        public sealed class PredictionTestEntitySystem : EntitySystem
+        public sealed class AutoPredictionTestEntitySystem : EntitySystem
         {
             public bool Allow { get; set; } = true;
 
@@ -439,11 +406,12 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 SubscribeNetworkEvent<SetFooMessage>(HandleMessage);
                 SubscribeLocalEvent<SetFooMessage>(HandleMessage);
+                SubscribeLocalEvent<AutoPredictionTestComponent, AfterAutoHandleStateEvent>(AfterAutoHandleState);
             }
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
             {
-                var component = EntityManager.GetComponent<PredictionTestComponent>(message.Uid);
+                var component = EntityManager.GetComponent<AutoPredictionTestComponent>(message.Uid);
                 var old = component.Foo;
                 if (Allow)
                 {
@@ -453,9 +421,14 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo, message.NewFoo));
             }
+
+            private void AfterAutoHandleState(EntityUid uid, AutoPredictionTestComponent comp, ref AfterAutoHandleStateEvent args)
+            {
+                Dirty(uid, comp);
+            }
         }
 
-        private sealed class SetFooMessage : EntityEventArgs
+        public sealed class SetFooMessage : EntityEventArgs
         {
             public SetFooMessage(EntityUid uid, bool newFoo)
             {
@@ -466,5 +439,15 @@ namespace Content.IntegrationTests.Tests.Networking
             public EntityUid Uid { get; }
             public bool NewFoo { get; }
         }
+    }
+
+    // Must be directly located in the namespace or the sourcegen can't find it.
+    [NetworkedComponent()]
+    [AutoGenerateComponentState]
+    [Access(typeof(AutoPredictReconcileTest.AutoPredictionTestEntitySystem))]
+    public sealed partial class AutoPredictionTestComponent : Component
+    {
+        [AutoNetworkedField]
+        public bool Foo;
     }
 }
