@@ -113,7 +113,8 @@ public sealed class EntityHealthBarOverlay : Overlay
     {
         if (_mobStateSystem.IsAlive(uid, component))
         {
-            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold, thresholds))
+            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold, thresholds) &&
+                !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out threshold, thresholds))
                 return (1, false);
 
             var ratio = 1 - ((FixedPoint2)(dmg.TotalDamage / threshold)).Float();
