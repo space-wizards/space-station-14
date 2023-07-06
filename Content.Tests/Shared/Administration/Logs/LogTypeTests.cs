@@ -18,6 +18,6 @@ public sealed class LogTypeTests
             .Select(g => g.Key)
             .ToArray();
 
-        Assert.That(duplicates.Length, Is.Zero, $"{nameof(LogType)} has duplicate values for: " + string.Join(", ", duplicates));
+        Assert.That(duplicates, Has.Length.Zero, $"{nameof(LogType)} has duplicate values for: " + string.Join(", ", duplicates));
     }
 }
