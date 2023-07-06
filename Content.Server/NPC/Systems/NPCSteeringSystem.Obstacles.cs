@@ -124,25 +124,30 @@ public sealed partial class NPCSteeringSystem
             // Try smashing obstacles.
             else if ((component.Flags & PathFlags.Smashing) != 0x0)
             {
-                if (_melee.TryGetWeapon(uid, out var meleeUid, out var meleeWeapon) && meleeWeapon.NextAttack <= _timing.CurTime && TryComp<CombatModeComponent>(uid, out var combatMode))
+                if (_melee.TryGetWeapon(uid, out _, out var meleeWeapon) && meleeWeapon.NextAttack <= _timing.CurTime && TryComp<CombatModeComponent>(uid, out var combatMode))
                 {
                     _combat.SetInCombatMode(uid, true, combatMode);
                     var destructibleQuery = GetEntityQuery<DestructibleComponent>();
 
                     // TODO: This is a hack around grilles and windows.
                     _random.Shuffle(obstacleEnts);
+                    var attackResult = false;
 
                     foreach (var ent in obstacleEnts)
                     {
                         // TODO: Validate we can damage it
                         if (destructibleQuery.HasComponent(ent))
                         {
-                            _melee.AttemptLightAttack(uid, uid, meleeWeapon, ent);
+                            attackResult = _melee.AttemptLightAttack(uid, uid, meleeWeapon, ent);
                             break;
                         }
                     }
 
                     _combat.SetInCombatMode(uid, false, combatMode);
+
+                    // Blocked or the likes?
+                    if (!attackResult)
+                        return SteeringObstacleStatus.Failed;
 
                     if (obstacleEnts.Count == 0)
                         return SteeringObstacleStatus.Completed;
