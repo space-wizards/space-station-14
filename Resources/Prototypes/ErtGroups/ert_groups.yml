@@ -5,29 +5,29 @@
       name: medical
       announcementAfterCall: medical-ert-call-announcement
       shuttle: Maps/Shuttles/medical_rrs.yml
-      timeToSpawn: 600
+      timeToSpawn: 300
       humansList:
         RandomHumanoidSpawnerERTLeaderEVA: 1
         RandomHumanoidSpawnerERTMedicalEVA: 3
       requirements:
         RoundDuration: 30
-        DeadPercent: 50
+        DeadPercent: 30
     security:
       name: security
       announcementAfterCall: security-ert-call-announcement
       shuttle: Maps/Shuttles/officer_rrs.yml
-      timeToSpawn: 600
+      timeToSpawn: 300
       humansList:
         RandomHumanoidSpawnerERTLeaderEVA: 1
         RandomHumanoidSpawnerERTSecurityEVA: 3
       requirements:
         RoundDuration: 30
-        DeadPercent: 50
+        DeadPercent: 30
     janitor:
       name: janitor
       announcementAfterCall: janitor-ert-call-announcement
       shuttle: Maps/Shuttles/cleaner_rrs.yml
-      timeToSpawn: 600
+      timeToSpawn: 300
       humansList:
         RandomHumanoidSpawnerERTLeader: 1
         RandomHumanoidSpawnerERTJanitor: 3
@@ -38,7 +38,7 @@
       name: engineer
       announcementAfterCall: engineer-ert-call-announcement
       shuttle: Maps/Shuttles/engineer_rrs.yml
-      timeToSpawn: 600
+      timeToSpawn: 300
       humansList:
         RandomHumanoidSpawnerERTLeader: 1
         RandomHumanoidSpawnerERTEngineer: 3
@@ -49,12 +49,12 @@
       name: cburn
       announcementAfterCall: cburn-ert-call-announcement
       shuttle: Maps/Shuttles/cburn_shuttle.yml
-      timeToSpawn: 600
+      timeToSpawn: 300
       humansList:
         RandomHumanoidSpawnerCBURNUnit: 3
       requirements:
         RoundDuration: 30
-        ZombiePercent: 50
+        ZombiePercent: 30
     clown:
       name: clown
       announcementAfterCall: clown-ert-call-announcement
