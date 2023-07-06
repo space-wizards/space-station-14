@@ -36,14 +36,16 @@ namespace Content.Tests.Shared.Gamestates
             AppDomain.CurrentDomain.Load("Robust.Shared");
             AppDomain.CurrentDomain.Load("Content.Shared");
 
-            var assemblies = new List<Assembly>(7);
-            assemblies.Add(AppDomain.CurrentDomain.GetAssemblyByName("Robust.Client"));
-            assemblies.Add(AppDomain.CurrentDomain.GetAssemblyByName("Content.Client"));
-            assemblies.Add(AppDomain.CurrentDomain.GetAssemblyByName("Robust.Server"));
-            assemblies.Add(AppDomain.CurrentDomain.GetAssemblyByName("Content.Server"));
-            assemblies.Add(AppDomain.CurrentDomain.GetAssemblyByName("Robust.Shared"));
-            assemblies.Add(AppDomain.CurrentDomain.GetAssemblyByName("Content.Shared"));
-            assemblies.Add(Assembly.GetExecutingAssembly());
+            var assemblies = new List<Assembly>(7)
+            {
+                AppDomain.CurrentDomain.GetAssemblyByName("Robust.Client"),
+                AppDomain.CurrentDomain.GetAssemblyByName("Content.Client"),
+                AppDomain.CurrentDomain.GetAssemblyByName("Robust.Server"),
+                AppDomain.CurrentDomain.GetAssemblyByName("Content.Server"),
+                AppDomain.CurrentDomain.GetAssemblyByName("Robust.Shared"),
+                AppDomain.CurrentDomain.GetAssemblyByName("Content.Shared"),
+                Assembly.GetExecutingAssembly(),
+            };
 
             var reflection = new FullReflectionManager();
 
