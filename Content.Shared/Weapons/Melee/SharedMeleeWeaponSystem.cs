@@ -425,48 +425,49 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         AttemptAttack(user, weaponUid, weapon, new LightAttackEvent(null, weaponUid, coordinates), null);
     }
 
-    public void AttemptLightAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, EntityUid target)
+    public bool AttemptLightAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, EntityUid target)
     {
         if (!TryComp<TransformComponent>(target, out var targetXform))
-            return;
+            return false;
 
-        AttemptAttack(user, weaponUid, weapon, new LightAttackEvent(target, weaponUid, targetXform.Coordinates), null);
+        return AttemptAttack(user, weaponUid, weapon, new LightAttackEvent(target, weaponUid, targetXform.Coordinates), null);
     }
 
-    public void AttemptDisarmAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, EntityUid target)
+    public bool AttemptDisarmAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, EntityUid target)
     {
         if (!TryComp<TransformComponent>(target, out var targetXform))
-            return;
+            return false;
 
-        AttemptAttack(user, weaponUid, weapon, new DisarmAttackEvent(target, targetXform.Coordinates), null);
+        return AttemptAttack(user, weaponUid, weapon, new DisarmAttackEvent(target, targetXform.Coordinates), null);
     }
 
     /// <summary>
     /// Called when a windup is finished and an attack is tried.
     /// </summary>
-    private void AttemptAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, AttackEvent attack, ICommonSession? session)
+    /// <returns>True if attack successful</returns>
+    private bool AttemptAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, AttackEvent attack, ICommonSession? session)
     {
         var curTime = Timing.CurTime;
 
         if (weapon.NextAttack > curTime)
-            return;
+            return false;
 
         if (!CombatMode.IsInCombatMode(user))
-            return;
+            return false;
 
         switch (attack)
         {
             case LightAttackEvent light:
                 if (!Blocker.CanAttack(user, light.Target))
-                    return;
+                    return false;
                 break;
             case DisarmAttackEvent disarm:
                 if (!Blocker.CanAttack(user, disarm.Target))
-                    return;
+                    return false;
                 break;
             default:
                 if (!Blocker.CanAttack(user))
-                    return;
+                    return false;
                 break;
         }
 
@@ -497,7 +498,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 PopupSystem.PopupClient(ev.Message, weaponUid, user);
             }
 
-            return;
+            return false;
         }
 
         // Attack confirmed
@@ -513,7 +514,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                     break;
                 case DisarmAttackEvent disarm:
                     if (!DoDisarm(user, disarm, weaponUid, weapon, session))
-                        return;
+                        return false;
 
                     animation = weapon.ClickAnimation;
                     break;
@@ -529,6 +530,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         weapon.Attacking = true;
+        return true;
     }
 
     /// <summary>

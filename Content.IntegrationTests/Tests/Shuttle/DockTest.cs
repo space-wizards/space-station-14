@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Content.Server.Shuttles.Systems;
 using Content.Tests;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -12,7 +9,7 @@ namespace Content.IntegrationTests.Tests.Shuttle;
 
 public sealed class DockTest : ContentUnitTest
 {
-    static IEnumerable<object[]> TestSource()
+    private static IEnumerable<object[]> TestSource()
     {
         // I-shape for grid1, T-shape for grid2
         yield return new object[] { new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Angle.Zero, Angle.Zero, true };
@@ -31,6 +28,7 @@ public sealed class DockTest : ContentUnitTest
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
         var dockingSystem = entManager.System<DockingSystem>();
+        var xformSystem = entManager.System<SharedTransformSystem>();
 
         var mapId = map.MapId;
 
@@ -39,8 +37,10 @@ public sealed class DockTest : ContentUnitTest
             entManager.DeleteEntity(map.GridUid);
             var grid1 = mapManager.CreateGrid(mapId);
             var grid2 = mapManager.CreateGrid(mapId);
+            var grid1Ent = grid1.Owner;
+            var grid2Ent = grid2.Owner;
             var grid2Offset = new Vector2(50f, 50f);
-            entManager.GetComponent<TransformComponent>(grid2.Owner).LocalPosition = grid2Offset;
+            xformSystem.SetLocalPosition(grid2Ent, grid2Offset);
 
             // Tetris tests
             // Grid1 is a vertical I
@@ -54,7 +54,7 @@ public sealed class DockTest : ContentUnitTest
             };
 
             grid1.SetTiles(tiles1);
-            var dock1 = entManager.SpawnEntity("AirlockShuttle", new EntityCoordinates(grid1.Owner, dock1Pos));
+            var dock1 = entManager.SpawnEntity("AirlockShuttle", new EntityCoordinates(grid1Ent, dock1Pos));
             var dock1Xform = entManager.GetComponent<TransformComponent>(dock1);
             dock1Xform.LocalRotation = dock1Angle;
 
@@ -68,11 +68,11 @@ public sealed class DockTest : ContentUnitTest
             };
 
             grid2.SetTiles(tiles2);
-            var dock2 = entManager.SpawnEntity("AirlockShuttle", new EntityCoordinates(grid2.Owner, dock2Pos));
+            var dock2 = entManager.SpawnEntity("AirlockShuttle", new EntityCoordinates(grid2Ent, dock2Pos));
             var dock2Xform = entManager.GetComponent<TransformComponent>(dock2);
             dock2Xform.LocalRotation = dock2Angle;
 
-            var config = dockingSystem.GetDockingConfig(grid1.Owner, grid2.Owner);
+            var config = dockingSystem.GetDockingConfig(grid1Ent, grid2Ent);
 
             Assert.That(result, Is.EqualTo(config != null));
         });

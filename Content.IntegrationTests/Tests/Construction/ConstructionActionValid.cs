@@ -1,9 +1,7 @@
 using System.Text;
-using System.Threading.Tasks;
 using Content.Server.Construction.Completions;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
-using NUnit.Framework;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction
@@ -49,7 +47,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task ConstructionGraphSpawnPrototypeValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
@@ -89,7 +87,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task ConstructionGraphNodeEntityPrototypeValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
@@ -115,7 +113,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task ConstructionGraphEdgeValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();

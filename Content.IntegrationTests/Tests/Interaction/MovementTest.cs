@@ -1,9 +1,5 @@
 #nullable enable
-using System;
-using System.Threading.Tasks;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -32,14 +28,14 @@ public abstract class MovementTest : InteractionTest
         await base.Setup();
         for (var i = -Tiles; i <= Tiles; i++)
         {
-            await SetTile(Plating, PlayerCoords.Offset((i,0)), MapData.MapGrid);
+            await SetTile(Plating, PlayerCoords.Offset((i, 0)), MapData.MapGrid);
         }
         AssertGridCount(1);
 
         if (AddWalls)
         {
-            await SpawnEntity("WallSolid", PlayerCoords.Offset((-Tiles,0)));
-            await SpawnEntity("WallSolid", PlayerCoords.Offset((Tiles,0)));
+            await SpawnEntity("WallSolid", PlayerCoords.Offset((-Tiles, 0)));
+            await SpawnEntity("WallSolid", PlayerCoords.Offset((Tiles, 0)));
         }
 
         await AddGravity();
@@ -58,7 +54,7 @@ public abstract class MovementTest : InteractionTest
             return 0;
         }
 
-        var delta =  Transform.GetWorldPosition(target.Value) - Transform.GetWorldPosition(other ?? Player);
+        var delta = Transform.GetWorldPosition(target.Value) - Transform.GetWorldPosition(other ?? Player);
         return delta.X;
     }
 }

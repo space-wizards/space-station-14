@@ -1,17 +1,10 @@
-using System.Threading;
-using Content.Server.Fluids.Components;
 using Content.Server.Tools.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
-using Content.Shared.DoAfter;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Tools.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Tools;
 
@@ -41,20 +34,21 @@ public sealed partial class ToolSystem
         var gridUid = args.Coordinates.GetGridUid(EntityManager);
         if (!_mapManager.TryGetGrid(gridUid, out var grid))
         {
-            Logger.Error("Attempted to pry from a non-existent grid?");
+            Log.Error("Attempted to pry from a non-existent grid?");
             return;
         }
 
         var tile = grid.GetTileRef(args.Coordinates);
+        var center = _turf.GetTileCenter(tile);
         if (args.Used != null)
         {
             _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(args.User):actor} used {ToPrettyString(args.Used.Value):tool} to pry {_tileDefinitionManager[tile.Tile.TypeId].Name} at {ToPrettyString(tile.GridUid):grid} {tile.GridPosition()}");
+                $"{ToPrettyString(args.User):actor} used {ToPrettyString(args.Used.Value):tool} to pry {_tileDefinitionManager[tile.Tile.TypeId].Name} at {center}");
         }
         else
         {
             _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(args.User):actor} pried {_tileDefinitionManager[tile.Tile.TypeId].Name} at {ToPrettyString(tile.GridUid):grid} {tile.GridPosition()}");
+                $"{ToPrettyString(args.User):actor} pried {_tileDefinitionManager[tile.Tile.TypeId].Name} at {center}");
         }
 
         _tile.PryTile(tile);

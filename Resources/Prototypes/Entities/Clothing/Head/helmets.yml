@@ -1,3 +1,6 @@
+#These are intentionally all very mediocre as locational damage does not exist yet. Without it, armor values will stack in a way that makes it really god damn hard to determine how effective something is, along with making players extremely tanky.
+#When it DOES exist, the values here should be totally reworked - probably just port them from SS13.
+
 #Basic Helmet (Security Helmet)
 - type: entity
   parent: ClothingHeadBase
@@ -9,13 +12,13 @@
     sprite: Clothing/Head/Helmets/security.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/security.rsi
-  - type: Armor
+  - type: Armor #Values seem to let the user survive one extra hit if attacked consistently.
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
+        Blunt: 0.9
+        Slash: 0.9
         Piercing: 0.9
-        Heat: 0.8
+        Heat: 0.9
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -43,14 +46,15 @@
     sprite: Clothing/Head/Helmets/swat.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/swat.rsi
-  - type: Armor #In SS13 this has 100% acid (caustic) protection, however it would be probably be silly to give this to a helmet without locational damage existing yet.
+  - type: Armor #This is intentionally not spaceproof, when the time comes to port the values from SS13 this should be buffed from what it was.
     modifiers:
       coefficients:
-        Blunt: 0.70
-        Slash: 0.70
+        Blunt: 0.80
+        Slash: 0.80
         Piercing: 0.80
         Heat: 0.80
         Radiation: 0.80
+        Caustic: 0.95
   - type: ExplosionResistance
     damageCoefficient: 0.75
 
@@ -82,9 +86,9 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.70
-        Slash: 0.80
-        Piercing: 0.85
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.95
 
 #Bombsuit Helmet
 - type: entity
@@ -103,9 +107,9 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.5
-        Slash: 0.8
-        Piercing: 0.8
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
 
 #Cult Helmet
 - type: entity
@@ -122,10 +126,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
+        Blunt: 0.9
         Slash: 0.8
         Piercing: 0.9
-        Heat: 0.8
+        Heat: 0.9
 
 #SCAF Helmet
 - type: entity
@@ -142,8 +146,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
+        Blunt: 0.9
+        Slash: 0.9
         Piercing: 0.8
   - type: Tag
     tags:
@@ -224,11 +228,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.90
-        Slash: 0.90
+        Blunt: 0.95
+        Slash: 0.95
         Piercing: 0.95
-        Heat: 0.65
-        Radiation: 1
+        Heat: 0.80
   - type: IdentityBlocker
   - type: Tag
     tags:
@@ -253,11 +256,7 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 1
-        Slash: 1
-        Piercing: 1
         Heat: 0.4
-        Radiation: 1
   - type: PressureProtection
     highPressureMultiplier: 0.25
     lowPressureMultiplier: 1
@@ -278,7 +277,7 @@
     sprite: Clothing/Head/Helmets/linghelmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/linghelmet.rsi
-  - type: Armor
+  - type: Armor #admeme item so it should be fine being overpowered while helmets are still intentionally kneecapped.
     modifiers:
       coefficients:
         Blunt: 0.5

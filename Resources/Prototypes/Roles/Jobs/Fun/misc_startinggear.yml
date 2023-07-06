@@ -156,7 +156,7 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     head: ClothingHeadHelmetSwatSyndicate
     mask: ClothingMaskGas
-    outerClothing: ClothingOuterVestKevlar
+    outerClothing: ClothingOuterArmorBasic
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     back: ClothingBackpackFilled
@@ -173,7 +173,7 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     head: ClothingHeadHelmetSwatSyndicate
     mask: ClothingMaskGas
-    outerClothing: ClothingOuterVestKevlar
+    outerClothing: ClothingOuterArmorBasic
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     back: ClothingBackpackFilled
@@ -192,7 +192,7 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     head: ClothingHeadHelmetSwatSyndicate
     mask: ClothingMaskGas
-    outerClothing: ClothingOuterVestKevlar
+    outerClothing: ClothingOuterArmorBasic
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     back: ClothingBackpackFilled
@@ -210,7 +210,7 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     head: ClothingHeadHelmetSwatSyndicate
     mask: ClothingMaskGas
-    outerClothing: ClothingOuterVestKevlar
+    outerClothing: ClothingOuterArmorBasic
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     back: ClothingBackpackFilled
@@ -232,7 +232,7 @@
     eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHelmetSwat
     mask: ClothingMaskGasSwat
-    outerClothing: ClothingOuterVestKevlar
+    outerClothing: ClothingOuterArmorBasicSlim
     ears: ClothingHeadsetSecurity
     gloves: ClothingHandsGlovesCombat
   innerclothingskirt: ClothingUniformJumpskirtSec

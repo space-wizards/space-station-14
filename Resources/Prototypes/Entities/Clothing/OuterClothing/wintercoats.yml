@@ -16,7 +16,7 @@
     modifiers:
       coefficients:
         Slash: 0.95
-        Heat: 0.75
+        Heat: 0.90
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -102,7 +102,7 @@
     modifiers:
       coefficients:
         Slash: 0.95
-        Heat: 0.75
+        Heat: 0.90
         Caustic: 0.75
 
 - type: entity
@@ -118,7 +118,7 @@
     modifiers:
       coefficients:
         Slash: 0.95
-        Heat: 0.75
+        Heat: 0.90
         Caustic: 0.75
 
 - type: entity
@@ -154,7 +154,7 @@
     modifiers:
       coefficients:
         Slash: 0.95
-        Heat: 0.75
+        Heat: 0.90
         Caustic: 0.9
 
 - type: entity
@@ -200,7 +200,7 @@
     modifiers:
       coefficients:
         Slash: 0.95
-        Heat: 0.75
+        Heat: 0.9
         Caustic: 0.9
 
 - type: entity
@@ -216,7 +216,7 @@
     modifiers:
       coefficients:
         Slash: 0.95
-        Heat: 0.75
+        Heat: 0.90
         Caustic: 0.9
 
 - type: entity
@@ -278,7 +278,7 @@
     modifiers:
       coefficients:
         Slash: 0.95
-        Heat: 0.75
+        Heat: 0.90
         Caustic: 0.9
 
 - type: entity
@@ -304,7 +304,7 @@
     modifiers:
       coefficients:
         Slash: 0.95
-        Heat: 0.75
+        Heat: 0.90
         Caustic: 0.9
 
 - type: entity
@@ -330,7 +330,7 @@
     modifiers:
       coefficients:
         Slash: 0.95
-        Heat: 0.75
+        Heat: 0.90
         Caustic: 0.9
 
 - type: entity
@@ -342,14 +342,13 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.6 #slightly less bulletproof than wardens normal coat
-        Heat: 0.75
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.8 #slightly less bulletproof then warden's normal coat
+        Heat: 0.70
 
 - type: entity
   parent: ClothingOuterWinterCoat

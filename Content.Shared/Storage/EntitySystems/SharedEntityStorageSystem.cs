@@ -34,6 +34,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -261,6 +262,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return true;
         }
 
+        _joints.RecursiveClearJoints(toInsert);
         var inside = EnsureComp<InsideEntityStorageComponent>(toInsert);
         inside.Storage = container;
         return component.Contents.Insert(toInsert, EntityManager);
