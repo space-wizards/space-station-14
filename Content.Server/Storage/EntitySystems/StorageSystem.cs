@@ -30,6 +30,7 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -52,10 +53,10 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly StackSystem _stack = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
@@ -226,7 +227,9 @@ namespace Content.Server.Storage.EntitySystems
                         || !itemQuery.HasComponent(entity)
                         || !CanInsert(uid, entity, out _, storageComp)
                         || !_interactionSystem.InRangeUnobstructed(args.User, entity))
+                    {
                         continue;
+                    }
 
                     validStorables.Add(entity);
                 }

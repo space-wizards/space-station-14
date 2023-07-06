@@ -22,13 +22,13 @@
   - type: StorageFill
     contents:
     - id: SmokingPipeFilledTobacco
-  - type: Armor
+  - type: Armor #same as regular sec armor
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.6
-        Heat: 0.9
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.70
+        Heat: 0.80
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -45,7 +45,7 @@
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatHoSTrench
   name: head of security's armored trenchcoat
-  description: This trenchcoat was specifically designed for asserting superior authority.
+  description: A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
@@ -54,10 +54,13 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.7
-        Slash: 0.7
-        Piercing: 0.4
-        Heat: 0.7
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.70
+        Heat: 0.70
+        Caustic: 0.75 #not the full 90% from ss13 because of the head
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -212,10 +215,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.4
-        Heat: 0.8
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.70
+        Heat: 0.70
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
 
 - type: entity
   parent: ClothingOuterStorageBase
