@@ -105,10 +105,10 @@ public sealed class EntityPainter
                 return (targetX * rsi.Size.X, targetY * rsi.Size.Y, rsi.Size.X, rsi.Size.Y);
             }
 
-            var dir =  entity.Sprite.GetLayerDirectionCount(layer) switch
+            var dir = entity.Sprite.GetLayerDirectionCount(layer) switch
             {
                 0 => 0,
-                _ => (int)layer.EffectiveDirection(worldRotation)
+                _ => (int) layer.EffectiveDirection(worldRotation)
             };
 
             var (x, y, width, height) = GetRsiFrame(rsi, image, entity, layer, dir);
@@ -133,8 +133,8 @@ public sealed class EntityPainter
                 .Resize(imgX, imgY)
                 .Flip(FlipMode.Vertical));
 
-            var pointX = (int) entity.X - (imgX / 2) + EyeManager.PixelsPerMeter / 2;
-            var pointY = (int) entity.Y - (imgY / 2) + EyeManager.PixelsPerMeter / 2;
+            var pointX = (int) entity.X - imgX / 2 + EyeManager.PixelsPerMeter / 2;
+            var pointY = (int) entity.Y - imgY / 2 + EyeManager.PixelsPerMeter / 2;
             canvas.Mutate(o => o.DrawImage(image, new Point(pointX, pointY), 1));
         }
     }
