@@ -30,8 +30,10 @@ namespace Content.Tests.Server.Jobs
 
             queue.Process();
 
+#pragma warning disable NUnit2045 // Should probably wait on checking the result of a job until it's finished.
             Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
             Assert.That(job.Result, Is.EqualTo("honk!"));
+#pragma warning restore NUnit2045
         }
 
         [Test]
@@ -46,16 +48,24 @@ namespace Content.Tests.Server.Jobs
             queue.EnqueueJob(job);
 
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
-            Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(1f));
+            Assert.Multiple(() =>
+            {
+                Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
+                Assert.That((float) job.DebugTime, new ApproxEqualityConstraint(1f));
+            });
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
-            Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(2f));
+            Assert.Multiple(() =>
+            {
+                Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
+                Assert.That((float) job.DebugTime, new ApproxEqualityConstraint(2f));
+            });
             queue.Process();
             Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
-
-            Assert.That(job.Result, Is.EqualTo("foo!"));
-            Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(2.4f));
+            Assert.Multiple(() =>
+            {
+                Assert.That(job.Result, Is.EqualTo("foo!"));
+                Assert.That((float) job.DebugTime, new ApproxEqualityConstraint(2.4f));
+            });
         }
 
         [Test]
@@ -77,9 +87,11 @@ namespace Content.Tests.Server.Jobs
             cts.Cancel();
             queue.Process();
             Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
-            Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(2.0f));
-
-            Assert.That(job.Result, Is.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That((float) job.DebugTime, new ApproxEqualityConstraint(2.0f));
+                Assert.That(job.Result, Is.Null);
+            });
         }
 
         [Test]
@@ -100,9 +112,10 @@ namespace Content.Tests.Server.Jobs
             Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
             tcs.SetResult(1);
             queue.Process();
+#pragma warning disable NUnit2045 // Shouldn't check job result until it's finished.
             Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
-
             Assert.That(job.Result, Is.EqualTo("oof!"));
+#pragma warning restore NUnit2045
         }
 
         [Test]
@@ -123,9 +136,10 @@ namespace Content.Tests.Server.Jobs
             Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
             tcs.SetCanceled();
             queue.Process();
+#pragma warning disable NUnit2045 // Shouldn't check job result until it's finished.
             Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
-
             Assert.That(job.Result, Is.Null);
+#pragma warning restore NUnit2045
         }
 
         private sealed class DebugStopwatch : IStopwatch
