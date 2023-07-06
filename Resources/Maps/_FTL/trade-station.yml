@@ -5624,6 +5624,22 @@ entities:
       type: Transform
     - bodyType: Static
       type: Physics
+- proto: PaperOffice
+  entities:
+  - uid: 1039
+    components:
+    - pos: 0.04681492,9.524423
+      parent: 1
+      type: Transform
+    - content: WILL WORK 4 CASH
+      type: Paper
+  - uid: 1040
+    components:
+    - pos: 0.067647934,11.545256
+      parent: 1
+      type: Transform
+    - content: WILL WORK 4 CASH
+      type: Paper
 - proto: Poweredlight
   entities:
   - uid: 70
@@ -5946,6 +5962,25 @@ entities:
   - uid: 94
     components:
     - pos: 5.529931,13.179684
+      parent: 1
+      type: Transform
+- proto: TradeStationQuartermasterSpawner
+  entities:
+  - uid: 1036
+    components:
+    - pos: -0.5,16.5
+      parent: 1
+      type: Transform
+- proto: TradeStationRecruitSpawner
+  entities:
+  - uid: 1037
+    components:
+    - pos: -0.5,11.5
+      parent: 1
+      type: Transform
+  - uid: 1038
+    components:
+    - pos: -0.5,9.5
       parent: 1
       type: Transform
 - proto: VendingBarDrobe

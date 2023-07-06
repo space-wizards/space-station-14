@@ -27,5 +27,4 @@
             MedicalDoctor: [ 3, 3 ]
             HeadOfSecurity: [ 1, 1 ]
             SecurityOfficer: [ 3, 3 ]
-            AtmosphericTechnician: [ 1, 1 ]
             # SalvageSpecialist: [ 2, 2 ] # One day

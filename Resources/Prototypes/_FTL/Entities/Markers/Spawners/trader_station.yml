@@ -1,0 +1,25 @@
+- type: entity
+  name: Recruit Spawner
+  id: TradeStationRecruitSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+  - type: ConditionalSpawner
+    prototypes:
+      - MobHumanTraderRecruit
+
+- type: entity
+  name: Quartermaster Spawner
+  id: TradeStationQuartermasterSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+  - type: ConditionalSpawner
+    prototypes:
+      - MobHumanTraderQuartermaster
