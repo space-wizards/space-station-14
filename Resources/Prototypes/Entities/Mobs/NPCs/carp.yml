@@ -9,6 +9,9 @@
     - type: MobMover
     - type: HTN
       rootTask: SimpleHostileCompound
+      blackboard:
+        NavSmash: !type:Bool
+          true
     - type: Faction
       factions:
         - SimpleHostile
