@@ -12,7 +12,7 @@ public sealed class CauseZombieInfection : ReagentEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-cause-zombie-infection", ("chance", Probability)); 
 
-    // Removes the Zombie Infection Components
+    // Adds the Zombie Infection Components
     public override void Effect(ReagentEffectArgs args)
     {
         var entityManager = args.EntityManager;
