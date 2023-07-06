@@ -1,4 +1,4 @@
-namespace Content.Shared.SimpleStation14.Clothing
+namespace Content.Shared.Clothing.Components
 {
     [RegisterComponent]
     public sealed class ClothingGrantTagComponent : Component
