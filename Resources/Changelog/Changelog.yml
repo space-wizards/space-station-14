@@ -1,10 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Added 3 new burgers and made 8 unused burgers craftable., type: Add}
-  - {message: Cargo can now purchase a crate of crabs., type: Add}
-  id: 3679
-  time: '2023-05-06T07:43:09.0000000+00:00'
 - author: tom-leys
   changes:
   - {message: You can open and close firelock doors like airlock doors if they are
@@ -2935,3 +2929,9 @@ Entries:
   - {message: Fix muzzle flashes only showing for a frame., type: Fix}
   id: 4178
   time: '2023-07-06T04:42:38.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Mimes can no longer create invisible walls while inside of containers
+      or vehicles., type: Fix}
+  id: 4179
+  time: '2023-07-06T04:43:49.0000000+00:00'
