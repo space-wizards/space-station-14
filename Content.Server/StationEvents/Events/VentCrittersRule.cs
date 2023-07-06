@@ -37,7 +37,7 @@ public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleCompon
             }
         }
 
-        if (component.SpecialEntries.Count == 0)
+        if (component.SpecialEntries.Count == 0 || validLocations.Count == 0)
         {
             return;
         }
