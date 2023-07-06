@@ -1,24 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Added several soup recipes, type: Add}
-  - {message: Added soup flavors, type: Add}
-  id: 3676
-  time: '2023-05-06T07:36:34.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Saltern has been refitted with the latest and greatest, it is now back
-      in rotation.', type: Add}
-  - {message: Omega has been derotated due to excessive wear and tear., type: Remove}
-  id: 3677
-  time: '2023-05-06T07:41:24.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Added 5 new bread loaves, type: Add}
-  - {message: Added a recipe for all bread loaves, type: Add}
-  - {message: Changed all bread sprites, type: Tweak}
-  id: 3678
-  time: '2023-05-06T07:41:32.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Added 3 new burgers and made 8 unused burgers craftable., type: Add}
@@ -2939,3 +2919,19 @@ Entries:
   - {message: Break joints upon entering storage., type: Fix}
   id: 4175
   time: '2023-07-06T03:39:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Carps will now smash to get to their destination., type: Tweak}
+  id: 4176
+  time: '2023-07-06T04:41:53.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Stop NPCs indefinitely trying to break a wall if they don't have line
+      of sight., type: Fix}
+  id: 4177
+  time: '2023-07-06T04:42:17.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix muzzle flashes only showing for a frame., type: Fix}
+  id: 4178
+  time: '2023-07-06T04:42:38.0000000+00:00'
