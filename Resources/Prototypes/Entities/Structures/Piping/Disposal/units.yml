@@ -68,7 +68,7 @@
       type: DisposalUnitBoundUserInterface
   - type: ContainerContainer
     containers:
-      DisposalUnit: !type:Container
+      disposals: !type:Container
   - type: StaticPrice
     price: 62
   - type: PowerSwitch
