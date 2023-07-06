@@ -16,13 +16,14 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void DeserializeReagentPrototype()
         {
-            using (TextReader stream = new StringReader(YamlReagentPrototype))
+            TextReader stream = new StringReader(YamlReagentPrototype);
+            using (stream)
             {
                 var yamlStream = new YamlStream();
                 yamlStream.Load(stream);
                 var document = yamlStream.Documents[0];
-                var rootNode = (YamlSequenceNode)document.RootNode;
-                var proto = (YamlMappingNode)rootNode[0];
+                var rootNode = (YamlSequenceNode) document.RootNode;
+                var proto = (YamlMappingNode) rootNode[0];
 
                 var defType = proto.GetNode("type").AsString();
                 var serializationManager = IoCManager.Resolve<ISerializationManager>();
@@ -31,10 +32,13 @@ namespace Content.Tests.Shared.Chemistry
                 var newReagent = serializationManager.Read<ReagentPrototype>(new MappingDataNode(proto));
 
                 Assert.That(defType, Is.EqualTo("reagent"));
-                Assert.That(newReagent.ID, Is.EqualTo("H2"));
-                Assert.That(newReagent.LocalizedName, Is.EqualTo("Hydrogen"));
-                Assert.That(newReagent.LocalizedDescription, Is.EqualTo("A light, flammable gas."));
-                Assert.That(newReagent.SubstanceColor, Is.EqualTo(Color.Teal));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(newReagent.ID, Is.EqualTo("H2"));
+                    Assert.That(newReagent.LocalizedName, Is.EqualTo("Hydrogen"));
+                    Assert.That(newReagent.LocalizedDescription, Is.EqualTo("A light, flammable gas."));
+                    Assert.That(newReagent.SubstanceColor, Is.EqualTo(Color.Teal));
+                });
             }
         }
 
