@@ -265,11 +265,9 @@
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: ClothingGrantComponent
-    component:
-    - type: ShowHealthBars
-      damageContainers: 
-      - Biological
+  - type: ShowHealthBars
+    damageContainers: 
+    - Biological
   
 - type: entity
   parent: MobSiliconBase
