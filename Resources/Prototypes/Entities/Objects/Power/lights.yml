@@ -89,6 +89,7 @@
     lightEnergy: 1.0
     lightRadius: 6
     lightSoftness: 1.1
+    PowerUse: 15
 
 - type: entity
   parent: BaseLightTube
