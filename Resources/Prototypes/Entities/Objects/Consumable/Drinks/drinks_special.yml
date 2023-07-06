@@ -22,6 +22,7 @@
     canChangeTransferAmount: true
   - type: Spillable
     solution: drink
+  - type: AtmosExposed
   - type: SolutionGasHeatConductivity
     solution: drink
   - type: Sprite

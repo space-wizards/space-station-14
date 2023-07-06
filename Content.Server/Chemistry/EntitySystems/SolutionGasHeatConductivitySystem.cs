@@ -1,45 +1,37 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.Components.SolutionManager;
-using Robust.Server.GameObjects;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
 public sealed class SolutionGasHeatConductivitySystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
 
     /// <inheritdoc/>
-    public override void Update(float frameTime)
+    public override void Initialize()
     {
-        base.Update(frameTime);
+        base.Initialize();
 
-        var query = EntityQueryEnumerator<SolutionContainerManagerComponent, SolutionGasHeatConductivityComponent>();
-        while (query.MoveNext(out var uid, out var solutionContainer, out var solutionGasHeatConductivity))
-        {
-            if (!_solutionContainerSystem.TryGetSolution(uid, solutionGasHeatConductivity.Solution, out var solution) || solution.Volume == 0)
-                continue;
+        SubscribeLocalEvent<SolutionGasHeatConductivityComponent, AtmosExposedUpdateEvent>(AtmosUpdate);
+    }
 
-            var tf = Transform(uid);
-            var grid = tf.GridUid;
-            var map = tf.MapUid;
-            var indices = _transformSystem.GetGridOrMapTilePosition(uid, tf);
-            var mixture = _atmosphereSystem.GetTileMixture(grid, map, indices);
+    private void AtmosUpdate(EntityUid uid, SolutionGasHeatConductivityComponent solutionGasHeatConductivity, ref AtmosExposedUpdateEvent args)
+    {
+        if (!_solutionContainerSystem.TryGetSolution(uid, solutionGasHeatConductivity.Solution, out var solution) || solution.Volume == 0)
+            return;
 
-            if (mixture is null)
-                continue;
+        var heatDifferenceKelvin = args.GasMixture.Temperature - solution.Temperature;
+        if (Math.Abs(heatDifferenceKelvin) < 0.5)
+            return; // close enough
 
-            var heatDifferentialKelvin = mixture.Temperature - solution.Temperature;
-            if (Math.Abs(heatDifferentialKelvin) < 0.5)
-                continue; // close enough
+        var thermalEnergyTransferWatts = heatDifferenceKelvin * solutionGasHeatConductivity.WattsPerKelvin;
+        var thermalEnergyTransferJoules = thermalEnergyTransferWatts * AtmosphereSystem.ExposedUpdateDelay;
 
-            var thermalEnergyTransferWatts = heatDifferentialKelvin * solutionGasHeatConductivity.WattsPerKelvin;
-            var thermalEnergyTransferJoules = thermalEnergyTransferWatts * frameTime;
-
-            _solutionContainerSystem.AddThermalEnergy(uid, solution, thermalEnergyTransferJoules);
-            var gasHeatCapacity = _atmosphereSystem.GetHeatCapacity(mixture);
-            mixture.Temperature += gasHeatCapacity == 0 ? 0 : -thermalEnergyTransferJoules / gasHeatCapacity;
-        }
+        _solutionContainerSystem.AddThermalEnergy(uid, solution, thermalEnergyTransferJoules);
+        var gasHeatCapacity = _atmosphereSystem.GetHeatCapacity(args.GasMixture);
+        args.GasMixture.Temperature += gasHeatCapacity == 0 ? 0 : -thermalEnergyTransferJoules / gasHeatCapacity;
     }
 }

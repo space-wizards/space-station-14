@@ -21,6 +21,7 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 10
+  - type: AtmosExposed
   - type: SolutionGasHeatConductivity
     solution: drink
   - type: UserInterface
