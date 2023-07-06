@@ -21,7 +21,7 @@ ert-call-announcement-engineer = We have received a request to dispatch the Emer
 
 ert-group-name-cburn = CBURN
 ert-group-full-name-cburn = CBURN
-ert-call-announcement-cburn = We have received a request to dispatch the Emergency Response Team CBURN.
+ert-call-announcement-cburn = We have received a request to dispatch the CBURN.
 
 ert-group-name-clown = ERT Clowns
 ert-group-full-name-clown = Emergency Response Team Clowns
