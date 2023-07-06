@@ -55,7 +55,7 @@ namespace Content.Tests.Server.Preferences
                     Color.Aquamarine,
                     Color.Azure,
                     Color.Beige,
-                    new ()
+                    new()
                 ),
                 ClothingPreference.Jumpskirt,
                 BackpackPreference.Backpack,
@@ -64,7 +64,7 @@ namespace Content.Tests.Server.Preferences
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
                 },
                 PreferenceUnavailableMode.StayInLobby,
-                new List<string> (),
+                new List<string>(),
                 new List<string>()
             );
         }
@@ -83,7 +83,7 @@ namespace Content.Tests.Server.Preferences
         {
             var db = GetDb();
             // Database should be empty so a new GUID should do it.
-            Assert.Null(await db.GetPlayerPreferencesAsync(NewUserId()));
+            Assert.That(await db.GetPlayerPreferencesAsync(NewUserId()), Is.Null);
         }
 
         [Test]
