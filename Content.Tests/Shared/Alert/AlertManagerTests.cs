@@ -57,17 +57,6 @@ namespace Content.Tests.Shared.Alert
                 Assert.That(lowPressure.Icons[0], Is.EqualTo(new SpriteSpecifier.Texture(new("/Textures/Interface/Alerts/Pressure/lowpressure.png"))));
                 Assert.That(highPressure.Icons[0], Is.EqualTo(new SpriteSpecifier.Texture(new("/Textures/Interface/Alerts/Pressure/highpressure.png"))));
             });
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(alertsSystem.TryGet(AlertType.LowPressure, out lowPressure));
-                Assert.That(alertsSystem.TryGet(AlertType.HighPressure, out highPressure));
-            });
-            Assert.Multiple(() =>
-            {
-                Assert.That(lowPressure.Icons[0], Is.EqualTo(new SpriteSpecifier.Texture(new("/Textures/Interface/Alerts/Pressure/lowpressure.png"))));
-                Assert.That(highPressure.Icons[0], Is.EqualTo(new SpriteSpecifier.Texture(new("/Textures/Interface/Alerts/Pressure/highpressure.png"))));
-            });
         }
     }
 }
