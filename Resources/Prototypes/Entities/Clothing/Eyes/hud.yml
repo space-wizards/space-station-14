@@ -8,6 +8,9 @@
     sprite: Clothing/Eyes/Hud/diag.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/diag.rsi
+  - type: ClothingGrantComponent
+    component:
+    - type: ShowHealthBars
       damageContainers: 
       - Inorganic
 
@@ -21,6 +24,7 @@
     sprite: Clothing/Eyes/Hud/med.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/med.rsi
+  - type: ClothingGrantComponent
     component:
     - type: ShowHealthBars
       damageContainers: 
