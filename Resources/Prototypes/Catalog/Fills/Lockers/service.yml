@@ -5,7 +5,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterVestKevlar
+      - id: ClothingOuterVest
       - id: WeaponShotgunDoubleBarreledRubber
       - id: DrinkShaker
       - id: ClothingEyesGlassesBeer
@@ -70,6 +70,8 @@
       - id: SoapNT
         amount: 2
       - id: FlashlightLantern
+        amount: 2
+      - id: Plunger
         amount: 2
 
 - type: entity

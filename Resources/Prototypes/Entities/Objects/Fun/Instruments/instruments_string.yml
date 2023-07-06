@@ -105,6 +105,37 @@
     slots:
     - back
     sprite: Objects/Fun/Instruments/guitar.rsi
+  - type: Wieldable
+  - type: Damageable # Smash it! Does 20 damage a hit, but breaks after 1 hit. 
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Weapons/guitarsmash.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnHit # This makes it destroy after one hit.
+    damage:
+      types:
+        Blunt: 20
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 15
 
 - type: entity
   parent: BaseHandheldInstrument

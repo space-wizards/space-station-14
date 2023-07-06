@@ -355,6 +355,9 @@
   id: Hamster
 
 - type: Tag
+  id: HamsterWearable
+
+- type: Tag
   id: HamtrCentralControlModule
 
 - type: Tag
@@ -629,7 +632,11 @@
   id: Plastic
 
 - type: Tag
+  id: Plunger
+  
+- type: Tag
   id: PlushieGhost
+
 
 - type: Tag
   id: Powerdrill

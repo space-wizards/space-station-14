@@ -217,6 +217,8 @@
   - type: Construction
     graph: WallmountGenerator
     node: generator
+  - type: StaticPrice
+    price: 14
 
 - type: entity
   parent: BaseGeneratorWallmount
@@ -230,6 +232,8 @@
   - type: Construction
     graph: WallmountGenerator
     node: APU
+  - type: StaticPrice
+    price: 38
 
 # RTG - no fuel requirement
 

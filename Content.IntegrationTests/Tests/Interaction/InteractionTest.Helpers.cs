@@ -642,7 +642,7 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Convenience method to get components on the target. Returns SERVER-SIDE components.
     /// </summary>
-    protected T Comp<T>(EntityUid? target = null)
+    protected T Comp<T>(EntityUid? target = null) where T : IComponent
     {
         target ??= Target;
         if (target == null)

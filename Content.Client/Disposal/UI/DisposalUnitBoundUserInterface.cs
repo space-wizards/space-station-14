@@ -1,6 +1,6 @@
-using Content.Client.Disposal.Components;
 using Content.Client.Disposal.Systems;
 using Content.Shared.Disposal;
+using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
@@ -14,6 +14,7 @@ namespace Content.Client.Disposal.UI
     [UsedImplicitly]
     public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
     {
+        // What are you doing here
         [ViewVariables]
         public MailingUnitWindow? MailingUnitWindow;
 
@@ -76,41 +77,27 @@ namespace Content.Client.Disposal.UI
                 return;
             }
 
-            var entityId = Owner;
-            if (!EntMan.TryGetComponent<DisposalUnitComponent>(entityId, out var component))
-                return;
-
             switch (state)
             {
                 case MailingUnitBoundUserInterfaceState mailingUnitState:
                     MailingUnitWindow?.UpdateState(mailingUnitState);
-                    component.UiState = mailingUnitState.DisposalState;
                     break;
 
                 case DisposalUnitBoundUserInterfaceState disposalUnitState:
                     DisposalUnitWindow?.UpdateState(disposalUnitState);
-                    component.UiState = disposalUnitState;
                     break;
             }
-
-            EntMan.System<DisposalUnitSystem>().UpdateActive(entityId, true);
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
 
-            if (!disposing) return;
+            if (!disposing)
+                return;
 
             MailingUnitWindow?.Dispose();
             DisposalUnitWindow?.Dispose();
-        }
-
-        public bool? UpdateWindowState(DisposalUnitBoundUserInterfaceState state)
-        {
-            return UiKey is DisposalUnitUiKey
-                ? DisposalUnitWindow?.UpdateState(state)
-                : MailingUnitWindow?.UpdatePressure(state.FullPressureTime);
         }
     }
 }

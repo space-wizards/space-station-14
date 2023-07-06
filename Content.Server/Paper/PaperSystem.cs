@@ -8,6 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using static Content.Shared.Paper.SharedPaperComponent;
@@ -66,7 +67,11 @@ namespace Content.Server.Paper
         private void BeforeUIOpen(EntityUid uid, PaperComponent paperComp, BeforeActivatableUIOpenEvent args)
         {
             paperComp.Mode = PaperAction.Read;
-            UpdateUserInterface(uid, paperComp);
+
+            if (!TryComp<ActorComponent>(args.User, out var actor))
+                return;
+
+            UpdateUserInterface(uid, paperComp, actor.PlayerSession);
         }
 
         private void OnExamined(EntityUid uid, PaperComponent paperComp, ExaminedEvent args)
@@ -101,10 +106,8 @@ namespace Content.Server.Paper
                     return;
 
                 paperComp.Mode = PaperAction.Write;
-                UpdateUserInterface(uid, paperComp);
-
-                if (_uiSystem.TryGetUi(uid, PaperUiKey.Key, out var bui))
-                    _uiSystem.OpenUi(bui, actor.PlayerSession);
+                _uiSystem.TryOpen(uid, PaperUiKey.Key, actor.PlayerSession);
+                UpdateUserInterface(uid, paperComp, actor.PlayerSession);
                 return;
             }
 
@@ -189,7 +192,7 @@ namespace Content.Server.Paper
             _appearance.SetData(uid, PaperVisuals.Status, status, appearance);
         }
 
-        public void UpdateUserInterface(EntityUid uid, PaperComponent? paperComp = null)
+        public void UpdateUserInterface(EntityUid uid, PaperComponent? paperComp = null, IPlayerSession? session = null)
         {
             if (!Resolve(uid, ref paperComp))
                 return;
