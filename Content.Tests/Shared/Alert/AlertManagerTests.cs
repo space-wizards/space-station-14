@@ -16,7 +16,7 @@ namespace Content.Tests.Shared.Alert
     [TestFixture, TestOf(typeof(AlertsSystem))]
     public sealed class AlertManagerTests : RobustUnitTest
     {
-        const string PROTOTYPES = @"
+        private const string PROTOTYPES = @"
 - type: alert
   id: LowPressure
   icons:
@@ -45,15 +45,29 @@ namespace Content.Tests.Shared.Alert
             prototypeManager.Initialize();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
 
-            Assert.That(alertsSystem.TryGet(AlertType.LowPressure, out var lowPressure));
-            Assert.That(lowPressure.Icons[0], Is.EqualTo(new SpriteSpecifier.Texture(new ("/Textures/Interface/Alerts/Pressure/lowpressure.png"))));
-            Assert.That(alertsSystem.TryGet(AlertType.HighPressure, out var highPressure));
-            Assert.That(highPressure.Icons[0], Is.EqualTo(new SpriteSpecifier.Texture(new ("/Textures/Interface/Alerts/Pressure/highpressure.png"))));
+            AlertPrototype lowPressure = default!;
+            AlertPrototype highPressure = default!;
+            Assert.Multiple(() =>
+            {
+                Assert.That(alertsSystem.TryGet(AlertType.LowPressure, out lowPressure));
+                Assert.That(alertsSystem.TryGet(AlertType.HighPressure, out highPressure));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(lowPressure.Icons[0], Is.EqualTo(new SpriteSpecifier.Texture(new("/Textures/Interface/Alerts/Pressure/lowpressure.png"))));
+                Assert.That(highPressure.Icons[0], Is.EqualTo(new SpriteSpecifier.Texture(new("/Textures/Interface/Alerts/Pressure/highpressure.png"))));
+            });
 
-            Assert.That(alertsSystem.TryGet(AlertType.LowPressure, out lowPressure));
-            Assert.That(lowPressure.Icons[0], Is.EqualTo(new SpriteSpecifier.Texture(new ("/Textures/Interface/Alerts/Pressure/lowpressure.png"))));
-            Assert.That(alertsSystem.TryGet(AlertType.HighPressure, out highPressure));
-            Assert.That(highPressure.Icons[0], Is.EqualTo(new SpriteSpecifier.Texture(new ("/Textures/Interface/Alerts/Pressure/highpressure.png"))));
+            Assert.Multiple(() =>
+            {
+                Assert.That(alertsSystem.TryGet(AlertType.LowPressure, out lowPressure));
+                Assert.That(alertsSystem.TryGet(AlertType.HighPressure, out highPressure));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(lowPressure.Icons[0], Is.EqualTo(new SpriteSpecifier.Texture(new("/Textures/Interface/Alerts/Pressure/lowpressure.png"))));
+                Assert.That(highPressure.Icons[0], Is.EqualTo(new SpriteSpecifier.Texture(new("/Textures/Interface/Alerts/Pressure/highpressure.png"))));
+            });
         }
     }
 }
