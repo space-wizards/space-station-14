@@ -4,13 +4,13 @@
   id: BoxSurvival
   description: It's a box with basic internals inside.
   components:
-  - type: Storage
-    capacity: 20
   - type: StorageFill
     contents:
       - id: ClothingMaskBreath
       - id: EmergencyOxygenTankFilled
       - id: EmergencyMedipen
+      - id: Flare
+      - id: FoodTinMRE
   - type: Sprite
     layers:
       - state: internals
@@ -18,7 +18,7 @@
 
 - type: entity
   name: extended-capacity survival box
-  parent: BoxSurvival
+  parent: BoxCardboard
   id: BoxSurvivalEngineering
   description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
   components:
@@ -27,6 +27,8 @@
       - id: ClothingMaskBreath
       - id: ExtendedEmergencyOxygenTankFilled
       - id: EmergencyMedipen
+      - id: Flare
+      - id: FoodTinMRE
   - type: Sprite
     layers:
       - state: internals
@@ -34,7 +36,7 @@
 
 - type: entity
   name: survival box
-  parent: BoxSurvival
+  parent: BoxCardboard
   id: BoxSurvivalSecurity
   description: It's a box with basic internals inside.
   suffix: Security
@@ -44,6 +46,8 @@
       - id: ClothingMaskGasSecurity
       - id: EmergencyOxygenTankFilled
       - id: EmergencyMedipen
+      - id: Flare
+      - id: FoodTinMRE
   - type: Sprite
     layers:
       - state: internals
@@ -51,7 +55,7 @@
 
 - type: entity
   name: survival box
-  parent: BoxSurvival
+  parent: BoxCardboard
   id: BoxSurvivalBrigmedic
   description: It's a box with basic internals inside.
   suffix: Medical
@@ -62,6 +66,7 @@
       - id: EmergencyOxygenTankFilled
       - id: EmergencyMedipen
       - id: EmergencyMedipen
+      - id: FoodTinMRE
   - type: Sprite
     layers:
       - state: internals
@@ -69,7 +74,7 @@
 
 - type: entity
   name: survival box
-  parent: BoxSurvival
+  parent: BoxCardboard
   id: BoxSurvivalMedical
   description: It's a box with basic internals inside.
   suffix: Medical
@@ -79,6 +84,8 @@
       - id: ClothingMaskBreathMedical
       - id: EmergencyOxygenTankFilled
       - id: EmergencyMedipen
+      - id: Flare
+      - id: FoodTinMRE
   - type: Sprite
     layers:
       - state: internals
@@ -86,7 +93,7 @@
 
 - type: entity
   name: box of hugs
-  parent: BoxSurvival
+  parent: BoxCardboard
   id: BoxHug
   description: A special box for sensitive people.
   components:
@@ -101,13 +108,15 @@
       - id: ClothingMaskBreath
       - id: EmergencyOxygenTankFilled
       - id: EmergencyMedipen
+      - id: Flare
+      - id: FoodTinMRE
   - type: Tag
     tags:
       - BoxHug
 
 - type: entity
   name: extended-capacity survival box
-  parent: BoxSurvival
+  parent: BoxCardboard
   id: BoxSurvivalSyndicate
   description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
   components:
@@ -116,6 +125,8 @@
       - id: ClothingMaskGasSyndicate
       - id: ExtendedEmergencyOxygenTankFilled
       - id: EmergencyMedipen
+      - id: Flare
+      - id: FoodTinMRE
   - type: Sprite
     layers:
       - state: internals
