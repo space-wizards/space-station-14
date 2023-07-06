@@ -1,8 +1,12 @@
-using Content.Client.Disposal.Components;
-using Content.Client.Disposal.UI;
 using Content.Shared.Disposal;
+using Content.Shared.Disposal.Components;
+using Content.Shared.DragDrop;
+using Content.Shared.Emag.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Animations;
+using Robust.Client.Graphics;
+using Robust.Shared.GameStates;
+using Robust.Shared.Physics.Events;
 using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Client.Disposal.Systems;
@@ -12,131 +16,65 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly AnimationPlayerSystem _animationSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    private const string AnimationKey = "disposal_unit_animation";
 
-    private readonly List<EntityUid> _pressuringDisposals = new();
+    private const string AnimationKey = "disposal_unit_animation";
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<DisposalUnitComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<DisposalUnitComponent, PreventCollideEvent>(OnPreventCollide);
+        SubscribeLocalEvent<DisposalUnitComponent, CanDropTargetEvent>(OnCanDragDropOn);
+        SubscribeLocalEvent<DisposalUnitComponent, GotEmaggedEvent>(OnEmagged);
+
         SubscribeLocalEvent<DisposalUnitComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DisposalUnitComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    public void UpdateActive(EntityUid disposalEntity, bool active)
+    private void OnHandleState(EntityUid uid, DisposalUnitComponent component, ref ComponentHandleState args)
     {
-        if (active)
-        {
-            if (!_pressuringDisposals.Contains(disposalEntity))
-                _pressuringDisposals.Add(disposalEntity);
-        }
-        else
-        {
-            _pressuringDisposals.Remove(disposalEntity);
-        }
-    }
-
-    public override void FrameUpdate(float frameTime)
-    {
-        base.FrameUpdate(frameTime);
-        for (var i = _pressuringDisposals.Count - 1; i >= 0; i--)
-        {
-            var disposal = _pressuringDisposals[i];
-            if (!UpdateInterface(disposal))
-                continue;
-
-            _pressuringDisposals.RemoveAt(i);
-        }
-    }
-
-    private bool UpdateInterface(EntityUid disposalUnit)
-    {
-        if (!TryComp(disposalUnit, out DisposalUnitComponent? component) || component.Deleted)
-            return true;
-        if (component.Deleted)
-            return true;
-        if (!TryComp(disposalUnit, out ClientUserInterfaceComponent? userInterface))
-            return true;
-
-        var state = component.UiState;
-        if (state == null)
-            return true;
-
-        foreach (var inter in userInterface.Interfaces)
-        {
-            if (inter is DisposalUnitBoundUserInterface boundInterface)
-            {
-                return boundInterface.UpdateWindowState(state) != false;
-            }
-        }
-
-        return true;
-    }
-
-    private void OnComponentInit(EntityUid uid, DisposalUnitComponent disposalUnit, ComponentInit args)
-    {
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
+        if (args.Current is not DisposalUnitComponentState state)
             return;
 
-        if (!sprite.LayerMapTryGet(DisposalUnitVisualLayers.Base, out var baseLayerIdx))
-            return; // Couldn't find the "normal" layer to return to after flush animation
-
-        if (!sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseFlush, out var flushLayerIdx))
-            return; // Couldn't find the flush animation layer
-
-        var originalBaseState = sprite.LayerGetState(baseLayerIdx);
-        var flushState = sprite.LayerGetState(flushLayerIdx);
-
-        // Setup the flush animation to play
-        disposalUnit.FlushAnimation = new Animation
-        {
-            Length = TimeSpan.FromSeconds(disposalUnit.FlushTime),
-            AnimationTracks = {
-                new AnimationTrackSpriteFlick {
-                    LayerKey = DisposalUnitVisualLayers.BaseFlush,
-                    KeyFrames = {
-                        // Play the flush animation
-                        new AnimationTrackSpriteFlick.KeyFrame(flushState, 0),
-                        // Return to base state (though, depending on how the unit is
-                        // configured we might get an appearence change event telling
-                        // us to go to charging state)
-                        new AnimationTrackSpriteFlick.KeyFrame(originalBaseState, disposalUnit.FlushTime)
-                    }
-                },
-            }
-        };
-
-        if (disposalUnit.FlushSound != null)
-        {
-            disposalUnit.FlushAnimation.AnimationTracks.Add(
-                new AnimationTrackPlaySound
-                {
-                    KeyFrames = {
-                        new AnimationTrackPlaySound.KeyFrame(_audioSystem.GetSound(disposalUnit.FlushSound), 0)
-                    }
-                });
-        }
-
-        EnsureComp<AnimationPlayerComponent>(uid);
-
-        UpdateState(uid, disposalUnit, sprite);
+        component.FlushSound = state.FlushSound;
+        component.State = state.State;
+        component.NextPressurized = state.NextPressurized;
+        component.AutomaticEngageTime = state.AutomaticEngageTime;
+        component.NextFlush = state.NextFlush;
+        component.Powered = state.Powered;
+        component.Engaged = state.Engaged;
+        component.RecentlyEjected.Clear();
+        component.RecentlyEjected.AddRange(state.RecentlyEjected);
     }
 
-    private void OnAppearanceChange(EntityUid uid, DisposalUnitComponent unit, ref AppearanceChangeEvent args)
+    public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
+    {
+        return;
+    }
+
+    private void OnComponentInit(EntityUid uid, SharedDisposalUnitComponent sharedDisposalUnit, ComponentInit args)
+    {
+        if (!TryComp<SpriteComponent>(uid, out var sprite) || !TryComp<AppearanceComponent>(uid, out var appearance))
+            return;
+
+        UpdateState(uid, sharedDisposalUnit, sprite, appearance);
+    }
+
+    private void OnAppearanceChange(EntityUid uid, SharedDisposalUnitComponent unit, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
-        {
             return;
-        }
 
-        UpdateState(uid, unit, args.Sprite);
+        UpdateState(uid, unit, args.Sprite, args.Component);
     }
 
-    // Update visuals and tick animation
-    private void UpdateState(EntityUid uid, DisposalUnitComponent unit, SpriteComponent sprite)
+    /// <summary>
+    /// Update visuals and tick animation
+    /// </summary>
+    private void UpdateState(EntityUid uid, SharedDisposalUnitComponent unit, SpriteComponent sprite, AppearanceComponent appearance)
     {
-        if (!_appearanceSystem.TryGetData<VisualState>(uid, Visuals.VisualState, out var state))
+        if (!_appearanceSystem.TryGetData<VisualState>(uid, Visuals.VisualState, out var state, appearance))
         {
             return;
         }
@@ -144,24 +82,69 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Unanchored, state == VisualState.UnAnchored);
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Base, state == VisualState.Anchored);
         sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseCharging, state == VisualState.Charging);
-        sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseFlush, state == VisualState.Flushing);
+        sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseFlush, state is VisualState.Flushing or VisualState.Charging);
 
+        // This is a transient state so not too worried about replaying in range.
         if (state == VisualState.Flushing)
         {
             if (!_animationSystem.HasRunningAnimation(uid, AnimationKey))
             {
-                _animationSystem.Play(uid, unit.FlushAnimation, AnimationKey);
+                var flushState = new RSI.StateId("disposal-flush");
+
+                // Setup the flush animation to play
+                var anim = new Animation
+                {
+                    Length = unit.FlushDelay,
+                    AnimationTracks =
+                    {
+                        new AnimationTrackSpriteFlick
+                        {
+                            LayerKey = DisposalUnitVisualLayers.BaseFlush,
+                            KeyFrames =
+                            {
+                                // Play the flush animation
+                                new AnimationTrackSpriteFlick.KeyFrame(flushState, 0),
+                                // Return to base state (though, depending on how the unit is
+                                // configured we might get an appearance change event telling
+                                // us to go to charging state)
+                                new AnimationTrackSpriteFlick.KeyFrame("disposal-charging", (float) unit.FlushDelay.TotalSeconds)
+                            }
+                        },
+                    }
+                };
+
+                if (unit.FlushSound != null)
+                {
+                    anim.AnimationTracks.Add(
+                        new AnimationTrackPlaySound
+                        {
+                            KeyFrames =
+                            {
+                                new AnimationTrackPlaySound.KeyFrame(_audioSystem.GetSound(unit.FlushSound), 0)
+                            }
+                        });
+                }
+
+                _animationSystem.Play(uid, anim, AnimationKey);
             }
         }
+        else if (state == VisualState.Charging)
+        {
+            sprite.LayerSetState(DisposalUnitVisualLayers.BaseFlush, new RSI.StateId("disposal-charging"));
+        }
+        else
+        {
+            _animationSystem.Stop(uid, AnimationKey);
+        }
 
-        if (!_appearanceSystem.TryGetData<HandleState>(uid, Visuals.Handle, out var handleState))
+        if (!_appearanceSystem.TryGetData<HandleState>(uid, Visuals.Handle, out var handleState, appearance))
         {
             handleState = HandleState.Normal;
         }
 
         sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayEngaged, handleState != HandleState.Normal);
 
-        if (!_appearanceSystem.TryGetData<LightStates>(uid, Visuals.Light, out var lightState))
+        if (!_appearanceSystem.TryGetData<LightStates>(uid, Visuals.Light, out var lightState, appearance))
         {
             lightState = LightStates.Off;
         }
