@@ -389,15 +389,6 @@ namespace Content.IntegrationTests.Tests.Networking
             await pairTracker.CleanReturnAsync();
         }
 
-        [NetworkedComponent()]
-        [AutoGenerateComponentState]
-        [Access(typeof(AutoPredictionTestEntitySystem))]
-        public partial class AutoPredictionTestComponent : Component
-        {
-            [AutoNetworkedField]
-            public bool Foo;
-        }
-
         [Reflect(false)]
         public sealed class AutoPredictionTestEntitySystem : EntitySystem
         {
@@ -437,7 +428,7 @@ namespace Content.IntegrationTests.Tests.Networking
             }
         }
 
-        private sealed class SetFooMessage : EntityEventArgs
+        public sealed class SetFooMessage : EntityEventArgs
         {
             public SetFooMessage(EntityUid uid, bool newFoo)
             {
@@ -448,5 +439,15 @@ namespace Content.IntegrationTests.Tests.Networking
             public EntityUid Uid { get; }
             public bool NewFoo { get; }
         }
+    }
+
+    // Must be directly located in the namespace or the sourcegen can't find it.
+    [NetworkedComponent()]
+    [AutoGenerateComponentState]
+    [Access(typeof(AutoPredictReconcileTest.AutoPredictionTestEntitySystem))]
+    public sealed partial class AutoPredictionTestComponent : Component
+    {
+        [AutoNetworkedField]
+        public bool Foo;
     }
 }

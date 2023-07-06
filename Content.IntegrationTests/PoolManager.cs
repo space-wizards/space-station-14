@@ -106,7 +106,7 @@ public static class PoolManager
         {
             IoCManager.Resolve<IEntitySystemManager>()
                 .LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
-            IoCManager.Resolve<IComponentFactory>().RegisterClass<AutoPredictReconcileTest.AutoPredictionTestComponent>();
+            IoCManager.Resolve<IComponentFactory>().RegisterClass<AutoPredictionTestComponent>();
             IoCManager.Resolve<IEntitySystemManager>()
                 .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
             IoCManager.Resolve<IComponentFactory>().RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
@@ -216,7 +216,7 @@ public static class PoolManager
                     IoCManager.Resolve<IEntitySystemManager>()
                         .LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
                     IoCManager.Resolve<IComponentFactory>()
-                        .RegisterClass<AutoPredictReconcileTest.AutoPredictionTestComponent>();
+                        .RegisterClass<AutoPredictionTestComponent>();
                     IoCManager.Resolve<IEntitySystemManager>()
                         .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
                     IoCManager.Resolve<IEntitySystemManager>()
