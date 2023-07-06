@@ -12,5 +12,9 @@
 
         <RichTextLabel Name="CountdownLabel" VerticalExpand="True" />
         <Button Name="EmergencyShuttleButton" Text="Placeholder Text" Access="Public" />
+        <Label Text="{Loc 'Call ERT'}" Align="Center" />
+        <RichTextLabel Name="ErtCountdownLabel" VerticalExpand="True" />
+        <OptionButton Name="ErtGroupSelector" />
+        <Button Name="CallErt" Text="Вызвать" Access="Public"/>
     </BoxContainer>
 </controls:FancyWindow>

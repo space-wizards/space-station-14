@@ -18,6 +18,7 @@
     - BaseStationCentcomm
     - BaseStationEvacuation
     - BaseStationAlertLevels
+    - BaseStationCallErt
     - BaseStationExpeditions
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen

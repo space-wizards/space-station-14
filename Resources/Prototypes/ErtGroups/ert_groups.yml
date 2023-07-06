@@ -1,0 +1,66 @@
+﻿- type: ertGroups
+  id: stationErtsGroups
+  groups:
+    medical:
+      name: medical
+      announcementAfterCall: medical-ert-call-announcement
+      shuttle: Maps/Shuttles/medical_rrs.yml
+      timeToSpawn: 600
+      humansList:
+        RandomHumanoidSpawnerERTLeaderEVA: 1
+        RandomHumanoidSpawnerERTMedicalEVA: 3
+      requirements:
+        RoundDuration: 30
+        DeadPercent: 50
+    security:
+      name: security
+      announcementAfterCall: security-ert-call-announcement
+      shuttle: Maps/Shuttles/officer_rrs.yml
+      timeToSpawn: 600
+      humansList:
+        RandomHumanoidSpawnerERTLeaderEVA: 1
+        RandomHumanoidSpawnerERTSecurityEVA: 3
+      requirements:
+        RoundDuration: 30
+        DeadPercent: 50
+    janitor:
+      name: janitor
+      announcementAfterCall: janitor-ert-call-announcement
+      shuttle: Maps/Shuttles/cleaner_rrs.yml
+      timeToSpawn: 600
+      humansList:
+        RandomHumanoidSpawnerERTLeader: 1
+        RandomHumanoidSpawnerERTJanitor: 3
+      requirements:
+        RoundDuration: 30
+        PuddlesCount: 50
+    engineer:
+      name: engineer
+      announcementAfterCall: engineer-ert-call-announcement
+      shuttle: Maps/Shuttles/engineer_rrs.yml
+      timeToSpawn: 600
+      humansList:
+        RandomHumanoidSpawnerERTLeader: 1
+        RandomHumanoidSpawnerERTEngineer: 3
+      requirements:
+        RoundDuration: 30
+        DangerAlarmCount: 10
+    cburn:
+      name: cburn
+      announcementAfterCall: cburn-ert-call-announcement
+      shuttle: Maps/Shuttles/cburn_shuttle.yml
+      timeToSpawn: 600
+      humansList:
+        RandomHumanoidSpawnerCBURNUnit: 3
+      requirements:
+        RoundDuration: 30
+        ZombiePercent: 50
+    clown:
+      name: clown
+      announcementAfterCall: clown-ert-call-announcement
+      shuttle: Maps/Shuttles/clown_shuttle.yml
+      timeToSpawn: 300
+      humansList:
+        RandomHumanoidSpawnerERTClown: 3
+      requirements:
+        RoundDuration: 10

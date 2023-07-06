@@ -61,6 +61,13 @@
       alertLevelPrototype: stationAlerts
 
 - type: entity
+  id: BaseStationCallErt
+  abstract: true
+  components:
+    - type: StationCallErt
+      ertGroupsPrototype: stationErtsGroups
+
+- type: entity
   id: BaseStationExpeditions
   abstract: true
   components:

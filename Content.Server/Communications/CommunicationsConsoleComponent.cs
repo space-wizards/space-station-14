@@ -16,6 +16,9 @@ namespace Content.Server.Communications
         [ViewVariables(VVAccess.ReadWrite)]
         public float AnnouncementCooldownRemaining;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float CallErtCooldownRemaining;
+
         /// <summary>
         /// Fluent ID for the announcement title
         /// If a Fluent ID isn't found, just uses the raw string
@@ -37,6 +40,10 @@ namespace Content.Server.Communications
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("delay")]
         public int DelayBetweenAnnouncements = 90;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("delayCallErt")]
+        public int DelayBetweenCallErt = 30;
 
         /// <summary>
         /// Can call or recall the shuttle

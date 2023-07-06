@@ -1,9 +1,8 @@
 using System.Globalization;
-using System.Linq;
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
-using Content.Server.Chat;
+using Content.Server.CallERT;
 using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
 using Content.Server.Popups;
@@ -16,11 +15,8 @@ using Content.Shared.CCVar;
 using Content.Shared.Communications;
 using Content.Shared.Database;
 using Content.Shared.Emag.Components;
-using Content.Shared.Examine;
 using Content.Shared.Popups;
-using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
-using Robust.Shared.Player;
 
 namespace Content.Server.Communications
 {
@@ -37,6 +33,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly StationCallErtSystem _stationCallErtSystem = default!;
 
         private const int MaxMessageLength = 256;
         private const int MaxMessageNewlines = 2;
@@ -46,6 +43,8 @@ namespace Content.Server.Communications
         {
             // All events that refresh the BUI
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
+            SubscribeLocalEvent<CallErtEvent>(OnErtCalled);
+            SubscribeLocalEvent<RecallErtEvent>(OnErtRecalled);
             SubscribeLocalEvent<CommunicationsConsoleComponent, ComponentInit>((_, comp, _) => UpdateCommsConsoleInterface(comp));
             SubscribeLocalEvent<RoundEndSystemChangedEvent>(_ => OnGenericBroadcastEvent());
             SubscribeLocalEvent<AlertLevelDelayFinishedEvent>(_ => OnGenericBroadcastEvent());
@@ -55,6 +54,9 @@ namespace Content.Server.Communications
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleAnnounceMessage>(OnAnnounceMessage);
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleCallEmergencyShuttleMessage>(OnCallShuttleMessage);
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleRecallEmergencyShuttleMessage>(OnRecallShuttleMessage);
+            SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleCallErtMessage>(OnCallErtMessage);
+            SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleRecallErtMessage>(OnRecallErtMessage);
+            SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleSelectErtMessage>(OnSelectErtMessage);
         }
 
         public override void Update(float frameTime)
@@ -65,6 +67,12 @@ namespace Content.Server.Communications
                 if (comp.AnnouncementCooldownRemaining >= 0f)
                 {
                     comp.AnnouncementCooldownRemaining -= frameTime;
+                }
+
+                // TODO refresh the UI in a less horrible way
+                if (comp.CallErtCooldownRemaining >= 0f)
+                {
+                    comp.CallErtCooldownRemaining -= frameTime;
                 }
 
                 comp.UIUpdateAccumulator += frameTime;
@@ -98,10 +106,25 @@ namespace Content.Server.Communications
         /// <param name="args">Alert level changed event arguments</param>
         private void OnAlertLevelChanged(AlertLevelChangedEvent args)
         {
+            RefreshConsoleInterface(args.Station);
+        }
+
+        private void OnErtCalled(CallErtEvent args)
+        {
+            RefreshConsoleInterface(args.Station);
+        }
+
+        private void OnErtRecalled(RecallErtEvent args)
+        {
+            RefreshConsoleInterface(args.Station);
+        }
+
+        private void RefreshConsoleInterface(EntityUid StationUid)
+        {
             foreach (var comp in EntityQuery<CommunicationsConsoleComponent>(true))
             {
                 var entStation = _stationSystem.GetOwningStation(comp.Owner);
-                if (args.Station == entStation)
+                if (StationUid == entStation)
                 {
                     UpdateCommsConsoleInterface(comp);
                 }
@@ -129,8 +152,11 @@ namespace Content.Server.Communications
 
             var stationUid = _stationSystem.GetOwningStation(uid);
             List<string>? levels = null;
+            List<string>? ertsList = null;
             string currentLevel = default!;
             float currentDelay = 0;
+            bool isolationProtocol = default!;
+            bool blackoutProtocol = default!;
 
             if (stationUid != null)
             {
@@ -152,16 +178,28 @@ namespace Content.Server.Communications
                     currentLevel = alertComp.CurrentLevel;
                     currentDelay = _alertLevelSystem.GetAlertLevelDelay(stationUid.Value, alertComp);
                 }
+
+                if (TryComp(stationUid.Value, out StationCallErtComponent? ertComponent) && ertComponent.ErtGroups != null)
+                {
+                    ertsList = new();
+                    foreach (var (id, detail) in ertComponent.ErtGroups.ErtGroupList)
+                    {
+                        ertsList.Add(id);
+                    }
+                }
             }
 
             comp.UserInterface?.SetState(
                 new CommunicationsConsoleInterfaceState(
                     CanAnnounce(comp),
                     CanCallOrRecall(comp),
+                    CanCallOrRecallErt(comp),
                     levels,
+                    ertsList,
                     currentLevel,
                     currentDelay,
-                    _roundEndSystem.ExpectedCountdownEnd
+                    _roundEndSystem.ExpectedCountdownEnd,
+                    _stationCallErtSystem.TimeToErt(stationUid)
                     )
                 );
         }
@@ -182,6 +220,11 @@ namespace Content.Server.Communications
                 return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
             }
             return true;
+        }
+
+        private bool CanCallOrRecallErt(CommunicationsConsoleComponent comp)
+        {
+            return comp.CallErtCooldownRemaining <= 0f;
         }
 
         private bool CanCallOrRecall(CommunicationsConsoleComponent comp)
@@ -307,6 +350,58 @@ namespace Content.Server.Communications
 
             _roundEndSystem.CancelRoundEndCountdown(uid);
             _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(mob):player} has recalled the shuttle.");
+        }
+
+        private void OnCallErtMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallErtMessage message)
+        {
+            if (message.Session.AttachedEntity is not {Valid: true} mob) return;
+            if (!CanUse(mob, uid))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
+                return;
+            }
+
+            var stationUid = _stationSystem.GetOwningStation(uid);
+            if (stationUid == null)
+                return;
+
+            _stationCallErtSystem.CallErt(stationUid.Value, message.ErtGroup);
+            comp.CallErtCooldownRemaining = comp.DelayBetweenCallErt;
+            UpdateCommsConsoleInterface(comp);
+
+            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(mob):player} has call {message.ErtGroup} ert.");
+        }
+
+        private void OnRecallErtMessage(EntityUid uid, CommunicationsConsoleComponent comp,
+            CommunicationsConsoleRecallErtMessage message)
+        {
+            if (message.Session.AttachedEntity is not {Valid: true} mob) return;
+            if (!CanUse(mob, uid))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
+                return;
+            }
+
+            var stationUid = _stationSystem.GetOwningStation(uid);
+            if (stationUid == null)
+                return;
+
+            if (!_stationCallErtSystem.ReallErt(stationUid.Value))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-call-ert-fall"), uid, message.Session);
+                return;
+            }
+
+            comp.CallErtCooldownRemaining = comp.DelayBetweenCallErt;
+            UpdateCommsConsoleInterface(comp);
+
+            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(mob):player} has recall ert.");
+        }
+
+        private void OnSelectErtMessage(EntityUid uid, CommunicationsConsoleComponent comp,
+            CommunicationsConsoleSelectErtMessage message)
+        {
+            UpdateCommsConsoleInterface(comp);
         }
     }
 }
