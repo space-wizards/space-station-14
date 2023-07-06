@@ -14,6 +14,7 @@ ui-options-default = По-умолчанию
 
 ui-options-master-volume = Основная громкость:
 ui-options-midi-volume = MIDI (Инструменты) громкость:
+ui-options-ambient-music-volume = Громкость окружния:
 ui-options-ambience-volume = Громкость окружения:
 ui-options-lobby-volume = Громкость лобби и конца раунда:
 ui-options-ambience-max-sounds = Кол-во одновременных звуков окружения:
