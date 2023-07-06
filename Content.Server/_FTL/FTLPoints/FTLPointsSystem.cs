@@ -72,11 +72,14 @@ public sealed class FTLPointsSystem : EntitySystem
         // create map
         if (point.OverrideSpawn == null)
         {
+            if (!_random.Prob(point.Probability))
+                return;
+
             var mapId = _mapManager.CreateMap();
             _mapManager.AddUninitializedMap(mapId);
             var mapUid = _mapManager.GetMapEntityId(mapId);
             _metaDataSystem.SetEntityName(mapUid, $"[{Loc.GetString(point.Tag)}] {
-                SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _random.Next(0, 1000000))}");
+                SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _random.Next())}");
 
             // make it ftlable
             EnsureComp<FTLDestinationComponent>(mapUid);
@@ -115,7 +118,10 @@ public sealed class FTLPointsSystem : EntitySystem
             // spawn the stuff
             foreach (var effect in point.FtlPointEffects)
             {
-                effect.Effect(new FTLPointEffect.FTLPointEffectArgs(mapUid, mapId, _entManager, _mapManager));
+                if (_random.Prob(effect.Probability))
+                {
+                    effect.Effect(new FTLPointEffect.FTLPointEffectArgs(mapUid, mapId, _entManager, _mapManager));
+                }
             }
         }
         else

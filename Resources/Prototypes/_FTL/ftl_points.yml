@@ -39,15 +39,37 @@
   tag: ship-ftl-tag-planet
   effects:
     - !type:ToPlanetEffect
+    - !type:SpawnDungeonEffect
+      probability: 0.7
+      minSpawn: 1
+      maxSpawn: 3
 
 - type: ftlPoint
   id: StarPoint
-  tag: ship-ftl-tag-star # these and NoDangerPoint are the exact same just with a difference in tag
-  effects: []
+  tag: ship-ftl-tag-star
+  effects:
+    - !type:SpawnDungeonEffect
+      probability: 0.7
+      maxSpawn: 6
+
+- type: ftlPoint
+  id: RuinPoint
+  tag: ship-ftl-tag-ruin
+  effects:
+    - !type:SpawnDungeonEffect
+
+- type: ftlPoint
+  id: YardPoint
+  tag: ship-ftl-tag-yard
+  effects:
+    - !type:SpawnDungeonEffect
+      probability: 0.7
+      minSpawn: 5
+      maxSpawn: 10
 
 - type: ftlPoint
   id: NoDangerPoint
-  tag: ship-ftl-tag-unknown # these and StarPoint are the exact same just with a difference in tag
+  tag: ship-ftl-tag-unknown
   effects: []
 
 - type: weightedRandom
@@ -60,3 +82,5 @@
     ConfDangerPoint: 3
     StarPoint: 1
     PlanetPoint: 1
+    RuinPoint: 0.25
+    YardPoint: 0.25

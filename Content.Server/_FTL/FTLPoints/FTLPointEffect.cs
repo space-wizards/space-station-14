@@ -10,6 +10,7 @@ namespace Content.Server._FTL.FTLPoints;
 [ImplicitDataDefinitionForInheritors, MeansImplicitUse]
 public abstract class FTLPointEffect
 {
+    [DataField("probability")] public float Probability = 1f;
     public abstract void Effect(FTLPointEffectArgs args);
 
     public readonly record struct FTLPointEffectArgs(
