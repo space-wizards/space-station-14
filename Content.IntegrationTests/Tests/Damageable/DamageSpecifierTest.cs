@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using NUnit.Framework;
 
 namespace Content.IntegrationTests.Tests.Damageable;
 

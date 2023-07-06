@@ -1,8 +1,6 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Stacks;
-using NUnit.Framework;
 using Robust.Shared.Containers;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;

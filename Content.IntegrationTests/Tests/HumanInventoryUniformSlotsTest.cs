@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using Content.Shared.Inventory;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests

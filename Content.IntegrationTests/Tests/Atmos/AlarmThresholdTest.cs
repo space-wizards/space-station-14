@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using Content.Shared.Atmos.Monitor;
-using NUnit.Framework;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Atmos

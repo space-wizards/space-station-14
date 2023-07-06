@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using Content.Shared.FixedPoint;
-using NUnit.Framework;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Value;

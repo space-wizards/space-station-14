@@ -1,7 +1,5 @@
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Explosion.Components;
-using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 

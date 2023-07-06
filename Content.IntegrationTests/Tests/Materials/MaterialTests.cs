@@ -1,6 +1,4 @@
 #nullable enable
-using NUnit.Framework;
-using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.Stacks;
 using Content.Shared.Materials;

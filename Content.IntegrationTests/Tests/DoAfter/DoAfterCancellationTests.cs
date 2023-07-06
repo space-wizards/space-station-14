@@ -1,10 +1,8 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Construction.Interaction;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.IntegrationTests.Tests.Weldable;
 using Content.Server.Tools.Components;
-using NUnit.Framework;
 
 namespace Content.IntegrationTests.Tests.DoAfter;
 

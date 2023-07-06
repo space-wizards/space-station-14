@@ -1,8 +1,6 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Whitelist;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Utility

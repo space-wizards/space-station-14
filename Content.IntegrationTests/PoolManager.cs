@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;
 using Content.IntegrationTests.Tests;
@@ -14,7 +12,6 @@ using Content.IntegrationTests.Tests.Interaction.Click;
 using Content.IntegrationTests.Tests.Networking;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
-using NUnit.Framework;
 using Robust.Client;
 using Robust.Server;
 using Robust.Shared;

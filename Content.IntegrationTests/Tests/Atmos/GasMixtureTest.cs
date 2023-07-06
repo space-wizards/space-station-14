@@ -1,8 +1,6 @@
-﻿using System.Threading.Tasks;
-using Content.Server.Atmos;
+﻿using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Atmos

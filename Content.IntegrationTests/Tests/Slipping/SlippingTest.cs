@@ -1,10 +1,8 @@
 #nullable enable
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Slippery;
 using Content.Shared.Stunnable;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Maths;

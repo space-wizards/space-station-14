@@ -1,7 +1,5 @@
-using System.Threading.Tasks;
 using Content.Server.Gravity;
 using Content.Shared.Alert;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Gravity

@@ -1,7 +1,5 @@
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Tools.Components;
-using NUnit.Framework;
 
 namespace Content.IntegrationTests.Tests.Weldable;
 

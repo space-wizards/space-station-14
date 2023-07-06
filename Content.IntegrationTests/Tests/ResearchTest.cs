@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.Lathe;
 using Content.Shared.Research.Prototypes;
-using NUnit.Framework;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;

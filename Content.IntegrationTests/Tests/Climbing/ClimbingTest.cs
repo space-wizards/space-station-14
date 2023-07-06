@@ -1,9 +1,7 @@
 #nullable enable
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Climbing;
 using Content.Shared.Climbing;
-using NUnit.Framework;
 using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Climbing;

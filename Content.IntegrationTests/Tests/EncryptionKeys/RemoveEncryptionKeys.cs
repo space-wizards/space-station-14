@@ -1,9 +1,7 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Radio.Components;
 using Content.Shared.Wires;
-using NUnit.Framework;
 
 namespace Content.IntegrationTests.Tests.EncryptionKeys;
 

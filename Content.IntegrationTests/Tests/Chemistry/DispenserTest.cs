@@ -1,9 +1,7 @@
-using System.Threading.Tasks;
 using Content.Client.Chemistry.UI;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Chemistry;
 using Content.Shared.Containers.ItemSlots;
-using NUnit.Framework;
 
 namespace Content.IntegrationTests.Tests.Chemistry;
 

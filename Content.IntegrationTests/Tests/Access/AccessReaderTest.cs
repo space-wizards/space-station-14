@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Access

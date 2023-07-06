@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
-using NUnit.Framework;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Tiles;
