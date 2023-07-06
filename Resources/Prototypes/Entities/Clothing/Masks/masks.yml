@@ -463,3 +463,17 @@
     sprite: Clothing/Mask/scaredmime.rsi
   - type: Clothing
     sprite: Clothing/Mask/scaredmime.rsi
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskItalianMoustache
+  name: italian moustache
+  description: Made from authentic Italian moustache hairs. Gives the wearer an irresistable urge to gesticulate wildly.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/italian_moustache.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/italian_moustache.rsi
+  - type: AddAccentClothing
+    accent: ReplacementAccent
+    replacement: italian
