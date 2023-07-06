@@ -21,10 +21,13 @@ namespace Content.Tests.Client
 
             var clickMap = ClickMapManager.ClickMap.FromImage(img, 0.5f);
 
-            Assert.That(clickMap.IsOccluded(0, 0), Is.False);
-            Assert.That(clickMap.IsOccluded(1, 0), Is.True);
-            Assert.That(clickMap.IsOccluded(0, 1), Is.True);
-            Assert.That(clickMap.IsOccluded(1, 1), Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(clickMap.IsOccluded(0, 0), Is.False);
+                Assert.That(clickMap.IsOccluded(1, 0), Is.True);
+                Assert.That(clickMap.IsOccluded(0, 1), Is.True);
+                Assert.That(clickMap.IsOccluded(1, 1), Is.False);
+            });
         }
 
         [Test]
@@ -40,10 +43,13 @@ namespace Content.Tests.Client
 
             var clickMap = ClickMapManager.ClickMap.FromImage(img, 0.5f);
 
-            Assert.That(clickMap.IsOccluded(0, 0), Is.False);
-            Assert.That(clickMap.IsOccluded(1, 0), Is.False);
-            Assert.That(clickMap.IsOccluded(0, 1), Is.True);
-            Assert.That(clickMap.IsOccluded(1, 1), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(clickMap.IsOccluded(0, 0), Is.False);
+                Assert.That(clickMap.IsOccluded(1, 0), Is.False);
+                Assert.That(clickMap.IsOccluded(0, 1), Is.True);
+                Assert.That(clickMap.IsOccluded(1, 1), Is.True);
+            });
         }
     }
 }
