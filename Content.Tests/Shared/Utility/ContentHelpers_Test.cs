@@ -86,7 +86,7 @@ namespace Content.Tests.Shared.Utility
         [Test]
         public void Test([ValueSource(nameof(TestData))] (double val, double max, int levels, int expected) data)
         {
-            (double val, double max, int levels, int expected) = data;
+            (var val, var max, var levels, var expected) = data;
             Assert.That(ContentHelpers.RoundToLevels(val, max, levels), Is.EqualTo(expected));
         }
 
@@ -94,7 +94,7 @@ namespace Content.Tests.Shared.Utility
         [Test]
         public void TestNearest([ValueSource(nameof(TestNear))] (double val, double max, int size, int expected) data)
         {
-            (double val, double max, int size, int expected) = data;
+            (var val, var max, var size, var expected) = data;
             Assert.That(ContentHelpers.RoundToNearestLevels(val, max, size), Is.EqualTo(expected));
         }
 
