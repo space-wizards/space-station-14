@@ -73,6 +73,7 @@ namespace Content.Client.Medical.CrewMonitoring
                 };
                 if (sensor.SuitSensorUid == _trackedButton?.SuitSensorUid)
                     nameButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+                SetColorLabel(nameButton.Label, sensor.TotalDamage, sensor.IsAlive);
                 SensorsTable.AddChild(nameButton);
                 _rowsContent.Add(nameButton);
 
@@ -83,6 +84,7 @@ namespace Content.Client.Medical.CrewMonitoring
                     Text = sensor.Job,
                     HorizontalExpand = true
                 };
+                SetColorLabel(jobLabel, sensor.TotalDamage, sensor.IsAlive);
                 SensorsTable.AddChild(jobLabel);
                 _rowsContent.Add(jobLabel);
 
@@ -99,12 +101,13 @@ namespace Content.Client.Medical.CrewMonitoring
                 {
                     Text = statusText
                 };
+                SetColorLabel(statusLabel, sensor.TotalDamage, sensor.IsAlive);
                 SensorsTable.AddChild(statusLabel);
                 _rowsContent.Add(statusLabel);
 
                 // add users positions
                 // format: (x, y)
-                var box = GetPositionBox(sensor.Coordinates, monitorCoordsInStationSpace ?? Vector2.Zero, snap, precision);
+                var box = GetPositionBox(sensor, monitorCoordsInStationSpace ?? Vector2.Zero, snap, precision);
 
                 SensorsTable.AddChild(box);
                 _rowsContent.Add(box);
@@ -139,8 +142,9 @@ namespace Content.Client.Medical.CrewMonitoring
                 NavMap.TrackedCoordinates.Add(monitorCoords.Value, (true, StyleNano.PointMagenta));
         }
 
-        private BoxContainer GetPositionBox(EntityCoordinates? coordinates, Vector2 monitorCoordsInStationSpace, bool snap, float precision)
+        private BoxContainer GetPositionBox(SuitSensorStatus sensor, Vector2 monitorCoordsInStationSpace, bool snap, float precision)
         {
+            EntityCoordinates? coordinates = sensor.Coordinates;
             var box = new BoxContainer() { Orientation = LayoutOrientation.Horizontal };
 
             if (coordinates == null || _stationUid == null)
@@ -164,7 +168,9 @@ namespace Content.Client.Medical.CrewMonitoring
                     Margin = new(0, 0, 4, 0)
                 };
                 box.AddChild(dirIcon);
-                box.AddChild(new Label() { Text = displayPos.ToString() });
+                Label label = new Label() { Text = displayPos.ToString() };
+                SetColorLabel(label, sensor.TotalDamage, sensor.IsAlive);
+                box.AddChild(label);
                 _directionIcons.Add((dirIcon, local - monitorCoordsInStationSpace));
             }
 
@@ -204,6 +210,55 @@ namespace Content.Client.Medical.CrewMonitoring
             _rowsContent.Clear();
             _directionIcons.Clear();
             NavMap.TrackedCoordinates.Clear();
+        }
+
+        private void SetColorLabel(Label label, int? totalDamage, bool isAlive)
+        {
+            var startColor = Color.White;
+            var critColor = Color.Yellow;
+            var endColor = Color.Red;
+
+            if (!isAlive)
+            {
+                label.FontColorOverride = endColor;
+                return;
+            }
+
+            //Convert from null to regular int
+            int damage;
+            if (totalDamage == null) return;
+            else damage = (int) totalDamage;
+
+            if (damage <= 0)
+            {
+                label.FontColorOverride = startColor;
+            }
+            else if (damage >= 200)
+            {
+                label.FontColorOverride = endColor;
+            }
+            else if (damage >= 0 && damage <= 100)
+            {
+                label.FontColorOverride = GetColorLerp(startColor, critColor, damage);
+            }
+            else if (damage >= 100 && damage <= 200)
+            {
+                //We need a number from 0 to 100. Divide the number from 100 to 200 by 2
+                damage /= 2;
+                label.FontColorOverride = GetColorLerp(critColor, endColor, damage);
+            }
+        }
+
+        private Color GetColorLerp(Color startColor, Color endColor, int damage)
+        {
+            //Smooth transition from one color to another depending on the percentage
+            var t = damage / 100f;
+            var r = MathHelper.Lerp(startColor.R, endColor.R, t);
+            var g = MathHelper.Lerp(startColor.G, endColor.G, t);
+            var b = MathHelper.Lerp(startColor.B, endColor.B, t);
+            var a = MathHelper.Lerp(startColor.A, endColor.A, t);
+
+            return new Color(r, g, b, a);
         }
     }
 
