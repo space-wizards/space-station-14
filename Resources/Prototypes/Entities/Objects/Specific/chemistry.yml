@@ -40,6 +40,8 @@
     solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
+  - type: SolutionGasHeatConductivity
+    solution: beaker
   - type: UserInterface
     interfaces:
     - key: enum.TransferAmountUiKey.Key
@@ -131,6 +133,8 @@
     solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
+  - type: SolutionGasHeatConductivity
+    solution: beaker
   - type: UserInterface
     interfaces:
     - key: enum.TransferAmountUiKey.Key
