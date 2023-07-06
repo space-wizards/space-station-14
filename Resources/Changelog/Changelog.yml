@@ -1,10 +1,4 @@
 Entries:
-- author: Fireheart
-  changes:
-  - {message: 'Improved paperwork interface, enabling fillable forms to be created
-      and sealed with a stamp.', type: Tweak}
-  id: 3675
-  time: '2023-05-06T07:35:22.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Added several soup recipes, type: Add}
@@ -2937,3 +2931,11 @@ Entries:
       3x more expensive. EVA Suits are cheaper out of pity.', type: Tweak}
   id: 4174
   time: '2023-07-05T23:16:10.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix disposals units playing their flush animation whenever they come
+      into range., type: Fix}
+  - {message: Break joints upon entering disposals., type: Fix}
+  - {message: Break joints upon entering storage., type: Fix}
+  id: 4175
+  time: '2023-07-06T03:39:34.0000000+00:00'
