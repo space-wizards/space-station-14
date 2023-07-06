@@ -12,7 +12,7 @@ namespace Content.Tests.Shared.Alert
     [TestFixture, TestOf(typeof(AlertOrderPrototype))]
     public sealed class AlertOrderPrototypeTests : ContentUnitTest
     {
-        const string PROTOTYPES = @"
+        private const string PROTOTYPES = @"
 - type: alertOrder
   id: testAlertOrder
   order:
@@ -85,19 +85,21 @@ namespace Content.Tests.Shared.Alert
             var alerts = prototypeManager.EnumeratePrototypes<AlertPrototype>();
 
             // ensure they sort according to our expected criteria
-            var expectedOrder = new List<AlertType>();
-            expectedOrder.Add(AlertType.Handcuffed);
-            expectedOrder.Add(AlertType.Ensnared);
-            expectedOrder.Add(AlertType.HighPressure);
-            // stuff with only category + same category ordered by enum value
-            expectedOrder.Add(AlertType.Peckish);
-            expectedOrder.Add(AlertType.Hot);
-            expectedOrder.Add(AlertType.Stun);
-            expectedOrder.Add(AlertType.LowPressure);
-            expectedOrder.Add(AlertType.Cold);
-            // stuff at end of list ordered by enum value
-            expectedOrder.Add(AlertType.Weightless);
-            expectedOrder.Add(AlertType.PilotingShuttle);
+            var expectedOrder = new List<AlertType>()
+            {
+                AlertType.Handcuffed,
+                AlertType.Ensnared,
+                AlertType.HighPressure,
+                // stuff with only category + same category ordered by enum value
+                AlertType.Peckish,
+                AlertType.Hot,
+                AlertType.Stun,
+                AlertType.LowPressure,
+                AlertType.Cold,
+                // stuff at end of list ordered by enum value
+                AlertType.Weightless,
+                AlertType.PilotingShuttle
+            };
 
             var actual = alerts.ToList();
             actual.Sort(alertOrder);
