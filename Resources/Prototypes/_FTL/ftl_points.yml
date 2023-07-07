@@ -47,25 +47,13 @@
 - type: ftlPoint
   id: StarPoint
   tag: ship-ftl-tag-star
-  effects:
-    - !type:SpawnDungeonEffect
-      probability: 0.7
-      maxSpawn: 6
+  effects: []
 
 - type: ftlPoint
   id: RuinPoint
   tag: ship-ftl-tag-ruin
   effects:
     - !type:SpawnDungeonEffect
-
-- type: ftlPoint
-  id: YardPoint
-  tag: ship-ftl-tag-yard
-  effects:
-    - !type:SpawnDungeonEffect
-      probability: 0.7
-      minSpawn: 5
-      maxSpawn: 10
 
 - type: ftlPoint
   id: NoDangerPoint
