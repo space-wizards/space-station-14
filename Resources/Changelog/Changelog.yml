@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: hot potato now deals damage while you are holding it, type: Add}
-  id: 3681
-  time: '2023-05-06T10:30:16.0000000+00:00'
 - author: ar4ill
   changes:
   - {message: 'Added roboticist jumpsuit, jumpskirt and labcoat. They''re available
@@ -2934,3 +2929,9 @@ Entries:
   - {message: Balanced a explosive payload craft, type: Tweak}
   id: 4180
   time: '2023-07-07T00:31:18.0000000+00:00'
+- author: '0x6273'
+  changes:
+  - {message: Thermal conductivity between chemistry solutions and atmos gases has
+      been implemented., type: Add}
+  id: 4181
+  time: '2023-07-07T01:18:56.0000000+00:00'
