@@ -70,9 +70,14 @@
     - type: SlowContacts
       walkSpeedModifier: 0.5
       sprintSpeedModifier: 0.5
+      fasterWalkSpeedModifier: 1.5
+      fasterSprintSpeedModifier: 1.5
       ignoreWhitelist:
         components:
             - IgnoreSpiderWeb
+      fasterWhitelist:
+        components:
+            - FasterSpiderWeb
 
 - type: entity
   id: SpiderWebClown

@@ -61,7 +61,7 @@
     - id: BroodServantEgg
     eggLayAction: SpiderLayEgg
   - type: NoSlip
-  - type: IgnoreSpiderWeb
+  - type: FasterSpiderWeb
   - type: Bloodstream
     bloodMaxVolume: 600
     bloodReagent: SpiderBlood
@@ -130,7 +130,7 @@
   - type: Spider
     webActionName: BroodServantWebAction
   - type: NoSlip
-  - type: IgnoreSpiderWeb
+  - type: FasterSpiderWeb
 
 
 #broodwebaction

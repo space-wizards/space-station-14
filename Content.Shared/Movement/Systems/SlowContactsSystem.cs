@@ -86,16 +86,18 @@ public sealed class SlowContactsSystem : EntitySystem
             if (!TryComp<SlowContactsComponent>(ent, out var slowContactsComponent))
                 continue;
 
-            if (HasComp<SpiderComponent>(uid) & HasComp<SpiderWebObjectComponent>(ent))
-            {
-                walkSpeed = Math.Max(walkSpeed, slowContactsComponent.SpiderWalkSpeedModifier);
-                sprintSpeed = Math.Max(sprintSpeed, slowContactsComponent.SpiderSprintSpeedModifier);
-                remove = false;
-                continue;
-            }
 
             if (slowContactsComponent.IgnoreWhitelist != null && slowContactsComponent.IgnoreWhitelist.IsValid(uid))
                 continue;
+
+
+            if (slowContactsComponent.FasterWhitelist != null && slowContactsComponent.FasterWhitelist.IsValid(uid))
+            {
+                walkSpeed = Math.Max(walkSpeed, slowContactsComponent.FasterWalkSpeedModifier);
+                sprintSpeed = Math.Max(sprintSpeed, slowContactsComponent.FasterSprintSpeedModifier);
+                remove = false;
+                continue;
+            }
 
             walkSpeed = Math.Min(walkSpeed, slowContactsComponent.WalkSpeedModifier);
             sprintSpeed = Math.Min(sprintSpeed, slowContactsComponent.SprintSpeedModifier);
