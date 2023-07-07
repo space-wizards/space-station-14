@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using Content.Shared.Interaction;
-using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -27,7 +25,7 @@ namespace Content.IntegrationTests.Tests.Interaction
         [Test]
         public async Task EntityEntityTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
@@ -51,50 +49,61 @@ namespace Content.IntegrationTests.Tests.Interaction
 
             await server.WaitIdleAsync();
 
-            var interactionSys = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SharedInteractionSystem>();
+            var interactionSys = sEntities.System<SharedInteractionSystem>();
+            var xformSys = sEntities.System<SharedTransformSystem>();
+            var xform = sEntities.GetComponent<TransformComponent>(origin);
 
             await server.WaitAssertion(() =>
             {
-                // Entity <-> Entity
-                Assert.True(interactionSys.InRangeUnobstructed(origin, other));
-                Assert.True(interactionSys.InRangeUnobstructed(other, origin));
+                Assert.Multiple(() =>
+                {
+                    // Entity <-> Entity
+                    Assert.That(interactionSys.InRangeUnobstructed(origin, other));
+                    Assert.That(interactionSys.InRangeUnobstructed(other, origin));
 
-                // Entity <-> MapCoordinates
-                Assert.True(interactionSys.InRangeUnobstructed(origin, mapCoordinates));
-                Assert.True(interactionSys.InRangeUnobstructed(mapCoordinates, origin));
+                    // Entity <-> MapCoordinates
+                    Assert.That(interactionSys.InRangeUnobstructed(origin, mapCoordinates));
+                    Assert.That(interactionSys.InRangeUnobstructed(mapCoordinates, origin));
+                });
 
                 // Move them slightly apart
-                sEntities.GetComponent<TransformComponent>(origin).LocalPosition += _interactionRangeDivided15X;
+                xformSys.SetLocalPosition(origin, xform.LocalPosition + _interactionRangeDivided15X, xform);
 
-                // Entity <-> Entity
-                // Entity <-> Entity
-                Assert.True(interactionSys.InRangeUnobstructed(origin, other));
-                Assert.True(interactionSys.InRangeUnobstructed(other, origin));
+                Assert.Multiple(() =>
+                {
+                    // Entity <-> Entity
+                    // Entity <-> Entity
+                    Assert.That(interactionSys.InRangeUnobstructed(origin, other));
+                    Assert.That(interactionSys.InRangeUnobstructed(other, origin));
 
-                // Entity <-> MapCoordinates
-                Assert.True(interactionSys.InRangeUnobstructed(origin, mapCoordinates));
-                Assert.True(interactionSys.InRangeUnobstructed(mapCoordinates, origin));
+                    // Entity <-> MapCoordinates
+                    Assert.That(interactionSys.InRangeUnobstructed(origin, mapCoordinates));
+                    Assert.That(interactionSys.InRangeUnobstructed(mapCoordinates, origin));
+                });
 
                 // Move them out of range
-                sEntities.GetComponent<TransformComponent>(origin).LocalPosition += new Vector2(InteractionRangeDivided15 + HumanRadius * 2f, 0f);
+                xformSys.SetLocalPosition(origin, xform.LocalPosition + new Vector2(InteractionRangeDivided15 + HumanRadius * 2f, 0f), xform);
 
-                // Entity <-> Entity
-                Assert.False(interactionSys.InRangeUnobstructed(origin, other));
-                Assert.False(interactionSys.InRangeUnobstructed(other, origin));
+                Assert.Multiple(() =>
+                {
+                    // Entity <-> Entity
+                    Assert.That(interactionSys.InRangeUnobstructed(origin, other), Is.False);
+                    Assert.That(interactionSys.InRangeUnobstructed(other, origin), Is.False);
 
-                // Entity <-> MapCoordinates
-                Assert.False(interactionSys.InRangeUnobstructed(origin, mapCoordinates));
-                Assert.False(interactionSys.InRangeUnobstructed(mapCoordinates, origin));
+                    // Entity <-> MapCoordinates
+                    Assert.That(interactionSys.InRangeUnobstructed(origin, mapCoordinates), Is.False);
+                    Assert.That(interactionSys.InRangeUnobstructed(mapCoordinates, origin), Is.False);
 
-                // Checks with increased range
+                    // Checks with increased range
 
-                // Entity <-> Entity
-                Assert.True(interactionSys.InRangeUnobstructed(origin, other, InteractionRangeDivided15Times3));
-                Assert.True(interactionSys.InRangeUnobstructed(other, origin, InteractionRangeDivided15Times3));
+                    // Entity <-> Entity
+                    Assert.That(interactionSys.InRangeUnobstructed(origin, other, InteractionRangeDivided15Times3));
+                    Assert.That(interactionSys.InRangeUnobstructed(other, origin, InteractionRangeDivided15Times3));
 
-                // Entity <-> MapCoordinates
-                Assert.True(interactionSys.InRangeUnobstructed(origin, mapCoordinates, InteractionRangeDivided15Times3));
-                Assert.True(interactionSys.InRangeUnobstructed(mapCoordinates, origin, InteractionRangeDivided15Times3));
+                    // Entity <-> MapCoordinates
+                    Assert.That(interactionSys.InRangeUnobstructed(origin, mapCoordinates, InteractionRangeDivided15Times3));
+                    Assert.That(interactionSys.InRangeUnobstructed(mapCoordinates, origin, InteractionRangeDivided15Times3));
+                });
             });
 
             await pairTracker.CleanReturnAsync();

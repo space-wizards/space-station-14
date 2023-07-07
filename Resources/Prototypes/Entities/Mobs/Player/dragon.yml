@@ -15,6 +15,13 @@
   - type: GhostTakeoverAvailable
   - type: HTN
     rootTask: XenoCompound
+    blackboard:
+      NavInteract: !type:Bool
+        true
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
   - type: Faction
     factions:
     - Dragon

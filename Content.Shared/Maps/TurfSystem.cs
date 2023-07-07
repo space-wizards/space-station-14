@@ -12,6 +12,7 @@ public sealed class TurfSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IMapManager _mapMan = default!;
 
     /// <summary>
     ///     Returns true if a given tile is blocked by physics-enabled entities.
@@ -83,5 +84,15 @@ public sealed class TurfSystem : EntitySystem
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Returns the location of the centre of the tile in grid coordinates.
+    /// </summary>
+    public EntityCoordinates GetTileCenter(TileRef turf)
+    {
+        var grid = _mapMan.GetGrid(turf.GridUid);
+        var center = (turf.GridIndices + new Vector2(0.5f, 0.5f)) * grid.TileSize;
+        return new EntityCoordinates(turf.GridUid, center);
     }
 }
