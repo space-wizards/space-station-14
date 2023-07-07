@@ -13,42 +13,42 @@
 
   Command members should always be relatively competent in their respective departments and attempt to delegate responsibility and direct work.
 
-  Chain of Command:
-  - Captain
-  - Head of Security
-  - Chief Medical Officer
-  - Pilot
+  Chain of Command and Objective:
+  - Captain: Handle paychecks and order your subordinates.
+  - Head of Security: Handle your department.
+  - Chief Medical Officer: Handle your department.
+  - Pilot: Fly the ship and listen to the Captain.
 
   ## Security
   Security consists of the security cadets, lawyers, detective, security officers, warden, and the head of security. As a department it is responsible for dealing with troublemakers and non-humanoid threats like giant rats and carp.
 
   As a result of this, and the need to walk a fine line, security sometimes is overwhelmed by angry crew (don't kill the clown), and it is important for it's members to try and stay on their best behavior.
 
-  Chain of Command:
-  - Head of Security
-  - Chief Medical Officer
-  - Pilot
+  Chain of Command and Objective:
+  - Head of Security: Handle your department.
+  - Ship Mercenary: Shoot guns, arrest bad guys.
+  - Ordnance Technician: Load missiles, shoot guns.
 
   ## Engineering
   Engineering consists of technical assistants, station engineers, atmospheric technicians, and the chief engineer. As a department it is responsible for keeping the station powered, its structure intact and its air supply working.
 
   Engineering is readily equipped to go safely into space, and as such they should always attempt to repair uninhabitable parts of the station.
 
-  Chain of Command:
-  - Engineers
+  Chain of Command and Objective:
+  - Engineers: Fix holes in the hull.
 
   ## Medical
   Medical consists of the medical interns, chemists, medical doctors, and the chief medical officer. As a department it is responsible for taking care of the crew, treat and/or clone the wounded and dead, treat disease, and prevent everyone from dying a horrible, bloody death in a closet somewhere.
 
   Medical is one of the more well-equipped departments, with the ability to locate injured crew using the crew monitor, a nigh infinite supply of chems should chemistry be on-par, and the ability to rapidly diagnose and vaccinate contagious diseases.
 
-  Chain of Command:
-  - Chief Medical Officer
-  - Medical Doctors
+  Chain of Command and Objective:
+  - Chief Medical Officer: Handle your department.
+  - Medical Doctors: Treat and save as many as you can.
 
   ## Civilian
   Civilian roles consist of jobs such as the deckhand, a multiuse job that essentially functions as an assistant. You may order them to perform engineering tasks or other such.
-  Chain of Command:
-  - Deckhand
+  Chain of Command and Objective:
+  - Deckhand: Listen to everyone. Do cargo work.
 
 </Document>
