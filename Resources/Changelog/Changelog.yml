@@ -1,10 +1,4 @@
 Entries:
-- author: Mumohan
-  changes:
-  - {message: Nukies can no longer buy uplink implanters to access agent-only offers.,
-    type: Fix}
-  id: 3686
-  time: '2023-05-06T19:10:47.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fixed a bug causing screen overlays (flashbang, admin HUD, etc) to
@@ -2945,3 +2939,9 @@ Entries:
   - {message: Slightly adjusted the items inside the syndicate zombie bundle., type: Tweak}
   id: 4185
   time: '2023-07-07T04:45:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Mobs can no longer self-harm without a weapon., type: Fix}
+  - {message: Mobs can now wide-swing as their alt attack., type: Tweak}
+  id: 4186
+  time: '2023-07-07T08:45:37.0000000+00:00'
