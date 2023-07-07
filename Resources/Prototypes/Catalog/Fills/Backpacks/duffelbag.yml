@@ -246,6 +246,7 @@
       - id: SyringeRomerol
       - id: WeaponRevolverMateba
       - id: MagazineBoxMagnumIncendiary
+      - id: PillAmbuzolPlus
       - id: PillAmbuzol
         amount: 3
 

@@ -325,6 +325,19 @@
             - ReagentId: Ambuzol
               Quantity: 10
 
+- type: entity
+  name: ambuzol plus pill
+  parent: Pill
+  id: PillAmbuzolPlus
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+            - ReagentId: AmbuzolPlus
+              Quantity: 5
+
 # Syringes
 - type: entity
   name: ephedrine syringe
