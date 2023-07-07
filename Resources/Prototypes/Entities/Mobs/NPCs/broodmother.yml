@@ -54,8 +54,8 @@
     webActionName: BroodWebAction
   - type: EggLayer
     hungerUsage: 10
-    eggLayCooldownMin: 9999999
-    eggLayCooldownMax: 99999999
+    eggLayCooldownMin: 120
+    eggLayCooldownMax: 180
     eggSpawn:
     - id: BroodServantEgg
     eggLayAction: SpiderLayEgg
