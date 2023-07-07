@@ -1,7 +1,7 @@
 - type: entity
   id: Bookshelf
   parent: BaseStructure
-  name: bookshelf
+  name: "bookshelf"
   description: Mostly filled with books.
   components:
   - type: Sprite
@@ -45,7 +45,7 @@
   - type: Anchorable
   - type: Pullable
   - type: Storage
-    capacity: 30
+    capacity: 200
     whitelist:
       tags:
         - Document
@@ -64,4 +64,3 @@
   - type: Construction
     graph: Bookshelf
     node: bookshelf
-
