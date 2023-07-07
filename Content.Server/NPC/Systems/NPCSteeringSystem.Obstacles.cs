@@ -33,7 +33,7 @@ public sealed partial class NPCSteeringSystem
      */
 
 
-    private SteeringObstacleStatus TryHandleFlags(EntityUid uid, NPCSteeringComponent component, PathPoly poly, EntityQuery<PhysicsComponent> bodyQuery)
+    private SteeringObstacleStatus TryHandleFlags(EntityUid uid, NPCSteeringComponent component, PathPoly poly)
     {
         DebugTools.Assert(!poly.Data.IsFreeSpace);
         // TODO: Store PathFlags on the steering comp
@@ -71,7 +71,7 @@ public sealed partial class NPCSteeringSystem
 
             var obstacleEnts = new List<EntityUid>();
 
-            GetObstacleEntities(poly, mask, layer, bodyQuery, obstacleEnts);
+            GetObstacleEntities(poly, mask, layer, obstacleEnts);
             var isDoor = (poly.Data.Flags & PathfindingBreadcrumbFlag.Door) != 0x0;
             var isAccessRequired = (poly.Data.Flags & PathfindingBreadcrumbFlag.Access) != 0x0;
 
@@ -124,25 +124,30 @@ public sealed partial class NPCSteeringSystem
             // Try smashing obstacles.
             else if ((component.Flags & PathFlags.Smashing) != 0x0)
             {
-                if (_melee.TryGetWeapon(uid, out var meleeUid, out var meleeWeapon) && meleeWeapon.NextAttack <= _timing.CurTime && TryComp<CombatModeComponent>(uid, out var combatMode))
+                if (_melee.TryGetWeapon(uid, out _, out var meleeWeapon) && meleeWeapon.NextAttack <= _timing.CurTime && TryComp<CombatModeComponent>(uid, out var combatMode))
                 {
                     _combat.SetInCombatMode(uid, true, combatMode);
                     var destructibleQuery = GetEntityQuery<DestructibleComponent>();
 
                     // TODO: This is a hack around grilles and windows.
                     _random.Shuffle(obstacleEnts);
+                    var attackResult = false;
 
                     foreach (var ent in obstacleEnts)
                     {
                         // TODO: Validate we can damage it
                         if (destructibleQuery.HasComponent(ent))
                         {
-                            _melee.AttemptLightAttack(uid, uid, meleeWeapon, ent);
+                            attackResult = _melee.AttemptLightAttack(uid, uid, meleeWeapon, ent);
                             break;
                         }
                     }
 
                     _combat.SetInCombatMode(uid, false, combatMode);
+
+                    // Blocked or the likes?
+                    if (!attackResult)
+                        return SteeringObstacleStatus.Failed;
 
                     if (obstacleEnts.Count == 0)
                         return SteeringObstacleStatus.Completed;
@@ -157,8 +162,7 @@ public sealed partial class NPCSteeringSystem
         return SteeringObstacleStatus.Completed;
     }
 
-    private void GetObstacleEntities(PathPoly poly, int mask, int layer, EntityQuery<PhysicsComponent> bodyQuery,
-        List<EntityUid> ents)
+    private void GetObstacleEntities(PathPoly poly, int mask, int layer, List<EntityUid> ents)
     {
         // TODO: Can probably re-use this from pathfinding or something
         if (!_mapManager.TryGetGrid(poly.GraphUid, out var grid))
@@ -168,7 +172,7 @@ public sealed partial class NPCSteeringSystem
 
         foreach (var ent in grid.GetLocalAnchoredEntities(poly.Box))
         {
-            if (!bodyQuery.TryGetComponent(ent, out var body) ||
+            if (!_physicsQuery.TryGetComponent(ent, out var body) ||
                 !body.Hard ||
                 !body.CanCollide ||
                 (body.CollisionMask & layer) == 0x0 && (body.CollisionLayer & mask) == 0x0)

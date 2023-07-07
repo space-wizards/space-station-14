@@ -41,7 +41,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
-        density: 145
+        density: 75
         mask:
         - MachineMask
         layer:
@@ -257,5 +257,5 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBase: base
-    stateDoorOpen: base 
+    stateDoorOpen: base
     stateDoorClosed: closed
