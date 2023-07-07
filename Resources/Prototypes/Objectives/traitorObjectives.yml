@@ -1,4 +1,5 @@
-﻿- type: objective
+﻿#Steal the Captain's ID
+- type: objective
   id: CaptainIDStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
@@ -13,6 +14,7 @@
     - !type:StealCondition
       prototype: CaptainIDCard
 
+#Kill
 - type: objective
   id: KillRandomObjective
   issuer: syndicate
@@ -25,6 +27,7 @@
     - !type:KillRandomPersonCondition {}
   canBeDuplicate: true
 
+#Protect
 - type: objective
   id: RandomTraitorAliveObjective
   issuer: syndicate
@@ -38,6 +41,7 @@
     - !type:RandomTraitorAliveCondition {}
   canBeDuplicate: true
 
+#Die a Glorious Death
 - type: objective
   id: DieObjective
   issuer: syndicate
@@ -50,6 +54,7 @@
   conditions:
     - !type:DieCondition {}
 
+#Steal the CMO's hypospray
 - type: objective
   id: CMOHyposprayStealObjective
   issuer: syndicate
@@ -66,6 +71,7 @@
       prototype: Hypospray
       owner: job-name-cmo
 
+#Steal the Research Director's hardsuit
 - type: objective
   id: RDHardsuitStealObjective
   issuer: syndicate
@@ -82,6 +88,7 @@
       prototype: ClothingOuterHardsuitRd
       owner: job-name-rd
 
+#Steal the Hand Teleporter
 - type: objective
   id: HandTeleporterStealObjective
   issuer: syndicate
@@ -98,6 +105,7 @@
     prototype: HandTeleporter
     owner: job-name-rd
 
+#Steal the Nuclear Authentication Disk
 - type: objective
   id: NukeDiskStealObjective
   issuer: syndicate
@@ -123,22 +131,7 @@
       prototype: NukeDisk
       owner: objective-condition-steal-station
 
-
-- type: objective
-  id: IDComputerBoardStealObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: HeadOfPersonnel
-  conditions:
-    - !type:StealCondition
-      prototype: IDComputerCircuitboard
-      owner: job-name-hop
-
+#Steal the CE's Advanced Magboots
 - type: objective
   id: MagbootsStealObjective
   issuer: syndicate
@@ -155,21 +148,7 @@
       prototype: ClothingShoesBootsMagAdv
       owner: job-name-ce
 
-- type: objective
-  id: SupplyConsoleBoardStealObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: Quartermaster
-  conditions:
-    - !type:StealCondition
-      prototype: CargoRequestComputerCircuitboard
-      owner: job-name-qm
-
+#Get Prime Cut Corgi Meat
 - type: objective
   id: CorgiMeatStealObjective
   issuer: syndicate
@@ -185,6 +164,7 @@
       prototype: FoodMeatCorgi
       owner: objective-condition-steal-Ian
 
+#Steal the Captain's Antique Laser Gun
 - type: objective
   id: CaptainGunStealObjective
   issuer: syndicate
@@ -201,6 +181,7 @@
       prototype: WeaponAntiqueLaser
       owner: job-name-captain
 
+#Steal the Captain's Jetpack
 - type: objective
   id: CaptainJetpackStealObjective
   issuer: syndicate
@@ -216,6 +197,7 @@
     - !type:StealCondition
       prototype: JetpackCaptainFilled
 
+#Escape on the emergency shuttle alive and unrestrained
 - type: objective
   id: EscapeShuttleObjective
   issuer: syndicate
@@ -227,6 +209,7 @@
   conditions:
     - !type:EscapeShuttleCondition {}
 
+#Ensure another traitor achieves at least half of their objectives
 - type: objective
   id: RandomTraitorProgressObjective
   issuer: syndicate
