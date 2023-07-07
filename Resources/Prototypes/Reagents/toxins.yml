@@ -384,20 +384,16 @@
               Poison: 2
 
 - type: reagent
-  id: Corpium
-  name: reagent-name-corpium
+  id: Romerol
+  name: reagent-name-romerol
   group: Toxins
-  desc: reagent-desc-corpium
+  desc: reagent-desc-romerol
   physicalDesc: reagent-physical-desc-necrotic
   flavor: bitter
-  color: "#7668a1"
+  color: "#7e916e"
   metabolisms:
-    Poison:
+    Medicine:
       effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Cellular: 1
         - !type:CauseZombieInfection
           conditions:
             - !type:ReagentThreshold
@@ -502,4 +498,4 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 0.6 # Makes it 20 damage per unit. 
+            Poison: 0.6 # Makes it 20 damage per unit.
