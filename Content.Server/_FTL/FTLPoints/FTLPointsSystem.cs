@@ -61,13 +61,13 @@ public sealed class FTLPointsSystem : EntitySystem
     /// <summary>
     /// Generates a temporary disposable FTL point.
     /// </summary>
-    public void GenerateDisposablePoint()
+    public void GenerateDisposablePoint(FTLPointPrototype? prototype = null)
     {
-        var picked = _prototypeManager.Index<WeightedRandomPrototype>("FTLPoints").Pick(_random);
+        var picked = _prototypeManager.Index<WeightedRandomPrototype>("FTLPoints").Pick();
 
         Log.Info($"Picked {picked} as point type.");
 
-        var point = _prototypeManager.Index<FTLPointPrototype>(picked);
+        var point = prototype == null ? _prototypeManager.Index<FTLPointPrototype>(picked) : prototype;
 
         // create map
         if (point.OverrideSpawn == null)
