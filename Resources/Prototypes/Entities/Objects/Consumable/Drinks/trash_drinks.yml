@@ -33,9 +33,6 @@
     solution: drink
   - type: DrainableSolution
     solution: drink
-  - type: AtmosExposed
-  - type: SolutionGasHeatConductivity
-    solution: drink
   - type: UserInterface
     interfaces:
     - key: enum.TransferAmountUiKey.Key

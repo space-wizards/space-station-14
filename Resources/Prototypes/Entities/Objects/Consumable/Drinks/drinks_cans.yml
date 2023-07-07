@@ -34,9 +34,6 @@
     solution: drink
   - type: DrainableSolution
     solution: drink
-  - type: AtmosExposed
-  - type: SolutionGasHeatConductivity
-    solution: drink
   - type: Appearance
   - type: GenericVisualizer
     visuals:

@@ -142,9 +142,6 @@
     - type: SolutionContainerManager
       solutions:
         puddle: { maxVol: 1000 }
-    - type: AtmosExposed
-    - type: SolutionGasHeatConductivity
-      solution: puddle
     - type: Puddle
     - type: Appearance
     - type: EdgeSpreader
