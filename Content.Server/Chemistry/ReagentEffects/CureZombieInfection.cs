@@ -12,7 +12,12 @@ public sealed class CureZombieInfection : ReagentEffect
     public bool innoculate = false;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("reagent-effect-guidebook-cure-zombie-infection", ("chance", Probability)); 
+    {
+        if(innoculate == true)
+            return Loc.GetString("reagent-effect-guidebook-innoculate-zombie-infection", ("chance", Probability)); 
+        
+        return Loc.GetString("reagent-effect-guidebook-cure-zombie-infection", ("chance", Probability)); 
+    }
 
     // Removes the Zombie Infection Components
     public override void Effect(ReagentEffectArgs args)
@@ -22,7 +27,7 @@ public sealed class CureZombieInfection : ReagentEffect
         entityManager.RemoveComponent<PendingZombieComponent>(args.SolutionEntity);
 
         if (innoculate == true) {
-            entityManager.AddComponent<PendingZombieComponent>(args.SolutionEntity);
+            entityManager.EnsureComponent<ZombieImmuneComponent>(args.SolutionEntity);
         }
     }
 }

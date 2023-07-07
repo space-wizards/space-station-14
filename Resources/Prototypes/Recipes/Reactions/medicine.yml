@@ -221,6 +221,16 @@
     Ambuzol: 4
 
 - type: reaction
+  id: AmbuzolPlus
+  reactants:
+    Ambuzol:
+      amount: 1
+    ZombieBlood:
+      amount: 1
+  products:
+    AmbuzolPlus: 2
+
+- type: reaction
   id: Synaptizine
   reactants:
     Lithium:
