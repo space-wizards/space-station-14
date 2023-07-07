@@ -61,6 +61,11 @@
   - type: Tool
     qualities:
       - Prying
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/crusher.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
 
 - type: entity
   name: crusher dagger
@@ -103,3 +108,11 @@
     attackRate: 1.25
   - type: Item
     size: 150
+  - type: Tool
+    qualities:
+      - Prying
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/crusher_glaive.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
