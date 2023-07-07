@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed a bug causing screen overlays (flashbang, admin HUD, etc) to
-      sometimes not get drawn.', type: Fix}
-  id: 3687
-  time: '2023-05-06T23:46:16.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Added diagonal walls made of plasttitanium and solid wall!, type: Add}
@@ -2945,3 +2939,9 @@ Entries:
   - {message: Mobs can now wide-swing as their alt attack., type: Tweak}
   id: 4186
   time: '2023-07-07T08:45:37.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Made it more apparent to the player that starting to remove their handcuffs
+      damaged them., type: Tweak}
+  id: 4187
+  time: '2023-07-07T09:28:34.0000000+00:00'
