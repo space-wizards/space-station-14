@@ -43,8 +43,8 @@ reagent-desc-amatoxin = A potent toxin found in some mushrooms.
 reagent-name-vent-crud = vent crud
 reagent-desc-vent-crud = A jet black substance found in poorly maintained ventilation systems.
 
-reagent-name-zombrex = zombrex
-reagent-desc-zombrex = A highly engineered substance able to halt the progression of a zombie infection.
+reagent-name-romerol = romerol
+reagent-desc-romerol = An otherworldly concoction able to bring the undead to life. If untreated, the effects are irreversible and will bring certain doom upon the station. Handle with care.
 
 reagent-name-uncooked-animal-proteins = uncooked animal proteins
 reagent-desc-uncooked-animal-proteins = This is very risky for the stomachs of softer lifeforms to digest.
