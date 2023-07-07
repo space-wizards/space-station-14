@@ -70,5 +70,4 @@
     ConfDangerPoint: 3
     StarPoint: 1
     PlanetPoint: 1
-    RuinPoint: 0.25
-    YardPoint: 0.25
+    RuinPoint: 0.15
