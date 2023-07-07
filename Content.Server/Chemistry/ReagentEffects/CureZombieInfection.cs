@@ -1,6 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
-
 using Robust.Shared.Configuration;
 using Content.Server.Zombies;
 
@@ -9,6 +8,9 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed class CureZombieInfection : ReagentEffect
 {
+    [DataField("innoculate")]
+    public bool innoculate = false;
+
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-cure-zombie-infection", ("chance", Probability)); 
 
@@ -18,6 +20,10 @@ public sealed class CureZombieInfection : ReagentEffect
         var entityManager = args.EntityManager;
         entityManager.RemoveComponent<ZombifyOnDeathComponent>(args.SolutionEntity);
         entityManager.RemoveComponent<PendingZombieComponent>(args.SolutionEntity);
+
+        if (innoculate == true) {
+            entityManager.AddComponent<PendingZombieComponent>(args.SolutionEntity);
+        }
     }
 }
 

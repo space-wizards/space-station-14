@@ -258,7 +258,11 @@ namespace Content.Server.Zombies
                 }
                 else
                 {
-                    if (_random.Prob(GetZombieInfectionChance(entity, component)))
+                    if (HasComp<ZombieImmuneComponent>(entity)) 
+                    {
+                        continue;
+                    } 
+                    else if (_random.Prob(GetZombieInfectionChance(entity, component)))
                     {
                         var pending = EnsureComp<PendingZombieComponent>(entity);
                         pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.ZombieInfectionTurnTime;
