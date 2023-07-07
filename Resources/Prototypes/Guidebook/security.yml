@@ -4,8 +4,19 @@
   text: "/ServerInfo/Guidebook/Security/Security.xml"
   children:
     - DNA
+    - GunsAndYou
 
 - type: guideEntry
   id: DNA
   name: guide-entry-dna
   text: "/ServerInfo/Guidebook/Security/DNA.xml"
+
+- type: guideEntry
+  id: GunsAndYou
+  name: guide-entry-guns-and-you
+  text: "/ServerInfo/Guidebook/Security/GunsAndYou.xml"
+
+- type: guideEntry
+  id: Law
+  name: guide-entry-law
+  text: "/ServerInfo/Guidebook/Security/Law.xml"

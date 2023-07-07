@@ -1,41 +1,54 @@
 ﻿<Document>
-# Jobs
+  # Jobs
 
-SS14 has a large number of jobs, divided into seven major departments:
+  Ekrixi has a few main jobs compared to upstream, here are the departments in the order of highest and lowest in chain of command. Read the following if you do not understand the concept of CoC.
 
-## Service
-This department includes the janitor, passengers, clown, mime, musician, chef, bartender, the head of personnel, and other jobs who exist to serve the station.
+  ## Chain of Command
+  A disorganized crew is worse than no crew, order must be placed - hence Chain of Command. This chain of command is essentially who orders who. The high ranking individuals can order the ones below them, and same goes for them.
 
-It primarily functions as folks who entertain, clean, and serve the rest of the crew, with the exception of passengers who have no particular job beyond getting lost in maintenance.
+  All departments report to Command and the officers in them. Otherwise, all departments are equally the same. However, in the event that a captain did not awaken from cryosleep - the departments have been sorted from "most likely to be captain" to "least likely to be captain".
 
-## Cargo
-Cargo consists of the cargo technicians, salvage technicians, and the quartermaster. As a department, it responsible resource distribution and trade, capable of buying and selling things on the galactic market.
+  ## Command
+  Command consists of the captain, the head of security, the chief medical officer, and the pilot. As a department it is responsible for keeping the station and its departments running efficiently.
 
-For the most part, this means they scrounge around the station and assorted wrecks to find materials to sell and redistribute, and purchase materials other departments request.
+  Command members should always be relatively competent in their respective departments and attempt to delegate responsibility and direct work.
 
-## Security
-Security consists of the security cadets, lawyers, detective, security officers, warden, and the head of security. As a department it is responsible for dealing with troublemakers and non-humanoid threats like giant rats and carp.
+  Chain of Command:
+  - Captain
+  - Head of Security
+  - Chief Medical Officer
+  - Pilot
 
-As a result of this, and the need to walk a fine line, security sometimes is overwhelmed by angry crew (don't kill the clown), and it is important for it's members to try and stay on their best behavior.
+  ## Security
+  Security consists of the security cadets, lawyers, detective, security officers, warden, and the head of security. As a department it is responsible for dealing with troublemakers and non-humanoid threats like giant rats and carp.
 
-## Medical
-Medical consists of the medical interns, chemists, medical doctors, and the chief medical officer. As a department it is responsible for taking care of the crew, treat and/or clone the wounded and dead, treat disease, and prevent everyone from dying a horrible, bloody death in a closet somewhere.
+  As a result of this, and the need to walk a fine line, security sometimes is overwhelmed by angry crew (don't kill the clown), and it is important for it's members to try and stay on their best behavior.
 
-Medical is one of the more well-equipped departments, with the ability to locate injured crew using the crew monitor, a nigh infinite supply of chems should chemistry be on-par, and the ability to rapidly diagnose and vaccinate contagious diseases.
+  Chain of Command:
+  - Head of Security
+  - Chief Medical Officer
+  - Pilot
 
-## Science
-Science consists of research assistants, scientists, and the research director. As a department it is responsible for researching technologies and artifacts, upgrading machines, and printing new and useful devices.
+  ## Engineering
+  Engineering consists of technical assistants, station engineers, atmospheric technicians, and the chief engineer. As a department it is responsible for keeping the station powered, its structure intact and its air supply working.
 
-Scientists should seek out new artifacts to study, as well as solicit departments to help upgrade their machines.
+  Engineering is readily equipped to go safely into space, and as such they should always attempt to repair uninhabitable parts of the station.
 
-## Engineering
-Engineering consists of technical assistants, station engineers, atmospheric technicians, and the chief engineer. As a department it is responsible for keeping the station powered, its structure intact and its air supply working.
+  Chain of Command:
+  - Engineers
 
-Engineering is readily equipped to go safely into space, and as such they should always attempt to repair uninhabitable parts of the station.
+  ## Medical
+  Medical consists of the medical interns, chemists, medical doctors, and the chief medical officer. As a department it is responsible for taking care of the crew, treat and/or clone the wounded and dead, treat disease, and prevent everyone from dying a horrible, bloody death in a closet somewhere.
 
-## Command
-Command consists of the captain, the head of personnel, the head of security, the chief engineer, the chief medical officer, the research director, and the quartermaster. As a department it is responsible for keeping the station and its departments running efficiently.
+  Medical is one of the more well-equipped departments, with the ability to locate injured crew using the crew monitor, a nigh infinite supply of chems should chemistry be on-par, and the ability to rapidly diagnose and vaccinate contagious diseases.
 
-Command members should always be relatively competent in their respective departments and attempt to delegate responsibility and direct work.
+  Chain of Command:
+  - Chief Medical Officer
+  - Medical Doctors
+
+  ## Civilian
+  Civilian roles consist of jobs such as the deckhand, a multiuse job that essentially functions as an assistant. You may order them to perform engineering tasks or other such.
+  Chain of Command:
+  - Deckhand
 
 </Document>

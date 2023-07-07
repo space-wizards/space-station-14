@@ -1,0 +1,19 @@
+<Document>
+  # Navigation
+
+  As a Pilot, your main objectives are to:
+  - safely move your crew from point A to point B
+  - choose which warp point to visit
+  - follow orders from the captain
+
+  ## Warp Points
+  In order to travel the stars, the shuttle console gets 2-6 warp points. These warp points have a 4 letter tag that allow you to see what it is quickly.
+
+  - [color=#a4885c]????[/color], is an unsurveyed warp point. There may, or may not, be something there.
+  - [color=#a4885c]BASE[/color], indicates a trade station, which your crew may be able to perform cargo duties at.
+  - [color=#a4885c]!!!![/color], is a confirmed threat warp point. There is a confirmed danger in that zone.
+  - [color=#a4885c]PLNT[/color], indicates that there is a planet within range you can visit.
+  - [color=#a4885c]STAR[/color], is a confirmed safe star, there will be no dangers. This will be a good place to relax.
+  - [color=#a4885c]RUIN[/color], is a confirmed ruin, and there may be something you can get out of the wreck.
+  - [color=#a4885c]VOID[/color], is an abyss. May god save your souls should you pick this destination.
+</Document>

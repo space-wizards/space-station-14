@@ -1,0 +1,27 @@
+﻿<Document>
+  # Guns And You
+  Weapons are the main way of fighting off attackers - or becoming the attacker.
+
+  ## Weapons
+  All weapons are either [color=#a4885c]silo-fed[/color] or [color=#a4885c]not silo-fed[/color].
+  - Silo-fed weapons require you to load a specific type of missile (usually the same tier or higher rated missile).
+  - Not silo-fed weapons do not require you to load anything, and recharge automatically.
+
+  ## Weapon Pads
+  The weapon pad is the main way of controlling weapons. Here are the controls:
+  - In order to change your target, you can use the top-left dropdown menu. [color=#a4885c]It will only target valid ships (e.g. not trade stations)[/color].
+  - In order to choose the position you shoot at, you use the [color=#a4885c]right click[/color] button. Reminder that the position may be inaccurate, and it may take a bit of adjusting to get used to.
+  - In order to fire, you click the [color=#a4885c]Fire[/color] button in the top-right corner.
+
+  Please do remember that hull damage is not dependent on your right-click, rather only your selected target. Do not shoot yourself to mine rocks.
+
+  ## Roundstart
+  On roundstart, depending on the map, you will usually start with [color=#a4885c]one silo-fed weapon[/color] and [color=#a4885c]one non silo-fed weapon[/color], alongside the ammunition for said weaponry.
+
+  The weapons and weapon pads may not be linked by default, and it is best to ask engineering to either double check or link it. Better safe than sorry.
+
+  <Box>
+    <GuideEntityEmbed Entity="WeaponBurstLaserMkI"/>
+    <GuideEntityEmbed Entity="ArtemisMarkIWeaponSilo"/>
+  </Box>
+</Document>

@@ -1,0 +1,55 @@
+- type: guideEntry
+  id: Lore
+  name: guide-entry-lore
+  text: "/ServerInfo/Guidebook/Lore/Lore.xml"
+  children:
+    - LoreHistory
+    - LoreFactions
+
+- type: guideEntry
+  id: LoreHistory
+  name: guide-entry-lore-history
+  text: "/ServerInfo/Guidebook/Lore/History.xml"
+
+# Factions
+- type: guideEntry
+  id: LoreFactions
+  name: guide-entry-lore-factions
+  text: "/ServerInfo/Guidebook/Lore/Factions/Faction.xml"
+  children:
+    - LoreFactionsCoregov
+    - LoreFactionsIncSek
+    - LoreFactionsA2B
+    - LoreFactionsACKs
+    - LoreFactionsFrontierStabilityCorp
+    - LoreFactionsIndependent
+
+- type: guideEntry
+  id: LoreFactionsCoregov
+  name: guide-entry-lore-factions-coregov
+  text: "/ServerInfo/Guidebook/Lore/Factions/CoreGov.xml"
+
+- type: guideEntry
+  id: LoreFactionsIncSek
+  name: guide-entry-lore-factions-incsek
+  text: "/ServerInfo/Guidebook/Lore/Factions/IncSek.xml"
+
+- type: guideEntry
+  id: LoreFactionsA2B
+  name: guide-entry-lore-factions-a2b
+  text: "/ServerInfo/Guidebook/Lore/Factions/A2B.xml"
+
+- type: guideEntry
+  id: LoreFactionsACKs
+  name: guide-entry-lore-factions-acks
+  text: "/ServerInfo/Guidebook/Lore/Factions/ACKs.xml"
+
+- type: guideEntry
+  id: LoreFactionsFrontierStabilityCorp
+  name: guide-entry-lore-factions-frontierstabilitycorp
+  text: "/ServerInfo/Guidebook/Lore/Factions/FrontierStabilityCorp.xml"
+
+- type: guideEntry
+  id: LoreFactionsIndependent
+  name: guide-entry-lore-factions-independent
+  text: "/ServerInfo/Guidebook/Lore/Factions/Independent.xml"
