@@ -37,12 +37,18 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<GrapplingProjectileComponent, ProjectileEmbedEvent>(OnGrappleCollide);
+        SubscribeLocalEvent<GrapplingProjectileComponent, JointRemovedEvent>(OnGrappleJointRemoved);
         SubscribeLocalEvent<CanWeightlessMoveEvent>(OnWeightlessMove);
         SubscribeAllEvent<RequestGrapplingReelMessage>(OnGrapplingReel);
 
         SubscribeLocalEvent<GrapplingGunComponent, GunShotEvent>(OnGrapplingShot);
         SubscribeLocalEvent<GrapplingGunComponent, ActivateInWorldEvent>(OnGunActivate);
         SubscribeLocalEvent<GrapplingGunComponent, HandDeselectedEvent>(OnGrapplingDeselected);
+    }
+
+    private void OnGrappleJointRemoved(EntityUid uid, GrapplingProjectileComponent component, JointRemovedEvent args)
+    {
+        QueueDel(uid);
     }
 
     private void OnGrapplingShot(EntityUid uid, GrapplingGunComponent component, ref GunShotEvent args)

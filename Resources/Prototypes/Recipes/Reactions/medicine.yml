@@ -209,14 +209,16 @@
     Phalanximine: 3
 
 - type: reaction
-  id: Romerol
+  id: Ambuzol
   reactants:
-    Phalanximine:
+    Dylovene:
       amount: 1
-    Tricordrazine:
+    Ammonia:
       amount: 1
+    Blood:
+      amount: 2
   products:
-    Romerol: 2
+    Ambuzol: 4
 
 - type: reaction
   id: Synaptizine
@@ -373,13 +375,13 @@
   impact: Medium
   minTemp: 370
   reactants:
-    SodiumCarbonate: 
+    SodiumCarbonate:
       amount: 1
     Kelotane:
       amount: 1
     Water:
       amount: 1
-    Sugar: 
+    Sugar:
       amount: 1
   products:
     Sigynate: 4

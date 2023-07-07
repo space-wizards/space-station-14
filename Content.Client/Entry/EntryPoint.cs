@@ -21,7 +21,7 @@ using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Administration;
-using Content.Shared.AME;
+using Content.Shared.Ame;
 using Content.Shared.Gravity;
 using Content.Shared.Localizations;
 using Robust.Client;
@@ -91,7 +91,7 @@ namespace Content.Client.Entry
 
             // Do not add to these, they are legacy.
             _componentFactory.RegisterClass<SharedGravityGeneratorComponent>();
-            _componentFactory.RegisterClass<SharedAMEControllerComponent>();
+            _componentFactory.RegisterClass<SharedAmeControllerComponent>();
             // Do not add to the above, they are legacy
 
             _prototypeManager.RegisterIgnore("utilityQuery");

@@ -55,7 +55,7 @@ namespace Content.Shared.Pulling
 
             if (!TryComp<SharedPullerComponent?>(state.Puller.Value, out var comp))
             {
-                Logger.Error($"Pullable state for entity {ToPrettyString(uid)} had invalid puller entity {ToPrettyString(state.Puller.Value)}");
+                Log.Error($"Pullable state for entity {ToPrettyString(uid)} had invalid puller entity {ToPrettyString(state.Puller.Value)}");
                 // ensure it disconnects from any different puller, still
                 ForceDisconnectPullable(component);
                 return;
@@ -193,7 +193,7 @@ namespace Content.Shared.Pulling
 
             // Don't allow setting a MovingTo if there's no puller.
             // The other half of this guarantee (shutting down a MovingTo if the puller goes away) is enforced in ForceRelationship.
-            if ((pullable.Puller == null) && (movingTo != null))
+            if (pullable.Puller == null && movingTo != null)
             {
                 return;
             }
