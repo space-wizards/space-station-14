@@ -559,10 +559,10 @@
         probability: 0.05
 
 - type: reagent
-  id: Zombrex
-  name: reagent-name-zombrex
+  id: Ambuzol
+  name: reagent-name-ambuzol
   group: Medicine
-  desc: reagent-desc-zombrex
+  desc: reagent-desc-ambuzol
   physicalDesc: reagent-physical-desc-crisp
   flavor: medicine
   color: "#86caf7"

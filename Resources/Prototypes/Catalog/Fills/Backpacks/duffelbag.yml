@@ -26,7 +26,7 @@
         amount: 2
       - id: GrenadeFlashBang
         amount: 2
-      - id: PillZombrex
+      - id: PillAmbuzol
         amount: 5
 
 - type: entity
@@ -246,7 +246,7 @@
       - id: SyringeRomerol
       - id: WeaponRevolverMateba
       - id: MagazineBoxMagnumIncendiary
-      - id: PillZombrex
+      - id: PillAmbuzol
         amount: 3
 
 - type: entity

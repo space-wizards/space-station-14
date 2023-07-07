@@ -209,7 +209,7 @@
     Phalanximine: 3
 
 - type: reaction
-  id: Zombrex
+  id: Ambuzol
   reactants:
     Dylovene:
       amount: 1
@@ -218,7 +218,7 @@
     Blood:
       amount: 2
   products:
-    Zombrex: 4
+    Ambuzol: 4
 
 - type: reaction
   id: Synaptizine

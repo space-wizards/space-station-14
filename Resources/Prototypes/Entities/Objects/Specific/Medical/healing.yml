@@ -313,16 +313,16 @@
           Quantity: 10
 
 - type: entity
-  name: zombrex pill
+  name: ambuzol pill
   parent: Pill
-  id: PillZombrex
+  id: PillAmbuzol
   components:
     - type: SolutionContainerManager
       solutions:
         food:
           maxVol: 20
           reagents:
-            - ReagentId: Zombrex
+            - ReagentId: Ambuzol
               Quantity: 10
 
 # Syringes
@@ -405,16 +405,16 @@
           Quantity: 15
 
 - type: entity
-  name: zombrex syringe
+  name: ambuzol syringe
   parent: BaseSyringe
-  id: SyringeZombrex
+  id: SyringeAmbuzol
   components:
     - type: SolutionContainerManager
       solutions:
         injector:
           maxVol: 15
           reagents:
-            - ReagentId: Zombrex
+            - ReagentId: Ambuzol
               Quantity: 15
 
 #this is where all the syringes are so i didn't know where to put it

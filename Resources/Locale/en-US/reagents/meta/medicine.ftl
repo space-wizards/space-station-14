@@ -52,8 +52,8 @@ reagent-desc-barozine = A potent drug that prevents pressure damage. Causes extr
 reagent-name-phalanximine = phalanximine
 reagent-desc-phalanximine = Used in the treatment of cancer. Causes moderate radiation poisoning.
 
-reagent-name-zombrex = zombrex
-reagent-desc-zombrex = A highly engineered substance able to halt the progression of a zombie infection.
+reagent-name-ambuzol = ambuzol
+reagent-desc-ambuzol = A highly engineered substance able to halt the progression of a zombie infection.
 
 reagent-name-pulped-banana-peel = pulped banana peel
 reagent-desc-pulped-banana-peel = Pulped banana peels have some effectiveness against bleeding.
