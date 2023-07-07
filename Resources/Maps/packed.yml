@@ -71077,6 +71077,28 @@ entities:
     - pos: 5.5,-4.5
       parent: 2
       type: Transform
+- proto: SpawnPointLatejoin
+  entities:
+  - uid: 12803
+    components:
+    - pos: -16.5,-12.5
+      parent: 2
+      type: Transform
+  - uid: 12804
+    components:
+    - pos: -15.5,-12.5
+      parent: 2
+      type: Transform
+  - uid: 12805
+    components:
+    - pos: -9.5,-12.5
+      parent: 2
+      type: Transform
+  - uid: 12806
+    components:
+    - pos: -8.5,-12.5
+      parent: 2
+      type: Transform
 - proto: SpawnPointLawyer
   entities:
   - uid: 8160
