@@ -44,6 +44,7 @@
   name: basic laser
   placement:
     mode: SnapgridCenter
+  description: A rudimentary laser weapon, most independent crews use this unfortunately.
   components:
     - type: Sprite
       sprite: _FTL/Structures/Weapons/silo.rsi
@@ -57,6 +58,7 @@
   parent: BaseWeaponLaser
   id: WeaponDualLaser
   name: dual laser
+  description: Two basic lasers in one, not really hard to use.
   placement:
     mode: SnapgridCenter
   components:
@@ -72,6 +74,7 @@
   parent: BaseWeaponLaser
   id: WeaponBurstLaserMkI
   name: burst laser mk. 1
+  description: The CoreGov Burst Laser Mark 1 is the first of the Burst Laser series. A common weapon aboard CoreGov ships.
   placement:
     mode: SnapgridCenter
   components:
@@ -87,6 +90,7 @@
   parent: WeaponBurstLaserMkI
   id: WeaponBurstLaserMkII
   name: burst laser mk. 2
+  description: The CoreGov Burst Laser Mark 2 is the second rendition of the Burst Laser series. A common weapon aboard CoreGov fleets.
   placement:
     mode: SnapgridCenter
   components:
@@ -99,6 +103,7 @@
   parent: BaseWeaponLaserTierTwo
   id: WeaponBurstLaserMkIII
   name: burst laser mk. 3
+  description: The ACKs Burst Laser Mark 3 is a redefined version of the Burst Laser Mark 2.5's prototype, stolen from CoreGov.
   placement:
     mode: SnapgridCenter
   components:
@@ -109,7 +114,8 @@
 - type: entity
   parent: BaseWeaponLaserTierTwo
   id: WeaponHeavyLaserMkI
-  name: burst laser mk. 1
+  name: heavy laser mk. 1
+  description: The IncSek Heavy Laser Mark 1 punches a deep hole in the ship - when shields are down.
   placement:
     mode: SnapgridCenter
   components:

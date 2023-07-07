@@ -63,7 +63,8 @@
 - type: entity
   parent: BaseWeaponSilo
   id: BasicMissileSilo
-  name: basic weapon silo
+  name: basic missile silo
+  description: A basic missile silo. Most independent crews use this, unfortunately.
   placement:
     mode: SnapgridCenter
   components:
@@ -79,6 +80,7 @@
   parent: BaseWeaponSilo
   id: ArtemisMarkIWeaponSilo
   name: artemis mk.1 weapon silo
+  description: The CoreGov Artemis Mark 1 is an out of print weapon as due to many incidents revolving it and workers, however is still much common on the edge.
   placement:
     mode: SnapgridCenter
   components:
@@ -94,6 +96,7 @@
   parent: BaseWeaponSilo
   id: ArtemisMarkIIWeaponSilo
   name: artemis mk.2 weapon silo
+  description: The CoreGov Artemis Mark 2 is a standard missile launcher aboard a majority of CoreGov ships.
   placement:
     mode: SnapgridCenter
   components:
@@ -110,6 +113,7 @@
   parent: BaseWeaponSiloTierTwo
   id: SwarmMarkOneMissileSilo
   name: swarm mk.1 weapon silo
+  description: The ACKs Swarm Mark 1 uses the T2 missile's ability to split into swarms, attacking the enemy ship in multiple areas rather than one specific area.
   placement:
     mode: SnapgridCenter
   components:
@@ -121,6 +125,7 @@
   parent: BaseWeaponSiloTierTwo
   id: HoleMarkOneMissileSilo
   name: hole mk.1 weapon silo
+  description: The IncSek Hole Mark 1 is notorious amongst the edge for the main cause of ship destruction since 2488, punching massive holes inside ships - like a hole puncher. They missed an opportunity
   placement:
     mode: SnapgridCenter
   components:
@@ -132,6 +137,7 @@
   parent: BaseWeaponSiloTierTwo
   id: PunchMarkOneMissileSilo
   name: punch mk.1 weapon silo
+  description: The Frontier Stability Corporation's Punch Mark 1 is what it is. It creates a devastating explosion that can easily kill crew - but not hull.
   placement:
     mode: SnapgridCenter
   components:
@@ -143,7 +149,7 @@
 - type: entity
   parent: BaseWeaponSiloTierThree
   id: RailgunWeaponSilo
-  name: railgun weapon silo
+  name: railgun mk. 1 weapon silo
   placement:
     mode: SnapgridCenter
   components:
