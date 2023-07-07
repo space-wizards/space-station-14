@@ -398,6 +398,10 @@
           damage:
             types:
               Cellular: 1
+        - !type:CauseZombieInfection
+          conditions:
+            - !type:ReagentThreshold
+              min: 5
 
 - type: reagent
   id: UncookedAnimalProteins
