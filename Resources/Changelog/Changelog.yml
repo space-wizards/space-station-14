@@ -1,9 +1,4 @@
 Entries:
-- author: Arteben
-  changes:
-  - {message: Changed size for additional combat mode indicators., type: Tweak}
-  id: 3685
-  time: '2023-05-06T16:07:55.0000000+00:00'
 - author: Mumohan
   changes:
   - {message: Nukies can no longer buy uplink implanters to access agent-only offers.,
@@ -2939,3 +2934,14 @@ Entries:
       custodial trolley reservoirs.', type: Add}
   id: 4184
   time: '2023-07-07T02:55:27.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'In accordance with SS13, romerol now causes the zombie infection instead
+      of curing it.', type: Tweak}
+  - {message: Consuming romerol no longer causes damage., type: Tweak}
+  - {message: 'The zombie infection can now be halted with the use of ambuzol, made
+      with dylovene, ammonia, and blood.', type: Add}
+  - {message: Removed corpium., type: Remove}
+  - {message: Slightly adjusted the items inside the syndicate zombie bundle., type: Tweak}
+  id: 4185
+  time: '2023-07-07T04:45:59.0000000+00:00'
