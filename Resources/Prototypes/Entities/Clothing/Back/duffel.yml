@@ -95,7 +95,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/chemistry.rsi
-    
+
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelVirology
@@ -104,7 +104,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/virology.rsi
-    
+
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelGenetics
@@ -157,8 +157,8 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicate
-  name: syndicate duffel bag
-  description: A large duffel bag for holding various traitor goods.
+  name: suspicious duffel bag
+  description: A large duffel bag for holding various... strange things. It looks larger than usual.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi

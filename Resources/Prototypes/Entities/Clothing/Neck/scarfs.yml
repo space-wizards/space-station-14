@@ -89,8 +89,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckScarfStripedSyndieGreen
-  name: striped syndicate green scarf
-  description: A stylish striped syndicate green scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
+  name: striped black-green scarf
+  description: A stylish striped black-green scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to cause some trouble.
   components:
     - type: Sprite
       sprite: Clothing/Neck/Scarfs/syndiegreen.rsi
@@ -100,8 +100,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckScarfStripedSyndieRed
-  name: striped syndicate red scarf
-  description: A stylish striped syndicate red scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
+  name: striped black-red scarf
+  description: A stylish striped black-red scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to cause some trouble.
   components:
     - type: Sprite
       sprite: Clothing/Neck/Scarfs/syndiered.rsi

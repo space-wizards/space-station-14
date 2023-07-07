@@ -18,7 +18,7 @@
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetEVALarge
   name: EVA helmet
-  description: An old-but-gold helmet designed for extravehicular activites.
+  description: An old-but-gold helmet designed for extravehicular activities.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/eva_large.rsi
@@ -29,14 +29,14 @@
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetSyndicate
-  name: syndicate EVA helmet
-  description: A simple, stylish EVA helmet. Designed for maximum humble space-badassery.
+  name: red EVA helmet
+  description: An old-but-gold helmet designed for extravehicular activities, this one is some-why red.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/eva_syndicate.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/eva_syndicate.rsi
- 
+
 #Cosmonaut Helmet
 - type: entity
   parent: ClothingHeadEVAHelmetBase

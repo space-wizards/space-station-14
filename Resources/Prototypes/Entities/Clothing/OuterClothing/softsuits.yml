@@ -16,9 +16,9 @@
 #Syndicate EVA
 - type: entity
   parent: ClothingOuterEVASuitBase
-  id: ClothingOuterHardsuitSyndicate
-  name: syndicate EVA suit
-  description: "Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'"
+  id: ClothingOuterHardsuitSyndicate # TODO: rename to ClothingOuterEVASuitSyndicate
+  name: red EVA suit
+  description: "Has a tag on the back that reads: 'Not property of any rival corporations, no way.'"
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi

@@ -787,7 +787,7 @@
 - type: entity
   parent: UnsensoredClothingUniformBase
   id: ClothingUniformJumpsuitPyjamaSyndicateBlack
-  name: black syndicate pyjamas
+  name: black pyjamas
   description: For those long nights in perma.
   components:
   - type: Sprite
@@ -798,7 +798,7 @@
 - type: entity
   parent: UnsensoredClothingUniformBase
   id: ClothingUniformJumpsuitPyjamaSyndicatePink
-  name: pink syndicate pyjamas
+  name: pink pyjamas
   description: For those long nights in perma.
   components:
   - type: Sprite
@@ -809,7 +809,7 @@
 - type: entity
   parent: UnsensoredClothingUniformBase
   id: ClothingUniformJumpsuitPyjamaSyndicateRed
-  name: red syndicate pyjamas
+  name: red pyjamas
   description: For those long nights in perma.
   components:
   - type: Sprite
