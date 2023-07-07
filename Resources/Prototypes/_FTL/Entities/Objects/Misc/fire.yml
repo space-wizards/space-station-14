@@ -69,6 +69,7 @@
     - type: AmbientHeater
       targetTemperature: 473.15
       heatPerSecond: 10.0
+      requiresPower: false
     - type: GrowingKudzu
     - type: SlowContacts
       walkSpeedModifier: 0.75

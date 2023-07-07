@@ -11,8 +11,8 @@ public sealed class AmbientHeaterComponent : Component
     [DataField("heatPerSecond")]
     public float HeatPerSecond = 100f;
 
-    [ViewVariables(VVAccess.ReadOnly)] [DataField("requirePower")]
-    public bool RequiresPower = false;
+    [ViewVariables(VVAccess.ReadOnly)] [DataField("requiresPower")]
+    public bool RequiresPower;
 
     [ViewVariables(VVAccess.ReadOnly)] public bool Powered = false;
 }

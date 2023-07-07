@@ -10,8 +10,8 @@ namespace Content.Server._Frigid.AmbientHeater;
 
 public sealed class AmbientHeaterSystem : EntitySystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly TransformSystem _xform = default!;
 
     public override void Initialize()
     {
@@ -28,20 +28,22 @@ public sealed class AmbientHeaterSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var (heater, transform) in EntityQuery<AmbientHeaterComponent, TransformComponent>())
+        var query = EntityQueryEnumerator<AmbientHeaterComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var comp, out var xform))
         {
-            if (heater.Powered == false && heater.RequiresPower)
+            if (!comp.Powered && comp.RequiresPower)
                 continue;
 
-            var ent = transform.ParentUid;
-            var grid = transform.GridUid;
-            var map = transform.MapUid;
-            var indices = _transformSystem.GetGridOrMapTilePosition(ent, transform);
-            var mixture = _atmosphereSystem.GetTileMixture(grid, map, indices, true);
+            var grid = xform.GridUid;
+            var map = xform.MapUid;
+            var indices = _xform.GetGridOrMapTilePosition(ent, xform);
+            var mixture = _atmosphere.GetTileMixture(grid, map, indices, true);
+
             if (mixture is { })
             {
-                if (mixture.Temperature <= heater.TargetTemperature)
-                    mixture.Temperature += heater.HeatPerSecond * frameTime;
+                Log.Debug(mixture.Temperature.ToString());
+                if (mixture.Temperature < comp.TargetTemperature)
+                    mixture.Temperature += comp.HeatPerSecond * frameTime;
             }
         }
     }
