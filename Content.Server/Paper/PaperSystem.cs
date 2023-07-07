@@ -23,6 +23,7 @@ namespace Content.Server.Paper
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -118,6 +119,8 @@ namespace Content.Server.Paper
                     _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
                 var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
                     _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, args.User);
+
+                _audio.PlayPvs(stampComp.Sound, uid);
 
                 UpdateUserInterface(uid, paperComp);
             }
