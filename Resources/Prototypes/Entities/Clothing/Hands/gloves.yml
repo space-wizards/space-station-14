@@ -79,9 +79,7 @@
 - type: entity
   parent: ClothingHandsGlovesBoxingBlue
   id: ClothingHandsGlovesBoxingRigged
-  name: blue boxing gloves
   suffix: Rigged
-  description: Blue gloves for competitive boxing.
   components:
   - type: StaminaDamageOnHit
     damage: 30
