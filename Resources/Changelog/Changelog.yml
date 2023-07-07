@@ -1,10 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: You can open and close firelock doors like airlock doors if they are
-      safe. You still need a crowbar for unsafe doors., type: Add}
-  id: 3680
-  time: '2023-05-06T10:21:26.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: hot potato now deals damage while you are holding it, type: Add}
@@ -2935,3 +2929,8 @@ Entries:
       or vehicles., type: Fix}
   id: 4179
   time: '2023-07-06T04:43:49.0000000+00:00'
+- author: noverd
+  changes:
+  - {message: Balanced a explosive payload craft, type: Tweak}
+  id: 4180
+  time: '2023-07-07T00:31:18.0000000+00:00'
