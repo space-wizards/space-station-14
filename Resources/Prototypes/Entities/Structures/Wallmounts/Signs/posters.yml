@@ -885,11 +885,38 @@
   parent: PosterBase
   id: PosterLegitSecWatch
   name: "Sec is Watching You"
-  description: A poster reminding you that security is watching your every move.
+  description: "A poster reminding you that security is watching your every move."
   components:
   - type: Sprite
     state: poster39_legit
 
+- type: entity
+  parent: PosterBase
+  id: PosterLegitAnatomyPoster
+  name: "Anatomy of a spessman"
+  description: "A poster showing the bits and bobs that makes you... you!"
+  components:
+  - type: Sprite
+    state: poster40_legit
+    
+- type: entity
+  parent: PosterBase
+  id: PosterLegitMime
+  name: "Mime Postmodern"
+  description: "A postmodern depiction of a mime, superb!"
+  components:
+  - type: Sprite
+    state: poster41_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitCarpMount
+  name: "Wall-mounted Carp"
+  description: "Carpe diem!"
+  components:
+  - type: Sprite
+    state: poster42_legit
+    
 #maps
 
 - type: entity
