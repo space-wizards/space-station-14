@@ -1,6 +1,4 @@
 # Traitor
-# Some objectives, like Protect, and Stealing the HOP and QM's computer boards, have intentionally been removed from this list. Do with that information what you will.
-
 - type: weightedRandom
   id: TraitorObjectiveGroups
   weights:
@@ -16,6 +14,7 @@
     CMOHyposprayStealObjective: 1
     RDHardsuitStealObjective: 1
     NukeDiskStealObjective: 1
+    IDComputerBoardStealObjective: 1
     MagbootsStealObjective: 1
     CorgiMeatStealObjective: 1
     CaptainGunStealObjective: 0.5
@@ -36,6 +35,7 @@
 - type: weightedRandom
   id: TraitorObjectiveGroupSocial
   weights:
+    RandomTraitorAliveObjective: 0.1
     RandomTraitorProgressObjective: 1
 
 #Changeling, crew, wizard, when you code it...

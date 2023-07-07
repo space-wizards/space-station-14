@@ -148,6 +148,22 @@
       prototype: ClothingShoesBootsMagAdv
       owner: job-name-ce
 
+#Steal the ID computer board
+- type: objective
+  id: IDComputerBoardStealObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+    - !type:NotRoleRequirement
+      roleId: HeadOfPersonnel
+  conditions:
+    - !type:StealCondition
+      prototype: IDComputerCircuitboard
+      owner: job-name-hop
+ 
 #Get Prime Cut Corgi Meat
 - type: objective
   id: CorgiMeatStealObjective
