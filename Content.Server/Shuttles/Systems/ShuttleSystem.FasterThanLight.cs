@@ -164,8 +164,6 @@ public sealed partial class ShuttleSystem
         _console.RefreshShuttleConsoles();
         var ev = new FTLRequestEvent(_mapManager.GetMapEntityId(coordinates.ToMap(EntityManager, _transform).MapId));
         RaiseLocalEvent(shuttleUid, ref ev, true);
-
-        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jump-jumped-message"), colorOverride: Color.Gold);
     }
 
     /// <summary>
@@ -242,7 +240,6 @@ public sealed partial class ShuttleSystem
             {
                 // Startup time has elapsed and in hyperspace.
                 case FTLState.Starting:
-                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jump-jumped-message"), colorOverride: Color.Gold);
                     DoTheDinosaur(xform);
 
                     comp.State = FTLState.Travelling;
@@ -295,7 +292,6 @@ public sealed partial class ShuttleSystem
                     break;
                 // Arrived
                 case FTLState.Arriving:
-                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jump-arrival-message"), colorOverride: Color.Gold);
                     DoTheDinosaur(xform);
                     SetDockBolts(uid, false);
                     SetDocks(uid, true);

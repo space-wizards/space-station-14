@@ -3,6 +3,7 @@ using Content.Server._FTL.AutomatedCombat;
 using Content.Server._FTL.FTLPoints;
 using Content.Server._FTL.ShipTracker.Events;
 using Content.Server._FTL.Weapons;
+using Content.Server.AlertLevel;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Explosion.EntitySystems;
@@ -28,6 +29,7 @@ public sealed class ShipTrackerSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
 
     public override void Initialize()
     {
@@ -35,9 +37,15 @@ public sealed class ShipTrackerSystem : EntitySystem
 
         SubscribeLocalEvent<ShipTrackerComponent, FTLCompletedEvent>(OnFTLCompletedEvent);
         SubscribeLocalEvent<ShipTrackerComponent, FTLStartedEvent>(OnFTLStartedEvent);
+        SubscribeLocalEvent<ShipTrackerComponent, FTLRequestEvent>(OnFTLRequestEvent);
         SubscribeLocalEvent<GridAddEvent>(OnGridAdd);
         SubscribeLocalEvent<ShipTrackerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RepairMainShipOnInitComponent, MapInitEvent>(OnRepairShipMapInit);
+    }
+
+    private void OnFTLRequestEvent(EntityUid uid, ShipTrackerComponent component, ref FTLRequestEvent args)
+    {
+        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jump-jumped-message"), colorOverride: Color.Gold);
     }
 
     private void OnRepairShipMapInit(EntityUid uid, RepairMainShipOnInitComponent component, MapInitEvent args)
@@ -70,6 +78,8 @@ public sealed class ShipTrackerSystem : EntitySystem
     {
         if (args.FromMapUid != null)
             Del(args.FromMapUid.Value);
+
+        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jump-jumped-message"), colorOverride: Color.Gold);
     }
 
     private void OnFTLCompletedEvent(EntityUid uid, ShipTrackerComponent component, ref FTLCompletedEvent args)
@@ -79,6 +89,17 @@ public sealed class ShipTrackerSystem : EntitySystem
         var mapId = Transform(args.MapUid).MapID;
         _mapManager.DoMapInitialize(mapId);
 
+        var amount = EntityQuery<AutomatedCombatComponent>().Select(x => Transform(x.Owner).MapID == mapId).Count();
+        if (amount > 0)
+        {
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-inbound-message", ("amount", amount)));
+            _alertLevelSystem.SetLevel(args.Entity, "blue", true, true);
+        }
+        else
+        {
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("ship-ftl-jump-arrival-message"),
+                colorOverride: Color.Gold);
+        }
         _pointsSystem.RegeneratePoints();
     }
 
