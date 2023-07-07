@@ -5,7 +5,7 @@
     - !type:BiomeMetaLayer
       template: Lava
     - !type:BiomeMetaLayer
-      template: LowDesert
+      template: Caves
       threshold: -0.5
       noise:
         frequency: 0.001
