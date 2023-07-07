@@ -377,7 +377,7 @@ public sealed class BloodstreamSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Change what's in someone's blood, on the fly. Will also refill their blood, I guess.
+    ///     Change what someone's blood is made of, on the fly. 
     /// </summary>
     public void ChangeBloodReagent(EntityUid uid, string reagent, BloodstreamComponent? component = null)
     {
@@ -387,8 +387,10 @@ public sealed class BloodstreamSystem : EntitySystem
         if(reagent == component.BloodReagent)
             return;
 
+        var currentVolume = component.BloodSolution.Volume;
+
         component.BloodReagent = reagent;
         component.BloodSolution.RemoveAllSolution();
-        _solutionContainerSystem.TryAddReagent(uid, component.BloodSolution, component.BloodReagent, component.BloodMaxVolume, out _);
+        _solutionContainerSystem.TryAddReagent(uid, component.BloodSolution, component.BloodReagent, currentVolume, out _);
     }
 }
