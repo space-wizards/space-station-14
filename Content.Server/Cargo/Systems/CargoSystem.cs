@@ -15,12 +15,14 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Random;
 
 namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem : SharedCargoSystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -51,6 +53,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
         InitializeConsole();
         InitializeShuttle();
         InitializeTelepad();
+        InitializeBounty();
     }
 
     public override void Shutdown()
@@ -64,6 +67,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
         base.Update(frameTime);
         UpdateConsole(frameTime);
         UpdateTelepad(frameTime);
+        UpdateBounty();
     }
 
     [PublicAPI]

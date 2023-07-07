@@ -9,6 +9,18 @@
     Blunt: 5
     Heat: 5
 
+- type: damageModifierSet
+  id: PerforatedMetallic
+  coefficients:
+    Blunt: 2
+    Slash: 0.6
+    Piercing: 0.2
+    Shock: 1.2
+  flatReductions:
+    Blunt: 5
+    Heat: 5
+    Piercing: 10
+
 # Like metallic, but without flat reduction so it can be damaged with fists.
 - type: damageModifierSet
   id: FlimsyMetallic

@@ -332,3 +332,18 @@
     maxSoundDistance: 7
     sounds:
       collection: Paracusia
+
+- type: entity
+  id: ImmovableRodSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-immovable-rod-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 1
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 20
+  - type: ImmovableRodRule

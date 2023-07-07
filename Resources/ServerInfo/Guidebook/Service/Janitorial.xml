@@ -25,6 +25,9 @@ You keep things clean, it's a rough job sometimes, but someone's gotta do it. Th
 <GuideEntityEmbed Entity="Holoprojector" Caption="holosign projector"/>
 <GuideEntityEmbed Entity="LightReplacer"/>
 </Box>
+<Box>
+<GuideEntityEmbed Entity="AdvMopItem" Caption="Advanced mop, ask in R&D"/>
+</Box>
 
 ## Fluid Acquisition and Disposal
 <Box>
@@ -51,4 +54,5 @@ A good janitor is always on the lookout for a bit more to do, and there are plen
 ##Additional Information:
 <GuideReagentEmbed Reagent="SpaceCleaner"/>
 <GuideReagentEmbed Reagent="Ammonia"/>
+
 </Document>

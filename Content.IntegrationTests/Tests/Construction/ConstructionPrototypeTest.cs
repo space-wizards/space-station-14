@@ -1,11 +1,9 @@
 using Content.Server.Construction.Components;
 using Content.Shared.Construction.Prototypes;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using System.Threading.Tasks;
 
 namespace Content.IntegrationTests.Tests.Construction
 {
@@ -22,7 +20,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task TestStartNodeValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var entMan = server.ResolveDependency<IEntityManager>();
@@ -54,7 +52,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task TestStartIsValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
@@ -72,7 +70,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task TestTargetIsValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
@@ -121,7 +119,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task TestStartReachesValidTarget()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
@@ -131,12 +129,15 @@ namespace Content.IntegrationTests.Tests.Construction
                 var start = proto.StartNode;
                 var target = proto.TargetNode;
                 var graph = protoMan.Index<ConstructionGraphPrototype>(proto.Graph);
+
+#pragma warning disable NUnit2045 // Interdependent assertions.
                 Assert.That(graph.TryPath(start, target, out var path), $"Unable to find path from \"{start}\" to \"{target}\" on graph \"{graph.ID}\"");
-                Assert.That(path!.Length, Is.GreaterThanOrEqualTo(1), $"Unable to find path from \"{start}\" to \"{target}\" on graph \"{graph.ID}\".");
+                Assert.That(path, Has.Length.GreaterThanOrEqualTo(1), $"Unable to find path from \"{start}\" to \"{target}\" on graph \"{graph.ID}\".");
                 var next = path[0];
                 Assert.That(next.Entity, Is.Not.Null, $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) must specify an entity! Graph: {graph.ID}");
                 Assert.That(protoMan.TryIndex(next.Entity, out EntityPrototype entity), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an invalid entity prototype ({next.Entity})");
                 Assert.That(entity.Components.ContainsKey("Construction"), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an entity prototype ({next.Entity}) without a ConstructionComponent.");
+#pragma warning restore NUnit2045
             }
             await pairTracker.CleanReturnAsync();
         }

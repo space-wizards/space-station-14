@@ -3144,11 +3144,6 @@ entities:
     - pos: 19.42657,0.6288943
       parent: 588
       type: Transform
-  - uid: 398
-    components:
-    - pos: 28.387192,8.540832
-      parent: 588
-      type: Transform
 - proto: BookRandom
   entities:
   - uid: 1835
@@ -7708,6 +7703,13 @@ entities:
     - pos: 10.645364,44.67479
       parent: 588
       type: Transform
+- proto: ClusterBangFull
+  entities:
+  - uid: 599
+    components:
+    - pos: 33.484257,28.42918
+      parent: 588
+      type: Transform
 - proto: ComputerAlert
   entities:
   - uid: 999
@@ -9004,6 +9006,13 @@ entities:
     - pos: 10.5,48.5
       parent: 588
       type: Transform
+- proto: GatfruitSeeds
+  entities:
+  - uid: 562
+    components:
+    - pos: 8.528373,27.49547
+      parent: 588
+      type: Transform
 - proto: Gauze
   entities:
   - uid: 1482
@@ -9191,16 +9200,15 @@ entities:
       type: Transform
 - proto: HospitalCurtains
   entities:
+  - uid: 402
+    components:
+    - pos: 8.5,27.5
+      parent: 588
+      type: Transform
   - uid: 949
     components:
     - rot: 1.5707963267948966 rad
       pos: 8.5,24.5
-      parent: 588
-      type: Transform
-  - uid: 950
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 8.5,27.5
       parent: 588
       type: Transform
   - uid: 951
@@ -9350,6 +9358,13 @@ entities:
   - uid: 1788
     components:
     - pos: 30.5,42.5
+      parent: 588
+      type: Transform
+- proto: IngotGold
+  entities:
+  - uid: 952
+    components:
+    - pos: 11.069347,39.504154
       parent: 588
       type: Transform
 - proto: KitchenMicrowave
@@ -9606,13 +9621,6 @@ entities:
     - pos: 30.614443,28.392822
       parent: 588
       type: Transform
-- proto: MedkitBruteFilled
-  entities:
-  - uid: 402
-    components:
-    - pos: 30.512049,27.511803
-      parent: 588
-      type: Transform
 - proto: MedkitCombatFilled
   entities:
   - uid: 1154
@@ -9828,7 +9836,7 @@ entities:
     - pos: 22.5,40.5
       parent: 588
       type: Transform
-- proto: PowerCellHigh
+- proto: PowerCellHyper
   entities:
   - uid: 469
     components:
@@ -11174,6 +11182,24 @@ entities:
       type: Transform
 - proto: RemoteSignaller
   entities:
+  - uid: 593
+    components:
+    - pos: 34.361877,24.623777
+      parent: 588
+      type: Transform
+    - linkedPorts:
+        1238:
+        - Pressed: Toggle
+        1239:
+        - Pressed: Toggle
+        1237:
+        - Pressed: Toggle
+      registeredSinks:
+        Pressed:
+        - 1238
+        - 1239
+        - 1237
+      type: DeviceLinkSource
   - uid: 1104
     components:
     - pos: 25.24476,30.698978
@@ -11288,6 +11314,39 @@ entities:
     - pos: 28.5,42.5
       parent: 588
       type: Transform
+- proto: SheetGlass
+  entities:
+  - uid: 649
+    components:
+    - pos: 14.3137455,32.471424
+      parent: 588
+      type: Transform
+- proto: SheetPlasteel
+  entities:
+  - uid: 866
+    components:
+    - pos: 2.412651,34.456436
+      parent: 588
+      type: Transform
+- proto: SheetPlastic
+  entities:
+  - uid: 398
+    components:
+    - pos: 20.04785,45.07574
+      parent: 588
+      type: Transform
+- proto: SheetSteel
+  entities:
+  - uid: 656
+    components:
+    - pos: 26.36062,32.5183
+      parent: 588
+      type: Transform
+  - uid: 699
+    components:
+    - pos: 29.259031,40.432583
+      parent: 588
+      type: Transform
 - proto: ShowcaseRobot
   entities:
   - uid: 1621
@@ -11307,11 +11366,17 @@ entities:
     - pos: 34.5,27.5
       parent: 588
       type: Transform
+    - links:
+      - 593
+      type: DeviceLinkSink
   - uid: 1238
     components:
     - pos: 32.5,27.5
       parent: 588
       type: Transform
+    - links:
+      - 593
+      type: DeviceLinkSink
 - proto: ShuttersWindow
   entities:
   - uid: 1239
@@ -11319,6 +11384,9 @@ entities:
     - pos: 33.5,27.5
       parent: 588
       type: Transform
+    - links:
+      - 593
+      type: DeviceLinkSink
 - proto: SignCloning
   entities:
   - uid: 1484
@@ -11474,11 +11542,25 @@ entities:
     - pos: 24.466219,48.441994
       parent: 588
       type: Transform
+- proto: SpeedLoaderMagnumHighVelocity
+  entities:
+  - uid: 950
+    components:
+    - pos: 28.703945,8.421182
+      parent: 588
+      type: Transform
 - proto: StasisBed
   entities:
   - uid: 1425
     components:
     - pos: 13.5,43.5
+      parent: 588
+      type: Transform
+- proto: StimkitFilled
+  entities:
+  - uid: 561
+    components:
+    - pos: 30.39083,27.514402
       parent: 588
       type: Transform
 - proto: StimpackMini
@@ -12761,6 +12843,13 @@ entities:
   - uid: 1612
     components:
     - pos: 22.543945,6.5464144
+      parent: 588
+      type: Transform
+- proto: WeaponShotgunKammerer
+  entities:
+  - uid: 583
+    components:
+    - pos: 26.57963,35.4414
       parent: 588
       type: Transform
 - proto: WindoorAssemblySecure

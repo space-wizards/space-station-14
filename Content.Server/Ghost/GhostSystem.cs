@@ -236,8 +236,6 @@ namespace Content.Server.Ghost
             if (Deleted(uid) || Terminating(uid))
                 return;
 
-            if (EntityManager.TryGetComponent<MindContainerComponent?>(uid, out var mind))
-                _mindSystem.SetGhostOnShutdown(uid, false, mind);
             QueueDel(uid);
         }
 

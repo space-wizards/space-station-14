@@ -107,6 +107,7 @@
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
+  - type: TransformableContainer
 
 - type: entity
   name: Coupe glass

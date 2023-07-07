@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Text;
+using Content.Client.Stylesheets;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
@@ -22,7 +23,6 @@ public sealed partial class LatheMenu : DefaultWindow
 
     public event Action<BaseButton.ButtonEventArgs>? OnQueueButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnServerListButtonPressed;
-    public event Action<BaseButton.ButtonEventArgs>? OnServerSyncButtonPressed;
     public event Action<string, int>? RecipeQueueAction;
 
     public List<string> Recipes = new();
@@ -49,15 +49,13 @@ public sealed partial class LatheMenu : DefaultWindow
         QueueButton.OnPressed += a => OnQueueButtonPressed?.Invoke(a);
         ServerListButton.OnPressed += a => OnServerListButtonPressed?.Invoke(a);
 
-        //refresh the bui state
-        ServerSyncButton.OnPressed += a => OnServerSyncButtonPressed?.Invoke(a);
-
         if (_entityManager.TryGetComponent<LatheComponent>(owner.Lathe, out var latheComponent))
         {
             if (!latheComponent.DynamicRecipes.Any())
             {
                 ServerListButton.Visible = false;
-                ServerSyncButton.Visible = false;
+                QueueButton.RemoveStyleClass(StyleBase.ButtonOpenRight);
+                //QueueButton.AddStyleClass(StyleBase.ButtonSquare);
             }
         }
     }
