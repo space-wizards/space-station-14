@@ -460,6 +460,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             case LightAttackEvent light:
                 if (!Blocker.CanAttack(user, light.Target))
                     return false;
+
+                // Can't self-attack if you're the weapon
+                if (weaponUid == light.Target)
+                    return false;
+
                 break;
             case DisarmAttackEvent disarm:
                 if (!Blocker.CanAttack(user, disarm.Target))

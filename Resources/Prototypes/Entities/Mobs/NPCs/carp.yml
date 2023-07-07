@@ -56,6 +56,7 @@
         - id: FoodMeatFish
           amount: 2
     - type: MeleeWeapon
+      altDisarm: false
       hidden: true
       angle: 0
       animation: WeaponArcBite
