@@ -258,17 +258,12 @@ namespace Content.Server.Zombies
                 }
                 else
                 {
-                    if (_random.Prob(GetZombieInfectionChance(entity, component)))
+                    if (!HasComp<ZombieImmuneComponent>(entity) && _random.Prob(GetZombieInfectionChance(entity, component)))
                     {
                         var pending = EnsureComp<PendingZombieComponent>(entity);
                         pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.ZombieInfectionTurnTime;
                         EnsureComp<ZombifyOnDeathComponent>(entity);
                     }
-                    if (HasComp<ZombieImmuneComponent>(entity)) 
-                    {
-                        EntityManager.RemoveComponent<PendingZombieComponent>(entity);
-                        EntityManager.RemoveComponent<ZombifyOnDeathComponent>(entity);
-                    } 
                 }
 
                 if ((mobState.CurrentState == MobState.Dead || mobState.CurrentState == MobState.Critical)
