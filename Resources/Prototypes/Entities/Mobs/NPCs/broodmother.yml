@@ -16,8 +16,6 @@
     states:
       Alive:
         Base: alive
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: PointLight
@@ -34,8 +32,9 @@
       1000: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      500: 0.7
-      750: 0.8
+      250: 0.9
+      500: 0.8
+      920: 0.2
   - type: GhostTakeoverAvailable
   - type: GhostRole
     name: A huge spider!
@@ -110,8 +109,7 @@
       100: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      500: 0.8
-      750: 0.7
+      20: 0.5
   - type: GhostTakeoverAvailable
   - type: GhostRole
     name: Little spider!
