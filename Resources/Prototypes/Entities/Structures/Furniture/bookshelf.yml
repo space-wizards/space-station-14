@@ -1,7 +1,7 @@
 - type: entity
   id: Bookshelf
   parent: BaseStructure
-  name: "bookshelf"
+  name: bookshelf
   description: Mostly filled with books.
   components:
   - type: Sprite
@@ -13,7 +13,7 @@
       - map: ["enum.StorageFillLayers.Fill"]
   - type: Appearance
   - type: StorageFillVisualizer
-    maxFillLevels: 20
+    maxFillLevels: 8
     fillBaseName: book
   - type: Damageable
     damageModifierSet: Wood
@@ -22,7 +22,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 30
+        damage: 100
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -45,7 +45,7 @@
   - type: Anchorable
   - type: Pullable
   - type: Storage
-    capacity: 200
+    capacity: 30
     whitelist:
       tags:
         - Document
@@ -64,3 +64,4 @@
   - type: Construction
     graph: Bookshelf
     node: bookshelf
+
