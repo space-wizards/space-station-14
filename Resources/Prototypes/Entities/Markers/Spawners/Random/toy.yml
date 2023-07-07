@@ -37,15 +37,15 @@
       offset: 0.2
 
 - type: entity
-  name: Figure Spawner
+  name: Prize Figurine Spawner
   id: FigureSpawner
   parent: MarkerBase
   components:
     - type: Sprite
       layers:
         - state: red
-        - sprite: Objects/Fun/toys.rsi
-          state: ripleytoy
+        - sprite: Objects/Fun/mech_figurines.rsi
+          state: ripley
     - type: RandomSpawner
       prototypes:
         - ToyAi

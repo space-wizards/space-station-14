@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites made by Flareguy for Space Station 14. Griffinprize, skeletonprize, and owlprize taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "atmos"
+    },
+    {
+      "name": "engineer"
+    },
+    {
+      "name": "passenger"
+    },
+    {
+      "name": "passenger_greytide"
+    },
+    {
+      "name": "captain"
+    },
+    {
+      "name": "cargotech"
+    },
+    {
+      "name": "qm"
+    },
+    {
+      "name": "salvage"
+    },
+    {
+      "name": "nukie"
+    },
+    {
+      "name": "nukie_elite"
+    },
+    {
+      "name": "nukie_commander"
+    },
+    {
+      "name": "footsoldier"
+    },
+    {
+      "name": "scientist"
+    },
+    {
+      "name": "medical"
+    },
+    {
+      "name": "queen"
+    },
+    {
+      "name": "security"
+    },
+    {
+      "name": "clown"
+    },
+    {
+      "name": "mime"
+    },
+    {
+      "name": "librarian"
+    },
+    {
+      "name": "slime"
+    },
+    {
+      "name": "wizard"
+    },
+    {
+      "name": "wizard_fake"
+    },
+    {
+      "name": "owlprize"
+    },
+    {
+      "name": "griffinprize"
+    },
+    {
+      "name": "skeletonprize"
+    },
+    {
+      "name": "fig_box"
+    },
+    {
+      "name": "fig_box_unfolded"
+    }
+  ]
+}
