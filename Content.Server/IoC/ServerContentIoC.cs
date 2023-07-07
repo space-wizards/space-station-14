@@ -11,6 +11,7 @@ using Content.Server.GhostKick;
 using Content.Server.Info;
 using Content.Server.Maps;
 using Content.Server.MoMMI;
+using Content.Server.NewCon;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Objectives;
 using Content.Server.Objectives.Interfaces;
@@ -58,6 +59,7 @@ namespace Content.Server.IoC
             IoCManager.Register<UserDbDataManager>();
             IoCManager.Register<ServerInfoManager>();
             IoCManager.Register<PoissonDiskSampler>();
+            IoCManager.Register<NewConManager>();
         }
     }
 }
