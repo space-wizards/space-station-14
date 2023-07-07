@@ -14,6 +14,9 @@ public sealed class WeaponTargetingComponent : Component
 
     [DataField("cooldownSound"), ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier CooldownSound = new SoundPathSpecifier("/Audio/Weapons/click.ogg");
+
+    [DataField("isLinked"), ViewVariables(VVAccess.ReadWrite)]
+    public bool IsLinked;
 }
 
 /// <summary>

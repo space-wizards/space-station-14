@@ -31,14 +31,27 @@ public sealed class FireWeaponSendMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
+public sealed class ShipScanRequestMessage : BoundUserInterfaceMessage
+{
+    public EntityUid SelectedGrid;
+
+    public ShipScanRequestMessage(EntityUid selectedGrid)
+    {
+        SelectedGrid = selectedGrid;
+    }
+}
+
+[Serializable, NetSerializable]
 public sealed class WeaponTargetingUserInterfaceState : BoundUserInterfaceState
 {
     public bool CanFire;
     public List<EntityUid> MapUids;
+    public string? ScanText;
 
-    public WeaponTargetingUserInterfaceState(bool canFire, List<EntityUid> mapUids)
+    public WeaponTargetingUserInterfaceState(bool canFire, List<EntityUid> mapUids, string? scanText = null)
     {
         CanFire = canFire;
         MapUids = mapUids;
+        ScanText = scanText;
     }
 }

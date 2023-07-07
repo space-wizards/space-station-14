@@ -45,7 +45,7 @@ public sealed class WeaponMapControl : MapGridControl
     private Vector2 _offset;
     private bool _draggin;
 
-    private bool _recentering = false;
+    private bool _recentering;
 
     private float _recenterMinimum = 0.05f;
     private EntityCoordinates? _lastTargetCoordinates;
@@ -54,27 +54,35 @@ public sealed class WeaponMapControl : MapGridControl
     private Angle? _rotation;
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
-    private readonly Label _flavor = new()
+    public readonly Label ScanOutput = new()
     {
-        VerticalAlignment = VAlignment.Top,
+        VerticalAlignment = VAlignment.Center,
         HorizontalAlignment = HAlignment.Center,
         Margin = new Thickness(8f, 8f)
     };
 
-    private readonly OptionButton _selectMapUid = new()
+    private readonly OptionButton SelectMapUid = new()
     {
-        VerticalAlignment = VAlignment.Top,
-        HorizontalAlignment = HAlignment.Left,
+        VerticalAlignment = VAlignment.Center,
+        HorizontalAlignment = HAlignment.Center,
         Margin = new Thickness(8f, 4f)
     };
 
     public readonly Button FireButton = new()
     {
         Text = Loc.GetString("weapon-control-ui-button-fire-text"),
-        VerticalAlignment = VAlignment.Top,
-        HorizontalAlignment = HAlignment.Right,
+        VerticalAlignment = VAlignment.Center,
+        HorizontalAlignment = HAlignment.Left,
         Margin = new Thickness(8f, 4f),
         Disabled = true,
+    };
+
+    public readonly Button ScanButton = new()
+    {
+        Text = Loc.GetString("weapon-control-ui-button-scan-text"),
+        VerticalAlignment = VAlignment.Center,
+        HorizontalAlignment = HAlignment.Right,
+        Margin = new Thickness(8f, 4f)
     };
 
     public WeaponMapControl() : base(8f, 128f, 48f)
@@ -94,9 +102,7 @@ public sealed class WeaponMapControl : MapGridControl
             VerticalExpand = false,
             Children =
             {
-                FireButton,
-                _selectMapUid,
-                // _flavor,
+                ScanOutput
             }
         };
 
@@ -115,8 +121,38 @@ public sealed class WeaponMapControl : MapGridControl
             }
         };
 
+        var bottomPanel = new PanelContainer()
+        {
+            PanelOverride = new StyleBoxFlat()
+            {
+                BackgroundColor = StyleNano.ButtonColorContext.WithAlpha(1f),
+                BorderColor = StyleNano.PanelDark
+            },
+            VerticalExpand = false,
+            Children =
+            {
+                FireButton,
+                ScanButton,
+                SelectMapUid
+            }
+        };
 
-        _flavor.Text = Loc.GetString($"weapon-control-ui-flavor-{_robustRandom.Next(1, 5)}");
+        var bottomContainer = new BoxContainer()
+        {
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
+            VerticalAlignment = VAlignment.Bottom,
+            Children =
+            {
+                bottomPanel,
+                new Control
+                {
+                    Name = "DrawingControl",
+                    VerticalExpand = true,
+                    Margin = new Thickness(5f, 5f)
+                }
+            }
+        };
+
         FireButton.OnPressed += args =>
         {
             if (_lastTargetCoordinates != null)
@@ -124,6 +160,7 @@ public sealed class WeaponMapControl : MapGridControl
         };
 
         AddChild(topContainer);
+        AddChild(bottomContainer);
         topPanel.Measure(Vector2.Infinity);
     }
 
@@ -184,10 +221,8 @@ public sealed class WeaponMapControl : MapGridControl
         relativeWorldPos = _rotation.Value.RotateVec(relativeWorldPos);
         var coords = _coordinates.Value.Offset(relativeWorldPos);
 
-        TrackedCoordinates.Add(coords, (true, Color.Blue));
+        TrackedCoordinates.Add(coords, (true, new Color(125, 255, 125)));
         _lastTargetCoordinates = coords;
-
-        Logger.Debug(coords.ToString());
 
         return coords;
     }
@@ -230,12 +265,12 @@ public sealed class WeaponMapControl : MapGridControl
                 _entityManager.TryGetComponent<MetaDataComponent>(map, out var meta);
                 if (meta == null)
                     continue;
-                _selectMapUid.AddItem(meta.EntityName, i);
+                SelectMapUid.AddItem(meta.EntityName, i);
                 if (map == MapUid)
-                    _selectMapUid.SelectId(i);
+                    SelectMapUid.SelectId(i);
             }
 
-            _selectMapUid.OnItemSelected += item =>
+            SelectMapUid.OnItemSelected += item =>
             {
                 MapUid = MapUids[item.Id];
                 OnGridSwitchRequest?.Invoke(MapUid.Value);
@@ -279,8 +314,8 @@ public sealed class WeaponMapControl : MapGridControl
         }
 
         var offset = _offset;
-        var tileColor = new Color(30, 67, 30);
-        var lineColor = new Color(102, 217, 102);
+        var tileColor = new Color(0, 29, 57);
+        var lineColor = new Color(255, 125, 0);
 
         if (_entManager.TryGetComponent<PhysicsComponent>(mapGridUid, out var physics))
         {

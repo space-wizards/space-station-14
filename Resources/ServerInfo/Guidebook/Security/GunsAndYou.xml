@@ -7,16 +7,24 @@
   - Silo-fed weapons require you to load a specific type of missile (usually the same tier or higher rated missile).
   - Not silo-fed weapons do not require you to load anything, and recharge automatically.
 
+  ## Tiers
+  There are four main tiers of weapons.
+  - Tier 1: The most rudimentary of weapons, they're commonly sold at shops and all ships have had it at one point.
+  - Tier 2: Intermediate weaponry, not very common on the Edge however very common amongst fleets.
+  - Tier 3: Advanced weaponry or powerful weaponry, such as the railgun.
+  - Tier 4: Experimental weaponry. Unstable, prone to breaking, none exist... or?
+  
   These 2 weapons all show up in a "packaged" form, a 1x1 block that represents the object. This may be a loader, a battery or some other object that requires to be linked onto a weapon pad.
   The actual gun exists, you just cant see it. It's ontop of the ship. However, ammo handling, cooldowns and others are handled by the package.
 
   ## Weapon Pads
-  The weapon pad is the main way of controlling weapons. Here are the controls:
-  - In order to change your target, you can use the top-left dropdown menu. [color=#a4885c]It will only target valid ships (e.g. not trade stations)[/color].
-  - In order to choose the position you shoot at, you use the [color=#a4885c]right click[/color] button. Reminder that the position may be inaccurate, and it may take a bit of adjusting to get used to.
-  - In order to fire, you click the [color=#a4885c]Fire[/color] button in the top-right corner.
+  The weapon pad is the main way of targeting and firing weapons.
+  You must first choose a target to fire at, by default, it targets the ship that the pad is on. This is bad, because you will shoot yourself if you do fire. However, it is fine as a default. In order to switch grids, there is a dropdown menu in the center of the bottom menu showing applicable targets.
+  After this, you may either:
+  - Shoot the gun: In order to select a point to fire at, you must right click. Do note that it may be slightly inaccurate and you may have to zoom in and out in order to get it correct. Then simply hit the Fire button.
+  - Scan the ship: Scanning is instant and does not consume ammunition or damage the ship, it also does not require right click. It will scan the ship's hull and shield values so you can see how the ships got you.
 
-  Please do remember that hull damage is not dependent on your right-click, rather only your selected target. Do not shoot yourself to mine rocks.
+  Please do remember that hull damage is not dependent on your where you right-clicked, rather only your selected target. Do not shoot yourself to mine rocks.
 
   ## Roundstart
   On roundstart, depending on the map, you will usually start with [color=#a4885c]one silo-fed weapon[/color] and [color=#a4885c]one non silo-fed weapon[/color], alongside the ammunition for said weaponry.

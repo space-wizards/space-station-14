@@ -25,8 +25,7 @@ public sealed class PowerControlSystem : SharedPowerControlSystem
     private void OnApcToggleRequestMessage(EntityUid uid, PowerControlComponent component, ToggleApcMessage message)
     {
         var apc = message.ApcEntity;
-
-        Logger.Debug(apc.ToString());
+;
         _apc.ApcToggleBreaker(apc);
         UpdateUserInterface(uid, component);
     }

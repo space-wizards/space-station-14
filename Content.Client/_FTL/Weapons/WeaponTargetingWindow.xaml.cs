@@ -15,13 +15,18 @@ public sealed partial class WeaponTargetingWindow : FancyWindow
     {
         RobustXamlLoader.Load(this);
         _owner = owner;
-        TargetingMapScreen.MapUid = mapUid;
+        ChangeGrid(mapUid);
         TargetingMapScreen.SetMatrix(coordinates, rotation);
 
         TargetingMapScreen.OnWeaponMapFire += args =>
         {
             if (TargetingMapScreen.MapUid != null)
                 _owner.FireWeapon(args, TargetingMapScreen.MapUid.Value);
+        };
+        TargetingMapScreen.ScanButton.OnPressed += args =>
+        {
+            if (TargetingMapScreen.MapUid != null)
+                _owner.ScanButton(TargetingMapScreen.MapUid.Value);
         };
 
         if (trackedEntity != null)
@@ -33,7 +38,7 @@ public sealed partial class WeaponTargetingWindow : FancyWindow
         }
     }
 
-    public void ChangeGrid(EntityUid gridUid)
+    public void ChangeGrid(EntityUid? gridUid)
     {
         TargetingMapScreen.MapUid = gridUid;
     }
@@ -42,5 +47,9 @@ public sealed partial class WeaponTargetingWindow : FancyWindow
     {
         TargetingMapScreen.FireButton.Disabled = !state.CanFire;
         TargetingMapScreen.MapUids = state.MapUids;
+        if (state.ScanText != null)
+        {
+            TargetingMapScreen.ScanOutput.Text = state.ScanText;
+        }
     }
 }

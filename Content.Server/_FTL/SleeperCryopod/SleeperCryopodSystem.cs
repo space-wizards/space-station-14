@@ -51,7 +51,6 @@ public sealed class SleeperCryopodSystem : EntitySystem
             return;
 
         var validPods = EntityQuery<SleeperCryopodComponent>().Where(c => !IsOccupied(c)).ToArray();
-        Logger.Debug($"{validPods.Length}");
         _random.Shuffle(validPods);
         if (!validPods.Any())
             return;

@@ -37,6 +37,13 @@ public sealed class WeaponTargetingBoundUserInterface : BoundUserInterface
         SendMessage(message);
     }
 
+    public void ScanButton(EntityUid targetGrid)
+    {
+        var message = new ShipScanRequestMessage(targetGrid);
+
+        SendMessage(message);
+    }
+
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
