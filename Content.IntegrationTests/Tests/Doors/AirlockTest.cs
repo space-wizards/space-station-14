@@ -1,12 +1,8 @@
-using System;
-using System.Threading.Tasks;
 using Content.Server.Doors.Systems;
 using Content.Shared.Doors.Components;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
@@ -55,7 +51,11 @@ namespace Content.IntegrationTests.Tests.Doors
         [Test]
         public async Task OpenCloseDestroyTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            {
+                NoClient = true,
+                ExtraPrototypes = Prototypes
+            });
             var server = pairTracker.Pair.Server;
 
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -68,8 +68,10 @@ namespace Content.IntegrationTests.Tests.Doors
             {
                 airlock = entityManager.SpawnEntity("AirlockDummy", MapCoordinates.Nullspace);
 
-                Assert.True(entityManager.TryGetComponent(airlock, out doorComponent));
+#pragma warning disable NUnit2045 // Interdependent assertions.
+                Assert.That(entityManager.TryGetComponent(airlock, out doorComponent), Is.True);
                 Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closed));
+#pragma warning restore NUnit2045
             });
 
             await server.WaitIdleAsync();
@@ -112,7 +114,11 @@ namespace Content.IntegrationTests.Tests.Doors
         [Test]
         public async Task AirlockBlockTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            {
+                NoClient = true,
+                ExtraPrototypes = Prototypes
+            });
             var server = pairTracker.Pair.Server;
 
             await server.WaitIdleAsync();
@@ -120,6 +126,7 @@ namespace Content.IntegrationTests.Tests.Doors
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var physicsSystem = entityManager.System<SharedPhysicsSystem>();
+            var xformSystem = entityManager.System<SharedTransformSystem>();
 
             PhysicsComponent physBody = null;
             EntityUid physicsDummy = default;
@@ -137,9 +144,11 @@ namespace Content.IntegrationTests.Tests.Doors
 
                 airlock = entityManager.SpawnEntity("AirlockDummy", new MapCoordinates((0, 0), mapId));
 
-                Assert.True(entityManager.TryGetComponent(physicsDummy, out physBody));
-
-                Assert.True(entityManager.TryGetComponent(airlock, out doorComponent));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(entityManager.TryGetComponent(physicsDummy, out physBody), Is.True);
+                    Assert.That(entityManager.TryGetComponent(airlock, out doorComponent), Is.True);
+                });
                 Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closed));
             });
 
@@ -171,7 +180,10 @@ namespace Content.IntegrationTests.Tests.Doors
             // Assert.That(physicsDummy.Transform.MapPosition.X, Is.GreaterThan(physicsDummyStartingX));
 
             // Blocked by the airlock
-            await server.WaitAssertion(() => Assert.That(Math.Abs(entityManager.GetComponent<TransformComponent>(physicsDummy).MapPosition.X - 1) > 0.01f));
+            await server.WaitAssertion(() =>
+            {
+                Assert.That(Math.Abs(xformSystem.GetWorldPosition(physicsDummy).X - 1), Is.GreaterThan(0.01f));
+            });
             await pairTracker.CleanReturnAsync();
         }
     }

@@ -465,7 +465,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   cost:
-    Telecrystal: 30
+    Telecrystal: 25
   categories:
   - UplinkBundles
 
@@ -476,29 +476,29 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledLMG
   cost:
-    Telecrystal: 40
+    Telecrystal: 30
   categories:
   - UplinkBundles
 
-#- type: listing
-#  id: UplinkZombieBundle
-#  name: uplink-zombie-bundle-name
-#  description: uplink-zombie-bundle-desc
-#  icon: { sprite: /Textures/Structures/Wallmounts/signs.rsi, state: bio }
-#  productEntity: ClothingBackpackDuffelZombieBundle
-#  cost:
-#    Telecrystal: 40
-#  categories:
-#  - UplinkBundles
-#  conditions:
-#  - !type:StoreWhitelistCondition
-#    whitelist:
-#      tags:
-#      - NukeOpsUplink
-#  - !type:BuyerWhitelistCondition
-#    blacklist:
-#      components:
-#      - SurplusBundle
+- type: listing
+  id: UplinkZombieBundle
+  name: uplink-zombie-bundle-name
+  description: uplink-zombie-bundle-desc
+  icon: { sprite: /Textures/Structures/Wallmounts/signs.rsi, state: bio }
+  productEntity: ClothingBackpackDuffelZombieBundle
+  cost:
+    Telecrystal: 40
+  categories:
+  - UplinkBundles
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkSurplusBundle
