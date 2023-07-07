@@ -224,11 +224,12 @@
   id: AmbuzolPlus
   reactants:
     Ambuzol:
-      amount: 1
+      amount: 5
     ZombieBlood:
-      amount: 1
+      amount: 15
   products:
-    AmbuzolPlus: 1
+    Blood: 15
+    AmbuzolPlus: 5
 
 - type: reaction
   id: Synaptizine
