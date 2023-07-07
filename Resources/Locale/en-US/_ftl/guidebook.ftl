@@ -9,3 +9,4 @@ guide-entry-lore-factions-frontierstabilitycorp = Frontier Stability Corp
 guide-entry-lore-factions-independent = Independent
 guide-entry-guns-and-you = Guns & You
 guide-entry-law = Law
+guide-entry-navigation = Navigation

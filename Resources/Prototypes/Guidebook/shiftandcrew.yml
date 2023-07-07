@@ -13,6 +13,7 @@
   - Cargo
   - Salvage
   - Medical
+  - Navigation
 
 - type: guideEntry
   id: Survival
