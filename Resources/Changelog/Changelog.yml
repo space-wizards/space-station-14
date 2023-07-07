@@ -1,11 +1,4 @@
 Entries:
-- author: ar4ill
-  changes:
-  - {message: 'Added roboticist jumpsuit, jumpskirt and labcoat. They''re available
-      in RoboDrobe.', type: Add}
-  - {message: Robotics wardrobe is now filled., type: Tweak}
-  id: 3682
-  time: '2023-05-06T10:38:47.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: 'After several complaints, the blueprint for the biomass reclaimer has
@@ -2935,3 +2928,8 @@ Entries:
       been implemented., type: Add}
   id: 4181
   time: '2023-07-07T01:18:56.0000000+00:00'
+- author: Lomcastar
+  changes:
+  - {message: Added stamp sounds., type: Add}
+  id: 4182
+  time: '2023-07-07T02:53:38.0000000+00:00'
