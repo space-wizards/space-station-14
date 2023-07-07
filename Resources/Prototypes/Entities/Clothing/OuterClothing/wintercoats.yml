@@ -352,6 +352,39 @@
 
 - type: entity
   parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterSyndieCap
+  name: syndicate's winter coat
+  description: "The syndicate's winter coat is made of durable fabric, with gilded patterns, and coarse wool."
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/syndicate/coatsyndiecap.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/syndicate/coatsyndiecap.rsi
+
+- type: entity
+  parent: ClothingOuterWinterWarden
+  id: ClothingOuterWinterSyndieCapArmored
+  name: syndicate's armored winter coat
+  description: "The syndicate's armored winter coat is made of durable fabric, with gilded patterns, and coarse wool."
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/syndicate/coatsyndiecaparmored.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/syndicate/coatsyndiecaparmored.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterSyndie
+  name: syndicate's winter coat
+  description: Insulated winter coat, looks like a merch from "Syndieland"
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/syndicate/wintercoatsyndie.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/syndicate/wintercoatsyndie.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterMusician
   name: musician's winter coat
   description: An oversized, plasticine space tuxedo that'll have people asking "do you know me?"

@@ -1162,6 +1162,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSyndieFormalDress
+  name: syndicate formal dress
+  description: "The syndicate's uniform is made in an elegant style, it's even a pity to do dirty tricks in this."
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/syndieformaldress.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/syndieformaldress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitFlannel
   name: flannel jumpsuit
   description: Smells like someones been grillin'.
