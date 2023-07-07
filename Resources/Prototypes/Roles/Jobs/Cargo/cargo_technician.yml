@@ -12,17 +12,18 @@
   - Maintenance
   - External
   - Salvage
+  - Security
 
 - type: startingGear
   id: CargoTechGear
   equipment:
-    head: ClothingHeadHatCargosoft
-    jumpsuit: ClothingUniformJumpsuitCargo
-    back: ClothingBackpackFilled
-    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatRedsoft
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    back: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsJack
     id: CargoPDA
-    ears: ClothingHeadsetCargo
+    ears: ClothingHeadsetSecurity
     pocket1: AppraisalTool
-  innerclothingskirt: ClothingUniformJumpskirtCargo
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  innerclothingskirt: ClothingUniformJumpskirtColorRed
+  satchel: ClothingBackpackSatchelSecurityFilled
+  duffelbag: ClothingBackpackDuffelSecurityFilled
