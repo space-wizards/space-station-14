@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added diagonal walls made of plasttitanium and solid wall!, type: Add}
-  id: 3688
-  time: '2023-05-07T00:36:39.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Explosions and other forces should no longer stop projectiles midair.,
@@ -2945,3 +2940,9 @@ Entries:
       damaged them., type: Tweak}
   id: 4187
   time: '2023-07-07T09:28:34.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: 'Added more syndicate clothes (5 coats, 3 uniforms, 3 hats, 1 mask,
+      1 glove) + syndicate banner.', type: Add}
+  id: 4188
+  time: '2023-07-07T18:40:24.0000000+00:00'
