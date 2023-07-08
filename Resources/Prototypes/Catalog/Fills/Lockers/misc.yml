@@ -156,10 +156,10 @@
         - id: ClothingBeltMilitaryWebbing
           prob: 0.005
           orGroup: syndiemaintloot
-        - id: ClothingHandsGlovesCombat
+        - id: ClothingShoesBootsCombatFilled
           prob: 0.005
           orGroup: syndiemaintloot
-        - id: ClothingShoesBootsCombatFilled
+        - id: ToolboxSyndicate
           prob: 0.005
           orGroup: syndiemaintloot
         - id: BalloonSyn
