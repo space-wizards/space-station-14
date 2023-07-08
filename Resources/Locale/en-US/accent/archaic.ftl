@@ -59,8 +59,8 @@ accent-archaic-replacement-17 = wonderous
 accent-archaic-replaced-18 = by chance
 accent-archaic-replacement-18 = perchance
 
-accent-archaic-replaced-19 = nothing
-accent-archaic-replacement-19 = naught
+accent-archaic-replaced-19 = this
+accent-archaic-replacement-19 = thee
 
 accent-archaic-replaced-20 = nothing
 accent-archaic-replacement-20 = naught
@@ -125,8 +125,8 @@ accent-archaic-replacement-39 = guards
 accent-archaic-replaced-40 = gib
 accent-archaic-replacement-40 = butcher
 
-accent-archaic-replaced-41 = it
-accent-archaic-replacement-41 = foresaw
+accent-archaic-replaced-41 = begs
+accent-archaic-replacement-41 = pleads
 
 accent-archaic-replaced-42 = fancy
 accent-archaic-replacement-42 = furbished
@@ -500,8 +500,8 @@ accent-archaic-replacement-163 = closet
 accent-archaic-replaced-164 = do
 accent-archaic-replacement-164 = doth
 
-accent-archaic-replaced-165 = see
-accent-archaic-replacement-165 = percieve
+accent-archaic-replaced-165 = beg
+accent-archaic-replacement-165 = plead
 
 accent-archaic-replaced-166 = saw
 accent-archaic-replacement-166 = observed
@@ -667,3 +667,36 @@ accent-archaic-replacement-220 = happening
 
 accent-archaic-replaced-221 = tasty
 accent-archaic-replacement-221 = delectable
+
+accent-archaic-replaced-222 = myself
+accent-archaic-replacement-222 = mineself
+
+accent-archaic-replaced-223 = i am hungry
+accent-archaic-replacement-223 = i require grub
+
+accent-archaic-replaced-224 = you suck
+accent-archaic-replacement-224 = thou are foul
+
+accent-archaic-replaced-225 = please
+accent-archaic-replacement-225 = i request of thee
+
+accent-archaic-replaced-226 = secway
+accent-archaic-replacement-226 = patrol cart
+
+accent-archaic-replaced-227 = janicart
+accent-archaic-replacement-227 = cart
+
+accent-archaic-replaced-228 = soda
+accent-archaic-replacement-228 = drink
+
+accent-archaic-replaced-229 = pop
+accent-archaic-replacement-229 = drink
+
+accent-archaic-replaced-230 = how
+accent-archaic-replacement-230 = in what way
+
+accent-archaic-replaced-231 = wants
+accent-archaic-replacement-231 = wishes
+
+accent-archaic-replaced-232 = want
+accent-archaic-replacement-232 = wish for
