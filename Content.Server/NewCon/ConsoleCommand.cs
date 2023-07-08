@@ -178,7 +178,6 @@ public sealed class ConsoleCommandImplementor
         if (unshimmed.IsGenericMethodDefinition)
             unshimmed = unshimmed.MakeGenericMethod(pipedType!);
 
-
         var args = Expression.Parameter(typeof(CommandInvocationArguments));
 
         var paramList = new List<Expression>();

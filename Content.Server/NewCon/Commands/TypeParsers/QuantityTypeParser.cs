@@ -8,7 +8,7 @@ public sealed class QuantityParser : TypeParser<Quantity>
     {
         var word = parser.GetWord();
 
-        if (word?.TrimEnd('%') is not { } maybeParseable || !float.TryParse(word, out var v))
+        if (word?.TrimEnd('%') is not { } maybeParseable || !float.TryParse(maybeParseable, out var v))
         {
             result = null;
             return false;
