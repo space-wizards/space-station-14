@@ -1,9 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Health analyzers and cloth now fit in medical belts., type: Add}
-  id: 3693
-  time: '2023-05-07T03:52:00.0000000+00:00'
 - author: juliangiebel
   changes:
   - {message: The network configurator. A tool used to link devices together., type: Add}
@@ -2941,3 +2936,8 @@ Entries:
   - {message: you can find space lube tube in lockers again, type: Fix}
   id: 4192
   time: '2023-07-08T19:42:43.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Remove dummy crit states for mobs that don't implement it., type: Fix}
+  id: 4193
+  time: '2023-07-08T19:44:01.0000000+00:00'
