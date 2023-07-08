@@ -148,7 +148,7 @@ namespace Content.Client.Paper.UI
             // so we need to get some info out now:
             if (WrittenTextLabel.TryGetStyleProperty<Font>("font", out var font))
             {
-                float fontLineHeight = font.GetLineHeight(UIScale);
+                float fontLineHeight = font.GetLineHeight(1.0f);
                 // This positions the texture so the font baseline is on the bottom:
                 _paperContentTex.ExpandMarginTop = font.GetDescent(UIScale);
                 // And this scales the texture so that it's a single text line:
