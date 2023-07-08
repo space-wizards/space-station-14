@@ -48,7 +48,7 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
         foreach (var accessRecord in accessReaderComponent.AccessLog)
         {
             var log = new PulledAccessLog(
-                TimeSpan.FromSeconds(accessRecord.AccessTime).ToString(),
+                accessRecord.AccessTime,
                 accessRecord.Accessor
             );
 

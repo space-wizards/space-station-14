@@ -330,7 +330,7 @@ namespace Content.Shared.Access.Systems
 
             if (reader.AccessLog.Count >= reader.AccessLogLimit)
                 reader.AccessLog.Dequeue();
-            reader.AccessLog.Enqueue(new AccessRecord((int) _gameTiming.CurTime.Subtract(_gameTicker.GetRoundStartTimeSpan()).TotalSeconds, provider));
+            reader.AccessLog.Enqueue(new AccessRecord(_gameTiming.CurTime.Subtract(_gameTicker.GetRoundStartTimeSpan()), provider));
         }
 
         public record ProvidedAccessList()

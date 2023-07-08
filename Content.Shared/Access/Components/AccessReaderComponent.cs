@@ -52,7 +52,7 @@ public sealed class AccessReaderComponent : Component
 }
 
 [Serializable, NetSerializable]
-public record struct AccessRecord(int AccessTime, string Accessor);
+public record struct AccessRecord(TimeSpan AccessTime, string Accessor);
 
 [Serializable, NetSerializable]
 public sealed class AccessReaderComponentState : ComponentState
