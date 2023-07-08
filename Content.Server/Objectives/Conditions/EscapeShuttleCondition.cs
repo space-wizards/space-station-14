@@ -46,7 +46,7 @@ namespace Content.Server.Objectives.Conditions
                     return 0f;
                 }
 
-                // Any emergency shuttle or escape pod counts for this objective.
+                // Any emergency shuttle counts for this objective, but not pods.
                 var emergencyShuttle = entMan.System<EmergencyShuttleSystem>();
                 if (!emergencyShuttle.IsTargetEscaping(_mind.OwnedEntity.Value))
                     return 0f;
