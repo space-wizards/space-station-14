@@ -15,6 +15,11 @@ namespace Content.Server.Objectives.Conditions
         protected Mind.Mind? Target;
         public abstract IObjectiveCondition GetAssigned(Mind.Mind mind);
 
+        /// <summary>
+        /// Whether the target must be truly dead, ignores missing evac.
+        /// </summary>
+        protected bool RequireDead = false;
+
         public string Title
         {
             get
@@ -47,6 +52,9 @@ namespace Content.Server.Objectives.Conditions
                 var mindSystem = entMan.System<MindSystem>();
                 if (mindSystem.IsCharacterDeadIc(Target))
                     return 1f;
+
+                if (RequireDead)
+                    return 0f;
 
                 // if evac is disabled then they really do have to be dead
                 var configMan = IoCManager.Resolve<IConfigurationManager>();
