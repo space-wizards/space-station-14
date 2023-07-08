@@ -1,4 +1,7 @@
 - type: Tag
+  id: Credit
+
+- type: Tag
   id: FTLMissile
 
 - type: Tag

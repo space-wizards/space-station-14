@@ -67,7 +67,10 @@ public sealed class FTLPointsSystem : EntitySystem
 
         Log.Info($"Picked {picked} as point type.");
 
-        var point = prototype == null ? _prototypeManager.Index<FTLPointPrototype>(picked) : prototype;
+        var point = _prototypeManager.Index<FTLPointPrototype>(picked);
+
+        if (prototype != null)
+            point = prototype;
 
         // create map
         if (point.OverrideSpawn == null)
@@ -78,12 +81,12 @@ public sealed class FTLPointsSystem : EntitySystem
             var mapId = _mapManager.CreateMap();
             _mapManager.AddUninitializedMap(mapId);
             var mapUid = _mapManager.GetMapEntityId(mapId);
-            _metaDataSystem.SetEntityName(mapUid, $"[{Loc.GetString(point.Tag)}] {
-                SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _random.Next())}");
 
             // make it ftlable
             EnsureComp<FTLDestinationComponent>(mapUid);
             EnsureComp<DisposalFTLPointComponent>(mapUid);
+            _metaDataSystem.SetEntityName(mapUid, $"[{Loc.GetString(point.Tag)}] {
+                SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _random.Next())}");
             _consoleSystem.RefreshShuttleConsoles();
 
             // add parallax
@@ -123,6 +126,7 @@ public sealed class FTLPointsSystem : EntitySystem
                     effect.Effect(new FTLPointEffect.FTLPointEffectArgs(mapUid, mapId, _entManager, _mapManager));
                 }
             }
+
         }
         else
         {

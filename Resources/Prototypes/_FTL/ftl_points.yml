@@ -2,7 +2,7 @@
   id: StationPoint
   tag: ship-ftl-tag-base
   effects:
-    - !type:SpawnMapEffect
+    - !type:SpawnStationEffect
 
 - type: ftlPoint
   id: LoDangerPoint

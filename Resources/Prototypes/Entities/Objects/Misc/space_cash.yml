@@ -4,9 +4,13 @@
   name: credit
   description: You gotta have money.
   components:
+  - type: Credit
   - type: Currency
     price:
       Credits: 1
+  - type: Tag
+    tags:
+      - Credit
   - type: Material
   - type: PhysicalComposition
     materialComposition:

@@ -1,0 +1,21 @@
+- type: entity
+  parent: BaseComputer
+  id: ComputerATM
+  name: vault access machine
+  description: The vault access machine (VAM) is used to siphon and deposit credits into secure accounts which can be used for cargo purposes, or general storage.
+  components:
+    - type: Sprite
+      noRot: true
+      sprite: _FTL/Structures/Machines/atm.rsi
+      layers:
+      - map: ["computerLayerBody"]
+        state: icon
+      - map: ["computerLayerScreen"]
+        state: unshaded
+    - type: NoAnchor
+    - type: ExtensionCableReceiver
+    - type: OutpostATM
+    - type: PointLight
+      radius: 0.8
+      energy: 0.5
+      color: "#b53ca1"

@@ -691,6 +691,7 @@
     - map: ["computerLayerKeys"]
       state: tech_key
   - type: CargoOrderConsole
+  - type: NoAnchor
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Orders
   - type: UserInterface
@@ -703,8 +704,6 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
-  - type: AccessReader
-    access: [["Cargo"]]
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice

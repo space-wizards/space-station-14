@@ -7,6 +7,18 @@
   - Order important items at trade stations
   - Give all profits to the captain
 
+  ## Credits
+
+  Credits (Cr) are the common form of currency in the local galaxy.
+
+  ## VAM
+  <Box>
+    <GuideEntityEmbed Entity="ComputerATM" />
+  </Box>
+
+  The VAM (vault access machine) allows you to deposit and withdraw physical credits into a secure vault account which can be used for either general storage or cargo usage.
+  There are 2 places which you can find the VAM, one is in the Bridge of your ship while the other are in trade stations. Please remember to withdraw the cash when at a trade station or you may lose everything.
+
   ## Trade Stations
 
   In order to order, sell, and relax, you will first need to go to a trade station. Trade stations are marked on warps with the [color=#a4885c]\[BASE\][/color] tag.

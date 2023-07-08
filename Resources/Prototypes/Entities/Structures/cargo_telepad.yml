@@ -5,6 +5,7 @@
   description: Beam in the pizzas and dig in.
   components:
   - type: InteractionOutline
+  - type: NoAnchor
   - type: Physics
     bodyType: Static
     canCollide: false

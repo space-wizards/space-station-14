@@ -5,6 +5,7 @@
   children:
     - DNA
     - GunsAndYou
+    - Law
 
 - type: guideEntry
   id: DNA
