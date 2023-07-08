@@ -312,3 +312,23 @@
         Piercing: 0.65
         Heat: 0.85
         Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterVestHoP
+  name: HoP's coat
+  description: This coat was specifically designed for head of personnel, with armored plastic of course.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/hopcoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/hopcoat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.8
+        Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
