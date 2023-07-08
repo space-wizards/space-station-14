@@ -274,6 +274,28 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatSyndieCap
+  name: syndicate's coat
+  description: The syndicate's coat is made of durable fabric, with gilded patterns.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecap.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecap.rsi
+
+- type: entity
+  parent: ClothingOuterCoatHoSTrench
+  id: ClothingOuterCoatSyndieCapArmored
+  name: syndicate's armored coat
+  description: The syndicate's armored coat is made of durable fabric, with gilded patterns.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecaparmored.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecaparmored.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatAMG
   name: armored medical gown
   description: The version of the medical gown, with elements of a bulletproof vest, looks strange, but your heart is protected.
