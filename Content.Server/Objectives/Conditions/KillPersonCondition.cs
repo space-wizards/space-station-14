@@ -1,6 +1,9 @@
 using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
+using Content.Server.Shuttles.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Mobs.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
@@ -37,13 +40,34 @@ namespace Content.Server.Objectives.Conditions
         {
             get
             {
-                var entityManager = IoCManager.Resolve<EntityManager>();
-                var mindSystem = entityManager.System<MindSystem>();
-                return Target == null || mindSystem.IsCharacterDeadIc(Target) ? 1f : 0f;
+                if (Target == null || Target.OwnedEntity == null)
+                    return 1f;
+
+                var entMan = IoCManager.Resolve<EntityManager>();
+                var mindSystem = entMan.System<MindSystem>();
+                if (mindSystem.IsCharacterDeadIc(Target))
+                    return 1f;
+
+                // if evac is disabled then they really do have to be dead
+                var configMan = IoCManager.Resolve<IConfigurationManager>();
+                if (!configMan.GetCVar(CCVars.EmergencyShuttleEnabled))
+                    return 0f;
+
+                // target is escaping so you fail
+                var emergencyShuttle = entMan.System<EmergencyShuttleSystem>();
+                if (emergencyShuttle.IsTargetEscaping(Target.OwnedEntity.Value))
+                    return 0f;
+
+                // evac has left without the target, greentext since the target is afk in space with a full oxygen tank and coordinates off.
+                if (emergencyShuttle.ShuttlesLeft)
+                    return 1f;
+
+                // evac is still here and target hasn't boarded, show 50% to give you an indicator that you are doing good
+                return 0.5f;
             }
         }
 
-        public float Difficulty => 2f;
+        public float Difficulty => 1.75f;
 
         public bool Equals(IObjectiveCondition? other)
         {
