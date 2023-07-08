@@ -61,7 +61,7 @@ public sealed class JointVisualsOverlay : Overlay
             var posA = coordsA.ToMapPos(_entManager, xformSystem);
             var posB = coordsB.ToMapPos(_entManager, xformSystem);
             var diff = (posB - posA);
-            var length = diff.Length;
+            var length = diff.Length();
 
             var midPoint = diff / 2f + posA;
             var angle = (posB - posA).ToWorldAngle();

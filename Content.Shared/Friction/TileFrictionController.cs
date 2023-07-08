@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Events;
@@ -112,7 +113,7 @@ namespace Content.Shared.Friction
 
         private void ReduceLinearVelocity(EntityUid uid, bool prediction, PhysicsComponent body, float friction, float frameTime)
         {
-            var speed = body.LinearVelocity.Length;
+            var speed = body.LinearVelocity.Length();
 
             if (speed <= 0.0f)
                 return;
