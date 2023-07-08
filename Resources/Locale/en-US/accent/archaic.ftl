@@ -1,4 +1,6 @@
-# referenced a lot of sites and used my own intuition to determine which fits well in our modern day speech patterns. Predominantly old modern english and other miscellaneous archaic terms. Sources i used includes shakespeare text and google searches, along with terms from the original version of the PR for this accent.
+# Referenced a lot of sites and used my own intuition to determine which fits well compared to our modern day speech patterns. Predominantly old modern english and other miscellaneous archaic terms. Sources I used includes shakespeare text and google searches, along with terms from the original version of the PR for this accent.
+
+# I also included a lot of changes to formality and word choice to fit better with the accent.
 
 accent-archaic-replaced-1 = tell
 accent-archaic-replacement-1 = advise
@@ -21,17 +23,17 @@ accent-archaic-replacement-5 = deem
 accent-archaic-replaced-6 = my
 accent-archaic-replacement-6 = mine
 
-accent-archaic-replaced-7 = thou
-accent-archaic-replacement-7 = you
+accent-archaic-replaced-7 = you
+accent-archaic-replacement-7 = thou
 
-accent-archaic-replaced-8 = thy
-accent-archaic-replacement-8 = your
+accent-archaic-replaced-8 = your
+accent-archaic-replacement-8 = thy
 
-accent-archaic-replaced-9 = thine
-accent-archaic-replacement-9 = yours
+accent-archaic-replaced-9 = yours
+accent-archaic-replacement-9 = thine
 
-accent-archaic-replaced-10 = thyself
-accent-archaic-replacement-10 = yourself
+accent-archaic-replaced-10 = yourself
+accent-archaic-replacement-10 = thyself
 
 accent-archaic-replaced-11 = shall
 accent-archaic-replacement-11 = shalt
@@ -132,8 +134,8 @@ accent-archaic-replacement-42 = furbished
 accent-archaic-replaced-43 = onto
 accent-archaic-replacement-43 = unto
 
-accent-archaic-replaced-44 = to
-accent-archaic-replacement-44 = unto
+accent-archaic-replaced-44 = can i
+accent-archaic-replacement-44 = am i allowed to
 
 accent-archaic-replaced-45 = upon
 accent-archaic-replacement-45 = unto
@@ -600,5 +602,68 @@ accent-archaic-replacement-197 = relocate
 accent-archaic-replaced-198 = will
 accent-archaic-replacement-198 = shalt
 
-accent-archaic-replaced-199 = bad
-accent-archaic-replacement-199 = unpleasant
+accent-archaic-replaced-200 = bad
+accent-archaic-replacement-200 = unpleasant
+
+accent-archaic-replaced-201 = got rid of
+accent-archaic-replacement-201 = removed
+
+accent-archaic-replaced-202 = guy
+accent-archaic-replacement-202 = man
+
+accent-archaic-replaced-203 = guys
+accent-archaic-replacement-203 = people
+
+accent-archaic-replaced-204 = airlock
+accent-archaic-replacement-204 = door
+
+accent-archaic-replaced-205 = sorry
+accent-archaic-replacement-205 = i apologise
+
+accent-archaic-replaced-206 = hey
+accent-archaic-replacement-206 = pardon me
+
+accent-archaic-replaced-207 = chair
+accent-archaic-replacement-207 = seating
+
+accent-archaic-replaced-208 = can
+accent-archaic-replacement-208 = may
+
+accent-archaic-replaced-209 = kill
+accent-archaic-replacement-209 = murder
+
+accent-archaic-replaced-210 = guess
+accent-archaic-replacement-210 = surmise
+
+accent-archaic-replaced-211 = wow
+accent-archaic-replacement-211 = astonishing
+
+accent-archaic-replaced-212 = why
+accent-archaic-replacement-212 = for what reason
+
+accent-archaic-replaced-213 = im
+accent-archaic-replacement-213 = i am
+
+accent-archaic-replaced-214 = sink
+accent-archaic-replacement-214 = taps
+
+accent-archaic-replaced-215 = beaker
+accent-archaic-replacement-215 = vial
+
+accent-archaic-replaced-216 = toolbox
+accent-archaic-replacement-216 = case
+
+accent-archaic-replaced-217 = rubber stamp
+accent-archaic-replacement-217 = wax stamp
+
+accent-archaic-replaced-218 = tiles
+accent-archaic-replacement-218 = flooring
+
+accent-archaic-replaced-219 = maintenance
+accent-archaic-replacement-219 = alleyways
+
+accent-archaic-replaced-220 = going on
+accent-archaic-replacement-220 = happening
+
+accent-archaic-replaced-221 = tasty
+accent-archaic-replacement-221 = delectable
