@@ -6,7 +6,7 @@ namespace Content.Client.CriminalRecords;
 
 public sealed class GeneralCriminalRecordConsoleBoundUserInterface : BoundUserInterface
 {
-    private GeneralCriminalRecordConsoleWindow? _window = default!;
+    private GeneralCriminalRecordConsoleWindow? _window;
 
     public GeneralCriminalRecordConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {}
