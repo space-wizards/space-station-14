@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Computer;
 using Content.Shared.Power;
 using JetBrains.Annotations;
@@ -21,7 +22,7 @@ public sealed partial class PowerMonitoringWindow : DefaultWindow, IComputerWind
     public PowerMonitoringWindow()
     {
         RobustXamlLoader.Load(this);
-        SetSize = MinSize = (300, 450);
+        SetSize = MinSize = new Vector2(300, 450);
         IoCManager.InjectDependencies(this);
         _spriteSystem = IoCManager.Resolve<IEntityManager>().System<SpriteSystem>();
         MasterTabContainer.SetTabTitle(0, Loc.GetString("power-monitoring-window-tab-sources"));

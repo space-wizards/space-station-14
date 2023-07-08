@@ -5994,7 +5994,8 @@ entities:
           0,-3:
             0: 65535
           0,-2:
-            0: 65535
+            0: 63479
+            1: 2056
           0,-1:
             0: 65535
           1,-3:
@@ -6261,19 +6262,19 @@ entities:
             0: 65535
           5,-8:
             0: 32767
-            1: 32768
+            2: 32768
           5,-7:
             0: 65399
-            1: 136
+            2: 136
           5,-6:
             0: 65535
           5,-5:
             0: 65535
           6,-8:
             0: 36863
-            1: 28672
+            2: 28672
           6,-7:
-            1: 119
+            2: 119
             0: 65416
           6,-6:
             0: 65535
@@ -6883,7 +6884,7 @@ entities:
             0: 65535
           14,-5:
             0: 65279
-            2: 256
+            3: 256
           4,-13:
             0: 65535
           -8,-10:
@@ -7196,7 +7197,7 @@ entities:
             0: 65535
           -8,11:
             0: 64719
-            3: 816
+            4: 816
           -7,8:
             0: 65535
           -7,9:
@@ -7229,15 +7230,15 @@ entities:
             0: 65535
           -12,10:
             0: 62451
-            3: 3072
-            4: 12
+            4: 3072
+            5: 12
           -11,10:
-            3: 256
+            4: 256
             0: 65278
-            4: 1
+            5: 1
           -11,11:
             0: 52478
-            3: 1
+            4: 1
           -10,10:
             0: 65535
           -10,8:
@@ -7254,7 +7255,7 @@ entities:
             0: 65535
           -9,11:
             0: 63359
-            3: 2176
+            4: 2176
           -8,12:
             0: 48063
           -7,12:
@@ -7511,9 +7512,9 @@ entities:
             0: 65535
           -7,14:
             0: 8191
-            3: 57344
+            4: 57344
           -7,15:
-            3: 238
+            4: 238
             0: 65297
           -6,12:
             0: 65535
@@ -7828,7 +7829,7 @@ entities:
           17,-8:
             0: 29457
           17,-7:
-            4: 1
+            5: 1
             0: 4990
           17,-6:
             0: 4593
@@ -7956,14 +7957,14 @@ entities:
             0: 35771
           -12,8:
             0: 62451
-            5: 12
-            6: 3072
+            6: 12
+            7: 3072
           -12,9:
             0: 62451
-            3: 3084
+            4: 3084
           -12,11:
             0: 8947
-            3: 12
+            4: 12
           -12,12:
             0: 8751
           -12,13:
@@ -8157,11 +8158,11 @@ entities:
           -13,7:
             0: 39327
           -11,8:
-            5: 1
+            6: 1
             0: 65278
-            6: 256
+            7: 256
           -11,9:
-            3: 257
+            4: 257
             0: 65278
           1,12:
             0: 63897
@@ -8183,8 +8184,8 @@ entities:
             0: 65497
           -13,12:
             0: 53199
-            6: 48
-            5: 12288
+            7: 48
+            6: 12288
           -13,13:
             0: 61727
           -18,4:
@@ -8677,8 +8678,8 @@ entities:
             0: 255
           -14,12:
             0: 32639
-            6: 128
-            5: 32768
+            7: 128
+            6: 32768
           -14,13:
             0: 31
           -17,12:
@@ -8699,6 +8700,21 @@ entities:
           moles:
           - 21.824879
           - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.596506
+          - 81.243996
           - 0
           - 0
           - 0
@@ -15448,13 +15464,6 @@ entities:
   - uid: 16092
     components:
     - pos: 0.97444147,20.461615
-      parent: 60
-      type: Transform
-- proto: BoxMagazinePistolSubMachineGunHighVelocity
-  entities:
-  - uid: 9018
-    components:
-    - pos: -28.662039,2.7893302
       parent: 60
       type: Transform
 - proto: BoxMouthSwab
@@ -63383,6 +63392,35 @@ entities:
     - pos: -11.417416,-50.455223
       parent: 60
       type: Transform
+- proto: ClothingOuterArmorBasic
+  entities:
+  - uid: 19886
+    components:
+    - pos: -24.397709,1.3971437
+      parent: 60
+      type: Transform
+  - uid: 20003
+    components:
+    - pos: -24.397709,1.3971437
+      parent: 60
+      type: Transform
+- proto: ClothingOuterArmorBulletproof
+  entities:
+  - uid: 21011
+    components:
+    - pos: -24.521177,1.5767841
+      parent: 60
+      type: Transform
+  - uid: 21012
+    components:
+    - pos: -24.521177,1.5767841
+      parent: 60
+      type: Transform
+  - uid: 21016
+    components:
+    - pos: -24.521177,1.5767841
+      parent: 60
+      type: Transform
 - proto: ClothingOuterArmorReflective
   entities:
   - uid: 24113
@@ -63482,6 +63520,46 @@ entities:
     - pos: -40.51241,3.5016193
       parent: 60
       type: Transform
+  - uid: 9093
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 18441
+      type: Transform
+    - group:
+      - hoverMessage: ""
+        contextText: verb-examine-group-other
+        icon: /Textures/Interface/examine-star.png
+        components:
+        - Armor
+        - ClothingSpeedModifier
+        entries:
+        - message: This decreases your speed by [color=yellow]20%[/color].
+          priority: 0
+          component: ClothingSpeedModifier
+        - message: >-
+            It provides the following protection:
+
+            - [color=yellow]Blunt[/color] damage reduced by [color=lightblue]10%[/color].
+
+            - [color=yellow]Slash[/color] damage reduced by [color=lightblue]10%[/color].
+
+            - [color=yellow]Piercing[/color] damage reduced by [color=lightblue]10%[/color].
+
+            - [color=yellow]Heat[/color] damage reduced by [color=lightblue]10%[/color].
+
+            - [color=yellow]Radiation[/color] damage reduced by [color=lightblue]10%[/color].
+
+            - [color=yellow]Caustic[/color] damage reduced by [color=lightblue]15%[/color].
+
+            - [color=orange]Explosion[/color] damage reduced by [color=lightblue]10%[/color].
+          priority: 0
+          component: Armor
+        title: null
+      type: GroupExamine
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: ClothingOuterHardsuitEVA
   entities:
   - uid: 5207
@@ -65903,8 +65981,8 @@ entities:
         immutable: False
         temperature: 293.1496
         moles:
-        - 1.6495836
-        - 6.2055764
+        - 1.877957
+        - 7.0646954
         - 0
         - 0
         - 0
@@ -65921,12 +65999,12 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 18835
-          - 18834
-          - 18823
-          - 18792
-          - 18731
           - 18442
+          - 18731
+          - 18792
+          - 18823
+          - 18834
+          - 18835
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -114141,8 +114219,8 @@ entities:
         immutable: False
         temperature: 293.1496
         moles:
-        - 1.6495836
-        - 6.2055764
+        - 1.877957
+        - 7.0646954
         - 0
         - 0
         - 0
@@ -114159,11 +114237,13 @@ entities:
           showEnts: False
           occludes: True
           ents:
+          - 9018
           - 18453
           - 18548
           - 17492
           - 17491
           - 17379
+          - 9093
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -114768,18 +114848,6 @@ entities:
   - uid: 24092
     components:
     - pos: 4.5,-44.5
-      parent: 60
-      type: Transform
-- proto: MagazineBoxPistol
-  entities:
-  - uid: 9093
-    components:
-    - pos: -28.427664,2.5080802
-      parent: 60
-      type: Transform
-  - uid: 9524
-    components:
-    - pos: -28.427664,2.6487052
       parent: 60
       type: Transform
 - proto: MagazinePistol
@@ -116019,6 +116087,13 @@ entities:
     - pos: -19.5,19.5
       parent: 60
       type: Transform
+- proto: PaintingSadClown
+  entities:
+  - uid: 19730
+    components:
+    - pos: 25.5,-14.5
+      parent: 60
+      type: Transform
 - proto: PaintingSaturn
   entities:
   - uid: 21752
@@ -117200,6 +117275,13 @@ entities:
     - pos: -62.5,11.5
       parent: 60
       type: Transform
+- proto: PosterLegitAnatomyPoster
+  entities:
+  - uid: 13788
+    components:
+    - pos: 42.5,-15.5
+      parent: 60
+      type: Transform
 - proto: PosterLegitBlessThisSpess
   entities:
   - uid: 18208
@@ -117212,6 +117294,13 @@ entities:
   - uid: 6611
     components:
     - pos: 11.5,20.5
+      parent: 60
+      type: Transform
+- proto: PosterLegitCarpMount
+  entities:
+  - uid: 13787
+    components:
+    - pos: 46.5,11.5
       parent: 60
       type: Transform
 - proto: PosterLegitCleanliness
@@ -117326,6 +117415,13 @@ entities:
   - uid: 1373
     components:
     - pos: 9.5,-27.5
+      parent: 60
+      type: Transform
+- proto: PosterLegitMime
+  entities:
+  - uid: 19885
+    components:
+    - pos: 26.5,-14.5
       parent: 60
       type: Transform
 - proto: PosterLegitNanomichiAd
@@ -134541,6 +134637,17 @@ entities:
     - pos: 25.537956,-7.7012243
       parent: 60
       type: Transform
+- proto: SpaceCash1000
+  entities:
+  - uid: 9018
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 18441
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: SpaceVillainArcadeFilled
   entities:
   - uid: 5301
@@ -157396,21 +157503,21 @@ entities:
     - pos: -24.45179,2.5628066
       parent: 60
       type: Transform
-- proto: WeaponSubMachineGunDrozdRubber
+- proto: WeaponSubMachineGunDrozd
   entities:
+  - uid: 9524
+    components:
+    - pos: -28.494457,2.634122
+      parent: 60
+      type: Transform
+  - uid: 11536
+    components:
+    - pos: -28.510082,2.337247
+      parent: 60
+      type: Transform
   - uid: 13667
     components:
-    - pos: -28.5329,2.411416
-      parent: 60
-      type: Transform
-  - uid: 13787
-    components:
-    - pos: -28.517275,2.708291
-      parent: 60
-      type: Transform
-  - uid: 13788
-    components:
-    - pos: -28.517275,2.552041
+    - pos: -28.494457,2.493497
       parent: 60
       type: Transform
 - proto: WeaponSubMachineGunWt550

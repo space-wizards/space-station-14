@@ -26,6 +26,7 @@ using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -591,6 +592,7 @@ namespace Content.Shared.Cuffs
 
                 if (target == user)
                 {
+                    RaiseNetworkEvent(new DamageEffectEvent(Color.Red, new List<EntityUid>() { user }));
                     _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-self"), user, user);
                 }
                 else

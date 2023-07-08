@@ -1,3 +1,5 @@
+using System.Numerics;
+using Content.Server.Cargo.Components;
 using Content.Server.Shuttle.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
@@ -314,7 +316,7 @@ namespace Content.Server.Physics.Controllers
                         brakeInput += brakes;
                     }
 
-                    if (strafe.Length > 0f)
+                    if (strafe.Length() > 0f)
                     {
                         var offsetRotation = consoleXform.LocalRotation;
                         linearInput += offsetRotation.RotateVec(strafe);
@@ -334,7 +336,7 @@ namespace Content.Server.Physics.Controllers
                 // Handle shuttle movement
                 if (brakeInput > 0f)
                 {
-                    if (body.LinearVelocity.Length > 0f)
+                    if (body.LinearVelocity.Length() > 0f)
                     {
                         // Minimum brake velocity for a direction to show its thrust appearance.
                         const float appearanceThreshold = 0.1f;
@@ -388,11 +390,11 @@ namespace Content.Server.Physics.Controllers
                         var impulse = force * brakeInput * ShuttleComponent.BrakeCoefficient;
                         impulse = shuttleNorthAngle.RotateVec(impulse);
                         var forceMul = frameTime * body.InvMass;
-                        var maxVelocity = (-body.LinearVelocity).Length / forceMul;
+                        var maxVelocity = (-body.LinearVelocity).Length() / forceMul;
 
                         // Don't overshoot
-                        if (impulse.Length > maxVelocity)
-                            impulse = impulse.Normalized * maxVelocity;
+                        if (impulse.Length() > maxVelocity)
+                            impulse = impulse.Normalized() * maxVelocity;
 
                         PhysicsSystem.ApplyForce(shuttleUid, impulse, body: body);
                     }
@@ -427,7 +429,7 @@ namespace Content.Server.Physics.Controllers
                     }
                 }
 
-                if (linearInput.Length.Equals(0f))
+                if (linearInput.Length().Equals(0f))
                 {
                     PhysicsSystem.SetSleepingAllowed(shuttleUid, body, true);
 
@@ -486,20 +488,20 @@ namespace Content.Server.Physics.Controllers
                         }
 
                         _thruster.EnableLinearThrustDirection(shuttle, dir);
-                        var impulse = force * linearInput.Length;
+                        var impulse = force * linearInput.Length();
                         totalForce += impulse;
                     }
 
                     totalForce = shuttleNorthAngle.RotateVec(totalForce);
 
                     var forceMul = frameTime * body.InvMass;
-                    var maxVelocity = (ShuttleComponent.MaxLinearVelocity - body.LinearVelocity.Length) / forceMul;
+                    var maxVelocity = (ShuttleComponent.MaxLinearVelocity - body.LinearVelocity.Length()) / forceMul;
 
                     if (maxVelocity != 0f)
                     {
                         // Don't overshoot
-                        if (totalForce.Length > maxVelocity)
-                            totalForce = totalForce.Normalized * maxVelocity;
+                        if (totalForce.Length() > maxVelocity)
+                            totalForce = totalForce.Normalized() * maxVelocity;
 
                         PhysicsSystem.ApplyForce(shuttleUid, totalForce, body: body);
                     }

@@ -1,4 +1,5 @@
-﻿using Content.Server.Decals;
+﻿using System.Numerics;
+using Content.Server.Decals;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
@@ -17,6 +18,7 @@ public sealed class TileSystem : EntitySystem
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly DecalSystem _decal = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     public bool PryTile(Vector2i indices, EntityUid gridId)
     {
@@ -68,7 +70,7 @@ public sealed class TileSystem : EntitySystem
             return false;
 
         var variant = _robustRandom.Pick(replacementTile.PlacementVariants);
-        var decals = _decal.GetDecalsInRange(tileref.GridUid, tileref.GridPosition().SnapToGrid(EntityManager, _mapManager).Position, 0.5f);
+        var decals = _decal.GetDecalsInRange(tileref.GridUid, _turf.GetTileCenter(tileref).Position, 0.5f);
         foreach (var (id, _) in decals)
         {
             _decal.RemoveDecal(tileref.GridUid, id);

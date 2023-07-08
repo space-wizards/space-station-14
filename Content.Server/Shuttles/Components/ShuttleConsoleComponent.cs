@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Shuttles.Components;
 
 namespace Content.Server.Shuttles.Components

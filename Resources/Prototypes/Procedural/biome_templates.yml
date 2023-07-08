@@ -129,7 +129,7 @@
       allowedTiles:
         - FloorPlanetGrass
         - FloorPlanetDirt
-      threshold: -0.15
+      threshold: -0.30
       noise:
         seed: 0
         noiseType: Cellular
@@ -184,7 +184,7 @@
     # Rock formation sand
     - !type:BiomeTileLayer
       tile: FloorPlanetDirt
-      threshold: -0.15
+      threshold: -0.30
       noise:
         seed: 0
         noiseType: Cellular
@@ -260,7 +260,7 @@
     - !type:BiomeEntityLayer
       allowedTiles:
         - FloorBasalt
-      threshold: -0.15
+      threshold: -0.30
       noise:
         seed: 0
         noiseType: Cellular
@@ -377,7 +377,7 @@
     - !type:BiomeEntityLayer
       allowedTiles:
         - FloorSnow
-      threshold: -0.15
+      threshold: -0.30
       noise:
         seed: 0
         noiseType: Cellular
