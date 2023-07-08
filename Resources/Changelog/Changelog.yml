@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Explosions and other forces should no longer stop projectiles midair.,
-    type: Fix}
-  id: 3689
-  time: '2023-05-07T02:57:23.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added the water gun crate to cargo. Happy spraying., type: Add}
@@ -2946,3 +2940,8 @@ Entries:
       1 glove) + syndicate banner.', type: Add}
   id: 4188
   time: '2023-07-07T18:40:24.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Planets have significantly more rocks than before., type: Tweak}
+  id: 4189
+  time: '2023-07-08T03:30:29.0000000+00:00'
