@@ -1,9 +1,13 @@
 ﻿namespace Content.Shared.Security
 {
     /// <summary>
-    /// Status using in Criminal Records Console
+    /// Status used in Criminal Records.
+    ///
+    /// None - the default value
+    /// Wanted - the person is being wanted by security
+    /// Detained - the person is detained by security
     /// </summary>
-    public enum SecurityStatus
+    public enum SecurityStatus : byte
     {
         None,
         Wanted,
