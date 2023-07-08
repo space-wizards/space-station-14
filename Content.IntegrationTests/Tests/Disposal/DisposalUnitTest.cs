@@ -1,5 +1,6 @@
 #nullable enable annotations
 using System.Linq;
+using System.Numerics;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
@@ -210,7 +211,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Move the disposal trunk away
                 var xform = entityManager.GetComponent<TransformComponent>(disposalTrunk);
                 var worldPos = xformSystem.GetWorldPosition(disposalTrunk);
-                xformSystem.SetWorldPosition(xform, worldPos + (1, 0));
+                xformSystem.SetWorldPosition(xform, worldPos + new Vector2(1, 0));
 
                 // Fail to flush with a mob and an item
                 Flush(disposalUnit, unitComponent, false, disposalSystem, human, wrench);
@@ -221,7 +222,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Move the disposal trunk back
                 var xform = entityManager.GetComponent<TransformComponent>(disposalTrunk);
                 var worldPos = xformSystem.GetWorldPosition(disposalTrunk);
-                xformSystem.SetWorldPosition(xform, worldPos - (1, 0));
+                xformSystem.SetWorldPosition(xform, worldPos - new Vector2(1, 0));
 
                 // Fail to flush with a mob and an item, no power
                 Flush(disposalUnit, unitComponent, false, disposalSystem, human, wrench);
