@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Doors.Systems;
 using Content.Shared.Doors.Components;
 using Robust.Shared.GameObjects;
@@ -139,10 +140,10 @@ namespace Content.IntegrationTests.Tests.Doors
             {
                 var mapId = mapManager.CreateMap();
 
-                var humanCoordinates = new MapCoordinates((physicsDummyStartingX, 0), mapId);
+                var humanCoordinates = new MapCoordinates(new Vector2(physicsDummyStartingX, 0), mapId);
                 physicsDummy = entityManager.SpawnEntity("PhysicsDummy", humanCoordinates);
 
-                airlock = entityManager.SpawnEntity("AirlockDummy", new MapCoordinates((0, 0), mapId));
+                airlock = entityManager.SpawnEntity("AirlockDummy", new MapCoordinates(new Vector2(0, 0), mapId));
 
                 Assert.Multiple(() =>
                 {

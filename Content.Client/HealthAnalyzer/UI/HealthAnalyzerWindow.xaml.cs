@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Text;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -64,12 +65,12 @@ namespace Content.Client.HealthAnalyzer.UI
                     text.AppendLine();
                 }
                 Diagnostics.Text = text.ToString();
-                SetSize = (250, 600);
+                SetSize = new Vector2(250, 600);
             }
             else
             {
                 Diagnostics.Text = Loc.GetString("health-analyzer-window-no-patient-data-text");
-                SetSize = (250, 100);
+                SetSize = new Vector2(250, 100);
             }
         }
     }

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 

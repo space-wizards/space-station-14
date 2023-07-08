@@ -16,7 +16,7 @@ reagent-desc-bicaridine = An analgesic which is highly effective at treating bru
 reagent-name-cryoxadone = cryoxadone
 reagent-desc-cryoxadone = Required for the proper function of cryogenics. Heals all standard types of damage very swiftly, but only works in temperatures under 170K (usually this means cryo cells). Can also slowly heal clone damage, such as caused by cloning or Slimes.
 
-reagent-name-doxarubixadone = doxarubixadone 
+reagent-name-doxarubixadone = doxarubixadone
 reagent-desc-doxarubixadone = A cryogenics chemical. Heals certain types of cellular damage done by Slimes and improper use of other chemicals.
 
 reagent-name-dermaline = dermaline
@@ -52,8 +52,8 @@ reagent-desc-barozine = A potent drug that prevents pressure damage. Causes extr
 reagent-name-phalanximine = phalanximine
 reagent-desc-phalanximine = Used in the treatment of cancer. Causes moderate radiation poisoning.
 
-reagent-name-romerol = romerol
-reagent-desc-romerol = A difficult to procure chemical that can remove a zombie infection in living organisms. Cannot save anyone who has already turned. Tastes like death.
+reagent-name-ambuzol = ambuzol
+reagent-desc-ambuzol = A highly engineered substance able to halt the progression of a zombie infection.
 
 reagent-name-pulped-banana-peel = pulped banana peel
 reagent-desc-pulped-banana-peel = Pulped banana peels have some effectiveness against bleeding.

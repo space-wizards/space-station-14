@@ -1,5 +1,6 @@
 #nullable enable
 using System.Linq;
+using System.Numerics;
 using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.Server.Body.Systems;
@@ -171,8 +172,8 @@ public abstract partial class InteractionTest
 
         // Setup map.
         MapData = await PoolManager.CreateTestMap(PairTracker);
-        PlayerCoords = MapData.GridCoords.Offset((0.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
-        TargetCoords = MapData.GridCoords.Offset((1.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
+        PlayerCoords = MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
+        TargetCoords = MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
         await SetTile(Plating, grid: MapData.MapGrid);
 
         // Get player data
