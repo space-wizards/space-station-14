@@ -1,0 +1,175 @@
+- type: entity
+  parent: Beaker
+  id: BeakerAluminium
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Aluminium
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerCarbon
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Carbon
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerChlorine
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Chlorine
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerCopper
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Copper
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerEthanol
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Ethanol
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerFluorine
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Fluorine
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerHydrogen
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Hydrogen
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerIodine
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Iodine
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerMercury
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Mercury
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerNitrogen
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Nitrogen
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerOxygen
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Oxygen
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerPhosphorus
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Phosphorus
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerPotassium
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Potassium
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerSilicon
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Silicon
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerSodium
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Sodium
+              Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerSulfur
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: Sulfur
+              Quantity: 50

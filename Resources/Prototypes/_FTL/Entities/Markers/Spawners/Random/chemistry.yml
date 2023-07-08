@@ -1,0 +1,15 @@
+- type: entity
+  name: Salvage Chemistry Crate Spawner
+  id: SalvageChemistryCrateSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Storage/Crates/generic.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+        - CrateRandomChemistryBeakers
+      chance: 0.9
+      offset: 0.0

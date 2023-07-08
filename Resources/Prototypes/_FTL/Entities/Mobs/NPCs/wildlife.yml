@@ -1,0 +1,121 @@
+- type: entity
+  id: BaseMobWildlife
+  parent: SimpleSpaceMobBase
+  abstract: true
+  components:
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask: SimpleHostileCompound
+    - type: Reactive
+      groups:
+        Flammable: [Touch]
+        Extinguish: [Touch]
+    - type: Faction
+      factions:
+        - SimpleHostile
+    - type: Physics
+      bodyType: Dynamic
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.25
+          density: 120
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: MobState
+      allowedStates:
+        - Alive
+        - Dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        75: Dead
+    - type: MeleeWeapon
+      hidden: true
+      angle: 0
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      animation: WeaponArcBite
+      damage:
+        types:
+          Piercing: 5
+    - type: Puller
+    - type: Butcherable
+      butcheringType: Spike
+      spawned:
+        - id: FoodMeat
+          amount: 5
+    - type: Tag
+      tags:
+        - CannotSuicide
+        - DoorBumpOpener
+        - FootstepSound
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2
+      baseSprintSpeed: 4
+    - type: ReplacementAccent
+      accent: genericAggressive
+    - type: Hands
+
+- type: entity
+  name: wolf
+  parent: BaseMobWildlife
+  id: MobWildlifeWolf
+  description: It's feasting for you!
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: _FTL/Mobs/Wildlife/wolf.rsi
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base"]
+          state: running
+    - type: DamageStateVisuals
+      rotate: true
+      states:
+        Alive:
+          Base: running
+        Critical:
+          Base: dead
+        Dead:
+          Base: dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2
+      baseSprintSpeed: 6
+
+- type: entity
+  name: bear
+  parent: BaseMobWildlife
+  id: MobWildlifeBear
+  description: I don't think playing dead will work out in this scenario.
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: _FTL/Mobs/Wildlife/bear.rsi
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base"]
+          state: running
+    - type: DamageStateVisuals
+      rotate: true
+      states:
+        Alive:
+          Base: running
+        Critical:
+          Base: dead
+        Dead:
+          Base: dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 1
+      baseSprintSpeed: 2
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        150: Dead
+    - type: MeleeWeapon
+      damage:
+        types:
+          Slash: 15

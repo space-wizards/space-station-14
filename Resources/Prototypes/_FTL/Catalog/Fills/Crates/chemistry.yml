@@ -1,0 +1,63 @@
+- type: entity
+  id: CrateRandomChemistryBeakers
+  suffix: Filled, Chemistry Random
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: BeakerAluminium
+          prob: 0.5
+        - id: BeakerCarbon
+          prob: 0.5
+        - id: BeakerChlorine
+          prob: 0.5
+        - id: BeakerCopper
+          prob: 0.5
+        - id: BeakerEthanol
+          prob: 0.5
+        - id: BeakerFluorine
+          prob: 0.5
+        - id: BeakerHydrogen
+          prob: 0.5
+        - id: BeakerIodine
+          prob: 0.5
+        - id: BeakerMercury
+          prob: 0.5
+        - id: BeakerNitrogen
+          prob: 0.5
+        - id: BeakerOxygen
+          prob: 0.5
+        - id: BeakerPhosphorus
+          prob: 0.5
+        - id: BeakerPotassium
+          prob: 0.5
+        - id: BeakerSilicon
+          prob: 0.5
+        - id: BeakerSodium
+          prob: 0.5
+        - id: BeakerSulfur
+          prob: 0.5
+
+- type: entity
+  id: CrateChemistryBeakers
+  suffix: Filled, Chemistry
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: BeakerAluminium
+        - id: BeakerCarbon
+        - id: BeakerChlorine
+        - id: BeakerCopper
+        - id: BeakerEthanol
+        - id: BeakerFluorine
+        - id: BeakerHydrogen
+        - id: BeakerIodine
+        - id: BeakerMercury
+        - id: BeakerNitrogen
+        - id: BeakerOxygen
+        - id: BeakerPhosphorus
+        - id: BeakerPotassium
+        - id: BeakerSilicon
+        - id: BeakerSodium
+        - id: BeakerSulfur
