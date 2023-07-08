@@ -7,7 +7,6 @@
   components:
   - type: Sprite
     sprite: Objects/Devices/door_remote.rsi
-    netsync: false
   - type: Access
   - type: DoorRemote
 

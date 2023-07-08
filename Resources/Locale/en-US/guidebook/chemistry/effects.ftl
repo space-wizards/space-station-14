@@ -309,6 +309,18 @@ reagent-effect-guidebook-wash-cream-pie-reaction =
         *[other] wash
     } off cream pie from one's face
 
+reagent-effect-guidebook-cure-zombie-infection =
+    { $chance ->
+        [1] Cures
+        *[other] cure
+    } an ongoing zombie infection
+
+reagent-effect-guidebook-cause-zombie-infection =
+    { $chance ->
+        [1] Gives
+        *[other] give
+    } an individual the zombie infection
+
 reagent-effect-guidebook-missing =
     { $chance ->
         [1] Causes

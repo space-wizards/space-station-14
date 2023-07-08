@@ -9,7 +9,6 @@
   - type: Sprite
     sprite: Structures/Machines/Medical/biomass_reclaimer.rsi
     state: icon
-    netsync: false
     snapCardinals: true
   - type: BiomassReclaimer
   - type: Climbable

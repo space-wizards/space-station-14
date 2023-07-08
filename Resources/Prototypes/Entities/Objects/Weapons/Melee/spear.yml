@@ -10,7 +10,6 @@
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
-    netsync: false
     state: spear
   - type: MeleeWeapon
     damage:
@@ -90,7 +89,6 @@
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/reinforced_spear.rsi
-    netsync: false
     state: spear
   - type: MeleeWeapon
     damage:
@@ -170,7 +168,6 @@
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/plasma_spear.rsi
-    netsync: false
     state: spear
   - type: MeleeWeapon
     damage:
@@ -250,7 +247,6 @@
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/uranium_spear.rsi
-    netsync: false
     state: spear
   - type: MeleeWeapon
     damage:

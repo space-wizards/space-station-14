@@ -38,7 +38,6 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-    netsync: false
   - type: Faction
     factions:
     - SimpleNeutral
@@ -286,7 +285,6 @@
       state: mimebot
       sprite: Mobs/Silicon/Bots/mimebot.rsi
   - type: MimePowers
-  - type: Appearance
   - type: Construction
     graph: MimeBot
     node: bot

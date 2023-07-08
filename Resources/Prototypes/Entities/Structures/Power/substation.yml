@@ -114,10 +114,10 @@
     sound:
       path: /Audio/Ambience/Objects/buzzing.ogg
   - type: PointLight
-    netsync: false
     radius: 1.5
     energy: 1.6
     color: "#3db83b"
+    netsync: false
     castShadows: false
   - type: Clickable
   - type: AccessReader
@@ -131,7 +131,6 @@
     anchored: true
   - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation_wall
@@ -238,7 +237,6 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation_wall

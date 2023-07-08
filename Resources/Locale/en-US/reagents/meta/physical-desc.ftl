@@ -66,7 +66,6 @@ reagent-physical-desc-lemony-fresh = lemony fresh
 reagent-physical-desc-crisp = crisp
 reagent-physical-desc-citric = citric
 reagent-physical-desc-acidic = acidic
-reagent-physical-desc-bilky = bilky
 reagent-physical-desc-buzzy = buzzy
 reagent-physical-desc-fibrous = fibrous
 reagent-physical-desc-strong-smelling = strong smelling

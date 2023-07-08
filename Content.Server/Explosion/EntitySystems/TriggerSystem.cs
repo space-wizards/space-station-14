@@ -231,7 +231,7 @@ namespace Content.Server.Explosion.EntitySystems
         {
             base.Update(frameTime);
 
-            UpdateProximity(frameTime);
+            UpdateProximity();
             UpdateTimer(frameTime);
             UpdateTimedCollide(frameTime);
         }
