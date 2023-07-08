@@ -452,3 +452,12 @@ accent-archaic-replacement-148 = indeed
 
 accent-archaic-replaced-149 = yup
 accent-archaic-replacement-149 = indeed
+
+accent-archaic-replaced-150 = ok
+accent-archaic-replacement-149 = alright
+
+accent-archaic-replaced-151 = k
+accent-archaic-replacement-11 = alright
+
+accent-archaic-replaced-152 = okay
+accent-archaic-replacement-152 = alright
