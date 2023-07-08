@@ -8,6 +8,7 @@ using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Numerics;
 
 namespace Content.Client.EntityHealthBar;
 
@@ -131,7 +132,7 @@ public sealed class EntityHealthBarOverlay : Overlay
 
     public static Color GetProgressColor(float progress, bool crit)
     {
-        if (progress >= 1.0f)
+        if (progress >= 1.0f && !crit)
         {
             return new Color(0f, 1f, 0f);
         }
@@ -140,9 +141,8 @@ public sealed class EntityHealthBarOverlay : Overlay
         {
             var hue = (5f / 18f) * progress;
             return Color.FromHsv((hue, 1f, 0.75f, 1f));
-        } else
-        {
-            return Color.Red;
         }
+
+        return Color.Red;
     }
 }
