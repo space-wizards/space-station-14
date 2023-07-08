@@ -1,10 +1,7 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.CCVar;
-using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 namespace Content.IntegrationTests.Tests.Lobby;
 
@@ -16,7 +13,7 @@ public sealed class ServerReloginTest
         await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
         var client = pairTracker.Pair.Client;
-        int originalMaxPlayers = 0;
+        var originalMaxPlayers = 0;
         string username = null;
 
         var serverConfig = server.ResolveDependency<IConfigurationManager>();

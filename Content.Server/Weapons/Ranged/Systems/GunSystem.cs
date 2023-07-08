@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
 using Content.Server.Examine;
@@ -108,7 +109,7 @@ public sealed partial class GunSystem : SharedGunSystem
             : new EntityCoordinates(MapManager.GetMapEntityId(fromMap.MapId), fromMap.Position);
 
         // Update shot based on the recoil
-        toMap = fromMap.Position + angle.ToVec() * mapDirection.Length;
+        toMap = fromMap.Position + angle.ToVec() * mapDirection.Length();
         mapDirection = toMap - fromMap.Position;
         var gunVelocity = Physics.GetMapLinearVelocity(gunUid);
 
@@ -186,8 +187,9 @@ public sealed partial class GunSystem : SharedGunSystem
                     EntityUid? lastHit = null;
 
                     var from = fromMap;
-                    var fromEffect = fromCoordinates; // can't use map coords above because funny FireEffects
-                    var dir = mapDirection.Normalized;
+                    // can't use map coords above because funny FireEffects
+                    var fromEffect = fromCoordinates;
+                    var dir = mapDirection.Normalized();
                     var lastUser = user;
 
                     if (hitscan.Reflective != ReflectType.None)
@@ -204,7 +206,7 @@ public sealed partial class GunSystem : SharedGunSystem
                             var hit = result.HitEntity;
                             lastHit = hit;
 
-                            FireEffects(fromEffect, result.Distance, dir.Normalized.ToAngle(), hitscan, hit);
+                            FireEffects(fromEffect, result.Distance, dir.Normalized().ToAngle(), hitscan, hit);
 
                             var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false);
                             RaiseLocalEvent(hit, ref ev);
@@ -221,7 +223,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                     if (lastHit != null)
                     {
-                        EntityUid hitEntity = lastHit.Value;
+                        var hitEntity = lastHit.Value;
                         if (hitscan.StaminaDamage > 0f)
                             _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source:user);
 
@@ -292,7 +294,7 @@ public sealed partial class GunSystem : SharedGunSystem
         var physics = EnsureComp<PhysicsComponent>(uid);
         Physics.SetBodyStatus(physics, BodyStatus.InAir);
 
-        var targetMapVelocity = gunVelocity + direction.Normalized * speed;
+        var targetMapVelocity = gunVelocity + direction.Normalized() * speed;
         var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
         var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
         Physics.SetLinearVelocity(uid, finalLinear, body: physics);
@@ -416,7 +418,7 @@ public sealed partial class GunSystem : SharedGunSystem
         {
             if (hitscan.MuzzleFlash != null)
             {
-                sprites.Add((fromCoordinates.Offset(angle.ToVec().Normalized / 2), angle, hitscan.MuzzleFlash, 1f));
+                sprites.Add((fromCoordinates.Offset(angle.ToVec().Normalized() / 2), angle, hitscan.MuzzleFlash, 1f));
             }
 
             if (hitscan.TravelFlash != null)

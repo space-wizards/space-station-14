@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Viewport;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -64,7 +65,7 @@ namespace Content.Client.Flash
             screenSpaceHandle.UseShader(_shader);
             _shader.SetParameter("percentComplete", percentComplete);
 
-            var screenSize = UIBox2.FromDimensions((0, 0), _displayManager.ScreenSize);
+            var screenSize = UIBox2.FromDimensions(new Vector2(0, 0), _displayManager.ScreenSize);
 
             if (_screenshotTexture != null)
             {

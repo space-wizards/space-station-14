@@ -9,6 +9,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
@@ -541,7 +542,7 @@ public sealed partial class ShuttleSystem
         }
 
         var targetAABB = _transform.GetWorldMatrix(targetXform, xformQuery)
-            .TransformBox(targetLocalAABB).Enlarged(shuttleAABB.Size.Length);
+            .TransformBox(targetLocalAABB).Enlarged(shuttleAABB.Size.Length());
         var nearbyGrids = new HashSet<EntityUid>();
         var iteration = 0;
         var lastCount = nearbyGrids.Count;
@@ -564,7 +565,7 @@ public sealed partial class ShuttleSystem
                 break;
             }
 
-            targetAABB = targetAABB.Enlarged(shuttleAABB.Size.Length / 2f);
+            targetAABB = targetAABB.Enlarged(shuttleAABB.Size.Length() / 2f);
             iteration++;
             lastCount = nearbyGrids.Count;
 

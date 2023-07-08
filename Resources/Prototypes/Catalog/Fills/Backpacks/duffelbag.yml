@@ -26,7 +26,7 @@
         amount: 2
       - id: GrenadeFlashBang
         amount: 2
-      - id: PillRomerol
+      - id: PillAmbuzol
         amount: 5
 
 - type: entity
@@ -243,10 +243,10 @@
   components:
   - type: StorageFill
     contents:
-      - id: SyringeCorpium
-      - id: WeaponFlareGun
-      - id: BoxShotgunIncendiary
-      - id: PillRomerol
+      - id: SyringeRomerol
+      - id: WeaponRevolverMateba
+      - id: MagazineBoxMagnumIncendiary
+      - id: PillAmbuzol
         amount: 3
 
 - type: entity
