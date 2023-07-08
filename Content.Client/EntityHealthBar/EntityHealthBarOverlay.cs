@@ -1,8 +1,8 @@
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.FixedPoint;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
@@ -124,7 +124,15 @@ public sealed class EntityHealthBarOverlay : Overlay
 
         if (_mobStateSystem.IsCritical(uid, component))
         {
-            return (1, true);
+            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var critThreshold, thresholds) ||
+                !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out var deadThreshold, thresholds))
+            {
+                return (1, true);
+            }
+
+            var ratio = 1 - ((dmg.TotalDamage - critThreshold) / (deadThreshold - critThreshold)).Value.Float();
+
+            return (ratio, true);
         }
 
         return (0, true);
@@ -132,7 +140,7 @@ public sealed class EntityHealthBarOverlay : Overlay
 
     public static Color GetProgressColor(float progress, bool crit)
     {
-        if (progress >= 1.0f && !crit)
+        if (progress >= 1.0f)
         {
             return new Color(0f, 1f, 0f);
         }
