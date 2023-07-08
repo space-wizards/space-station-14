@@ -11,6 +11,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using System.Linq;
+using System.Numerics;
 
 namespace Content.IntegrationTests.Tests.Body
 {

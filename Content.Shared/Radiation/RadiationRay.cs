@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Radiation.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;

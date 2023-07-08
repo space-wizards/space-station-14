@@ -129,7 +129,8 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var entity in nearbyEntities)
             {
-                if (entity == owner) continue;
+                if (entity == owner)
+                    continue;
 
                 if (EntityManager.IsQueuedForDeletion(entity) || MetaData(entity).EntityLifeStage > EntityLifeStage.MapInitialized)
                     continue;
@@ -140,7 +141,7 @@ namespace Content.Server.Power.EntitySystems
                 if (!receiver.Connectable || receiver.Provider != null)
                     continue;
 
-                if ((Transform(entity).LocalPosition - xform.LocalPosition).Length < Math.Min(range, receiver.ReceptionRange))
+                if ((Transform(entity).LocalPosition - xform.LocalPosition).Length() < Math.Min(range, receiver.ReceptionRange))
                     yield return receiver;
             }
         }
@@ -268,7 +269,7 @@ namespace Content.Server.Power.EntitySystems
                 // Find the closest provider
                 if (!xformQuery.TryGetComponent(entity, out var entityXform))
                     continue;
-                var distance = (entityXform.LocalPosition - xform.LocalPosition).Length;
+                var distance = (entityXform.LocalPosition - xform.LocalPosition).Length();
                 if (distance >= closestDistanceFound)
                     continue;
 
