@@ -184,6 +184,17 @@
   categories:
   - UplinkExplosives
 
+- type: listing
+  id: UplinkSyndicateBomb
+  name: uplink-syndicate-bomb-name
+  description: uplink-syndicate-bomb-desc
+  icon: { sprite: /Textures/Objects/Devices/nuke.rsi, state: syndicate-bomb}
+  productEntity: CrateSyndicateBomb
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkExplosives
+
 # Ammo
 
 - type: listing
@@ -1043,6 +1054,16 @@
   name: uplink-scarf-syndie-green-name
   description: uplink-scarf-syndie-green-desc
   productEntity: ClothingNeckScarfStripedSyndieGreen
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkPointless
+
+- type: listing
+  id: UplinkSyndicateBombCodes
+  name: uplink-syndicate-bomb-codes-name
+  description: uplink-syndicate-bomb-codes-desc
+  productEntity: SyndicateBombCodePaper
   cost:
     Telecrystal: 1
   categories:

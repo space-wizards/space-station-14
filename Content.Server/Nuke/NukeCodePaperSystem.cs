@@ -35,7 +35,7 @@ namespace Content.Server.Nuke
             if (!Resolve(uid, ref component))
                 return;
 
-            if (TryGetRelativeNukeCode(uid, out var paperContent, station, onlyCurrentStation: component.AllNukesAvailable))
+            if (TryGetRelativeNukeCode(uid, component.PaperType, out var paperContent, station, onlyCurrentStation: component.AllNukesAvailable))
             {
                 _paper.SetContent(uid, paperContent);
             }
@@ -56,7 +56,7 @@ namespace Content.Server.Nuke
             var wasSent = false;
             while (faxes.MoveNext(out var faxEnt, out var fax))
             {
-                if (!fax.ReceiveNukeCodes || !TryGetRelativeNukeCode(faxEnt, out var paperContent, station))
+                if (!fax.ReceiveNukeCodes || !TryGetRelativeNukeCode(faxEnt, "Nuke", out var paperContent, station))
                 {
                     continue;
                 }
@@ -83,6 +83,7 @@ namespace Content.Server.Nuke
 
         private bool TryGetRelativeNukeCode(
             EntityUid uid,
+            string paperType,
             [NotNullWhen(true)] out string? nukeCode,
             EntityUid? station = null,
             TransformComponent? transform = null,
@@ -102,22 +103,35 @@ namespace Content.Server.Nuke
             _random.Shuffle(query);
             foreach (var nuke in query)
             {
-                if (!onlyCurrentStation &&
-                    (owningStation == null &&
-                    nuke.OriginMapGrid != (transform.MapID, transform.GridUid) ||
-                    nuke.OriginStation != owningStation))
+                if (nuke.BombType == "Nuke" && paperType == "NukePaper")
                 {
-                    continue;
+                    if (!onlyCurrentStation &&
+                        (owningStation == null &&
+                        nuke.OriginMapGrid != (transform.MapID, transform.GridUid) ||
+                        nuke.OriginStation != owningStation))
+                    {
+                        continue;
+                    }
+                    FillPaper(nuke, codesMessage);
+                    break;
                 }
 
-                codesMessage.PushNewline();
-                codesMessage.AddMarkup(Loc.GetString("nuke-codes-list", ("name", MetaData(nuke.Owner).EntityName), ("code", nuke.Code)));
-                break;
+                if (nuke.BombType == "SyndicateBomb" && paperType == "SyndicateBombPaper")
+                {
+                    FillPaper(nuke, codesMessage);
+                    break;
+                }
             }
 
             if (!codesMessage.IsEmpty)
                 nukeCode = Loc.GetString("nuke-codes-message")+codesMessage;
             return !codesMessage.IsEmpty;
+        }
+
+        public void FillPaper(NukeComponent nuke, FormattedMessage message)
+        {
+            message.PushNewline();
+            message.AddMarkup(Loc.GetString("nuke-codes-list", ("name", MetaData(nuke.Owner).EntityName), ("code", nuke.Code)));
         }
     }
 }

@@ -169,6 +169,14 @@
 
 - type: entity
   parent: NukeCodePaper
+  id: SyndicateBombCodePaper
+  name: syndicate bomb codes
+  components:
+  - type: NukeCodePaper
+    paperType: SyndicateBombPaper
+
+- type: entity
+  parent: NukeCodePaper
   id: NukeCodePaperStation
   suffix: Station Only
   components:

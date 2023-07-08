@@ -11,3 +11,13 @@
   components:
     - type: SurplusBundle
       totalPrice: 125
+
+- type: entity
+  id: CrateSyndicateBomb
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyndicateBombUnanchored
+      - id: SyndicateBombCodePaper
+      - id: NukeDiskFake

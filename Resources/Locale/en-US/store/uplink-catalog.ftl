@@ -15,7 +15,7 @@ uplink-esword-name = Energy Sword
 uplink-esword-desc = A very dangerous energy sword that can reflect shots. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
 
 uplink-esword-double-name = Double Bladed Energy Sword
-uplink-esword-double-desc = A much more expensive counter part to the normal energy sword: with a much higher reflection chance, larger attack angle, higher structural damage, and faster swing, all at the cost of lower heat and slash damage. Makes a lot of noise when used or turned on. 
+uplink-esword-double-desc = A much more expensive counter part to the normal energy sword: with a much higher reflection chance, larger attack angle, higher structural damage, and faster swing, all at the cost of lower heat and slash damage. Makes a lot of noise when used or turned on.
 
 uplink-edagger-name = Energy Dagger
 uplink-edagger-desc = A small energy blade conveniently disguised in the form of a pen.
@@ -50,6 +50,9 @@ uplink-emp-grenade-desc = Releases electromagnetic pulses that disrupt or damage
 
 uplink-exploding-pen-name = Exploding pen
 uplink-exploding-pen-desc = A class IV explosive device contained within a standard pen. Comes with a 4 second fuse.
+
+uplink-syndicate-bomb-name = Syndicate Bomb
+uplink-syndicate-bomb-desc = A bomb with a payload consisting of a failed attempt at copying NT's nuclear fission explosive, able to destroy an entire room instead of an entire station. Uses NT nuke firmware and comes with required disk and code.
 
 # Ammo
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
@@ -271,3 +274,5 @@ uplink-scarf-syndie-red-desc = A stylish striped syndicate red scarf. The perfec
 uplink-scarf-syndie-green-name = striped syndicate green scarf
 uplink-scarf-syndie-green-desc = A stylish striped syndicate green scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
 
+uplink-syndicate-bomb-codes-name = Syndicate Bomb Codes
+uplink-syndicate-bomb-codes-desc = For the operatives that lost their original paper or accidentally received codes for another bomb on the same station(no refunds).

@@ -14,5 +14,8 @@ namespace Content.Server.Nuke
         /// </summary>
         [DataField("allNukesAvailable")]
         public bool AllNukesAvailable;
+
+        [DataField("paperType")]
+        public string PaperType = "NukePaper";
     }
 }

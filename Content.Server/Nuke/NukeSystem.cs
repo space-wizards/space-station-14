@@ -279,19 +279,28 @@ namespace Content.Server.Nuke
 
             nuke.RemainingTime -= frameTime;
 
-            // Start playing the nuke event song so that it ends a couple seconds before the alert sound
-            // should play
-            if (nuke.RemainingTime <= NukeSongLength + nuke.AlertSoundTime + NukeSongBuffer && !nuke.PlayedNukeSong)
+            // Only start playing music if it's a nuke
+            if (nuke.BombType == "Nuke")
             {
-                _soundSystem.DispatchStationEventMusic(uid, nuke.ArmMusic, StationEventMusicType.Nuke);
-                nuke.PlayedNukeSong = true;
+                // Start playing the nuke event song so that it ends a couple seconds before the alert sound
+                // should play
+                if (nuke.RemainingTime <= NukeSongLength + nuke.AlertSoundTime + NukeSongBuffer && !nuke.PlayedNukeSong)
+                {
+                    _soundSystem.DispatchStationEventMusic(uid, nuke.ArmMusic, StationEventMusicType.Nuke);
+                    nuke.PlayedNukeSong = true;
+                }
             }
 
             // play alert sound if time is running out
             if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
             {
                 nuke.AlertAudioStream = _audio.Play(nuke.AlertSound, Filter.Broadcast(), uid, true);
-                _soundSystem.StopStationEventMusic(uid, StationEventMusicType.Nuke);
+
+                //Only end music if it's a nuke
+                if (nuke.BombType == "Nuke")
+                {
+                    _soundSystem.StopStationEventMusic(uid, StationEventMusicType.Nuke);
+                }
                 nuke.PlayedAlertSound = true;
             }
 
@@ -441,22 +450,26 @@ namespace Content.Server.Nuke
             // The nuke may not be on a station, so it's more important to just
             // let people know that a nuclear bomb was armed in their vicinity instead.
             // Otherwise, you could set every station to whatever AlertLevelOnActivate is.
-            if (stationUid != null)
-                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, true, true, true, true);
+            if (component.BombType == "Nuke")
+            {
+                if (stationUid != null)
+                    _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, true, true, true, true);
 
-            var pos =  nukeXform.MapPosition;
-            var x = (int) pos.X;
-            var y = (int) pos.Y;
-            var posText = $"({x}, {y})";
+                var pos =  nukeXform.MapPosition;
+                var x = (int) pos.X;
+                var y = (int) pos.Y;
+                var posText = $"({x}, {y})";
 
-            // warn a crew
-            var announcement = Loc.GetString("nuke-component-announcement-armed",
-                ("time", (int) component.RemainingTime), ("position", posText));
-            var sender = Loc.GetString("nuke-component-announcement-sender");
-            _chatSystem.DispatchStationAnnouncement(stationUid ?? uid, announcement, sender, false, null, Color.Red);
+                // warn a crew
+                var announcement = Loc.GetString("nuke-component-announcement-armed",
+                    ("time", (int) component.RemainingTime), ("position", posText));
+                var sender = Loc.GetString("nuke-component-announcement-sender");
+                _chatSystem.DispatchStationAnnouncement(stationUid ?? uid, announcement, sender, false, null, Color.Red);
 
-            _soundSystem.PlayGlobalOnStation(uid, _audio.GetSound(component.ArmSound));
+                _soundSystem.PlayGlobalOnStation(uid, _audio.GetSound(component.ArmSound));
+            }
 
+            _audio.Play(component.ArmSound, Filter.Broadcast(), uid, true);
             _itemSlots.SetLock(uid, component.DiskSlot, true);
             nukeXform.Anchored = true;
             component.Status = NukeStatus.ARMED;
@@ -475,21 +488,25 @@ namespace Content.Server.Nuke
                 return;
 
             var stationUid = _station.GetOwningStation(uid);
-            if (stationUid != null)
-                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnDeactivate, true, true, true);
-
-            // warn a crew
             var announcement = Loc.GetString("nuke-component-announcement-unarmed");
             var sender = Loc.GetString("nuke-component-announcement-sender");
-            _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false);
 
-            component.PlayedNukeSong = false;
-            _soundSystem.PlayGlobalOnStation(uid, _audio.GetSound(component.DisarmSound));
-            _soundSystem.StopStationEventMusic(uid, StationEventMusicType.Nuke);
+            if (component.BombType == "Nuke")
+            {
+                if (stationUid != null)
+                    _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnDeactivate, true, true, true);
 
-            // disable sound and reset it
-            component.PlayedAlertSound = false;
-            component.AlertAudioStream?.Stop();
+                // warn a crew
+                _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false);
+
+                component.PlayedNukeSong = false;
+                _soundSystem.PlayGlobalOnStation(uid, _audio.GetSound(component.DisarmSound));
+                _soundSystem.StopStationEventMusic(uid, StationEventMusicType.Nuke);
+
+                // disable sound and reset it
+                component.PlayedAlertSound = false;
+                component.AlertAudioStream?.Stop();
+            }
 
             // start bomb cooldown
             _itemSlots.SetLock(uid, component.DiskSlot, false);
@@ -533,12 +550,15 @@ namespace Content.Server.Nuke
                 component.IntensitySlope,
                 component.MaxIntensity);
 
-            RaiseLocalEvent(new NukeExplodedEvent()
+            //Only end round if it's a nuke
+            if (component.BombType == "Nuke")
             {
-                OwningStation = transform.GridUid,
-            });
-
-            _soundSystem.StopStationEventMusic(uid, StationEventMusicType.Nuke);
+                RaiseLocalEvent(new NukeExplodedEvent()
+                {
+                    OwningStation = transform.GridUid,
+                });
+                _soundSystem.StopStationEventMusic(uid, StationEventMusicType.Nuke);
+            }
             EntityManager.DeleteEntity(uid);
         }
 

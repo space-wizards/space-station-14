@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d Syndicate bomb taken from: https://github.com/tgstation/tgstation/commit/f4f743e0a90be03f374051037ca7f9081650aaf5#diff-4b9d3e10c9d1375fdf188a23afed1269866dd9fe6f51a07f979daab2786cd9af",
     "states": [
         {
             "name": "nuclearbomb_base"
@@ -18,6 +18,15 @@
         },
         {
             "name": "nuclearbomb_timing"
+        },
+        {
+            "name": "syndicate-bomb"
+        },
+        {
+            "name": "syndicate-bomb-active"
+        },
+        {
+            "name": "syndicate-bomb-inactive"
         }
     ]
 }
