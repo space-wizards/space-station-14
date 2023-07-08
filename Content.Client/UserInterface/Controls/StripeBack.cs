@@ -113,7 +113,7 @@ namespace Content.Client.UserInterface.Controls
                     EdgeColor);
             }
 
-            GetActualStyleBox()?.Draw(handle, centerBox);
+            GetActualStyleBox()?.Draw(handle, centerBox, UIScale);
         }
 
         private StyleBox? GetActualStyleBox()

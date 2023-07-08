@@ -60,7 +60,6 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        450: Critical
         500: Dead
     - type: Metabolizer
       solutionOnBody: false
