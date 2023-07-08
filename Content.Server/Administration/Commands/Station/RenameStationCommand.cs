@@ -1,3 +1,4 @@
+using Content.Server.Commands;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
@@ -27,12 +28,28 @@ public sealed class RenameStationCommand : IConsoleCommand
 
         var stationSystem = _entSysManager.GetEntitySystem<StationSystem>();
 
-        if (!EntityUid.TryParse(args[0], out var station) || _entityManager.HasComponent<StationDataComponent>(station))
+        if (!EntityUid.TryParse(args[0], out var station) || !_entityManager.HasComponent<StationDataComponent>(station))
         {
             shell.WriteError(Loc.GetString("shell-argument-station-id-invalid", ("index", 1)));
             return;
         }
 
         stationSystem.RenameStation(station, args[1]);
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            var options = ContentCompletionHelper.StationIds(_entityManager);
+            return CompletionResult.FromHintOptions(options, "<station id>");
+        }
+
+        if (args.Length == 2)
+        {
+            return CompletionResult.FromHint("<name>");
+        }
+
+        return CompletionResult.Empty;
     }
 }

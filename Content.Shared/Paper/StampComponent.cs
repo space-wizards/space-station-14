@@ -1,4 +1,5 @@
 using Robust.Shared.Serialization;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Paper
 {
@@ -28,10 +29,14 @@ namespace Content.Shared.Paper
         /// </summary>
         [DataField("stampState")]
         public string StampState { get; set; } = "paper_stamp-generic";
+
         /// <summary>
         /// The color of the ink used by the stamp in UIs
         /// </summary>
         [DataField("stampedColor")]
         public Color StampedColor = Color.FromHex("#BB3232"); // StyleNano.DangerousRedFore
+
+        [DataField("sound")]
+        public SoundSpecifier? Sound;
     }
 }

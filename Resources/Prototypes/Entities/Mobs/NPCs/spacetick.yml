@@ -44,7 +44,6 @@
   - type: Stamina
     excess: 15
   - type: MovementAlwaysTouching
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:

@@ -24,7 +24,7 @@ public sealed class StatValuesCommand : IConsoleCommand
 
     public string Command => "showvalues";
     public string Description => Loc.GetString("stat-values-desc");
-    public string Help => $"{Command} <cargosell / lathsell / melee>";
+    public string Help => $"{Command} <cargosell / lathesell / melee>";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not IPlayerSession pSession)

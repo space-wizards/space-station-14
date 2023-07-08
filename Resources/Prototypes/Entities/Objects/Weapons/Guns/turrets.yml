@@ -7,11 +7,28 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite
-      netsync: false
       sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
       drawdepth: WallMountedItems
       layers:
         - state: syndie_broken
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 450
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 2
+                  max: 4
 
 - type: entity
   parent: BaseStructure
@@ -37,7 +54,6 @@
       containers:
         ballistic-ammo: !type:Container
     - type: Sprite
-      netsync: false
       sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
       drawdepth: WallMountedItems
       layers:
@@ -133,7 +149,6 @@
       factions:
         - Xeno
     - type: Sprite
-      netsync: false
       sprite: Objects/Weapons/Guns/Turrets/xenoturret.rsi
       noRot: true
       layers:

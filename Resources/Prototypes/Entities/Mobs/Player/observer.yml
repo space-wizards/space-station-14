@@ -7,7 +7,7 @@
   components:
   - type: ContentEye
     maxZoom: 1.44,1.44
-  - type: Mind
+  - type: MindContainer
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -47,7 +47,6 @@
     globalReceive: true
   - type: Sprite
     overrideContainerOcclusion: true # Ghosts always show up regardless of where they're contained.
-    netsync: false
     noRot: true
     drawdepth: Ghosts
     sprite: Mobs/Ghosts/ghost_human.rsi

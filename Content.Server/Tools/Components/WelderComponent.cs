@@ -13,25 +13,25 @@ namespace Content.Server.Tools.Components
         /// <summary>
         ///     Solution on the entity that contains the fuel.
         /// </summary>
-        [DataField("fuelSolution")]
+        [DataField("fuelSolution"), ViewVariables(VVAccess.ReadWrite)]
         public string FuelSolution { get; } = "Welder";
 
         /// <summary>
         ///     Reagent that will be used as fuel for welding.
         /// </summary>
-        [DataField("fuelReagent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
+        [DataField("fuelReagent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>)), ViewVariables(VVAccess.ReadWrite)]
         public string FuelReagent { get; } = "WeldingFuel";
 
         /// <summary>
         ///     Fuel consumption per second, while the welder is active.
         /// </summary>
-        [DataField("fuelConsumption")]
-        public FixedPoint2 FuelConsumption { get; } = FixedPoint2.New(0.05f);
+        [DataField("fuelConsumption"), ViewVariables(VVAccess.ReadWrite)]
+        public FixedPoint2 FuelConsumption { get; } = FixedPoint2.New(2.0f);
 
         /// <summary>
         ///     A fuel amount to be consumed when the welder goes from being unlit to being lit.
         /// </summary>
-        [DataField("welderOnConsume")]
+        [DataField("fuelLitCost"), ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 FuelLitCost { get; } = FixedPoint2.New(0.5f);
 
         /// <summary>

@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using Content.Client.Computer;
 using Content.Shared.Solar;
 using JetBrains.Annotations;
@@ -104,7 +105,7 @@ namespace Content.Client.Power
 
         public SolarControlNotARadar()
         {
-            MinSize = (SizeFull, SizeFull);
+            MinSize = new Vector2(SizeFull, SizeFull);
         }
 
         public void UpdateState(SolarControlConsoleBoundInterfaceState ls)
@@ -125,36 +126,36 @@ namespace Content.Client.Power
             var gridLinesEquatorial = 8;
 
             // Draw base
-            handle.DrawCircle((point, point), RadiusCircle + 1, fakeAA);
-            handle.DrawCircle((point, point), RadiusCircle, Color.Black);
+            handle.DrawCircle(new Vector2(point, point), RadiusCircle + 1, fakeAA);
+            handle.DrawCircle(new Vector2(point, point), RadiusCircle, Color.Black);
 
             // Draw grid lines
             for (var i = 0; i < gridLinesEquatorial; i++)
             {
-                handle.DrawCircle((point, point), (RadiusCircle / gridLinesEquatorial) * i, gridLines, false);
+                handle.DrawCircle(new Vector2(point, point), (RadiusCircle / gridLinesEquatorial) * i, gridLines, false);
             }
 
             for (var i = 0; i < gridLinesRadial; i++)
             {
                 Angle angle = (Math.PI / gridLinesRadial) * i;
                 var aExtent = angle.ToVec() * RadiusCircle;
-                handle.DrawLine((point, point) - aExtent, (point, point) + aExtent, gridLines);
+                handle.DrawLine(new Vector2(point, point) - aExtent, new Vector2(point, point) + aExtent, gridLines);
             }
 
             // The rotations need to be adjusted because Y is inverted in Robust (like BYOND)
-            Vector2 rotMul = (1, -1);
+            var rotMul = new Vector2(1, -1);
             // Hotfix corrections I don't understand
-            Angle rotOfs = new Angle(Math.PI * -0.5);
+            var rotOfs = new Angle(Math.PI * -0.5);
 
-            Angle predictedPanelRotation = PredictedPanelRotation;
+            var predictedPanelRotation = PredictedPanelRotation;
 
             var extent = (predictedPanelRotation + rotOfs).ToVec() * rotMul * RadiusCircle;
-            Vector2 extentOrtho = (extent.Y, -extent.X);
-            handle.DrawLine((point, point) - extentOrtho, (point, point) + extentOrtho, Color.White);
-            handle.DrawLine((point, point) + (extent / panelExtentCutback), (point, point) + extent - (extent / panelExtentCutback), Color.DarkGray);
+            var extentOrtho = new Vector2(extent.Y, -extent.X);
+            handle.DrawLine(new Vector2(point, point) - extentOrtho, new Vector2(point, point) + extentOrtho, Color.White);
+            handle.DrawLine(new Vector2(point, point) + (extent / panelExtentCutback), new Vector2(point, point) + extent - (extent / panelExtentCutback), Color.DarkGray);
 
             var sunExtent = (_lastState.TowardsSun + rotOfs).ToVec() * rotMul * RadiusCircle;
-            handle.DrawLine((point, point) + sunExtent, (point, point), Color.Yellow);
+            handle.DrawLine(new Vector2(point, point) + sunExtent, new Vector2(point, point), Color.Yellow);
         }
     }
 

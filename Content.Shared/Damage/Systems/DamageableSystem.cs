@@ -124,7 +124,7 @@ namespace Content.Shared.Damage
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance) && damageDelta != null)
             {
-                var data = new DamageVisualizerGroupData(damageDelta.GetDamagePerGroup(_prototypeManager).Keys.ToList());
+                var data = new DamageVisualizerGroupData(component.DamagePerGroup.Keys.ToList());
                 _appearance.SetData(uid, DamageVisualizerKeys.DamageUpdateGroups, data, appearance);
             }
             RaiseLocalEvent(uid, new DamageChangedEvent(component, damageDelta, interruptsDoAfters, origin));
@@ -153,7 +153,7 @@ namespace Content.Shared.Damage
 
             if (damage == null)
             {
-                Logger.Error("Null DamageSpecifier. Probably because a required yaml field was not given.");
+                Log.Error("Null DamageSpecifier. Probably because a required yaml field was not given.");
                 return null;
             }
 
@@ -313,10 +313,12 @@ namespace Content.Shared.Damage
         // Whenever locational damage is a thing, this should just check only that bit of armour.
         public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 
+        public readonly DamageSpecifier OriginalDamage;
         public DamageSpecifier Damage;
 
         public DamageModifyEvent(DamageSpecifier damage)
         {
+            OriginalDamage = damage;
             Damage = damage;
         }
     }

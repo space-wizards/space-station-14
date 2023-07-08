@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Threading;
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
@@ -366,7 +367,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
            if (comp == centcomm || comp.MapId != centcomm.MapId)
                continue;
 
-           comp.ShuttleIndex = comp.ShuttleIndex;
+           comp.ShuttleIndex = centcomm.ShuttleIndex;
        }
 
        component.EmergencyShuttle = shuttle;

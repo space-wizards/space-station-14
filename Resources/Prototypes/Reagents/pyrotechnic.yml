@@ -144,6 +144,7 @@
   physicalDesc: reagent-physical-desc-oily
   slippery: true
   flavor: bitter
+  flavorMinimum: 0.01
   color: "#a76b1c"
   recognizable: true
   boilingPoint: -84.7 # Acetylene. Close enough.

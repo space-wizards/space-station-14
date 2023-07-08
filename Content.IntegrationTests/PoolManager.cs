@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;
 using Content.IntegrationTests.Tests;
@@ -14,8 +12,6 @@ using Content.IntegrationTests.Tests.Interaction.Click;
 using Content.IntegrationTests.Tests.Networking;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
-using Microsoft.Diagnostics.Tracing.Parsers.Kernel;
-using NUnit.Framework;
 using Robust.Client;
 using Robust.Server;
 using Robust.Shared;
@@ -61,13 +57,13 @@ public static class PoolManager
         // @formatter:on
     };
 
-    private static int PairId;
-    private static object PairLock = new();
+    private static int _pairId;
+    private static readonly object PairLock = new();
 
     // Pair, IsBorrowed
-    private static Dictionary<Pair, bool> Pairs = new();
-    private static bool Dead;
-    private static Exception PoolFailureReason;
+    private static readonly Dictionary<Pair, bool> Pairs = new();
+    private static bool _dead;
+    private static Exception _poolFailureReason;
 
     private static async Task ConfigurePrototypes(RobustIntegrationTest.IntegrationInstance instance,
         PoolSettings settings)
@@ -108,18 +104,21 @@ public static class PoolManager
 
         options.BeforeStart += () =>
         {
-            IoCManager.Resolve<IEntitySystemManager>()
-                .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
-            IoCManager.Resolve<IComponentFactory>().RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
+            var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
+            var compFactory = IoCManager.Resolve<IComponentFactory>();
+            entSysMan.LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
+            compFactory.RegisterClass<AutoPredictionTestComponent>();
+            entSysMan.LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
+            compFactory.RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
+            entSysMan.LoadExtraSystemType<SystemPredictReconcileTest.SystemPredictionTestEntitySystem>();
+            compFactory.RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
             IoCManager.Register<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
             IoCManager.Register<InteractionSystemTests.TestInteractionSystem>();
             IoCManager.Register<DeviceNetworkTestSystem>();
-            IoCManager.Resolve<IEntitySystemManager>()
-                .LoadExtraSystemType<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
-            IoCManager.Resolve<IEntitySystemManager>()
-                .LoadExtraSystemType<InteractionSystemTests.TestInteractionSystem>();
-            IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
-            IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestDestructibleListenerSystem>();
+            entSysMan.LoadExtraSystemType<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
+            entSysMan.LoadExtraSystemType<InteractionSystemTests.TestInteractionSystem>();
+            entSysMan.LoadExtraSystemType<DeviceNetworkTestSystem>();
+            entSysMan.LoadExtraSystemType<TestDestructibleListenerSystem>();
             IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
             IoCManager.Resolve<IConfigurationManager>()
                 .OnValueChanged(RTCVars.FailureLogLevel, value => logHandler.FailureLevel = value, true);
@@ -141,9 +140,9 @@ public static class PoolManager
         List<Pair> localPairs;
         lock (PairLock)
         {
-            if(Dead)
+            if (_dead)
                 return;
-            Dead = true;
+            _dead = true;
             localPairs = Pairs.Keys.ToList();
         }
 
@@ -163,7 +162,7 @@ public static class PoolManager
             {
                 var borrowed = Pairs[pair];
                 builder.AppendLine($"Pair {pair.PairId}, Tests Run: {pair.TestHistory.Count}, Borrowed: {borrowed}");
-                for (int i = 0; i < pair.TestHistory.Count; i++)
+                for (var i = 0; i < pair.TestHistory.Count; i++)
                 {
                     builder.AppendLine($"#{i}: {pair.TestHistory[i]}");
                 }
@@ -211,10 +210,14 @@ public static class PoolManager
             {
                 ClientBeforeIoC = () =>
                 {
-                    IoCManager.Resolve<IEntitySystemManager>()
-                        .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
-                    IoCManager.Resolve<IComponentFactory>()
-                        .RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
+                    var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
+                    var compFactory = IoCManager.Resolve<IComponentFactory>();
+                    entSysMan.LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
+                    compFactory.RegisterClass<AutoPredictionTestComponent>();
+                    entSysMan.LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
+                    compFactory.RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
+                    entSysMan.LoadExtraSystemType<SystemPredictReconcileTest.SystemPredictionTestEntitySystem>();
+                    compFactory.RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
                     IoCManager.Register<IParallaxManager, DummyParallaxManager>(true);
                     IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
                     IoCManager.Resolve<IConfigurationManager>()
@@ -232,9 +235,9 @@ public static class PoolManager
 
     private static void SetupCVars(PoolSettings poolSettings, RobustIntegrationTest.IntegrationOptions options)
     {
-        foreach (var serverTestCvar in ServerTestCvars)
+        foreach (var (cvar, value) in ServerTestCvars)
         {
-            options.CVarOverrides[serverTestCvar.cvar] = serverTestCvar.value;
+            options.CVarOverrides[cvar] = value;
         }
 
         if (poolSettings.DummyTicker)
@@ -266,8 +269,10 @@ public static class PoolManager
     /// </summary>
     /// <param name="poolSettings">See <see cref="PoolSettings"/></param>
     /// <returns></returns>
-    public static async Task<PairTracker> GetServerClient(PoolSettings poolSettings = null) =>
-        await GetServerClientPair(poolSettings ?? new PoolSettings());
+    public static async Task<PairTracker> GetServerClient(PoolSettings poolSettings = null)
+    {
+        return await GetServerClientPair(poolSettings ?? new PoolSettings());
+    }
 
     private static string GetDefaultTestName(TestContext testContext)
     {
@@ -328,7 +333,7 @@ public static class PoolManager
             if (pair != null && pair.TestHistory.Count > 1)
             {
                 await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Pair {pair.PairId} Test History Start");
-                for (int i = 0; i < pair.TestHistory.Count; i++)
+                for (var i = 0; i < pair.TestHistory.Count; i++)
                 {
                     await testOut.WriteLineAsync($"- Pair {pair.PairId} Test #{i}: {pair.TestHistory[i]}");
                 }
@@ -403,6 +408,8 @@ public static class PoolManager
         methodWatch.Start();
         await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Setting CVar ");
         var configManager = pair.Server.ResolveDependency<IConfigurationManager>();
+        var entityManager = pair.Server.ResolveDependency<IEntityManager>();
+        var gameTicker = entityManager.System<GameTicker>();
         await pair.Server.WaitPost(() =>
         {
             configManager.SetCVar(CCVars.GameLobbyEnabled, poolSettings.InLobby);
@@ -414,14 +421,14 @@ public static class PoolManager
             pair.Client.SetConnectTarget(pair.Server);
             await pair.Server.WaitPost(() =>
             {
-                EntitySystem.Get<GameTicker>().RestartRound();
+                gameTicker.RestartRound();
             });
             await pair.Client.WaitPost(() =>
             {
                 cNetMgr.ClientConnect(null!, 0, null!);
             });
         }
-        await ReallyBeIdle(pair,11);
+        await ReallyBeIdle(pair, 11);
 
         await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Disconnecting client, and restarting server");
 
@@ -443,7 +450,7 @@ public static class PoolManager
                     serverProtoManager.RemoveString(pair.Settings.ExtraPrototypes.Trim());
                 });
             }
-            if(!pair.Settings.NoClient)
+            if (!pair.Settings.NoClient)
             {
                 var clientProtoManager = pair.Client.ResolveDependency<IPrototypeManager>();
                 await pair.Client.WaitPost(() =>
@@ -471,7 +478,7 @@ public static class PoolManager
         await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Restarting server again");
         await pair.Server.WaitPost(() =>
         {
-            EntitySystem.Get<GameTicker>().RestartRound();
+            gameTicker.RestartRound();
         });
 
 
@@ -495,17 +502,17 @@ public static class PoolManager
 
     private static void DieIfPoolFailure()
     {
-        if (PoolFailureReason != null)
+        if (_poolFailureReason != null)
         {
-            // If the PoolFailureReason is not null, we can assume at least one test failed.
+            // If the _poolFailureReason is not null, we can assume at least one test failed.
             // So we say inconclusive so we don't add more failed tests to search through.
             Assert.Inconclusive(@"
 In a different test, the pool manager had an exception when trying to create a server/client pair.
 Instead of risking that the pool manager will fail at creating a server/client pairs for every single test,
-we are just going to end this here to save a lot of time. This is the exception that started this:\n {0}", PoolFailureReason);
+we are just going to end this here to save a lot of time. This is the exception that started this:\n {0}", _poolFailureReason);
         }
 
-        if (Dead)
+        if (_dead)
         {
             // If Pairs is null, we ran out of time, we can't assume a test failed.
             // So we are going to tell it all future tests are a failure.
@@ -525,12 +532,12 @@ we are just going to end this here to save a lot of time. This is the exception 
                 ServerLogHandler = serverLog,
                 Client = client,
                 ClientLogHandler = clientLog,
-                PairId = Interlocked.Increment(ref PairId)
+                PairId = Interlocked.Increment(ref _pairId)
             };
         }
         catch (Exception ex)
         {
-            PoolFailureReason = ex;
+            _poolFailureReason = ex;
             throw;
         }
 
@@ -565,6 +572,8 @@ we are just going to end this here to save a lot of time. This is the exception 
         var settings = pairTracker.Pair.Settings;
         var mapManager = server.ResolveDependency<IMapManager>();
         var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
+        var entityManager = server.ResolveDependency<IEntityManager>();
+        var xformSystem = entityManager.System<SharedTransformSystem>();
 
         if (settings.NoServer) throw new Exception("Cannot setup test map without server");
         var mapData = new TestMapData();
@@ -573,7 +582,7 @@ we are just going to end this here to save a lot of time. This is the exception 
             mapData.MapId = mapManager.CreateMap();
             mapData.MapUid = mapManager.GetMapEntityId(mapData.MapId);
             mapData.MapGrid = mapManager.CreateGrid(mapData.MapId);
-            mapData.GridUid = mapData.MapGrid.Owner;
+            mapData.GridUid = mapData.MapGrid.Owner; // Fixing this requires an engine PR.
             mapData.GridCoords = new EntityCoordinates(mapData.GridUid, 0, 0);
             var plating = tileDefinitionManager["Plating"];
             var platingTile = new Tile(plating.TileId);
@@ -610,11 +619,11 @@ we are just going to end this here to save a lot of time. This is the exception 
     /// <param name="runTicks">How many ticks to run</param>
     public static async Task ReallyBeIdle(Pair pair, int runTicks = 25)
     {
-        for (int i = 0; i < runTicks; i++)
+        for (var i = 0; i < runTicks; i++)
         {
             await pair.Client.WaitRunTicks(1);
             await pair.Server.WaitRunTicks(1);
-            for (int idleCycles = 0; idleCycles < 4; idleCycles++)
+            for (var idleCycles = 0; idleCycles < 4; idleCycles++)
             {
                 await pair.Client.WaitIdleAsync();
                 await pair.Server.WaitIdleAsync();
@@ -809,7 +818,9 @@ public sealed class PoolSettings
     // Prototype hot reload is not available outside TOOLS builds,
     // so we can't pool test instances that use ExtraPrototypes without TOOLS.
 #if TOOLS
+#pragma warning disable CA1822 // Can't be marked as static b/c the other branch exists but Omnisharp can't see both.
     private bool NoToolsExtraPrototypes => false;
+#pragma warning restore CA1822
 #else
     private bool NoToolsExtraPrototypes => !string.IsNullOrEmpty(ExtraPrototypes);
 #endif

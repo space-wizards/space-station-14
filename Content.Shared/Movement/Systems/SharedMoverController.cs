@@ -16,6 +16,7 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -133,35 +134,7 @@ namespace Content.Shared.Movement.Systems
                 }
             }
 
-            var angleDiff = Angle.ShortestDistance(mover.RelativeRotation, mover.TargetRelativeRotation);
-
-            // if we've just traversed then lerp to our target rotation.
-            if (!angleDiff.EqualsApprox(Angle.Zero, 0.001))
-            {
-                var adjustment = angleDiff * 5f * frameTime;
-                var minAdjustment = 0.01 * frameTime;
-
-                if (angleDiff < 0)
-                {
-                    adjustment = Math.Min(adjustment, -minAdjustment);
-                    adjustment = Math.Clamp(adjustment, angleDiff, -angleDiff);
-                }
-                else
-                {
-                    adjustment = Math.Max(adjustment, minAdjustment);
-                    adjustment = Math.Clamp(adjustment, -angleDiff, angleDiff);
-                }
-
-                mover.RelativeRotation += adjustment;
-                mover.RelativeRotation.FlipPositive();
-                Dirty(mover);
-            }
-            else if (!angleDiff.Equals(Angle.Zero))
-            {
-                mover.TargetRelativeRotation.FlipPositive();
-                mover.RelativeRotation = mover.TargetRelativeRotation;
-                Dirty(mover);
-            }
+            LerpRotation(mover, frameTime);
 
             if (!canMove
                 || physicsComponent.BodyStatus != BodyStatus.OnGround
@@ -208,7 +181,7 @@ namespace Content.Shared.Movement.Systems
             var parentRotation = GetParentGridAngle(mover, xformQuery);
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
-            DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));
+            DebugTools.Assert(MathHelper.CloseToPercent(total.Length(), worldTotal.Length()));
 
             var velocity = physicsComponent.LinearVelocity;
             float friction;
@@ -282,9 +255,42 @@ namespace Content.Shared.Movement.Systems
             PhysicsSystem.SetAngularVelocity(physicsUid, 0, body: physicsComponent);
         }
 
+        public void LerpRotation(InputMoverComponent mover, float frameTime)
+        {
+            var angleDiff = Angle.ShortestDistance(mover.RelativeRotation, mover.TargetRelativeRotation);
+
+            // if we've just traversed then lerp to our target rotation.
+            if (!angleDiff.EqualsApprox(Angle.Zero, 0.001))
+            {
+                var adjustment = angleDiff * 5f * frameTime;
+                var minAdjustment = 0.01 * frameTime;
+
+                if (angleDiff < 0)
+                {
+                    adjustment = Math.Min(adjustment, -minAdjustment);
+                    adjustment = Math.Clamp(adjustment, angleDiff, -angleDiff);
+                }
+                else
+                {
+                    adjustment = Math.Max(adjustment, minAdjustment);
+                    adjustment = Math.Clamp(adjustment, -angleDiff, angleDiff);
+                }
+
+                mover.RelativeRotation += adjustment;
+                mover.RelativeRotation.FlipPositive();
+                Dirty(mover);
+            }
+            else if (!angleDiff.Equals(Angle.Zero))
+            {
+                mover.TargetRelativeRotation.FlipPositive();
+                mover.RelativeRotation = mover.TargetRelativeRotation;
+                Dirty(mover);
+            }
+        }
+
         private void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref Vector2 velocity)
         {
-            var speed = velocity.Length;
+            var speed = velocity.Length();
 
             if (speed < minimumFrictionSpeed)
                 return;
@@ -305,8 +311,8 @@ namespace Content.Shared.Movement.Systems
 
         private void Accelerate(ref Vector2 currentVelocity, in Vector2 velocity, float accel, float frameTime)
         {
-            var wishDir = velocity != Vector2.Zero ? velocity.Normalized : Vector2.Zero;
-            var wishSpeed = velocity.Length;
+            var wishDir = velocity != Vector2.Zero ? velocity.Normalized() : Vector2.Zero;
+            var wishSpeed = velocity.Length();
 
             var currentSpeed = Vector2.Dot(currentVelocity, wishDir);
             var addSpeed = wishSpeed - currentSpeed;

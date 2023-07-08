@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using Content.Client.Actions;
 using Content.Client.Construction;
@@ -71,10 +72,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _menuDragHelper = new DragDropHelper<ActionButton>(OnMenuBeginDrag, OnMenuContinueDrag, OnMenuEndDrag);
         _dragShadow = new TextureRect
         {
-            MinSize = (64, 64),
+            MinSize = new Vector2(64, 64),
             Stretch = StretchMode.Scale,
             Visible = false,
-            SetSize = (64, 64),
+            SetSize = new Vector2(64, 64),
             MouseFilter = MouseFilterMode.Ignore
         };
 
@@ -108,18 +109,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void OnStateEntered(GameplayState state)
     {
-        DebugTools.Assert(_window == null);
-
-        _window = UIManager.CreateWindow<ActionsWindow>();
-        LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
-
-        _window.OnOpen += OnWindowOpened;
-        _window.OnClose += OnWindowClosed;
-        _window.ClearButton.OnPressed += OnClearPressed;
-        _window.SearchBar.OnTextChanged += OnSearchChanged;
-        _window.FilterButton.OnItemSelected += OnFilterSelected;
-
-
         if (_actionsSystem != null)
         {
             _actionsSystem.ActionAdded += OnActionAdded;
@@ -326,18 +315,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _actionsSystem.ActionRemoved -= OnActionRemoved;
             _actionsSystem.ActionReplaced -= OnActionReplaced;
             _actionsSystem.ActionsUpdated -= OnActionsUpdated;
-        }
-
-        if (_window != null)
-        {
-            _window.OnOpen -= OnWindowOpened;
-            _window.OnClose -= OnWindowClosed;
-            _window.ClearButton.OnPressed -= OnClearPressed;
-            _window.SearchBar.OnTextChanged -= OnSearchChanged;
-            _window.FilterButton.OnItemSelected -= OnFilterSelected;
-
-            _window.Dispose();
-            _window = null;
         }
 
         CommandBinds.Unregister<ActionUIController>();
@@ -692,7 +669,18 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (args.Function == EngineKeyFunctions.UIClick)
         {
-            _menuDragHelper.MouseDown(button);
+            if (button.Action == null)
+            {
+                var ev = new FillActionSlotEvent();
+                EntityManager.EventBus.RaiseEvent(EventSource.Local, ev);
+                if (ev.Action != null)
+                    SetAction(button, ev.Action);
+            }
+            else
+            {
+                _menuDragHelper.MouseDown(button);
+            }
+
             args.Handle();
         }
         else if (args.Function == EngineKeyFunctions.UIRightClick)
@@ -751,13 +739,13 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             }
         }
 
-        LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - (32, 32));
+        LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - new Vector2(32, 32));
         return true;
     }
 
     private bool OnMenuContinueDrag(float frameTime)
     {
-        LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - (32, 32));
+        LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - new Vector2(32, 32));
         _dragShadow.Visible = true;
         return true;
     }
@@ -779,10 +767,32 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         ActionsBar.PageButtons.LeftArrow.OnPressed -= OnLeftArrowPressed;
         ActionsBar.PageButtons.RightArrow.OnPressed -= OnRightArrowPressed;
+
+        if (_window != null)
+        {
+            _window.OnOpen -= OnWindowOpened;
+            _window.OnClose -= OnWindowClosed;
+            _window.ClearButton.OnPressed -= OnClearPressed;
+            _window.SearchBar.OnTextChanged -= OnSearchChanged;
+            _window.FilterButton.OnItemSelected -= OnFilterSelected;
+
+            _window.Dispose();
+            _window = null;
+        }
     }
 
     private void LoadGui()
     {
+        DebugTools.Assert(_window == null);
+        _window = UIManager.CreateWindow<ActionsWindow>();
+        LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
+
+        _window.OnOpen += OnWindowOpened;
+        _window.OnClose += OnWindowClosed;
+        _window.ClearButton.OnPressed += OnClearPressed;
+        _window.SearchBar.OnTextChanged += OnSearchChanged;
+        _window.FilterButton.OnItemSelected += OnFilterSelected;
+
         if (ActionsBar == null)
         {
             return;
@@ -790,7 +800,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         ActionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
         ActionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
-
 
         RegisterActionContainer(ActionsBar.ActionsContainer);
 

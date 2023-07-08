@@ -9,12 +9,14 @@
     - type: MobMover
     - type: HTN
       rootTask: SimpleHostileCompound
+      blackboard:
+        NavSmash: !type:Bool
+          true
     - type: Faction
       factions:
         - SimpleHostile
     - type: Sprite
       drawdepth: Mobs
-      netsync: false
       sprite: Mobs/Aliens/Carps/space.rsi
       layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -41,7 +43,6 @@
     - type: Stamina
       excess: 100
     - type: MovementAlwaysTouching
-    - type: Appearance
     - type: DamageStateVisuals
       states:
         Alive:
@@ -55,6 +56,7 @@
         - id: FoodMeatFish
           amount: 2
     - type: MeleeWeapon
+      altDisarm: false
       hidden: true
       angle: 0
       animation: WeaponArcBite
@@ -155,3 +157,13 @@
     - type: GhostTakeoverAvailable
     - type: HTN
       rootTask: DragonCarpCompound
+
+- type: entity
+  id: MobCarpDungeon
+  parent: MobCarp
+  suffix: Dungeon
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 5

@@ -42,9 +42,6 @@ public sealed class TemperatureArtifactSystem : EntitySystem
     {
         var dif = component.TargetTemperature - environment.Temperature;
         var absDif = Math.Abs(dif);
-        if (absDif < component.MaxTemperatureDifference)
-            return;
-
         var step = Math.Min(absDif, component.SpawnTemperature);
         environment.Temperature += dif > 0 ? step : -step;
     }

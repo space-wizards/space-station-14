@@ -295,10 +295,10 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         var gen2Coords = Transform(secondGenComp.Owner).Coordinates;
 
         var delta = (gen2Coords - gen1Coords).Position;
-        var dirVec = delta.Normalized;
-        var stopDist = delta.Length;
+        var dirVec = delta.Normalized();
+        var stopDist = delta.Length();
         var currentOffset = dirVec;
-        while (currentOffset.Length < stopDist)
+        while (currentOffset.Length() < stopDist)
         {
             var currentCoords = gen1Coords.Offset(currentOffset);
             var newField = Spawn(firstGenComp.CreatedField, currentCoords);

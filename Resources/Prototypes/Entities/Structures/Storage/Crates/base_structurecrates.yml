@@ -11,7 +11,6 @@
     sprite: Structures/Storage/Crates/generic.rsi
     state: icon
   - type: Sprite
-    netsync: false
     noRot: true
     sprite: Structures/Storage/Crates/generic.rsi
     layers:
@@ -30,7 +29,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.29"
-        density: 190
+        density: 50
         mask:
         - SmallMobMask #this is so they can go under plastic flaps
         layer:
