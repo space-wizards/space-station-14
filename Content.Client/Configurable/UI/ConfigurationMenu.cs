@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Numerics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -21,7 +22,7 @@ namespace Content.Client.Configurable.UI
 
         public ConfigurationMenu(ConfigurationBoundUserInterface owner)
         {
-            MinSize = SetSize = (300, 250);
+            MinSize = SetSize = new Vector2(300, 250);
             Owner = owner;
 
             _inputs = new List<(string name, LineEdit input)>();

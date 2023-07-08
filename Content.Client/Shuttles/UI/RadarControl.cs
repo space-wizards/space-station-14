@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
@@ -134,8 +135,8 @@ public sealed class RadarControl : MapGridControl
 
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
 
-        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
-        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
+        handle.DrawCircle(new Vector2(MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
+        handle.DrawCircle(new Vector2(MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
 
         // No data
         if (_coordinates == null || _rotation == null)
@@ -150,14 +151,14 @@ public sealed class RadarControl : MapGridControl
 
         for (var i = 1; i < gridLinesEquatorial + 1; i++)
         {
-            handle.DrawCircle((MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
+            handle.DrawCircle(new Vector2(MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
         }
 
         for (var i = 0; i < gridLinesRadial; i++)
         {
             Angle angle = (Math.PI / gridLinesRadial) * i;
             var aExtent = angle.ToVec() * ScaledMinimapRadius;
-            handle.DrawLine((MidPoint, MidPoint) - aExtent, (MidPoint, MidPoint) + aExtent, gridLines);
+            handle.DrawLine(new Vector2(MidPoint, MidPoint) - aExtent, new Vector2(MidPoint, MidPoint) + aExtent, gridLines);
         }
 
         var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
@@ -202,7 +203,7 @@ public sealed class RadarControl : MapGridControl
 
         // Draw other grids... differently
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
-                     new Box2(mapPosition.Position - MaxRadarRange, mapPosition.Position + MaxRadarRange)))
+                     new Box2(mapPosition.Position - MaxRadarRangeVector, mapPosition.Position + MaxRadarRangeVector)))
         {
             if (grid.Owner == ourGridId || !fixturesQuery.TryGetComponent(grid.Owner, out var fixturesComp))
                 continue;
@@ -330,7 +331,8 @@ public sealed class RadarControl : MapGridControl
                 var position = state.Coordinates.Position;
                 var uiPosition = matrix.Transform(position);
 
-                if (uiPosition.Length > WorldRange - DockScale) continue;
+                if (uiPosition.Length() > WorldRange - DockScale)
+                    continue;
 
                 var color = HighlightedDock == ent ? state.HighlightedColor : state.Color;
 
@@ -408,7 +410,7 @@ public sealed class RadarControl : MapGridControl
                 var adjustedStart = matrix.Transform(start);
                 var adjustedEnd = matrix.Transform(end);
 
-                if (adjustedStart.Length > ActualRadarRange || adjustedEnd.Length > ActualRadarRange)
+                if (adjustedStart.Length() > ActualRadarRange || adjustedEnd.Length() > ActualRadarRange)
                     continue;
 
                 start = ScalePosition(new Vector2(adjustedStart.X, -adjustedStart.Y));
@@ -424,11 +426,11 @@ public sealed class RadarControl : MapGridControl
 
     private Vector2 ScalePosition(Vector2 value)
     {
-        return value * MinimapScale + MidPoint;
+        return value * MinimapScale + MidpointVector;
     }
 
     private Vector2 InverseScalePosition(Vector2 value)
     {
-        return (value - MidPoint) / MinimapScale;
+        return (value - MidpointVector) / MinimapScale;
     }
 }

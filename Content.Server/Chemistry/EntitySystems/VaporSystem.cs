@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Components;
@@ -68,8 +69,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
                 _throwing.TryThrow(vapor.Owner, dir, speed, user: user, pushbackRatio: ThrowingSystem.PushbackDefault * 10f);
 
-                var distance = (target.Position - vaporXform.WorldPosition).Length;
-                var time = (distance / physics.LinearVelocity.Length);
+                var distance = (target.Position - vaporXform.WorldPosition).Length();
+                var time = (distance / physics.LinearVelocity.Length());
                 despawn.Lifetime = MathF.Min(aliveTime, time);
             }
         }

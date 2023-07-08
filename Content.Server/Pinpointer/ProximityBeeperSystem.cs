@@ -69,7 +69,7 @@ public sealed class ProximityBeeperSystem : EntitySystem
             // forgive me father, for i have sinned.
             var ent = comp.Owner;
 
-            var dist = (_transform.GetWorldPosition(xform, xformQuery) - _transform.GetWorldPosition(ent, xformQuery)).Length;
+            var dist = (_transform.GetWorldPosition(xform, xformQuery) - _transform.GetWorldPosition(ent, xformQuery)).Length();
             if (dist >= (closestDistance ?? float.MaxValue))
                 continue;
             closestDistance = dist;
