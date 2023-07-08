@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Cursor item overlay no longer draws in the top-left when cursor offscreen.,
-    type: Fix}
-  id: 3692
-  time: '2023-05-07T03:37:05.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Health analyzers and cloth now fit in medical belts., type: Add}
@@ -2942,3 +2936,8 @@ Entries:
       fluent archaic accents, and as a result it sounds a bit better to most.', type: Tweak}
   id: 4191
   time: '2023-07-08T08:34:11.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: you can find space lube tube in lockers again, type: Fix}
+  id: 4192
+  time: '2023-07-08T19:42:43.0000000+00:00'
