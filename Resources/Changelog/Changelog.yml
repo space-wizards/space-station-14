@@ -1,17 +1,4 @@
 Entries:
-- author: juliangiebel
-  changes:
-  - {message: The network configurator. A tool used to link devices together., type: Add}
-  - {message: Configuring device lists is now done using the network configurator
-      instead of the multitool., type: Tweak}
-  id: 3694
-  time: '2023-05-07T06:07:24.0000000+00:00'
-- author: AJCM-git
-  changes:
-  - {message: You can now emag PDA and vehicles to change the color of the light,
-    type: Tweak}
-  id: 3695
-  time: '2023-05-07T06:08:04.0000000+00:00'
 - author: notafet
   changes:
   - {message: Airlocks can now be configured to interlock and cycle correctly., type: Add}
@@ -2941,3 +2928,14 @@ Entries:
   - {message: Remove dummy crit states for mobs that don't implement it., type: Fix}
   id: 4193
   time: '2023-07-08T19:44:01.0000000+00:00'
+- author: kseandi
+  changes:
+  - {message: NanoTrasen has created more compact singularity field generators that
+      will no longer get stuck in airlocks., type: Fix}
+  id: 4194
+  time: '2023-07-08T19:47:28.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: The mass scanner UI shows distances again., type: Fix}
+  id: 4195
+  time: '2023-07-08T19:47:53.0000000+00:00'
