@@ -166,8 +166,8 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicatePyjamaBundle
-  name: pyjama duffel bag
-  description: Contains 3 pairs of pyjamas and 3 plushies for the ultimate sleepover.
+  name: syndicate pyjama duffel bag
+  description: Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
   components:
   - type: StorageFill
     contents:
@@ -218,7 +218,7 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateEVABundle
   name: syndicate EVA bundle
-  description: "Contains the Syndicate approved red EVA suit."
+  description: "Contains the Syndicate approved EVA suit."
   components:
   - type: StorageFill
     contents:
