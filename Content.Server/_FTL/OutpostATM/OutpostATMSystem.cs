@@ -43,7 +43,7 @@ public sealed class OutpostATMSystem : EntitySystem
     private void OnExaminedEvent(EntityUid uid, OutpostATMComponent component, ExaminedEvent args)
     {
         var xform = Transform(uid);
-        if (xform.GridUid == null)
+        if (!xform.GridUid.HasValue)
             return;
         var station = _stationSystem.GetOwningStation(xform.GridUid.Value, xform);
         if (!TryComp<StationBankAccountComponent>(station, out var bankAccountComponent))
@@ -63,7 +63,7 @@ public sealed class OutpostATMSystem : EntitySystem
         if (!TryComp<StackComponent>(uid, out var stackComponent))
             return;
         var xform = Transform(args.Target.Value);
-        if (!atmComponent.Enabled || xform.GridUid == null)
+        if (!atmComponent.Enabled || !xform.GridUid.HasValue)
             return;
         var station = _stationSystem.GetOwningStation(xform.GridUid.Value, xform);
         if (!TryComp<StationBankAccountComponent>(station, out var bankAccountComponent))
@@ -80,7 +80,7 @@ public sealed class OutpostATMSystem : EntitySystem
         if (!actor.PlayerSession.AttachedEntity.HasValue)
             return;
         var xform = Transform(uid);
-        if (!component.Enabled || !xform.Anchored || xform.GridUid == null)
+        if (!component.Enabled || !xform.Anchored || !xform.GridUid.HasValue)
             return;
         var station = _stationSystem.GetOwningStation(xform.GridUid.Value, xform);
         if (!TryComp<StationBankAccountComponent>(station, out var bankAccountComponent))
