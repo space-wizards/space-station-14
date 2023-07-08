@@ -11,8 +11,6 @@ using Content.Shared.Shuttles.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 
 namespace Content.Server.Physics.Controllers
 {
@@ -20,8 +18,9 @@ namespace Content.Server.Physics.Controllers
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ThrusterSystem _thruster = default!;
+        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
-        private Dictionary<ShuttleComponent, List<(PilotComponent, InputMoverComponent, TransformComponent)>> _shuttlePilots = new();
+        private Dictionary<EntityUid, (ShuttleComponent, List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>)> _shuttlePilots = new();
 
         public override void Initialize()
         {
@@ -165,7 +164,8 @@ namespace Content.Server.Physics.Controllers
 
         protected override void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state)
         {
-            if (!TryComp<PilotComponent>(uid, out var pilot) || pilot.Console == null) return;
+            if (!TryComp<PilotComponent>(uid, out var pilot) || pilot.Console == null)
+                return;
 
             ResetSubtick(pilot);
 
@@ -191,7 +191,7 @@ namespace Content.Server.Physics.Controllers
             pilot.HeldButtons = buttons;
         }
 
-        private void ApplyTick(PilotComponent component, float fraction)
+        private static void ApplyTick(PilotComponent component, float fraction)
         {
             var x = 0;
             var y = 0;
@@ -248,12 +248,14 @@ namespace Content.Server.Physics.Controllers
 
         private void HandleShuttleMovement(float frameTime)
         {
-            var newPilots = new Dictionary<ShuttleComponent, List<(PilotComponent Pilot, InputMoverComponent Mover, TransformComponent ConsoleXform)>>();
+            var newPilots = new Dictionary<EntityUid, (ShuttleComponent Shuttle, List<(EntityUid PilotUid, PilotComponent Pilot, InputMoverComponent Mover, TransformComponent ConsoleXform)>)>();
 
             // We just mark off their movement and the shuttle itself does its own movement
-            foreach (var (pilot, mover) in EntityManager.EntityQuery<PilotComponent, InputMoverComponent>())
+            var activePilotQuery = EntityQueryEnumerator<PilotComponent, InputMoverComponent>();
+            var shuttleQuery = GetEntityQuery<ShuttleComponent>();
+            while (activePilotQuery.MoveNext(out var uid, out var pilot, out var mover))
             {
-                var consoleEnt = pilot.Console?.Owner;
+                var consoleEnt = pilot.Console;
 
                 // TODO: This is terrible. Just make a new mover and also make it remote piloting + device networks
                 if (TryComp<DroneConsoleComponent>(consoleEnt, out var cargoConsole))
@@ -265,23 +267,25 @@ namespace Content.Server.Physics.Controllers
 
                 var gridId = xform.GridUid;
                 // This tries to see if the grid is a shuttle and if the console should work.
-                if (!_mapManager.TryGetGrid(gridId, out var grid) ||
-                    !EntityManager.TryGetComponent(grid.Owner, out ShuttleComponent? shuttleComponent) ||
-                    !shuttleComponent.Enabled) continue;
+                if (!_mapManager.TryGetGrid(gridId, out var _) ||
+                    !shuttleQuery.TryGetComponent(gridId, out var shuttleComponent) ||
+                    !shuttleComponent.Enabled)
+                    continue;
 
-                if (!newPilots.TryGetValue(shuttleComponent, out var pilots))
+                if (!newPilots.TryGetValue(gridId!.Value, out var pilots))
                 {
-                    pilots = new List<(PilotComponent, InputMoverComponent, TransformComponent)>();
-                    newPilots[shuttleComponent] = pilots;
+                    pilots = (shuttleComponent, new List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>());
+                    newPilots[gridId.Value] = pilots;
                 }
 
-                pilots.Add((pilot, mover, xform));
+                pilots.Item2.Add((uid, pilot, mover, xform));
             }
 
             // Reset inputs for non-piloted shuttles.
-            foreach (var (shuttle, _) in _shuttlePilots)
+            foreach (var (shuttleUid, (shuttle, _)) in _shuttlePilots)
             {
-                if (newPilots.ContainsKey(shuttle) || CanPilot(shuttle)) continue;
+                if (newPilots.ContainsKey(shuttleUid) || CanPilot(shuttleUid))
+                    continue;
 
                 _thruster.DisableLinearThrusters(shuttle);
             }
@@ -290,35 +294,37 @@ namespace Content.Server.Physics.Controllers
 
             // Collate all of the linear / angular velocites for a shuttle
             // then do the movement input once for it.
-            foreach (var (shuttle, pilots) in _shuttlePilots)
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            foreach (var (shuttleUid, (shuttle, pilots)) in _shuttlePilots)
             {
-                if (Paused(shuttle.Owner) || CanPilot(shuttle) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
+                if (Paused(shuttleUid) || CanPilot(shuttleUid) || !TryComp<PhysicsComponent>(shuttleUid, out var body))
+                    continue;
 
-                var shuttleNorthAngle = Transform(body.Owner).WorldRotation;
+                var shuttleNorthAngle = _xformSystem.GetWorldRotation(shuttleUid, xformQuery);
 
                 // Collate movement linear and angular inputs together
                 var linearInput = Vector2.Zero;
                 var brakeInput = 0f;
                 var angularInput = 0f;
 
-                foreach (var (pilot, _, consoleXform) in pilots)
+                foreach (var (pilotUid, pilot, _, consoleXform) in pilots)
                 {
-                    var pilotInput = GetPilotVelocityInput(pilot);
+                    var (strafe, rotation, brakes) = GetPilotVelocityInput(pilot);
 
-                    if (pilotInput.Brakes > 0f)
+                    if (brakes > 0f)
                     {
-                        brakeInput += pilotInput.Brakes;
+                        brakeInput += brakes;
                     }
 
-                    if (pilotInput.Strafe.Length() > 0f)
+                    if (strafe.Length() > 0f)
                     {
                         var offsetRotation = consoleXform.LocalRotation;
-                        linearInput += offsetRotation.RotateVec(pilotInput.Strafe);
+                        linearInput += offsetRotation.RotateVec(strafe);
                     }
 
-                    if (pilotInput.Rotation != 0f)
+                    if (rotation != 0f)
                     {
-                        angularInput += pilotInput.Rotation;
+                        angularInput += rotation;
                     }
                 }
 
@@ -390,7 +396,7 @@ namespace Content.Server.Physics.Controllers
                         if (impulse.Length() > maxVelocity)
                             impulse = impulse.Normalized() * maxVelocity;
 
-                        PhysicsSystem.ApplyForce(shuttle.Owner, impulse, body: body);
+                        PhysicsSystem.ApplyForce(shuttleUid, impulse, body: body);
                     }
                     else
                     {
@@ -413,7 +419,7 @@ namespace Content.Server.Physics.Controllers
 
                         if (!torque.Equals(0f))
                         {
-                            PhysicsSystem.ApplyTorque(shuttle.Owner, torque, body: body);
+                            PhysicsSystem.ApplyTorque(shuttleUid, torque, body: body);
                             _thruster.SetAngularThrust(shuttle, true);
                         }
                     }
@@ -425,14 +431,14 @@ namespace Content.Server.Physics.Controllers
 
                 if (linearInput.Length().Equals(0f))
                 {
-                    PhysicsSystem.SetSleepingAllowed(shuttle.Owner, body, true);
+                    PhysicsSystem.SetSleepingAllowed(shuttleUid, body, true);
 
                     if (brakeInput.Equals(0f))
                         _thruster.DisableLinearThrusters(shuttle);
                 }
                 else
                 {
-                    PhysicsSystem.SetSleepingAllowed(shuttle.Owner, body, false);
+                    PhysicsSystem.SetSleepingAllowed(shuttleUid, body, false);
                     var angle = linearInput.ToWorldAngle();
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
@@ -478,7 +484,7 @@ namespace Content.Server.Physics.Controllers
                                 force.X -= thrust;
                                 break;
                             default:
-                                throw new ArgumentOutOfRangeException();
+                                throw new ArgumentOutOfRangeException($"Attempted to apply thrust to shuttle {shuttleUid} along invalid dir {dir}.");
                         }
 
                         _thruster.EnableLinearThrustDirection(shuttle, dir);
@@ -497,20 +503,20 @@ namespace Content.Server.Physics.Controllers
                         if (totalForce.Length() > maxVelocity)
                             totalForce = totalForce.Normalized() * maxVelocity;
 
-                        PhysicsSystem.ApplyForce(shuttle.Owner, totalForce, body: body);
+                        PhysicsSystem.ApplyForce(shuttleUid, totalForce, body: body);
                     }
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))
                 {
-                    PhysicsSystem.SetSleepingAllowed(shuttle.Owner, body, true);
+                    PhysicsSystem.SetSleepingAllowed(shuttleUid, body, true);
 
                     if (brakeInput <= 0f)
                         _thruster.SetAngularThrust(shuttle, false);
                 }
                 else
                 {
-                    PhysicsSystem.SetSleepingAllowed(shuttle.Owner, body, false);
+                    PhysicsSystem.SetSleepingAllowed(shuttleUid, body, false);
                     var torque = shuttle.AngularThrust * -angularInput;
 
                     // Need to cap the velocity if 1 tick of input brings us over cap so we don't continuously
@@ -523,18 +529,18 @@ namespace Content.Server.Physics.Controllers
 
                     if (!torque.Equals(0f))
                     {
-                        PhysicsSystem.ApplyTorque(shuttle.Owner, torque, body: body);
+                        PhysicsSystem.ApplyTorque(shuttleUid, torque, body: body);
                         _thruster.SetAngularThrust(shuttle, true);
                     }
                 }
             }
         }
 
-        private bool CanPilot(ShuttleComponent shuttle)
+        private bool CanPilot(EntityUid shuttleUid)
         {
-            return TryComp<FTLComponent>(shuttle.Owner, out var ftl) &&
-                   (ftl.State & (FTLState.Starting | FTLState.Travelling | FTLState.Arriving)) != 0x0 ||
-                   HasComp<PreventPilotComponent>(shuttle.Owner);
+            return TryComp<FTLComponent>(shuttleUid, out var ftl)
+            && (ftl.State & (FTLState.Starting | FTLState.Travelling | FTLState.Arriving)) != 0x0
+                || HasComp<PreventPilotComponent>(shuttleUid);
         }
 
     }

@@ -1,18 +1,23 @@
 ﻿using Content.Shared.MachineLinking;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.MachineLinking.UI
 {
     public sealed class SignalPortSelectorBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private SignalPortSelectorMenu? _menu;
 
+        [ViewVariables]
         private string? _selectedTransmitterPort;
+
+        [ViewVariables]
         private string? _selectedReceiverPort;
 
-        public SignalPortSelectorBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] Enum uiKey) : base(owner, uiKey) { }
+        public SignalPortSelectorBoundUserInterface([NotNull] EntityUid owner, [NotNull] Enum uiKey) : base(owner, uiKey)
+        {
+        }
 
         protected override void Open()
         {

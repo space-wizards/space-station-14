@@ -52,13 +52,13 @@ namespace Content.Client.Shuttles.Systems
                 return;
             }
 
-            if (!TryComp<ShuttleConsoleComponent>(console, out var shuttleConsoleComponent))
+            if (!HasComp<ShuttleConsoleComponent>(console))
             {
-                Logger.Warning($"Unable to set Helmsman console to {console}");
+                Log.Warning($"Unable to set Helmsman console to {console}");
                 return;
             }
 
-            component.Console = shuttleConsoleComponent;
+            component.Console = console;
             ActionBlockerSystem.UpdateCanMove(uid);
             _input.Contexts.SetActiveContext("shuttle");
         }
