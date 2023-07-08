@@ -20,7 +20,6 @@ public sealed class CommandImplementationAttribute :  Attribute
 [MeansImplicitUse]
 public sealed class PipedArgumentAttribute : Attribute
 {
-
 }
 
 [AttributeUsage(AttributeTargets.Parameter)]
@@ -28,4 +27,16 @@ public sealed class PipedArgumentAttribute : Attribute
 public sealed class CommandArgumentAttribute : Attribute
 {
     public readonly bool Optional = false;
+}
+
+[AttributeUsage(AttributeTargets.Parameter)]
+[MeansImplicitUse]
+public sealed class CommandInvertedAttribute : Attribute
+{
+}
+
+[AttributeUsage(AttributeTargets.Parameter)]
+[MeansImplicitUse]
+public sealed class PipedArgumentTypeAttribute : Attribute
+{
 }

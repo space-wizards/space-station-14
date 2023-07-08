@@ -13,6 +13,7 @@ using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
 using Content.Server.Maps;
+using Content.Server.NewCon;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
@@ -112,6 +113,7 @@ namespace Content.Server.Entry
                 _voteManager.Initialize();
                 _updateManager.Initialize();
                 _playTimeTracking.Initialize();
+                IoCManager.Resolve<NewConManager>().Initialize();
             }
         }
 
