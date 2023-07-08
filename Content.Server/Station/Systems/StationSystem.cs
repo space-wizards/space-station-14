@@ -197,7 +197,7 @@ public sealed class StationSystem : EntitySystem
         foreach (var gridUid in component.Grids)
         {
             if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
-                grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
+                grid.LocalAABB.Size.LengthSquared() < largestBounds.Size.LengthSquared())
                 continue;
 
             largestBounds = grid.LocalAABB;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using Content.Client.Arcade.UI;
 using Content.Client.Resources;
@@ -61,7 +62,7 @@ namespace Content.Client.Arcade
             Title = Loc.GetString("blockgame-menu-title");
             _owner = owner;
 
-            MinSize = SetSize = (410, 490);
+            MinSize = SetSize = new Vector2(410, 490);
 
             var resourceCache = IoCManager.Resolve<IResourceCache>();
             var backgroundTexture = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");

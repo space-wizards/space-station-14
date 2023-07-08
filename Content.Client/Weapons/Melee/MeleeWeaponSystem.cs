@@ -177,7 +177,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             var attackerPos = Transform(entity).MapPosition;
 
             if (mousePos.MapId != attackerPos.MapId ||
-                (attackerPos.Position - mousePos.Position).Length > weapon.Range)
+                (attackerPos.Position - mousePos.Position).Length() > weapon.Range)
             {
                 return;
             }
@@ -276,7 +276,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         var userPos = TransformSystem.GetWorldPosition(userXform);
         var direction = targetMap.Position - userPos;
-        var distance = Math.Min(component.Range, direction.Length);
+        var distance = MathF.Min(component.Range, direction.Length());
 
         // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
         // Server will validate it with InRangeUnobstructed.

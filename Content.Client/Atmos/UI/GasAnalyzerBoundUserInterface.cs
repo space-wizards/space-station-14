@@ -5,11 +5,12 @@ namespace Content.Client.Atmos.UI
 {
     public sealed class GasAnalyzerBoundUserInterface : BoundUserInterface
     {
-        public GasAnalyzerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        [ViewVariables]
+        private GasAnalyzerWindow? _window;
+
+        public GasAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
-
-        private GasAnalyzerWindow? _window;
 
         protected override void Open()
         {

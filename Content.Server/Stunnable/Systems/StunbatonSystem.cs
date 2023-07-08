@@ -1,4 +1,6 @@
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Events;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
@@ -10,7 +12,6 @@ using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -20,6 +21,7 @@ namespace Content.Server.Stunnable.Systems
     {
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly RiggableSystem _riggableSystem = default!;
 
         public override void Initialize()
         {
@@ -27,6 +29,7 @@ namespace Content.Server.Stunnable.Systems
 
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<StunbatonComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
             SubscribeLocalEvent<StunbatonComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
         }
@@ -100,16 +103,24 @@ namespace Content.Server.Stunnable.Systems
 
         private void TurnOn(EntityUid uid, StunbatonComponent comp, EntityUid user)
         {
+
             if (comp.Activated)
                 return;
 
             var playerFilter = Filter.Pvs(comp.Owner, entityManager: EntityManager);
             if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
+
                 SoundSystem.Play(comp.TurnOnFailSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("stunbaton-component-low-charge"));
                 return;
             }
+
+            if (TryComp<RiggableComponent>(uid, out var rig) && rig.IsRigged)
+            {
+                _riggableSystem.Explode(uid, battery, user);
+            }
+
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(comp.Owner, out var appearance) &&
                 EntityManager.TryGetComponent<ItemComponent>(comp.Owner, out var item))
@@ -120,6 +131,16 @@ namespace Content.Server.Stunnable.Systems
 
             SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
             comp.Activated = true;
+        }
+
+        // https://github.com/space-wizards/space-station-14/pull/17288#discussion_r1241213341
+        private void OnSolutionChange(EntityUid uid, StunbatonComponent component, SolutionChangedEvent args)
+        {
+            // Explode if baton is activated and rigged.
+            if (TryComp<RiggableComponent>(uid, out var riggable))
+                if (TryComp<BatteryComponent>(uid, out var battery))
+                    if (component.Activated && riggable.IsRigged)
+                        _riggableSystem.Explode(uid, battery);
         }
 
         private void SendPowerPulse(EntityUid target, EntityUid? user, EntityUid used)
