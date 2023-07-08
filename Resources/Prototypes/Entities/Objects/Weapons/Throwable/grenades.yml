@@ -141,17 +141,15 @@
       volume: 5
   - type: AnchorOnTrigger
     removeOnTrigger: true
-  - type: AmbientSound
-    enabled: false
-    volume: -5
-    range: 14
-    sound:
-      path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
-  - type: TwoStagedGrenade
-    explosionDelay: 10.1
-    addComponentsOffset: 0.35
-    isUsingAmbience: true
-    secondStageComponents:
+  - type: TwoStageTrigger
+    triggerDelay: 10
+    components:
+      - type: AmbientSound
+        enabled: true
+        volume: -5
+        range: 14
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
       - type: GravityWell
         maxRange: 8
         baseRadialAcceleration: 145
@@ -176,7 +174,7 @@
 
 - type: entity
   name: whitehole grenade
-  description: Grenade that are repulses everything a round for some time. Very useful in small rooms and for chasing someone.
+  description: Grenade that repulses everything around for some time.
   parent: SupermatterGrenade
   id: WhiteholeGrenade
   components:
@@ -196,10 +194,9 @@
     range: 14
     sound:
       path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
-  - type: TwoStagedGrenade
-    explosionDelay: 10.4
-    addComponentsOffset: 0.74
-    secondStageComponents:
+  - type: TwoStageTrigger
+    triggerDelay: 10
+    components:
       - type: GravityWell
         maxRange: 10
         baseRadialAcceleration: -180

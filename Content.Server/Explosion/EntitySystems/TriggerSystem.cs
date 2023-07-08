@@ -90,8 +90,12 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnAnchorTrigger(EntityUid uid, AnchorOnTriggerComponent component, TriggerEvent args)
         {
-            if (!(_container.IsEntityInContainer(uid)) || _container.TryRemoveFromContainer(uid, true))
-                _transformSystem.AnchorEntity(uid, Transform(uid));
+            var xform = Transform(uid);
+
+            if (xform.Anchored)
+                return;
+
+            _transformSystem.AnchorEntity(uid, xform);
 
             if(component.RemoveOnTrigger)
                 RemCompDeferred<AnchorOnTriggerComponent>(uid);
