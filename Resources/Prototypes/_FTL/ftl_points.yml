@@ -1,14 +1,13 @@
 - type: ftlPoint
   id: StationPoint
   tag: ship-ftl-tag-base
-  probability: 0.9
   effects:
     - !type:SpawnMapEffect
 
 - type: ftlPoint
   id: LoDangerPoint
   tag: ship-ftl-tag-unknown
-  probability: 0.4
+  probability: 0.6
   effects:
     - !type:SpawnMapEffect
       mapPaths:
@@ -17,7 +16,7 @@
 - type: ftlPoint
   id: HiDangerPoint
   tag: ship-ftl-tag-unknown
-  probability: 0.8
+  probability: 0.9
   effects:
     - !type:SpawnMapEffect
       mapPaths:
@@ -40,14 +39,15 @@
   effects:
     - !type:ToPlanetEffect
     - !type:SpawnDungeonEffect
-      probability: 0.7
       minSpawn: 1
       maxSpawn: 3
 
 - type: ftlPoint
   id: StarPoint
   tag: ship-ftl-tag-star
-  effects: []
+  effects:
+    - !type:SpawnDungeonEffect
+      probability: 0.5
 
 - type: ftlPoint
   id: RuinPoint
@@ -64,10 +64,10 @@
   id: FTLPoints
   weights:
     StationPoint: 0.5
-    NoDangerPoint: 5
+    NoDangerPoint: 1
     LoDangerPoint: 7
     HiDangerPoint: 3
-    ConfDangerPoint: 3
+    ConfDangerPoint: 0.5
     StarPoint: 1
     PlanetPoint: 1
     RuinPoint: 0.15

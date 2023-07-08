@@ -16,7 +16,7 @@ public sealed class GeneratePointCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (!_prototypeManager.TryIndex<FTLPointPrototype>(args[1], out var prototype))
+        if (!_prototypeManager.TryIndex<FTLPointPrototype>(args[0], out var prototype))
         {
             _entityManager.System<FTLPointsSystem>().GenerateDisposablePoint(prototype);
         }
