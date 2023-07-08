@@ -1,13 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - {message: Monkeys can now wear jumpsuits and jumpskirts (no pockets only pda slot).,
-    type: Add}
-  - {message: security are now authorized to handcuff monkeys., type: Add}
-  - {message: clowns are encouraged to creampie monkeys., type: Add}
-  - {message: Monkeys may now wear soft EVA suits., type: Add}
-  id: 3691
-  time: '2023-05-07T03:24:44.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Cursor item overlay no longer draws in the top-left when cursor offscreen.,
@@ -2945,3 +2936,9 @@ Entries:
   - {message: Batons can now contain solutions., type: Tweak}
   id: 4190
   time: '2023-07-08T03:32:31.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: 'Nanotrasen has started to selectively employ those with slightly more
+      fluent archaic accents, and as a result it sounds a bit better to most.', type: Tweak}
+  id: 4191
+  time: '2023-07-08T08:34:11.0000000+00:00'
