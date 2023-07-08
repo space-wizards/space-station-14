@@ -64,6 +64,7 @@
   - type: Bloodstream
     bloodReagent: FluorosulfuricAcid
   - type: MeleeWeapon
+    altDisarm: false
     hidden: true
     angle: 0
     soundHit:

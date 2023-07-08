@@ -647,6 +647,39 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatSyndie
+  name: syndicate hat
+  description: A souvenir hat from "Syndieland", their production has already been closed.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/syndiecap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/syndiecap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSyndieMAA
+  name: master at arms hat
+  description: Master at arms hat, looks intimidating, I doubt that you will like to communicate with its owner...
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/syndiecap_maa.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/syndiecap_maa.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTacticalMaidHeadband
+  name: tactical maid headband
+  description: "A red headband - don't imagine yourself a Rambo and don't pick up a few machine guns."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/tacticalmaidheadband.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/tacticalmaidheadband.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatHetmanHat
   name: Hetman hat
   description: From the Zaporozhian Sich with love.

@@ -103,7 +103,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             }
 
             // If it's an unarmed attack then do a disarm
-            if (weaponUid == entity)
+            if (weapon.AltDisarm && weaponUid == entity)
             {
                 EntityUid? target = null;
 
@@ -128,7 +128,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 return;
             }
 
-            // Otherwise do heavy attack if it's a weapon.
+            // Otherwise do heavy attack.
 
             // Start a windup
             if (weapon.WindUpStart == null)

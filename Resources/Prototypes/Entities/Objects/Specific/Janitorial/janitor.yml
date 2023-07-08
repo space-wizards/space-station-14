@@ -291,6 +291,8 @@
       solution: bucket
     - type: RefillableSolution
       solution: bucket
+    - type: ExaminableSolution
+      solution: bucket
     - type: Tag
       tags:
         - Wringer
