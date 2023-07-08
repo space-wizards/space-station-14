@@ -40465,15 +40465,13 @@ entities:
       type: Transform
     - name: Conference Room
       type: FaxMachine
-- proto: FaxMachineCentcom
+- proto: FaxMachineCaptain
   entities:
-  - uid: 11948
+  - uid: 1465
     components:
     - pos: 30.5,41.5
       parent: 2
       type: Transform
-    - name: Captain's Office
-      type: FaxMachine
 - proto: filingCabinet
   entities:
   - uid: 12088
@@ -61886,14 +61884,16 @@ entities:
       type: Transform
 - proto: MachineParticleAcceleratorEmitterForeCircuitboard
   entities:
-  - uid: 1465
-    components:
-    - pos: 19.52202,-38.527542
-      parent: 2
-      type: Transform
   - uid: 5610
     components:
     - pos: 19.614614,-38.64791
+      parent: 2
+      type: Transform
+- proto: MachineParticleAcceleratorEmitterPortCircuitboard
+  entities:
+  - uid: 11948
+    components:
+    - pos: 19.50161,-38.48987
       parent: 2
       type: Transform
 - proto: MachineParticleAcceleratorEmitterStarboardCircuitboard
