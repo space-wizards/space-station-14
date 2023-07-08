@@ -68,12 +68,6 @@
     spawned:
     - id: FoodMeatSpider
       amount: 12
-  # - type: AmbientSound
-  #   volume: -4
-  #   range: 30
-  #   enabled: true
-  #   sound: 
-  #     path: massacre.ogg
   - type: HTN
     rootTask: SimpleHostileCompound
   - type: Faction
