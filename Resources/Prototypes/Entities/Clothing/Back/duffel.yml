@@ -157,8 +157,8 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicate
-  name: suspicious duffel bag
-  description: A large duffel bag for holding various... strange things. It looks larger than usual.
+  name: syndicate duffel bag
+  description: A large duffel bag for holding various traitor goods.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
