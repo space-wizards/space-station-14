@@ -454,10 +454,151 @@ accent-archaic-replaced-149 = yup
 accent-archaic-replacement-149 = indeed
 
 accent-archaic-replaced-150 = ok
-accent-archaic-replacement-149 = alright
+accent-archaic-replacement-150 = alright
 
 accent-archaic-replaced-151 = k
-accent-archaic-replacement-11 = alright
+accent-archaic-replacement-151 = alright
 
 accent-archaic-replaced-152 = okay
 accent-archaic-replacement-152 = alright
+
+accent-archaic-replaced-153 = sure
+accent-archaic-replacement-153 = alright
+
+accent-archaic-replaced-154 = below
+accent-archaic-replacement-154 = beneath
+
+accent-archaic-replaced-155 = the
+accent-archaic-replacement-155 = thy
+
+accent-archaic-replaced-156 = need
+accent-archaic-replacement-156 = require
+
+accent-archaic-replaced-157 = maybe
+accent-archaic-replacement-157 = perhaps
+
+accent-archaic-replaced-158 = is
+accent-archaic-replacement-158 = 's
+
+accent-archaic-replaced-159 = alcohol
+accent-archaic-replacement-159 = booze
+
+accent-archaic-replaced-160 = liquor
+accent-archaic-replacement-160 = booze
+
+accent-archaic-replaced-161 = id
+accent-archaic-replacement-161 = identification
+
+accent-archaic-replaced-162 = crate
+accent-archaic-replacement-162 = chest
+
+accent-archaic-replaced-163 = locker
+accent-archaic-replacement-163 = closet
+
+accent-archaic-replaced-164 = do
+accent-archaic-replacement-164 = doth
+
+accent-archaic-replaced-165 = see
+accent-archaic-replacement-165 = percieve
+
+accent-archaic-replaced-166 = saw
+accent-archaic-replacement-166 = observed
+
+accent-archaic-replaced-167 = food
+accent-archaic-replacement-167 = grub
+
+accent-archaic-replaced-168 = delicious
+accent-archaic-replacement-168 = exquisite
+
+accent-archaic-replaced-169 = cool
+accent-archaic-replacement-169 = enjoyable
+
+accent-archaic-replaced-170 = think
+accent-archaic-replacement-170 = believe
+
+accent-archaic-replaced-171 = indeed
+accent-archaic-replacement-171 = certainly
+
+accent-archaic-replaced-172 = help
+accent-archaic-replacement-172 = assist
+
+accent-archaic-replaced-173 = now
+accent-archaic-replacement-173 = immediately
+
+accent-archaic-replaced-174 = or
+accent-archaic-replacement-174 = else
+
+accent-archaic-replaced-175 = will
+accent-archaic-replacement-175 = shall
+
+accent-archaic-replaced-176 = i am thirsty
+accent-archaic-replacement-176 = i require a drink
+
+accent-archaic-replaced-177 = hate
+accent-archaic-replacement-177 = loathe
+
+accent-archaic-replaced-178 = old
+accent-archaic-replacement-178 = olden
+
+accent-archaic-replaced-179 = bike horn
+accent-archaic-replacement-179 = honker
+
+accent-archaic-replaced-180 = flashlight
+accent-archaic-replacement-180 = torch
+
+accent-archaic-replaced-181 = pen
+accent-archaic-replacement-181 = quill
+
+accent-archaic-replaced-182 = lobby
+accent-archaic-replacement-182 = anteroom
+
+accent-archaic-replaced-183 = syndicate
+accent-archaic-replacement-183 = traitor
+
+accent-archaic-replaced-184 = syndi
+accent-archaic-replacement-184 = traitor
+
+accent-archaic-replaced-185 = good
+accent-archaic-replacement-185 = well
+
+accent-archaic-replaced-186 = like
+accent-archaic-replacement-186 = enjoy
+
+accent-archaic-replaced-187 = fate
+accent-archaic-replacement-187 = doom
+
+accent-archaic-replaced-188 = space
+accent-archaic-replacement-188 = void
+
+accent-archaic-replaced-189 = i'm
+accent-archaic-replacement-189 = I am
+
+accent-archaic-replaced-190 = I'm
+accent-archaic-replacement-190 = I am
+
+accent-archaic-replaced-191 = chef
+accent-archaic-replacement-191 = cook
+
+accent-archaic-replaced-192 = captain
+accent-archaic-replacement-192 = lord
+
+accent-archaic-replaced-193 = chaplain
+accent-archaic-replacement-193 = priest
+
+accent-archaic-replaced-194 = chapel
+accent-archaic-replacement-194 = church
+
+accent-archaic-replaced-195 = ask
+accent-archaic-replacement-195 = request
+
+accent-archaic-replaced-196 = ask for
+accent-archaic-replacement-196 = request
+
+accent-archaic-replaced-197 = move
+accent-archaic-replacement-197 = relocate
+
+accent-archaic-replaced-198 = will
+accent-archaic-replacement-198 = shalt
+
+accent-archaic-replaced-199 = bad
+accent-archaic-replacement-199 = unpleasant
