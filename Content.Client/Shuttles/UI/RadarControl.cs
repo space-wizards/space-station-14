@@ -26,7 +26,7 @@ public sealed class RadarControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    private SharedTransformSystem _transform = default!;
+    private SharedTransformSystem _transform;
 
     private const float GridLinesDistance = 32f;
 
@@ -166,26 +166,23 @@ public sealed class RadarControl : MapGridControl
         var fixturesQuery = _entManager.GetEntityQuery<FixturesComponent>();
         var bodyQuery = _entManager.GetEntityQuery<PhysicsComponent>();
 
-        var mapPosition = _coordinates.Value.ToMap(_entManager);
-
-        if (mapPosition.MapId == MapId.Nullspace || !xformQuery.TryGetComponent(_coordinates.Value.EntityId, out var xform))
+        if (!xformQuery.TryGetComponent(_coordinates.Value.EntityId, out var xform)
+            || xform.MapID == MapId.Nullspace)
         {
             Clear();
             return;
         }
 
+        var (pos, rot) = _transform.GetWorldPositionRotation(xform);
         var offset = _coordinates.Value.Position;
-        var offsetMatrix = Matrix3.CreateInverseTransform(
-            mapPosition.Position,
-            xform.WorldRotation + _rotation.Value);
+        var offsetMatrix = Matrix3.CreateInverseTransform(pos, rot + _rotation.Value);
 
         // Draw our grid in detail
-        var ourGridId = _coordinates.Value.GetGridUid(_entManager);
+        var ourGridId = xform.GridUid;
         if (_entManager.TryGetComponent<MapGridComponent>(ourGridId, out var ourGrid) &&
-            fixturesQuery.TryGetComponent(ourGridId, out var ourFixturesComp))
+            fixturesQuery.HasComponent(ourGridId.Value))
         {
-            var ourGridMatrix = xformQuery.GetComponent(ourGridId.Value).WorldMatrix;
-
+            var ourGridMatrix = _transform.GetWorldMatrix(ourGridId.Value);
             Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out var matrix);
 
             DrawGrid(handle, matrix, ourGrid, Color.MediumSpringGreen, true);
@@ -202,20 +199,21 @@ public sealed class RadarControl : MapGridControl
         var shown = new HashSet<EntityUid>();
 
         // Draw other grids... differently
-        foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
-                     new Box2(mapPosition.Position - MaxRadarRangeVector, mapPosition.Position + MaxRadarRangeVector)))
+        foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID,
+                     new Box2(pos - MaxRadarRangeVector, pos + MaxRadarRangeVector)))
         {
-            if (grid.Owner == ourGridId || !fixturesQuery.TryGetComponent(grid.Owner, out var fixturesComp))
+            var gUid = grid.Owner;
+            if (gUid == ourGridId || !fixturesQuery.HasComponent(gUid))
                 continue;
 
-            var gridBody = bodyQuery.GetComponent(grid.Owner);
+            var gridBody = bodyQuery.GetComponent(gUid);
             if (gridBody.Mass < 10f)
             {
-                ClearLabel(grid.Owner);
+                ClearLabel(gUid);
                 continue;
             }
 
-            _entManager.TryGetComponent<IFFComponent>(grid.Owner, out var iff);
+            _entManager.TryGetComponent<IFFComponent>(gUid, out var iff);
 
             // Hide it entirely.
             if (iff != null &&
@@ -224,14 +222,13 @@ public sealed class RadarControl : MapGridControl
                 continue;
             }
 
-            shown.Add(grid.Owner);
-            var name = metaQuery.GetComponent(grid.Owner).EntityName;
+            shown.Add(gUid);
+            var name = metaQuery.GetComponent(gUid).EntityName;
 
             if (name == string.Empty)
                 name = Loc.GetString("shuttle-console-unknown");
 
-            var gridXform = xformQuery.GetComponent(grid.Owner);
-            var gridMatrix = gridXform.WorldMatrix;
+            var gridMatrix = _transform.GetWorldMatrix(gUid);
             Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
             var color = iff?.Color ?? Color.Gold;
 
@@ -246,14 +243,14 @@ public sealed class RadarControl : MapGridControl
                 var gridBounds = grid.LocalAABB;
                 Label label;
 
-                if (!_iffControls.TryGetValue(grid.Owner, out var control))
+                if (!_iffControls.TryGetValue(gUid, out var control))
                 {
                     label = new Label()
                     {
                         HorizontalAlignment = HAlignment.Left,
                     };
 
-                    _iffControls[grid.Owner] = label;
+                    _iffControls[gUid] = label;
                     AddChild(label);
                 }
                 else
@@ -264,7 +261,7 @@ public sealed class RadarControl : MapGridControl
                 label.FontColorOverride = color;
                 var gridCentre = matty.Transform(gridBody.LocalCenter);
                 gridCentre.Y = -gridCentre.Y;
-                var distance = gridCentre.Length;
+                var distance = gridCentre.Length();
 
                 // y-offset the control to always render below the grid (vertically)
                 var yOffset = Math.Max(gridBounds.Height, gridBounds.Width) * MinimapScale / 1.8f / UIScale;
@@ -283,13 +280,13 @@ public sealed class RadarControl : MapGridControl
             }
             else
             {
-                ClearLabel(grid.Owner);
+                ClearLabel(gUid);
             }
 
             // Detailed view
             DrawGrid(handle, matty, grid, color, true);
 
-            DrawDocks(handle, grid.Owner, matty);
+            DrawDocks(handle, gUid, matty);
         }
 
         foreach (var (ent, _) in _iffControls)
