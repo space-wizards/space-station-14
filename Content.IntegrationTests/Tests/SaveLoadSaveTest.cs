@@ -1,15 +1,13 @@
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.CCVar;
-using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests
@@ -23,9 +21,10 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SaveLoadSave()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings {Fresh = true, Disconnected = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Fresh = true, Disconnected = true });
             var server = pairTracker.Pair.Server;
-            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
+            var entManager = server.ResolveDependency<IEntityManager>();
+            var mapLoader = entManager.System<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var cfg = server.ResolveDependency<IConfigurationManager>();
             Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
@@ -37,8 +36,15 @@ namespace Content.IntegrationTests.Tests
                 var grid0 = mapManager.CreateGrid(mapId0);
                 mapLoader.Save(grid0.Owner, "save load save 1.yml");
                 var mapId1 = mapManager.CreateMap();
-                var grid1 = mapLoader.LoadGrid(mapId1, "save load save 1.yml", new MapLoadOptions() {LoadMap = false});
-                mapLoader.Save(grid1!.Value, "save load save 2.yml");
+                EntityUid grid1 = default!;
+#pragma warning disable NUnit2045
+                Assert.That(mapLoader.TryLoad(mapId1, "save load save 1.yml", out var roots, new MapLoadOptions() { LoadMap = false }), $"Failed to load test map {TestMap}");
+                Assert.DoesNotThrow(() =>
+                {
+                    grid1 = roots.First(uid => entManager.HasComponent<MapGridComponent>(uid));
+                });
+#pragma warning restore NUnit2045
+                mapLoader.Save(grid1, "save load save 2.yml");
             });
 
             await server.WaitIdleAsync();
@@ -61,7 +67,8 @@ namespace Content.IntegrationTests.Tests
                 two = await reader.ReadToEndAsync();
             }
 
-            Assert.Multiple(() => {
+            Assert.Multiple(() =>
+            {
                 Assert.That(two, Is.EqualTo(one));
                 var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
                 if (failed != null)
@@ -82,7 +89,7 @@ namespace Content.IntegrationTests.Tests
             await pairTracker.CleanReturnAsync();
         }
 
-        const string TestMap = "Maps/bagel.yml";
+        private const string TestMap = "Maps/bagel.yml";
 
         /// <summary>
         ///     Loads the default map, runs it for 5 ticks, then assert that it did not change.
@@ -90,7 +97,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task LoadSaveTicksSaveBagel()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -105,7 +112,7 @@ namespace Content.IntegrationTests.Tests
                 mapId = mapManager.CreateMap();
                 mapManager.AddUninitializedMap(mapId);
                 mapManager.SetMapPaused(mapId, true);
-                mapLoader.LoadMap(mapId, TestMap);
+                Assert.That(mapLoader.TryLoad(mapId, TestMap, out _), $"Failed to load test map {TestMap}");
                 mapLoader.SaveMap(mapId, "load save ticks save 1.yml");
             });
 
@@ -135,7 +142,8 @@ namespace Content.IntegrationTests.Tests
                 two = await reader.ReadToEndAsync();
             }
 
-            Assert.Multiple(() => {
+            Assert.Multiple(() =>
+            {
                 Assert.That(two, Is.EqualTo(one));
                 var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
                 if (failed != null)
@@ -171,7 +179,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task LoadTickLoadBagel()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
@@ -192,7 +200,7 @@ namespace Content.IntegrationTests.Tests
                 mapId = mapManager.CreateMap();
                 mapManager.AddUninitializedMap(mapId);
                 mapManager.SetMapPaused(mapId, true);
-                mapLoader.LoadMap(mapId, TestMap);
+                Assert.That(mapLoader.TryLoad(mapId, TestMap, out _), $"Failed to load test map {TestMap}");
                 mapLoader.SaveMap(mapId, fileA);
             });
 
@@ -212,7 +220,7 @@ namespace Content.IntegrationTests.Tests
                 mapManager.CreateMap(mapId);
                 mapManager.AddUninitializedMap(mapId);
                 mapManager.SetMapPaused(mapId, true);
-                mapLoader.LoadMap(mapId, TestMap);
+                Assert.That(mapLoader.TryLoad(mapId, TestMap, out _), $"Failed to load test map {TestMap}");
                 mapLoader.SaveMap(mapId, fileB);
             });
 
