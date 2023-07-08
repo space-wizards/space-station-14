@@ -7,7 +7,7 @@ namespace Content.Server.CriminalRecords.Components;
 /// A component for Criminal Record Console storing an active station record key and a currently applied filter
 /// </summary>
 [RegisterComponent]
-[Access(typeof(CriminalRecordsSystem))]
+[Access(typeof(GeneralCriminalRecordConsoleSystem))]
 public sealed class GeneralCriminalRecordConsoleComponent : Component
 {
     /// <summary>

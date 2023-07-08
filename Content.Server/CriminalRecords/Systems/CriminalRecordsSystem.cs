@@ -1,4 +1,3 @@
-using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Security;
@@ -43,13 +42,8 @@ public sealed class CriminalRecordsSystem : EntitySystem
     {
         updatedStatus = default;
 
-        if (!TryComp<StationRecordsComponent>(station, out var stationRecordsComponent))
-            return false;
-
-        if (!_stationRecordsSystem.TryGetRecord(station, key, out GeneralCriminalRecord? record, stationRecordsComponent))
-            return false;
-
-        if (status == record!.Status)
+        if (!_stationRecordsSystem.TryGetRecord(station, key, out GeneralCriminalRecord? record)
+            || status == record.Status)
             return false;
 
         record.Reason = (status == SecurityStatus.None ? string.Empty : reason)!;
@@ -66,20 +60,7 @@ public sealed class CriminalRecordsSystem : EntitySystem
     {
         updatedStatus = default;
 
-        if (!TryComp<StationRecordsComponent>(station, out var stationRecordsComponent))
-            return false;
-
-        if (!_stationRecordsSystem.TryGetRecord(station, key, out GeneralCriminalRecord? record,
-                stationRecordsComponent))
-            return false;
-
-        record!.Status = record.Status == SecurityStatus.Detained ? SecurityStatus.None : SecurityStatus.Detained;
-        record.Reason = (record.Status == SecurityStatus.None ? string.Empty : reason)!;
-
-        updatedStatus = record.Status;
-
-        _stationRecordsSystem.Synchronize(station);
-
-        return true;
+        return TryChangeStatus(station, key, SecurityStatus.Detained, out updatedStatus, reason)
+               || TryChangeStatus(station, key, SecurityStatus.None, out updatedStatus, reason);
     }
 }
