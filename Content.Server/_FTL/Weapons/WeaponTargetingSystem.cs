@@ -132,7 +132,9 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
                 {
                     if (siloComponent.AmmoWhitelist != null && !siloComponent.AmmoWhitelist.IsValid(entity))
                     {
-                        _popupSystem.PopupCoordinates(Loc.GetString("weapon-popup-incorrect-ammo-message"), Transform(entity).Coordinates);
+                        if (!TryComp<TransformComponent>(uid, out var transform))
+                            return;
+                        _popupSystem.PopupCoordinates(Loc.GetString("weapon-popup-incorrect-ammo-message"), transform.Coordinates);
                         _entityManager.DeleteEntity(entity);
                         continue;
                     }
@@ -226,7 +228,9 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
         if (component.ContainedEntities == null)
             return;
 
-        var transform = Transform(uid);
+        if (!TryComp<TransformComponent>(uid, out var transform))
+            return;
+
         foreach (var entity in component.ContainedEntities)
         {
             _physicsSystem.ApplyLinearImpulse(entity, -(transform.LocalRotation.ToWorldVec() * 100f));
@@ -257,7 +261,9 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
         if (!component.IsLinked)
         {
             args.Cancel();
-            _popupSystem.PopupCoordinates(Loc.GetString("weapon-popup-no-link-message"), Transform(uid).Coordinates);
+            if (!TryComp<TransformComponent>(uid, out var transform))
+                return;
+            _popupSystem.PopupCoordinates(Loc.GetString("weapon-popup-no-link-message"), transform.Coordinates);
         }
     }
 
