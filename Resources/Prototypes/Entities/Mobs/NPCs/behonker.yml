@@ -59,7 +59,8 @@
         type: StrippableBoundUserInterface
     - type: MobThresholds
       thresholds:
-        0: Alive        500: Dead
+        0: Alive
+        500: Dead
     - type: Metabolizer
       solutionOnBody: false
       updateFrequency: 0.25
