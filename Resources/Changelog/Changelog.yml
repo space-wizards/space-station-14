@@ -1,10 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: fixed pinpointer flickering!, type: Fix}
-  - {message: fixed pinpointer screen not being visible in dark!, type: Fix}
-  id: 3698
-  time: '2023-05-07T08:20:44.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Telecommunication server added to CentComm station, type: Add}
@@ -2939,3 +2933,9 @@ Entries:
   - {message: Added sub-biome support to planets., type: Add}
   id: 4197
   time: '2023-07-09T05:26:16.0000000+00:00'
+- author: BobTheSleder
+  changes:
+  - {message: Changed game mode weights to make nukeops more common and zombies less
+      common., type: Tweak}
+  id: 4198
+  time: '2023-07-09T09:48:02.0000000+00:00'
