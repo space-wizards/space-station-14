@@ -1,9 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Airlocks can now be configured to interlock and cycle correctly., type: Add}
-  id: 3696
-  time: '2023-05-07T06:49:11.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Remove diseases pending a further refactor., type: Remove}
@@ -2939,3 +2934,8 @@ Entries:
   - {message: The mass scanner UI shows distances again., type: Fix}
   id: 4195
   time: '2023-07-08T19:47:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed chat scrollbar not working properly., type: Fix}
+  id: 4196
+  time: '2023-07-09T02:25:39.0000000+00:00'
