@@ -1,0 +1,29 @@
+- type: startingGear
+  id: SpaceKnightRedLoadout
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHelmetWizardHelm
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterArmorMagusred
+    belt: ClothingBeltSheathFilled
+    id: CentcomPDA
+    ears: ClothingHeadsetAltCommand
+    pocket1: ScrollRunes
+    pocket2: BlinkBook
+    back: ClothingBackpackSpaceKnightSatchelFilled
+
+- type: startingGear
+  id: SpaceKnightBlueLoadout
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHelmetWizardHelm
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterArmorMagusblue
+    id: CentcomPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltSheathFilled
+    pocket1: ScrollRunes
+    pocket2: BlinkBook
+    back: ClothingBackpackSpaceKnightSatchelFilled

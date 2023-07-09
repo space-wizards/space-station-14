@@ -1,0 +1,8 @@
+- type: startingGear
+  id: SyndicateCrewLoadout
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    shoes: ClothingShoesBootsCombatFilled
+    gloves: ClothingHandsGlovesColorBlack
+    id: SyndiPDA
+    ears: ClothingHeadsetAltSyndicate

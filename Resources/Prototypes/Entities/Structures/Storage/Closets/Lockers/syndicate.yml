@@ -1,0 +1,8 @@
+- type: entity
+  parent: LockerSyndicatePersonal
+  id: LockerSyndicatePersonalLocked
+  name: armory locker
+  suffix: Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]

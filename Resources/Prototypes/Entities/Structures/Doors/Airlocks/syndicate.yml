@@ -1,0 +1,39 @@
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockNukeOpGlassLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+  - type: Wires
+    LayoutId: AirlockSecurity
+
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockNukeOpLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+  - type: Wires
+    LayoutId: AirlockSecurity
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalNukeop
+  suffix: Syndicate, External
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+  - type: Wires
+    LayoutId: AirlockExternal
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassNukeop
+  suffix: Syndicate, Glass, External
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+  - type: Wires
+    LayoutId: AirlockExternal
