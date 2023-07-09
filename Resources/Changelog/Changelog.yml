@@ -1,32 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Telecommunication server added to CentComm station, type: Add}
-  id: 3699
-  time: '2023-05-07T10:06:05.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: Added xeno plushie! Hisssss!, type: Add}
-  - {message: Plushie crate can have either a gray or blue shark, type: Tweak}
-  id: 3700
-  time: '2023-05-07T22:50:09.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Cloth can go into the autolathe and uniform printer again., type: Fix}
-  id: 3701
-  time: '2023-05-08T00:34:27.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Adds crew monitoring console and server boards to cargo., type: Add}
-  - {message: 'A new category was added to cargo: circuitboards.', type: Add}
-  - {message: Removed crew monitoring console boards from lathes., type: Remove}
-  id: 3702
-  time: '2023-05-08T05:49:07.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: The network configurator can now be found in the Engivend., type: Add}
-  id: 3703
-  time: '2023-05-08T11:45:15.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Updated the data and nuke disk sprites, type: Tweak}
@@ -2939,3 +2911,29 @@ Entries:
       common., type: Tweak}
   id: 4198
   time: '2023-07-09T09:48:02.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added SyndieDrobe!, type: Add}
+  id: 4199
+  time: '2023-07-09T19:19:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Tweak NPC steering slightly to make them slightly less twitchy., type: Tweak}
+  id: 4200
+  time: '2023-07-09T19:20:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added xeno turrets to salvage dungeons., type: Add}
+  id: 4201
+  time: '2023-07-09T19:20:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix spawning expeditions mobs on blocked tiles., type: Fix}
+  id: 4202
+  time: '2023-07-09T19:20:55.0000000+00:00'
+- author: craazybrain
+  changes:
+  - {message: '"Ensure fellow traitor stays alive" objective now works correctly.',
+    type: Fix}
+  id: 4203
+  time: '2023-07-09T19:21:24.0000000+00:00'
