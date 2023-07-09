@@ -159,7 +159,7 @@
         - id: ClothingShoesBootsCombatFilled
           prob: 0.005
           orGroup: syndiemaintloot
-        - id: ToolboxSyndicate
+        - id: ToolboxSyndicateFilled
           prob: 0.005
           orGroup: syndiemaintloot
         - id: BalloonSyn
@@ -242,7 +242,7 @@
         - id: ClothingShoesBootsCombatFilled
           prob: 0.005
           orGroup: syndiemaintloot
-        - id: ToolboxSyndicate
+        - id: ToolboxSyndicateFilled
           prob: 0.005
           orGroup: syndiemaintloot
         - id: BalloonSyn
