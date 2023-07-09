@@ -154,7 +154,9 @@
 - type: reaction
   id: Ipecac
   reactants:
-    Dylovene:
+    Potassium:
+      amount: 1
+    Nitrogen:
       amount: 1
     Ammonia:
       amount: 1

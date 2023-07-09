@@ -6,6 +6,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using System.Linq;
+using System.Numerics;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -50,7 +51,7 @@ public sealed class GasProducerAnomalySystem : EntitySystem
         }
     }
 
-    private void ReleaseGas(EntityUid uid, Gas gas, float mols, float radius, int count, float temp) 
+    private void ReleaseGas(EntityUid uid, Gas gas, float mols, float radius, int count, float temp)
     {
         var xform = Transform(uid);
 
@@ -59,19 +60,19 @@ public sealed class GasProducerAnomalySystem : EntitySystem
 
         var localpos = xform.Coordinates.Position;
         var tilerefs = grid.GetLocalTilesIntersecting(
-            new Box2(localpos + (-radius, -radius), localpos + (radius, radius))).ToArray();
+            new Box2(localpos + new Vector2(-radius, -radius), localpos + new Vector2(radius, radius))).ToArray();
 
         if (tilerefs.Length == 0)
             return;
 
         var mixture = _atmosphere.GetTileMixture(xform.GridUid, xform.MapUid, _xform.GetGridOrMapTilePosition(uid, xform), true);
-        if (mixture != null) 
+        if (mixture != null)
         {
             mixture.AdjustMoles(gas, mols);
             mixture.Temperature += temp;
         }
-            
-        if (count == 0) 
+
+        if (count == 0)
             return;
 
         _random.Shuffle(tilerefs);

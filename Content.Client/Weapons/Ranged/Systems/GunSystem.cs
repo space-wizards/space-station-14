@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
@@ -239,7 +240,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (!Timing.IsFirstTimePredicted || user == null || recoil == Vector2.Zero || recoilScalar == 0)
             return;
 
-        _recoil.KickCamera(user.Value, recoil.Normalized * 0.5f * recoilScalar);
+        _recoil.KickCamera(user.Value, recoil.Normalized() * 0.5f * recoilScalar);
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)

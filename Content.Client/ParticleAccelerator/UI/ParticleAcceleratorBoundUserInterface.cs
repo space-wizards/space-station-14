@@ -5,9 +5,10 @@ namespace Content.Client.ParticleAccelerator.UI
 {
     public sealed class ParticleAcceleratorBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private ParticleAcceleratorControlMenu? _menu;
 
-        public ParticleAcceleratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public ParticleAcceleratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

@@ -38,7 +38,6 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        50: Critical
         100: Dead
     - type: Stamina
       excess: 100

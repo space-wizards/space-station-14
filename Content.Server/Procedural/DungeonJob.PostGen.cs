@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server.NodeContainer;
 using Content.Shared.Doors.Components;
@@ -301,7 +302,7 @@ public sealed partial class DungeonJob
 
                 if (!blocked)
                     continue;
-                
+
                 var nextDir = (Direction) ((i + 1) * 2 % 8);
                 blocked = HasWall(grid, tile + nextDir.ToIntVec());
 
@@ -326,7 +327,7 @@ public sealed partial class DungeonJob
         var pocketDirections = new ValueList<Direction>(4);
         var doorQuery = _entManager.GetEntityQuery<DoorComponent>();
         var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
-        var offset = new Vector2(-_grid.TileSize / 2f, -_grid.TileSize / 2f);
+        var offset = -_grid.TileSizeHalfVector;
         var color = decks.Color;
 
         foreach (var tile in dungeon.CorridorTiles)
@@ -649,7 +650,7 @@ public sealed partial class DungeonJob
 
                 foreach (var tile in room.Tiles)
                 {
-                    var tileAngle = ((Vector2) tile + grid.TileSize / 2f - room.Center).ToAngle();
+                    var tileAngle = ((Vector2) tile + grid.TileSizeHalfVector - room.Center).ToAngle();
                     var roundedAngle = Math.Round(tileAngle.Theta / (Math.PI / 2)) * (Math.PI / 2);
 
                     var tileVec = (Vector2i) new Angle(roundedAngle).ToVec().Rounded();
@@ -689,7 +690,7 @@ public sealed partial class DungeonJob
                     validTiles.Add(windowTile);
                 }
 
-                validTiles.Sort((x, y) => ((Vector2) x + grid.TileSize / 2f - room.Center).LengthSquared.CompareTo(((Vector2) y + grid.TileSize / 2f - room.Center).LengthSquared));
+                validTiles.Sort((x, y) => ((Vector2) x + grid.TileSizeHalfVector - room.Center).LengthSquared().CompareTo((y + grid.TileSizeHalfVector - room.Center).LengthSquared));
 
                 for (var j = 0; j < Math.Min(validTiles.Count, 3); j++)
                 {
@@ -795,7 +796,7 @@ public sealed partial class DungeonJob
             foreach (var entrance in room.Entrances)
             {
                 // Just so we can still actually get in to the entrance we won't deter from a tile away from it.
-                var normal = ((Vector2) entrance + grid.TileSize / 2f - room.Center).ToWorldAngle().GetCardinalDir().ToIntVec();
+                var normal = ((Vector2) entrance + grid.TileSizeHalfVector - room.Center).ToWorldAngle().GetCardinalDir().ToIntVec();
                 deterredTiles.Remove(entrance + normal);
             }
         }
@@ -1112,7 +1113,7 @@ public sealed partial class DungeonJob
 
                 foreach (var node in flipp)
                 {
-                    center += (Vector2) node + grid.TileSize / 2f;
+                    center += (Vector2) node + grid.TileSizeHalfVector;
                 }
 
                 center /= flipp.Count;
@@ -1121,7 +1122,7 @@ public sealed partial class DungeonJob
 
                 foreach (var node in flipp)
                 {
-                    nodeDistances.Add((node, ((Vector2) node + grid.TileSize / 2f - center).LengthSquared));
+                    nodeDistances.Add((node, ((Vector2) node + grid.TileSizeHalfVector - center).LengthSquared()));
                 }
 
                 nodeDistances.Sort((x, y) => x.Distance.CompareTo(y.Distance));

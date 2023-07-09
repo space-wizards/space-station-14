@@ -502,8 +502,6 @@
     states:
       Alive:
         Base: shiva
-      Critical:
-        Base: shiva_dead
       Dead:
         Base: shiva_dead
   - type: Butcherable
@@ -514,7 +512,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      90: Critical
       150: Dead
   - type: MeleeWeapon
     hidden: true
