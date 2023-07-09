@@ -45,6 +45,8 @@
     radsPerLevel: 2
     intensity: 20
   - type: RandomWalk # To make the singularity move around.
+  - type: SingularityDistortion
+    intensity: 20
   - type: RadiationSource
     slope: 0.2 # its emit really far away
   - type: PointLight
