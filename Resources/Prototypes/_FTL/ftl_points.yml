@@ -39,8 +39,7 @@
   effects:
     - !type:ToPlanetEffect
     - !type:SpawnDungeonEffect
-      minSpawn: 1
-      maxSpawn: 3
+      range: 50
 
 - type: ftlPoint
   id: StarPoint

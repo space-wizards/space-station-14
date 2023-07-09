@@ -20,6 +20,7 @@ public sealed class SpawnDungeonEffect : FTLPointEffect
 
     [DataField("minSpawn")] public int MinSpawn = 1;
     [DataField("maxSpawn")] public int MaxSpawn = 2;
+    [DataField("range")] public int SpawnRange = 200;
 
     public override void Effect(FTLPointEffectArgs args)
     {
@@ -31,7 +32,7 @@ public sealed class SpawnDungeonEffect : FTLPointEffect
             var dungeon = args.EntityManager.System<DungeonSystem>();
             var prototype = IoCManager.Resolve<IPrototypeManager>();
 
-            var position = new Vector2i(random.Next(-200, 200), random.Next(-200, 200));
+            var position = new Vector2i(random.Next(-SpawnRange, SpawnRange), random.Next(-SpawnRange, SpawnRange));
             var dungeonUid = args.MapManager.GetMapEntityId(args.MapId);
 
             if (!args.EntityManager.TryGetComponent<MapGridComponent>(dungeonUid, out var dungeonGrid))

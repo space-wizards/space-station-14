@@ -1627,5 +1627,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ReplayRecordAdminChat =
             CVarDef.Create("replay.record_admin_chat", false, CVar.ARCHIVE);
+
+        /*
+         * FTL Points
+         */
+
+        /// <summary>
+        ///     Whether or not to generate FTL points roundstart.
+        /// </summary>
+        public static readonly CVarDef<bool> GenerateFTLPointsRoundstart =
+            CVarDef.Create("ftlpoints.generate_roundstart", false, CVar.ARCHIVE);
     }
 }
