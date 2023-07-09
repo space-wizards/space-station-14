@@ -1,9 +1,4 @@
 Entries:
-- author: Lomcastar
-  changes:
-  - {message: Added Proximity Mine disguised as a wet floor sign., type: Add}
-  id: 3712
-  time: '2023-05-09T23:50:03.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Due to a recent economic boom, NT is now able to supply ERT cleanup
@@ -2939,3 +2934,10 @@ Entries:
       are advised not to fight over its use., type: Tweak}
   id: 4211
   time: '2023-07-09T22:01:36.0000000+00:00'
+- author: FoxHorn
+  changes:
+  - {message: 'Added prototype interrogator lamp for admin entity spawn panel. Perhaps
+      the mapmakers will replace the lamps in the interrogation rooms with this? I
+      said where''s the detonator?!?!', type: Add}
+  id: 4212
+  time: '2023-07-09T22:35:21.0000000+00:00'
