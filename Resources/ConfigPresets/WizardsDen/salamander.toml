@@ -19,6 +19,9 @@ emergency_early_launch_allowed = true
 [biomass]
 easy_mode = false
 
+[looc]
+enabled_crit = true
+
 [ooc]
 enable_during_round = true
 
