@@ -8,6 +8,7 @@ namespace Content.Shared.Singularity.Components;
 /// Also makes the associated entity destroy other entities upon contact.
 /// Primarily managed by <see cref="SharedEventHorizonSystem"/> and its server/client versions.
 /// </summary>
+[Access(friends: typeof(SharedEventHorizonSystem))]
 [RegisterComponent, NetworkedComponent]
 public sealed class EventHorizonComponent : Component
 {
@@ -17,7 +18,6 @@ public sealed class EventHorizonComponent : Component
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetRadius"/>.
     /// </summary>
     [DataField("radius")]
-    [Access(friends: typeof(SharedEventHorizonSystem))]
     public float Radius;
 
     /// <summary>
@@ -25,7 +25,7 @@ public sealed class EventHorizonComponent : Component
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetCanBreachContainment"/>.
     /// </summary>
     [DataField("canBreachContainment")]
-    [Access(friends: typeof(SharedEventHorizonSystem))]
+    [ViewVariables(VVAccess.ReadWrite)]
     public bool CanBreachContainment = false;
 
     /// <summary>
@@ -34,7 +34,7 @@ public sealed class EventHorizonComponent : Component
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetHorizonFixtureId"/>.
     /// </summary>
     [DataField("consumerFixtureId")]
-    [Access(friends: typeof(SharedEventHorizonSystem))]
+    [ViewVariables(VVAccess.ReadWrite)]
     public string? ConsumerFixtureId = "EventHorizonConsumer";
 
     /// <summary>
@@ -43,7 +43,7 @@ public sealed class EventHorizonComponent : Component
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetHorizonFixtureId"/>.
     /// </summary>
     [DataField("colliderFixtureId")]
-    [Access(friends: typeof(SharedEventHorizonSystem))]
+    [ViewVariables(VVAccess.ReadWrite)]
     public string? ColliderFixtureId = "EventHorizonCollider";
 
     /// <summary>
@@ -58,22 +58,19 @@ public sealed class EventHorizonComponent : Component
     /// The amount of time that should elapse between this event horizon consuming everything it overlaps with.
     /// </summary>
     [DataField("consumePeriod")]
-    [ViewVariables(VVAccess.ReadOnly)]
-    [Access(typeof(SharedEventHorizonSystem))]
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan TargetConsumePeriod { get; set; } = TimeSpan.FromSeconds(0.5);
 
     /// <summary>
     /// The last time at which this consumed everything it overlapped with.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(typeof(SharedEventHorizonSystem))]
     public TimeSpan LastConsumeWaveTime { get; set; } = default!;
 
     /// <summary>
     /// The next time at which this consumed everything it overlapped with.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(typeof(SharedEventHorizonSystem))]
     public TimeSpan NextConsumeWaveTime { get; set; } = default!;
 
     #endregion Update Timing
