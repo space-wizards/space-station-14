@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.Maps;
 using Content.Shared.Parallax.Biomes.Layers;
 using Robust.Shared.Map;

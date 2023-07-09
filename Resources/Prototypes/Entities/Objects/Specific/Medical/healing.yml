@@ -312,6 +312,19 @@
         - ReagentId: Romerol
           Quantity: 10
 
+- type: entity
+  name: ambuzol pill
+  parent: Pill
+  id: PillAmbuzol
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+            - ReagentId: Ambuzol
+              Quantity: 10
+
 # Syringes
 - type: entity
   name: ephedrine syringe
@@ -402,7 +415,7 @@
         maxVol: 15
         reagents:
         - ReagentId: Dermaline
-          Quantity: 15    
+          Quantity: 15
 
 - type: entity
   name: dexalin plus syringe
@@ -415,7 +428,7 @@
         maxVol: 15
         reagents:
         - ReagentId: DexalinPlus
-          Quantity: 15    
+          Quantity: 15
 
 - type: entity
   name: iron syringe
@@ -428,18 +441,31 @@
         maxVol: 15
         reagents:
         - ReagentId: Iron
-          Quantity: 15    
+          Quantity: 15
+
+- type: entity
+  name: ambuzol syringe
+  parent: BaseSyringe
+  id: SyringeAmbuzol
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Ambuzol
+              Quantity: 15
 
 #this is where all the syringes are so i didn't know where to put it
 - type: entity
-  name: corpium syringe
+  name: romerol syringe
   parent: BaseSyringe
-  id: SyringeCorpium
+  id: SyringeRomerol
   components:
   - type: SolutionContainerManager
     solutions:
       injector:
         maxVol: 15
         reagents:
-        - ReagentId: Corpium
-          Quantity: 10
+        - ReagentId: Romerol
+          Quantity: 15

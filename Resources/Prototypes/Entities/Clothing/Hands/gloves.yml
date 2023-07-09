@@ -223,6 +223,17 @@
   - type: FingerprintMask
 
 - type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsTacticalMaidGloves
+  name: tactical maid gloves
+  description: Tactical maid gloves, every self-respecting maid should be able to discreetly eliminate her goals.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
+
+- type: entity
   parent: ClothingHandsBase
   id: ClothingHandsMercGlovesCombat
   name: mercenary combat gloves

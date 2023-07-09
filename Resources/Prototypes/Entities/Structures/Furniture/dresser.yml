@@ -23,6 +23,17 @@
             max: 3
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Storage
+    capacity: 50
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: InteractionOutline
+  - type: Clickable
   - type: Tag
     tags:
     - Wooden
