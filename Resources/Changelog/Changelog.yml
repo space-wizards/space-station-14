@@ -1,9 +1,4 @@
 Entries:
-- author: Tyzemol
-  changes:
-  - {message: Fixed not being able to link airlocks using network configurator, type: Fix}
-  id: 3711
-  time: '2023-05-09T22:50:35.0000000+00:00'
 - author: Lomcastar
   changes:
   - {message: Added Proximity Mine disguised as a wet floor sign., type: Add}
@@ -2932,3 +2927,15 @@ Entries:
     type: Tweak}
   id: 4210
   time: '2023-07-09T22:00:08.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Ambuzol Plus can now be made as an vaccine against the zombie infection.
+      It requires zombie blood to create., type: Add}
+  - {message: 'Zombies now have unique blood. While it cannot transfer the infection,
+      consumption or injection is still ill-advised.', type: Add}
+  - {message: CBURN now get one Ambuzol Plus pill. Operatives are advised to use it
+      on themselves., type: Tweak}
+  - {message: The syndicate zombie bundle now has one Ambuzol Plus pill. Operatives
+      are advised not to fight over its use., type: Tweak}
+  id: 4211
+  time: '2023-07-09T22:01:36.0000000+00:00'
