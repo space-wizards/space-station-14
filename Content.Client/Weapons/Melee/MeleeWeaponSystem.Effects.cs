@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Weapons.Melee.Components;
 using Content.Shared.Weapons;
 using Content.Shared.Weapons.Melee;
@@ -138,7 +139,7 @@ public sealed partial class MeleeWeaponSystem
 
         sprite.NoRotation = true;
         sprite.Rotation = localPos.ToWorldAngle();
-        var distance = Math.Clamp(localPos.Length / 2f, 0.2f, 1f);
+        var distance = Math.Clamp(localPos.Length() / 2f, 0.2f, 1f);
 
         var xformQuery = GetEntityQuery<TransformComponent>();
         var xform = xformQuery.GetComponent(animationUid);
@@ -274,7 +275,7 @@ public sealed partial class MeleeWeaponSystem
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(direction.Normalized * 0.15f, 0f),
+                        new AnimationTrackProperty.KeyFrame(direction.Normalized() * 0.15f, 0f),
                         new AnimationTrackProperty.KeyFrame(Vector2.Zero, length)
                     }
                 }

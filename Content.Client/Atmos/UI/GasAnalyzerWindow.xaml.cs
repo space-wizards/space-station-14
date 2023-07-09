@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos;
 using Content.Shared.Temperature;

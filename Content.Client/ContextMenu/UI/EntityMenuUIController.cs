@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
@@ -94,7 +95,7 @@ namespace Content.Client.ContextMenu.UI
             Elements.Clear();
             AddToUI(orderedStates);
 
-            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, (1, 1));
+            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, new Vector2(1, 1));
             _context.RootMenu.Open(box);
         }
 

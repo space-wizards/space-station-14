@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
@@ -640,7 +641,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         component.NukieOutpost = outpostGrids[0];
 
         // Listen I just don't want it to overlap.
-        if (!_map.TryLoad(mapId, shuttlePath.ToString(), out var grids, new MapLoadOptions {Offset = Vector2.One*1000f}) || !grids.Any())
+        if (!_map.TryLoad(mapId, shuttlePath.ToString(), out var grids, new MapLoadOptions {Offset = Vector2.One * 1000f}) || !grids.Any())
         {
             Logger.ErrorS("nukies", $"Error loading grid {shuttlePath} for nukies!");
             return false;

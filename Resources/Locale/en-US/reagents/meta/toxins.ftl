@@ -43,8 +43,8 @@ reagent-desc-amatoxin = A potent toxin found in some mushrooms.
 reagent-name-vent-crud = vent crud
 reagent-desc-vent-crud = A jet black substance found in poorly maintained ventilation systems.
 
-reagent-name-corpium = corpium
-reagent-desc-corpium = A Syndicate cocktail, carefully harvested from various sources. You wouldn't want this inside of you.
+reagent-name-romerol = romerol
+reagent-desc-romerol = An otherworldly concoction able to bring the undead to life. If untreated, the effects are irreversible and will bring certain doom upon the station. Handle with care.
 
 reagent-name-uncooked-animal-proteins = uncooked animal proteins
 reagent-desc-uncooked-animal-proteins = This is very risky for the stomachs of softer lifeforms to digest.
@@ -59,4 +59,4 @@ reagent-name-honk = honk
 reagent-desc-honk = A toxin found in bananium. Causes severe honking and internal bleeding, may also cause the patient to mutate.
 
 reagent-name-lead = lead
-reagent-desc-lead = A slow-acting but incredibly lethal toxin found in steel, albiet in trace amounts. Tasteless. 
+reagent-desc-lead = A slow-acting but incredibly lethal toxin found in steel, albiet in trace amounts. Tasteless.

@@ -12,7 +12,7 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
 {
     private AirAlarmWindow? _window;
 
-    public AirAlarmBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public AirAlarmBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
@@ -20,7 +20,7 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = new AirAlarmWindow(Owner);
+        _window = new AirAlarmWindow(this);
 
         if (State != null)
         {

@@ -14,16 +14,15 @@ namespace Content.Client.Disposal.UI
     [UsedImplicitly]
     public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         // What are you doing here
+        [ViewVariables]
         public MailingUnitWindow? MailingUnitWindow;
 
+        [ViewVariables]
         public DisposalUnitWindow? DisposalUnitWindow;
 
-        public DisposalUnitBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public DisposalUnitBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-            IoCManager.InjectDependencies(this);
         }
 
         private void ButtonPressed(UiButton button)
@@ -56,7 +55,7 @@ namespace Content.Client.Disposal.UI
 
                 MailingUnitWindow.TargetListContainer.OnItemSelected += TargetSelected;
             }
-            else if(UiKey is DisposalUnitUiKey)
+            else if (UiKey is DisposalUnitUiKey)
             {
                 DisposalUnitWindow = new DisposalUnitWindow();
 

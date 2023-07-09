@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Decals;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Shuttles.Events;
@@ -195,7 +196,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         if (!TryComp<BiomeComponent>(targetMapUid, out var biome))
             return;
 
-        var targetArea = new Box2(targetMap.Position - 32f, targetMap.Position + 32f);
+        var preloadArea = new Vector2(32f, 32f);
+        var targetArea = new Box2(targetMap.Position - preloadArea, targetMap.Position + preloadArea);
         Preload(targetMapUid, biome, targetArea);
     }
 
@@ -337,7 +339,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     {
         // Offset the load area so it's centralised.
         var loadArea = new Box2(0, 0, layer.Size, layer.Size);
-        var enumerator = new ChunkIndicesEnumerator(loadArea.Translated(worldPos - layer.Size / 2f), layer.Size);
+        var halfLayer = new Vector2(layer.Size / 2f);
+
+        var enumerator = new ChunkIndicesEnumerator(loadArea.Translated(worldPos - halfLayer), layer.Size);
 
         while (enumerator.MoveNext(out var chunkOrigin))
         {
