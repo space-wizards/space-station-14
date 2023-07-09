@@ -46,10 +46,14 @@
     pathfindInPlanning: false
 
 - type: htnPrimitive
+  id: MoveToTargetPrimitive
+  operator: !type:MoveToOperator
+
+- type: htnPrimitive
   id: PickAccessiblePrimitive
   operator: !type:PickAccessibleOperator
     rangeKey: IdleRange
-    targetKey: MovementTarget
+    targetKey: Target
 
 - type: htnPrimitive
   id: PickRandomRotationPrimitive

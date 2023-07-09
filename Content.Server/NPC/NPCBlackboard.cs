@@ -27,6 +27,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         {MeleeMissChance, 0.3f},
         {"MeleeRange", 1f},
         {"MinimumIdleTime", 2f},
+        {"MovementRangeClose", 0.2f},
         {"MovementRange", 1.5f},
         {"RangedRange", 10f},
         {"RotateSpeed", MathF.PI},
@@ -232,7 +233,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
 
     public const string RotateSpeed = "RotateSpeed";
     public const string VisionRadius = "VisionRadius";
-    public const string UtilityTarget = "Target";
+    public const string UtilityTarget = "UtilityTarget";
 
     public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
     {

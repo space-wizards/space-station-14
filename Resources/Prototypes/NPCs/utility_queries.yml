@@ -18,6 +18,22 @@
       curve: !type:BoolCurve
 
 - type: utilityQuery
+  id: NearbyGuns
+  query:
+    - !type:ComponentQuery
+      components:
+        - type: Gun
+        - type: Item
+  considerations:
+    - !type:TargetHasAmmoCon
+      curve: !type:BoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
   id: NearbyMeleeTargets
   query:
     - !type:NearbyHostilesQuery

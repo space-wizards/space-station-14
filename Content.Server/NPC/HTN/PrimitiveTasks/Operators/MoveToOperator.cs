@@ -35,7 +35,7 @@ public sealed class MoveToOperator : HTNOperator
     /// Target Coordinates to move to. This gets removed after execution.
     /// </summary>
     [DataField("targetKey")]
-    public string TargetKey = "MovementTarget";
+    public string TargetKey = "TargetCoordinates";
 
     /// <summary>
     /// Where the pathfinding result will be stored (if applicable). This gets removed after execution.

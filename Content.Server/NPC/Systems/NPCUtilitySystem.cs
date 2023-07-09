@@ -12,6 +12,8 @@ using Content.Server.Storage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Server.Containers;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
@@ -179,6 +181,23 @@ public sealed class NPCUtilitySystem : EntitySystem
                 }
 
                 return Math.Clamp(distance / radius, 0f, 1f);
+            }
+            case TargetHasAmmoCon:
+            {
+                if (!HasComp<GunComponent>(targetUid))
+                    return 0f;
+
+                var ev = new GetAmmoCountEvent();
+                RaiseLocalEvent(targetUid, ref ev);
+
+                if (ev.Count == 0)
+                    return 0f;
+
+                // Wat
+                if (ev.Capacity == 0)
+                    return 1f;
+
+                return (float) ev.Count / ev.Capacity;
             }
             case TargetHealthCon:
             {
