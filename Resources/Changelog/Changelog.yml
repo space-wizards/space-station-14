@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Due to a recent economic boom, NT is now able to supply ERT cleanup
-      crews with mops.', type: Add}
-  id: 3713
-  time: '2023-05-09T23:51:48.0000000+00:00'
 - author: Mumohan
   changes:
   - {message: Airlocks are no longer scared of puddles and soap. They should now close
@@ -2941,3 +2935,9 @@ Entries:
       said where''s the detonator?!?!', type: Add}
   id: 4212
   time: '2023-07-09T22:35:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Certain livestock (cows, goats, pigs, chickens, ducks) now have the
+      ability to produce offspring so long as they are properly tended to.', type: Add}
+  id: 4213
+  time: '2023-07-09T22:36:37.0000000+00:00'
