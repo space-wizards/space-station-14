@@ -17,7 +17,7 @@ public sealed class EventHorizonComponent : Component
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetRadius"/>.
     /// </summary>
     [DataField("radius")]
-    [Access(friends:typeof(SharedEventHorizonSystem))]
+    [Access(friends: typeof(SharedEventHorizonSystem))]
     public float Radius;
 
     /// <summary>
@@ -25,7 +25,7 @@ public sealed class EventHorizonComponent : Component
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetCanBreachContainment"/>.
     /// </summary>
     [DataField("canBreachContainment")]
-    [Access(friends:typeof(SharedEventHorizonSystem))]
+    [Access(friends: typeof(SharedEventHorizonSystem))]
     public bool CanBreachContainment = false;
 
     /// <summary>
@@ -34,7 +34,7 @@ public sealed class EventHorizonComponent : Component
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetHorizonFixtureId"/>.
     /// </summary>
     [DataField("consumerFixtureId")]
-    [Access(friends:typeof(SharedEventHorizonSystem))]
+    [Access(friends: typeof(SharedEventHorizonSystem))]
     public string? ConsumerFixtureId = "EventHorizonConsumer";
 
     /// <summary>
@@ -43,7 +43,7 @@ public sealed class EventHorizonComponent : Component
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetHorizonFixtureId"/>.
     /// </summary>
     [DataField("colliderFixtureId")]
-    [Access(friends:typeof(SharedEventHorizonSystem))]
+    [Access(friends: typeof(SharedEventHorizonSystem))]
     public string? ColliderFixtureId = "EventHorizonCollider";
 
     /// <summary>
