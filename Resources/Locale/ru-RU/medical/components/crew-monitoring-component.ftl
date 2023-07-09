@@ -10,3 +10,5 @@ crew-monitoring-user-interface-location = Местоположение
 crew-monitoring-user-interface-alive = Жив
 crew-monitoring-user-interface-dead = Мёртв
 crew-monitoring-user-interface-no-info = Н/Д
+
+crew-monitoring-user-interface-no-server = Сервер не найден
