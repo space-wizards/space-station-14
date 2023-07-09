@@ -102,7 +102,7 @@
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadio40TC
-  suffix: 40 TC, NukeOps
+  suffix: 60 TC, NukeOps
   components:
   - type: Store
     preset: StorePresetUplink

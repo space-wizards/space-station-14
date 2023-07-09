@@ -1,0 +1,10 @@
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSpaceKnightSatchelFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: WeaponWandFireball
+      - id: CrowbarRed

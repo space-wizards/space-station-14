@@ -1,0 +1,59 @@
+- type: entity
+  id: RandomHumanoidSpawnerSyndicateCrew
+  name: Syndicate Crew
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - type: RandomHumanoidSpawner
+      settings: SyndicateCrew
+
+- type: randomHumanoidSettings
+  id: SyndicateCrew
+  components:
+    - type: GhostRole
+      name: Syndicate Crewmember
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ SyndicateCrewLoadout ]
+
+- type: entity
+  id: RandomHumanoidSpawnerSpaceKnightRed
+  name: Space Knight Red
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - type: RandomHumanoidSpawner
+      settings: SpaceknightRed
+
+- type: entity
+  id: RandomHumanoidSpawnerSpaceKnightBlue
+  name: Space Knight Blue
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - type: RandomHumanoidSpawner
+      settings: SpaceknightBlue
+
+- type: randomHumanoidSettings
+  id: SpaceknightRed
+  components:
+    - type: GhostRole
+      name: Space Knight
+      description: Become a warlock and get rid of the bad.
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ SpaceKnightRedLoadout ]
+
+- type: randomHumanoidSettings
+  id: SpaceknightBlue
+  components:
+    - type: GhostRole
+      name: Space Knight
+      description: Become a warlock and get rid of the bad.
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ SpaceKnightBlueLoadout ]
+

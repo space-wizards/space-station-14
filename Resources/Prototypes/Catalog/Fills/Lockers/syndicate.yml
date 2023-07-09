@@ -1,0 +1,13 @@
+- type: entity
+  id: LockerSyndicatePersonalLockedFilled
+  suffix: Locked, Filled
+  parent: LockerSyndicatePersonalLocked
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltMilitaryWebbing
+      - id: ClothingHandsGlovesCombat
+      - id: JetpackBlackFilled
+      - id: ClothingUniformJumpsuitOperative
+      - id: ClothingUniformJumpskirtOperative
+      - id: ClothingHeadsetAltSyndicate
