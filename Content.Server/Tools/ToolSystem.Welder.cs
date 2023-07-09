@@ -4,6 +4,7 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Tools.Components;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -15,7 +16,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Tools
 {
@@ -39,17 +40,16 @@ namespace Content.Server.Tools
             SubscribeLocalEvent<WelderComponent, SolutionChangedEvent>(OnWelderSolutionChange);
             SubscribeLocalEvent<WelderComponent, ActivateInWorldEvent>(OnWelderActivate);
             SubscribeLocalEvent<WelderComponent, AfterInteractEvent>(OnWelderAfterInteract);
-            SubscribeLocalEvent<WelderComponent, ToolUseAttemptEvent>(OnWelderToolUseAttempt);
-            SubscribeLocalEvent<WelderComponent, ToolUseFinishAttemptEvent>(OnWelderToolUseFinishAttempt);
+            SubscribeLocalEvent<WelderComponent, DoAfterAttemptEvent<ToolDoAfterEvent>>(OnWelderToolUseAttempt);
             SubscribeLocalEvent<WelderComponent, ComponentShutdown>(OnWelderShutdown);
             SubscribeLocalEvent<WelderComponent, ComponentGetState>(OnWelderGetState);
-            SubscribeLocalEvent<WelderComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<WelderComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
         }
 
-        private void OnMeleeHit(EntityUid uid, WelderComponent component, MeleeHitEvent args)
+        private void OnGetMeleeDamage(EntityUid uid, WelderComponent component, ref GetMeleeDamageEvent args)
         {
-            if (!args.Handled && component.Lit)
-                args.BonusDamage += component.LitMeleeDamageBonus;
+            if (component.Lit)
+                args.Damage += component.LitMeleeDamageBonus;
         }
 
         public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerManagerComponent? solutionContainer = null)
@@ -118,6 +118,9 @@ namespace Content.Server.Tools
             var ev = new WelderToggledEvent(true);
             RaiseLocalEvent(welder.Owner, ev, false);
 
+            var hotEvent = new IsHotEvent() {IsHot = true};
+            RaiseLocalEvent(uid, hotEvent);
+
             _appearanceSystem.SetData(uid, WelderVisuals.Lit, true);
             _appearanceSystem.SetData(uid, ToggleableLightVisuals.Enabled, true);
 
@@ -129,7 +132,7 @@ namespace Content.Server.Tools
             if (transform.GridUid is {} gridUid)
             {
                 var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
-                _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, true);
+                _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, uid, true);
             }
 
             _entityManager.Dirty(welder);
@@ -222,8 +225,6 @@ namespace Content.Server.Tools
             args.Handled = TryToggleWelder(uid, args.User, welder);
             if (args.Handled)
                 args.WasLogged = true;
-            var hotEvent = new IsHotEvent() {IsHot = true};
-            RaiseLocalEvent(uid, hotEvent);
         }
 
         private void OnWelderAfterInteract(EntityUid uid, WelderComponent welder, AfterInteractEvent args)
@@ -262,56 +263,16 @@ namespace Content.Server.Tools
             args.Handled = true;
         }
 
-        private void OnWelderToolUseAttempt(EntityUid uid, WelderComponent welder, ToolUseAttemptEvent args)
+        private void OnWelderToolUseAttempt(EntityUid uid, WelderComponent welder, DoAfterAttemptEvent<ToolDoAfterEvent> args)
         {
-            if (args.Cancelled)
-                return;
+            var user = args.DoAfter.Args.User;
 
             if (!welder.Lit)
             {
-                _popupSystem.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, args.User);
+                _popupSystem.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, user);
                 args.Cancel();
                 return;
             }
-
-            var (fuel, _) = GetWelderFuelAndCapacity(uid, welder);
-
-            if (FixedPoint2.New(args.Fuel) > fuel)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("welder-component-cannot-weld-message"), uid, args.User);
-                args.Cancel();
-            }
-        }
-
-        private void OnWelderToolUseFinishAttempt(EntityUid uid, WelderComponent welder, ToolUseFinishAttemptEvent args)
-        {
-            if (args.Cancelled)
-                return;
-
-            if (!welder.Lit)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, args.User);
-                args.Cancel();
-                return;
-            }
-
-            var (fuel, _) = GetWelderFuelAndCapacity(uid, welder);
-
-            var neededFuel = FixedPoint2.New(args.Fuel);
-
-            if (neededFuel > fuel)
-            {
-                args.Cancel();
-            }
-
-            if (!_solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var solution))
-            {
-                args.Cancel();
-                return;
-            }
-
-            solution.RemoveReagent(welder.FuelReagent, neededFuel);
-            _entityManager.Dirty(welder);
         }
 
         private void OnWelderShutdown(EntityUid uid, WelderComponent welder, ComponentShutdown args)

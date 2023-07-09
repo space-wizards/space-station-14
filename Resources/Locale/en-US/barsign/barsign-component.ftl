@@ -90,6 +90,10 @@ barsign-prototype-description-enginechange = Still waiting.
 barsign-prototype-name-emprah = 4 The Emprah
 barsign-prototype-description-emprah = Enjoyed by fanatics, heretics, and brain-damaged patrons alike.
 
+## Spacebucks
+barsign-prototype-name-spacebucks = Spacebucks
+barsign-prototype-description-spacebucks = You can't get away from them, even in space.
+
 ## EmpBarSign
 barsign-prototype-description-empbarsign = Something has gone very wrong.
 

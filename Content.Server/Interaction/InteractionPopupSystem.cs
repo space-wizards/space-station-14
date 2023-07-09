@@ -34,6 +34,8 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (HasComp<SleepingComponent>(uid))
             return;
 
+        args.Handled = true;
+
         var curTime = _gameTiming.CurTime;
 
         if (curTime < component.LastInteractTime + component.InteractDelay)
@@ -85,6 +87,5 @@ public sealed class InteractionPopupSystem : EntitySystem
         }
 
         component.LastInteractTime = curTime;
-        args.Handled = true;
     }
 }

@@ -1,4 +1,6 @@
+using System.Globalization;
 using System.Linq;
+using System.Numerics;
 using Content.Client.Administration.Managers;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
@@ -7,12 +9,16 @@ using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
+using Content.Client.Lobby.UI;
+using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
+using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Examine;
 using Content.Shared.Input;
+using Content.Shared.Radio;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -24,6 +30,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -41,38 +48,42 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
     [UISystemDependency] private readonly TypingIndicatorSystem? _typingIndicator = default;
+    [UISystemDependency] private readonly ChatSystem? _chatSys = default;
 
     private ISawmill _sawmill = default!;
 
-    public const char AliasLocal = '.';
-    public const char AliasConsole = '/';
-    public const char AliasDead = '\\';
-    public const char AliasLOOC = '(';
-    public const char AliasOOC = '[';
-    public const char AliasEmotes = '@';
-    public const char AliasAdmin = ']';
-    public const char AliasRadio = ';';
-    public const char AliasWhisper = ',';
-
     public static readonly Dictionary<char, ChatSelectChannel> PrefixToChannel = new()
     {
-        {AliasLocal, ChatSelectChannel.Local},
-        {AliasWhisper, ChatSelectChannel.Whisper},
-        {AliasConsole, ChatSelectChannel.Console},
-        {AliasLOOC, ChatSelectChannel.LOOC},
-        {AliasOOC, ChatSelectChannel.OOC},
-        {AliasEmotes, ChatSelectChannel.Emotes},
-        {AliasAdmin, ChatSelectChannel.Admin},
-        {AliasRadio, ChatSelectChannel.Radio},
-        {AliasDead, ChatSelectChannel.Dead}
+        {SharedChatSystem.LocalPrefix, ChatSelectChannel.Local},
+        {SharedChatSystem.WhisperPrefix, ChatSelectChannel.Whisper},
+        {SharedChatSystem.ConsolePrefix, ChatSelectChannel.Console},
+        {SharedChatSystem.LOOCPrefix, ChatSelectChannel.LOOC},
+        {SharedChatSystem.OOCPrefix, ChatSelectChannel.OOC},
+        {SharedChatSystem.EmotesPrefix, ChatSelectChannel.Emotes},
+        {SharedChatSystem.EmotesAltPrefix, ChatSelectChannel.Emotes},
+        {SharedChatSystem.AdminPrefix, ChatSelectChannel.Admin},
+        {SharedChatSystem.RadioCommonPrefix, ChatSelectChannel.Radio},
+        {SharedChatSystem.DeadPrefix, ChatSelectChannel.Dead}
     };
 
-    public static readonly Dictionary<ChatSelectChannel, char> ChannelPrefixes =
-        PrefixToChannel.ToDictionary(kv => kv.Value, kv => kv.Key);
+    public static readonly Dictionary<ChatSelectChannel, char> ChannelPrefixes = new()
+    {
+        {ChatSelectChannel.Local, SharedChatSystem.LocalPrefix},
+        {ChatSelectChannel.Whisper, SharedChatSystem.WhisperPrefix},
+        {ChatSelectChannel.Console, SharedChatSystem.ConsolePrefix},
+        {ChatSelectChannel.LOOC, SharedChatSystem.LOOCPrefix},
+        {ChatSelectChannel.OOC, SharedChatSystem.OOCPrefix},
+        {ChatSelectChannel.Emotes, SharedChatSystem.EmotesPrefix},
+        {ChatSelectChannel.Admin, SharedChatSystem.AdminPrefix},
+        {ChatSelectChannel.Radio, SharedChatSystem.RadioCommonPrefix},
+        {ChatSelectChannel.Dead, SharedChatSystem.DeadPrefix}
+    };
 
     /// <summary>
     ///     The max amount of chars allowed to fit in a single speech bubble.
@@ -165,8 +176,14 @@ public sealed class ChatUIController : UIController
         _input.SetInputCommand(ContentKeyFunctions.FocusLocalChat,
             InputCmdHandler.FromDelegate(_ => FocusChannel(ChatSelectChannel.Local)));
 
+        _input.SetInputCommand(ContentKeyFunctions.FocusEmote,
+            InputCmdHandler.FromDelegate(_ => FocusChannel(ChatSelectChannel.Emotes)));
+
         _input.SetInputCommand(ContentKeyFunctions.FocusWhisperChat,
             InputCmdHandler.FromDelegate(_ => FocusChannel(ChatSelectChannel.Whisper)));
+
+        _input.SetInputCommand(ContentKeyFunctions.FocusLOOC,
+            InputCmdHandler.FromDelegate(_ => FocusChannel(ChatSelectChannel.LOOC)));
 
         _input.SetInputCommand(ContentKeyFunctions.FocusOOC,
             InputCmdHandler.FromDelegate(_ => FocusChannel(ChatSelectChannel.OOC)));
@@ -188,22 +205,106 @@ public sealed class ChatUIController : UIController
 
         _input.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
             InputCmdHandler.FromDelegate(_ => CycleChatChannel(false)));
+
+        var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
+        gameplayStateLoad.OnScreenLoad += OnScreenLoad;
+        gameplayStateLoad.OnScreenUnload += OnScreenUnload;
+    }
+
+    public void OnScreenLoad()
+    {
+        SetMainChat(true);
+
+        var viewportContainer = UIManager.ActiveScreen!.FindControl<LayoutContainer>("ViewportContainer");
+        SetSpeechBubbleRoot(viewportContainer);
+    }
+
+    public void OnScreenUnload()
+    {
+        SetMainChat(false);
     }
 
     public void SetMainChat(bool setting)
     {
-        // This isn't very nice to look at.
-        var widget = UIManager.ActiveScreen?.GetWidget<ChatBox>();
-        if (widget == null)
+        if (UIManager.ActiveScreen == null)
         {
-            widget = UIManager.ActiveScreen?.GetWidget<ResizableChatBox>();
-            if (widget == null)
-            {
-                return;
-            }
+            return;
         }
 
-        widget.Main = setting;
+        ChatBox chatBox;
+        string? chatSizeRaw;
+
+        switch (UIManager.ActiveScreen)
+        {
+            case DefaultGameScreen defaultScreen:
+                chatBox = defaultScreen.ChatBox;
+                chatSizeRaw = _config.GetCVar(CCVars.DefaultScreenChatSize);
+                SetChatSizing(chatSizeRaw, defaultScreen, setting);
+                break;
+            case SeparatedChatGameScreen separatedScreen:
+                chatBox = separatedScreen.ChatBox;
+                chatSizeRaw = _config.GetCVar(CCVars.SeparatedScreenChatSize);
+                SetChatSizing(chatSizeRaw, separatedScreen, setting);
+                break;
+            default:
+                // this could be better?
+                var maybeChat = UIManager.ActiveScreen.GetWidget<ChatBox>();
+
+                chatBox = maybeChat ?? throw new Exception("Cannot get chat box in screen!");
+
+                break;
+        }
+
+        chatBox.Main = setting;
+    }
+
+    private void SetChatSizing(string sizing, InGameScreen screen, bool setting)
+    {
+        if (!setting)
+        {
+            screen.OnChatResized -= StoreChatSize;
+            return;
+        }
+
+        screen.OnChatResized += StoreChatSize;
+
+        if (string.IsNullOrEmpty(sizing))
+        {
+            return;
+        }
+
+        var split = sizing.Split(",");
+
+        var chatSize = new Vector2(
+            float.Parse(split[0], CultureInfo.InvariantCulture),
+            float.Parse(split[1], CultureInfo.InvariantCulture));
+
+
+        screen.SetChatSize(chatSize);
+    }
+
+    private void StoreChatSize(Vector2 size)
+    {
+        if (UIManager.ActiveScreen == null)
+        {
+            throw new Exception("Cannot get active screen!");
+        }
+
+        var stringSize = $"{size.X},{size.Y}";
+        switch (UIManager.ActiveScreen)
+        {
+            case DefaultGameScreen _:
+                _config.SetCVar(CCVars.DefaultScreenChatSize, stringSize);
+                break;
+            case SeparatedChatGameScreen _:
+                _config.SetCVar(CCVars.SeparatedScreenChatSize, stringSize);
+                break;
+            default:
+                // do nothing
+                return;
+        }
+
+        _config.SaveToFile();
     }
 
     private void FocusChat()
@@ -369,11 +470,6 @@ public sealed class ChatUIController : UIController
         }
     }
 
-    public static string GetChannelSelectorName(ChatSelectChannel channelSelector)
-    {
-        return channelSelector.ToString();
-    }
-
     private void UpdateChannelPermissions()
     {
         CanSendChannels = default;
@@ -421,6 +517,7 @@ public sealed class ChatUIController : UIController
         if (_admin.HasFlag(AdminFlags.Admin))
         {
             FilterableChannels |= ChatChannel.Admin;
+            FilterableChannels |= ChatChannel.AdminAlert;
             FilterableChannels |= ChatChannel.AdminChat;
             CanSendChannels |= ChatSelectChannel.Admin;
         }
@@ -592,53 +689,101 @@ public sealed class ChatUIController : UIController
         return channel;
     }
 
-    public (ChatSelectChannel channel, ReadOnlyMemory<char> text) SplitInputContents(string inputText)
+    private bool TryGetRadioChannel(string text, out RadioChannelPrototype? radioChannel)
     {
-        var text = inputText.AsMemory().Trim();
-        if (text.Length == 0)
-            return default;
+        radioChannel = null;
+        return _player.LocalPlayer?.ControlledEntity is EntityUid { Valid: true } uid
+           && _chatSys != null
+           && _chatSys.TryProccessRadioMessage(uid, text, out _, out radioChannel, quiet: true);
+    }
 
-        var prefixChar = text.Span[0];
-        var channel = PrefixToChannel.GetValueOrDefault(prefixChar);
+    public void UpdateSelectedChannel(ChatBox box)
+    {
+        var (prefixChannel, _, radioChannel) = SplitInputContents(box.ChatInput.Input.Text);
 
-        if ((CanSendChannels & channel) != 0)
-            // Cut off prefix if it's valid and we can use the channel in question.
-            text = text[1..];
+        if (prefixChannel == ChatSelectChannel.None)
+            box.ChatInput.ChannelSelector.UpdateChannelSelectButton(box.SelectedChannel, null);
         else
-            channel = 0;
+            box.ChatInput.ChannelSelector.UpdateChannelSelectButton(prefixChannel, radioChannel);
+    }
 
-        channel = MapLocalIfGhost(channel);
+    public (ChatSelectChannel chatChannel, string text, RadioChannelPrototype? radioChannel) SplitInputContents(string text)
+    {
+        text = text.Trim();
+        if (text.Length == 0)
+            return (ChatSelectChannel.None, text, null);
 
-        // Trim from start again to cut out any whitespace between the prefix and message, if any.
-        return (channel, text.TrimStart());
+        // We only cut off prefix only if it is not a radio or local channel, which both map to the same /say command
+        // because ????????
+
+        ChatSelectChannel chatChannel;
+        if (TryGetRadioChannel(text, out var radioChannel))
+            chatChannel = ChatSelectChannel.Radio;
+        else
+            chatChannel = PrefixToChannel.GetValueOrDefault(text[0]);
+
+        if ((CanSendChannels & chatChannel) == 0)
+            return (ChatSelectChannel.None, text, null);
+
+        if (chatChannel == ChatSelectChannel.Radio)
+            return (chatChannel, text, radioChannel);
+
+        if (chatChannel == ChatSelectChannel.Local)
+        {
+            if (_ghost?.IsGhost != true)
+                return (chatChannel, text, null);
+            else
+                chatChannel = ChatSelectChannel.Dead;
+        }
+
+        return (chatChannel, text[1..].TrimStart(), null);
     }
 
     public void SendMessage(ChatBox box, ChatSelectChannel channel)
     {
         _typingIndicator?.ClientSubmittedChatText();
 
-        if (!string.IsNullOrWhiteSpace(box.ChatInput.Input.Text))
+        var text = box.ChatInput.Input.Text;
+        box.ChatInput.Input.Clear();
+        box.ChatInput.Input.ReleaseKeyboardFocus();
+        UpdateSelectedChannel(box);
+
+        if (string.IsNullOrWhiteSpace(text))
+            return;
+
+        (var prefixChannel, text, var _) = SplitInputContents(text);
+
+        // Check if message is longer than the character limit
+        if (text.Length > MaxMessageLength)
         {
-            var (prefixChannel, text) = SplitInputContents(box.ChatInput.Input.Text);
-
-            // Check if message is longer than the character limit
-            if (text.Length > MaxMessageLength)
-            {
-                var locWarning = Loc.GetString("chat-manager-max-message-length",
-                    ("maxMessageLength", MaxMessageLength));
-                box.AddLine(locWarning, Color.Orange);
-                return;
-            }
-
-            _manager.SendMessage(text, prefixChannel == 0 ? channel : prefixChannel);
+            var locWarning = Loc.GetString("chat-manager-max-message-length",
+                ("maxMessageLength", MaxMessageLength));
+            box.AddLine(locWarning, Color.Orange);
+            return;
         }
 
-        box.ChatInput.Input.Clear();
-        box.UpdateSelectedChannel();
-        box.ChatInput.Input.ReleaseKeyboardFocus();
+        if (prefixChannel != ChatSelectChannel.None)
+            channel = prefixChannel;
+        else if (channel == ChatSelectChannel.Radio)
+        {
+            // radio must have prefix as it goes through the say command.
+            text = $";{text}";
+        }
+
+        _manager.SendMessage(text, prefixChannel == 0 ? channel : prefixChannel);
     }
 
-    private void OnChatMessage(MsgChatMessage message) => ProcessChatMessage(message.Message);
+    private void OnChatMessage(MsgChatMessage message)
+    {
+        var msg = message.Message;
+        ProcessChatMessage(msg);
+
+        if ((msg.Channel & ChatChannel.AdminRelated) == 0 ||
+            _cfg.GetCVar(CCVars.ReplayRecordAdminChat))
+        {
+            _replayRecording.RecordClientMessage(msg);
+        }
+    }
 
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {
@@ -685,11 +830,6 @@ public sealed class ChatUIController : UIController
                 AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
                 break;
         }
-    }
-
-    public char GetPrefixFromChannel(ChatSelectChannel channel)
-    {
-        return ChannelPrefixes.GetValueOrDefault(channel);
     }
 
     public void RegisterChat(ChatBox chat)

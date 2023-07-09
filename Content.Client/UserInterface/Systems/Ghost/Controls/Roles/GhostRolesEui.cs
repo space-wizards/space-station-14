@@ -40,7 +40,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 
             _window.OnClose += () =>
             {
-                SendMessage(new GhostRoleWindowCloseMessage());
+                SendMessage(new CloseEuiMessage());
             };
         }
 

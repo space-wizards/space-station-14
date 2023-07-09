@@ -9,10 +9,11 @@
     sprite: Structures/Machines/Anomaly/anomaly_vessel.rsi
     layers:
     - state: base
-    - state: powered
+    - state: powered-1
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: anomaly
+    - state: anomaly-1
+      visible: false
       shader: unshaded
       map: ["enum.AnomalyVesselVisualLayers.Base"]
     - state: panel
@@ -35,6 +36,7 @@
     energy: 2
     color: "#fca3c0"
   - type: Appearance
+  - type: WiresPanel
   - type: Wires
     BoardName: "Vessel"
     LayoutId: Vessel
@@ -54,6 +56,15 @@
         enum.AnomalyVesselVisualLayers.Base:
           True: { visible: true }
           False: { visible: false }
+      enum.AnomalyVesselVisuals.AnomalyState:
+        enum.PowerDeviceVisualLayers.Powered:
+          1: { state: powered-1 }
+          2: { state: powered-2 }
+          3: { state: powered-3 }
+        enum.AnomalyVesselVisualLayers.Base:
+          1: { state: anomaly-1 }
+          2: { state: anomaly-2 }
+          3: { state: anomaly-3 }
       enum.WiresVisuals.MaintenancePanelState:
         enum.WiresVisualLayers.MaintenancePanel:
           True: { visible: false }
@@ -66,6 +77,12 @@
     canCreateVacuum: false
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 150
@@ -108,14 +125,15 @@
     noRot: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Machine
@@ -133,6 +151,10 @@
     - AnomalousParticleDelta
     - AnomalousParticleEpsilon
     - AnomalousParticleZeta
+    setTypePorts:
+      SetParticleDelta: AnomalousParticleDelta
+      SetParticleEpsilon: AnomalousParticleEpsilon
+      SetParticleZeta: AnomalousParticleZeta
     fireBurstSize: 1
     baseFireBurstDelayMin: 2
     baseFireBurstDelayMax: 6
@@ -150,6 +172,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: Appearance
+  - type: WiresPanel
   - type: WiresVisuals
   - type: Wires
     BoardName: "Ape"
@@ -160,6 +183,19 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - On
+      - Off
+      - Toggle
+      - SetParticleDelta
+      - SetParticleEpsilon
+      - SetParticleZeta
 
 - type: entity
   id: MachineAnomalyGenerator
@@ -171,7 +207,6 @@
   components:
   - type: SpriteFade
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/Anomaly/anomaly_generator.rsi
     offset: 0,1
     drawdepth: Mobs
@@ -186,6 +221,10 @@
     - state: inserting
       visible: false
       map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: generating
+      visible: false
+      shader: unshaded
+      map: ["enum.AnomalyGeneratorVisualLayers.Base"]
   - type: Transform
     anchored: true
   - type: ApcPowerReceiver
@@ -193,12 +232,16 @@
   - type: ExtensionCableReceiver
   - type: AmbientSound
     range: 5
-    volume: -3
+    volume: -6
     sound:
       path: /Audio/Ambience/Objects/anomaly_generator.ogg
   - type: Physics
     bodyType: Static
   - type: AnomalyGenerator
+    generatingSound:
+      path: /Audio/Machines/anomaly_generate.ogg
+    generatingFinishedSound:
+      path: /Audio/Machines/beep.ogg
   - type: MaterialStorage
     whitelist:
       tags:
@@ -207,17 +250,19 @@
     - Plasma
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-1.5,-0.5,1.5,0.6"
-      density: 50
-      mask:
-      - LargeMobMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-0.5,1.5,0.6"
+        density: 50
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5
+  - type: WiresPanel
   - type: Wires
     BoardName: "AnomalyGenerator"
     LayoutId: AnomalyGenerator
@@ -237,10 +282,17 @@
       - key: enum.AnomalyGeneratorUiKey.Key
         type: AnomalyGeneratorBoundUserInterface
   - type: Appearance
+  - type: ActiveRadio
+    channels:
+    - Science
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AnomalyGeneratorVisuals.Generating:
+        enum.AnomalyGeneratorVisualLayers.Base:
           True: { visible: true }
           False: { visible: false }
   - type: WiresVisuals

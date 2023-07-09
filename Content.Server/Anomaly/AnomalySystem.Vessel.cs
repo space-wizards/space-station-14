@@ -25,7 +25,9 @@ public sealed partial class AnomalySystem
         SubscribeLocalEvent<AnomalyVesselComponent, InteractUsingEvent>(OnVesselInteractUsing);
         SubscribeLocalEvent<AnomalyVesselComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<AnomalyVesselComponent, ResearchServerGetPointsPerSecondEvent>(OnVesselGetPointsPerSecond);
+        SubscribeLocalEvent<AnomalyVesselComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<AnomalyShutdownEvent>(OnVesselAnomalyShutdown);
+        SubscribeLocalEvent<AnomalyStabilityChangedEvent>(OnVesselAnomalyStabilityChanged);
     }
 
     private void OnExamined(EntityUid uid, AnomalyVesselComponent component, ExaminedEvent args)
@@ -86,20 +88,21 @@ public sealed partial class AnomalySystem
     private void OnVesselGetPointsPerSecond(EntityUid uid, AnomalyVesselComponent component, ref ResearchServerGetPointsPerSecondEvent args)
     {
         if (!this.IsPowered(uid, EntityManager) || component.Anomaly is not {} anomaly)
-        {
-            args.Points = 0;
             return;
-        }
 
         args.Points += (int) (GetAnomalyPointValue(anomaly) * component.PointMultiplier);
     }
 
+    private void OnUnpaused(EntityUid uid, AnomalyVesselComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextBeep += args.PausedTime;
+    }
+
     private void OnVesselAnomalyShutdown(ref AnomalyShutdownEvent args)
     {
-        foreach (var component in EntityQuery<AnomalyVesselComponent>())
+        var query = EntityQueryEnumerator<AnomalyVesselComponent>();
+        while (query.MoveNext(out var ent, out var component))
         {
-            var ent = component.Owner;
-
             if (args.Anomaly != component.Anomaly)
                 continue;
 
@@ -109,6 +112,18 @@ public sealed partial class AnomalySystem
             if (!args.Supercritical)
                 continue;
             _explosion.TriggerExplosive(ent);
+        }
+    }
+
+    private void OnVesselAnomalyStabilityChanged(ref AnomalyStabilityChangedEvent args)
+    {
+        var query = EntityQueryEnumerator<AnomalyVesselComponent>();
+        while (query.MoveNext(out var ent, out var component))
+        {
+            if (args.Anomaly != component.Anomaly)
+                continue;
+
+            UpdateVesselAppearance(ent,  component);
         }
     }
 
@@ -125,11 +140,59 @@ public sealed partial class AnomalySystem
 
         var on = component.Anomaly != null;
 
-        Appearance.SetData(uid, AnomalyVesselVisuals.HasAnomaly, on);
+        if (!TryComp<AppearanceComponent>(uid, out var appearanceComponent))
+            return;
+
+        Appearance.SetData(uid, AnomalyVesselVisuals.HasAnomaly, on, appearanceComponent);
         if (TryComp<SharedPointLightComponent>(uid, out var pointLightComponent))
+            _pointLight.SetEnabled(uid, on, pointLightComponent);
+
+        // arbitrary value for the generic visualizer to use.
+        // i didn't feel like making an enum for this.
+        var value = 1;
+        if (TryComp<AnomalyComponent>(component.Anomaly, out var anomalyComp))
         {
-            pointLightComponent.Enabled = on;
+            if (anomalyComp.Stability <= anomalyComp.DecayThreshold)
+            {
+                value = 2;
+            }
+            else if (anomalyComp.Stability >= anomalyComp.GrowthThreshold)
+            {
+                value = 3;
+            }
         }
+        Appearance.SetData(uid, AnomalyVesselVisuals.AnomalyState, value, appearanceComponent);
+
         _ambient.SetAmbience(uid, on);
+    }
+
+    private void UpdateVessels()
+    {
+        var query = EntityQueryEnumerator<AnomalyVesselComponent>();
+        while (query.MoveNext(out var vesselEnt, out var vessel))
+        {
+            if (vessel.Anomaly is not { } anomUid)
+                continue;
+
+            if (!TryComp<AnomalyComponent>(anomUid, out var anomaly))
+                continue;
+
+            if (Timing.CurTime < vessel.NextBeep)
+                continue;
+
+            // a lerp between the max and min values for each threshold.
+            // longer beeps that get shorter as the anomaly gets more extreme
+            float timerPercentage;
+            if (anomaly.Stability <= anomaly.DecayThreshold)
+                timerPercentage = (anomaly.DecayThreshold - anomaly.Stability) / anomaly.DecayThreshold;
+            else if (anomaly.Stability >= anomaly.GrowthThreshold)
+                timerPercentage = (anomaly.Stability - anomaly.GrowthThreshold) / (1 - anomaly.GrowthThreshold);
+            else //it's not unstable
+                continue;
+
+            Audio.PlayPvs(vessel.BeepSound, vesselEnt);
+            var beepInterval = (vessel.MaxBeepInterval - vessel.MinBeepInterval) * (1 - timerPercentage) + vessel.MinBeepInterval;
+            vessel.NextBeep = beepInterval + Timing.CurTime;
+        }
     }
 }

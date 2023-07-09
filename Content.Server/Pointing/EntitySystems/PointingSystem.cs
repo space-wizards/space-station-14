@@ -80,7 +80,7 @@ namespace Content.Server.Pointing.EntitySystems
                 RaiseNetworkEvent(new PopupEntityEvent(message, PopupType.Small, source), viewerEntity);
             }
 
-            _replay.QueueReplayMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, source));
+            _replay.RecordServerMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, source));
         }
 
         public bool InRange(EntityUid pointer, EntityCoordinates coordinates)
@@ -207,9 +207,9 @@ namespace Content.Server.Pointing.EntitySystems
                 TileRef? tileRef = null;
                 string? position = null;
 
-                if (_mapManager.TryFindGridAt(mapCoords, out var grid))
+                if (_mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid))
                 {
-                    position = $"EntId={grid.Owner} {grid.WorldToTile(mapCoords.Position)}";
+                    position = $"EntId={gridUid} {grid.WorldToTile(mapCoords.Position)}";
                     tileRef = grid.GetTileRef(grid.WorldToTile(mapCoords.Position));
                 }
 
@@ -218,7 +218,7 @@ namespace Content.Server.Pointing.EntitySystems
                 var name = Loc.GetString(tileDef.Name);
                 selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", name));
 
-                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", tileDef.Name));
+                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", name));
 
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {name} {(position == null ? mapCoords : position)}");
             }

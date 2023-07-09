@@ -3,6 +3,7 @@ using Content.Shared.Singularity.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+using System.Numerics;
 
 namespace Content.Client.Singularity
 {
@@ -32,9 +33,9 @@ namespace Content.Client.Singularity
             _entMan.EventBus.SubscribeEvent<ProjectScreenToMapEvent>(EventSource.Local, this, OnProjectFromScreenToMap);
         }
 
-        private Vector2[] _positions = new Vector2[MaxCount];
-        private float[] _intensities = new float[MaxCount];
-        private float[] _falloffPowers = new float[MaxCount];
+        private readonly Vector2[] _positions = new Vector2[MaxCount];
+        private readonly float[] _intensities = new float[MaxCount];
+        private readonly float[] _falloffPowers = new float[MaxCount];
         private int _count = 0;
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -51,7 +52,7 @@ namespace Content.Client.Singularity
                 var mapPos = xform.WorldPosition;
 
                 // is the distortion in range?
-                if ((mapPos - args.WorldAABB.ClosestPoint(mapPos)).LengthSquared > MaxDistance * MaxDistance)
+                if ((mapPos - args.WorldAABB.ClosestPoint(mapPos)).LengthSquared() > MaxDistance * MaxDistance)
                     continue;
 
                 // To be clear, this needs to use "inside-viewport" pixels.
@@ -96,23 +97,23 @@ namespace Content.Client.Singularity
             float distance = 0.0f;
             float deformation = 0.0f;
             float maxDistance = MaxDistance * EyeManager.PixelsPerMeter;
-    
+
             for (int i = 0; i < MaxCount && i < _count; i++)
             {
                 delta = args.ScreenPosition - _positions[i];
                 distance = (delta / args.ClydeViewport.RenderScale).Length;
 
                 deformation = _intensities[i] / MathF.Pow(distance, _falloffPowers[i]);
-                
+
                 // ensure deformation goes to zero at max distance
                 // avoids long-range single-pixel shifts that are noticeable when leaving PVS.
-                
+
                 if (distance >= maxDistance) {
                     deformation = 0.0f;
                 } else {
                     deformation *= (1.0f - MathF.Pow(distance/maxDistance, 4.0f));
                 }
-                
+
                 if(deformation > 0.8)
                     deformation = MathF.Pow(deformation, 0.3f);
 

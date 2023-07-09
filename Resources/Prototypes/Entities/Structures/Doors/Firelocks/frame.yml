@@ -6,7 +6,18 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
-    state: frame1
+    layers:
+    - state: frame1
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          frame1: { state: frame1 }
+          frame2: { state: frame2 }
+          frame3: { state: frame3 }
+          frame4: { state: frame4 }
   - type: Construction
     graph: Firelock
     node: frame1
@@ -26,15 +37,16 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.45"
-      density: 55
-      mask:
-      - Impassable
-      - HighImpassable
-      layer:
-      - HighImpassable
-      - MidImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 55
+        mask:
+        - Impassable
+        - HighImpassable
+        layer:
+        - HighImpassable
+        - MidImpassable
   - type: Transform
     noRot: true

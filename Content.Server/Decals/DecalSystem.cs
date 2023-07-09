@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
@@ -32,6 +33,8 @@ namespace Content.Server.Decals
 
         private readonly Dictionary<EntityUid, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<IPlayerSession, Dictionary<EntityUid, HashSet<Vector2i>>> _previousSentChunks = new();
+        private static readonly Vector2 _boundsMinExpansion = new(0.01f, 0.01f);
+        private static readonly Vector2 _boundsMaxExpansion = new(1.01f, 1.01f);
 
         // If this ever gets parallelised then you'll want to increase the pooled count.
         private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
@@ -41,7 +44,6 @@ namespace Content.Server.Decals
         private ObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>> _chunkViewerPool =
             new DefaultObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>>(
                 new DefaultPooledObjectPolicy<Dictionary<EntityUid, HashSet<Vector2i>>>(), 64);
-        private bool _pvsEnabled;
 
         public override void Initialize()
         {
@@ -49,7 +51,6 @@ namespace Content.Server.Decals
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
-            SubscribeLocalEvent<DecalGridComponent, ComponentGetState>(OnGetState);
 
             SubscribeNetworkEvent<RequestDecalPlacementEvent>(OnDecalPlacementRequest);
             SubscribeNetworkEvent<RequestDecalRemovalEvent>(OnDecalRemovalRequest);
@@ -60,10 +61,10 @@ namespace Content.Server.Decals
 
         private void OnPvsToggle(bool value)
         {
-            if (value == _pvsEnabled)
+            if (value == PvsEnabled)
                 return;
 
-            _pvsEnabled = value;
+            PvsEnabled = value;
 
             if (value)
                 return;
@@ -78,28 +79,6 @@ namespace Content.Server.Decals
                 grid.ForceTick = _timing.CurTick;
                 Dirty(grid, meta);
             }
-        }
-
-        private void OnGetState(EntityUid uid, DecalGridComponent component, ref ComponentGetState args)
-        {
-            if (_pvsEnabled && !args.ReplayState)
-                return;
-
-            // Should this be a full component state or a delta-state?
-            if (args.FromTick <= component.CreationTick || args.FromTick <= component.ForceTick)
-            {
-                args.State = new DecalGridState(component.ChunkCollection.ChunkCollection);
-                return;
-            }
-
-            var data = new Dictionary<Vector2i, DecalChunk>();
-            foreach (var (index, chunk) in component.ChunkCollection.ChunkCollection)
-            {
-                if (chunk.LastModified >= args.FromTick)
-                    data[index] = chunk;
-            }
-
-            args.State = new DecalGridState(data) { AllChunks = new(component.ChunkCollection.ChunkCollection.Keys) };
         }
 
         private void OnGridSplit(ref PostGridSplitEvent ev)
@@ -124,7 +103,7 @@ namespace Content.Server.Decals
                 if (!oldChunkCollection.TryGetValue(chunkIndices, out var oldChunk))
                     continue;
 
-                var bounds = new Box2(tilePos - 0.01f, tilePos + 1.01f);
+                var bounds = new Box2(tilePos - _boundsMinExpansion, tilePos + _boundsMaxExpansion);
                 var toRemove = new RemQueue<uint>();
 
                 foreach (var (oldDecalId, decal) in oldChunk.Decals)
@@ -307,12 +286,39 @@ namespace Content.Server.Decals
 
             foreach (var (uid, decal) in chunk.Decals)
             {
-                if ((position - decal.Coordinates-new Vector2(0.5f, 0.5f)).Length > distance)
+                if ((position - decal.Coordinates - new Vector2(0.5f, 0.5f)).Length() > distance)
                     continue;
 
                 if (validDelegate == null || validDelegate(decal))
                 {
                     decalIds.Add((uid, decal));
+                }
+            }
+
+            return decalIds;
+        }
+
+        public HashSet<(uint Index, Decal Decal)> GetDecalsIntersecting(EntityUid gridUid, Box2 bounds, DecalGridComponent? component = null)
+        {
+            var decalIds = new HashSet<(uint, Decal)>();
+            var chunkCollection = ChunkCollection(gridUid, component);
+
+            if (chunkCollection == null)
+                return decalIds;
+
+            var chunks = new ChunkIndicesEnumerator(bounds, ChunkSize);
+
+            while (chunks.MoveNext(out var chunkOrigin))
+            {
+                if (!chunkCollection.TryGetValue(chunkOrigin.Value, out var chunk))
+                    continue;
+
+                foreach (var (id, decal) in chunk.Decals)
+                {
+                    if (!bounds.Contains(decal.Coordinates))
+                        continue;
+
+                    decalIds.Add((id, decal));
                 }
             }
 
@@ -381,13 +387,13 @@ namespace Content.Server.Decals
                     Dirty(decals);
             }
 
-            if (!_pvsEnabled)
+            if (!PvsEnabled)
             {
                 _dirtyChunks.Clear();
                 return;
             }
 
-            if (_pvsEnabled)
+            if (PvsEnabled)
             {
                 var players = _playerManager.ServerSessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
                 var opts = new ParallelOptions { MaxDegreeOfParallelism = _parMan.ParallelProcessCount };

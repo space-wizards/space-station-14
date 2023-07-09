@@ -1,11 +1,3 @@
-cough1.ogg taken from freesound (deleted user)
-cough2.ogg taken from https://freesound.org/people/Harris85/sounds/208761/
-sneeze.ogg taken from https://freesound.org/people/sherby168/sounds/540771/
 beepboop.ogg taken from https://freesound.org/people/Fidjo20/sounds/503526/
 monkey1.ogg taken from https://freesound.org/people/TRAVELcandies/sounds/423396/
 monkey2.ogg taken from https://freesound.org/people/Archeos/sounds/325549/
-sneeze2.ogg taken from https://freesound.org/people/InspectorJ/sounds/352177/
-vomiting.ogg taken from https://freesound.org/people/vikuserro/sounds/246308/
-yawn1.ogg taken from https://freesound.org/people/ckvoiceover/sounds/401338/ user ckvoiceover CC-3.0
-yawn2.ogg taken from https://freesound.org/people/Reitanna/sounds/252239/ user reitanna CC-0
-snore1, snore2, snore3.ogg taken from https://freesound.org/people/mattyharm/sounds/432995/ user mattyharm CC-0

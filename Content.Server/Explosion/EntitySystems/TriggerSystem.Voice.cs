@@ -41,7 +41,7 @@ namespace Content.Server.Explosion.EntitySystems
             {
                 _adminLogger.Add(LogType.Trigger, LogImpact.High,
                         $"A voice-trigger on {ToPrettyString(uid):entity} was triggered by {ToPrettyString(args.Source):speaker} speaking the key-phrase {component.KeyPhrase}.");
-                Trigger(uid);
+                Trigger(uid, args.Source);
             }
         }
 

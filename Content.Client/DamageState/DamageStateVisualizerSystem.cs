@@ -20,16 +20,6 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
             return;
         }
 
-        if (component.Rotate)
-        {
-            sprite.NoRotation = data switch
-            {
-                MobState.Critical => false,
-                MobState.Dead => false,
-                _ => true
-            };
-        }
-
         // Brain no worky rn so this was just easier.
         foreach (var key in new []{ DamageStateVisualLayers.Base, DamageStateVisualLayers.BaseUnshaded })
         {

@@ -65,8 +65,9 @@
     bloodlossHealDamage:
       types:
         Bloodloss:
-          -0.25
+          -1
   - type: Stamina
+  - type: StatusIcon
   - type: StatusEffects
     allowed:
       - Stun
@@ -77,22 +78,22 @@
       - Electrocution
       - Drunk
       - SlurredSpeech
+      - RatvarianLanguage
       - PressureImmunity
       - Muted
       - ForcedSleep
       - TemporaryBlindness
       - Pacified
-  - type: DiseaseCarrier
   - type: Blindable
   # Other
   - type: Inventory
+  - type: InventorySlots
   - type: Clickable
   - type: InteractionOutline
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
     state: full
   - type: Sprite
-    netsync: false
     noRot: true
     drawdepth: Mobs
     layers:
@@ -110,16 +111,16 @@
         # sprite refactor when
         state: l_leg
       - shader: StencilMask
-        map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+        map: ["enum.HumanoidVisualLayers.StencilMask"]
         sprite: Mobs/Customization/masking_helpers.rsi
-        state: female_full
+        state: unisex_full
         visible: false
-      - map: [ "jumpsuit" ]
-      - map: [ "enum.HumanoidVisualLayers.LHand" ]
-      - map: [ "enum.HumanoidVisualLayers.RHand" ]
-      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      - map: ["jumpsuit"]
+      - map: ["enum.HumanoidVisualLayers.LFoot"]
+      - map: ["enum.HumanoidVisualLayers.RFoot"]
+      - map: ["enum.HumanoidVisualLayers.LHand"]
+      - map: ["enum.HumanoidVisualLayers.RHand"]
+      - map: ["enum.HumanoidVisualLayers.Handcuffs"]
         color: "#ffffff"
         sprite: Objects/Misc/handcuffs.rsi
         state: body-overlay-2
@@ -142,11 +143,16 @@
       - map: [ "head" ]
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
+      - map: [ "clownedon" ] # Dynamically generated
+        sprite: "Effects/creampie.rsi"
+        state: "creampie_human"
+        visible: false
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeCircle
           radius: 0.35
         density: 185
@@ -225,9 +231,12 @@
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: CreamPiedVisualizer
-        state: creampie_human
+      enum.CreamPiedVisuals.Creamed:
+        clownedon: # Not 'creampied' bc I can already see Skyrat complaining about conflicts.
+          True: {visible: true}
+          False: {visible: false}
   - type: RotationVisuals
   - type: FloatingVisuals
   - type: FireVisuals
@@ -273,8 +282,6 @@
     spawned:
       - id: FoodMeat
         amount: 5
-  #  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
-  #    safe: false
   - type: Speech
     speechSounds: Alto
   - type: Vocal
@@ -290,9 +297,11 @@
       proper: true
   - type: StandingState
   - type: Fingerprint
+  - type: Dna
   - type: MobPrice
     price: 1500 # Kidnapping a living person and selling them for cred is a good move.
     deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.
+  - type: ContentEye
 
 - type: entity
   save: false
@@ -303,12 +312,12 @@
   components:
     - type: Hands
     - type: Inventory
+    - type: InventorySlots
     - type: ContainerContainer
     - type: Icon
       sprite: Mobs/Species/Human/parts.rsi
       state: full
     - type: Sprite
-      netsync: false
       drawdepth: Mobs
       noRot: true
       # TODO BODY Turn these into individual body parts?
@@ -325,16 +334,16 @@
           sprite: Mobs/Species/Human/parts.rsi
           state: l_leg
         - shader: StencilMask
-          map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+          map: ["enum.HumanoidVisualLayers.StencilMask"]
           sprite: Mobs/Customization/masking_helpers.rsi
-          state: female_full
+          state: unisex_full
           visible: false
-        - map: [ "jumpsuit" ]
-        - map: [ "enum.HumanoidVisualLayers.LHand" ]
-        - map: [ "enum.HumanoidVisualLayers.RHand" ]
-        - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-        - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-        - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+        - map: ["jumpsuit"]
+        - map: ["enum.HumanoidVisualLayers.LFoot"]
+        - map: ["enum.HumanoidVisualLayers.RFoot"]
+        - map: ["enum.HumanoidVisualLayers.LHand"]
+        - map: ["enum.HumanoidVisualLayers.RHand"]
+        - map: ["enum.HumanoidVisualLayers.Handcuffs"]
           color: "#ffffff"
           sprite: Objects/Misc/handcuffs.rsi
           state: body-overlay-2
@@ -361,15 +370,16 @@
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
-        density: 185
-        restitution: 0.0
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.35,-0.35,0.35,0.35"
+          density: 185
+          restitution: 0.0
+          mask:
+          - MobMask
+          layer:
+          - MobLayer
     - type: HumanoidAppearance
       species: Human
     - type: Body

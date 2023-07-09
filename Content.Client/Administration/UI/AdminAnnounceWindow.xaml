@@ -8,7 +8,7 @@
             <Control HorizontalExpand="True" SizeFlagsStretchRatio="1" />
             <OptionButton Name="AnnounceMethod" Access="Public" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
         </BoxContainer>
-        <LineEdit Name="Announcement" Access="Public" PlaceHolder="{Loc admin-announce-announcement-placeholder}"/>
+        <TextEdit Name="Announcement" Access="Public" VerticalExpand="True" MinHeight="100" />
 
         <GridContainer Rows="1">
             <CheckBox Name="KeepWindowOpen" Access="Public" Text="{Loc 'admin-announce-keep-open'}" />

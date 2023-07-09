@@ -14,6 +14,7 @@ health-analyzer-window-damage-group-Burn = Burn
 health-analyzer-window-damage-type-Heat = Heat
 health-analyzer-window-damage-type-Shock = Shock
 health-analyzer-window-damage-type-Cold = Cold
+health-analyzer-window-damage-type-Caustic = Caustic
 
 health-analyzer-window-damage-group-Airloss = Airloss
 health-analyzer-window-damage-type-Asphyxiation = Asphyxiation
@@ -25,5 +26,3 @@ health-analyzer-window-damage-type-Radiation = Radiation
 
 health-analyzer-window-damage-group-Genetic = Genetic
 health-analyzer-window-damage-type-Cellular = Cellular
-
-health-analyzer-window-damage-group-Caustic = Caustic

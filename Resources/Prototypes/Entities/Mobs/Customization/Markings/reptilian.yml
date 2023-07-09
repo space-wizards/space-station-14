@@ -157,7 +157,7 @@
   id: LizardSnoutRound
   bodyPart: Snout
   markingCategory: Snout
-  followSkinColor: true
+  forcedColoring: true
   speciesRestriction: [Reptilian]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
@@ -167,7 +167,7 @@
   id: LizardSnoutSharp
   bodyPart: Snout
   markingCategory: Snout
-  followSkinColor: true
+  forcedColoring: true
   speciesRestriction: [Reptilian]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
@@ -177,7 +177,6 @@
   id: LizardChestTiger
   bodyPart: Chest
   markingCategory: Chest
-  followSkinColor: false
   speciesRestriction: [Reptilian]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi

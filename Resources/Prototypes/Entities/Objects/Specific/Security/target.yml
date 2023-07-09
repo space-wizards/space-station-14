@@ -7,20 +7,20 @@
     sprite: Objects/Specific/Security/target.rsi
     state: target_stake
     noRot: true
-    netsync: false
   - type: Repairable
   - type: DamagePopup
     damagePopupType: Combined
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 200
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 200
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
   - type: InteractionOutline
   - type: Physics
   - type: Damageable
@@ -29,7 +29,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 1000
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -51,22 +57,6 @@
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi
     state: target_h
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel:
-            min: 10
-            max: 10
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   name: syndicate target
@@ -77,22 +67,6 @@
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi
     state: target_s
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel:
-            min: 10
-            max: 10
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   name: clown target
@@ -103,22 +77,6 @@
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi
     state: target_c
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel:
-            min: 10
-            max: 10
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 # put it on a salvage or something
 - type: entity
@@ -132,6 +90,12 @@
     state: target_f
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 4000
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 2000

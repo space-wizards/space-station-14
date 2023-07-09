@@ -26,8 +26,8 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
 
         // If it's not our ent or we shot it.
         if (attachedEnt == null ||
-            args.OtherFixture.Body.Owner != attachedEnt ||
-            TryComp<ProjectileComponent>(args.OurFixture.Body.Owner, out var projectile) &&
+            args.OtherEntity != attachedEnt ||
+            TryComp<ProjectileComponent>(uid, out var projectile) &&
             projectile.Shooter == attachedEnt)
         {
             return;
@@ -40,6 +40,6 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
         }
 
         // Play attached to our entity because the projectile may immediately delete or the likes.
-        _audio.Play(component.Sound, Filter.Local(), attachedEnt.Value, false);
+        _audio.PlayPredicted(component.Sound, attachedEnt.Value, attachedEnt.Value);
     }
 }

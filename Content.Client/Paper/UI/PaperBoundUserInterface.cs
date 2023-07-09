@@ -1,8 +1,8 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Input;
+using Robust.Shared.Utility;
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Client.Paper.UI
@@ -10,22 +10,30 @@ namespace Content.Client.Paper.UI
     [UsedImplicitly]
     public sealed class PaperBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private PaperWindow? _window;
 
-        public PaperBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public PaperBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
         protected override void Open()
         {
             base.Open();
-            var entityMgr = IoCManager.Resolve<IEntityManager>();
 
             _window = new PaperWindow();
             _window.OnClose += Close;
-            _window.Input.OnTextEntered += Input_OnTextEntered;
+            _window.Input.OnKeyBindDown += args => // Solution while TextEdit don't have events
+            {
+                if (args.Function == EngineKeyFunctions.TextSubmit)
+                {
+                    var text = Rope.Collapse(_window.Input.TextRope);
+                    Input_OnTextEntered(text);
+                    args.Handle();
+                }
+            };
 
-            if (entityMgr.TryGetComponent<PaperVisualsComponent>(Owner.Owner, out var visuals))
+            if (EntMan.TryGetComponent<PaperVisualsComponent>(Owner, out var visuals))
             {
                 _window.InitVisuals(visuals);
             }
@@ -39,15 +47,16 @@ namespace Content.Client.Paper.UI
             _window?.Populate((PaperBoundUserInterfaceState) state);
         }
 
-        private void Input_OnTextEntered(LineEdit.LineEditEventArgs obj)
+        private void Input_OnTextEntered(string text)
         {
-            if (!string.IsNullOrEmpty(obj.Text))
+            if (!string.IsNullOrEmpty(text))
             {
-                SendMessage(new PaperInputTextMessage(obj.Text));
+                SendMessage(new PaperInputTextMessage(text));
 
                 if (_window != null)
                 {
-                    _window.Input.Text = string.Empty;
+                    _window.Input.TextRope = Rope.Leaf.Empty;
+                    _window.Input.CursorPosition = new TextEdit.CursorPos(0, TextEdit.LineBreakBias.Top);
                 }
             }
         }

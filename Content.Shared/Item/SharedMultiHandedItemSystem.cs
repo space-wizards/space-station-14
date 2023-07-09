@@ -2,7 +2,6 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Item;
@@ -27,7 +26,7 @@ public abstract class SharedMultiHandedItemSystem : EntitySystem
 
     private void OnAttemptPickup(EntityUid uid, MultiHandedItemComponent component, GettingPickedUpAttemptEvent args)
     {
-        if (TryComp<SharedHandsComponent>(args.User, out var hands) && hands.CountFreeHands() >= component.HandsNeeded)
+        if (TryComp<HandsComponent>(args.User, out var hands) && hands.CountFreeHands() >= component.HandsNeeded)
             return;
 
         args.Cancel();

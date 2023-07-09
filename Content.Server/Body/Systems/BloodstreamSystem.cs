@@ -2,6 +2,7 @@ using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Forensics;
 using Content.Server.HealthExaminable;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
@@ -15,28 +16,27 @@ using Content.Shared.Drunk;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Rejuvenate;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Body.Systems;
 
 public sealed class BloodstreamSystem : EntitySystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly SpillableSystem _spillableSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
+    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly PuddleSystem _puddleSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
-
-    // TODO here
-    // Update over time. Modify bloodloss damage in accordance with (amount of blood / max blood level), and reduce bleeding over time
-    // Sub to damage changed event and modify bloodloss if incurring large hits of slashing/piercing
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
 
     public override void Initialize()
     {
@@ -82,7 +82,8 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var bloodstream in EntityManager.EntityQuery<BloodstreamComponent>())
+        var query = EntityQueryEnumerator<BloodstreamComponent>();
+        while (query.MoveNext(out var uid, out var bloodstream))
         {
             bloodstream.AccumulatedFrametime += frameTime;
 
@@ -91,40 +92,50 @@ public sealed class BloodstreamSystem : EntitySystem
 
             bloodstream.AccumulatedFrametime -= bloodstream.UpdateInterval;
 
-            var uid = bloodstream.Owner;
-            if (TryComp<MobStateComponent>(uid, out var state) && _mobStateSystem.IsDead(uid, state))
-                continue;
-
-            // First, let's refresh their blood if possible.
-            if (bloodstream.BloodSolution.Volume < bloodstream.BloodSolution.MaxVolume)
+            // Adds blood to their blood level if it is below the maximum; Blood regeneration. Must be alive.
+            if (bloodstream.BloodSolution.Volume < bloodstream.BloodSolution.MaxVolume && !_mobStateSystem.IsDead(uid))
+            {
                 TryModifyBloodLevel(uid, bloodstream.BloodRefreshAmount, bloodstream);
+            }
 
-            // Next, let's remove some blood from them according to their bleed level.
+            // Removes blood from the bloodstream based on bleed amount (bleed rate)
             // as well as stop their bleeding to a certain extent.
             if (bloodstream.BleedAmount > 0)
             {
-                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount) / 20, bloodstream);
+                // Blood is removed from the bloodstream at a 1-1 rate with the bleed amount
+                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount), bloodstream);
+                // Bleed rate is reduced by the bleed reduction amount in the bloodstream component.
                 TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
             }
 
-            // Next, we'll deal some bloodloss damage if their blood level is below a threshold.
+            // deal bloodloss damage if their blood level is below a threshold.
             var bloodPercentage = GetBloodLevelPercentage(uid, bloodstream);
-            if (bloodPercentage < bloodstream.BloodlossThreshold)
+            if (bloodPercentage < bloodstream.BloodlossThreshold && !_mobStateSystem.IsDead(uid))
             {
-                // TODO use a better method for determining this.
+                // bloodloss damage is based on the base value, and modified by how low your blood level is.
                 var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
 
                 _damageableSystem.TryChangeDamage(uid, amt, true, false);
 
                 // Apply dizziness as a symptom of bloodloss.
-                // So, threshold is 0.9, you have 0.85 percent blood, it adds (5 * 1.05) or 5.25 seconds of drunkenness.
-                // So, it'd max at 1.9 by default with 0% blood.
-                _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval * (1 + (bloodstream.BloodlossThreshold - bloodPercentage)), false);
-            }
-            else
+                // The effect is applied in a way that it will never be cleared without being healthy.
+                // Multiplying by 2 is arbitrary but works for this case, it just prevents the time from running out
+                _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval*2, false);
+                _stutteringSystem.DoStutter(uid, TimeSpan.FromSeconds(bloodstream.UpdateInterval*2), false);
+
+                // storing the drunk and stutter time so we can remove it independently from other effects additions
+                bloodstream.StatusTime += bloodstream.UpdateInterval * 2;
+            }   
+            else if (!_mobStateSystem.IsDead(uid))
             {
                 // If they're healthy, we'll try and heal some bloodloss instead.
                 _damageableSystem.TryChangeDamage(uid, bloodstream.BloodlossHealDamage * bloodPercentage, true, false);
+
+                // Remove the drunk effect when healthy. Should only remove the amount of drunk and stutter added by low blood level
+                _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.StatusTime);
+                _stutteringSystem.DoRemoveStutterTime(uid, bloodstream.StatusTime);
+                // Reset the drunk and stutter time to zero
+                bloodstream.StatusTime = 0;
             }
         }
     }
@@ -149,6 +160,10 @@ public sealed class BloodstreamSystem : EntitySystem
         if (args.DamageDelta is null)
             return;
 
+        // definitely don't make them bleed if they got healed
+        if (!args.DamageIncreased)
+            return;
+
         // TODO probably cache this or something. humans get hurt a lot
         if (!_prototypeManager.TryIndex<DamageModifierSetPrototype>(component.DamageBleedModifiers, out var modifiers))
             return;
@@ -158,43 +173,55 @@ public sealed class BloodstreamSystem : EntitySystem
         if (bloodloss.Empty)
             return;
 
+        // Does the calculation of how much bleed rate should be added/removed, then applies it
         var oldBleedAmount = component.BleedAmount;
         var total = bloodloss.Total;
         var totalFloat = total.Float();
         TryModifyBleedAmount(uid, totalFloat, component);
 
-        var prob = Math.Clamp(totalFloat / 50, 0, 1);
-        var healPopupProb = Math.Clamp(Math.Abs(totalFloat) / 25, 0, 1);
+        /// <summary>
+        ///     Critical hit. Causes target to lose blood, using the bleed rate modifier of the weapon, currently divided by 5
+        ///     The crit chance is currently the bleed rate modifier divided by 25.
+        ///     Higher damage weapons have a higher chance to crit!
+        /// </summary>
+        var prob = Math.Clamp(totalFloat / 25, 0, 1);
         if (totalFloat > 0 && _robustRandom.Prob(prob))
         {
             TryModifyBloodLevel(uid, (-total) / 5, component);
-            SoundSystem.Play(component.InstantBloodSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
+            _audio.PlayPvs(component.InstantBloodSound, uid);
         }
-        else if (totalFloat < 0 && oldBleedAmount > 0 && _robustRandom.Prob(healPopupProb))
+
+        // Heat damage will cauterize, causing the bleed rate to be reduced.
+        else if (totalFloat < 0 && oldBleedAmount > 0)
         {
             // Magically, this damage has healed some bleeding, likely
             // because it's burn damage that cauterized their wounds.
 
             // We'll play a special sound and popup for feedback.
-            SoundSystem.Play(component.BloodHealedSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
+            _audio.PlayPvs(component.BloodHealedSound, uid);
             _popupSystem.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), uid,
                 uid, PopupType.Medium);
         }
     }
-
+    /// <summary>
+    ///     Shows text on health examine, based on bleed rate and blood level.
+    /// </summary>
     private void OnHealthBeingExamined(EntityUid uid, BloodstreamComponent component, HealthBeingExaminedEvent args)
     {
-        if (component.BleedAmount > 10)
+        // Shows profusely bleeding at half the max bleed rate.
+        if (component.BleedAmount > component.MaxBleedAmount / 2)
         {
             args.Message.PushNewline();
             args.Message.AddMarkup(Loc.GetString("bloodstream-component-profusely-bleeding", ("target", Identity.Entity(uid, EntityManager))));
         }
+        // Shows bleeding message when bleeding, but less than profusely.
         else if (component.BleedAmount > 0)
         {
             args.Message.PushNewline();
             args.Message.AddMarkup(Loc.GetString("bloodstream-component-bleeding", ("target", Identity.Entity(uid, EntityManager))));
         }
 
+        // If the mob's blood level is below the damage threshhold, the pale message is added.
         if (GetBloodLevelPercentage(uid, component) < component.BloodlossThreshold)
         {
             args.Message.PushNewline();
@@ -291,7 +318,15 @@ public sealed class BloodstreamSystem : EntitySystem
             // Pass some of the chemstream into the spilled blood.
             var temp = component.ChemicalSolution.SplitSolution(component.BloodTemporarySolution.Volume / 10);
             component.BloodTemporarySolution.AddSolution(temp, _prototypeManager);
-            _spillableSystem.SpillAt(uid, component.BloodTemporarySolution, "PuddleBlood", false);
+            if (_puddleSystem.TrySpillAt(uid, component.BloodTemporarySolution, out var puddleUid, false))
+            {
+                if (TryComp<DnaComponent>(uid, out var dna))
+                {
+                    var comp = EnsureComp<ForensicsComponent>(puddleUid);
+                    comp.DNAs.Add(dna.DNA);
+                }
+            }
+
             component.BloodTemporarySolution.RemoveAllSolution();
         }
 
@@ -330,6 +365,14 @@ public sealed class BloodstreamSystem : EntitySystem
         component.BloodTemporarySolution.RemoveAllSolution();
         tempSol.AddSolution(component.ChemicalSolution, _prototypeManager);
         component.ChemicalSolution.RemoveAllSolution();
-        _spillableSystem.SpillAt(uid, tempSol, "PuddleBlood", true);
+
+        if (_puddleSystem.TrySpillAt(uid, tempSol, out var puddleUid))
+        {
+            if (TryComp<DnaComponent>(uid, out var dna))
+            {
+                var comp = EnsureComp<ForensicsComponent>(puddleUid);
+                comp.DNAs.Add(dna.DNA);
+            }
+        }
     }
 }

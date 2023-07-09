@@ -58,7 +58,7 @@ namespace Content.Server.Light.EntitySystems
             EntInsertedIntoContainerMessage args)
         {
             // Not guaranteed to be the correct container for our slot, I don't care.
-            UpdateLevel(component);
+            UpdateLevel(uid, component);
         }
 
         private void OnEntRemoved(
@@ -67,7 +67,7 @@ namespace Content.Server.Light.EntitySystems
             EntRemovedFromContainerMessage args)
         {
             // Ditto above
-            UpdateLevel(component);
+            UpdateLevel(uid, component);
         }
 
         private void OnGetActions(EntityUid uid, HandheldLightComponent component, GetItemActionsEvent args)
@@ -88,24 +88,24 @@ namespace Content.Server.Light.EntitySystems
                 return;
 
             if (component.Activated)
-                TurnOff(component);
+                TurnOff(uid, component);
             else
-                TurnOn(args.Performer, component);
+                TurnOn(args.Performer, uid, component);
 
             args.Handled = true;
         }
 
         private void OnGetState(EntityUid uid, HandheldLightComponent component, ref ComponentGetState args)
         {
-            args.State = new HandheldLightComponent.HandheldLightComponentState(component.Activated, GetLevel(component));
+            args.State = new HandheldLightComponent.HandheldLightComponentState(component.Activated, GetLevel(uid, component));
         }
 
-        private byte? GetLevel(HandheldLightComponent component)
+        private byte? GetLevel(EntityUid uid, HandheldLightComponent component)
         {
             // Curently every single flashlight has the same number of levels for status and that's all it uses the charge for
             // Thus we'll just check if the level changes.
 
-            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery))
+            if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery))
                 return null;
 
             if (MathHelper.CloseToPercent(battery.CurrentCharge, 0) || component.Wattage > battery.CurrentCharge)
@@ -121,9 +121,10 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnActivate(EntityUid uid, HandheldLightComponent component, ActivateInWorldEvent args)
         {
-            if (args.Handled) return;
+            if (args.Handled)
+                return;
 
-            if (ToggleStatus(args.User, component))
+            if (ToggleStatus(args.User, uid, component))
                 args.Handled = true;
         }
 
@@ -131,9 +132,9 @@ namespace Content.Server.Light.EntitySystems
         ///     Illuminates the light if it is not active, extinguishes it if it is active.
         /// </summary>
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
-        public bool ToggleStatus(EntityUid user, HandheldLightComponent component)
+        public bool ToggleStatus(EntityUid user, EntityUid uid, HandheldLightComponent component)
         {
-            return component.Activated ? TurnOff(component) : TurnOn(user, component);
+            return component.Activated ? TurnOff(uid, component) : TurnOn(user, uid, component);
         }
 
         private void OnExamine(EntityUid uid, HandheldLightComponent component, ExaminedEvent args)
@@ -155,14 +156,16 @@ namespace Content.Server.Light.EntitySystems
 
             foreach (var handheld in _activeLights)
             {
+                var uid = handheld.Owner;
+
                 if (handheld.Deleted)
                 {
                     toRemove.Add(handheld);
                     continue;
                 }
 
-                if (Paused(handheld.Owner)) continue;
-                TryUpdate(handheld, frameTime);
+                if (Paused(uid)) continue;
+                TryUpdate(uid, handheld, frameTime);
             }
 
             foreach (var light in toRemove)
@@ -173,46 +176,47 @@ namespace Content.Server.Light.EntitySystems
 
         private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetVerbsEvent<ActivationVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract) return;
+            if (!args.CanAccess || !args.CanInteract)
+                return;
 
             ActivationVerb verb = new()
             {
                 Text = Loc.GetString("verb-common-toggle-light"),
-                IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/light.svg.192dpi.png")),
                 Act = component.Activated
-                    ? () => TurnOff(component)
-                    : () => TurnOn(args.User, component)
+                    ? () => TurnOff(uid, component)
+                    : () => TurnOn(args.User, uid,  component)
             };
 
             args.Verbs.Add(verb);
         }
 
-        public bool TurnOff(HandheldLightComponent component, bool makeNoise = true)
+        public bool TurnOff(EntityUid uid, HandheldLightComponent component, bool makeNoise = true)
         {
-            if (!component.Activated || !TryComp<PointLightComponent>(component.Owner, out var pointLightComponent))
+            if (!component.Activated || !TryComp<PointLightComponent>(uid, out var pointLightComponent))
             {
                 return false;
             }
 
             pointLightComponent.Enabled = false;
-            SetActivated(component.Owner, false, component, makeNoise);
+            SetActivated(uid, false, component, makeNoise);
             component.Level = null;
             _activeLights.Remove(component);
             return true;
         }
 
-        public bool TurnOn(EntityUid user, HandheldLightComponent component)
+        public bool TurnOn(EntityUid user, EntityUid uid, HandheldLightComponent component)
         {
-            if (component.Activated || !TryComp<PointLightComponent>(component.Owner, out var pointLightComponent))
+            if (component.Activated || !TryComp<PointLightComponent>(uid, out var pointLightComponent))
             {
                 return false;
             }
 
-            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery) &&
-                !TryComp(component.Owner, out battery))
+            if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
+                !TryComp(uid, out battery))
             {
-                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), component.Owner);
-                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner, user);
+                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), uid);
+                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), uid, user);
                 return false;
             }
 
@@ -221,52 +225,52 @@ namespace Content.Server.Light.EntitySystems
             // Simple enough.
             if (component.Wattage > battery.CurrentCharge)
             {
-                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), component.Owner);
-                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), component.Owner, user);
+                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), uid);
+                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), uid, user);
                 return false;
             }
 
             pointLightComponent.Enabled = true;
-            SetActivated(component.Owner, true, component, true);
+            SetActivated(uid, true, component, true);
             _activeLights.Add(component);
 
             return true;
         }
 
-        public void TryUpdate(HandheldLightComponent component, float frameTime)
+        public void TryUpdate(EntityUid uid, HandheldLightComponent component, float frameTime)
         {
-            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery) &&
-                !TryComp(component.Owner, out battery))
+            if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
+                !TryComp(uid, out battery))
             {
-                TurnOff(component, false);
+                TurnOff(uid, component, false);
                 return;
             }
 
-            var appearanceComponent = EntityManager.GetComponent<AppearanceComponent>(component.Owner);
+            var appearanceComponent = EntityManager.GetComponentOrNull<AppearanceComponent>(uid);
 
             var fraction = battery.CurrentCharge / battery.MaxCharge;
             if (fraction >= 0.30)
             {
-                _appearance.SetData(component.Owner, HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower, appearanceComponent);
+                _appearance.SetData(uid, HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower, appearanceComponent);
             }
             else if (fraction >= 0.10)
             {
-                _appearance.SetData(component.Owner, HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower, appearanceComponent);
+                _appearance.SetData(uid, HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower, appearanceComponent);
             }
             else
             {
-                _appearance.SetData(component.Owner, HandheldLightVisuals.Power, HandheldLightPowerStates.Dying, appearanceComponent);
+                _appearance.SetData(uid, HandheldLightVisuals.Power, HandheldLightPowerStates.Dying, appearanceComponent);
             }
 
             if (component.Activated && !battery.TryUseCharge(component.Wattage * frameTime))
-                TurnOff(component, false);
+                TurnOff(uid, component, false);
 
-            UpdateLevel(component);
+            UpdateLevel(uid, component);
         }
 
-        private void UpdateLevel(HandheldLightComponent comp)
+        private void UpdateLevel(EntityUid uid, HandheldLightComponent comp)
         {
-            var level = GetLevel(comp);
+            var level = GetLevel(uid, comp);
 
             if (level == comp.Level)
                 return;

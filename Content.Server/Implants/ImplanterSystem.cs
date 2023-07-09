@@ -1,8 +1,6 @@
-using System.Threading;
-using Content.Server.DoAfter;
 using Content.Server.Guardian;
 using Content.Server.Popups;
-using Content.Shared.Hands;
+using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
@@ -11,14 +9,13 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
 
 namespace Content.Server.Implants;
 
 public sealed partial class ImplanterSystem : SharedImplanterSystem
 {
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
@@ -26,25 +23,17 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         base.Initialize();
         InitializeImplanted();
 
-        SubscribeLocalEvent<ImplanterComponent, HandDeselectedEvent>(OnHandDeselect);
         SubscribeLocalEvent<ImplanterComponent, AfterInteractEvent>(OnImplanterAfterInteract);
         SubscribeLocalEvent<ImplanterComponent, ComponentGetState>(OnImplanterGetState);
 
-        SubscribeLocalEvent<ImplanterComponent, ImplanterImplantCompleteEvent>(OnImplantAttemptSuccess);
-        SubscribeLocalEvent<ImplanterComponent, ImplanterDrawCompleteEvent>(OnDrawAttemptSuccess);
-        SubscribeLocalEvent<ImplanterComponent, ImplanterCancelledEvent>(OnImplantAttemptFail);
+        SubscribeLocalEvent<ImplanterComponent, ImplantEvent>(OnImplant);
+        SubscribeLocalEvent<ImplanterComponent, DrawEvent>(OnDraw);
     }
 
     private void OnImplanterAfterInteract(EntityUid uid, ImplanterComponent component, AfterInteractEvent args)
     {
         if (args.Target == null || !args.CanReach || args.Handled)
             return;
-
-        if (component.CancelToken != null)
-        {
-            args.Handled = true;
-            return;
-        }
 
         //Simplemobs and regular mobs should be injectable, but only regular mobs have mind.
         //So just don't implant/draw anything that isn't living or is a guardian
@@ -59,20 +48,16 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         }
         else
         {
+            if (!CanImplant(args.User, args.Target.Value, uid, component, out _, out _))
+                return;
+
             //Implant self instantly, otherwise try to inject the target.
             if (args.User == args.Target)
-                Implant(uid, args.Target.Value, component);
-
+                Implant(args.User, args.Target.Value, uid, component);
             else
                 TryImplant(component, args.User, args.Target.Value, uid);
         }
         args.Handled = true;
-    }
-
-    private void OnHandDeselect(EntityUid uid, ImplanterComponent component, HandDeselectedEvent args)
-    {
-        component.CancelToken?.Cancel();
-        component.CancelToken = null;
     }
 
     /// <summary>
@@ -84,23 +69,21 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     /// <param name="implanter">The implanter being used</param>
     public void TryImplant(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
-
-        var userName = Identity.Entity(user, EntityManager);
-        _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, target, PopupType.LargeCaution);
-
-        component.CancelToken?.Cancel();
-        component.CancelToken = new CancellationTokenSource();
-
-        _doAfter.DoAfter(new DoAfterEventArgs(user, component.ImplantTime, component.CancelToken.Token, target, implanter)
+        var args = new DoAfterArgs(user, component.ImplantTime, new ImplantEvent(), implanter, target: target, used: implanter)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
             BreakOnDamage = true,
-            BreakOnStun = true,
-            UsedFinishedEvent = new ImplanterImplantCompleteEvent(implanter, target),
-            UserCancelledEvent = new ImplanterCancelledEvent()
-        });
+            NeedHand = true,
+        };
+
+        if (!_doAfter.TryStartDoAfter(args))
+            return;
+
+        _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
+
+        var userName = Identity.Entity(user, EntityManager);
+        _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, target, PopupType.LargeCaution);
     }
 
     /// <summary>
@@ -113,20 +96,17 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     //TODO: Remove when surgery is in
     public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
-
-        component.CancelToken?.Cancel();
-        component.CancelToken = new CancellationTokenSource();
-
-        _doAfter.DoAfter(new DoAfterEventArgs(user, component.DrawTime, component.CancelToken.Token, target ,implanter)
+        var args = new DoAfterArgs(user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
             BreakOnDamage = true,
-            BreakOnStun = true,
-            UsedFinishedEvent = new ImplanterDrawCompleteEvent(implanter, user, target),
-            UsedCancelledEvent = new ImplanterCancelledEvent()
-        });
+            NeedHand = true,
+        };
+
+        if (_doAfter.TryStartDoAfter(args))
+            _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
+
     }
 
     private void OnImplanterGetState(EntityUid uid, ImplanterComponent component, ref ComponentGetState args)
@@ -134,55 +114,23 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         args.State = new ImplanterComponentState(component.CurrentMode, component.ImplantOnly);
     }
 
-    private void OnImplantAttemptSuccess(EntityUid uid, ImplanterComponent component, ImplanterImplantCompleteEvent args)
+    private void OnImplant(EntityUid uid, ImplanterComponent component, ImplantEvent args)
     {
-        component.CancelToken?.Cancel();
-        component.CancelToken = null;
-        Implant(args.Implanter, args.Target, component);
+        if (args.Cancelled || args.Handled || args.Target == null || args.Used == null)
+            return;
+
+        Implant(args.User, args.Target.Value, args.Used.Value, component);
+
+        args.Handled = true;
     }
 
-    private void OnDrawAttemptSuccess(EntityUid uid, ImplanterComponent component, ImplanterDrawCompleteEvent args)
+    private void OnDraw(EntityUid uid, ImplanterComponent component, DrawEvent args)
     {
-        component.CancelToken?.Cancel();
-        component.CancelToken = null;
-        Draw(args.Implanter, args.User, args.Target, component);
+        if (args.Cancelled || args.Handled || args.Used == null || args.Target == null)
+            return;
+
+        Draw(args.Used.Value, args.User, args.Target.Value, component);
+
+        args.Handled = true;
     }
-
-    private void OnImplantAttemptFail(EntityUid uid, ImplanterComponent component, ImplanterCancelledEvent args)
-    {
-        component.CancelToken?.Cancel();
-        component.CancelToken = null;
-    }
-
-    private sealed class ImplanterImplantCompleteEvent : EntityEventArgs
-    {
-        public EntityUid Implanter;
-        public EntityUid Target;
-
-        public ImplanterImplantCompleteEvent(EntityUid implanter, EntityUid target)
-        {
-            Implanter = implanter;
-            Target = target;
-        }
-    }
-
-    private sealed class ImplanterCancelledEvent : EntityEventArgs
-    {
-
-    }
-
-    private sealed class ImplanterDrawCompleteEvent : EntityEventArgs
-    {
-        public EntityUid Implanter;
-        public EntityUid User;
-        public EntityUid Target;
-
-        public ImplanterDrawCompleteEvent(EntityUid implanter, EntityUid user, EntityUid target)
-        {
-            Implanter = implanter;
-            User = user;
-            Target = target;
-        }
-    }
-
 }

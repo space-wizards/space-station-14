@@ -24,6 +24,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 75
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
@@ -40,5 +46,4 @@
     walkSpeed: 0.7 #makeshift bola shouldn't slow too much
     sprintSpeed: 0.7
     canThrowTrigger: true
-    canMoveBreakout: true
 

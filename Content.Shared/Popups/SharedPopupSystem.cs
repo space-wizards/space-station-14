@@ -68,12 +68,12 @@ namespace Content.Shared.Popups
         public abstract void PopupEntity(string message, EntityUid uid, PopupType type=PopupType.Small);
 
         /// <summary>
-        ///     Variant of <see cref="PopupEntity(string, EntityUid, PopupType)"/> that shoes the popup only to some specific client.
+        ///     Variant of <see cref="PopupEntity(string, EntityUid, PopupType)"/> that shows the popup only to some specific client.
         /// </summary>
         public abstract void PopupEntity(string message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small);
 
         /// <summary>
-        ///     Variant of <see cref="PopupEntity(string, EntityUid, PopupType)"/> that shoes the popup only to some specific client.
+        ///     Variant of <see cref="PopupEntity(string, EntityUid, PopupType)"/> that shows the popup only to some specific client.
         /// </summary>
         public abstract void PopupEntity(string message, EntityUid uid, ICommonSession recipient, PopupType type = PopupType.Small);
 
@@ -82,6 +82,12 @@ namespace Content.Shared.Popups
         ///     if the filtering has to be more specific than simply PVS range based.
         /// </summary>
         public abstract void PopupEntity(string message, EntityUid uid, Filter filter, bool recordReplay, PopupType type = PopupType.Small);
+
+        /// <summary>
+        /// Variant of <see cref="PopupEnity(string, EntityUid, EntityUid, PopupType)"/> that only runs on the client, outside of prediction.
+        /// Useful for shared code that is always ran by both sides to avoid duplicate popups.
+        /// </summary>
+        public abstract void PopupClient(string message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small);
     }
 
     /// <summary>

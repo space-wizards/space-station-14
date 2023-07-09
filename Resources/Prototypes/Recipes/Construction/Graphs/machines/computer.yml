@@ -14,8 +14,7 @@
 
     - node: frameUnsecured
       actions:
-        - !type:SpriteStateChange
-          state: "0"
+      - !type:AppearanceChange
       entity: ComputerFrame
       edges:
         - to: boardUnsecured
@@ -44,8 +43,7 @@
 
     - node: boardUnsecured
       actions:
-        - !type:SpriteStateChange
-          state: "1"
+      - !type:AppearanceChange
       edges:
         - to: missingWires
           conditions:
@@ -58,15 +56,12 @@
             - !type:EntityAnchored { }
           completed:
             - !type:EmptyAllContainers {}
-            - !type:SpriteStateChange
-              state: 0
           steps:
             - tool: Prying
 
     - node: missingWires
       actions:
-        - !type:SpriteStateChange
-          state: "2"
+      - !type:AppearanceChange
       edges:
         - to: monitorMissing
           conditions:
@@ -85,8 +80,7 @@
       entity: ComputerFrame
       actions:
         - !type:SetAnchor { }
-        - !type:SpriteStateChange
-          state: "3"
+        - !type:AppearanceChange
       edges:
         - to: monitorUnsecured
           conditions:
@@ -107,8 +101,7 @@
 
     - node: monitorUnsecured
       actions:
-        - !type:SpriteStateChange
-          state: "4"
+      - !type:AppearanceChange
       entity: ComputerFrame
       edges:
         - to: computer

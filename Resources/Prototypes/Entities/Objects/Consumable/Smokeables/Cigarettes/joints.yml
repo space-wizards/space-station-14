@@ -6,13 +6,11 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi
-    netsync: false
     state: unlit-icon
   - type: Tag
     tags:
       - Cigarette
       - Trash
-  - type: Recyclable
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi
@@ -39,13 +37,11 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi
-    netsync: false
     state: unlit-icon
   - type: Tag
     tags:
       - Cigarette
       - Trash
-  - type: Recyclable
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi

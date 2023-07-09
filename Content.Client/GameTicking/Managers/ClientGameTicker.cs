@@ -21,10 +21,17 @@ namespace Content.Client.GameTicking.Managers
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly BackgroundAudioSystem _backgroundAudio = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         [ViewVariables] private bool _initialized;
         private Dictionary<EntityUid, Dictionary<string, uint?>>  _jobsAvailable = new();
         private Dictionary<EntityUid, string> _stationNames = new();
+
+        /// <summary>
+        /// The current round-end window. Could be used to support re-opening the window after closing it.
+        /// </summary>
+        private RoundEndSummaryWindow? _window;
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
@@ -42,7 +49,6 @@ namespace Content.Client.GameTicking.Managers
 
         public event Action? InfoBlobUpdated;
         public event Action? LobbyStatusUpdated;
-        public event Action? LobbyReadyUpdated;
         public event Action? LobbyLateJoinStatusUpdated;
         public event Action<IReadOnlyDictionary<EntityUid, Dictionary<string, uint?>>>? LobbyJobsAvailableUpdated;
 
@@ -55,7 +61,6 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<TickerLobbyStatusEvent>(LobbyStatus);
             SubscribeNetworkEvent<TickerLobbyInfoEvent>(LobbyInfo);
             SubscribeNetworkEvent<TickerLobbyCountdownEvent>(LobbyCountdown);
-            SubscribeNetworkEvent<TickerLobbyReadyEvent>(LobbyReady);
             SubscribeNetworkEvent<RoundEndMessageEvent>(RoundEnd);
             SubscribeNetworkEvent<RequestWindowAttentionEvent>(msg =>
             {
@@ -117,23 +122,22 @@ namespace Content.Client.GameTicking.Managers
             Paused = message.Paused;
         }
 
-        private void LobbyReady(TickerLobbyReadyEvent message)
-        {
-            LobbyReadyUpdated?.Invoke();
-        }
-
         private void RoundEnd(RoundEndMessageEvent message)
         {
             if (message.LobbySong != null)
             {
                 LobbySong = message.LobbySong;
-                Get<BackgroundAudioSystem>().StartLobbyMusic();
+                _backgroundAudio.StartLobbyMusic();
             }
 
             RestartSound = message.RestartSound;
 
+            // Don't open duplicate windows (mainly for replays).
+            if (_window?.RoundId == message.RoundId)
+                return;
+
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
-            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, _entityManager);
+            _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, _entityManager);
         }
 
         private void RoundRestartCleanup(RoundRestartCleanupEvent ev)
@@ -147,7 +151,7 @@ namespace Content.Client.GameTicking.Managers
                 return;
             }
 
-            SoundSystem.Play(RestartSound, Filter.Empty());
+            _audio.PlayGlobal(RestartSound, Filter.Local(), false);
 
             // Cleanup the sound, we only want it to play when the round restarts after it ends normally.
             RestartSound = null;

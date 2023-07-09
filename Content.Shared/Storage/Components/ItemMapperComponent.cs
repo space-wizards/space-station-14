@@ -58,7 +58,7 @@ namespace Content.Shared.Storage.Components
     {
         [DataField("mapLayers")] public readonly Dictionary<string, SharedMapLayerData> MapLayers = new();
 
-        [DataField("sprite")] public ResourcePath? RSIPath;
+        [DataField("sprite")] public ResPath? RSIPath;
 
         /// <summary>
         ///     If this exists, shown layers will only consider entities in the given containers.

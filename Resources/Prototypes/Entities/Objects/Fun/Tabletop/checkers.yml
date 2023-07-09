@@ -32,10 +32,8 @@
   components:
   - type: TabletopDraggable
   - type: Sprite
-    netsync: false
     noRot: true
   - type: Appearance
-  - type: TabletopItemVisualizer
 
 # The pieces
 - type: entity

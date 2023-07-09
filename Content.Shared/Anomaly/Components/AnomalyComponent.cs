@@ -1,4 +1,5 @@
-﻿using Content.Shared.Damage;
+using System.Numerics;
+using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -13,7 +14,7 @@ namespace Content.Shared.Anomaly.Components;
 ///
 /// Anomalies and their related components were designed here: https://hackmd.io/@ss14-design/r1sQbkJOs
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedAnomalySystem))]
 public sealed class AnomalyComponent : Component
 {
     /// <summary>
@@ -62,7 +63,7 @@ public sealed class AnomalyComponent : Component
     /// The amount of health lost when the stability is below the <see cref="DecayThreshold"/>
     /// </summary>
     [DataField("healthChangePerSecond"), ViewVariables(VVAccess.ReadWrite)]
-    public float HealthChangePerSecond = -0.05f;
+    public float HealthChangePerSecond = -0.01f;
     #endregion
 
     #region Growth
@@ -85,7 +86,7 @@ public sealed class AnomalyComponent : Component
     /// The time at which the next artifact pulse will occur.
     /// </summary>
     [DataField("nextPulseTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan NextPulseTime = TimeSpan.MaxValue;
+    public TimeSpan NextPulseTime = TimeSpan.Zero;
 
     /// <summary>
     /// The minimum interval between pulses.
@@ -103,14 +104,16 @@ public sealed class AnomalyComponent : Component
     /// A percentage by which the length of a pulse might vary.
     /// </summary>
     [DataField("pulseVariation")]
-    public float PulseVariation = .1f;
+    public float PulseVariation = 0.1f;
 
     /// <summary>
-    /// The largest value by which the anomaly will vary in stability for each pulse.
-    /// In simple terms, every pulse, stability changes from a range of -this_value to this_value
+    /// The range that an anomaly's stability can vary each pulse. Scales with severity.
     /// </summary>
+    /// <remarks>
+    /// This is more likely to trend upwards than donwards, because that's funny
+    /// </remarks>
     [DataField("pulseStabilityVariation")]
-    public float PulseStabilityVariation = 0.05f;
+    public Vector2 PulseStabilityVariation = new(-0.1f, 0.15f);
 
     /// <summary>
     /// The sound played when an anomaly pulses
@@ -150,44 +153,16 @@ public sealed class AnomalyComponent : Component
     public AnomalousParticleType SeverityParticleType;
 
     /// <summary>
-    /// The amount that the <see cref="Severity"/> increases by when hit
-    /// of an anomalous particle of <seealso cref="SeverityParticleType"/>.
-    /// </summary>
-    [DataField("severityPerSeverityHit")]
-    public float SeverityPerSeverityHit = 0.025f;
-
-    /// <summary>
     /// The particle type that destabilizes the anomaly.
     /// </summary>
     [DataField("destabilizingParticleType")]
     public AnomalousParticleType DestabilizingParticleType;
 
     /// <summary>
-    /// The amount that the <see cref="Stability"/> increases by when hit
-    /// of an anomalous particle of <seealso cref="DestabilizingParticleType"/>.
-    /// </summary>
-    [DataField("stabilityPerDestabilizingHit")]
-    public float StabilityPerDestabilizingHit = 0.04f;
-
-    /// <summary>
     /// The particle type that weakens the anomalys health.
     /// </summary>
     [DataField("weakeningParticleType")]
     public AnomalousParticleType WeakeningParticleType;
-
-    /// <summary>
-    /// The amount that the <see cref="Stability"/> increases by when hit
-    /// of an anomalous particle of <seealso cref="DestabilizingParticleType"/>.
-    /// </summary>
-    [DataField("healthPerWeakeningeHit")]
-    public float HealthPerWeakeningeHit = -0.05f;
-
-    /// <summary>
-    /// The amount that the <see cref="Stability"/> increases by when hit
-    /// of an anomalous particle of <seealso cref="DestabilizingParticleType"/>.
-    /// </summary>
-    [DataField("stabilityPerWeakeningeHit")]
-    public float StabilityPerWeakeningeHit = -0.1f;
 
     #region Points and Vessels
     /// <summary>
@@ -201,28 +176,21 @@ public sealed class AnomalyComponent : Component
     /// The minimum amount of research points generated per second
     /// </summary>
     [DataField("minPointsPerSecond")]
-    public int MinPointsPerSecond;
+    public int MinPointsPerSecond = 10;
 
     /// <summary>
     /// The maximum amount of research points generated per second
     /// This doesn't include the point bonus for being unstable.
     /// </summary>
     [DataField("maxPointsPerSecond")]
-    public int MaxPointsPerSecond = 65;
+    public int MaxPointsPerSecond = 80;
 
     /// <summary>
     /// The multiplier applied to the point value for the
     /// anomaly being above the <see cref="GrowthThreshold"/>
     /// </summary>
     [DataField("growingPointMultiplier")]
-    public float GrowingPointMultiplier = 1.2f;
-
-    /// <summary>
-    /// The multiplier applied to the point value for the
-    /// anomaly being below the <see cref="DecayThreshold"/>
-    /// </summary>
-    [DataField("decayingPointMultiplier")]
-    public float DecayingPointMultiplier = 0.75f;
+    public float GrowingPointMultiplier = 1.5f;
     #endregion
 
     /// <summary>
@@ -238,6 +206,24 @@ public sealed class AnomalyComponent : Component
     /// </summary>
     [DataField("anomalyContactDamageSound")]
     public SoundSpecifier AnomalyContactDamageSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+
+    #region Floating Animation
+    /// <summary>
+    /// How long it takes to go from the bottom of the animation to the top.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("animationTime")]
+    public readonly float AnimationTime = 2f;
+
+    /// <summary>
+    /// How far it goes in any direction.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("offset")]
+    public readonly Vector2 FloatingOffset = new(0, 0.15f);
+
+    public readonly string AnimationKey = "anomalyfloat";
+    #endregion
 }
 
 [Serializable, NetSerializable]
@@ -260,14 +246,10 @@ public sealed class AnomalyComponentState : ComponentState
 /// <summary>
 /// Event raised at regular intervals on an anomaly to do whatever its effect is.
 /// </summary>
-/// <param name="Stabiltiy"></param>
+/// <param name="Stability"></param>
 /// <param name="Severity"></param>
 [ByRefEvent]
-public readonly record struct AnomalyPulseEvent(float Stabiltiy, float Severity)
-{
-    public readonly float Stabiltiy = Stabiltiy;
-    public readonly float Severity = Severity;
-}
+public readonly record struct AnomalyPulseEvent(float Stability, float Severity);
 
 /// <summary>
 /// Event raised on an anomaly when it reaches a supercritical point.

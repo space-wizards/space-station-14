@@ -5,7 +5,6 @@
   description: It extinguishes fires.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Misc/fire_extinguisher.rsi
     layers:
         - state: fire_extinguisher_closed
@@ -24,17 +23,16 @@
     solution: spray
   - type: DrainableSolution
     solution: spray
+  - type: SolutionTransfer
   - type: ItemCooldown
   - type: Spray
+    transferAmount: 10
     spraySound:
       path: /Audio/Effects/extinguish.ogg
     sprayedPrototype: ExtinguisherSpray
     vaporAmount: 3
     vaporSpread: 90
     sprayVelocity: 2.0
-    sprayTimeAlive: 1.5
-    transferAmount: 5
-    impulse: 50.0
   - type: FireExtinguisher
     hasSafety: true
   - type: MeleeWeapon
@@ -65,7 +63,6 @@
   - type: Physics
     bodyType: Dynamic
   - type: Appearance
-    visuals:
-      - type: VaporVisualizer
-        animation_delay: 0.8
-        animation_state: extinguish
+  - type: VaporVisuals
+    animationTime: 0.8
+    animationState: extinguish

@@ -19,6 +19,11 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Diona
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#75b1f0"
   - type: Butcherable
     butcheringType: Spike
     spawned:
@@ -26,17 +31,10 @@
         amount: 5
   - type: Bloodstream
     bloodReagent: Water
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeCircle
           radius: 0.35
         density: 300 #weighs more than humans because wood
@@ -47,9 +45,17 @@
           - MobLayer
   - type: Inventory
     templateId: diona
+  - type: InventorySlots
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 3.5
+  - type: Vocal
+    sounds:
+      Male: UnisexDiona
+      Female: UnisexDiona
+      Unsexed: UnisexDiona
+  - type: BodyEmotes
+    soundsId: DionaBodyEmotes
 
 - type: entity
   save: false
@@ -61,5 +67,6 @@
   components:
   - type: Inventory
     templateId: diona
+  - type: InventorySlots
   - type: HumanoidAppearance
     species: Diona

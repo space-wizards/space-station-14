@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by brainfood1183 (github) for ss14",
+  "states": [
+    {
+      "name": "dead"
+    },
+    {
+      "name": "abomination",
+      "directions": 4
+    }
+  ]
+}

@@ -43,8 +43,8 @@ public sealed class HumanoidAppearanceComponent : Component
     ///     Current species. Dictates things like base body sprites,
     ///     base humanoid to spawn, etc.
     /// </summary>
-    [DataField("species", customTypeSerializer: typeof(PrototypeIdSerializer<SpeciesPrototype>))]
-    public string Species { get; set; } = string.Empty;
+    [DataField("species", customTypeSerializer: typeof(PrototypeIdSerializer<SpeciesPrototype>), required: true)]
+    public string Species { get; set; } = default!;
 
     /// <summary>
     ///     The initial profile and base layers to apply to this humanoid.
@@ -70,6 +70,18 @@ public sealed class HumanoidAppearanceComponent : Component
 
     [DataField("eyeColor")]
     public Color EyeColor = Color.Brown;
+
+    /// <summary>
+    ///     Hair color of this humanoid. Used to avoid looping through all markings
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Color? CachedHairColor;
+
+    /// <summary>
+    ///     Facial Hair color of this humanoid. Used to avoid looping through all markings
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Color? CachedFacialHairColor;
 }
 
 [Serializable, NetSerializable]

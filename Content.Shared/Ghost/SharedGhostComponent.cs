@@ -3,9 +3,11 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ghost
 {
-    [NetworkedComponent()]
-    public abstract class SharedGhostComponent : Component
+    [NetworkedComponent]
+    [AutoGenerateComponentState]
+    public abstract partial class SharedGhostComponent : Component
     {
+        // TODO: instead of this funny stuff just give it access and update in system dirtying when needed
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanGhostInteract
         {
@@ -18,7 +20,7 @@ namespace Content.Shared.Ghost
             }
         }
 
-        [DataField("canInteract")]
+        [DataField("canInteract"), AutoNetworkedField]
         private bool _canGhostInteract;
 
         /// <summary>
@@ -37,41 +39,16 @@ namespace Content.Shared.Ghost
             }
         }
 
-        [DataField("canReturnToBody")]
+        /// <summary>
+        /// Ghost color
+        /// </summary>
+        /// <remarks>Used to allow admins to change ghost colors. Should be removed if the capability to edit existing sprite colors is ever added back.</remarks>
+        [DataField("color"), AutoNetworkedField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Color color = Color.White;
+
+        [DataField("canReturnToBody"), AutoNetworkedField]
         private bool _canReturnToBody;
-
-        public override ComponentState GetComponentState()
-        {
-            return new GhostComponentState(CanReturnToBody, CanGhostInteract);
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not GhostComponentState state)
-            {
-                return;
-            }
-
-            CanReturnToBody = state.CanReturnToBody;
-            CanGhostInteract = state.CanGhostInteract;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class GhostComponentState : ComponentState
-    {
-        public bool CanReturnToBody { get; }
-        public bool CanGhostInteract { get; }
-
-        public GhostComponentState(
-            bool canReturnToBody,
-            bool canGhostInteract)
-        {
-            CanReturnToBody = canReturnToBody;
-            CanGhostInteract = canGhostInteract;
-        }
     }
 }
 

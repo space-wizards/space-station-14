@@ -35,7 +35,7 @@ namespace Content.Server.Ghost.Roles
                 return;
             }
 
-            if (entityManager.TryGetComponent(uid, out MindComponent? mind) &&
+            if (entityManager.TryGetComponent(uid, out MindContainerComponent? mind) &&
                 mind.HasMind)
             {
                 shell.WriteLine($"Entity {metaData.EntityName} with id {uid} already has a mind.");
@@ -46,16 +46,23 @@ namespace Content.Server.Ghost.Roles
             var description = args[2];
             var rules = args.Length >= 4 ? args[3] : Loc.GetString("ghost-role-component-default-rules");
 
+            if (entityManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole))
+            {
+                shell.WriteLine($"Entity {metaData.EntityName} with id {uid} already has a {nameof(GhostRoleComponent)}");
+                return;
+            }
+
             if (entityManager.TryGetComponent(uid, out GhostTakeoverAvailableComponent? takeOver))
             {
                 shell.WriteLine($"Entity {metaData.EntityName} with id {uid} already has a {nameof(GhostTakeoverAvailableComponent)}");
                 return;
             }
 
-            takeOver = entityManager.AddComponent<GhostTakeoverAvailableComponent>(uid);
-            takeOver.RoleName = name;
-            takeOver.RoleDescription = description;
-            takeOver.RoleRules = rules;
+            ghostRole = entityManager.AddComponent<GhostRoleComponent>(uid);
+            entityManager.AddComponent<GhostTakeoverAvailableComponent>(uid);
+            ghostRole.RoleName = name;
+            ghostRole.RoleDescription = description;
+            ghostRole.RoleRules = rules;
 
             shell.WriteLine($"Made entity {metaData.EntityName} a ghost role.");
         }

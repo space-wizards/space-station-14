@@ -1,17 +1,20 @@
 - type: entity
   id: BodyBag_Container
+  parent: BaseFoldable
   name: body bag
   description: A plastic bag designed for the storage and transportation of cadavers.
   components:
   - type: Item
     size: 6
   - type: Sprite
-    netsync: false
     drawdepth: SmallObjects # I guess body bags need appear above a coroner's table?
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     layers:
     - state: bag
-      map: ["enum.FoldableVisualLayers.Base"]
+      map: ["unfoldedLayer", "enum.StorageVisualLayers.Base"]
+    - state: bag_folded
+      map: ["foldedLayer"]
+      visible: false
     - state: open_overlay
       map: ["enum.StorageVisualLayers.Door"]
     - state: label_overlay
@@ -31,12 +34,13 @@
     noRot: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.4,0.25,0.1"
-      density: 20
-      mask:
-      - Impassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.4,0.25,0.1"
+        density: 20
+        mask:
+        - Impassable
   - type: EntityStorage
     capacity: 1
     isCollidableWhenOpen: true
@@ -45,7 +49,6 @@
     openSound:
       path: /Audio/Misc/zip.ogg
   - type: EntityStorageLayingDownOverride
-  - type: Foldable
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label
@@ -54,17 +57,21 @@
         components:
         - Paper
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: open_overlay
-    - type: FoldableVisualizer
-      key: bag
+  - type: EntityStorageVisuals
+    stateDoorOpen: open_overlay
   - type: GenericVisualizer
     visuals:
       enum.PaperLabelVisuals.HasLabel:
         enum.BodyBagVisualLayers.Label:
           True: {visible: true}
           False: {visible: false}
+      enum.FoldedVisuals.State:
+        foldedLayer:
+          True: {visible: true}
+          False: {visible: false}
+        unfoldedLayer:
+          True: {visible: false}
+          False: {visible: true}
   - type: Pullable
   - type: AntiRottingContainer
   - type: ItemSlots
@@ -96,7 +103,6 @@
   description: This used to be something, but now it's not.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/materials.rsi
     state: ash
   - type: Tag
@@ -115,3 +121,26 @@
   - type: DeleteOnTrigger
   - type: Extractable
     grindableSolutionName: food
+
+- type: entity
+  parent: Ash
+  id: Ectoplasm
+  name: ectoplasm
+  description: Much less deadly in this form.
+  components:
+    - type: Sprite
+      sprite: Mobs/Ghosts/revenant.rsi
+      state: ectoplasm
+    - type: Tag
+      tags:
+        - Trash
+        - Ectoplasm
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 50
+          reagents:
+            - ReagentId: Ash
+              Quantity: 5
+            - ReagentId: SpaceLube
+              Quantity: 5

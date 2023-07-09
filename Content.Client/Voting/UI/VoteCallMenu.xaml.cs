@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Shared.Administration;
 using Content.Shared.Voting;
@@ -12,6 +13,7 @@ using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Voting.UI
@@ -22,6 +24,7 @@ namespace Content.Client.Voting.UI
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IClientNetManager _netManager = default!;
 
         public static readonly (string name, StandardVoteType type, (string name, string id)[]? secondaries)[]
             AvailableVoteTypes =
@@ -53,6 +56,8 @@ namespace Content.Client.Voting.UI
         protected override void Opened()
         {
             base.Opened();
+
+            _netManager.ClientSendMessage(new MsgVoteMenu());
 
             _voteManager.CanCallVoteChanged += CanCallVoteChanged;
         }

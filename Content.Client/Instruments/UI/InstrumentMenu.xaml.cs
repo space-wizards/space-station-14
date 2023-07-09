@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Client.Interactable;
 using Content.Shared.ActionBlocker;
@@ -59,7 +60,7 @@ namespace Content.Client.Instruments.UI
             PlaybackSlider.OnValueChanged += PlaybackSliderSeek;
             PlaybackSlider.OnKeyBindUp += PlaybackSliderKeyUp;
 
-            MinSize = SetSize = (400, 150);
+            MinSize = SetSize = new Vector2(400, 150);
         }
 
         private void InstrumentOnMidiPlaybackEnded()

@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Access.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Research.Systems
@@ -12,8 +14,9 @@ namespace Content.Server.Research.Systems
     public sealed partial class ResearchSystem : SharedResearchSystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -22,22 +25,30 @@ namespace Content.Server.Research.Systems
             InitializeConsole();
             InitializeSource();
             InitializeServer();
+
+            SubscribeLocalEvent<TechnologyDatabaseComponent, ResearchRegistrationChangedEvent>(OnDatabaseRegistrationChanged);
         }
 
         /// <summary>
         /// Gets a server based on it's unique numeric id.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="serverUid"></param>
+        /// <param name="serverComponent"></param>
         /// <returns></returns>
-        public ResearchServerComponent? GetServerById(int id)
+        public bool TryGetServerById(int id, [NotNullWhen(true)] out EntityUid? serverUid, [NotNullWhen(true)] out ResearchServerComponent? serverComponent)
         {
+            serverUid = null;
+            serverComponent = null;
             foreach (var server in EntityQuery<ResearchServerComponent>())
             {
-                if (server.Id == id)
-                    return server;
+                if (server.Id != id)
+                    continue;
+                serverUid = server.Owner;
+                serverComponent = server;
+                return true;
             }
-
-            return null;
+            return false;
         }
 
         /// <summary>

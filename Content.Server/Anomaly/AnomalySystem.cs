@@ -1,15 +1,18 @@
 ﻿using Content.Server.Anomaly.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Audio;
-using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Materials;
+using Content.Server.Radio.EntitySystems;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.DoAfter;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+
 namespace Content.Server.Anomaly;
 
 /// <summary>
@@ -18,12 +21,14 @@ namespace Content.Server.Anomaly;
 public sealed partial class AnomalySystem : SharedAnomalySystem
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly MaterialStorageSystem _material = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+    [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public const float MinParticleVariation = 0.8f;
@@ -40,6 +45,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         InitializeGenerator();
         InitializeScanner();
         InitializeVessel();
+        InitializeCommands();
     }
 
     private void OnMapInit(EntityUid uid, AnomalyComponent component, MapInitEvent args)
@@ -62,27 +68,27 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
     private void OnStartCollide(EntityUid uid, AnomalyComponent component, ref StartCollideEvent args)
     {
-        if (!TryComp<AnomalousParticleComponent>(args.OtherFixture.Body.Owner, out var particleComponent))
+        if (!TryComp<AnomalousParticleComponent>(args.OtherEntity, out var particle))
             return;
 
-        if (args.OtherFixture.ID != particleComponent.FixtureId)
+        if (args.OtherFixture.ID != particle.FixtureId)
             return;
 
         // small function to randomize because it's easier to read like this
         float VaryValue(float v) => v * Random.NextFloat(MinParticleVariation, MaxParticleVariation);
 
-        if (particleComponent.ParticleType == component.DestabilizingParticleType)
+        if (particle.ParticleType == component.DestabilizingParticleType || particle.DestabilzingOverride)
         {
-            ChangeAnomalyStability(uid, VaryValue(component.StabilityPerDestabilizingHit), component);
+            ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerDestabilizingHit), component);
         }
-        else if (particleComponent.ParticleType == component.SeverityParticleType)
+        if (particle.ParticleType == component.SeverityParticleType || particle.SeverityOverride)
         {
-            ChangeAnomalySeverity(uid, VaryValue(component.SeverityPerSeverityHit), component);
+            ChangeAnomalySeverity(uid, VaryValue(particle.SeverityPerSeverityHit), component);
         }
-        else if (particleComponent.ParticleType == component.WeakeningParticleType)
+        if (particle.ParticleType == component.WeakeningParticleType || particle.WeakeningOverride)
         {
-            ChangeAnomalyHealth(uid, VaryValue(component.HealthPerWeakeningeHit), component);
-            ChangeAnomalyStability(uid, VaryValue(component.StabilityPerWeakeningeHit), component);
+            ChangeAnomalyHealth(uid, VaryValue(particle.HealthPerWeakeningeHit), component);
+            ChangeAnomalyStability(uid, VaryValue(particle.StabilityPerWeakeningeHit), component);
         }
     }
 
@@ -100,13 +106,13 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         var multiplier = 1f;
         if (component.Stability > component.GrowthThreshold)
             multiplier = component.GrowingPointMultiplier; //more points for unstable
-        else if (component.Stability < component.DecayThreshold)
-            multiplier = component.DecayingPointMultiplier; //less points if it's dying
 
         //penalty of up to 50% based on health
         multiplier *= MathF.Pow(1.5f, component.Health) - 0.5f;
 
-        return (int) ((component.MaxPointsPerSecond - component.MinPointsPerSecond) * component.Severity * multiplier);
+        var severityValue = 1 / (1 + MathF.Pow(MathF.E, -7 * (component.Severity - 0.5f)));
+
+        return (int) ((component.MaxPointsPerSecond - component.MinPointsPerSecond) * severityValue * multiplier) + component.MinPointsPerSecond;
     }
 
     /// <summary>
@@ -123,5 +129,13 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
             AnomalousParticleType.Zeta => Loc.GetString("anomaly-particles-zeta"),
             _ => throw new ArgumentOutOfRangeException()
         };
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        UpdateGenerator();
+        UpdateVessels();
     }
 }

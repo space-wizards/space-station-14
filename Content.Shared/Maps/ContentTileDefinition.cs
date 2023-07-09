@@ -9,12 +9,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Maps
 {
-    [UsedImplicitly]
     [Prototype("tile")]
     public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
         public const string SpaceID = "Space";
-        private string _name = string.Empty;
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<ContentTileDefinition>))]
         public string[]? Parents { get; private set; }
@@ -29,11 +27,14 @@ namespace Content.Shared.Maps
 
         [DataField("name")]
         public string Name { get; private set; } = "";
-        [DataField("sprite")] public ResourcePath? Sprite { get; }
+        [DataField("sprite")] public ResPath? Sprite { get; }
+
+        [DataField("edgeSprites")] public Dictionary<Direction, ResPath> EdgeSprites { get; } = new();
 
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 
-        [DataField("baseTurfs")] public List<string> BaseTurfs { get; } = new();
+        [DataField("baseTurf")]
+        public string BaseTurf { get; } = string.Empty;
 
         [DataField("canCrowbar")] public bool CanCrowbar { get; private set; }
 
@@ -49,7 +50,7 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("barestepSounds")] public SoundSpecifier? BarestepSounds { get; } = new SoundCollectionSpecifier("BarestepHard");
 
-        [DataField("friction")] public float Friction { get; set; }
+        [DataField("friction")] public float Friction { get; set; } = 0.2f;
 
         [DataField("variants")] public byte Variants { get; set; } = 1;
 
@@ -58,7 +59,7 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("placementVariants")] public byte[] PlacementVariants { get; set; } = new byte[1] { 0 };
 
-        [DataField("thermalConductivity")] public float ThermalConductivity { get; set; } = 0.05f;
+        [DataField("thermalConductivity")] public float ThermalConductivity = 0.04f;
 
         // Heat capacity is opt-in, not opt-out.
         [DataField("heatCapacity")] public float HeatCapacity = Atmospherics.MinimumHeatCapacity;

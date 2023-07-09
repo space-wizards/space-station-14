@@ -17,14 +17,6 @@ namespace Content.Shared.Chemistry
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
-        public void ReactionEntity(EntityUid uid, ReactionMethod method, Solution solution)
-        {
-            foreach (var (id, quantity) in solution)
-            {
-                ReactionEntity(uid, method, id, quantity, solution);
-            }
-        }
-
         public void DoEntityReaction(EntityUid uid, Solution solution, ReactionMethod method)
         {
             foreach (var (reagentId, quantity) in solution.Contents.ToArray())

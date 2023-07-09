@@ -1,0 +1,56 @@
+- type: entity
+  id: CrateChemistryP
+  parent: CrateChemistrySecure
+  components:
+    - type: StorageFill
+      contents:
+        - id: JugAluminium
+          amount: 1
+        - id: JugCarbon
+          amount: 1
+        - id: JugChlorine
+          amount: 1
+        - id: JugFluorine
+          amount: 1
+        - id: JugIodine
+          amount: 1
+        - id: JugPhosphorus
+          amount: 1
+        - id: JugSulfur
+          amount: 1
+        - id: JugSilicon
+          amount: 1
+
+- type: entity
+  id: CrateChemistryS
+  parent: CrateChemistrySecure
+  components:
+    - type: StorageFill
+      contents:
+        - id: JugHydrogen
+          amount: 1
+        - id: JugLithium
+          amount: 1
+        - id: JugSodium
+          amount: 1
+        - id: JugPotassium
+          amount: 1
+        - id: JugRadium
+          amount: 1
+
+- type: entity
+  id: CrateChemistryD
+  parent: CrateChemistrySecure
+  components:
+    - type: StorageFill
+      contents:
+        - id: JugIron
+          amount: 1
+        - id: JugCopper
+          amount: 1
+        - id: JugGold
+          amount: 1
+        - id: JugMercury
+          amount: 1
+        - id: JugSilver
+          amount: 1

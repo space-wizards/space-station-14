@@ -20,8 +20,6 @@ public abstract class SharedFlyBySoundSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<FlyBySoundComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<FlyBySoundComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<FlyBySoundComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<FlyBySoundComponent, ComponentShutdown>(OnShutdown);
     }
@@ -45,29 +43,5 @@ public abstract class SharedFlyBySoundSystem : EntitySystem
         }
 
         _fixtures.DestroyFixture(uid, FlyByFixture, body: body);
-    }
-
-    private void OnHandleState(EntityUid uid, FlyBySoundComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not FlyBySoundComponentState state) return;
-
-        component.Sound = state.Sound;
-        component.Range = state.Range;
-    }
-
-    private void OnGetState(EntityUid uid, FlyBySoundComponent component, ref ComponentGetState args)
-    {
-        args.State = new FlyBySoundComponentState()
-        {
-            Sound = component.Sound,
-            Range = component.Range,
-        };
-    }
-
-    [Serializable, NetSerializable]
-    private sealed class FlyBySoundComponentState : ComponentState
-    {
-        public SoundSpecifier Sound = default!;
-        public float Range;
     }
 }

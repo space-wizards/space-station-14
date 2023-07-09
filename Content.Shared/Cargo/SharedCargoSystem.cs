@@ -6,8 +6,15 @@ namespace Content.Shared.Cargo;
 public enum CargoConsoleUiKey : byte
 {
     Orders,
+    Bounty,
     Shuttle,
     Telepad
+}
+
+[NetSerializable, Serializable]
+public enum CargoPalletConsoleUiKey : byte
+{
+    Sale
 }
 
 public abstract class SharedCargoSystem : EntitySystem {}

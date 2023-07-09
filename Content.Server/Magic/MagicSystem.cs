@@ -1,17 +1,20 @@
-using System.Threading;
+using System.Numerics;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Coordinates.Helpers;
-using Content.Server.DoAfter;
+using Content.Server.Chat.Systems;
 using Content.Server.Doors.Systems;
+using Content.Server.Magic.Components;
 using Content.Server.Magic.Events;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Body.Components;
+using Content.Shared.Coordinates.Helpers;
+using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Magic;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Spawners.Components;
@@ -23,6 +26,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Manager.Exceptions;
 
 namespace Content.Server.Magic;
 
@@ -36,16 +40,17 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AirlockSystem _airlock = default!;
+    [Dependency] private readonly DoorBoltSystem _boltsSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly GunSystem _gunSystem = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     public override void Initialize()
     {
@@ -53,8 +58,7 @@ public sealed class MagicSystem : EntitySystem
 
         SubscribeLocalEvent<SpellbookComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SpellbookComponent, UseInHandEvent>(OnUse);
-        SubscribeLocalEvent<SpellbookComponent, LearnDoAfterComplete>(OnLearnComplete);
-        SubscribeLocalEvent<SpellbookComponent, LearnDoAfterCancel>(OnLearnCancel);
+        SubscribeLocalEvent<SpellbookComponent, SpellbookDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
@@ -63,6 +67,15 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
         SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
         SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
+    }
+
+    private void OnDoAfter(EntityUid uid, SpellbookComponent component, DoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled)
+            return;
+
+        _actionsSystem.AddActions(args.Args.User, component.Spells, component.LearnPermanently ? null : uid);
+        args.Handled = true;
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
@@ -102,33 +115,15 @@ public sealed class MagicSystem : EntitySystem
 
     private void AttemptLearn(EntityUid uid, SpellbookComponent component, UseInHandEvent args)
     {
-        if (component.CancelToken != null) return;
-
-        component.CancelToken = new CancellationTokenSource();
-
-        var doAfterEventArgs = new DoAfterEventArgs(args.User, component.LearnTime, component.CancelToken.Token, uid)
+        var doAfterEventArgs = new DoAfterArgs(args.User, component.LearnTime, new SpellbookDoAfterEvent(), uid, target: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             BreakOnDamage = true,
-            BreakOnStun = true,
-            NeedHand = true, //What, are you going to read with your eyes only??
-            TargetFinishedEvent = new LearnDoAfterComplete(args.User),
-            TargetCancelledEvent = new LearnDoAfterCancel(),
+            NeedHand = true //What, are you going to read with your eyes only??
         };
 
-        _doAfter.DoAfter(doAfterEventArgs);
-    }
-
-    private void OnLearnComplete(EntityUid uid, SpellbookComponent component, LearnDoAfterComplete ev)
-    {
-        component.CancelToken = null;
-        _actionsSystem.AddActions(ev.User, component.Spells, uid);
-    }
-
-    private void OnLearnCancel(EntityUid uid, SpellbookComponent component, LearnDoAfterCancel args)
-    {
-        component.CancelToken = null;
+        _doAfter.TryStartDoAfter(doAfterEventArgs);
     }
 
     #region Spells
@@ -154,6 +149,7 @@ public sealed class MagicSystem : EntitySystem
             }
         }
 
+        Speak(args);
         args.Handled = true;
     }
 
@@ -162,6 +158,9 @@ public sealed class MagicSystem : EntitySystem
         if (ev.Handled)
             return;
 
+        ev.Handled = true;
+        Speak(ev);
+
         var xform = Transform(ev.Performer);
         var userVelocity = _physics.GetMapLinearVelocity(ev.Performer);
 
@@ -169,17 +168,24 @@ public sealed class MagicSystem : EntitySystem
         {
             // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
             var mapPos = pos.ToMap(EntityManager);
-            EntityCoordinates spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
-                ? pos.WithEntityId(grid.Owner, EntityManager)
+            var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var gridUid, out _)
+                ? pos.WithEntityId(gridUid, EntityManager)
                 : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
 
             var ent = Spawn(ev.Prototype, spawnCoords);
-            _gunSystem.ShootProjectile(ent, ev.Target.Position - mapPos.Position, userVelocity, ev.Performer);
+            var direction = ev.Target.ToMapPos(EntityManager, _transformSystem) -
+                            spawnCoords.ToMapPos(EntityManager, _transformSystem);
+            _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer);
         }
     }
 
     private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
     {
+        if (ev.Handled)
+            return;
+        ev.Handled = true;
+        Speak(ev);
+
         foreach (var toRemove in ev.ToRemove)
         {
             if (_compFact.TryGetRegistration(toRemove, out var registration))
@@ -208,7 +214,7 @@ public sealed class MagicSystem : EntitySystem
             case TargetInFront:
             {
                 // This is shit but you get the idea.
-                var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized);
+                var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
 
                 if (!_mapManager.TryGetGrid(casterXform.GridUid, out var mapGrid))
                     return new List<EntityCoordinates>();
@@ -273,6 +279,7 @@ public sealed class MagicSystem : EntitySystem
         _transformSystem.SetCoordinates(args.Performer, args.Target);
         transform.AttachToGridOrMap();
         _audio.PlayPvs(args.BlinkSound, args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
+        Speak(args);
         args.Handled = true;
     }
 
@@ -285,6 +292,9 @@ public sealed class MagicSystem : EntitySystem
         if (args.Handled)
             return;
 
+        args.Handled = true;
+        Speak(args);
+
         //Get the position of the player
         var transform = Transform(args.Performer);
         var coords = transform.Coordinates;
@@ -294,20 +304,21 @@ public sealed class MagicSystem : EntitySystem
         //Look for doors and don't open them if they're already open.
         foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
         {
-            if (TryComp<AirlockComponent>(entity, out var airlock))
-                _airlock.SetBoltsDown(entity, airlock, false);
+            if (TryComp<DoorBoltComponent>(entity, out var bolts))
+                _boltsSystem.SetBoltsDown(entity, bolts, false);
 
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
                 _doorSystem.StartOpening(doorComp.Owner);
         }
-
-        args.Handled = true;
     }
 
     private void OnSmiteSpell(SmiteSpellEvent ev)
     {
         if (ev.Handled)
             return;
+
+        ev.Handled = true;
+        Speak(ev);
 
         var direction = Transform(ev.Target).MapPosition.Position - Transform(ev.Performer).MapPosition.Position;
         var impulseVector = direction * 10000;
@@ -347,7 +358,7 @@ public sealed class MagicSystem : EntitySystem
         var targetMapCoords = args.Target;
 
         SpawnSpellHelper(args.Contents, targetMapCoords, args.Lifetime, args.Offset);
-
+        Speak(args);
         args.Handled = true;
     }
 
@@ -384,19 +395,12 @@ public sealed class MagicSystem : EntitySystem
 
     #endregion
 
-    #region DoAfterClasses
-
-    private sealed class LearnDoAfterComplete : EntityEventArgs
+    private void Speak(BaseActionEvent args)
     {
-        public readonly EntityUid User;
+        if (args is not ISpeakSpell speak || string.IsNullOrWhiteSpace(speak.Speech))
+            return;
 
-        public LearnDoAfterComplete(EntityUid uid)
-        {
-            User = uid;
-        }
+        _chat.TrySendInGameICMessage(args.Performer, Loc.GetString(speak.Speech),
+            InGameICChatType.Speak, false);
     }
-
-    private sealed class LearnDoAfterCancel : EntityEventArgs { }
-
-    #endregion
 }

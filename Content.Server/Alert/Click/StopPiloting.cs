@@ -16,10 +16,10 @@ namespace Content.Server.Alert.Click
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
 
-            if (entManager.TryGetComponent(player, out PilotComponent? pilotComponent) &&
-                pilotComponent.Console != null)
+            if (entManager.TryGetComponent(player, out PilotComponent? pilotComponent)
+            && pilotComponent.Console != null)
             {
-                entManager.System<ShuttleConsoleSystem>().RemovePilot(pilotComponent);
+                entManager.System<ShuttleConsoleSystem>().RemovePilot(player, pilotComponent);
             }
         }
     }

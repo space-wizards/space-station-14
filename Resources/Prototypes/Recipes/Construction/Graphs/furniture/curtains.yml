@@ -1,0 +1,37 @@
+- type: constructionGraph
+  id: Curtains
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: Curtains
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Cloth
+              amount: 2
+              doAfter: 1
+    - node: Curtains
+      entity: HospitalCurtains
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Cutting
+              doAfter: 1
+    - node: CurtainsOpen
+      entity: HospitalCurtainsOpen
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Cutting
+              doAfter: 1

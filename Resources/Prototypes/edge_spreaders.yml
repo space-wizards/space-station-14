@@ -1,0 +1,8 @@
+- type: edgeSpreader
+  id: kudzu
+
+- type: edgeSpreader
+  id: puddle
+
+- type: edgeSpreader
+  id: smoke

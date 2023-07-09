@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -30,6 +31,8 @@ public sealed class ResizableChatBox : ChatBox
         private Vector2 _dragOffsetBottomRight;
 
         private byte _clampIn;
+
+        public Action<Vector2>? OnChatResizeFinish;
 
         protected override void EnteredTree()
         {
@@ -73,6 +76,8 @@ public sealed class ResizableChatBox : ChatBox
 
                 // If this is done in MouseDown, Godot won't fire MouseUp as you need focus to receive MouseUps.
                 UserInterfaceManager.KeyboardFocused?.ReleaseKeyboardFocus();
+
+                OnChatResizeFinish?.Invoke(Size);
             }
 
             base.KeyBindUp(args);

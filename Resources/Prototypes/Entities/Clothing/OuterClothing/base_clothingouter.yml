@@ -67,13 +67,14 @@
         Piercing: 0.95
         Heat: 0.90
         Radiation: 0.25
-  - type: DiseaseProtection
-    protection: 0.05
   - type: ToggleableClothing
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
   - type: GroupExamine
+  - type: Tag
+    tags:
+    - Hardsuit
 
 - type: entity
   abstract: true
@@ -91,5 +92,3 @@
     sprintModifier: 0.8
   - type: Item
     size: 80
-  - type: DiseaseProtection
-    protection: 0.05

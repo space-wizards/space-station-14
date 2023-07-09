@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: ProjectileFireball
   name: fireball
   description: You better GITTAH WEIGH.
@@ -111,3 +111,45 @@
       types:
         Piercing: 300
     ignoreResistances: true
+
+- type: entity
+  id: ProjectilePolyboltCluwne
+  parent: ProjectilePolyboltBase
+  name: cluwne polybolt
+  description: knoH KnoH!
+  noSpawn: true
+  components:
+  - type: PolymorphOnCollide
+    polymorph: WizardForcedCluwne
+    whitelist:
+      components:
+      - Body
+
+- type: entity
+  id: ProjectileIcicle
+  parent: BaseBulletHighVelocity
+  name: Icicle
+  description: Brrrrr.
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 20
+        Cold: 20
+        Structural: 50
+
+- type: entity
+  parent: ProjectilePolyboltBase
+  id: ProjectilePolyboltBread
+  name: bread polybolt
+  description: Nooo, I don't wanna be bread!
+  noSpawn: true
+  components:
+  - type: PolymorphOnCollide
+    polymorph: BreadMorph
+    whitelist:
+      components:
+      - Body

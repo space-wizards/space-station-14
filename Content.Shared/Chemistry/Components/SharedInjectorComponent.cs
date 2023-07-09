@@ -1,9 +1,15 @@
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Components
 {
+    [Serializable, NetSerializable]
+    public sealed class InjectorDoAfterEvent : SimpleDoAfterEvent
+    {
+    }
+
     /// <summary>
     /// Shared class for injectors & syringes
     /// </summary>
@@ -20,7 +26,8 @@ namespace Content.Shared.Chemistry.Components
             public FixedPoint2 TotalVolume { get; }
             public InjectorToggleMode CurrentMode { get; }
 
-            public InjectorComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume, InjectorToggleMode currentMode)
+            public InjectorComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume,
+                InjectorToggleMode currentMode)
             {
                 CurrentVolume = currentVolume;
                 TotalVolume = totalVolume;

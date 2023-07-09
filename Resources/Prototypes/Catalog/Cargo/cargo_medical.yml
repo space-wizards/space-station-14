@@ -77,3 +77,53 @@
   cost: 2500
   category: Medical
   group: market
+
+- type: cargoProduct
+  id: MedicalBodybags
+  icon:
+    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
+    state: bag_folded
+  product: CrateBodyBags
+  cost: 700
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalBiosuit
+  icon:
+    sprite: Clothing/Head/Hoods/Bio/bio.rsi
+    state: icon
+  product: CrateVirologyBiosuit
+  cost: 800
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemistryP
+  icon:
+    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    state: icon
+  product: CrateChemistryP
+  cost: 750
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemistryS
+  icon:
+    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    state: icon
+  product: CrateChemistryS
+  cost: 750
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CrateChemistryD
+  icon:
+    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    state: icon
+  product: CrateChemistryD
+  cost: 750
+  category: Medical
+  group: market

@@ -1,6 +1,8 @@
-using Content.Server.Cuffs.Components;
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
+using Content.Server.Shuttles.Components;
 using Content.Server.Station.Components;
+using Content.Shared.Cuffs.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
@@ -24,7 +26,7 @@ namespace Content.Server.Objectives.Conditions
 
         public string Description => Loc.GetString("objective-condition-escape-shuttle-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Structures/Furniture/chairs.rsi"), "shuttle");
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ("Structures/Furniture/chairs.rsi"), "shuttle");
 
         private bool IsAgentOnShuttle(TransformComponent agentXform, EntityUid? shuttle)
         {
@@ -46,13 +48,14 @@ namespace Content.Server.Objectives.Conditions
         {
             get {
                 var entMan = IoCManager.Resolve<IEntityManager>();
+                var mindSystem = entMan.System<MindSystem>();
 
                 if (_mind?.OwnedEntity == null
                     || !entMan.TryGetComponent<TransformComponent>(_mind.OwnedEntity, out var xform))
                     return 0f;
 
                 var shuttleContainsAgent = false;
-                var agentIsAlive = !_mind.CharacterDeadIC;
+                var agentIsAlive = !mindSystem.IsCharacterDeadIc(_mind);
                 var agentIsEscaping = true;
 
                 if (entMan.TryGetComponent<CuffableComponent>(_mind.OwnedEntity, out var cuffed)
@@ -61,7 +64,7 @@ namespace Content.Server.Objectives.Conditions
                     agentIsEscaping = false;
 
                 // Any emergency shuttle counts for this objective.
-                foreach (var stationData in entMan.EntityQuery<StationDataComponent>())
+                foreach (var stationData in entMan.EntityQuery<StationEmergencyShuttleComponent>())
                 {
                     if (IsAgentOnShuttle(xform, stationData.EmergencyShuttle)) {
                         shuttleContainsAgent = true;

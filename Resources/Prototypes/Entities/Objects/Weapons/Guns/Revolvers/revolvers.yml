@@ -6,7 +6,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     state: icon
   - type: Item
     size: 10
@@ -56,6 +55,8 @@
     - state: mag-unshaded-3
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Gun
+    fireRate: 2
   - type: RevolverAmmoProvider
     capacity: 5
     chambers: [ True, True, True, True, True ]
@@ -65,6 +66,8 @@
     steps: 4
     zeroVisible: true
   - type: Appearance
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   name: Inspector
@@ -92,11 +95,12 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Gun
+    fireRate: 2
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
 
 - type: entity
-  name: Predator
+  name: Python
   parent: BaseWeaponRevolver
   id: WeaponRevolverPython
   description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
@@ -110,7 +114,7 @@
   name: pirate revolver
   parent: BaseWeaponRevolver
   id: WeaponRevolverPirate
-  description: An odd, muzzle-loading revolver, favoured by pirate crews. Uses .45 magnum ammo.
+  description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
@@ -125,3 +129,42 @@
     capacity: 5
     chambers: [ True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null ]
+
+- type: entity
+  id: WeaponPistolCHIMP
+  parent: BaseWeaponRevolver
+  name: C.H.I.M.P. handcannon
+  description: Just because it's a little C.H.I.M.P. doesn't mean it can't punch like an A.P.E.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-1
+      visible: false
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 3
+    zeroVisible: false
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeCHIMP
+    proto: CartridgeAnomalousParticleDelta #when revolvers stop sucking cock, make this spawn empty
+    capacity: 10
+    chambers: [ True, True, True, True, True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null, null, null, null, null ]
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: Gun
+    fireRate: 1.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg

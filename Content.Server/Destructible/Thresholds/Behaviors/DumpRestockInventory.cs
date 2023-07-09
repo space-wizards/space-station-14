@@ -1,6 +1,5 @@
 using Robust.Shared.Random;
 using Content.Shared.Stacks;
-using Content.Server.VendingMachines.Restock;
 using Content.Shared.Prototypes;
 using Content.Shared.VendingMachines;
 
@@ -24,7 +23,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("offset")]
         public float Offset { get; set; } = 0.5f;
 
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             if (!system.EntityManager.TryGetComponent<VendingMachineRestockComponent>(owner, out var packagecomp) ||
                 !system.EntityManager.TryGetComponent<TransformComponent>(owner, out var xform))

@@ -1,13 +1,23 @@
 ﻿[game]
 # Straight in-game baby
 lobbyenabled = false
+# Dev map for faster loading & convenience
+map = "Dev"
+role_timers = false
 
 [physics]
 # Makes mapping annoying
 grid_splitting = false
 
-[shuttle]
-# Wastes startup time
-cargo = false
-emergency_enabled = false
+[procgen]
+preload = false
 
+[salvage]
+expedition_cooldown = 30.0
+expedition_failed_cooldown = 30.0
+
+[shuttle]
+grid_fill = false
+auto_call_time = 0
+emergency = false
+arrivals = false

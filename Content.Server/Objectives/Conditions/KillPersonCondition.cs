@@ -1,3 +1,4 @@
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Utility;
@@ -30,9 +31,17 @@ namespace Content.Server.Objectives.Conditions
 
         public string Description => Loc.GetString("objective-condition-kill-person-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Guns/Pistols/viper.rsi"), "icon");
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ("Objects/Weapons/Guns/Pistols/viper.rsi"), "icon");
 
-        public float Progress => (Target?.CharacterDeadIC ?? true) ? 1f : 0f;
+        public float Progress
+        {
+            get
+            {
+                var entityManager = IoCManager.Resolve<EntityManager>();
+                var mindSystem = entityManager.System<MindSystem>();
+                return Target == null || mindSystem.IsCharacterDeadIc(Target) ? 1f : 0f;
+            }
+        }
 
         public float Difficulty => 2f;
 

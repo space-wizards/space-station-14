@@ -41,7 +41,7 @@ namespace Content.Server.Body.Components
         ///     How high can <see cref="BleedAmount"/> go?
         /// </summary>
         [DataField("maxBleedAmount")]
-        public float MaxBleedAmount = 20.0f;
+        public float MaxBleedAmount = 10.0f;
 
         /// <summary>
         ///     What percentage of current blood is necessary to avoid dealing blood loss damage?
@@ -51,12 +51,14 @@ namespace Content.Server.Body.Components
 
         /// <summary>
         ///     The base bloodloss damage to be incurred if below <see cref="BloodlossThreshold"/>
+        ///     The default values are defined per mob/species in YML.
         /// </summary>
         [DataField("bloodlossDamage", required: true)]
         public DamageSpecifier BloodlossDamage = new();
 
         /// <summary>
         ///     The base bloodloss damage to be healed if above <see cref="BloodlossThreshold"/>
+        ///     The default values are defined per mob/species in YML.
         /// </summary>
         [DataField("bloodlossHealDamage", required: true)]
         public DamageSpecifier BloodlossHealDamage = new();
@@ -65,20 +67,20 @@ namespace Content.Server.Body.Components
         ///     How frequently should this bloodstream update, in seconds?
         /// </summary>
         [DataField("updateInterval")]
-        public float UpdateInterval = 5.0f;
+        public float UpdateInterval = 3.0f;
 
         // TODO shouldn't be hardcoded, should just use some organ simulation like bone marrow or smth.
         /// <summary>
         ///     How much reagent of blood should be restored each update interval?
         /// </summary>
         [DataField("bloodRefreshAmount")]
-        public float BloodRefreshAmount = 0.2f;
+        public float BloodRefreshAmount = 1.0f;
 
         /// <summary>
         ///     How much blood needs to be in the temporary solution in order to create a puddle?
         /// </summary>
         [DataField("bleedPuddleThreshold")]
-        public FixedPoint2 BleedPuddleThreshold = 5.0f;
+        public FixedPoint2 BleedPuddleThreshold = 1.0f;
 
         /// <summary>
         ///     A modifier set prototype ID corresponding to how damage should be modified
@@ -146,5 +148,11 @@ namespace Content.Server.Body.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public Solution BloodTemporarySolution = default!;
+
+        /// <summary>
+        /// Variable that stores the amount of status time added by having a low blood level.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float StatusTime;
     }
 }

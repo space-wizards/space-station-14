@@ -3,6 +3,7 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing.Components;
@@ -46,6 +47,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             InitializeCigars();
             InitializePipes();
+            InitializeVapes();
         }
 
         public void SetSmokableState(EntityUid uid, SmokableState state, SmokableComponent? smokable = null,
@@ -112,7 +114,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     if (transform.GridUid is {} gridUid)
                     {
                         var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
-                        _atmos.HotspotExpose(gridUid, position, smokable.ExposeTemperature, smokable.ExposeVolume, true);
+                        _atmos.HotspotExpose(gridUid, position, smokable.ExposeTemperature, smokable.ExposeVolume, uid, true);
                     }
                 }
 
@@ -135,7 +137,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     continue;
                 }
 
-                _reactiveSystem.ReactionEntity(containerManager.Owner, ReactionMethod.Ingestion, inhaledSolution);
+                _reactiveSystem.DoEntityReaction(containerManager.Owner, inhaledSolution, ReactionMethod.Ingestion);
                 _bloodstreamSystem.TryAddToChemicals(containerManager.Owner, inhaledSolution, bloodstream);
             }
 

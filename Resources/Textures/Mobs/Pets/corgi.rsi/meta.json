@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b",
+  "copyright": "https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b , cerberus by Alekshhh",
   "states": [
     {
       "name": "corgi",
@@ -209,29 +209,11 @@
     },
     {
       "name": "narsian",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "narsian_dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "directions": 1
     },
     {
       "name": "old_ian",

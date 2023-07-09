@@ -97,7 +97,10 @@ public partial class AtmosphereSystem
 
         // If we've been passed a grid, try to let it handle it.
         if (gridUid.HasValue)
+        {
+            DebugTools.Assert(_mapManager.IsGrid(gridUid.Value));
             RaiseLocalEvent(gridUid.Value, ref ev, false);
+        }
 
         if (ev.Handled)
             return ev.Mixtures;
@@ -105,7 +108,10 @@ public partial class AtmosphereSystem
         // We either don't have a grid, or the event wasn't handled.
         // Let the map handle it instead, and also broadcast the event.
         if (mapUid.HasValue)
+        {
+            DebugTools.Assert(_mapManager.IsMap(mapUid.Value));
             RaiseLocalEvent(mapUid.Value, ref ev, true);
+        }
         else
             RaiseLocalEvent(ref ev);
 
@@ -127,7 +133,10 @@ public partial class AtmosphereSystem
 
         // If we've been passed a grid, try to let it handle it.
         if(gridUid.HasValue)
+        {
+            DebugTools.Assert(_mapManager.IsGrid(gridUid.Value));
             RaiseLocalEvent(gridUid.Value, ref ev, false);
+        }
 
         if (ev.Handled)
             return ev.Mixture;
@@ -135,7 +144,10 @@ public partial class AtmosphereSystem
         // We either don't have a grid, or the event wasn't handled.
         // Let the map handle it instead, and also broadcast the event.
         if(mapUid.HasValue)
+        {
+            DebugTools.Assert(_mapManager.IsMap(mapUid.Value));
             RaiseLocalEvent(mapUid.Value, ref ev, true);
+        }
         else
             RaiseLocalEvent(ref ev);
 
@@ -216,9 +228,10 @@ public partial class AtmosphereSystem
         RaiseLocalEvent(gridUid, ref ev);
     }
 
-    public void HotspotExpose(EntityUid gridUid, Vector2i tile, float exposedTemperature, float exposedVolume, bool soh = false)
+    public void HotspotExpose(EntityUid gridUid, Vector2i tile, float exposedTemperature, float exposedVolume,
+        EntityUid? sparkSourceUid = null, bool soh = false)
     {
-        var ev = new HotspotExposeMethodEvent(gridUid, tile, exposedTemperature, exposedVolume, soh);
+        var ev = new HotspotExposeMethodEvent(gridUid, sparkSourceUid, tile, exposedTemperature, exposedVolume, soh);
         RaiseLocalEvent(gridUid, ref ev);
     }
 
@@ -300,7 +313,7 @@ public partial class AtmosphereSystem
     [ByRefEvent] private record struct IsTileAirBlockedMethodEvent
         (EntityUid Grid, Vector2i Tile, AtmosDirection Direction = AtmosDirection.All, MapGridComponent? MapGridComponent = null, bool Result = false, bool Handled = false)
     {
-        /// <summary> 
+        /// <summary>
         ///     True if one of the enabled blockers has <see cref="AirtightComponent.NoAirWhenFullyAirBlocked"/>. Note
         ///     that this does not actually check if all directions are blocked.
         /// </summary>
@@ -321,7 +334,7 @@ public partial class AtmosphereSystem
         (EntityUid Grid, Vector2i Tile, MapGridComponent? MapGridComponent = null, bool Handled = false);
 
     [ByRefEvent] private record struct HotspotExposeMethodEvent
-        (EntityUid Grid, Vector2i Tile, float ExposedTemperature, float ExposedVolume, bool soh, bool Handled = false);
+        (EntityUid Grid, EntityUid? SparkSourceUid, Vector2i Tile, float ExposedTemperature, float ExposedVolume, bool soh, bool Handled = false);
 
     [ByRefEvent] private record struct HotspotExtinguishMethodEvent
         (EntityUid Grid, Vector2i Tile, bool Handled = false);

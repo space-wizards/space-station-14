@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Weapons.Melee;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -29,7 +30,7 @@ public sealed class MeleeWindupOverlay : Overlay
         _player = playerManager;
         _melee = _entManager.EntitySysManager.GetEntitySystem<SharedMeleeWeaponSystem>();
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
-        var sprite = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
+        var sprite = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
         _texture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
         _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
     }
@@ -44,9 +45,7 @@ public sealed class MeleeWindupOverlay : Overlay
             return;
         }
 
-        var comp = _melee.GetWeapon(owner.Value);
-
-        if (comp == null)
+        if (!_melee.TryGetWeapon(owner.Value, out var meleeUid, out var comp))
             return;
 
         var handle = args.WorldHandle;
@@ -67,7 +66,7 @@ public sealed class MeleeWindupOverlay : Overlay
             return;
         }
 
-        if (!xformQuery.TryGetComponent(comp.Owner, out var xform) ||
+        if (!xformQuery.TryGetComponent(meleeUid, out var xform) ||
             xform.MapID != args.MapId)
         {
             return;
@@ -84,7 +83,7 @@ public sealed class MeleeWindupOverlay : Overlay
         // Use the sprite itself if we know its bounds. This means short or tall sprites don't get overlapped
         // by the bar.
         float yOffset;
-        if (spriteQuery.TryGetComponent(comp.Owner, out var sprite))
+        if (spriteQuery.TryGetComponent(meleeUid, out var sprite))
         {
             yOffset = -sprite.Bounds.Height / 2f - 0.05f;
         }
@@ -106,17 +105,17 @@ public sealed class MeleeWindupOverlay : Overlay
         const float endX = 22f;
 
         // Area marking where to release
-        var ReleaseWidth = 2f * SharedMeleeWeaponSystem.GracePeriod / (float) comp.WindupTime.TotalSeconds * EyeManager.PixelsPerMeter;
-        var releaseMiddle = (endX - startX) / 2f + startX;
+        var releaseWidth = 2f * SharedMeleeWeaponSystem.GracePeriod / (float) _melee.GetWindupTime(meleeUid, owner.Value, comp).TotalSeconds * EyeManager.PixelsPerMeter;
+        const float releaseMiddle = (endX - startX) / 2f + startX;
 
-        var releaseBox = new Box2(new Vector2(releaseMiddle - ReleaseWidth / 2f, 3f) / EyeManager.PixelsPerMeter,
-            new Vector2(releaseMiddle + ReleaseWidth / 2f, 4f) / EyeManager.PixelsPerMeter);
+        var releaseBox = new Box2(new Vector2(releaseMiddle - releaseWidth / 2f, 3f) / EyeManager.PixelsPerMeter,
+            new Vector2(releaseMiddle + releaseWidth / 2f, 4f) / EyeManager.PixelsPerMeter);
 
         releaseBox = releaseBox.Translated(position);
         handle.DrawRect(releaseBox, Color.LimeGreen);
 
         // Wraps around back to 0
-        var totalDuration = comp.WindupTime.TotalSeconds * 2;
+        var totalDuration = _melee.GetWindupTime(meleeUid, owner.Value, comp).TotalSeconds * 2;
 
         var elapsed = (currentTime - comp.WindUpStart.Value).TotalSeconds % (2 * totalDuration);
         var value = elapsed / totalDuration;
@@ -131,11 +130,11 @@ public sealed class MeleeWindupOverlay : Overlay
         var xPos = (endX - startX) * fraction + startX;
 
         // In pixels
-        const float Width = 2f;
+        const float width = 2f;
         // If we hit the end we won't draw half the box so we need to subtract the end pos from it
-        var endPos = xPos + Width / 2f;
+        var endPos = xPos + width / 2f;
 
-        var box = new Box2(new Vector2(Math.Max(startX, endPos - Width), 3f) / EyeManager.PixelsPerMeter,
+        var box = new Box2(new Vector2(Math.Max(startX, endPos - width), 3f) / EyeManager.PixelsPerMeter,
             new Vector2(Math.Min(endX, endPos), 4f) / EyeManager.PixelsPerMeter);
 
         box = box.Translated(position);

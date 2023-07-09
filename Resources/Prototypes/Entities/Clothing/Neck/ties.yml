@@ -8,6 +8,10 @@
     sprite: Clothing/Neck/Ties/redtie.rsi
   - type: Clothing
     sprite: Clothing/Neck/Ties/redtie.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingNeckBase
@@ -19,3 +23,18 @@
     sprite: Clothing/Neck/Ties/dettie.rsi
   - type: Clothing
     sprite: Clothing/Neck/Ties/dettie.rsi
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTieSci
+  name: scientist's tie
+  description: Why do we all have to wear these ridiculous ties?
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/scitie.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Ties/scitie.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon

@@ -1,6 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Gameplay;
@@ -9,12 +8,7 @@ using Content.Shared.Verbs;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Verbs.UI
 {
@@ -100,7 +94,7 @@ namespace Content.Client.Verbs.UI
 
             // Show the menu at mouse pos
             menu.SetPositionLast();
-            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, (1, 1));
+            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, new Vector2(1, 1));
             menu.Open(box);
         }
 

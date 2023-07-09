@@ -15,11 +15,14 @@ implanter-label = [color=white]Implant: {$currentEntities}{$lineBreak}Mode: {$mo
 
 ## Implanter Actions
 
-open-storage-implant-action-name = open storage implant
-open-storage-implant-action-description = opens the storage implant embedded under your skin
+open-storage-implant-action-name = Open Storage Implant
+open-storage-implant-action-description = Opens the storage implant embedded under your skin
 
-activate-micro-bomb-action-name = activate micro bomb
-activate-micro-bomb-action-description = activates your internal microbomb, completely destroying you and your equipment
+activate-micro-bomb-action-name = Activate Microbomb
+activate-micro-bomb-action-description = Activates your internal microbomb, completely destroying you and your equipment
 
-use-freedom-implant-action-name = use freedom implant
-use-freedom-implant-action-description = activating the implant will free you from any hand restraints
+use-freedom-implant-action-name = Break Free
+use-freedom-implant-action-description = Activating your freedom implant will free you from any hand restraints
+
+open-uplink-implant-action-name = Open Uplink
+open-uplink-implant-action-description = Opens the syndicate uplink embedded under your skin

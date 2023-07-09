@@ -148,6 +148,9 @@ namespace Content.Client.Construction.UI
 
             foreach (var recipe in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
+                if (recipe.Hide)
+                    continue;
+
                 if (!string.IsNullOrEmpty(search))
                 {
                     if (!recipe.Name.ToLowerInvariant().Contains(search.Trim().ToLowerInvariant()))
@@ -286,7 +289,14 @@ namespace Content.Client.Construction.UI
 
         private void UpdateGhostPlacement()
         {
-            if (_selected == null || _selected.Type != ConstructionType.Structure) return;
+            if (_selected == null)
+                return;
+
+            if (_selected.Type != ConstructionType.Structure)
+            {
+                _placementManager.Clear();
+                return;
+            }
 
             var constructSystem = _systemManager.GetEntitySystem<ConstructionSystem>();
 
@@ -335,6 +345,7 @@ namespace Content.Client.Construction.UI
         {
             _constructionSystem = system;
             system.ToggleCraftingWindow += SystemOnToggleMenu;
+            system.FlipConstructionPrototype += SystemFlipConstructionPrototype;
             system.CraftingAvailabilityChanged += SystemCraftingAvailabilityChanged;
             system.ConstructionGuideAvailable += SystemGuideAvailable;
             if (_uiManager.GetActiveUIWidgetOrNull<GameTopMenuBar>() != null)
@@ -351,6 +362,7 @@ namespace Content.Client.Construction.UI
                 throw new InvalidOperationException();
 
             system.ToggleCraftingWindow -= SystemOnToggleMenu;
+            system.FlipConstructionPrototype -= SystemFlipConstructionPrototype;
             system.CraftingAvailabilityChanged -= SystemCraftingAvailabilityChanged;
             system.ConstructionGuideAvailable -= SystemGuideAvailable;
             _constructionSystem = null;
@@ -383,6 +395,22 @@ namespace Content.Client.Construction.UI
                 WindowOpen = true;
                 _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.Pressed = true; // This does not call CraftingButtonToggled
             }
+        }
+
+        private void SystemFlipConstructionPrototype(object? sender, EventArgs eventArgs)
+        {
+            if (!_placementManager.IsActive || _placementManager.Eraser)
+            {
+                return;
+            }
+
+            if (_selected == null || _selected.Mirror == String.Empty)
+            {
+                return;
+            }
+
+            _selected = _prototypeManager.Index<ConstructionPrototype>(_selected.Mirror);
+            UpdateGhostPlacement();
         }
 
         private void SystemGuideAvailable(object? sender, string e)

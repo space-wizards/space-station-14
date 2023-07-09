@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Weapons.Melee.Components;
 using Content.Shared.Weapons;
 using Content.Shared.Weapons.Melee;
@@ -15,7 +16,6 @@ public sealed partial class MeleeWeaponSystem
     /// </summary>
     private const float DamageAnimationLength = 0.30f;
 
-    private const string AnimationKey = "melee-animation";
     private const string DamageAnimationKey = "damage-effect";
     private const string FadeAnimationKey = "melee-fade";
     private const string SlashAnimationKey = "melee-slash";
@@ -114,7 +114,7 @@ public sealed partial class MeleeWeaponSystem
     /// <summary>
     /// Does all of the melee effects for a player that are predicted, i.e. character lunge and weapon animation.
     /// </summary>
-    public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation)
+    public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation, bool predicted = true)
     {
         if (!Timing.IsFirstTimePredicted)
             return;
@@ -139,25 +139,31 @@ public sealed partial class MeleeWeaponSystem
 
         sprite.NoRotation = true;
         sprite.Rotation = localPos.ToWorldAngle();
-        var distance = Math.Clamp(localPos.Length / 2f, 0.2f, 1f);
+        var distance = Math.Clamp(localPos.Length() / 2f, 0.2f, 1f);
+
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var xform = xformQuery.GetComponent(animationUid);
 
         switch (arcComponent.Animation)
         {
             case WeaponArcAnimation.Slash:
                 _animation.Play(animationUid, GetSlashAnimation(sprite, angle), SlashAnimationKey);
+                TransformSystem.SetParent(animationUid, xform, user, userXform);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.065f, 0.065f + 0.05f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.Thrust:
                 _animation.Play(animationUid, GetThrustAnimation(sprite, distance), ThrustAnimationKey);
+                TransformSystem.SetParent(animationUid, xform, user, userXform);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.None:
-                var mapPos = userXform.WorldPosition;
-                var xform = Transform(animationUid);
-                xform.AttachToGridOrMap();
-                xform.WorldPosition = mapPos + (userXform.WorldRotation - userXform.LocalRotation).RotateVec(localPos);
+                var (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform, xformQuery);
+                TransformSystem.AttachToGridOrMap(animationUid, xform);
+                var worldPos = mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos);
+                var newLocalPos = TransformSystem.GetInvWorldMatrix(xform.ParentUid, xformQuery).Transform(worldPos);
+                TransformSystem.SetLocalPositionNoLerp(xform, newLocalPos);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);
                 break;
@@ -269,7 +275,7 @@ public sealed partial class MeleeWeaponSystem
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(direction.Normalized * 0.15f, 0f),
+                        new AnimationTrackProperty.KeyFrame(direction.Normalized() * 0.15f, 0f),
                         new AnimationTrackProperty.KeyFrame(Vector2.Zero, length)
                     }
                 }

@@ -28,6 +28,12 @@
         amount: 2
         doAfter: 1
 
+    - to: signalvalve
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
     - to: port
       steps:
       - material: Steel
@@ -90,6 +96,22 @@
 
   - node: valve
     entity: GasValve
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: signalvalve
+    entity: SignalControlledValve
     edges:
     - to: start
       conditions:

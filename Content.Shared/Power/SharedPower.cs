@@ -3,11 +3,11 @@
 namespace Content.Shared.Power
 {
     [Serializable, NetSerializable]
-    public enum ChargeState
+    public enum ChargeState : byte
     {
-        Still,
-        Charging,
-        Discharging,
+        Still = 0,
+        Charging = 1,
+        Discharging = 2,
     }
 
     [Serializable, NetSerializable]

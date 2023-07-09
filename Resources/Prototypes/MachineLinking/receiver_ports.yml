@@ -64,6 +64,31 @@
   description: signal-port-description-med-scanner-receiver
 
 - type: receiverPort
+  id: AutoClose
+  name: signal-port-name-hold-open
+  description: signal-port-description-hold-open
+
+- type: receiverPort
   id: ArtifactAnalyzerReceiver
   name: signal-port-name-artifact-analyzer-receiver
   description: signal-port-description-artifact-analyzer-receiver
+
+- type: receiverPort
+  id: DoorBolt
+  name: signal-port-name-doorbolt
+  description: signal-port-description-doorbolt
+
+- type: receiverPort
+  id: InputA
+  name: signal-port-name-logic-input-a
+  description: signal-port-description-logic-input-a
+
+- type: receiverPort
+  id: InputB
+  name: signal-port-name-logic-input-b
+  description: signal-port-description-logic-input-b
+
+- type: receiverPort
+  id: Input
+  name: signal-port-name-logic-input
+  description: signal-port-description-logic-input

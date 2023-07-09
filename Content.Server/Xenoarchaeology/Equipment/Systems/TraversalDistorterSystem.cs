@@ -90,7 +90,7 @@ public sealed class TraversalDistorterSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, TraversalDistorterComponent component, ref StartCollideEvent args)
     {
-        var otherEnt = args.OtherFixture.Body.Owner;
+        var otherEnt = args.OtherEntity;
 
         if (!HasComp<ArtifactComponent>(otherEnt))
             return;
@@ -101,7 +101,7 @@ public sealed class TraversalDistorterSystem : EntitySystem
 
     private void OnEndCollide(EntityUid uid, TraversalDistorterComponent component, ref EndCollideEvent args)
     {
-        var otherEnt = args.OtherFixture.Body.Owner;
+        var otherEnt = args.OtherEntity;
 
         if (!HasComp<ArtifactComponent>(otherEnt))
             return;

@@ -1,6 +1,6 @@
 <DefaultWindow xmlns="https://spacestation14.io"
             MinSize="300 300"
-            SetSize="300 300"
+            SetSize="300 500"
             Title="{Loc 'airlock-painter-window-title'}">
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
         <Label Name="SelectedSpriteLabel"

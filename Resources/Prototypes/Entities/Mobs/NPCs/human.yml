@@ -31,11 +31,25 @@
   suffix: Dead
   save: false # mobs are currently not saveable.
   id: SalvageHumanCorpse
-  name: unidentified human
-  description: We barely knew ye.
+  name: unidentified corpse
+  description: I think he's dead.
   components:
+  - type: RandomHumanoidAppearance
+    randomizeName: false
   - type: Damageable
     damage:
       types:
-        Blunt: 200
+        Bloodloss: 49
+        Asphyxiation: 76
+        Slash: 56
+        Blunt: 19
+  - type: Inventory
+    templateId: corpse
 
+- type: entity
+  parent: MobHuman
+  id: MobCluwne
+  name: person
+  description: A polymorphed unfortunate.
+  components:
+  - type: Cluwne

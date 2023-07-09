@@ -1,20 +1,12 @@
 using Content.Server.Atmos;
 using Content.Server.Disposal.Tube.Components;
-using Content.Shared.Body.Components;
-using Content.Shared.Item;
 using Robust.Shared.Containers;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Disposal.Unit.Components
 {
-    // TODO: Add gas
     [RegisterComponent]
     public sealed class DisposalHolderComponent : Component, IGasMixtureHolder
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
         public Container Container = null!;
 
         /// <summary>
@@ -31,7 +23,7 @@ namespace Content.Server.Disposal.Unit.Components
         public float TimeLeft { get; set; }
 
         [ViewVariables]
-        public IDisposalTubeComponent? PreviousTube { get; set; }
+        public EntityUid? PreviousTube { get; set; }
 
         [ViewVariables]
         public Direction PreviousDirection { get; set; } = Direction.Invalid;
@@ -40,7 +32,7 @@ namespace Content.Server.Disposal.Unit.Components
         public Direction PreviousDirectionFrom => (PreviousDirection == Direction.Invalid) ? Direction.Invalid : PreviousDirection.GetOpposite();
 
         [ViewVariables]
-        public IDisposalTubeComponent? CurrentTube { get; set; }
+        public EntityUid? CurrentTube { get; set; }
 
         // CurrentDirection is not null when CurrentTube isn't null.
         [ViewVariables]
@@ -57,39 +49,6 @@ namespace Content.Server.Disposal.Unit.Components
         public HashSet<string> Tags { get; set; } = new();
 
         [DataField("air")]
-        public GasMixture Air { get; set; } = new (70);
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            Container = ContainerHelpers.EnsureContainer<Container>(Owner, nameof(DisposalHolderComponent));
-        }
-
-        private bool CanInsert(EntityUid entity)
-        {
-            if (!Container.CanInsert(entity))
-            {
-                return false;
-            }
-
-            return _entMan.HasComponent<ItemComponent>(entity) ||
-                   _entMan.HasComponent<BodyComponent>(entity);
-        }
-
-        public bool TryInsert(EntityUid entity)
-        {
-            if (!CanInsert(entity) || !Container.Insert(entity))
-            {
-                return false;
-            }
-
-            if (_entMan.TryGetComponent(entity, out PhysicsComponent? physics))
-            {
-                _entMan.System<SharedPhysicsSystem>().SetCanCollide(entity, false, body: physics);
-            }
-
-            return true;
-        }
+        public GasMixture Air { get; set; } = new(70);
     }
 }
