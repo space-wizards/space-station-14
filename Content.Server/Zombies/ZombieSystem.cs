@@ -301,6 +301,7 @@ namespace Content.Server.Zombies
                 _humanoidSystem.SetBaseLayerId(target, layer, info.ID);
             }
             _humanoidSystem.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
+            _bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
 
             MetaData(target).EntityName = zombiecomp.BeforeZombifiedEntityName;
             return true;
