@@ -36,7 +36,7 @@ public sealed class StrippableSystem : SharedStrippableSystem
         if (!TryComp(uid, out ClientUserInterfaceComponent? uiComp))
             return;
 
-        foreach (var ui in uiComp.Interfaces)
+        foreach (var ui in uiComp.OpenInterfaces.Values)
         {
             if (ui is StrippableBoundUserInterface stripUi)
                 stripUi.DirtyMenu();

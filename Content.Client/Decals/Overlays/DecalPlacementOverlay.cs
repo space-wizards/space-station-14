@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -54,7 +55,7 @@ public sealed class DecalPlacementOverlay : Overlay
 
         if (snap)
         {
-            localPos = (Vector2) localPos.Floored() + grid.TileSize / 2f;
+            localPos = (Vector2) localPos.Floored() + grid.TileSizeHalfVector;
         }
 
         // Nothing uses snap cardinals so probably don't need preview?
