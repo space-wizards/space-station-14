@@ -30,7 +30,7 @@ public sealed partial class ShuttleSystem
 
     private MapId? _hyperSpaceMap;
 
-    public const float DefaultStartupTime = 5.5f;
+    public const float DefaultStartupTime = 15.5f;
     public const float DefaultTravelTime = 60f;
     public const float DefaultArrivalTime = 5f;
     private const float FTLCooldown = 30f;
