@@ -15,7 +15,9 @@
     canCollide: false
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
-    state: on
+    layers:
+    - state: off
+      map: [ "indicator" ]
   - type: SignalSwitch
   - type: UseDelay
     delay: 0.5 # prevent light-toggling auto-clickers.
@@ -32,6 +34,13 @@
     ports:
       - On
       - Off
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SignalSwitchVisuals.State:
+        indicator:
+          True: {state: on}
+          False: {state: off}
 
 - type: entity
   id: SignalButton

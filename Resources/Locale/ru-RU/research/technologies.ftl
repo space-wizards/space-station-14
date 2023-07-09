@@ -35,6 +35,7 @@ research-technology-grappling = Технология захвата
 research-technology-abnormal-artifact-manipulation = Абнормальное манипулирование артефактами
 research-technology-gravity-manipulation = Манипулирование гравитацией
 research-technology-mobile-anomaly-tech = Мобильные аномалии
+research-technology-hamtr = Мех Х.М.Я.К.
 research-technology-rped = Быстрая замена компонентов
 research-technology-super-parts = Суперкомпоненты
 research-technology-janitorial-equipment = Уборочное оборудование
