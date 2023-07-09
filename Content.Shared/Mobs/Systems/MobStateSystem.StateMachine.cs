@@ -48,7 +48,7 @@ public partial class MobStateSystem
         if (!Resolve(entity, ref component))
             return;
 
-        var ev = new UpdateMobStateEvent {Target = entity, Component = component, Origin = origin};
+        var ev = new UpdateMobStateEvent {Target = entity, Component = component, Origin = origin, State = mobState};
         RaiseLocalEvent(entity, ref ev);
         ChangeState(entity, component, ev.State);
     }

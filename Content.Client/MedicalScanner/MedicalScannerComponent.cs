@@ -1,16 +1,8 @@
-﻿using Content.Shared.DragDrop;
-using Content.Shared.MedicalScanner;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.MedicalScanner;
 
-namespace Content.Client.MedicalScanner
+namespace Content.Client.MedicalScanner;
+
+[RegisterComponent]
+public sealed class MedicalScannerComponent : SharedMedicalScannerComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedMedicalScannerComponent))]
-    public sealed class MedicalScannerComponent : SharedMedicalScannerComponent
-    {
-        public override bool DragDropOn(DragDropEvent eventArgs)
-        {
-            return false;
-        }
-    }
 }

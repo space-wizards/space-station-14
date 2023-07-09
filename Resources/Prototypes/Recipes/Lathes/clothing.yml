@@ -207,6 +207,22 @@
     Durathread: 100
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitHoSAlt
+  result: ClothingUniformJumpsuitHoSAlt
+  completetime: 4
+  materials:
+    Cloth: 300
+    Durathread: 100
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtHoSAlt
+  result: ClothingUniformJumpskirtHoSAlt
+  completetime: 4
+  materials:
+    Cloth: 300
+    Durathread: 100
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitHydroponics
   result: ClothingUniformJumpsuitHydroponics
   completetime: 4
@@ -377,6 +393,20 @@
     Cloth: 300
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitBrigmedic
+  result: ClothingUniformJumpsuitBrigmedic
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtBrigmedic
+  result: ClothingUniformJumpskirtBrigmedic
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitWarden
   result: ClothingUniformJumpsuitWarden
   completetime: 4
@@ -499,21 +529,137 @@
   result: ClothingOuterWinterMusician
   completetime: 3.2
   materials:
-    Cloth: 300
-    Durathread: 300
+    Cloth: 500
 
 - type: latheRecipe
   id: ClothingOuterWinterClown
   result: ClothingOuterWinterClown
   completetime: 3.2
   materials:
-    Cloth: 300
-    Durathread: 300
+    Cloth: 500
 
 - type: latheRecipe
   id: ClothingOuterWinterMime
   result: ClothingOuterWinterMime
   completetime: 3.2
   materials:
-    Cloth: 300
-    Durathread: 300
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterCoat
+  result: ClothingOuterWinterCoat
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterJani
+  result: ClothingOuterWinterJani
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterBar
+  result: ClothingOuterWinterBar
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterChef
+  result: ClothingOuterWinterChef
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterHydro
+  result: ClothingOuterWinterHydro
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterAtmos
+  result: ClothingOuterWinterAtmos
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterEngi
+  result: ClothingOuterWinterEngi
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterCargo
+  result: ClothingOuterWinterCargo
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterMiner
+  result: ClothingOuterWinterMiner
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterMed
+  result: ClothingOuterWinterMed
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterPara
+  result: ClothingOuterWinterPara
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterChem
+  result: ClothingOuterWinterChem
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterGen
+  result: ClothingOuterWinterGen
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterViro
+  result: ClothingOuterWinterViro
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterSci
+  result: ClothingOuterWinterSci
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterRobo
+  result: ClothingOuterWinterRobo
+  completetime: 3.2
+  materials:
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterWinterSec
+  result: ClothingOuterWinterSec
+  completetime: 3.2
+  materials:
+    Cloth: 500

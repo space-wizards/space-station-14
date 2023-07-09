@@ -2,7 +2,7 @@
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, staging, trying ]
     paths:
       - '**.cs'
       - '**.csproj'
@@ -13,6 +13,7 @@ on:
       # why not just do both
       - 'RobustToolbox'
       - 'RobustToolbox/**'
+  merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
     branches: [ master ]
@@ -27,6 +28,7 @@ on:
 
 jobs:
   build:
+    name: Test Packaging
     if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
 

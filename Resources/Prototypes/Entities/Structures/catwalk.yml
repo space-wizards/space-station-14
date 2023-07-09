@@ -8,7 +8,6 @@
   components:
   - type: Clickable
   - type: Sprite
-    netsync: false
     sprite: Structures/catwalk.rsi
     drawdepth: FloorTiles
   - type: Icon
@@ -22,6 +21,11 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepCatwalk
+      params:
+        volume: 8
+  - type: Tag
+    tags:
+      - Catwalk
   - type: Construction
     graph: Catwalk
     node: Catwalk

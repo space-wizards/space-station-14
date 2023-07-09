@@ -1,10 +1,10 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
-using Content.Server.Storage.Components;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Actions;
@@ -15,6 +15,7 @@ using Content.Shared.Ghost;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
+using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -92,13 +93,13 @@ namespace Content.Server.Ghost
             if (EntityManager.HasComponent<VisitingMindComponent>(uid))
                 return;
 
-            if (!EntityManager.TryGetComponent<MindComponent>(uid, out var mind) || !mind.HasMind || mind.Mind!.IsVisitingEntity)
+            if (!EntityManager.TryGetComponent<MindContainerComponent>(uid, out var mind) || !mind.HasMind || mind.Mind.IsVisitingEntity)
                 return;
 
             if (component.MustBeDead && (_mobState.IsAlive(uid) || _mobState.IsCritical(uid)))
                 return;
 
-            _ticker.OnGhostAttempt(mind.Mind!, component.CanReturn);
+            _ticker.OnGhostAttempt(mind.Mind, component.CanReturn);
         }
 
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
@@ -172,7 +173,7 @@ namespace Content.Server.Ghost
 
         private void OnPlayerDetached(EntityUid uid, GhostComponent component, PlayerDetachedEvent args)
         {
-            QueueDel(uid);
+            DeleteEntity(uid);
         }
 
         private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
@@ -199,7 +200,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            actor.PlayerSession.ContentData()!.Mind?.UnVisit();
+            _mindSystem.UnVisit(actor.PlayerSession.ContentData()!.Mind);
         }
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
@@ -236,9 +237,7 @@ namespace Content.Server.Ghost
             if (Deleted(uid) || Terminating(uid))
                 return;
 
-            if (EntityManager.TryGetComponent<MindComponent?>(uid, out var mind))
-                _mindSystem.SetGhostOnShutdown(uid, false, mind);
-            EntityManager.DeleteEntity(uid);
+            QueueDel(uid);
         }
 
         private IEnumerable<GhostWarp> GetLocationWarps()
@@ -260,7 +259,7 @@ namespace Content.Server.Ghost
                 {
                     if (attached == except) continue;
 
-                    TryComp<MindComponent>(attached, out var mind);
+                    TryComp<MindContainerComponent>(attached, out var mind);
 
                     string playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
 
@@ -270,9 +269,9 @@ namespace Content.Server.Ghost
             }
         }
 
-        private void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoEntityStorageAttemptEvent args)
+        private void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
         {
-            args.Cancel();
+            args.Cancelled = true;
         }
 
         /// <summary>

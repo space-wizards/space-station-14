@@ -16,7 +16,7 @@ public sealed class CrewManifestEui : BaseEui
 
         _window.OnClose += () =>
         {
-            SendMessage(new CrewManifestEuiClosed());
+            SendMessage(new CloseEuiMessage());
         };
     }
 

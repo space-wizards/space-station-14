@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Modified from https://github.com/space-wizards/space-station-14/tree/master/Resources/Textures/Objects/Weapons/Melee/captain_sabre.rsi by Taral#6480 (Discord) for ss14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "foam_icon"
+        },
+		{
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

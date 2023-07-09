@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace Content.Server.Storage.Components;
+﻿namespace Content.Server.Storage.Components;
 
 [RegisterComponent]
 public sealed class BluespaceLockerComponent : Component
@@ -54,8 +52,6 @@ public sealed class BluespaceLockerComponent : Component
     /// </summary>
     [DataField("pickLinksFromNonBluespaceLockers"), ViewVariables(VVAccess.ReadWrite)]
     public bool PickLinksFromNonBluespaceLockers = true;
-
-    public CancellationTokenSource? CancelToken;
 
     /// <summary>
     /// Determines if links automatically added get the source locker set as a target

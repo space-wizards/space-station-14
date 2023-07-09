@@ -1,48 +1,24 @@
 ﻿using Content.Server.Fluids.EntitySystems;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Fluids.Components
+namespace Content.Server.Fluids.Components;
+
+/// <summary>
+/// Added to puddles that contain water so it may evaporate over time.
+/// </summary>
+[RegisterComponent, Access(typeof(PuddleSystem))]
+public sealed class EvaporationComponent : Component
 {
-    [RegisterComponent]
-    [Access(typeof(EvaporationSystem))]
-    public sealed class EvaporationComponent : Component
-    {
-        /// <summary>
-        ///     Is this entity actively evaporating? This toggle lets us pause evaporation under certain conditions.
-        /// </summary>
-        [DataField("evaporationToggle")]
-        public bool EvaporationToggle = true;
+    /// <summary>
+    /// The next time we remove the EvaporationSystem reagent amount from this entity.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    public TimeSpan NextTick = TimeSpan.Zero;
 
-        /// <summary>
-        ///     The time that it will take this puddle to lose one fixed unit of solution, in seconds.
-        /// </summary>
-        [DataField("evaporateTime")]
-        public float EvaporateTime { get; set; } = 5f;
-
-        /// <summary>
-        ///     Name of referenced solution. Defaults to <see cref="PuddleComponent.DefaultSolutionName"/>
-        /// </summary>
-        [DataField("solution")]
-        public string SolutionName { get; set; } = PuddleComponent.DefaultSolutionName;
-
-        /// <summary>
-        ///     Lower limit below which puddle won't evaporate. Useful when wanting to leave a stain.
-        ///     Defaults to evaporate completely.
-        /// </summary>
-        [DataField("lowerLimit")]
-        public FixedPoint2 LowerLimit = FixedPoint2.Zero;
-
-        /// <summary>
-        ///     Upper limit above which puddle won't evaporate. Useful when wanting to make sure large puddle will
-        ///     remain forever. Defaults to 100.
-        /// </summary>
-        [DataField("upperLimit")]
-        public FixedPoint2 UpperLimit = FixedPoint2.New(100); //TODO: Consider setting this back to PuddleComponent.DefaultOverflowVolume once that behaviour is fixed.
-
-        /// <summary>
-        ///     The time accumulated since the start.
-        /// </summary>
-        [DataField("accumulator")]
-        public float Accumulator = 0f;
-    }
+    /// <summary>
+    /// How much evaporation occurs every tick.
+    /// </summary>
+    [DataField("evaporationAmount")]
+    public FixedPoint2 EvaporationAmount = FixedPoint2.New(0.3);
 }

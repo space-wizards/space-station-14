@@ -9,7 +9,6 @@
     layers:
       - state: icon
         map: ["analyzer"]
-    netsync: false
   - type: GasAnalyzer
   - type: ActivatableUI
     inHandsOnly: true
@@ -32,3 +31,7 @@
       - DroneUsable
   - type: StaticPrice
     price: 80
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 400
+      Glass: 100

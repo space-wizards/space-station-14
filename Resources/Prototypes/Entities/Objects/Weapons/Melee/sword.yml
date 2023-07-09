@@ -13,6 +13,8 @@
     damage:
       types:
         Slash: 17 #cmon, it has to be at least BETTER than the rest.
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
@@ -38,6 +40,8 @@
     damage:
       types:
         Slash: 25
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/katana.rsi
@@ -60,6 +64,8 @@
     damage:
       types:
         Slash: 20
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/machete.rsi
@@ -80,10 +86,36 @@
     damage:
       types:
         Slash: 33
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: 20
   - type: Clothing
     sprite: Objects/Weapons/Melee/claymore.rsi
     slots:
     - back
+  - type: DisarmMalus
+
+- type: entity
+  name: cutlass
+  parent: BaseItem
+  id: Cutlass
+  description: A wickedly curved blade, often seen in the hands of space pirates.
+  components:
+  - type: Sharp
+  - type: Tag
+    tags:
+    - Machete
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cutlass.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 16
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/cutlass.rsi
   - type: DisarmMalus

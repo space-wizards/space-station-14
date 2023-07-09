@@ -2,22 +2,30 @@
 - type: emote
   id: Scream
   category: Vocal
-  chatMessages: [screams, yells]
+  chatMessages: [screams!]
   chatTriggers:
     - scream
     - screams
+    - screams.
+    - screams!
     - screaming
     - screamed
     - shriek
     - shrieks
+    - shrieks.
+    - shrieks!
     - shrieking
     - shrieked
     - screech
-    - screechs
+    - screeches
+    - screeches.
+    - screeches!
     - screeching
     - screeched
     - yell
     - yells
+    - yells.
+    - yells!
     - yelled
     - yelling
 
@@ -28,32 +36,97 @@
   chatTriggers:
     - laugh
     - laughs
+    - laughs.
+    - laughs!
     - laughing
     - laughed
     - chuckle
     - chuckles
+    - chuckles.
+    - chuckles!
     - chuckled
     - chuckling
     - giggle
     - giggles
+    - giggles.
+    - giggles!
     - giggling
     - giggled
+
+- type: emote
+  id: Sigh
+  category: Vocal
+  chatMessages: [sighs]
+  chatTriggers:
+    - sigh
+    - sighs
+    - sighed
+    - sigh.
+    - sighs.
+    - sighed.
+
+- type: emote
+  id: Whistle
+  category: Vocal
+  chatMessages: [whistle]
+  chatTriggers:
+    - whistle
+    - whistle.
+    - whistle!
+    - whistles
+    - whistles.
+    - whistles!
+    - whistleblowing
+    - whistleblowing.
+    - whistleblowing!
+
+- type: emote
+  id: Crying
+  category: Vocal
+  chatMessages: [crying]
+  chatTriggers:
+    - cry
+    - cry.
+    - cry!
+    - crying
+    - crying.
+    - crying!
+    - cries
+    - cries.
+    - cries!
+
+- type: emote
+  id: Squish
+  category: Vocal
+  chatMessages: [squishing]
+  chatTriggers:
+    - squish
+    - squish.
+    - squish!
+    - squishing
+    - squishing.
+    - squishing!
+    - squishes
+    - squishes.
+    - squishes!
 
 # hand emotes
 - type: emote
   id: Clap
   category: Hands
-  chatMessages: [claps]
+  chatMessages: [claps!]
   chatTriggers:
     - clap
     - claps
+    - claps.
+    - claps!
     - clapping
     - clapped
 
 - type: emote
   id: Snap
   category: Hands
-  chatMessages: [snaps fingers]
+  chatMessages: [snaps fingers] # snaps <{THEIR($ent)}> fingers?
   chatTriggers:
     - snap
     - snaps
@@ -61,6 +134,23 @@
     - snapped
     - snap fingers
     - snaps fingers
+    - snaps fingers.
+    - snaps fingers!
+    - snaps their fingers
+    - snaps their fingers.
+    - snaps their fingers!
     - snapping fingers
     - snapped fingers
+
+- type: emote
+  id: Salute
+  category: Hands
+  chatMessages: [Salute]
+  chatTriggers:
+    - salute
+    - salute.
+    - salute!
+    - salutes
+    - salutes.
+    - salutes!
 

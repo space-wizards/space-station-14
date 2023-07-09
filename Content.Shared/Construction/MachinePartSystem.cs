@@ -1,5 +1,7 @@
 using Content.Shared.Construction.Components;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Examine;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Construction
 {
@@ -8,6 +10,8 @@ namespace Content.Shared.Construction
     /// </summary>
     public sealed class MachinePartSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -24,7 +28,7 @@ namespace Content.Shared.Construction
             {
                 args.PushMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
                                                 ("amount", amount),
-                                                ("requiredElement", Loc.GetString(part))));
+                                                ("requiredElement", Loc.GetString(_prototype.Index<MachinePartPrototype>(part).Name))));
             }
 
             foreach (var (material, amount) in component.MaterialRequirements)
@@ -54,7 +58,8 @@ namespace Content.Shared.Construction
             if (!args.IsInDetailsRange)
                 return;
             args.PushMarkup(Loc.GetString("machine-part-component-on-examine-rating-text", ("rating", component.Rating)));
-            args.PushMarkup(Loc.GetString("machine-part-component-on-examine-type-text", ("type", component.PartType)));
+            args.PushMarkup(Loc.GetString("machine-part-component-on-examine-type-text", ("type",
+                Loc.GetString(_prototype.Index<MachinePartPrototype>(component.PartType).Name))));
         }
     }
 }

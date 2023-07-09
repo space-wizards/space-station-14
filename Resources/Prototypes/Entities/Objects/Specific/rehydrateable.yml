@@ -31,19 +31,20 @@
     enabled: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      density: 5
-      mask:
-      - ItemMask
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      id: "rehydrate"
-      hard: false
-      layer:
-      - LowImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        density: 5
+        mask:
+        - ItemMask
+      rehydrate:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        hard: false
+        layer:
+        - LowImpassable
 
 - type: entity
   parent: PlushieCarp
@@ -74,17 +75,27 @@
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
-    fixtures: # TODO: Make a second fixture.
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      density: 15
-      mask:
-      - ItemMask
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      id: "rehydrate"
-      hard: false
-      layer:
-      - LowImpassable
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        density: 15
+        mask:
+        - ItemMask
+      rehydrate:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        hard: false
+        layer:
+        - LowImpassable
+  # pet fish before rehydrating and he will be nice to you
+  - type: FactionException
+  - type: PettableFriend
+    successString: petting-success-dehydrated-carp
+    failureString: petting-failure-dehydrated-carp
+  - type: EmitSoundOnUse
+    handle: false
+    sound:
+      path: /Audio/Effects/bite.ogg

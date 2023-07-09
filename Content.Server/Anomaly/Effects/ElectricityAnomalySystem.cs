@@ -1,4 +1,5 @@
 ﻿using Content.Server.Electrocution;
+﻿using Content.Server.Emp;
 using Content.Server.Lightning;
 using Content.Server.Power.Components;
 using Content.Shared.Anomaly.Components;
@@ -16,6 +17,7 @@ public sealed class ElectricityAnomalySystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly LightningSystem _lightning = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
+    [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     /// <inheritdoc/>
@@ -55,6 +57,9 @@ public sealed class ElectricityAnomalySystem : EntitySystem
         {
             _lightning.ShootLightning(uid, ent);
         }
+
+        var empRange = component.MaxElectrocuteRange * 3;
+        _emp.EmpPulse(Transform(uid).MapPosition, empRange, component.EmpEnergyConsumption, component.EmpDisabledDuration);
     }
 
     public override void Update(float frameTime)

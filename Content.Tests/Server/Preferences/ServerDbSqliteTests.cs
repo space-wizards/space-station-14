@@ -10,6 +10,7 @@ using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -74,7 +75,7 @@ namespace Content.Tests.Server.Preferences
             var conn = new SqliteConnection("Data Source=:memory:");
             conn.Open();
             builder.UseSqlite(conn);
-            return new ServerDbSqlite(builder.Options);
+            return new ServerDbSqlite(() => builder.Options, true, IoCManager.Resolve<IConfigurationManager>());
         }
 
         [Test]
@@ -106,7 +107,7 @@ namespace Content.Tests.Server.Preferences
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.Initialize();
             prototypeManager.LoadFromStream(new StringReader(Prototypes));
-            await db.InitPrefsAsync(username, HumanoidCharacterProfile.Default());
+            await db.InitPrefsAsync(username, new HumanoidCharacterProfile());
             await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), 1);
             await db.SaveSelectedCharacterIndexAsync(username, 1);
             await db.SaveCharacterSlotAsync(username, null, 1);

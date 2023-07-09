@@ -1,9 +1,7 @@
-using System.Threading.Tasks;
 using Content.Server.Gravity;
 using Content.Server.Power.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Gravity;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -31,29 +29,39 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            {
+                NoClient = true,
+                ExtraPrototypes = Prototypes
+            });
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
 
             EntityUid generator = default;
             var entityMan = server.ResolveDependency<IEntityManager>();
+            var mapMan = server.ResolveDependency<IMapManager>();
 
             MapGridComponent grid1 = null;
             MapGridComponent grid2 = null;
+            EntityUid grid1Entity = default!;
+            EntityUid grid2Entity = default!;
 
             // Create grids
             await server.WaitAssertion(() =>
             {
-                var mapMan = IoCManager.Resolve<IMapManager>();
-
                 var mapId = testMap.MapId;
                 grid1 = mapMan.CreateGrid(mapId);
                 grid2 = mapMan.CreateGrid(mapId);
+                grid1Entity = grid1.Owner;
+                grid2Entity = grid2.Owner;
 
                 generator = entityMan.SpawnEntity("GravityGeneratorDummy", grid2.ToCoordinates());
-                Assert.That(entityMan.HasComponent<GravityGeneratorComponent>(generator));
-                Assert.That(entityMan.HasComponent<ApcPowerReceiverComponent>(generator));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(entityMan.HasComponent<GravityGeneratorComponent>(generator));
+                    Assert.That(entityMan.HasComponent<ApcPowerReceiverComponent>(generator));
+                });
 
                 var powerComponent = entityMan.GetComponent<ApcPowerReceiverComponent>(generator);
                 powerComponent.NeedsPower = false;
@@ -66,13 +74,12 @@ namespace Content.IntegrationTests.Tests
                 var generatorComponent = entityMan.GetComponent<GravityGeneratorComponent>(generator);
                 var powerComponent = entityMan.GetComponent<ApcPowerReceiverComponent>(generator);
 
-                Assert.That(generatorComponent.GravityActive, Is.True);
-
-                var grid1Entity = grid1.Owner;
-                var grid2Entity = grid2.Owner;
-
-                Assert.That(!entityMan.GetComponent<GravityComponent>(grid1Entity).EnabledVV);
-                Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).EnabledVV);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(generatorComponent.GravityActive, Is.True);
+                    Assert.That(!entityMan.GetComponent<GravityComponent>(grid1Entity).EnabledVV);
+                    Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).EnabledVV);
+                });
 
                 // Re-enable needs power so it turns off again.
                 // Charge rate is ridiculously high so it finishes in one tick.
@@ -85,11 +92,11 @@ namespace Content.IntegrationTests.Tests
             {
                 var generatorComponent = entityMan.GetComponent<GravityGeneratorComponent>(generator);
 
-                Assert.That(generatorComponent.GravityActive, Is.False);
-
-                var grid2Entity = grid2.Owner;
-
-                Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).EnabledVV, Is.False);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(generatorComponent.GravityActive, Is.False);
+                    Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).EnabledVV, Is.False);
+                });
             });
 
             await pairTracker.CleanReturnAsync();

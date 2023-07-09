@@ -3,21 +3,32 @@
 
 - type: metabolizerType
   id: Animal
+  name: animal
 
 - type: metabolizerType
   id: Dragon
+  name: dragon
 
 - type: metabolizerType
   id: Human
+  name: human
 
 - type: metabolizerType
   id: Slime
+  name: slime
 
 - type: metabolizerType
   id: Vox
+  name: vox
 
 - type: metabolizerType
   id: Rat
+  name: rat
 
 - type: metabolizerType
   id: Plant
+  name: plant
+
+- type: metabolizerType
+  id: Dwarf
+  name: dwarf

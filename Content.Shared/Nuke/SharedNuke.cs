@@ -1,3 +1,4 @@
+using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nuke
@@ -28,5 +29,10 @@ namespace Content.Shared.Nuke
         public int EnteredCodeLength;
         public int MaxCodeLength;
         public bool AllowArm;
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class NukeDisarmDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 }

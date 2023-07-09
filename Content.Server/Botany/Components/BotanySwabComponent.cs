@@ -12,11 +12,6 @@ namespace Content.Server.Botany
         public float SwabDelay = 2f;
 
         /// <summary>
-        /// Token for interrupting swabbing do after.
-        /// </summary>
-        public CancellationTokenSource? CancelToken;
-
-        /// <summary>
         /// SeedData from the first plant that got swabbed.
         /// </summary>
         public SeedData? SeedData;

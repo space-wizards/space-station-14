@@ -1,0 +1,148 @@
+- type: species
+  id: Arachnid
+  name: species-name-arachnid
+  roundStart: true
+  prototype: MobArachnid
+  sprites: MobArachnidSprites
+  defaultSkinTone: "#385878"
+  markingLimits: MobArachnidMarkingLimits
+  dollPrototype: MobArachnidDummy
+  skinColoration: Hues
+  maleFirstNames: names_arachnid_first
+  femaleFirstNames: names_arachnid_first
+  lastNames: names_arachnid_last
+  sexes:
+  - Unsexed
+
+- type: speciesBaseSprites
+  id: MobArachnidSprites
+  sprites:
+    Head: MobArachnidHead
+    Snout: MobHumanoidAnyMarking
+    Chest: MobArachnidTorso
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    Tail: MobHumanoidAnyMarking
+    Eyes: MobArachnidEyes
+    LArm: MobArachnidLArm
+    RArm: MobArachnidRArm
+    LHand: MobArachnidLHand
+    RHand: MobArachnidRHand
+    LLeg: MobArachnidLLeg
+    RLeg: MobArachnidRLeg
+    LFoot: MobArachnidLFoot
+    RFoot: MobArachnidRFoot
+
+- type: humanoidBaseSprite
+  id: MobArachnidEyes
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: eyes
+
+- type: markingPoints
+  id: MobArachnidMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Hair:
+      points: 0
+      required: false
+    FacialHair:
+      points: 0
+      required: false
+    Tail:
+      points: 1
+      required: true
+      defaultMarkings: [ ArachnidAppendagesDefault ]
+    HeadTop:
+      points: 1
+      required: false
+    HeadSide:
+      points: 1
+      required: false
+    Chest:
+      points: 1
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobArachnidHead
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobArachnidHeadMale
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobArachnidHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobArachnidTorso
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobArachnidTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobArachnidTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobArachnidLLeg
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobArachnidLHand
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobArachnidLArm
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobArachnidLFoot
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobArachnidRLeg
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobArachnidRHand
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobArachnidRArm
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobArachnidRFoot
+  baseSprite:
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: r_foot

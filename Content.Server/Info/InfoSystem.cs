@@ -6,7 +6,7 @@ using Robust.Shared.Log;
 
 namespace Content.Server.Info;
 
-public class InfoSystem : EntitySystem
+public sealed class InfoSystem : EntitySystem
 {
     [Dependency] private readonly IResourceManager _res = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -24,7 +24,7 @@ public class InfoSystem : EntitySystem
         var rules = "Server could not read its rules.";
         try
         {
-            rules = _res.ContentFileReadAllText($"/Server Info/{path}");
+            rules = _res.ContentFileReadAllText($"/ServerInfo/{path}");
         }
         catch (Exception)
         {

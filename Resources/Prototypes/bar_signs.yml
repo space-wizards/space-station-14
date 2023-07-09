@@ -130,6 +130,12 @@
   icon: "emprah"
   description: barsign-prototype-description-emprah
 
+- type: barSign
+  id: Spacebucks
+  name: barsign-prototype-name-spacebucks
+  icon: "spacebucks"
+  description: barsign-prototype-description-spacebucks
+
 # Hidden signs list below this point
 - type: barSign
   id: EmpBarSign

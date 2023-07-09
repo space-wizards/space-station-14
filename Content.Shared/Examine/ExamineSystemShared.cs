@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Eye.Blinding;
+using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
@@ -122,14 +123,12 @@ namespace Content.Shared.Examine
             {
                 if (MobStateSystem.IsDead(examiner, mobState))
                     return DeadExamineRange;
-                else if (MobStateSystem.IsCritical(examiner, mobState) || (TryComp<BlindableComponent>(examiner, out var blind) && blind.Sources > 0))
+
+                if (MobStateSystem.IsCritical(examiner, mobState) || TryComp<BlindableComponent>(examiner, out var blind) && blind.IsBlind)
                     return CritExamineRange;
 
-                else if (TryComp<BlurryVisionComponent>(examiner, out var blurry) && blurry.Magnitude != 0)
-                {
-                    float range = ExamineRange - (2 * (8 - blurry.Magnitude));
-                    return Math.Clamp(range, 2, 16);
-                }
+                if (TryComp<BlurryVisionComponent>(examiner, out var blurry))
+                    return Math.Clamp(ExamineRange - blurry.Magnitude, 2, ExamineRange);
             }
             return ExamineRange;
         }
@@ -159,7 +158,7 @@ namespace Content.Shared.Examine
                 other.MapId == MapId.Nullspace) return false;
 
             var dir = other.Position - origin.Position;
-            var length = dir.Length;
+            var length = dir.Length();
 
             // If range specified also check it
             // TODO: This rounding check is here because the API is kinda eh
@@ -176,7 +175,7 @@ namespace Content.Shared.Examine
             var occluderSystem = Get<OccluderSystem>();
             IoCManager.Resolve(ref entMan);
 
-            var ray = new Ray(origin.Position, dir.Normalized);
+            var ray = new Ray(origin.Position, dir.Normalized());
             var rayResults = occluderSystem
                 .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false).ToList();
 
@@ -319,7 +318,7 @@ namespace Content.Shared.Examine
         /// <seealso cref="PushText"/>
         public void PushMessage(FormattedMessage message)
         {
-            if (message.Tags.Count == 0)
+            if (message.Nodes.Count == 0)
                 return;
 
             if (_doNewLine)

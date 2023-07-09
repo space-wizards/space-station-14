@@ -41,6 +41,13 @@
             - material: Silver
               amount: 20
               doAfter: 15
+        - to: bananiumDoor
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Bananium
+              amount: 5
+              doAfter: 15
         - to: paperDoor
           completed:
             - !type:SnapToGrid { }
@@ -111,6 +118,17 @@
             - !type:SpawnPrototype
               prototype: SheetPaper1
               amount: 20
+          steps:
+            - tool: Anchoring
+              doAfter: 15
+    - node: bananiumDoor
+      entity: BananiumDoor
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialBananium1
+              amount: 5
           steps:
             - tool: Anchoring
               doAfter: 15

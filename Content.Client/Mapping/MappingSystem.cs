@@ -17,12 +17,12 @@ public sealed partial class MappingSystem : EntitySystem
     /// <summary>
     ///     The icon to use for space tiles.
     /// </summary>
-    private readonly SpriteSpecifier _spaceIcon = new SpriteSpecifier.Texture(new ResourcePath("Tiles/cropped_parallax.png"));
+    private readonly SpriteSpecifier _spaceIcon = new SpriteSpecifier.Texture(new ("Tiles/cropped_parallax.png"));
 
     /// <summary>
     ///     The icon to use for entity-eraser.
     /// </summary>
-    private readonly SpriteSpecifier _deleteIcon = new SpriteSpecifier.Texture(new ResourcePath("Interface/VerbIcons/delete.svg.192dpi.png"));
+    private readonly SpriteSpecifier _deleteIcon = new SpriteSpecifier.Texture(new ("Interface/VerbIcons/delete.svg.192dpi.png"));
 
     public string DefaultMappingActions = "/mapping_actions.yml";
 
@@ -80,10 +80,11 @@ public sealed partial class MappingSystem : EntitySystem
 
             var tileIcon = contentTileDef.IsSpace
                 ? _spaceIcon
-                : new SpriteSpecifier.Texture(contentTileDef.Sprite!);
+                : new SpriteSpecifier.Texture(contentTileDef.Sprite!.Value);
 
             ev.Action = new InstantAction()
             {
+                ClientExclusive = true,
                 CheckCanInteract = false,
                 Event = actionEvent,
                 DisplayName = Loc.GetString(tileDef.Name),
@@ -97,6 +98,7 @@ public sealed partial class MappingSystem : EntitySystem
         {
             ev.Action = new InstantAction()
             {
+                ClientExclusive = true,
                 CheckCanInteract = false,
                 Event = actionEvent,
                 DisplayName = "action-name-mapping-erase",
@@ -111,6 +113,7 @@ public sealed partial class MappingSystem : EntitySystem
 
         ev.Action = new InstantAction()
         {
+            ClientExclusive = true,
             CheckCanInteract = false,
             Event = actionEvent,
             DisplayName = actionEvent.EntityType,

@@ -14,19 +14,23 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using System.Linq;
+using System.Numerics;
 using System.Threading;
+using Content.Shared.Eye.Blinding.Components;
+using Robust.Client;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Examine
 {
     [UsedImplicitly]
-    internal sealed class ExamineSystem : ExamineSystemShared
+    public sealed class ExamineSystem : ExamineSystemShared
     {
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly VerbSystem _verbSystem = default!;
+        [Dependency] private readonly IBaseClient _client = default!;
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
@@ -49,7 +53,7 @@ namespace Content.Client.Examine
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine, outsidePrediction: true))
                 .Register<ExamineSystem>();
-            
+
             _idCounter = 0;
         }
 
@@ -117,7 +121,7 @@ namespace Content.Client.Examine
             // Center it on the entity if they use the verb instead.
             verb.Act = () => DoExamine(args.Target, false);
             verb.Text = Loc.GetString("examine-verb-name");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png";
+            verb.Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/examine.svg.192dpi.png"));
             verb.ShowOnExamineTooltip = false;
             verb.ClientExclusive = true;
             args.Verbs.Add(verb);
@@ -132,7 +136,7 @@ namespace Content.Client.Examine
             // Prevent updating a new tooltip.
             if (ev.Id != 0 && ev.Id != _idCounter)
                 return;
-            
+
             // Tooltips coming in from the server generally prioritize
             // opening at the old tooltip rather than the cursor/another entity,
             // since there's probably one open already if it's coming in from the server.
@@ -206,6 +210,7 @@ namespace Content.Client.Examine
                 hBox.AddChild(new SpriteView
                 {
                     Sprite = sprite, OverrideDirection = Direction.South,
+                    SetSize = new Vector2(32, 32),
                     Margin = new Thickness(2, 0, 2, 0),
                 });
             }
@@ -227,8 +232,8 @@ namespace Content.Client.Examine
                 });
             }
 
-            panel.Measure(Vector2.Infinity);
-            var size = Vector2.ComponentMax((minWidth, 0), panel.DesiredSize);
+            panel.Measure(Vector2Helpers.Infinity);
+            var size = Vector2.Max(new Vector2(minWidth, 0), panel.DesiredSize);
 
             _examineTooltipOpen.Open(UIBox2.FromDimensions(_popupPos.Position, size));
         }
@@ -244,9 +249,15 @@ namespace Content.Client.Examine
                 return;
             }
 
-            foreach (var msg in message.Tags.OfType<FormattedMessage.TagText>())
+            foreach (var msg in message.Nodes)
             {
-                if (string.IsNullOrWhiteSpace(msg.Text)) continue;
+                if (msg.Name != null)
+                    continue;
+
+                var text = msg.Value.StringValue ?? "";
+
+                if (string.IsNullOrWhiteSpace(text))
+                    continue;
 
                 var richLabel = new RichTextLabel() { Margin = new Thickness(4, 4, 0, 4)};
                 richLabel.SetMessage(message);
@@ -280,7 +291,7 @@ namespace Content.Client.Examine
                 if (verb is not ExamineVerb examine)
                     continue;
 
-                if (examine.IconTexture == null)
+                if (examine.Icon == null)
                     continue;
 
                 if (!examine.ShowOnExamineTooltip)
@@ -319,9 +330,9 @@ namespace Content.Client.Examine
             }
         }
 
-        public void DoExamine(EntityUid entity, bool centeredOnCursor=true)
+        public void DoExamine(EntityUid entity, bool centeredOnCursor = true, EntityUid? userOverride = null)
         {
-            var playerEnt = _playerManager.LocalPlayer?.ControlledEntity;
+            var playerEnt = userOverride ?? _playerManager.LocalPlayer?.ControlledEntity;
             if (playerEnt == null)
                 return;
 
@@ -333,10 +344,10 @@ namespace Content.Client.Examine
                 canSeeClearly = false;
 
             OpenTooltip(playerEnt.Value, entity, centeredOnCursor, false, knowTarget: canSeeClearly);
-            if (entity.IsClientSide())
+            if (entity.IsClientSide()
+                || _client.RunLevel == ClientRunLevel.SinglePlayerGame) // i.e. a replay
             {
                 message = GetExamineText(entity, playerEnt);
-
                 UpdateTooltipInfo(playerEnt.Value, entity, message);
             }
             else

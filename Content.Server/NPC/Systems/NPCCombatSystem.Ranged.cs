@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
@@ -8,6 +9,7 @@ namespace Content.Server.NPC.Systems;
 
 public sealed partial class NPCCombatSystem
 {
+    [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly RotateToFaceSystem _rotate = default!;
 
     // TODO: Don't predict for hitscan
@@ -26,9 +28,9 @@ public sealed partial class NPCCombatSystem
 
     private void OnRangedStartup(EntityUid uid, NPCRangedCombatComponent component, ComponentStartup args)
     {
-        if (TryComp<SharedCombatModeComponent>(uid, out var combat))
+        if (TryComp<CombatModeComponent>(uid, out var combat))
         {
-            combat.IsInCombatMode = true;
+            _combat.SetInCombatMode(uid, true, combat);
         }
         else
         {
@@ -38,9 +40,9 @@ public sealed partial class NPCCombatSystem
 
     private void OnRangedShutdown(EntityUid uid, NPCRangedCombatComponent component, ComponentShutdown args)
     {
-        if (TryComp<SharedCombatModeComponent>(uid, out var combat))
+        if (TryComp<CombatModeComponent>(uid, out var combat))
         {
-            combat.IsInCombatMode = false;
+            _combat.SetInCombatMode(uid, false, combat);
         }
     }
 
@@ -48,9 +50,10 @@ public sealed partial class NPCCombatSystem
     {
         var bodyQuery = GetEntityQuery<PhysicsComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var combatQuery = GetEntityQuery<SharedCombatModeComponent>();
+        var combatQuery = GetEntityQuery<CombatModeComponent>();
+        var query = EntityQueryEnumerator<NPCRangedCombatComponent, TransformComponent>();
 
-        foreach (var (comp, xform) in EntityQuery<NPCRangedCombatComponent, TransformComponent>())
+        while (query.MoveNext(out var uid, out var comp, out var xform))
         {
             if (comp.Status == CombatStatus.Unspecified)
                 continue;
@@ -70,14 +73,12 @@ public sealed partial class NPCCombatSystem
                 continue;
             }
 
-            if (combatQuery.TryGetComponent(comp.Owner, out var combatMode))
+            if (combatQuery.TryGetComponent(uid, out var combatMode))
             {
-                combatMode.IsInCombatMode = true;
+                _combat.SetInCombatMode(uid, true, combatMode);
             }
 
-            var gun = _gun.GetGun(comp.Owner);
-
-            if (gun == null)
+            if (!_gun.TryGetGun(uid, out var gunUid, out var gun))
             {
                 comp.Status = CombatStatus.NoWeapon;
                 comp.ShootAccumulator = 0f;
@@ -90,7 +91,7 @@ public sealed partial class NPCCombatSystem
             var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
 
             // We'll work out the projected spot of the target and shoot there instead of where they are.
-            var distance = (targetPos - worldPos).Length;
+            var distance = (targetPos - worldPos).Length();
             var oldInLos = comp.TargetInLOS;
 
             // TODO: Should be doing these raycasts in parallel
@@ -98,7 +99,7 @@ public sealed partial class NPCCombatSystem
             if (comp.LOSAccumulator < 0f)
             {
                 comp.LOSAccumulator += UnoccludedCooldown;
-                comp.TargetInLOS = _interaction.InRangeUnobstructed(comp.Owner, comp.Target, distance + 0.1f);
+                comp.TargetInLOS = _interaction.InRangeUnobstructed(uid, comp.Target, distance + 0.1f);
             }
 
             if (!comp.TargetInLOS)
@@ -110,7 +111,7 @@ public sealed partial class NPCCombatSystem
 
             if (!oldInLos && comp.SoundTargetInLOS != null)
             {
-                _audio.PlayPvs(comp.SoundTargetInLOS, comp.Owner);
+                _audio.PlayPvs(comp.SoundTargetInLOS, uid);
             }
 
             comp.ShootAccumulator += frameTime;
@@ -127,7 +128,7 @@ public sealed partial class NPCCombatSystem
             var goalRotation = (targetSpot - worldPos).ToWorldAngle();
             var rotationSpeed = comp.RotationSpeed;
 
-            if (!_rotate.TryRotateTo(comp.Owner, goalRotation, frameTime, comp.AccuracyThreshold, rotationSpeed?.Theta ?? double.MaxValue, xform))
+            if (!_rotate.TryRotateTo(uid, goalRotation, frameTime, comp.AccuracyThreshold, rotationSpeed?.Theta ?? double.MaxValue, xform))
             {
                 continue;
             }
@@ -145,16 +146,16 @@ public sealed partial class NPCCombatSystem
 
             EntityCoordinates targetCordinates;
 
-            if (_mapManager.TryFindGridAt(xform.MapID, targetPos, out var mapGrid))
+            if (_mapManager.TryFindGridAt(xform.MapID, targetPos, out var gridUid, out var mapGrid))
             {
-                targetCordinates = new EntityCoordinates(mapGrid.Owner, mapGrid.WorldToLocal(targetSpot));
+                targetCordinates = new EntityCoordinates(gridUid, mapGrid.WorldToLocal(targetSpot));
             }
             else
             {
                 targetCordinates = new EntityCoordinates(xform.MapUid!.Value, targetSpot);
             }
 
-            _gun.AttemptShoot(comp.Owner, gun, targetCordinates);
+            _gun.AttemptShoot(uid, gunUid, gun, targetCordinates);
         }
     }
 }

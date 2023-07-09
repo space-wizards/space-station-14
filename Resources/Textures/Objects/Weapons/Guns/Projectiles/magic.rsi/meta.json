@@ -19,6 +19,17 @@
       ]
     },
     {
+      "name": "magicm_green",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
       "name": "spell",
       "delays": [
         [

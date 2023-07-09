@@ -8,14 +8,6 @@
   },
   "states": [
     {
-      "name": "booze",
-      "directions": 4
-    },
-    {
-      "name": "soda",
-      "directions": 4
-    },
-    {
       "name": "industrial"
     },
     {

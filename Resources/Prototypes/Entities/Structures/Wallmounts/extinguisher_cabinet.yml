@@ -11,7 +11,6 @@
     - type: InteractionOutline
     - type: Sprite
       sprite: Structures/Wallmounts/extinguisher_cabinet.rsi
-      netsync: false
       snapCardinals: true
       layers:
       - state: frame
@@ -28,10 +27,9 @@
           - FireExtinguisher
       doorSound:
         path: /Audio/Machines/machine_switch.ogg
-    - type: Appearance
-    - type: ItemCabinetVisuals
       openState: open
       closedState: closed
+    - type: Appearance
     - type: ItemSlots
     - type: ContainerContainer
       containers:
@@ -41,6 +39,12 @@
       damageModifierSet: Metallic
     - type: Destructible
       thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 80
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
             damage: 40
@@ -61,6 +65,10 @@
   components:
   - type: ItemCabinet
     opened: true
+    doorSound:
+      path: /Audio/Machines/machine_switch.ogg
+    openState: open
+    closedState: closed
 
 - type: entity
   id: ExtinguisherCabinetFilled
@@ -74,6 +82,10 @@
       whitelist:
         components:
         - FireExtinguisher
+    doorSound:
+      path: /Audio/Machines/machine_switch.ogg
+    openState: open
+    closedState: closed
 
 - type: entity
   id: ExtinguisherCabinetFilledOpen
@@ -82,3 +94,7 @@
   components:
   - type: ItemCabinet
     opened: true
+    doorSound:
+      path: /Audio/Machines/machine_switch.ogg
+    openState: open
+    closedState: closed

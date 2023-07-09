@@ -8,7 +8,7 @@ namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
 /// <summary>
 /// A machine that is combined and linked to the <see cref="AnalysisConsoleComponent"/>
-/// in order to analyze and destroy artifacts.
+/// in order to analyze artifacts and extract points.
 /// </summary>
 [RegisterComponent]
 public sealed class ArtifactAnalyzerComponent : Component
@@ -30,7 +30,7 @@ public sealed class ArtifactAnalyzerComponent : Component
     /// The machine part that modifies analysis duration.
     /// </summary>
     [DataField("machinePartAnalysisDuration", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-    public string MachinePartAnalysisDuration = "ScanningModule";
+    public string MachinePartAnalysisDuration = "Manipulator";
 
     /// <summary>
     /// The modifier raised to the part rating to determine the duration multiplier.

@@ -8,6 +8,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Database;
+using Content.Shared.Hands;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -31,7 +32,6 @@ namespace Content.Shared.Stunnable
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         /// <summary>

@@ -50,5 +50,15 @@
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical" Name="TraitorFooter">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'store-ui-traitor-flavor'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'store-ui-traitor-warning'}" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+            </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

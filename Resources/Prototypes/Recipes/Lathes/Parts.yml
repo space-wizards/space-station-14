@@ -16,29 +16,11 @@
     Plastic: 50
 
 - type: latheRecipe
-  id: MicroLaserStockPart
-  result: MicroLaserStockPart
-  completetime: 1
-  materials:
-    Steel: 50
-    Glass: 50
-    Plastic: 50
-
-- type: latheRecipe
   id: MicroManipulatorStockPart
   result: MicroManipulatorStockPart
   completetime: 1
   materials:
     Steel: 50
-    Plastic: 50
-
-- type: latheRecipe
-  id: ScanningModuleStockPart
-  result: ScanningModuleStockPart
-  completetime: 1
-  materials:
-    Steel: 50
-    Glass: 50
     Plastic: 50
 
 #Rating 2
@@ -61,16 +43,6 @@
     Plasma: 75
 
 - type: latheRecipe
-  id: HighPowerMicroLaserStockPart
-  result: HighPowerMicroLaserStockPart
-  completetime: 3
-  materials:
-    Steel: 150
-    Glass: 150
-    Plastic: 150
-    Plasma: 50
-
-- type: latheRecipe
   id: NanoManipulatorStockPart
   result: NanoManipulatorStockPart
   completetime: 3
@@ -78,16 +50,6 @@
     Steel: 150
     Plastic: 150
     Plasma: 75
-
-- type: latheRecipe
-  id: AdvancedScanningModuleStockPart
-  result: AdvancedScanningModuleStockPart
-  completetime: 3
-  materials:
-    Steel: 150
-    Glass: 150
-    Plastic: 150
-    Plasma: 50
     
 #Rating 3
 - type: latheRecipe
@@ -111,17 +73,6 @@
     Gold: 125
 
 - type: latheRecipe
-  id: UltraHighPowerMicroLaserStockPart
-  result: UltraHighPowerMicroLaserStockPart
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
-    Plasma: 100
-    Gold: 100
-
-- type: latheRecipe
   id: PicoManipulatorStockPart
   result: PicoManipulatorStockPart
   completetime: 3
@@ -130,14 +81,3 @@
     Plastic: 250
     Plasma: 100
     Gold: 125
-
-- type: latheRecipe
-  id: PhasicScanningModuleStockPart
-  result: PhasicScanningModuleStockPart
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
-    Plasma: 100
-    Gold: 100

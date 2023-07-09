@@ -7,3 +7,4 @@ admin-player-actions-window-announce = Announce
 admin-player-actions-window-shuttle = (Re)call Shuttle
 admin-player-actions-window-admin-logs = Admin Logs
 admin-player-actions-window-admin-notes = Admin Notes
+admin-player-actions-window-admin-fax = Admin Fax

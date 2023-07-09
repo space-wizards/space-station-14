@@ -1,9 +1,10 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Shared.Anomaly;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Anomaly.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SharedAnomalySystem))]
 public sealed class GeneratingAnomalyGeneratorComponent : Component
 {
     /// <summary>

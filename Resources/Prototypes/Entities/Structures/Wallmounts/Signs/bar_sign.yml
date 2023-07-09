@@ -246,3 +246,12 @@
   components:
   - type: BarSign
     current: Emprah
+
+- type: entity
+  parent: BaseBarSign
+  id: BarSignSpacebucks
+  name: Spacebucks
+  description: You can't get away from them, even in space.
+  components:
+  - type: BarSign
+    current: Spacebucks

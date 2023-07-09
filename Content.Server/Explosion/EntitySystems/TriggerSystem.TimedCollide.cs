@@ -19,7 +19,7 @@ public sealed partial class TriggerSystem
     {
         //Ensures the entity trigger will have an active component
         EnsureComp<ActiveTriggerOnTimedCollideComponent>(uid);
-        var otherUID = args.OtherFixture.Body.Owner;
+        var otherUID = args.OtherEntity;
         if (component.Colliding.ContainsKey(otherUID))
             return;
         component.Colliding.Add(otherUID, 0);
@@ -27,7 +27,7 @@ public sealed partial class TriggerSystem
 
     private void OnTimerEndCollide(EntityUid uid, TriggerOnTimedCollideComponent component, ref EndCollideEvent args)
     {
-        var otherUID = args.OtherFixture.Body.Owner;
+        var otherUID = args.OtherEntity;
         component.Colliding.Remove(otherUID);
 
         if (component.Colliding.Count == 0 && HasComp<ActiveTriggerOnTimedCollideComponent>(uid))

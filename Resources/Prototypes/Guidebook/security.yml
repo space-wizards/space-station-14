@@ -1,0 +1,11 @@
+﻿- type: guideEntry
+  id: Security
+  name: guide-entry-security
+  text: "/ServerInfo/Guidebook/Security/Security.xml"
+  children:
+    - DNA
+
+- type: guideEntry
+  id: DNA
+  name: guide-entry-dna
+  text: "/ServerInfo/Guidebook/Security/DNA.xml"

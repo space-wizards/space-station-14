@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
@@ -65,7 +66,7 @@ public sealed class ActionButton : Control
         HighlightRect = new PanelContainer
         {
             StyleClasses = {StyleNano.StyleClassHandSlotHighlight},
-            MinSize = (32, 32),
+            MinSize = new Vector2(32, 32),
             Visible = false
         };
         _bigActionIcon = new TextureRect
@@ -94,7 +95,8 @@ public sealed class ActionButton : Control
             Name = "Big Sprite",
             HorizontalExpand = true,
             VerticalExpand = true,
-            Scale = (2, 2),
+            Scale = new Vector2(2, 2),
+            SetSize = new Vector2(64, 64),
             Visible = false,
             OverrideDirection = Direction.South,
         };
@@ -112,11 +114,11 @@ public sealed class ActionButton : Control
             Orientation = LayoutOrientation.Horizontal,
             HorizontalExpand = true,
             VerticalExpand = true,
-            MinSize = (64, 64)
+            MinSize = new Vector2(64, 64)
         };
         paddingBoxItemIcon.AddChild(new Control()
         {
-            MinSize = (32, 32),
+            MinSize = new Vector2(32, 32),
         });
         paddingBoxItemIcon.AddChild(new Control
         {
@@ -157,6 +159,7 @@ public sealed class ActionButton : Control
 
     protected override void OnThemeUpdated()
     {
+        base.OnThemeUpdated();
         Button.Texture = Theme.ResolveTexture("SlotBackground");
         Label.FontColorOverride = Theme.ResolveColorOrSpecified("whiteText");
     }

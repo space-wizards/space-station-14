@@ -27,13 +27,6 @@ public sealed class WeldableComponent : SharedWeldableComponent
     public bool Weldable = true;
 
     /// <summary>
-    ///     How much fuel does it take to weld/unweld entity.
-    /// </summary>
-    [DataField("fuel")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float FuelConsumption = 1f;
-
-    /// <summary>
     ///     How much time does it take to weld/unweld entity.
     /// </summary>
     [DataField("time")]
@@ -48,14 +41,8 @@ public sealed class WeldableComponent : SharedWeldableComponent
     public string? WeldedExamineMessage = "weldable-component-examine-is-welded";
 
     /// <summary>
-    ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public bool BeingWelded;
-
-    /// <summary>
     ///     Is this entity currently welded shut?
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField("isWelded")]
     public bool IsWelded;
 }

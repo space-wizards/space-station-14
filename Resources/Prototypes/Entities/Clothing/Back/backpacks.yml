@@ -23,6 +23,9 @@
     interfaces:
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
+  # to prevent bag open/honk spam
+  - type: UseDelay
+    delay: 0.5
 
 - type: entity
   parent: ClothingBackpack
@@ -38,12 +41,33 @@
 
 - type: entity
   parent: ClothingBackpack
+  id: ClothingBackpackIan
+  name: Ian's backpack
+  description: Sometimes he wears it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/ian.rsi
+  - type: Storage
+    storageOpenSound:
+      collection: IanBark
+
+- type: entity
+  parent: ClothingBackpack
   id: ClothingBackpackSecurity
   name: security backpack
   description: It's a very robust backpack.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/security.rsi
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackBrigmedic
+  name: brigmedic backpack
+  description: It's a very sterile backpack.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/brigmedic.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -93,11 +117,11 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackHydroponics
-  name: botany backpack
+  name: hydroponics backpack
   description: It's a backpack made of all-natural fibers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/botany.rsi
+    sprite: Clothing/Back/Backpacks/hydroponics.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -119,12 +143,30 @@
 
 - type: entity
   parent: ClothingBackpack
+  id: ClothingBackpackGenetics
+  name: genetics backpack
+  description: A backpack designed to be super tough, just in case someone hulks out on you.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/genetics.rsi
+
+- type: entity
+  parent: ClothingBackpack
   id: ClothingBackpackSalvage
   name: salvage bag
   description: A robust backpack for stashing your loot.
   components:
     - type: Sprite
       sprite: Clothing/Back/Backpacks/salvage.rsi
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackMerc
+  name: merc bag
+  description: A backpack that has been in many dangerous places, a reliable combat backpack.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Backpacks/merc.rsi
 
 #ERT
 - type: entity
@@ -201,3 +243,16 @@
     equippedPrefix: holding
   - type: Storage
     capacity: 9999
+
+- type: entity
+  parent: ClothingBackpackClown
+  id: ClothingBackpackCluwne
+  name: jiggles von jonkerton
+  suffix: Unremoveable
+  description: It's a backpack made by Jonk! Co.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/cluwne.rsi
+  - type: Unremoveable
+    deleteOnDrop: false
+

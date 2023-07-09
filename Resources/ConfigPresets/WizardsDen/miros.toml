@@ -1,0 +1,11 @@
+﻿# Configuration preset used on Wizard's Den Miros
+
+[game]
+hostname = "[EN] Wizard's Den Miros [EU West 2]"
+soft_max_players = 50
+
+[net]
+tickrate = 20
+
+[hub]
+tags = "lang:en,region:eu_w,rp:low"

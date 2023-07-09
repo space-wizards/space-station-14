@@ -10,6 +10,7 @@ public static class AdminNotesExtensions
         return new SharedAdminNote(
             note.Id,
             note.RoundId,
+            note.PlayerUserId,
             note.Message,
             note.CreatedBy.LastSeenUserName,
             note.LastEditedBy.LastSeenUserName,

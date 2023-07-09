@@ -1,5 +1,7 @@
 using System.Threading;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Forensics
 {
@@ -19,6 +21,12 @@ namespace Content.Server.Forensics
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public List<string> Fibers = new();
+
+        /// <summary>
+        /// DNA that the forensic scanner found from the <see cref="DNAComponent"/> on an entity.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public List<string> DNAs = new();
 
         /// <summary>
         /// What is the name of the entity that was scanned last?
@@ -66,5 +74,12 @@ namespace Content.Server.Forensics
         /// </summary>
         [DataField("soundPrint")]
         public SoundSpecifier SoundPrint = new SoundPathSpecifier("/Audio/Machines/short_print_and_rip.ogg");
+
+        /// <summary>
+        /// What the machine will print
+        /// </summary>
+        [DataField("machineOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string MachineOutput = "ForensicReportPaper";
+
     }
 }

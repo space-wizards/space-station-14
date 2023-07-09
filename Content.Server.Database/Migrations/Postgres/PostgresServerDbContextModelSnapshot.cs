@@ -19,7 +19,7 @@ namespace Content.Server.Database.Migrations.Postgres
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -302,8 +302,7 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasKey("Id")
                         .HasName("PK_admin_rank_flag");
 
-                    b.HasIndex("AdminRankId")
-                        .HasDatabaseName("IX_admin_rank_flag_admin_rank_id");
+                    b.HasIndex("AdminRankId");
 
                     b.HasIndex("Flag", "AdminRankId")
                         .IsUnique();
@@ -408,9 +407,10 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("connection_log", (string)null);
-
-                    b.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
+                    b.ToTable("connection_log", null, t =>
+                        {
+                            t.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
+                        });
                 });
 
             modelBuilder.Entity("Content.Server.Database.Job", b =>
@@ -438,8 +438,7 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasKey("Id")
                         .HasName("PK_job");
 
-                    b.HasIndex("ProfileId")
-                        .HasDatabaseName("IX_job_profile_id");
+                    b.HasIndex("ProfileId");
 
                     b.HasIndex("ProfileId", "JobName")
                         .IsUnique();
@@ -449,6 +448,37 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasFilter("priority = 3");
 
                     b.ToTable("job", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("play_time_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("player_id");
+
+                    b.Property<TimeSpan>("TimeSpent")
+                        .HasColumnType("interval")
+                        .HasColumnName("time_spent");
+
+                    b.Property<string>("Tracker")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("tracker");
+
+                    b.HasKey("Id")
+                        .HasName("PK_play_time");
+
+                    b.HasIndex("PlayerId", "Tracker")
+                        .IsUnique();
+
+                    b.ToTable("play_time", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Player", b =>
@@ -501,40 +531,10 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("player", (string)null);
-
-                    b.HasCheckConstraint("LastSeenAddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= last_seen_address");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("play_time_id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("PlayerId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("player_id");
-
-                    b.Property<TimeSpan>("TimeSpent")
-                        .HasColumnType("interval")
-                        .HasColumnName("time_spent");
-
-                    b.Property<string>("Tracker")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("tracker");
-
-                    b.HasKey("Id")
-                        .HasName("PK_play_time");
-
-                    b.HasIndex("PlayerId", "Tracker")
-                        .IsUnique();
-
-                    b.ToTable("play_time", (string)null);
+                    b.ToTable("player", null, t =>
+                        {
+                            t.HasCheckConstraint("LastSeenAddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= last_seen_address");
+                        });
                 });
 
             modelBuilder.Entity("Content.Server.Database.Preference", b =>
@@ -729,6 +729,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("inet")
                         .HasColumnName("address");
 
+                    b.Property<bool>("AutoDelete")
+                        .HasColumnType("boolean")
+                        .HasColumnName("auto_delete");
+
                     b.Property<DateTime>("BanTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("ban_time");
@@ -736,6 +740,10 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<Guid?>("BanningAdmin")
                         .HasColumnType("uuid")
                         .HasColumnName("banning_admin");
+
+                    b.Property<int>("ExemptFlags")
+                        .HasColumnType("integer")
+                        .HasColumnName("exempt_flags");
 
                     b.Property<DateTime?>("ExpirationTime")
                         .HasColumnType("timestamp with time zone")
@@ -761,11 +769,32 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("server_ban", (string)null);
+                    b.ToTable("server_ban", null, t =>
+                        {
+                            t.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
 
-                    b.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
+                            t.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+                        });
+                });
 
-                    b.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+            modelBuilder.Entity("Content.Server.Database.ServerBanExemption", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<int>("Flags")
+                        .HasColumnType("integer")
+                        .HasColumnName("flags");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_server_ban_exemption");
+
+                    b.ToTable("server_ban_exemption", null, t =>
+                        {
+                            t.HasCheckConstraint("FlagsNotZero", "flags != 0");
+                        });
                 });
 
             modelBuilder.Entity("Content.Server.Database.ServerBanHit", b =>
@@ -847,11 +876,12 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("server_role_ban", (string)null);
+                    b.ToTable("server_role_ban", null, t =>
+                        {
+                            t.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
 
-                    b.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
-
-                    b.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+                            t.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+                        });
                 });
 
             modelBuilder.Entity("Content.Server.Database.ServerRoleUnban", b =>
@@ -935,8 +965,8 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasKey("Id")
                         .HasName("PK_trait");
 
-                    b.HasIndex("ProfileId")
-                        .HasDatabaseName("IX_trait_profile_id");
+                    b.HasIndex("ProfileId", "TraitName")
+                        .IsUnique();
 
                     b.ToTable("trait", (string)null);
                 });

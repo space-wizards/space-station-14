@@ -4,10 +4,18 @@
     xmlns:ui="clr-namespace:Content.Client.ContextMenu.UI"
     MinHeight="{x:Static ui:ContextMenuElement.ElementHeight}">
     <BoxContainer Orientation="Horizontal">
-        <Control
+        <SpriteView
             Name="Icon"
             SetWidth="{x:Static ui:ContextMenuElement.ElementHeight}"
-            SetHeight="{x:Static ui:ContextMenuElement.ElementHeight}"/>
+            SetHeight="{x:Static ui:ContextMenuElement.ElementHeight}"
+            OverrideDirection="South">
+            <Label
+                Name="IconLabel"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                StyleClasses="contextMenuIconLabel"
+                Visible="false"/>
+        </SpriteView>
         <RichTextLabel
             Name="Label"
             MaxWidth="300"

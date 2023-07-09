@@ -20,7 +20,7 @@
     jumpsuit: ClothingUniformJumpsuitScientist
     back: ClothingBackpackScienceFilled
     shoes: ClothingShoesColorWhite
-    outerClothing: ClothingOuterCoatLab
+    outerClothing: ClothingOuterCoatRnd
     id: SciencePDA
     ears: ClothingHeadsetScience
   innerclothingskirt: ClothingUniformJumpskirtScientist

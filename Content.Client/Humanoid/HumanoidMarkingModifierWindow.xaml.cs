@@ -60,11 +60,13 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
         string? state = _protoMan.HasIndex<HumanoidSpeciesSpriteLayer>(modifier.Text) ? modifier.Text : null;
         OnLayerInfoModified?.Invoke(layer, new CustomBaseLayerInfo(state, modifier.Color));
     }
-
-    public void SetState(MarkingSet markings, string species, Color skinColor, Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> info)
+    public void SetState(
+        MarkingSet markings,
+        string species,
+        Color skinColor,
+        Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> info
+    )
     {
-        MarkingPickerWidget.SetData(markings, species, skinColor);
-
         foreach (var (layer, modifier) in _modifiers)
         {
             if (!info.TryGetValue(layer, out var layerInfo))
@@ -75,6 +77,14 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
 
             modifier.SetState(true, layerInfo.ID ?? string.Empty, layerInfo.Color ?? Color.White);
         }
+
+        var eyesColor = Color.White;
+        if (info.TryGetValue(HumanoidVisualLayers.Eyes, out var eyes) && eyes.Color != null)
+        {
+            eyesColor = eyes.Color.Value;
+        }
+
+        MarkingPickerWidget.SetData(markings, species, skinColor, eyesColor);
     }
 
     private sealed class HumanoidBaseLayerModifier : BoxContainer

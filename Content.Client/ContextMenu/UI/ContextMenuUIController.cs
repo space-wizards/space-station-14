@@ -1,8 +1,11 @@
+using System.Numerics;
 using System.Threading;
+using Content.Client.CombatMode;
 using Content.Client.Gameplay;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Timer = Robust.Shared.Timing.Timer;
+
 namespace Content.Client.ContextMenu.UI
 {
     /// <summary>
@@ -13,7 +16,7 @@ namespace Content.Client.ContextMenu.UI
     /// <remarks>
     ///     This largely involves setting up timers to open and close sub-menus when hovering over other menu elements.
     /// </remarks>
-    public sealed class ContextMenuUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
+    public sealed class ContextMenuUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CombatModeSystem>
     {
         public static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
 
@@ -169,8 +172,8 @@ namespace Content.Client.ContextMenu.UI
             // open pop-up adjacent to the parent element. We want the sub-menu elements to align with this element
             // which depends on the panel container style margins.
             var altPos = element.GlobalPosition;
-            var pos = altPos + (element.Width + 2 * ContextMenuElement.ElementMargin, -2 * ContextMenuElement.ElementMargin);
-            element.SubMenu.Open(UIBox2.FromDimensions(pos, (1, 1)), altPos);
+            var pos = altPos + new Vector2(element.Width + 2 * ContextMenuElement.ElementMargin, -2 * ContextMenuElement.ElementMargin);
+            element.SubMenu.Open(UIBox2.FromDimensions(pos, new Vector2(1, 1)), altPos);
 
             // draw on top of other menus
             element.SubMenu.SetPositionLast();
@@ -205,6 +208,21 @@ namespace Content.Client.ContextMenu.UI
             element.OnKeyBindDown -= args => OnKeyBindDown(element, args);
 
             menu.InvalidateMeasure();
+        }
+
+        private void OnCombatModeUpdated()
+        {
+            Close();
+        }
+
+        public void OnSystemLoaded(CombatModeSystem system)
+        {
+            system.LocalPlayerCombatModeUpdated += OnCombatModeUpdated;
+        }
+
+        public void OnSystemUnloaded(CombatModeSystem system)
+        {
+            system.LocalPlayerCombatModeUpdated -= OnCombatModeUpdated;
         }
     }
 }

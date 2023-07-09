@@ -19,6 +19,7 @@ public sealed class BeingDisposedSystem : EntitySystem
         if (TryComp<DisposalHolderComponent>(component.Holder, out var holder))
         {
             args.Gas = holder.Air;
+            args.Handled = true;
         }
     }
 

@@ -1,0 +1,177 @@
+- type: constructionGraph
+  id: Timer
+  start: start
+  graph:
+    - node: start
+      edges:
+      - to: frame
+        steps:
+        - material: Steel
+          amount: 5
+          doAfter: 2
+
+    - node: frame
+      entity: TimerFrame
+      edges:
+      - to: start
+        steps:
+        - tool: Welding
+          doAfter: 4
+        completed:
+        - !type:GivePrototype
+          prototype: SheetSteel1
+          amount: 5
+        - !type:DeleteEntity {}
+      - to: parts
+        steps:
+        - material: Cable
+          amount: 2
+          doAfter: 2
+        - tool: Screwing
+          doAfter: 2
+
+    - node: parts
+      entity: TimerFrame
+      edges:
+      - to: signalElectronics
+        steps:
+        - tag: TimerSignalElectronics
+          store: board
+          name: "signal timer electronics"
+          icon:
+            sprite: "Objects/Misc/module.rsi"
+            state: "charger_APC"
+          doAfter: 1
+      - to: screenElectronics
+        steps:
+        - tag: TimerScreenElectronics
+          store: board
+          name: "screen timer electronics"
+          icon:
+            sprite: "Objects/Misc/module.rsi"
+            state: "charger_APC"
+          doAfter: 1
+      - to: brigElectronics
+        steps:
+        - tag: TimerBrigElectronics
+          store: board
+          name: "brig timer electronics"
+          icon:
+            sprite: "Objects/Misc/module.rsi"
+            state: "charger_APC"
+          doAfter: 1
+      - to: frame
+        steps:
+        - tool: Cutting
+          doAfter: 1
+        completed:
+        - !type:GivePrototype
+          prototype: CableApcStack1
+          amount: 2
+
+    - node: signalElectronics
+      entity: TimerFrame
+      edges:
+      - to: signal
+        steps:
+        - tool: Screwing
+          doAfter: 1
+      - to: parts
+        steps:
+        - tool: Prying
+          doAfter: 1
+        conditions:
+        - !type:ContainerNotEmpty
+          container: board
+        completed:
+        - !type:EmptyAllContainers {}
+
+    - node: screenElectronics
+      edges:
+      - to: screenGlass
+        steps:
+        - material: Glass
+          amount: 2
+          doAfter: 2
+      - to: parts
+        steps:
+        - tool: Prying
+          doAfter: 1
+        conditions:
+        - !type:ContainerNotEmpty
+          container: board
+        completed:
+        - !type:EmptyAllContainers {}
+
+    - node: brigElectronics
+      edges:
+      - to: brigGlass
+        steps:
+        - material: Glass
+          amount: 2
+          doAfter: 2
+      - to: parts
+        steps:
+        - tool: Prying
+          doAfter: 1
+        conditions:
+        - !type:ContainerNotEmpty
+          container: board
+        completed:
+        - !type:EmptyAllContainers {}
+
+    - node: screenGlass
+      entity: TimerFrame
+      edges:
+      - to: screenElectronics
+        steps:
+        - tool: Prying
+          doAfter: 1
+        completed:
+        - !type:GivePrototype
+          prototype: SheetGlass1
+          amount: 2
+      - to: screen
+        steps:
+        - tool: Screwing
+          doAfter: 1
+
+    - node: brigGlass
+      entity: TimerFrame
+      edges:
+      - to: brigElectronics
+        steps:
+        - tool: Prying
+          doAfter: 1
+        completed:
+        - !type:GivePrototype
+          prototype: SheetGlass1
+          amount: 2
+      - to: brig
+        steps:
+        - tool: Screwing
+          doAfter: 1
+
+    - node: signal
+      entity: SignalTimer
+      edges:
+      - to: signalElectronics
+        steps:
+        - tool: Screwing
+          doAfter: 2
+
+    - node: screen
+      entity: ScreenTimer
+      edges:
+      - to: screenGlass
+        steps:
+        - tool: Screwing
+          doAfter: 2
+
+    - node: brig
+      entity: BrigTimer
+      edges:
+      - to: brigGlass
+        steps:
+        - tool: Screwing
+          doAfter: 2

@@ -4,11 +4,12 @@
   suffix: rat king
   parent: MarkerBase
   components:
-  - type: GhostRoleMobSpawner
-    prototype: MobRatKing
+  - type: GhostRole
     name: Rat King
     description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
     rules: You are an antagonist, scavenge, attack, and grow your hoard!
+  - type: GhostRoleMobSpawner
+    prototype: MobRatKing
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -22,11 +23,12 @@
   suffix: Remilia
   parent: MarkerBase
   components:
-  - type: GhostRoleMobSpawner
-    prototype: MobBatRemilia
+  - type: GhostRole
     name: Remilia, the chaplain's familiar
     description: Obey your master. Eat fruit.
     rules: You are an intelligent fruit bat. Follow the chaplain around. Don't cause any trouble unless the chaplain tells you to.
+  - type: GhostRoleMobSpawner
+    prototype: MobBatRemilia
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -40,11 +42,12 @@
   suffix: cerberus
   parent: MarkerBase
   components:
-  - type: GhostRoleMobSpawner
-    prototype: MobCorgiCerberus
+  - type: GhostRole
     name: Cerberus, Evil Familiar
     description: Obey your master. Spread chaos.
     rules: You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
+  - type: GhostRoleMobSpawner
+    prototype: MobCorgiCerberus
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -59,9 +62,10 @@
   suffix: nukeops
   parent: MarkerBase
   components:
+  - type: GhostRole
+    rules: You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
   - type: GhostRoleMobSpawner
     prototype: MobHumanNukeOp
-    rules: You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
   - type: NukeOperativeSpawner
   - type: Sprite
     sprite: Markers/jobs.rsi
@@ -70,4 +74,22 @@
       - sprite: Structures/Wallmounts/signs.rsi
         state: radiation
 
-
+- type: entity
+  noSpawn: true
+  id: SpawnPointLoneNukeOperative
+  name: ghost role spawn point
+  suffix: loneops
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: Lone Operative
+    description: You are a lone nuclear operative. Destroy the station!
+    rules: You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanLoneNuclearOperative
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Structures/Wallmounts/signs.rsi
+        state: radiation

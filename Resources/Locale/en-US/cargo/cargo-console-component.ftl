@@ -43,3 +43,5 @@ cargo-shuttle-console-station-unknown = Unknown
 cargo-shuttle-console-shuttle-not-found = Not found
 cargo-shuttle-console-organics = Detected organic lifeforms on the shuttle
 cargo-no-shuttle = No cargo shuttle found!
+
+cargo-telepad-delay-upgrade = Teleport delay

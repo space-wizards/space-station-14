@@ -1,40 +1,46 @@
-using Content.Server.Cargo.Systems;
 using Content.Server.Cargo.Components;
-using Content.Server.Labels.Components;
+using Content.Server.Construction;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
 using Content.Shared.Cargo;
-using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Cargo.Components;
+using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
-using Robust.Shared.Collections;
-using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {
-    [Dependency] private readonly PaperSystem _paperSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-
     private void InitializeTelepad()
     {
         SubscribeLocalEvent<CargoTelepadComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<CargoTelepadComponent, RefreshPartsEvent>(OnRefreshParts);
+        SubscribeLocalEvent<CargoTelepadComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         SubscribeLocalEvent<CargoTelepadComponent, PowerChangedEvent>(OnTelepadPowerChange);
         // Shouldn't need re-anchored event
         SubscribeLocalEvent<CargoTelepadComponent, AnchorStateChangedEvent>(OnTelepadAnchorChange);
     }
-
     private void UpdateTelepad(float frameTime)
     {
-        foreach (var comp in EntityManager.EntityQuery<CargoTelepadComponent>())
+        var query = EntityQueryEnumerator<CargoTelepadComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
             // Don't EntityQuery for it as it's not required.
-            TryComp<AppearanceComponent>(comp.Owner, out var appearance);
+            TryComp<AppearanceComponent>(uid, out var appearance);
 
             if (comp.CurrentState == CargoTelepadState.Unpowered)
             {
                 comp.CurrentState = CargoTelepadState.Idle;
-                _appearance.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
+                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
+                comp.Accumulator = comp.Delay;
+                continue;
+            }
+
+            if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent) ||
+                sinkComponent.LinkedSources.FirstOrNull() is not { } console ||
+                !HasComp<CargoOrderConsoleComponent>(console))
+            {
                 comp.Accumulator = comp.Delay;
                 continue;
             }
@@ -45,11 +51,11 @@ public sealed partial class CargoSystem
             if (comp.Accumulator > 0f)
             {
                 comp.CurrentState = CargoTelepadState.Idle;
-                _appearance.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
+                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
                 continue;
             }
 
-            var station = _station.GetOwningStation(comp.Owner);
+            var station = _station.GetOwningStation(console);
 
             if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase) ||
                 orderDatabase.Orders.Count == 0)
@@ -58,108 +64,61 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            var orderIndices = new ValueList<int>();
-
-            foreach (var (oIndex, oOrder) in orderDatabase.Orders)
+            var xform = Transform(uid);
+            if (FulfillOrder(orderDatabase, xform.Coordinates, comp.PrinterOutput))
             {
-                if (!oOrder.Approved) continue;
-                orderIndices.Add(oIndex);
+                _audio.PlayPvs(_audio.GetSound(comp.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
+                UpdateOrders(station!.Value, orderDatabase);
+
+                comp.CurrentState = CargoTelepadState.Teleporting;
+                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             }
 
-            if (orderIndices.Count == 0)
-            {
-                comp.Accumulator += comp.Delay;
-                continue;
-            }
-
-            orderIndices.Sort();
-            var index = orderIndices[0];
-            var order = orderDatabase.Orders[index];
-            order.Amount--;
-
-            if (order.Amount <= 0)
-                orderDatabase.Orders.Remove(index);
-
-            _audio.PlayPvs(_audio.GetSound(comp.TeleportSound), comp.Owner, AudioParams.Default.WithVolume(-8f));
-            SpawnProduct(comp, order);
-            UpdateOrders(orderDatabase);
-
-            comp.CurrentState = CargoTelepadState.Teleporting;
-            _appearance.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             comp.Accumulator += comp.Delay;
         }
     }
 
     private void OnInit(EntityUid uid, CargoTelepadComponent telepad, ComponentInit args)
     {
-        _linker.EnsureReceiverPorts(uid, telepad.ReceiverPort);
+        _linker.EnsureSinkPorts(uid, telepad.ReceiverPort);
     }
 
-    private void SetEnabled(CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
+    private void OnRefreshParts(EntityUid uid, CargoTelepadComponent component, RefreshPartsEvent args)
+    {
+        var rating = args.PartRatings[component.MachinePartTeleportDelay] - 1;
+        component.Delay = component.BaseDelay * MathF.Pow(component.PartRatingTeleportDelay, rating);
+    }
+
+    private void OnUpgradeExamine(EntityUid uid, CargoTelepadComponent component, UpgradeExamineEvent args)
+    {
+        args.AddPercentageUpgrade("cargo-telepad-delay-upgrade", component.Delay / component.BaseDelay);
+    }
+
+    private void SetEnabled(EntityUid uid, CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
         TransformComponent? xform = null)
     {
         // False due to AllCompsOneEntity test where they may not have the powerreceiver.
-        if (!Resolve(component.Owner, ref receiver, ref xform, false)) return;
+        if (!Resolve(uid, ref receiver, ref xform, false))
+            return;
 
         var disabled = !receiver.Powered || !xform.Anchored;
 
         // Setting idle state should be handled by Update();
-        if (disabled) return;
+        if (disabled)
+            return;
 
-        TryComp<AppearanceComponent>(component.Owner, out var appearance);
+        TryComp<AppearanceComponent>(uid, out var appearance);
         component.CurrentState = CargoTelepadState.Unpowered;
-        _appearance.SetData(component.Owner, CargoTelepadVisuals.State, CargoTelepadState.Unpowered, appearance);
+        _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Unpowered, appearance);
     }
 
     private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)
     {
-        SetEnabled(component);
+        SetEnabled(uid, component);
     }
 
     private void OnTelepadAnchorChange(EntityUid uid, CargoTelepadComponent component, ref AnchorStateChangedEvent args)
     {
-        SetEnabled(component);
-    }
-
-    /// <summary>
-    ///     Spawn the product and a piece of paper. Attempt to attach the paper to the product.
-    /// </summary>
-    private void SpawnProduct(CargoTelepadComponent component, CargoOrderData data)
-    {
-        // spawn the order
-        if (!_protoMan.TryIndex(data.ProductId, out CargoProductPrototype? prototype))
-            return;
-
-        var xform = Transform(component.Owner);
-
-        var product = EntityManager.SpawnEntity(prototype.Product, xform.Coordinates);
-
-        Transform(product).Anchored = false;
-
-        // spawn a piece of paper.
-        var printed = EntityManager.SpawnEntity(component.PrinterOutput, xform.Coordinates);
-
-        if (!TryComp<PaperComponent>(printed, out var paper))
-            return;
-
-        // fill in the order data
-        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", data.PrintableOrderNumber));
-
-        MetaData(printed).EntityName = val;
-
-        _paperSystem.SetContent(printed, Loc.GetString(
-            "cargo-console-paper-print-text",
-            ("orderNumber", data.PrintableOrderNumber),
-            ("itemName", prototype.Name),
-            ("requester", data.Requester),
-            ("reason", data.Reason),
-            ("approver", data.Approver ?? string.Empty)),
-            paper);
-
-        // attempt to attach the label
-        if (TryComp<PaperLabelComponent>(product, out var label))
-        {
-            _slots.TryInsert(product, label.LabelSlot, printed, null);
-        }
+        SetEnabled(uid, component);
     }
 }

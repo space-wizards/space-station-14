@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using Content.Server.DoAfter;
 using Content.Server.Interaction;
-using Content.Server.Mech.Components;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Mech.Systems;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
+using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Wall;
@@ -24,7 +24,7 @@ public sealed class MechGrabberSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly MechSystem _mech = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
@@ -39,8 +39,7 @@ public sealed class MechGrabberSystem : EntitySystem
         SubscribeLocalEvent<MechGrabberComponent, AttemptRemoveMechEquipmentEvent>(OnAttemptRemove);
 
         SubscribeLocalEvent<MechGrabberComponent, InteractNoHandEvent>(OnInteract);
-        SubscribeLocalEvent<MechGrabberComponent, MechGrabberGrabFinishedEvent>(OnGrabFinished);
-        SubscribeLocalEvent<MechGrabberComponent, MechGrabberGrabCancelledEvent>(OnGrabCancelled);
+        SubscribeLocalEvent<MechGrabberComponent, GrabberDoAfterEvent>(OnMechGrab);
     }
 
     private void OnGrabberMessage(EntityUid uid, MechGrabberComponent component, MechEquipmentUiMessageRelayEvent args)
@@ -144,40 +143,37 @@ public sealed class MechGrabberSystem : EntitySystem
         if (mech.Energy + component.GrabEnergyDelta < 0)
             return;
 
-        if (component.Token != null)
-            return;
-
         if (!_interaction.InRangeUnobstructed(args.User, target))
             return;
 
         args.Handled = true;
-        component.Token = new();
         component.AudioStream = _audio.PlayPvs(component.GrabSound, uid);
-        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.GrabDelay, component.Token.Token, target, uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.GrabDelay, new GrabberDoAfterEvent(), uid, target: target, used: uid)
         {
             BreakOnTargetMove = true,
-            BreakOnUserMove = true,
-            UsedFinishedEvent = new MechGrabberGrabFinishedEvent(target),
-            UsedCancelledEvent = new MechGrabberGrabCancelledEvent()
+            BreakOnUserMove = true
         });
     }
 
-    private void OnGrabFinished(EntityUid uid, MechGrabberComponent component, MechGrabberGrabFinishedEvent args)
+    private void OnMechGrab(EntityUid uid, MechGrabberComponent component, DoAfterEvent args)
     {
-        component.Token = null;
+        if (args.Cancelled)
+        {
+            component.AudioStream?.Stop();
+            return;
+        }
+
+        if (args.Handled || args.Args.Target == null)
+            return;
 
         if (!TryComp<MechEquipmentComponent>(uid, out var equipmentComponent) || equipmentComponent.EquipmentOwner == null)
             return;
         if (!_mech.TryChangeEnergy(equipmentComponent.EquipmentOwner.Value, component.GrabEnergyDelta))
             return;
 
-        component.ItemContainer.Insert(args.Grabbed);
+        component.ItemContainer.Insert(args.Args.Target.Value);
         _mech.UpdateUserInterface(equipmentComponent.EquipmentOwner.Value);
-    }
 
-    private void OnGrabCancelled(EntityUid uid, MechGrabberComponent component, MechGrabberGrabCancelledEvent args)
-    {
-        component.AudioStream?.Stop();
-        component.Token = null;
+        args.Handled = true;
     }
 }

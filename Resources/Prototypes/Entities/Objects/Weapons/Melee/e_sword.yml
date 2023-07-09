@@ -2,13 +2,14 @@
   name: energy sword
   parent: BaseItem
   id: EnergySword
-  description: A very dangerous energy sword. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
+  description: Very loud and very dangerous energy sword that can reflect shots. Can be stored in pockets when turned off.
   components:
   - type: EnergySword
     litDamageBonus:
         types:
-            Slash: 9.5
-            Heat: 9.5
+            Slash: 15
+            Heat: 15
+            Structural: 4
             Blunt: -4.5
     litDisarmMalus: 0.6
   - type: Sprite
@@ -21,9 +22,9 @@
         shader: unshaded
         map: [ "blade" ]
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 1
     soundHit:
-      path: /Audio/Weapons/genhit1.ogg
+      path: /Audio/Weapons/eblade1.ogg
     damage:
       types:
         Blunt: 4.5
@@ -33,11 +34,11 @@
   - type: UseDelay
     delay: 1.0
   - type: PointLight
-    netsync: false
     enabled: false
     radius: 2
     energy: 2
     color: white
+    netsync: false
   - type: Appearance
   - type: ToggleableLightVisuals
     spriteLayer: blade
@@ -50,6 +51,8 @@
         shader: unshaded
   - type: DisarmMalus
     malus: 0
+  - type: Reflect
+    enabled: false
 
 - type: entity
   name: pen
@@ -95,11 +98,11 @@
   - type: UseDelay
     delay: 1.0
   - type: PointLight
-    netsync: false
     enabled: false
     radius: 1.5
     energy: 1.5
     color: white
+    netsync: false
   - type: Appearance
   - type: ToggleableLightVisuals
     spriteLayer: blade
@@ -115,3 +118,89 @@
     - Write
   - type: DisarmMalus
     malus: 0
+
+- type: entity
+  parent: BaseItem
+  id: EnergyDaggerBox
+  name: e-dagger box
+  suffix: E-Dagger
+  description: A small box containing an e-dagger. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/penbox.rsi
+    state: e_dagger
+  - type: SpawnItemsOnUse
+    items:
+    - id: EnergyDagger
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  name: energy cutlass
+  parent: EnergySword
+  id: EnergyCutlass
+  description: An exotic energy weapon.
+  components:
+  - type: EnergySword
+    secret: true
+    litDamageBonus:
+        types:
+            Slash: 7.5
+            Heat: 7.5
+            Blunt: -1
+    litDisarmMalus: 0.6
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_cutlass.rsi
+    layers:
+      - state: e_cutlass
+      - state: e_cutlass_blade
+        color: "#e95151"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+  - type: Item
+    size: 5
+    sprite: Objects/Weapons/Melee/e_cutlass.rsi
+
+- type: entity
+  name: Double Bladed Energy Sword
+  parent: EnergySword
+  id: EnergySwordDouble
+  description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
+  components:
+  - type: Wieldable
+    wieldTime: 0
+  - type: EnergySword
+    litDamageBonus:
+        types:
+            Slash: 9
+            Heat: 9
+            Structural: 20
+            Blunt: -4.5
+    litDisarmMalus: 0.7
+  - type: MeleeWeapon
+    attackRate: 1.6
+    angle: 100
+    heavyWindupModifier: .9
+    heavyDamageModifier: 1.5
+    soundHit:
+      path: /Audio/Weapons/eblade1.ogg
+    damage:
+      types:
+        Blunt: 4.5
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+    layers:
+      - state: e_sword_double
+      - state: e_sword_double_blade
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+  - type: Reflect
+    enabled: true
+    reflectProb: .75
+    spread: 75

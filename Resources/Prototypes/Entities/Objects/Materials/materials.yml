@@ -5,10 +5,10 @@
   description: A raw material.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/materials.rsi
   - type: Item
     sprite: Objects/Materials/materials.rsi
+    size: 30
   - type: ItemStatus
   - type: Tag
     tags:
@@ -27,14 +27,75 @@
 
 - type: entity
   parent: MaterialBase
+  id: MaterialCardboard
+  name: cardboard
+  suffix: Full
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 100
+  - type: Stack
+    stackType: Cardboard
+    baseLayer: base
+    layerStates:
+    - cardboard
+    - cardboard_2
+    - cardboard_3
+  - type: Sprite
+    state: cardboard_3
+    layers:
+    - state: cardboard_3
+      map: ["base"]
+  - type: Appearance
+  - type: Item
+    size: 30
+
+- type: entity
+  parent: MaterialCardboard
+  id: MaterialCardboard1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: cardboard
+  - type: Stack
+    count: 1
+  - type: Item
+    size: 1
+
+- type: entity
+  parent: MaterialBase
   id: MaterialCloth
   name: cloth
   suffix: Full
   components:
+  - type: Tag
+    tags:
+    - RawMaterial
+    - DroneUsable
+    - Gauze
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Slash: -0.5
+        Piercing: -0.5
+    bloodlossModifier: -4
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
     stackType: Cloth
+    baseLayer: base
+    layerStates:
+    - cloth
+    - cloth_2
+    - cloth_3
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Cloth: 100
   - type: Extractable
     juiceSolution:
@@ -43,13 +104,12 @@
         Quantity: 3
   - type: Sprite
     state: cloth_3
+    layers:
+    - state: cloth_3
+      map: ["base"]
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - cloth
-      - cloth_2
-      - cloth_3
+  - type: Item
+    size: 30
 
 - type: entity
   parent: MaterialCloth
@@ -60,6 +120,8 @@
     state: cloth
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   parent: MaterialBase
@@ -69,18 +131,21 @@
   components:
   - type: Stack
     stackType: Durathread
+    baseLayer: base
+    layerStates:
+    - durathread
+    - durathread_2
+    - durathread_3
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Durathread: 100
   - type: Sprite
     state: durathread_3
+    layers:
+    - state: durathread_3
+      map: ["base"]
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - durathread
-      - durathread_2
-      - durathread_3
   - type: Construction
     graph: Durathread
     node: MaterialDurathread
@@ -94,6 +159,8 @@
     state: durathread
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   parent: MaterialBase
@@ -102,12 +169,22 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Wood: 100
   - type: Stack
     stackType: WoodPlank
+    baseLayer: base
+    layerStates:
+    - wood
+    - wood_2
+    - wood_3
   - type: Sprite
     state: wood
+    layers:
+    - state: wood
+      map: ["base"]
+  - type: Appearance
   - type: Item
     heldPrefix: wood
 
@@ -118,6 +195,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   parent: MaterialBase
@@ -126,7 +205,8 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Biomass: 1
   - type: Stack
     stackType: Biomass
@@ -135,6 +215,11 @@
     sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
     color: "#8A9A5B"
+  - type: GuideHelp
+    guides:
+    - Cloning
+  - type: Item
+    size: 100
 
 - type: entity
   parent: MaterialBiomass
@@ -143,6 +228,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 # Following not used currently
 - type: entity
@@ -152,7 +239,12 @@
   components:
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
-    state: bearpelt
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: bearpelt
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: bearpelt_glow
+      shader: unshaded
   - type: Item
     sprite: Clothing/Head/Misc/hides.rsi
     heldPrefix: bear
@@ -161,6 +253,11 @@
     equippedPrefix: bear
     slots:
       - HEAD
+  - type: PointLight
+    radius: 1.2
+    energy: 1.5
+    color: "#4faffb"
+    slots:
 
 - type: entity
   parent: MaterialBase
@@ -174,6 +271,7 @@
     state: diamond
   - type: Item
     heldPrefix: diamond
+    size: 60
 
 - type: entity
   parent: MaterialDiamond
@@ -182,6 +280,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2
 
 - type: entity
   parent: MaterialBase
@@ -191,15 +291,20 @@
   components:
   - type: Stack
     stackType: Cotton
+    baseLayer: base
+    layerStates:
+    - cotton
+    - cotton_2
+    - cotton_3
   - type: Sprite
     state: cotton_3
+    layers:
+    - state: cotton_3
+      map: ["base"]
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        stackLayers:
-          - cotton
-          - cotton_2
-          - cotton_3
+  - type: Item
+    size: 30
+
 
 - type: entity
   parent: MaterialCotton
@@ -210,3 +315,69 @@
     state: cotton
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBananium
+  name: bananium
+  suffix: Full
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Bananium: 150
+  - type: Sprite
+    state: bananium_1
+    layers:
+    - state: bananium_1
+      map: ["base"]
+  - type: Stack
+    stackType: Bananium
+    count: 10
+    baseLayer: base
+    layerStates:
+      - bananium
+      - bananium_1
+  - type: RadiationSource
+    intensity: 0.3
+  - type: FlavorProfile
+    flavors:
+      - banana
+  - type: Food
+    trash: TrashBananiumPeel
+  - type: BadFood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Honk
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceBanana
+        Quantity: 5
+      - ReagentId: Honk
+        Quantity: 5
+  - type: Appearance
+  - type: Item
+    size: 20
+
+- type: entity
+  parent: MaterialBananium
+  id: MaterialBananium1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: bananium
+  - type: Stack
+    count: 1
+  - type: Item
+    size: 2

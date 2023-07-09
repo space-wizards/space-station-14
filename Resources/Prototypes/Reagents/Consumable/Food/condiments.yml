@@ -6,6 +6,7 @@
   physicalDesc: reagent-physical-desc-sugary
   flavor: sweet
   color: aquamarine
+  recognizable: true
 
 - type: reagent
   id: BbqSauce
@@ -15,6 +16,7 @@
   physicalDesc: reagent-physical-desc-gloopy
   flavor: sweet
   color: darkred
+  recognizable: true
 
 - type: reagent
   id: Cornoil
@@ -24,6 +26,7 @@
   physicalDesc: reagent-physical-desc-oily
   flavor: oily
   color: yellow
+  recognizable: true
 
 - type: reagent
   id: Frostoil
@@ -42,6 +45,7 @@
   physicalDesc: reagent-physical-desc-overpowering
   flavor: spicy
   color: gray
+  recognizable: true
 
 - type: reagent
   id: Hotsauce
@@ -51,6 +55,7 @@
   physicalDesc: reagent-physical-desc-spicy
   flavor: spicy
   color: red
+  recognizable: true
 
 - type: reagent
   id: Ketchup
@@ -60,6 +65,7 @@
   physicalDesc: reagent-physical-desc-tangy
   flavor: tomato
   color: red
+  recognizable: true
 
 - type: reagent
   id: Ketchunaise
@@ -69,6 +75,7 @@
   physicalDesc: reagent-physical-desc-saucey
   flavor: piquant
   color: "#fba399"
+  recognizable: true
 
 - type: reagent
   id: Mayo
@@ -78,6 +85,17 @@
   physicalDesc: reagent-physical-desc-thick
   flavor: sour
   color: "#f9f5e5"
+  recognizable: true
+
+- type: reagent
+  id: Vinaigrette
+  name: reagent-name-vinaigrette
+  group: Foods
+  desc: reagent-desc-vinaigrette
+  physicalDesc: reagent-physical-desc-sour
+  flavor: sour
+  color: "#efdaae"
+  recognizable: true
 
 - type: reagent
   id: Soysauce
@@ -87,6 +105,7 @@
   physicalDesc: reagent-physical-desc-salty
   flavor: salty
   color: saddlebrown
+  recognizable: true
   metabolisms:
     Food:
       effects:
@@ -103,6 +122,7 @@
   physicalDesc: reagent-physical-desc-grainy
   flavor: salty
   color: "#a1000b"
+  recognizable: true
   boilingPoint: 1465.0
   meltingPoint: 800.7
   plantMetabolism:

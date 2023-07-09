@@ -22,8 +22,17 @@ namespace Content.Shared.Chemistry
             UpdatesOutsidePrediction = true;
 
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentHandleState>(OnMovespeedHandleState);
+            SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentStartup>(AddComponent);
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+        }
+
+        private void OnGetState(EntityUid uid, MovespeedModifierMetabolismComponent component, ref ComponentGetState args)
+        {
+            args.State = new MovespeedModifierMetabolismComponentState(
+                component.WalkSpeedModifier,
+                component.SprintSpeedModifier,
+                component.ModifierTimer);
         }
 
         private void OnMovespeedHandleState(EntityUid uid, MovespeedModifierMetabolismComponent component, ref ComponentHandleState args)
@@ -31,17 +40,9 @@ namespace Content.Shared.Chemistry
             if (args.Current is not MovespeedModifierMetabolismComponentState cast)
                 return;
 
-            if (EntityManager.TryGetComponent<MovementSpeedModifierComponent>(uid, out var modifier) &&
-                (!component.WalkSpeedModifier.Equals(cast.WalkSpeedModifier) ||
-                 !component.SprintSpeedModifier.Equals(cast.SprintSpeedModifier)))
-            {
-                _movespeed.RefreshMovementSpeedModifiers(uid);
-            }
-
             component.WalkSpeedModifier = cast.WalkSpeedModifier;
             component.SprintSpeedModifier = cast.SprintSpeedModifier;
             component.ModifierTimer = cast.ModifierTimer;
-
         }
 
         private void OnRefreshMovespeed(EntityUid uid, MovespeedModifierMetabolismComponent component, RefreshMovementSpeedModifiersEvent args)

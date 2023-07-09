@@ -1,5 +1,5 @@
-using System.Threading;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -21,6 +21,7 @@ namespace Content.Server.Nutrition.Components
         internal bool DefaultToOpened;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("transferAmount")]
         public FixedPoint2 TransferAmount { get; [UsedImplicitly] private set; } = FixedPoint2.New(5);
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -41,16 +42,13 @@ namespace Content.Server.Nutrition.Components
         [DataField("delay")]
         public float Delay = 1;
 
+        [DataField("examinable")]
+        public bool Examinable = true;
+
         /// <summary>
         ///     This is how many seconds it takes to force feed someone this drink.
         /// </summary>
         [DataField("forceFeedDelay")]
         public float ForceFeedDelay = 3;
-
-        /// <summary>
-        ///     Token for interrupting a do-after action (e.g., force feeding). If not null, implies component is
-        ///     currently "in use".
-        /// </summary>
-        public CancellationTokenSource? CancelToken;
     }
 }

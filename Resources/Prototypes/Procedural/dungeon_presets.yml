@@ -1,0 +1,35 @@
+- type: dungeonPreset
+  id: Bucket
+  roomPacks:
+    - 0,0,17,17
+    - 20,0,37,17
+    - 20,20,37,37
+    - -20,0,-3,17
+    - -20,20,-3,37
+
+- type: dungeonPreset
+  id: SpaceShip
+  roomPacks:
+    - 0,10,17,27
+    - 20,0,37,17
+    - 20,20,37,37
+    - -20,0,-3,17
+    - -20,20,-3,37
+
+- type: dungeonPreset
+  id: Tall
+  roomPacks:
+    - 0,0,17,17
+    - 0,20,17,37
+    - 20,37,37,54
+    - 0,54,17,71
+    - 0,74,17,91
+
+- type: dungeonPreset
+  id: Wow
+  roomPacks:
+    - 0,20,17,37
+    - 20,0,37,17
+    - 40,20,57,37
+    - -20,0,-3,17
+    - -40,20,-23,37

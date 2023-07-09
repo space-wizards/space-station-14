@@ -91,9 +91,6 @@ reagent-desc-barefoot = Barefoot and pregnant.
 reagent-name-beepsky-smash = beepsky smash
 reagent-desc-beepsky-smash = Deny drinking this and prepare for THE LAW.
 
-reagent-name-bilk = bilk
-reagent-desc-bilk = This appears to be beer mixed with milk. Disgusting.
-
 reagent-name-black-russian = black russian
 reagent-desc-black-russian = For the lactose-intolerant. Still as classy as a White Russian.
 
@@ -204,6 +201,9 @@ reagent-desc-sbiten = A spicy Vodka! Might be a little hot for the little guys!
 
 reagent-name-screwdriver-cocktail = screwdriver
 reagent-desc-screwdriver-cocktail = Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious.
+
+reagent-name-cogchamp = cogchamp
+reagent-desc-cogchamp = Not even Ratvar's Four Generals could withstand this! Qevax Jryy!
 
 reagent-name-silencer = silencer
 reagent-desc-silencer = A drink from Mime Heaven.

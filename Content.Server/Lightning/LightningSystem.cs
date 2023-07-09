@@ -37,28 +37,28 @@ public sealed class LightningSystem : SharedLightningSystem
 
     private void OnCollide(EntityUid uid, LightningComponent component, ref StartCollideEvent args)
     {
-        if (!TryComp<BeamComponent>(uid, out var lightningBeam) || !TryComp<BeamComponent>(lightningBeam.VirtualBeamController, out var beamController))
-        {
+        if (!TryComp<BeamComponent>(uid, out var lightningBeam)
+            || !TryComp<BeamComponent>(lightningBeam.VirtualBeamController, out var beamController))
             return;
-        }
 
-        if (component.CanArc)
-        {
-            while (beamController.CreatedBeams.Count < component.MaxTotalArcs)
-            {
-                Arc(component, args.OtherFixture.Body.Owner, lightningBeam.VirtualBeamController.Value);
+        if (!component.CanArc || beamController.CreatedBeams.Count >= component.MaxTotalArcs)
+            return;
 
-                var spriteState = LightningRandomizer();
+        Arc(component, args.OtherEntity, lightningBeam.VirtualBeamController.Value);
 
-                component.ArcTargets.Add(args.OtherFixture.Body.Owner);
-                component.ArcTargets.Add(component.ArcTarget);
+        if (component.ArcTarget == null)
+            return;
 
-                _beam.TryCreateBeam(args.OtherFixture.Body.Owner, component.ArcTarget, component.LightningPrototype, spriteState, controller: lightningBeam.VirtualBeamController.Value);
+        var spriteState = LightningRandomizer();
+        component.ArcTargets.Add(args.OtherEntity);
+        component.ArcTargets.Add(component.ArcTarget.Value);
 
-                //Break from this loop so other created bolts can collide and arc
-                break;
-            }
-        }
+        _beam.TryCreateBeam(
+            args.OtherEntity,
+            component.ArcTarget.Value,
+            component.LightningPrototype,
+            spriteState,
+            controller: lightningBeam.VirtualBeamController.Value);
     }
 
     /// <summary>

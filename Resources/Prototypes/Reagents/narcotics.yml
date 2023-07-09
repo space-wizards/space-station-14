@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: Desoxyephedrine
   name: reagent-name-desoxyephedrine
   group: Narcotics
@@ -93,6 +93,56 @@
           min: 30
 
 - type: reagent
+  id: Stimulants
+  name: reagent-name-stimulants
+  group: Narcotics
+  desc: reagent-desc-stimulants
+  physicalDesc: reagent-physical-desc-energizing
+  flavor: sharp
+  color: "#9A040E"
+  boilingPoint: 212.0
+  meltingPoint: 170.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 1.0
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.3
+        sprintSpeedModifier: 1.3
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 80 #please wait 3 minutes before using another stimpack
+        damage:
+          types:
+            Poison: 1
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 3
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 3
+        type: Remove
+    Medicine:
+      metabolismRate: 1.0
+      effects:
+        - !type:ResetNarcolepsy
+        - !type:SatiateHunger
+          factor: 1
+        - !type:SatiateThirst
+          factor: 1
+        - !type:HealthChange
+          conditions:
+          - !type:TotalDamage
+            min: 70
+            max: 120 # you've got a chance to get out of crit
+          damage: # heals at the same rate as tricordrazine, doesn't heal poison because if you OD'd I'm not giving you a safety net
+            groups:
+              Burn: -1
+              Brute: -1
+
+- type: reagent
   id: THC
   name: reagent-name-thc
   group: Narcotics
@@ -112,7 +162,7 @@
         key: SeeingRainbows
         component: SeeingRainbows
         type: Add
-        time: 5
+        time: 16
         refresh: false
 
 - type: reagent
@@ -122,6 +172,7 @@
   desc: reagent-desc-thc-oil
   physicalDesc: reagent-physical-desc-skunky
   flavor: bitter
+  flavorMinimum: 0.05
   color: "#DAA520"
   metabolisms:
     Narcotic:
@@ -130,7 +181,7 @@
         key: SeeingRainbows
         component: SeeingRainbows
         type: Add
-        time: 5
+        time: 16
         refresh: false
 
 - type: reagent
@@ -145,6 +196,7 @@
   - !type:PlantAdjustHealth
     amount: -5
 
+# TODO: Replace these nonstandardized effects with generic brain damage
 - type: reagent
   id: Impedrezene
   name: reagent-name-impedrezene
@@ -153,6 +205,26 @@
   physicalDesc: reagent-physical-desc-acrid
   flavor: bitter
   color: "#215263"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 10
+        refresh: false
+      - !type:ChemVomit # Vomiting is a symptom of brain damage
+        probability: 0.05
+      - !type:Drunk # Headaches and slurring are major symptoms of brain damage, this is close enough
+        boozePower: 5
 
 - type: reagent
   id: SpaceDrugs

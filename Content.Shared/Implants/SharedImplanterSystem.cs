@@ -1,10 +1,14 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Threading.Tasks;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Implants;
 
@@ -21,7 +25,6 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         SubscribeLocalEvent<ImplanterComponent, ComponentInit>(OnImplanterInit);
         SubscribeLocalEvent<ImplanterComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
-
     }
 
     private void OnImplanterInit(EntityUid uid, ImplanterComponent component, ComponentInit args)
@@ -38,36 +41,46 @@ public abstract class SharedImplanterSystem : EntitySystem
         component.ImplantData = (implantData.EntityName, implantData.EntityDescription);
     }
 
+
     //Instantly implant something and add all necessary components and containers.
     //Set to draw mode if not implant only
-    public void Implant(EntityUid implanter, EntityUid target, ImplanterComponent component)
+    public void Implant(EntityUid user, EntityUid target, EntityUid implanter, ImplanterComponent component)
     {
-        var implanterContainer = component.ImplanterSlot.ContainerSlot;
-
-        if (implanterContainer is null)
-            return;
-
-        var implant = implanterContainer.ContainedEntities.FirstOrDefault();
-
-        if (!TryComp<SubdermalImplantComponent>(implant, out var implantComp))
+        if (!CanImplant(user, target, implanter, component, out var implant, out var implantComp))
             return;
 
         //If the target doesn't have the implanted component, add it.
         var implantedComp = EnsureComp<ImplantedComponent>(target);
         var implantContainer = implantedComp.ImplantContainer;
 
-        implanterContainer.Remove(implant);
+        component.ImplanterSlot.ContainerSlot?.Remove(implant.Value);
         implantComp.ImplantedEntity = target;
         implantContainer.OccludesLight = false;
-        implantContainer.Insert(implant);
+        implantContainer.Insert(implant.Value);
 
         if (component.CurrentMode == ImplanterToggleMode.Inject && !component.ImplantOnly)
             DrawMode(component);
-
         else
             ImplantMode(component);
 
         Dirty(component);
+    }
+
+    public bool CanImplant(
+        EntityUid user,
+        EntityUid target,
+        EntityUid implanter,
+        ImplanterComponent component,
+        [NotNullWhen(true)] out EntityUid? implant,
+        [NotNullWhen(true)] out SubdermalImplantComponent? implantComp)
+    {
+        implant = component.ImplanterSlot.ContainerSlot?.ContainedEntities?.FirstOrDefault();
+        if (!TryComp<SubdermalImplantComponent>(implant, out implantComp))
+            return false;
+
+        var ev = new AddImplantAttemptEvent(user, target, implant.Value, implanter);
+        RaiseLocalEvent(target, ev);
+        return !ev.Cancelled;
     }
 
     //Draw the implant out of the target
@@ -95,7 +108,8 @@ public abstract class SharedImplanterSystem : EntitySystem
                 {
                     var implantName = Identity.Entity(implant, EntityManager);
                     var targetName = Identity.Entity(target, EntityManager);
-                    var failedPermanentMessage = Loc.GetString("implanter-draw-failed-permanent", ("implant", implantName), ("target", targetName));
+                    var failedPermanentMessage = Loc.GetString("implanter-draw-failed-permanent",
+                        ("implant", implantName), ("target", targetName));
                     _popup.PopupEntity(failedPermanentMessage, target, user);
                     permanentFound = implantComp.Permanent;
                     continue;
@@ -147,10 +161,37 @@ public abstract class SharedImplanterSystem : EntitySystem
         else if (component.CurrentMode == ImplanterToggleMode.Inject && component.ImplantOnly)
         {
             _appearance.SetData(component.Owner, ImplanterVisuals.Full, implantFound, appearance);
-            _appearance.SetData(component.Owner, ImplanterImplantOnlyVisuals.ImplantOnly, component.ImplantOnly, appearance);
+            _appearance.SetData(component.Owner, ImplanterImplantOnlyVisuals.ImplantOnly, component.ImplantOnly,
+                appearance);
         }
 
         else
             _appearance.SetData(component.Owner, ImplanterVisuals.Full, implantFound, appearance);
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class ImplantEvent : SimpleDoAfterEvent
+{
+}
+
+[Serializable, NetSerializable]
+public sealed class DrawEvent : SimpleDoAfterEvent
+{
+}
+
+public sealed class AddImplantAttemptEvent : CancellableEntityEventArgs
+{
+    public readonly EntityUid User;
+    public readonly EntityUid Target;
+    public readonly EntityUid Implant;
+    public readonly EntityUid Implanter;
+
+    public AddImplantAttemptEvent(EntityUid user, EntityUid target, EntityUid implant, EntityUid implanter)
+    {
+        User = user;
+        Target = target;
+        Implant = implant;
+        Implanter = implanter;
     }
 }

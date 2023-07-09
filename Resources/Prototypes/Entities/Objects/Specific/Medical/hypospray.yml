@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: hypospray
   parent: BaseItem
   description: A sterile injector for rapid administration of drugs to patients.
@@ -18,13 +18,18 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+  - type: UseDelay
+    delay: 0.5
   - type: StaticPrice
     price: 750
+  - type: Tag
+    tags:
+    - HighRiskItem
 
 - type: entity
-  name: gorlax hypospray
+  name: gorlex hypospray
   parent: BaseItem
-  description: Using reverse engineered designs from NT, Cybersun produced these in limited quantities for gorlax marauder operatives.
+  description: Using reverse engineered designs from NT, Cybersun produced these in limited quantities for Gorlex Marauder operatives.
   id: SyndiHypo
   components:
   - type: Sprite
@@ -41,6 +46,8 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+  - type: UseDelay
+    delay: 0.5
 
 - type: entity
   name: chemical medipen
@@ -50,7 +57,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
-    netsync: false
     layers:
     - state: medipen
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -74,7 +80,9 @@
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
   - type: SpaceGarbage
   - type: StaticPrice
     price: 75 # These are limited supply items.
@@ -106,6 +114,11 @@
   id: AntiPoisonMedipen
   description: A rapid dose of anti-poison. Contains ultravasculine and epinephrine.
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: penacid
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -126,7 +139,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
-    netsync: false
     layers:
     - state: hypovolemic
       map: [ "enum.SolutionContainerLayers.Fill" ]
@@ -151,6 +163,61 @@
     tags: []
 
 - type: entity
+  name: stimulant injector
+  parent: ChemicalMedipen
+  id: Stimpack
+  description: Contains enough stimulants for you to have the chemical's effect for 30 seconds. Use it when you're sure you're ready to throw down.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: stimpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Item
+    sprite: Objects/Specific/Medical/medipen.rsi
+    size: 10
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 30
+        reagents:
+        - ReagentId: Stimulants
+          Quantity: 30
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 30
+  - type: StaticPrice
+    price: 500
+  - type: Tag
+    tags: []
+
+- type: entity
+  name: stimulant microinjector
+  parent: ChemicalMedipen
+  id: StimpackMini
+  description: A microinjector of stimulants that give you about fifteen seconds of the chemical's effects.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: stimpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Item
+    sprite: Objects/Specific/Medical/medipen.rsi
+    size: 5
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 15
+        reagents:
+        - ReagentId: Stimulants
+          Quantity: 15
+  - type: StaticPrice
+    price: 100
+  - type: Tag
+    tags: []
+
+- type: entity
   name: pen
   suffix: Hypopen
   parent: Pen # It is just like normal pen, isn't it?
@@ -160,11 +227,28 @@
   - type: SolutionContainerManager
     solutions:
       hypospray:
-        maxVol: 15
+        maxVol: 10
   - type: RefillableSolution
     solution: hypospray
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+  - type: UseDelay
+    delay: 0.5
   - type: StaticPrice # A new shitcurity meta
     price: 75
+
+- type: entity
+  parent: BaseItem
+  id: HypopenBox
+  name: hypopen box
+  description: A small box containing a hypopen. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/penbox.rsi
+    state: hypopen
+  - type: SpawnItemsOnUse
+    items:
+    - id: Hypopen
+    sound:
+      path: /Audio/Effects/unwrap.ogg

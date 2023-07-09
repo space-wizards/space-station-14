@@ -2,28 +2,6 @@
 
 # Powder (For when you throw stuff like flour and it explodes)
 
-- type: entity
-  name: flour
-  id: PuddleFlour
-  parent: PuddleBase
-  description: Call the janitor.
-  components:
-  - type: Sprite
-    sprite: Fluids/powder.rsi
-    state: powder
-    color: white
-    netsync: false
-  - type: Puddle
-  - type: SolutionContainerManager
-    solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: Flour
-          Quantity: 10
-  - type: Appearance
-  - type: PuddleVisualizer
-
 # Reagent Containers
 
 - type: entity
@@ -32,7 +10,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Food/ingredients.rsi
   - type: SolutionContainerManager
     solutions:
@@ -53,6 +30,12 @@
       path: /Audio/Items/eating_1.ogg
   - type: Spillable
     solution: food
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: TrashOnEmpty
     solution: food
 
@@ -141,6 +124,37 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerCornmeal
+  name: cornmeal bag
+  description: A big bag of cornmeal. Good for cooking!
+  components:
+  - type: Sprite
+    state: cornmeal-big
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Cornmeal
+          Quantity: 50
+
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerCornmealSmall
+  name: cornmeal pack
+  description: A pack of cornmeal. Good for cooking!
+  components:
+  - type: Sprite
+    state: cornmeal
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Cornmeal
+          Quantity: 20
 
 - type: entity
   parent: ReagentContainerBase
@@ -249,10 +263,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: MilkOat
-          Quantity: 20
+          Quantity: 50
 
 # Misc
 
@@ -313,7 +327,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/ingredients.rsi
-    netsync: false
   - type: Food
   - type: SolutionContainerManager
     solutions:
@@ -349,6 +362,35 @@
       - dough
   - type: Sprite
     state: dough-slice
+
+- type: entity
+  name: cornmeal dough
+  parent: FoodBakingBase
+  id: FoodDoughCornmeal
+  description: A piece of cornmeal dough.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chalky
+      - dough
+  - type: Sprite
+    state: cornmealdough
+  - type: SliceableFood
+    count: 3
+    slice: FoodDoughCornmealSlice
+
+- type: entity
+  name: cornmeal dough slice
+  parent: FoodBakingBase
+  id: FoodDoughCornmealSlice
+  description: A slice of cornmeal dough.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chalky
+      - dough
+  - type: Sprite
+    state: cornmealdough-slice
 
 - type: entity
   name: bun
@@ -464,6 +506,51 @@
           Quantity: 5
 
 - type: entity
+  name: tofu
+  parent: FoodBakingBase
+  id: FoodTofu
+  description: Solid white block with a subtle flavor.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - tofu
+  - type: Sprite
+    state: tofu
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Protein
+          Quantity: 9
+        - ReagentId: Nutriment
+          Quantity: 6
+  - type: SliceableFood
+    count: 3
+    slice: FoodTofuSlice
+
+- type: entity
+  name: tofu slice
+  parent: FoodBakingBase
+  id: FoodTofuSlice
+  description: A slice of tofu. Ingredient of various vegetarian dishes.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - tofu
+  - type: Sprite
+    state: tofu-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: Nutriment
+          Quantity: 2
+
+- type: entity
   name: burned mess
   parent: FoodBakingBase
   id: FoodBadRecipe
@@ -483,3 +570,6 @@
           Quantity: 2
         - ReagentId: Toxin
           Quantity: 3
+  - type: Tag
+    tags:
+    - Trash

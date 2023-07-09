@@ -1,4 +1,5 @@
 server-info-rules-button = Rules
+server-info-guidebook-button = Guidebook
 server-info-discord-button = Discord
 server-info-website-button = Website
 server-info-wiki-button = Wiki

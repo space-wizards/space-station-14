@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.Roles;
@@ -121,7 +122,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
 
             AddChild(gridContainer);
 
-            var path = new ResourcePath("/Textures/Interface/Misc/job_icons.rsi");
+            var path = new ResPath("/Textures/Interface/Misc/job_icons.rsi");
             cache.TryGetResource(path, out RSIResource? rsi);
 
             foreach (var entry in entries)
@@ -146,7 +147,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
                 {
                     var icon = new TextureRect()
                     {
-                        TextureScale = (2, 2),
+                        TextureScale = new Vector2(2, 2),
                         Stretch = TextureRect.StretchMode.KeepCentered
                     };
 

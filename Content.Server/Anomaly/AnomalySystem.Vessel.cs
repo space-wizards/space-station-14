@@ -88,10 +88,7 @@ public sealed partial class AnomalySystem
     private void OnVesselGetPointsPerSecond(EntityUid uid, AnomalyVesselComponent component, ref ResearchServerGetPointsPerSecondEvent args)
     {
         if (!this.IsPowered(uid, EntityManager) || component.Anomaly is not {} anomaly)
-        {
-            args.Points = 0;
             return;
-        }
 
         args.Points += (int) (GetAnomalyPointValue(anomaly) * component.PointMultiplier);
     }
@@ -103,10 +100,9 @@ public sealed partial class AnomalySystem
 
     private void OnVesselAnomalyShutdown(ref AnomalyShutdownEvent args)
     {
-        foreach (var component in EntityQuery<AnomalyVesselComponent>())
+        var query = EntityQueryEnumerator<AnomalyVesselComponent>();
+        while (query.MoveNext(out var ent, out var component))
         {
-            var ent = component.Owner;
-
             if (args.Anomaly != component.Anomaly)
                 continue;
 
@@ -121,9 +117,9 @@ public sealed partial class AnomalySystem
 
     private void OnVesselAnomalyStabilityChanged(ref AnomalyStabilityChangedEvent args)
     {
-        foreach (var component in EntityQuery<AnomalyVesselComponent>())
+        var query = EntityQueryEnumerator<AnomalyVesselComponent>();
+        while (query.MoveNext(out var ent, out var component))
         {
-            var ent = component.Owner;
             if (args.Anomaly != component.Anomaly)
                 continue;
 
@@ -149,9 +145,7 @@ public sealed partial class AnomalySystem
 
         Appearance.SetData(uid, AnomalyVesselVisuals.HasAnomaly, on, appearanceComponent);
         if (TryComp<SharedPointLightComponent>(uid, out var pointLightComponent))
-        {
-            pointLightComponent.Enabled = on;
-        }
+            _pointLight.SetEnabled(uid, on, pointLightComponent);
 
         // arbitrary value for the generic visualizer to use.
         // i didn't feel like making an enum for this.
@@ -174,9 +168,9 @@ public sealed partial class AnomalySystem
 
     private void UpdateVessels()
     {
-        foreach (var vessel in EntityQuery<AnomalyVesselComponent>())
+        var query = EntityQueryEnumerator<AnomalyVesselComponent>();
+        while (query.MoveNext(out var vesselEnt, out var vessel))
         {
-            var vesselEnt = vessel.Owner;
             if (vessel.Anomaly is not { } anomUid)
                 continue;
 

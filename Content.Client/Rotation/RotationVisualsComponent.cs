@@ -3,12 +3,16 @@ namespace Content.Client.Rotation;
 [RegisterComponent]
 public sealed class RotationVisualsComponent : Component
 {
-    public static readonly Angle DefaultRotation = Angle.FromDegrees(90);
+    [DataField("defaultRotation")]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public readonly Angle DefaultRotation = Angle.FromDegrees(90);
 
     [ViewVariables(VVAccess.ReadWrite)]
     public Angle VerticalRotation = 0;
 
-    [ViewVariables(VVAccess.ReadWrite)] public Angle HorizontalRotation = DefaultRotation;
+    [DataField("horizontalRotation")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public Angle HorizontalRotation = Angle.FromDegrees(90);
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float AnimationTime = 0.125f;

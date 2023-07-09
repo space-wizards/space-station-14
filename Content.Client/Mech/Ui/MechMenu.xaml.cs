@@ -31,7 +31,7 @@ public sealed partial class MechMenu : FancyWindow
 
     public void UpdateMechStats()
     {
-        if (!_ent.TryGetComponent<SharedMechComponent>(_mech, out var mechComp))
+        if (!_ent.TryGetComponent<MechComponent>(_mech, out var mechComp))
             return;
 
         var integrityPercent = mechComp.Integrity / mechComp.MaxIntegrity;

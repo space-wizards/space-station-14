@@ -196,7 +196,7 @@ csharp_preserve_single_line_blocks = true
 #dotnet_naming_style.begins_with_i.word_separator =
 #dotnet_naming_style.begins_with_i.capitalization = pascal_case
 
-
+dotnet_diagnostic.IDE0055.severity = warning
 
 dotnet_naming_rule.constants_rule.severity = warning
 dotnet_naming_rule.constants_rule.style = upper_camel_case_style

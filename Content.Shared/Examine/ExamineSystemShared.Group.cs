@@ -35,10 +35,10 @@ namespace Content.Shared.Examine
                         SendExamineGroup(args.User, args.Target, group);
                         group.Entries.Clear();
                     },
-                    Text = group.ContextText,
-                    Message = group.HoverMessage,
+                    Text = Loc.GetString(group.ContextText),
+                    Message = Loc.GetString(group.HoverMessage),
                     Category = VerbCategory.Examine,
-                    IconTexture = group.Icon
+                    Icon = group.Icon,
                 };
 
                 args.Verbs.Add(examineVerb);
@@ -149,7 +149,7 @@ namespace Content.Shared.Examine
                 Text = verbText,
                 Message = hoverMessage,
                 Category = VerbCategory.Examine,
-                IconTexture = iconTexture
+                Icon = new SpriteSpecifier.Texture(new(iconTexture)),
             };
 
             verbsEvent.Verbs.Add(examineVerb);

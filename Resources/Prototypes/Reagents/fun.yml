@@ -52,7 +52,7 @@
     maxOnTileWhitelist:
       tags: [ Bee ]
   - !type:CleanTileReaction # Bees are extremely obsessive about cleanliness within what they consider their hive.
-    cleanAmountMultiplier: 0 # Consume absolutely zero bees. Buzz buzz.
+    cleanCost: 0 # Consume absolutely zero bees. Buzz buzz.
   metabolisms:
     Poison:
       effects:

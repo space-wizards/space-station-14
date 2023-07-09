@@ -1,13 +1,18 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Ghost.Components;
+using Content.Server.Mind.Components;
 using Content.Server.Station.Components;
 using Content.Server.Singularity.Events;
+using Content.Shared.Database;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
+using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Events;
+using System.Numerics;
 
 
 namespace Content.Server.Singularity.EntitySystems;
@@ -22,8 +27,10 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
     #endregion Dependencies
 
     /// <summary>
@@ -112,6 +119,14 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// </summary>
     public void ConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, IContainer? outerContainer = null)
     {
+        if (!EntityManager.IsQueuedForDeletion(morsel) // I saw it log twice a few times for some reason?
+        && (HasComp<MindContainerComponent>(morsel)
+            || _tagSystem.HasTag(morsel, "HighRiskItem")
+            || HasComp<ContainmentFieldGeneratorComponent>(morsel)))
+        {
+            _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(morsel)} entered the event horizon of {ToPrettyString(eventHorizonOwner)} and was deleted");
+        }
+
         EntityManager.QueueDeleteEntity(morsel);
         var evSelf = new EntityConsumedByEventHorizonEvent(morsel, hungry, eventHorizon, outerContainer);
         var evEaten = new EventHorizonConsumedEntityEvent(morsel, hungry, eventHorizon, outerContainer);
@@ -159,7 +174,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
                 continue;
             if(!xformQuery.TryGetComponent(entity, out var entityXform))
                 continue;
-            
+
             // GetEntitiesInRange gets everything in a _square_ centered on the given position, but we are a _circle_. If we don't have this check and the station is rotated it is possible for the singularity to reach _outside of the containment field_ and eat the emitters.
             var displacement = _xformSystem.GetWorldPosition(entityXform, xformQuery) - epicenter;
             if (displacement.LengthSquared > range2)
@@ -339,7 +354,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
             return true;
 
         // If we can eat it we don't want to bounce off of it. If we can't eat it we want to bounce off of it (containment fields).
-        args.Cancelled = args.FixtureA.Hard && CanConsumeEntity(uid, args.BodyB.Owner, comp);
+        args.Cancelled = args.FixtureA.Hard && CanConsumeEntity(uid, args.OtherEntity, comp);
         return false;
     }
 
@@ -375,7 +390,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (args.OurFixture.ID != comp.ConsumerFixtureId)
             return;
 
-        AttemptConsumeEntity(uid, args.OtherFixture.Body.Owner, comp);
+        AttemptConsumeEntity(uid, args.OtherEntity, comp);
     }
 
     /// <summary>
@@ -429,8 +444,8 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if(!EntityManager.EntityExists(containerEntity))
             return;
         if (AttemptConsumeEntity(uid, containerEntity, comp))
-            return; // If we consume the entity we also consume everything in the containers it has. 
-        
+            return; // If we consume the entity we also consume everything in the containers it has.
+
         ConsumeEntitiesInContainer(uid, args.Args.Container, comp, args.Args.Container);
     }
 

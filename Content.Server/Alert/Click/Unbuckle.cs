@@ -1,5 +1,5 @@
-using Content.Server.Buckle.Systems;
 using Content.Shared.Alert;
+using Content.Shared.Buckle;
 using JetBrains.Annotations;
 
 namespace Content.Server.Alert.Click
@@ -13,7 +13,7 @@ namespace Content.Server.Alert.Click
     {
         public void AlertClicked(EntityUid player)
         {
-            IoCManager.Resolve<IEntityManager>().System<BuckleSystem>().TryUnbuckle(player, player);
+            IoCManager.Resolve<IEntityManager>().System<SharedBuckleSystem>().TryUnbuckle(player, player);
         }
     }
 }

@@ -87,3 +87,12 @@
     path: /Audio/Voice/Talk/slime_ask.ogg
   exclaimSound:
     path: /Audio/Voice/Talk/slime_exclaim.ogg
+
+- type: speechSounds
+  id: Arachnid
+  saySound:
+    path: /Audio/Voice/Talk/arachnid.ogg
+  askSound:
+    path: /Audio/Voice/Talk/arachnid_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/arachnid_exclaim.ogg

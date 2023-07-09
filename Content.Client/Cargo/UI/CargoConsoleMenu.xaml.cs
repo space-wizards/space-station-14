@@ -129,19 +129,19 @@ namespace Content.Client.Cargo.UI
 
             foreach (var order in orders)
             {
-                var product = _protoManager.Index<CargoProductPrototype>(order.ProductId);
+                var product = _protoManager.Index<EntityPrototype>(order.ProductId);
                 var productName = product.Name;
 
                 var row = new CargoOrderRow
                 {
                     Order = order,
-                    Icon = { Texture = _spriteSystem.Frame0(product.Icon) },
+                    Icon = { Texture = _spriteSystem.Frame0(product) },
                     ProductName =
                     {
                         Text = Loc.GetString(
                             "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
                             ("productName", productName),
-                            ("orderAmount", order.Amount),
+                            ("orderAmount", order.OrderQuantity),
                             ("orderRequester", order.Requester))
                     },
                     Description = {Text = Loc.GetString("cargo-console-menu-order-reason-description",

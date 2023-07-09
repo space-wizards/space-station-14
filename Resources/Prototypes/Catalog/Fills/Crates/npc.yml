@@ -23,7 +23,17 @@
   - type: StorageFill
     contents:
       - id: MobCat
-        amount: 1
+        prob: 1
+        orGroup: MobCat
+      - id: MobCatCalico
+        prob: 1
+        orGroup: MobCat
+      - id: MobCatCaracal
+        prob: 0.5
+        orGroup: MobCat
+      - id: MobBingus
+        prob: 0.005
+        orGroup: MobCat
 
 - type: entity
   id: CrateNPCChicken
@@ -33,6 +43,15 @@
     contents:
       - id: MobChicken
         amount: 4
+
+- type: entity
+  id: CrateNPCCrab
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobCrab
+        amount: 3
 
 - type: entity
   id: CrateNPCDuck
@@ -54,7 +73,6 @@
   - type: StorageFill
     contents:
       - id: MobCorgi
-        amount: 1
 
 - type: entity
   id: CrateNPCCow
@@ -63,7 +81,6 @@
   - type: StorageFill
     contents:
       - id: MobCow
-        amount: 1
 
 - type: entity
   id: CrateNPCGoat
@@ -72,7 +89,6 @@
   - type: StorageFill
     contents:
       - id: MobGoat
-        amount: 1
 
 - type: entity
   id: CrateNPCGoose
@@ -90,7 +106,6 @@
   - type: StorageFill
     contents:
       - id: MobGorilla
-        amount: 1
 
 - type: entity
   id: CrateNPCMonkeyCube
@@ -99,7 +114,6 @@
   - type: StorageFill
     contents:
       - id: MonkeyCubeBox
-        amount: 1
 
 - type: entity
   id: CrateNPCMouse
@@ -135,7 +149,6 @@
   - type: StorageFill
     contents:
       - id: MobPig
-        amount: 1
 
 - type: entity
   id: CrateNPCSnake
@@ -163,3 +176,19 @@
     - type: StorageFill
       contents:
         - id: MobHamsterHamlet
+
+- type: entity
+  id: CrateNPCLizard
+  parent: CrateLivestock
+  components:
+    - type: StorageFill
+      contents:
+        - id: MobLizard
+
+- type: entity
+  id: CrateNPCKangaroo
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobKangaroo

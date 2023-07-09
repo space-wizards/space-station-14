@@ -102,10 +102,10 @@
   effects:
     - !type:ExplosionReactionEffect
       explosionType: Default
-      maxIntensity: 1 # at most 15 damage per tile
+      maxIntensity: 5
       intensityPerUnit: 0.5 # 50+50 reagent for maximum explosion
-      intensitySlope: 2
-      maxTotalIntensity: 25
+      intensitySlope: .5
+      maxTotalIntensity: 30
 
 - type: reaction
   id: Smoke
@@ -119,14 +119,8 @@
     Sugar:
       amount: 1
   effects:
-    - !type:SmokeAreaReactionEffect
-      rangeConstant: 0
-      rangeMultiplier: 1.1 #Range formula: rangeConstant + rangeMultiplier*sqrt(ReactionUnits)
-      maxRange: 10
+    - !type:AreaReactionEffect
       duration: 10
-      spreadDelay: 0.5
-      removeDelay: 0.5
-      diluteReagents: true
       prototypeId: Smoke
       sound:
         path: /Audio/Effects/smoke.ogg
@@ -141,17 +135,8 @@
     Water:
       amount: 1
   effects:
-    - !type:FoamAreaReactionEffect
-      rangeConstant: 0
-      rangeMultiplier: 1.1 #Range formula: rangeConstant + rangeMultiplier*sqrt(ReactionUnits)
-      maxRange: 10
+    - !type:AreaReactionEffect
       duration: 10
-      spreadDelay: 1
-      removeDelay: 0
-      diluteReagents: true
-      reagentDilutionStart: 4 #At what range should the reagents start diluting
-      reagentDilutionFactor: 1
-      reagentMaxConcentrationFactor: 2 #The reagents will get multiplied by this number if the range turns out to be 0
       prototypeId: Foam
       sound:
         path: /Audio/Effects/extinguish.ogg
@@ -168,17 +153,8 @@
     FluorosulfuricAcid:
       amount: 1
   effects:
-    - !type:FoamAreaReactionEffect
-      rangeConstant: 0
-      rangeMultiplier: 1.1
-      maxRange: 10
+    - !type:AreaReactionEffect
       duration: 10
-      spreadDelay: 1
-      removeDelay: 0
-      diluteReagents: true
-      reagentDilutionStart: 4
-      reagentDilutionFactor: 1
-      reagentMaxConcentrationFactor: 2
       prototypeId: IronMetalFoam
       sound:
         path: /Audio/Effects/extinguish.ogg
@@ -195,17 +171,8 @@
     FluorosulfuricAcid:
       amount: 1
   effects:
-    - !type:FoamAreaReactionEffect
-      rangeConstant: 0
-      rangeMultiplier: 1.1
-      maxRange: 10
+    - !type:AreaReactionEffect
       duration: 10
-      spreadDelay: 1
-      removeDelay: 0
-      diluteReagents: true
-      reagentDilutionStart: 4
-      reagentDilutionFactor: 1
-      reagentMaxConcentrationFactor: 2
       prototypeId: AluminiumMetalFoam
       sound:
         path: /Audio/Effects/extinguish.ogg
@@ -378,13 +345,28 @@
   id: Diphenylmethylamine
   impact: Medium
   reactants:
-    Ethyloxyephedrine: 
+    Ethyloxyephedrine:
       amount: 1
     Charcoal:
       amount: 1
     Pax:
       amount: 1
-    Coffee: 
+    Coffee:
       amount: 1
   products:
     Diphenylmethylamine: 2
+
+- type: reaction
+  id: SodiumCarbonate
+  impact: Medium
+  reactants:
+    Ammonia:
+      amount: 1
+    TableSalt:
+      amount: 1
+    Carbon:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    SodiumCarbonate: 4

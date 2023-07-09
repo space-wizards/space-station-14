@@ -30,6 +30,7 @@
   - type: Transform
     noRot: false
     anchored: true
+  - type: WiresPanel
   - type: Wires
     BoardName: "Intercom"
     LayoutId: Intercom
@@ -41,6 +42,12 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 100

@@ -1,16 +1,15 @@
 using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.Hands.Components;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Sandbox;
 using Robust.Server.Console;
-using Robust.Server.GameObjects;
 using Robust.Server.Placement;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -129,9 +128,9 @@ namespace Content.Server.Sandbox
                 {
                     UpgradeId(slotEntity.Value);
                 }
-                else if (TryComp<PDAComponent>(slotEntity, out var pda))
+                else if (TryComp<PdaComponent>(slotEntity, out var pda))
                 {
-                    if (pda.ContainedID == null)
+                    if (pda.ContainedId == null)
                     {
                         var newID = CreateFreshId();
                         if (TryComp<ItemSlotsComponent>(pda.Owner, out var itemSlots))
@@ -141,7 +140,7 @@ namespace Content.Server.Sandbox
                     }
                     else
                     {
-                        UpgradeId(pda.ContainedID.Owner);
+                        UpgradeId(pda.ContainedId.Owner);
                     }
                 }
             }

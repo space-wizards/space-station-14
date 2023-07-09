@@ -38,7 +38,7 @@ public sealed class SpawnExplosionEui : BaseEui
 
     public void SendClosedMessage()
     {
-        SendMessage(new SpawnExplosionEuiMsg.Close());
+        SendMessage(new CloseEuiMessage());
     }
 
     public void ClearOverlay()

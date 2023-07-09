@@ -1,0 +1,255 @@
+﻿using System.Linq;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
+using Content.Shared.Body.Components;
+using Content.Shared.Database;
+using Content.Shared.Emag.Components;
+using Content.Shared.Emag.Systems;
+using Content.Shared.Examine;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Stacks;
+using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Timing;
+
+namespace Content.Shared.Materials;
+
+/// <summary>
+/// Handles interactions and logic related to <see cref="MaterialReclaimerComponent"/>,
+/// <see cref="CollideMaterialReclaimerComponent"/>, and <see cref="ActiveMaterialReclaimerComponent"/>.
+/// </summary>
+public abstract class SharedMaterialReclaimerSystem : EntitySystem
+{
+    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] protected readonly SharedAmbientSoundSystem AmbientSound = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+
+    public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";
+
+    /// <inheritdoc/>
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<MaterialReclaimerComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<MaterialReclaimerComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<MaterialReclaimerComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<MaterialReclaimerComponent, EntityUnpausedEvent>(OnUnpaused);
+        SubscribeLocalEvent<MaterialReclaimerComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<MaterialReclaimerComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<CollideMaterialReclaimerComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<ActiveMaterialReclaimerComponent, ComponentStartup>(OnActiveStartup);
+        SubscribeLocalEvent<ActiveMaterialReclaimerComponent, EntityUnpausedEvent>(OnActiveUnpaused);
+    }
+
+    private void OnGetState(EntityUid uid, MaterialReclaimerComponent component, ref ComponentGetState args)
+    {
+        args.State = new MaterialReclaimerComponentState(component.Powered,
+            component.Enabled,
+            component.MaterialProcessRate,
+            component.ItemsProcessed);
+    }
+
+    private void OnHandleState(EntityUid uid, MaterialReclaimerComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not MaterialReclaimerComponentState state)
+            return;
+        component.Powered = state.Powered;
+        component.Enabled = state.Enabled;
+        component.MaterialProcessRate = state.MaterialProcessRate;
+        component.ItemsProcessed = state.ItemsProcessed;
+    }
+
+    private void OnShutdown(EntityUid uid, MaterialReclaimerComponent component, ComponentShutdown args)
+    {
+        component.Stream?.Stop();
+    }
+
+    private void OnUnpaused(EntityUid uid, MaterialReclaimerComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextSound += args.PausedTime;
+    }
+
+    private void OnExamined(EntityUid uid, MaterialReclaimerComponent component, ExaminedEvent args)
+    {
+        args.PushMarkup(Loc.GetString("recycler-count-items", ("items", component.ItemsProcessed)));
+    }
+
+    private void OnEmagged(EntityUid uid, MaterialReclaimerComponent component, ref GotEmaggedEvent args)
+    {
+        args.Handled = true;
+    }
+
+    private void OnCollide(EntityUid uid, CollideMaterialReclaimerComponent component, ref StartCollideEvent args)
+    {
+        if (args.OurFixture.ID != component.FixtureId)
+            return;
+        if (!TryComp<MaterialReclaimerComponent>(uid, out var reclaimer))
+            return;
+        TryStartProcessItem(uid, args.OtherEntity, reclaimer);
+    }
+
+    private void OnActiveStartup(EntityUid uid, ActiveMaterialReclaimerComponent component, ComponentStartup args)
+    {
+        component.ReclaimingContainer = _container.EnsureContainer<Container>(uid, ActiveReclaimerContainerId);
+    }
+
+    private void OnActiveUnpaused(EntityUid uid, ActiveMaterialReclaimerComponent component, ref EntityUnpausedEvent args)
+    {
+        component.EndTime += args.PausedTime;
+    }
+
+    /// <summary>
+    /// Tries to start processing an item via a <see cref="MaterialReclaimerComponent"/>.
+    /// </summary>
+    public bool TryStartProcessItem(EntityUid uid, EntityUid item, MaterialReclaimerComponent? component = null, EntityUid? user = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        if (!CanStart(uid, component))
+            return false;
+
+        if (component.Whitelist != null && !component.Whitelist.IsValid(item) ||
+            HasComp<MobStateComponent>(item) && !CanGib(uid, item, component)) // whitelist? We be gibbing, boy!
+            return false;
+
+        if (component.Blacklist != null && component.Blacklist.IsValid(item))
+            return false;
+
+        if (user != null)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.High,
+                $"{ToPrettyString(user.Value):player} destroyed {ToPrettyString(item)} in the material reclaimer, {ToPrettyString(uid)}");
+        }
+
+        if (Timing.CurTime > component.NextSound)
+            component.Stream = _audio.PlayPvs(component.Sound, uid);
+        component.NextSound = Timing.CurTime + component.SoundCooldown;
+
+        var duration = GetReclaimingDuration(uid, item, component);
+        // if it's instant, don't bother with all the active comp stuff.
+        if (duration == TimeSpan.Zero)
+        {
+            Reclaim(uid, item, 1, component);
+            return true;
+        }
+
+        var active = EnsureComp<ActiveMaterialReclaimerComponent>(uid);
+        active.Duration = duration;
+        active.EndTime = Timing.CurTime + duration;
+        active.ReclaimingContainer.Insert(item);
+        return true;
+    }
+
+    /// <summary>
+    /// Finishes processing an item, freeing up the the reclaimer.
+    /// </summary>
+    /// <remarks>
+    /// This doesn't reclaim the entity itself, but rather ends the formal
+    /// process started with <see cref="ActiveMaterialReclaimerComponent"/>.
+    /// The actual reclaiming happens in <see cref="Reclaim"/>
+    /// </remarks>
+    public virtual bool TryFinishProcessItem(EntityUid uid, MaterialReclaimerComponent? component = null, ActiveMaterialReclaimerComponent? active = null)
+    {
+        if (!Resolve(uid, ref component, ref active, false))
+            return false;
+
+        RemCompDeferred(uid, active);
+        return true;
+    }
+
+    /// <summary>
+    /// Spawns the materials and chemicals associated
+    /// with an entity. Also deletes the item.
+    /// </summary>
+    public virtual void Reclaim(EntityUid uid,
+        EntityUid item,
+        float completion = 1f,
+        MaterialReclaimerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.ItemsProcessed++;
+        if (component.CutOffSound)
+            component.Stream?.Stop();
+
+        Dirty(component);
+    }
+
+    /// <summary>
+    /// Sets the Enabled field on the reclaimer.
+    /// </summary>
+    public void SetReclaimerEnabled(EntityUid uid, bool enabled, MaterialReclaimerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+        component.Enabled = enabled;
+        AmbientSound.SetAmbience(uid, enabled && component.Powered);
+        Dirty(component);
+    }
+
+    /// <summary>
+    /// Whether or not the specified reclaimer can currently
+    /// begin reclaiming another entity.
+    /// </summary>
+    public bool CanStart(EntityUid uid, MaterialReclaimerComponent component)
+    {
+        if (HasComp<ActiveMaterialReclaimerComponent>(uid))
+            return false;
+
+        return component.Powered && component.Enabled;
+    }
+
+    /// <summary>
+    /// Whether or not the reclaimer satisfies the conditions
+    /// allowing it to gib/reclaim a living creature.
+    /// </summary>
+    public bool CanGib(EntityUid uid, EntityUid victim, MaterialReclaimerComponent component)
+    {
+        return component.Powered &&
+               component.Enabled &&
+               HasComp<BodyComponent>(victim) &&
+               HasComp<EmaggedComponent>(uid);
+    }
+
+    /// <summary>
+    /// Gets the duration of processing a specified entity.
+    /// Processing is calculated from the sum of the materials within the entity.
+    /// It does not regard the chemicals within it.
+    /// </summary>
+    public TimeSpan GetReclaimingDuration(EntityUid reclaimer,
+        EntityUid item,
+        MaterialReclaimerComponent? reclaimerComponent = null,
+        PhysicalCompositionComponent? compositionComponent = null)
+    {
+        if (!Resolve(reclaimer, ref reclaimerComponent))
+            return TimeSpan.Zero;
+
+        if (!reclaimerComponent.ScaleProcessSpeed ||
+            !Resolve(item, ref compositionComponent, false))
+            return reclaimerComponent.MinimumProcessDuration;
+
+        var materialSum = compositionComponent.MaterialComposition.Values.Sum();
+        materialSum *= CompOrNull<StackComponent>(item)?.Count ?? 1;
+        var duration = TimeSpan.FromSeconds(materialSum / reclaimerComponent.MaterialProcessRate);
+        if (duration < reclaimerComponent.MinimumProcessDuration)
+            duration = reclaimerComponent.MinimumProcessDuration;
+        return duration;
+    }
+
+    /// <inheritdoc/>
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        var query = EntityQueryEnumerator<ActiveMaterialReclaimerComponent, MaterialReclaimerComponent>();
+        while (query.MoveNext(out var uid, out var active, out var reclaimer))
+        {
+            if (Timing.CurTime < active.EndTime)
+                continue;
+            TryFinishProcessItem(uid, reclaimer, active);
+        }
+    }
+}

@@ -6,6 +6,7 @@ namespace Content.Shared.CombatMode.Pacification
     public sealed class PacificationSystem : EntitySystem
     {
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly SharedCombatModeSystem _combatSystem = default!;
 
         public override void Initialize()
         {
@@ -22,13 +23,13 @@ namespace Content.Shared.CombatMode.Pacification
 
         private void OnStartup(EntityUid uid, PacifiedComponent component, ComponentStartup args)
         {
-            if (!TryComp<SharedCombatModeComponent>(uid, out var combatMode))
+            if (!TryComp<CombatModeComponent>(uid, out var combatMode))
                 return;
 
             if (combatMode.CanDisarm != null)
-                combatMode.CanDisarm = false;
+                _combatSystem.SetCanDisarm(uid, false, combatMode);
 
-            combatMode.IsInCombatMode = false;
+            _combatSystem.SetInCombatMode(uid, false, combatMode);
 
             if (combatMode.CombatToggleAction != null)
             {
@@ -38,11 +39,11 @@ namespace Content.Shared.CombatMode.Pacification
 
         private void OnShutdown(EntityUid uid, PacifiedComponent component, ComponentShutdown args)
         {
-            if (!TryComp<SharedCombatModeComponent>(uid, out var combatMode))
+            if (!TryComp<CombatModeComponent>(uid, out var combatMode))
                 return;
 
             if (combatMode.CanDisarm != null)
-                combatMode.CanDisarm = true;
+                _combatSystem.SetCanDisarm(uid, true, combatMode);
 
             if (combatMode.CombatToggleAction != null)
                 _actionsSystem.SetEnabled(combatMode.CombatToggleAction, true);

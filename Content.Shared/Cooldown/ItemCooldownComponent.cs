@@ -6,10 +6,11 @@ namespace Content.Shared.Cooldown
     /// <summary>
     ///     Stores a visual "cooldown" for items, that gets displayed in the hands GUI.
     /// </summary>
-    [RegisterComponent]
-    [NetworkedComponent()]
-    public sealed class ItemCooldownComponent : Component
+    [RegisterComponent, NetworkedComponent]
+    [AutoGenerateComponentState]
+    public sealed partial class ItemCooldownComponent : Component
     {
+        // TODO: access and system setting and dirtying not this funny stuff
         private TimeSpan? _cooldownEnd;
         private TimeSpan? _cooldownStart;
 
@@ -19,7 +20,7 @@ namespace Content.Shared.Cooldown
         /// <remarks>
         ///     If null, no cooldown is displayed.
         /// </remarks>
-        [ViewVariables]
+        [ViewVariables, AutoNetworkedField]
         public TimeSpan? CooldownEnd
         {
             get => _cooldownEnd;
@@ -36,7 +37,7 @@ namespace Content.Shared.Cooldown
         /// <remarks>
         ///     If null, no cooldown is displayed.
         /// </remarks>
-        [ViewVariables]
+        [ViewVariables, AutoNetworkedField]
         public TimeSpan? CooldownStart
         {
             get => _cooldownStart;
@@ -44,36 +45,6 @@ namespace Content.Shared.Cooldown
             {
                 _cooldownStart = value;
                 Dirty();
-            }
-        }
-
-        public override ComponentState GetComponentState()
-        {
-            return new ItemCooldownComponentState
-            {
-                CooldownEnd = CooldownEnd,
-                CooldownStart = CooldownStart
-            };
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not ItemCooldownComponentState cast)
-                return;
-
-            CooldownStart = cast.CooldownStart;
-            CooldownEnd = cast.CooldownEnd;
-        }
-
-        [Serializable, NetSerializable]
-        private sealed class ItemCooldownComponentState : ComponentState
-        {
-            public TimeSpan? CooldownStart { get; set; }
-            public TimeSpan? CooldownEnd { get; set; }
-
-            public ItemCooldownComponentState() {
             }
         }
     }

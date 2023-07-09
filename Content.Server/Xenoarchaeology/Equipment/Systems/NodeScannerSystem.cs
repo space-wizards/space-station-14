@@ -23,7 +23,7 @@ public sealed class NodeScannerSystem : EntitySystem
         if (!args.CanReach || args.Target == null)
             return;
 
-        if (!TryComp<ArtifactComponent>(args.Target, out var artifact) || artifact.CurrentNode == null)
+        if (!TryComp<ArtifactComponent>(args.Target, out var artifact) || artifact.CurrentNodeId == null)
             return;
 
         if (args.Handled)
@@ -33,6 +33,6 @@ public sealed class NodeScannerSystem : EntitySystem
         var target = args.Target.Value;
         _useDelay.BeginDelay(uid);
         _popupSystem.PopupEntity(Loc.GetString("node-scan-popup",
-            ("id", $"{artifact.CurrentNode.Id}")), target);
+            ("id", $"{artifact.CurrentNodeId}")), target);
     }
 }

@@ -3,6 +3,11 @@
   bodyPart: Chest
   markingCategory: Chest
   speciesRestriction: [Human]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_hive_chest
@@ -12,6 +17,11 @@
   bodyPart: Chest
   markingCategory: Chest
   speciesRestriction: [Human]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_nightling
@@ -21,6 +31,11 @@
   bodyPart: LLeg
   markingCategory: Legs
   speciesRestriction: [Human]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_silverburgh_l_leg
@@ -30,6 +45,11 @@
   bodyPart: RLeg
   markingCategory: Legs
   speciesRestriction: [Human]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_silverburgh_r_leg
@@ -39,6 +59,11 @@
   bodyPart: LArm
   markingCategory: Arms
   speciesRestriction: [Human]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_campbell_l_arm
@@ -48,6 +73,11 @@
   bodyPart: RArm
   markingCategory: Arms
   speciesRestriction: [Human]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_campbell_r_arm
@@ -57,6 +87,11 @@
   bodyPart: LLeg
   markingCategory: Legs
   speciesRestriction: [Human]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_campbell_l_leg
@@ -66,6 +101,11 @@
   bodyPart: RLeg
   markingCategory: Legs
   speciesRestriction: [Human]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_campbell_r_leg
@@ -75,6 +115,11 @@
   bodyPart: Eyes
   markingCategory: Head
   speciesRestriction: [Human, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_r
@@ -84,6 +129,11 @@
   bodyPart: Eyes
   markingCategory: Head
   speciesRestriction: [Human, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_l

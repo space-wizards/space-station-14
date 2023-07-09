@@ -14,5 +14,5 @@ public sealed class HumanoidProfilePrototype : IPrototype
     public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers = new();
 
     [DataField("profile")]
-    public HumanoidCharacterProfile Profile { get; } = HumanoidCharacterProfile.Default();
+    public HumanoidCharacterProfile Profile { get; } = new();
 }
