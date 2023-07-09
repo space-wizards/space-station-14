@@ -17,7 +17,7 @@ action-desc-katana-dash = Teleport to anywhere you can see, if your Energy Katan
 action-name-em-burst = EM Burst
 action-desc-em-burst = Disable any nearby technology with an electro-magnetic pulse.
 
-ninja-full-power = Suit battery is already full
+ninja-drain-full = Your suit battery is already full
 ninja-drain-empty = {CAPITALIZE(THE($battery))} does not have enough power to drain
 ninja-drain-success = You drain power from {THE($battery)}!
 

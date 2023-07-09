@@ -55,4 +55,12 @@ public abstract class SharedBatteryDrainerSystem : EntitySystem
     {
         return true;
     }
+
+    /// <summary>
+    /// Sets the battery field on the drainer.
+    /// </summary>
+    public void SetBattery(BatteryDrainerComponent comp, EntityUid? battery)
+    {
+        comp.BatteryUid = battery;
+    }
 }

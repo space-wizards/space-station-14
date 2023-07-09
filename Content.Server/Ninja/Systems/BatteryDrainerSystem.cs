@@ -23,21 +23,23 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         if (comp.BatteryUid == null || !HasComp<PowerNetworkBatteryComponent>(target))
             return;
 
+        // nicer for spam-clicking to not open apc ui, and when draining starts, so cancel the ui action
+        args.Cancel();
+
         if (IsBatteryFull(comp.BatteryUid.Value))
         {
             _popup.PopupEntity(Loc.GetString("ninja-drain-full"), uid, uid, PopupType.Medium);
             return;
         }
 
-        // nicer for spam-clicking to not open apc ui, and when draining starts, so cancel the ui action
-        args.Cancel();
-
         var doAfterArgs = new DoAfterArgs(uid, comp.DrainTime, new DrainDoAfterEvent(), target: target, eventTarget: uid)
         {
             BreakOnUserMove = true,
             MovementThreshold = 0.5f,
             CancelDuplicate = false,
-            AttemptFrequency = AttemptFrequency.StartAndEnd
+            AttemptFrequency = AttemptFrequency.StartAndEnd,
+            // prevent stack overflow /!\
+            RequireCanInteract = false
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
@@ -68,7 +70,7 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         }
 
         var available = targetBattery.CurrentCharge;
-        var required = battery.MaxCharge - targetBattery.CurrentCharge;
+        var required = targetBattery.MaxCharge - targetBattery.CurrentCharge;
         // higher tier storages can charge more
         var maxDrained = pnb.MaxSupply * comp.DrainTime;
         var input = Math.Min(Math.Min(available, required / comp.DrainEfficiency), maxDrained);

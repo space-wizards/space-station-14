@@ -49,32 +49,6 @@ public sealed partial class NinjaGlovesComponent : Component
 }
 
 /// <summary>
-/// Component for stunning mobs on click, when gloves are enabled.
-/// Knocks them down for a bit and deals shock damage.
-/// </summary>
-[RegisterComponent]
-public sealed class NinjaStunComponent : Component
-{
-    /// <summary>
-    /// Joules required in the suit to stun someone. Defaults to 10 uses on a small battery.
-    /// </summary>
-    [DataField("stunCharge")]
-    public float StunCharge = 36.0f;
-
-    /// <summary>
-    /// Shock damage dealt when stunning someone
-    /// </summary>
-    [DataField("stunDamage")]
-    public int StunDamage = 5;
-
-    /// <summary>
-    /// Time that someone is stunned for, stacks if done multiple times.
-    /// </summary>
-    [DataField("stunTime")]
-    public TimeSpan StunTime = TimeSpan.FromSeconds(3);
-}
-
-/// <summary>
 /// Component for downloading research nodes from a R&D server, when gloves are enabled.
 /// Requirement for greentext.
 /// </summary>

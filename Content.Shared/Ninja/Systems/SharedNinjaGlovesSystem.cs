@@ -1,9 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.CombatMode;
-using Content.Shared.Damage.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.DoAfter;
-using Content.Shared.Electrocution;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -16,7 +14,6 @@ using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
-using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 
@@ -25,11 +22,9 @@ namespace Content.Shared.Ninja.Systems;
 public abstract class SharedNinjaGlovesSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
     [Dependency] protected readonly SharedInteractionSystem Interaction = default!;
     [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
@@ -42,9 +37,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         SubscribeLocalEvent<NinjaGlovesComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<NinjaGlovesComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<NinjaGlovesComponent, GotUnequippedEvent>(OnUnequipped);
-
-        // TODO: StunProvider
-        SubscribeLocalEvent<NinjaStunComponent, InteractionAttemptEvent>(OnStun);
 
         // TODO: maybe move into r&d server???
         SubscribeLocalEvent<NinjaDownloadComponent, InteractionAttemptEvent>(OnDownload);
@@ -72,6 +64,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
             RemComp<BatteryDrainerComponent>(user);
             RemComp<EmagProviderComponent>(user);
+            RemComp<StunProviderComponent>(user);
         }
     }
 
@@ -157,31 +150,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
         target = EntityUid.Invalid;
         return false;
-    }
-
-    /// <summary>
-    /// Stun mobs on click when enabled and not on cooldown.
-    /// </summary>
-    private void OnStun(EntityUid uid, NinjaStunComponent comp, InteractionAttemptEvent args)
-    {
-        if (!GloveCheck(uid, args, out var gloves, out var user, out var target))
-            return;
-
-        // battery can't be predicted since it's serverside
-        if (user == target || _net.IsClient || !HasComp<StaminaComponent>(target))
-            return;
-
-        // take charge from battery
-        if (!_ninja.TryUseCharge(user, comp.StunCharge))
-        {
-            Popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
-            return;
-        }
-
-        // not holding hands with target so insuls don't matter
-        _electrocution.TryDoElectrocution(target, uid, comp.StunDamage, comp.StunTime, false, ignoreInsulation: true);
-        // short cooldown to prevent instant stunlocking
-        _useDelay.BeginDelay(user);
     }
 
     /// <summary>
