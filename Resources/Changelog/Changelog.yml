@@ -1,10 +1,4 @@
 Entries:
-- author: notquitehadouken
-  changes:
-  - {message: Mice can no longer lift thousands times their weight (they can't drag
-      people onto tables anymore), type: Fix}
-  id: 3709
-  time: '2023-05-09T07:37:56.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: Adds a pet Pun Pun for bartenders ghost role., type: Add}
@@ -2932,3 +2926,8 @@ Entries:
     type: Fix}
   id: 4208
   time: '2023-07-09T20:20:27.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Fixed some jumpskirts parents, type: Fix}
+  id: 4209
+  time: '2023-07-09T21:57:20.0000000+00:00'
