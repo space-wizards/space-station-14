@@ -4,7 +4,7 @@
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     state: margherita
   product: CrateFoodPizza
-  cost: 450
+  cost: 1150
   category: Food
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     state: margherita
   product: CrateFoodPizzaLarge
-  cost: 1800
+  cost: 3800
   category: Food
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Objects/Consumable/Food/ingredients.rsi
     state: flour-big
   product: CrateFoodCooking
-  cost: 750
+  cost: 1500
   category: Food
   group: market
 
@@ -44,7 +44,7 @@
     sprite: Objects/Consumable/Food/plates.rsi
     state: tin
   product: CrateFoodDinnerware
-  cost: 750
+  cost: 1750
   category: Food
   group: market
 
@@ -54,7 +54,7 @@
     sprite: Objects/Consumable/Drinks/beerglass.rsi
     state: icon
   product: CrateFoodBarSupply
-  cost: 750
+  cost: 1750
   category: Food
   group: market
 
@@ -64,7 +64,7 @@
     sprite: Objects/Consumable/Drinks/beerglass.rsi
     state: icon
   product: CrateFoodSoftdrinks
-  cost: 1200
+  cost: 3200
   category: Food
   group: market
 
@@ -74,6 +74,6 @@
     sprite: Objects/Consumable/Drinks/beerglass.rsi
     state: icon
   product: CrateFoodSoftdrinksLarge
-  cost: 2400
+  cost: 4400
   category: Food
   group: market

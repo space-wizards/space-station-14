@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: HydroponicsTray
+  icon:
+    sprite: Structures/Hydroponics/containers.rsi
+    state: hydrotray3
+  product: hydroponicsTray
+  cost: 1500
+  category: Hydroponics
+  group: market

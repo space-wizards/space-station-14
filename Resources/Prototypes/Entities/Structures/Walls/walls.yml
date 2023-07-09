@@ -504,13 +504,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1200 #excess damage (nuke?). avoid computational cost of spawning entities.
+        damage: 5000 #excess damage (nuke?). avoid computational cost of spawning entities.
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 600
+        damage: 2000
       behaviors:
       - !type:ChangeConstructionNodeBehavior
         node: girder
@@ -554,7 +554,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1000
+        damage: 1000000
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:

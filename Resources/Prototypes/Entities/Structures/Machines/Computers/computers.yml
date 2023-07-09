@@ -935,6 +935,7 @@
       type: CargoPalletConsoleBoundUserInterface
   - type: Computer
     board: CargoRequestComputerCircuitboard
+  - type: NoAnchor
   - type: PointLight
     radius: 1.5
     energy: 1.6

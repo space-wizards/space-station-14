@@ -4,7 +4,7 @@
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
     state: icon
   product: CrateArmorySMG
-  cost: 3000
+  cost: 5000
   category: Armory
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
     state: icon
   product: CrateArmoryShotgun
-  cost: 2500
+  cost: 4500
   category: Armory
   group: market
 
@@ -24,7 +24,7 @@
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: syringe_base0
   product: CrateTrackingImplants
-  cost: 1000
+  cost: 3000
   category: Armory
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     state: icon
   product: CrateArmoryLaser
-  cost: 1600
+  cost: 3600
   category: Armory
   group: market
 
@@ -44,6 +44,6 @@
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
     state: icon
   product: CrateArmoryPistols
-  cost: 1700
+  cost: 3700
   category: Armory
   group: market

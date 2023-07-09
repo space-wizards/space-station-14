@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: EngineUranium
+  icon:
+    sprite: Structures/Power/Generation/portable_generator.rsi
+    state: portgen1_1
+  product: GeneratorUranium
+  cost: 3000
+  category: Engineering
+  group: market

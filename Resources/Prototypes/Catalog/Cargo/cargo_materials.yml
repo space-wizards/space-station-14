@@ -34,7 +34,7 @@
     sprite: Objects/Materials/Sheets/metal.rsi
     state: plasteel_3
   product: CrateMaterialPlasteel
-  cost: 3000
+  cost: 2000
   category: Materials
   group: market
 

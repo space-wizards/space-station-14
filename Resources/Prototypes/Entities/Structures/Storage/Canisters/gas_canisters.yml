@@ -91,7 +91,7 @@
     - type: GasPortable
     - type: GasCanister
     - type: StaticPrice
-      price: 1000
+      price: 50
     - type: AccessReader
       access: [["Atmospherics"], ["ResearchDirector"]]
     - type: Lock
@@ -613,7 +613,7 @@
       materialComposition:
         Steel: 500
     - type: StaticPrice
-      price: 60
+      price: 0
 
 - type: entity
   parent: GasCanisterBrokenBase

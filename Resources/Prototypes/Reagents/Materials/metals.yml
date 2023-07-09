@@ -27,4 +27,4 @@
   name: materials-plasteel
   icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: plasteel }
   color: "#696969" #Okay, this is epic
-  price: 0.28 # 1-1 mix of plasma and steel.
+  price: 0.18 # 1-1 mix of plasma and steel.

@@ -4,7 +4,7 @@
   name: materials-biomass
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   color: "#8A9A5B"
-  price: 0.1
+  price: 0
 
 - type: material
   id: Cardboard
@@ -20,7 +20,7 @@
   name: materials-cloth
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cloth }
   color: "#e7e7de"
-  price: 0.05
+  price: 0
 
 - type: material
   id: Durathread
@@ -28,7 +28,7 @@
   name: materials-durathread
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: durathread }
   color: "#8291a1"
-  price: 0.15 # 1-1 mix of plastic and cloth.
+  price: 0 # 1-1 mix of plastic and cloth.
 
 - type: material
   id: Plasma
@@ -52,7 +52,7 @@
   name: materials-wood
   icon: { sprite: Objects/Materials/materials.rsi, state: wood }
   color: "#966F33"
-  price: 0.05
+  price: 0.0
 
 - type: material
   id: Uranium
