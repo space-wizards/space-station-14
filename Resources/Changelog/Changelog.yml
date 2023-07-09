@@ -1,9 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - {message: Adds a pet Pun Pun for bartenders ghost role., type: Add}
-  id: 3710
-  time: '2023-05-09T07:39:43.0000000+00:00'
 - author: Tyzemol
   changes:
   - {message: Fixed not being able to link airlocks using network configurator, type: Fix}
@@ -2931,3 +2926,9 @@ Entries:
   - {message: Fixed some jumpskirts parents, type: Fix}
   id: 4209
   time: '2023-07-09T21:57:20.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Going afk and missing evac now counts as being killed for the kill objective.,
+    type: Tweak}
+  id: 4210
+  time: '2023-07-09T22:00:08.0000000+00:00'
