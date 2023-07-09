@@ -1,3 +1,6 @@
+signal-port-name-autoclose = Автозакрытие
+signal-port-description-autoclose = Переключает, должно ли устройство автоматически закрываться.
+
 signal-port-name-toggle = Переключить
 signal-port-description-toggle = Переключает состояние устройства.
 
@@ -18,6 +21,9 @@ signal-port-description-open = Открывает устройство.
 
 signal-port-name-close = Закрыть
 signal-port-description-close = Закрывает устройство.
+
+signal-port-name-doorbolt = Дверной болт
+signal-port-description-doorbolt = Запирает дверь при ВЫСОКОМ уровне.
 
 signal-port-name-trigger = Триггер
 signal-port-description-trigger = Запускает определенный механизм на устройстве.
@@ -46,8 +52,29 @@ signal-port-description-med-scanner-sender = Передатчик сигнала
 signal-port-name-med-scanner-receiver = Медицинский сканер
 signal-port-description-med-scanner-receiver = Приёмник сигнала медицинского сканера
 
+signal-port-name-hold-open = Удерживать
+signal-port-description-hold-open = Отключает автоматическое закрытие.
+
 signal-port-name-artifact-analyzer-sender = Консоль
 signal-port-description-artifact-analyzer-sender = Передатчик сигнала аналитической консоли
 
 signal-port-name-artifact-analyzer-receiver = Платформа
 signal-port-description-artifact-analyzer-receiver = Приёмник сигнала анализатора артефактов
+
+signal-port-name-set-particle-delta = Установить тип частицы: дельта
+signal-port-description-set-particle-delta = Устанавливает тип частицы, испускаемой этим устройством, в дельта.
+
+signal-port-name-set-particle-epsilon = Установить тип частицы: эпсилон
+signal-port-description-set-particle-epsilon = Устанавливает тип частицы, испускаемой этим устройством, на эпсилон.
+
+signal-port-name-set-particle-zeta = Установить тип частицы: zeta
+signal-port-description-set-particle-zeta = Устанавливает тип частицы, излучаемой этим устройством, на дзета.
+
+signal-port-name-logic-input-a = Вход A
+signal-port-description-logic-input-a = Первый вход логического элемента.
+
+signal-port-name-logic-input-b = Вход B
+signal-port-description-logic-input-b = Второй вход логического вентиля.
+
+signal-port-name-logic-input = Вход
+signal-port-description-logic-input = Вход для детектора фронта, не может быть импульсным сигналом.
