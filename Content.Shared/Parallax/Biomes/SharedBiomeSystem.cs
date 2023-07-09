@@ -106,6 +106,23 @@ public abstract class SharedBiomeSystem : EntitySystem
         {
             var layer = layers[i];
 
+            // Check if the tile is from meta layer, otherwise fall back to default layers.
+            if (layer is BiomeMetaLayer meta)
+            {
+                SetNoise(noise, oldSeed, layer.Noise);
+                var found = noise.GetNoise(indices.X, indices.Y);
+                found *= layer.Invert ? -1 : 1;
+
+                if (found > layer.Threshold && TryGetBiomeTile(indices, ProtoManager.Index<BiomeTemplatePrototype>(meta.Template).Layers, noise,
+                        grid, out tile))
+                {
+                    noise.SetSeed(oldSeed);
+                    return true;
+                }
+
+                continue;
+            }
+
             if (layer is not BiomeTileLayer tileLayer)
                 continue;
 
@@ -185,6 +202,8 @@ public abstract class SharedBiomeSystem : EntitySystem
                         continue;
 
                     break;
+                case BiomeMetaLayer:
+                    break;
                 default:
                     continue;
             }
@@ -195,7 +214,16 @@ public abstract class SharedBiomeSystem : EntitySystem
             value = invert ? value * -1 : value;
 
             if (value < layer.Threshold)
+                continue;
+
+            if (layer is BiomeMetaLayer meta)
             {
+                if (TryGetEntity(indices, ProtoManager.Index<BiomeTemplatePrototype>(meta.Template).Layers, noise, grid, out entity))
+                {
+                    noise.SetSeed(oldSeed);
+                    return true;
+                }
+
                 continue;
             }
 
@@ -245,12 +273,28 @@ public abstract class SharedBiomeSystem : EntitySystem
                         continue;
 
                     break;
+                case BiomeMetaLayer:
+                    break;
                 default:
                     continue;
             }
 
             SetNoise(noise, oldSeed, layer.Noise);
             var invert = layer.Invert;
+
+            if (layer is BiomeMetaLayer meta)
+            {
+                var found = noise.GetNoise(indices.X, indices.Y);
+                found *= layer.Invert ? -1 : 1;
+
+                if (found > layer.Threshold && TryGetDecals(indices, ProtoManager.Index<BiomeTemplatePrototype>(meta.Template).Layers, noise, grid, out decals))
+                {
+                    noise.SetSeed(oldSeed);
+                    return true;
+                }
+
+                continue;
+            }
 
             // Check if the other layer should even render, if not then keep going.
             if (layer is not BiomeDecalLayer decalLayer)
