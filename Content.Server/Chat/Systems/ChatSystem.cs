@@ -12,7 +12,9 @@ using Content.Server.Station.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
@@ -53,6 +55,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly DamageableSystem _damageSystem = default!;
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperRange = 2; // how far whisper goes in world units
@@ -61,6 +64,9 @@ public sealed partial class ChatSystem : SharedChatSystem
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled = false;
     private bool _critLoocEnabled = false;
+    private string? _critLoocDamageType = null;
+    private float? _critLoocDamageAmount = null;
+    private DamageSpecifier? _critLoocDamage = null;
     private readonly bool _adminLoocEnabled = true;
 
     public override void Initialize()
@@ -70,6 +76,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         _configurationManager.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
         _configurationManager.OnValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
         _configurationManager.OnValueChanged(CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
+        _configurationManager.OnValueChanged(CCVars.CritLoocDamageType, OnCritLoocDamageTypeChanged, true);
+        _configurationManager.OnValueChanged(CCVars.CritLoocDamageAmount, OnCritLoocDamageAmountChanged, true);
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
     }
@@ -81,6 +89,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         _configurationManager.UnsubValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged);
         _configurationManager.UnsubValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged);
         _configurationManager.UnsubValueChanged(CCVars.CritLoocEnabled, OnCritLoocEnabledChanged);
+        _configurationManager.UnsubValueChanged(CCVars.CritLoocDamageType, OnCritLoocDamageTypeChanged);
+        _configurationManager.UnsubValueChanged(CCVars.CritLoocDamageAmount, OnCritLoocDamageAmountChanged);
     }
 
     private void OnLoocEnabledChanged(bool val)
@@ -108,6 +118,51 @@ public sealed partial class ChatSystem : SharedChatSystem
         _critLoocEnabled = val;
         _chatManager.DispatchServerAnnouncement(
             Loc.GetString(val ? "chat-manager-crit-looc-chat-enabled-message" : "chat-manager-crit-looc-chat-disabled-message"));
+    }
+
+    private void OnCritLoocDamageAmountChanged(float val)
+    {
+        if (_critLoocDamageAmount == val) return;
+
+        _critLoocDamageAmount = val;
+        OnCritLoocDamageChanged(_critLoocDamageType, val);
+    }
+
+    private void OnCritLoocDamageTypeChanged(string val)
+    {
+        if (_critLoocDamageType == val) return;
+
+        _critLoocDamageType = val;
+        OnCritLoocDamageChanged(val, _critLoocDamageAmount);
+    }
+
+    private void OnCritLoocDamageChanged(string? damageType, float? damageAmount)
+    {
+        if (damageAmount == 0)
+        {
+            _critLoocDamage = null;
+            return;
+        }
+
+        if (_critLoocDamage != null)
+        {
+            foreach (var (oldDamageType, oldDamageAmount) in _critLoocDamage.DamageDict)
+            {
+                damageType ??= oldDamageType;
+                damageAmount ??= oldDamageAmount.Float();
+            }
+        }
+
+        if (damageType == null || damageAmount == null)
+            return;
+
+        _critLoocDamage = new DamageSpecifier
+        {
+                DamageDict = new()
+                {
+                    { damageType, (FixedPoint2) damageAmount },
+                }
+        };
     }
 
     private void OnGameChange(GameRunLevelChangedEvent ev)
@@ -464,7 +519,14 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (!_adminLoocEnabled) return;
         }
         else if (!_loocEnabled) return;
-        else if (!_critLoocEnabled && _mobStateSystem.IsCritical(source)) return;
+        else if (_mobStateSystem.IsCritical(source))
+        {
+            if (_critLoocDamage != null)
+                _damageSystem.TryChangeDamage(source, _critLoocDamage, true, false);
+
+            if (!_critLoocEnabled) return;
+        }
+
         var wrappedMessage = Loc.GetString("chat-manager-entity-looc-wrap-message",
             ("entityName", name),
             ("message", FormattedMessage.EscapeText(message)));

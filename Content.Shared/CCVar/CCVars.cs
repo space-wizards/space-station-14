@@ -977,6 +977,16 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> CritLoocEnabled = CVarDef.Create("looc.enabled_crit", false, CVar.NOTIFY | CVar.REPLICATED);
 
+        /// <summary>
+        /// Type of damage done to someone who uses LOOC while in crit.
+        /// </summary>
+        public static readonly CVarDef<string> CritLoocDamageType = CVarDef.Create("looc.crit_damage_type", "Cellular", CVar.NOTIFY | CVar.REPLICATED);
+
+        /// <summary>
+        /// Amount of the damage type done to someone who uses LOOC while in crit.
+        /// </summary>
+        public static readonly CVarDef<float> CritLoocDamageAmount = CVarDef.Create("looc.crit_damage_amount", 20f, CVar.NOTIFY | CVar.REPLICATED);
+
         /*
          * Entity Menu Grouping Types
          */
