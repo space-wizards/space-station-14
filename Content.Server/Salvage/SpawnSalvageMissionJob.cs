@@ -138,7 +138,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         expedition.Rewards = mission.Rewards;
 
         // Don't want consoles to have the incorrect name until refreshed.
-        var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
+        var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, grid.TileSizeHalfVector));
         _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _missionParams.Seed);
         _entManager.InitializeAndStartEntity(ftlUid);
 
