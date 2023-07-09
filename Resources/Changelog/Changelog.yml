@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Remove diseases pending a further refactor., type: Remove}
-  id: 3697
-  time: '2023-05-07T07:50:38.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: fixed pinpointer flickering!, type: Fix}
@@ -2939,3 +2934,8 @@ Entries:
   - {message: Fixed chat scrollbar not working properly., type: Fix}
   id: 4196
   time: '2023-07-09T02:25:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added sub-biome support to planets., type: Add}
+  id: 4197
+  time: '2023-07-09T05:26:16.0000000+00:00'
