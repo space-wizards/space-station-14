@@ -373,6 +373,11 @@
     Telecrystal: 5
   categories:
   - UplinkUtility
+  conditions:
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
 
 # Implants
 
