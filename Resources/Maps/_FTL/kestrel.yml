@@ -158,7 +158,7 @@ entities:
             color: '#FF7200FF'
             id: BrickTileWhiteEndE
           decals:
-            64: 4,-13
+            63: 4,-13
         - node:
             color: '#334E6DC8'
             id: BrickTileWhiteLineE
@@ -822,6 +822,13 @@ entities:
     - pos: -0.5,-22.5
       parent: 2
       type: Transform
+- proto: Autolathe
+  entities:
+  - uid: 968
+    components:
+    - pos: -0.5,-20.5
+      parent: 2
+      type: Transform
 - proto: Bed
   entities:
   - uid: 541
@@ -892,6 +899,23 @@ entities:
   - uid: 913
     components:
     - pos: -3.2176027,-12.743704
+      parent: 2
+      type: Transform
+- proto: Bucket
+  entities:
+  - uid: 972
+    components:
+    - pos: 3.438407,-7.3609934
+      parent: 2
+      type: Transform
+  - uid: 976
+    components:
+    - pos: 3.344657,-7.2359934
+      parent: 2
+      type: Transform
+  - uid: 977
+    components:
+    - pos: 3.625907,-7.5328684
       parent: 2
       type: Transform
 - proto: CableApcExtension
@@ -2597,6 +2621,56 @@ entities:
     - pos: -1.4764618,-28.41355
       parent: 2
       type: Transform
+- proto: ClothingOuterHardsuitCap
+  entities:
+  - uid: 965
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 817
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
+- proto: ClothingOuterHardsuitMedical
+  entities:
+  - uid: 966
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 818
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
+- proto: ClothingOuterHardsuitSecurity
+  entities:
+  - uid: 973
+    components:
+    - pos: 2.5003078,-12.531275
+      parent: 2
+      type: Transform
+  - uid: 974
+    components:
+    - pos: 2.5003078,-12.5469
+      parent: 2
+      type: Transform
+  - uid: 975
+    components:
+    - pos: 2.5003078,-12.5469
+      parent: 2
+      type: Transform
+- proto: ClothingOuterHardsuitSecurityRed
+  entities:
+  - uid: 967
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 819
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: ClothingOuterWinterCap
   entities:
   - uid: 430
@@ -4378,8 +4452,9 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 430
           - 37
+          - 430
+          - 965
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -4416,6 +4491,7 @@ entities:
           occludes: True
           ents:
           - 943
+          - 966
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -4470,11 +4546,12 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 41
-          - 40
-          - 39
-          - 38
           - 944
+          - 38
+          - 39
+          - 40
+          - 41
+          - 967
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -5010,6 +5087,28 @@ entities:
     - pos: -1.4949968,-0.45751953
       parent: 2
       type: Transform
+- proto: RagItem
+  entities:
+  - uid: 979
+    components:
+    - pos: 3.266532,-9.220368
+      parent: 2
+      type: Transform
+  - uid: 980
+    components:
+    - pos: 3.782157,-9.220368
+      parent: 2
+      type: Transform
+  - uid: 981
+    components:
+    - pos: 3.797782,-9.704743
+      parent: 2
+      type: Transform
+  - uid: 982
+    components:
+    - pos: 3.313407,-9.720368
+      parent: 2
+      type: Transform
 - proto: RandomPosterLegit
   entities:
   - uid: 456
@@ -5310,6 +5409,16 @@ entities:
   - uid: 418
     components:
     - pos: -0.57021177,-28.47605
+      parent: 2
+      type: Transform
+  - uid: 970
+    components:
+    - pos: -1.5794902,-20.425585
+      parent: 2
+      type: Transform
+  - uid: 971
+    components:
+    - pos: -1.4857402,-20.519335
       parent: 2
       type: Transform
 - proto: SheetSteel1
@@ -5660,6 +5769,12 @@ entities:
   - uid: 883
     components:
     - pos: -3.5,-12.5
+      parent: 2
+      type: Transform
+  - uid: 969
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -1.5,-20.5
       parent: 2
       type: Transform
 - proto: TableReinforced
@@ -6626,6 +6741,13 @@ entities:
   - uid: 388
     components:
     - pos: 3.5,-7.5
+      parent: 2
+      type: Transform
+- proto: WaterTankHighCapacity
+  entities:
+  - uid: 978
+    components:
+    - pos: 3.5,-8.5
       parent: 2
       type: Transform
 - proto: WeaponBurstLaserMkI
