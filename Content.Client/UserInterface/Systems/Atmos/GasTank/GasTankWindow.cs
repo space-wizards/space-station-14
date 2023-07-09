@@ -40,7 +40,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
             var back = new StyleBoxTexture
             {
                 Texture = panelTex,
-                Modulate = Color.FromHex("#25252A"),
+                Modulate = Color.FromHex("#141414"),
             };
 
             back.SetPatchMargin(StyleBox.Margin.All, 10);

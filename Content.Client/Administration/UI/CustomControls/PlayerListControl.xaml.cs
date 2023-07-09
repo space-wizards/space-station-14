@@ -41,7 +41,7 @@ namespace Content.Client.Administration.UI.CustomControls
             PopulateList(_adminSystem.PlayerList);
             FilterLineEdit.OnTextChanged += _ => FilterList();
             _adminSystem.PlayerListChanged += PopulateList;
-            BackgroundPanel.PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)};
+            BackgroundPanel.PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(20, 20, 20)};
         }
 
         private void PlayerListItemPressed(BaseButton.ButtonEventArgs args, ListData data)

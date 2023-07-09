@@ -17,7 +17,7 @@
                HorizontalExpand="True" />
         <PanelContainer>
             <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BackgroundColor="#25252A" />
+                <gfx:StyleBoxFlat BackgroundColor="#141414" />
             </PanelContainer.PanelOverride>
             <Label Name="PointCost"
                    Access="Public"

@@ -2,7 +2,7 @@
        xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
     <PanelContainer>
         <PanelContainer.PanelOverride>
-            <graphics:StyleBoxFlat BackgroundColor="#25252A"/>
+            <graphics:StyleBoxFlat BackgroundColor="#141414"/>
         </PanelContainer.PanelOverride>
         <BoxContainer Orientation="Vertical">
             <Label Name="ID" HorizontalExpand="True"/>

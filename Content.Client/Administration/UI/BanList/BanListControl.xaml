@@ -4,7 +4,7 @@
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
     <PanelContainer>
         <PanelContainer.PanelOverride>
-            <graphics:StyleBoxFlat BackgroundColor="#25252A"/>
+            <graphics:StyleBoxFlat BackgroundColor="#141414"/>
         </PanelContainer.PanelOverride>
         <ScrollContainer>
             <BoxContainer Name="Bans" Access="Public" Orientation="Vertical">

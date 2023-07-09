@@ -1,0 +1,931 @@
+From 0f6028b9ed47a038ddcf6294a62c2c05e8705390 Mon Sep 17 00:00:00 2001
+From: PixelTheKermit <pixelmontrainer8967@gmail.com>
+Date: Thu, 25 May 2023 16:31:58 +0100
+Subject: [PATCH 1/2] 3 AM gaming UI
+
+---
+ .../UI/BanList/BanListControl.xaml            |   2 +-
+ .../UI/BanList/BanListIdsPopup.xaml           |   2 +-
+ .../UI/Bwoink/BwoinkControl.xaml              |   2 +-
+ .../UI/CustomControls/HSeparator.cs           |   2 +-
+ .../CustomControls/PlayerListControl.xaml.cs  |   2 +-
+ .../UI/CustomControls/VSeparator.cs           |   2 +-
+ .../UI/Logs/AdminLogsControl.xaml             |   2 +-
+ .../UI/Notes/AdminNotesControl.xaml           |   2 +-
+ .../UI/Notes/AdminNotesLinePopup.xaml         |   2 +-
+ .../UI/Tabs/PlayerTab/PlayerTab.xaml.cs       |   4 +-
+ Content.Client/Cargo/UI/CargoProductRow.xaml  |   2 +-
+ .../PDA/PDANavigationButton.xaml.cs           |   2 +-
+ Content.Client/PDA/PDAProgramItem.xaml.cs     |   2 +-
+ Content.Client/PDA/PDASettingsButton.xaml.cs  |   2 +-
+ .../UI/ParticleAcceleratorControlMenu.cs      |   2 +-
+ .../Preferences/UI/CharacterSetupGui.xaml.cs  |   2 +-
+ .../UI/HumanoidProfileEditor.xaml.cs          |   4 +-
+ Content.Client/Stylesheets/StyleBase.cs       |   6 +-
+ Content.Client/Stylesheets/StyleNano.cs       |  76 +++++++++---------
+ Content.Client/Stylesheets/StyleSpace.cs      |  20 ++---
+ .../UserInterface/Controls/MenuButton.cs      |  10 +--
+ .../Screens/SeparatedChatGameScreen.xaml      |   2 +-
+ .../Systems/Atmos/GasTank/GasTankWindow.cs    |   2 +-
+ .../Chat/Controls/ChannelFilterButton.cs      |   6 +-
+ .../Systems/Chat/Widgets/ChatBox.xaml         |   2 +-
+ Content.Client/Wires/UI/WiresMenu.cs          |   2 +-
+ .../Interface/Nano/chat_sub_background.png    | Bin 147 -> 88 bytes
+ .../Interface/Nano/checkbox_checked.svg       |  53 +++++++++---
+ .../Nano/checkbox_checked.svg.96dpi.png       | Bin 484 -> 333 bytes
+ .../Interface/Nano/checkbox_unchecked.svg     |  39 +++++++--
+ .../Nano/checkbox_unchecked.svg.96dpi.png     | Bin 352 -> 252 bytes
+ .../Nano/light_panel_background_bordered.png  | Bin 147 -> 88 bytes
+ .../Textures/Interface/Nano/lineedit.png      | Bin 161 -> 139 bytes
+ .../Textures/Interface/Nano/stripeback.svg    |  42 +++++-----
+ .../Interface/Nano/stripeback.svg.96dpi.png   | Bin 322 -> 251 bytes
+ .../Interface/Nano/tabcontainer_panel.png     | Bin 144 -> 123 bytes
+ Resources/Textures/Interface/Nano/tooltip.png | Bin 213 -> 102 bytes
+ ...transparent_window_background_bordered.png | Bin 131 -> 88 bytes
+ Resources/Textures/Interface/Nano/whisper.png | Bin 1643 -> 103 bytes
+ .../Interface/Nano/window_background.png      | Bin 112 -> 105 bytes
+ .../Nano/window_background_bordered.png       | Bin 147 -> 88 bytes
+ .../Textures/Interface/Nano/window_header.png | Bin 101 -> 81 bytes
+ .../Interface/Nano/window_header_alert.png    | Bin 154 -> 85 bytes
+ 43 files changed, 175 insertions(+), 123 deletions(-)
+
+diff --git a/Content.Client/Administration/UI/BanList/BanListControl.xaml b/Content.Client/Administration/UI/BanList/BanListControl.xaml
+index b202e92e57..19604d48fd 100644
+--- a/Content.Client/Administration/UI/BanList/BanListControl.xaml
++++ b/Content.Client/Administration/UI/BanList/BanListControl.xaml
+@@ -4,7 +4,7 @@
+     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+     <PanelContainer>
+         <PanelContainer.PanelOverride>
+-            <graphics:StyleBoxFlat BackgroundColor="#25252A"/>
++            <graphics:StyleBoxFlat BackgroundColor="#141414"/>
+         </PanelContainer.PanelOverride>
+         <ScrollContainer>
+             <BoxContainer Name="Bans" Access="Public" Orientation="Vertical">
+diff --git a/Content.Client/Administration/UI/BanList/BanListIdsPopup.xaml b/Content.Client/Administration/UI/BanList/BanListIdsPopup.xaml
+index ae8c99bc75..10b143334c 100644
+--- a/Content.Client/Administration/UI/BanList/BanListIdsPopup.xaml
++++ b/Content.Client/Administration/UI/BanList/BanListIdsPopup.xaml
+@@ -2,7 +2,7 @@
+        xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+     <PanelContainer>
+         <PanelContainer.PanelOverride>
+-            <graphics:StyleBoxFlat BackgroundColor="#25252A"/>
++            <graphics:StyleBoxFlat BackgroundColor="#141414"/>
+         </PanelContainer.PanelOverride>
+         <BoxContainer Orientation="Vertical">
+             <Label Name="ID" HorizontalExpand="True"/>
+diff --git a/Content.Client/Administration/UI/Bwoink/BwoinkControl.xaml b/Content.Client/Administration/UI/Bwoink/BwoinkControl.xaml
+index 89e5694b0d..94bb694955 100644
+--- a/Content.Client/Administration/UI/Bwoink/BwoinkControl.xaml
++++ b/Content.Client/Administration/UI/Bwoink/BwoinkControl.xaml
+@@ -4,7 +4,7 @@
+     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+     <PanelContainer>
+          <PanelContainer.PanelOverride>
+-            <gfx:StyleBoxFlat BackgroundColor="#25252A"/>
++            <gfx:StyleBoxFlat BackgroundColor="#141414"/>
+          </PanelContainer.PanelOverride>
+         <SplitContainer Orientation="Horizontal" VerticalExpand="True">
+             <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" SizeFlagsStretchRatio="1" />
+diff --git a/Content.Client/Administration/UI/CustomControls/HSeparator.cs b/Content.Client/Administration/UI/CustomControls/HSeparator.cs
+index 2dfb0b27fe..d0575a4ede 100644
+--- a/Content.Client/Administration/UI/CustomControls/HSeparator.cs
++++ b/Content.Client/Administration/UI/CustomControls/HSeparator.cs
+@@ -7,7 +7,7 @@ namespace Content.Client.Administration.UI.CustomControls;
+ 
+ public sealed class HSeparator : Control
+ {
+-    private static readonly Color SeparatorColor = Color.FromHex("#3D4059");
++    private static readonly Color SeparatorColor = Color.FromHex("#191919");
+ 
+     public HSeparator(Color color)
+     {
+diff --git a/Content.Client/Administration/UI/CustomControls/PlayerListControl.xaml.cs b/Content.Client/Administration/UI/CustomControls/PlayerListControl.xaml.cs
+index d5367dfa99..6c3cd8a284 100644
+--- a/Content.Client/Administration/UI/CustomControls/PlayerListControl.xaml.cs
++++ b/Content.Client/Administration/UI/CustomControls/PlayerListControl.xaml.cs
+@@ -41,7 +41,7 @@ public PlayerListControl()
+             PopulateList(_adminSystem.PlayerList);
+             FilterLineEdit.OnTextChanged += _ => FilterList();
+             _adminSystem.PlayerListChanged += PopulateList;
+-            BackgroundPanel.PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)};
++            BackgroundPanel.PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(20, 20, 20)};
+         }
+ 
+         private void PlayerListItemPressed(BaseButton.ButtonEventArgs args, ListData data)
+diff --git a/Content.Client/Administration/UI/CustomControls/VSeparator.cs b/Content.Client/Administration/UI/CustomControls/VSeparator.cs
+index 3f4dbc18bc..5c97f28990 100644
+--- a/Content.Client/Administration/UI/CustomControls/VSeparator.cs
++++ b/Content.Client/Administration/UI/CustomControls/VSeparator.cs
+@@ -6,7 +6,7 @@ namespace Content.Client.Administration.UI.CustomControls;
+ 
+ public sealed class VSeparator : PanelContainer
+ {
+-    private static readonly Color SeparatorColor = Color.FromHex("#3D4059");
++    private static readonly Color SeparatorColor = Color.FromHex("#191919");
+ 
+     public VSeparator(Color color)
+     {
+diff --git a/Content.Client/Administration/UI/Logs/AdminLogsControl.xaml b/Content.Client/Administration/UI/Logs/AdminLogsControl.xaml
+index 9d3506c6ba..af1772585c 100644
+--- a/Content.Client/Administration/UI/Logs/AdminLogsControl.xaml
++++ b/Content.Client/Administration/UI/Logs/AdminLogsControl.xaml
+@@ -3,7 +3,7 @@
+          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+     <PanelContainer>
+         <PanelContainer.PanelOverride>
+-            <gfx:StyleBoxFlat BackgroundColor="#25252A"/>
++            <gfx:StyleBoxFlat BackgroundColor="#141414"/>
+         </PanelContainer.PanelOverride>
+         <BoxContainer Orientation="Horizontal">
+             <BoxContainer Orientation="Vertical">
+diff --git a/Content.Client/Administration/UI/Notes/AdminNotesControl.xaml b/Content.Client/Administration/UI/Notes/AdminNotesControl.xaml
+index 16b5f0b3e0..269b87facd 100644
+--- a/Content.Client/Administration/UI/Notes/AdminNotesControl.xaml
++++ b/Content.Client/Administration/UI/Notes/AdminNotesControl.xaml
+@@ -2,7 +2,7 @@
+          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+     <PanelContainer>
+         <PanelContainer.PanelOverride>
+-            <gfx:StyleBoxFlat BackgroundColor="#25252A"/>
++            <gfx:StyleBoxFlat BackgroundColor="#141414"/>
+         </PanelContainer.PanelOverride>
+         <BoxContainer Orientation="Vertical">
+             <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+diff --git a/Content.Client/Administration/UI/Notes/AdminNotesLinePopup.xaml b/Content.Client/Administration/UI/Notes/AdminNotesLinePopup.xaml
+index 48a0baff11..8ab53757a0 100644
+--- a/Content.Client/Administration/UI/Notes/AdminNotesLinePopup.xaml
++++ b/Content.Client/Administration/UI/Notes/AdminNotesLinePopup.xaml
+@@ -2,7 +2,7 @@
+        xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+     <PanelContainer>
+         <PanelContainer.PanelOverride>
+-            <gfx:StyleBoxFlat BackgroundColor="#25252A"/>
++            <gfx:StyleBoxFlat BackgroundColor="#141414"/>
+         </PanelContainer.PanelOverride>
+         <BoxContainer Orientation="Vertical">
+             <Label Name="IdLabel"/>
+diff --git a/Content.Client/Administration/UI/Tabs/PlayerTab/PlayerTab.xaml.cs b/Content.Client/Administration/UI/Tabs/PlayerTab/PlayerTab.xaml.cs
+index 7ece83d1cf..e8a180070e 100644
+--- a/Content.Client/Administration/UI/Tabs/PlayerTab/PlayerTab.xaml.cs
++++ b/Content.Client/Administration/UI/Tabs/PlayerTab/PlayerTab.xaml.cs
+@@ -16,8 +16,8 @@ public sealed partial class PlayerTab : Control
+     {
+         private const string ArrowUp = "↑";
+         private const string ArrowDown = "↓";
+-        private readonly Color _altColor = Color.FromHex("#292B38");
+-        private readonly Color _defaultColor = Color.FromHex("#2F2F3B");
++        private readonly Color _altColor = Color.FromHex("#141414");
++        private readonly Color _defaultColor = Color.FromHex("#191919");
+         private readonly AdminSystem _adminSystem;
+         private IReadOnlyList<PlayerInfo> _players = new List<PlayerInfo>();
+ 
+diff --git a/Content.Client/Cargo/UI/CargoProductRow.xaml b/Content.Client/Cargo/UI/CargoProductRow.xaml
+index 29c2a6df81..d2fe01f2f0 100644
+--- a/Content.Client/Cargo/UI/CargoProductRow.xaml
++++ b/Content.Client/Cargo/UI/CargoProductRow.xaml
+@@ -17,7 +17,7 @@
+                HorizontalExpand="True" />
+         <PanelContainer>
+             <PanelContainer.PanelOverride>
+-                <gfx:StyleBoxFlat BackgroundColor="#25252A" />
++                <gfx:StyleBoxFlat BackgroundColor="#141414" />
+             </PanelContainer.PanelOverride>
+             <Label Name="PointCost"
+                    Access="Public"
+diff --git a/Content.Client/PDA/PDANavigationButton.xaml.cs b/Content.Client/PDA/PDANavigationButton.xaml.cs
+index 83907717c3..ef0b28e492 100644
+--- a/Content.Client/PDA/PDANavigationButton.xaml.cs
++++ b/Content.Client/PDA/PDANavigationButton.xaml.cs
+@@ -24,7 +24,7 @@ public sealed partial class PDANavigationButton : ContainerButton
+     };
+ 
+     public string InactiveBgColor { get; set; } = "#202023";
+-    public string ActiveBgColor { get; set; } = "#25252a";
++    public string ActiveBgColor { get; set; } = "#141414";
+     public string InactiveFgColor { get; set; } = "#5a5a5a";
+     public string ActiveFgColor { get; set; } = "#FFFFFF";
+ 
+diff --git a/Content.Client/PDA/PDAProgramItem.xaml.cs b/Content.Client/PDA/PDAProgramItem.xaml.cs
+index 5cc16da497..61ae75c7b5 100644
+--- a/Content.Client/PDA/PDAProgramItem.xaml.cs
++++ b/Content.Client/PDA/PDAProgramItem.xaml.cs
+@@ -16,7 +16,7 @@ public sealed partial class PDAProgramItem : ContainerButton
+ 
+     private readonly StyleBoxFlat _styleBox = new()
+     {
+-        BackgroundColor = Color.FromHex("#25252a"),
++        BackgroundColor = Color.FromHex("#141414"),
+     };
+ 
+     public Color BackgroundColor
+diff --git a/Content.Client/PDA/PDASettingsButton.xaml.cs b/Content.Client/PDA/PDASettingsButton.xaml.cs
+index 0fb4ffb596..67530efdf3 100644
+--- a/Content.Client/PDA/PDASettingsButton.xaml.cs
++++ b/Content.Client/PDA/PDASettingsButton.xaml.cs
+@@ -18,7 +18,7 @@ public sealed partial class PDASettingsButton : ContainerButton
+ 
+     private readonly StyleBoxFlat _styleBox = new()
+     {
+-        BackgroundColor = Color.FromHex("#25252a")
++        BackgroundColor = Color.FromHex("#141414")
+     };
+ 
+     public string? Text
+diff --git a/Content.Client/ParticleAccelerator/UI/ParticleAcceleratorControlMenu.cs b/Content.Client/ParticleAccelerator/UI/ParticleAcceleratorControlMenu.cs
+index 0b916c7600..baefb9b270 100644
+--- a/Content.Client/ParticleAccelerator/UI/ParticleAcceleratorControlMenu.cs
++++ b/Content.Client/ParticleAccelerator/UI/ParticleAcceleratorControlMenu.cs
+@@ -83,7 +83,7 @@ public ParticleAcceleratorControlMenu(ParticleAcceleratorBoundUserInterface owne
+             var back = new StyleBoxTexture
+             {
+                 Texture = panelTex,
+-                Modulate = Color.FromHex("#25252A"),
++                Modulate = Color.FromHex("#141414"),
+             };
+             back.SetPatchMargin(StyleBox.Margin.All, 10);
+ 
+diff --git a/Content.Client/Preferences/UI/CharacterSetupGui.xaml.cs b/Content.Client/Preferences/UI/CharacterSetupGui.xaml.cs
+index d5230228e9..4218805cfd 100644
+--- a/Content.Client/Preferences/UI/CharacterSetupGui.xaml.cs
++++ b/Content.Client/Preferences/UI/CharacterSetupGui.xaml.cs
+@@ -54,7 +54,7 @@ public sealed partial class CharacterSetupGui : Control
+             var back = new StyleBoxTexture
+             {
+                 Texture = panelTex,
+-                Modulate = new Color(37, 37, 42)
++                Modulate = new Color(15, 15, 15)
+             };
+             back.SetPatchMargin(StyleBox.Margin.All, 10);
+ 
+diff --git a/Content.Client/Preferences/UI/HumanoidProfileEditor.xaml.cs b/Content.Client/Preferences/UI/HumanoidProfileEditor.xaml.cs
+index b404b13fcf..3400ed5440 100644
+--- a/Content.Client/Preferences/UI/HumanoidProfileEditor.xaml.cs
++++ b/Content.Client/Preferences/UI/HumanoidProfileEditor.xaml.cs
+@@ -37,7 +37,7 @@ public HighlightedContainer()
+         {
+             PanelOverride = new StyleBoxFlat()
+             {
+-                BackgroundColor = new Color(47, 47, 53),
++                BackgroundColor = new Color(25, 25, 25),
+                 ContentMarginTopOverride = 10,
+                 ContentMarginBottomOverride = 10,
+                 ContentMarginLeftOverride = 10,
+@@ -409,7 +409,7 @@ public sealed partial class HumanoidProfileEditor : Control
+ 
+                     category.AddChild(new PanelContainer
+                     {
+-                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#464966")},
++                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#232323")},
+                         Children =
+                         {
+                             new Label
+diff --git a/Content.Client/Stylesheets/StyleBase.cs b/Content.Client/Stylesheets/StyleBase.cs
+index 0a7cac910d..0e72c59373 100644
+--- a/Content.Client/Stylesheets/StyleBase.cs
++++ b/Content.Client/Stylesheets/StyleBase.cs
+@@ -176,7 +176,7 @@ protected StyleBase(IResourceCache resCache)
+                     new[]
+                     {
+                         new StyleProperty(TextureButton.StylePropertyTexture, textureCloseButton),
+-                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#4B596A")),
++                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#1e1e1e")),
+                     }),
+                 // Window close button hover.
+                 new StyleRule(
+@@ -184,7 +184,7 @@ protected StyleBase(IResourceCache resCache)
+                         new[] {TextureButton.StylePseudoClassHover}),
+                     new[]
+                     {
+-                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
++                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#960000")),
+                     }),
+                 // Window close button pressed.
+                 new StyleRule(
+@@ -192,7 +192,7 @@ protected StyleBase(IResourceCache resCache)
+                         new[] {TextureButton.StylePseudoClassPressed}),
+                     new[]
+                     {
+-                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
++                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#141414")),
+                     }),
+ 
+                 // Scroll bars
+diff --git a/Content.Client/Stylesheets/StyleSpace.cs b/Content.Client/Stylesheets/StyleSpace.cs
+index 0ddb141837..437dd7a2b9 100644
+--- a/Content.Client/Stylesheets/StyleSpace.cs
++++ b/Content.Client/Stylesheets/StyleSpace.cs
+@@ -11,17 +11,17 @@ namespace Content.Client.Stylesheets
+ {
+     public sealed class StyleSpace : StyleBase
+     {
+-        public static readonly Color SpaceRed = Color.FromHex("#9b2236");
++        public static readonly Color SpaceRed = Color.FromHex("#960000");
+ 
+-        public static readonly Color ButtonColorDefault = Color.FromHex("#464966");
+-        public static readonly Color ButtonColorHovered = Color.FromHex("#575b7f");
+-        public static readonly Color ButtonColorPressed = Color.FromHex("#3e6c45");
+-        public static readonly Color ButtonColorDisabled = Color.FromHex("#30313c");
++        public static readonly Color ButtonColorDefault = Color.FromHex("#232323");
++        public static readonly Color ButtonColorHovered = Color.FromHex("#2d2d2d");
++        public static readonly Color ButtonColorPressed = Color.FromHex("#0f0f0f");
++        public static readonly Color ButtonColorDisabled = Color.FromHex("#0f0f0f");
+ 
+-        public static readonly Color ButtonColorCautionDefault = Color.FromHex("#ab3232");
+-        public static readonly Color ButtonColorCautionHovered = Color.FromHex("#cf2f2f");
+-        public static readonly Color ButtonColorCautionPressed = Color.FromHex("#3e6c45");
+-        public static readonly Color ButtonColorCautionDisabled = Color.FromHex("#602a2a");
++        public static readonly Color ButtonColorCautionDefault = Color.FromHex("#640000");
++        public static readonly Color ButtonColorCautionHovered = Color.FromHex("#960000");
++        public static readonly Color ButtonColorCautionPressed = Color.FromHex("#0f0f0f");
++        public static readonly Color ButtonColorCautionDisabled = Color.FromHex("#0f0f0f");
+ 
+         public override Stylesheet Stylesheet { get; }
+ 
+@@ -146,7 +146,7 @@ public StyleSpace(IResourceCache resCache) : base(resCache)
+ 
+                 Element<PanelContainer>().Class(ClassAngleRect)
+                     .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
+-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#202030")),
++                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#191919")),
+ 
+                 Child()
+                     .Parent(Element<Button>().Class(ContainerButton.StylePseudoClassDisabled))
+diff --git a/Content.Client/UserInterface/Controls/MenuButton.cs b/Content.Client/UserInterface/Controls/MenuButton.cs
+index 028412eae7..c99a2d21da 100644
+--- a/Content.Client/UserInterface/Controls/MenuButton.cs
++++ b/Content.Client/UserInterface/Controls/MenuButton.cs
+@@ -14,11 +14,11 @@ public sealed class MenuButton : ContainerButton
+     public const string StyleClassRedTopButton = "topButtonLabel";
+     private const float CustomTooltipDelay = 0.4f;
+ 
+-    private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
+-    private static readonly Color ColorRedNormal = Color.FromHex("#FEFEFE");
+-    private static readonly Color ColorHovered = Color.FromHex("#9699bb");
+-    private static readonly Color ColorRedHovered = Color.FromHex("#FFFFFF");
+-    private static readonly Color ColorPressed = Color.FromHex("#789B8C");
++    private static readonly Color ColorNormal = Color.FromHex("#5a5a5a");
++    private static readonly Color ColorRedNormal = Color.FromHex("#640000");
++    private static readonly Color ColorHovered = Color.FromHex("#646464");
++    private static readonly Color ColorRedHovered = Color.FromHex("#960000");
++    private static readonly Color ColorPressed = Color.FromHex("#464646");
+ 
+     private const float VertPad = 8f;
+     private Color NormalColor => HasStyleClass(StyleClassRedTopButton) ? ColorRedNormal : ColorNormal;
+diff --git a/Content.Client/UserInterface/Screens/SeparatedChatGameScreen.xaml b/Content.Client/UserInterface/Screens/SeparatedChatGameScreen.xaml
+index a486cf7e3a..8ed5061192 100644
+--- a/Content.Client/UserInterface/Screens/SeparatedChatGameScreen.xaml
++++ b/Content.Client/UserInterface/Screens/SeparatedChatGameScreen.xaml
+@@ -24,7 +24,7 @@
+         </LayoutContainer>
+         <PanelContainer HorizontalExpand="True" MinWidth="300">
+             <PanelContainer.PanelOverride>
+-                <graphics:StyleBoxFlat BackgroundColor="#2B2C3B" />
++                <graphics:StyleBoxFlat BackgroundColor="#191919" />
+             </PanelContainer.PanelOverride>
+ 
+             <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="10" Margin="10">
+diff --git a/Content.Client/UserInterface/Systems/Atmos/GasTank/GasTankWindow.cs b/Content.Client/UserInterface/Systems/Atmos/GasTank/GasTankWindow.cs
+index db3cc02e53..5b45ebbacb 100644
+--- a/Content.Client/UserInterface/Systems/Atmos/GasTank/GasTankWindow.cs
++++ b/Content.Client/UserInterface/Systems/Atmos/GasTank/GasTankWindow.cs
+@@ -40,7 +40,7 @@ public GasTankWindow(GasTankBoundUserInterface owner)
+             var back = new StyleBoxTexture
+             {
+                 Texture = panelTex,
+-                Modulate = Color.FromHex("#25252A"),
++                Modulate = Color.FromHex("#141414"),
+             };
+ 
+             back.SetPatchMargin(StyleBox.Margin.All, 10);
+diff --git a/Content.Client/UserInterface/Systems/Chat/Controls/ChannelFilterButton.cs b/Content.Client/UserInterface/Systems/Chat/Controls/ChannelFilterButton.cs
+index 43f189211f..85f61a8e94 100644
+--- a/Content.Client/UserInterface/Systems/Chat/Controls/ChannelFilterButton.cs
++++ b/Content.Client/UserInterface/Systems/Chat/Controls/ChannelFilterButton.cs
+@@ -8,9 +8,9 @@ namespace Content.Client.UserInterface.Systems.Chat.Controls;
+ 
+ public sealed class ChannelFilterButton : ContainerButton
+ {
+-    private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
+-    private static readonly Color ColorHovered = Color.FromHex("#9699bb");
+-    private static readonly Color ColorPressed = Color.FromHex("#789B8C");
++    private static readonly Color ColorNormal = Color.FromHex("#5a5a5a");
++    private static readonly Color ColorHovered = Color.FromHex("#646464");
++    private static readonly Color ColorPressed = Color.FromHex("#464646");
+     private readonly TextureRect? _textureRect;
+     public readonly ChannelFilterPopup ChatFilterPopup;
+     private readonly ChatUIController _chatUIController;
+diff --git a/Content.Client/UserInterface/Systems/Chat/Widgets/ChatBox.xaml b/Content.Client/UserInterface/Systems/Chat/Widgets/ChatBox.xaml
+index e242e636b3..e696169c4d 100644
+--- a/Content.Client/UserInterface/Systems/Chat/Widgets/ChatBox.xaml
++++ b/Content.Client/UserInterface/Systems/Chat/Widgets/ChatBox.xaml
+@@ -9,7 +9,7 @@
+     MinSize="465 225">
+     <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+         <PanelContainer.PanelOverride>
+-            <graphics:StyleBoxFlat BackgroundColor="#25252AAA" />
++            <graphics:StyleBoxFlat BackgroundColor="#141414AA" />
+         </PanelContainer.PanelOverride>
+ 
+         <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True" VerticalExpand="True">
+diff --git a/Content.Client/Wires/UI/WiresMenu.cs b/Content.Client/Wires/UI/WiresMenu.cs
+index bfbb2ebd22..7084d21835 100644
+--- a/Content.Client/Wires/UI/WiresMenu.cs
++++ b/Content.Client/Wires/UI/WiresMenu.cs
+@@ -48,7 +48,7 @@ public WiresMenu(WiresBoundUserInterface owner)
+             var back = new StyleBoxTexture
+             {
+                 Texture = panelTex,
+-                Modulate = Color.FromHex("#25252A"),
++                Modulate = Color.FromHex("#141414"),
+             };
+             back.SetPatchMargin(StyleBox.Margin.All, 10);
+ 
+diff --git a/Resources/Textures/Interface/Nano/chat_sub_background.png b/Resources/Textures/Interface/Nano/chat_sub_background.png
+index de59bb0b3a7e9e3dfb69faedc42e3468c488eddb..27167259389b230d43855a93f757bf37982fe6ec 100644
+GIT binary patch
+delta 58
+zcmbQt7%@S`MBdZIF@$4g@|6o0ew=S$n{k0PfW^M<Plx7-^XL2Htr?8Avos!LTC2|h
+N1fH&bF6*2UngF<M7L))0
+
+delta 117
+zcma!;%s4?MpDoGT-G$*l2rk&Wd@=(A180FpWHAGSo-znCRxGtI0}8U2c>21sKjGnJ
+zQBs`cY2gJFQt)(f4B@z*Y+_XS`+Ni242ca4J02|O_cvty$+F~QHammcWR|T064ze>
+P)iQXx`njxgN@xNA6VN0$
+
+diff --git a/Resources/Textures/Interface/Nano/checkbox_checked.svg b/Resources/Textures/Interface/Nano/checkbox_checked.svg
+index bbe62581e5..2421bbe042 100644
+--- a/Resources/Textures/Interface/Nano/checkbox_checked.svg
++++ b/Resources/Textures/Interface/Nano/checkbox_checked.svg
+@@ -1,16 +1,39 @@
+ <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+ <svg
+-   xmlns:dc="http://purl.org/dc/elements/1.1/"
+-   xmlns:cc="http://creativecommons.org/ns#"
+-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+-   xmlns:svg="http://www.w3.org/2000/svg"
+-   xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="19.999998"
+    viewBox="0 0 5.2916661 5.2916662"
+    version="1.1"
+    id="svg8"
+-   style="enable-background:new">
++   style="enable-background:new"
++   sodipodi:docname="checkbox_checked.svg"
++   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
++   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
++   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
++   xmlns="http://www.w3.org/2000/svg"
++   xmlns:svg="http://www.w3.org/2000/svg"
++   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
++   xmlns:cc="http://creativecommons.org/ns#"
++   xmlns:dc="http://purl.org/dc/elements/1.1/">
++  <sodipodi:namedview
++     id="namedview15"
++     pagecolor="#505050"
++     bordercolor="#eeeeee"
++     borderopacity="1"
++     inkscape:showpageshadow="0"
++     inkscape:pageopacity="0"
++     inkscape:pagecheckerboard="0"
++     inkscape:deskcolor="#505050"
++     showgrid="false"
++     inkscape:zoom="21.575002"
++     inkscape:cx="17.775201"
++     inkscape:cy="6.5353412"
++     inkscape:window-width="1920"
++     inkscape:window-height="1017"
++     inkscape:window-x="-8"
++     inkscape:window-y="-8"
++     inkscape:window-maximized="1"
++     inkscape:current-layer="svg8" />
+   <defs
+      id="defs2">
+     <marker
+@@ -27,7 +50,11 @@
+     </marker>
+     <filter
+        style="color-interpolation-filters:sRGB"
+-       id="filter9714">
++       id="filter9714"
++       x="-0.11111111"
++       y="-0.11111112"
++       width="1.2222222"
++       height="1.2222222">
+       <feBlend
+          mode="normal"
+          in2="BackgroundImage"
+@@ -42,7 +69,7 @@
+         <dc:format>image/svg+xml</dc:format>
+         <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+-        <dc:title></dc:title>
++        <dc:title />
+       </cc:Work>
+     </rdf:RDF>
+   </metadata>
+@@ -56,24 +83,24 @@
+        height="5.1954541"
+        x="78.147339"
+        y="142.25995"
+-       style="display:inline;fill:#3d4059;fill-opacity:1;fill-rule:nonzero;stroke:#3d4059;stroke-width:1.15454543;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
++       style="display:inline;fill:#282828;fill-opacity:1;fill-rule:nonzero;stroke:#282828;stroke-width:1.15454543;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+        ry="0.5931561" />
+   </g>
+   <g
+      id="layer2"
+-     style="opacity:1"
++     style="opacity:1;stroke-width:1.00002114;stroke-dasharray:none"
+      transform="matrix(0.84876535,0,0,0.84876535,-2.7438235,-11.726601)">
+     <g
+        id="g9680"
+        transform="matrix(0.25712973,0.25712973,-0.25712973,0.25712973,12.687721,15.603163)"
+-       style="fill:#a88b5e;fill-opacity:1">
++       style="fill:#5f5f5f;fill-opacity:1;stroke-width:2.75005822;stroke-dasharray:none">
+       <rect
+          y="8.996666"
+          x="-9.5863533"
+          height="10.583333"
+          width="1.8520833"
+          id="rect9671"
+-         style="fill:#a88b5e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.17499995;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
++         style="fill:#5f5f5f;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.75005822;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+          rx="0.52916664" />
+       <rect
+          y="17.727915"
+@@ -81,7 +108,7 @@
+          height="1.8520832"
+          width="5.2916665"
+          id="rect9673"
+-         style="fill:#a88b5e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.17499971;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
++         style="fill:#5f5f5f;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.75005822;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+          rx="0.52916664" />
+     </g>
+   </g>
+diff --git a/Resources/Textures/Interface/Nano/checkbox_checked.svg.96dpi.png b/Resources/Textures/Interface/Nano/checkbox_checked.svg.96dpi.png
+index 5c5771fcea20186743e968eba605df04828b9b6f..6c629bf7b9dc30b73591dbba0471b29bedac9d7f 100644
+GIT binary patch
+delta 307
+zcmV-30nGm71I+@EBYy!DNkl<ZIE}5;K~4fO6vpvCZ+ym7li7%Rf`&~^>=E<~+y!A}
+z;sQO~xR~8sK!hbQiKzoF3<ep*q4Mqf>-U<Mwz}PJlIMA^ed+s?x6BZi88CFt4U_YW
+z>%n|BdMxL!8i@fM1GnSx_+6H?djEhnb1#$8%jp5ZGdUmzKz}r-s;JhVJqlD+y!UwT
+zYv@rd7DAvbORB1hZ@7sSMZsdR*bRyZBK3QkU^P%gu-0O&{ed>cYG9Hiq-lyV<{RAy
+z188+Ro#n34(ll+1)fxhX5XiC&RmB*y7q%5#M^}xTVz6c8^{6UURW-)okHrolG=^4@
+z_SMaN?^C~Lnk<-;4}iM^fe+%GdjbZ0edDp20)6M)^CxebnLd2Pw2=S+002ovPDHLk
+FV1f*glDq%_
+
+delta 459
+zcmV;+0W|*20^|dbBYyw{b3#c}2nYxWd<bNS00009a7bBm000ie000ie0hKEb8vp<R
+z8FWQhbW?9;ba!ELWdL_~cP?peYja~^aAhuUa%Y?FJQ@H10bxl*K~y-6t<=p*LO~eD
+z@&C*mH9trUH4BuMZEBS%K@cqyLIM}vNz^Kcl5R)w27;h$>wgtQ2?~~}l%8{(HbL46
+z)059`;F%vU@4$#cp`hwb<3wn2iqHYvrK_R160?db8s9tvae=_&5(DrG*zdlpzDlia
+zQ~>Wku+d~B5S$YR5R!Am0B{W^B7#Ij%m+-xB>AjCK5GyTjH5GyshH$oOQ9q*UNzkh
+z?H)`<zp?s@rhi<uu!rLv2dJb#I#)w7D#@isuzQPv<?I=w2cHLyb_`5gQ@XS0o3mk#
+z2^YMAML#Tu1&7-TpJz4<K<w@vk8O2zNsvn$cnxUxAmnFi%rPOrb4ydHTG%#(gI`!n
+zQ<?(%6$E%{X>MvZ00UD~ey}j7z~INDjHdQDr13VS-9(d9P4*`U&};(?CsiDgKyRiS
+zlhct1aXB|mbEPur_1o^d>H`_vf3zJm=ZUy={Rz+OfsOQ>bY}nn002ovPDHLkV1kxQ
+BzVZM7
+
+diff --git a/Resources/Textures/Interface/Nano/checkbox_unchecked.svg b/Resources/Textures/Interface/Nano/checkbox_unchecked.svg
+index 0545f57244..a39718e465 100644
+--- a/Resources/Textures/Interface/Nano/checkbox_unchecked.svg
++++ b/Resources/Textures/Interface/Nano/checkbox_unchecked.svg
+@@ -1,15 +1,38 @@
+ <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+ <svg
+-   xmlns:dc="http://purl.org/dc/elements/1.1/"
+-   xmlns:cc="http://creativecommons.org/ns#"
+-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+-   xmlns:svg="http://www.w3.org/2000/svg"
+-   xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 5.2916661 5.2916667"
+    version="1.1"
+-   id="svg8">
++   id="svg8"
++   sodipodi:docname="checkbox_unchecked.svg"
++   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
++   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
++   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
++   xmlns="http://www.w3.org/2000/svg"
++   xmlns:svg="http://www.w3.org/2000/svg"
++   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
++   xmlns:cc="http://creativecommons.org/ns#"
++   xmlns:dc="http://purl.org/dc/elements/1.1/">
++  <sodipodi:namedview
++     id="namedview9"
++     pagecolor="#505050"
++     bordercolor="#eeeeee"
++     borderopacity="1"
++     inkscape:showpageshadow="0"
++     inkscape:pageopacity="0"
++     inkscape:pagecheckerboard="0"
++     inkscape:deskcolor="#505050"
++     showgrid="false"
++     inkscape:zoom="43.15"
++     inkscape:cx="7.9606025"
++     inkscape:cy="9.9884125"
++     inkscape:window-width="1920"
++     inkscape:window-height="1017"
++     inkscape:window-x="-8"
++     inkscape:window-y="-8"
++     inkscape:window-maximized="1"
++     inkscape:current-layer="svg8" />
+   <defs
+      id="defs2">
+     <marker
+@@ -33,7 +56,7 @@
+         <dc:format>image/svg+xml</dc:format>
+         <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+-        <dc:title></dc:title>
++        <dc:title />
+       </cc:Work>
+     </rdf:RDF>
+   </metadata>
+@@ -46,7 +69,7 @@
+        height="5.1954546"
+        x="78.147339"
+        y="142.25995"
+-       style="fill:none;stroke:#3d4059;stroke-width:1.15454543;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
++       style="fill:none;stroke:#282828;stroke-width:1.15454543;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+        ry="0.5931561" />
+   </g>
+ </svg>
+diff --git a/Resources/Textures/Interface/Nano/checkbox_unchecked.svg.96dpi.png b/Resources/Textures/Interface/Nano/checkbox_unchecked.svg.96dpi.png
+index 090d1acc1f6b8db24867c4149a65481cf3601974..d18d466625db64858cecf7f12324c8f0af0c10db 100644
+GIT binary patch
+delta 224
+zcmV<603ZM00{j7xB!9z6L_t(IjqTJiN&`_8h2d`|gH_7s2BLx68w9~Zvke#E8sY|A
+zhqwzHL6E4pfCsjg(<Nn!6d6dg(U-LISBG2tTrS*GK}1~O9%mRTV~J19a?Wp6CwoCt
+zDEiF`mxGkjBSr_xpvI`dWM}w==R(mn#$7&d{Jhyb=X_gYi&=<=9pSJp+~!YuVK3~3
+z|DlSAh3!A@Qw~#{c6r&@l;c%57~4MjK77=e*_7j<tZ+AI+x9!9^n?=}<ET)yz$<QY
+a&hKl?hbAsayswY|0000<MNUMnLSTYtmTYJM
+
+delta 325
+zcmV-L0lNPD0pJ3VB!2{RLP=Bz2nYy#2xN!=000SaNLh0L01m_e01m_fl`9S#0000P
+zbVXQnQ*UN;cVTj60C#tHE@^ISb7Ns}WiD@WXPfRk8UO$Q-AP12R5*?8)G=xTK@^Aa
+z?>`x=Y;6N#wo4Zggv8a{V(|bugE@dXM+(6+*qBHpDt0N;2!F{9v|Q$;Sx`cX9Z9)g
+zHxJ&g7?=@2nr7V~o`4&mPFx3I8*roL%VebjTL3;1`dx0aTNlLmA20x~ps@$qC&N#f
+z&0`dk20#LU=y*=<Ovd}-b@~tk_R{RxRDe)-G0SDDzzVFuGU=|L?K!^ZGd>6IL084`
+z;DIgBF9wN8$v&T(rF1qf;6^}xHgYUCXO9<OyN~b7=JgEJ5;TBXB(%p^nzP~Ce7gPt
+XsX9G<{ow#A00000NkvXXu0mjfyc&i%
+
+diff --git a/Resources/Textures/Interface/Nano/light_panel_background_bordered.png b/Resources/Textures/Interface/Nano/light_panel_background_bordered.png
+index 95aab33ba3763ced04d78fde85d39357d9448e8b..2c14b56f2f1019d7ae636705498f92a5172de50f 100644
+GIT binary patch
+delta 58
+zcmbQt7%@S`MBdZIF@$4g@|4Mwf1ht)n{k0PfMw^79R{rXYk#-JTQj`f%aXkKlDj+u
+O5O})!xvX<aXaWGGHWqjQ
+
+delta 117
+zcma!;%s4?MpDoGT-G$*l2rk&Wd@=(A180FpWHAGSo-znCRxGtI0}8U2c>21sKjGnJ
+zQDtXm)h+-EDR{a#hHzX@Hrf8=@A(F{84?>9b|^?&^Dld_et!IiY<31wC6;4T+o#t7
+P)iQXx`njxgN@xNA1Dzxw
+
+diff --git a/Resources/Textures/Interface/Nano/lineedit.png b/Resources/Textures/Interface/Nano/lineedit.png
+index 506b88b8b95e53ceb92bd95b0ea657418d98adbc..c168b6de96d96cb616e853193077ee514e77bfdd 100644
+GIT binary patch
+delta 110
+zcmV-!0FnQp0gC~UBxh1dL_t&tnSGAI3BWK61247n4ulNg{in(RSwW;P7fM6#DRDvt
+zAR@Mzkw{|BSv(?k@0|nN(^zXg=@<hu!!xM0e$?x<m$)PVT5GRD66Nph4UhC0<=2ah
+QlK=n!07*qoM6N<$f~*WKQvd(}
+
+delta 132
+zcmeBXT*x><rIxe6BeIx*K~EWk87r3BmoYFf1bezThHzX@PGMjQE<XR?$47_9;KTd-
+z@@<#Zw;LNZsaROBN?bVD|6X1qBEd@TjxFQ#fPifY44sG1CZ#_=bm8og2KEgNI_!*|
+jlC~n86D*YNt}`*bV3%>+?<UF#G@ilJ)z4*}Q$iB}RaY!>
+
+diff --git a/Resources/Textures/Interface/Nano/stripeback.svg b/Resources/Textures/Interface/Nano/stripeback.svg
+index 66cd6a059c..e87b2f4202 100644
+--- a/Resources/Textures/Interface/Nano/stripeback.svg
++++ b/Resources/Textures/Interface/Nano/stripeback.svg
+@@ -2,23 +2,23 @@
+ <!-- Created with Inkscape (http://www.inkscape.org/) -->
+ 
+ <svg
+-   xmlns:dc="http://purl.org/dc/elements/1.1/"
+-   xmlns:cc="http://creativecommons.org/ns#"
+-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+-   xmlns:svg="http://www.w3.org/2000/svg"
+-   xmlns="http://www.w3.org/2000/svg"
+-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    width="32"
+    height="32"
+    viewBox="0 0 8.4666666 8.4666669"
+    version="1.1"
+    id="svg1057"
+-   inkscape:version="0.92.4 5da689c313, 2019-01-14"
+-   sodipodi:docname="stripback.svg"
++   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
++   sodipodi:docname="stripeback.svg"
+    inkscape:export-filename="/ssdhome/pj/Projects/space-station-14-content/Resources/Textures/Interface/Nano/stripeback.png"
+    inkscape:export-xdpi="96"
+-   inkscape:export-ydpi="96">
++   inkscape:export-ydpi="96"
++   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
++   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
++   xmlns="http://www.w3.org/2000/svg"
++   xmlns:svg="http://www.w3.org/2000/svg"
++   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
++   xmlns:cc="http://creativecommons.org/ns#"
++   xmlns:dc="http://purl.org/dc/elements/1.1/">
+   <defs
+      id="defs1051" />
+   <sodipodi:namedview
+@@ -29,18 +29,20 @@
+      inkscape:pageopacity="0.0"
+      inkscape:pageshadow="2"
+      inkscape:zoom="22.627417"
+-     inkscape:cx="15.032227"
+-     inkscape:cy="17.599459"
++     inkscape:cx="11.203223"
++     inkscape:cy="17.633475"
+      inkscape:document-units="px"
+      inkscape:current-layer="layer1"
+      showgrid="false"
+      units="px"
+      inkscape:pagecheckerboard="true"
+      inkscape:window-width="1920"
+-     inkscape:window-height="1043"
+-     inkscape:window-x="0"
+-     inkscape:window-y="0"
+-     inkscape:window-maximized="1" />
++     inkscape:window-height="1017"
++     inkscape:window-x="-8"
++     inkscape:window-y="-8"
++     inkscape:window-maximized="1"
++     inkscape:showpageshadow="0"
++     inkscape:deskcolor="#d1d1d1" />
+   <metadata
+      id="metadata1054">
+     <rdf:RDF>
+@@ -49,7 +51,7 @@
+         <dc:format>image/svg+xml</dc:format>
+         <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+-        <dc:title></dc:title>
++        <dc:title />
+       </cc:Work>
+     </rdf:RDF>
+   </metadata>
+@@ -59,7 +61,7 @@
+      id="layer1"
+      transform="translate(0,-288.53331)">
+     <rect
+-       style="opacity:1;vector-effect:none;fill:#1e1e22;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.44710034;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
++       style="opacity:1;vector-effect:none;fill:#1e1e1e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.44710034;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+        id="rect1707"
+        width="8.4666672"
+        height="8.4666672"
+@@ -73,9 +75,9 @@
+          inkscape:connector-curvature="0"
+          id="rect1602"
+          d="m 0,294.88331 v -4.23333 l 6.3500001,6.34999 H 2.1166667 Z"
+-         style="opacity:1;vector-effect:none;fill:#262626;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.18526772;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
++         style="opacity:1;vector-effect:none;fill:#282828;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.18526772;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+       <path
+-         style="opacity:1;vector-effect:none;fill:#262626;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.18526772;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
++         style="opacity:1;vector-effect:none;fill:#282828;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.18526772;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+          d="m 8.4666667,290.64998 v 4.23333 l -6.35,-6.35 h 4.2333334 z"
+          id="path1665"
+          inkscape:connector-curvature="0"
+diff --git a/Resources/Textures/Interface/Nano/stripeback.svg.96dpi.png b/Resources/Textures/Interface/Nano/stripeback.svg.96dpi.png
+index fb35a5634e2ffb84fe95345d9dbd3fda9535737b..614f251cc92eedda3a54e930f0b6355a70c4b267 100644
+GIT binary patch
+delta 223
+zcmV<503iRu0{a1wB!9w5L_t(og~irA4uCKS1>gz;x9I(^$Ut<`#AxYH`hZo_d;<?S
+zYOQB+N<<1Xd%w74W<^z-->LV2sunX_1~79Gk#ztXF$6#&h5;zV6aayk2JA*G0d^wD
+zi%0~5dO1ZS=$2$5o*u|TyqYir@kv26;x~qoh~^xKLb!t{0$9<VglNRjC`KZNcL549
+zwTuvm>20_hv9ykNB9`xgT?j&++#?7=-~GL!Tatx%dLRq&YQhY}Ck4@n-xx+BnsXou
+ZaRL4A!I}21PQd^G002ovPDHLkV1g|yUN!&#
+
+delta 295
+zcmV+?0oeZg0m1^1B!2{RLP=Bz2nYy#2xN!=000SaNLh0L01m_e01m_fl`9S#0000P
+zbVXQnQ*UN;cVTj60C#tHE@^ISb7Ns}WiD@WXPfRk8UO$Qzez+vR9J<@)=>_CAP5Fv
+zW1ORh?tesAJ>lj`LFNy<Ch%ES9OrpGWfII(m}$0T8nxb~)_;3=U9GGY&_dgQX=_M?
+z`QD-sOAi-;SUz355w7FC6T#jh0`R_~l1IpQ+=3wVheit$Nfx4Y%|dh?GZ3F{(TLwp
+zk%(cJD8#fw1VXKzK9Hah=Bg;fQbhz}x!P`otI|${dma#g_a`KIgdDjo2tv>OT98Px
+t5G^YU(Pd;HJ|L^35x*-V5yMqch!;%RzM;4o<AeYJ002ovPDHLkV1oLLb#4Fv
+
+diff --git a/Resources/Textures/Interface/Nano/tabcontainer_panel.png b/Resources/Textures/Interface/Nano/tabcontainer_panel.png
+index 048540878e94da3c338ba1f510b30d70294bc031..464b741f9ae533017b78305e60aefb0519b996c0 100644
+GIT binary patch
+delta 93
+zcmV-j0HXhp0eg@nS3*fdK~xBtZOow+1R)Rwu&`rrv@rcwMGH90f4l13rGO0R?zgHW
+zvG*RMyWcsdpL?&Ts=zr1RFx+QSZjeK#=r9eKj9l^WSQ_700000NkvXXu0mjfYWpZ7
+
+delta 114
+zcmb=Pz&JrAhqJ&VvY3HEPZ@+6E0)@qF)%PVdAc};a9mGLVPFa_KL6jxM~CPCzrTqV
+zwMEv-${r2P!3~UTbv6GF9AF7zWSW1^p6RlJov;Tt#|O?+jhO=T1!vD>NPH>1C*Dn~
+Q251_Cr>mdKI;Vst04~5K^#A|>
+
+diff --git a/Resources/Textures/Interface/Nano/tooltip.png b/Resources/Textures/Interface/Nano/tooltip.png
+index bd6cefaa24c1fc62b5b48df3f2af06b5a876238b..fe4ce1a0c70d26b8ea2c778ee577d41d55caa951 100644
+GIT binary patch
+delta 72
+zcmcc0m^MMhN!QcGF@$4ga!Nu%!i5VLew=4uHP5?~km4fNz^Eqi`1bbv8BH-UF$Iop
+cIcZD`v;Xqc?@F2blmQ4lUHx3vIVCg!02<O9HUIzs
+
+literal 213
+zcmeAS@N?(olHy`uVBq!ia0vp^tRT$61|)m))t&+=&H|6fVg?31We{epSZZGe6l5>)
+z^mS!_!p+1et-$ZpeHtiK;_2cT!Xe9;$uR9dBaqKvZt3?QM1#P|<C_>6kp&>a3=B*#
+m#*;@EVN8UejGR7P5UZJ+cJmxvus!i0NR_9npUXO@geCyc86{T$
+
+diff --git a/Resources/Textures/Interface/Nano/transparent_window_background_bordered.png b/Resources/Textures/Interface/Nano/transparent_window_background_bordered.png
+index b9cc0a9ce186989990098254d60a5d45372a73f3..2c14b56f2f1019d7ae636705498f92a5172de50f 100644
+GIT binary patch
+delta 58
+zcmZo>jF_NeBJb(q7{W0#dCKI;zt1<Y&A7lCz_N444g=QxwZGfqtr_0#Wl3Iq$z7fS
+O2s~Z=T-G@yGywpimKJCL
+
+delta 101
+zcma!OW}KiB&spFRS<Jworwqc36-({Q7#JAXOFVsD*`IKWis+kEPF(Z{D5T`+;uykl
+zJ=tXYm*3|b*k(v<VA%2C_Vsf91P-olE$atY`53B1SdT|fy21!l&EV<k=d#Wzp$P!^
+C<RFRw
+
+diff --git a/Resources/Textures/Interface/Nano/whisper.png b/Resources/Textures/Interface/Nano/whisper.png
+index 5f0d49da7cdd3699924242397c60e213b660e71a..5b2e3ab16d58bdd5ab0163afcbb81ae5ef6ee583 100644
+GIT binary patch
+delta 73
+zcmaFOlRiPkS<lnOF@$4ga!Nu%f`^aKpYsh2Jv|vrJRsm>aO`NexFPG;uU`XMBrld2
+ZGcky$um_lSsGBhWfv2mV%Q~loCIFe^7gzuQ
+
+literal 1643
+zcmbVN&u`pB6gCo|QmJ=9Lb4nQm5Q-v#%r%Vt%=gz&|QfQQMyvYt>f`{*UH*sY$xmF
+z)*O(K;7ldXT)Be8flH431-)@V;)am8!}G4!q$p`CEPFkk`R04y`!R37+~0d}>*l*R
+zHBGxU9t{uR{YLZLcoTlVR`34?ueb8iXQif@Tg~%Y{oVEn0RBv-ht=Wa6DCw@@<@f!
+ztkWFOns#ry&bc^}l^)7jk_E;eKmBazNfa25oC%)f136DdXN7!twl@`LN5YSc?T_?(
+zH3NcFR$Q;sMOLypFjl+_#?7>4=qpHd6c{^=LH%&DuMboqb;op(AU#j-`zCRF*mghE
+zDJH&!J&V`~6NX*p^!4^Kz*-T->|pqDYYV;tV_sD`v#jNEX)bM36*G(YK5$TrQUnN8
+zo@N!VQC4nk7>2SGMUq#E%Jhbjhw8Wr3{bjuA<aA5tZc&s0kdkJTg1eTODkX`I$VBS
+zELO%NVabI|Wmc7dB^@@Ot4ft~bq#g5{G0&@?PSu~xKc}+b|%Vd_XON%19Bz0oSx>=
+zI*_G0E`;1Y0hwEkH#r*=l2@vjDz(@oYJVeHr{J}I`%#ibYFU18X@eZ{N(KhSlpsP8
+z^`^vOHes}fu*Wc7LnkUq;?oXFA+>N%DQ1q%9Pc?OluX1c{!(xxSgeYagTqP6XVS{E
+znW1-KWCOKO1sDc(_T~BUV6b1PI9b3#dGO%AKHeR;#CKgpO|p_ZnXqwIRy-4OJPZs7
+zj+rD8b7IelZ4#nB_WH;Pdokj!#0U%Dp`64v?)jVjLnV%z5@`0XPeY^xaQrLJ>tmN<
+zkD{;_Vnlnu=5g$y9=C}TN<u>yWUuniJ}nYBkbH5OwNVuTqaS0RJDj7w=!eLSdm-|o
+zu#c$g3nE<UN5pQ*e$6yWO33kPdypQ=&)d-=(O1R8xM&VVV2Gv~WMs6{$rbT<CClyp
+z<y->k3#w#oy;O0v<b~XsLF`^yh1PZAOMdcV>93Z`wWdz`byfR+q_<%abDqs4bXd!1
+zoUxi-v`&ik-+ZmsF7>Sq9GYP>?7A>~bbVZAKwUtW9=!AIkI>=u@o;B)<2~_MJHNQN
+t_<QvBK>O;~^JmY#czXW(9rDZTTK&X&`qvNN+-?32#=CpN@9#f8{|A5<{?`Bi
+
+diff --git a/Resources/Textures/Interface/Nano/window_background.png b/Resources/Textures/Interface/Nano/window_background.png
+index 65506ddef58f96a31dc6935d126abd9f79706f30..efd3ab0742834acc05dbe3a5acba73646f5f6621 100644
+GIT binary patch
+delta 74
+zcmXTOoS@=r;OXKR!ZFkL*hXFk1s>*u?17cc?<f5Y|HziPkg;=hUdYvVd6N>PJ$>|U
+euh(Jl{KL01heM_9u5ADV5O})!xvX<aXaWEX?;B+R
+
+delta 81
+zcmc~Sn4sdrS>O>_%)p?h48n{ROYO@T7#Ng1T^vI=t|uoXBs^eD@(c}K`(HuoNO}v`
+iCnJRe=`$3#7#NBzm~I@9+nNbf&EV<k=d#Wzp$P!VW*GMX
+
+diff --git a/Resources/Textures/Interface/Nano/window_background_bordered.png b/Resources/Textures/Interface/Nano/window_background_bordered.png
+index de59bb0b3a7e9e3dfb69faedc42e3468c488eddb..27167259389b230d43855a93f757bf37982fe6ec 100644
+GIT binary patch
+delta 58
+zcmbQt7%@S`MBdZIF@$4g@|6o0ew=S$n{k0PfW^M<Plx7-^XL2Htr?8Avos!LTC2|h
+N1fH&bF6*2UngF<M7L))0
+
+delta 117
+zcma!;%s4?MpDoGT-G$*l2rk&Wd@=(A180FpWHAGSo-znCRxGtI0}8U2c>21sKjGnJ
+zQBs`cY2gJFQt)(f4B@z*Y+_XS`+Ni242ca4J02|O_cvty$+F~QHammcWR|T064ze>
+P)iQXx`njxgN@xNA6VN0$
+
+diff --git a/Resources/Textures/Interface/Nano/window_header.png b/Resources/Textures/Interface/Nano/window_header.png
+index 1e78eaf12336c68410aaeab2fa31fbf0fca61170..8616f68de99dba5ce4fc8163f1aa0ba480d03dab 100644
+GIT binary patch
+delta 50
+zcmYcdoS>pB;pyTS!Z9=X!i5Vz&VPA!R+>#sPfw47k-_#IOPvY>=XM4l@O1TaS?83{
+F1OVHu5fK0Y
+
+delta 70
+zcmWGcouJ~#S>O>_%)p?h48n{ROYO@T7#PGoT^vI=t|wo(zWv{M2A1D58;&pvoR(uy
+XKg1mQc}B}xpb`d8S3j3^P6<r_@$wfP
+
+diff --git a/Resources/Textures/Interface/Nano/window_header_alert.png b/Resources/Textures/Interface/Nano/window_header_alert.png
+index 075c9c6ef2f9573fc0d033129c028354b5130717..fff27fc1e84e5b6ac54a2050b997a6e4c034822a 100644
+GIT binary patch
+delta 55
+zcmbQm7&<}4P{z~6F@$4gvPWXVkMjyjN}uL;c6WC-f(S+iwVO=$pWm2ukpT!iUHx3v
+IIVCg!08$GTuK)l5
+
+delta 124
+zcmWHY#W+Ewj3wRC*O7r?V?XzwL{<g{2F?PH$YKTtJw*^^WRL#yA1EkU;u=vBoS#-w
+zo>-L1P>`6JSE84fTB2a0XP{?jZk#ti8K_9y)5S4FB0PD<F@^8*89BZ+cT_2)ZD426
+Xn8a-8e3G*VsD#1O)z4*}Q$iB}h&Uus
+
+
+From db05f516bd0ff515f6ef01f013c551e5b5268364 Mon Sep 17 00:00:00 2001
+From: PixelTheKermit <pixelmontrainer8967@gmail.com>
+Date: Thu, 25 May 2023 16:51:16 +0100
+Subject: [PATCH 2/2] brighter purple
+
+---
+ Content.Client/Stylesheets/StyleNano.cs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)

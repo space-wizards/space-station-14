@@ -4,7 +4,7 @@
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
     <PanelContainer>
          <PanelContainer.PanelOverride>
-            <gfx:StyleBoxFlat BackgroundColor="#25252A"/>
+            <gfx:StyleBoxFlat BackgroundColor="#141414"/>
          </PanelContainer.PanelOverride>
         <SplitContainer Orientation="Horizontal" VerticalExpand="True">
             <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" SizeFlagsStretchRatio="1" />
