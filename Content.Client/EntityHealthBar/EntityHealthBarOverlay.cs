@@ -52,8 +52,14 @@ public sealed class EntityHealthBarOverlay : Overlay
         var rotationMatrix = Matrix3.CreateRotation(-rotation);
         handle.UseShader(_shader);
 
-        foreach (var (thresholds, mob, dmg) in _entManager.EntityQuery<MobThresholdsComponent, MobStateComponent, DamageableComponent>(true))
+        foreach (var (thresholds, mob, dmg) in _entManager.EntityQuery<MobThresholdsComponent, MobStateComponent, DamageableComponent>(includePaused: true))
         {
+            if (_entManager.TryGetComponent<MetaDataComponent>(mob.Owner, out var metaDataComponent) &&
+                metaDataComponent.Flags.HasFlag(MetaDataFlags.InContainer))
+            {
+                continue;
+            }
+
             if (!xformQuery.TryGetComponent(mob.Owner, out var xform) ||
                 xform.MapID != args.MapId)
             {
