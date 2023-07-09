@@ -62,14 +62,6 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     }
 
     /// <summary>
-    /// Increment number of doors jacked for greentext.
-    /// Only done on server duh
-    /// </summary>
-    public virtual void Doorjacked(EntityUid user)
-    {
-    }
-
-    /// <summary>
     /// Handle revealing ninja if cloaked when attacked.
     /// </summary>
     private void OnNinjaAttacked(EntityUid uid, SpaceNinjaComponent comp, AttackedEvent args)

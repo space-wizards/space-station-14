@@ -53,6 +53,13 @@ public sealed partial class NinjaSuitComponent : Component
     public SoundSpecifier RevealSound = new SoundPathSpecifier("/Audio/Effects/chime.ogg");
 
     /// <summary>
+    /// How long to disable all abilities for when revealed.
+    /// This adds a UseDelay to the ninja so it should not be set by anything else.
+    /// </summary>
+    [DataField("disableTime")]
+    public TimeSpan DisableTime = TimeSpan.FromSeconds(5);
+
+    /// <summary>
     /// The action for creating throwing soap, in place of ninja throwing stars since embedding doesn't exist.
     /// </summary>
     [DataField("createSoapAction")]

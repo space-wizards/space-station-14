@@ -2,7 +2,6 @@ using Content.Server.Administration.Commands;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
-using Content.Server.Doors.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
@@ -19,6 +18,7 @@ using Content.Server.Roles;
 using Content.Server.Warps;
 using Content.Shared.Alert;
 using Content.Shared.Doors.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Ninja.Components;
@@ -62,6 +62,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 
         SubscribeLocalEvent<SpaceNinjaComponent, ComponentStartup>(OnNinjaStartup);
         SubscribeLocalEvent<SpaceNinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
+        SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomethingEvent>(OnDoorjack);
     }
 
     public override void Update(float frameTime)
@@ -190,14 +191,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     public override bool TryUseCharge(EntityUid user, float charge)
     {
         return GetNinjaBattery(user, out var uid, out var battery) && _battery.TryUseCharge(uid.Value, charge, battery);
-    }
-
-    /// <inheritdoc/>
-    public override void Doorjacked(EntityUid uid)
-    {
-        // make sure it's a ninja doorjacking it
-        if (GetNinjaRole(uid, out var role))
-            role.DoorsJacked++;
     }
 
     /// <summary>
@@ -340,5 +333,22 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         {
             Logger.Error($"Ninja has unknown objective prototype: {name}");
         }
+    }
+
+    /// <summary>
+    /// Increment greentext when emagging a door.
+    /// </summary>
+    private void OnDoorjack(EntityUid uid, SpaceNinjaComponent comp, ref EmaggedSomethingEvent args)
+    {
+        // incase someone lets ninja emag non-doors double check it here
+        if (!HasComp<DoorComponent>(args.Target))
+            return;
+
+        // this popup is serverside since door emag logic is serverside (power funnies)
+        _popup.PopupEntity(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid, PopupType.Medium);
+
+        // make sure it's a ninja doorjacking it
+        if (GetNinjaRole(uid, out var role))
+            role.DoorsJacked++;
     }
 }

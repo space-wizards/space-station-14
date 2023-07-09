@@ -66,7 +66,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         var user = args.Performer;
         // need 1 second of charge to turn on stealth
         var chargeNeeded = SuitWattage(comp);
-        if (!comp.Cloaked && (!_ninja.GetNinjaBattery(user, out var _, out var battery) || battery.CurrentCharge < chargeNeeded || _useDelay.ActiveDelay(uid)))
+        if (!comp.Cloaked && (!_ninja.GetNinjaBattery(user, out var _, out var battery) || battery.CurrentCharge < chargeNeeded || _useDelay.ActiveDelay(user)))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
@@ -85,7 +85,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     {
         args.Handled = true;
         var user = args.Performer;
-        if (!_ninja.TryUseCharge(user, comp.SoapCharge) || _useDelay.ActiveDelay(uid))
+        if (!_ninja.TryUseCharge(user, comp.SoapCharge) || _useDelay.ActiveDelay(user))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
@@ -108,7 +108,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         var coords = _transform.GetWorldPosition(katana);
         var distance = (_transform.GetWorldPosition(user) - coords).Length;
         var chargeNeeded = (float) distance * 3.6f;
-        if (!_ninja.TryUseCharge(user, chargeNeeded) || _useDelay.ActiveDelay(uid))
+        if (!_ninja.TryUseCharge(user, chargeNeeded) || _useDelay.ActiveDelay(user))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
@@ -125,7 +125,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     {
         args.Handled = true;
         var user = args.Performer;
-        if (!_ninja.TryUseCharge(user, comp.EmpCharge) || _useDelay.ActiveDelay(uid))
+        if (!_ninja.TryUseCharge(user, comp.EmpCharge) || _useDelay.ActiveDelay(user))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;

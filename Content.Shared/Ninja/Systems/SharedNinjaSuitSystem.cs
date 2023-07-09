@@ -93,7 +93,9 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
             if (disableAbilities)
             {
                 _audio.PlayPredicted(comp.RevealSound, uid, user);
-                _useDelay.BeginDelay(uid);
+                var useDelay = EnsureComp<UseDelayComponent>(user);
+                useDelay.Delay = comp.DisableTime;
+                _useDelay.BeginDelay(user, useDelay);
             }
         }
     }

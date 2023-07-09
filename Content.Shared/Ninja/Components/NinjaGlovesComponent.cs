@@ -2,12 +2,11 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.DoAfter;
 using Content.Shared.Ninja.Systems;
-using Content.Shared.Tag;
 using Content.Shared.Toggleable;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using System.Threading;
 
@@ -38,20 +37,15 @@ public sealed partial class NinjaGlovesComponent : Component
         Priority = -13,
         Event = new ToggleActionEvent()
     };
-}
 
-/// <summary>
-/// Component for emagging doors on click, when gloves are enabled.
-/// Only works on entities with DoorComponent.
-/// </summary>
-[RegisterComponent]
-public sealed class NinjaDoorjackComponent : Component
-{
     /// <summary>
-    /// The tag that marks an entity as immune to doorjacking
+    /// The whitelist used for the emag provider to emag doors only.
     /// </summary>
-    [DataField("emagImmuneTag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
-    public string EmagImmuneTag = "EmagImmune";
+    [DataField("doorjackWhitelist")]
+    public EntityWhitelist DoorjackWhitelist = new()
+    {
+        Components = new[] {"Door"}
+    };
 }
 
 /// <summary>

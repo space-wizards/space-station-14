@@ -215,15 +215,11 @@
     stealthy: true
   # TODO: remove these when theyre moved onto the player
   - type: NinjaGloves
-  - type: NinjaDoorjack
   - type: NinjaStun
   - type: NinjaDownload
   - type: NinjaTerror
   # not actually electrified, just used to make stun ability work
   - type: Electrified
-  # delay for stunning to prevent instant stunlocking
-  - type: UseDelay
-    delay: 1
 
 - type: entity
   parent: ClothingHandsBase

@@ -1,12 +1,9 @@
 using Content.Shared.Actions;
-using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage.Components;
-using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Electrocution;
-using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -17,7 +14,6 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
-using Content.Shared.Tag;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Robust.Shared.Network;
@@ -28,10 +24,8 @@ namespace Content.Shared.Ninja.Systems;
 
 public abstract class SharedNinjaGlovesSystem : EntitySystem
 {
-    [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedDoAfterSystem _doAfter = default!;
@@ -39,7 +33,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     [Dependency] protected readonly SharedInteractionSystem Interaction = default!;
     [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
@@ -49,9 +42,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         SubscribeLocalEvent<NinjaGlovesComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<NinjaGlovesComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<NinjaGlovesComponent, GotUnequippedEvent>(OnUnequipped);
-
-        // TODO: EmagProvider
-        SubscribeLocalEvent<NinjaDoorjackComponent, InteractionAttemptEvent>(OnDoorjack);
 
         // TODO: StunProvider
         SubscribeLocalEvent<NinjaStunComponent, InteractionAttemptEvent>(OnStun);
@@ -81,6 +71,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             Popup.PopupClient(Loc.GetString("ninja-gloves-off"), user, user);
 
             RemComp<BatteryDrainerComponent>(user);
+            RemComp<EmagProviderComponent>(user);
         }
     }
 
@@ -129,7 +120,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             && !_combatMode.IsInCombatMode(gloves.User)
             && TryComp<SpaceNinjaComponent>(gloves.User, out var ninja)
             && ninja.Suit != null
-            && !_useDelay.ActiveDelay(ninja.Suit.Value)
+            && !_useDelay.ActiveDelay(gloves.User.Value)
             && TryComp<HandsComponent>(gloves.User, out var hands)
             && hands.ActiveHandEntity == null)
         {
@@ -146,23 +137,26 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     }
 
     /// <summary>
-    /// Emag doors on click when enabled.
+    /// GloveCheck but for abilities stored on the player, skips some checks.
+    /// Intended to be more generic, doesn't require the user to be a ninja or have any ninja equipment.
     /// </summary>
-    private void OnDoorjack(EntityUid uid, NinjaDoorjackComponent comp, InteractionAttemptEvent args)
+    public bool AbilityCheck(EntityUid uid, InteractionAttemptEvent args, out EntityUid target)
     {
-        if (!GloveCheck(uid, args, out var gloves, out var user, out var target))
-            return;
+        if (args.Target != null
+            && _timing.IsFirstTimePredicted
+            && !_combatMode.IsInCombatMode(uid)
+            && !_useDelay.ActiveDelay(uid)
+            && TryComp<HandsComponent>(uid, out var hands)
+            && hands.ActiveHandEntity == null)
+        {
+            target = args.Target.Value;
 
-        // only allowed to emag non-immune doors
-        if (!HasComp<DoorComponent>(target) || _tags.HasTag(target, comp.EmagImmuneTag))
-            return;
+            if (Interaction.InRangeUnobstructed(uid, target))
+                return true;
+        }
 
-        var handled = _emag.DoEmagEffect(user, target);
-        if (!handled)
-            return;
-
-        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} doorjacked {ToPrettyString(target):target}");
-        _ninja.Doorjacked(user);
+        target = EntityUid.Invalid;
+        return false;
     }
 
     /// <summary>
@@ -171,10 +165,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     private void OnStun(EntityUid uid, NinjaStunComponent comp, InteractionAttemptEvent args)
     {
         if (!GloveCheck(uid, args, out var gloves, out var user, out var target))
-            return;
-
-        // short cooldown to prevent instant stunlocking
-        if (_useDelay.ActiveDelay(uid))
             return;
 
         // battery can't be predicted since it's serverside
@@ -190,7 +180,8 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
         // not holding hands with target so insuls don't matter
         _electrocution.TryDoElectrocution(target, uid, comp.StunDamage, comp.StunTime, false, ignoreInsulation: true);
-        _useDelay.BeginDelay(uid);
+        // short cooldown to prevent instant stunlocking
+        _useDelay.BeginDelay(user);
     }
 
     /// <summary>

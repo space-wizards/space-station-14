@@ -15,6 +15,7 @@ namespace Content.Server.Ninja.Systems;
 
 public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
+    [Dependency] private readonly EmagProviderSystem _emagProvider = default!;
     [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
 
     public override void Initialize()
@@ -58,10 +59,12 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
             Interaction.SetRelay(user, uid, EnsureComp<InteractionRelayComponent>(user));
             Dirty(comp);
 
-            // TODO: put the BatteryUid part in its own component
             var drainer = EnsureComp<BatteryDrainerComponent>(user);
             if (_ninja.GetNinjaBattery(user, out var battery, out var _))
                 drainer.BatteryUid = battery;
+
+            var emag = EnsureComp<EmagProviderComponent>(user);
+            _emagProvider.SetWhitelist(user, comp.DoorjackWhitelist, emag);
         }
         else
         {
