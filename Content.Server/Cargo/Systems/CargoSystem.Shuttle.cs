@@ -231,16 +231,16 @@ public sealed partial class CargoSystem
         station ??= _station.GetOwningStation(gridUid);
         GetPalletGoods(gridUid, out var toSell, out amount);
 
-        _sawmill.Debug($"Cargo sold {toSell.Count} entities for {amount}");
+        Log.Debug($"Cargo sold {toSell.Count} entities for {amount}");
+
+        if (station != null)
+        {
+            var ev = new EntitySoldEvent(station.Value, toSell);
+            RaiseLocalEvent(ref ev);
+        }
 
         foreach (var ent in toSell)
         {
-            if (station != null)
-            {
-                var ev = new EntitySoldEvent(station.Value, toSell);
-                RaiseLocalEvent(ref ev);
-            }
-
             Del(ent);
         }
     }
@@ -248,9 +248,6 @@ public sealed partial class CargoSystem
     private void GetPalletGoods(EntityUid gridUid, out HashSet<EntityUid> toSell, out double amount)
     {
         amount = 0;
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var blacklistQuery = GetEntityQuery<CargoSellBlacklistComponent>();
-        var mobStateQuery = GetEntityQuery<MobStateComponent>();
         toSell = new HashSet<EntityUid>();
 
         foreach (var (palletUid, _) in GetCargoPallets(gridUid))
@@ -263,13 +260,13 @@ public sealed partial class CargoSystem
                 // - anything anchored (e.g. light fixtures)
                 // - anything blacklisted (e.g. players).
                 if (toSell.Contains(ent) ||
-                    xformQuery.TryGetComponent(ent, out var xform) &&
-                    (xform.Anchored || !CanSell(ent, xform, mobStateQuery, xformQuery)))
+                    _xformQuery.TryGetComponent(ent, out var xform) &&
+                    (xform.Anchored || !CanSell(ent, xform)))
                 {
                     continue;
                 }
 
-                if (blacklistQuery.HasComponent(ent))
+                if (_blacklistQuery.HasComponent(ent))
                     continue;
 
                 var price = _pricing.GetPrice(ent);
@@ -281,10 +278,9 @@ public sealed partial class CargoSystem
         }
     }
 
-    private bool CanSell(EntityUid uid, TransformComponent xform, EntityQuery<MobStateComponent> mobStateQuery, EntityQuery<TransformComponent> xformQuery)
+    private bool CanSell(EntityUid uid, TransformComponent xform)
     {
-        if (mobStateQuery.TryGetComponent(uid, out var mobState) &&
-            mobState.CurrentState != MobState.Dead)
+        if (_mobQuery.HasComponent(uid))
         {
             return false;
         }
@@ -293,7 +289,7 @@ public sealed partial class CargoSystem
         var children = xform.ChildEnumerator;
         while (children.MoveNext(out var child))
         {
-            if (!CanSell(child.Value, xformQuery.GetComponent(child.Value), mobStateQuery, xformQuery))
+            if (!CanSell(child.Value, _xformQuery.GetComponent(child.Value)))
                 return false;
         }
 

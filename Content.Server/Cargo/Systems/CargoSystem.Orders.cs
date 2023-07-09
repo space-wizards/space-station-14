@@ -188,7 +188,7 @@ namespace Content.Server.Cargo.Systems
 
             if (!_protoMan.TryIndex<CargoProductPrototype>(args.CargoProductId, out var product))
             {
-                _sawmill.Error($"Tried to add invalid cargo product {args.CargoProductId} as order!");
+                Log.Error($"Tried to add invalid cargo product {args.CargoProductId} as order!");
                 return;
             }
 
