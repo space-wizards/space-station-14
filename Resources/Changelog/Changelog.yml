@@ -2901,7 +2901,7 @@ Entries:
   - {message: Fix spawning expeditions mobs on blocked tiles., type: Fix}
   id: 4202
   time: '2023-07-09T19:20:55.0000000+00:00'
-- author: craazybrain
+- author: crazybrain
   changes:
   - {message: '"Ensure fellow traitor stays alive" objective now works correctly.',
     type: Fix}
