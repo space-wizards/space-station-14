@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Follower.Components;
 using Content.Shared.Input;
@@ -475,10 +476,10 @@ namespace Content.Shared.Movement.Systems
             var vec = new Vector2(x, y);
 
             // can't normalize zero length vector
-            if (vec.LengthSquared > 1.0e-6)
+            if (vec.LengthSquared() > 1.0e-6)
             {
                 // Normalize so that diagonals aren't faster or something.
-                vec = vec.Normalized;
+                vec = vec.Normalized();
             }
 
             return vec;

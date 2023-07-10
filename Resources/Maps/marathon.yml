@@ -5843,7 +5843,8 @@ entities:
           0,9:
             0: 40723
           0,10:
-            0: 52733
+            0: 52605
+            2: 128
           0,11:
             0: 35068
           1,8:
@@ -6238,15 +6239,15 @@ entities:
             0: 65535
           6,-8:
             0: 7967
-            2: 224
-            3: 57344
-          6,-7:
-            0: 7967
             3: 224
             4: 57344
+          6,-7:
+            0: 7967
+            4: 224
+            5: 57344
           6,-6:
             0: 65311
-            5: 224
+            6: 224
           6,-5:
             0: 65535
           7,-8:
@@ -6295,7 +6296,7 @@ entities:
             0: 65535
           6,-9:
             0: 7967
-            3: 57568
+            4: 57568
           7,-9:
             0: 13107
           -4,-12:
@@ -6886,7 +6887,7 @@ entities:
             0: 65280
           -16,14:
             0: 52862
-            2: 128
+            3: 128
           -16,15:
             0: 3976
           -16,13:
@@ -6923,6 +6924,7 @@ entities:
             0: 61007
           -20,10:
             0: 62718
+            4: 2816
           -20,9:
             0: 61166
           -20,11:
@@ -6931,6 +6933,7 @@ entities:
             0: 61007
           -19,10:
             0: 62718
+            4: 2816
           -19,9:
             0: 61166
           -19,11:
@@ -6939,6 +6942,7 @@ entities:
             0: 8739
           -18,10:
             0: 64752
+            4: 768
           -18,9:
             0: 2
           -18,11:
@@ -6967,6 +6971,7 @@ entities:
             0: 3136
           -23,10:
             0: 62968
+            4: 2560
           -23,11:
             0: 35061
           -23,8:
@@ -6977,6 +6982,7 @@ entities:
             0: 61007
           -22,10:
             0: 62718
+            4: 2816
           -22,9:
             0: 61166
           -22,11:
@@ -6985,6 +6991,7 @@ entities:
             0: 61007
           -21,10:
             0: 62718
+            4: 2816
           -21,9:
             0: 61166
           -21,11:
@@ -7383,12 +7390,12 @@ entities:
             0: 65535
           9,-16:
             0: 22399
-            3: 43136
+            4: 43136
           9,-15:
             0: 65277
-            3: 258
+            4: 258
           10,-16:
-            3: 32769
+            4: 32769
             0: 32766
           10,-15:
             0: 65535
@@ -7402,17 +7409,17 @@ entities:
             0: 65534
           8,-17:
             0: 63359
-            3: 2176
+            4: 2176
           8,-19:
             0: 60616
           9,-19:
             0: 64511
-            3: 1024
+            4: 1024
           9,-18:
             0: 49143
-            3: 16392
+            4: 16392
           9,-17:
-            3: 311
+            4: 311
             0: 65224
           9,-20:
             0: 57344
@@ -7420,19 +7427,19 @@ entities:
             0: 61440
           10,-19:
             0: 64703
-            3: 832
+            4: 832
           10,-18:
             0: 29695
-            3: 35840
+            4: 35840
           10,-17:
             0: 65535
           11,-19:
             0: 29489
           11,-18:
             0: 60655
-            3: 4880
+            4: 4880
           11,-17:
-            3: 8193
+            4: 8193
             0: 57342
           7,-17:
             0: 34944
@@ -7597,6 +7604,21 @@ entities:
           moles:
           - 21.824879
           - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 23.246532
+          - 87.451256
           - 0
           - 0
           - 0
@@ -58763,14 +58785,7 @@ entities:
     - pos: -38.429283,-20.300697
       parent: 30
       type: Transform
-- proto: ClothingHeadHelmetCosmonaut
-  entities:
-  - uid: 16767
-    components:
-    - pos: -17.446564,-106.45651
-      parent: 30
-      type: Transform
-- proto: ClothingHeadHelmetHelmet
+- proto: ClothingHeadHelmetBasic
   entities:
   - uid: 1986
     components:
@@ -58785,6 +58800,13 @@ entities:
   - uid: 1988
     components:
     - pos: -39.575058,56.668564
+      parent: 30
+      type: Transform
+- proto: ClothingHeadHelmetCosmonaut
+  entities:
+  - uid: 16767
+    components:
+    - pos: -17.446564,-106.45651
       parent: 30
       type: Transform
 - proto: ClothingHeadHelmetTemplar
@@ -59008,6 +59030,40 @@ entities:
     - pos: -0.49387097,-7.362574
       parent: 30
       type: Transform
+- proto: ClothingOuterArmorBasic
+  entities:
+  - uid: 12131
+    components:
+    - pos: -39.48033,56.411068
+      parent: 30
+      type: Transform
+  - uid: 14249
+    components:
+    - pos: -39.48033,56.411068
+      parent: 30
+      type: Transform
+  - uid: 14435
+    components:
+    - pos: -39.48033,56.411068
+      parent: 30
+      type: Transform
+- proto: ClothingOuterArmorBulletproof
+  entities:
+  - uid: 16243
+    components:
+    - pos: -39.286102,56.736275
+      parent: 30
+      type: Transform
+  - uid: 16244
+    components:
+    - pos: -39.286102,56.736275
+      parent: 30
+      type: Transform
+  - uid: 16251
+    components:
+    - pos: -39.286102,56.736275
+      parent: 30
+      type: Transform
 - proto: ClothingOuterArmorCult
   entities:
   - uid: 18249
@@ -59109,6 +59165,17 @@ entities:
     - pos: 19.488726,8.340895
       parent: 30
       type: Transform
+- proto: ClothingOuterHardsuitBasic
+  entities:
+  - uid: 11194
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 5608
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: ClothingOuterHardsuitEVAPrisoner
   entities:
   - uid: 2381
@@ -61372,6 +61439,17 @@ entities:
     - pos: -58.516808,51.429756
       parent: 30
       type: Transform
+- proto: CrayonRainbow
+  entities:
+  - uid: 12091
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 5608
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: Crematorium
   entities:
   - uid: 6908
@@ -107771,8 +107849,8 @@ entities:
         immutable: False
         temperature: 293.1496
         moles:
-        - 3.4430928
-        - 12.952587
+        - 2.0214376
+        - 7.6044564
         - 0
         - 0
         - 0
@@ -107789,10 +107867,12 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 21184
-          - 6975
-          - 5615
+          - 11194
           - 5616
+          - 5615
+          - 6975
+          - 21184
+          - 12091
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -109752,6 +109832,13 @@ entities:
     - pos: 18.5,59.5
       parent: 30
       type: Transform
+- proto: PaintingSadClown
+  entities:
+  - uid: 14969
+    components:
+    - pos: 1.5,15.5
+      parent: 30
+      type: Transform
 - proto: PaintingTheGreatWave
   entities:
   - uid: 7745
@@ -110835,11 +110922,30 @@ entities:
     - pos: -26.5,-12.5
       parent: 30
       type: Transform
+- proto: PosterLegitAnatomyPoster
+  entities:
+  - uid: 15969
+    components:
+    - pos: -21.5,-11.5
+      parent: 30
+      type: Transform
+  - uid: 16242
+    components:
+    - pos: -23.5,-20.5
+      parent: 30
+      type: Transform
 - proto: PosterLegitBuild
   entities:
   - uid: 10142
     components:
     - pos: -18.5,-33.5
+      parent: 30
+      type: Transform
+- proto: PosterLegitCarpMount
+  entities:
+  - uid: 14968
+    components:
+    - pos: 29.5,-8.5
       parent: 30
       type: Transform
 - proto: PosterLegitCleanliness
@@ -110919,6 +111025,13 @@ entities:
   - uid: 16753
     components:
     - pos: -42.5,23.5
+      parent: 30
+      type: Transform
+- proto: PosterLegitMime
+  entities:
+  - uid: 15203
+    components:
+    - pos: 6.5,11.5
       parent: 30
       type: Transform
 - proto: PosterLegitNanomichiAd
