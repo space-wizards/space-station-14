@@ -12,3 +12,6 @@
 
 - type: Tag
   id: FTLAmmoTierThree
+
+- type: Tag
+  id: WeaponPadElectronics

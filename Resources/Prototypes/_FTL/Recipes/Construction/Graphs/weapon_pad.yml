@@ -1,0 +1,78 @@
+- type: constructionGraph
+  id: WeaponPad
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: assembly
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2.0
+
+    - node: assembly
+      entity: WeaponPadAssembly
+      actions:
+        - !type:AppearanceChange
+      edges:
+        - to: wired
+          steps:
+            - material: Cable
+              amount: 2
+              doAfter: 1
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: wired
+      entity: WeaponPadAssembly
+      actions:
+        - !type:AppearanceChange
+      edges:
+        - to: electronics
+          steps:
+            - tag: WeaponPadElectronics
+              store: board
+              name: "station map electronics"
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "door_electronics" # /tg/ uses the same sprite, right?
+              doAfter: 1
+        - to: assembly
+          completed:
+            - !type:GivePrototype
+              prototype: CableApcStack1
+              amount: 2
+          steps:
+            - tool: Cutting
+              doAfter: 1
+
+    - node: electronics
+      actions:
+        - !type:AppearanceChange
+      edges:
+        - to: weapon_pad
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    - node: weapon_pad
+      entity: WeaponTargetingPad
+      edges:
+        - to: wired
+          conditions:
+            - !type:AllWiresCut {}
+            - !type:WirePanel {}
+            - !type:ContainerNotEmpty
+              container: board
+          completed:
+            - !type:EmptyAllContainers {}
+          steps:
+            - tool: Prying
+              doAfter: 1

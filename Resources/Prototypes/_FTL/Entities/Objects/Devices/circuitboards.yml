@@ -1,0 +1,15 @@
+- type: entity
+  parent: BaseElectronics
+  id: WeaponPadCircuitboard
+  name: weapon pad electronics
+  description: An electronics board used in weapon pads.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: airalarm_electronics
+    - type: Tag
+      tags:
+        - DroneUsable
+        - WeaponPadElectronics
+    - type: StaticPrice
+      price: 1500 # these should be super rare

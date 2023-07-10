@@ -1,0 +1,17 @@
+- type: construction
+  name: weapon pad
+  id: WeaponPad
+  graph: WeaponPad
+  startNode: start
+  targetNode: weapon_pad
+  category: construction-category-structures
+  description: A weapon pad for padding weapons.
+  icon:
+    sprite: Structures/Machines/station_map.rsi
+    state: station_map0
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition {}
