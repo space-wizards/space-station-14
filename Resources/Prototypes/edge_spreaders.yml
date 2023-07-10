@@ -6,3 +6,6 @@
 
 - type: edgeSpreader
   id: smoke
+
+- type: edgeSpreader
+  id: anomalousSpreader

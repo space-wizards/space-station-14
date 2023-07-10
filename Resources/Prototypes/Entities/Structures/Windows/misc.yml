@@ -1,0 +1,20 @@
+- type: entity
+  parent: Window
+  id: AnomalousCrystal
+  name: anomalous crystal
+  description: A thick crystal growth. It pulses and extends in strange patterns.
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/reinforced_window.rsi
+  - type: Icon
+    sprite: Structures/Windows/reinforced_window.rsi
+  - type: IconSmooth
+    base: rwindow
+  - type: AnomalyControlledSpreader
+  - type: EdgeSpreader
+  - type: NodeContainer
+    nodes:
+      anomalousSpreader:
+        !type:SpreaderNode
+        nodeGroupID: Spreader

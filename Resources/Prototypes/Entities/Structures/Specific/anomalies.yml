@@ -193,7 +193,6 @@
       types:
         Radiation: 10
 
-
 - type: entity
   id: AnomalyIce
   parent: BaseAnomaly
@@ -231,3 +230,30 @@
     releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
     releaseOnMaxSeverity: true
     spawnRadius: 0
+
+- type: entity
+  id: AnomalyCrystal
+  parent: BaseAnomaly
+  suffix: Crystal
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 2.5
+    color: "#befaff"
+    castShadows: false
+  - type: SpreaderAnomaly
+  - type: EntitySpawnAnomaly
+    spawnRange: 4
+    minSpawnAmount: 2
+    maxSpawnAmount: 8
+    superCriticalSpawn: AnomalousCrystal
+    spawns:
+    - AnomalousCrystal
