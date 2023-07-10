@@ -53,18 +53,9 @@ namespace Content.Server.Power.EntitySystems
         //Update the HasAccess var for UI to read
         private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
         {
-            TryComp<AccessReaderComponent>(uid, out var access);
             if (args.Session.AttachedEntity == null)
                 return;
-
-            if (access == null || _accessReader.IsAllowed(args.Session.AttachedEntity.Value, access))
-            {
-                component.HasAccess = true;
-            }
-            else
-            {
-                component.HasAccess = false;
-            }
+            component.HasAccess = HasAccess(uid, component, args.Session.AttachedEntity.Value);
             UpdateApcState(uid, component);
         }
         private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
@@ -78,11 +69,10 @@ namespace Content.Server.Power.EntitySystems
                 return;
             }
 
-            TryComp<AccessReaderComponent>(uid, out var access);
             if (args.Session.AttachedEntity == null)
                 return;
 
-            if (access == null || _accessReader.IsAllowed(args.Session.AttachedEntity.Value, access))
+            if (HasAccess(uid, component, args.Session.AttachedEntity.Value))
             {
                 ApcToggleBreaker(uid, component);
             }
@@ -91,6 +81,12 @@ namespace Content.Server.Power.EntitySystems
                 _popup.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
                     args.Session, PopupType.Medium);
             }
+        }
+
+        private bool HasAccess(EntityUid target, ApcComponent apc, EntityUid user)
+        {
+            TryComp<AccessReaderComponent>(target, out var access);
+            return access == null || !apc.MainBreakerEnabled || _accessReader.IsAllowed(user, access);
         }
 
         public void ApcToggleBreaker(EntityUid uid, ApcComponent? apc = null, PowerNetworkBatteryComponent? battery = null)
