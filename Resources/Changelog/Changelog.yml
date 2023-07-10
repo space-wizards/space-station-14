@@ -1,14 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Chef's vinegar bottles now hold 30u instead of 15u., type: Tweak}
-  id: 3719
-  time: '2023-05-10T11:36:47.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Survival gamemode has been temporarily disabled pending a rework, type: Tweak}
-  id: 3720
-  time: '2023-05-11T00:08:45.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Monkeys are now clumsy, like clowns', type: Tweak}
@@ -2944,3 +2934,13 @@ Entries:
       anti-bleeding effects and advised players to overdose on bica., type: Remove}
   id: 4218
   time: '2023-07-10T05:49:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Make salvage loading a lot faster., type: Fix}
+  id: 4219
+  time: '2023-07-10T07:16:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix spawning expeditions objectives in walls., type: Fix}
+  id: 4220
+  time: '2023-07-10T07:16:10.0000000+00:00'

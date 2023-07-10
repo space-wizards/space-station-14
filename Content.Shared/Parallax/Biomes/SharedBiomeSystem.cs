@@ -28,20 +28,22 @@ public abstract class SharedBiomeSystem : EntitySystem
         component.Noise.SetSeed(component.Seed);
     }
 
-    protected T Pick<T>(List<T> collection, float value)
+    private T Pick<T>(List<T> collection, float value)
     {
-        DebugTools.Assert(value is >= 0f and <= 1f);
+        // Listen I don't need this exact and I'm too lazy to finetune just for random ent picking.
+        value %= 1f;
+        value = Math.Clamp(value, 0f, 1f);
 
         if (collection.Count == 1)
             return collection[0];
 
-        value *= collection.Count;
+        var randValue = value * collection.Count;
 
         foreach (var item in collection)
         {
-            value -= 1f;
+            randValue -= 1f;
 
-            if (value <= 0f)
+            if (randValue <= 0f)
             {
                 return item;
             }
@@ -50,9 +52,10 @@ public abstract class SharedBiomeSystem : EntitySystem
         throw new ArgumentOutOfRangeException();
     }
 
-    protected int Pick(int count, float value)
+    private int Pick(int count, float value)
     {
-        DebugTools.Assert(value is >= 0f and <= 1f);
+        value %= 1f;
+        value = Math.Clamp(value, 0f, 1f);
 
         if (count == 1)
             return 0;
@@ -234,7 +237,8 @@ public abstract class SharedBiomeSystem : EntitySystem
                 return false;
             }
 
-            entity = Pick(biomeLayer.Entities, (noise.GetNoise(indices.X, indices.Y, i) + 1f) / 2f);
+            var noiseValue = noise.GetNoise(indices.X, indices.Y, i);
+            entity = Pick(biomeLayer.Entities, (noiseValue + 1f) / 2f);
             noise.SetSeed(oldSeed);
             return true;
         }
