@@ -77,10 +77,10 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             {
                 var name = group.Key.Name;
                 var description = group.Key.Description;
-                var hasAccess = true;
+                bool hasAccess = true;
                 string? reason;
 
-                if (requirementsManager.CheckRoleTime(group.Key.Requirements, out reason))
+                if (!requirementsManager.CheckRoleTime(group.Key.Requirements, out reason))
                 {
                     hasAccess = false;
                 }

@@ -29,7 +29,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 button.RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
                 button.FollowButton.OnPressed += _ => OnRoleFollow?.Invoke(role);
 
-                if (hasAccess)
+                if (!hasAccess)
                 {
                     button.RequestButton.Disabled = true;
 
