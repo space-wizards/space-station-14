@@ -401,6 +401,11 @@ namespace Content.Client.Preferences.UI
                 var selector = new AntagPreferenceSelector(antag);
                 _antagList.AddChild(selector);
                 _antagPreferences.Add(selector);
+                if (selector.Disable)
+                {
+                    Profile = Profile?.WithAntagPreference(antag.ID, false);
+                    IsDirty = true;
+                }
 
                 selector.PreferenceChanged += preference =>
                 {
@@ -1308,6 +1313,8 @@ namespace Content.Client.Preferences.UI
             {
                 var antagId = preferenceSelector.Antag.ID;
                 var preference = Profile?.AntagPreferences.Contains(antagId) ?? false;
+                if (preferenceSelector.Disable)
+                    preference = false;
 
                 preferenceSelector.Preference = preference;
             }
@@ -1327,6 +1334,7 @@ namespace Content.Client.Preferences.UI
         private sealed class AntagPreferenceSelector : Control
         {
             public AntagPrototype Antag { get; }
+            public bool Disable { get; }
             private readonly CheckBox _checkBox;
 
             public bool Preference
@@ -1341,13 +1349,23 @@ namespace Content.Client.Preferences.UI
             {
                 Antag = antag;
 
+                var requirements = IoCManager.Resolve<JobRequirementsManager>();
+                var description = antag.Description;
                 _checkBox = new CheckBox {Text = Loc.GetString(antag.Name)};
+
+                if (antag.Requirements != null && !requirements.CheckRoleTime(antag.Requirements, out var reason))
+                {
+                    description = Loc.GetString(reason);
+                    _checkBox.Disabled = true;
+                    Disable = true;
+                }
+
                 _checkBox.OnToggled += OnCheckBoxToggled;
 
-                if (antag.Description != null)
+                if (description != null)
                 {
-                    _checkBox.ToolTip = Loc.GetString(antag.Description);
-                    _checkBox.TooltipDelay = 0.2f;
+                    _checkBox.ToolTip = Loc.GetString(description);
+                    _checkBox.TooltipDelay = 0.1f;
                 }
 
                 AddChild(new BoxContainer
