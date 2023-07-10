@@ -1,9 +1,4 @@
 Entries:
-- author: Owai-Seek
-  changes:
-  - {message: Dermaline now heals 3 Heat/Shock/Cold per unit instead of 2., type: Tweak}
-  id: 3722
-  time: '2023-05-11T08:29:23.0000000+00:00'
 - author: lzk
   changes:
   - {message: Added sigh sound, type: Add}
@@ -2944,3 +2939,8 @@ Entries:
   - {message: Changed bookshelves to block vision., type: Tweak}
   id: 4221
   time: '2023-07-10T16:56:33.0000000+00:00'
+- author: Equivocateur
+  changes:
+  - {message: Removed sponge box from uplink pending rebalance, type: Remove}
+  id: 4222
+  time: '2023-07-10T18:31:11.0000000+00:00'
