@@ -14,5 +14,6 @@ ship-ftl-tag-base = BASE
 ship-ftl-tag-danger = !!!!
 ship-ftl-tag-unknown = ????
 ship-ftl-tag-planet = PLNT
+ship-ftl-tag-moon = MOON
 ship-ftl-tag-ruin = RUIN
 ship-ftl-tag-yard = YARD

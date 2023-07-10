@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
 using Serilog;
 
@@ -18,11 +19,23 @@ namespace Content.Server._FTL.FTLPoints.Effects;
 [DataDefinition]
 public sealed class ToPlanetEffect : FTLPointEffect
 {
+    [DataField("lightingColors")]
+    public List<string> LightingColors { get; } = new List<string>()
+    {
+        "D8B059",
+        "E6CB8B",
+        "2b3143",
+        "A34931"
+    };
+
+    [DataField("biomeTemplates", customTypeSerializer: typeof(PrototypeIdListSerializer<BiomeTemplatePrototype>))]
+    public List<string> BiomeTemplates { get; } = default!;
+
     public override void Effect(FTLPointEffectArgs args)
     {
         var protoManager = IoCManager.Resolve<IPrototypeManager>();
         var random = IoCManager.Resolve<IRobustRandom>();
-        var biomeTemplate = random.Pick(protoManager.EnumeratePrototypes<BiomeTemplatePrototype>().ToList());
+        var biomeTemplate = protoManager.Index<BiomeTemplatePrototype>(random.Pick(BiomeTemplates));
 
         var biome = args.EntityManager.EnsureComponent<BiomeComponent>(args.MapUid);
         var biomeSystem = args.EntityManager.System<BiomeSystem>();
@@ -36,13 +49,8 @@ public sealed class ToPlanetEffect : FTLPointEffect
         gravity.Enabled = true;
         args.EntityManager.Dirty(gravity, metadata);
 
-        // Day lighting
-        // Daylight: #D8B059
-        // Midday: #E6CB8B
-        // Moonlight: #2b3143
-        // Lava: #A34931
         var light = args.EntityManager.EnsureComponent<MapLightComponent>(args.MapUid);
-        light.AmbientLightColor = Color.FromHex("#D8B059");
+        light.AmbientLightColor = Color.FromHex("#" + random.Pick(LightingColors));
         args.EntityManager.Dirty(light, metadata);
 
         // Atmos

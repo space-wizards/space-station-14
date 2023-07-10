@@ -45,8 +45,24 @@
   tag: ship-ftl-tag-planet
   effects:
     - !type:ToPlanetEffect
+      biomeTemplates:
+        - Grasslands
+        - Lava
+        - Snow
+        - LowDesert
+        - Caves
     - !type:SpawnDungeonEffect
-      range: 50
+      range: 75
+
+- type: ftlPoint
+  id: MoonPoint
+  tag: ship-ftl-tag-moon
+  effects:
+    - !type:ToPlanetEffect
+      biomeTemplates:
+        - Caves
+    - !type:SpawnDungeonEffect
+      range: 100
 
 - type: ftlPoint
   id: StarPoint
@@ -76,4 +92,5 @@
     ConfDangerPoint: 0.5
     StarPoint: 1
     PlanetPoint: 1
+    MoonPoint: 0.25
     RuinPoint: 0.15

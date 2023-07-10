@@ -24,4 +24,6 @@ public sealed class BiomeEntityLayer : IBiomeWorldLayer
 
     [DataField("entities", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> Entities = new();
+
+    [DataField("anchored")] public bool AnchorEntities = true;
 }

@@ -392,7 +392,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     for (var y = lower; y <= upper; y++)
                     {
                         var index = new Vector2i(x + chunk.X, y + chunk.Y);
-                        TryGetEntity(index, component.Layers, component.Noise, grid, out var proto);
+                        TryGetEntity(index, component.Layers, component.Noise, grid, out var proto, out var _);
 
                         if (proto != layerProto.EntityMask)
                         {
@@ -554,7 +554,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 // Don't mess with anything that's potentially anchored.
                 var anchored = grid.GetAnchoredEntitiesEnumerator(indices);
 
-                if (anchored.MoveNext(out _) || !TryGetEntity(indices, component.Layers, noise, grid, out var entPrototype))
+                if (anchored.MoveNext(out _) || !TryGetEntity(indices, component.Layers, noise, grid, out var entPrototype, out var anchorEntity))
                     continue;
 
                 // TODO: Fix non-anchored ents spawning.
@@ -562,7 +562,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 var ent = Spawn(entPrototype, grid.GridTileToLocal(indices));
 
                 // At least for now unless we do lookups or smth, only work with anchoring.
-                if (xformQuery.TryGetComponent(ent, out var xform) && !xform.Anchored)
+                if (xformQuery.TryGetComponent(ent, out var xform) && !xform.Anchored && anchorEntity)
                 {
                     _transform.AnchorEntity(ent, xform, gridUid, grid, indices);
                 }

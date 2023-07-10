@@ -159,11 +159,12 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// Tries to get the relevant entity for this tile.
     /// </summary>
     protected bool TryGetEntity(Vector2i indices, List<IBiomeLayer> layers, FastNoiseLite noise, MapGridComponent grid,
-        [NotNullWhen(true)] out string? entity)
+        [NotNullWhen(true)] out string? entity, out bool anchored)
     {
         if (!TryGetBiomeTile(indices, layers, noise, grid, out var tileRef))
         {
             entity = null;
+            anchored = false;
             return false;
         }
 
@@ -182,7 +183,6 @@ public abstract class SharedBiomeSystem : EntitySystem
                 case IBiomeWorldLayer worldLayer:
                     if (!worldLayer.AllowedTiles.Contains(tileId))
                         continue;
-
                     break;
                 default:
                     continue;
@@ -201,17 +201,20 @@ public abstract class SharedBiomeSystem : EntitySystem
             if (layer is not BiomeEntityLayer biomeLayer)
             {
                 entity = null;
+                anchored = false;
                 noise.SetSeed(oldSeed);
                 return false;
             }
 
             entity = Pick(biomeLayer.Entities, (noise.GetNoise(indices.X, indices.Y, i) + 1f) / 2f);
             noise.SetSeed(oldSeed);
+            anchored = biomeLayer.AnchorEntities;
             return true;
         }
 
         noise.SetSeed(oldSeed);
         entity = null;
+        anchored = false;
         return false;
     }
 

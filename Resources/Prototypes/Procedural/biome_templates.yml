@@ -47,6 +47,18 @@
         seed: 0
         noiseType: Cellular
         frequency: 0.1
+    # Fauna spawn
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      anchored: false
+      noise:
+        seed: 0
+        frequency: 4
+        noiseType: OpenSimplex2
+      allowedTiles:
+        - FloorLowDesert
+      entities:
+        - MobGiantSpiderAngry
 
 # Grass
 - type: biomeTemplate
@@ -195,6 +207,19 @@
         gain: 1
         cellularDistanceFunction: Euclidean
         cellularReturnType: Distance2
+    # Fauna spawn
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      anchored: false
+      noise:
+        seed: 0
+        frequency: 4
+        noiseType: OpenSimplex2
+      allowedTiles:
+        - FloorPlanetGrass
+      entities:
+        - MobWildlifeWolf
+        - MobWildlifeBear
 
 # Lava
 - type: biomeTemplate
@@ -281,6 +306,18 @@
       variants:
         - 0
       tile: FloorBasalt
+    # Fauna spawn
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      anchored: false
+      noise:
+        seed: 0
+        frequency: 4
+        noiseType: OpenSimplex2
+      allowedTiles:
+        - FloorBasalt
+      entities:
+        - MobXenoRouny
 
 # Snow
 - type: biomeTemplate
@@ -402,6 +439,19 @@
         seed: 0
         frequency: 0.02
         fractalType: None
+    # Fauna spawn
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      anchored: false
+      noise:
+        seed: 0
+        frequency: 4
+        noiseType: OpenSimplex2
+      allowedTiles:
+        - FloorSnow
+      entities:
+        - MobWildlifeWolf
+        - MobWildlifeBear
 
 # Caves
 - type: biomeTemplate
@@ -440,3 +490,18 @@
     - !type:BiomeTileLayer
       threshold: -1.0
       tile: FloorAsteroidSand
+    # Fauna spawn
+    - !type:BiomeEntityLayer
+      threshold: 0.97
+      anchored: false
+      noise:
+        seed: 0
+        frequency: 4
+        noiseType: OpenSimplex2
+      allowedTiles:
+        - FloorAsteroidSand
+      entities:
+        - MobWildlifeWolf
+        - MobWildlifeBear
+        - MobXenoRouny
+        - MobGiantSpiderAngry
