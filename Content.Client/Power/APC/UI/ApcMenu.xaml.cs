@@ -33,17 +33,7 @@ namespace Content.Client.Power.APC.UI
 
             if (BreakerButton != null)
             {
-                if(castState.HasAccess == false)
-                {
-                    BreakerButton.Disabled = true;
-                    BreakerButton.ToolTip = Loc.GetString("apc-component-insufficient-access");
-                }
-                else
-                {
-                    BreakerButton.Disabled = false;
-                    BreakerButton.ToolTip = null;
-                    BreakerButton.Pressed = castState.MainBreaker;
-                }
+                BreakerButton.Pressed = castState.MainBreaker;
             }
 
             if (PowerLabel != null)

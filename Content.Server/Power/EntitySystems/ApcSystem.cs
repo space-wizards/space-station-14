@@ -31,7 +31,6 @@ namespace Content.Server.Power.EntitySystems
 
             UpdatesAfter.Add(typeof(PowerNetSystem));
 
-            SubscribeLocalEvent<ApcComponent, BoundUIOpenedEvent>(OnBoundUiOpen);
             SubscribeLocalEvent<ApcComponent, MapInitEvent>(OnApcInit);
             SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
             SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
@@ -50,14 +49,7 @@ namespace Content.Server.Power.EntitySystems
         {
             UpdateApcState(uid, component);
         }
-        //Update the HasAccess var for UI to read
-        private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
-        {
-            if (args.Session.AttachedEntity == null)
-                return;
-            component.HasAccess = HasAccess(uid, component, args.Session.AttachedEntity.Value);
-            UpdateApcState(uid, component);
-        }
+
         private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
         {
             var attemptEv = new ApcToggleMainBreakerAttemptEvent();
@@ -146,7 +138,7 @@ namespace Content.Server.Power.EntitySystems
 
             var battery = netBat.NetworkBattery;
 
-            var state = new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.HasAccess,
+            var state = new ApcBoundInterfaceState(apc.MainBreakerEnabled,
                 (int) MathF.Ceiling(battery.CurrentSupply), apc.LastExternalState,
                 battery.CurrentStorage / battery.Capacity);
 
