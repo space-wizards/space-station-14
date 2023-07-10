@@ -4,7 +4,6 @@ using Content.Server.Station.Systems;
 using Content.Shared.PDA;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Content.Shared.PDA;
 
 namespace Content.Server.AlertLevel;
 
@@ -191,16 +190,16 @@ public sealed class AlertLevelSystem : EntitySystem
         var pdas = EntityQueryEnumerator<PdaComponent>();
         while (pdas.MoveNext(out var ent, out var comp))
         {
-            RaiseLocalEvent(ent,new AlertLevelChangedEvent(station, level));
+            RaiseLocalEvent(ent, new AlertLevelChangedEvent(station, level));
         }
     }
 }
 
 public sealed class AlertLevelDelayFinishedEvent : EntityEventArgs
-{}
+{ }
 
 public sealed class AlertLevelPrototypeReloadedEvent : EntityEventArgs
-{}
+{ }
 
 public sealed class AlertLevelChangedEvent : EntityEventArgs
 {

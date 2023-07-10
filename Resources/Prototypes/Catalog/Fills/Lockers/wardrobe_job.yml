@@ -159,8 +159,8 @@
        - id: ClothingBackpackSecurity
        - id: ClothingShoesBootsJack
        - id: ClothingEyesGlassesSecurity
-       - id: ClothingHeadHelmetHelmet  # Corvax-Resprite
-       - id: ClothingOuterVestKevlar
+       - id: ClothingHeadHelmetBasic  # Corvax-Resprite
+       - id: ClothingOuterArmorBasic
        - id: ClothingUniformJumpskirtSec
 
  - type: entity

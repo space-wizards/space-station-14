@@ -65,7 +65,7 @@
   - type: Ringer
   - type: DeviceNetwork
     deviceNetId: Wireless
-    receiveFrequencyId: PDA
+    receiveFrequencyId: Pda
     prefix: device-address-prefix-console
   - type: WirelessNetworkConnection
     range: 500
@@ -138,7 +138,7 @@
   name: blue shield PDA
   description: average style.
   components:
-  - type: PDA
+  - type: Pda
     id: BlueShieldIDCard
     state: pda-bs
   - type: Icon

@@ -480,6 +480,11 @@ public sealed class MindSystem : EntitySystem
         return true;
     }
 
+    public bool TryRemoveObjective(Mind mind, Objective objective)
+    {
+        return TryRemoveObjective(mind, mind.Objectives.IndexOf(objective));
+    }
+
     /// <summary>
     ///     Gives this mind a new role.
     /// </summary>

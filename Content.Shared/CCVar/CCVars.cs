@@ -1676,7 +1676,7 @@ namespace Content.Shared.CCVar
         ///     false.
         /// </summary>
         public static readonly CVarDef<bool> ReplayRecordAdminChat =
-            CVarDef.Create("replay.record_admin_chat", false, CVar.SERVERONLY);
+            CVarDef.Create("replay.record_admin_chat", false, CVar.ARCHIVE);
         
         /*
          * Cryopod SSD 

@@ -7668,7 +7668,7 @@ entities:
     - pos: 27.40101,3.677678
       parent: 588
       type: Transform
-- proto: ClothingOuterVestKevlar
+- proto: ClothingOuterArmorBasic
   entities:
   - uid: 1032
     components:

@@ -96,9 +96,9 @@ WindoorAtmosphericsLocked: WindoorSecureAtmosphericsLocked
 WindoorParamedicLocked: WindoorSecureParamedicLocked
 
 # 2023-07-03
-ClothingHeadHelmetHelmet: ClothingHeadHelmetBasic
-ClothingHeadHelmetHelmetOld: ClothingHeadHelmetBasic
+ClothingHeadHelmetBasic: ClothingHeadHelmetBasic
+ClothingHeadHelmetBasicOld: ClothingHeadHelmetBasic
 
 # 2023-07-04
 # Bulletproof armor is almost statistically identical to kevlar, however, before this kevlar armor was the closest thing there was to "basic" armor. It makes the most sense to replace it with this.
-ClothingOuterVestKevlar: ClothingOuterArmorBasic
+ClothingOuterArmorBasic: ClothingOuterArmorBasic

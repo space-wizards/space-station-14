@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingOuterVestKevlar
+  parent: ClothingOuterArmorBasic
   id: ClothingOuterVestArmorSec
   name: armor vest
   description: A slim Type I armored vest that provides decent protection against most types of damage.
@@ -10,7 +10,7 @@
       sprite: Corvax/Clothing/OuterClothing/Vests/armor_sec.rsi
 
 - type: entity
-  parent: ClothingOuterVestKevlar
+  parent: ClothingOuterArmorBasic
   id: ClothingOuterVestArmorMedSec
   name: security medic armor vest
   description: A security medic's armor vest, with little pockets for little things.
