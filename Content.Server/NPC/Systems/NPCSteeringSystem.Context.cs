@@ -382,7 +382,7 @@ public sealed partial class NPCSteeringSystem
         TransformComponent xform,
         float[] danger)
     {
-        var objectRadius = 0.15f;
+        var objectRadius = 0.10f;
         var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Static))

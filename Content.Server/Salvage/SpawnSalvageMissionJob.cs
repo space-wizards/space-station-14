@@ -138,7 +138,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         expedition.Rewards = mission.Rewards;
 
         // Don't want consoles to have the incorrect name until refreshed.
-        var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
+        var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, grid.TileSizeHalfVector));
         _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _missionParams.Seed);
         _entManager.InitializeAndStartEntity(ftlUid);
 
@@ -353,7 +353,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                 validSpawns.AddRange(spawnRoom.Tiles);
                 random.Shuffle(validSpawns);
 
-                foreach (var entry in EntitySpawnCollection.GetSpawns(mobGroup.Entries, random))
+                while (validSpawns.Count > 0)
                 {
                     while (validSpawns.Count > 0)
                     {
