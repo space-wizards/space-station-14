@@ -117,4 +117,33 @@ public sealed class JobRequirementsManager
         reason = reasonBuilder.Length == 0 ? null : reasonBuilder.ToString();
         return reason == null;
     }
+
+    public bool CheckRoleTime(HashSet<JobRequirement>? requirements, [NotNullWhen(false)] out string? reason)
+    {
+        reason = null;
+
+        if (requirements == null)
+        {
+            return true;
+        }
+
+        var reasonBuilder = new StringBuilder();
+
+        var first = true;
+        foreach (var requirement in requirements)
+        {
+            if (JobRequirements.TryRequirementMet(requirement, _roles, out reason, _prototypes))
+            {
+                continue;
+            }
+            if (!first)
+                reasonBuilder.Append('\n');
+            first = false;
+
+            reasonBuilder.AppendLine(reason);
+        }
+
+        reason = reasonBuilder.Length == 0 ? null : reasonBuilder.ToString();
+        return reason == null;
+    }
 }
