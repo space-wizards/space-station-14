@@ -11,7 +11,10 @@
   effects:
     - !type:SpawnMapEffect
       mapPaths:
-        - /Maps/_FTL/small-drone-easy.yml
+        - /Maps/_FTL/easy-drone.yml
+        - /Maps/_FTL/tough-drone.yml
+        - /Maps/_FTL/pod.yml
+        - /Maps/_FTL/orb.yml
 
 - type: ftlPoint
   id: HiDangerPoint
@@ -20,9 +23,10 @@
   effects:
     - !type:SpawnMapEffect
       mapPaths:
-        - /Maps/_FTL/small-drone-easy.yml
-        - /Maps/_FTL/small-drone-tough.yml
+        - /Maps/_FTL/easy-drone.yml
+        - /Maps/_FTL/tough-drone.yml
         - /Maps/_FTL/cargo-vessel.yml
+        - /Maps/_FTL/rod.yml
 
 - type: ftlPoint
   id: ConfDangerPoint
@@ -30,8 +34,11 @@
   effects:
     - !type:SpawnMapEffect
       mapPaths:
-        - /Maps/_FTL/small-drone-tough.yml
+        - /Maps/_FTL/tough-drone.yml
         - /Maps/_FTL/cargo-vessel.yml
+        - /Maps/_FTL/fsc-fighter.yml
+        - /Maps/_FTL/incsek-bomber.yml
+        - /Maps/_FTL/rod.yml
 
 - type: ftlPoint
   id: PlanetPoint

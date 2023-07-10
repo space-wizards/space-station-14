@@ -1,0 +1,48 @@
+- type: entity
+  name: Random Silo-Fed Spawner
+  id: WeaponSiloFedSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+    - type: RandomSpawner
+      rarePrototypes:
+        - IncendiaryMissileSilo
+        - WeaponFlakGunMkII
+        - RailgunWeaponSilo
+        - HoleMarkTwoMissileSilo
+        - PunchMarkTwoMissileSilo
+      rareChance: 0.1
+      prototypes:
+        - WeaponFlakGunMkI
+        - BasicMissileSilo
+        - ArtemisMarkIWeaponSilo
+        - ArtemisMarkIIWeaponSilo
+        - SwarmMarkOneMissileSilo
+        - HoleMarkOneMissileSilo
+        - PunchMarkOneMissileSilo
+        - SwarmMarkTwoMissileSilo
+      offset: 0.2
+
+- type: entity
+  name: Random Non Silo-Fed Spawner
+  id: WeaponNonSiloFedSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+    - type: RandomSpawner
+      rarePrototypes:
+        - WeaponBurstLaserMkIII
+        - WeaponHeavyLaserMkI
+      rareChance: 0.3
+      prototypes:
+        - WeaponBasicLaser
+        - WeaponDualLaser
+        - WeaponBurstLaserMkI
+        - WeaponBurstLaserMkII
+      offset: 0.2
