@@ -20,7 +20,8 @@
       path: "/Audio/Weapons/smash.ogg"
   - type: Tag
     tags:
-      - DroneUsable
+    - DroneUsable
+    - Toolbox
 
 - type: entity
   name: emergency toolbox

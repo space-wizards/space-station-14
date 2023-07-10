@@ -126,6 +126,24 @@
   - type: StaminaDamageOnCollide
     damage: 22 # 5 hits to stun sounds reasonable
 
+- type: entity
+  id: BaseBulletIncendiary
+  name: base bullet incendiary
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 14
+  - type: PointLight
+    enabled: true
+    color: "#ff4300"
+    radius: 2.0
+    energy: 7.0
+  - type: IgniteOnCollide
+    fireStacks: 1
+
 # Energy projectiles
 - type: entity
   name: taser bolt

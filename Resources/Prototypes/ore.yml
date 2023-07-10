@@ -29,6 +29,12 @@
   id: OreBananium
   oreEntity: BananiumOre1
 
+- type: ore
+  id: OreArtifactFragment
+  oreEntity: ArtifactFragment
+  minOreYield: 2
+  maxOreYield: 4
+
 - type: weightedRandom
   id: RandomOreDistributionStandard
   weights:
@@ -39,3 +45,4 @@
     OreSilver: 1
     OreUranium: 1
     OreBananium: 0.5
+    OreArtifactFragment: 0.5

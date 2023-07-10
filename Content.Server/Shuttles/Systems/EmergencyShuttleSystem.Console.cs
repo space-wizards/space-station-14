@@ -11,6 +11,7 @@ using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -274,7 +275,8 @@ public sealed partial class EmergencyShuttleSystem
         }
 
         // TODO: This is fucking bad
-        if (!component.AuthorizedEntities.Remove(MetaData(idCard.Owner).EntityName)) return;
+        if (!component.AuthorizedEntities.Remove(MetaData(idCard.Owner).EntityName))
+            return;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL by {args.Session:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
@@ -286,7 +288,8 @@ public sealed partial class EmergencyShuttleSystem
     private void OnEmergencyAuthorize(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleAuthorizeMessage args)
     {
         var player = args.Session.AttachedEntity;
-        if (player == null) return;
+        if (player == null)
+            return;
 
         if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard.Owner, uid))
         {
@@ -295,7 +298,8 @@ public sealed partial class EmergencyShuttleSystem
         }
 
         // TODO: This is fucking bad
-        if (!component.AuthorizedEntities.Add(MetaData(idCard.Owner).EntityName)) return;
+        if (!component.AuthorizedEntities.Add(MetaData(idCard.Owner).EntityName))
+            return;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch AUTH by {args.Session:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
@@ -306,7 +310,7 @@ public sealed partial class EmergencyShuttleSystem
                 playSound: false, colorOverride: DangerColor);
 
         if (!CheckForLaunch(component))
-            SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
+            _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast(), recordReplay: true);
 
         UpdateAllEmergencyConsoles();
     }
@@ -327,9 +331,10 @@ public sealed partial class EmergencyShuttleSystem
 
     private void UpdateAllEmergencyConsoles()
     {
-        foreach (var comp in EntityQuery<EmergencyShuttleConsoleComponent>(true))
+        var query = AllEntityQuery<EmergencyShuttleConsoleComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
-            UpdateConsoleState(comp.Owner, comp);
+            UpdateConsoleState(uid, comp);
         }
     }
 
@@ -342,12 +347,16 @@ public sealed partial class EmergencyShuttleSystem
             auths.Add(auth);
         }
 
-        _uiSystem.GetUiOrNull(uid, EmergencyConsoleUiKey.Key)?.SetState(new EmergencyConsoleBoundUserInterfaceState()
-        {
-            EarlyLaunchTime = EarlyLaunchAuthorized ? _timing.CurTime + TimeSpan.FromSeconds(_consoleAccumulator) : null,
-            Authorizations = auths,
-            AuthorizationsRequired = component.AuthorizationsRequired,
-        });
+        if (_uiSystem.TryGetUi(uid, EmergencyConsoleUiKey.Key, out var bui))
+            UserInterfaceSystem.SetUiState(
+                bui,
+                new EmergencyConsoleBoundUserInterfaceState()
+                {
+                    EarlyLaunchTime = EarlyLaunchAuthorized ? _timing.CurTime + TimeSpan.FromSeconds(_consoleAccumulator) : null,
+                    Authorizations = auths,
+                    AuthorizationsRequired = component.AuthorizationsRequired,
+                }
+            );
     }
 
     private bool CheckForLaunch(EmergencyShuttleConsoleComponent component)
@@ -385,7 +394,7 @@ public sealed partial class EmergencyShuttleSystem
             playSound: false,
             colorOverride: DangerColor);
 
-        SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
+        _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast(), recordReplay: true);
     }
 
     public bool DelayEmergencyRoundEnd()

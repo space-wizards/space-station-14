@@ -1,4 +1,4 @@
-﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using Content.Client.Examine;
 using Content.Client.Storage.UI;
@@ -17,7 +17,7 @@ public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
     private CryopodSSDWindow? _window = default!;
     private StorageWindow? _storageWindow = default!;
 
-    public CryopodSSDBoundUserInterface(ClientUserInterfaceComponent owner, Enum uikey) : base(owner, uikey)
+    public CryopodSSDBoundUserInterface(EntityUid owner, Enum uikey) : base(owner, uikey)
     {}
     
     protected override void Open()
@@ -34,7 +34,7 @@ public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
         if (_storageWindow == null)
         {
             _storageWindow = new StorageWindow(entMan)
-                {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
+                {Title = entMan.GetComponent<MetaDataComponent>(Owner).EntityName};
 
             _storageWindow.EntityList.GenerateItem += _storageWindow.GenerateButton;
             _storageWindow.EntityList.ItemPressed += InteractWithItem;

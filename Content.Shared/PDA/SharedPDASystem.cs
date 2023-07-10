@@ -4,7 +4,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.PDA
 {
-    public abstract class SharedPDASystem : EntitySystem
+    public abstract class SharedPdaSystem : EntitySystem
     {
         [Dependency] protected readonly ItemSlotsSystem ItemSlotsSystem = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
@@ -13,49 +13,49 @@ namespace Content.Shared.PDA
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PDAComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<PDAComponent, ComponentRemove>(OnComponentRemove);
+            SubscribeLocalEvent<PdaComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<PdaComponent, ComponentRemove>(OnComponentRemove);
 
-            SubscribeLocalEvent<PDAComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
-            SubscribeLocalEvent<PDAComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
+            SubscribeLocalEvent<PdaComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
+            SubscribeLocalEvent<PdaComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
         }
 
-        protected virtual void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
+        protected virtual void OnComponentInit(EntityUid uid, PdaComponent pda, ComponentInit args)
         {
             if (pda.IdCard != null)
                 pda.IdSlot.StartingItem = pda.IdCard;
 
-            ItemSlotsSystem.AddItemSlot(uid, PDAComponent.PDAIdSlotId, pda.IdSlot);
-            ItemSlotsSystem.AddItemSlot(uid, PDAComponent.PDAPenSlotId, pda.PenSlot);
+            ItemSlotsSystem.AddItemSlot(uid, PdaComponent.PdaIdSlotId, pda.IdSlot);
+            ItemSlotsSystem.AddItemSlot(uid, PdaComponent.PdaPenSlotId, pda.PenSlot);
 
             UpdatePdaAppearance(uid, pda);
         }
 
-        private void OnComponentRemove(EntityUid uid, PDAComponent pda, ComponentRemove args)
+        private void OnComponentRemove(EntityUid uid, PdaComponent pda, ComponentRemove args)
         {
             ItemSlotsSystem.RemoveItemSlot(uid, pda.IdSlot);
             ItemSlotsSystem.RemoveItemSlot(uid, pda.PenSlot);
         }
 
-        protected virtual void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)
+        protected virtual void OnItemInserted(EntityUid uid, PdaComponent pda, EntInsertedIntoContainerMessage args)
         {
-            if (args.Container.ID == PDAComponent.PDAIdSlotId)
-                pda.ContainedID = CompOrNull<IdCardComponent>(args.Entity);
+            if (args.Container.ID == PdaComponent.PdaIdSlotId)
+                pda.ContainedId = CompOrNull<IdCardComponent>(args.Entity);
 
             UpdatePdaAppearance(uid, pda);
         }
 
-        protected virtual void OnItemRemoved(EntityUid uid, PDAComponent pda, EntRemovedFromContainerMessage args)
+        protected virtual void OnItemRemoved(EntityUid uid, PdaComponent pda, EntRemovedFromContainerMessage args)
         {
             if (args.Container.ID == pda.IdSlot.ID)
-                pda.ContainedID = null;
+                pda.ContainedId = null;
 
             UpdatePdaAppearance(uid, pda);
         }
 
-        private void UpdatePdaAppearance(EntityUid uid, PDAComponent pda)
+        private void UpdatePdaAppearance(EntityUid uid, PdaComponent pda)
         {
-            Appearance.SetData(uid, PDAVisuals.IDCardInserted, pda.ContainedID != null);
+            Appearance.SetData(uid, PdaVisuals.IdCardInserted, pda.ContainedId != null);
         }
     }
 }

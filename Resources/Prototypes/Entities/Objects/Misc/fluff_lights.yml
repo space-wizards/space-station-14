@@ -46,10 +46,10 @@
     size: 20
     heldPrefix: off
   - type: PointLight
-    netsync: false
     enabled: false
     radius: 3
     energy: 2
+    netsync: false
   - type: ToggleableLightVisuals
   - type: Appearance
   - type: Physics

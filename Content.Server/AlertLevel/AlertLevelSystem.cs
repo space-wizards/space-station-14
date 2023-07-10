@@ -4,6 +4,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.PDA;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Content.Shared.PDA;
 
 namespace Content.Server.AlertLevel;
 
@@ -139,7 +140,6 @@ public sealed class AlertLevelSystem : EntitySystem
                 return;
             }
 
-            component.CurrentDelay = AlertLevelComponent.Delay;
             component.ActiveDelay = true;
         }
 
@@ -188,7 +188,7 @@ public sealed class AlertLevelSystem : EntitySystem
 
         RaiseLocalEvent(new AlertLevelChangedEvent(station, level));
 
-        var pdas = EntityQueryEnumerator<PDAComponent>();
+        var pdas = EntityQueryEnumerator<PdaComponent>();
         while (pdas.MoveNext(out var ent, out var comp))
         {
             RaiseLocalEvent(ent,new AlertLevelChangedEvent(station, level));

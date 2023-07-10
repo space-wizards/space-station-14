@@ -42,7 +42,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Critical
       200: Dead
   - type: MeleeWeapon
     hidden: true
@@ -73,14 +72,11 @@
       Parched: 150
       Dead: 0
     baseDecayRate: 0.1
-  - type: Appearance
   - type: DamageStateVisuals
     rotate: true
     states:
       Alive:
         Base: regalrat
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: GhostRole
@@ -140,7 +136,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Critical
       350: Dead
   - type: MeleeWeapon
     hidden: true
@@ -245,7 +240,6 @@
       Parched: 150
       Dead: 0
     baseDecayRate: 0.1
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:

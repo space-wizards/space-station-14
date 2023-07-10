@@ -1,10 +1,13 @@
+using System.Linq;
+using System.Numerics;
 using Content.Server.Anomaly.Components;
-using Content.Server.Mind.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Projectiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
@@ -38,29 +41,36 @@ public sealed class ProjectileAnomalySystem : EntitySystem
 
     private void ShootProjectilesAtEntities(EntityUid uid, ProjectileAnomalyComponent component, float severity)
     {
-        var xform = Transform(uid);
-        var projectilesShot = 0;
-        var range = component.ProjectileRange * severity;
-        var mobQuery = GetEntityQuery<MindComponent>();
+        var projectileCount = (int) MathF.Round(MathHelper.Lerp(component.MinProjectiles, component.MaxProjectiles, severity));
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var mobQuery = GetEntityQuery<MobStateComponent>();
+        var xform = xformQuery.GetComponent(uid);
 
-        foreach (var entity in _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic))
+        var inRange = _lookup.GetEntitiesInRange(uid, component.ProjectileRange * severity, LookupFlags.Dynamic).ToList();
+        _random.Shuffle(inRange);
+        var priority = new List<EntityUid>();
+        foreach (var entity in inRange)
         {
-            if (projectilesShot >= component.MaxProjectiles * severity)
-                return;
+            if (mobQuery.HasComponent(entity))
+                priority.Add(entity);
+        }
 
-            // Sentient entities are more likely to be shot at than non sentient
-            if (!mobQuery.HasComponent(entity) && !_random.Prob(component.TargetNonSentientChance))
-                continue;
+        Log.Debug($"shots: {projectileCount}");
+        while (projectileCount > 0)
+        {
+            Log.Debug($"{projectileCount}");
+            var target = priority.Any()
+                ? _random.PickAndTake(priority)
+                : _random.Pick(inRange);
 
-            var targetCoords = Transform(entity).Coordinates.Offset(_random.NextVector2(-1, 1));
+            var targetCoords = xformQuery.GetComponent(target).Coordinates.Offset(_random.NextVector2(0.5f));
 
             ShootProjectile(
                 uid, component,
                 xform.Coordinates,
                 targetCoords,
-                severity
-            );
-            projectilesShot++;
+                severity);
+            projectileCount--;
         }
     }
 
@@ -69,8 +79,7 @@ public sealed class ProjectileAnomalySystem : EntitySystem
         ProjectileAnomalyComponent component,
         EntityCoordinates coords,
         EntityCoordinates targetCoords,
-        float severity
-        )
+        float severity)
     {
         var mapPos = coords.ToMap(EntityManager, _xform);
 
@@ -86,6 +95,6 @@ public sealed class ProjectileAnomalySystem : EntitySystem
 
         comp.Damage *= severity;
 
-        _gunSystem.ShootProjectile(ent, direction, Vector2.Zero, uid, uid, component.MaxProjectileSpeed * severity);
+        _gunSystem.ShootProjectile(ent, direction, Vector2.Zero, uid, uid, component.ProjectileSpeed);
     }
 }

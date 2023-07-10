@@ -42,8 +42,6 @@ entities:
       type: BecomesStation
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 88.8784752
-      type: GridPathfinding
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity

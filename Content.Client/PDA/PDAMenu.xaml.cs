@@ -13,7 +13,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.PDA
 {
     [GenerateTypedNameReferences]
-    public sealed partial class PDAMenu : PDAWindow
+    public sealed partial class PdaMenu : PdaWindow
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
@@ -29,7 +29,7 @@ namespace Content.Client.PDA
         public event Action<EntityUid>? OnProgramItemPressed;
         public event Action<EntityUid>? OnUninstallButtonPressed;
         public event Action<EntityUid>? OnInstallButtonPressed;
-        public PDAMenu()
+        public PdaMenu()
         {
             IoCManager.InjectDependencies(this);
             _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
@@ -88,22 +88,22 @@ namespace Content.Client.PDA
             ToHomeScreen();
         }
 
-        public void UpdateState(PDAUpdateState state)
+        public void UpdateState(PdaUpdateState state)
         {
             FlashLightToggleButton.IsActive = state.FlashlightEnabled;
 
-            if (state.PDAOwnerInfo.ActualOwnerName != null)
+            if (state.PdaOwnerInfo.ActualOwnerName != null)
             {
                 PdaOwnerLabel.SetMarkup(Loc.GetString("comp-pda-ui-owner",
-                    ("actualOwnerName", state.PDAOwnerInfo.ActualOwnerName)));
+                    ("actualOwnerName", state.PdaOwnerInfo.ActualOwnerName)));
             }
 
 
-            if (state.PDAOwnerInfo.IdOwner != null || state.PDAOwnerInfo.JobTitle != null)
+            if (state.PdaOwnerInfo.IdOwner != null || state.PdaOwnerInfo.JobTitle != null)
             {
                 IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui",
-                    ("owner", state.PDAOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
-                    ("jobTitle", state.PDAOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
+                    ("owner", state.PdaOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
+                    ("jobTitle", state.PdaOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
             }
             else
             {
@@ -118,8 +118,8 @@ namespace Content.Client.PDA
             StationTimeLabel.SetMarkup(Loc.GetString("comp-pda-ui-station-time",
                 ("time", stationTime.ToString("hh\\:mm\\:ss"))));
 
-            var alertLevel = state.PDAOwnerInfo.StationAlertLevel;
-            var alertColor = state.PDAOwnerInfo.StationAlertColor;
+            var alertLevel = state.PdaOwnerInfo.StationAlertLevel;
+            var alertColor = state.PdaOwnerInfo.StationAlertColor;
             var alertLevelKey = alertLevel != null ? $"alert-level-{alertLevel}" : "alert-level-unknown";
 
             StationAlertLevelLabel.SetMarkup(Loc.GetString(
@@ -135,7 +135,7 @@ namespace Content.Client.PDA
 
             AddressLabel.Text = state.Address?.ToUpper() ?? " - ";
 
-            EjectIdButton.IsActive = state.PDAOwnerInfo.IdOwner != null || state.PDAOwnerInfo.JobTitle != null;
+            EjectIdButton.IsActive = state.PdaOwnerInfo.IdOwner != null || state.PdaOwnerInfo.JobTitle != null;
             EjectPenButton.IsActive = state.HasPen;
             ActivateMusicButton.Visible = state.CanPlayMusic;
             ShowUplinkButton.Visible = state.HasUplink;
@@ -172,7 +172,7 @@ namespace Content.Client.PDA
                     ProgramList.AddChild(row);
                 }
 
-                var item = new PDAProgramItem();
+                var item = new PdaProgramItem();
 
                 if (component.Icon is not null)
                     item.Icon.SetFromSpriteSpecifier(component.Icon);

@@ -3,13 +3,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.PDA
 {
     [Serializable, NetSerializable]
-    public enum PDAVisuals
+    public enum PdaVisuals
     {
-        IDCardInserted
+        IdCardInserted
     }
 
     [Serializable, NetSerializable]
-    public enum PDAUiKey
+    public enum PdaUiKey
     {
         Key
     }
