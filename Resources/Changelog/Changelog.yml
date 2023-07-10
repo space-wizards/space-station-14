@@ -1,10 +1,4 @@
 Entries:
-- author: Mumohan
-  changes:
-  - {message: Airlocks are no longer scared of puddles and soap. They should now close
-      properly., type: Fix}
-  id: 3714
-  time: '2023-05-09T23:54:43.0000000+00:00'
 - author: notquitehadouken
   changes:
   - {message: Fixed the recipes for radiation shutters and glass shutters not appearing
@@ -2941,3 +2935,11 @@ Entries:
       ability to produce offspring so long as they are properly tended to.', type: Add}
   id: 4213
   time: '2023-07-09T22:36:37.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'After a long cooperative research project botanists and chemists have
+      finally discovered how to improve bruise packs and ointment. Medicated suture
+      and regenerating mesh are now made in the microwave using a combination of bruise
+      packs/ointment, plants, cloth and chemicals.', type: Add}
+  id: 4214
+  time: '2023-07-10T02:22:11.0000000+00:00'
