@@ -29,7 +29,7 @@ public sealed class EntityAnomalySystem : EntitySystem
     private void OnPulse(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalyPulseEvent args)
     {
         var range = component.SpawnRange * args.Stability;
-        var amount = (int) MathF.Round(MathHelper.Lerp(component.MinSpawnAmount, component.MaxSpawnAmount, args.Severity));
+        var amount = (int) (component.MaxSpawnAmount * args.Severity + 0.5f);
 
         var xform = Transform(uid);
         SpawnMonstersOnOpenTiles(component, xform, amount, range, component.Spawns);
@@ -66,15 +66,13 @@ public sealed class EntityAnomalySystem : EntitySystem
         foreach (var tileref in tilerefs)
         {
             var valid = true;
-            // todo: don't just iterate anchored
             foreach (var ent in grid.GetAnchoredEntities(tileref.GridIndices))
             {
                 if (!physQuery.TryGetComponent(ent, out var body))
                     continue;
                 if (body.BodyType != BodyType.Static ||
                     !body.Hard ||
-                    (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0 ||
-                    (body.CollisionLayer & (int) CollisionGroup.MidImpassable) == 0)
+                    (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
                     continue;
                 valid = false;
                 break;

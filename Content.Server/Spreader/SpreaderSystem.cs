@@ -222,10 +222,6 @@ public sealed class SpreaderSystem : EntitySystem
 
         while (ourEnts.MoveNext(out var ent))
         {
-            // a spreader cannot block itself
-            if (ent == uid)
-                continue;
-
             // Spread via docks in a special-case.
             if (dockQuery.TryGetComponent(ent, out var dock) &&
                 dock.Docked &&

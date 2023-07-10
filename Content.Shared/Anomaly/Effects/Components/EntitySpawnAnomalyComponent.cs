@@ -15,13 +15,6 @@ public sealed class EntitySpawnAnomalyComponent : Component
     public List<string> Spawns = new();
 
     /// <summary>
-    /// The minimum number of entities that spawn per pulse
-    /// scales with severity.
-    /// </summary>
-    [DataField("minSpawnAmount"), ViewVariables(VVAccess.ReadWrite)]
-    public int MinSpawnAmount = 1;
-
-    /// <summary>
     /// The maximum number of entities that spawn per pulse
     /// scales with severity.
     /// </summary>
@@ -35,6 +28,12 @@ public sealed class EntitySpawnAnomalyComponent : Component
     /// </summary>
     [DataField("spawnRange"), ViewVariables(VVAccess.ReadWrite)]
     public float SpawnRange = 5f;
+
+    /// <summary>
+    /// The tile that is spawned by the anomaly's effect
+    /// </summary>
+    [DataField("floorTileId", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>)), ViewVariables(VVAccess.ReadWrite)]
+    public string FloorTileId = "FloorFlesh";
 
     /// <summary>
     /// The entity spawned when the anomaly goes supercritical
