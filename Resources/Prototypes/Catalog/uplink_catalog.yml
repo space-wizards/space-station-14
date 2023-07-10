@@ -927,15 +927,15 @@
       - SurplusBundle
 
 - type: listing
- id: UplinkSyndicateSpongeBox
- name: uplink-syndicate-sponge-box-name
- description: uplink-syndicate-sponge-box-desc
- icon: { sprite:  Objects/Misc/monkeycube.rsi, state: box}
- productEntity: SyndicateSpongeBox
- cost:
-   Telecrystal: 7
- categories:
- - UplinkMisc
+  id: UplinkSyndicateSpongeBox
+  name: uplink-syndicate-sponge-box-name
+  description: uplink-syndicate-sponge-box-desc
+  icon: { sprite:  Objects/Misc/monkeycube.rsi, state: box}
+  productEntity: SyndicateSpongeBox
+  cost:
+    Telecrystal: 7
+  categories:
+  - UplinkMisc
 
  # Pointless
 
