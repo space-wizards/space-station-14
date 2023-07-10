@@ -167,6 +167,10 @@
     sprite: Clothing/Mask/clown.rsi
   - type: BreathMask
   - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - ClownMask
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskClownBase
@@ -266,10 +270,6 @@
   - type: Unremoveable
   - type: AddAccentClothing
     accent: StutteringAccent
-  - type: Tag
-    tags:
-    - ClownMask
-    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskGasExplorer
@@ -445,11 +445,6 @@
     sprite: Clothing/Mask/sexyclown.rsi
   - type: Clothing
     sprite: Clothing/Mask/sexyclown.rsi
-  - type: Tag
-    tags:
-    - ClownMask
-    - WhitelistChameleon
-
 
 - type: entity
   parent: ClothingMaskMime
