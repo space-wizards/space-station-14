@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Players.PlayTimeTracking;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Roles
@@ -10,9 +11,11 @@ namespace Content.Shared.Roles
     /// Abstract class for playtime and other requirements for role gates.
     /// </summary>
     [ImplicitDataDefinitionForInheritors]
+    [Serializable, NetSerializable]
     public abstract class JobRequirement{}
 
     [UsedImplicitly]
+    [Serializable, NetSerializable]
     public sealed class DepartmentTimeRequirement : JobRequirement
     {
         /// <summary>
@@ -37,6 +40,7 @@ namespace Content.Shared.Roles
     }
 
     [UsedImplicitly]
+    [Serializable, NetSerializable]
     public sealed class RoleTimeRequirement : JobRequirement
     {
         /// <summary>
@@ -53,6 +57,7 @@ namespace Content.Shared.Roles
     }
 
     [UsedImplicitly]
+    [Serializable, NetSerializable]
     public sealed class OverallPlaytimeRequirement : JobRequirement
     {
         /// <inheritdoc cref="DepartmentTimeRequirement.Time"/>

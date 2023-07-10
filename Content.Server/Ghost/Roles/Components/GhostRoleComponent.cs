@@ -1,4 +1,5 @@
 ﻿using Content.Server.Mind.Commands;
+using Content.Shared.Roles;
 
 namespace Content.Server.Ghost.Roles.Components
 {
@@ -11,6 +12,9 @@ namespace Content.Server.Ghost.Roles.Components
         [DataField("description")] private string _roleDescription = "Unknown";
 
         [DataField("rules")] private string _roleRules = "";
+
+        [DataField("requirements")]
+        public HashSet<JobRequirement>? Requirements;
 
         /// <summary>
         /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.
