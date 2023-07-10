@@ -7,7 +7,6 @@ using Content.Shared.Decals;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
-using JetBrains.Profiler.Api;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
 using Robust.Shared;
@@ -20,6 +19,8 @@ using Robust.Shared.Noise;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Threading;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Parallax;
@@ -29,9 +30,11 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IParallelManager _parallel = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -379,13 +382,15 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         foreach (var (layer, chunks) in markers)
         {
-            Parallel.ForEach(chunks, chunk =>
+            Parallel.ForEach(chunks, new ParallelOptions() { MaxDegreeOfParallelism = _parallel.ParallelProcessCount }, chunk =>
             {
                 if (loadedMarkers.TryGetValue(layer, out var mobChunks) && mobChunks.Contains(chunk))
                     return;
 
+                var noiseCopy = new FastNoiseLite();
+                _serManager.CopyTo(component.Noise, ref noiseCopy, notNullableOverride: true);
                 var spawnSet = _tilePool.Get();
-                var frontier = new ValueList<Vector2i>();
+                var frontier = new ValueList<Vector2i>(32);
 
                 // Make a temporary version and copy back in later.
                 var pending = new Dictionary<Vector2i, Dictionary<string, List<Vector2i>>>();
@@ -399,14 +404,14 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 var upper = (int) Math.Ceiling(layerProto.Size - buffer);
 
                 // TODO: Need poisson but crashes whenever I use moony's due to inputs or smth idk
-                var count = (int) ((layerProto.Size - buffer) * (layerProto.Size - buffer) / (layerProto.Radius * layerProto.Radius));
+                var count = (int) ((layerProto.Size - buffer) * (layerProto.Size - buffer) /
+                                   (layerProto.Radius * layerProto.Radius));
                 count = Math.Min(count, layerProto.MaxCount);
 
                 // Pick a random tile then BFS outwards from it
                 // It will bias edge tiles significantly more but will make the CPU cry less.
                 for (var i = 0; i < count; i++)
                 {
-                    spawnSet.Clear();
                     var groupCount = layerProto.GroupCount;
                     var startNodeX = rand.Next(lower, upper + 1);
                     var startNodeY = rand.Next(lower, upper + 1);
@@ -434,8 +439,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                                 if (neighbor.X < lower ||
                                     neighbor.Y < lower ||
                                     neighbor.X > upper ||
-                                    neighbor.Y > upper ||
-                                    !spawnSet.Add(neighbor))
+                                    neighbor.Y > upper)
                                 {
                                     continue;
                                 }
@@ -446,6 +450,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                         var actualNode = node + chunk;
 
+                        if (!spawnSet.Add(actualNode))
+                            continue;
+
                         // Check if it's a valid spawn, if so then use it.
                         var enumerator = grid.GetAnchoredEntitiesEnumerator(actualNode);
 
@@ -453,7 +460,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                             continue;
 
                         // Check if mask matches.
-                        TryGetEntity(actualNode, component.Layers, component.Noise, grid, out var proto);
+                        TryGetEntity(actualNode, component.Layers, noiseCopy, grid, out var proto);
 
                         if (proto != layerProto.EntityMask)
                         {
@@ -474,6 +481,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                             pendingMarkers[layer] = layerMarkers;
                         }
 
+                        // Log.Info($"Added node at {actualNode} for chunk {chunkOrigin}");
                         layerMarkers.Add(actualNode);
                         groupCount--;
                     }
@@ -555,7 +563,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     // If it is a ghost role then purge it
                     // TODO: This is *kind* of a bandaid but natural mobs spawns needs a lot more work.
                     // Ideally we'd just have ghost role and non-ghost role variants for some stuff.
-                    var uid = EntityManager.CreateEntityUninitialized(layerProto.Prototype, new EntityCoordinates(gridUid, node));
+                    var uid = EntityManager.CreateEntityUninitialized(layerProto.Prototype, grid.GridTileToLocal(node));
                     RemComp<GhostTakeoverAvailableComponent>(uid);
                     RemComp<GhostRoleComponent>(uid);
                     EntityManager.InitializeAndStartEntity(uid);
