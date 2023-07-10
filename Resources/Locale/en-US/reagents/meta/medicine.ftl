@@ -11,7 +11,7 @@ reagent-name-arithrazine = arithrazine
 reagent-desc-arithrazine = A slightly unstable medication used for the most extreme case of radiation poisoning. Lowers radiation level at over twice the rate Hyronalin does and will heal toxin damage at the same time. Deals very minor brute damage to the patient over time, but the patient's body will typically out-regenerate it easily.
 
 reagent-name-bicaridine = bicaridine
-reagent-desc-bicaridine = An analgesic which is highly effective at treating brute damage. It's useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries. In the case of bleeding (internal or external), bicaridine will slow down the bleeding heavily. If the dosage exceeds the overdose limit, it'll stop it outright.
+reagent-desc-bicaridine = An analgesic which is highly effective at treating brute damage. It's useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries.
 
 reagent-name-cryoxadone = cryoxadone
 reagent-desc-cryoxadone = Required for the proper function of cryogenics. Heals all standard types of damage very swiftly, but only works in temperatures under 170K (usually this means cryo cells). Can also slowly heal clone damage, such as caused by cloning or Slimes.

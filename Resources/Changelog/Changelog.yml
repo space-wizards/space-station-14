@@ -1,11 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: 'Frezon is slightly harder to make. The reaction always consumes Tritium
-      and Oxygen at a 1:50 ratio. But the reaction is easier to initiate, requiring
-      only Nitrogen, Oxygen, Tritium and <73.15K.', type: Tweak}
-  id: 3718
-  time: '2023-05-10T03:27:23.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Chef's vinegar bottles now hold 30u instead of 15u., type: Tweak}
@@ -2945,3 +2938,9 @@ Entries:
   - {message: Added nukie guidebook, type: Add}
   id: 4217
   time: '2023-07-10T02:54:43.0000000+00:00'
+- author: Myakot
+  changes:
+  - {message: Removed a part of bicaridine's description that talked about non-existent
+      anti-bleeding effects and advised players to overdose on bica., type: Remove}
+  id: 4218
+  time: '2023-07-10T05:49:11.0000000+00:00'
