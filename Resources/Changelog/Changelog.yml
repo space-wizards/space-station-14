@@ -1,9 +1,4 @@
 Entries:
-- author: lzk
-  changes:
-  - {message: Added sigh sound, type: Add}
-  id: 3723
-  time: '2023-05-11T09:17:25.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Botany's produce is now larger on average., type: Tweak}
@@ -2944,3 +2939,8 @@ Entries:
   - {message: Removed sponge box from uplink pending rebalance, type: Remove}
   id: 4222
   time: '2023-07-10T18:31:11.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: 'Fixed: clown mask cannot be used for H.O.N.K. construction', type: Fix}
+  id: 4223
+  time: '2023-07-10T18:33:24.0000000+00:00'
