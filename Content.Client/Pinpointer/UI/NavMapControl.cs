@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
@@ -10,7 +11,6 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
-using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -87,7 +87,7 @@ public sealed class NavMapControl : MapGridControl
         };
 
         AddChild(topContainer);
-        topPanel.Measure(Vector2.Infinity);
+        topPanel.Measure(Vector2Helpers.Infinity);
 
         _recenter.OnPressed += args =>
         {
@@ -153,7 +153,7 @@ public sealed class NavMapControl : MapGridControl
             var frameTime = Timing.FrameTime;
             var diff = _offset * (float) frameTime.TotalSeconds;
 
-            if (_offset.LengthSquared < _recenterMinimum)
+            if (_offset.LengthSquared() < _recenterMinimum)
             {
                 _offset = Vector2.Zero;
                 _recentering = false;
@@ -337,6 +337,6 @@ public sealed class NavMapControl : MapGridControl
 
     private Vector2 Scale(Vector2 position)
     {
-        return position * MinimapScale + MidPoint;
+        return position * MinimapScale + MidpointVector;
     }
 }

@@ -926,6 +926,17 @@
       components:
       - SurplusBundle
 
+- type: listing
+  id: UplinkSyndicateSpongeBox
+  name: uplink-syndicate-sponge-box-name
+  description: uplink-syndicate-sponge-box-desc
+  icon: { sprite:  Objects/Misc/monkeycube.rsi, state: box}
+  productEntity: SyndicateSpongeBox
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkMisc
+
  # Pointless
 
 - type: listing

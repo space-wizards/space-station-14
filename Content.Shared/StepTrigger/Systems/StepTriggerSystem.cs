@@ -98,7 +98,7 @@ public sealed class StepTriggerSystem : EntitySystem
             return;
         }
 
-        if (otherPhysics.LinearVelocity.Length < component.RequiredTriggerSpeed
+        if (otherPhysics.LinearVelocity.Length() < component.RequiredTriggerSpeed
             || component.CurrentlySteppedOn.Contains(otherUid)
             || otherAabb.IntersectPercentage(ourAabb) < component.IntersectRatio
             || !CanTrigger(component.Owner, otherUid, component))

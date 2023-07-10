@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Medical.SuitSensor;
@@ -151,7 +152,7 @@ namespace Content.Client.Medical.CrewMonitoring
             {
                 var dirIcon = new DirectionIcon()
                 {
-                    SetSize = (IconSize, IconSize),
+                    SetSize = new Vector2(IconSize, IconSize),
                     Margin = new(0, 0, 4, 0)
                 };
                 box.AddChild(dirIcon);
@@ -164,7 +165,7 @@ namespace Content.Client.Medical.CrewMonitoring
                 var displayPos = local.Floored();
                 var dirIcon = new DirectionIcon(snap, precision)
                 {
-                    SetSize = (IconSize, IconSize),
+                    SetSize = new Vector2(IconSize, IconSize),
                     Margin = new(0, 0, 4, 0)
                 };
                 box.AddChild(dirIcon);

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -34,7 +35,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.Multiple(() =>
                 {
                     Assert.That(entManager.HasComponent<ShuttleComponent>(gridEnt));
-                    Assert.That(entManager.TryGetComponent<PhysicsComponent>(gridEnt, out gridPhys));
+                    Assert.That(entManager.TryGetComponent(gridEnt, out gridPhys));
                 });
                 Assert.Multiple(() =>
                 {
