@@ -64500,13 +64500,6 @@ entities:
     - pos: -31.5,15.5
       parent: 60
       type: Transform
-- proto: ComputerSalvageExpedition
-  entities:
-  - uid: 9452
-    components:
-    - pos: 47.5,1.5
-      parent: 60
-      type: Transform
 - proto: ComputerShuttleCargo
   entities:
   - uid: 19004

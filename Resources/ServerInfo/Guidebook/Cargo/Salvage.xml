@@ -46,11 +46,7 @@ Mining equipment and a full utility belt are needed to be able to plunder the fu
 <Box>
 <GuideEntityEmbed Entity="SalvageMagnet"/>
 </Box>
-<Box>
-<GuideEntityEmbed Entity="ComputerSalvageExpedition"/>
-</Box>
-There are 2 primary forms of income for salvage. The magnet and Expeditions.
+There is one form of income for salvage, the magnet.
 The salvage magnet, when activated, calls in one of many random salvages to be generated somewhere within space. Once you find the salvage, you will need to fight off any present space fauna as well as loot it as much possible. A salvage will only be present for 4 minutes, before dissapearing, taking everything unlooted with it. And in worse case scenerios, will take the bodies of other salvagers in critical condition or dead. Afterwards, the magnet needs some time to recharge before being usable again.
-Expeditions are like adventures that you can do with your salvage buddies. First you must pick a mission from the salvage console, each of which of varying difficulty and reward. Afterwards you must FTL to the location via a shuttle. Once you arrive, the chat will tell you in which direction the dungeon of the salvage is, and you must go and conquer the dangers and gain the loot!
 
 </Document>

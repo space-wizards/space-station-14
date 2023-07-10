@@ -85146,13 +85146,6 @@ entities:
     - pos: 29.5,66.5
       parent: 82
       type: Transform
-- proto: ComputerSalvageExpedition
-  entities:
-  - uid: 21963
-    components:
-    - pos: 44.5,35.5
-      parent: 82
-      type: Transform
 - proto: ComputerShuttleCargo
   entities:
   - uid: 3402

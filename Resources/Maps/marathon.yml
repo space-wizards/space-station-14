@@ -60208,13 +60208,6 @@ entities:
       pos: 26.5,9.5
       parent: 30
       type: Transform
-- proto: ComputerSalvageExpedition
-  entities:
-  - uid: 7266
-    components:
-    - pos: 29.5,-9.5
-      parent: 30
-      type: Transform
 - proto: ComputerShuttleCargo
   entities:
   - uid: 18001
