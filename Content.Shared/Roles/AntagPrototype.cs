@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Roles
 {
@@ -6,6 +7,7 @@ namespace Content.Shared.Roles
     ///     Describes information for a single antag.
     /// </summary>
     [Prototype("antag")]
+    [Serializable, NetSerializable]
     public sealed class AntagPrototype : IPrototype
     {
         private string _name = string.Empty;
@@ -45,5 +47,7 @@ namespace Content.Shared.Roles
         /// </summary>
         [DataField("setPreference")]
         public bool SetPreference { get; private set; }
+        [DataField("requirements")]
+        public HashSet<JobRequirement>? Requirements;
     }
 }
