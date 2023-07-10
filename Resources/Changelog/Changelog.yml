@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Monkeys are now clumsy, like clowns', type: Tweak}
-  id: 3721
-  time: '2023-05-11T00:27:48.0000000+00:00'
 - author: Owai-Seek
   changes:
   - {message: Dermaline now heals 3 Heat/Shock/Cold per unit instead of 2., type: Tweak}
@@ -2944,3 +2939,8 @@ Entries:
   - {message: Fix spawning expeditions objectives in walls., type: Fix}
   id: 4220
   time: '2023-07-10T07:16:10.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: Changed bookshelves to block vision., type: Tweak}
+  id: 4221
+  time: '2023-07-10T16:56:33.0000000+00:00'
