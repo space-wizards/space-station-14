@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix popup spam in some instances., type: Fix}
-  id: 3716
-  time: '2023-05-10T00:00:59.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Wielding is now predicted., type: Tweak}
   id: 3717
   time: '2023-05-10T00:01:23.0000000+00:00'
@@ -2943,3 +2938,10 @@ Entries:
       of heads of staff., type: Add}
   id: 4215
   time: '2023-07-10T02:26:18.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'Clown R&D got inspired by incidents of accidentally swallowed honking
+      devices and made a minor breakthrough in clown science, bike horn implanters
+      are now available for purchase at cargo.', type: Add}
+  id: 4216
+  time: '2023-07-10T02:44:19.0000000+00:00'
