@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Station.Components;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.Network;
@@ -362,6 +363,12 @@ public sealed partial class StationJobsSystem
                     continue;
 
                 if (!(roleBans == null || !roleBans.Contains(jobId)))
+                    continue;
+
+                if (!_prototypeManager.TryIndex(profile.Species, out SpeciesPrototype? species))
+                    continue;
+
+                if (species.JobBlacklist.Contains(job.ID))
                     continue;
 
                 availableJobs ??= new List<string>(profile.JobPriorities.Count);

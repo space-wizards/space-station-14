@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Humanoid.Prototypes;
 
@@ -113,6 +114,9 @@ public sealed class SpeciesPrototype : IPrototype
     /// </summary>
     [DataField("oldAge")]
     public int OldAge = 60;
+
+    [DataField("jobBlacklist", customTypeSerializer: typeof(PrototypeIdListSerializer<SpeciesPrototype>))]
+    public List<string> JobBlacklist = new();
 
     /// <summary>
     ///     Characters cannot be older than this. Only used for restrictions...

@@ -1,4 +1,5 @@
 using Content.Shared.Access;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Players.PlayTimeTracking;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;

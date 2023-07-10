@@ -1,10 +1,15 @@
 using System.Numerics;
 using Content.Client.CrewManifest;
 using Content.Client.GameTicking.Managers;
+using Content.Client.Humanoid;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Players.PlayTimeTracking;
+using Content.Client.Preferences;
 using Content.Shared.CCVar;
+using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using NFluidsynth;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -14,6 +19,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Client.LateJoin
 {
@@ -24,12 +30,14 @@ namespace Content.Client.LateJoin
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
+        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
 
         public event Action<(EntityUid, string)> SelectedId;
 
         private readonly ClientGameTicker _gameTicker;
         private readonly SpriteSystem _sprites;
         private readonly CrewManifestSystem _crewManifest;
+        private readonly HumanoidAppearanceSystem _humanoidAppearance;
 
         private readonly Dictionary<EntityUid, Dictionary<string, JobButton>> _jobButtons = new();
         private readonly Dictionary<EntityUid, Dictionary<string, BoxContainer>> _jobCategories = new();
@@ -44,6 +52,7 @@ namespace Content.Client.LateJoin
             _sprites = _entitySystem.GetEntitySystem<SpriteSystem>();
             _crewManifest = _entitySystem.GetEntitySystem<CrewManifestSystem>();
             _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
+            _humanoidAppearance = _entitySystem.GetEntitySystem<HumanoidAppearanceSystem>();
 
             Title = Loc.GetString("late-join-gui-title");
 
@@ -216,6 +225,9 @@ namespace Content.Client.LateJoin
                     _jobCategories[id][department.ID] = category;
                     jobList.AddChild(category);
 
+                    var character = _preferencesManager.Preferences!.SelectedCharacter;
+                    var profile = (HumanoidCharacterProfile) character;
+
                     foreach (var prototype in jobsAvailable)
                     {
                         var value = stationAvailable[prototype.ID];
@@ -251,7 +263,9 @@ namespace Content.Client.LateJoin
 
                         jobButton.OnPressed += _ => SelectedId.Invoke((id, jobButton.JobId));
 
-                        if (!_jobRequirements.IsAllowed(prototype, out var reason))
+                        var species = _prototypeManager.Index<SpeciesPrototype>(profile.Species);
+
+                        if (!_jobRequirements.IsAllowed(prototype, species, out var reason))
                         {
                             jobButton.Disabled = true;
 

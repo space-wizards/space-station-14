@@ -524,6 +524,13 @@ namespace Content.Client.Preferences.UI
             _jobPriorities.Clear();
             _jobCategories.Clear();
             var firstCategory = true;
+            SpeciesPrototype? speciesPrototype = null;
+
+            if (Profile != null)
+            {
+                var species = (string) Profile.Species;
+                speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(species);
+            }
 
             foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
@@ -576,7 +583,7 @@ namespace Content.Client.Preferences.UI
                 {
                     var selector = new JobPrioritySelector(job);
 
-                    if (!_requirements.IsAllowed(job, out var reason))
+                    if (!_requirements.IsAllowed(job, speciesPrototype, out var reason))
                     {
                         selector.LockRequirements(reason);
                     }
@@ -763,6 +770,7 @@ namespace Content.Client.Preferences.UI
             CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
 
             UpdateControls();
+            UpdateRoleRequirements();
             _needUpdatePreview = true;
         }
 
@@ -805,6 +813,7 @@ namespace Content.Client.Preferences.UI
             CMarkings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
             UpdateSexControls(); // update sex for new species
             RebuildSpriteView(); // they might have different inv so we need a new dummy
+            UpdateRoleRequirements();
             IsDirty = true;
             _needUpdatePreview = true;
         }

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using Content.Shared.CCVar;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
@@ -78,13 +79,19 @@ public sealed class JobRequirementsManager
         Updated?.Invoke();
     }
 
-    public bool IsAllowed(JobPrototype job, [NotNullWhen(false)] out string? reason)
+    public bool IsAllowed(JobPrototype job, SpeciesPrototype? species, [NotNullWhen(false)] out string? reason)
     {
         reason = null;
 
         if (_roleBans.Contains($"Job:{job.ID}"))
         {
             reason = Loc.GetString("role-ban");
+            return false;
+        }
+
+        if (species != null && species.JobBlacklist.Contains(job.ID))
+        {
+            reason = Loc.GetString("role-species-ban", ("species", Loc.GetString(species.Name)));
             return false;
         }
 
