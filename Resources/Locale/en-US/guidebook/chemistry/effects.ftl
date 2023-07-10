@@ -321,6 +321,12 @@ reagent-effect-guidebook-cause-zombie-infection =
         *[other] give
     } an individual the zombie infection
 
+reagent-effect-guidebook-innoculate-zombie-infection =
+    { $chance ->
+        [1] Cures
+        *[other] cure
+    } an ongoing zombie infection, and provides immunity to future infections
+
 reagent-effect-guidebook-missing =
     { $chance ->
         [1] Causes

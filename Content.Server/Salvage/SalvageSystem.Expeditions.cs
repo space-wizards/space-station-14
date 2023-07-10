@@ -20,8 +20,6 @@ public sealed partial class SalvageSystem
      * Handles setup / teardown of salvage expeditions.
      */
 
-    [Dependency] private readonly CargoSystem _cargo = default!;
-
     private const int MissionLimit = 5;
 
     private readonly JobQueue _salvageQueue = new();
@@ -269,7 +267,7 @@ public sealed partial class SalvageSystem
             _timing,
             _mapManager,
             _prototypeManager,
-            _tileDefManager,
+            _anchorable,
             _biome,
             _dungeon,
             this,
