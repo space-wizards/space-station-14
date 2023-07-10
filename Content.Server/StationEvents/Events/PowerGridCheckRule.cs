@@ -26,10 +26,11 @@ namespace Content.Server.StationEvents.Events
             if (!TryGetRandomStation(out var chosenStation))
                 return;
 
-            foreach (var (apc, transform) in EntityQuery<ApcComponent, TransformComponent>(true))
+            var query = EntityQueryEnumerator<ApcComponent, TransformComponent>();
+            while (query.MoveNext(out var target, out var apc, out var transform))
             {
                 if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation)
-                    component.Powered.Add(apc.Owner);
+                    component.Powered.Add(target);
             }
 
             RobustRandom.Shuffle(component.Powered);
