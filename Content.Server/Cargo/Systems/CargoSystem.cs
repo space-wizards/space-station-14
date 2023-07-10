@@ -10,6 +10,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Cargo;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Mobs.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -43,13 +44,20 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
-    private ISawmill _sawmill = default!;
+    private EntityQuery<TransformComponent> _xformQuery;
+    private EntityQuery<CargoSellBlacklistComponent> _blacklistQuery;
+    private EntityQuery<MobStateComponent> _mobQuery;
 
     public override void Initialize()
     {
         base.Initialize();
-        _sawmill = Logger.GetSawmill("cargo");
+
+        _xformQuery = GetEntityQuery<TransformComponent>();
+        _blacklistQuery = GetEntityQuery<CargoSellBlacklistComponent>();
+        _mobQuery = GetEntityQuery<MobStateComponent>();
+
         InitializeConsole();
         InitializeShuttle();
         InitializeTelepad();
@@ -59,6 +67,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
     public override void Shutdown()
     {
         base.Shutdown();
+        ShutdownShuttle();
         CleanupCargoShuttle();
     }
 
@@ -76,7 +85,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
         component.Balance += balanceAdded;
         var query = EntityQueryEnumerator<CargoOrderConsoleComponent>();
 
-        while (query.MoveNext(out var oUid, out var oComp))
+        while (query.MoveNext(out var oUid, out var _))
         {
             if (!_uiSystem.IsUiOpen(oUid, CargoConsoleUiKey.Orders))
                 continue;
@@ -85,7 +94,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
             if (station != uid)
                 continue;
 
-            UpdateOrderState(oComp, station);
+            UpdateOrderState(oUid, station);
         }
     }
 }

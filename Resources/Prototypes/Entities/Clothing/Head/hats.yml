@@ -19,6 +19,10 @@
     sprite: Clothing/Head/Hats/beret.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -30,6 +34,10 @@
     sprite: Clothing/Head/Hats/beret_rnd.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_rnd.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -41,6 +49,10 @@
     sprite: Clothing/Head/Hats/beret_engineering.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_engineering.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -52,6 +64,10 @@
     sprite: Clothing/Head/Hats/beret_hos.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_hos.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -107,6 +123,10 @@
     sprite: Clothing/Head/Hats/captain.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/captain.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -153,6 +173,10 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -164,6 +188,10 @@
     sprite: Clothing/Head/Hats/brownfedora.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/brownfedora.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -197,6 +225,10 @@
     sprite: Clothing/Head/Hats/hopcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/hopcap.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -208,6 +240,10 @@
     sprite: Clothing/Head/Hats/hoshat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/hoshat.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -307,6 +343,10 @@
     sprite: Clothing/Head/Hats/surgcap_blue.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/surgcap_blue.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -340,6 +380,10 @@
     sprite: Clothing/Head/Hats/tophat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/tophat.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -408,6 +452,10 @@
     sprite: Clothing/Head/Hats/wizardhat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/wizardhat.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -474,6 +522,7 @@
     sprite: Clothing/Head/Hats/papersack.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/papersack.rsi
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -485,6 +534,7 @@
     sprite: Clothing/Head/Hats/papersacksmile.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/papersacksmile.rsi
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -507,6 +557,10 @@
     sprite: Clothing/Head/Hats/nursehat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/nursehat.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -560,6 +614,10 @@
     sprite: Clothing/Head/Hats/beret_cmo.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_cmo.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -586,6 +644,39 @@
     modifiers:
       coefficients:
         Blunt: 0.95
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSyndie
+  name: syndicate hat
+  description: A souvenir hat from "Syndieland", their production has already been closed.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/syndiecap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/syndiecap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSyndieMAA
+  name: master at arms hat
+  description: Master at arms hat, looks intimidating, I doubt that you will like to communicate with its owner...
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/syndiecap_maa.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/syndiecap_maa.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTacticalMaidHeadband
+  name: tactical maid headband
+  description: "A red headband - don't imagine yourself a Rambo and don't pick up a few machine guns."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/tacticalmaidheadband.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/tacticalmaidheadband.rsi
 
 - type: entity
   parent: ClothingHeadBase

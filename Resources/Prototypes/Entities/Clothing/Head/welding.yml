@@ -25,6 +25,10 @@
     sprite: Clothing/Head/Welding/welding.rsi
   - type: Clothing
     sprite: Clothing/Head/Welding/welding.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: WeldingMaskBase

@@ -83,6 +83,10 @@
     sprite: Clothing/Head/Hoods/chaplain.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/chaplain.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -105,6 +109,10 @@
     sprite: Clothing/Head/Hoods/nun.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/nun.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase

@@ -23,16 +23,15 @@ using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
-using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Content.Shared.Storage.SharedStorageComponent;
 
@@ -42,6 +41,7 @@ namespace Content.Server.Storage.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IAdminManager _admin = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
@@ -52,10 +52,10 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly StackSystem _stack = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
@@ -67,7 +67,7 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
             SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<UtilityVerb>>(AddTransferVerbs);
-            SubscribeLocalEvent<ServerStorageComponent, InteractUsingEvent>(OnInteractUsing, after: new []{ typeof(ItemSlotsSystem)} );
+            SubscribeLocalEvent<ServerStorageComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ItemSlotsSystem) });
             SubscribeLocalEvent<ServerStorageComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<ServerStorageComponent, OpenStorageImplantEvent>(OnImplantActivate);
             SubscribeLocalEvent<ServerStorageComponent, AfterInteractEvent>(AfterInteract);
@@ -97,7 +97,7 @@ namespace Content.Server.Storage.EntitySystems
 
         private void AddOpenUiVerb(EntityUid uid, ServerStorageComponent component, GetVerbsEvent<ActivationVerb> args)
         {
-            bool silent = false;
+            var silent = false;
             if (!args.CanAccess || !args.CanInteract || TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
             {
                 // we allow admins to open the storage anyways
@@ -114,7 +114,7 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             // Does this player currently have the storage UI open?
-            bool uiOpen = _uiSystem.SessionHasOpenUi(uid, StorageUiKey.Key, actor.PlayerSession);
+            var uiOpen = _uiSystem.SessionHasOpenUi(uid, StorageUiKey.Key, actor.PlayerSession);
 
             ActivationVerb verb = new()
             {
@@ -124,13 +124,13 @@ namespace Content.Server.Storage.EntitySystems
             {
                 verb.Text = Loc.GetString("verb-common-close-ui");
                 verb.Icon = new SpriteSpecifier.Texture(
-                    new ("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
+                    new("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
             }
             else
             {
                 verb.Text = Loc.GetString("verb-common-open-ui");
                 verb.Icon = new SpriteSpecifier.Texture(
-                    new ("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
+                    new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
             }
             args.Verbs.Add(verb);
         }
@@ -168,7 +168,8 @@ namespace Content.Server.Storage.EntitySystems
             if (args.Handled || !storageComp.ClickInsert || TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
                 return;
 
-            Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) attacked by user (UID {args.User}) with entity (UID {args.Used}).");
+            _logManager.GetSawmill(storageComp.LoggerName)
+                .Debug($"Storage (UID {uid}) attacked by user (UID {args.User}) with entity (UID {args.Used}).");
 
             if (HasComp<PlaceableSurfaceComponent>(uid))
                 return;
@@ -226,7 +227,9 @@ namespace Content.Server.Storage.EntitySystems
                         || !itemQuery.HasComponent(entity)
                         || !CanInsert(uid, entity, out _, storageComp)
                         || !_interactionSystem.InRangeUnobstructed(args.User, entity))
+                    {
                         continue;
+                    }
 
                     validStorables.Add(entity);
                 }
@@ -250,7 +253,7 @@ namespace Content.Server.Storage.EntitySystems
             // Pick up the clicked entity
             if (storageComp.QuickInsert)
             {
-                if (args.Target is not {Valid: true} target)
+                if (args.Target is not { Valid: true } target)
                     return;
 
                 if (_containerSystem.IsEntityInContainer(target)
@@ -264,7 +267,9 @@ namespace Content.Server.Storage.EntitySystems
 
                     var position = EntityCoordinates.FromMap(
                         parent.IsValid() ? parent : uid,
-                        transformEnt.MapPosition);
+                        transformEnt.MapPosition,
+                        _transform
+                    );
 
                     if (PlayerInsertEntityInWorld(uid, args.User, target, storageComp))
                     {
@@ -304,8 +309,9 @@ namespace Content.Server.Storage.EntitySystems
 
                 var position = EntityCoordinates.FromMap(
                     xform.ParentUid.IsValid() ? xform.ParentUid : uid,
-                    new MapCoordinates(_transform.GetWorldPosition(targetXform, xformQuery),
-                        targetXform.MapID), EntityManager);
+                    new MapCoordinates(_transform.GetWorldPosition(targetXform, xformQuery), targetXform.MapID),
+                    _transform
+                );
 
                 if (PlayerInsertEntityInWorld(uid, args.Args.User, entity, component))
                 {
@@ -350,7 +356,7 @@ namespace Content.Server.Storage.EntitySystems
 
             if (!Exists(args.InteractedItemUID))
             {
-                Logger.Error($"Player {args.Session} interacted with non-existent item {args.InteractedItemUID} stored in {ToPrettyString(uid)}");
+                Log.Error($"Player {args.Session} interacted with non-existent item {args.InteractedItemUID} stored in {ToPrettyString(uid)}");
                 return;
             }
 
@@ -484,7 +490,7 @@ namespace Content.Server.Storage.EntitySystems
         /// <summary>
         ///     Verifies if an entity can be stored and if it fits
         /// </summary>
-        /// <param name="entity">The entity to check</param>
+        /// <param name="uid">The entity to check</param>
         /// <param name="reason">If returning false, the reason displayed to the player</param>
         /// <returns>true if it can be inserted, false otherwise</returns>
         public bool CanInsert(EntityUid uid, EntityUid insertEnt, out string? reason, ServerStorageComponent? storageComp = null)
@@ -523,16 +529,8 @@ namespace Content.Server.Storage.EntitySystems
             if (TryComp(insertEnt, out ItemComponent? itemComp) &&
                 itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
             {
-                // If this is a stack, we may be able to combine it with an existing stack in the storage.
-                // If so, no extra space would be used.
-                //
-                // TODO: This doesn't allow any sort of top-up behavior.
-                // You either combine the whole stack, or insert nothing.
-                if (!TryComp(insertEnt, out StackComponent? stackComp) || !CanCombineStacks(storageComp, stackComp))
-                {
-                    reason = "comp-storage-insufficient-capacity";
-                    return false;
-                }
+                reason = "comp-storage-insufficient-capacity";
+                return false;
             }
 
             reason = null;
@@ -608,29 +606,6 @@ namespace Content.Server.Storage.EntitySystems
             RecalculateStorageUsed(storageComp);
             UpdateStorageUI(uid, storageComp);
             return true;
-        }
-
-        private bool CanCombineStacks(
-            ServerStorageComponent storageComp,
-            StackComponent stack)
-        {
-            if (storageComp.Storage == null)
-                return false;
-
-            var stackQuery = GetEntityQuery<StackComponent>();
-            var countLeft = stack.Count;
-            foreach (var ent in storageComp.Storage.ContainedEntities)
-            {
-                if (!stackQuery.TryGetComponent(ent, out var destStack))
-                    continue;
-
-                if (destStack.StackTypeId != stack.StackTypeId)
-                    continue;
-
-                countLeft -= _stack.GetAvailableSpace(stack);
-            }
-
-            return countLeft <= 0;
         }
 
         // REMOVE: remove and drop on the ground
@@ -710,7 +685,8 @@ namespace Content.Server.Storage.EntitySystems
                     _useDelay.BeginDelay(uid, useDelay);
             }
 
-            Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
+            _logManager.GetSawmill(storageComp.LoggerName)
+                .Debug($"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
 
             var bui = _uiSystem.GetUiOrNull(uid, StorageUiKey.Key);
             if (bui != null)
@@ -755,10 +731,10 @@ namespace Content.Server.Storage.EntitySystems
 
             var bui = _uiSystem.GetUiOrNull(uid, StorageUiKey.Key);
             if (bui != null)
-                _uiSystem.SetUiState(bui, state);
+                UserInterfaceSystem.SetUiState(bui, state);
         }
 
-        private void Popup(EntityUid uid, EntityUid player, string message, ServerStorageComponent storageComp)
+        private void Popup(EntityUid _, EntityUid player, string message, ServerStorageComponent storageComp)
         {
             if (!storageComp.ShowPopup)
                 return;
@@ -766,8 +742,7 @@ namespace Content.Server.Storage.EntitySystems
             _popupSystem.PopupEntity(Loc.GetString(message), player, player);
         }
 
-        private void PopupEnt(EntityUid uid, EntityUid player, string message, EntityUid entityUid,
-            ServerStorageComponent storageComp)
+        private void PopupEnt(EntityUid _, EntityUid player, string message, EntityUid entityUid, ServerStorageComponent storageComp)
         {
             if (!storageComp.ShowPopup)
                 return;

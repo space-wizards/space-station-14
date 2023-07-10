@@ -57,6 +57,25 @@
         iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
         event: !type:ToggleActionEvent
 
+- type: entity
+  parent: BaseSubdermalImplant
+  id: BikeHornImplant
+  name: bike horn implant
+  description: Makes you honk
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActivateHonkImplant
+    - type: TriggerImplantAction
+    - type: EmitSoundOnTrigger
+      sound:
+        collection: BikeHorn
+        params:
+          variation: 0.125
+    - type: Tag
+      tags:
+      - BikeHorn
+
 #Security implants
 
 - type: entity

@@ -470,6 +470,14 @@
      Glass: 900
 
 - type: latheRecipe
+  id: SolarTrackerElectronics
+  result: SolarTrackerElectronics
+  completetime: 4
+  materials:
+     Steel: 150
+     Glass: 600
+
+- type: latheRecipe
   id: PowerComputerCircuitboard
   result: PowerComputerCircuitboard
   completetime: 4

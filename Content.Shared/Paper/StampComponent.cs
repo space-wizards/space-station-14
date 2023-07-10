@@ -1,3 +1,5 @@
+using Robust.Shared.Audio;
+
 namespace Content.Shared.Paper
 {
     [RegisterComponent]
@@ -13,5 +15,8 @@ namespace Content.Shared.Paper
         /// </summary>
         [DataField("stampState")]
         public string StampState { get; set; } = "paper_stamp-generic";
+
+        [DataField("sound")]
+        public SoundSpecifier? Sound;
     }
 }

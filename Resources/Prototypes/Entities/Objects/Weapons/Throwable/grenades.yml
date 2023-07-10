@@ -80,9 +80,9 @@
   components:
     - type: PointLight
       enabled: true
-      netsync: false
       radius: 5
       energy: 8
+      netsync: false
     - type: LightFade
       duration: 0.5
     - type: TimedDespawn
