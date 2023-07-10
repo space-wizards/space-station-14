@@ -23,6 +23,18 @@
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
       description: ghost-role-information-ert-leader-description
+      requirements:
+        - !type:OverallPlaytimeRequirement
+          time: 36000 # 10 hrs
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 10800 # 3 hrs
+        - !type:DepartmentTimeRequirement
+          department: Command
+          time: 10800 # 3 hrs
+        - !type:DepartmentTimeRequirement
+          department: Engineering
+          time: 10800 # 3 hrs
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGear ]
@@ -47,9 +59,6 @@
   id: ERTLeaderEVA
   parent: ERTLeader
   components:
-    - type: GhostRole
-      name: ghost-role-information-ert-leader-name
-      description: ghost-role-information-ert-leader-description
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTLeaderGearEVA ]
@@ -78,6 +87,12 @@
     - type: GhostRole
       name: ghost-role-information-ert-janitor-name
       description: ghost-role-information-ert-janitor-description
+      requirements:
+        - !type:OverallPlaytimeRequirement
+          time: 36000 # 10 hrs
+        - !type:RoleTimeRequirement
+          role: JobJanitor
+          time: 10800 # 3 hrs
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
@@ -102,9 +117,6 @@
   id: ERTJanitorEVA
   parent: ERTJanitor
   components:
-    - type: GhostRole
-      name: ghost-role-information-ert-janitor-name
-      description: ghost-role-information-ert-janitor-description
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTJanitorGearEVA ]
@@ -133,6 +145,12 @@
     - type: GhostRole
       name: ghost-role-information-ert-engineer-name
       description: ghost-role-information-ert-engineer-description
+      requirements:
+        - !type:OverallPlaytimeRequirement
+          time: 36000 # 10 hrs
+        - !type:DepartmentTimeRequirement
+          department: Engineering
+          time: 10800 # 3 hrs
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
@@ -157,9 +175,6 @@
   id: ERTEngineerEVA
   parent: ERTEngineer
   components:
-    - type: GhostRole
-      name: ghost-role-information-ert-engineer-name
-      description: ghost-role-information-ert-engineer-description
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTEngineerGearEVA ]
@@ -188,6 +203,12 @@
     - type: GhostRole
       name: ghost-role-information-ert-security-name
       description: ghost-role-information-ert-security-description
+      requirements:
+        - !type:OverallPlaytimeRequirement
+          time: 36000 # 10 hrs
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 10800 # 3 hrs
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
@@ -212,9 +233,6 @@
   id: ERTSecurityEVA
   parent: ERTSecurity
   components:
-    - type: GhostRole
-      name: ghost-role-information-ert-security-name
-      description: ghost-role-information-ert-security-description
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTSecurityGearEVA ]
@@ -243,6 +261,12 @@
     - type: GhostRole
       name: ghost-role-information-ert-medical-name
       description: ghost-role-information-ert-medical-description
+      requirements:
+        - !type:OverallPlaytimeRequirement
+          time: 36000 # 10 hrs
+        - !type:DepartmentTimeRequirement
+          department: Medical
+          time: 10800 # 3 hrs
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
@@ -267,9 +291,6 @@
   id: ERTMedicalEVA
   parent: ERTMedical
   components:
-    - type: GhostRole
-      name: ghost-role-information-ert-medical-name
-      description: ghost-role-information-ert-medical-description
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ ERTMedicalGearEVA ]
@@ -294,6 +315,12 @@
     - type: GhostRole
       name: ghost-role-information-cburn-agent-name
       description: ghost-role-information-cburn-agent-description
+      requirements:
+        - !type:OverallPlaytimeRequirement
+          time: 36000 # 10h
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 18000 # 5 hrs
     - type: GhostTakeoverAvailable
     - type: RandomMetadata
       nameSegments:
