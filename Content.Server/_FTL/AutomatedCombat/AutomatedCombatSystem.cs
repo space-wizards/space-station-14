@@ -28,10 +28,10 @@ public sealed class AutomatedCombatSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AutomatedCombatComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<AutomatedCombatComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnComponentInit(EntityUid uid, AutomatedCombatComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, AutomatedCombatComponent component, MapInitEvent args)
     {
         EnsureComp<ActiveAutomatedCombatComponent>(uid);
     }
