@@ -133,6 +133,8 @@
   id: WaterTankHighCapacity
   suffix: Full
   components:
+  - type: StaticPrice
+    price: 3300
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
     layers:
