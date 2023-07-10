@@ -933,7 +933,7 @@
   icon: { sprite:  Objects/Misc/monkeycube.rsi, state: box}
   productEntity: SyndicateSpongeBox
   cost:
-    Telecrystal: 6
+    Telecrystal: 7
   categories:
   - UplinkMisc
 
