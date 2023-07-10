@@ -9,4 +9,4 @@ role-timer-locked = Locked (hover for details)
 
 role-ban = You have been banned from this role.
 
-role-species-ban = {$species} cannot take this role..
+role-species-ban = {$species} cannot take this role.
