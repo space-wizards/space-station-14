@@ -11,6 +11,7 @@ namespace Content.Client.Singularity
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        private SharedTransformSystem? _xformSystem = null;
 
         /// <summary>
         ///     Maximum number of distortions that can be shown on screen at a time.
@@ -42,14 +43,17 @@ namespace Content.Client.Singularity
         {
             if (args.Viewport.Eye == null)
                 return false;
+            if (_xformSystem is null && !_entMan.TrySystem(out _xformSystem))
+                return false;
 
             _count = 0;
-            foreach (var (distortion, xform) in _entMan.EntityQuery<SingularityDistortionComponent, TransformComponent>())
+            var query = _entMan.EntityQueryEnumerator<SingularityDistortionComponent, TransformComponent>();
+            while (query.MoveNext(out var uid, out var distortion, out var xform))
             {
                 if (xform.MapID != args.MapId)
                     continue;
 
-                var mapPos = xform.WorldPosition;
+                var mapPos = _xformSystem.GetWorldPosition(uid);
 
                 // is the distortion in range?
                 if ((mapPos - args.WorldAABB.ClosestPoint(mapPos)).LengthSquared() > MaxDistance * MaxDistance)
@@ -58,7 +62,7 @@ namespace Content.Client.Singularity
                 // To be clear, this needs to use "inside-viewport" pixels.
                 // In other words, specifically NOT IViewportControl.WorldToScreen (which uses outer coordinates).
                 var tempCoords = args.Viewport.WorldToLocal(mapPos);
-                tempCoords.Y = args.Viewport.Size.Y - tempCoords.Y;
+                tempCoords.Y = args.Viewport.Size.Y - tempCoords.Y; // Local space to fragment space.
 
                 _positions[_count] = tempCoords;
                 _intensities[_count] = distortion.Intensity;
@@ -90,35 +94,42 @@ namespace Content.Client.Singularity
             worldHandle.UseShader(null);
         }
 
+        /// <summary>
+        /// Repeats the transformation applied by the shader in <see cref="Resources/Textures/Shaders/singularity.swsl"/>
+        /// </summary>
         private void OnProjectFromScreenToMap(ref ProjectScreenToMapEvent args)
         {   // Mostly copypasta from the singularity shader.
-            Vector2 finalCoords = args.ScreenPosition;
-            Vector2 delta;
-            float distance = 0.0f;
-            float deformation = 0.0f;
-            float maxDistance = MaxDistance * EyeManager.PixelsPerMeter;
+            var maxDistance = MaxDistance * EyeManager.PixelsPerMeter;
+            var finalCoords = args.ScreenPosition;
 
-            for (int i = 0; i < MaxCount && i < _count; i++)
+            for (var i = 0; i < MaxCount && i < _count; i++)
             {
-                delta = args.ScreenPosition - _positions[i];
-                distance = (delta / args.ClydeViewport.RenderScale).Length;
+                // An explanation of pain:
+                // The shader used by the singularity to create the neat distortion effect occurs in _fragment space_
+                // All of these calculations are done in _local space_.
+                // The only difference between the two is that in fragment space 'Y' is measured in pixels from the bottom of the viewport...
+                // and in local space 'Y' is measured in pixels from the top of the viewport.
+                // As a minor optimization the locations of the singularities are transformed into fragment space in BeforeDraw so the shader doesn't need to.
+                // We need to undo that here or this will transform the cursor position as if the singularities were mirrored vertically relative to the center of the viewport.
+                var localPosition = _positions[i];
+                localPosition.Y = args.ClydeViewport.Size.Y - localPosition.Y;
+                var delta = args.ScreenPosition - localPosition;
+                var distance = (delta / args.ClydeViewport.RenderScale).Length();
 
-                deformation = _intensities[i] / MathF.Pow(distance, _falloffPowers[i]);
+                var deformation = _intensities[i] / MathF.Pow(distance, _falloffPowers[i]);
 
                 // ensure deformation goes to zero at max distance
                 // avoids long-range single-pixel shifts that are noticeable when leaving PVS.
 
-                if (distance >= maxDistance) {
+                if (distance >= maxDistance)
                     deformation = 0.0f;
-                } else {
-                    deformation *= (1.0f - MathF.Pow(distance/maxDistance, 4.0f));
-                }
+                else
+                    deformation *= 1.0f - MathF.Pow(distance / maxDistance, 4.0f);
 
-                if(deformation > 0.8)
+                if (deformation > 0.8)
                     deformation = MathF.Pow(deformation, 0.3f);
 
-                Vector2 displacement = delta * deformation;
-                finalCoords -= displacement;
+                finalCoords -= delta * deformation;
             }
 
             args.ScreenPosition = finalCoords;
