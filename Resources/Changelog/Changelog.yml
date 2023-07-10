@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Wielding is now predicted., type: Tweak}
-  id: 3717
-  time: '2023-05-10T00:01:23.0000000+00:00'
 - author: tom-leys
   changes:
   - {message: 'Frezon is slightly harder to make. The reaction always consumes Tritium
@@ -2945,3 +2940,8 @@ Entries:
       are now available for purchase at cargo.', type: Add}
   id: 4216
   time: '2023-07-10T02:44:19.0000000+00:00'
+- author: dribblydrone
+  changes:
+  - {message: Added nukie guidebook, type: Add}
+  id: 4217
+  time: '2023-07-10T02:54:43.0000000+00:00'
