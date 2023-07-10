@@ -353,7 +353,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                 validSpawns.AddRange(spawnRoom.Tiles);
                 random.Shuffle(validSpawns);
 
-                while (validSpawns.Count > 0)
+                foreach (var entry in EntitySpawnCollection.GetSpawns(mobGroup.Entries, random))
                 {
                     while (validSpawns.Count > 0)
                     {
