@@ -1,10 +1,4 @@
 Entries:
-- author: notquitehadouken
-  changes:
-  - {message: Fixed the recipes for radiation shutters and glass shutters not appearing
-      in the construction menu, type: Fix}
-  id: 3715
-  time: '2023-05-09T23:56:07.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix popup spam in some instances., type: Fix}
@@ -2943,3 +2937,9 @@ Entries:
       packs/ointment, plants, cloth and chemicals.', type: Add}
   id: 4214
   time: '2023-07-10T02:22:11.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Syndicate High Command can now explicitly order for the assassination
+      of heads of staff., type: Add}
+  id: 4215
+  time: '2023-07-10T02:26:18.0000000+00:00'
