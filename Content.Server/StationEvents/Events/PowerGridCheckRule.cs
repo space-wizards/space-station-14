@@ -17,6 +17,13 @@ namespace Content.Server.StationEvents.Events
     {
         [Dependency] private readonly ApcSystem _apcSystem = default!;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<PowerGridCheckDisabledComponent, ApcToggleMainBreakerAttemptEvent>(OnApcToggleMainBreaker);
+        }
+
         protected override void Started(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
         {
             base.Started(uid, component, gameRule, args);
@@ -47,9 +54,10 @@ namespace Content.Server.StationEvents.Events
 
                 if (TryComp(entity, out ApcComponent? apcComponent))
                 {
-                    if(!apcComponent.MainBreakerEnabled)
+                    if (!apcComponent.MainBreakerEnabled)
                         _apcSystem.ApcToggleBreaker(entity, apcComponent);
                 }
+                RemComp<PowerGridCheckDisabledComponent>(entity);
             }
 
             // Can't use the default EndAudio
@@ -87,8 +95,14 @@ namespace Content.Server.StationEvents.Events
                     if (apcComponent.MainBreakerEnabled)
                         _apcSystem.ApcToggleBreaker(selected, apcComponent);
                 }
+                EnsureComp<PowerGridCheckDisabledComponent>(selected);
                 component.Unpowered.Add(selected);
             }
+        }
+
+        private void OnApcToggleMainBreaker(EntityUid uid, PowerGridCheckDisabledComponent component, ref ApcToggleMainBreakerAttemptEvent args)
+        {
+            args.Cancelled = true;
         }
     }
 }
