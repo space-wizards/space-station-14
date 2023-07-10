@@ -292,13 +292,38 @@ public sealed partial class NPCSteeringSystem
     /// <summary>
     /// We may be pathfinding and moving at the same time in which case early nodes may be out of date.
     /// </summary>
-    public void PrunePath(EntityUid uid, MapCoordinates mapCoordinates, Vector2 direction, Queue<PathPoly> nodes)
+    public void PrunePath(EntityUid uid, MapCoordinates mapCoordinates, Vector2 direction, List<PathPoly> nodes)
     {
         if (nodes.Count <= 1)
             return;
 
-        // Prune the first node as it's irrelevant (normally it is our node so we don't want to backtrack).
-        nodes.Dequeue();
+        // Work out if we're inside any nodes, then use the next one as the starting point.
+        var index = 0;
+        var found = false;
+
+        for (var i = 0; i < nodes.Count; i++)
+        {
+            var node = nodes[i];
+            var matrix = _transform.GetWorldMatrix(node.GraphUid);
+
+            // Always want to prune the poly itself so we point to the next poly and don't backtrack.
+            if (matrix.TransformBox(node.Box).Contains(mapCoordinates.Position))
+            {
+                index = i + 1;
+                found = true;
+                break;
+            }
+        }
+
+        if (found)
+        {
+            nodes.RemoveRange(0, index);
+            _pathfindingSystem.Simplify(nodes);
+            return;
+        }
+
+        // Otherwise, take the node after the nearest node.
+
         // TODO: Really need layer support
         CollisionGroup mask = 0;
 
@@ -310,11 +335,11 @@ public sealed partial class NPCSteeringSystem
         // If we have to backtrack (for example, we're behind a table and the target is on the other side)
         // Then don't consider pruning.
         var goal = nodes.Last().Coordinates.ToMap(EntityManager, _transform);
-        var canPrune =
-            _interaction.InRangeUnobstructed(mapCoordinates, goal, (goal.Position - mapCoordinates.Position).Length() + 0.1f, mask);
 
-        while (nodes.TryPeek(out var node))
+        for (var i = 0; i < nodes.Count; i++)
         {
+            var node = nodes[i];
+
             if (!node.Data.IsFreeSpace)
                 break;
 
@@ -322,16 +347,17 @@ public sealed partial class NPCSteeringSystem
 
             // If any nodes are 'behind us' relative to the target we'll prune them.
             // This isn't perfect but should fix most cases of stutter stepping.
-            if (canPrune &&
-                nodeMap.MapId == mapCoordinates.MapId &&
+            if (nodeMap.MapId == mapCoordinates.MapId &&
                 Vector2.Dot(direction, nodeMap.Position - mapCoordinates.Position) < 0f)
             {
-                nodes.Dequeue();
+                nodes.RemoveAt(i);
                 continue;
             }
 
             break;
         }
+
+        _pathfindingSystem.Simplify(nodes);
     }
 
     /// <summary>
@@ -382,7 +408,7 @@ public sealed partial class NPCSteeringSystem
         TransformComponent xform,
         float[] danger)
     {
-        var objectRadius = 0.10f;
+        var objectRadius = 0.15f;
         var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Static))
@@ -430,7 +456,7 @@ public sealed partial class NPCSteeringSystem
             for (var i = 0; i < InterestDirections; i++)
             {
                 var dot = Vector2.Dot(norm, Directions[i]);
-                danger[i] = MathF.Max(dot * weight * 0.9f, danger[i]);
+                danger[i] = MathF.Max(dot * weight, danger[i]);
             }
         }
 
