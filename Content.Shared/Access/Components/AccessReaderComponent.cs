@@ -60,3 +60,12 @@ public sealed class AccessReaderComponentState : ComponentState
     }
 }
 
+[ByRefEvent]
+public struct GetRequiredAccessEvent
+{
+    public AccessReaderComponent Access = new();
+
+    public GetRequiredAccessEvent()
+    {
+    }
+}
