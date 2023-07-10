@@ -262,3 +262,12 @@
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
       - id: BeachBall
+
+- type: entity
+  id: CrateFunBikeHornImplants
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: BikeHornImplanter
+        amount: 3
