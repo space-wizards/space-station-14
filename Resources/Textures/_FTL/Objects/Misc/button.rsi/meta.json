@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/yogstation13/Yogstation/blob/161b661772beed6f67d18d14ddccd49a91b4d08f/icons/obj/bell.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bell"
+    },
+    {
+      "name": "bell-push",
+      "delays": [
+        [
+          0.11,
+          0.11
+        ]
+      ]
+    },
+    {
+      "name": "buttonred"
+    },
+    {
+      "name": "buttonred_push",
+      "delays": [
+        [
+          0.4,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "buttonblue"
+    },
+    {
+      "name": "buttonblue_push",
+      "delays": [
+        [
+          0.4,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

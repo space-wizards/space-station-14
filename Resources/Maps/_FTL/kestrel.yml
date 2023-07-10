@@ -717,7 +717,7 @@ entities:
       type: Transform
   - uid: 478
     components:
-    - name: Shields
+    - name: Security
       type: MetaData
     - rot: -1.5707963267948966 rad
       pos: 5.5,-13.5
@@ -725,7 +725,7 @@ entities:
       type: Transform
   - uid: 479
     components:
-    - name: Door Control
+    - name: Cleaning
       type: MetaData
     - rot: -1.5707963267948966 rad
       pos: 4.5,-8.5
@@ -2544,6 +2544,25 @@ entities:
     - pos: 7.5,-17.5
       parent: 2
       type: Transform
+  - uid: 991
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -0.5,-0.5
+      parent: 2
+      type: Transform
+  - uid: 1002
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 1.5,-0.5
+      parent: 2
+      type: Transform
+- proto: ChemistryHotplate
+  entities:
+  - uid: 992
+    components:
+    - pos: -2.5,-12.5
+      parent: 2
+      type: Transform
 - proto: ClosetFireFilled
   entities:
   - uid: 72
@@ -2621,6 +2640,37 @@ entities:
     - pos: -1.4764618,-28.41355
       parent: 2
       type: Transform
+- proto: ClothingMaskBreath
+  entities:
+  - uid: 985
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 818
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
+  - uid: 987
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 819
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
+- proto: ClothingMaskGasCaptain
+  entities:
+  - uid: 983
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 817
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: ClothingOuterHardsuitCap
   entities:
   - uid: 965
@@ -2718,6 +2768,14 @@ entities:
     - pos: -0.5,0.5
       parent: 2
       type: Transform
+- proto: ComputerId
+  entities:
+  - uid: 993
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 2.5,-1.5
+      parent: 2
+      type: Transform
 - proto: ComputerPowerMonitoring
   entities:
   - uid: 794
@@ -2788,6 +2846,13 @@ entities:
       pos: 0.5,-32.5
       parent: 2
       type: Transform
+- proto: CrateChemistryBeakers
+  entities:
+  - uid: 990
+    components:
+    - pos: -2.5,-15.5
+      parent: 2
+      type: Transform
 - proto: CrateEngineeringCableBulk
   entities:
   - uid: 51
@@ -2800,13 +2865,6 @@ entities:
   - uid: 961
     components:
     - pos: 2.5,-20.5
-      parent: 2
-      type: Transform
-- proto: CrateRandomChemistryBeakers
-  entities:
-  - uid: 543
-    components:
-    - pos: -2.5,-15.5
       parent: 2
       type: Transform
 - proto: Defibrillator
@@ -2826,6 +2884,23 @@ entities:
   - uid: 438
     components:
     - pos: -2.5,-11.5
+      parent: 2
+      type: Transform
+- proto: DiceBag
+  entities:
+  - uid: 998
+    components:
+    - pos: 0.3743762,-30.387688
+      parent: 2
+      type: Transform
+  - uid: 999
+    components:
+    - pos: 0.5306262,-30.418938
+      parent: 2
+      type: Transform
+  - uid: 1000
+    components:
+    - pos: 0.6712512,-30.418938
       parent: 2
       type: Transform
 - proto: EncryptionKeyCargo
@@ -4454,7 +4529,11 @@ entities:
           ents:
           - 37
           - 430
+          - 543
+          - 388
+          - 983
           - 965
+          - 882
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -4490,8 +4569,11 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 943
           - 966
+          - 943
+          - 984
+          - 985
+          - 986
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -4546,12 +4628,15 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 944
-          - 38
-          - 39
-          - 40
-          - 41
           - 967
+          - 41
+          - 40
+          - 39
+          - 38
+          - 944
+          - 987
+          - 988
+          - 989
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -4615,6 +4700,13 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
+- proto: MaterialReclaimer
+  entities:
+  - uid: 996
+    components:
+    - pos: -5.5,-25.5
+      parent: 2
+      type: Transform
 - proto: MedicalBed
   entities:
   - uid: 422
@@ -4687,6 +4779,40 @@ entities:
     - pos: -4.5,-31.5
       parent: 2
       type: Transform
+  - uid: 1001
+    components:
+    - pos: -5.5,-28.5
+      parent: 2
+      type: Transform
+- proto: NitrogenTankFilled
+  entities:
+  - uid: 543
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 817
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
+  - uid: 984
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 818
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
+  - uid: 989
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 819
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: OxygenCanister
   entities:
   - uid: 239
@@ -4694,6 +4820,35 @@ entities:
     - pos: -5.5,-31.5
       parent: 2
       type: Transform
+- proto: OxygenTankFilled
+  entities:
+  - uid: 388
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 817
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
+  - uid: 986
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 818
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
+  - uid: 988
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 819
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: PaperCaptainsThoughts
   entities:
   - uid: 37
@@ -5435,6 +5590,13 @@ entities:
       pos: 1.4910581,-4.480677
       parent: 2
       type: Transform
+- proto: ShipRenameButton
+  entities:
+  - uid: 995
+    components:
+    - pos: -1.3663222,-0.16304946
+      parent: 2
+      type: Transform
 - proto: SignalButton
   entities:
   - uid: 411
@@ -5462,10 +5624,13 @@ entities:
   entities:
   - uid: 882
     components:
-    - rot: -0.0009364878064843651 rad
-      pos: -1.5453466,-0.4471221
-      parent: 2
+    - flags: InContainer
+      type: MetaData
+    - parent: 817
       type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: SpawnPointAssistant
   entities:
   - uid: 550
@@ -5777,6 +5942,13 @@ entities:
       pos: -1.5,-20.5
       parent: 2
       type: Transform
+- proto: TableCarpet
+  entities:
+  - uid: 997
+    components:
+    - pos: 0.5,-30.5
+      parent: 2
+      type: Transform
 - proto: TableReinforced
   entities:
   - uid: 807
@@ -5846,6 +6018,8 @@ entities:
     - pos: -5.5,-13.5
       parent: 2
       type: Transform
+    - enabled: False
+      type: Thruster
   - uid: 905
     components:
     - pos: -5.5,-14.5
@@ -5869,6 +6043,8 @@ entities:
       pos: 7.5,-15.5
       parent: 2
       type: Transform
+    - enabled: False
+      type: Thruster
   - uid: 910
     components:
     - rot: 1.5707963267948966 rad
@@ -5880,6 +6056,13 @@ entities:
   - uid: 410
     components:
     - pos: 2.5,-35.5
+      parent: 2
+      type: Transform
+- proto: UniformPrinter
+  entities:
+  - uid: 994
+    components:
+    - pos: -1.5,-1.5
       parent: 2
       type: Transform
 - proto: VendingMachineCoffee
@@ -6734,13 +6917,6 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 3.5,-11.5
-      parent: 2
-      type: Transform
-- proto: WaterTankFull
-  entities:
-  - uid: 388
-    components:
-    - pos: 3.5,-7.5
       parent: 2
       type: Transform
 - proto: WaterTankHighCapacity

@@ -1,0 +1,18 @@
+- type: entity
+  parent: BaseItem
+  id: BaseButton
+  name: red button
+  abstract: true
+  description: Ominous.
+  components:
+    - type: Sprite
+      sprite: _FTL/Objects/Misc/button.rsi
+      state: "buttonred"
+
+- type: entity
+  parent: BaseButton
+  name: rename ship button
+  id: ShipRenameButton
+  description: How can you set the name of the ship with this button? God knows how, just rename your ship.
+  components:
+    - type: ShipRename
