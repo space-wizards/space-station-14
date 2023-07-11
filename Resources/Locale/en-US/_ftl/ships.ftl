@@ -17,3 +17,4 @@ ship-ftl-tag-planet = PLNT
 ship-ftl-tag-moon = MOON
 ship-ftl-tag-ruin = RUIN
 ship-ftl-tag-yard = YARD
+ship-ftl-tag-asteroid = ROID

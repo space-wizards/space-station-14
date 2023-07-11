@@ -1,0 +1,26 @@
+- type: spaceBiome
+  id: AsteroidsPacked
+  priority: 0 # This probably shouldn't get selected.
+  noiseRanges: {}
+  chunkComponents:
+    - type: DebrisFeaturePlacerController
+      densityNoiseChannel: Carver
+    - type: SimpleDebrisSelector
+      debrisTable:
+        - id: AsteroidDebrisSmall
+          prob: 0.4
+        - id: AsteroidDebrisMedium
+        - id: AsteroidDebrisLarge
+        - id: AsteroidDebrisLarger
+          prob: 0.7
+    - type: NoiseDrivenDebrisSelector
+      noiseChannel: Wreck
+      debrisTable:
+        - id: ScrapDebrisSmall
+          prob: 0.5
+        - id: ScrapDebrisMedium
+        - id: ScrapDebrisLarge
+    - type: NoiseRangeCarver
+      ranges:
+        - 0.4, 0.6
+      noiseChannel: Carver

@@ -3,6 +3,8 @@
   tag: ship-ftl-tag-base
   effects:
     - !type:SpawnStationEffect
+    - !type:ApplyWorldGenConfigEffect
+      probability: 0.15
 
 - type: ftlPoint
   id: LoDangerPoint
@@ -27,6 +29,8 @@
         - /Maps/_FTL/tough-drone.yml
         - /Maps/_FTL/cargo-vessel.yml
         - /Maps/_FTL/rod.yml
+    - !type:ApplyWorldGenConfigEffect
+      probability: 0.35
 
 - type: ftlPoint
   id: ConfDangerPoint
@@ -39,6 +43,8 @@
         - /Maps/_FTL/fsc-fighter.yml
         - /Maps/_FTL/incsek-bomber.yml
         - /Maps/_FTL/rod.yml
+    - !type:ApplyWorldGenConfigEffect
+      probability: 0.45
 
 - type: ftlPoint
   id: PlanetPoint
@@ -79,17 +85,31 @@
       range: 100
 
 - type: ftlPoint
+  id: AsteroidPoint
+  tag: ship-ftl-tag-asteroid
+  effects:
+    - !type:ApplyWorldGenConfigEffect
+      config: Packed
+    - !type:SpawnDungeonEffect
+      range: 1500
+      maxSpawn: 7
+
+- type: ftlPoint
   id: StarPoint
   tag: ship-ftl-tag-star
   effects:
     - !type:SpawnDungeonEffect
       probability: 0.5
+    - !type:ApplyWorldGenConfigEffect
+      probability: 0.25
 
 - type: ftlPoint
   id: RuinPoint
   tag: ship-ftl-tag-ruin
   effects:
     - !type:SpawnDungeonEffect
+    - !type:ApplyWorldGenConfigEffect
+      probability: 0.25
 
 - type: ftlPoint
   id: NoDangerPoint

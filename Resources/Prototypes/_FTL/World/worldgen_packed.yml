@@ -1,0 +1,9 @@
+- type: worldgenConfig
+  id: Packed
+  components:
+    - type: WorldController
+    - type: BiomeSelection
+      biomes:
+        - AsteroidsFallback
+        - Failsafe
+        - AsteroidsPacked
