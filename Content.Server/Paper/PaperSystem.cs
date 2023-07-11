@@ -11,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using Robust.Shared.Audio;
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Paper
@@ -122,7 +123,7 @@ namespace Content.Server.Paper
                 var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", Identity.Entity(args.Target, EntityManager)), ("stamp", args.Used));
                 _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, args.User);
 
-                _audio.PlayPvs(stampComp.Sound, uid);
+                _audio.PlayPvs(stampComp.Sound, uid, AudioParams.Default.WithVolume(-2f).WithMaxDistance(5));
 
                 UpdateUserInterface(uid, paperComp);
             }
