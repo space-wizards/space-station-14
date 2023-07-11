@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Humanoid;
 using Content.Client.Inventory;
 using Content.Client.Preferences;
@@ -96,7 +97,7 @@ namespace Content.Client.Lobby.UI
             {
                 Sprite = _entityManager.GetComponent<SpriteComponent>(entity),
                 OverrideDirection = direction,
-                Scale = (2, 2)
+                Scale = new Vector2(2, 2)
             };
         }
 

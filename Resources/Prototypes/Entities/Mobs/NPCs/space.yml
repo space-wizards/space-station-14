@@ -33,7 +33,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Critical
       150: Dead
   - type: Stamina
     excess: 150
@@ -217,7 +216,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      90: Critical
       130: Dead
   - type: Stamina
     excess: 150
@@ -226,8 +224,6 @@
       Alive:
         Base: spacespider
         BaseUnshaded: glow
-      Critical:
-        Base: spacespider_dead
       Dead:
         Base: spacespider_dead
   - type: Butcherable

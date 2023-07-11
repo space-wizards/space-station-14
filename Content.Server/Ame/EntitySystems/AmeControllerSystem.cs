@@ -94,7 +94,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
 
         var state = GetUiState(uid, controller);
-        _userInterfaceSystem.SetUiState(bui, state);
+        UserInterfaceSystem.SetUiState(bui, state);
     }
 
     private AmeControllerBoundUserInterfaceState GetUiState(EntityUid uid, AmeControllerComponent controller)
@@ -290,10 +290,10 @@ public sealed class AmeControllerSystem : EntitySystem
                 ToggleInjecting(uid, user: user, controller: comp);
                 break;
             case UiButton.IncreaseFuel:
-                AdjustInjectionAmount(uid, +1, user: user, controller: comp);
+                AdjustInjectionAmount(uid, +2, user: user, controller: comp);
                 break;
             case UiButton.DecreaseFuel:
-                AdjustInjectionAmount(uid, -1, user: user, controller: comp);
+                AdjustInjectionAmount(uid, -2, user: user, controller: comp);
                 break;
         }
 
