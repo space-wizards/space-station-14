@@ -82,6 +82,11 @@ public sealed class HumanoidAppearanceComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public Color? CachedFacialHairColor;
+
+    /// <summary>
+    ///     The height of this humanoid.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)] public float Height = 1f;
 }
 
 [Serializable, NetSerializable]
@@ -97,6 +102,7 @@ public sealed class HumanoidAppearanceState : ComponentState
     public readonly string Species;
     public readonly Color SkinColor;
     public readonly Color EyeColor;
+    public readonly float Height;
 
     public HumanoidAppearanceState(
         MarkingSet currentMarkings,
@@ -108,7 +114,8 @@ public sealed class HumanoidAppearanceState : ComponentState
         int age,
         string species,
         Color skinColor,
-        Color eyeColor)
+        Color eyeColor,
+        float height = 1f)
     {
         Markings = currentMarkings;
         PermanentlyHidden = permanentlyHidden;
@@ -120,6 +127,7 @@ public sealed class HumanoidAppearanceState : ComponentState
         Species = species;
         SkinColor = skinColor;
         EyeColor = eyeColor;
+        Height = height;
     }
 
     [DataDefinition]

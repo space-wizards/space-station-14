@@ -11,6 +11,8 @@
   maleFirstNames: names_reptilian_male
   femaleFirstNames: names_reptilian_female
   naming: FirstDashFirst
+  minHeight: 0.8
+  maxHeight: 1.3
 
 - type: speciesBaseSprites
   id: MobReptilianSprites

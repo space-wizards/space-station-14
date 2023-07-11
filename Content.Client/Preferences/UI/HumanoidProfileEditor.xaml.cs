@@ -107,6 +107,8 @@ namespace Content.Client.Preferences.UI
 
         public event Action<HumanoidCharacterProfile, int>? OnProfileChanged;
 
+        private float _defaultHeight = 1f;
+
         public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager,
             IEntityManager entityManager, IConfigurationManager configurationManager)
         {
@@ -191,6 +193,20 @@ namespace Content.Client.Preferences.UI
             };
 
             #endregion Species
+
+            #region Height
+
+            CHeight.OnValueChanged += args =>
+            {
+                SetHeight(args.Value);
+            };
+
+            CHeightReset.OnPressed += _ =>
+            {
+                CHeight.Value = _defaultHeight;
+            };
+
+            #endregion Height
 
             #region Skin
 
@@ -809,6 +825,12 @@ namespace Content.Client.Preferences.UI
             _needUpdatePreview = true;
         }
 
+        private void SetHeight(float height)
+        {
+            Profile = Profile?.WithHeight(height);
+            IsDirty = true;
+        }
+
         private void SetName(string newName)
         {
             Profile = Profile?.WithName(newName);
@@ -972,6 +994,20 @@ namespace Content.Client.Preferences.UI
             CSpeciesButton.Select(_speciesList.FindIndex(x => x.ID == Profile.Species));
         }
 
+        private void UpdateHeightControls()
+        {
+            if (Profile == null)
+            {
+                return;
+            }
+
+            var species = _speciesList.Find(x => x.ID == Profile.Species)!;
+            CHeight.MaxValue = species.MaxHeight;
+            CHeight.MinValue = species.MinHeight;
+            _defaultHeight = species.DefaultHeight;
+            CHeight.Value = Math.Clamp(Profile.Height, species.MinHeight, species.MaxHeight);
+        }
+
         private void UpdateGenderControls()
         {
             if (Profile == null)
@@ -1128,6 +1164,7 @@ namespace Content.Client.Preferences.UI
         public void UpdateControls()
         {
             if (Profile is null) return;
+            UpdateHeightControls();
             UpdateNameEdit();
             UpdateFlavorTextEdit();
             UpdateSexControls();

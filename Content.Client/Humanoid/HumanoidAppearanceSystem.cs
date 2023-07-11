@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -37,10 +38,15 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         component.Sex = state.Sex;
         component.Species = state.Species;
         component.Age = state.Age;
+        component.Height = state.Height;
         component.SkinColor = state.SkinColor;
         component.EyeColor = state.EyeColor;
         component.HiddenLayers = new(state.HiddenLayers);
         component.PermanentlyHidden = new(state.PermanentlyHidden);
+
+        var species = _prototypeManager.Index<SpeciesPrototype>(state.Species);
+        var height = Math.Clamp(state.Height, species.MinHeight, species.MaxHeight); // should NOT be locked, at all
+        sprite.Scale = new Vector2(species.ScaleWidth ? height : 1f, height);
 
         component.CustomBaseLayers = state.CustomBaseLayers.ShallowClone();
 
@@ -73,7 +79,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         foreach (var (key, info) in component.CustomBaseLayers)
         {
             oldLayers.Remove(key);
-            SetLayerData(component, sprite, key, info.ID, sexMorph: false, color: info.Color); ;
+            SetLayerData(component, sprite, key, info.ID, sexMorph: false, color: info.Color);
         }
 
         // hide old layers

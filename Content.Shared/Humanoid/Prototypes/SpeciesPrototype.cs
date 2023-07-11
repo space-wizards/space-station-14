@@ -120,6 +120,30 @@ public sealed class SpeciesPrototype : IPrototype
     /// </summary>
     [DataField("maxAge")]
     public int MaxAge = 120;
+
+    /// <summary>
+    /// The minimum height for this species
+    /// </summary>
+    [DataField("minHeight")]
+    public float MinHeight = 0.6f;
+
+    /// <summary>
+    /// The default height for this species
+    /// </summary>
+    [DataField("defaultHeight")]
+    public float DefaultHeight = 1f;
+
+    /// <summary>
+    /// The maximum height for this species
+    /// </summary>
+    [DataField("maxHeight")]
+    public float MaxHeight = 1.2f;
+
+    /// <summary>
+    /// Whether to scale horizontally or not
+    /// </summary>
+    [DataField("scaleWidth")]
+    public bool ScaleWidth = true;
 }
 
 public enum SpeciesNaming : byte
