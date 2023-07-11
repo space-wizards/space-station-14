@@ -1,17 +1,23 @@
+using System.Linq;
+using Content.Server.Administration;
 using Content.Server.Stunnable;
 using Content.Server.UserInterface;
+using Content.Shared.Administration;
 using Content.Shared.Instruments;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Instruments;
 
 [UsedImplicitly]
 public sealed partial class InstrumentSystem : SharedInstrumentSystem
 {
+    [Dependency] private readonly IConsoleHost _conHost = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
@@ -28,6 +34,39 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
         SubscribeLocalEvent<InstrumentComponent, BoundUIClosedEvent>(OnBoundUIClosed);
         SubscribeLocalEvent<InstrumentComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
+
+        _conHost.RegisterCommand("addtoband", AddToBandCommand);
+    }
+
+    [AdminCommand(AdminFlags.Fun)]
+    private void AddToBandCommand(IConsoleShell shell, string argstr, string[] args)
+    {
+        if (!EntityUid.TryParse(args[0], out var firstUid))
+        {
+            shell.WriteError($"Cannot parse first Uid");
+            return;
+        }
+
+        if (!EntityUid.TryParse(args[1], out var secondUid))
+        {
+            shell.WriteError($"Cannot parse second Uid");
+            return;
+        }
+
+        if (!uint.TryParse(args[2], out var channel))
+        {
+            shell.WriteError($"Cannot parse MIDI Channel");
+            return;
+        }
+
+        var otherInstrument = Comp<InstrumentComponent>(secondUid);
+        otherInstrument.Playing = true;
+        otherInstrument.Dirty();
+
+        var instrument = Comp<InstrumentComponent>(firstUid);
+        instrument.Band[channel] ??= new HashSet<EntityUid>();
+        instrument.Band[channel].Add(secondUid);
+        instrument.Dirty();
     }
 
     private void OnMidiStart(InstrumentStartMidiEvent msg, EntitySessionEventArgs args)
@@ -165,12 +204,12 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             send = false;
         }
 
+        instrument.LastSequencerTick = Math.Max(maxTick, minTick);
+
         if (send || !instrument.RespectMidiLimits)
         {
             RaiseNetworkEvent(msg);
         }
-
-        instrument.LastSequencerTick = Math.Max(maxTick, minTick);
     }
 
     public override void Update(float frameTime)

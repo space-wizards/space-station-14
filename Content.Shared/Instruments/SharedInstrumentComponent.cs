@@ -25,6 +25,9 @@ public abstract class SharedInstrumentComponent : Component
     [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
     public bool RespectMidiLimits { get; set; } = true;
 
+    [ViewVariables]
+    public HashSet<EntityUid>[] Band = new HashSet<EntityUid>[16];
+
     [ViewVariables(VVAccess.ReadWrite)]
     [Access(typeof(SharedInstrumentSystem), Other = AccessPermissions.ReadWrite)] // FIXME Friends
     public bool DirtyRenderer { get; set; }
@@ -84,8 +87,9 @@ public sealed class InstrumentState : ComponentState
     public bool AllowPercussion { get; }
     public bool AllowProgramChange { get; }
     public bool RespectMidiLimits { get; }
+    public EntityUid[][] Band { get; }
 
-    public InstrumentState(bool playing, byte instrumentProgram, byte instrumentBank, bool allowPercussion, bool allowProgramChange, bool respectMidiLimits)
+    public InstrumentState(bool playing, byte instrumentProgram, byte instrumentBank, bool allowPercussion, bool allowProgramChange, bool respectMidiLimits, EntityUid[][] band)
     {
         Playing = playing;
         InstrumentProgram = instrumentProgram;
@@ -93,6 +97,7 @@ public sealed class InstrumentState : ComponentState
         AllowPercussion = allowPercussion;
         AllowProgramChange = allowProgramChange;
         RespectMidiLimits = respectMidiLimits;
+        Band = band;
     }
 }
 

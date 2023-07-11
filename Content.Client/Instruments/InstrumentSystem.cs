@@ -268,6 +268,29 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
         var currentTick = renderer.SequencerTick;
 
+        for (var i = 0; i < instrument.Band.Length; i++)
+        {
+            var otherInstruments = instrument.Band[i];
+
+            if (otherInstruments == null || otherInstruments.Count == 0)
+                continue;
+
+            var channelEvents = midiEv.MidiEvent
+                .Where(e => e.Channel == i)
+                .ToArray();
+
+            if (channelEvents.Length == 0)
+                continue;
+
+            foreach (var otherUid in otherInstruments)
+            {
+                if (!HasComp<InstrumentComponent>(otherUid))
+                    continue;
+
+                OnMidiEventRx(new InstrumentMidiEventEvent(otherUid, channelEvents));
+            }
+        }
+
         // ReSharper disable once ForCanBeConvertedToForeach
         for (uint i = 0; i < midiEv.MidiEvent.Length; i++)
         {
