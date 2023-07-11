@@ -125,6 +125,10 @@
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
+  - type: Construction
+    graph: ShotgunSawnRubber
+    node: start
+    deconstructionTarget: null
 
 - type: entity
   name: Enforcer
@@ -170,6 +174,20 @@
   - type: Construction
     graph: ShotgunSawn
     node: shotgunsawn
+    deconstructionTarget: null
+
+- type: entity
+  name: sawn-off shogun
+  parent: WeaponShotgunSawn
+  id: WeaponShotgunSawnRubber
+  description: Groovy! Uses .50 shotgun shells.
+  suffix: Non-Lethal
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBeanbag
+  - type: Construction
+    graph: ShotgunSawnRubber
+    node: shotgunsawnrubber
     deconstructionTarget: null
 
 - type: entity

@@ -10,3 +10,16 @@
               doAfter: 2
     - node: shotgunsawn
       entity: WeaponShotgunSawn
+
+- type: constructionGraph
+  id: ShotgunSawnRubber
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shotgunsawnrubber
+          steps:
+            - tool: Sawing
+              doAfter: 2
+    - node: shotgunsawnrubber
+      entity: WeaponShotgunSawnRubber
