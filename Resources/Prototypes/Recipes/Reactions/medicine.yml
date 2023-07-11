@@ -154,7 +154,9 @@
 - type: reaction
   id: Ipecac
   reactants:
-    Dylovene:
+    Potassium:
+      amount: 1
+    Nitrogen:
       amount: 1
     Ammonia:
       amount: 1
@@ -219,6 +221,17 @@
       amount: 2
   products:
     Ambuzol: 4
+
+- type: reaction
+  id: AmbuzolPlus
+  reactants:
+    Ambuzol:
+      amount: 5
+    ZombieBlood:
+      amount: 15
+  products:
+    Blood: 15
+    AmbuzolPlus: 5
 
 - type: reaction
   id: Synaptizine

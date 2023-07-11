@@ -1531,12 +1531,10 @@ entities:
     - type: RadiationGridResistance
     - type: OccluderTree
     - type: Shuttle
-    - nextShake: 0
-      shakeTimes: 10
+    - shakeTimes: 10
       type: GravityShake
     - type: GasTileOverlay
-    - nextUpdate: 0
-      type: SpreaderGrid
+    - type: SpreaderGrid
     - type: GridPathfinding
   - uid: 1295
     components:
@@ -1797,12 +1795,6 @@ entities:
     - pos: 1.5,-12.5
       parent: 104
       type: Transform
-  - uid: 1383
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 11.5,-1.5
-      parent: 104
-      type: Transform
   - uid: 1470
     components:
     - rot: 3.141592653589793 rad
@@ -2038,6 +2030,18 @@ entities:
       pos: 7.5,-3.5
       parent: 104
       type: Transform
+- proto: Beaker
+  entities:
+  - uid: 2031
+    components:
+    - pos: 3.419857,-11.512698
+      parent: 104
+      type: Transform
+  - uid: 2095
+    components:
+    - pos: 3.669857,-11.387698
+      parent: 104
+      type: Transform
 - proto: BedsheetMedical
   entities:
   - uid: 1872
@@ -2075,6 +2079,13 @@ entities:
       pos: 2.5,-8.5
       parent: 104
       type: Transform
+- proto: BoxBeaker
+  entities:
+  - uid: 2114
+    components:
+    - pos: 3.622982,-12.387698
+      parent: 104
+      type: Transform
 - proto: BoxFolderBlack
   entities:
   - uid: 1022
@@ -2101,6 +2112,13 @@ entities:
   - uid: 155
     components:
     - pos: 10.5,-4.5
+      parent: 104
+      type: Transform
+- proto: BoxPillCanister
+  entities:
+  - uid: 1844
+    components:
+    - pos: 3.451107,-12.293948
       parent: 104
       type: Transform
 - proto: BoxShotgunPractice
@@ -5472,6 +5490,13 @@ entities:
     - pos: 3.6284866,-17.287361
       parent: 104
       type: Transform
+- proto: ChemistryHotplate
+  entities:
+  - uid: 1383
+    components:
+    - pos: 4.5,-12.5
+      parent: 104
+      type: Transform
 - proto: ClosetEmergencyFilledRandom
   entities:
   - uid: 1359
@@ -5734,6 +5759,13 @@ entities:
   - uid: 2438
     components:
     - pos: 10.5,-3.5
+      parent: 104
+      type: Transform
+    - fixtures: {}
+      type: Fixtures
+  - uid: 2443
+    components:
+    - pos: 4.5,-11.5
       parent: 104
       type: Transform
     - fixtures: {}
@@ -6202,9 +6234,16 @@ entities:
       type: Transform
 - proto: KitchenReagentGrinder
   entities:
-  - uid: 507
+  - uid: 1257
     components:
-    - pos: 3.5,-11.5
+    - pos: 3.5,-10.5
+      parent: 104
+      type: Transform
+- proto: LargeBeaker
+  entities:
+  - uid: 2021
+    components:
+    - pos: 3.435482,-11.231448
       parent: 104
       type: Transform
 - proto: LightPostSmall
@@ -11430,6 +11469,13 @@ entities:
     - pos: 12.5,-3.5
       parent: 104
       type: Transform
+- proto: PosterLegitAnatomyPoster
+  entities:
+  - uid: 2320
+    components:
+    - pos: 2.5,-11.5
+      parent: 104
+      type: Transform
 - proto: PosterLegitCleanliness
   entities:
   - uid: 955
@@ -11503,6 +11549,16 @@ entities:
     - pos: 5.5,-8.5
       parent: 104
       type: Transform
+- proto: Poweredlight
+  entities:
+  - uid: 1333
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 13.5,-0.5
+      parent: 104
+      type: Transform
+    - enabled: False
+      type: AmbientSound
 - proto: Rack
   entities:
   - uid: 472
@@ -12669,6 +12725,18 @@ entities:
       pos: 10.5,-14.5
       parent: 104
       type: Transform
+  - uid: 507
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 11.5,-1.5
+      parent: 104
+      type: Transform
+  - uid: 1334
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 12.5,-1.5
+      parent: 104
+      type: Transform
   - uid: 1369
     components:
     - rot: -1.5707963267948966 rad
@@ -12685,11 +12753,6 @@ entities:
     components:
     - rot: -1.5707963267948966 rad
       pos: 14.5,-14.5
-      parent: 104
-      type: Transform
-  - uid: 2320
-    components:
-    - pos: 11.5,0.5
       parent: 104
       type: Transform
 - proto: StoolBar
@@ -13269,6 +13332,15 @@ entities:
     - pos: -10.5,7.5
       parent: 104
       type: Transform
+- proto: VendingMachineChemicals
+  entities:
+  - uid: 1335
+    components:
+    - flags: SessionSpecific
+      type: MetaData
+    - pos: 4.5,-10.5
+      parent: 104
+      type: Transform
 - proto: VendingMachineCigs
   entities:
   - uid: 117
@@ -13311,6 +13383,15 @@ entities:
     - flags: SessionSpecific
       type: MetaData
     - pos: 6.5,0.5
+      parent: 104
+      type: Transform
+- proto: VendingMachineSyndieDrobe
+  entities:
+  - uid: 1299
+    components:
+    - flags: SessionSpecific
+      type: MetaData
+    - pos: 11.5,0.5
       parent: 104
       type: Transform
 - proto: VendingMachineTankDispenserEVA
