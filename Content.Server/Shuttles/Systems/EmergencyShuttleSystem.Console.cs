@@ -72,7 +72,10 @@ public sealed partial class EmergencyShuttleSystem
     /// </summary>
     private bool _launchedShuttles;
 
-    private bool _leftShuttles;
+    /// <summary>
+    /// Have the emergency shuttles left for CentCom?
+    /// </summary>
+    public bool ShuttlesLeft;
 
     /// <summary>
     /// Have we announced the launch?
@@ -219,9 +222,9 @@ public sealed partial class EmergencyShuttleSystem
         }
 
         // Departed
-        if (!_leftShuttles && _consoleAccumulator <= 0f)
+        if (!ShuttlesLeft && _consoleAccumulator <= 0f)
         {
-            _leftShuttles = true;
+            ShuttlesLeft = true;
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{TransitTime:0}")));
 
             Timer.Spawn((int) (TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken?.Token ?? default);
@@ -319,7 +322,7 @@ public sealed partial class EmergencyShuttleSystem
     {
         _announced = false;
         _roundEndCancelToken = null;
-        _leftShuttles = false;
+        ShuttlesLeft = false;
         _launchedShuttles = false;
         _consoleAccumulator = float.MinValue;
         EarlyLaunchAuthorized = false;

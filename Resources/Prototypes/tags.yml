@@ -150,6 +150,9 @@
   id: Catwalk
 
 - type: Tag
+  id: Chicken
+
+- type: Tag
   id: Cigarette
 
 - type: Tag
@@ -175,6 +178,9 @@
 
 - type: Tag #Ohioans die happy
   id: Corn
+
+- type: Tag
+  id: Cow
 
 - type: Tag
   id: Crayon
@@ -264,6 +270,9 @@
   id: DroneUsable
 
 - type: Tag
+  id: Duck
+
+- type: Tag
   id: Ectoplasm
 
 - type: Tag
@@ -343,6 +352,9 @@
 
 - type: Tag
   id: GlassShard
+
+- type: Tag
+  id: Goat
 
 - type: Tag
   id: Grenade
@@ -606,6 +618,9 @@
 
 - type: Tag
   id: Pie
+
+- type: Tag
+  id: Pig
 
 - type: Tag
   id: PillCanister
