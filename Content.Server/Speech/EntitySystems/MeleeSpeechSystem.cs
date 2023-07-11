@@ -4,7 +4,6 @@ using Content.Shared.Actions;
 using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Database;
-//using Content.Client.Weapons.Melee.UI;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -40,7 +39,7 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
         if (component.ConfigureAction != null)
             _actionSystem.AddAction(uid, component.ConfigureAction, uid);
     }
-
+    
     private void OnGetActions(EntityUid uid, MeleeSpeechComponent component, GetItemActionsEvent args)
     {
         if (component.ConfigureAction != null)
@@ -80,17 +79,8 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
 
         if (!_uiSystem.TryToggleUi(storeEnt, MeleeSpeechUiKey.Key, actor.PlayerSession))
             return;
-
-        //UpdateUserInterface(user, storeEnt, component);
     }
-    /* private bool TryOpenUi(EntityUid uid, MeleeSpeechComponent comp, MeleeSpeechConfigureActionEvent args)
-     {
 
-         if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor)) return false;
-
-         return _uiSystem.TryToggleUi(uid, comp.MeleeSpeechUiKey, actor.PlayerSession);
-     }
-    */
 
     /// <summary>
     /// Attempts to change the battlecry of an entity.

@@ -30,8 +30,8 @@ public sealed partial class MeleeSpeechComponent : Component
         UseDelay = TimeSpan.FromSeconds(4),
         Icon = new SpriteSpecifier.Texture(new("Clothing/Hands/Gloves/northstar.rsi/icon.png")),
         //ItemIconStyle = NoItem,
-        DisplayName = "mime-invisible-wall",
-        Description = "mime-invisible-wall-desc",
+        DisplayName = "melee-speech-config",
+        Description = "melee-speech-config-desc",
         Priority = -20,
         Event = new MeleeSpeechConfigureActionEvent(),
     };
