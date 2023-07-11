@@ -1,8 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using Content.Server.Stunnable;
+﻿using Content.Server.Stunnable;
 using Content.Shared.Inventory;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -43,7 +40,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnItemInSlotTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
             var server = pairTracker.Pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
@@ -54,21 +51,27 @@ namespace Content.IntegrationTests.Tests
                 var human = sEntities.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
                 var invSystem = systemMan.GetEntitySystem<InventorySystem>();
 
-                // Can't do the test if this human doesn't have the slots for it.
-                Assert.That(invSystem.HasSlot(human, "jumpsuit"));
-                Assert.That(invSystem.HasSlot(human, "id"));
+                Assert.Multiple(() =>
+                {
+                    // Can't do the test if this human doesn't have the slots for it.
+                    Assert.That(invSystem.HasSlot(human, "jumpsuit"));
+                    Assert.That(invSystem.HasSlot(human, "id"));
+                });
 
                 Assert.That(invSystem.SpawnItemInSlot(human, "jumpsuit", "InventoryJumpsuitJanitorDummy", true));
 
+#pragma warning disable NUnit2045
                 // Do we actually have the uniform equipped?
                 Assert.That(invSystem.TryGetSlotEntity(human, "jumpsuit", out var uniform));
                 Assert.That(sEntities.GetComponent<MetaDataComponent>(uniform.Value).EntityPrototype is
                 {
                     ID: "InventoryJumpsuitJanitorDummy"
                 });
+#pragma warning restore NUnit2045
 
                 systemMan.GetEntitySystem<StunSystem>().TryStun(human, TimeSpan.FromSeconds(1f), true);
 
+#pragma warning disable NUnit2045
                 // Since the mob is stunned, they can't equip this.
                 Assert.That(invSystem.SpawnItemInSlot(human, "id", "InventoryIDCardDummy", true), Is.False);
 
@@ -82,6 +85,7 @@ namespace Content.IntegrationTests.Tests
                 {
                     ID: "InventoryIDCardDummy"
                 });
+#pragma warning restore NUnit2045
             });
             await pairTracker.CleanReturnAsync();
         }

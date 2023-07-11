@@ -14,7 +14,7 @@ namespace Content.Tools
             var based = new Map(args[1]); // On what?
             var other = new Map(args[2]);
 
-            if ((ours.GridsNode.Children.Count != 1) || (based.GridsNode.Children.Count != 1) || (other.GridsNode.Children.Count != 1))
+            if (ours.GridsNode.Children.Count != 1 || based.GridsNode.Children.Count != 1 || other.GridsNode.Children.Count != 1)
             {
                 Console.WriteLine("one or more files had an amount of grids not equal to 1");
                 Environment.Exit(1);

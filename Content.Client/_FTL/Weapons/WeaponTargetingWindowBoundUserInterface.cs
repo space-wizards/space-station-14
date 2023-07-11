@@ -9,7 +9,7 @@ public sealed class WeaponTargetingBoundUserInterface : BoundUserInterface
     [Dependency] private EntityManager _entityManager = default!;
     private WeaponTargetingWindow? _window;
 
-    public WeaponTargetingBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public WeaponTargetingBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
 
     }
@@ -20,7 +20,7 @@ public sealed class WeaponTargetingBoundUserInterface : BoundUserInterface
         _window?.Close();
         EntityUid? gridUid = null;
 
-        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<TransformComponent>(Owner.Owner, out var xform))
+        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<TransformComponent>(Owner, out var xform))
         {
             gridUid = xform.GridUid;
         }

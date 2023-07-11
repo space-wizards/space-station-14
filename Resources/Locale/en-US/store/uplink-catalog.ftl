@@ -15,7 +15,7 @@ uplink-esword-name = Energy Sword
 uplink-esword-desc = A very dangerous energy sword that can reflect shots. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
 
 uplink-esword-double-name = Double Bladed Energy Sword
-uplink-esword-double-desc = A much more expensive counter part to the normal energy sword: with a much higher reflection chance, larger attack angle, higher structural damage, and faster swing, all at the cost of lower heat and slash damage. Makes a lot of noise when used or turned on. 
+uplink-esword-double-desc = A much more expensive counter part to the normal energy sword: with a much higher reflection chance, larger attack angle, higher structural damage, and faster swing, all at the cost of lower heat and slash damage. Makes a lot of noise when used or turned on.
 
 uplink-edagger-name = Energy Dagger
 uplink-edagger-desc = A small energy blade conveniently disguised in the form of a pen.
@@ -233,6 +233,9 @@ uplink-stimkit-desc = A medkit containing 6 stimulant microinjectors, which each
 
 uplink-syndicate-segway-crate-name = Syndicate Segway
 uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!
+
+uplink-syndicate-sponge-box-name = Syndicate Sponge Box
+uplink-syndicate-sponge-box-desc = A box containing 6 syndicate sponges disguised as monkey cubes, these cubes turn into a variety of angry wildlife after coming into contact with water.
 
 # Pointless
 uplink-revolver-cap-gun-name = Cap Gun

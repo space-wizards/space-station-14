@@ -95,7 +95,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/chemistry.rsi
-    
+
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelVirology
@@ -104,7 +104,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/virology.rsi
-    
+
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelGenetics

@@ -45,16 +45,17 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] private   readonly RechargeBasicEntityAmmoSystem _recharge = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
-    [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
-    [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
-    [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
-    [Dependency] protected readonly TagSystem TagSystem = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
+    [Dependency] protected readonly SharedPointLightSystem Lights = default!;
+    [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
+    [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] protected readonly SharedProjectileSystem Projectiles = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
+    [Dependency] protected readonly TagSystem TagSystem = default!;
+    [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -409,7 +410,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         var fromMap = fromCoordinates.ToMapPos(EntityManager, TransformSystem);
         var toMap = toCoordinates.ToMapPos(EntityManager, TransformSystem);
-        var shotDirection = (toMap - fromMap).Normalized;
+        var shotDirection = (toMap - fromMap).Normalized();
 
         const float impulseStrength = 25.0f;
         var impulseVector =  shotDirection * impulseStrength;

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
@@ -46,8 +47,6 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-
 
     public override void Initialize()
     {

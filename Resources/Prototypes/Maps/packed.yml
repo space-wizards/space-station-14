@@ -1,0 +1,20 @@
+- type: gameMap
+  id: Packed
+  mapName: 'Packed'
+  mapPath: /Maps/packed.yml
+  minPlayers: 5
+  maxPlayers: 50
+  stations:
+    Packed:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Packed {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'VG'
+        - type: StationJobs
+          overflowJobs:
+            - Passenger
+          availableJobs:
+            Passenger: [ -1, -1 ]

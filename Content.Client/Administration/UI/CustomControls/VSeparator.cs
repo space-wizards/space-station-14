@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics;
+﻿using System.Numerics;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
 
@@ -10,7 +11,7 @@ public sealed class VSeparator : PanelContainer
 
     public VSeparator(Color color)
     {
-        MinSize = (2, 5);
+        MinSize = new Vector2(2, 5);
 
         AddChild(new PanelContainer
         {
