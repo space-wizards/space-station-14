@@ -5,6 +5,7 @@ using Content.Server.Station.Systems;
 using Robust.Server.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server._FTL.FTLPoints.Effects;
 

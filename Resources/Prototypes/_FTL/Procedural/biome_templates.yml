@@ -1,0 +1,56 @@
+- type: biomeTemplate
+  id: Flesh
+  layers:
+    # Spawn blockers
+    - !type:BiomeEntityLayer
+      threshold: 0.95
+      noise:
+        seed: 0
+        frequency: 2
+        noiseType: OpenSimplex2
+      allowedTiles:
+        - FloorPlanetFlesh
+      entities:
+        - FleshBlocker
+    # Blood
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - FloorPlanetFlesh
+      threshold: 0.95
+      noise:
+        seed: 3
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+        - FloorBloodEntity
+    # Fill layer
+    - !type:BiomeTileLayer
+      threshold: -1
+      variants:
+        - 0
+      tile: FloorPlanetFlesh
+    - !type:BiomeTileLayer
+      threshold: 0.6
+      tile: FloorPlanetFlesh
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 0.1
+    # Fauna spawn
+    - !type:BiomeEntityLayer
+      threshold: 0.87
+      anchored: false
+      noise:
+        seed: 0
+        frequency: 4
+        noiseType: OpenSimplex2
+      allowedTiles:
+        - FloorPlanetFlesh
+      entities:
+        - MobFleshJared
+        - MobFleshGolem
+        - MobFleshClamp
+        - MobFleshLover

@@ -1,0 +1,13 @@
+- type: tile
+  id: FloorPlanetFlesh
+  name: tiles-flesh-floor
+  sprite: /Textures/Tiles/meat.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: BarestepCarpet
+  friction: 0.05 #slippy
+  heatCapacity: 10000
+  weather: true

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server._FTL.FTLPoints;
 using Content.Server.Administration;
 using Content.Shared.Administration;
@@ -16,7 +17,7 @@ public sealed class GeneratePointCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (_prototypeManager.TryIndex<FTLPointPrototype>(args[0], out var prototype))
+        if (args.Count() == 1 && _prototypeManager.TryIndex<FTLPointPrototype>(args[0], out var prototype))
         {
             _entityManager.System<FTLPointsSystem>().GenerateDisposablePoint(prototype);
             shell.WriteLine("Generated FTL point.");

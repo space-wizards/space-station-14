@@ -51,6 +51,20 @@
         - Snow
         - LowDesert
         - Caves
+        - Flesh
+    - !type:AddWeatherEffect
+      probability: 0.75
+      weatherPrototypes:
+        - Ashfall # reason why we don't have any of the thicker ones is because they completely obstruct the tile
+        - AshfallLight
+        - Fallout
+        - Hail
+        - Rain
+        - Sandstorm
+        - SnowfallLight
+        - SnowfallMedium
+        - Storm
+        - Blood
     - !type:SpawnDungeonEffect
       range: 75
 

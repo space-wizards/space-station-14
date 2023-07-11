@@ -1,0 +1,10 @@
+- type: weather
+  id: Blood
+  sprite:
+    sprite: /Textures/_FTL/Effects/weather.rsi
+    state: blood
+  sound:
+    path: /Audio/Effects/Weather/rain_heavy.ogg
+    params:
+      loop: true
+      volume: -6
