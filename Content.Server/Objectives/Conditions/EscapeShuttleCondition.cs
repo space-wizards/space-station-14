@@ -44,22 +44,7 @@ namespace Content.Server.Objectives.Conditions
                     && cuffed.CuffedHandCount > 0)
                 {
                     // You're not escaping if you're restrained!
-                    agentIsEscaping = false;
-                }
-                if (entMan.TryGetComponent<ZombieComponent>(_mind.OwnedEntity, out _))
-                {
-                    // You're not escaping if you're zombie
-                    agentIsEscaping = false;
-                }
-
-                // Any emergency shuttle counts for this objective.
-                foreach (var stationData in entMan.EntityQuery<StationEmergencyShuttleComponent>())
-                {
-                    if (IsAgentOnShuttle(xform, stationData.EmergencyShuttle))
-                    {
-                        shuttleContainsAgent = true;
-                        break;
-                    }
+                    return 0f;
                 }
 
                 // Any emergency shuttle counts for this objective, but not pods.
