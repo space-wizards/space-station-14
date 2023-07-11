@@ -1,0 +1,131 @@
+- type: cargoProduct
+  id: MissilesT1
+  icon:
+    sprite: _FTL/Structures/Weapons/silo.rsi
+    state: closed
+  product: CrateT1Missiles
+  cost: 2500
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: MissilesT2
+  icon:
+    sprite: _FTL/Structures/Weapons/silo.rsi
+    state: closed
+  product: CrateT2Missiles
+  cost: 5000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: MissilesT3
+  icon:
+    sprite: _FTL/Structures/Weapons/silo.rsi
+    state: closed
+  product: CrateT3Missiles
+  cost: 10000
+  category: Security
+  group: market
+
+# Non-silofed
+- type: cargoProduct
+  id: NavalWeaponBasicLaser
+  icon:
+    sprite: _FTL/Structures/Weapons/silo.rsi
+    state: closed
+  product: WeaponBasicLaser
+  cost: 4000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: NavalWeaponDualLaser
+  icon:
+    sprite: _FTL/Structures/Weapons/silo.rsi
+    state: closed
+  product: WeaponDualLaser
+  cost: 5000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: NavalWeaponBurstLaserMkI
+  icon:
+    sprite: _FTL/Structures/Weapons/silo.rsi
+    state: closed
+  product: WeaponBurstLaserMkI
+  cost: 6000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: NavalWeaponBurstLaserMkII
+  icon:
+    sprite: _FTL/Structures/Weapons/silo.rsi
+    state: closed
+  product: WeaponBurstLaserMkII
+  cost: 8000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: NavalWeaponFlakGunMkI
+  icon:
+    sprite: _FTL/Structures/Weapons/silo.rsi
+    state: closed
+  product: WeaponFlakGunMkI
+  cost: 12000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: NavalWeaponFlakGunMkII
+  icon:
+    sprite: _FTL/Structures/Weapons/silo.rsi
+    state: closed
+  product: WeaponFlakGunMkII
+  cost: 14000
+  category: Security
+  group: market
+
+# Silo
+- type: cargoProduct
+  id: NavalBasicMissileSilo
+  icon:
+    sprite: _FTL/Structures/Weapons/silo.rsi
+    state: closed
+  product: BasicMissileSilo
+  cost: 2000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: NavalArtemisMarkIWeaponSilo
+  icon:
+    sprite: _FTL/Structures/Weapons/silo.rsi
+    state: closed
+  product: ArtemisMarkIWeaponSilo
+  cost: 5000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: NavalArtemisMarkIIWeaponSilo
+  icon:
+    sprite: _FTL/Structures/Weapons/silo.rsi
+    state: closed
+  product: ArtemisMarkIIWeaponSilo
+  cost: 6000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: NavalSwarmMarkOneMissileSilo
+  icon:
+    sprite: _FTL/Structures/Weapons/silot2.rsi
+    state: closed
+  product: SwarmMarkOneMissileSilo
+  cost: 8000
+  category: Security
+  group: market
