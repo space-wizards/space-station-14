@@ -1,15 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: PKA bullets can now destroy gatherable materials such as rocks or trees.,
-    type: Add}
-  id: 3726
-  time: '2023-05-11T13:19:09.0000000+00:00'
-- author: juliangiebel
-  changes:
-  - {message: Fixed not being able to link blast doors and shutters, type: Fix}
-  id: 3727
-  time: '2023-05-11T22:16:02.0000000+00:00'
 - author: freeman2651
   changes:
   - {message: Added ChemVends for (limited) bulk chemical storage and dispensing.,
@@ -2945,3 +2934,13 @@ Entries:
   - {message: Minor tweak to mercenary item sprites, type: Tweak}
   id: 4225
   time: '2023-07-11T19:32:39.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: Made glass tiles look different, type: Tweak}
+  id: 4226
+  time: '2023-07-11T19:34:07.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: Syndicate sponge boxes now cost 7 tc to purchase, type: Tweak}
+  id: 4227
+  time: '2023-07-11T19:34:21.0000000+00:00'
