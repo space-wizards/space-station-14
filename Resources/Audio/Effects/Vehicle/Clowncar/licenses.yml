@@ -1,0 +1,4 @@
+- files: ["clowncar_activate_cannon.ogg", "clowncar_crash2.ogg", "clowncar_load1.ogg", "clowncar_ram2.ogg", "clowncar_deactivate_cannon.ogg", "clowncar_crashpins.ogg", "clowncar_load2.ogg", "clowncar_ram3.ogg", "clowncar_crash1.ogg", "clowncar_fart.ogg", "clowncar_ram1.ogg", "clowncar_cannonfire1", "clowncar_cannonfire2", "clowncar_cannonfire3"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Floyd/Qustinnus for tgstation, converted to mono"
+  source: "https://github.com/tgstation/tgstation/blob/7cf5a73771672bb13988a6316c6ced57a113d2d6/sound/vehicles/"

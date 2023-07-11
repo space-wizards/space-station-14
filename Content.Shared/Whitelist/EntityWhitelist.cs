@@ -38,6 +38,12 @@ namespace Content.Shared.Whitelist
         public List<string>? Tags = null;
 
         /// <summary>
+        ///    Entities that are allowed in the whitelist
+        /// </summary>
+        [DataField("entities")]
+        public List<EntityUid>? Entities = null;
+
+        /// <summary>
         ///     If false, an entity only requires one of these components or tags to pass the whitelist. If true, an
         ///     entity requires to have ALL of these components and tags to pass.
         /// </summary>
@@ -92,6 +98,21 @@ namespace Content.Shared.Whitelist
             {
                 var tagSystem = entityManager.System<TagSystem>();
                 return RequireAll ? tagSystem.HasAllTags(tags, Tags) : tagSystem.HasAnyTag(tags, Tags);
+            }
+
+            if (Entities != null)
+            {
+                foreach (var entity in Entities)
+                {
+                    if (uid == entity)
+                    {
+                        if (!RequireAll)
+                            return true;
+                    }
+                    else if (RequireAll)
+                        return false;
+                }
+
             }
 
             return false;

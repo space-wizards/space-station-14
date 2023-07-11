@@ -29,6 +29,7 @@
         variation: 0.125
   - type: Tag
     tags:
+    - VehicleKey
     - Payload # yes, you can make re-usable prank grenades
     - BikeHorn
   - type: MeleeWeapon

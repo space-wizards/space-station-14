@@ -1,0 +1,22 @@
+- type: soundCollection
+  id: ClowncarLoad
+  files:
+  - /Audio/Effects/Vehicle/Clowncar/clowncar_load1.ogg
+  - /Audio/Effects/Vehicle/Clowncar/clowncar_load2.ogg
+  - /Audio/Effects/Vehicle/Clowncar/clowncar_ram1.ogg
+  - /Audio/Effects/Vehicle/Clowncar/clowncar_ram2.ogg
+  - /Audio/Effects/Vehicle/Clowncar/clowncar_ram3.ogg
+
+- type: soundCollection
+  id: ClowncarCrash
+  files:
+  - /Audio/Effects/Vehicle/Clowncar/clowncar_crash1.ogg
+  - /Audio/Effects/Vehicle/Clowncar/clowncar_crash2.ogg
+  - /Audio/Effects/Vehicle/Clowncar/clowncar_crashpins.ogg
+
+- type: soundCollection
+  id: ClowncarCannonFire
+  files:
+  - /Audio/Effects/Vehicle/Clowncar/clowncar_cannonfire1.ogg
+  - /Audio/Effects/Vehicle/Clowncar/clowncar_cannonfire2.ogg
+  - /Audio/Effects/Vehicle/Clowncar/clowncar_cannonfire3.ogg

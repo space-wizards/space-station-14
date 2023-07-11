@@ -1,0 +1,167 @@
+- type: entity
+  id: ClowncarCannon
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
+    layers:
+      - state: icon
+  - type: Physics
+    bodyType: Dynamic
+  - type: Item
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+      - FullAuto
+    soundGunshot:
+      collection: ClowncarCannonFire
+    soundEmpty:
+      path: /Audio/Items/hiss.ogg
+  - type: ContainerAmmoProvider
+    container: clowncar_container
+  - type: Unremoveable
+  - type: ClowncarCannon
+
+- type: entity
+  parent: BaseVehicle
+  id: VehicleClowncarBase
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Vehicles/clowncar.rsi
+    layers:
+      - state: clowncar
+        map: ["enum.ClowncarLayers.Base"]
+    netsync: false
+    noRot: true
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 360
+        restitution: 0.0
+        mask:
+          - MachineMask
+        layer:
+          - MachineLayer
+  - type: DoAfter
+  - type: Strap
+    buckleOffset: "0.10, 0.36"
+    maxBuckleDistance: 1
+    unbuckleSound:
+      collection: ClowncarCrash
+    allowedEntities:
+      components:
+      - Clumsy
+  - type: Vehicle
+    northOverride: -0.1
+    southOverride: 0.1
+    hideRider: true
+    autoAnimate: false
+  - type: Clowncar
+    cannonActivateSound:
+      path: "/Audio/Effects/Vehicle/Clowncar/clowncar_activate_cannon.ogg"
+      params:
+        volume: 5
+    cannonDeactivateSound:
+      path: "/Audio/Effects/Vehicle/Clowncar/clowncar_deactivate_cannon.ogg"
+      params:
+        volume: 5
+  - type: MovementSpeedModifier
+    weightlessModifier: 0
+    acceleration: 1
+    friction: 1
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 7
+  - type: InsertOnDrag
+    container: clowncar_container
+    delay: 2
+  - type: RemoveFromContainerOnCollide
+    container: clowncar_container
+    requiredVelocity: 3
+    removeEverything: true
+    collidableEntities:
+      components:
+        - HumanoidAppearance
+        - KnockedDown
+        - Item
+        - SlowContacts
+        - Puddle
+        - Airlock
+        - Door
+        - Strap
+  - type: ExtendedContainer
+    containers:
+      clowncar_container:
+        capacity: 50
+        insertSound:
+            collection: ClowncarLoad
+            params:
+              volume: 4
+        removeSound:
+            collection: ClowncarCrash
+  - type: ItemSlots
+    slots:
+      key_slot:
+        name: Keys
+        whitelist:
+          requireAll: true
+          tags:
+          - VehicleKey
+          - BikeHorn
+        insertSound:
+          path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          params:
+            volume: -3
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+  - type: PointLight
+    enabled: false
+    radius: 3.5
+    softness: 2
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+
+- type: entity
+  parent: VehicleClowncarBase
+  id: VehicleClowncarAntag
+  name: clown car
+  description: How someone could even fit in there is byond me.
+  components:
+    - type: InsertToContainerOnCollide
+      container: clowncar_container
+      requiredVelocity: 3
+      insertableEntities:
+        components:
+          - HumanoidAppearance
+      blacklistedEntities:
+        components:
+          - KnockedDown
+
+- type: entity
+  parent: VehicleClowncarBase
+  id: VehicleClowncarTrainee
+  name: trainee clown car
+  description: Carry mostly willing passengers around! Be careful with collisions!.
+  components:
+    - type: ExtendedContainer
+      containers:
+        clowncar_container:
+          capacity: 6
+          insertSound:
+            collection: ClowncarLoad
+            params:
+              volume: 4
+          removeSound:
+            collection: ClowncarCrash

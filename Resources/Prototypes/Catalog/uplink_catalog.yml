@@ -722,6 +722,24 @@
       components:
       - SurplusBundle
 
+- type: listing
+  id: uplinkClowncar
+  name: uplink-clowncar-name
+  description: uplink-clowncar-desc
+  productEntity: VehicleClowncarAntag
+  cost:
+    Telecrystal: 12
+  categories:
+    - UplinkJob
+  conditions:
+    - !type:BuyerJobCondition
+      whitelist:
+        - Clown
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
+
 # Armor
 
 - type: listing
