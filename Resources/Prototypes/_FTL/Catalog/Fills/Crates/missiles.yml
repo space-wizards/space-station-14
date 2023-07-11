@@ -1,0 +1,26 @@
+- type: entity
+  id: CrateT1Missiles
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: GenericMissile
+          amount: 10
+
+- type: entity
+  id: CrateT2Missiles
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: TierTwoMissile
+          amount: 10
+
+- type: entity
+  id: CrateT3Missiles
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: TierThreeMissile
+          amount: 10
