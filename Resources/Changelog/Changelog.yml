@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Botany's produce is now larger on average., type: Tweak}
-  id: 3724
-  time: '2023-05-11T11:15:21.0000000+00:00'
 - author: themias
   changes:
   - {message: Mob sprites no longer rotate on death, type: Fix}
@@ -2944,3 +2939,9 @@ Entries:
   - {message: 'Fixed: clown mask cannot be used for H.O.N.K. construction', type: Fix}
   id: 4223
   time: '2023-07-10T18:33:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Aberrant flesh now smash through obstacles while trying to reach players.,
+    type: Add}
+  id: 4224
+  time: '2023-07-11T04:02:04.0000000+00:00'
