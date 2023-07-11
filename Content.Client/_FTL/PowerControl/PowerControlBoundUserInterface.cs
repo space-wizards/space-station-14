@@ -10,7 +10,7 @@ namespace Content.Client._FTL.PowerControl
     {
         private PowerControlWindow? _window;
 
-        public PowerControlBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base (owner, uiKey) {}
+        public PowerControlBoundUserInterface(EntityUid owner, Enum uiKey) : base (owner, uiKey) {}
 
         protected override void Open()
         {

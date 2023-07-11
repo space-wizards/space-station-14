@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
@@ -13,7 +14,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
-using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Client._FTL.Weapons;
 
@@ -161,7 +161,7 @@ public sealed class WeaponMapControl : MapGridControl
 
         AddChild(topContainer);
         AddChild(bottomContainer);
-        topPanel.Measure(Vector2.Infinity);
+        topPanel.Measure(Vector2Helpers.Infinity);
     }
 
     public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
@@ -229,7 +229,7 @@ public sealed class WeaponMapControl : MapGridControl
 
     private Vector2 InverseScalePosition(Vector2 value)
     {
-        return (value - MidPoint) / MinimapScale;
+        return (value - MidpointVector) / MinimapScale;
     }
 
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
@@ -295,7 +295,7 @@ public sealed class WeaponMapControl : MapGridControl
             var frameTime = Timing.FrameTime;
             var diff = _offset * (float) frameTime.TotalSeconds;
 
-            if (_offset.LengthSquared < _recenterMinimum)
+            if (_offset.LengthSquared() < _recenterMinimum)
             {
                 _offset = Vector2.Zero;
                 _recentering = false;
@@ -472,6 +472,6 @@ public sealed class WeaponMapControl : MapGridControl
 
     private Vector2 Scale(Vector2 position)
     {
-        return position * MinimapScale + MidPoint;
+        return position * MinimapScale + MidpointVector;
     }
 }

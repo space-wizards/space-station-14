@@ -160,7 +160,7 @@
        - id: ClothingShoesBootsJack
        - id: ClothingEyesGlassesSecurity
        - id: ClothingHeadHelmetBasic
-       - id: ClothingOuterVestKevlar
+       - id: ClothingOuterArmorBasic
        - id: ClothingUniformJumpskirtSec
 
  - type: entity

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 
@@ -26,5 +27,5 @@ public sealed class SleeperCryopodComponent : Component
     /// How long the entity initially is asleep for upon joining.
     /// </summary>
     [DataField("initialSleepDurationRange")]
-    public Vector2 InitialSleepDurationRange = (5, 10);
+    public Vector2 InitialSleepDurationRange = new (5, 10);
 }

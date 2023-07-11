@@ -59,7 +59,7 @@
       - id: ClothingUniformJumpsuitSecGrey
         prob: 0.3
       - id: ClothingHeadHelmetBasic
-      - id: ClothingOuterArmorBulletproof
+      - id: ClothingOuterArmorBasic
       - id: ClothingBeltSecurityFilled
       - id: Flash
         prob: 0.5

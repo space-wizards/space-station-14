@@ -1,10 +1,7 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Whitelist;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Utility
 {
@@ -60,7 +57,7 @@ namespace Content.IntegrationTests.Tests.Utility
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -79,34 +76,46 @@ namespace Content.IntegrationTests.Tests.Utility
                 // Test instantiated on its own
                 var whitelistInst = new EntityWhitelist
                 {
-                    Components = new[] { $"{ValidComponent}"},
-                    Tags = new() {"ValidTag"}
+                    Components = new[] { $"{ValidComponent}" },
+                    Tags = new() { "ValidTag" }
                 };
                 whitelistInst.UpdateRegistrations();
                 Assert.That(whitelistInst, Is.Not.Null);
 
-                Assert.That(whitelistInst.Components, Is.Not.Null);
-                Assert.That(whitelistInst.Tags, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(whitelistInst.Components, Is.Not.Null);
+                    Assert.That(whitelistInst.Tags, Is.Not.Null);
+                });
 
-                Assert.That(whitelistInst.IsValid(validComponent), Is.True);
-                Assert.That(whitelistInst.IsValid(validTag), Is.True);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(whitelistInst.IsValid(validComponent), Is.True);
+                    Assert.That(whitelistInst.IsValid(validTag), Is.True);
 
-                Assert.That(whitelistInst.IsValid(invalidComponent), Is.False);
-                Assert.That(whitelistInst.IsValid(invalidTag), Is.False);
+                    Assert.That(whitelistInst.IsValid(invalidComponent), Is.False);
+                    Assert.That(whitelistInst.IsValid(invalidTag), Is.False);
+                });
 
                 // Test from serialized
                 var dummy = sEntities.SpawnEntity("WhitelistDummy", mapCoordinates);
                 var whitelistSer = sEntities.GetComponent<ItemSlotsComponent>(dummy).Slots.Values.First().Whitelist;
                 Assert.That(whitelistSer, Is.Not.Null);
 
-                Assert.That(whitelistSer.Components, Is.Not.Null);
-                Assert.That(whitelistSer.Tags, Is.Not.Null);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(whitelistSer.Components, Is.Not.Null);
+                    Assert.That(whitelistSer.Tags, Is.Not.Null);
+                });
 
-                Assert.That(whitelistSer.IsValid(validComponent), Is.True);
-                Assert.That(whitelistSer.IsValid(validTag), Is.True);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(whitelistSer.IsValid(validComponent), Is.True);
+                    Assert.That(whitelistSer.IsValid(validTag), Is.True);
 
-                Assert.That(whitelistSer.IsValid(invalidComponent), Is.False);
-                Assert.That(whitelistSer.IsValid(invalidTag), Is.False);
+                    Assert.That(whitelistSer.IsValid(invalidComponent), Is.False);
+                    Assert.That(whitelistSer.IsValid(invalidTag), Is.False);
+                });
             });
             await pairTracker.CleanReturnAsync();
         }

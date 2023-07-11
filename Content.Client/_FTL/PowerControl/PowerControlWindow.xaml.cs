@@ -15,7 +15,7 @@ public sealed partial class PowerControlWindow : FancyWindow
     private readonly ButtonGroup _buttonGroup = new();
     private readonly PowerControlBoundUserInterface _owner;
 
-    public PowerControlWindow(PowerControlBoundUserInterface ui, ClientUserInterfaceComponent component)
+    public PowerControlWindow(PowerControlBoundUserInterface ui, EntityUid entity)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
