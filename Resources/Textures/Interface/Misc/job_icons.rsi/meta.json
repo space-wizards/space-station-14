@@ -150,6 +150,9 @@
         },
         {
             "name": "Zookeeper"
+        },
+		{
+            "name": "IAA"
         }
     ]
 }
