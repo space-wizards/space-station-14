@@ -1,15 +1,4 @@
 Entries:
-- author: freeman2651
-  changes:
-  - {message: Added ChemVends for (limited) bulk chemical storage and dispensing.,
-    type: Add}
-  id: 3728
-  time: '2023-05-12T09:31:20.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: You can now examine the ID cards worn by monkeys., type: Fix}
-  id: 3729
-  time: '2023-05-12T13:52:09.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Entering and leaving kudzu or other slowdown causing entities should
@@ -2944,3 +2933,15 @@ Entries:
   - {message: Syndicate sponge boxes now cost 7 tc to purchase, type: Tweak}
   id: 4227
   time: '2023-07-11T19:34:21.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Fixed SyndieDrobe adverts., type: Fix}
+  id: 4228
+  time: '2023-07-11T23:56:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fewer expeditions are offered to the station at a time., type: Tweak}
+  - {message: Salvage expeditions are now generally shorter., type: Tweak}
+  - {message: Adjusted some of the rewards for expeditions., type: Tweak}
+  id: 4229
+  time: '2023-07-11T23:56:43.0000000+00:00'
