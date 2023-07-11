@@ -59,7 +59,7 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
     private void OnConfigureAction(EntityUid uid, MeleeSpeechComponent comp, MeleeSpeechConfigureActionEvent args)
     {
 
-        TryOpenUi(uid, args.User, comp);
+        TryOpenUi(args.Performer, uid, comp);
     }
 
 
@@ -119,18 +119,5 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
 		_adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $" {ToPrettyString(uid):entity}'s battlecry has been changed to {battlecry}");
 		return true;
 	}
-
-    [Serializable]
-    public sealed class MeleeSpeechConfigureActionEvent : InstantActionEvent
-    {
-        public EntityUid User { get; }
-        public EntityUid Target { get; }
-
-        public MeleeSpeechConfigureActionEvent(EntityUid who, EntityUid target)
-        {
-            User = who;
-            Target = target;
-        }
-    }
 }
 

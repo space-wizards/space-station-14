@@ -93,17 +93,6 @@
   description: voice-mask-name-change-set-description
   serverEvent: !type:VoiceMaskSetNameEvent
 
-#- type: instantAction
-  #id: SetBattlecry
-  #name: action-name-meleespeech-config
-  #description: action-description-meleespeech-config
-  #itemIconStyle: BigAction
-  #priority: -20
-  #icon:
-  #  sprite: Clothing/Back/Backpacks/backpack.rsi
-  #  state: icon
-  #event: !type:MeleeSpeechConfigureActionEvent
-
 - type: instantAction
   id: VendingThrow
   name: vending-machine-action-name

@@ -1,7 +1,10 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Speech.EntitySystems;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Speech.Components;
 
@@ -9,8 +12,10 @@ namespace Content.Shared.Speech.Components;
 [AutoGenerateComponentState]
 public sealed partial class MeleeSpeechComponent : Component
 {
+    [ViewVariables]
+    public EntityUid? User;
 
-	[ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)]
 	[DataField("Battlecry")]
 	[AutoNetworkedField]
 	public string? Battlecry;
@@ -22,8 +27,20 @@ public sealed partial class MeleeSpeechComponent : Component
     [DataField("configureAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string configureActionId = "Set Battlecry";
     */
+    [DataField("configureAction")]
+    public InstantAction ConfigureAction = new()
+    {
+        UseDelay = TimeSpan.FromSeconds(4),
+        Icon = new SpriteSpecifier.Texture(new("Clothing/Hands/Gloves/northstar.rsi/icon.png")),
+        //ItemIconStyle = NoItem,
+        DisplayName = "mime-invisible-wall",
+        Description = "mime-invisible-wall-desc",
+        Priority = -20,
+        Event = new MeleeSpeechConfigureActionEvent(),
+    };
+    /*
     [DataField("configureAction")] 
-    public InstantAction? ConfigureAction = null;
+    public InstantAction? ConfigureAction = null;*/
 }
 
 /// <summary>
@@ -36,18 +53,10 @@ public enum MeleeSpeechUiKey : byte
     Key,
 }
 
-/*[Serializable, NetSerializable]
+//[Serializable, NetSerializable]
 public sealed class MeleeSpeechConfigureActionEvent : InstantActionEvent
 {
-    public EntityUid User { get; }
-    public EntityUid Target { get; }
-
-    public MeleeSpeechConfigureActionEvent(EntityUid who, EntityUid target)
-    {
-        User = who;
-        Target = target;
-    }
-}*/
+}
 
 /// <summary>
 /// Represents an <see cref="MeleeSpeechComponent"/> state that can be sent to the client
@@ -73,13 +82,12 @@ public sealed class MeleeSpeechBattlecryChangedMessage : BoundUserInterfaceMessa
     }
 }
 
-[Serializable, NetSerializable]
-public sealed class MeleeSpeechConfigureActionMessage : BoundUserInterfaceMessage
+public sealed class MeleeSpeechConfigureActionMessage : InstantActionEvent
 {
-    public string CurrentBattlecry { get; }
+    public EntityUid User { get; }
 
-    public MeleeSpeechConfigureActionMessage(string currentBattlecry)
+    public MeleeSpeechConfigureActionMessage(EntityUid who)
     {
-        CurrentBattlecry = currentBattlecry;
+        User = who;
     }
 }
