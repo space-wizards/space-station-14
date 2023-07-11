@@ -1,0 +1,14 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+               MinSize="300 300"
+               SetSize="300 500"
+               Title="{Loc 'pipe-painter-window-title'}">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
+        <Label Text="{Loc 'pipe-painter-selected-color'}"/>
+        <RichTextLabel
+            Name="SelectedColorLabel"/>
+        <ItemList
+            Name="ColorList"
+            SizeFlagsStretchRatio="8"
+            VerticalExpand="True"/>
+    </BoxContainer>
+</DefaultWindow>
