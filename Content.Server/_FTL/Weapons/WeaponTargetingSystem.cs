@@ -15,6 +15,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._FTL.Weapons;
@@ -233,6 +234,8 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
 
         foreach (var entity in component.ContainedEntities)
         {
+            if (!TryComp<PhysicsComponent>(entity, out var _))
+                continue;
             _physicsSystem.ApplyLinearImpulse(entity, -(transform.LocalRotation.ToWorldVec() * 100f));
             var damage = new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Brute"),
                 FixedPoint2.New(25));
