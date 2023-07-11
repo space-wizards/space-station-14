@@ -19,14 +19,9 @@ public sealed class GraphNodeEntitySerializer : ITypeSerializer<IGraphNodeEntity
 
         var protoMan = dependencies.Resolve<IPrototypeManager>();
 
-        if (!protoMan.TryIndex<EntityPrototype>(id, out var prototype))
+        if (!protoMan.HasIndex<EntityPrototype>(id))
         {
             return new ErrorNode(node, $"Entity Prototype {id} was not found!");
-        }
-
-        if (!prototype.Components.ContainsKey("Construction"))
-        {
-            return new ErrorNode(node, $"Entity Prototype {id} does not specify a Construction component!");
         }
 
         return new ValidatedValueNode(node);
