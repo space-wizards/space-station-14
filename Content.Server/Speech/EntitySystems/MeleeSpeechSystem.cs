@@ -32,6 +32,13 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
 		SubscribeLocalEvent<MeleeSpeechComponent, MeleeSpeechBattlecryChangedMessage>(OnBattlecryChanged);
         SubscribeLocalEvent<MeleeSpeechComponent, MeleeSpeechConfigureActionEvent>(OnConfigureAction);
         SubscribeLocalEvent<MeleeSpeechComponent, GetItemActionsEvent>(OnGetActions);
+        SubscribeLocalEvent<MeleeSpeechComponent, ComponentInit>(OnComponentInit);
+    }
+
+    private void OnComponentInit(EntityUid uid, MeleeSpeechComponent component, ComponentInit args)
+    {
+        if (component.ConfigureAction != null)
+            _actionSystem.AddAction(uid, component.ConfigureAction, uid);
     }
 
     private void OnGetActions(EntityUid uid, MeleeSpeechComponent component, GetItemActionsEvent args)
@@ -46,7 +53,7 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
         if (!TryComp<MeleeSpeechComponent>(uid, out var meleeSpeechUser))
             return;
 
-        string battlecry = args.Battlecry;
+        var battlecry = args.Battlecry;
 
         if (battlecry.Length > comp.MaxBattlecryLength)
             battlecry = battlecry[..comp.MaxBattlecryLength];

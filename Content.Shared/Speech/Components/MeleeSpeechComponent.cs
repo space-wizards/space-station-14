@@ -23,10 +23,7 @@ public sealed partial class MeleeSpeechComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("MaxBattlecryLength")]
     public int MaxBattlecryLength = 12;
-    /*
-    [DataField("configureAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string configureActionId = "Set Battlecry";
-    */
+
     [DataField("configureAction")]
     public InstantAction ConfigureAction = new()
     {
@@ -38,9 +35,6 @@ public sealed partial class MeleeSpeechComponent : Component
         Priority = -20,
         Event = new MeleeSpeechConfigureActionEvent(),
     };
-    /*
-    [DataField("configureAction")] 
-    public InstantAction? ConfigureAction = null;*/
 }
 
 /// <summary>

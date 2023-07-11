@@ -321,15 +321,6 @@
     fiberColor: fibers-blue
   - type: FingerprintMask
   - type: MeleeSpeech
-#    configureAction:
-#      name: Set Battlecry
-#      description: Set your custom battlecry.
-#      itemIconStyle: NoItem
-#      priority: -20
-#      icon:
-#        sprite: Clothing/Hands/Gloves/northstar.rsi
-#        state: icon
-#      event: !type:MeleeSpeechConfigureActionEvent
   - type: ActivatableUI
     key: enum.MeleeSpeechUiKey.Key
     closeOnHandDeselect: false
