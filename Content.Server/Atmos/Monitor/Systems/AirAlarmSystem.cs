@@ -157,6 +157,7 @@ public sealed class AirAlarmSystem : EntitySystem
         SubscribeLocalEvent<AirAlarmComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmResyncAllDevicesMessage>(OnResyncAll);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmModeMessage>(OnUpdateAlarmMode);
+        SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAutoModeMessage>(OnUpdateAutoMode);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmTabSetMessage>(OnTabChange);
@@ -273,6 +274,12 @@ public sealed class AirAlarmSystem : EntitySystem
             UpdateUI(uid, component);
     }
 
+    private void OnUpdateAutoMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAutoModeMessage args)
+    {
+        component.AutoMode = args.Enabled;
+        UpdateUI(uid, component);
+    }
+
     private void OnUpdateThreshold(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmThresholdMessage args)
     {
         if (AccessCheck(uid, args.Session.AttachedEntity, component))
@@ -317,13 +324,16 @@ public sealed class AirAlarmSystem : EntitySystem
         if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
             addr = netConn.Address;
 
-        if (args.AlarmType == AtmosAlarmType.Danger)
+        if (component.AutoMode)
         {
-            SetMode(uid, addr, AirAlarmMode.WideFiltering, false);
-        }
-        else if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
-        {
-            SetMode(uid, addr, AirAlarmMode.Filtering, false);
+            if (args.AlarmType == AtmosAlarmType.Danger)
+            {
+                SetMode(uid, addr, AirAlarmMode.WideFiltering, false);
+            }
+            else if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
+            {
+                SetMode(uid, addr, AirAlarmMode.Filtering, false);
+            }
         }
 
         UpdateUI(uid, component);
@@ -545,7 +555,7 @@ public sealed class AirAlarmSystem : EntitySystem
         _uiSystem.TrySetUiState(
             uid,
             SharedAirAlarmInterfaceKey.Key,
-            new AirAlarmUIState(devNet.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, alarm.CurrentTab, highestAlarm.Value));
+            new AirAlarmUIState(devNet.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, alarm.CurrentTab, highestAlarm.Value, alarm.AutoMode));
     }
 
     private const float Delay = 8f;

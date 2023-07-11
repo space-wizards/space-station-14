@@ -25,6 +25,22 @@
     - !type:KillRandomPersonCondition {}
   canBeDuplicate: true
 
+# technically its still possible for KillRandomObjective to roll a head but this is guaranteed, so higher difficulty
+# this also will not count missing evac as killing as heads are higher profile, so you really need to do the dirty work
+- type: objective
+  id: KillRandomHeadObjective
+  issuer: syndicate
+  difficultyOverride: 3.0
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+    - RandomTraitorAliveCondition
+  conditions:
+  - !type:KillRandomHeadCondition {}
+  # killing 1 head is enough
+  canBeDuplicate: false
+
 - type: objective
   id: RandomTraitorAliveObjective
   issuer: syndicate

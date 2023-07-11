@@ -84,6 +84,6 @@
     sprite: Clothing/Head/Helmets/eva.rsi
     state: icon
   product: CrateEvaKit
-  cost: 9500
+  cost: 5000
   category: Engineering
   group: market

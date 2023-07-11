@@ -178,7 +178,7 @@ entities:
       parent: 37
       type: Transform
     - containers:
-        DisposalUnit: !type:Container
+        disposals: !type:Container
           showEnts: False
           occludes: True
           ents:

@@ -194,7 +194,7 @@
     - type: Sprite
       sprite: Objects/Tanks/anesthetic.rsi
     - type: GasTank
-      outputPressure: 101.325
+      outputPressure: 30.3975
       air:
         volume: 15
         temperature: 293.15

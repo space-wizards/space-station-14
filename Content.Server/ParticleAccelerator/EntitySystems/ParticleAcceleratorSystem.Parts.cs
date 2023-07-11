@@ -4,6 +4,7 @@ using Robust.Server.Player;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Events;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
@@ -75,12 +76,12 @@ public sealed partial class ParticleAcceleratorSystem
 
         // Calculate offsets for each of the parts of the PA.
         // These are all done relative to the fuel chamber BC that is basically the center of the machine.
-        var positionFuelChamber = grid.TileIndicesFor(fuelXform.Coordinates);                           //       // 
-        var positionEndCap = positionFuelChamber + (Vector2i) rotation.RotateVec((0, 1));               //   n   // n: End Cap
-        var positionPowerBox = positionFuelChamber + (Vector2i) rotation.RotateVec((0, -1));            //  CF   // C: Control Box, F: Fuel Chamber
-        var positionPortEmitter = positionFuelChamber + (Vector2i) rotation.RotateVec((1, -2));         //   P   // P: Power Box
-        var positionForeEmitter = positionFuelChamber + (Vector2i) rotation.RotateVec((0, -2));         //  EEE  // E: Emitter (Starboard, Fore, Port)
-        var positionStarboardEmitter = positionFuelChamber + (Vector2i) rotation.RotateVec((-1, -2));   //       //
+        var positionFuelChamber = grid.TileIndicesFor(fuelXform.Coordinates);                           //       //
+        var positionEndCap = positionFuelChamber + (Vector2i) rotation.RotateVec(new Vector2(0, 1));               //   n   // n: End Cap
+        var positionPowerBox = positionFuelChamber + (Vector2i) rotation.RotateVec(new Vector2(0, -1));            //  CF   // C: Control Box, F: Fuel Chamber
+        var positionPortEmitter = positionFuelChamber + (Vector2i) rotation.RotateVec(new Vector2(1, -2));         //   P   // P: Power Box
+        var positionForeEmitter = positionFuelChamber + (Vector2i) rotation.RotateVec(new Vector2(0, -2));         //  EEE  // E: Emitter (Starboard, Fore, Port)
+        var positionStarboardEmitter = positionFuelChamber + (Vector2i) rotation.RotateVec(new Vector2(-1, -2));   //       //
 
         ScanPart<ParticleAcceleratorEndCapComponent>(gridUid!.Value, positionEndCap, rotation, out controller.EndCap, out var _, grid);
         ScanPart<ParticleAcceleratorPowerBoxComponent>(gridUid!.Value, positionPowerBox, rotation, out controller.PowerBox, out var _, grid);

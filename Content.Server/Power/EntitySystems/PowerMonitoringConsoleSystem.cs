@@ -15,8 +15,8 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
     private float _updateTimer = 0.0f;
     private const float UpdateTime = 1.0f;
 
-    [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
     public override void Update(float frameTime)
     {
@@ -24,9 +24,11 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         if (_updateTimer >= UpdateTime)
         {
             _updateTimer -= UpdateTime;
-            foreach (var component in EntityQuery<PowerMonitoringConsoleComponent>())
+
+            var query = EntityQueryEnumerator<PowerMonitoringConsoleComponent>();
+            while (query.MoveNext(out var uid, out var component))
             {
-                UpdateUIState(component.Owner, component);
+                UpdateUIState(uid, component);
             }
         }
     }
@@ -52,8 +54,7 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         if (!_nodeContainer.TryGetNode<Node>(ncComp, "hv", out var node))
             return;
 
-        var netQ = node.NodeGroup as PowerNet;
-        if (netQ != null)
+        if (node.NodeGroup is PowerNet netQ)
         {
             foreach (PowerConsumerComponent pcc in netQ.Consumers)
             {
@@ -92,9 +93,10 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         // Sort
         loads.Sort(CompareLoadOrSources);
         sources.Sort(CompareLoadOrSources);
+
         // Actually set state.
-        var state = new PowerMonitoringConsoleBoundInterfaceState(totalSources, totalLoads, sources.ToArray(), loads.ToArray());
-        _userInterfaceSystem.GetUiOrNull(target, PowerMonitoringConsoleUiKey.Key)?.SetState(state);
+        if (_userInterfaceSystem.TryGetUi(target, PowerMonitoringConsoleUiKey.Key, out var bui))
+            UserInterfaceSystem.SetUiState(bui, new PowerMonitoringConsoleBoundInterfaceState(totalSources, totalLoads, sources.ToArray(), loads.ToArray()));
     }
 
     private int CompareLoadOrSources(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)
