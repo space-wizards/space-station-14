@@ -28,6 +28,9 @@
     - type: Rotatable
     - type: Pullable
     - type: Construction
+      containers:
+        - machine_board
+        - machine_parts
       graph: Machine
       node: missingWires
     - type: ContainerContainer
