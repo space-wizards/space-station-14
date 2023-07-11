@@ -3,7 +3,6 @@ using Content.Shared.Random;
 using Content.Shared.Tag;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Mining.Components;
 
@@ -30,7 +29,7 @@ public sealed class OreVeinComponent : Component
     /// The weighted random prototype used for determining what ore will be dropped.
     /// Keyed to a specific tool.
     /// </summary>
-    [DataField("mappedTools")]
+    [DataField("mappedTools", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<string, TagPrototype>))]
     public Dictionary<string, string>? MappedTools = new();
 
     /// <summary>

@@ -1,5 +1,6 @@
 ﻿using Content.Server.Mining.Components;
 using Content.Shared.Destructible;
+using Content.Shared.Hands.Components;
 using Content.Shared.Mining;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
@@ -25,13 +26,6 @@ public sealed class MiningSystem : EntitySystem
         SubscribeLocalEvent<OreVeinComponent, DestructionEventArgs>(OnDestruction);
     }
 
-    private EntityUid? _gatheringTool;
-
-    public void SetGatherer(EntityUid? gatherer)
-    {
-        _gatheringTool = gatherer;
-    }
-
     private void OnDestruction(EntityUid uid, OreVeinComponent component, DestructionEventArgs args)
     {
         if (!_random.Prob(component.OreChance))
@@ -49,9 +43,12 @@ public sealed class MiningSystem : EntitySystem
 
             if (component.MappedTools != null)
             {
+                var gatherUser = args.GatherUser;
+                var gatherTool = args.GatherTool;
+
                 foreach (var (toolTag, mappedWeightedRandom) in component.MappedTools)
                 {
-                    if (_gatheringTool != null && _tagSystem.HasTag(_gatheringTool.Value, toolTag) || _gatherUser != null || toolTag == "All")
+                    if (gatherTool != null && _tagSystem.HasTag(gatherTool.Value, toolTag) || toolTag == "Hand" && gatherTool == null && TryComp<HandsComponent>(gatherUser, out var _) || toolTag == "All")
                     {
                         weightedRandom = mappedWeightedRandom;
                         break;
