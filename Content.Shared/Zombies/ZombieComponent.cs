@@ -140,5 +140,17 @@ namespace Content.Shared.Zombies
         /// </summary>
         [DataField("greetSoundNotification")]
         public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
+
+        /// <summary>
+        /// The blood reagent of the humanoid to restore in case of cloning
+        /// </summary>
+        [DataField("beforeZombifiedBloodReagent")]
+        public string BeforeZombifiedBloodReagent = String.Empty;
+
+        /// <summary>
+        /// The blood reagent to give the zombie. In case you want zombies that bleed milk, or something.
+        /// </summary>
+        [DataField("newBloodReagent")]
+        public string NewBloodReagent = "ZombieBlood";
     }
 }

@@ -7276,11 +7276,6 @@ entities:
     - pos: 21.5,20.5
       parent: 2
       type: Transform
-  - uid: 2084
-    components:
-    - pos: 12.5,29.5
-      parent: 2
-      type: Transform
   - uid: 11094
     components:
     - pos: 21.5,21.5
@@ -8409,6 +8404,13 @@ entities:
   - uid: 11898
     components:
     - pos: 76.5,7.5
+      parent: 2
+      type: Transform
+- proto: AirlockQuartermasterGlassLocked
+  entities:
+  - uid: 2084
+    components:
+    - pos: 12.5,29.5
       parent: 2
       type: Transform
 - proto: AirlockResearchDirectorGlassLocked
@@ -10182,7 +10184,7 @@ entities:
       parent: 2
       type: Transform
     - links:
-      - 12829
+      - 8665
       type: DeviceLinkSink
   - uid: 5361
     components:
@@ -10190,7 +10192,7 @@ entities:
       parent: 2
       type: Transform
     - links:
-      - 12829
+      - 8665
       type: DeviceLinkSink
   - uid: 5875
     components:
@@ -61736,13 +61738,8 @@ entities:
     - pos: 9.5,18.5
       parent: 2
       type: Transform
-- proto: LockerScientist
+- proto: LockerScienceFilled
   entities:
-  - uid: 5322
-    components:
-    - pos: 51.5,21.5
-      parent: 2
-      type: Transform
   - uid: 5338
     components:
     - pos: 55.5,22.5
@@ -61751,6 +61748,18 @@ entities:
   - uid: 5339
     components:
     - pos: 56.5,22.5
+      parent: 2
+      type: Transform
+  - uid: 12829
+    components:
+    - pos: 57.5,25.5
+      parent: 2
+      type: Transform
+- proto: LockerScientist
+  entities:
+  - uid: 5322
+    components:
+    - pos: 51.5,21.5
       parent: 2
       type: Transform
 - proto: LockerSecurityFilled
@@ -69438,21 +69447,6 @@ entities:
         - 12822
         - 12824
       type: DeviceLinkSource
-  - uid: 12829
-    components:
-    - pos: 63.5,25.5
-      parent: 2
-      type: Transform
-    - linkedPorts:
-        5351:
-        - Pressed: Toggle
-        5361:
-        - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 5351
-        - 5361
-      type: DeviceLinkSource
 - proto: SignAnomaly
   entities:
   - uid: 7376
@@ -74212,11 +74206,6 @@ entities:
     - pos: 41.5,24.5
       parent: 2
       type: Transform
-  - uid: 8665
-    components:
-    - pos: 63.5,25.5
-      parent: 2
-      type: Transform
   - uid: 10310
     components:
     - pos: 8.5,-6.5
@@ -75209,6 +75198,31 @@ entities:
         - 2041
         - 2042
         - 2064
+      type: DeviceLinkSource
+  - uid: 8665
+    components:
+    - pos: 63.5,25.5
+      parent: 2
+      type: Transform
+    - linkedPorts:
+        5351:
+        - Left: Open
+        - Right: Open
+        - Middle: Close
+        5361:
+        - Left: Open
+        - Right: Open
+        - Middle: Close
+      registeredSinks:
+        Left:
+        - 5351
+        - 5361
+        Right:
+        - 5351
+        - 5361
+        Middle:
+        - 5351
+        - 5361
       type: DeviceLinkSource
   - uid: 10322
     components:

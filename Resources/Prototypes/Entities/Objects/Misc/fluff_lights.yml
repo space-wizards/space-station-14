@@ -104,6 +104,59 @@
     sprite: Objects/Misc/Lights/lampgreen.rsi
 
 - type: entity
+  name: interrogator lamp
+  id: LampInterrogator
+  parent: BaseLamp
+  description: Ultra-bright lamp for the bad cop
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Lights/lampint.rsi
+    layers:
+      - state: lamp-int
+        map: [ "enum.FlashVisuals.BaseLayer" ]
+      - state: lamp-int-on
+        shader: unshaded
+        visible: false
+        map: [ "light" ]
+      - state: flashing
+        map: [ "enum.FlashVisuals.LightLayer" ]
+        visible: false
+  - type: Item
+    sprite: Objects/Misc/Lights/lampint.rsi
+  - type: StaticPrice
+    price: 2500
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 2
+    energy: 0.5
+    color: "#FFFFEE"
+  - type: Flash
+  - type: LimitedCharges
+    maxCharges: 3
+    charges: 3
+  - type: AutoRecharge
+    rechargeDuration: 30
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0 # melee weapon to allow flashing individual targets
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: GenericVisualizer
+    visuals:
+      enum.FlashVisuals.Burnt:
+        enum.FlashVisuals.BaseLayer:
+          True: {state: burnt}
+      enum.FlashVisuals.Flashing:
+        enum.FlashVisuals.LightLayer:
+          True: {visible: true}
+          False: {visible: false}
+
+- type: entity
   name: floodlight
   id: Floodlight
   parent: BaseLamp

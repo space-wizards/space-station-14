@@ -611,23 +611,6 @@ public sealed partial class ShuttleSystem
             spawnPos = _transform.GetWorldPosition(targetXform, xformQuery);
         }
 
-        // TODO: This is pretty crude for multiple landings.
-        if (nearbyGrids.Count > 1 || !HasComp<MapComponent>(targetXform.GridUid))
-        {
-            var minRadius = (MathF.Max(targetAABB.Width, targetAABB.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height)) / 2f;
-            spawnPos = targetAABB.Center + _random.NextVector2(minRadius, minRadius + 64f);
-        }
-        else if (shuttleBody != null)
-        {
-            var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
-            var transform = new Transform(targetPos, targetRot);
-            spawnPos = Robust.Shared.Physics.Transform.Mul(transform, -shuttleBody.LocalCenter);
-        }
-        else
-        {
-            spawnPos = _transform.GetWorldPosition(targetXform, xformQuery);
-        }
-
         xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);
 
         if (!HasComp<MapComponent>(targetXform.GridUid))
@@ -663,8 +646,8 @@ public sealed partial class ShuttleSystem
                 continue;
 
             var aabb = fixture.Shape.ComputeAABB(transform, 0);
-            // Double the polygon radius (at least while the radius exists).
-            aabb = aabb.Enlarged(0.02f);
+            // Create a small border around it.
+            aabb = aabb.Enlarged(0.2f);
             aabbs.Add(aabb);
 
             foreach (var ent in _lookup.GetEntitiesIntersecting(xform.MapUid.Value, aabb, LookupFlags.Uncontained))

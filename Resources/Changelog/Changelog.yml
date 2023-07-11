@@ -1,170 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Airlocks can now be configured to interlock and cycle correctly., type: Add}
-  id: 3696
-  time: '2023-05-07T06:49:11.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Remove diseases pending a further refactor., type: Remove}
-  id: 3697
-  time: '2023-05-07T07:50:38.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: fixed pinpointer flickering!, type: Fix}
-  - {message: fixed pinpointer screen not being visible in dark!, type: Fix}
-  id: 3698
-  time: '2023-05-07T08:20:44.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Telecommunication server added to CentComm station, type: Add}
-  id: 3699
-  time: '2023-05-07T10:06:05.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: Added xeno plushie! Hisssss!, type: Add}
-  - {message: Plushie crate can have either a gray or blue shark, type: Tweak}
-  id: 3700
-  time: '2023-05-07T22:50:09.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Cloth can go into the autolathe and uniform printer again., type: Fix}
-  id: 3701
-  time: '2023-05-08T00:34:27.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Adds crew monitoring console and server boards to cargo., type: Add}
-  - {message: 'A new category was added to cargo: circuitboards.', type: Add}
-  - {message: Removed crew monitoring console boards from lathes., type: Remove}
-  id: 3702
-  time: '2023-05-08T05:49:07.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: The network configurator can now be found in the Engivend., type: Add}
-  id: 3703
-  time: '2023-05-08T11:45:15.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Updated the data and nuke disk sprites, type: Tweak}
-  id: 3704
-  time: '2023-05-08T12:28:38.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Added hand labeler to the medical techfab. It costs 100 plastic., type: Add}
-  id: 3705
-  time: '2023-05-08T12:32:15.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix a shooting mispredict if you held left-click with a semi-auto gun
-      and then tried to fire afterwards., type: Fix}
-  - {message: Fix ammo counter for recharge weapons (mainly the PKA)., type: Fix}
-  - {message: Make the PKA feel nicer to shoot., type: Tweak}
-  id: 3706
-  time: '2023-05-08T12:37:40.0000000+00:00'
-- author: tom-leys
-  changes:
-  - {message: 'Zombification happens post death, rather than just crit. So you lie
-      on the floor a bit before beginning your new life.', type: Tweak}
-  - {message: 'Zombies are more likely (10-40% depending on clothes) to inflict a
-      zombifying Damage over Time.  This was 5% - 50% before. A typical outfit without
-      outer suit, mask or helmet has a 17.5% chance of being infected each hit.',
-    type: Tweak}
-  - {message: Zombies have some heal over time. This might also bring them back from
-      the dead (again)., type: Tweak}
-  id: 3707
-  time: '2023-05-09T02:24:40.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: 'Miasma text now has a locale again (foul smell, rotting and bloat).',
-    type: Fix}
-  id: 3708
-  time: '2023-05-09T07:35:43.0000000+00:00'
-- author: notquitehadouken
-  changes:
-  - {message: Mice can no longer lift thousands times their weight (they can't drag
-      people onto tables anymore), type: Fix}
-  id: 3709
-  time: '2023-05-09T07:37:56.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Adds a pet Pun Pun for bartenders ghost role., type: Add}
-  id: 3710
-  time: '2023-05-09T07:39:43.0000000+00:00'
-- author: Tyzemol
-  changes:
-  - {message: Fixed not being able to link airlocks using network configurator, type: Fix}
-  id: 3711
-  time: '2023-05-09T22:50:35.0000000+00:00'
-- author: Lomcastar
-  changes:
-  - {message: Added Proximity Mine disguised as a wet floor sign., type: Add}
-  id: 3712
-  time: '2023-05-09T23:50:03.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Due to a recent economic boom, NT is now able to supply ERT cleanup
-      crews with mops.', type: Add}
-  id: 3713
-  time: '2023-05-09T23:51:48.0000000+00:00'
-- author: Mumohan
-  changes:
-  - {message: Airlocks are no longer scared of puddles and soap. They should now close
-      properly., type: Fix}
-  id: 3714
-  time: '2023-05-09T23:54:43.0000000+00:00'
-- author: notquitehadouken
-  changes:
-  - {message: Fixed the recipes for radiation shutters and glass shutters not appearing
-      in the construction menu, type: Fix}
-  id: 3715
-  time: '2023-05-09T23:56:07.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix popup spam in some instances., type: Fix}
-  id: 3716
-  time: '2023-05-10T00:00:59.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Wielding is now predicted., type: Tweak}
-  id: 3717
-  time: '2023-05-10T00:01:23.0000000+00:00'
-- author: tom-leys
-  changes:
-  - {message: 'Frezon is slightly harder to make. The reaction always consumes Tritium
-      and Oxygen at a 1:50 ratio. But the reaction is easier to initiate, requiring
-      only Nitrogen, Oxygen, Tritium and <73.15K.', type: Tweak}
-  id: 3718
-  time: '2023-05-10T03:27:23.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Chef's vinegar bottles now hold 30u instead of 15u., type: Tweak}
-  id: 3719
-  time: '2023-05-10T11:36:47.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Survival gamemode has been temporarily disabled pending a rework, type: Tweak}
-  id: 3720
-  time: '2023-05-11T00:08:45.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Monkeys are now clumsy, like clowns', type: Tweak}
-  id: 3721
-  time: '2023-05-11T00:27:48.0000000+00:00'
-- author: Owai-Seek
-  changes:
-  - {message: Dermaline now heals 3 Heat/Shock/Cold per unit instead of 2., type: Tweak}
-  id: 3722
-  time: '2023-05-11T08:29:23.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: Added sigh sound, type: Add}
-  id: 3723
-  time: '2023-05-11T09:17:25.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Botany's produce is now larger on average., type: Tweak}
-  id: 3724
-  time: '2023-05-11T11:15:21.0000000+00:00'
 - author: themias
   changes:
   - {message: Mob sprites no longer rotate on death, type: Fix}
@@ -2939,3 +2773,175 @@ Entries:
   - {message: The mass scanner UI shows distances again., type: Fix}
   id: 4195
   time: '2023-07-08T19:47:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed chat scrollbar not working properly., type: Fix}
+  id: 4196
+  time: '2023-07-09T02:25:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added sub-biome support to planets., type: Add}
+  id: 4197
+  time: '2023-07-09T05:26:16.0000000+00:00'
+- author: BobTheSleder
+  changes:
+  - {message: Changed game mode weights to make nukeops more common and zombies less
+      common., type: Tweak}
+  id: 4198
+  time: '2023-07-09T09:48:02.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added SyndieDrobe!, type: Add}
+  id: 4199
+  time: '2023-07-09T19:19:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Tweak NPC steering slightly to make them slightly less twitchy., type: Tweak}
+  id: 4200
+  time: '2023-07-09T19:20:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added xeno turrets to salvage dungeons., type: Add}
+  id: 4201
+  time: '2023-07-09T19:20:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix spawning expeditions mobs on blocked tiles., type: Fix}
+  id: 4202
+  time: '2023-07-09T19:20:55.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: '"Ensure fellow traitor stays alive" objective now works correctly.',
+    type: Fix}
+  id: 4203
+  time: '2023-07-09T19:21:24.0000000+00:00'
+- author: ksenadi
+  changes:
+  - {message: Added the ability to lock the air alarm mode., type: Add}
+  id: 4204
+  time: '2023-07-09T19:22:41.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'The Syndicate reverse engineered Drymate''s monkey cube technology
+      and has started capturing wildlife to turn into dried cubes. Syndicate agents
+      can now buy Syndicate sponges from the uplink, these turn into random hostile
+      wildlife upon getting wet.', type: Add}
+  id: 4205
+  time: '2023-07-09T19:24:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Prevent selling dead mobs again., type: Tweak}
+  id: 4206
+  time: '2023-07-09T19:24:48.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: vent critters can no longer spawn on CentCom, type: Fix}
+  - {message: number of vent critters is now proportional to number of spawn points,
+    type: Tweak}
+  id: 4207
+  time: '2023-07-09T19:25:05.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Fixed filled gas tanks being 70 liters instead of the intended 15 liters.,
+    type: Fix}
+  id: 4208
+  time: '2023-07-09T20:20:27.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Fixed some jumpskirts parents, type: Fix}
+  id: 4209
+  time: '2023-07-09T21:57:20.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Going afk and missing evac now counts as being killed for the kill objective.,
+    type: Tweak}
+  id: 4210
+  time: '2023-07-09T22:00:08.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Ambuzol Plus can now be made as an vaccine against the zombie infection.
+      It requires zombie blood to create., type: Add}
+  - {message: 'Zombies now have unique blood. While it cannot transfer the infection,
+      consumption or injection is still ill-advised.', type: Add}
+  - {message: CBURN now get one Ambuzol Plus pill. Operatives are advised to use it
+      on themselves., type: Tweak}
+  - {message: The syndicate zombie bundle now has one Ambuzol Plus pill. Operatives
+      are advised not to fight over its use., type: Tweak}
+  id: 4211
+  time: '2023-07-09T22:01:36.0000000+00:00'
+- author: FoxHorn
+  changes:
+  - {message: 'Added prototype interrogator lamp for admin entity spawn panel. Perhaps
+      the mapmakers will replace the lamps in the interrogation rooms with this? I
+      said where''s the detonator?!?!', type: Add}
+  id: 4212
+  time: '2023-07-09T22:35:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Certain livestock (cows, goats, pigs, chickens, ducks) now have the
+      ability to produce offspring so long as they are properly tended to.', type: Add}
+  id: 4213
+  time: '2023-07-09T22:36:37.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'After a long cooperative research project botanists and chemists have
+      finally discovered how to improve bruise packs and ointment. Medicated suture
+      and regenerating mesh are now made in the microwave using a combination of bruise
+      packs/ointment, plants, cloth and chemicals.', type: Add}
+  id: 4214
+  time: '2023-07-10T02:22:11.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Syndicate High Command can now explicitly order for the assassination
+      of heads of staff., type: Add}
+  id: 4215
+  time: '2023-07-10T02:26:18.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'Clown R&D got inspired by incidents of accidentally swallowed honking
+      devices and made a minor breakthrough in clown science, bike horn implanters
+      are now available for purchase at cargo.', type: Add}
+  id: 4216
+  time: '2023-07-10T02:44:19.0000000+00:00'
+- author: dribblydrone
+  changes:
+  - {message: Added nukie guidebook, type: Add}
+  id: 4217
+  time: '2023-07-10T02:54:43.0000000+00:00'
+- author: Myakot
+  changes:
+  - {message: Removed a part of bicaridine's description that talked about non-existent
+      anti-bleeding effects and advised players to overdose on bica., type: Remove}
+  id: 4218
+  time: '2023-07-10T05:49:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Make salvage loading a lot faster., type: Fix}
+  id: 4219
+  time: '2023-07-10T07:16:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix spawning expeditions objectives in walls., type: Fix}
+  id: 4220
+  time: '2023-07-10T07:16:10.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: Changed bookshelves to block vision., type: Tweak}
+  id: 4221
+  time: '2023-07-10T16:56:33.0000000+00:00'
+- author: Equivocateur
+  changes:
+  - {message: Removed sponge box from uplink pending rebalance, type: Remove}
+  id: 4222
+  time: '2023-07-10T18:31:11.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: 'Fixed: clown mask cannot be used for H.O.N.K. construction', type: Fix}
+  id: 4223
+  time: '2023-07-10T18:33:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Aberrant flesh now smash through obstacles while trying to reach players.,
+    type: Add}
+  id: 4224
+  time: '2023-07-11T04:02:04.0000000+00:00'
