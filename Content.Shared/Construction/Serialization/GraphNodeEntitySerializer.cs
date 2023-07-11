@@ -24,7 +24,7 @@ public sealed class GraphNodeEntitySerializer : ITypeSerializer<IGraphNodeEntity
             return new ErrorNode(node, $"Entity Prototype {id} was not found!");
         }
 
-        if (!prototype.Components.ContainsKey("construction"))
+        if (!prototype.Components.ContainsKey("Construction"))
         {
             return new ErrorNode(node, $"Entity Prototype {id} does not specify a Construction component!");
         }
