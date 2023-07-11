@@ -35,6 +35,31 @@
         lacunarity: 2
         gain: 0.5
 
+# Backrooms
+- type: biomeTemplate
+  id: Backrooms
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: -0.80
+      invert: true
+      noise:
+        seed: 0
+        frequency: 0.04
+        noiseType: Cellular
+        fractalType: Ridged
+        octaves: 1
+        cellularDistanceFunction: Manhattan
+        cellularReturnType: Distance2
+      allowedTiles:
+        - FloorSteel
+      entities:
+        - WallSolid
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      variants:
+        - 0
+      tile: FloorSteel
+
 # Desert
 # TODO: Water in desert
 - type: biomeTemplate
