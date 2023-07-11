@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Mob sprites no longer rotate on death, type: Fix}
-  id: 3725
-  time: '2023-05-11T11:20:42.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: PKA bullets can now destroy gatherable materials such as rocks or trees.,
@@ -2945,3 +2940,8 @@ Entries:
     type: Add}
   id: 4224
   time: '2023-07-11T04:02:04.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Minor tweak to mercenary item sprites, type: Tweak}
+  id: 4225
+  time: '2023-07-11T19:32:39.0000000+00:00'
