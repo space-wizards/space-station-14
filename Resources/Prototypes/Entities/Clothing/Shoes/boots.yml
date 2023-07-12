@@ -19,6 +19,11 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
+  - type: Storage
+    whitelist:
+      tags:
+        - Knife
+
 
 - type: entity
   parent: ClothingShoesBaseButcherable
