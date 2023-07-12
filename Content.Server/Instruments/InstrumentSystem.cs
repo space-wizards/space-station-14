@@ -160,6 +160,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             return;
 
         instrument.MasterChannels[msg.Channel] = msg.Value;
+        instrument.DirtyRenderer = true;
         Dirty(uid, instrument);
     }
 
