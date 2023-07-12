@@ -160,6 +160,8 @@
     - type: BallisticAmmoProvider
       proto: CartridgePistol
       capacity: 125
+    - type: StaticPrice
+      price: 100
 
 - type: entity
   parent: BaseWeaponTurret
