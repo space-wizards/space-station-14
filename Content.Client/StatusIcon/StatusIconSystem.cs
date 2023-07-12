@@ -1,4 +1,4 @@
-﻿using Content.Shared.CCVar;
+using Content.Shared.CCVar;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Client.Graphics;
@@ -58,8 +58,9 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
         if (!Exists(uid) || Terminating(uid))
             return new();
 
-        var ev = new GetStatusIconsEvent(new());
+        var ev = new GetStatusIconsEvent(new(), uid);
         RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(ref ev);
         return ev.StatusIcons;
     }
 }

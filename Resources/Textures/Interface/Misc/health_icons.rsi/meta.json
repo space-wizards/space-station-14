@@ -1,0 +1,12 @@
+{
+    "version": 1,
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "Fine"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+- type: statusIcon
+  id: HealthIcon_Fine
+  priority: 1
+  icon:
+    sprite: Interface/Misc/health_icons.rsi
+    state: Fine

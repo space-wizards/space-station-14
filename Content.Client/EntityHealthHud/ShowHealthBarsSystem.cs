@@ -5,7 +5,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.EntityHealthBar
+namespace Content.Client.EntityHealthHud
 {
     public sealed class ShowHealthBarsSystem : EntitySystem
     {

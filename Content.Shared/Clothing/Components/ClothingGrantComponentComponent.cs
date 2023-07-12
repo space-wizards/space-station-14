@@ -5,7 +5,7 @@ namespace Content.Shared.Clothing.Components
     [RegisterComponent]
     public sealed class ClothingGrantComponentComponent : Component
     {
-        [DataField("component", required: true)]
+        [DataField("components", required: true)]
         [AlwaysPushInheritance]
         public ComponentRegistry Components { get; } = new();
 

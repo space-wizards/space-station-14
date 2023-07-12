@@ -2,7 +2,7 @@ using Robust.Client.Player;
 using Robust.Shared.Console;
 using Content.Shared.EntityHealthBar;
 using System.Linq;
-using Content.Client.EntityHealthBar;
+using Content.Client.EntityHealthHud;
 
 namespace Content.Client.Commands
 {

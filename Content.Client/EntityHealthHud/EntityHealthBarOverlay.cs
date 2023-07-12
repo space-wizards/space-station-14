@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 using System.Numerics;
 using static Robust.Shared.Maths.Color;
 
-namespace Content.Client.EntityHealthBar;
+namespace Content.Client.EntityHealthHud;
 
 /// <summary>
 /// Yeah a lot of this is duplicated from doafters.
@@ -128,7 +128,7 @@ public sealed class EntityHealthBarOverlay : Overlay
                 !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out threshold, thresholds))
                 return (1, false);
 
-            var ratio = 1 - ((FixedPoint2)(dmg.TotalDamage / threshold)).Float();
+            var ratio = 1 - ((FixedPoint2) (dmg.TotalDamage / threshold)).Float();
             return (ratio, false);
         }
 
@@ -157,10 +157,10 @@ public sealed class EntityHealthBarOverlay : Overlay
         // lerp
         if (!crit)
         {
-            var hue = (5f / 18f) * progress;
-            return Color.FromHsv((hue, 1f, 0.75f, 1f));
+            var hue = 5f / 18f * progress;
+            return FromHsv((hue, 1f, 0.75f, 1f));
         }
 
-        return Color.Red;
+        return Red;
     }
 }
