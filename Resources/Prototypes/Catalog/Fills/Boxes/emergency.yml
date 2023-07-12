@@ -61,7 +61,7 @@
   parent: BoxCardboard
   id: BoxSurvivalBrigmedic
   description: It's a box with basic internals inside.
-  suffix: Medical
+  suffix: MedSec
   components:
   - type: StorageFill
     contents:

@@ -723,6 +723,23 @@
       - SurplusBundle
 
 - type: listing
+  id: UplinkSyndicateSpongeBox
+  name: uplink-syndicate-sponge-box-name
+  description: uplink-syndicate-sponge-box-desc
+  icon: { sprite:  Objects/Misc/monkeycube.rsi, state: box}
+  productEntity: SyndicateSpongeBox
+  cost:
+    Telecrystal: 7
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Zookeeper
+    - Scientist
+    - Chef
+
+- type: listing
   id: UplinkDisposableTurret
   name: uplink-disposable-turret-name
   description: uplink-disposable-turret-desc
@@ -940,17 +957,6 @@
     blacklist:
       components:
       - SurplusBundle
-
-#- type: listing
-#  id: UplinkSyndicateSpongeBox
-#  name: uplink-syndicate-sponge-box-name
-#  description: uplink-syndicate-sponge-box-desc
-#  icon: { sprite:  Objects/Misc/monkeycube.rsi, state: box}
-#  productEntity: SyndicateSpongeBox
-#  cost:
-#    Telecrystal: 6
-#  categories:
-#  - UplinkMisc
 
  # Pointless
 

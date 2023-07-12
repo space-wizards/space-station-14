@@ -1623,3 +1623,12 @@
     FoodOnionSlice: 2
     FoodCheeseSlice: 1
     FoodMeatCutlet: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodBakedChevreChaud
+  name: chevre chaud recipe
+  result: FoodBakedChevreChaud
+  time: 5
+  solids:
+    FoodChevreSlice: 1
+    FoodBreadBaguetteSlice: 1
