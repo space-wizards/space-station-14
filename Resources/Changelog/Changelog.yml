@@ -1,9 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: 'Syringes are now size 3, down from 5.', type: Tweak}
-  id: 3735
-  time: '2023-05-12T21:10:45.0000000+00:00'
 - author: Cripes
   changes:
   - {message: Space tunes should now only be heard in space, type: Fix}
@@ -2956,3 +2951,10 @@ Entries:
       the contents of dispensers loaded on-site., type: Tweak}
   id: 4234
   time: '2023-07-12T02:01:01.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: 'Added chevre (goat cheese), crostini (slices of baguette), and chevre
+      chaud (chevre on top of a crostini and lightly toasted) to the game. Bon ap-petite!',
+    type: Add}
+  id: 4235
+  time: '2023-07-12T03:00:30.0000000+00:00'
