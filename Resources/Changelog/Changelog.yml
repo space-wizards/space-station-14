@@ -1,65 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Mob sprites no longer rotate on death, type: Fix}
-  id: 3725
-  time: '2023-05-11T11:20:42.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: PKA bullets can now destroy gatherable materials such as rocks or trees.,
-    type: Add}
-  id: 3726
-  time: '2023-05-11T13:19:09.0000000+00:00'
-- author: juliangiebel
-  changes:
-  - {message: Fixed not being able to link blast doors and shutters, type: Fix}
-  id: 3727
-  time: '2023-05-11T22:16:02.0000000+00:00'
-- author: freeman2651
-  changes:
-  - {message: Added ChemVends for (limited) bulk chemical storage and dispensing.,
-    type: Add}
-  id: 3728
-  time: '2023-05-12T09:31:20.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: You can now examine the ID cards worn by monkeys., type: Fix}
-  id: 3729
-  time: '2023-05-12T13:52:09.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Entering and leaving kudzu or other slowdown causing entities should
-      no longer cause the screen to stutter/flicker., type: Fix}
-  id: 3730
-  time: '2023-05-12T14:02:51.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - {message: Fixed several bottles not correctly displaying contained solutions.,
-    type: Fix}
-  id: 3731
-  time: '2023-05-12T15:29:39.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Due to a recession on the clown planet, NT can no longer afford to
-      fill your scrubbers with quite as much foam.', type: Tweak}
-  id: 3732
-  time: '2023-05-12T18:37:09.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: 'The Captain''s ID card can now be thrown against an airlock to open
-      it, just like any other ID.', type: Fix}
-  id: 3733
-  time: '2023-05-12T20:07:57.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: hop now has detective acces, type: Fix}
-  id: 3734
-  time: '2023-05-12T20:16:29.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: 'Syringes are now size 3, down from 5.', type: Tweak}
-  id: 3735
-  time: '2023-05-12T21:10:45.0000000+00:00'
 - author: Cripes
   changes:
   - {message: Space tunes should now only be heard in space, type: Fix}
@@ -2945,3 +2884,77 @@ Entries:
     type: Add}
   id: 4224
   time: '2023-07-11T04:02:04.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Minor tweak to mercenary item sprites, type: Tweak}
+  id: 4225
+  time: '2023-07-11T19:32:39.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: Made glass tiles look different, type: Tweak}
+  id: 4226
+  time: '2023-07-11T19:34:07.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: Syndicate sponge boxes now cost 7 tc to purchase, type: Tweak}
+  id: 4227
+  time: '2023-07-11T19:34:21.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Fixed SyndieDrobe adverts., type: Fix}
+  id: 4228
+  time: '2023-07-11T23:56:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fewer expeditions are offered to the station at a time., type: Tweak}
+  - {message: Salvage expeditions are now generally shorter., type: Tweak}
+  - {message: Adjusted some of the rewards for expeditions., type: Tweak}
+  id: 4229
+  time: '2023-07-11T23:56:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Intercoms now have a menu for selecting the channel, toggling the microphone,
+      and toggling the speakers.', type: Add}
+  - {message: 'Intercoms now come with speakers, which allow you to hear what people
+      are saying.', type: Add}
+  - {message: 'Radio speakers are now much quieter, requiring you to stand next to
+      them to make out what they''re saying.', type: Tweak}
+  id: 4230
+  time: '2023-07-11T23:58:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Emagged recyclers grind people again., type: Tweak}
+  id: 4231
+  time: '2023-07-12T00:45:34.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Sawing off a double barrel shotgun no longer fills it with lethal shells.
+      It will instead spawn empty., type: Tweak}
+  id: 4232
+  time: '2023-07-12T00:45:43.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'The Syndicate has retrofitted the minibomb with a higher quality timer.
+      The fuse has been halved to five seconds, and the beeping sound is now much
+      quieter (and cooler.)', type: Tweak}
+  - {message: Changed some descriptions of explosives both in-and-out of the uplink
+      to be less weird., type: Tweak}
+  - {message: Fixed the EMP grenade's capitalization., type: Tweak}
+  id: 4233
+  time: '2023-07-12T01:52:15.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: 'Shotgun shell boxes have been recalled by the manufacturer, and rebranded
+      as dispensers. They no longer feature inventory space in addition to the shells
+      they contain.', type: Fix}
+  - {message: Shells can now be inserted back into dispensers. No guarantees regarding
+      the contents of dispensers loaded on-site., type: Tweak}
+  id: 4234
+  time: '2023-07-12T02:01:01.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: 'Added chevre (goat cheese), crostini (slices of baguette), and chevre
+      chaud (chevre on top of a crostini and lightly toasted) to the game. Bon ap-petite!',
+    type: Add}
+  id: 4235
+  time: '2023-07-12T03:00:30.0000000+00:00'
