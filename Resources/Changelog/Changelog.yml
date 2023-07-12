@@ -1,10 +1,4 @@
 Entries:
-- author: OctoRocket
-  changes:
-  - {message: 1 nukeop per 10 people instead of per 5., type: Tweak}
-  - {message: minimum of 20 people for nukeops., type: Tweak}
-  id: 3738
-  time: '2023-05-12T22:55:47.0000000+00:00'
 - author: DEATHB4DEFEAT
   changes:
   - {message: Changed the portal sprite., type: Tweak}
@@ -2958,3 +2952,8 @@ Entries:
       closet, type: Tweak}
   id: 4237
   time: '2023-07-12T19:09:36.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Fixed singularity distortion render on zoom, type: Fix}
+  id: 4238
+  time: '2023-07-12T19:12:25.0000000+00:00'
