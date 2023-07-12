@@ -1,4 +1,5 @@
 #nullable enable
+using System.Numerics;
 using Content.Server.Cuffs;
 using Content.Shared.Body.Components;
 using Content.Shared.Cuffs.Components;

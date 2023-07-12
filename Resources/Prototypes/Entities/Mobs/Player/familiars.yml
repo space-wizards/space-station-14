@@ -65,7 +65,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Critical
       160: Dead
   - type: Grammar
     attributes:

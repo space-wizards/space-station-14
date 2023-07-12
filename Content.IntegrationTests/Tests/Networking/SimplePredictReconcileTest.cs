@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Robust.Client.GameStates;
 using Robust.Client.Timing;
 using Robust.Server.Player;
@@ -66,7 +67,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Spawn dummy component entity.
                 var map = sMapManager.CreateMap();
                 var player = sPlayerManager.ServerSessions.Single();
-                serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates((0, 0), map));
+                serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates(new Vector2(0, 0), map));
                 serverComponent = sEntityManager.AddComponent<PredictionTestComponent>(serverEnt);
 
                 // Make client "join game" so they receive game state updates.

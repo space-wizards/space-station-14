@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.CCVar;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
