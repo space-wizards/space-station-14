@@ -1,10 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: 'The Captain''s ID card can now be thrown against an airlock to open
-      it, just like any other ID.', type: Fix}
-  id: 3733
-  time: '2023-05-12T20:07:57.0000000+00:00'
 - author: lzk
   changes:
   - {message: hop now has detective acces, type: Fix}
@@ -2948,3 +2942,13 @@ Entries:
       It will instead spawn empty., type: Tweak}
   id: 4232
   time: '2023-07-12T00:45:43.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'The Syndicate has retrofitted the minibomb with a higher quality timer.
+      The fuse has been halved to five seconds, and the beeping sound is now much
+      quieter (and cooler.)', type: Tweak}
+  - {message: Changed some descriptions of explosives both in-and-out of the uplink
+      to be less weird., type: Tweak}
+  - {message: Fixed the EMP grenade's capitalization., type: Tweak}
+  id: 4233
+  time: '2023-07-12T01:52:15.0000000+00:00'
