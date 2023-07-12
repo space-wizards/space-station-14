@@ -1,9 +1,4 @@
 Entries:
-- author: lzk
-  changes:
-  - {message: hop now has detective acces, type: Fix}
-  id: 3734
-  time: '2023-05-12T20:16:29.0000000+00:00'
 - author: Whisper
   changes:
   - {message: 'Syringes are now size 3, down from 5.', type: Tweak}
@@ -2952,3 +2947,12 @@ Entries:
   - {message: Fixed the EMP grenade's capitalization., type: Tweak}
   id: 4233
   time: '2023-07-12T01:52:15.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: 'Shotgun shell boxes have been recalled by the manufacturer, and rebranded
+      as dispensers. They no longer feature inventory space in addition to the shells
+      they contain.', type: Fix}
+  - {message: Shells can now be inserted back into dispensers. No guarantees regarding
+      the contents of dispensers loaded on-site., type: Tweak}
+  id: 4234
+  time: '2023-07-12T02:01:01.0000000+00:00'
