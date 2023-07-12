@@ -29,7 +29,7 @@ public sealed class ClientAlertsSystem : AlertsSystem
 
         SubscribeLocalEvent<AlertsComponent, ComponentHandleState>(ClientAlertsHandleState);
     }
-    public override void LoadPrototypes()
+    protected override void LoadPrototypes()
     {
         base.LoadPrototypes();
 
