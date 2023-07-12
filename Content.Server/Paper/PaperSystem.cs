@@ -123,7 +123,7 @@ namespace Content.Server.Paper
                 var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", Identity.Entity(args.Target, EntityManager)), ("stamp", args.Used));
                 _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, args.User);
 
-                _audio.PlayPvs(stampComp.Sound, uid, AudioParams.Default.WithVolume(-2f).WithMaxDistance(5));
+                _audio.PlayPvs(stampComp.Sound, uid);
 
                 UpdateUserInterface(uid, paperComp);
             }
