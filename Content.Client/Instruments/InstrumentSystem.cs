@@ -3,11 +3,14 @@ using Content.Shared.CCVar;
 using Content.Shared.Instruments;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Instruments;
 
@@ -50,6 +53,22 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
     private void OnShutdown(EntityUid uid, InstrumentComponent component, ComponentShutdown args)
     {
         EndRenderer(uid, false, component);
+    }
+
+    public void SetMaster(EntityUid uid, EntityUid? masterUid)
+    {
+        if (!TryComp(uid, out InstrumentComponent? instrument))
+            return;
+
+        RaiseNetworkEvent(new InstrumentSetMasterEvent(uid, masterUid));
+    }
+
+    public void SetMasterChannel(EntityUid uid, int channel, bool value)
+    {
+        if (!TryComp(uid, out InstrumentComponent? instrument))
+            return;
+
+        RaiseNetworkEvent(new InstrumentSetMasterChannelEvent(uid, channel, value));
     }
 
     public override void SetupRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? component = null)
@@ -97,8 +116,24 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             instrument.Renderer.MidiProgram = instrument.InstrumentProgram;
         }
 
+        UpdateRendererMaster(instrument);
+
         instrument.Renderer.LoopMidi = instrument.LoopMidi;
         instrument.DirtyRenderer = false;
+    }
+
+    private void UpdateRendererMaster(InstrumentComponent instrument)
+    {
+        if (instrument.Renderer == null || instrument.Master == null)
+            return;
+
+        if (!TryComp(instrument.Master, out InstrumentComponent? masterInstrument) || masterInstrument.Renderer == null)
+            return;
+
+        instrument.Renderer.MasterChannels.SetAll(false);
+        instrument.Renderer.MasterChannels.Or(instrument.MasterChannels);
+
+        instrument.Renderer.Master = masterInstrument.Renderer;
     }
 
     public override void EndRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? component = null)
@@ -266,35 +301,71 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
         instrument.SequenceDelay = Math.Max(instrument.SequenceDelay, delta);
 
-        var currentTick = renderer.SequencerTick;
+        SendMidiEvents(midiEv.MidiEvent, instrument);
+        //SendMidiEventsForBand(midiEv.MidiEvent, instrument);
+    }
 
-        for (var i = 0; i < instrument.Band.Length; i++)
+    /*private void SendMidiEventsForBand(RobustMidiEvent[] midiEvents, InstrumentComponent owner, uint tickOffset = 0)
+    {
+        if (owner.Renderer == null)
+            return;
+
+        var ownerTick = owner.Renderer.SequencerTick;
+
+        // Wow, this whole method is really expensive! TODO: Optimize this
+        var instrumentQuery = GetEntityQuery<InstrumentComponent>();
+        var dict = new Dictionary<EntityUid, (InstrumentComponent, List<RobustMidiEvent>)>();
+
+        foreach (var set in owner.Master)
         {
-            var otherInstruments = instrument.Band[i];
-
-            if (otherInstruments == null || otherInstruments.Count == 0)
-                continue;
-
-            var channelEvents = midiEv.MidiEvent
-                .Where(e => e.Channel == i)
-                .ToArray();
-
-            if (channelEvents.Length == 0)
-                continue;
-
-            foreach (var otherUid in otherInstruments)
+            foreach (var other in set)
             {
-                if (!HasComp<InstrumentComponent>(otherUid))
+                var instrument = instrumentQuery.GetComponent(other);
+
+                if (instrument.Renderer == null)
                     continue;
 
-                OnMidiEventRx(new InstrumentMidiEventEvent(otherUid, channelEvents));
+                instrument.SequenceDelay = owner.SequenceDelay;
+                dict[other] = (instrument, new List<RobustMidiEvent>());
             }
         }
 
-        // ReSharper disable once ForCanBeConvertedToForeach
-        for (uint i = 0; i < midiEv.MidiEvent.Length; i++)
+        foreach (var ev in midiEvents)
         {
-            var ev = midiEv.MidiEvent[i];
+            if (owner.Master[ev.Channel] is not {} set)
+                continue;
+
+            foreach (var other in set)
+            {
+                var (instrument, list) = dict[other];
+
+                // Get time relative to other instrument
+                var newTick = ((ev.Tick - ownerTick) + instrument.Renderer!.SequencerTick) - tickOffset;
+                list.Add(new RobustMidiEvent(ev, newTick));
+            }
+        }
+
+        foreach (var (_, (instrument, events)) in dict)
+        {
+            SendMidiEvents(events, instrument, false);
+        }
+    }*/
+
+    private void SendMidiEvents(IReadOnlyList<RobustMidiEvent> midiEvents, InstrumentComponent instrument)
+    {
+        if (instrument.Renderer == null)
+        {
+            Log.Warning($"Tried to send Midi events to an instrument without a renderer.");
+            return;
+        }
+
+        var currentTick = instrument.Renderer.SequencerTick;
+
+        // ReSharper disable once ForCanBeConvertedToForeach
+        for (uint i = 0; i < midiEvents.Count; i++)
+        {
+            // I am surprised this doesn't take uint...
+            var ev = midiEvents[(int)i];
 
             var scheduled = ev.Tick + instrument.SequenceDelay;
 
@@ -329,12 +400,20 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             return;
         }
 
-        foreach (var instrument in EntityManager.EntityQuery<InstrumentComponent>(true))
+        var query = EntityQueryEnumerator<InstrumentComponent>();
+        while (query.MoveNext(out var uid, out var instrument))
         {
-            if (instrument.DirtyRenderer && instrument.Renderer != null)
-                UpdateRenderer(instrument.Owner, instrument);
+            if (instrument.Renderer != null)
+            {
+                if (instrument.DirtyRenderer)
+                    UpdateRenderer(uid, instrument);
 
-            if (!instrument.IsMidiOpen && !instrument.IsInputOpen)
+                // For cases where the master renderer was not created yet.
+                if(instrument.Master != null && instrument.Renderer.Master == null)
+                    UpdateRendererMaster(instrument);
+            }
+
+            if (instrument is { IsMidiOpen: false, IsInputOpen: false })
                 continue;
 
             var now = _gameTiming.RealTime;
@@ -346,10 +425,11 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
                 instrument.SentWithinASec = 0;
             }
 
-            if (instrument.MidiEventBuffer.Count == 0) continue;
+            if (instrument.MidiEventBuffer.Count == 0)
+                continue;
 
-            var max = instrument.RespectMidiLimits ?
-                Math.Min(MaxMidiEventsPerBatch, MaxMidiEventsPerSecond - instrument.SentWithinASec)
+            var max = instrument.RespectMidiLimits
+                ? Math.Min(MaxMidiEventsPerBatch, MaxMidiEventsPerSecond - instrument.SentWithinASec)
                 : instrument.MidiEventBuffer.Count;
 
             if (max <= 0)
@@ -380,7 +460,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             if (eventCount == 0)
                 continue;
 
-            RaiseNetworkEvent(new InstrumentMidiEventEvent(instrument.Owner, events));
+            RaiseNetworkEvent(new InstrumentMidiEventEvent(uid, events));
 
             instrument.SentWithinASec += eventCount;
 
