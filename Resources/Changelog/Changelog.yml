@@ -1,16 +1,4 @@
 Entries:
-- author: MisterMecky
-  changes:
-  - {message: Fixed several bottles not correctly displaying contained solutions.,
-    type: Fix}
-  id: 3731
-  time: '2023-05-12T15:29:39.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Due to a recession on the clown planet, NT can no longer afford to
-      fill your scrubbers with quite as much foam.', type: Tweak}
-  id: 3732
-  time: '2023-05-12T18:37:09.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: 'The Captain''s ID card can now be thrown against an airlock to open
@@ -2949,3 +2937,14 @@ Entries:
       them to make out what they''re saying.', type: Tweak}
   id: 4230
   time: '2023-07-11T23:58:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Emagged recyclers grind people again., type: Tweak}
+  id: 4231
+  time: '2023-07-12T00:45:34.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Sawing off a double barrel shotgun no longer fills it with lethal shells.
+      It will instead spawn empty., type: Tweak}
+  id: 4232
+  time: '2023-07-12T00:45:43.0000000+00:00'
