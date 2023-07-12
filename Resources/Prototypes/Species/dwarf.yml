@@ -7,6 +7,4 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobDwarfDummy
   skinColoration: HumanToned
-  # The reason why minHeight and maxHeight aren't used here is because they break the slider's, so...
   defaultHeight: 0.6
-  scaleWidth: false

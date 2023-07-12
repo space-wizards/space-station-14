@@ -125,7 +125,7 @@ public sealed class SpeciesPrototype : IPrototype
     /// The minimum height for this species
     /// </summary>
     [DataField("minHeight")]
-    public float MinHeight = 0.6f;
+    public float MinHeight = 0.7f;
 
     /// <summary>
     /// The default height for this species
@@ -143,7 +143,7 @@ public sealed class SpeciesPrototype : IPrototype
     /// Whether to scale horizontally or not
     /// </summary>
     [DataField("scaleWidth")]
-    public bool ScaleWidth = true;
+    public bool ScaleWidth;
 }
 
 public enum SpeciesNaming : byte

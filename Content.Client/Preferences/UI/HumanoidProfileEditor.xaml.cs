@@ -198,6 +198,7 @@ namespace Content.Client.Preferences.UI
 
             CHeight.OnValueChanged += args =>
             {
+                CHeightLabel.Text = MathF.Round(args.Value, 1).ToString("G");
                 SetHeight(args.Value);
             };
 
@@ -1004,8 +1005,8 @@ namespace Content.Client.Preferences.UI
             var species = _speciesList.Find(x => x.ID == Profile.Species)!;
             CHeight.MaxValue = species.MaxHeight;
             CHeight.MinValue = species.MinHeight;
-            _defaultHeight = species.DefaultHeight;
             CHeight.Value = Math.Clamp(Profile.Height, species.MinHeight, species.MaxHeight);
+            _defaultHeight = species.DefaultHeight;
         }
 
         private void UpdateGenderControls()
