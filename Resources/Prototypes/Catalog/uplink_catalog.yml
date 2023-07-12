@@ -753,6 +753,7 @@
       whitelist:
         - StationEngineer
         - AtmosphericTechnician
+        - Scientist
 
 # Armor
 
