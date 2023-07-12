@@ -67,7 +67,7 @@
   description: A toolbox typically stocked with electrical gear.
   components:
   - type: Damageable
-    damageContainer: Toolbox
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
       - trigger:
