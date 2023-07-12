@@ -38,7 +38,6 @@ public sealed partial class MindTests
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Critical
       200: Dead
   - type: Destructible
     thresholds:

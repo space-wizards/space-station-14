@@ -575,6 +575,23 @@
               min: 10
 
 - type: reagent
+  id: AmbuzolPlus
+  name: reagent-name-ambuzol-plus
+  group: Medicine
+  desc: reagent-desc-ambuzol-plus
+  physicalDesc: reagent-physical-desc-crisp
+  flavor: medicine
+  color: "#1274b5"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:CureZombieInfection
+          innoculate: true
+          conditions:
+            - !type:ReagentThreshold
+              min: 5
+
+- type: reagent
   id: PulpedBananaPeel
   name: reagent-name-pulped-banana-peel
   group: Medicine

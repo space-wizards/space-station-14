@@ -1,4 +1,5 @@
-﻿using Content.Shared.StatusIcon.Components;
+﻿using System.Numerics;
+using Content.Shared.StatusIcon.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;

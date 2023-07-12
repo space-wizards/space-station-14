@@ -18,6 +18,10 @@
       maxAmount: 2
     prob: 0.25
   - entries:
+    - id: WeaponTurretXeno
+      amount: 3
+    prob: 0.25
+  - entries:
     - id: MobXenoRavager
       amount: 1
     prob: 0.1

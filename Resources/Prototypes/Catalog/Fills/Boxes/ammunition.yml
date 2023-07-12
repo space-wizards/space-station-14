@@ -349,112 +349,118 @@
       - id: MagazineShotgunIncendiary
         amount: 6
 
-# base BallisticAmmoProvider boxes
+# base BallisticAmmoProvider dispensers
 - type: entity
-  parent: BoxMagazine
-  id: BoxAmmoProvider
+  parent: BaseItem
+  id: BaseAmmoProvider
   abstract: true
   components:
-  - type: BallisticAmmoProvider
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
-      storagebase: !type:Container
+  - type: Item
+    size: 30
+  - type: Sprite
+    sprite: Objects/Storage/boxes.rsi
+
+- type: entity
+  parent: BaseAmmoProvider
+  id: AmmoProviderShotgunShell
+  abstract: true
+  components:
+    - type: BallisticAmmoProvider
+      whitelist:
+        tags:
+        - ShellShotgun
+      capacity: 12
 
 # Shotgun Shells
 - type: entity
-  name: box of shotgun beanbag cartridges
-  parent: BoxAmmoProvider
+  name: shotgun beanbag cartridges dispenser
+  parent: AmmoProviderShotgunShell
   id: BoxBeanbag
-  description: A box full of beanbag shots, designed for riot shotguns.
+  description: A dispenser box full of beanbag shots, designed for riot shotguns.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunBeanbag
-      capacity: 12
     - type: Sprite
       layers:
         - state: boxwide
         - state: shellbeanbag
 
 - type: entity
-  name: box of shotgun lethal cartridges
-  parent: BoxAmmoProvider
+  name: shotgun lethal cartridges dispenser
+  parent: AmmoProviderShotgunShell
   id: BoxLethalshot
-  description: A box full of lethal pellet shots, designed for riot shotguns.
+  description: A dispenser box full of lethal pellet shots, designed for riot shotguns.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgun
-      capacity: 12
     - type: Sprite
       layers:
         - state: boxwide
         - state: shelllethal
 
 - type: entity
-  name: box of shotgun slug cartridges
-  parent: BoxAmmoProvider
+  name: shotgun slug cartridges dispenser
+  parent: AmmoProviderShotgunShell
   id: BoxShotgunSlug
-  description: A box full of shotgun slugs, designed for riot shotguns.
+  description: A dispenser box full of slugs, designed for riot shotguns.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunSlug
-      capacity: 12
     - type: Sprite
       layers:
         - state: boxwide
         - state: shellslug
 
 - type: entity
-  name: box of shotgun flare cartridges
-  parent: BoxAmmoProvider
+  name: shotgun flare cartridges dispenser
+  parent: AmmoProviderShotgunShell
   id: BoxShotgunFlare
-  description: A box full of shotgun flare cartridges, designed for riot shotguns.
+  description: A dispenser box full of flare cartridges, designed for riot shotguns.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunFlare
-      capacity: 12
     - type: Sprite
       layers:
         - state: boxwide
         - state: shellflare
 
 - type: entity
-  name: box of shotgun incendiary cartridges
-  parent: BoxAmmoProvider
+  name: shotgun incendiary cartridges dispenser
+  parent: AmmoProviderShotgunShell
   id: BoxShotgunIncendiary
-  description: A box full of shotgun incendiary cartridges, designed for riot shotguns.
+  description: A dispenser box full of incendiary cartridges, designed for riot shotguns.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunIncendiary
-      capacity: 12
     - type: Sprite
       layers:
         - state: boxwide
         - state: shellincendiary
 
 - type: entity
-  name: box of shotgun practice cartridges
-  parent: BoxAmmoProvider
+  name: shotgun practice cartridges dispenser
+  parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
-  description: A box full of shotgun practice cartridges, designed for riot shotguns.
+  description: A dispenser box full of practice cartridges, designed for riot shotguns.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunPractice
-      capacity: 12
     - type: Sprite
       layers:
         - state: boxwide
         - state: shellpractice
 
 - type: entity
-  name: box of tranquilizer cartridges
-  parent: BoxAmmoProvider
+  name: tranquilizer cartridges dispenser
+  parent: AmmoProviderShotgunShell
   id: BoxShellTranquilizer
-  description: A box full of tranquilizer cartridges, designed for riot shotguns.
+  description: A dispenser box full of tranquilizer cartridges, designed for riot shotguns.
   components:
     - type: BallisticAmmoProvider
       proto: ShellTranquilizer
-      capacity: 12
     - type: Sprite
       layers:
         - state: boxwide

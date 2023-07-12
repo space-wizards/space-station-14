@@ -43,6 +43,19 @@
           False: {state: stunbaton_off}
   - type: StaticPrice
     price: 100
+  - type: Riggable
+  - type: SolutionContainerManager
+    solutions:
+      battery:
+        maxVol: 5
+  - type: InjectableSolution
+    solution: battery
+  - type: DrawableSolution
+    solution: battery
+  - type: Explosive
+    explosionType: Default
+    intensitySlope: 1.5
+    maxIntensity: 200
 
 - type: entity
   name: flash

@@ -1,4 +1,3 @@
-# TODO probably needs a base grenade
 - type: entity
   abstract: true
   parent: BaseItem
@@ -88,16 +87,18 @@
     - type: TimedDespawn
       lifetime: 0.5
 
+#The explosive values for these are pretty god damn mediocre, but SS14's explosion system is hard to understand - this is a good enough approximation of how it was in SS13.
+#Ideally, there should be a weak radius around the bomb outside of its gibbing / spacing range capable of dealing fair damage to players / structures.
 - type: entity
   name: syndicate minibomb
-  description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
+  description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
   parent: GrenadeBase
   id: SyndieMiniBomb
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
   - type: OnUseTimerTrigger
-    delay: 10
+    delay: 5
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Minibomb
@@ -108,6 +109,8 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/minibombcountdown.ogg
+      params:
+        volume: 8
 
 - type: entity
   name: the nuclear option
@@ -184,8 +187,8 @@
     price: 25
 
 - type: entity
-  name: emp grenade
-  description: Releases electromagnetic pulses that disrupt or damage many electronic devices or drain power cells.
+  name: EMP grenade
+  description: A grenade designed to wreak havoc on electronic systems.
   parent: GrenadeBase
   id: EmpGrenade
   components:
