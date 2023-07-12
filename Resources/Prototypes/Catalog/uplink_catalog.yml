@@ -546,7 +546,7 @@
   description: uplink-toolbox-desc
   productEntity: ToolboxSyndicateFilled
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkTools
 
