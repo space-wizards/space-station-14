@@ -23,8 +23,7 @@
     whitelist:
       tags:
         - Knife
-
-
+  
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsSalvage
