@@ -1,10 +1,4 @@
 Entries:
-- author: KEEYNy
-  changes:
-  - {message: "Equal values \u200B\u200Bfor ERT Leader jumpsuit  and ERT Security\
-      \ jumpsuit", type: Tweak}
-  id: 3740
-  time: '2023-05-12T23:43:27.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Scale throwing pushback by mass., type: Tweak}
@@ -2959,3 +2953,9 @@ Entries:
     type: Tweak}
   id: 4239
   time: '2023-07-12T19:14:25.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Added 4 empty jugs to the chemvend. Janitors remind chemists not to
+      dump dangerous chemicals in drains!, type: Add}
+  id: 4240
+  time: '2023-07-12T19:38:14.0000000+00:00'
