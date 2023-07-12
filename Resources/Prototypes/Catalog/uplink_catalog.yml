@@ -124,7 +124,7 @@
   description: uplink-mini-bomb-desc
   productEntity: SyndieMiniBomb
   cost:
-    Telecrystal: 6
+    Telecrystal: 6  
   categories:
     - UplinkExplosives
 

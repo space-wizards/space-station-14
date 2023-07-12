@@ -28,16 +28,16 @@ uplink-gloves-north-star-desc = A pair of gloves that reduce your punching coold
 
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade
-uplink-explosive-grenade-desc = Grenade that creates a small but devastating explosion.
+uplink-explosive-grenade-desc = A simplistic grenade with a ten-second fuse that is geared towards injuring personnel. Causes minimal hull damage.
 
 uplink-flash-grenade-name = Flashbang
-uplink-flash-grenade-desc = Eeeeeeeeeeeeeeeeeeeeee
+uplink-flash-grenade-desc = A standard-issue flashbang, capable of blinding and slowing down anyone without proper protection. This, of course, includes you; make sure you're properly equipped before using it.
 
 uplink-mini-bomb-name = Minibomb
-uplink-mini-bomb-desc = A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
+uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a five-second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.
 
 uplink-penguin-grenade-name = Grenade Penguin
-uplink-penguin-grenade-desc = A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
+uplink-penguin-grenade-desc = A small, highly-aggressive penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
 
 uplink-c4-name = C-4
 uplink-c4-desc = Use it to breach walls, airlocks or sabotage equipment. It can be attached to almost all objects and has a modifiable timer with a minimum setting of 10 seconds.
@@ -45,8 +45,8 @@ uplink-c4-desc = Use it to breach walls, airlocks or sabotage equipment. It can 
 uplink-c4-bundle-name = C-4 bundle
 uplink-c4-bundle-desc = Because sometimes quantity is quality. Contains 8 C-4 plastic explosives.
 
-uplink-emp-grenade-name = Emp Grenade
-uplink-emp-grenade-desc = Releases electromagnetic pulses that disrupt or damage many electronic devices or drain power cells.
+uplink-emp-grenade-name = EMP Grenade
+uplink-emp-grenade-desc = A grenade designed to disrupt electronic systems. Useful for disrupting communications, security's energy weapons, and APCs when you're in a tight spot."
 
 uplink-exploding-pen-name = Exploding pen
 uplink-exploding-pen-desc = A class IV explosive device contained within a standard pen. Comes with a 4 second fuse.
