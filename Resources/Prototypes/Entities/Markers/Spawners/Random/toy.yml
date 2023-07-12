@@ -74,12 +74,11 @@
 - type: entity
   name: Spacemen Minifigure Spawner
   suffix: Librarian only, map with care!
-  id: FigureSpawner
+  id: SpacemenFigureSpawner
   parent: MarkerBase
   components:
     - type: Sprite
       layers:
-        - state: red
         - sprite: Objects/Fun/figurines.rsi
           state: figurine_spawner
     - type: RandomSpawner
@@ -112,5 +111,5 @@
       - ToyOwlman
       - ToySkeleton
       - ToyFigurineQueen
-      chance: 0.5
+      chance: 0.90
       offset: 0.2
