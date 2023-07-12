@@ -63,12 +63,12 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         RaiseNetworkEvent(new InstrumentSetMasterEvent(uid, masterUid));
     }
 
-    public void SetMasterChannel(EntityUid uid, int channel, bool value)
+    public void SetFilteredChannel(EntityUid uid, int channel, bool value)
     {
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
-        RaiseNetworkEvent(new InstrumentSetMasterChannelEvent(uid, channel, value));
+        RaiseNetworkEvent(new InstrumentSetFilteredChannelEvent(uid, channel, value));
     }
 
     public override void SetupRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? component = null)
@@ -76,8 +76,20 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component is not InstrumentComponent instrument || instrument.IsRendererAlive)
+        if (component is not InstrumentComponent instrument)
+        {
             return;
+        }
+
+        if (instrument.IsRendererAlive)
+        {
+            if (fromStateChange)
+            {
+                UpdateRenderer(uid, instrument);
+            }
+
+            return;
+        }
 
         instrument.SequenceDelay = 0;
         instrument.SequenceStartTick = 0;
@@ -116,10 +128,12 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             instrument.Renderer.MidiProgram = instrument.InstrumentProgram;
         }
 
+        instrument.Renderer.FilteredChannels.SetAll(false);
+        instrument.Renderer.FilteredChannels.Or(instrument.FilteredChannels);
+
         UpdateRendererMaster(instrument);
 
         instrument.Renderer.LoopMidi = instrument.LoopMidi;
-        instrument.DirtyRenderer = false;
     }
 
     private void UpdateRendererMaster(InstrumentComponent instrument)
@@ -129,9 +143,6 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
         if (!TryComp(instrument.Master, out InstrumentComponent? masterInstrument) || masterInstrument.Renderer == null)
             return;
-
-        instrument.Renderer.MasterChannels.SetAll(false);
-        instrument.Renderer.MasterChannels.Or(instrument.MasterChannels);
 
         instrument.Renderer.Master = masterInstrument.Renderer;
     }
@@ -302,54 +313,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         instrument.SequenceDelay = Math.Max(instrument.SequenceDelay, delta);
 
         SendMidiEvents(midiEv.MidiEvent, instrument);
-        //SendMidiEventsForBand(midiEv.MidiEvent, instrument);
     }
-
-    /*private void SendMidiEventsForBand(RobustMidiEvent[] midiEvents, InstrumentComponent owner, uint tickOffset = 0)
-    {
-        if (owner.Renderer == null)
-            return;
-
-        var ownerTick = owner.Renderer.SequencerTick;
-
-        // Wow, this whole method is really expensive! TODO: Optimize this
-        var instrumentQuery = GetEntityQuery<InstrumentComponent>();
-        var dict = new Dictionary<EntityUid, (InstrumentComponent, List<RobustMidiEvent>)>();
-
-        foreach (var set in owner.Master)
-        {
-            foreach (var other in set)
-            {
-                var instrument = instrumentQuery.GetComponent(other);
-
-                if (instrument.Renderer == null)
-                    continue;
-
-                instrument.SequenceDelay = owner.SequenceDelay;
-                dict[other] = (instrument, new List<RobustMidiEvent>());
-            }
-        }
-
-        foreach (var ev in midiEvents)
-        {
-            if (owner.Master[ev.Channel] is not {} set)
-                continue;
-
-            foreach (var other in set)
-            {
-                var (instrument, list) = dict[other];
-
-                // Get time relative to other instrument
-                var newTick = ((ev.Tick - ownerTick) + instrument.Renderer!.SequencerTick) - tickOffset;
-                list.Add(new RobustMidiEvent(ev, newTick));
-            }
-        }
-
-        foreach (var (_, (instrument, events)) in dict)
-        {
-            SendMidiEvents(events, instrument, false);
-        }
-    }*/
 
     private void SendMidiEvents(IReadOnlyList<RobustMidiEvent> midiEvents, InstrumentComponent instrument)
     {
@@ -403,15 +367,9 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         var query = EntityQueryEnumerator<InstrumentComponent>();
         while (query.MoveNext(out var uid, out var instrument))
         {
-            if (instrument.Renderer != null)
-            {
-                if (instrument.DirtyRenderer)
-                    UpdateRenderer(uid, instrument);
-
-                // For cases where the master renderer was not created yet.
-                if(instrument.Master != null && instrument.Renderer.Master == null)
-                    UpdateRendererMaster(instrument);
-            }
+            // For cases where the master renderer was not created yet.
+            if (instrument is { Renderer.Master: null, Master: not null })
+                UpdateRendererMaster(instrument);
 
             if (instrument is { IsMidiOpen: false, IsInputOpen: false })
                 continue;

@@ -32,11 +32,7 @@ public abstract partial class SharedInstrumentComponent : Component
     public EntityUid? Master { get; set; } = null;
 
     [ViewVariables, AutoNetworkedField]
-    public BitArray MasterChannels { get; set; } = new(RobustMidiEvent.MaxChannels, true);
-
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    [Access(typeof(SharedInstrumentSystem), Other = AccessPermissions.ReadWrite)] // FIXME Friends
-    public bool DirtyRenderer { get; set; }
+    public BitArray FilteredChannels { get; set; } = new(RobustMidiEvent.MaxChannels, true);
 }
 
 
@@ -74,13 +70,13 @@ public sealed class InstrumentSetMasterEvent : EntityEventArgs
 ///     Send from the client to the server to set a master instrument channel.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class InstrumentSetMasterChannelEvent : EntityEventArgs
+public sealed class InstrumentSetFilteredChannelEvent : EntityEventArgs
 {
     public EntityUid Uid { get; }
     public int Channel { get; }
     public bool Value { get; }
 
-    public InstrumentSetMasterChannelEvent(EntityUid uid, int channel, bool value)
+    public InstrumentSetFilteredChannelEvent(EntityUid uid, int channel, bool value)
     {
         Uid = uid;
         Channel = channel;

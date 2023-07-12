@@ -26,12 +26,12 @@ public sealed partial class ChannelsMenu : DefaultWindow
 
     private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
     {
-        _owner.Instruments.SetMasterChannel(_owner.Owner, (int)ChannelList[args.ItemIndex].Metadata!, true);
+        _owner.Instruments.SetFilteredChannel(_owner.Owner, (int)ChannelList[args.ItemIndex].Metadata!, false);
     }
 
     private void OnItemDeselected(ItemList.ItemListDeselectedEventArgs args)
     {
-        _owner.Instruments.SetMasterChannel(_owner.Owner, (int)ChannelList[args.ItemIndex].Metadata!, false);
+        _owner.Instruments.SetFilteredChannel(_owner.Owner, (int)ChannelList[args.ItemIndex].Metadata!, true);
     }
 
     private void OnAllPressed(BaseButton.ButtonEventArgs obj)
@@ -59,7 +59,7 @@ public sealed partial class ChannelsMenu : DefaultWindow
             var item = ChannelList.AddItem(_owner.Loc.GetString("instrument-component-channel-name",
                 ("number", i)), null, true, i);
 
-            item.Selected = _owner.Instrument?.MasterChannels[i] ?? false;
+            item.Selected = !_owner.Instrument?.FilteredChannels[i] ?? false;
         }
     }
 }

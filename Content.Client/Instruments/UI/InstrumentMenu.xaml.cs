@@ -30,7 +30,7 @@ namespace Content.Client.Instruments.UI
                 Title = _owner.Entities.GetComponent<MetaDataComponent>(_owner.Owner).EntityName;
                 LoopButton.Disabled = !_owner.Instrument.IsMidiOpen;
                 LoopButton.Pressed = _owner.Instrument.LoopMidi;
-                ChannelsButton.Disabled = !_owner.Instrument.IsMidiOpen && _owner.Instrument.Master == null;
+                ChannelsButton.Disabled = !_owner.Instrument.IsRendererAlive;
                 StopButton.Disabled = !_owner.Instrument.IsMidiOpen;
                 PlaybackSlider.MouseFilter = _owner.Instrument.IsMidiOpen ? MouseFilterMode.Pass : MouseFilterMode.Ignore;
             }
@@ -194,7 +194,7 @@ namespace Content.Client.Instruments.UI
                 return;
 
             _owner.Instrument.LoopMidi = obj.Pressed;
-            _owner.Instrument.DirtyRenderer = true;
+            _owner.Instruments.UpdateRenderer(_owner.Owner, _owner.Instrument);
         }
 
         private void PlaybackSliderSeek(Range _)
@@ -225,7 +225,7 @@ namespace Content.Client.Instruments.UI
             BandButton.ToggleMode = hasMaster;
             BandButton.Pressed = hasMaster;
             BandButton.Disabled = _owner.Instrument.IsMidiOpen || _owner.Instrument.IsInputOpen;
-            ChannelsButton.Disabled = !hasMaster;
+            ChannelsButton.Disabled = !_owner.Instrument.IsRendererAlive;
 
             if (!_owner.Instrument.IsMidiOpen)
             {

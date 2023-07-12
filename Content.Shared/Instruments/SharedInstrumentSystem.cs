@@ -22,7 +22,6 @@ public abstract class SharedInstrumentSystem : EntitySystem
     {
         component.InstrumentBank = bank;
         component.InstrumentProgram = program;
-        component.DirtyRenderer = true;
         Dirty(component);
     }
 
