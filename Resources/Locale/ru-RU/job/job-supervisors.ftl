@@ -6,6 +6,7 @@ job-supervisors-hos = Главе Службы Безопасноси
 job-supervisors-ce = Старший Инженеру
 job-supervisors-cmo = Главному Врачу
 job-supervisors-rd = Научному Руководителю
+job-supervisors-qm = Квартирмейстеру
 job-supervisors-service = Поварам, Ботаникам, Барменам и Главе Персонала
 job-supervisors-engineering = Инженерам станции, Атмосферным техникам и Старший Инженеру
 job-supervisors-medicine = Врачам, Химикам и Главному Врачу
