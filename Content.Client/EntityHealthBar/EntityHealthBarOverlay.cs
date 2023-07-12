@@ -7,8 +7,8 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 using System.Numerics;
+using static Robust.Shared.Maths.Color;
 
 namespace Content.Client.EntityHealthBar;
 
@@ -22,7 +22,6 @@ public sealed class EntityHealthBarOverlay : Overlay
     private readonly SharedTransformSystem _transform;
     private readonly MobStateSystem _mobStateSystem;
     private readonly MobThresholdSystem _mobThresholdSystem;
-    private readonly Texture _barTexture;
     private readonly ShaderInstance _shader;
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
     public List<string> DamageContainers = new();
@@ -33,9 +32,6 @@ public sealed class EntityHealthBarOverlay : Overlay
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
         _mobStateSystem = _entManager.EntitySysManager.GetEntitySystem<MobStateSystem>();
         _mobThresholdSystem = _entManager.EntitySysManager.GetEntitySystem<MobThresholdSystem>();
-
-        var sprite = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Misc/health_bar.rsi"), "icon");
-        _barTexture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
 
         _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
     }
@@ -78,20 +74,20 @@ public sealed class EntityHealthBarOverlay : Overlay
             handle.SetTransform(matty);
 
             float yOffset;
+            float widthOfMob;
             if (spriteQuery.TryGetComponent(mob.Owner, out var sprite))
             {
-                yOffset = sprite.Bounds.Height + 15f;
+                yOffset = sprite.Bounds.Height * EyeManager.PixelsPerMeter / 2 - 3f;
+                widthOfMob = sprite.Bounds.Width * EyeManager.PixelsPerMeter;
+
             }
             else
             {
-                yOffset = 1f;
+                yOffset = -3f * EyeManager.PixelsPerMeter;
+                widthOfMob = EyeManager.PixelsPerMeter;
             }
 
-            var position = new Vector2(-_barTexture.Width / 2f / EyeManager.PixelsPerMeter,
-                yOffset / EyeManager.PixelsPerMeter);
-
-            // Draw the underlying bar texture
-            handle.DrawTexture(_barTexture, position);
+            var position = new Vector2(-widthOfMob / EyeManager.PixelsPerMeter / 2, yOffset / EyeManager.PixelsPerMeter);
 
             // we are all progressing towards death every day
             (float ratio, bool inCrit) deathProgress = CalcProgress(mob.Owner, mob, dmg, thresholds);
@@ -99,14 +95,22 @@ public sealed class EntityHealthBarOverlay : Overlay
             var color = GetProgressColor(deathProgress.ratio, deathProgress.inCrit);
 
             // Hardcoded width of the progress bar because it doesn't match the texture.
-            const float startX = 2f;
-            const float endX = 22f;
+            const float startX = 8f;
+            var endX = widthOfMob - 8f;
 
             var xProgress = (endX - startX) * deathProgress.ratio + startX;
 
-            var box = new Box2(new Vector2(startX, 2f) / EyeManager.PixelsPerMeter, new Vector2(xProgress, 4f) / EyeManager.PixelsPerMeter);
-            box = box.Translated(position);
-            handle.DrawRect(box, color);
+            var boxBackground = new Box2(new Vector2(startX, 0f) / EyeManager.PixelsPerMeter, new Vector2(endX, 3f) / EyeManager.PixelsPerMeter);
+            boxBackground = boxBackground.Translated(position);
+            handle.DrawRect(boxBackground, Black.WithAlpha(192));
+
+            var boxMain = new Box2(new Vector2(startX, 0f) / EyeManager.PixelsPerMeter, new Vector2(xProgress, 3f) / EyeManager.PixelsPerMeter);
+            boxMain = boxMain.Translated(position);
+            handle.DrawRect(boxMain, color);
+
+            var pixelDarken = new Box2(new Vector2(startX, 2f) / EyeManager.PixelsPerMeter, new Vector2(xProgress, 3f) / EyeManager.PixelsPerMeter);
+            pixelDarken = pixelDarken.Translated(position);
+            handle.DrawRect(pixelDarken, Black.WithAlpha(128));
         }
 
         handle.UseShader(null);
