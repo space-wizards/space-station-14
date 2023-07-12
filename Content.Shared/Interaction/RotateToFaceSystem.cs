@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Mobs.Systems;
@@ -70,7 +71,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             var diff = coordinates - xform.MapPosition.Position;
-            if (diff.LengthSquared <= 0.01f)
+            if (diff.LengthSquared() <= 0.01f)
                 return true;
 
             var diffAngle = Angle.FromWorldVec(diff);

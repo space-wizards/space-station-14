@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
-using Content.Shared.CCVar;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Timing;
@@ -13,7 +12,7 @@ namespace Content.YAMLLinter
 {
     internal static class Program
     {
-        private static async Task<int> Main(string[] args)
+        private static async Task<int> Main(string[] _)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -40,7 +39,7 @@ namespace Content.YAMLLinter
 
         private static async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{DummyTicker = true, Disconnected = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { DummyTicker = true, Disconnected = true });
             var client = pairTracker.Pair.Client;
 
             var cPrototypeManager = client.ResolveDependency<IPrototypeManager>();
@@ -58,7 +57,7 @@ namespace Content.YAMLLinter
 
         private static async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{DummyTicker = true, Disconnected = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { DummyTicker = true, Disconnected = true });
             var server = pairTracker.Pair.Server;
 
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();

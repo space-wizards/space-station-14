@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Shared.CombatMode;
@@ -27,17 +28,31 @@ public sealed partial class NPCCombatSystem
         if (TryComp<MeleeWeaponComponent>(component.Weapon, out var weapon))
         {
             var cdRemaining = weapon.NextAttack - _timing.CurTime;
+            var attackCooldown = TimeSpan.FromSeconds(1f / _melee.GetAttackRate(component.Weapon, uid, weapon));
 
-            // If CD remaining then backup.
-            if (cdRemaining < TimeSpan.FromSeconds(1f / _melee.GetAttackRate(component.Weapon, uid, weapon)) * 0.5f)
+            // Might as well get in range.
+            if (cdRemaining < attackCooldown * 0.45f)
                 return;
 
             if (!_physics.TryGetNearestPoints(uid, component.Target, out var pointA, out var pointB))
                 return;
 
-            var idealDistance = weapon.Range * 1.5f;
             var obstacleDirection = pointB - args.WorldPosition;
-            var obstacleDistance = obstacleDirection.Length;
+
+            // If they're moving away then pursue anyway.
+            // If just hit then always back up a bit.
+            if (cdRemaining < attackCooldown * 0.90f &&
+                TryComp<PhysicsComponent>(component.Target, out var targetPhysics) &&
+                Vector2.Dot(targetPhysics.LinearVelocity, obstacleDirection) > 0f)
+            {
+                return;
+            }
+
+            if (cdRemaining < TimeSpan.FromSeconds(1f / _melee.GetAttackRate(component.Weapon, uid, weapon)) * 0.45f)
+                return;
+
+            var idealDistance = weapon.Range * 4f;
+            var obstacleDistance = obstacleDirection.Length();
 
             if (obstacleDistance > idealDistance || obstacleDistance == 0f)
             {
@@ -47,7 +62,7 @@ public sealed partial class NPCCombatSystem
 
             args.Steering.CanSeek = false;
             obstacleDirection = args.OffsetRotation.RotateVec(obstacleDirection);
-            var norm = obstacleDirection.Normalized;
+            var norm = obstacleDirection.Normalized();
 
             var weight = (obstacleDistance <= args.AgentRadius
                 ? 1f
@@ -163,7 +178,7 @@ public sealed partial class NPCCombatSystem
 
         if (_random.Prob(component.MissChance) &&
             physicsQuery.TryGetComponent(component.Target, out var targetPhysics) &&
-            targetPhysics.LinearVelocity.LengthSquared != 0f)
+            targetPhysics.LinearVelocity.LengthSquared() != 0f)
         {
             _melee.AttemptLightAttackMiss(uid, component.Weapon, weapon, targetXform.Coordinates.Offset(_random.NextVector2(0.5f)));
         }
