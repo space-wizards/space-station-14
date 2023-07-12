@@ -469,6 +469,18 @@
       - ClownRubberStamp
 
 - type: entity
+  name: chief engineer's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampCE
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-ce
+    stampState: "paper_stamp-ce"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-ce
+
+- type: entity
   name: chief medical officer's rubber stamp
   parent: RubberStampBase
   id: RubberStampCMO
@@ -542,18 +554,6 @@
     state: stamp-rd
 
 - type: entity
-  name: warden's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampWarden
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-warden
-    stampState: "paper_stamp-warden"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-warden
-
-- type: entity
   name: trader's rubber stamp
   parent: RubberStampBase
   id: RubberStampTrader
@@ -578,16 +578,16 @@
     state: stamp-syndicate
 
 - type: entity
-  name: chief engineer's rubber stamp
+  name: warden's rubber stamp
   parent: RubberStampBase
-  id: RubberStampCE
+  id: RubberStampWarden
   components:
   - type: Stamp
-    stampedName: stamp-component-stamped-name-ce
-    stampState: "paper_stamp-ce"
+    stampedName: stamp-component-stamped-name-warden
+    stampState: "paper_stamp-warden"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-ce
+    state: stamp-warden
 
 - type: entity
   name: APPROVED rubber stamp
