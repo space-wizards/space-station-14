@@ -2,7 +2,7 @@
   id: YouToolInventory
   startingInventory:
     CableApcStack: 5
-    Crowbar: 3
+    Crowbar: 5
     Welder: 2
     Wirecutter: 3
     Wrench: 3
