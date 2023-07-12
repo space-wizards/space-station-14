@@ -1,9 +1,4 @@
 Entries:
-- author: DEATHB4DEFEAT
-  changes:
-  - {message: Changed the portal sprite., type: Tweak}
-  id: 3739
-  time: '2023-05-12T23:36:43.0000000+00:00'
 - author: KEEYNy
   changes:
   - {message: "Equal values \u200B\u200Bfor ERT Leader jumpsuit  and ERT Security\
@@ -2957,3 +2952,10 @@ Entries:
   - {message: Fixed singularity distortion render on zoom, type: Fix}
   id: 4238
   time: '2023-07-12T19:12:25.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'Due to a couple thousand life support patients finally dying, Nanotrasen
+      now has the funds to put medicated sutures and regenerative mesh in select medkits',
+    type: Tweak}
+  id: 4239
+  time: '2023-07-12T19:14:25.0000000+00:00'
