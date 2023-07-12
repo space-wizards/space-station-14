@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: New safety standards have made bicaridine overdoses less fatal than
-      before., type: Tweak}
-  id: 3737
-  time: '2023-05-12T22:40:55.0000000+00:00'
 - author: OctoRocket
   changes:
   - {message: 1 nukeop per 10 people instead of per 5., type: Tweak}
@@ -2958,3 +2952,9 @@ Entries:
   - {message: Starvation will kill you again., type: Add}
   id: 4236
   time: '2023-07-12T05:46:38.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Returned body armor to the bartender's vending machine and bartender's
+      closet, type: Tweak}
+  id: 4237
+  time: '2023-07-12T19:09:36.0000000+00:00'
