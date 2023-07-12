@@ -1,14 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Scale throwing pushback by mass., type: Tweak}
-  id: 3741
-  time: '2023-05-12T23:54:38.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: You can now drinky puddles (inefficiently), type: Add}
-  id: 3742
-  time: '2023-05-13T01:32:57.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Chemical reactions should now conserve thermal energy., type: Tweak}
@@ -2959,3 +2949,14 @@ Entries:
       dump dangerous chemicals in drains!, type: Add}
   id: 4240
   time: '2023-07-12T19:38:14.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Nuke Ops can no longer purchase dehydrated carp, type: Remove}
+  - {message: Increased the price of dehydrated carp to 3 TC., type: Tweak}
+  id: 4241
+  time: '2023-07-12T19:47:09.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Youtool nerf, type: Add}
+  id: 4242
+  time: '2023-07-12T19:47:20.0000000+00:00'
