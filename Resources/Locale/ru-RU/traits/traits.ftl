@@ -19,3 +19,9 @@ trait-muted-desc = Вы не можете говорить
 
 trait-paracusia-name = Паракузия
 trait-paracusia-desc = Вы слышите звуки, которых на самом деле нет
+
+trait-uncloneable-name = Неклонируемый
+trait-uncloneable-desc = Вас невозможно клонировать
+
+trait-pirate-accent-name = Пиратский акцент
+trait-pirate-accent-desc = Вы не можете перестать говорить как пират!

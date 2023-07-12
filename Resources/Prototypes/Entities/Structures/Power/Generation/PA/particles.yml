@@ -3,7 +3,7 @@
   description: Accelerated particles.
   id: ParticlesProjectile
   parent: BaseBullet
-  noSpawn: true
+  noSpawn: false #imperial GM need special effects
   components:
     - type: Sprite
       layers:
