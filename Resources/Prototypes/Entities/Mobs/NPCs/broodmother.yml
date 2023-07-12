@@ -60,7 +60,6 @@
     - id: BroodServantEgg
     eggLayAction: SpiderLayEgg
   - type: NoSlip
-  - type: FasterSpiderWeb
   - type: Bloodstream
     bloodMaxVolume: 600
     bloodReagent: SpiderBlood
@@ -68,6 +67,12 @@
     spawned:
     - id: FoodMeatSpider
       amount: 12
+  # - type: AmbientSound
+  #   volume: 1000
+  #   range: 1000
+  #   enabled: true
+  #   sound: 
+  #     path: massacre.ogg
   - type: HTN
     rootTask: SimpleHostileCompound
   - type: Faction
@@ -75,6 +80,80 @@
       - Xeno
   - type: InputMover
   - type: MobMover
+  - type: WebSpitStun
+    actionWebSpit:
+      icon: Objects/Weapons/Guns/Projectiles/web_projectile.rsi/web_projectile.png
+      name: WebSpitStun
+      description: WebSpitStun
+      itemIconStyle: NoItem
+      range: 200
+      event: !type:SpiderWebSpitActionEvent
+      useDelay: 2
+  - type: FasterSpiderWeb
+
+
+- type: entity
+  id: BulletWebSpit
+  name: web spit
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Projectiles/web_projectile.rsi
+      layers:
+        - state: web_projectile
+    - type: Projectile
+      damage:
+        types:
+          Caustic: 5
+    - type: WebStun
+      paralyzeTime: 5
+      knockdownAmount: 5
+
+
+
+- type: entity
+  #abstract: true
+  name: BroodyTrap
+  description: BroodyTrap
+  id: BroodyTrap
+  parent: [Handcuffs, ClothingShoesBase]
+  components:
+  - type: Item
+    size: 5
+  - type: Handcuff
+    breakoutTime: 30
+    cuffedRSI: Objects/Misc/broodtrap.rsi
+    bodyIconState: body-overlay
+    breakOnRemove: true
+    brokenPrototype: WebCuffsBroken
+    startCuffSound:
+      path: /Audio/Items/Handcuffs/rope_start.ogg
+    endCuffSound:
+      path: /Audio/Items/Handcuffs/rope_end.ogg
+    startUncuffSound:
+      path: /Audio/Items/Handcuffs/rope_start.ogg
+    endUncuffSound:
+      path: /Audio/Items/Handcuffs/rope_breakout.ogg
+    startBreakoutSound:
+      path: /Audio/Items/Handcuffs/rope_takeoff.ogg
+  - type: Sprite
+    sprite: Objects/Misc/broodtrap.rsi
+    state: cuff
+
+- type: entity
+  #abstract: true
+  name: broken web cuffs
+  description: The torn web
+  id: WebCuffsBroken
+  parent: BaseHandcuffsBroken
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/broodtrap.rsi
+    state: cuff-broken
+  - type: Tag
+    tags:
+    - Trash
 
 
 #broodservant
