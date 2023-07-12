@@ -8399,7 +8399,7 @@ entities:
     - pos: 71.5,3.5
       parent: 2
       type: Transform
-  - uid: 12834
+  - uid: 12836
     components:
     - pos: 61.5,-8.5
       parent: 2
@@ -60915,14 +60915,14 @@ entities:
       type: Transform
 - proto: HospitalCurtainsOpen
   entities:
-  - uid: 622
-    components:
-    - pos: 61.5,-8.5
-      parent: 2
-      type: Transform
   - uid: 4682
     components:
     - pos: 24.5,-11.5
+      parent: 2
+      type: Transform
+  - uid: 5049
+    components:
+    - pos: 61.5,-8.5
       parent: 2
       type: Transform
   - uid: 5744
@@ -60940,49 +60940,39 @@ entities:
     - pos: 102.5,-13.5
       parent: 2
       type: Transform
-  - uid: 11291
+  - uid: 11749
     components:
     - pos: 59.5,2.5
       parent: 2
       type: Transform
-  - uid: 11748
+  - uid: 11750
     components:
     - pos: 60.5,2.5
       parent: 2
       type: Transform
-  - uid: 11752
+  - uid: 11754
     components:
     - pos: 62.5,2.5
       parent: 2
       type: Transform
-  - uid: 11753
+  - uid: 11755
     components:
     - pos: 61.5,2.5
       parent: 2
       type: Transform
-  - uid: 11754
+  - uid: 11759
     components:
     - pos: 63.5,2.5
       parent: 2
       type: Transform
-  - uid: 11755
+  - uid: 11762
     components:
     - pos: 64.5,2.5
       parent: 2
       type: Transform
-  - uid: 11759
-    components:
-    - pos: 65.5,2.5
-      parent: 2
-      type: Transform
-  - uid: 11762
-    components:
-    - pos: 66.5,2.5
-      parent: 2
-      type: Transform
   - uid: 11763
     components:
-    - pos: 67.5,2.5
+    - pos: 65.5,2.5
       parent: 2
       type: Transform
   - uid: 11849
@@ -61048,6 +61038,16 @@ entities:
   - uid: 12262
     components:
     - pos: 14.5,16.5
+      parent: 2
+      type: Transform
+  - uid: 12834
+    components:
+    - pos: 66.5,2.5
+      parent: 2
+      type: Transform
+  - uid: 12835
+    components:
+    - pos: 67.5,2.5
       parent: 2
       type: Transform
 - proto: HydroponicsToolHatchet
@@ -63653,7 +63653,7 @@ entities:
       type: Transform
     - powerLoad: 0
       type: ApcPowerReceiver
-  - uid: 5049
+  - uid: 5060
     components:
     - pos: 51.5,-4.5
       parent: 2
@@ -75390,7 +75390,7 @@ entities:
       type: Transform
 - proto: VendingMachineChemicals
   entities:
-  - uid: 5060
+  - uid: 5061
     components:
     - flags: SessionSpecific
       type: MetaData
@@ -85588,9 +85588,19 @@ entities:
       type: Transform
 - proto: WeaponCapacitorRecharger
   entities:
+  - uid: 622
+    components:
+    - pos: 41.5,24.5
+      parent: 2
+      type: Transform
   - uid: 2050
     components:
     - pos: 34.5,41.5
+      parent: 2
+      type: Transform
+  - uid: 5062
+    components:
+    - pos: 36.5,20.5
       parent: 2
       type: Transform
   - uid: 7979
@@ -86759,28 +86769,16 @@ entities:
       type: Transform
 - proto: WindowTintedDirectional
   entities:
-  - uid: 5061
+  - uid: 5063
     components:
     - rot: -1.5707963267948966 rad
       pos: 59.5,3.5
       parent: 2
       type: Transform
-  - uid: 5062
+  - uid: 5064
     components:
     - rot: -1.5707963267948966 rad
       pos: 59.5,4.5
-      parent: 2
-      type: Transform
-  - uid: 5063
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 65.5,3.5
-      parent: 2
-      type: Transform
-  - uid: 5064
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 67.5,3.5
       parent: 2
       type: Transform
   - uid: 5243
@@ -86792,7 +86790,7 @@ entities:
   - uid: 7076
     components:
     - rot: -1.5707963267948966 rad
-      pos: 62.5,3.5
+      pos: 65.5,3.5
       parent: 2
       type: Transform
   - uid: 7770
@@ -86812,19 +86810,31 @@ entities:
       pos: 12.5,4.5
       parent: 2
       type: Transform
-  - uid: 11749
+  - uid: 11291
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 67.5,3.5
+      parent: 2
+      type: Transform
+  - uid: 11748
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 62.5,3.5
+      parent: 2
+      type: Transform
+  - uid: 11751
     components:
     - rot: -1.5707963267948966 rad
       pos: 62.5,4.5
       parent: 2
       type: Transform
-  - uid: 11750
+  - uid: 11752
     components:
     - rot: 1.5707963267948966 rad
       pos: 67.5,4.5
       parent: 2
       type: Transform
-  - uid: 11751
+  - uid: 11753
     components:
     - rot: -1.5707963267948966 rad
       pos: 65.5,4.5
