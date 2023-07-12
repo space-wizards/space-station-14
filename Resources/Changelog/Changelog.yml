@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Chemical reactions should now conserve thermal energy., type: Tweak}
-  id: 3743
-  time: '2023-05-13T03:10:32.0000000+00:00'
 - author: Tristan Thomas
   changes:
   - {message: 'Added a white cane, which spawns on blind players.', type: Add}
@@ -2960,3 +2955,11 @@ Entries:
   - {message: Youtool nerf, type: Add}
   id: 4242
   time: '2023-07-12T19:47:20.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: 'The NTDDB has received 1,349,418 full shipments of combat knifes and
+      boots, expect every officer to have a knife on them from this point and on.',
+    type: Tweak}
+  - {message: Jackboots can store knives now., type: Tweak}
+  id: 4243
+  time: '2023-07-12T19:55:18.0000000+00:00'
