@@ -418,19 +418,6 @@
         maxdistance: 5
 
 - type: entity
-  name: mime's rubber stamp
-  parent: RubberStampBase
-  id: RubberStampMime
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-mime
-    stampState: "paper_stamp-mime"
-    # TODO remove sound from mime's rubber stamp
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-mime
-
-- type: entity
   name: captain's rubber stamp
   parent: RubberStampBase
   id: RubberStampCaptain
@@ -518,6 +505,19 @@
     state: stamp-hos
 
 - type: entity
+  name: mime's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampMime
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-mime
+    stampState: "paper_stamp-mime"
+    # TODO remove sound from mime's rubber stamp
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-mime
+
+- type: entity
   name: quartermaster's rubber stamp
   parent: RubberStampBase
   id: RubberStampQm
@@ -590,18 +590,6 @@
     state: stamp-ce
 
 - type: entity
-  name: DENIED rubber stamp
-  parent: RubberStampBaseAlt
-  id: RubberStampDenied
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-denied
-    stampState: "paper_stamp-deny"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-deny
-
-- type: entity
   name: APPROVED rubber stamp
   parent: RubberStampBaseAlt
   id: RubberStampApproved
@@ -612,3 +600,15 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-iaa
+
+- type: entity
+  name: DENIED rubber stamp
+  parent: RubberStampBaseAlt
+  id: RubberStampDenied
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-denied
+    stampState: "paper_stamp-deny"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-deny
