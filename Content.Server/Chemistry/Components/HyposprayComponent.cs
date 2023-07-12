@@ -8,11 +8,10 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public sealed class HyposprayComponent : SharedHyposprayComponent
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
+        // TODO: This should be on clumsycomponent.
         [DataField("clumsyFailChance")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ClumsyFailChance { get; set; } = 0.5f;
+        public float ClumsyFailChance = 0.5f;
 
         [DataField("transferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
