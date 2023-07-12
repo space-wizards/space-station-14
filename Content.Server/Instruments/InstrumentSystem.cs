@@ -149,6 +149,10 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (args.SenderSession != instrument.InstrumentPlayer)
             return;
 
+        // TODO: Unhardcode percussion channel
+        if (msg.Channel == 9 && !instrument.AllowPercussion)
+            return;
+
         instrument.FilteredChannels[msg.Channel] = msg.Value;
 
         if (!msg.Value)
