@@ -125,10 +125,6 @@
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
-  - type: Construction
-    graph: ShotgunSawn
-    node: start
-    deconstructionTarget: null
 
 - type: entity
   name: Enforcer
