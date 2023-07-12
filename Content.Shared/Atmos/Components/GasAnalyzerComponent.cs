@@ -7,13 +7,13 @@ namespace Content.Shared.Atmos.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed class GasAnalyzerComponent : Component
 {
-    [DataField("target")]
+    [ViewVariables]
     public EntityUid? Target;
 
-    [DataField("user")]
+    [ViewVariables]
     public EntityUid User;
 
-    [DataField("lastPosition"), ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)]
     public EntityCoordinates? LastPosition;
 
     [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
