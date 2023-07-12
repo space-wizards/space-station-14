@@ -147,3 +147,6 @@ ghost-role-information-SyndicateAgent-description = Кому-то нужно п�
 
 ghost-role-information-LoneOps-name = Одинокий Оперативник
 ghost-role-information-LoneOps-description = Вы одинокий ядерный оперативник. Уничтожите станцию!
+
+ghost-role-information-behonker-name = Бехонкер
+ghost-role-information-behonker-description = Вы антагонист, приносите смерть и гудки тем, кто не следует за Хонкоматерью.
