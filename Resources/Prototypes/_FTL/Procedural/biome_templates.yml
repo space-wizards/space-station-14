@@ -26,6 +26,23 @@
         octaves: 1
       entities:
         - FloorBloodEntity
+    # Large rock areas
+    - !type:BiomeEntityLayer
+      threshold: -0.20
+      noise:
+        seed: 0
+        frequency: 0.04
+        noiseType: Cellular
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
+      allowedTiles:
+        - FloorPlanetFlesh
+      entities:
+        - WallMeat
     # Fill layer
     - !type:BiomeTileLayer
       threshold: -1
