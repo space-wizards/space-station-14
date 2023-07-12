@@ -7028,6 +7028,11 @@ entities:
       pos: -5.5,0.5
       parent: 1
       type: Transform
+  - uid: 1006
+    components:
+    - pos: -4.5,1.5
+      parent: 1
+      type: Transform
 - proto: WindoorSecureSecurityLocked
   entities:
   - uid: 867
@@ -7125,6 +7130,12 @@ entities:
     components:
     - rot: 1.5707963267948966 rad
       pos: 0.5,7.5
+      parent: 1
+      type: Transform
+  - uid: 1005
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -3.5,0.5
       parent: 1
       type: Transform
 ...
