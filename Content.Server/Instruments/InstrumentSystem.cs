@@ -23,9 +23,6 @@ namespace Content.Server.Instruments;
 [UsedImplicitly]
 public sealed partial class InstrumentSystem : SharedInstrumentSystem
 {
-    private const float MaxInstrumentBandRange = 10f;
-    private const float BandRequestDelay = 1.0f;
-
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConsoleHost _conHost = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -36,6 +33,10 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly InteractionSystem _interactions = default!;
 
+    private const float MaxInstrumentBandRange = 10f;
+
+    // Band Requests are queued and delayed both to avoid metagaming and to prevent spamming it, since it's expensive.
+    private const float BandRequestDelay = 1.0f;
     private TimeSpan _bandRequestTimer = TimeSpan.Zero;
     private readonly List<InstrumentBandRequestBuiMessage> _bandRequestQueue = new();
 
@@ -223,19 +224,17 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             return Array.Empty<(EntityUid, string)>();
 
         var list = new ValueList<(EntityUid, string)>();
-        var activeQuery = EntityManager.GetEntityQuery<ActiveInstrumentComponent>();
         var instrumentQuery = EntityManager.GetEntityQuery<InstrumentComponent>();
 
         if (!TryComp(uid, out InstrumentComponent? originInstrument)
             || originInstrument.InstrumentPlayer?.AttachedEntity is not {} originPlayer)
             return Array.Empty<(EntityUid, string)>();
 
-        foreach (var entity in _lookup.GetEntitiesInRange(uid, MaxInstrumentBandRange))
+        // It's probably faster to get all possible active instruments than all entities in range
+        var activeEnumerator = EntityManager.EntityQueryEnumerator<ActiveInstrumentComponent>();
+        while (activeEnumerator.MoveNext(out var entity, out _))
         {
             if (entity == uid)
-                continue;
-
-            if (!activeQuery.HasComponent(entity))
                 continue;
 
             // Don't grab puppet instruments.
