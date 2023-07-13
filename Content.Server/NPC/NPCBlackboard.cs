@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Interaction;
 using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
@@ -160,6 +161,16 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                 var access = entManager.EntitySysManager.GetEntitySystem<AccessReaderSystem>();
                 value = access.FindAccessTags(owner);
                 return true;
+            case ActiveHand:
+                if (!TryGetValue(Owner, out owner, entManager) ||
+                    !entManager.TryGetComponent<HandsComponent>(owner, out var hands) ||
+                    hands.ActiveHand == null)
+                {
+                    return false;
+                }
+
+                value = hands.ActiveHand;
+                return true;
             case CanMove:
                 if (!TryGetValue(Owner, out owner, entManager))
                 {
@@ -201,6 +212,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     */
 
     public const string Access = "Access";
+    public const string ActiveHand = "ActiveHand";
     public const string CanMove = "CanMove";
     public const string FollowTarget = "FollowTarget";
     public const string MedibotInjectRange = "MedibotInjectRange";

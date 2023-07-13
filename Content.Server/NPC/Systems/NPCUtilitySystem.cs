@@ -11,6 +11,7 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Storage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
+using Content.Shared.Hands.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -164,6 +165,21 @@ public sealed class NPCUtilitySystem : EntitySystem
                 // TODO: Pathfind there, though probably do it in a separate con.
                 return 1f;
             }
+            case TargetAmmoMatchesCon:
+            {
+                if (!blackboard.TryGetValue(NPCBlackboard.ActiveHand, out Hand? activeHand, EntityManager) ||
+                    !TryComp<BallisticAmmoProviderComponent>(activeHand.HeldEntity, out var heldGun))
+                {
+                    return 0f;
+                }
+
+                if (heldGun.Whitelist?.IsValid(targetUid, EntityManager) != true)
+                {
+                    return 0f;
+                }
+
+                return 1f;
+            }
             case TargetDistanceCon:
             {
                 var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
@@ -214,7 +230,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
                 const float bufferRange = 0.5f;
 
-                if (blackboard.TryGetValue<EntityUid>("CombatTarget", out var currentTarget, EntityManager) &&
+                if (blackboard.TryGetValue<EntityUid>("Target", out var currentTarget, EntityManager) &&
                     currentTarget == targetUid &&
                     TryComp<TransformComponent>(owner, out var xform) &&
                     TryComp<TransformComponent>(targetUid, out var targetXform) &&

@@ -1,4 +1,21 @@
 - type: utilityQuery
+  id: NearbyAmmo
+  query:
+    - !type:ComponentQuery
+      components:
+        - type: Ammo
+        - type: Item
+  considerations:
+    - !type:TargetAmmoMatchesCon
+      curve: !type:BoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    # TODO: Get ammo count.
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
   id: NearbyFood
   query:
     - !type:ComponentQuery
@@ -25,6 +42,7 @@
         - type: Gun
         - type: Item
   considerations:
+    # TODO: Prefer highest DPC probably?
     - !type:TargetHasAmmoCon
       curve: !type:BoolCurve
     - !type:TargetDistanceCon
@@ -68,7 +86,7 @@
       curve: !type:BoolCurve
 
 - type: utilityQuery
-  id: NearbyRangedTargets
+  id: NearbyGunTargets
   query:
     - !type:NearbyHostilesQuery
   considerations:

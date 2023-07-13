@@ -1,0 +1,97 @@
+# -- Ranged --
+# Tries to shoot a target at range.
+- type: htnCompound
+  id: GunCombatCompound
+  preconditions:
+    - !type:GunAmmoPrecondition
+  branches:
+    - tasks:
+        - id: PickGunTargetPrimitive
+        - id: GunAttackTargetCompound
+
+# Tries to Gun attack our target.
+- type: htnCompound
+  id: GunAttackTargetCompound
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: Target
+  branches:
+    # Keep hitting them if they're in LOS
+    - tasks:
+        - id: GunAttackTargetPrimitive
+
+    # Move to range and hit them
+    - tasks:
+        - id: MoveToCombatTargetPrimitive
+        - id: GunAttackTargetPrimitive
+
+# Selects ammo in range, then moves to it and picks it up
+- type: htnCompound
+  id: GunAmmoPickupCompound
+  preconditions:
+    - !type:GunAmmoPrecondition
+      percent: 0.1
+  branches:
+    # Find ammo then pick it up.
+    - tasks:
+        - id: PickAmmoPrimitive
+        - id: MoveToTargetPrimitive
+        - id: InteractWithPrimitive
+# TODO: Prioritise ammo for weapon we have equipped, otherwise grab anything if we don't have any.
+# TODO: Only works on ballistic
+
+# Discard empty gun we have no ammo for and none in range.
+#- type: htnCompound
+#  id: DiscardGunCompound
+#  preconditions:
+#    - !type:GunAmmoPrecondition
+#      percent: 0.0
+  # TODO: Utility select guns in ventory
+  # TODO: Drop them
+
+# Selects a gun in range, then moves to it and picks it up.
+- type: htnCompound
+  id: PickupGunCompound
+  branches:
+    - tasks:
+        - id: PickGunPrimitive
+          key: Target
+        - id: MoveToTargetPrimitive
+        - id: InteractWithPrimitive
+
+# Primitive
+- type: htnPrimitive
+  id: PickAmmoPrimitive
+  operator: !type:UtilityOperator
+    proto: NearbyAmmo
+
+- type: htnPrimitive
+  id: PickGunPrimitive
+  operator: !type:UtilityOperator
+    proto: NearbyGuns
+
+- type: htnPrimitive
+  id: PickGunTargetPrimitive
+  operator: !type:UtilityOperator
+    proto: NearbyGunTargets
+
+# Shoots the specified target if they're in LOS.
+- type: htnPrimitive
+  id: GunAttackTargetPrimitive
+  operator: !type:GunOperator
+    targetKey: Target
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: Target
+    - !type:TargetInRangePrecondition
+      targetKey: Target
+      # TODO: Non-scuffed
+      rangeKey: RangedRange
+    - !type:TargetInLOSPrecondition
+      targetKey: Target
+      rangeKey: RangedRange
+  services:
+    - !type:UtilityService
+      id: RangedService
+      proto: NearbyGunTargets
+      key: Target

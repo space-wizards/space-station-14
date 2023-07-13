@@ -30,12 +30,12 @@
   id: MopPrimitive
   preconditions:
     - !type:TargetInRangePrecondition
-      targetKey: CombatTarget
+      targetKey: Target
       rangeKey: InteractRange
   operator: !type:InteractWithOperator
-    targetKey: CombatTarget
+    targetKey: Target
   services:
     - !type:UtilityService
       id: PuddleService
       proto: NearbyPuddles
-      key: CombatTarget
+      key: Target

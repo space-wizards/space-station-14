@@ -215,7 +215,9 @@ public sealed partial class NPCSteeringSystem
         // Do we have no more nodes to follow OR has the target moved sufficiently? If so then re-path.
         if (!needsPath)
         {
-            needsPath = steering.CurrentPath.Count == 0 || (steering.CurrentPath.Peek().Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0;
+            // TODO: Uhh just don't want to get stuck on table pickups for now.
+            needsPath = steering.CurrentPath.Count > 0 && (steering.CurrentPath.Peek().Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0 ||
+                        distance > steering.Range + 0.5f;
         }
 
         // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
@@ -270,7 +272,7 @@ public sealed partial class NPCSteeringSystem
             return;
         }
 
-        if (!needsPath)
+        if (!needsPath && steering.CurrentPath.Count > 0)
         {
             // If the target has sufficiently moved.
             var lastNode = GetCoordinates(steering.CurrentPath.Last());

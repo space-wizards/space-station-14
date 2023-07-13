@@ -11,7 +11,7 @@ public sealed class AltInteractOperator : HTNOperator
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     [DataField("targetKey")]
-    public string Key = "CombatTarget";
+    public string Key = "Target";
 
     /// <summary>
     /// If this alt-interaction started a do_after where does the key get stored.

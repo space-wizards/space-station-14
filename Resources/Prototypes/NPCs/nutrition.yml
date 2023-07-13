@@ -17,5 +17,5 @@
   id: EatPrimitive
   preconditions:
     - !type:KeyExistsPrecondition
-      key: CombatTarget
+      key: Target
   operator: !type:AltInteractOperator

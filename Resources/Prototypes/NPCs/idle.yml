@@ -32,40 +32,6 @@
 
 # Primitives
 - type: htnPrimitive
-  id: InteractWithPrimitive
-  preconditions:
-    - !type:TargetInRangePrecondition
-      targetKey: Target
-      rangeKey: InteractRange
-  operator: !type:InteractWithOperator
-    targetKey: Target
-
-- type: htnPrimitive
-  id: MoveToAccessiblePrimitive
-  operator: !type:MoveToOperator
-    pathfindInPlanning: false
-
-- type: htnPrimitive
-  id: MoveToTargetPrimitive
-  operator: !type:MoveToOperator
-
-- type: htnPrimitive
-  id: PickAccessiblePrimitive
-  operator: !type:PickAccessibleOperator
-    rangeKey: IdleRange
-    targetKey: Target
-
-- type: htnPrimitive
-  id: PickRandomRotationPrimitive
-  operator: !type:PickRandomRotationOperator
-    targetKey: RotateTarget
-
-- type: htnPrimitive
-  id: RotateToTargetPrimitive
-  operator: !type:RotateToTargetOperator
-    targetKey: RotateTarget
-
-- type: htnPrimitive
   id: RandomIdleTimePrimitive
   operator: !type:RandomOperator
     targetKey: IdleTime
