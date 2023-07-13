@@ -18,6 +18,8 @@ namespace Content.Client.EntityHealthHud
         private bool _isActive = false;
         public List<string> DamageContainers = new();
 
+        private StatusIconPrototype? _healthyIcon;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -70,9 +72,10 @@ namespace Content.Client.EntityHealthHud
 
             // Here you could check health status, diseases, mind status, etc. and pick a good icon, or multiple depending on whatever.
             if (damageableComponent?.DamageContainerID == "Biological" &&
-                _prototypeMan.TryIndex<StatusIconPrototype>("HealthIcon_Fine", out var healthyIcon))
+                (_healthyIcon != null ||
+                _prototypeMan.TryIndex("HealthIcon_Fine", out _healthyIcon)))
             {
-                result.Add(healthyIcon);
+                result.Add(_healthyIcon);
             }
 
             return result;
