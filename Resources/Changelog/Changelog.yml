@@ -1,9 +1,4 @@
 Entries:
-- author: Tristan Thomas
-  changes:
-  - {message: 'Added a white cane, which spawns on blind players.', type: Add}
-  id: 3744
-  time: '2023-05-13T03:11:35.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Changed manly dorf appearance and flavor., type: Tweak}
@@ -2963,3 +2958,10 @@ Entries:
   - {message: Jackboots can store knives now., type: Tweak}
   id: 4243
   time: '2023-07-12T19:55:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Security staff are now being issued handguns with rubber bullets for
+      station security. An extra magazine with lethals has additionally been supplied
+      in their bags., type: Add}
+  id: 4244
+  time: '2023-07-13T03:18:58.0000000+00:00'
