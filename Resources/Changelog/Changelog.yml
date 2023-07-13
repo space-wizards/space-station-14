@@ -1,9 +1,4 @@
 Entries:
-- author: OttoMaticode
-  changes:
-  - {message: Robotics now has a guidebook entry, type: Add}
-  id: 3749
-  time: '2023-05-13T15:21:38.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Puddles slip you further and reduced slip multipliers across the board
@@ -2965,3 +2960,8 @@ Entries:
   - {message: 'Added head, arm, and leg tiger stripe markings for lizards.', type: Add}
   id: 4248
   time: '2023-07-13T06:22:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Numerous NPC steering improvements so they flicker a lot less., type: Fix}
+  id: 4249
+  time: '2023-07-13T14:48:06.0000000+00:00'
