@@ -27,7 +27,7 @@ namespace Content.Client.EntityHealthHud
             SubscribeLocalEvent<ShowHealthIconsComponent, PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<ShowHealthIconsComponent, PlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-            SubscribeLocalEvent<GetStatusIconsEvent>(OnGetStatusIconsEvent);
+            SubscribeLocalEvent<DamageableComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
 
         }
 
@@ -43,17 +43,17 @@ namespace Content.Client.EntityHealthHud
             _isActive = false;
         }
 
-        private void OnGetStatusIconsEvent(ref GetStatusIconsEvent @event)
+        private void OnGetStatusIconsEvent(EntityUid uid, DamageableComponent damageableComponent, ref GetStatusIconsEvent @event)
         {
             if (!_isActive)
                 return;
 
-            var healthIcons = DecideHealthIcon(@event.Uid);
+            var healthIcons = DecideHealthIcon(uid, damageableComponent);
 
             @event.StatusIcons.AddRange(healthIcons);
         }
 
-        private IReadOnlyList<StatusIconPrototype> DecideHealthIcon(EntityUid uid)
+        private IReadOnlyList<StatusIconPrototype> DecideHealthIcon(EntityUid uid, DamageableComponent damageableComponent)
         {
             var result = new List<StatusIconPrototype>();
             if (_entManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
@@ -62,8 +62,7 @@ namespace Content.Client.EntityHealthHud
                 return result;
             }
 
-            if (!_entManager.TryGetComponent<DamageableComponent>(uid, out var damageableComponent) ||
-                damageableComponent.DamageContainerID == null ||
+            if (damageableComponent.DamageContainerID == null ||
                 !DamageContainers.Contains(damageableComponent.DamageContainerID))
             {
                 return result;

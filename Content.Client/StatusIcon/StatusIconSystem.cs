@@ -60,7 +60,6 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
 
         var ev = new GetStatusIconsEvent(new(), uid);
         RaiseLocalEvent(uid, ref ev);
-        RaiseLocalEvent(ref ev);
         return ev.StatusIcons;
     }
 }
