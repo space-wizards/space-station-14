@@ -1,5 +1,5 @@
 ﻿using Robust.Client.GameObjects;
-using static Content.Shared.Atmos.Components.SharedGasAnalyzerComponent;
+using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
 
 namespace Content.Client.Atmos.UI
 {
@@ -16,7 +16,7 @@ namespace Content.Client.Atmos.UI
         {
             base.Open();
 
-            _window = new GasAnalyzerWindow(this);
+            _window = new GasAnalyzerWindow();
             _window.OnClose += OnClose;
             _window.OpenCentered();
         }
