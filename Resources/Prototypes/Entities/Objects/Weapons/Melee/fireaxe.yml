@@ -40,14 +40,14 @@
 
 - type: entity
   id: FireAxeFlaming
-  name: fireaxe
+  name: fire axe
   parent: FireAxe
-  description: Why fight fire with an axe when you can fight with fire and axe?
+  description: Why fight fire with an axe when you can fight with fire and axe? Now featuring rugged rubberized handle!
   components:
   - type: IgniteOnMeleeHit
     fireStacks: 1
   - type: Sprite
-    sprite: Objects/Weapons/Melee/fireaxe.rsi
+    sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
     state: icon
   - type: Clothing
     sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
