@@ -1,25 +1,19 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.EntityHealthBar;
-using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
-using Robust.Client.GameObjects;
-using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.EntityHealthHud
 {
-    public sealed class ShowSecurityIconsSystem : EntitySystem
+    public sealed class ShowSecurityIconsSystem : ComponentAddedOverlaySystemBase<ShowSecurityIconsComponent>
     {
-        [Dependency] private readonly IPlayerManager _player = default!;
         [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
-
-        private bool _isActive = false;
 
         private Dictionary<string, StatusIconPrototype> _jobIcons = new();
 
@@ -27,27 +21,12 @@ namespace Content.Client.EntityHealthHud
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ShowSecurityIconsComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<ShowSecurityIconsComponent, ComponentRemove>(OnRemove);
-            SubscribeLocalEvent<ShowSecurityIconsComponent, PlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<ShowSecurityIconsComponent, PlayerDetachedEvent>(OnPlayerDetached);
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
             SubscribeLocalEvent<BodyComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
-        }
-
-        public void ApplyOverlays()
-        {
-            _isActive = true;
-        }
-
-        public void RemoveOverlay()
-        {
-            _isActive = false;
         }
 
         private void OnGetStatusIconsEvent(EntityUid uid, BodyComponent _, ref GetStatusIconsEvent @event)
         {
-            if (!_isActive)
+            if (!IsActive)
                 return;
 
             var healthIcons = DecideSecurityIcon(uid);
@@ -106,37 +85,6 @@ namespace Content.Client.EntityHealthHud
 
             iconKey = "Unknown";
             return EnsureIcon(iconKey, icons);
-        }
-
-        private void OnInit(EntityUid uid, ShowSecurityIconsComponent component, ComponentInit args)
-        {
-            if (_player.LocalPlayer?.ControlledEntity == uid)
-            {
-                ApplyOverlays();
-            }
-        }
-
-        private void OnRemove(EntityUid uid, ShowSecurityIconsComponent component, ComponentRemove args)
-        {
-            if (_player.LocalPlayer?.ControlledEntity == uid)
-            {
-                RemoveOverlay();
-            }
-        }
-
-        private void OnPlayerAttached(EntityUid uid, ShowSecurityIconsComponent component, PlayerAttachedEvent args)
-        {
-            ApplyOverlays();
-        }
-
-        private void OnPlayerDetached(EntityUid uid, ShowSecurityIconsComponent component, PlayerDetachedEvent args)
-        {
-            RemoveOverlay();
-        }
-
-        private void OnRoundRestart(RoundRestartCleanupEvent args)
-        {
-            RemoveOverlay();
         }
     }
 }

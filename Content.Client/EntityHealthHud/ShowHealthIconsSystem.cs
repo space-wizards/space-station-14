@@ -1,21 +1,16 @@
 using Content.Shared.Damage;
 using Content.Shared.EntityHealthBar;
-using Content.Shared.GameTicking;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
-using Robust.Client.GameObjects;
-using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.EntityHealthHud
 {
-    public sealed class ShowHealthIconsSystem : EntitySystem
+    public sealed class ShowHealthIconsSystem : ComponentAddedOverlaySystemBase<ShowHealthIconsComponent>
     {
-        [Dependency] private readonly IPlayerManager _player = default!;
         [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        private bool _isActive = false;
         public List<string> DamageContainers = new();
 
         private StatusIconPrototype? _healthyIcon;
@@ -24,30 +19,19 @@ namespace Content.Client.EntityHealthHud
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ShowHealthIconsComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<ShowHealthIconsComponent, ComponentRemove>(OnRemove);
-            SubscribeLocalEvent<ShowHealthIconsComponent, PlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<ShowHealthIconsComponent, PlayerDetachedEvent>(OnPlayerDetached);
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
             SubscribeLocalEvent<DamageableComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
 
         }
 
-        public void ApplyOverlays(ShowHealthIconsComponent component)
+        protected override void OnApplyOverlay(ShowHealthIconsComponent component)
         {
-            _isActive = true;
             DamageContainers.Clear();
             DamageContainers.AddRange(component.DamageContainers);
         }
 
-        public void RemoveOverlay()
-        {
-            _isActive = false;
-        }
-
         private void OnGetStatusIconsEvent(EntityUid uid, DamageableComponent damageableComponent, ref GetStatusIconsEvent @event)
         {
-            if (!_isActive)
+            if (!IsActive)
                 return;
 
             var healthIcons = DecideHealthIcon(uid, damageableComponent);
@@ -79,37 +63,6 @@ namespace Content.Client.EntityHealthHud
             }
 
             return result;
-        }
-
-        private void OnInit(EntityUid uid, ShowHealthIconsComponent component, ComponentInit args)
-        {
-            if (_player.LocalPlayer?.ControlledEntity == uid)
-            {
-                ApplyOverlays(component);
-            }
-        }
-
-        private void OnRemove(EntityUid uid, ShowHealthIconsComponent component, ComponentRemove args)
-        {
-            if (_player.LocalPlayer?.ControlledEntity == uid)
-            {
-                RemoveOverlay();
-            }
-        }
-
-        private void OnPlayerAttached(EntityUid uid, ShowHealthIconsComponent component, PlayerAttachedEvent args)
-        {
-            ApplyOverlays(component);
-        }
-
-        private void OnPlayerDetached(EntityUid uid, ShowHealthIconsComponent component, PlayerDetachedEvent args)
-        {
-            RemoveOverlay();
-        }
-
-        private void OnRoundRestart(RoundRestartCleanupEvent args)
-        {
-            RemoveOverlay();
         }
     }
 }

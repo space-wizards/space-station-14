@@ -36,7 +36,7 @@ namespace Content.Client.Commands
             {
                 var showHealthBarsComponent = _entityManager.AddComponent<ShowHealthBarsComponent>((EntityUid) playerEntity);
                 showHealthBarsComponent.DamageContainers = args.ToList();
-                showHealthBarsSystem.ApplyOverlays(showHealthBarsComponent);
+                showHealthBarsSystem.ApplyOverlay(showHealthBarsComponent);
                 shell.WriteLine($"Enabled health overlay for DamageContainers: {string.Join(", ", args)}.");
                 return;
             }
