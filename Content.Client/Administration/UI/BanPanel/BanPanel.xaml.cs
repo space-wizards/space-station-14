@@ -67,6 +67,7 @@ public sealed partial class BanPanel : DefaultWindow
     public BanPanel()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
         PlayerList.OnSelectionChanged += OnPlayerSelectionChanged;
         PlayerNameLine.OnFocusExit += _ => OnPlayerNameChanged();
         PlayerCheckbox.OnPressed += _ =>
