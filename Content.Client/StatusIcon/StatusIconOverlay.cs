@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+using System.Numerics;
+using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -53,7 +54,8 @@ public sealed class StatusIconOverlay : Overlay
             Matrix3.Multiply(rotationMatrix, scaledWorld, out var matty);
             handle.SetTransform(matty);
 
-            var count = 0;
+            var countL = 0;
+            var countR = 0;
             var accOffsetL = 0;
             var accOffsetR = 0;
             icons.Sort();
@@ -67,13 +69,16 @@ public sealed class StatusIconOverlay : Overlay
 
                 // the icons are ordered left to right, top to bottom.
                 // extra icons that don't fit are just cut off.
-                if (count % 2 == 0)
+                if (proto.LocationPreference == StatusIconLocationPreference.Left ||
+                    proto.LocationPreference == StatusIconLocationPreference.None && countL <= countR)
                 {
                     if (accOffsetL + texture.Height > sprite.Bounds.Height * EyeManager.PixelsPerMeter)
                         break;
                     accOffsetL += texture.Height;
                     yOffset = (bounds.Height + sprite.Offset.Y) / 2f - (float) accOffsetL / EyeManager.PixelsPerMeter;
                     xOffset = -(bounds.Width + sprite.Offset.X) / 2f;
+
+                    countL++;
                 }
                 else
                 {
@@ -82,8 +87,9 @@ public sealed class StatusIconOverlay : Overlay
                     accOffsetR += texture.Height;
                     yOffset = (bounds.Height + sprite.Offset.Y) / 2f - (float) accOffsetR / EyeManager.PixelsPerMeter;
                     xOffset = (bounds.Width + sprite.Offset.X) / 2f - (float) texture.Width / EyeManager.PixelsPerMeter;
+
+                    countR++;
                 }
-                count++;
 
                 var position = new Vector2(xOffset, yOffset);
                 handle.DrawTexture(texture, position);
