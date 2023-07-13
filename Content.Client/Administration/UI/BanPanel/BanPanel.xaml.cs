@@ -36,9 +36,6 @@ public sealed partial class BanPanel : DefaultWindow
     // have to know how the controls are nested, which makes the code more complicated.
     private readonly List<CheckBox> _roleCheckboxes = new();
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("GeneratedRegex", "SYSLIB1045:Convert to 'GeneratedRegexAttribute'.", Justification = "Sandbox violation")]
-    private static readonly Regex HwidRegex = new(@"^[0-9a-f]{64}$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private enum TabNumbers
@@ -332,7 +329,9 @@ public sealed partial class BanPanel : DefaultWindow
     private void OnHwidChanged()
     {
         var hwidString = HwidLine.Text;
-        if (HwidCheckbox.Pressed && !(string.IsNullOrEmpty(hwidString) && LastConnCheckbox.Pressed) && !HwidRegex.IsMatch(hwidString))
+        var length = 3 * (hwidString.Length / 4) - hwidString.TakeLast(2).Count(c => c == '=');
+        Hwid = new byte[length];
+        if (HwidCheckbox.Pressed && !(string.IsNullOrEmpty(hwidString) && LastConnCheckbox.Pressed) && !Convert.TryFromBase64String(hwidString, Hwid, out _))
         {
             ErrorLevel |= ErrorLevelEnum.Hwid;
             HwidLine.ModulateSelfOverride = Color.Red;
