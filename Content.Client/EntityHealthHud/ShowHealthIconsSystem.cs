@@ -56,14 +56,14 @@ namespace Content.Client.EntityHealthHud
         private IReadOnlyList<StatusIconPrototype> DecideHealthIcon(EntityUid uid, DamageableComponent damageableComponent)
         {
             var result = new List<StatusIconPrototype>();
-            if (_entManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
-                metaDataComponent.Flags.HasFlag(MetaDataFlags.InContainer))
+            if (damageableComponent.DamageContainerID == null ||
+                !DamageContainers.Contains(damageableComponent.DamageContainerID))
             {
                 return result;
             }
 
-            if (damageableComponent.DamageContainerID == null ||
-                !DamageContainers.Contains(damageableComponent.DamageContainerID))
+            if (_entManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
+                metaDataComponent.Flags.HasFlag(MetaDataFlags.InContainer))
             {
                 return result;
             }
