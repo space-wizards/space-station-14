@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Changed manly dorf appearance and flavor., type: Tweak}
-  id: 3745
-  time: '2023-05-13T12:14:57.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix vapors., type: Fix}
@@ -2965,3 +2960,9 @@ Entries:
       in their bags., type: Add}
   id: 4244
   time: '2023-07-13T03:18:58.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Traitorous Atmospheric Technicans no longer have a 10 telecrystal penalty,
+      and now have access to the full 20TC that all other jobs do.', type: Tweak}
+  id: 4245
+  time: '2023-07-13T04:09:28.0000000+00:00'
