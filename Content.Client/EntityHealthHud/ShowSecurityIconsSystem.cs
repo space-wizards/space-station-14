@@ -1,9 +1,7 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Body.Components;
-using Content.Shared.Damage;
 using Content.Shared.EntityHealthBar;
 using Content.Shared.GameTicking;
-using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.StatusIcon;

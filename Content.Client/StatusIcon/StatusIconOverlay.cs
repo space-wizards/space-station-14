@@ -1,9 +1,9 @@
-using System.Numerics;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using System.Numerics;
 
 namespace Content.Client.StatusIcon;
 

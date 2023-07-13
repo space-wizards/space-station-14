@@ -3,7 +3,6 @@ using Content.Shared.GameTicking;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.EntityHealthHud
 {

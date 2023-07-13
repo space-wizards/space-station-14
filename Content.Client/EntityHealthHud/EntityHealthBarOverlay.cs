@@ -6,7 +6,6 @@ using Content.Shared.Mobs.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using Robust.Shared.Prototypes;
 using System.Numerics;
 using static Robust.Shared.Maths.Color;
 

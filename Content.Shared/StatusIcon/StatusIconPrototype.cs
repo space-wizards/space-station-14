@@ -46,7 +46,7 @@ public sealed class StatusIconPrototype : StatusIconData, IPrototype
 }
 
 [Serializable, NetSerializable]
-public enum StatusIconLocationPreference
+public enum StatusIconLocationPreference : byte
 {
     None,
     Left,
