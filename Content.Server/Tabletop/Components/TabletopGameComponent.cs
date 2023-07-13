@@ -1,4 +1,5 @@
-using Content.Shared.Whitelist;
+using System.Numerics;
+using Vector2 = System.Numerics.Vector2;
 
 namespace Content.Server.Tabletop.Components
 {

@@ -273,6 +273,24 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> GameTableBonk =
             CVarDef.Create("game.table_bonk", false, CVar.REPLICATED);
 
+        /// <summary>
+        /// Whether or not status icons are rendered for everyone.
+        /// </summary>
+        public static readonly CVarDef<bool> GlobalStatusIconsEnabled =
+            CVarDef.Create("game.global_status_icons_enabled", true, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Whether or not status icons are rendered on this specific client.
+        /// </summary>
+        public static readonly CVarDef<bool> LocalStatusIconsEnabled =
+            CVarDef.Create("game.local_status_icons_enabled", true, CVar.CLIENTONLY);
+
+        /// <summary>
+        /// Whether or not coordinates on the Debug overlay should only be available to admins.
+        /// </summary>
+        public static readonly CVarDef<bool> DebugCoordinatesAdminOnly =
+            CVarDef.Create("game.debug_coordinates_admin_only", true, CVar.SERVER | CVar.REPLICATED);
+
 #if EXCEPTION_TOLERANCE
         /// <summary>
         ///     Amount of times round start must fail before the server is shut down.
@@ -801,7 +819,7 @@ namespace Content.Shared.CCVar
         ///     Whether gas differences will move entities.
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
-            CVarDef.Create("atmos.space_wind", false, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.

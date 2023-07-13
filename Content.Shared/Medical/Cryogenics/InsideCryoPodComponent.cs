@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameStates;
+﻿using System.Numerics;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Medical.Cryogenics;
 

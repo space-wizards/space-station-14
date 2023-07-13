@@ -1,7 +1,4 @@
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Instruments.UI
 {
@@ -10,15 +7,16 @@ namespace Content.Client.Instruments.UI
         [ViewVariables]
         private InstrumentMenu? _instrumentMenu;
 
+        [ViewVariables]
         public InstrumentComponent? Instrument { get; set; }
 
-        public InstrumentBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
         protected override void Open()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<InstrumentComponent?>(Owner.Owner, out var instrument)) return;
+            if (!EntMan.TryGetComponent<InstrumentComponent?>(Owner, out var instrument)) return;
 
             Instrument = instrument;
             _instrumentMenu = new InstrumentMenu(this);
