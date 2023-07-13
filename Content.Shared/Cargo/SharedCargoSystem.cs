@@ -6,6 +6,7 @@ namespace Content.Shared.Cargo;
 public enum CargoConsoleUiKey : byte
 {
     Orders,
+    Bounty,
     Shuttle,
     Telepad
 }

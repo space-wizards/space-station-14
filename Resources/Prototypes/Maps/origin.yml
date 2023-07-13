@@ -20,7 +20,7 @@
           availableJobs:
             CargoTechnician: [ 5, 5 ]
             Passenger: [ -1, -1 ]
-            Bartender: [ 3, 3 ]
+            Bartender: [ 2, 2 ]
             Botanist: [ 3, 3 ]
             Chef: [ 3, 3 ]
             Clown: [ 1, 1 ]

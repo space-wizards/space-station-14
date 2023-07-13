@@ -114,10 +114,10 @@
     sound:
       path: /Audio/Ambience/Objects/buzzing.ogg
   - type: PointLight
-    netsync: false
     radius: 1.5
     energy: 1.6
     color: "#3db83b"
+    netsync: false
     castShadows: false
   - type: Clickable
   - type: AccessReader

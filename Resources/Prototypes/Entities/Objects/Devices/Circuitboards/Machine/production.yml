@@ -709,6 +709,17 @@
         Glass: 1
 
 - type: entity
+  id: SheetifierMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: sheet-meister 2000 machine board
+  components:
+  - type: MachineBoard
+    prototype: Sheetifier
+    requirements:
+      MatterBin: 1
+      Manipulator: 1
+
+- type: entity
   id: MicrowaveMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: microwave machine board
@@ -879,3 +890,18 @@
       materialRequirements:
         Steel: 1
         Cable: 2
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: SalvageMagnetMachineCircuitboard
+  name: salvage magnet machine board
+  description: A machine printed circuit board for a salvage magnet.
+  components:
+  - type: MachineBoard
+    prototype: SalvageMagnet
+    requirements:
+      Capacitor: 4
+    materialRequirements:
+      Steel: 5
+      CableHV: 5
+      Cable: 2

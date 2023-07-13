@@ -84,8 +84,9 @@ public sealed partial class AdminNotesControl : Control
             noteEdit.SubmitPressed += OnNoteSubmitted;
             noteEdit.OpenCentered();
         };
+
         _popup.OnDeletePressed += (noteId, noteType) => NoteDeleted?.Invoke(noteId, noteType);
-        var box = UIBox2.FromDimensions(UserInterfaceManager.MousePositionScaled.Position, (1, 1));
+        var box = UIBox2.FromDimensions(UserInterfaceManager.MousePositionScaled.Position, Vector2.One);
         _popup.Open(box);
 
         return true;

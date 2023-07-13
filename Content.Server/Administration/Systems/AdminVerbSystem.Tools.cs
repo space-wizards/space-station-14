@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Components;
 using Content.Server.Atmos;
@@ -857,11 +858,11 @@ public sealed partial class AdminVerbSystem
             {
                 return slotEntity.Value;
             }
-            else if (TryComp<PDAComponent>(slotEntity, out var pda))
+            else if (TryComp<PdaComponent>(slotEntity, out var pda))
             {
-                if (pda.ContainedID != null)
+                if (pda.ContainedId != null)
                 {
-                    return pda.ContainedID.Owner;
+                    return pda.ContainedId.Owner;
                 }
             }
         }
