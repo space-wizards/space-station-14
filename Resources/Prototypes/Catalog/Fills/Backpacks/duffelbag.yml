@@ -308,7 +308,7 @@
     contents:
       - id: MedkitCombatFilled
       - id: Defibrillator
-      - id: PowerCellMedium
+      - id: CombatMedipen
       - id: ClothingEyesHudMedical
       - id: ClothingHandsGlovesLatex
       - id: Gauze
