@@ -1,2 +1,5 @@
 - type: playTimeTracker
   id: JobPilot
+
+- type: playTimeTracker
+  id: JobEkrixiCommandWhitelist

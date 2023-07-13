@@ -5,7 +5,10 @@
   name: job-name-cmo
   description: job-description-cmo
   playTimeTracker: JobChiefMedicalOfficer
-#  requirements:
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobEkrixiCommandWhitelist
+      time: 1
 #    - !type:DepartmentTimeRequirement
 #      department: Medical
 #      time: 18000

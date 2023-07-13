@@ -3,7 +3,10 @@
   name: job-name-captain
   description: job-description-captain
   playTimeTracker: JobCaptain
-#  requirements:
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobEkrixiCommandWhitelist
+      time: 1
 #    - !type:DepartmentTimeRequirement
 #      department: Engineering
 #      time: 18000

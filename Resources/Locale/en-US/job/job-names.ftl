@@ -61,6 +61,7 @@ JobChiefMedicalOfficer = Chief Medical Officer
 JobClown = Clown
 JobDetective = Detective
 JobBrigmedic = Brigmedic
+JobEkrixiCommandWhitelist = command whitelist, whitelist on the Discord in order
 JobERTEngineer = ERT Engineer
 JobERTJanitor = ERT Janitor
 JobERTLeader = ERT Leader

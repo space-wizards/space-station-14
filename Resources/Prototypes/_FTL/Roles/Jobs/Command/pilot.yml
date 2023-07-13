@@ -8,6 +8,10 @@
   setPreference: true
   accessGroups:
     - AllAccess
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobEkrixiCommandWhitelist
+      time: 1
 
 - type: startingGear
   id: PilotGear
