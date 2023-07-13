@@ -1,9 +1,12 @@
 using Content.Server.Administration;
+using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.Administration;
 using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
+using Content.Shared.Interaction;
+using Content.Shared.Physics;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -13,6 +16,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Instruments;
 
@@ -30,9 +34,10 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly InteractionSystem _interactions = default!;
 
     private TimeSpan _bandRequestTimer = TimeSpan.Zero;
-    private readonly Queue<InstrumentBandRequestBuiMessage> _bandRequestQueue = new();
+    private readonly List<InstrumentBandRequestBuiMessage> _bandRequestQueue = new();
 
     public override void Initialize()
     {
@@ -200,7 +205,14 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
     private void OnBoundUIRequestBands(EntityUid uid, InstrumentComponent component, InstrumentBandRequestBuiMessage args)
     {
-        _bandRequestQueue.Enqueue(args);
+        foreach (var request in _bandRequestQueue)
+        {
+            // Prevent spamming requests for the same entity.
+            if (request.Entity == args.Entity)
+                return;
+        }
+
+        _bandRequestQueue.Add(args);
     }
 
     public (EntityUid, string)[] GetBands(EntityUid uid)
@@ -213,6 +225,10 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         var list = new ValueList<(EntityUid, string)>();
         var activeQuery = EntityManager.GetEntityQuery<ActiveInstrumentComponent>();
         var instrumentQuery = EntityManager.GetEntityQuery<InstrumentComponent>();
+
+        if (!TryComp(uid, out InstrumentComponent? originInstrument)
+            || originInstrument.InstrumentPlayer?.AttachedEntity is not {} originPlayer)
+            return Array.Empty<(EntityUid, string)>();
 
         foreach (var entity in _lookup.GetEntitiesInRange(uid, MaxInstrumentBandRange))
         {
@@ -228,6 +244,12 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
             // We want to use the instrument player's name.
             if (instrument.InstrumentPlayer?.AttachedEntity is not {} playerUid)
+                continue;
+
+            // Maybe a bit expensive but oh well GetBands is queued and has a timer anyway.
+            // Make sure the instrument is visible, uses the Opaque collision group so this works across windows etc.
+            if (!_interactions.InRangeUnobstructed(uid, entity, MaxInstrumentBandRange,
+                    CollisionGroup.Opaque, e => e == playerUid || e == originPlayer))
                 continue;
 
             if (!metadataQuery.TryGetComponent(playerUid, out var playerMetadata)
@@ -339,12 +361,13 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         {
             _bandRequestTimer = _timing.RealTime.Add(TimeSpan.FromSeconds(BandRequestDelay));
 
-            while (_bandRequestQueue.TryDequeue(out var request))
+            foreach (var request in _bandRequestQueue)
             {
                 var nearby = GetBands(request.Entity);
                 _bui.TrySendUiMessage(request.Entity, request.UiKey, new InstrumentBandResponseBuiMessage(nearby),
                     (IPlayerSession)request.Session);
             }
+            _bandRequestQueue.Clear();
         }
 
         var activeQuery = EntityManager.GetEntityQuery<ActiveInstrumentComponent>();
