@@ -1,10 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - {message: 'Adds a new pet slime for RND, named Slime. Slime Smile.', type: Add}
-  - {message: The description of angry Slimes is now working., type: Fix}
-  id: 3748
-  time: '2023-05-13T14:51:03.0000000+00:00'
 - author: OttoMaticode
   changes:
   - {message: Robotics now has a guidebook entry, type: Add}
@@ -2966,3 +2960,8 @@ Entries:
   - {message: Stamps are quieter than before., type: Fix}
   id: 4247
   time: '2023-07-13T06:20:39.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: 'Added head, arm, and leg tiger stripe markings for lizards.', type: Add}
+  id: 4248
+  time: '2023-07-13T06:22:15.0000000+00:00'
