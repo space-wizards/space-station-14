@@ -10,7 +10,6 @@ namespace Content.Client.EntityHealthHud
     public sealed class ShowHealthBarsSystem : EntitySystem
     {
         [Dependency] private readonly IPlayerManager _player = default!;
-        [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
         private EntityHealthBarOverlay _overlay = default!;
@@ -24,7 +23,7 @@ namespace Content.Client.EntityHealthHud
             SubscribeLocalEvent<ShowHealthBarsComponent, PlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
-            _overlay = new(EntityManager, _protoMan);
+            _overlay = new(EntityManager);
         }
 
         public void ApplyOverlays(ShowHealthBarsComponent component)
