@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix vapors., type: Fix}
-  id: 3746
-  time: '2023-05-13T13:45:59.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: Adds new masks for the clown and mime in the theater machine., type: Add}
@@ -2966,3 +2961,8 @@ Entries:
       and now have access to the full 20TC that all other jobs do.', type: Tweak}
   id: 4245
   time: '2023-07-13T04:09:28.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Syndie fire axe description is more clear., type: Tweak}
+  id: 4246
+  time: '2023-07-13T06:19:24.0000000+00:00'
