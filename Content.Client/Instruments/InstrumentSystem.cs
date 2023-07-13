@@ -3,14 +3,11 @@ using Content.Shared.CCVar;
 using Content.Shared.Instruments;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
-using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Instruments;
 
@@ -68,6 +65,9 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
+        if(value)
+            instrument.Renderer?.SendMidiEvent(RobustMidiEvent.AllNotesOff((byte)channel, 0), false);
+
         RaiseNetworkEvent(new InstrumentSetFilteredChannelEvent(uid, channel, value));
     }
 
@@ -119,17 +119,24 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             return;
 
         instrument.Renderer.TrackingEntity = uid;
+
+        instrument.Renderer.FilteredChannels.SetAll(false);
+        instrument.Renderer.FilteredChannels.Or(instrument.FilteredChannels);
+
         instrument.Renderer.DisablePercussionChannel = !instrument.AllowPercussion;
         instrument.Renderer.DisableProgramChangeEvent = !instrument.AllowProgramChange;
+
+        for (int i = 0; i < RobustMidiEvent.MaxChannels; i++)
+        {
+            if(instrument.FilteredChannels[i])
+                instrument.Renderer.SendMidiEvent(RobustMidiEvent.AllNotesOff((byte)i, 0));
+        }
 
         if (!instrument.AllowProgramChange)
         {
             instrument.Renderer.MidiBank = instrument.InstrumentBank;
             instrument.Renderer.MidiProgram = instrument.InstrumentProgram;
         }
-
-        instrument.Renderer.FilteredChannels.SetAll(false);
-        instrument.Renderer.FilteredChannels.Or(instrument.FilteredChannels);
 
         UpdateRendererMaster(instrument);
 
@@ -167,7 +174,8 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             return;
         }
 
-        instrument.Renderer?.StopAllNotes();
+        instrument.Renderer?.SystemReset();
+        instrument.Renderer?.ClearAllEvents();
 
         var renderer = instrument.Renderer;
 
@@ -208,13 +216,14 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
         SetupRenderer(uid, false, instrument);
 
-        if (instrument.Renderer != null && instrument.Renderer.OpenInput())
-        {
-            instrument.Renderer.OnMidiEvent += instrument.MidiEventBuffer.Add;
-            return true;
-        }
+        if (instrument.Renderer == null || !instrument.Renderer.OpenInput())
+            return false;
 
-        return false;
+        SetMaster(uid, null);
+        instrument.MidiEventBuffer.Clear();
+        instrument.Renderer.OnMidiEvent += instrument.MidiEventBuffer.Add;
+        return true;
+
     }
 
     public bool OpenMidi(EntityUid uid, ReadOnlySpan<byte> data, InstrumentComponent? instrument = null)
@@ -225,12 +234,10 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         SetupRenderer(uid, false, instrument);
 
         if (instrument.Renderer == null || !instrument.Renderer.OpenMidi(data))
-        {
             return false;
-        }
 
+        SetMaster(uid, null);
         instrument.MidiEventBuffer.Clear();
-
         instrument.Renderer.OnMidiEvent += instrument.MidiEventBuffer.Add;
         return true;
     }

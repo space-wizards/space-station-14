@@ -83,6 +83,9 @@ namespace Content.Client.Instruments.UI
 
         public void MidiPlaybackSetButtonsDisabled(bool disabled)
         {
+            if(disabled)
+                _owner.CloseChannelsMenu();
+
             LoopButton.Disabled = disabled;
             StopButton.Disabled = disabled;
 
@@ -92,6 +95,8 @@ namespace Content.Client.Instruments.UI
 
         private async void MidiFileButtonOnOnPressed(ButtonEventArgs obj)
         {
+            _owner.CloseBandMenu();
+
             var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
             await using var file = await _owner.FileDialogManager.OpenFile(filters);
 
@@ -131,6 +136,8 @@ namespace Content.Client.Instruments.UI
 
         private void MidiInputButtonOnOnToggled(ButtonToggledEventArgs obj)
         {
+            _owner.CloseBandMenu();
+
             if (obj.Pressed)
             {
                 if (!PlayCheck())
@@ -140,8 +147,11 @@ namespace Content.Client.Instruments.UI
                 if(_owner.Instrument is {} instrument)
                     _owner.Instruments.OpenInput(_owner.Owner, instrument);
             }
-            else  if(_owner.Instrument is {} instrument)
+            else if (_owner.Instrument is { } instrument)
+            {
                 _owner.Instruments.CloseInput(_owner.Owner, false, instrument);
+                _owner.CloseChannelsMenu();
+            }
         }
 
         private bool PlayCheck()
@@ -186,6 +196,7 @@ namespace Content.Client.Instruments.UI
                 return;
 
             _owner.Instruments.CloseMidi(_owner.Owner, false, instrument);
+            _owner.CloseChannelsMenu();
         }
 
         private void MidiLoopButtonOnOnToggled(ButtonToggledEventArgs obj)

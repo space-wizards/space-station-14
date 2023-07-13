@@ -84,10 +84,23 @@ namespace Content.Client.Instruments.UI
             _bandMenu.OpenCenteredLeft();
         }
 
+        public void CloseBandMenu()
+        {
+            if(_bandMenu?.IsOpen ?? false)
+                _bandMenu?.Close();
+        }
+
         public void OpenChannelsMenu()
         {
             _channelsMenu ??= new ChannelsMenu(this);
+            _channelsMenu.Populate();
             _channelsMenu.OpenCenteredRight();
+        }
+
+        public void CloseChannelsMenu()
+        {
+            if(_channelsMenu?.IsOpen ?? false)
+                _channelsMenu?.Close();
         }
     }
 }

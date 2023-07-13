@@ -130,13 +130,17 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 return;
 
             instrument.Master = master;
-            instrument.FilteredChannels.SetAll(true);
+            instrument.FilteredChannels.SetAll(false);
             instrument.Playing = true;
             Dirty(uid, instrument);
             return;
         }
 
-        Clean(uid, instrument);
+        // Cleanup when disabling master...
+        if (master == null && instrument.Master != null)
+        {
+            Clean(uid, instrument);
+        }
     }
 
     private void OnMidiSetFilteredChannel(InstrumentSetFilteredChannelEvent msg, EntitySessionEventArgs args)
@@ -149,13 +153,12 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (args.SenderSession != instrument.InstrumentPlayer)
             return;
 
-        // TODO: Unhardcode percussion channel
-        if (msg.Channel == 9 && !instrument.AllowPercussion)
+        if (msg.Channel == RobustMidiEvent.PercussionChannel && !instrument.AllowPercussion)
             return;
 
         instrument.FilteredChannels[msg.Channel] = msg.Value;
 
-        if (!msg.Value)
+        if (msg.Value)
         {
             // Prevent stuck notes when turning off a channel... Shrimple.
             RaiseNetworkEvent(new InstrumentMidiEventEvent(uid, new []{RobustMidiEvent.AllNotesOff((byte)msg.Channel, 0)}));
@@ -244,12 +247,15 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
         if (instrument.Playing)
         {
+            // Reset puppet instruments too.
+            RaiseNetworkEvent(new InstrumentMidiEventEvent(uid, new[]{RobustMidiEvent.SystemReset(0)}));
+
             RaiseNetworkEvent(new InstrumentStopMidiEvent(uid));
         }
 
         instrument.Playing = false;
         instrument.Master = null;
-        instrument.FilteredChannels.SetAll(true);
+        instrument.FilteredChannels.SetAll(false);
         instrument.LastSequencerTick = 0;
         instrument.BatchesDropped = 0;
         instrument.LaggedBatches = 0;

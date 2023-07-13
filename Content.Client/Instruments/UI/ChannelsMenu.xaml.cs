@@ -21,7 +21,6 @@ public sealed partial class ChannelsMenu : DefaultWindow
         ChannelList.OnItemDeselected += OnItemDeselected;
         AllButton.OnPressed += OnAllPressed;
         ClearButton.OnPressed += OnClearPressed;
-        Populate();
     }
 
     private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
@@ -54,6 +53,8 @@ public sealed partial class ChannelsMenu : DefaultWindow
 
     public void Populate()
     {
+        ChannelList.Clear();
+
         for (int i = 0; i < RobustMidiEvent.MaxChannels; i++)
         {
             var item = ChannelList.AddItem(_owner.Loc.GetString("instrument-component-channel-name",
