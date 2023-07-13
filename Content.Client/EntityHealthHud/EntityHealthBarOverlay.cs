@@ -22,18 +22,15 @@ public sealed class EntityHealthBarOverlay : Overlay
     private readonly SharedTransformSystem _transform;
     private readonly MobStateSystem _mobStateSystem;
     private readonly MobThresholdSystem _mobThresholdSystem;
-    private readonly ShaderInstance _shader;
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
     public List<string> DamageContainers = new();
 
-    public EntityHealthBarOverlay(IEntityManager entManager, IPrototypeManager protoManager)
+    public EntityHealthBarOverlay(IEntityManager entManager)
     {
         _entManager = entManager;
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
         _mobStateSystem = _entManager.EntitySysManager.GetEntitySystem<MobStateSystem>();
         _mobThresholdSystem = _entManager.EntitySysManager.GetEntitySystem<MobThresholdSystem>();
-
-        _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -46,7 +43,6 @@ public sealed class EntityHealthBarOverlay : Overlay
         const float scale = 1f;
         var scaleMatrix = Matrix3.CreateScale(new Vector2(scale, scale));
         var rotationMatrix = Matrix3.CreateRotation(-rotation);
-        handle.UseShader(_shader);
 
         foreach (var (thresholds, mob, dmg) in _entManager.EntityQuery<MobThresholdsComponent, MobStateComponent, DamageableComponent>(includePaused: true))
         {
