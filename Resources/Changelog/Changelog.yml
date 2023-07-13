@@ -1,11 +1,6 @@
 Entries:
 - author: Nimfar11
   changes:
-  - {message: Adds new masks for the clown and mime in the theater machine., type: Add}
-  id: 3747
-  time: '2023-05-13T14:41:35.0000000+00:00'
-- author: Nimfar11
-  changes:
   - {message: 'Adds a new pet slime for RND, named Slime. Slime Smile.', type: Add}
   - {message: The description of angry Slimes is now working., type: Fix}
   id: 3748
@@ -2966,3 +2961,8 @@ Entries:
   - {message: Syndie fire axe description is more clear., type: Tweak}
   id: 4246
   time: '2023-07-13T06:19:24.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Stamps are quieter than before., type: Fix}
+  id: 4247
+  time: '2023-07-13T06:20:39.0000000+00:00'
