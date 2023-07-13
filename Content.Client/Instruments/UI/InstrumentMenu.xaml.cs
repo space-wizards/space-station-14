@@ -225,6 +225,13 @@ namespace Content.Client.Instruments.UI
             _owner.Instruments.SetPlayerTick(_owner.Owner, (int)Math.Ceiling(PlaybackSlider.Value), instrument);
         }
 
+        public override void Close()
+        {
+            base.Close();
+            _owner.CloseBandMenu();
+            _owner.CloseChannelsMenu();
+        }
+
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
