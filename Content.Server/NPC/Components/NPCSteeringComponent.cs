@@ -48,7 +48,7 @@ public sealed class NPCSteeringComponent : Component
     [DataField("lastSteerDirection")]
     public Vector2 LastSteerDirection = Vector2.Zero;
 
-    public const int SteeringFrequency = 10;
+    public const int SteeringFrequency = 5;
 
     /// <summary>
     /// Last position we considered for being stuck.

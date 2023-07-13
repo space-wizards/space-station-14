@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Threading.Tasks;
 using Content.Server.Decals;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Shuttles.Events;
@@ -6,6 +7,7 @@ using Content.Shared.Decals;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
+using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Collections;
@@ -17,6 +19,8 @@ using Robust.Shared.Noise;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Threading;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Parallax;
@@ -26,15 +30,20 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IParallelManager _parallel = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private readonly HashSet<EntityUid> _handledEntities = new();
     private const float DefaultLoadRange = 16f;
     private float _loadRange = DefaultLoadRange;
+
+    private ObjectPool<HashSet<Vector2i>> _tilePool =
+        new DefaultObjectPool<HashSet<Vector2i>>(new SetPolicy<Vector2i>(), 256);
 
     /// <summary>
     /// Load area for chunks containing tiles, decals etc.
@@ -265,7 +274,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         while (biomes.MoveNext(out var biome))
         {
-            _activeChunks.Add(biome, new HashSet<Vector2i>());
+            _activeChunks.Add(biome, _tilePool.Get());
             _markerChunks.GetOrNew(biome);
         }
 
@@ -321,6 +330,12 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
 
         _handledEntities.Clear();
+
+        foreach (var tiles in _activeChunks.Values)
+        {
+            _tilePool.Return(tiles);
+        }
+
         _activeChunks.Clear();
         _markerChunks.Clear();
     }
@@ -364,100 +379,53 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     {
         var markers = _markerChunks[component];
         var loadedMarkers = component.LoadedMarkers;
-        var spawnSet = new HashSet<Vector2i>();
-        var spawns = new List<Vector2i>();
-        var frontier = new ValueList<Vector2i>();
 
         foreach (var (layer, chunks) in markers)
         {
-            foreach (var chunk in chunks)
+            Parallel.ForEach(chunks, new ParallelOptions() { MaxDegreeOfParallelism = _parallel.ParallelProcessCount }, chunk =>
             {
                 if (loadedMarkers.TryGetValue(layer, out var mobChunks) && mobChunks.Contains(chunk))
-                    continue;
+                    return;
 
-                spawns.Clear();
-                spawnSet.Clear();
+                var noiseCopy = new FastNoiseLite();
+                _serManager.CopyTo(component.Noise, ref noiseCopy, notNullableOverride: true);
+                var spawnSet = _tilePool.Get();
+                var frontier = new ValueList<Vector2i>(32);
+
+                // Make a temporary version and copy back in later.
+                var pending = new Dictionary<Vector2i, Dictionary<string, List<Vector2i>>>();
+
                 var layerProto = _proto.Index<BiomeMarkerLayerPrototype>(layer);
                 var buffer = layerProto.Radius / 2f;
-                mobChunks ??= new HashSet<Vector2i>();
-                mobChunks.Add(chunk);
-                loadedMarkers[layer] = mobChunks;
                 var rand = new Random(noise.GetSeed() + chunk.X * 8 + chunk.Y + layerProto.GetHashCode());
 
                 // We treat a null entity mask as requiring nothing else on the tile
                 var lower = (int) Math.Floor(buffer);
                 var upper = (int) Math.Ceiling(layerProto.Size - buffer);
 
-                // TODO: Okay this is inefficient as FUCK
-                // I think the ideal is pick a random tile then BFS outwards from it probably ig
-                // It will bias edge tiles significantly more but will make the CPU cry less.
-                for (var x = lower; x <= upper; x++)
-                {
-                    for (var y = lower; y <= upper; y++)
-                    {
-                        var index = new Vector2i(x + chunk.X, y + chunk.Y);
-                        TryGetEntity(index, component.Layers, component.Noise, grid, out var proto);
-
-                        if (proto != layerProto.EntityMask)
-                        {
-                            continue;
-                        }
-
-                        spawns.Add(index);
-                        spawnSet.Add(index);
-                    }
-                }
-
-                // Load NOW
                 // TODO: Need poisson but crashes whenever I use moony's due to inputs or smth idk
-                var count = (int) ((layerProto.Size - buffer) * (layerProto.Size - buffer) / (layerProto.Radius * layerProto.Radius));
+                var count = (int) ((layerProto.Size - buffer) * (layerProto.Size - buffer) /
+                                   (layerProto.Radius * layerProto.Radius));
                 count = Math.Min(count, layerProto.MaxCount);
 
+                // Pick a random tile then BFS outwards from it
+                // It will bias edge tiles significantly more but will make the CPU cry less.
                 for (var i = 0; i < count; i++)
                 {
-                    if (spawns.Count == 0)
-                        break;
-
-                    var index = rand.Next(spawns.Count);
-                    var point = spawns[index];
-                    spawns.RemoveSwap(index);
-
-                    // Point was potentially used in BFS search below but we hadn't updated the list yet.
-                    if (!spawnSet.Remove(point))
-                    {
-                        i--;
-                        continue;
-                    }
-
-                    // BFS search
-                    frontier.Add(point);
                     var groupCount = layerProto.GroupCount;
+                    var startNodeX = rand.Next(lower, upper + 1);
+                    var startNodeY = rand.Next(lower, upper + 1);
+                    var startNode = new Vector2i(startNodeX, startNodeY);
+                    frontier.Clear();
+                    frontier.Add(startNode + chunk);
 
-                    while (frontier.Count > 0 && groupCount > 0)
+                    while (groupCount > 0 && frontier.Count > 0)
                     {
-                        var frontierIndex = _random.Next(frontier.Count);
+                        var frontierIndex = rand.Next(frontier.Count);
                         var node = frontier[frontierIndex];
                         frontier.RemoveSwap(frontierIndex);
-                        var enumerator = grid.GetAnchoredEntitiesEnumerator(node);
 
-                        if (enumerator.MoveNext(out _))
-                            continue;
-
-                        // Need to ensure the tile under it has loaded for anchoring.
-                        if (TryGetBiomeTile(node, component.Layers, component.Noise, grid, out var tile))
-                        {
-                            grid.SetTile(node, tile.Value);
-                        }
-
-                        // If it is a ghost role then purge it
-                        // TODO: This is *kind* of a bandaid but natural mobs spawns needs a lot more work.
-                        // Ideally we'd just have ghost role and non-ghost role variants for some stuff.
-                        var uid = EntityManager.CreateEntityUninitialized(layerProto.Prototype, new EntityCoordinates(gridUid, node));
-                        RemComp<GhostTakeoverAvailableComponent>(uid);
-                        RemComp<GhostRoleComponent>(uid);
-                        EntityManager.InitializeAndStartEntity(uid);
-                        groupCount--;
-
+                        // Add neighbors regardless.
                         for (var x = -1; x <= 1; x++)
                         {
                             for (var y = -1; y <= 1; y++)
@@ -466,26 +434,85 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                                     continue;
 
                                 var neighbor = new Vector2i(x + node.X, y + node.Y);
+                                var chunkOffset = neighbor - chunk;
 
-                                if (!spawnSet.Contains(neighbor))
+                                // Check if it's inbounds.
+                                if (chunkOffset.X < lower ||
+                                    chunkOffset.Y < lower ||
+                                    chunkOffset.X > upper ||
+                                    chunkOffset.Y > upper)
+                                {
+                                    continue;
+                                }
+
+                                if (!spawnSet.Add(neighbor))
                                     continue;
 
                                 frontier.Add(neighbor);
-                                // Rather than doing some uggo remove check on the list we'll defer it until later
-                                spawnSet.Remove(neighbor);
                             }
+                        }
+
+                        // Check if it's a valid spawn, if so then use it.
+                        var enumerator = grid.GetAnchoredEntitiesEnumerator(node);
+
+                        if (enumerator.MoveNext(out _))
+                            continue;
+
+                        // Check if mask matches.
+                        TryGetEntity(node, component.Layers, noiseCopy, grid, out var proto);
+
+                        if (proto != layerProto.EntityMask)
+                        {
+                            continue;
+                        }
+
+                        var chunkOrigin = SharedMapSystem.GetChunkIndices(node, ChunkSize) * ChunkSize;
+
+                        if (!pending.TryGetValue(chunkOrigin, out var pendingMarkers))
+                        {
+                            pendingMarkers = new Dictionary<string, List<Vector2i>>();
+                            pending[chunkOrigin] = pendingMarkers;
+                        }
+
+                        if (!pendingMarkers.TryGetValue(layer, out var layerMarkers))
+                        {
+                            layerMarkers = new List<Vector2i>();
+                            pendingMarkers[layer] = layerMarkers;
+                        }
+
+                        // Log.Info($"Added node at {actualNode} for chunk {chunkOrigin}");
+                        layerMarkers.Add(node);
+                        groupCount--;
+                    }
+                }
+
+                lock (component.PendingMarkers)
+                {
+                    if (!loadedMarkers.TryGetValue(layer, out var lockMobChunks))
+                    {
+                        lockMobChunks = new HashSet<Vector2i>();
+                        loadedMarkers[layer] = lockMobChunks;
+                    }
+
+                    lockMobChunks.Add(chunk);
+
+                    foreach (var (chunkOrigin, layers) in pending)
+                    {
+                        if (!component.PendingMarkers.TryGetValue(chunkOrigin, out var lockMarkers))
+                        {
+                            lockMarkers = new Dictionary<string, List<Vector2i>>();
+                            component.PendingMarkers[chunkOrigin] = lockMarkers;
+                        }
+
+                        foreach (var (lockLayer, nodes) in layers)
+                        {
+                            lockMarkers[lockLayer] = nodes;
                         }
                     }
 
-                    // Add the unused nodes back in
-                    foreach (var node in frontier)
-                    {
-                        spawnSet.Add(node);
-                    }
-
-                    frontier.Clear();
+                    _tilePool.Return(spawnSet);
                 }
-            }
+            });
         }
 
         var active = _activeChunks[component];
@@ -515,7 +542,36 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         EntityQuery<TransformComponent> xformQuery)
     {
         component.ModifiedTiles.TryGetValue(chunk, out var modified);
-        modified ??= new HashSet<Vector2i>();
+        modified ??= _tilePool.Get();
+
+        // Load any pending marker tiles first.
+        if (component.PendingMarkers.TryGetValue(chunk, out var layers))
+        {
+            foreach (var (layer, nodes) in layers)
+            {
+                var layerProto = _proto.Index<BiomeMarkerLayerPrototype>(layer);
+
+                foreach (var node in nodes)
+                {
+                    // Need to ensure the tile under it has loaded for anchoring.
+                    if (TryGetBiomeTile(node, component.Layers, component.Noise, grid, out var tile))
+                    {
+                        grid.SetTile(node, tile.Value);
+                    }
+
+                    // If it is a ghost role then purge it
+                    // TODO: This is *kind* of a bandaid but natural mobs spawns needs a lot more work.
+                    // Ideally we'd just have ghost role and non-ghost role variants for some stuff.
+                    var uid = EntityManager.CreateEntityUninitialized(layerProto.Prototype, grid.GridTileToLocal(node));
+                    RemComp<GhostTakeoverAvailableComponent>(uid);
+                    RemComp<GhostRoleComponent>(uid);
+                    EntityManager.InitializeAndStartEntity(uid);
+                    modified.Add(node);
+                }
+            }
+
+            component.PendingMarkers.Remove(chunk);
+        }
 
         // Set tiles first
         for (var x = 0; x < ChunkSize; x++)
@@ -606,6 +662,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         if (modified.Count == 0)
         {
+            _tilePool.Return(modified);
             component.ModifiedTiles.Remove(chunk);
         }
         else

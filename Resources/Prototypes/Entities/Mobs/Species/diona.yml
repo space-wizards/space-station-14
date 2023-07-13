@@ -8,6 +8,9 @@
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger
+    starvationDamage:
+      types:
+        Bloodloss: 0.5
   - type: Thirst
     baseDecayRate: 0.3
   - type: Icon
