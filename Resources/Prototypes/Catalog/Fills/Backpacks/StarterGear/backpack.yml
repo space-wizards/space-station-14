@@ -27,7 +27,6 @@
     contents:
       - id: BoxSurvivalSecurity
       - id: Flash
-      - id: MagazinePistol
 
 - type: entity
   noSpawn: true
@@ -113,7 +112,6 @@
     contents:
       - id: BoxSurvivalSecurity
       - id: Flash
-      - id: MagazinePistol
 
 - type: entity
   noSpawn: true
@@ -250,6 +248,9 @@
         - id: Hypospray
         - id: MedkitAdvancedFilled
         - id: CrowbarRed
+        - id: OmnizineChemistryBottle
+        - id: EpinephrineChemistryBottle
+        - id: EpinephrineChemistryBottle
 
 - type: entity
   noSpawn: true
@@ -265,6 +266,8 @@
         - id: RCDAmmo
         - id: RCDAmmo
         - id: RCDAmmo
+        - id: CableMVStack
+        - id: CableHVStack
 
 - type: entity
   noSpawn: true
@@ -289,7 +292,7 @@
   components:
     - type: StorageFill
       contents:
-        - id: BoxSurvival
+        - id: BoxSurvivalEngineering
 
 - type: entity
   parent: ClothingBackpackSatchelLeather
