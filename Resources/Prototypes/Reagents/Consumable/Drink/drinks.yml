@@ -15,6 +15,11 @@
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
+    Narcotic:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.1
+        sprintSpeedModifier: 1.1
 
 - type: reagent
   id: Cream
