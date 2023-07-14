@@ -8,7 +8,7 @@
     - to: riflestock
       steps:
       - material: WoodPlank
-        amount: 10 #Intentionally expensive.
+        amount: 5
         doAfter: 4
   - node: riflestock
     entity: RifleStock
