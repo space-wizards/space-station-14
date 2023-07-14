@@ -43,6 +43,8 @@ public sealed class ShipRenameSystem : EntitySystem
                     Loc.GetString("ship-rename-popup-prompt"),
                     (string name) =>
                     {
+                        if (!uid.Valid)
+                            return;
                         var finalString = name.Trim();
                         var station = _stationSystem.GetOwningStation(component.GridId.Value);
                         if (!station.HasValue)

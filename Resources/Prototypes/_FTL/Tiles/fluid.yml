@@ -1,6 +1,7 @@
 - type: entity
   id: FloorBloodEntity
-  name: water
+  name: blood
+  description: Uncomfortable.
   placement:
     mode: SnapgridCenter
     snap:

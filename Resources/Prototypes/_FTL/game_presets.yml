@@ -4,5 +4,6 @@
     - xplor
   name: exploration-title
   description: exploration-description
+  showInVote: true
   rules:
     - EndOnShipDestruction
