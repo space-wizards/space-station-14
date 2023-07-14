@@ -10,7 +10,11 @@ public sealed class RattleComponent : Component
     [DataField("radioChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
     public string RadioChannel = "Syndicate";
 
-    // The message that the implant will send
-    [DataField("message")]
-    public string Message = "";
+    // The message that the implant will send when crit
+    [DataField("critMessage")]
+    public string CritMessage = "deathrattle-implant-critical-message";
+
+    // The message that the implant will send when dead
+    [DataField("deathMessage")]
+    public string DeathMessage = "deathrattle-implant-dead-message";
 }

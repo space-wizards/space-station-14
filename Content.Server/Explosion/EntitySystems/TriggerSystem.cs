@@ -20,6 +20,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.Explosion.EntitySystems
@@ -129,10 +131,10 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleRattleTrigger(EntityUid uid, RattleComponent component, TriggerEvent args)
         {
-            if (!TryComp<SubdermalImplantComponent?>(uid, out var owner))
+            if (!TryComp<SubdermalImplantComponent?>(uid, out var implanted))
                 return;
 
-            if (owner.ImplantedEntity == null)
+            if (implanted.ImplantedEntity == null)
                 return;
 
             // Gets location of the implant
@@ -142,10 +144,17 @@ namespace Content.Server.Explosion.EntitySystems
             var y = (int) pos.Y;
             var posText = $"({x}, {y})";
 
-            var message = Loc.GetString(component.Message, ("user", owner.ImplantedEntity.Value), ("position", posText));
+            var critMessage = Loc.GetString(component.CritMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText));
+            var deathMessage = Loc.GetString(component.DeathMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText));
 
-            // Sends a message to the radio channel specified by the implanter
-            _radioSystem.SendRadioMessage(uid, message, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);
+            if (!TryComp<MobStateComponent>(implanted.ImplantedEntity, out var mobstate))
+                return;
+
+            // Sends a message to the radio channel specified by the implant
+            if (mobstate.CurrentState == MobState.Critical)
+                _radioSystem.SendRadioMessage(uid, critMessage, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);
+            if (mobstate.CurrentState == MobState.Dead)
+                _radioSystem.SendRadioMessage(uid, deathMessage, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);
 
             args.Handled = true;
         }

@@ -31,11 +31,8 @@ public abstract class SharedImplanterSystem : EntitySystem
     {
         if (component.Implant != null)
             component.ImplanterSlot.StartingItem = component.Implant;
-        if (component.Implant2 != null)
-            component.ImplanterSlot2.StartingItem = component.Implant2;
 
         _itemSlots.AddItemSlot(uid, ImplanterComponent.ImplanterSlotId, component.ImplanterSlot);
-        _itemSlots.AddItemSlot(uid, ImplanterComponent.ImplanterSlotId2, component.ImplanterSlot2);
 
     }
 
@@ -50,7 +47,7 @@ public abstract class SharedImplanterSystem : EntitySystem
     //Set to draw mode if not implant only
     public void Implant(EntityUid user, EntityUid target, EntityUid implanter, ImplanterComponent component)
     {
-        if (!CanImplant(user, target, implanter, component, out var implant, out var implant2, out var implantComp, out var implantComp2))
+        if (!CanImplant(user, target, implanter, component, out var implant, out var implantComp))
             return;
 
         //If the target doesn't have the implanted component, add it.
@@ -58,14 +55,11 @@ public abstract class SharedImplanterSystem : EntitySystem
         var implantContainer = implantedComp.ImplantContainer;
 
         component.ImplanterSlot.ContainerSlot?.Remove(implant.Value);
-        component.ImplanterSlot2.ContainerSlot?.Remove(implant2.Value);
 
         implantComp.ImplantedEntity = target;
-        implantComp2.ImplantedEntity = target;
 
         implantContainer.OccludesLight = false;
         implantContainer.Insert(implant.Value);
-        implantContainer.Insert(implant2.Value);
 
         if (component.CurrentMode == ImplanterToggleMode.Inject && !component.ImplantOnly)
             DrawMode(component);
@@ -81,28 +75,19 @@ public abstract class SharedImplanterSystem : EntitySystem
         EntityUid implanter,
         ImplanterComponent component,
         [NotNullWhen(true)] out EntityUid? implant,
-        [NotNullWhen(true)] out EntityUid? implant2,
-        [NotNullWhen(true)] out SubdermalImplantComponent? implantComp,
-        [NotNullWhen(true)] out SubdermalImplantComponent? implantComp2)
+        [NotNullWhen(true)] out SubdermalImplantComponent? implantComp)
 
     {
         implant = component.ImplanterSlot.ContainerSlot?.ContainedEntities?.FirstOrDefault();
-        implant2 = component.ImplanterSlot2.ContainerSlot?.ContainedEntities?.FirstOrDefault();
 
         if (!TryComp<SubdermalImplantComponent>(implant, out implantComp))
         {
-            implantComp2 = null;
             return false;
         }
 
-        if (!TryComp<SubdermalImplantComponent>(implant2, out implantComp2))
-            return false;
-
         var ev = new AddImplantAttemptEvent(user, target, implant.Value, implanter);
-        var ev2 = new AddImplantAttemptEvent(user, target, implant2.Value, implanter);
 
         RaiseLocalEvent(target, ev);
-        RaiseLocalEvent(target, ev2);
         return !ev.Cancelled;
     }
 
