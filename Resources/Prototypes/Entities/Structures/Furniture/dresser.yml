@@ -2,7 +2,7 @@
   id: Dresser
   parent: BaseStructure
   name: dresser
-  description: It's filled with underwear and shorts, finding an unused one is a gamble.
+  description: Wooden dresser, can store things inside itself, ideal for underwear, and someone's kidneys?...
   components:
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
@@ -37,3 +37,231 @@
   - type: Tag
     tags:
     - Wooden
+
+- type: entity
+  id: DresserFilled
+  parent: Dresser
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingNeckLGBTPin
+        prob: 0.06
+      - id: HatBandBlack
+        prob: 0.05
+      - id: HatBandBlue
+        prob: 0.05
+      - id: HatBandGreen
+        prob: 0.05
+      - id: HatBandRed
+        prob: 0.05
+      - id: HatBandSkull
+        prob: 0.05
+      - id: ClothingUniformJumpsuitColorGrey
+        prob: 0.05
+      - id: ClothingUniformJumpskirtColorGrey
+        prob: 0.05
+      - id: ClothingUniformJumpsuitColorWhite
+        prob: 0.05
+      - id: ClothingUniformJumpskirtColorWhite
+        prob: 0.05
+      - id: ClothingUniformJumpsuitColorPink
+        prob: 0.05
+      - id: ClothingUniformJumpskirtColorPink
+        prob: 0.05
+      - id: Pen # It`s pen.
+        prob: 0.03
+      - id: ClothingUniformJumpsuitColorBlue
+        prob: 0.03
+      - id: ClothingUniformJumpskirtColorBlue
+        prob: 0.03
+      - id: ClothingUniformJumpsuitColorYellow
+        prob: 0.03
+      - id: ClothingUniformJumpskirtColorYellow
+        prob: 0.03
+      - id: ClothingUniformJumpsuitColorGreen
+        prob: 0.03
+      - id: ClothingUniformJumpskirtColorGreen
+        prob: 0.03
+      - id: ClothingUniformJumpsuitColorOrange
+        prob: 0.03
+      - id: ClothingUniformJumpskirtColorOrange
+        prob: 0.03
+      - id: ClothingUniformJumpsuitColorRed
+        prob: 0.03
+      - id: ClothingUniformJumpskirtColorRed
+        prob: 0.03
+      - id: ClothingUniformJumpsuitColorPurple
+        prob: 0.03
+      - id: ClothingUniformJumpskirtColorPurple
+        prob: 0.03
+      - id: ClothingUniformJumpsuitColorDarkBlue
+        prob: 0.03
+      - id: ClothingUniformJumpskirtColorDarkBlue
+        prob: 0.03
+      - id: ClothingUniformJumpsuitColorTeal
+        prob: 0.03
+      - id: ClothingUniformJumpskirtColorTeal
+        prob: 0.03
+      - id: ClothingShoesColorBlack
+        prob: 0.03
+      - id: ClothingNeckScarfStripedRed
+        prob: 0.03
+      - id: ClothingNeckScarfStripedBlue
+        prob: 0.03
+      - id: ClothingNeckScarfStripedGreen
+        prob: 0.03
+      - id: ClothingHeadHatGreysoft
+        prob: 0.03
+      - id: ClothingHeadHatCorpsoft
+        prob: 0.03
+      - id: ClothingHeadHatBunny
+        prob: 0.03
+      - id: ClothingOuterHoodieBlack
+        prob: 0.03
+      - id: BedsheetNT
+        prob: 0.03
+      - id: BedsheetGrey
+        prob: 0.03
+      - id: ClothingOuterWinterClown
+        prob: 0.03
+      - id: ClothingOuterCoatBomber
+        prob: 0.03
+      - id: ClothingEyesEyepatch
+        prob: 0.03
+      - id: ClothingHeadHatPaper
+        prob: 0.03
+      - id: ClothingMaskBreath
+        prob: 0.03
+      - id: ClothingHeadHatWitch
+        prob: 0.03
+      - id: ClothingOuterCoatLab
+        prob: 0.03
+      - id: ClothingHeadHatFedoraGrey
+        prob: 0.03
+      - id: ClothingUniformJumpsuitHawaiBlue
+        prob: 0.03
+      - id: ClothingHeadHatAnimalHeadslime
+        prob: 0.03
+      - id: ClothingNeckHeadphones
+        prob: 0.03
+      - id: ClothingUnderSocksCoder
+        prob: 0.03
+      - id: ClothingUnderSocksBee
+        prob: 0.03
+      - id: ClothingHeadHatAnimalMonkey
+        prob: 0.03
+      - id: ClothingShoesWizard
+        prob: 0.03
+      - id: ClothingEyesGlasses
+        prob: 0.03
+      - id: ClothingOuterDameDane
+        prob: 0.03
+      - id: ClothingHeadHatShrineMaidenWig
+        prob: 0.03
+      - id: ClothingOuterPoncho
+        prob: 0.03
+      - id: ClothingShoesBootsWork
+        prob: 0.03
+      - id: ClothingOuterWinterCoat
+        prob: 0.03
+      - id: ClothingMaskFox
+        prob: 0.03
+      - id: ClothingEyesGlassesGar
+        prob: 0.03
+      - id: ClothingOuterCoatGentle
+        prob: 0.03
+      - id: ClothingHeadHatBeret
+        prob: 0.03
+      - id: PlushieLizard
+        prob: 0.03
+      - id: ClothingOuterSuitShrineMaiden
+        prob: 0.03
+      - id: ClothingOuterClownPriest
+        prob: 0.02
+      - id: ClothingHeadHatXmasCrown
+        prob: 0.02
+      - id: ClothingOuterDiscoAssBlazer
+        prob: 0.02
+      - id: ClothingMaskNeckGaiter
+        prob: 0.02
+      - id: ClothingHeadHatBeretBrigmedic
+        prob: 0.02
+      - id: ClothingMaskGas
+        prob: 0.008
+      - id: CablecuffsBroken
+        prob: 0.008
+      - id: ClothingOuterVestHazard
+        prob: 0.008
+      - id: ClothingHandsGlovesLatex
+        prob: 0.008
+      - id: ClothingHandsGlovesColorWhite
+        prob: 0.008
+      - id: ClothingHandsGlovesBoxingYellow
+        prob: 0.008
+      - id: ClothingOuterGhostSheet
+        prob: 0.008
+      - id: ClothingUniformJumpskirtJanimaid
+        prob: 0.005
+      - id: ClothingUniformJumpskirtJanimaidmini
+        prob: 0.005
+      - id: ClothingBeltSuspenders
+        prob: 0.005
+      - id: ClothingNeckScarfStripedSyndieRed
+        prob: 0.005
+      - id: ClothingOuterCoatJensen
+        prob: 0.005
+      - id: ClothingShoesGreenLizardskin
+        prob: 0.005
+      - id: ClothingMaskMuzzle
+        prob: 0.003
+      - id: ClothingHandsGlovesColorYellowBudget
+        prob: 0.002
+      - id: ClothingHeadPyjamaSyndicatePink
+        prob: 0.002
+      - id: ClothingUniformJumpsuitPyjamaSyndicatePink
+        prob: 0.002
+      - id: ClothingOuterCoatDetectiveDark
+        prob: 0.001
+      - id: ClothingHeadHatTacticalMaidHeadband
+        prob: 0.001
+      - id: ClothingUniformJumpskirtTacticalMaid
+        prob: 0.001
+      - id: ClothingUniformJumpsuitNanotrasen
+        prob: 0.001
+      - id: ClothingOuterCoatDetectiveDark
+        prob: 0.001
+      - id: Shiv
+        prob: 0.001
+      - id: BikeHorn
+        prob: 0.001
+      - id: DrinkWaterBottleFull
+        prob: 0.001
+      - id: BrokenBottle
+        prob: 0.001
+      - id: FoodMeatRotten
+        prob: 0.001
+      - id: ClothingOuterSkub
+        prob: 0.0008
+      - id: ClothingNeckCloakMoth
+        prob: 0.0003
+      - id: ClothingUniformJumpsuitPrisoner
+        prob: 0.0003
+      - id: ClothingUniformJumpskirtPrisoner
+        prob: 0.0003
+      - id: ClothingOuterWinterCentcom
+        prob: 0.0001
+      - id: ClothingUniformJumpskirtOfLife
+        prob: 0.0001
+      - id: ClothingUniformJumpsuitSyndieFormalDress
+        prob: 0.0001
+      - id: ClothingUniformJumpskirtSyndieFormalDress
+        prob: 0.0001
+      - id: ClothingOuterWinterSyndie
+        prob: 0.0001
+      - id: ClothingHeadHatRichard
+        prob: 0.0001
+      - id: ClothingOuterDogi
+        prob: 0.00001
+      - id: HeadHuman
+        prob: 0.00001
