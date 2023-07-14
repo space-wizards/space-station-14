@@ -50,7 +50,7 @@
       prototypes:
         - ToyAi
         - ToyNuke
-        - ToyAssistant
+        - ToyFigurinePassenger
         - ToyGriffin
         - ToyHonk
         - ToyIan
@@ -107,7 +107,7 @@
       - ToyFigurineSlime
       - ToyFigurineGreytider
       - ToyFigurineWizard
-      - ToyGriffon
+      - ToyGriffin
       - ToyOwlman
       - ToySkeleton
       - ToyFigurineQueen
