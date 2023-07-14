@@ -47,16 +47,6 @@
     contents:
       - id: ClothingNeckLGBTPin
         prob: 0.06
-      - id: HatBandBlack
-        prob: 0.05
-      - id: HatBandBlue
-        prob: 0.05
-      - id: HatBandGreen
-        prob: 0.05
-      - id: HatBandRed
-        prob: 0.05
-      - id: HatBandSkull
-        prob: 0.05
       - id: ClothingUniformJumpsuitColorGrey
         prob: 0.05
       - id: ClothingUniformJumpskirtColorGrey
@@ -181,8 +171,6 @@
         prob: 0.02
       - id: ClothingHeadHatXmasCrown
         prob: 0.02
-      - id: ClothingOuterDiscoAssBlazer
-        prob: 0.02
       - id: ClothingMaskNeckGaiter
         prob: 0.02
       - id: ClothingHeadHatBeretBrigmedic
@@ -211,8 +199,6 @@
         prob: 0.005
       - id: ClothingOuterCoatJensen
         prob: 0.005
-      - id: ClothingShoesGreenLizardskin
-        prob: 0.005
       - id: ClothingMaskMuzzle
         prob: 0.003
       - id: ClothingHandsGlovesColorYellowBudget
@@ -228,8 +214,6 @@
       - id: ClothingUniformJumpskirtTacticalMaid
         prob: 0.001
       - id: ClothingUniformJumpsuitNanotrasen
-        prob: 0.001
-      - id: ClothingOuterCoatDetectiveDark
         prob: 0.001
       - id: Shiv
         prob: 0.001
@@ -253,7 +237,7 @@
         prob: 0.0001
       - id: ClothingUniformJumpskirtOfLife
         prob: 0.0001
-      - id: ClothingUniformJumpsuitSyndieFormalDress
+      - id: ClothingUniformJumpsuitSyndieFormal
         prob: 0.0001
       - id: ClothingUniformJumpskirtSyndieFormalDress
         prob: 0.0001
