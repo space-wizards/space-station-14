@@ -37,7 +37,7 @@ public sealed class MachineFrameSystem : EntitySystem
     {
         RegenerateProgress(component);
 
-        if (TryComp<ConstructionComponent>(uid, out var construction))
+        if (TryComp<ConstructionComponent>(uid, out var construction) && construction.TargetNode == null)
         {
             // Attempt to set pathfinding to the machine node...
             _construction.SetPathfindingTarget(uid, "machine", construction);

@@ -1,79 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: New safety standards have made bicaridine overdoses less fatal than
-      before., type: Tweak}
-  id: 3737
-  time: '2023-05-12T22:40:55.0000000+00:00'
-- author: OctoRocket
-  changes:
-  - {message: 1 nukeop per 10 people instead of per 5., type: Tweak}
-  - {message: minimum of 20 people for nukeops., type: Tweak}
-  id: 3738
-  time: '2023-05-12T22:55:47.0000000+00:00'
-- author: DEATHB4DEFEAT
-  changes:
-  - {message: Changed the portal sprite., type: Tweak}
-  id: 3739
-  time: '2023-05-12T23:36:43.0000000+00:00'
-- author: KEEYNy
-  changes:
-  - {message: "Equal values \u200B\u200Bfor ERT Leader jumpsuit  and ERT Security\
-      \ jumpsuit", type: Tweak}
-  id: 3740
-  time: '2023-05-12T23:43:27.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Scale throwing pushback by mass., type: Tweak}
-  id: 3741
-  time: '2023-05-12T23:54:38.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: You can now drinky puddles (inefficiently), type: Add}
-  id: 3742
-  time: '2023-05-13T01:32:57.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Chemical reactions should now conserve thermal energy., type: Tweak}
-  id: 3743
-  time: '2023-05-13T03:10:32.0000000+00:00'
-- author: Tristan Thomas
-  changes:
-  - {message: 'Added a white cane, which spawns on blind players.', type: Add}
-  id: 3744
-  time: '2023-05-13T03:11:35.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Changed manly dorf appearance and flavor., type: Tweak}
-  id: 3745
-  time: '2023-05-13T12:14:57.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix vapors., type: Fix}
-  id: 3746
-  time: '2023-05-13T13:45:59.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Adds new masks for the clown and mime in the theater machine., type: Add}
-  id: 3747
-  time: '2023-05-13T14:41:35.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: 'Adds a new pet slime for RND, named Slime. Slime Smile.', type: Add}
-  - {message: The description of angry Slimes is now working., type: Fix}
-  id: 3748
-  time: '2023-05-13T14:51:03.0000000+00:00'
-- author: OttoMaticode
-  changes:
-  - {message: Robotics now has a guidebook entry, type: Add}
-  id: 3749
-  time: '2023-05-13T15:21:38.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Puddles slip you further and reduced slip multipliers across the board
-      as most were comically large., type: Tweak}
-  id: 3750
-  time: '2023-05-13T15:45:53.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: Health Analyzer's that run out of power/don't have a power cell in them
@@ -2958,3 +2883,87 @@ Entries:
   - {message: Starvation will kill you again., type: Add}
   id: 4236
   time: '2023-07-12T05:46:38.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Returned body armor to the bartender's vending machine and bartender's
+      closet, type: Tweak}
+  id: 4237
+  time: '2023-07-12T19:09:36.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Fixed singularity distortion render on zoom, type: Fix}
+  id: 4238
+  time: '2023-07-12T19:12:25.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'Due to a couple thousand life support patients finally dying, Nanotrasen
+      now has the funds to put medicated sutures and regenerative mesh in select medkits',
+    type: Tweak}
+  id: 4239
+  time: '2023-07-12T19:14:25.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Added 4 empty jugs to the chemvend. Janitors remind chemists not to
+      dump dangerous chemicals in drains!, type: Add}
+  id: 4240
+  time: '2023-07-12T19:38:14.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Nuke Ops can no longer purchase dehydrated carp, type: Remove}
+  - {message: Increased the price of dehydrated carp to 3 TC., type: Tweak}
+  id: 4241
+  time: '2023-07-12T19:47:09.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Youtool nerf, type: Add}
+  id: 4242
+  time: '2023-07-12T19:47:20.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: 'The NTDDB has received 1,349,418 full shipments of combat knifes and
+      boots, expect every officer to have a knife on them from this point and on.',
+    type: Tweak}
+  - {message: Jackboots can store knives now., type: Tweak}
+  id: 4243
+  time: '2023-07-12T19:55:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Security staff are now being issued handguns with rubber bullets for
+      station security. An extra magazine with lethals has additionally been supplied
+      in their bags., type: Add}
+  id: 4244
+  time: '2023-07-13T03:18:58.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Traitorous Atmospheric Technicans no longer have a 10 telecrystal penalty,
+      and now have access to the full 20TC that all other jobs do.', type: Tweak}
+  id: 4245
+  time: '2023-07-13T04:09:28.0000000+00:00'
+- author: IProduceWidgets
+  changes:
+  - {message: Syndie fire axe description is more clear., type: Tweak}
+  id: 4246
+  time: '2023-07-13T06:19:24.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Stamps are quieter than before., type: Fix}
+  id: 4247
+  time: '2023-07-13T06:20:39.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: 'Added head, arm, and leg tiger stripe markings for lizards.', type: Add}
+  id: 4248
+  time: '2023-07-13T06:22:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Numerous NPC steering improvements so they flicker a lot less., type: Fix}
+  id: 4249
+  time: '2023-07-13T14:48:06.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'The Syndicate has found a way to compress their ballistic turrets into
+      a toolbox, reducing it''s performance in the process. Atmos technician, station
+      engineer and scientist traitors can now purchase the disposable turret from
+      the uplink.', type: Add}
+  id: 4250
+  time: '2023-07-14T04:48:59.0000000+00:00'
