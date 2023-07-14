@@ -33,7 +33,6 @@ public abstract class SharedImplanterSystem : EntitySystem
             component.ImplanterSlot.StartingItem = component.Implant;
 
         _itemSlots.AddItemSlot(uid, ImplanterComponent.ImplanterSlotId, component.ImplanterSlot);
-
     }
 
     private void OnEntInserted(EntityUid uid, ImplanterComponent component, EntInsertedIntoContainerMessage args)
@@ -55,9 +54,7 @@ public abstract class SharedImplanterSystem : EntitySystem
         var implantContainer = implantedComp.ImplantContainer;
 
         component.ImplanterSlot.ContainerSlot?.Remove(implant.Value);
-
         implantComp.ImplantedEntity = target;
-
         implantContainer.OccludesLight = false;
         implantContainer.Insert(implant.Value);
 
@@ -76,17 +73,12 @@ public abstract class SharedImplanterSystem : EntitySystem
         ImplanterComponent component,
         [NotNullWhen(true)] out EntityUid? implant,
         [NotNullWhen(true)] out SubdermalImplantComponent? implantComp)
-
     {
         implant = component.ImplanterSlot.ContainerSlot?.ContainedEntities?.FirstOrDefault();
-
         if (!TryComp<SubdermalImplantComponent>(implant, out implantComp))
-        {
             return false;
-        }
 
         var ev = new AddImplantAttemptEvent(user, target, implant.Value, implanter);
-
         RaiseLocalEvent(target, ev);
         return !ev.Cancelled;
     }

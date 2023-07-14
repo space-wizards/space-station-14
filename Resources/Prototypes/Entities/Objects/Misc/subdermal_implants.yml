@@ -222,7 +222,6 @@
         - HideContextMenu
         - MacroBomb
 
-
 - type: entity
   parent: BaseSubdermalImplant
   id: DeathRattleImplant
