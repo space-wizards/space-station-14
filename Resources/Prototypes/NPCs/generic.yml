@@ -1,4 +1,13 @@
 # Primitive
+
+# Discard active hand entity.
+- type: htnPrimitive
+  id: DiscardActiveHandPrimitive
+  preconditions:
+    - !type:ActiveHandEntityPrecondition
+  operator: !type:DropOperator
+
+# Interacts with the specified target key
 - type: htnPrimitive
   id: InteractWithPrimitive
   preconditions:

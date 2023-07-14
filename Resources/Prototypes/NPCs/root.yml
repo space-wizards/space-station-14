@@ -12,6 +12,30 @@
 - type: htnCompound
   id: PirateCompound
   branches:
+    # TODO: Equip a gun from inventory if one found, preferring over pickup.
+    # Shoot if ammo
+    - tasks:
+        - id: GunCombatCompound
+      preconditions:
+        - !type:GunAmmoPrecondition
+          minPercent: 0.001
+    # Pickup ammo if any nearby
+    # TODO: Need nearby ammo
+    #- tasks:
+    #    - id: GunAmmoPickupCompound
+    #  preconditions:
+    #    - !type:GunAmmoPrecondition
+    #      maxPercent: 0.0
+    # Discard gun if no ammo
+    - tasks:
+        - id: DiscardActiveHandPrimitive
+      preconditions:
+        - !type:ActiveHandComponentPrecondition
+          components:
+            - type: Gun
+        - !type:GunAmmoPrecondition
+          maxPercent: 0.001
+    # Pickup gun if no ammo
     - tasks:
         - id: PickupGunCompound
       preconditions:
@@ -19,9 +43,9 @@
           components:
             - type: Gun
           invert: true
-    - tasks:
-        - id: GunCombatCompound
-    - tasks:
-        - id: GunAmmoPickupCompound
-    #- tasks:
-    #    - id: DiscardGunCompound
+
+
+# Changes:
+# Make melee combat and movement separate
+# Melee just does the hit and then moves at the target.
+# If target out of double melee range then fail.

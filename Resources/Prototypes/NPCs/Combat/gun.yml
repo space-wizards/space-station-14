@@ -2,8 +2,6 @@
 # Tries to shoot a target at range.
 - type: htnCompound
   id: GunCombatCompound
-  preconditions:
-    - !type:GunAmmoPrecondition
   branches:
     - tasks:
         - id: PickGunTargetPrimitive
@@ -12,9 +10,6 @@
 # Tries to Gun attack our target.
 - type: htnCompound
   id: GunAttackTargetCompound
-  preconditions:
-    - !type:KeyExistsPrecondition
-      key: Target
   branches:
     # Keep hitting them if they're in LOS
     - tasks:
@@ -28,9 +23,6 @@
 # Selects ammo in range, then moves to it and picks it up
 - type: htnCompound
   id: GunAmmoPickupCompound
-  preconditions:
-    - !type:GunAmmoPrecondition
-      percent: 0.1
   branches:
     # Find ammo then pick it up.
     - tasks:
@@ -39,15 +31,6 @@
         - id: InteractWithPrimitive
 # TODO: Prioritise ammo for weapon we have equipped, otherwise grab anything if we don't have any.
 # TODO: Only works on ballistic
-
-# Discard empty gun we have no ammo for and none in range.
-#- type: htnCompound
-#  id: DiscardGunCompound
-#  preconditions:
-#    - !type:GunAmmoPrecondition
-#      percent: 0.0
-  # TODO: Utility select guns in ventory
-  # TODO: Drop them
 
 # Selects a gun in range, then moves to it and picks it up.
 - type: htnCompound

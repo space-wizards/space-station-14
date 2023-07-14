@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 
@@ -81,6 +82,16 @@ public sealed partial class NPCCombatSystem
             if (!_gun.TryGetGun(uid, out var gunUid, out var gun))
             {
                 comp.Status = CombatStatus.NoWeapon;
+                comp.ShootAccumulator = 0f;
+                continue;
+            }
+
+            var ammoEv = new GetAmmoCountEvent();
+            RaiseLocalEvent(gunUid, ref ammoEv);
+
+            if (ammoEv.Count == 0)
+            {
+                comp.Status = CombatStatus.Unspecified;
                 comp.ShootAccumulator = 0f;
                 continue;
             }
