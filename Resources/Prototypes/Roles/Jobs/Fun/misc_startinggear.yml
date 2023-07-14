@@ -61,7 +61,6 @@
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicateOperative
     shoes: ClothingShoesBootsCombatFilled
-    id: PassengerIDCard
     gloves: ClothingHandsGlovesColorBlack
   innerclothingskirt: ClothingUniformJumpsuitOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
