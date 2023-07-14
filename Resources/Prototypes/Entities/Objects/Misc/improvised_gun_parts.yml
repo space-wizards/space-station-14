@@ -1,4 +1,5 @@
 #The entire game mysteriously shits itself and dies if you uncomment the item size. I have no idea why.
+#TODO: Assimilate these into the same RSI.
 - type: entity
   parent: BaseItem
   id: ModularReceiver 
@@ -22,7 +23,7 @@
   parent: BaseItem
   id: RifleStock
   name: rifle stock
-  description: A robust wooden stock that is used in the creation of firearms. #Same as above
+  description: A robust wooden stock, used in the creation of firearms. #Same as above
   components:
 #    - type: Item
 #      size: 25

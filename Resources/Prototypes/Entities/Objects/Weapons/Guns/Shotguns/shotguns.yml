@@ -173,6 +173,20 @@
     deconstructionTarget: null
 
 - type: entity
+  name: sawn-off shogun
+  parent: WeaponShotgunSawn
+  id: WeaponShotgunSawnEmpty
+  description: Groovy! Uses .50 shotgun shells.
+  suffix: Empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Construction
+    graph: ShotgunSawn
+    node: shotgunsawn
+    deconstructionTarget: null
+
+- type: entity
   name: handmade pistol
   parent: BaseWeaponShotgun
   id: WeaponShotgunHandmade
@@ -218,7 +232,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
   - type: Item
-    size: 60
+    size: 75
   - type: Gun
     fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
   - type: BallisticAmmoProvider
@@ -227,45 +241,14 @@
   - type: Construction
     graph: ImprovisedShotgunGraph
     node: shotgun
-#Fairly shoddily put-together, so you can smash it in half with enough time and effort.
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Pipe:
-            min: 1
-            max: 1
-          RifleStock:
-            min: 1
-            max: 1
-          ModularReceiver:
-            min: 1
-            max: 1
-          MaterialCloth:
-            min: 1
-            max: 3
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 400
 
 - type: entity
   name: improvised shotgun
   parent: WeaponShotgunImprovised
   suffix: Loaded
   id: WeaponShotgunImprovisedLoaded
-  description: A shitty hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunImprovised

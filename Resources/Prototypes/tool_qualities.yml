@@ -60,11 +60,3 @@
   toolName: tool-quality-honking-tool-name
   spawn: BikeHorn
   icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
-
-#This should probably be able to use stuff like the fireaxe in the future, but I don't think multiple tool types for tool qualities are supported right now.
-- type: tool
-  id: Woodcutting
-  name: tool-quality-woodcutting-name
-  toolName: tool-quality-woodcutting-tool-name
-  spawn: hatchet
-  icon: { sprite: Objects/Tools/Hydroponics/hatchet.rsi, state: icon }

@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.NPC.Systems;
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.PDA.Ringer;
 using Content.Server.Players;
@@ -34,6 +35,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -250,11 +252,11 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("", code))));
 
         // Assign traitor roles
-        mind.AddRole(traitorRole);
+        _mindSystem.AddRole(mind, traitorRole);
         SendTraitorBriefing(mind, traitorRule.Codewords, code);
         traitorRule.Traitors.Add(traitorRole);
 
-        if (mind.TryGetSession(out var session))
+        if (_mindSystem.TryGetSession(mind, out var session))
         {
             // Notificate player about new role assignment
             _audioSystem.PlayGlobal(traitorRule.GreetSoundNotification, session);
@@ -271,9 +273,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
         {
             var objective = _objectivesManager.GetRandomObjective(traitorRole.Mind, "TraitorObjectiveGroups");
+
             if (objective == null)
                 continue;
-            if (traitorRole.Mind.TryAddObjective(objective))
+            if (_mindSystem.TryAddObjective(traitorRole.Mind, objective))
                 difficulty += objective.Difficulty;
         }
 
@@ -288,7 +291,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     /// <param name="code">Uplink codes</param>
     private void SendTraitorBriefing(Mind.Mind mind, string[] codewords, Note[] code)
     {
-        if (mind.TryGetSession(out var session))
+        if (_mindSystem.TryGetSession(mind, out var session))
         {
            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
@@ -367,7 +370,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             foreach (var t in traitor.Traitors)
             {
                 var name = t.Mind.CharacterName;
-                t.Mind.TryGetSession(out var session);
+                _mindSystem.TryGetSession(t.Mind, out var session);
                 var username = session?.Name;
 
                 var objectives = t.Mind.AllObjectives.ToArray();

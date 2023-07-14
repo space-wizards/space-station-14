@@ -8,8 +8,7 @@
     - to: riflestock
       steps:
       - material: WoodPlank
-        amount: 5
+        amount: 10 #Intentionally expensive.
         doAfter: 4
-      - tool: Woodcutting
   - node: riflestock
     entity: RifleStock

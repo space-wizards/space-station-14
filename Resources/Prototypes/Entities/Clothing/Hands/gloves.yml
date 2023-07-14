@@ -79,8 +79,7 @@
 - type: entity
   parent: ClothingHandsGlovesBoxingBlue
   id: ClothingHandsGlovesBoxingRigged
-  name: blue boxing gloves
-  description: Blue gloves for competitive boxing. Feels like they're heavier than usual...
+  suffix: Rigged
   components:
   - type: StaminaDamageOnHit
     damage: 30
@@ -219,6 +218,35 @@
   - type: Fiber
     fiberMaterial: fibers-insulative
     fiberColor: fibers-black
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsTacticalMaidGloves
+  name: tactical maid gloves
+  description: Tactical maid gloves, every self-respecting maid should be able to discreetly eliminate her goals.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsMercGlovesCombat
+  name: mercenary combat gloves
+  description: High-quality combat gloves to protect hands from mechanical damage during combat.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/olive.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/olive.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-olive
   - type: FingerprintMask
 
 - type: entity

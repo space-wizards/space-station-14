@@ -7,7 +7,15 @@
   permanentComponents:
   - type: RadioMicrophone
     powerRequired: false
+    toggleOnInteract: false
     listenRange: 3
+  - type: Speech
+  - type: RadioSpeaker
+    toggleOnInteract: false
+  - type: ActivatableUI
+    key: enum.IntercomUiKey.Key
+  - type: Intercom
+    requiresPower: false
     supportedChannels:
     - Common
     - CentCom
