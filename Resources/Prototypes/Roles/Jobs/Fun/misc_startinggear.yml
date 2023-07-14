@@ -149,7 +149,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     head: ClothingHeadHelmetSwatSyndicate
-    mask: ClothingMaskGasSyndicate
+    mask: ClothingMaskGas
     outerClothing: ClothingOuterArmorBasicSlim
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
@@ -166,7 +166,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     head: ClothingHeadHelmetSwatSyndicate
-    mask: ClothingMaskGasSyndicate
+    mask: ClothingMaskGas
     outerClothing: ClothingOuterArmorBasicSlim
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
@@ -184,7 +184,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     head: ClothingHeadHelmetSwatSyndicate
-    mask: ClothingMaskGasSyndicate
+    mask: ClothingMaskGas
     outerClothing: ClothingOuterArmorBasicSlim
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
@@ -203,7 +203,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     head: ClothingHeadHelmetSwatSyndicate
-    mask: ClothingMaskGasSyndicate
+    mask: ClothingMaskGas
     outerClothing: ClothingOuterArmorBasicSlim
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
