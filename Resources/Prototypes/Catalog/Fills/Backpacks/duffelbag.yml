@@ -297,6 +297,7 @@
       - id: WeaponPistolViper
       - id: PinpointerNuclear
       - id: HandheldHealthAnalyzer
+      - id: CombatMedipen
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
