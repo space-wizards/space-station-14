@@ -64,7 +64,7 @@ public sealed class DrainComponent : Component
     /// What's the probability of uncloging on each try
     /// </summary>
     [DataField("unclogProbability"), ViewVariables(VVAccess.ReadWrite)]
-    public float UnclogProbability = 0.3f;
+    public float UnclogProbability = 0.75f;
 
     [DataField("manualDrainSound"), ViewVariables(VVAccess.ReadOnly)]
     public SoundSpecifier ManualDrainSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");

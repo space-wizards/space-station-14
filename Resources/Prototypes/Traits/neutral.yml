@@ -4,3 +4,10 @@
   description: trait-pirate-accent-desc
   components:
     - type: PirateAccent
+
+- type: trait
+  id: ArchaicAccent
+  name: trait-archaic-accent-name
+  description: trait-archaic-accent-desc
+  components:
+    - type: ArchaicAccent  
