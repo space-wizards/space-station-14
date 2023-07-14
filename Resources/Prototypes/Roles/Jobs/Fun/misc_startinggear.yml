@@ -191,7 +191,7 @@
     back: ClothingBackpackFilled
     shoes: ClothingShoesBootsCombatFilled
     pocket1: EnergySword
-    pocket1: EnergyShield
+    pocket2: EnergyShield
     id: SyndiPDA
   innerclothingskirt: ClothingUniformJumpsuitOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
