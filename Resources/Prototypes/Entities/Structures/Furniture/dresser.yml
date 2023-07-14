@@ -6,7 +6,8 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
-    state: dresser
+    state
+: dresser
   - type: Damageable
     damageModifierSet: Wood
     damageContainer: Inorganic
@@ -207,8 +208,6 @@
         prob: 0.002
       - id: ClothingUniformJumpsuitPyjamaSyndicatePink
         prob: 0.002
-      - id: ClothingOuterCoatDetectiveDark
-        prob: 0.001
       - id: ClothingHeadHatTacticalMaidHeadband
         prob: 0.001
       - id: ClothingUniformJumpskirtTacticalMaid
