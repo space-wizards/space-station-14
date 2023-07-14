@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Puddles slip you further and reduced slip multipliers across the board
-      as most were comically large., type: Tweak}
-  id: 3750
-  time: '2023-05-13T15:45:53.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: Health Analyzer's that run out of power/don't have a power cell in them
@@ -2965,3 +2959,11 @@ Entries:
   - {message: Numerous NPC steering improvements so they flicker a lot less., type: Fix}
   id: 4249
   time: '2023-07-13T14:48:06.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'The Syndicate has found a way to compress their ballistic turrets into
+      a toolbox, reducing it''s performance in the process. Atmos technician, station
+      engineer and scientist traitors can now purchase the disposable turret from
+      the uplink.', type: Add}
+  id: 4250
+  time: '2023-07-14T04:48:59.0000000+00:00'
