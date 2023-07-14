@@ -132,7 +132,7 @@
     state: "practice"
 
 #Not yet craftable due to balance concerns. Should take a good bit of setup to create like the /tg/station recipe.
-#Either the improvised shotgun or its recipe (as of June 2023) will also probably have to be nerfed if you decide to make this craftable.
+#Either the improvised shotgun or its recipe (as of July 2023) will also probably have to be nerfed if you decide to make this craftable.
 - type: entity
   id: ShellShotgunImprovised
   name: improvised shotgun shell
@@ -149,6 +149,3 @@
     proto: PelletShotgunImprovised
   - type: SpentAmmoVisuals
     state: "improvised"
-  - type: Construction
-    graph: ShellShotgunImprovisedGraph
-    node: shell
