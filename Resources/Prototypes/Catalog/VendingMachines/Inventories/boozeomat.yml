@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: BoozeOMatInventory
-  startingInventory:
+  inventory:
     DrinkGlass: 20 #Kept glasses at top for ease to differentiate from booze.
     DrinkShotGlass: 10
     DrinkGlassCoupeShaped: 10
@@ -33,3 +33,4 @@
     DrinkVodkaBottleFull: 5
     DrinkWhiskeyBottleFull: 5
     DrinkWineBottleFull: 5
+  inventoryType: RegularInventory

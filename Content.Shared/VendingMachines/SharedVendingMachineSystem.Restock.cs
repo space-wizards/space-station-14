@@ -1,18 +1,14 @@
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.VendingMachines.Components;
 using Content.Shared.Wires;
-using Robust.Shared.Audio;
 
 namespace Content.Shared.VendingMachines;
 
 public abstract partial class SharedVendingMachineSystem
 {
-    public bool TryAccessMachine(EntityUid uid,
-        VendingMachineRestockComponent restock,
-        VendingMachineComponent machineComponent,
-        EntityUid user,
-        EntityUid target)
+    public bool TryAccessMachine(EntityUid uid, EntityUid user, EntityUid target)
     {
         if (!TryComp<WiresPanelComponent>(target, out var panel) || !panel.Open)
         {
@@ -33,36 +29,44 @@ public abstract partial class SharedVendingMachineSystem
 
     public bool TryMatchPackageToMachine(EntityUid uid,
         VendingMachineRestockComponent component,
-        VendingMachineComponent machineComponent,
+        VendingMachineInventoryComponent inventoryComponent,
         EntityUid user,
         EntityUid target)
     {
-        if (!component.CanRestock.Contains(machineComponent.PackPrototypeId))
+        foreach (var packs in inventoryComponent.PackPrototypeId)
         {
-            if (_net.IsServer)
-            {
-                Popup.PopupCursor(Loc.GetString("vending-machine-restock-invalid-inventory", ("this", uid), ("user", user),
-                        ("target", target)), user);
-            }
+            if (!PrototypeManager.HasIndex<VendingMachineInventoryPrototype>(packs))
+                continue;
 
-            return false;
+            if (component.CanRestock.Contains(packs))
+            {
+                return true;
+            }
         }
 
-        return true;
+        if (_net.IsServer)
+        {
+            Popup.PopupCursor(Loc.GetString("vending-machine-restock-invalid-inventory", ("this", uid), ("user", user),
+                ("target", target)), user);
+        }
+
+        return false;
     }
 
-    private void OnAfterInteract(EntityUid uid, VendingMachineRestockComponent component, AfterInteractEvent args)
+    private void OnAfterInteract(EntityUid uid,
+        VendingMachineRestockComponent component,
+        AfterInteractEvent args)
     {
         if (args.Target is not { } target || !args.CanReach || args.Handled)
             return;
 
-        if (!TryComp<VendingMachineComponent>(args.Target, out var machineComponent))
+        if (!TryComp<VendingMachineInventoryComponent>(args.Target, out var machineComponent))
             return;
 
         if (!TryMatchPackageToMachine(uid, component, machineComponent, args.User, target))
             return;
 
-        if (!TryAccessMachine(uid, component, machineComponent, args.User, target))
+        if (!TryAccessMachine(uid, args.User, target))
             return;
 
         args.Handled = true;

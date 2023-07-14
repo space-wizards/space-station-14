@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: DetDrobeInventory
-  startingInventory:
+  inventory:
     ClothingUniformJumpsuitDetective: 2
     ClothingUniformJumpskirtDetective: 2
     ClothingShoesColorBrown: 2
@@ -14,3 +14,4 @@
     ClothingHandsGlovesColorBlack: 2
     ClothingHandsGlovesLatex: 2
     ClothingHeadsetSecurity: 2
+  inventoryType: RegularInventory

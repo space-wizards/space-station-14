@@ -1,5 +1,6 @@
 using Content.Server.VendingMachines;
 using Content.Shared.VendingMachines;
+using Content.Shared.VendingMachines.Components;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
@@ -25,19 +26,20 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
-            if (!system.EntityManager.TryGetComponent<VendingMachineComponent>(owner, out var vendingcomp) ||
+            if (!system.EntityManager.TryGetComponent<VendingMachineInventoryComponent>(owner, out var inventoryComponent) ||
+                !system.EntityManager.TryGetComponent<VendingMachineEjectComponent>(owner, out var ejectComponent) ||
                 !system.EntityManager.TryGetComponent<TransformComponent>(owner, out var xform))
                 return;
 
             var vendingMachineSystem = EntitySystem.Get<VendingMachineSystem>();
-            var inventory = vendingMachineSystem.GetAvailableInventory(owner, vendingcomp);
+            var inventory = vendingMachineSystem.GetAvailableInventory(owner, inventoryComponent);
             if (inventory.Count <= 0)
                 return;
 
             var toEject = Math.Min(inventory.Count * Percent, Max);
             for (var i = 0; i < toEject; i++)
             {
-                vendingMachineSystem.EjectRandom(owner, throwItem: true, forceEject: true, vendingcomp);
+                vendingMachineSystem.EjectRandom(owner, throwItem: true, forceEject: true, ejectComponent);
             }
         }
     }

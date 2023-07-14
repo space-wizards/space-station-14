@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: YouToolInventory
-  startingInventory:
+  inventory:
     CableApcStack: 5
     Crowbar: 5
     Welder: 2
@@ -13,6 +13,4 @@
     FlashlightLantern: 5
     ClothingHandsGlovesColorYellowBudget: 3
     AirlockPainter: 3
-  # Some engineer forgot to take the multitool out the youtool when working on it, happens.
-  contrabandInventory:
-    Multitool: 1
+  inventoryType: RegularInventory

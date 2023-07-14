@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: MediDrobeInventory
-  startingInventory:
+  inventory:
     ClothingBackpackDuffelMedical: 4
     ClothingBackpackMedical: 4
     ClothingBackpackSatchelMedical: 4
@@ -18,3 +18,4 @@
     ClothingHeadHelmetVoidParamed: 1
     ClothingOuterHardsuitVoidParamed: 1
     ClothingOuterHospitalGown: 5
+  inventoryType: RegularInventory

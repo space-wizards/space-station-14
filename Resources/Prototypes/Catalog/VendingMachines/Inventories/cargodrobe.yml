@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: CargoDrobeInventory
-  startingInventory:
+  inventory:
     ClothingUniformJumpsuitCargo: 3
     ClothingUniformJumpskirtCargo: 3
     ClothingShoesColorBlack: 3
@@ -11,3 +11,4 @@
     ClothingOuterWinterCargo: 2
     ClothingOuterWinterMiner: 2
     ClothingNeckScarfStripedBrown: 3
+  inventoryType: RegularInventory

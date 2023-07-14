@@ -1,0 +1,8 @@
+﻿- type: vendingMachineInventoryType
+  id: RegularInventory
+
+- type: vendingMachineInventoryType
+  id: EmaggedInventory
+
+- type: vendingMachineInventoryType
+  id: ContrabandInventory

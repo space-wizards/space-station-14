@@ -4,75 +4,72 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using System.Linq;
 
-namespace Content.Client.VendingMachines
+namespace Content.Client.VendingMachines;
+
+public sealed class VendingMachineBoundUserInterface : BoundUserInterface
 {
-    public sealed class VendingMachineBoundUserInterface : BoundUserInterface
+    [ViewVariables] private VendingMachineMenu? _menu;
+
+    [ViewVariables] private List<VendingMachineInventoryEntry> _cachedInventory = new();
+
+    public VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        [ViewVariables]
-        private VendingMachineMenu? _menu;
+    }
 
-        [ViewVariables]
-        private List<VendingMachineInventoryEntry> _cachedInventory = new();
+    protected override void Open()
+    {
+        base.Open();
 
-        public VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
+        var vendingMachineSys = EntMan.System<VendingMachineSystem>();
 
-        protected override void Open()
-        {
-            base.Open();
+        _cachedInventory = vendingMachineSys.GetAllInventory(Owner);
 
-            var vendingMachineSys = EntMan.System<VendingMachineSystem>();
+        _menu = new VendingMachineMenu {Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName};
 
-            _cachedInventory = vendingMachineSys.GetAllInventory(Owner);
+        _menu.OnClose += Close;
+        _menu.OnItemSelected += OnItemSelected;
 
-            _menu = new VendingMachineMenu { Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName };
+        _menu.Populate(_cachedInventory);
 
-            _menu.OnClose += Close;
-            _menu.OnItemSelected += OnItemSelected;
+        _menu.OpenCentered();
+    }
 
-            _menu.Populate(_cachedInventory);
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
 
-            _menu.OpenCentered();
-        }
+        if (state is not VendingMachineInterfaceState newState)
+            return;
 
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
+        _cachedInventory = newState.Inventory;
 
-            if (state is not VendingMachineInterfaceState newState)
-                return;
+        _menu?.Populate(_cachedInventory);
+    }
 
-            _cachedInventory = newState.Inventory;
+    private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
+    {
+        if (_cachedInventory.Count == 0)
+            return;
 
-            _menu?.Populate(_cachedInventory);
-        }
+        var selectedItem = _cachedInventory.ElementAtOrDefault(args.ItemIndex);
 
-        private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
-        {
-            if (_cachedInventory.Count == 0)
-                return;
+        if (selectedItem == null)
+            return;
 
-            var selectedItem = _cachedInventory.ElementAtOrDefault(args.ItemIndex);
+        SendMessage(new VendingMachineEjectMessage(selectedItem.TypeId, selectedItem.ItemId));
+    }
 
-            if (selectedItem == null)
-                return;
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
 
-            SendMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
-        }
+        if (_menu == null)
+            return;
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
-                return;
-
-            if (_menu == null)
-                return;
-
-            _menu.OnItemSelected -= OnItemSelected;
-            _menu.OnClose -= Close;
-            _menu.Dispose();
-        }
+        _menu.OnItemSelected -= OnItemSelected;
+        _menu.OnClose -= Close;
+        _menu.Dispose();
     }
 }

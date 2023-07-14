@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: NutriMaxInventory
-  startingInventory:
+  inventory:
     HydroponicsToolSpade: 3
     HydroponicsToolMiniHoe: 3
     HydroponicsToolClippers: 3
@@ -16,4 +16,4 @@
     DiseaseSwab: 20
     #TO DO:
     #plant analyzer
-
+  inventoryType: RegularInventory

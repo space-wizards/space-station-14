@@ -1,6 +1,6 @@
 ﻿- type: vendingMachineInventory
   id: DinnerwareInventory
-  startingInventory:
+  inventory:
     ButchCleaver: 1
     KitchenKnife: 5
     FoodBowlBig: 10
@@ -21,3 +21,4 @@
     DrinkMugOne: 1
     DrinkMugRainbow: 2
     DrinkMugRed: 2
+  inventoryType: RegularInventory

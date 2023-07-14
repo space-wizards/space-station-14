@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: RoboticsInventory
-  startingInventory:
+  inventory:
     CableApcStack: 4
     #Flash: 4 add when robotics
     ProximitySensor: 3
@@ -13,3 +13,4 @@
     ClothingMaskBreathMedical: 5
     Screwdriver: 2
     Crowbar: 2
+  inventoryType: RegularInventory

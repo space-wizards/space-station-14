@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: ChangInventory
-  startingInventory:
+  inventory:
     FoodCondimentPacketSoy: 5
     FoodSnackCookieFortune: 5
     DrinkRamen: 3
@@ -8,3 +8,4 @@
     FoodSnackChowMein: 3
     FoodSnackDanDanNoodles: 3
 # rice?
+  inventoryType: RegularInventory

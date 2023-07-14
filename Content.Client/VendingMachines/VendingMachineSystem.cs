@@ -1,4 +1,5 @@
 using Content.Shared.VendingMachines;
+using Content.Shared.VendingMachines.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 
@@ -13,11 +14,13 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<VendingMachineComponent, AppearanceChangeEvent>(OnAppearanceChange);
-        SubscribeLocalEvent<VendingMachineComponent, AnimationCompletedEvent>(OnAnimationCompleted);
+        SubscribeLocalEvent<VendingMachineVisualStateComponent, AppearanceChangeEvent>(OnAppearanceChange);
+        SubscribeLocalEvent<VendingMachineVisualStateComponent, AnimationCompletedEvent>(OnAnimationCompleted);
     }
 
-    private void OnAnimationCompleted(EntityUid uid, VendingMachineComponent component, AnimationCompletedEvent args)
+    private void OnAnimationCompleted(EntityUid uid,
+        VendingMachineVisualStateComponent component,
+        AnimationCompletedEvent args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
@@ -31,7 +34,9 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         UpdateAppearance(uid, visualState, component, sprite);
     }
 
-    private void OnAppearanceChange(EntityUid uid, VendingMachineComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(EntityUid uid,
+        VendingMachineVisualStateComponent component,
+        ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
@@ -45,8 +50,14 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         UpdateAppearance(uid, visualState, component, args.Sprite);
     }
 
-    private void UpdateAppearance(EntityUid uid, VendingMachineVisualState visualState, VendingMachineComponent component, SpriteComponent sprite)
+    private void UpdateAppearance(EntityUid uid,
+        VendingMachineVisualState visualState,
+        VendingMachineVisualStateComponent component,
+        SpriteComponent sprite)
     {
+        if (!TryComp<VendingMachineEjectComponent>(uid, out var ejectComponent))
+            return;
+
         SetLayerState(VendingMachineVisualLayers.Base, component.OffState, sprite);
 
         switch (visualState)
@@ -60,13 +71,13 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
                 if (component.LoopDenyAnimation)
                     SetLayerState(VendingMachineVisualLayers.BaseUnshaded, component.DenyState, sprite);
                 else
-                    PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.DenyState, component.DenyDelay, sprite);
+                    PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.DenyState, ejectComponent.DenyDelay, sprite);
 
                 SetLayerState(VendingMachineVisualLayers.Screen, component.ScreenState, sprite);
                 break;
 
             case VendingMachineVisualState.Eject:
-                PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.EjectState, component.EjectDelay, sprite);
+                PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.EjectState, ejectComponent.Delay, sprite);
                 SetLayerState(VendingMachineVisualLayers.Screen, component.ScreenState, sprite);
                 break;
 
@@ -81,7 +92,9 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         }
     }
 
-    private static void SetLayerState(VendingMachineVisualLayers layer, string? state, SpriteComponent sprite)
+    private static void SetLayerState(VendingMachineVisualLayers layer,
+        string? state,
+        SpriteComponent sprite)
     {
         if (string.IsNullOrEmpty(state))
             return;
@@ -91,7 +104,11 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         sprite.LayerSetState(layer, state);
     }
 
-    private void PlayAnimation(EntityUid uid, VendingMachineVisualLayers layer, string? state, float animationTime, SpriteComponent sprite)
+    private void PlayAnimation(EntityUid uid,
+        VendingMachineVisualLayers layer,
+        string? state,
+        TimeSpan animationTime,
+        SpriteComponent sprite)
     {
         if (string.IsNullOrEmpty(state))
             return;
@@ -104,11 +121,13 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         }
     }
 
-    private static Animation GetAnimation(VendingMachineVisualLayers layer, string state, float animationTime)
+    private static Animation GetAnimation(VendingMachineVisualLayers layer,
+        string state,
+        TimeSpan animationTime)
     {
         return new Animation
         {
-            Length = TimeSpan.FromSeconds(animationTime),
+            Length = animationTime,
             AnimationTracks =
                 {
                     new AnimationTrackSpriteFlick

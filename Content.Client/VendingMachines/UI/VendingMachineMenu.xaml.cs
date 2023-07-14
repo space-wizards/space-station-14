@@ -62,9 +62,9 @@ namespace Content.Client.VendingMachines.UI
                 vendingItem.Text = string.Empty;
                 vendingItem.Icon = null;
 
-                var itemName = entry.ID;
+                var itemName = entry.ItemId;
                 Texture? icon = null;
-                if (_prototypeManager.TryIndex<EntityPrototype>(entry.ID, out var prototype))
+                if (_prototypeManager.TryIndex<EntityPrototype>(entry.ItemId, out var prototype))
                 {
                     itemName = prototype.Name;
                     icon = spriteSystem.GetPrototypeIcon(prototype).Default;

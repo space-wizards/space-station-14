@@ -3,6 +3,7 @@ using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
+using Content.Shared.Broke;
 using Content.Shared.VendingMachines;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -27,7 +28,7 @@ namespace Content.Server.Advertise
             SubscribeLocalEvent<AdvertiseComponent, PowerChangedEvent>(OnPowerChanged);
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, AdvertiseEnableChangeAttemptEvent>(OnPowerReceiverEnableChangeAttempt);
-            SubscribeLocalEvent<VendingMachineComponent, AdvertiseEnableChangeAttemptEvent>(OnVendingEnableChangeAttempt);
+            SubscribeLocalEvent<BrokeComponent, AdvertiseEnableChangeAttemptEvent>(OnVendingEnableChangeAttempt);
         }
 
         private void OnComponentInit(EntityUid uid, AdvertiseComponent advertise, ComponentInit args)
@@ -87,7 +88,7 @@ namespace Content.Server.Advertise
                 args.Cancel();
         }
 
-        private void OnVendingEnableChangeAttempt(EntityUid uid, VendingMachineComponent component, AdvertiseEnableChangeAttemptEvent args)
+        private void OnVendingEnableChangeAttempt(EntityUid uid, BrokeComponent component, AdvertiseEnableChangeAttemptEvent args)
         {
             // TODO: Improve this...
             if(args.NewState && component.Broken)

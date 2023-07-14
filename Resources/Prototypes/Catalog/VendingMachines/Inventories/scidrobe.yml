@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: SciDrobeInventory
-  startingInventory:
+  inventory:
     ClothingBackpackScience: 3
     ClothingBackpackSatchelScience: 3
     ClothingBackpackDuffelScience: 3
@@ -14,3 +14,4 @@
     ClothingMaskGas: 3
     ClothingOuterWinterSci: 2
     ClothingNeckScarfStripedPurple: 3
+  inventoryType: RegularInventory
