@@ -491,7 +491,7 @@
   description: uplink-meds-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateMedicalBundleFilled
   cost:
-    Telecrystal: 25
+    Telecrystal: 20
   categories:
   - UplinkBundles
   conditions:
@@ -986,7 +986,7 @@
   description: uplink-combat-medkit-desc
   productEntity: MedkitCombatFilled
   cost:
-    Telecrystal: 10
+    Telecrystal: 5
   categories:
   - UplinkMisc
 

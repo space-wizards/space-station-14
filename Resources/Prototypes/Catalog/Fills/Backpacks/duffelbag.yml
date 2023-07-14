@@ -309,7 +309,7 @@
       - id: MedkitCombatFilled
       - id: Defibrillator
       - id: CombatMedipen
-      - id: ClothingEyesHudMedical
+        amount: 2
       - id: ClothingHandsGlovesLatex
       - id: Gauze
       - id: SyringeSpaceacillin
