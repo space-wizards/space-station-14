@@ -74,7 +74,7 @@
       - id: ToyFigurineNukieCommander
         prob: 0.50
         orGroup: SpacemenFig
-      - id: ToyGriffon
+      - id: ToyGriffin
         prob: 0.50
         orGroup: SpacemenFig
       - id: ToyOwlman
