@@ -19,3 +19,11 @@
   - type: ItemCooldown
   - type: UseDelay
     delay: 300
+
+- type: entity
+  parent: ReinforcementRadioSyndicate
+  id: ReinforcementRadioSyndicateNukeops # Reinforcement radio exclusive to nukeops uplink
+  suffix: NukeOps
+  components:
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanSyndicateAgentNukeops
