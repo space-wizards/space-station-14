@@ -62,7 +62,6 @@
     containers:
       board: !type:Container
   - type: Weldable
-    fuel: 3
     time: 3
   - type: Airlock
     openUnlitVisible: true # Corvax-Resprite-Airlocks

@@ -7,10 +7,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.PDA
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class PDAComponent : Component
+    public sealed class PdaComponent : Component
     {
-        public const string PDAIdSlotId = "PDA-id";
-        public const string PDAPenSlotId = "PDA-pen";
+        public const string PdaIdSlotId = "PDA-id";
+        public const string PdaPenSlotId = "PDA-pen";
 
         /// <summary>
         /// The base PDA sprite state, eg. "pda", "pda-clown"
@@ -30,7 +30,7 @@ namespace Content.Shared.PDA
         [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? IdCard;
 
-        [ViewVariables] public IdCardComponent? ContainedID;
+        [ViewVariables] public IdCardComponent? ContainedId;
         [ViewVariables] public bool FlashlightOn;
 
         [ViewVariables] public string? OwnerName;

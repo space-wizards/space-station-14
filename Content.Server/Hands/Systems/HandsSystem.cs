@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Popups;
 using Content.Server.Pulling;
 using Content.Server.Stack;
@@ -204,7 +205,7 @@ namespace Content.Server.Hands.Systems
             if (direction == Vector2.Zero)
                 return true;
 
-            direction = direction.Normalized * Math.Min(direction.Length, hands.ThrowRange);
+            direction = direction.Normalized() * Math.Min(direction.Length(), hands.ThrowRange);
 
             var throwStrength = hands.ThrowForceMultiplier;
 

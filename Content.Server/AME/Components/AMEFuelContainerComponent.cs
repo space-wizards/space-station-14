@@ -1,18 +1,23 @@
-namespace Content.Server.AME.Components;
+namespace Content.Server.Ame.Components;
 
-// TODO: network and put in shared
+/// <summary>
+/// An antimatter containment cell used to handle the fuel for the AME.
+/// TODO: network and put in shared
+/// </summary>
 [RegisterComponent]
-public sealed class AMEFuelContainerComponent : Component
+public sealed class AmeFuelContainerComponent : Component
 {
     /// <summary>
     /// The amount of fuel in the jar.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("fuelAmount")]
+    [DataField("fuelAmount")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public int FuelAmount = 1000;
 
     /// <summary>
     /// The maximum fuel capacity of the jar.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("fuelCapacity")]
+    [DataField("fuelCapacity")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public int FuelCapacity = 1000;
 }

@@ -147,7 +147,7 @@ public sealed partial class TTSSystem : EntitySystem
                 continue;
 
             var xform = xformQuery.GetComponent(session.AttachedEntity.Value);
-            var distance = (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).LengthSquared;
+            var distance = (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).LengthSquared();
 
             if (distance > WhisperVoiceRange)
                 continue;

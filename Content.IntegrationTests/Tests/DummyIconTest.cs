@@ -1,10 +1,7 @@
 #nullable enable
 using System.Linq;
-using System.Threading.Tasks;
-using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests

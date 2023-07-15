@@ -34,6 +34,7 @@
     ports:
       - On
       - Off
+      - Status
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -65,6 +66,7 @@
   - type: SignalSwitch
     onPort: Pressed
     offPort: Pressed
+    statusPort: Pressed
   - type: Rotatable
   - type: Construction
     graph: SignalButtonGraph

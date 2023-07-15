@@ -142,3 +142,6 @@ ghost-role-information-cburn-agent-description = A highly trained CentCom agent,
 
 ghost-role-information-centcom-official-name = CentCom official
 ghost-role-information-centcom-official-description = Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
+
+ghost-role-information-behonker-name = Behonker
+ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.

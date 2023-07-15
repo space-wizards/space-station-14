@@ -1,3 +1,21 @@
+#When adding new hardsuits, please try to keep the organization consistent with hardsuit.yml (if possible.)
+#For now, since locational damage is not a thing, all "combat" hardsuits (with the exception of the deathsquad hardsuit) have the equvilent of a helmet in terms of armor. This is so people don't need to wear both regular, on-station helmets and hardsuits to get full protection.
+#Generally, unless you're adding something like caustic damage, you should probably avoid messing with armor outside of the above scenario.
+
+#CREW HARDSUITS
+#Standard Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitBasic
+  noSpawn: true
+  name: basic hardsuit helmet
+  description: A basic-looking hardsuit helmet that provides minor protection against most sources of damage.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/basic.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/basic.rsi
+
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitAtmos

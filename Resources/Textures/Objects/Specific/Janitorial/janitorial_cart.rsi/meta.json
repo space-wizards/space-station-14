@@ -47,6 +47,10 @@
             "name": "cart_spray",
             "directions": 4
         },
+		{
+            "name": "cart_plunger",
+            "directions": 4
+        },
         {
             "name": "cart_water-1",
             "directions": 4,
