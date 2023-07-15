@@ -8,6 +8,9 @@
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger
+    starvationDamage:
+      types:
+        Bloodloss: 0.5
   - type: Thirst
     baseDecayRate: 0.3
   - type: Icon
@@ -19,6 +22,11 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Diona
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#75b1f0"
   - type: Butcherable
     butcheringType: Spike
     spawned:

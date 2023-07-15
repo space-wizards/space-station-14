@@ -70,7 +70,7 @@
     state: syndie
   - type: Slippery
     paralyzeTime: 5
-    launchForwardsMultiplier: 9.0
+    launchForwardsMultiplier: 2.5
   - type: StepTrigger
   - type: Item
     heldPrefix: syndie
@@ -99,7 +99,7 @@
     state: omega
   - type: Slippery
     paralyzeTime: 7
-    launchForwardsMultiplier: 9.0
+    launchForwardsMultiplier: 3
   - type: StepTrigger
   - type: Item
     heldPrefix: omega

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Components;
 using Content.Server.Atmos;
@@ -39,6 +40,7 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
+    [Dependency] private readonly DoorBoltSystem _boltsSystem = default!;
     [Dependency] private readonly AirlockSystem _airlockSystem = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
     [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
@@ -60,28 +62,31 @@ public sealed partial class AdminVerbSystem
 
         if (_adminManager.HasAdminFlag(player, AdminFlags.Admin))
         {
-            if (TryComp<AirlockComponent>(args.Target, out var airlock))
+            if (TryComp<DoorBoltComponent>(args.Target, out var bolts))
             {
                 Verb bolt = new()
                 {
-                    Text = airlock.BoltsDown ? "Unbolt" : "Bolt",
+                    Text = bolts.BoltsDown ? "Unbolt" : "Bolt",
                     Category = VerbCategory.Tricks,
-                    Icon = airlock.BoltsDown
-                        ? new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/unbolt.png"))
-                        : new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/bolt.png")),
+                    Icon = bolts.BoltsDown
+                        ? new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/unbolt.png"))
+                        : new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/bolt.png")),
                     Act = () =>
                     {
-                        _airlockSystem.SetBoltsWithAudio(args.Target, airlock, !airlock.BoltsDown);
+                        _boltsSystem.SetBoltsWithAudio(args.Target, bolts, !bolts.BoltsDown);
                     },
                     Impact = LogImpact.Medium,
-                    Message = Loc.GetString(airlock.BoltsDown
+                    Message = Loc.GetString(bolts.BoltsDown
                         ? "admin-trick-unbolt-description"
                         : "admin-trick-bolt-description"),
-                    Priority = (int) (airlock.BoltsDown ? TricksVerbPriorities.Unbolt : TricksVerbPriorities.Bolt),
+                    Priority = (int) (bolts.BoltsDown ? TricksVerbPriorities.Unbolt : TricksVerbPriorities.Bolt),
 
                 };
                 args.Verbs.Add(bolt);
+            }
 
+            if (TryComp<AirlockComponent>(args.Target, out var airlock))
+            {
                 Verb emergencyAccess = new()
                 {
                     Text = airlock.EmergencyAccess ? "Emergency Access Off" : "Emergency Access On",
@@ -853,11 +858,11 @@ public sealed partial class AdminVerbSystem
             {
                 return slotEntity.Value;
             }
-            else if (TryComp<PDAComponent>(slotEntity, out var pda))
+            else if (TryComp<PdaComponent>(slotEntity, out var pda))
             {
-                if (pda.ContainedID != null)
+                if (pda.ContainedId != null)
                 {
-                    return pda.ContainedID.Owner;
+                    return pda.ContainedId.Owner;
                 }
             }
         }

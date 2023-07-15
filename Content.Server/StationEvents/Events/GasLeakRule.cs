@@ -22,8 +22,9 @@ namespace Content.Server.StationEvents.Events
             var mod = MathF.Sqrt(GetSeverityModifier());
 
             // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
-            if (TryFindRandomTile(out component.TargetTile, out component.TargetStation, out component.TargetGrid, out component.TargetCoords))
+            if (TryFindRandomTile(out component.TargetTile, out var target, out component.TargetGrid, out component.TargetCoords))
             {
+                component.TargetStation = target.Value;
                 component.FoundTile = true;
 
                 component.LeakGas = RobustRandom.Pick(component.LeakableGases);

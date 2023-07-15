@@ -23,9 +23,10 @@ public sealed class DamageContactsSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var damaged in EntityQuery<DamagedByContactComponent>())
+        var query = EntityQueryEnumerator<DamagedByContactComponent>();
+
+        while (query.MoveNext(out var ent, out var damaged))
         {
-            var ent = damaged.Owner;
             if (_timing.CurTime < damaged.NextSecond)
                 continue;
             damaged.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);

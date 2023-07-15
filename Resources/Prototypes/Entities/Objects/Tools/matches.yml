@@ -20,7 +20,6 @@
     - Trash
   - type: SpaceGarbage
   - type: Sprite
-    netsync: false
     sprite: Objects/Tools/matches.rsi
     layers:
       - state: match_unlit
@@ -55,7 +54,7 @@
 
 - type: entity
   name: match box
-  parent: SmallboxItem
+  parent: [ SmallboxItem, BaseBagOpenClose ]
   id: Matchbox
   description: A small box of Almost But Not Quite Plasma Premium Matches.
   components:
@@ -64,10 +63,20 @@
       path: /Audio/Items/matchbox_drop.ogg
   - type: Matchbox
   - type: Sprite
-    netsync: false
     sprite: Objects/Tools/matches.rsi
     layers:
-      - state: matchbox
+    - state: matchbox
+    - state: matchbox-open
+      map: ["openLayer"]
+    - state: matchbox1
+      map: ["matchbox1"]
+      visible: false
+    - state: matchbox2
+      map: ["matchbox2"]
+      visible: false
+    - state: matchbox3
+      map: ["matchbox3"]
+      visible: false
   - type: Item
     sprite: Objects/Tools/matches.rsi
     heldPrefix: matchbox
@@ -81,16 +90,12 @@
   - type: ItemCounter
     count:
       tags: [Matchstick]
+    composite: true
+    layerStates:
+    - matchbox1
+    - matchbox2
+    - matchbox3
   - type: Appearance
-    visuals:
-      - type: BagOpenCloseVisualizer
-        openIcon: matchbox-open
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - matchbox1
-          - matchbox2
-          - matchbox3
   - type: Tag
     tags:
     - Trash

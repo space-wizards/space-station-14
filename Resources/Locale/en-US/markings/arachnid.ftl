@@ -6,6 +6,17 @@ marking-ArachnidAppendagesSharp = Appendages (Sharp)
 marking-ArachnidAppendagesSharp-sharp = Appendage
 marking-ArachnidAppendagesSharp-web = Web
 
+marking-ArachnidAppendagesZigZag = Appendages (ZigZag)
+marking-ArachnidAppendagesZigZag-zigzag = Appendage
+marking-ArachnidAppendagesSharp-web = Web
+
+marking-ArachnidAppendagesCurled = Appendages (Curled)
+marking-ArachnidAppendagesCurled-curled = Appendage
+marking-ArachnidAppendagesCurled-web = Web
+
+marking-ArachnidAppendagesStingers = Appendages (Stingers)
+marking-ArachnidAppendagesStingers-stingers = Appendage
+marking-ArachnidAppendagesStingers-web = Web
 
 marking-ArachnidTorsoStripes = Stripes
 marking-ArachnidTorsoStripes-stripes = Design

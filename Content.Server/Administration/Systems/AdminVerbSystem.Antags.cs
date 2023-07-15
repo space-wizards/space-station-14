@@ -28,7 +28,7 @@ public sealed partial class AdminVerbSystem
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;
 
-        var targetHasMind = TryComp(args.Target, out MindComponent? targetMindComp);
+        var targetHasMind = TryComp(args.Target, out MindContainerComponent? targetMindComp);
         if (!targetHasMind || targetMindComp == null)
             return;
 
@@ -56,11 +56,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Wallmounts/signs.rsi"), "bio"),
             Act = () =>
             {
-                TryComp(args.Target, out MindComponent? mindComp);
-                if (mindComp == null || mindComp.Mind == null)
-                    return;
-
-                _zombify.ZombifyEntity(targetMindComp.Owner);
+                _zombify.ZombifyEntity(args.Target);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-zombie"),

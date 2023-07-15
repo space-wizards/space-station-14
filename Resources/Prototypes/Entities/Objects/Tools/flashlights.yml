@@ -33,12 +33,6 @@
         isLooped: true
         property: Radius
         enabled: false
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: ToggleableLightVisuals
     spriteLayer: light
     inhandVisuals:
@@ -60,7 +54,6 @@
         startingItem: PowerCellMedium
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
-    netsync: false
     layers:
       - state: flashlight
       - state: flashlight-overlay
@@ -70,11 +63,11 @@
   - type: Item
     sprite: Objects/Tools/flashlight.rsi
   - type: PointLight
-    netsync: false
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     radius: 6
+    netsync: false
   - type: Appearance
   - type: StaticPrice
     price: 40
@@ -111,6 +104,10 @@
         shader: unshaded
         visible: false
         map: [ "light" ]
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: Item
     sprite: Objects/Tools/seclite.rsi
   - type: PointLight

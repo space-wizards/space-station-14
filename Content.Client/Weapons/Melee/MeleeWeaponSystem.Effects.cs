@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Weapons.Melee.Components;
 using Content.Shared.Weapons;
 using Content.Shared.Weapons.Melee;
@@ -138,25 +139,28 @@ public sealed partial class MeleeWeaponSystem
 
         sprite.NoRotation = true;
         sprite.Rotation = localPos.ToWorldAngle();
-        var distance = Math.Clamp(localPos.Length / 2f, 0.2f, 1f);
+        var distance = Math.Clamp(localPos.Length() / 2f, 0.2f, 1f);
+
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var xform = xformQuery.GetComponent(animationUid);
 
         switch (arcComponent.Animation)
         {
             case WeaponArcAnimation.Slash:
                 _animation.Play(animationUid, GetSlashAnimation(sprite, angle), SlashAnimationKey);
+                TransformSystem.SetParent(animationUid, xform, user, userXform);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.065f, 0.065f + 0.05f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.Thrust:
                 _animation.Play(animationUid, GetThrustAnimation(sprite, distance), ThrustAnimationKey);
+                TransformSystem.SetParent(animationUid, xform, user, userXform);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.None:
-                var xformQuery = GetEntityQuery<TransformComponent>();
                 var (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform, xformQuery);
-                var xform = xformQuery.GetComponent(animationUid);
-                xform.AttachToGridOrMap();
+                TransformSystem.AttachToGridOrMap(animationUid, xform);
                 var worldPos = mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos);
                 var newLocalPos = TransformSystem.GetInvWorldMatrix(xform.ParentUid, xformQuery).Transform(worldPos);
                 TransformSystem.SetLocalPositionNoLerp(xform, newLocalPos);
@@ -271,7 +275,7 @@ public sealed partial class MeleeWeaponSystem
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(direction.Normalized * 0.15f, 0f),
+                        new AnimationTrackProperty.KeyFrame(direction.Normalized() * 0.15f, 0f),
                         new AnimationTrackProperty.KeyFrame(Vector2.Zero, length)
                     }
                 }

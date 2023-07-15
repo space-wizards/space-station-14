@@ -22,12 +22,13 @@
   - type: StorageFill
     contents:
       - id: WeaponShotgunDoubleBarreled
-      - id: BoxShotgunFlare
+      - id: BoxShotgunIncendiary
         amount: 2
       - id: GrenadeFlashBang
         amount: 2
-      - id: PillRomerol
-        amount: 5
+      - id: PillAmbuzolPlus
+      - id: PillAmbuzol
+        amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
@@ -48,11 +49,12 @@
   parent: ClothingBackpackDuffelSyndicateAmmoBundle
   id: ClothingBackpackDuffelSyndicateFilledShotgun
   name: Bulldog bundle
-  description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
+  description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 3 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
   components:
   - type: StorageFill
     contents:
       - id: WeaponShotgunBulldog
+      - id: MagazineShotgun
       - id: MagazineShotgun
       - id: MagazineShotgunBeanbag
 #     - id: ThermalImagingGoggles
@@ -141,7 +143,7 @@
       - id: ClothingShoesBootsJack
       - id: ClothingHandsGlovesColorGray
       - id: ClothingHeadsetService
-      - id: ClothingOuterVestKevlar
+      - id: ClothingOuterArmorBasic
       - id: Paper
       - id: Pen
       - id: CentcomPDA
@@ -242,10 +244,11 @@
   components:
   - type: StorageFill
     contents:
-      - id: SyringeCorpium
-      - id: WeaponFlareGun
-      - id: BoxShotgunFlare
-      - id: PillRomerol
+      - id: SyringeRomerol
+      - id: WeaponRevolverMateba
+      - id: MagazineBoxMagnumIncendiary
+      - id: PillAmbuzolPlus
+      - id: PillAmbuzol
         amount: 3
 
 - type: entity

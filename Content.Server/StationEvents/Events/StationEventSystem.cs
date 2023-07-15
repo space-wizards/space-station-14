@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Systems;
@@ -131,19 +133,37 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : Compon
         GameTicker.EndGameRule(uid, component);
     }
 
-    protected bool TryFindRandomTile(out Vector2i tile, out EntityUid targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords)
+    protected bool TryGetRandomStation([NotNullWhen(true)] out EntityUid? station, Func<EntityUid, bool>? filter = null)
+    {
+        filter ??= _ => true;
+
+        // augh. sorry sloth there's no better API and my goal today isn't adding 50 entitymanager methods :waa:
+        var stations = EntityManager.GetAllComponents(typeof(StationEventEligibleComponent)).Select(x => x.Owner).Where(filter).ToArray();
+
+        if (stations.Length == 0)
+        {
+            station = null;
+            return false;
+        }
+
+
+        station = RobustRandom.Pick(stations);
+
+        return true;
+    }
+
+    protected bool TryFindRandomTile(out Vector2i tile, [NotNullWhen(true)] out EntityUid? targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords)
     {
         tile = default;
 
         targetCoords = EntityCoordinates.Invalid;
-        if (StationSystem.Stations.Count == 0)
+        if (!TryGetRandomStation(out targetStation))
         {
             targetStation = EntityUid.Invalid;
             targetGrid = EntityUid.Invalid;
             return false;
         }
-        targetStation = RobustRandom.Pick(StationSystem.Stations);
-        var possibleTargets = Comp<StationDataComponent>(targetStation).Grids;
+        var possibleTargets = Comp<StationDataComponent>(targetStation.Value).Grids;
         if (possibleTargets.Count == 0)
         {
             targetGrid = EntityUid.Invalid;

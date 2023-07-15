@@ -54,6 +54,7 @@ public sealed partial class AdminLogsControl : Control
     public string Search => LogSearch.Text;
     private int ShownLogs { get; set; }
     private int TotalLogs { get; set; }
+    private int RoundLogs { get; set; }
     public bool IncludeNonPlayerLogs { get; set; }
 
     public HashSet<LogType> SelectedTypes { get; } = new();
@@ -485,7 +486,7 @@ public sealed partial class AdminLogsControl : Control
         AddLogs(logs);
     }
 
-    private void UpdateCount(int? shown = null, int? total = null)
+    public void UpdateCount(int? shown = null, int? total = null, int? round = null)
     {
         if (shown != null)
         {
@@ -497,7 +498,15 @@ public sealed partial class AdminLogsControl : Control
             TotalLogs = total.Value;
         }
 
-        Count.Text = Loc.GetString("admin-logs-count", ("showing", ShownLogs), ("total", TotalLogs));
+        if (round != null)
+        {
+            RoundLogs = round.Value;
+        }
+
+        Count.Text = Loc.GetString(
+            "admin-logs-count",
+            ("showing", ShownLogs), ("total", TotalLogs), ("round", RoundLogs)
+        );
     }
 
     protected override void Dispose(bool disposing)

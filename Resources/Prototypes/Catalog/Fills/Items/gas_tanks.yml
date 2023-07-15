@@ -1,3 +1,7 @@
+# The number 1000 used in the rest of this file refers to the default
+# MaxReleasePressure for a GasCanister, which is 10 * Atmospherics.OneAtmosphere,
+# rounded down.
+
 - type: entity
   id: OxygenTankFilled
   parent: OxygenTank
@@ -6,9 +10,10 @@
   - type: GasTank
     outputPressure: 21.27825
     air:
-      volume: 70
+      volume: 15
       moles:
-        - 22.6293856 # oxygen
+        # 1000 / (Atmospherics.R * temperature / volume)
+        - 6.154137219
       temperature: 293.15
 
 - type: entity
@@ -27,7 +32,8 @@
       air:
         volume: 2
         moles:
-          - 0.323460326 # oxygen
+          # 1000 / (Atmospherics.R * temperature / volume)
+          - 0.820551629 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -40,7 +46,8 @@
       air:
         volume: 6
         moles:
-          - 0.969830813 # oxygen
+          # 1000 / (Atmospherics.R * temperature / volume)
+          - 2.461654887 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -53,7 +60,8 @@
       air:
         volume: 10
         moles:
-          - 1.61721219 # oxygen
+          # 1000 / (Atmospherics.R * temperature / volume)
+          - 4.102725815 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -64,10 +72,12 @@
     - type: GasTank
       outputPressure: 101.325
       air:
-        volume: 70
+        volume: 15
         moles:
-          - 4.75217098 # oxygen
-          - 17.8772147 # nitrogen
+          # (1000 * .22) / (Atmospherics.R * temperature / volume)
+          - 1.353910188 # oxygen
+          # (1000 * .78) / (Atmospherics.R * temperature / volume)
+          - 4.800227031 # nitrogen
         temperature: 293.15
 
 - type: entity
@@ -79,10 +89,11 @@
     - type: GasTank
       outputPressure: 101.325
       air:
-        volume: 70
+        volume: 15
         moles:
           - 0 # oxygen
-          - 22.6293856 # nitrogen
+          # 1000 / (Atmospherics.R * temperature / volume)
+          - 6.154137219 # nitrogen
         temperature: 293.15
 
 - type: entity
@@ -92,35 +103,41 @@
   name: nitrous oxide tank
   components:
     - type: GasTank
-      outputPressure: 101.325
+      #      0.21  | % oxygen in normal atmosphere
+      #  /   0.7   | % oxygen in this mixture
+      #  * 101.325 | one atmosphere
+      # __________
+      #    30.3975   optimal output pressure
+      outputPressure: 30.3975
       air:
-        volume: 70
+        volume: 15
         moles:
-          - 20.5 # oxygen
+          # (1000 * .7) / (Atmospherics.R * temperature / volume)
+          - 4.307896053 # oxygen
           - 0 # Nitrogen
           - 0 # CO2
           - 0 # Plasma
           - 0 # Tritium
           - 0 # Water vapor
           - 0 # Miasma
-          - 2 # N2O
+          # (1000 * .3) / (Atmospherics.R * temperature / volume)
+          - 1.846241166 # N2O
         temperature: 293.15
-
 
 - type: entity
   id: PlasmaTankFilled
   parent: PlasmaTank
   name: plasma tank
   suffix: Filled
-  description: "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
   components:
     - type: GasTank
       outputPressure: 101.325
       air:
-        volume: 70
+        volume: 15
         moles:
           - 0
           - 0
           - 0
-          - 11.3146928 # plasma
+          # 1000 / (Atmospherics.R * temperature / volume)
+          - 6.154137219 # plasma
         temperature: 293.15

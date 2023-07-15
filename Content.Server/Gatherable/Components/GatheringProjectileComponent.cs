@@ -6,5 +6,9 @@ namespace Content.Server.Gatherable.Components;
 [RegisterComponent]
 public sealed class GatheringProjectileComponent : Component
 {
-
+    /// <summary>
+    /// How many more times we can gather.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("amount")]
+    public int Amount = 1;
 }

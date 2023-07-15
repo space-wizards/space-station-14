@@ -1,11 +1,7 @@
-using System.Linq;
-using System.Threading.Tasks;
-using Content.Server.Storage.Components;
+using System.Numerics;
 using Content.Server.Storage.EntitySystems;
-using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -37,19 +33,20 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestA()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
             var s = pairTracker.Pair.Server;
             var c = pairTracker.Pair.Client;
 
             var cEntities = c.ResolveDependency<IEntityManager>();
+            var ent = s.ResolveDependency<IEntityManager>();
 
             EntityUid dummy = default;
-            var ent2 = s.ResolveDependency<IMapManager>();
+            var mapManager = s.ResolveDependency<IMapManager>();
+            var mapId = mapManager.CreateMap();
+
             await s.WaitPost(() =>
             {
-                var mapId = ent2.GetAllMapIds().Last();
                 var pos = new MapCoordinates(Vector2.Zero, mapId);
-                var ent = IoCManager.Resolve<IEntityManager>();
                 var entStorage = ent.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
                 var container = ent.SpawnEntity("ContainerOcclusionA", pos);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
@@ -63,8 +60,11 @@ namespace Content.IntegrationTests.Tests
             {
                 var sprite = cEntities.GetComponent<SpriteComponent>(dummy);
                 var light = cEntities.GetComponent<PointLightComponent>(dummy);
-                Assert.True(sprite.ContainerOccluded);
-                Assert.True(light.ContainerOccluded);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sprite.ContainerOccluded);
+                    Assert.That(light.ContainerOccluded);
+                });
             });
 
             await pairTracker.CleanReturnAsync();
@@ -73,19 +73,20 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestB()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
             var s = pairTracker.Pair.Server;
             var c = pairTracker.Pair.Client;
 
             var cEntities = c.ResolveDependency<IEntityManager>();
-            var ent2 = s.ResolveDependency<IMapManager>();
+            var ent = s.ResolveDependency<IEntityManager>();
 
             EntityUid dummy = default;
+            var mapManager = s.ResolveDependency<IMapManager>();
+            var mapId = mapManager.CreateMap();
+
             await s.WaitPost(() =>
             {
-                var mapId = ent2.GetAllMapIds().Last();
                 var pos = new MapCoordinates(Vector2.Zero, mapId);
-                var ent = IoCManager.Resolve<IEntityManager>();
                 var entStorage = ent.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
                 var container = ent.SpawnEntity("ContainerOcclusionB", pos);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
@@ -99,8 +100,11 @@ namespace Content.IntegrationTests.Tests
             {
                 var sprite = cEntities.GetComponent<SpriteComponent>(dummy);
                 var light = cEntities.GetComponent<PointLightComponent>(dummy);
-                Assert.False(sprite.ContainerOccluded);
-                Assert.False(light.ContainerOccluded);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sprite.ContainerOccluded, Is.False);
+                    Assert.That(light.ContainerOccluded, Is.False);
+                });
             });
 
             await pairTracker.CleanReturnAsync();
@@ -109,19 +113,20 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestAb()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
             var s = pairTracker.Pair.Server;
             var c = pairTracker.Pair.Client;
 
-            var ent2 = s.ResolveDependency<IMapManager>();
             var cEntities = c.ResolveDependency<IEntityManager>();
+            var ent = s.ResolveDependency<IEntityManager>();
 
             EntityUid dummy = default;
+            var mapManager = s.ResolveDependency<IMapManager>();
+            var mapId = mapManager.CreateMap();
+
             await s.WaitPost(() =>
             {
-                var mapId = ent2.GetAllMapIds().Last();
                 var pos = new MapCoordinates(Vector2.Zero, mapId);
-                var ent = IoCManager.Resolve<IEntityManager>();
                 var entStorage = ent.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
                 var containerA = ent.SpawnEntity("ContainerOcclusionA", pos);
                 var containerB = ent.SpawnEntity("ContainerOcclusionB", pos);
@@ -137,8 +142,11 @@ namespace Content.IntegrationTests.Tests
             {
                 var sprite = cEntities.GetComponent<SpriteComponent>(dummy);
                 var light = cEntities.GetComponent<PointLightComponent>(dummy);
-                Assert.True(sprite.ContainerOccluded);
-                Assert.True(light.ContainerOccluded);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sprite.ContainerOccluded);
+                    Assert.That(light.ContainerOccluded);
+                });
             });
 
             await pairTracker.CleanReturnAsync();

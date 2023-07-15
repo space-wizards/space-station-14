@@ -16,12 +16,12 @@
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
   - type: Sprite
-    netsync: false
     sprite: Objects/Fun/pai.rsi
     layers:
     - state: pai-base
     - state: pai-off-overlay
       shader: unshaded
+      map: ["screen"]
   - type: Input
     context: "human"
   - type: PAI
@@ -50,12 +50,10 @@
     allowedStates:
       - Alive
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: GenericEnumVisualizer
-        key: enum.PAIVisuals.Status
-        layer: 1
-        states:
-          enum.PAIStatus.Off: pai-off-overlay
-          enum.PAIStatus.Searching: pai-searching-overlay
-          enum.PAIStatus.On: pai-on-overlay
-
+      enum.PAIVisuals.Status:
+        screen:
+          Off: { state: pai-off-overlay }
+          Searching: { state: pai-searching-overlay }
+          On: { state: pai-on-overlay }

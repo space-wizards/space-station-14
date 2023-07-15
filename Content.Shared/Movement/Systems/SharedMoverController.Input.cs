@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Follower.Components;
 using Content.Shared.Input;
@@ -51,6 +52,8 @@ namespace Content.Shared.Movement.Systems
             SubscribeLocalEvent<InputMoverComponent, ComponentGetState>(OnInputGetState);
             SubscribeLocalEvent<InputMoverComponent, ComponentHandleState>(OnInputHandleState);
             SubscribeLocalEvent<InputMoverComponent, EntParentChangedMessage>(OnInputParentChange);
+
+            SubscribeLocalEvent<AutoOrientComponent, EntParentChangedMessage>(OnAutoParentChange);
 
             SubscribeLocalEvent<FollowedComponent, EntParentChangedMessage>(OnFollowedParentChange);
 
@@ -109,6 +112,11 @@ namespace Content.Shared.Movement.Systems
         private void SetDiagonalMovement(bool value) => DiagonalMovementEnabled = value;
 
         protected virtual void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state) {}
+
+        private void OnAutoParentChange(EntityUid uid, AutoOrientComponent component, ref EntParentChangedMessage args)
+        {
+            ResetCamera(uid);
+        }
 
         public void RotateCamera(EntityUid uid, Angle angle)
         {
@@ -468,10 +476,10 @@ namespace Content.Shared.Movement.Systems
             var vec = new Vector2(x, y);
 
             // can't normalize zero length vector
-            if (vec.LengthSquared > 1.0e-6)
+            if (vec.LengthSquared() > 1.0e-6)
             {
                 // Normalize so that diagonals aren't faster or something.
-                vec = vec.Normalized;
+                vec = vec.Normalized();
             }
 
             return vec;

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Vehicle.Components;
@@ -106,13 +107,15 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         // Add Rider
         if (args.Buckling)
         {
-            // Add a virtual item to rider's hand, unbuckle if we can't.
-            if (!_virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity))
+            if (component.UseHand == true)
             {
-                _buckle.TryUnbuckle(uid, uid, true);
-                return;
+                // Add a virtual item to rider's hand, unbuckle if we can't.
+                if (!_virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.BuckledEntity))
+                {
+                    _buckle.TryUnbuckle(uid, uid, true);
+                    return;
+                }
             }
-
             // Set up the rider and vehicle with each other
             EnsureComp<InputMoverComponent>(uid);
             var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
@@ -148,7 +151,9 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
         // Clean up actions and virtual items
         _actionsSystem.RemoveProvidedActions(args.BuckledEntity, uid);
-        _virtualItemSystem.DeleteInHandsMatching(args.BuckledEntity, uid);
+
+        if (component.UseHand == true)
+            _virtualItemSystem.DeleteInHandsMatching(args.BuckledEntity, uid);
 
 
         // Entity is no longer riding
@@ -300,11 +305,11 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
         strap.BuckleOffsetUnclamped = xform.LocalRotation.Degrees switch
         {
-            < 45f => (0, component.SouthOverride),
+            < 45f => new(0, component.SouthOverride),
             <= 135f => component.BaseBuckleOffset,
-            < 225f  => (0, component.NorthOverride),
-            <= 315f => (component.BaseBuckleOffset.X * -1, component.BaseBuckleOffset.Y),
-            _ => (0, component.SouthOverride)
+            < 225f  => new(0, component.NorthOverride),
+            <= 315f => new(component.BaseBuckleOffset.X * -1, component.BaseBuckleOffset.Y),
+            _ => new(0, component.SouthOverride)
         };
 
         if (!oldOffset.Equals(strap.BuckleOffsetUnclamped))

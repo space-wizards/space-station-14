@@ -11,7 +11,7 @@ namespace Content.Server.Jobs
 
         [DataField("components")]
         [AlwaysPushInheritance]
-        public EntityPrototype.ComponentRegistry Components { get; } = new();
+        public ComponentRegistry Components { get; } = new();
 
         public override void AfterEquip(EntityUid mob)
         {
@@ -28,7 +28,7 @@ namespace Content.Server.Jobs
 
                 var temp = (object) component;
                 serializationManager.CopyTo(data.Component, ref temp);
-                entityManager.AddComponent(mob, (Component)temp!);
+                entityManager.AddComponent(mob, (Component) temp!, true);
             }
         }
     }
