@@ -61,7 +61,7 @@ public sealed class AccessReaderComponentState : ComponentState
 }
 
 [ByRefEvent]
-public struct GetRequiredAccessEvent
+public sealed class GetRequiredAccessEvent : HandledEntityEventArgs
 {
     public AccessReaderComponent Access = new();
 

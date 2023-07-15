@@ -85,8 +85,8 @@ namespace Content.Shared.Access.Systems
             var ev = new GetRequiredAccessEvent();
             RaiseLocalEvent(target, ref ev);
 
-            if (Resolve(target, ref reader, false))
-                ev.Access.AccessLists.AddRange(reader.AccessLists);
+            if (!ev.Handled && Resolve(target, ref reader, false))
+                ev.Access = reader;
 
             return IsAllowed(source, ev.Access);
         }
