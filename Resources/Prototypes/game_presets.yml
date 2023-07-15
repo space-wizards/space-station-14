@@ -98,3 +98,13 @@
   rules:
     - Pirates
     - BasicStationEventScheduler
+
+- type: gamePreset
+  id: War
+  alias:
+    - war
+  name: war-title
+  description: war-description
+  showInVote: true
+  rules:
+    - War
