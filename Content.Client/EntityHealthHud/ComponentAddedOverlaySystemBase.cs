@@ -1,4 +1,7 @@
+using Content.Shared.Clothing.Components;
 using Content.Shared.GameTicking;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 
@@ -7,6 +10,8 @@ namespace Content.Client.EntityHealthHud
     public abstract class ComponentAddedOverlaySystemBase<T> : EntitySystem where T : IComponent
     {
         [Dependency] private readonly IPlayerManager _player = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        private InventorySystem _invSystem = default!;
 
         protected bool IsActive = false;
 
@@ -16,11 +21,17 @@ namespace Content.Client.EntityHealthHud
 
             SubscribeLocalEvent<T, ComponentInit>(OnInit);
             SubscribeLocalEvent<T, ComponentRemove>(OnRemove);
-            SubscribeLocalEvent<T, PlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<T, PlayerDetachedEvent>(OnPlayerDetached);
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-        }
 
+            SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
+
+            SubscribeLocalEvent<T, GotEquippedEvent>(OnCompEquip);
+            SubscribeLocalEvent<T, GotUnequippedEvent>(OnCompUnequip);
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+
+            _invSystem = _entityManager.System<InventorySystem>();
+        }
 
         public void ApplyOverlay(T component)
         {
@@ -54,13 +65,45 @@ namespace Content.Client.EntityHealthHud
             }
         }
 
-        private void OnPlayerAttached(EntityUid uid, T component, PlayerAttachedEvent args)
+        private void OnPlayerAttached(PlayerAttachedEvent args)
         {
+            if (TryComp<T>(args.Entity, out var component))
+                ApplyOverlay(component);
+
+            if (TryComp(args.Entity, out InventoryComponent? inventoryComponent)
+                && _invSystem.TryGetSlots(args.Entity, out var slotDefinitions, inventoryComponent))
+            {
+                foreach (var slot in slotDefinitions)
+                {
+                    if (_invSystem.TryGetSlotEntity(args.Entity, slot.Name, out var itemUid)
+                        && TryComp(itemUid.Value, out component))
+                    {
+                        OnCompEquip(itemUid.Value, component, new GotEquippedEvent(args.Entity, itemUid.Value, slot));
+                    }
+                }
+            }
+        }
+
+        private void OnPlayerDetached(PlayerDetachedEvent args)
+        {
+            RemoveOverlay();
+        }
+
+        private void OnCompEquip(EntityUid uid, T component, GotEquippedEvent args)
+        {
+            if (!TryComp<ClothingComponent>(uid, out var clothing)) return;
+
+            if (args.Equipee != _player.LocalPlayer?.ControlledEntity) return;
+
+            if (!clothing.Slots.HasFlag(args.SlotFlags)) return;
+
             ApplyOverlay(component);
         }
 
-        private void OnPlayerDetached(EntityUid uid, T component, PlayerDetachedEvent args)
+        private void OnCompUnequip(EntityUid uid, T component, GotUnequippedEvent args)
         {
+            if (args.Equipee != _player.LocalPlayer?.ControlledEntity) return;
+
             RemoveOverlay();
         }
 
