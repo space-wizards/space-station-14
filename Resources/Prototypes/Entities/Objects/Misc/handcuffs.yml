@@ -117,3 +117,26 @@
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff-broken
     color: forestgreen
+
+- type: entity
+  parent: Handcuffs
+  id: ClothingOuterStraightjacket
+  name: strait jacket
+  description: You should probably be wearing this.
+  components:
+  - type: Item
+    size: 10
+  - type: Handcuff
+    cuffedRSI: Clothing/OuterClothing/Misc/straight_jacket.rsi
+    breakoutTime: 60
+    damageOnResist:
+      types:
+        Blunt: 20
+    cuffTime: 6.5
+    uncuffTime: 5.5
+    stunBonus: 4
+    bodyIconState: body-overlay
+    isJacket: true
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
+    state: icon
