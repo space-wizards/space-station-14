@@ -53,7 +53,7 @@
   name: soap
   id: SoapDeluxe
   parent: Soap
-  description: A deluxe Waffle Co. brand bar of soap. Smells of condoms.
+  description: A deluxe Waffle Co. brand bar of soap.
   components:
   - type: Sprite
     state: deluxe
