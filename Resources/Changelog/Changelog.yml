@@ -1,11 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: Health Analyzer's that run out of power/don't have a power cell in them
-      will turn off and their screen will go black until a power cell with power is
-      inserted again, type: Tweak}
-  id: 3751
-  time: '2023-05-13T16:28:11.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: 'Kelotane can now cause an overdose above 30u, greatly decreasing the
@@ -2967,3 +2960,8 @@ Entries:
       the uplink.', type: Add}
   id: 4250
   time: '2023-07-14T04:48:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: All bounties will last for at least 10 to 15 minutes., type: Tweak}
+  id: 4251
+  time: '2023-07-15T18:15:12.0000000+00:00'
