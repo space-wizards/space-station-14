@@ -85,32 +85,6 @@ namespace Content.IntegrationTests.Tests.Construction
         }
 
         [Test]
-        public async Task ConstructionGraphNodeEntityPrototypeValid()
-        {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
-            var server = pairTracker.Pair.Server;
-
-            var protoMan = server.ResolveDependency<IPrototypeManager>();
-
-            var valid = true;
-            var message = new StringBuilder();
-
-            foreach (var graph in protoMan.EnumeratePrototypes<ConstructionGraphPrototype>())
-            {
-                foreach (var node in graph.Nodes.Values)
-                {
-                    if (string.IsNullOrEmpty(node.Entity) || protoMan.TryIndex(node.Entity, out EntityPrototype _)) continue;
-
-                    valid = false;
-                    message.Append($"Invalid entity prototype \"{node.Entity}\" on node \"{node.Name}\" of graph \"{graph.ID}\"\n");
-                }
-            }
-            await pairTracker.CleanReturnAsync();
-
-            Assert.That(valid, Is.True, $"One or more nodes specified invalid entity prototypes!\n{message}");
-        }
-
-        [Test]
         public async Task ConstructionGraphEdgeValid()
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });

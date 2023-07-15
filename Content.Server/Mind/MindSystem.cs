@@ -467,7 +467,7 @@ public sealed class MindSystem : EntitySystem
     /// <returns>Returns true if the removal succeeded.</returns>
     public bool TryRemoveObjective(Mind mind, int index)
     {
-        if (mind.Objectives.Count >= index) return false;
+        if (index < 0 || index >= mind.Objectives.Count) return false;
 
         var objective = mind.Objectives[index];
 

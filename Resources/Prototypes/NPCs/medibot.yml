@@ -11,8 +11,8 @@
   branches:
     - tasks:
         - id: PickNearbyInjectablePrimitive
-        - id: MedibotSpeakPrimitive
         - id: MoveToAccessiblePrimitive
+        - id: MedibotSpeakPrimitive
         - id: SetIdleTimePrimitive
         - id: WaitIdleTimePrimitive
         - id: MedibotInjectPrimitive

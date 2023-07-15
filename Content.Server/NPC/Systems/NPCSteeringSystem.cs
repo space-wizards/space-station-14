@@ -368,6 +368,12 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 
         Separation(uid, offsetRot, worldPos, agentRadius, layer, mask, body, xform, danger);
 
+        // Prioritise whichever direction we went last tick if it's a tie-breaker.
+        if (steering.LastSteerIndex != -1)
+        {
+            interest[steering.LastSteerIndex] *= 1.1f;
+        }
+
         // Remove the danger map from the interest map.
         var desiredDirection = -1;
         var desiredValue = 0f;
@@ -392,6 +398,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 
         steering.NextSteer = curTime + TimeSpan.FromSeconds(1f / NPCSteeringComponent.SteeringFrequency);
         steering.LastSteerDirection = resultDirection;
+        steering.LastSteerIndex = desiredDirection;
         DebugTools.Assert(!float.IsNaN(resultDirection.X));
         SetDirection(mover, steering, resultDirection, false);
     }
@@ -425,14 +432,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
             _interaction.InRangeUnobstructed(uid, steering.Coordinates.EntityId, range: 30f, (CollisionGroup) physics.CollisionMask))
         {
             steering.CurrentPath.Clear();
-            // Enqueue our poly as it will be pruned later.
-            var ourPoly = _pathfindingSystem.GetPoly(xform.Coordinates);
-
-            if (ourPoly != null)
-            {
-                steering.CurrentPath.Enqueue(ourPoly);
-            }
-
             steering.CurrentPath.Enqueue(targetPoly);
             return;
         }
@@ -468,7 +467,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         var ourPos = xform.MapPosition;
 
         PrunePath(uid, ourPos, targetPos.Position - ourPos.Position, result.Path);
-        steering.CurrentPath = result.Path;
+        steering.CurrentPath = new Queue<PathPoly>(result.Path);
     }
 
     // TODO: Move these to movercontroller

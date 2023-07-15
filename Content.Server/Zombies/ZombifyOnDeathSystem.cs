@@ -146,6 +146,8 @@ namespace Content.Server.Zombies
                 //store some values before changing them in case the humanoid get cloned later
                 zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
                 zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
+                if (TryComp<BloodstreamComponent>(target, out var stream))
+                    zombiecomp.BeforeZombifiedBloodReagent = stream.BloodReagent;
 
                 _sharedHuApp.SetSkinColor(target, zombiecomp.SkinColor, verify: false, humanoid: huApComp);
                 _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.EyeColor, humanoid: huApComp);
@@ -171,6 +173,8 @@ namespace Content.Server.Zombies
             //This makes it so the zombie doesn't take bloodloss damage.
             //NOTE: they are supposed to bleed, just not take damage
             _bloodstream.SetBloodLossThreshold(target, 0f);
+            //Give them zombie blood
+            _bloodstream.ChangeBloodReagent(target, zombiecomp.NewBloodReagent);
 
             //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
             _serverInventory.TryUnequip(target, "gloves", true, true);
