@@ -1,48 +1,68 @@
 # Specific Root compound tasks being used for NPCs.
 
 # Tries to shoot a target in LOS in range.
-- type: htnCompound
-  id: TurretCompound
-  branches:
-    - tasks:
-        - id: GunCombatCompound
-    - tasks:
-        - id: IdleSpinCompound
+#- type: htnCompound
+#  id: TurretCompound
+#  branches:
+#    - tasks:
+#        - id: GunCombatCompound
+#    - tasks:
+#        - id: IdleSpinCompound
+
+# TODO: Need a thing to recharge a laser gun
+# TODO: When selecting pickup guns also add chargers or easy container grabs.
+
+# TODO: Making juking its own operator, then melee is just a repeatingtask
+# - MoveTo
+# - Hit
+# - Juke.
+# - Then for juke we can make it a compound and combine different jukes.
 
 - type: htnCompound
-  id: PirateCompound
+  id: RangedCompound
   branches:
-    # TODO: Equip a gun from inventory if one found, preferring over pickup.
+    - tasks:
+        - !type:htnRepeating
+          tasks:
+            - !type:htnPrimitive
+              operator: !type:MoveToOperator
+            - !type:htnPrimitive
+              operator: !type:RangedCombatOperator
+            - !type:htnPrimitive
+              operator: !type:JukeOperator
+                type: AdjacentTile
     # Shoot if ammo
-    - tasks:
-        - id: GunCombatCompound
-      preconditions:
-        - !type:GunAmmoPrecondition
-          minPercent: 0.001
-    # Pickup ammo if any nearby
-    # TODO: Need nearby ammo
-    #- tasks:
-    #    - id: GunAmmoPickupCompound
-    #  preconditions:
-    #    - !type:GunAmmoPrecondition
-    #      maxPercent: 0.0
-    # Discard gun if no ammo
-    - tasks:
-        - id: DiscardActiveHandPrimitive
-      preconditions:
-        - !type:ActiveHandComponentPrecondition
-          components:
-            - type: Gun
-        - !type:GunAmmoPrecondition
-          maxPercent: 0.001
-    # Pickup gun if no ammo
-    - tasks:
-        - id: PickupGunCompound
-      preconditions:
-        - !type:ActiveHandComponentPrecondition
-          components:
-            - type: Gun
-          invert: true
+#    - tasks:
+#        - id: GunCombatCompound
+#      preconditions:
+#        - !type:GunAmmoPrecondition
+#          minPercent: 0.001
+#    # TODO: Equip a gun from inventory if one found, preferring over pickup.
+#
+#    # Pickup ammo if any nearby
+#    # TODO: Need nearby ammo
+#    #- tasks:
+#    #    - id: GunAmmoPickupCompound
+#    #  preconditions:
+#    #    - !type:GunAmmoPrecondition
+#    #      maxPercent: 0.0
+#    # Discard gun if no ammo
+#    - tasks:
+#        - id: DiscardActiveHandPrimitive
+#      preconditions:
+#        - !type:ActiveHandComponentPrecondition
+#          components:
+#            - type: Gun
+#        - !type:GunAmmoPrecondition
+#          maxPercent: 0.001
+#    # Pickup gun if no ammo
+#    - tasks:
+#        - id: PickupGunCompound
+#      preconditions:
+#        - !type:ActiveHandComponentPrecondition
+#          components:
+#            - type: Gun
+#          invert: true
 
 
 # Changes:

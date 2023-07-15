@@ -43,16 +43,19 @@
         - id: InteractWithPrimitive
 
 # Primitive
+# Selects appropriate ammo nearby and applies it to Target key.
 - type: htnPrimitive
   id: PickAmmoPrimitive
   operator: !type:UtilityOperator
     proto: NearbyAmmo
 
+# Selects best gun nearby and applies it to Target key.
 - type: htnPrimitive
   id: PickGunPrimitive
   operator: !type:UtilityOperator
     proto: NearbyGuns
 
+# Selects best ranged target nearby and applies it to Target key.
 - type: htnPrimitive
   id: PickGunTargetPrimitive
   operator: !type:UtilityOperator

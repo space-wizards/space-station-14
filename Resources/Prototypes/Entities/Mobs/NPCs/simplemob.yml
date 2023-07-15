@@ -15,8 +15,8 @@
       Acidic: [Touch, Ingestion]
   - type: InputMover
   - type: MobMover
-  - type: HTN
-    rootTask: IdleCompound
+#  - type: HTN
+#    rootTask: IdleCompound
   - type: Input
     context: "human"
   - type: Faction

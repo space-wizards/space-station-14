@@ -1,0 +1,8 @@
+# Generic pickups to not be naked.
+# TODO: Armor / Pressure pickups.
+# TODO: Preferred slots
+- type: htnCompound
+  id:
+
+
+- type:

@@ -132,8 +132,8 @@
         Piercing: 1
   - type: InputMover
   - type: MobMover
-  - type: HTN
-    rootTask: SimpleHostileCompound
+#  - type: HTN
+#    rootTask: SimpleHostileCompound
   - type: Faction
     factions:
     - SimpleHostile
@@ -469,8 +469,8 @@
     - Passive
   - type: Body
     prototype: AnimalRuminant
-  - type: HTN
-    rootTask: RuminantCompound
+#  - type: HTN
+#    rootTask: RuminantCompound
   - type: GuideHelp
     guides:
     - Chef
@@ -762,8 +762,8 @@
   components:
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
-  - type: HTN
-    rootTask: SimpleHostileCompound
+#  - type: HTN
+#    rootTask: SimpleHostileCompound
   - type: Faction
     factions:
     - SimpleHostile
@@ -1285,8 +1285,8 @@
     baseSprintSpeed : 5
   - type: InputMover
   - type: MobMover
-  - type: HTN
-    rootTask: SimpleHostileCompound
+#  - type: HTN
+#    rootTask: SimpleHostileCompound
   - type: Faction
     factions:
     - Syndicate
@@ -1774,8 +1774,8 @@
         Slash: 5
   - type: InputMover
   - type: MobMover
-  - type: HTN
-    rootTask: SimpleHostileCompound
+#  - type: HTN
+#    rootTask: SimpleHostileCompound
   - type: Faction
     factions:
     - SimpleHostile

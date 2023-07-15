@@ -5,8 +5,8 @@
   description: A shambling mass of flesh, animated through anomalous energy.
   abstract: true
   components:
-  - type: HTN
-    rootTask: SimpleHostileCompound
+#  - type: HTN
+#    rootTask: SimpleHostileCompound
     blackboard:
       NavSmash: !type:Bool
         true
