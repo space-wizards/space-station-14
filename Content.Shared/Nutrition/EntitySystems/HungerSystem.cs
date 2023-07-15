@@ -1,5 +1,7 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
+using Content.Shared.Atmos.Miasma;
 using Content.Shared.Damage;
+using Content.Shared.Examine;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
@@ -31,6 +33,7 @@ public sealed class HungerSystem : EntitySystem
         SubscribeLocalEvent<HungerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<HungerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<HungerComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<HungerComponent, ExaminedEvent>(OnExamined);
     }
 
     private void OnGetState(EntityUid uid, HungerComponent component, ref ComponentGetState args)
@@ -89,6 +92,17 @@ public sealed class HungerSystem : EntitySystem
     private void OnRejuvenate(EntityUid uid, HungerComponent component, RejuvenateEvent args)
     {
         SetHunger(uid, component.Thresholds[HungerThreshold.Okay], component);
+    }
+
+    private void OnExamined(EntityUid uid, HungerComponent component, ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange || component.CurrentThreshold >= HungerThreshold.Peckish)
+            return;
+
+        if (component.CurrentThreshold == HungerThreshold.Starving)
+            args.PushMarkup($"[color=orangered]{Loc.GetString("comp-hunger-examined-starving", ("ent", uid))}[/color]");
+        else
+            args.PushMarkup($"[color=red]{Loc.GetString("comp-hunger-examined-dead", ("ent", uid))}[/color]");
     }
 
     /// <summary>
