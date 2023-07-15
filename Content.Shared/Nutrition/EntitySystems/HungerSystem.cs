@@ -1,5 +1,4 @@
 using Content.Shared.Alert;
-using Content.Shared.Atmos.Miasma;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Systems;
