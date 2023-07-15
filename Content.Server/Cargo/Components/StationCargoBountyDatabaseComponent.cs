@@ -27,21 +27,14 @@ public sealed class StationCargoBountyDatabaseComponent : Component
     public int TotalBounties;
 
     /// <summary>
-    /// A poor-man's weighted list of the durations for how long
-    /// each bounty will last.
+    /// The minimum amount of time the bounty lasts before being removed.
     /// </summary>
-    [DataField("bountyDurations")]
-    public List<TimeSpan> BountyDurations = new()
-    {
-        TimeSpan.FromMinutes(5),
-        TimeSpan.FromMinutes(7.5f),
-        TimeSpan.FromMinutes(7.5f),
-        TimeSpan.FromMinutes(7.5f),
-        TimeSpan.FromMinutes(10),
-        TimeSpan.FromMinutes(10),
-        TimeSpan.FromMinutes(10),
-        TimeSpan.FromMinutes(10),
-        TimeSpan.FromMinutes(10),
-        TimeSpan.FromMinutes(15)
-    };
+    [DataField("minBountyTime"), ViewVariables(VVAccess.ReadWrite)]
+    public float MinBountyTime = 600f;
+
+    /// <summary>
+    /// The maxmium amount of time the bounty lasts before being removed.
+    /// </summary>
+    [DataField("maxBountyTime"), ViewVariables(VVAccess.ReadWrite)]
+    public float MaxBountyTime = 905f;
 }
