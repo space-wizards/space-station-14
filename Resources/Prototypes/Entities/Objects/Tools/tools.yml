@@ -171,6 +171,34 @@
     heldPrefix: red
 
 - type: entity
+  parent: Crowbar
+  id: CrowbarMakeshift
+  name: makeshift crowbar
+  components:
+  - type: Tag
+    tags:
+    - Crowbar
+  - type: Sprite
+    state: makeshift-icon
+  - type: Item
+    heldPrefix: makeshift
+    size: 11
+  - type: Tool
+    qualities:
+      - Prying
+    speed: 0.5
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 4
+        Structural: 2
+  - type: Construction
+    graph: Crowbarmakeshift
+    node: crowbarmakeshift
+
+- type: entity
   name: multitool
   parent: BaseItem
   id: Multitool

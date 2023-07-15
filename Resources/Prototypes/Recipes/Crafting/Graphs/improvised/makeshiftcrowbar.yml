@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: Crowbarmakeshift
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: crowbarmakeshift
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 10
+    - node: crowbarmakeshift
+      entity: CrowbarMakeshift

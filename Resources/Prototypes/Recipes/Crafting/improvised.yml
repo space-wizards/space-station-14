@@ -12,6 +12,19 @@
   objectType: Item
 
 - type: construction
+  name: makeshift crowbar
+  id: crowbarmakeshift
+  graph: Crowbarmakeshift
+  startNode: start
+  targetNode: crowbarmakeshift
+  category: construction-category-tools
+  objectType: Item
+  description: the crowbar is made with your own hands... and steel.
+  icon:
+    sprite: Objects/Tools/crowbar.rsi
+    state: makeshift-icon
+
+- type: construction
   name: ghost sheet
   id: ghost_sheet
   graph: GhostSheet
