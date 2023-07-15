@@ -94,6 +94,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.4 # this technically means it protects against fires pretty well? -heat is just for lasers and stuff, not atmos temperature
+        Stun: 0.8
 
 - type: entity
   parent: ClothingOuterBaseLarge

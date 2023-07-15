@@ -423,6 +423,7 @@
         Heat: 0.4
         Radiation: 0.50
         Caustic: 0.75
+        Stun: 0.4
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: ToggleableClothing
@@ -454,6 +455,7 @@
         Heat: 0.5
         Radiation: 0.25
         Caustic: 0.35
+        Stun: 0.1
   - type: ExplosionResistance
     damageCoefficient: 0.8
   - type: ToggleableClothing
@@ -487,6 +489,7 @@
         Heat: 0.2
         Radiation: 0.25
         Caustic: 0.5
+        Stun: 0.4
   - type: ExplosionResistance
     damageCoefficient: 0.3
   - type: ToggleableClothing
@@ -518,6 +521,7 @@
         Heat: 0.3
         Radiation: 0.25
         Caustic: 0.4
+        Stun: 0.4
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: ToggleableClothing
@@ -549,6 +553,8 @@
         Heat: 0.25
         Radiation: 0.25
         Caustic: 0.75
+        # magic
+        Stun: 0.6
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: ToggleableClothing
@@ -637,6 +643,7 @@
         Piercing: 0.85
         Heat: 0.4
         Caustic: 0.75
+        Stun: 0.6
   - type: ExplosionResistance
     damageCoefficient: 0.6
   - type: ToggleableClothing
@@ -736,6 +743,7 @@
         Heat: 0.2
         Radiation: 0.1
         Caustic: 0.2
+        Stun: 0.2
   - type: ExplosionResistance
     damageCoefficient: 0.2
   - type: ToggleableClothing
