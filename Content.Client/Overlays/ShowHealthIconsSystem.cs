@@ -1,10 +1,10 @@
 using Content.Shared.Damage;
-using Content.Shared.EntityHealthBar;
+using Content.Shared.Overlays;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.EntityHealthHud
+namespace Content.Client.Overlays
 {
     public sealed class ShowHealthIconsSystem : ComponentAddedOverlaySystemBase<ShowHealthIconsComponent>
     {

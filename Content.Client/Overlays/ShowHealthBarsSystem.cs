@@ -1,7 +1,7 @@
-using Content.Shared.EntityHealthBar;
+using Content.Shared.Overlays;
 using Robust.Client.Graphics;
 
-namespace Content.Client.EntityHealthHud
+namespace Content.Client.Overlays
 {
     public sealed class ShowHealthBarsSystem : ComponentAddedOverlaySystemBase<ShowHealthBarsComponent>
     {

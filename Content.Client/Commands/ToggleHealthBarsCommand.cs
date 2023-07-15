@@ -1,8 +1,8 @@
 using Robust.Client.Player;
 using Robust.Shared.Console;
-using Content.Shared.EntityHealthBar;
 using System.Linq;
-using Content.Client.EntityHealthHud;
+using Content.Client.Overlays;
+using Content.Shared.Overlays;
 
 namespace Content.Client.Commands
 {

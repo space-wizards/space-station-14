@@ -5,7 +5,7 @@ using Content.Shared.Inventory.Events;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 
-namespace Content.Client.EntityHealthHud
+namespace Content.Client.Overlays
 {
     public abstract class ComponentAddedOverlaySystemBase<T> : EntitySystem where T : IComponent
     {
