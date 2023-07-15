@@ -5,6 +5,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Stacks;
 using Content.Shared.Tag;
+using Content.Shared.Popups;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Construction;
@@ -16,6 +17,7 @@ public sealed class MachineFrameSystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly ConstructionSystem _construction = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -75,11 +77,10 @@ public sealed class MachineFrameSystem : EntitySystem
                 {
                     component.Progress[machinePart.PartType]++;
                     args.Handled = true;
-                    return;
                 }
             }
 
-            if (TryComp<StackComponent?>(args.Used, out var stack))
+            if (!args.Handled && TryComp<StackComponent?>(args.Used, out var stack))
             {
                 var type = stack.StackTypeId;
                 if (type == null)
@@ -114,6 +115,13 @@ public sealed class MachineFrameSystem : EntitySystem
 
                 component.MaterialProgress[type] += needed;
                 args.Handled = true;
+            }
+
+            if (args.Handled)
+            {
+                if (IsComplete(component)) {
+                    _popupSystem.PopupEntity(Loc.GetString("machine-frame-component-on-complete"), uid);
+                }
                 return;
             }
 
