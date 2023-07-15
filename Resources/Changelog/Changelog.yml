@@ -1,10 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: 'Kelotane can now cause an overdose above 30u, greatly decreasing the
-      body''s ability to retain water.', type: Tweak}
-  id: 3752
-  time: '2023-05-13T21:18:06.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'Added suit storage units, for storing EVA-capable suits.', type: Add}
@@ -2965,3 +2959,10 @@ Entries:
   - {message: All bounties will last for at least 10 to 15 minutes., type: Tweak}
   id: 4251
   time: '2023-07-15T18:15:12.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: Nanotrasen released a new software update for their medibots making
+      them actually inject people again. They also got equipped with new wheels that
+      can be locked with a wrench., type: Tweak}
+  id: 4252
+  time: '2023-07-15T19:59:46.0000000+00:00'
