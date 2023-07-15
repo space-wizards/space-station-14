@@ -455,7 +455,7 @@
         Heat: 0.5
         Radiation: 0.25
         Caustic: 0.35
-        Stun: 0.1
+        Stun: 0.0
   - type: ExplosionResistance
     damageCoefficient: 0.8
   - type: ToggleableClothing
