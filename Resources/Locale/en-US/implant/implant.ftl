@@ -29,3 +29,9 @@ open-uplink-implant-action-description = Opens the syndicate uplink embedded und
 
 action-name-honk = Honk!
 action-desc-honk = Activates your honking implant, which will produce the signature sound of the clown.
+
+use-emp-implant-action-name = Activate EMP
+use-emp-implant-action-description = Triggers a small EMP pulse around you
+
+use-dna-scrambler-implant-action-name = Scramble DNA
+use-dna-scrambler-implant-action-description = LING IN MAINTS!

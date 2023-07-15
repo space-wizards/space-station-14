@@ -399,6 +399,28 @@
           - NukeOpsUplink
 
 - type: listing
+  id: UplinkDnaScramblerImplant
+  name: uplink-dna-scrambler-implanter-name
+  description: uplink-dna-scrambler-implanter-desc
+  icon: { sprite: /Textures/Mobs/Species/Human/parts.rsi, state: full }
+  productEntity: DnaScramblerImplanter
+  cost:
+    Telecrystal: 10
+  categories:
+    - UplinkImplants
+
+- type: listing
+  id: UplinkEmpImplanter
+  name: uplink-emp-implanter-name
+  description: uplink-emp-implanter-desc
+  icon: { sprite: /Textures/Objects/Magic/magicactions.rsi, state: shield }
+  productEntity: EmpImplanter
+  cost:
+    Telecrystal: 7
+  categories:
+    - UplinkImplants
+
+- type: listing
   id: UplinkMacroBombImplanter
   name: uplink-macro-bomb-implanter-name
   description: uplink-macro-bomb-implanter-desc
