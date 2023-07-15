@@ -2,23 +2,11 @@
 using Content.Shared.Broke;
 using Content.Shared.VendingMachines;
 using Content.Shared.VendingMachines.Components;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.VendingMachines;
 
-public sealed class VendingMachineUiSystem : EntitySystem
+public sealed partial class VendingMachineSystem
 {
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-    [Dependency] private readonly VendingMachineSystem _machineSystem = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<BrokeComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttempt);
-        SubscribeLocalEvent<VendingMachineInventoryComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
-    }
-
     private void OnActivatableUIOpenAttempt(EntityUid uid, BrokeComponent component,
         ActivatableUIOpenAttemptEvent args)
     {
@@ -32,7 +20,7 @@ public sealed class VendingMachineUiSystem : EntitySystem
         UpdateVendingMachineInterfaceState(uid, component);
     }
 
-    public void UpdateVendingMachineInterfaceState(EntityUid uid,
+    private void UpdateVendingMachineInterfaceState(EntityUid uid,
         VendingMachineInventoryComponent component)
     {
         var state = new VendingMachineInterfaceState(_machineSystem.GetAllInventory(uid, component));

@@ -6,18 +6,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.VendingMachines;
 
-public sealed class VendingMachineRestockSystem : EntitySystem
+public sealed partial class VendingMachineSystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly PricingSystem _pricing = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
-    }
-
     private void OnPriceCalculation(EntityUid uid, VendingMachineRestockComponent component, ref PriceCalculationEvent args)
     {
         List<double> priceSets = new();

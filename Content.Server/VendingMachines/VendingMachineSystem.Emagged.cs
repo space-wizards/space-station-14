@@ -4,15 +4,8 @@ using Content.Shared.VendingMachines.Components;
 
 namespace Content.Server.VendingMachines;
 
-public sealed class VendingMachineEmaggedSystem : EntitySystem
+public sealed partial class VendingMachineSystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<VendingMachineInventoryComponent, GotEmaggedEvent>(OnEmagged);
-    }
-
     private void OnEmagged(EntityUid uid, VendingMachineInventoryComponent component, ref GotEmaggedEvent args)
     {
         var emaggedItems = component.Items.GetValueOrDefault(VendingMachinesInventoryTypeNames.Emagged);

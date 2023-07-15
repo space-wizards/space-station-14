@@ -1,20 +1,26 @@
 using System.Numerics;
 using Content.Server.Cargo.Systems;
+using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Broke;
+using Content.Shared.Damage;
+using Content.Shared.Destructible;
 using Content.Shared.DispenseOnHit;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Components;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Emp;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.VendingMachines;
 using Content.Shared.VendingMachines.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -22,7 +28,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.VendingMachines;
 
-public sealed class VendingMachineSystem : SharedVendingMachineSystem
+public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
@@ -30,8 +36,10 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly VendingMachineUiSystem _uiSystem = default!;
-    [Dependency] private readonly VendingMachineVisualStateSystem _visualStateSystem = default!;
+    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly VendingMachineSystem _machineSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -46,6 +54,13 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         SubscribeLocalEvent<VendingMachineEjectComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
         SubscribeLocalEvent<VendingMachineEjectComponent, VendingMachineSelfDispenseEvent>(OnSelfDispense);
         SubscribeLocalEvent<VendingMachineInventoryComponent, RestockDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<BrokeComponent, BreakageEventArgs>(OnBreak);
+        SubscribeLocalEvent<BrokeComponent, DamageChangedEvent>(OnDamage);
+        SubscribeLocalEvent<BrokeComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttempt);
+        SubscribeLocalEvent<VendingMachineInventoryComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
+        SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
+        SubscribeLocalEvent<BrokeComponent, EmpPulseEvent>(OnEmpPulse);
+        SubscribeLocalEvent<VendingMachineInventoryComponent, GotEmaggedEvent>(OnEmagged);
     }
 
     private void OnVendingPrice(EntityUid uid,
@@ -79,7 +94,7 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
 
         if (HasComp<ApcPowerReceiverComponent>(uid))
         {
-            _visualStateSystem.UpdateVisualState(uid);
+            UpdateVisualState(uid);
         }
 
         if (component.Action == null)
@@ -88,6 +103,8 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         var action = new InstantAction(PrototypeManager.Index<InstantActionPrototype>(component.Action));
         _action.AddAction(uid, action, uid);
     }
+
+
 
     private void OnInventoryEjectMessage(EntityUid uid,
         VendingMachineEjectComponent component,
@@ -106,7 +123,7 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         VendingMachineVisualStateComponent component,
         ref PowerChangedEvent args)
     {
-        _visualStateSystem.TryUpdateVisualState(uid, component);
+        TryUpdateVisualState(uid, component);
     }
 
     private void OnSelfDispense(EntityUid uid,
@@ -179,7 +196,7 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
 
         Audio.PlayPvs(vendComponent.SoundDeny, uid, AudioParams.Default.WithVolume(-2f));
 
-        _visualStateSystem.UpdateVisualState(uid);
+        UpdateVisualState(uid);
     }
 
     /// <summary>
@@ -263,8 +280,8 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
 
         entry.Amount--;
 
-        _uiSystem.UpdateVendingMachineInterfaceState(uid, inventoryComponent);
-        _visualStateSystem.UpdateVisualState(uid);
+        UpdateVendingMachineInterfaceState(uid, inventoryComponent);
+        UpdateVisualState(uid);
 
         Audio.PlayPvs(vendComponent.SoundVend, uid);
     }
@@ -340,7 +357,7 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
 
         // No need to update the visual state because we never changed it during a forced eject
         if (!forceEject)
-            _visualStateSystem.UpdateVisualState(uid);
+            UpdateVisualState(uid);
 
         if (string.IsNullOrEmpty(vendComponent.NextItemToEject))
         {
@@ -497,7 +514,7 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
             return;
 
         RestockInventoryFromPrototype(uid, vendComponent);
-        _uiSystem.UpdateVendingMachineInterfaceState(uid, vendComponent);
-        _visualStateSystem.UpdateVisualState(uid);
+        UpdateVendingMachineInterfaceState(uid, vendComponent);
+        UpdateVisualState(uid);
     }
 }

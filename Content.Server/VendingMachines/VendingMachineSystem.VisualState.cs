@@ -2,19 +2,16 @@
 using Content.Shared.Broke;
 using Content.Shared.VendingMachines;
 using Content.Shared.VendingMachines.Components;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.VendingMachines;
 
-public sealed class VendingMachineVisualStateSystem : EntitySystem
+public sealed partial class VendingMachineSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-
     /// <summary>
     /// Tries to update the visual elements of the component,
     /// if there is a visualization component, based on its current state.
     /// </summary>
-    public void UpdateVisualState(EntityUid uid)
+    private void UpdateVisualState(EntityUid uid)
     {
         if (!TryComp<VendingMachineVisualStateComponent>(uid, out var visualStateComponent))
         {
@@ -27,7 +24,7 @@ public sealed class VendingMachineVisualStateSystem : EntitySystem
     /// <summary>
     /// Tries to update the visuals of the component based on its current state.
     /// </summary>
-    public void TryUpdateVisualState(EntityUid uid,
+    private void TryUpdateVisualState(EntityUid uid,
         VendingMachineVisualStateComponent? vendComponent = null)
     {
         if (!Resolve(uid, ref vendComponent))
