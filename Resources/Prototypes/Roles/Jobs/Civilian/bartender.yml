@@ -22,6 +22,7 @@
   id: BartenderGear
   equipment:
     head: ClothingHeadHatTophat
+    eyes: ClothingEyesGlassesBeer
     jumpsuit: ClothingUniformJumpsuitBartender
     outerClothing: ClothingOuterVest
     back: ClothingBackpackFilled
