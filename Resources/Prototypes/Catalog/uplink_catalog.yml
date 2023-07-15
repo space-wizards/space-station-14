@@ -415,7 +415,7 @@
   icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: explosive }
   productEntity: MicroBombImplanter
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
     - UplinkImplants
   conditions:
