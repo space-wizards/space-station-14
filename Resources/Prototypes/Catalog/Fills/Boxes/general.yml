@@ -398,7 +398,7 @@
   name: deathrattle implant box
   parent: BoxCardboard
   id: BoxDeathRattleImplants
-  description: Six deathrattle implants and handheld gps devices for the whole squad.
+  description: Six deathrattle implants and handheld GPS devices for the whole squad.
   components:
   - type: Item
     size: 60

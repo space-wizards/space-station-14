@@ -236,10 +236,4 @@
       - Critical
       - Dead
     - type: Rattle
-    - type: OnUseTimerTrigger
-      delay: 10
-      initialBeepDelay: 0
-      beepSound: /Audio/Machines/Nuke/general_beep.ogg
-      params:
-        volume: -2
 

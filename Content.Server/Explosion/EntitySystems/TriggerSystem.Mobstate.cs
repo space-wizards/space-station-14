@@ -21,9 +21,9 @@ public sealed partial class TriggerSystem
         if (!component.MobState.Contains(args.NewMobState))
             return;
 
-        //This chains Mobstate Changed triggers with OnUseTimerTrigger if they have it and if the mob is dead
+        //This chains Mobstate Changed triggers with OnUseTimerTrigger if they have it
         //Very useful for things that require a mobstate change and a timer
-        if (TryComp<OnUseTimerTriggerComponent>(uid, out var timerTrigger) && args.NewMobState == MobState.Dead)
+        if (TryComp<OnUseTimerTriggerComponent>(uid, out var timerTrigger))
         {
             HandleTimerTrigger(
                 uid,

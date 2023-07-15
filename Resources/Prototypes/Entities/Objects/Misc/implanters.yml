@@ -164,7 +164,7 @@
 - type: entity
   id: DeathRattleImplanter
   name: Deathrattle implanter
-  description: a single use implanter, the implant will start a fake bomb countdown and inform anyone with access to the syndicate radio channel of your death.
+  description: a single use implanter, the implant will inform anyone with access to the syndicate radio channel of your death.
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
