@@ -5,7 +5,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterVestKevlar
+      - id: ClothingOuterArmorBasicSlim
       - id: WeaponShotgunDoubleBarreledRubber
       - id: DrinkShaker
       - id: ClothingEyesGlassesBeer
@@ -71,6 +71,8 @@
         amount: 2
       - id: FlashlightLantern
         amount: 2
+      - id: Plunger
+        amount: 2
 
 - type: entity
   id: ClosetLegalFilled
@@ -94,7 +96,7 @@
         amount: 2
       - id: ClothingOuterApronBotanist
         amount: 2
-      - id: HatBandBotany
+      - id: ClothingHeadBandBotany
         amount: 2
       - id: HydroponicsToolClippers
       - id: ClothingBeltPlant

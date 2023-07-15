@@ -15,7 +15,7 @@ namespace Content.Server.PDA.Ringer
 {
     public sealed class RingerSystem : SharedRingerSystem
     {
-        [Dependency] private readonly PDASystem _pda = default!;
+        [Dependency] private readonly PdaSystem _pda = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
@@ -74,7 +74,7 @@ namespace Content.Server.PDA.Ringer
             if (uplink.Code.SequenceEqual(args.Ringtone) && HasComp<StoreComponent>(uid))
             {
                 uplink.Unlocked = !uplink.Unlocked;
-                if (TryComp<PDAComponent>(uid, out var pda))
+                if (TryComp<PdaComponent>(uid, out var pda))
                     _pda.UpdatePdaUi(uid, pda);
 
                 // can't keep store open after locking it
@@ -147,7 +147,7 @@ namespace Content.Server.PDA.Ringer
         private void UpdateRingerUserInterface(EntityUid uid, RingerComponent ringer)
         {
             if (_ui.TryGetUi(uid, RingerUiKey.Key, out var bui))
-                _ui.SetUiState(bui, new RingerUpdateState(HasComp<ActiveRingerComponent>(uid), ringer.Ringtone));
+                UserInterfaceSystem.SetUiState(bui, new RingerUpdateState(HasComp<ActiveRingerComponent>(uid), ringer.Ringtone));
         }
 
         public bool ToggleRingerUI(EntityUid uid, IPlayerSession session)

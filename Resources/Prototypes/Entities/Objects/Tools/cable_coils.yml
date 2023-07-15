@@ -19,7 +19,7 @@
     sprite: Objects/Tools/cable-coils.rsi
   - type: Item
     sprite: Objects/Tools/cable-coils.rsi
-    size: 10
+    size: 30
   - type: CablePlacer
   - type: Clickable
   - type: StaticPrice
@@ -55,6 +55,18 @@
 
 - type: entity
   parent: CableHVStack
+  id: CableHVStack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: coilhv-10
+  - type: Stack
+    count: 10
+  - type: Item
+    size: 10
+
+- type: entity
+  parent: CableHVStack
   id: CableHVStack1
   suffix: 1
   components:
@@ -62,6 +74,8 @@
     state: coilhv-10
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   parent: CableStack
@@ -91,6 +105,18 @@
 
 - type: entity
   parent: CableMVStack
+  id: CableMVStack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: coilmv-10
+  - type: Stack
+    count: 10
+  - type: Item
+    size: 10
+
+- type: entity
+  parent: CableMVStack
   id: CableMVStack1
   suffix: 1
   components:
@@ -98,6 +124,8 @@
     state: coilmv-10
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   parent: CableStack
@@ -126,6 +154,18 @@
 
 - type: entity
   parent: CableApcStack
+  id: CableApcStack10
+  suffix: 10
+  components:
+    - type: Sprite
+      state: coillv-10
+    - type: Stack
+      count: 10
+    - type: Item
+      size: 10
+
+- type: entity
+  parent: CableApcStack
   id: CableApcStack1
   suffix: 1
   components:
@@ -133,3 +173,5 @@
     state: coillv-10
   - type: Stack
     count: 1
+  - type: Item
+    size: 1

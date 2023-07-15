@@ -57,7 +57,9 @@ namespace Content.Server.AirlockPainter
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
             DirtyUI(uid, component);
-            component.Owner.GetUIOrNull(AirlockPainterUiKey.Key)?.Open(actor.PlayerSession);
+
+            if (_userInterfaceSystem.TryGetUi(uid, AirlockPainterUiKey.Key, out var bui))
+                _userInterfaceSystem.OpenUi(bui, actor.PlayerSession);
             args.Handled = true;
         }
 
@@ -71,7 +73,7 @@ namespace Content.Server.AirlockPainter
 
             if (!_prototypeManager.TryIndex<AirlockGroupPrototype>(airlock.Group, out var grp))
             {
-                Logger.Error("Group not defined: %s", airlock.Group);
+                Log.Error("Group not defined: %s", airlock.Group);
                 return;
             }
 

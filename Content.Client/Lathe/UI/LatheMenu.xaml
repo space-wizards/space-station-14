@@ -1,85 +1,84 @@
 ﻿<DefaultWindow
     xmlns="https://spacestation14.io"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'lathe-menu-title'}"
     MinSize="300 450"
     SetSize="300 450">
     <BoxContainer
         Orientation="Vertical"
         VerticalExpand="True"
+        HorizontalExpand="True"
         SeparationOverride="5">
         <BoxContainer
             Orientation="Horizontal"
             Align="End"
-            HorizontalExpand="True"
-            VerticalExpand="True"
-            SizeFlagsStretchRatio="1">
+            HorizontalExpand="True">
             <Button
                 Name="QueueButton"
                 Text="{Loc 'lathe-menu-queue'}"
                 TextAlign="Center"
                 Mode="Press"
-                SizeFlagsStretchRatio="1">
+                StyleClasses="OpenRight">
             </Button>
             <Button
                 Name="ServerListButton"
                 Text="{Loc 'lathe-menu-server-list'}"
                 TextAlign="Center"
                 Mode="Press"
-                SizeFlagsStretchRatio="1">
-            </Button>
-            <Button
-                Name="ServerSyncButton"
-                Text="{Loc 'lathe-menu-sync'}"
-                TextAlign="Center"
-                Mode="Press"
-                SizeFlagsStretchRatio="1">
+                StyleClasses="OpenLeft">
             </Button>
         </BoxContainer>
-        <BoxContainer
-            Orientation="Horizontal"
-            HorizontalExpand="True"
-            VerticalExpand="True"
-            SizeFlagsStretchRatio="1">
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True">
             <LineEdit
                 Name="SearchBar"
                 PlaceHolder="{Loc 'lathe-menu-search-designs'}"
-                HorizontalExpand="True"
-                SizeFlagsStretchRatio="1">
+                HorizontalExpand="True">
             </LineEdit>
             <Button
                 Name="FilterButton"
                 Text="{Loc 'lathe-menu-search-filter'}"
                 TextAlign="Center"
-                SizeFlagsStretchRatio="1"
-                Disabled="True">
+                Margin="5 0 0 0"
+                Disabled="True"
+                StyleClasses="ButtonSquare">
             </Button>
         </BoxContainer>
-        <ScrollContainer MinHeight="225">
-            <BoxContainer
-                Name="RecipeList"
-                Orientation="Vertical"
-                SizeFlagsStretchRatio="8"
-                HorizontalExpand="True"
-                VerticalExpand="True">
-            </BoxContainer>
-        </ScrollContainer>
-        <BoxContainer
-            Orientation="Horizontal"
-            HorizontalExpand="True"
-            VerticalExpand="True"
-            SizeFlagsStretchRatio="1">
+        <BoxContainer Orientation="Vertical"
+                      MinHeight="225"
+                      VerticalExpand="True"
+                      HorizontalExpand="True"
+                      SizeFlagsStretchRatio="4">
+            <PanelContainer VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                </PanelContainer.PanelOverride>
+                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                    <BoxContainer
+                        Name="RecipeList"
+                        Orientation="Vertical"
+                        HorizontalExpand="True"
+                        VerticalExpand="True"
+                        RectClipContent="True">
+                    </BoxContainer>
+                </ScrollContainer>
+            </PanelContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True">
             <Label Margin="8 0 8 0" Text="{Loc 'lathe-menu-amount'}"/>
             <LineEdit
                 Name="AmountLineEdit"
                 PlaceHolder="0"
                 Text="1"
-                HorizontalExpand="True" />
+                HorizontalExpand="True"/>
         </BoxContainer>
-        <ItemList
-            Name="Materials"
-            VerticalExpand="True"
-            SizeFlagsStretchRatio="3">
-        </ItemList>
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+            <ItemList
+                Name="Materials"
+                VerticalExpand="True">
+            </ItemList>
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
 

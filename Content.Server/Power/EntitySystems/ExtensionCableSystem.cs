@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Power.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -128,7 +129,8 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var entity in nearbyEntities)
             {
-                if (entity == owner) continue;
+                if (entity == owner)
+                    continue;
 
                 if (EntityManager.IsQueuedForDeletion(entity) || MetaData(entity).EntityLifeStage > EntityLifeStage.MapInitialized)
                     continue;
@@ -139,7 +141,7 @@ namespace Content.Server.Power.EntitySystems
                 if (!receiver.Connectable || receiver.Provider != null)
                     continue;
 
-                if ((Transform(entity).LocalPosition - xform.LocalPosition).Length < Math.Min(range, receiver.ReceptionRange))
+                if ((Transform(entity).LocalPosition - xform.LocalPosition).Length() < Math.Min(range, receiver.ReceptionRange))
                     yield return receiver;
             }
         }
@@ -247,24 +249,42 @@ namespace Content.Server.Power.EntitySystems
 
             var coordinates = xform.Coordinates;
             var nearbyEntities = grid.GetCellsInSquareArea(coordinates, (int) Math.Ceiling(range / grid.TileSize));
+            var cableQuery = GetEntityQuery<ExtensionCableProviderComponent>();
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
 
+            ExtensionCableProviderComponent? closestCandidate = null;
+            var closestDistanceFound = float.MaxValue;
             foreach (var entity in nearbyEntities)
             {
-                if (entity == owner || !EntityManager.TryGetComponent<ExtensionCableProviderComponent?>(entity, out var provider)) continue;
+                if (entity == owner || !cableQuery.TryGetComponent(entity, out var provider) || !provider.Connectable)
+                    continue;
 
-                if (EntityManager.IsQueuedForDeletion(entity)) continue;
+                if (EntityManager.IsQueuedForDeletion(entity))
+                    continue;
 
-                if (MetaData(entity).EntityLifeStage > EntityLifeStage.MapInitialized) continue;
+                if (!metaQuery.TryGetComponent(entity, out var meta) || meta.EntityLifeStage > EntityLifeStage.MapInitialized)
+                    continue;
 
-                if (!provider.Connectable) continue;
+                // Find the closest provider
+                if (!xformQuery.TryGetComponent(entity, out var entityXform))
+                    continue;
+                var distance = (entityXform.LocalPosition - xform.LocalPosition).Length();
+                if (distance >= closestDistanceFound)
+                    continue;
 
-                if ((Transform(entity).LocalPosition - xform.LocalPosition).Length > Math.Min(range, provider.TransferRange)) continue;
+                closestCandidate = provider;
+                closestDistanceFound = distance;
+            }
 
-                foundProvider = provider;
+            // Make sure the provider is in range before claiming success
+            if (closestCandidate != null && closestDistanceFound <= Math.Min(range, closestCandidate.TransferRange))
+            {
+                foundProvider = closestCandidate;
                 return true;
             }
 
-            foundProvider = default;
+            foundProvider = null;
             return false;
         }
 

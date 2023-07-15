@@ -1,4 +1,4 @@
-﻿trait-blindness-name = Blindness
+trait-blindness-name = Blindness
 trait-blindness-desc = You lack vision
 
 trait-narcolepsy-name = Narcolepsy
@@ -19,3 +19,9 @@ trait-paracusia-desc = You hear sounds that aren't really there
 
 trait-uncloneable-name = Uncloneable
 trait-uncloneable-desc = Cannot be cloned
+
+trait-pirate-accent-name = Pirate Accent
+trait-pirate-accent-desc = You can't stop speaking like a pirate!
+
+trait-archaic-accent-name = Archaic Accent
+trait-archaic-accent-desc = You speak in a way that many others find outdated

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Explosion.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.CCVar;
@@ -305,7 +306,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         EntityQuery<TagComponent> tagQuery,
         EntityQuery<ProjectileComponent> projectileQuery)
     {
-        var gridBox = Box2.FromDimensions(tile * DefaultTileSize, (DefaultTileSize, DefaultTileSize));
+        var gridBox = Box2.FromDimensions(tile * DefaultTileSize, new Vector2(DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
         var list = new List<TransformComponent>();
         var state = (list, processed, invSpaceMatrix, lookup.Owner, xformQuery, gridBox);
@@ -399,7 +400,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             {
                 // no damage-dict multiplication required.
                 _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true, damageable: damageable);
-                if (HasComp<MindComponent>(uid) || HasComp<ExplosiveComponent>(uid))
+                if (HasComp<MindContainerComponent>(uid) || HasComp<ExplosiveComponent>(uid))
                 {
                     var damageStr = string.Join(", ", damage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));
                     _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
@@ -410,7 +411,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             {
                 var appliedDamage = damage * ev.DamageCoefficient;
                 _damageableSystem.TryChangeDamage(uid, appliedDamage, ignoreResistances: true, damageable: damageable);
-                if (HasComp<MindComponent>(uid) || HasComp<ExplosiveComponent>(uid))
+                if (HasComp<MindContainerComponent>(uid) || HasComp<ExplosiveComponent>(uid))
                 {
                     var damageStr = string.Join(", ", appliedDamage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));
                     _adminLogger.Add(LogType.Explosion, LogImpact.Medium,

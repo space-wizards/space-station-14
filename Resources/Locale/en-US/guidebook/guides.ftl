@@ -12,6 +12,8 @@ guide-entry-singularity = Singularity
 guide-entry-controls = Controls
 guide-entry-radio = Radio
 guide-entry-jobs = Jobs
+guide-entry-cargo = Cargo
+guide-entry-cargo-bounties = Cargo Bounties
 guide-entry-salvage = Salvage
 guide-entry-survival = Survival
 guide-entry-chemicals = Chemicals
@@ -27,7 +29,6 @@ guide-entry-medicine = Medicine
 guide-entry-botanicals = Botanicals
 guide-entry-cloning = Cloning
 guide-entry-cryogenics = Cryogenics
-
 guide-entry-science = Science
 guide-entry-anomalous-research = Anomalous Research
 guide-entry-scanners-and-vessels = Scanners and Vessels
@@ -40,3 +41,6 @@ guide-entry-robotics = Robotics
 
 guide-entry-security = Security
 guide-entry-dna = DNA
+
+guide-entry-antagonists = Antagonists
+guide-entry-nuclear-operatives = Nuclear Operatives

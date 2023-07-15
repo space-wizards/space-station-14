@@ -94,9 +94,8 @@
     blacklist:
       components:
       - Material
-      - PDA
+      - Pda
       - IdCard
-      - HumanoidAppearance
       tags:
       - HighRiskItem
     sound:
