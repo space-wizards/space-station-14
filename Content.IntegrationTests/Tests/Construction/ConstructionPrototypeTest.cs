@@ -124,6 +124,7 @@ namespace Content.IntegrationTests.Tests.Construction
             var server = pairTracker.Pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
+            var entMan = server.ResolveDependency<IEntityManager>();
 
             foreach (var proto in protoMan.EnumeratePrototypes<ConstructionPrototype>())
             {
@@ -135,8 +136,9 @@ namespace Content.IntegrationTests.Tests.Construction
                 Assert.That(graph.TryPath(start, target, out var path), $"Unable to find path from \"{start}\" to \"{target}\" on graph \"{graph.ID}\"");
                 Assert.That(path, Has.Length.GreaterThanOrEqualTo(1), $"Unable to find path from \"{start}\" to \"{target}\" on graph \"{graph.ID}\".");
                 var next = path[0];
-                Assert.That(next.Entity, Is.Not.Null, $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) must specify an entity! Graph: {graph.ID}");
-                Assert.That(protoMan.TryIndex(next.Entity, out EntityPrototype entity), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an invalid entity prototype ({next.Entity})");
+                var nextId = next.Entity.GetId(null, null, new(entMan));
+                Assert.That(nextId, Is.Not.Null, $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) must specify an entity! Graph: {graph.ID}");
+                Assert.That(protoMan.TryIndex(nextId, out EntityPrototype entity), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an invalid entity prototype ({nextId} [{next.Entity}])");
                 Assert.That(entity.Components.ContainsKey("Construction"), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an entity prototype ({next.Entity}) without a ConstructionComponent.");
 #pragma warning restore NUnit2045
             }

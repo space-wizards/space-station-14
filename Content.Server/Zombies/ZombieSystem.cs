@@ -258,7 +258,7 @@ namespace Content.Server.Zombies
                 }
                 else
                 {
-                    if (_random.Prob(GetZombieInfectionChance(entity, component)))
+                    if (!HasComp<ZombieImmuneComponent>(entity) && _random.Prob(GetZombieInfectionChance(entity, component)))
                     {
                         var pending = EnsureComp<PendingZombieComponent>(entity);
                         pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.ZombieInfectionTurnTime;
@@ -301,6 +301,7 @@ namespace Content.Server.Zombies
                 _humanoidSystem.SetBaseLayerId(target, layer, info.ID);
             }
             _humanoidSystem.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
+            _bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
 
             MetaData(target).EntityName = zombiecomp.BeforeZombifiedEntityName;
             return true;
