@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Added the proto-kinetic crusher for salvagers., type: Add}
-  id: 3755
-  time: '2023-05-14T03:15:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix docked grids failing to split., type: Fix}
   id: 3756
   time: '2023-05-14T03:29:50.0000000+00:00'
@@ -2963,3 +2958,13 @@ Entries:
   - {message: Quartermaster airlock now has command sprite, type: Tweak}
   id: 4254
   time: '2023-07-16T02:21:32.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: In an effort to reduce the amount of manpower lost during Syndicate
+      missions operators can now order deathrattle implants from the uplink. These
+      implants send your coordinates to the syndicate radio when going into a critical
+      state and upon dying., type: Add}
+  - {message: Tracking implants now relay the location of an implanted person to the
+      security channel when they go into a critical state., type: Tweak}
+  id: 4255
+  time: '2023-07-16T02:59:47.0000000+00:00'
