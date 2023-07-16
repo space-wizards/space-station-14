@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Arrivals will auto-orient your camera upon traversal., type: Add}
-  id: 3759
-  time: '2023-05-14T11:46:29.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'Secret''s gamemode weights have been tweaked. Zombies are now much
@@ -2967,3 +2962,16 @@ Entries:
       the station. Find them in your local Good Clean Fun vendor today!, type: Add}
   id: 4258
   time: '2023-07-16T07:07:47.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added instrument bands. Choose a person as your band "leader" and your
+      instrument playback will be synced with them! You can even become a one-man
+      band by playing multiple instruments at once and syncing them together., type: Add}
+  - {message: 'Added MIDI channel filtering to instruments. You can now choose which
+      channels your instrument will play! Useful with instrument bands, so each person
+      can play a different "track" of the song, if the MIDI file supports it.', type: Add}
+  - {message: Fixed some cases where custom instruments (such as the gilded bike horn)
+      would sound like a piano instead., type: Fix}
+  - {message: Fixed user soundfonts not being loaded., type: Fix}
+  id: 4259
+  time: '2023-07-16T19:12:53.0000000+00:00'
