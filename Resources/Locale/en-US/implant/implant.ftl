@@ -40,3 +40,8 @@ use-dna-scrambler-implant-action-description = LING IN MAINTS!
 
 scramble-attempt-while-scrambled-popup = Scrambled DNA detected, please extract implant before undoing the current scramble.
 scramble-implant-activated-popup = You transformed into {$identity}
+
+## Implant Messages
+
+deathrattle-implant-dead-message = {$user} has died at {$position}.
+deathrattle-implant-critical-message = {$user} life signs critical, immediate assistance required at {$position}.
