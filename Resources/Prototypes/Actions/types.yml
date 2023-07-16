@@ -148,3 +148,10 @@
   icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
   checkCanInteract: false
   event: !type:WakeActionEvent
+
+- type: instantAction
+  id: ActivateHonkImplant
+  name: action-name-honk
+  description: action-desc-honk
+  icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
+  event: !type:ActivateImplantEvent

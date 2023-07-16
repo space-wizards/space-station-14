@@ -48,3 +48,9 @@
       types:
         Piercing: 10
         Blunt: 4
+        Structural: 7
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Structural: 30

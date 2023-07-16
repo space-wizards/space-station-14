@@ -80,7 +80,7 @@ namespace Content.Server.Pointing.EntitySystems
                 RaiseNetworkEvent(new PopupEntityEvent(message, PopupType.Small, source), viewerEntity);
             }
 
-            _replay.QueueReplayMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, source));
+            _replay.RecordServerMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, source));
         }
 
         public bool InRange(EntityUid pointer, EntityCoordinates coordinates)

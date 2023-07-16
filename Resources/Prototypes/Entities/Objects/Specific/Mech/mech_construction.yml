@@ -292,7 +292,6 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
-    netsync: false
     sprite: Objects/Specific/Mech/hamtr_construction.rsi
 
 - type: entity

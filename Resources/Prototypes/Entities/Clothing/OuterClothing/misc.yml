@@ -236,6 +236,7 @@
   - type: Construction
     graph: GhostSheet
     node: ghost_sheet
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingOuterBase

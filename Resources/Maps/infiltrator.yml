@@ -446,8 +446,6 @@ entities:
       type: IFF
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 2319.9379624
-      type: GridPathfinding
     - type: RadiationGridResistance
     - nextShake: 0
       shakeTimes: 10

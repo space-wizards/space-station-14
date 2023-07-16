@@ -13,7 +13,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHelmetHelmet
+      - id: ClothingHeadHelmetBasic
         amount: 3
 
 - type: entity

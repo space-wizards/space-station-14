@@ -86,7 +86,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             if (component.BehaviorProperties.TransportEntities || component.BehaviorProperties.TransportSentient)
                 foreach (var entity in target.Value.storageComponent.Contents.ContainedEntities.ToArray())
                 {
-                    if (EntityManager.HasComponent<MindComponent>(entity))
+                    if (EntityManager.HasComponent<MindContainerComponent>(entity))
                     {
                         if (!component.BehaviorProperties.TransportSentient)
                             continue;
@@ -297,7 +297,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         if (component.BehaviorProperties.TransportEntities || component.BehaviorProperties.TransportSentient)
             foreach (var entity in entityStorageComponent.Contents.ContainedEntities.ToArray())
             {
-                if (EntityManager.HasComponent<MindComponent>(entity))
+                if (EntityManager.HasComponent<MindContainerComponent>(entity))
                 {
                     if (!component.BehaviorProperties.TransportSentient)
                         continue;

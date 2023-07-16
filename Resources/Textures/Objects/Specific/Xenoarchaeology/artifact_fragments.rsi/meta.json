@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Taken from goonstation at commit https://github.com/goonstation/goonstation/commit/8c9738746d1222a80dddff25af1bceda58bbccac and created by Flaborized.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "precursorball1"
+    },
+    {
+      "name": "precursorball2"
+    },
+    {
+      "name": "precursorball3"
+    },
+    {
+      "name": "precursorball4"
+    },
+    {
+      "name": "precursorball5"
+    },
+    {
+      "name": "precursorball6"
+    },
+    {
+      "name": "wizardball1"
+    },
+    {
+      "name": "wizardball2"
+    },
+    {
+      "name": "wizardball3"
+    },
+    {
+      "name": "wizardball4"
+    },
+    {
+      "name": "wizardball5"
+    },
+    {
+      "name": "wizardball6"
+    },
+    {
+      "name": "martianball1"
+    },
+    {
+      "name": "martianball2"
+    },
+    {
+      "name": "martianball3"
+    },
+    {
+      "name": "martianball4"
+    },
+    {
+      "name": "martianball5"
+    },
+    {
+      "name": "martianball6"
+    },
+    {
+      "name": "eldritchball1"
+    },
+    {
+      "name": "eldritchball2"
+    },
+    {
+      "name": "eldritchball3"
+    },
+    {
+      "name": "eldritchball4"
+    },
+    {
+      "name": "eldritchball5"
+    },
+    {
+      "name": "eldritchball6"
+    },
+    {
+      "name": "ancientball1"
+    },
+    {
+      "name": "ancientball2"
+    },
+    {
+      "name": "ancientball3"
+    },
+    {
+      "name": "ancientball4"
+    },
+    {
+      "name": "ancientball5"
+    },
+    {
+      "name": "ancientball6"
+    }
+  ]
+}
