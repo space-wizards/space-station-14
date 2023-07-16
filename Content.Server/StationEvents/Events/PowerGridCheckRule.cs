@@ -31,7 +31,7 @@ namespace Content.Server.StationEvents.Events
             if (!TryGetRandomStation(out var chosenStation))
                 return;
 
-            var query = EntityQueryEnumerator<ApcComponent, TransformComponent>();
+            var query = AllEntityQuery<ApcComponent, TransformComponent>();
             while (query.MoveNext(out var target, out var apc, out var transform))
             {
                 if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation)
