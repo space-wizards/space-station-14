@@ -35,3 +35,8 @@ use-emp-implant-action-description = Triggers a small EMP pulse around you
 
 use-dna-scrambler-implant-action-name = Scramble DNA
 use-dna-scrambler-implant-action-description = LING IN MAINTS!
+
+## Implant Popups
+
+scramble-attempt-while-scrambled-popup = Scrambled DNA detected, please extract implant before undoing the current scramble.
+scramble-implant-activated-popup = You transformed into {$identity}

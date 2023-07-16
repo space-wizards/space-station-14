@@ -72,7 +72,18 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         if (component.ImplantedEntity == null)
             return;
 
-        _polymorph.PolymorphEntity(component.ImplantedEntity.Value, "Scrambled");
+        var newIdentity = _polymorph.PolymorphEntity(component.ImplantedEntity.Value, "Scrambled");
+
+        //checks if someone is trying to use a dna scrambler implant while already scrambled
+        if (newIdentity == null)
+        {
+            _popup.PopupEntity(Loc.GetString("scramble-attempt-while-scrambled-popup"), component.ImplantedEntity.Value, component.ImplantedEntity.Value);
+            return;
+        }
+
+        _popup.PopupEntity(Loc.GetString("scramble-implant-activated-popup", ("identity", newIdentity.Value)), newIdentity.Value, newIdentity.Value);
+
         args.Handled = true;
+        QueueDel(uid);
     }
 }

@@ -74,7 +74,7 @@
   name: use-emp-implant-action-name
   description: use-emp-implant-action-description
   charges: 3
-  useDelay: 10
+  useDelay: 5
   itemIconStyle: BigAction
   priority: -20
   icon:
