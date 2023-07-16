@@ -1,11 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: 'Added suit storage units, for storing EVA-capable suits.', type: Add}
-  - {message: 'Most lockers with space suits no longer contain them, in lieu of suit
-      storage units.', type: Tweak}
-  id: 3753
-  time: '2023-05-14T01:36:47.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The RPED can now quickly pick up machine parts on the ground like a
@@ -2966,3 +2959,8 @@ Entries:
       can be locked with a wrench., type: Tweak}
   id: 4252
   time: '2023-07-15T19:59:46.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: Make minibomb a little louder., type: Tweak}
+  id: 4253
+  time: '2023-07-16T01:59:10.0000000+00:00'
