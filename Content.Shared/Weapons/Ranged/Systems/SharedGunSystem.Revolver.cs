@@ -271,7 +271,7 @@ public partial class SharedGunSystem
                     if (TryComp<CartridgeAmmoComponent>(uid, out var cartridge))
                         SetCartridgeSpent(uid, cartridge, !(bool) chamber);
 
-                    EjectCartridge(uid);
+                    EjectCartridge(uid, 0f);
                 }
 
                 component.Chambers[i] = null;
@@ -283,7 +283,7 @@ public partial class SharedGunSystem
                 component.AmmoContainer.Remove(slot.Value);
 
                 if (!_netManager.IsClient)
-                    EjectCartridge(slot.Value);
+                    EjectCartridge(slot.Value, 0f);
 
                 anyEmpty = true;
             }

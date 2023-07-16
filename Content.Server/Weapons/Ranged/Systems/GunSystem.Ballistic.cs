@@ -27,7 +27,7 @@ public sealed partial class GunSystem
         }
 
         if (ent != null)
-            EjectCartridge(ent.Value);
+            EjectCartridge(ent.Value, 0f);
 
         var cycledEvent = new GunCycledEvent();
         RaiseLocalEvent(uid, ref cycledEvent);

@@ -377,6 +377,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// </summary>
     protected void EjectCartridge(
         EntityUid entity,
+        Angle angle,
         bool playSound = true)
     {
         // TODO: Sound limit version.
@@ -389,6 +390,12 @@ public abstract partial class SharedGunSystem : EntitySystem
         xform.LocalRotation = Random.NextAngle();
         xform.Coordinates = coordinates;
 
+        // decides direction the casing ejects and only when not cycling
+        if (angle != 0f)
+        {
+            angle += 10;
+            ThrowingSystem.TryThrow(entity, angle.ToVec().Normalized(), 2f);
+        }
         if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
         {
             Audio.PlayPvs(cartridge.EjectSound, entity, AudioParams.Default.WithVariation(0.05f).WithVolume(-1f));
