@@ -225,6 +225,7 @@
       - ClothingBackpackDuffelHolding
       - WelderExperimental
       - JawsOfLife
+      - Multitool
 
 - type: entity
   id: CircuitImprinter

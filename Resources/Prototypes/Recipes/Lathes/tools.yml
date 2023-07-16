@@ -85,6 +85,7 @@
   materials:
     Steel: 200
     Plastic: 200
+    Gold: 25
 
 - type: latheRecipe
   id: NetworkConfigurator
