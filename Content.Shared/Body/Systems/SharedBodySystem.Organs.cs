@@ -18,7 +18,7 @@ public partial class SharedBodySystem
         SubscribeLocalEvent<OrganComponent, ComponentHandleState>(OnOrganHandleState);
     }
 
-    private OrganSlot? CreateOrganSlot(string slotId, EntityUid parent, BodyPartComponent? part = null)
+    public OrganSlot? CreateOrganSlot(string slotId, EntityUid parent, BodyPartComponent? part = null)
     {
         if (!Resolve(parent, ref part, false))
             return null;

@@ -1,0 +1,7 @@
+- type: entity
+  id: BorgChassisStandard
+  parent: BaseBorgChassis
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/drone.rsi
+    state: drone

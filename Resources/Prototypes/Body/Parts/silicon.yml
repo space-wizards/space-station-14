@@ -20,6 +20,16 @@
     materialComposition:
       Steel: 25
 
+# this isn't ever visible. This is the torso that borgs use for attaching legs and inserting brains
+- type: entity
+  id: SiliconCore
+  parent: PartSilicon
+  name: silicon core
+  noSpawn: true
+  components:
+  - type: BodyPart
+    partType: Torso
+
 - type: entity
   id: LeftArmBorg
   name: "left borg arm"

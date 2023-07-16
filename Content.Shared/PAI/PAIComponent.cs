@@ -16,6 +16,13 @@ namespace Content.Shared.PAI
     [RegisterComponent, NetworkedComponent]
     public sealed class PAIComponent : Component
     {
+        /// <summary>
+        /// The last person who activated this PAI.
+        /// Used for assigning the name.
+        /// </summary>
+        [ViewVariables]
+        public EntityUid? LastUser;
+
         [DataField("midiAction", required: true, serverOnly: true)] // server only, as it uses a server-BUI event !type
         public InstantAction? MidiAction;
     }

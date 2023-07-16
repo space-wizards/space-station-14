@@ -1,0 +1,7 @@
+﻿- type: body
+  id: Borg
+  name: borg
+  root: torso
+  slots:
+    torso:
+      part: SiliconCore

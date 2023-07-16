@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: BaseBorgChassis
-  name: borg chassis
+  name: cyborg
+  description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
   save: false
   abstract: true
   components:
@@ -9,6 +10,7 @@
       Acidic: [Touch]
   - type: Input
     context: "human"
+  - type: InputMover
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -31,19 +33,38 @@
         layer:
         - MobLayer
   - type: MovementSpeedModifier
-    baseWalkSpeed : 4.5
-    baseSprintSpeed : 2.5
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4.5
   - type: Sprite
     noRot: true
     drawdepth: Mobs
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.7
+      80: 0.5
   - type: Physics
     bodyType: KinematicController
+  - type: UserInterface
+    interfaces:
+    - key: enum.SiliconLawsUiKey.Key
+      type: SiliconLawBoundUserInterface
+  - type: SiliconLawBound
   - type: Hands
     showInHands: false
   - type: Body
-    prototype: Drone
+    prototype: Borg
   - type: BorgChassis
   - type: DoAfter
+  - type: Actions
+  - type: Flashable
   - type: Pullable
   - type: Examiner
   - type: StandingState
