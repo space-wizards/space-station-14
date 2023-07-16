@@ -1,0 +1,11 @@
+- type: guideEntry
+  id: StandardOperatingProcedure
+  name: guide-entry-sop
+  text: "/ServerInfo/Guidebook/SoP/StandardOperatingProcedure.xml"
+  children:
+    - TradeStationEtiquette
+
+- type: guideEntry
+  id: TradeStationEtiquette
+  name: guide-entry-tse
+  text: "/ServerInfo/Guidebook/SoP/TradeStationEtiquette.xml"

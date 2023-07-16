@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.Guidebook.Components;
 using Content.Client.Light;
+using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.Verbs;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Component;
@@ -29,7 +30,7 @@ public sealed class GuidebookSystem : EntitySystem
     [Dependency] private readonly SharedPointLightSystem _pointLightSystem = default!;
     [Dependency] private readonly TagSystem _tags = default!;
 
-    public event Action<List<string>, List<string>?, string?, bool, string?>? OnGuidebookOpen;
+    public event Action<List<string>, List<string>?, string?, bool, string?, bool>? OnGuidebookOpen;
     public const string GuideEmbedTag = "GuideEmbeded";
 
     private EntityUid _defaultUser;
@@ -72,7 +73,11 @@ public sealed class GuidebookSystem : EntitySystem
         {
             Text = Loc.GetString("guide-help-verb"),
             Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
-            Act = () => OnGuidebookOpen?.Invoke(component.Guides, null, null, component.IncludeChildren, component.Guides[0]),
+            Act = () =>
+            {
+                OnGuidebookOpen?.Invoke(component.Guides, null, null, component.IncludeChildren,
+                    component.Guides[0], true);
+            },
             ClientExclusive = true,
             CloseMenu = true
         });
@@ -86,7 +91,7 @@ public sealed class GuidebookSystem : EntitySystem
         if (!component.OpenOnActivation || component.Guides.Count == 0 || _tags.HasTag(uid, GuideEmbedTag))
             return;
 
-        OnGuidebookOpen?.Invoke(component.Guides, null, null, component.IncludeChildren, component.Guides[0]);
+        OnGuidebookOpen?.Invoke(component.Guides, null, null, component.IncludeChildren, component.Guides[0], true);
         args.Handled = true;
     }
 

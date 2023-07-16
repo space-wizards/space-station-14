@@ -132,12 +132,13 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         List<string>? rootEntries = null,
         string? forceRoot = null,
         bool includeChildren = true,
-        string? selected = null)
+        string? selected = null,
+        bool forceOpen = false)
     {
         if (_guideWindow == null)
             return;
 
-        if (_guideWindow.IsOpen)
+        if (_guideWindow.IsOpen && !forceOpen)
         {
             _guideWindow.Close();
             return;
@@ -175,7 +176,8 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         List<string>? rootEntries = null,
         string? forceRoot = null,
         bool includeChildren = true,
-        string? selected = null)
+        string? selected = null,
+        bool forceOpen = false)
     {
         Dictionary<string, GuideEntry> guides = new();
         foreach (var guideId in guideList)
@@ -188,7 +190,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
             guides.Add(guideId, guide);
         }
 
-        ToggleGuidebook(guides, rootEntries, forceRoot, includeChildren, selected);
+        ToggleGuidebook(guides, rootEntries, forceRoot, includeChildren, selected, forceOpen);
     }
 
     private void RecursivelyAddChildren(GuideEntry guide, Dictionary<string, GuideEntry> guides)

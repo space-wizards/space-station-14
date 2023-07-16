@@ -1,14 +1,35 @@
 ﻿<Document>
-# Ekrixi
+  # Ekrixi
 
-Welcome to Ekrixi! The gameplay of this fork differs heavily from Wizard's Den (referred to as Upstream), but some mechanics still remain the same. If you understand how to play your department, you should read up on that specific category.
+  <Box>
+    <GuideColorLabelBand Caption="[color=#ffffff]Welcome to [bold]Ekrixi[/bold]." Color="#101010" Height="50"/>
+  </Box>
 
-## What this is
-Ekrixi is a roleplaying game set on an independent ship on the [color=#a4885c]the edge[/color] of charted space.
+  Welcome to Ekrixi! The gameplay of this fork differs heavily from Wizard's Den (referred to as Upstream), but some mechanics still remain the same. If you understand how to play your department, you should read up on that specific category.
 
-If you're brand new, that's great! The [color=#a4885c]Where to start[/color] section of this entry will help you out, if you're looking to do a bit more with the game, you can join our discord and find our github page in the lobby.
+  <Box>
+    <GuideColorLabelBand Caption="[color=#ffffff]What is this?" Color="#101010" Height="50"/>
+  </Box>
+  Ekrixi is a roleplaying game set on an independent ship on the [color=#a4885c]the edge[/color] of charted space.
 
-## Where to start
-It's recommended to start with the [color=#a4885c]Controls[/color] guide, and then read the [color=#a4885c]Lore[/color], [color=#a4885c]Character Creation[/color], [color=#a4885c]Roleplaying[/color], and [color=#a4885c]Jobs[/color] guides.
+  If you're brand new, that's great! The [color=#a4885c]Where to start[/color] section of this entry will help you out, if you're looking to do a bit more with the game, you can join our discord and find our github page in the lobby.
 
+  <Box>
+    <GuideColorLabelBand Caption="[color=#ffffff]Where to start?" Color="#101010" Height="50"/>
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHyperlinkCommand" AllowGuideHelp="true" />
+    <GuideEntityEmbed Entity="GuidebookHyperlinkNavigation" AllowGuideHelp="true" />
+    <GuideEntityEmbed Entity="GuidebookHyperlinkEngineering" AllowGuideHelp="true"/>
+    <GuideEntityEmbed Entity="GuidebookHyperlinkMedical" AllowGuideHelp="true"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHyperlinkSecurity" AllowGuideHelp="true"/>
+    <GuideEntityEmbed Entity="GuidebookHyperlinkLaw" AllowGuideHelp="true"/>
+    <GuideEntityEmbed Entity="GuidebookHyperlinkLore" AllowGuideHelp="true"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHyperlinkSOP" AllowGuideHelp="true"/>
+  </Box>
 </Document>

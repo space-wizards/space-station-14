@@ -1,0 +1,84 @@
+<Document>
+  # Standard Operating Procedure
+
+  ## Terms
+  - [color=#a4885c]First warp[/color]: The period between the start of the shift and the first ever warp.
+  - [color=#a4885c]Pre-warp[/color]: The period between when the captain announces pre-warp, and the actual warp.
+  - [color=#a4885c]Warp[/color]: The period when the ship is in warpspace.
+  - [color=#a4885c]Post-warp[/color]: The cooldown period when the ship exits warpspace.
+  - [color=#a4885c]On-incidence[/color]: The period during a incidence/battle occurs.
+  - [color=#a4885c]Post-incidence[/color]: The period after an incident/battle occurs and it is officially declared safe enough where your ship cannot get worse than it already is.
+
+  ## First-warp procedures
+  Additional first-warp procedures for each department should be as follows. Heads of staff may specify additional or fewer procedures, otherwise, refer to pre-warp procedures.
+  - [color=#a4885c]Captain[/color]: Establish authority. Begin start-of-the-shift announcements, and announce additional or fewer laws.
+  - [color=#a4885c]Security[/color]: Arm the silo-fed weaponry and link weapon pads.
+  - [color=#a4885c]Engineering[/color]: Affirm that power systems are working.
+  - [color=#a4885c]Medical[/color]: Begin labeling chemicals.
+
+  ## Pre-warp procedures
+  Standard pre-warp procedures for each department should be as follows. Heads of staff may specify additional or fewer procedures.
+  - [color=#a4885c]Pilot[/color]: Discuss with command on where to go, announce to the crew on the destination.
+  - [color=#a4885c]Command[/color]: Begin ordering your department on their pre-warp procedures.
+  - [color=#a4885c]Security[/color]: Reload ammunition and prepare for warp.
+  - [color=#a4885c]Engineering[/color]: Perform a ship safety check by checking the rooms you are able to access for any issues.
+  - [color=#a4885c]Medical[/color]: Check for casualties and perform a head count to see whether the ship has marooned any crewmembers.
+
+  ## On-incidence procedures
+  Standard on-incidence procedures for each department should be as follows. Prioritize listening to your head of staff for orders. If none are given, follow the specified standard procedure for your department.
+  - [color=#a4885c]Pilot[/color]: Stay put and follow orders. Should the situation overwhelm the crew, prepare for warp.
+  - [color=#a4885c]Command[/color]: Begin ordering your department on what to do and relay situation reports through the command radio.
+  - [color=#a4885c]Security[/color]: Either begin firing at the hostile ship or search for intruders.
+  - [color=#a4885c]Engineering[/color]: Begin repairing broken machinery and structures.
+  - [color=#a4885c]Medical[/color]: Get to healing.
+
+  ## Post-incidence procedures
+  Standard post-incidence procedures for each department should be as follows. Prioritize listening to your head of staff for orders. If none are given, follow the specified standard procedure for your department.
+  - [color=#a4885c]Pilot[/color]: Stay put and follow orders. Should the situation overwhelm the crew, prepare for warp.
+  - [color=#a4885c]Command[/color]: Begin ordering your department on what to do and relay situation reports through the command radio.
+  - [color=#a4885c]Security[/color]: Begin to apprehend the intruder or assist in any other way you can.
+  - [color=#a4885c]Engineering[/color]: Begin repairing broken machinery and structures.
+  - [color=#a4885c]Medical[/color]: Get to healing.
+
+  ## Line of succession
+  Should the captain be unable to captain for any reason, an acting captain must be selected. These are a simple list of rulings which should help you more.
+  1. Is the captain able to captain? If so, go to step 5 - otherwise, proceed with the next step.
+  2. Is the pilot able to captain? If so, go to step 5 - otherwise, proceed with the next step.
+  3. All heads may vote on who to make captain, then go to step 5. If all heads are dead, proceed with the next step.
+  4. Set the alert level to Red and attempt emergency warp.
+  5. That person is now captain
+
+  ## High security areas
+  - Loading bay: Ordnance technicians and above.
+  - Brig: Ordnance technicians and above.
+  - Armoury: Security officers and above.
+  - Bridge: Command staff and above.
+
+  ## Docking
+  Refer to [color=#a4885c]Trade Station Etiquette[/color]. Each crewmember should be paid minimum wage (Cr20) or higher (Cr50 on average) upon docking at a trade station. Additionally, hazard pay may be awarded to crewmembers who have sustained major damage and/or have still persisted to perform their job even in tough situations.
+
+  ## Medical evaluation
+  The procedure for demoting on-duty personnel due to medical or psychological reasons involves simply asking the captain. The Chief Medical Officer may declare any non-command on-duty personnel unfit for duty and remove them from their position (including the Captain). Should the CMO rule a command on-duty person to be unfit for duty, a vote must be conducted with the CMO stating their reasons. The person being demoted may not partake in this vote. This standard operating procedure may not be overruled by the Captain.
+
+  ## Controlled/Restricted Substances/Items
+  Controlled substances are any substances that have been restricted or made illegal under space law. The current list of controlled substances is as follows:
+
+  - Space drugs
+  - Pure Lysergic Acid Diethylamide (LSD)
+  - Any explosive or pyrotechnic compound outside of science, salvage or security.
+  - Any lethal toxin or toxic substance/compound outside of science, salvage or security.
+
+  Controlled Items are items that have been restricted or made illegal under space law. The current list of controlled items is as follows:
+
+  - Biological or Chemical Weapons, such as neurotoxin grenades. Plasma gas is considered a chemical weapon when used offensively.
+  - Military Explosives when not in use by Security or otherwise authorised entities. Note that constructive explosives, such as any charges used for mining are not subject to this restriction. Plasma-based explosives are considered military weapons.
+  - Hacking software which allows a person to subvert access to ship systems, bypass access restrictions or attack a vessels computer network.
+
+  Restricted Gear is equipment that has been restricted to a specific station job or department. Exceptions can be made with proper authorization. The current list is as follows:
+
+  - [color=#a4885c]Security[/color]: Bullet proof vests or riot gear. A single exception is automatically authorized for bartending personnel.
+  - [color=#a4885c]Security[/color]: Lethal firearms. Any lethal gun or laser, usually this restriction can be waved off with a permit signed by the proper head of staff. Exception being salvaging's Proto Kinetic Accelerators and Captain's laser gun.
+  - [color=#a4885c]Security[/color]: Most standard issue security equipment. Security belt, vest, secglasses, etc.
+  - [color=#a4885c]Security[/color]: Non-lethal disabling technology. This covers disablers, stun batons, flash tech and bolas. Two exceptions exist; The head's handheld flash, and the HoP's and Captain's disabler.
+  - [color=#a4885c]Engineering[/color]: Meson goggles and insulated gloves.
+</Document>

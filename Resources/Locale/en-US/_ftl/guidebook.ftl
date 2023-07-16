@@ -10,3 +10,6 @@ guide-entry-lore-factions-independent = Independent
 guide-entry-guns-and-you = Guns & You
 guide-entry-law = Law
 guide-entry-navigation = Navigation
+
+guide-entry-sop = Standard Operating Procedure
+guide-entry-tse = Trade Station Etiquette

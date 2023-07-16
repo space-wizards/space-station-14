@@ -4,7 +4,9 @@
   text: "/ServerInfo/Guidebook/SpaceStation14.xml"
   children:
   - Controls
-  - Jobs
+  - StandardOperatingProcedure
   - Survival
   - Chemicals
+  - Jobs
   - Lore
+  - Antagonists

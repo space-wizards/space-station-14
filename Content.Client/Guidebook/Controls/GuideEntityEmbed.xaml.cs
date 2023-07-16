@@ -142,7 +142,13 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 
         var ent = _entityManager.SpawnEntity(proto, MapCoordinates.Nullspace);
 
-        _tagSystem.AddTag(ent, GuidebookSystem.GuideEmbedTag);
+        if (args.TryGetValue("AllowGuideHelp", out var allowed))
+        {
+            if (!bool.Parse(allowed))
+            {
+                _tagSystem.AddTag(ent, GuidebookSystem.GuideEmbedTag);
+            }
+        }
         Sprite = _entityManager.GetComponent<SpriteComponent>(ent);
 
         if (!args.TryGetValue("Caption", out var caption))

@@ -1,0 +1,132 @@
+# Used for guidebook entities
+
+- type: entity
+  id: BaseGuidebookHyperlink
+  name: hyperlink
+  abstract: true
+
+- type: entity
+  parent: BaseGuidebookHyperlink
+  noSpawn: true
+  id: GuidebookHyperlinkNavigation
+  name: navigation
+  description: This is a hyperlink to the navigation guide!
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/computers.rsi
+      layers:
+        - map: ["computerLayerBody"]
+          state: computer
+        - map: ["computerLayerKeyboard"]
+          state: generic_keyboard
+        - map: ["computerLayerScreen"]
+          state: shuttle
+        - map: ["computerLayerKeys"]
+          state: generic_keys
+    - type: GuideHelp
+      guides:
+        - Navigation
+
+- type: entity
+  parent: BaseGuidebookHyperlink
+  noSpawn: true
+  id: GuidebookHyperlinkCommand
+  name: command
+  description: This is a hyperlink to the command guide!
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/id_cards.rsi
+      layers:
+        - state: gold
+        - state: idcaptain
+    - type: GuideHelp
+      guides:
+        - Jobs
+
+- type: entity
+  parent: BaseGuidebookHyperlink
+  noSpawn: true
+  id: GuidebookHyperlinkEngineering
+  name: engineering
+  description: This is a hyperlink to the engineering guide!
+  components:
+    - type: GuideHelp
+      guides:
+        - Engineering
+    - type: Sprite
+      sprite: Objects/Tools/wrench.rsi
+      state: icon
+
+- type: entity
+  parent: BaseGuidebookHyperlink
+  noSpawn: true
+  id: GuidebookHyperlinkMedical
+  name: medical
+  description: This is a hyperlink to the medical guide!
+  components:
+    - type: GuideHelp
+      guides:
+        - Medical
+    - type: Sprite
+      sprite: Objects/Specific/Medical/firstaidkits.rsi
+      state: firstaid
+
+- type: entity
+  parent: BaseGuidebookHyperlink
+  noSpawn: true
+  id: GuidebookHyperlinkSecurity
+  name: security
+  description: This is a hyperlink to the security guide!
+  components:
+    - type: GuideHelp
+      guides:
+        - Medical
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/stunbaton.rsi
+      layers:
+        - state: stunbaton_on
+
+- type: entity
+  parent: BaseGuidebookHyperlink
+  noSpawn: true
+  id: GuidebookHyperlinkLaw
+  name: law
+  description: This is a hyperlink to the law guide!
+  components:
+    - type: GuideHelp
+      guides:
+        - Law
+    - type: Sprite
+      sprite: Clothing/Neck/Misc/lawyerbadge.rsi
+      state: icon
+
+- type: entity
+  parent: BaseGuidebookHyperlink
+  noSpawn: true
+  id: GuidebookHyperlinkLore
+  name: lore
+  description: This is a hyperlink to the lore guide!
+  components:
+    - type: GuideHelp
+      guides:
+        - Lore
+    - type: Sprite
+      sprite: Objects/Misc/authorbooks.rsi
+      layers:
+        - state: book_watched
+
+- type: entity
+  parent: BaseGuidebookHyperlink
+  noSpawn: true
+  id: GuidebookHyperlinkSOP
+  name: standard operating procedure
+  description: This is a hyperlink to the SoP guide!
+  components:
+    - type: GuideHelp
+      guides:
+        - StandardOperatingProcedure
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book0
+          map: [ "enum.DamageStateVisualLayers.Base" ]
