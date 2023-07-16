@@ -366,6 +366,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 _bui.TrySendUiMessage(request.Entity, request.UiKey, new InstrumentBandResponseBuiMessage(nearby),
                     (IPlayerSession)request.Session);
             }
+
             _bandRequestQueue.Clear();
         }
 

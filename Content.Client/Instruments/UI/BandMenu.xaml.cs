@@ -17,7 +17,6 @@ public sealed partial class BandMenu : DefaultWindow
 
         _owner = owner;
         BandList.OnItemSelected += OnItemSelected;
-        // BandList.OnItemDeselected += OnItemDeselected;
         RefreshButton.OnPressed += OnRefreshPressed;
     }
 
