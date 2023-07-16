@@ -25,6 +25,8 @@
           color: "#FFFFFF"
           visible: false
           shader: unshaded
+        - map: [ enum.ExpendableLightVisualLayers.Overlay ] #Error loose Overlay layer when use
+          state: torch_spent
     - type: Icon
       sprite: Objects/Misc/torch.rsi
       state: icon
