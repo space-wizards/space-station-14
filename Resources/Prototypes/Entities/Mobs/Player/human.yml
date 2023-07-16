@@ -29,7 +29,7 @@
   - type: CameraRecoil
   - type: Examiner
   - type: CanHostGuardian
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - NanoTrasen
 
@@ -44,7 +44,7 @@
       prototypes: [SyndicateOperativeGearExtremelyBasic]
     - type: RandomMetadata
       nameSegments: [names_death_commando]
-    - type: Faction
+    - type: NpcFactionMember
       factions:
       - Syndicate
 
@@ -74,6 +74,6 @@
       nameSegments:
       - SyndicateNamesPrefix
       - SyndicateNamesNormal
-    - type: Faction
+    - type: NpcFactionMember
       factions:
       - Syndicate

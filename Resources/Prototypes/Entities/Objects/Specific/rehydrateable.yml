@@ -93,7 +93,7 @@
         layer:
         - LowImpassable
   # pet fish before rehydrating and he will be nice to you
-  - type: FactionException
+  - type: NpcFactionMemberException
   - type: PettableFriend
     successString: petting-success-dehydrated-carp
     failureString: petting-failure-dehydrated-carp

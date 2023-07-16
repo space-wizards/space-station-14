@@ -26,7 +26,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly FactionSystem _faction = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly FoodSystem _food = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
@@ -264,7 +264,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 break;
             case NearbyHostilesQuery:
-                foreach (var ent in _faction.GetNearbyHostiles(owner, vision))
+                foreach (var ent in _npcFaction.GetNearbyHostiles(owner, vision))
                 {
                     entities.Add(ent);
                 }
