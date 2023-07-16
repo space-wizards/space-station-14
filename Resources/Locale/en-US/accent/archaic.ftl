@@ -369,10 +369,10 @@ accent-archaic-replaced-120 = refuse
 accent-archaic-replacement-120 = shun
 
 accent-archaic-replaced-121 = pest
-accent-archaic-replacement-1221 = varmint
+accent-archaic-replacement-121 = varmint
 
 accent-archaic-replaced-122 = ghost
-accent-archaic-replacement-22 = wraith
+accent-archaic-replacement-122 = wraith
 
 accent-archaic-replaced-123 = apparition
 accent-archaic-replacement-123 = wraith

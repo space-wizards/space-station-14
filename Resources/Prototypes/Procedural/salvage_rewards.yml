@@ -30,19 +30,22 @@
     SheetUranium: 1.0
     CratePartsT3: 1.0
     CratePartsT3T4: 0.5
+    TechnologyDiskRare: 0.5
     # cloning boards
     CloningPodMachineCircuitboard: 0.5
     MedicalScannerMachineCircuitboard: 0.5
     CloningConsoleComputerCircuitboard: 0.5
     BiomassReclaimerMachineCircuitboard: 0.5
     # basic weapons
-    CrateArmorySMG: 0.25
-    CrateArmoryLaser: 0.25
-    WeaponMakeshiftLaser: 0.25
+    Katana: 0.25
+    KukriKnife: 0.25
+    WeaponLaserGun: 0.25
+    MakeshiftShield: 0.25
     # rare armor
-    ClothingHeadHelmetSwat: 0.1
+    ClothingHeadHelmetSwat: 0.25
+    ClothingOuterArmorBasicSlim: 0.25
     # rare weapons
-    WeaponSubMachineGunC20r: 0.1
+    WeaponMakeshiftLaser: 0.1
     # money
     SpaceCash500: 1.0
     SpaceCash1000: 0.75
@@ -55,11 +58,12 @@
     ResearchAndDevelopmentServerMachineCircuitboard: 1.0
     CratePartsT4: 1.0
     PowerCellAntiqueProto: 0.25
-    # rare weapons
-    WeaponAdvancedLaser: 1.0
-    WeaponLaserCannon: 1.0
-    WeaponXrayCannon: 1.0
-    WeaponSniperHristov: 1.0
+    # basic weapons
+    CrateArmorySMG: 1.0
+    CrateArmoryLaser: 1.0
+    CrateArmoryShotgun: 1.0
+    # rare armor
+    ClothingOuterArmorRiot: 1.0
     # rare chemicals
     CognizineChemistryBottle: 1.0
     OmnizineChemistryBottle: 1.0
