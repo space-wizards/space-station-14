@@ -5,13 +5,11 @@
   playTimeTracker: JobCargoTechnician
   startingGear: CargoTechGear
   icon: "CargoTechnician"
-  supervisors: job-supervisors-qm
+  supervisors: job-supervisors-hop-qm
   access:
   - Cargo
   - Maintenance
   - External
-  extendedAccess:
-  - Salvage
 
 - type: startingGear
   id: CargoTechGear

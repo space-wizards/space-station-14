@@ -23,7 +23,7 @@
     containers:
     - entity_storage
   - type: StaticPrice
-    price: 80
+    price: 150
 
 - type: entity
   parent: CrateBaseWeldable

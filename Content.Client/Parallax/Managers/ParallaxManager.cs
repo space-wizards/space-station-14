@@ -1,5 +1,4 @@
 using System.Collections.Concurrent;
-using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Client.Parallax.Data;

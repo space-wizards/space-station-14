@@ -49,6 +49,7 @@ namespace Content.Client.GameTicking.Managers
 
         public event Action? InfoBlobUpdated;
         public event Action? LobbyStatusUpdated;
+        public event Action? LobbyReadyUpdated;
         public event Action? LobbyLateJoinStatusUpdated;
         public event Action<IReadOnlyDictionary<EntityUid, Dictionary<string, uint?>>>? LobbyJobsAvailableUpdated;
 
@@ -61,6 +62,7 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<TickerLobbyStatusEvent>(LobbyStatus);
             SubscribeNetworkEvent<TickerLobbyInfoEvent>(LobbyInfo);
             SubscribeNetworkEvent<TickerLobbyCountdownEvent>(LobbyCountdown);
+            SubscribeNetworkEvent<TickerLobbyReadyEvent>(LobbyReady);
             SubscribeNetworkEvent<RoundEndMessageEvent>(RoundEnd);
             SubscribeNetworkEvent<RequestWindowAttentionEvent>(msg =>
             {
@@ -120,6 +122,11 @@ namespace Content.Client.GameTicking.Managers
         {
             StartTime = message.StartTime;
             Paused = message.Paused;
+        }
+
+        private void LobbyReady(TickerLobbyReadyEvent message)
+        {
+            LobbyReadyUpdated?.Invoke();
         }
 
         private void RoundEnd(RoundEndMessageEvent message)

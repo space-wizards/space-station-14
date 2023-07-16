@@ -8,10 +8,12 @@ using Robust.Shared.Console;
 namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Logs)]
-    public sealed class ListObjectivesCommand : LocalizedCommands
+    public sealed class ListObjectivesCommand : IConsoleCommand
     {
-        public override string Command => "lsobjectives";
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public string Command => "lsobjectives";
+        public string Description => "Lists all objectives in a players mind.";
+        public string Help => "lsobjectives [<username>]";
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             IPlayerData? data;
@@ -21,14 +23,14 @@ namespace Content.Server.Objectives.Commands
             }
             else if (player == null || !IoCManager.Resolve<IPlayerManager>().TryGetPlayerDataByUsername(args[0], out data))
             {
-                shell.WriteError(LocalizationManager.GetString("shell-target-player-does-not-exist"));
+                shell.WriteLine("Can't find the playerdata.");
                 return;
             }
 
             var mind = data.ContentData()?.Mind;
             if (mind == null)
             {
-                shell.WriteError(LocalizationManager.GetString("shell-target-entity-does-not-have-message", ("missing", "mind")));
+                shell.WriteLine("Can't find the mind.");
                 return;
             }
 
@@ -43,16 +45,6 @@ namespace Content.Server.Objectives.Commands
                 shell.WriteLine($"- [{i}] {objectives[i].Conditions[0].Title}");
             }
 
-        }
-
-        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
-        {
-            if (args.Length == 1)
-            {
-                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), LocalizationManager.GetString("shell-argument-username-hint"));
-            }
-
-            return CompletionResult.Empty;
         }
     }
 }

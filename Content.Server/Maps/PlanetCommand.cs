@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Parallax;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
@@ -86,17 +85,16 @@ public sealed class PlanetCommand : IConsoleCommand
         // Atmos
         var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
 
+        atmos.Space = false;
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;
         moles[(int) Gas.Nitrogen] = 82.10312f;
 
-        var mixture = new GasMixture(2500)
+        atmos.Mixture = new GasMixture(2500)
         {
             Temperature = 293.15f,
             Moles = moles,
         };
-
-        _entManager.System<AtmosphereSystem>().SetMapAtmosphere(mapUid, false, mixture, atmos);
 
         _entManager.EnsureComponent<MapGridComponent>(mapUid);
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));

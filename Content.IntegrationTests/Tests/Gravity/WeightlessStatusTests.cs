@@ -1,6 +1,11 @@
+using System.Threading.Tasks;
 using Content.Server.Gravity;
 using Content.Shared.Alert;
+using Content.Shared.Coordinates;
+using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Gravity
 {
@@ -32,11 +37,7 @@ namespace Content.IntegrationTests.Tests.Gravity
         [Test]
         public async Task WeightlessStatusTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -50,7 +51,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             {
                 human = entityManager.SpawnEntity("HumanDummy", testMap.GridCoords);
 
-                Assert.That(entityManager.TryGetComponent(human, out AlertsComponent alerts));
+                Assert.True(entityManager.TryGetComponent(human, out AlertsComponent alerts));
             });
 
             // Let WeightlessSystem and GravitySystem tick
@@ -59,7 +60,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             await server.WaitAssertion(() =>
             {
                 // No gravity without a gravity generator
-                Assert.That(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
+                Assert.True(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
 
                 generatorUid = entityManager.SpawnEntity("GravityGeneratorDummy", entityManager.GetComponent<TransformComponent>(human).Coordinates);
             });
@@ -69,7 +70,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(alertsSystem.IsShowingAlert(human, AlertType.Weightless), Is.False);
+                Assert.False(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
 
                 // This should kill gravity
                 entityManager.DeleteEntity(generatorUid);
@@ -79,7 +80,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
+                Assert.True(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
             });
 
             await PoolManager.RunTicksSync(pairTracker.Pair, 10);

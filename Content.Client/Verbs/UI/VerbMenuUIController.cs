@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Gameplay;
@@ -94,7 +93,7 @@ namespace Content.Client.Verbs.UI
 
             // Show the menu at mouse pos
             menu.SetPositionLast();
-            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, new Vector2(1, 1));
+            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, (1, 1));
             menu.Open(box);
         }
 

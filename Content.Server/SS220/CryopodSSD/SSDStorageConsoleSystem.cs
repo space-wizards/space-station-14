@@ -1,4 +1,4 @@
-// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -51,7 +51,6 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
     
     private ISawmill _sawmill = default!;
     
@@ -212,9 +211,9 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
 
             foreach (var objective in objectiveToReplace)
             {
-                _mindSystem.TryRemoveObjective(mind, objective);
+                mind.TryRemoveObjective(objective);
                 var newObjective = _objectivesManager.GetRandomObjective(mind, "TraitorObjectiveGroups");
-                if (newObjective is null || !_mindSystem.TryAddObjective(mind,newObjective))
+                if (newObjective is null || !mind.TryAddObjective(newObjective))
                 {
                     _sawmill.Error($"{ToPrettyString(mind.OwnedEntity.Value)}'s target get in cryo, so he lost his objective and didn't get a new one");
                     continue;
@@ -366,7 +365,7 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
             return;
         }
         
-        if (TryComp<ServerStorageComponent>(uid, out var storageComponent) && storageComponent.StoredEntities != null)
+        if (TryComp<ServerStorageComponent>(uid, out var storageComponent) && storageComponent.StoredEntities is not null)
         {
             var hasAccess = HasComp<EmaggedComponent>(uid) || _accessReaderSystem.IsAllowed(user, uid) || forseAccess;
             var storageState = hasAccess ?  
@@ -384,6 +383,10 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
     
     private void SetStateForInterface(EntityUid uid, SSDStorageConsoleState storageConsoleState)
     {
-        _userInterface.TrySetUiState(uid, SSDStorageConsoleKey.Key, storageConsoleState);
+        var ui = _userInterface.GetUiOrNull(uid, SSDStorageConsoleKey.Key);
+        if (ui is not null)
+        {
+            _userInterface.SetUiState(ui, storageConsoleState);
+        }
     }
 }

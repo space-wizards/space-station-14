@@ -375,22 +375,4 @@ public sealed class BloodstreamSystem : EntitySystem
             }
         }
     }
-
-    /// <summary>
-    ///     Change what someone's blood is made of, on the fly. 
-    /// </summary>
-    public void ChangeBloodReagent(EntityUid uid, string reagent, BloodstreamComponent? component = null)
-    {
-        if (!Resolve(uid, ref component, false))
-            return;
-
-        if(reagent == component.BloodReagent)
-            return;
-
-        var currentVolume = component.BloodSolution.Volume;
-
-        component.BloodReagent = reagent;
-        component.BloodSolution.RemoveAllSolution();
-        _solutionContainerSystem.TryAddReagent(uid, component.BloodSolution, component.BloodReagent, currentVolume, out _);
-    }
 }

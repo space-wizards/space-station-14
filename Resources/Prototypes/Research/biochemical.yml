@@ -102,30 +102,16 @@
 # Tier 3
 
 - type: technology
-  id: BluespaceChemistry
-  name: research-technology-bluespace-chemistry
+  id: Cloning
+  name: research-technology-cloning
   icon:
-    sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
-    state: beakerbluespace
+    sprite: Structures/Machines/cloning.rsi
+    state: pod_0
   discipline: Biochemical
   tier: 3
-  cost: 10000
+  cost: 15000
   recipeUnlocks:
-  - BluespaceBeaker
-  - SyringeBluespace
-
-# look into revisiting this later once medical isn't a hellhole
-#- type: technology
-#  id: Cloning
-#  name: research-technology-cloning
-#  icon:
-#    sprite: Structures/Machines/cloning.rsi
-#    state: pod_0
-#  discipline: Biochemical
-#  tier: 3
-#  cost: 15000
-#  recipeUnlocks:
-#  - CloningPodMachineCircuitboard
-#  - MedicalScannerMachineCircuitboard
-#  - CloningConsoleComputerCircuitboard
-#  - BiomassReclaimerMachineCircuitboard
+  - CloningPodMachineCircuitboard
+  - MedicalScannerMachineCircuitboard
+  - CloningConsoleComputerCircuitboard
+  - BiomassReclaimerMachineCircuitboard

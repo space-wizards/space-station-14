@@ -8,8 +8,8 @@
     fixtures:
       fix1:
         shape:
-          !type:PhysShapeCircle
-          radius: 0.4
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
         density: 190
         mask:
         - FullTileMask

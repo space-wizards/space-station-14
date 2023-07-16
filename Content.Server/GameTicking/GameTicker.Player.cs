@@ -8,7 +8,6 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using PlayerData = Content.Server.Players.PlayerData;
 
 namespace Content.Server.GameTicking
 {
@@ -27,29 +26,15 @@ namespace Content.Server.GameTicking
         {
             var session = args.Session;
 
-            if (_mind.TryGetMind(session.UserId, out var mind))
-            {
-                if (args.OldStatus == SessionStatus.Connecting && args.NewStatus == SessionStatus.Connected)
-                    mind.Session = session;
-
-                DebugTools.Assert(mind.Session == session);
-            }
-
-            DebugTools.Assert(session.GetMind() == mind);
-
             switch (args.NewStatus)
             {
                 case SessionStatus.Connected:
                 {
                     AddPlayerToDb(args.Session.UserId.UserId);
 
-                    // Always make sure the client has player data.
+                    // Always make sure the client has player data. Mind gets assigned on spawn.
                     if (session.Data.ContentDataUncast == null)
-                    {
-                        var data = new PlayerData(session.UserId, args.Session.Name);
-                        data.Mind = mind;
-                        session.Data.ContentDataUncast = data;
-                    }
+                        session.Data.ContentDataUncast = new PlayerData(session.UserId, args.Session.Name);
 
                     // Make the player actually join the game.
                     // timer time must be > tick length
@@ -76,30 +61,32 @@ namespace Content.Server.GameTicking
                 {
                     _userDb.ClientConnected(session);
 
-                    if (mind == null)
+                    var data = session.ContentData();
+
+                    DebugTools.AssertNotNull(data);
+
+                    if (data!.Mind == null)
                     {
                         if (LobbyEnabled)
+                        {
                             PlayerJoinLobby(session);
-                        else
-                            SpawnWaitDb();
+                            return;
+                        }
 
-                        break;
-                    }
 
-                    if (mind.CurrentEntity == null || Deleted(mind.CurrentEntity))
-                    {
-                        DebugTools.Assert(mind.CurrentEntity == null, "a mind's current entity was deleted without updating the mind");
-
-                        // This player is joining the game with an existing mind, but the mind has no entity.
-                        // Their entity was probably deleted sometime while they were disconnected, or they were an observer.
-                        // Instead of allowing them to spawn in, we will dump and their existing mind in an observer ghost.
-                        SpawnObserverWaitDb();
+                        SpawnWaitDb();
                     }
                     else
                     {
-                        // Simply re-attach to existing entity.
-                        session.AttachToEntity(mind.CurrentEntity);
-                        PlayerJoinGame(session);
+                        if (data.Mind.CurrentEntity == null)
+                        {
+                            SpawnWaitDb();
+                        }
+                        else
+                        {
+                            session.AttachToEntity(data.Mind.CurrentEntity);
+                            PlayerJoinGame(session);
+                        }
                     }
 
                     break;
@@ -108,8 +95,6 @@ namespace Content.Server.GameTicking
                 case SessionStatus.Disconnected:
                 {
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
-                    if (mind != null)
-                        mind.Session = null;
 
                     if (_playerGameStatuses.ContainsKey(args.Session.UserId)) // Corvax-Queue: Delete data only if player was in game
                         _userDb.ClientDisconnected(session);
@@ -123,12 +108,6 @@ namespace Content.Server.GameTicking
             {
                 await _userDb.WaitLoadComplete(session);
                 SpawnPlayer(session, EntityUid.Invalid);
-            }
-
-            async void SpawnObserverWaitDb()
-            {
-                await _userDb.WaitLoadComplete(session);
-                JoinAsObserver(session);
             }
 
             async void AddPlayerToDb(Guid id)
@@ -164,6 +143,7 @@ namespace Content.Server.GameTicking
             RaiseNetworkEvent(new TickerJoinLobbyEvent(), client);
             RaiseNetworkEvent(GetStatusMsg(session), client);
             RaiseNetworkEvent(GetInfoMsg(), client);
+            RaiseNetworkEvent(GetPlayerStatus(), client);
             RaiseLocalEvent(new PlayerJoinedLobbyEvent(session));
         }
 

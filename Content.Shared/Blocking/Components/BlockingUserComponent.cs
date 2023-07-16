@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Physics;
+﻿using Content.Shared.Damage;
+using Robust.Shared.Physics;
 
 namespace Content.Shared.Blocking;
 
@@ -14,10 +15,14 @@ public sealed class BlockingUserComponent : Component
     [DataField("blockingItem")]
     public EntityUid? BlockingItem;
 
+    [DataField("modifiers")]
+    public DamageModifierSet Modifiers = default!;
+
     /// <summary>
     /// Stores the entities original bodytype
     /// Used so that it can be put back to what it was after anchoring
     /// </summary>
     [DataField("originalBodyType")]
     public BodyType OriginalBodyType;
+
 }

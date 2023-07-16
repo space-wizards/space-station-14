@@ -1,9 +1,11 @@
-﻿using System.Numerics;
+﻿using System.Threading.Tasks;
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Rotation;
+using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -29,34 +31,24 @@ namespace Content.IntegrationTests.Tests.Body
         public async Task RemoveLegsFallTest()
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
-            EntityUid human = default!;
             AppearanceComponent appearance = null;
-
             var entityManager = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
-            var appearanceSystem = entityManager.System<SharedAppearanceSystem>();
 
             await server.WaitAssertion(() =>
             {
                 var mapId = mapManager.CreateMap();
-                BodyComponent body = null;
 
-                human = entityManager.SpawnEntity("HumanBodyAndAppearanceDummy",
+                var human = entityManager.SpawnEntity("HumanBodyAndAppearanceDummy",
                     new MapCoordinates(Vector2.Zero, mapId));
 
-                Assert.Multiple(() =>
-                {
-                    Assert.That(entityManager.TryGetComponent(human, out body));
-                    Assert.That(entityManager.TryGetComponent(human, out appearance));
-                });
+                Assert.That(entityManager.TryGetComponent(human, out BodyComponent body));
+                Assert.That(entityManager.TryGetComponent(human, out appearance));
 
-                Assert.That(!appearanceSystem.TryGetData(human, RotationVisuals.RotationState, out RotationState _, appearance));
+                Assert.That(!appearance.TryGetData(RotationVisuals.RotationState, out RotationState _));
 
                 var bodySystem = entityManager.System<BodySystem>();
                 var legs = bodySystem.GetBodyChildrenOfType(human, BodyPartType.Leg, body);
@@ -69,11 +61,8 @@ namespace Content.IntegrationTests.Tests.Body
 
             await server.WaitAssertion(() =>
             {
-#pragma warning disable NUnit2045
-                // Interdependent assertions.
-                Assert.That(appearanceSystem.TryGetData(human, RotationVisuals.RotationState, out RotationState state, appearance));
+                Assert.That(appearance.TryGetData(RotationVisuals.RotationState, out RotationState state));
                 Assert.That(state, Is.EqualTo(RotationState.Horizontal));
-#pragma warning restore NUnit2045
             });
             await pairTracker.CleanReturnAsync();
         }

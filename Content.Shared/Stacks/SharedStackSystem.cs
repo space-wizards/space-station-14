@@ -1,9 +1,7 @@
-using System.Numerics;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
@@ -21,11 +19,11 @@ namespace Content.Shared.Stacks
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly IViewVariablesManager _vvm = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-        [Dependency] protected readonly SharedHandsSystem Hands = default!;
+        [Dependency] protected readonly SharedHandsSystem HandsSystem = default!;
         [Dependency] protected readonly SharedTransformSystem Xform = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] protected readonly SharedPopupSystem Popup = default!;
+        [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
 
         public override void Initialize()
         {
@@ -77,18 +75,18 @@ namespace Content.Shared.Stacks
             switch (transfered)
             {
                 case > 0:
-                    Popup.PopupCoordinates($"+{transfered}", popupPos, Filter.Local(), false);
+                    PopupSystem.PopupCoordinates($"+{transfered}", popupPos, Filter.Local(), false);
 
                     if (GetAvailableSpace(recipientStack) == 0)
                     {
-                        Popup.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
+                        PopupSystem.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
                             popupPos.Offset(new Vector2(0, -0.5f)), Filter.Local(), false);
                     }
 
                     break;
 
                 case 0 when GetAvailableSpace(recipientStack) == 0:
-                    Popup.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local(), false);
+                    PopupSystem.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local(), false);
                     break;
             }
         }
@@ -135,12 +133,12 @@ namespace Content.Shared.Stacks
             if (!Resolve(item, ref itemStack, false))
             {
                 // This isn't even a stack. Just try to pickup as normal.
-                Hands.PickupOrDrop(user, item, handsComp: hands);
+                HandsSystem.PickupOrDrop(user, item, handsComp: hands);
                 return;
             }
 
             // This is shit code until hands get fixed and give an easy way to enumerate over items, starting with the currently active item.
-            foreach (var held in Hands.EnumerateHeld(user, hands))
+            foreach (var held in HandsSystem.EnumerateHeld(user, hands))
             {
                 TryMergeStacks(item, held, out _, donorStack: itemStack);
 
@@ -148,7 +146,7 @@ namespace Content.Shared.Stacks
                     return;
             }
 
-            Hands.PickupOrDrop(user, item, handsComp: hands);
+            HandsSystem.PickupOrDrop(user, item, handsComp: hands);
         }
 
         public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)

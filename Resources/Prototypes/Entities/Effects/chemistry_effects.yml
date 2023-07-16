@@ -44,6 +44,7 @@
       - state: foam
         map: ["enum.FoamVisualLayers.Base"]
   - type: AnimationPlayer
+    netsync: false
   - type: Appearance
   - type: SmokeVisuals
   - type: FoamVisuals

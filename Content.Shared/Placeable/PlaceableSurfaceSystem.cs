@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Storage.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;

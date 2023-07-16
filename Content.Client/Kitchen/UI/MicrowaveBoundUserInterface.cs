@@ -1,25 +1,29 @@
+using System.Collections.Generic;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Kitchen.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Kitchen.UI
 {
     [UsedImplicitly]
     public sealed class MicrowaveBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         private MicrowaveMenu? _menu;
 
-        [ViewVariables]
         private readonly Dictionary<int, EntityUid> _solids = new();
+        private readonly Dictionary<int, Solution.ReagentQuantity> _reagents =new();
 
-        [ViewVariables]
-        private readonly Dictionary<int, Solution.ReagentQuantity> _reagents = new();
-
-        public MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public MicrowaveBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner,uiKey)
         {
         }
 
@@ -36,10 +40,10 @@ namespace Content.Client.Kitchen.UI
                 SendMessage(new MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
             };
 
-            _menu.OnCookTimeSelected += (args, buttonIndex) =>
+            _menu.OnCookTimeSelected += (args,buttonIndex) =>
             {
-                var actualButton = (MicrowaveMenu.MicrowaveCookTimeButton) args.Button;
-                SendMessage(new MicrowaveSelectCookTimeMessage(buttonIndex, actualButton.CookTime));
+                var actualButton = (MicrowaveMenu.MicrowaveCookTimeButton) args.Button ;
+                SendMessage(new MicrowaveSelectCookTimeMessage(buttonIndex,actualButton.CookTime));
             };
         }
 
@@ -89,7 +93,7 @@ namespace Content.Client.Kitchen.UI
             _menu.IngredientsList.Clear();
             foreach (var entity in containedSolids)
             {
-                if (EntMan.Deleted(entity))
+                if (_entityManager.Deleted(entity))
                 {
                     return;
                 }
@@ -97,11 +101,11 @@ namespace Content.Client.Kitchen.UI
                 // TODO just use sprite view
 
                 Texture? texture;
-                if (EntMan.TryGetComponent<IconComponent>(entity, out var iconComponent))
+                if (_entityManager.TryGetComponent(entity, out IconComponent? iconComponent))
                 {
-                    texture = EntMan.System<SpriteSystem>().GetIcon(iconComponent);
+                    texture = _entityManager.System<SpriteSystem>().GetIcon(iconComponent);
                 }
-                else if (EntMan.TryGetComponent<SpriteComponent>(entity, out var spriteComponent))
+                else if (_entityManager.TryGetComponent(entity, out SpriteComponent? spriteComponent))
                 {
                     texture = spriteComponent.Icon?.Default;
                 }
@@ -110,7 +114,7 @@ namespace Content.Client.Kitchen.UI
                     continue;
                 }
 
-                var solidItem = _menu.IngredientsList.AddItem(EntMan.GetComponent<MetaDataComponent>(entity).EntityName, texture);
+                var solidItem = _menu.IngredientsList.AddItem(_entityManager.GetComponent<MetaDataComponent>(entity).EntityName, texture);
                 var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
                 _solids.Add(solidIndex, entity);
             }

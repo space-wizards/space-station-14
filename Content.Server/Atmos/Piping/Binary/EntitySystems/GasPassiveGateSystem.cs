@@ -2,7 +2,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Examine;
@@ -14,7 +13,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     public sealed class GasPassiveGateSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -29,8 +27,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!_nodeContainer.TryGetNode(nodeContainer, gate.InletName, out PipeNode? inlet)
-                || !_nodeContainer.TryGetNode(nodeContainer, gate.OutletName, out PipeNode? outlet))
+            if (!nodeContainer.TryGetNode(gate.InletName, out PipeNode? inlet)
+                || !nodeContainer.TryGetNode(gate.OutletName, out PipeNode? outlet))
                 return;
 
             var n1 = inlet.Air.TotalMoles;

@@ -1,5 +1,5 @@
 - type: entity
-  id: AmeController
+  id: AMEController
   name: AME controller
   description: It's a controller for the antimatter engine.
   placement:
@@ -11,11 +11,6 @@
     snapCardinals: true
     sprite: Structures/Power/Generation/ame.rsi
     state: control
-    layers:
-    - state: control
-    - state: control_on
-      map: ["display"]
-      visible: false
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -49,26 +44,19 @@
     noRot: true
   - type: Anchorable
   - type: Pullable
-  - type: AmeController
+  - type: AMEController
   - type: Explosive
     explosionType: Default
     intensitySlope: 5
     maxIntensity: 60
   - type: ActivatableUI
-    key: enum.AmeControllerUiKey.Key
+    key: enum.AMEControllerUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.AmeControllerUiKey.Key
-      type: AmeControllerBoundUserInterface
+    - key: enum.AMEControllerUiKey.Key
+      type: AMEControllerBoundUserInterface
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.AmeControllerVisuals.DisplayState:
-        display:
-          Off: { visible: false }
-          On: { state: control_on, visible: true }
-          Critical: { state: control_critical, visible: true }
-          Fuck: { state: control_fuck, visible: true }
+  - type: AMEControllerVisuals
   - type: NodeContainer
     examinable: true
     nodes:
@@ -84,7 +72,7 @@
     supplyRate: 0
   - type: ContainerContainer
     containers:
-      AmeFuel: !type:ContainerSlot {}
+      AMEController-fuelJarContainer: !type:ContainerSlot {}
   - type: GuideHelp
     guides: [ AME, Power ]
   - type: Electrified
@@ -97,8 +85,8 @@
 
 - type: entity
   noSpawn: true
-  parent: AmeController
-  id: AmeControllerUnanchored
+  parent: AMEController
+  id: AMEControllerUnanchored
   suffix: Unanchored
   components:
   - type: Transform
@@ -107,7 +95,7 @@
     bodyType: Dynamic
 
 - type: entity
-  id: AmeShielding
+  id: AMEShielding
   name: AME shielding
   description: Keeps the antimatter in and the matter out.
   placement:
@@ -119,15 +107,6 @@
     drawdepth: Walls
     sprite: Structures/Power/Generation/ame.rsi
     state: shield_0
-    layers:
-    - state: shield_0
-    - state: core
-      map: ["core"]
-      visible: false
-    - state: core_weak
-      map: ["core_glow"]
-      shader: unshaded
-      visible: false
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -162,7 +141,7 @@
     mode: CardinalFlags
     base: shield_
     key: ame_shield
-  - type: AmeShield
+  - type: AMEShield
   - type: NodeContainer
     nodes:
       ame:
@@ -174,19 +153,9 @@
     energy: 0.5
     color: "#00AAFF"
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.AmeShieldVisuals.Core:
-        core:
-          True: { visible: true }
-          False: { visible: false }
-      enum.AmeShieldVisuals.CoreState:
-        core_glow:
-          Off: { visible: false }
-          Weak: { state: core_weak, visible: true }
-          Strong: { state: core_strong, visible: true }
+  - type: AMEShieldingVisuals
   - type: Construction
-    graph: AmeShielding
+    graph: AMEShielding
     node: ameShielding
   - type: GuideHelp
     guides: [ AME, Power ]

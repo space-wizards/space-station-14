@@ -14,7 +14,7 @@ public sealed class AnomalySupercriticalComponent : Component
     /// The time when the supercritical animation ends and it does whatever effect.
     /// </summary>
     [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan EndTime;
+    public TimeSpan EndTime = TimeSpan.MaxValue;
 
     /// <summary>
     /// The length of the animation before it goes supercritical.

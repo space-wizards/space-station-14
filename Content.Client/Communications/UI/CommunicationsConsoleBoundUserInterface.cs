@@ -8,31 +8,23 @@ namespace Content.Client.Communications.UI
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        [ViewVariables]
-        private CommunicationsConsoleMenu? _menu;
+        [ViewVariables] private CommunicationsConsoleMenu? _menu;
 
-        [ViewVariables]
         public bool CanAnnounce { get; private set; }
-
-        [ViewVariables]
         public bool CanCall { get; private set; }
 
-        [ViewVariables]
         public bool CountdownStarted { get; private set; }
 
-        [ViewVariables]
         public bool AlertLevelSelectable { get; private set; }
 
-        [ViewVariables]
         public string CurrentLevel { get; private set; } = default!;
 
-        [ViewVariables]
+        public int Countdown => _expectedCountdownTime == null ? 0 : Math.Max((int)_expectedCountdownTime.Value.Subtract(_gameTiming.CurTime).TotalSeconds, 0);
         private TimeSpan? _expectedCountdownTime;
 
-        public int Countdown => _expectedCountdownTime == null ? 0 : Math.Max((int) _expectedCountdownTime.Value.Subtract(_gameTiming.CurTime).TotalSeconds, 0);
-
-        public CommunicationsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public CommunicationsConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
+
         }
 
         protected override void Open()

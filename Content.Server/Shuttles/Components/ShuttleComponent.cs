@@ -1,5 +1,3 @@
-using System.Numerics;
-
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]

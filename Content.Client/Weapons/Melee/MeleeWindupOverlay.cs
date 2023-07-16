@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Weapons.Melee;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;

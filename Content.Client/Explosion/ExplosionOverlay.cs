@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Explosion;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
@@ -103,13 +102,13 @@ public sealed class ExplosionOverlay : Overlay
 
             foreach (var tile in tiles)
             {
-                var centre = (tile + Vector2Helpers.Half) * tileSize;
+                var centre = ((Vector2) tile + 0.5f) * tileSize;
 
                 if (!gridBounds.Contains(centre))
                     continue;
 
                 var texture = _robustRandom.Pick(frames);
-                drawHandle.DrawTextureRect(texture, Box2.CenteredAround(centre, new Vector2(tileSize, tileSize)), textures.FireColor);
+                drawHandle.DrawTextureRect(texture, Box2.CenteredAround(centre, (tileSize, tileSize)), textures.FireColor);
             }
         }
     }

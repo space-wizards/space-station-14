@@ -5,23 +5,23 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.PDA
 {
     [Serializable, NetSerializable]
-    public sealed class PdaUpdateState : CartridgeLoaderUiState
+    public sealed class PDAUpdateState : CartridgeLoaderUiState
     {
         public bool FlashlightEnabled;
         public bool HasPen;
-        public PdaIdInfoText PdaOwnerInfo;
+        public PDAIdInfoText PDAOwnerInfo;
         public string? StationName;
         public bool HasUplink;
         public bool CanPlayMusic;
         public string? Address;
 
-        public PdaUpdateState(bool flashlightEnabled, bool hasPen, PdaIdInfoText pdaOwnerInfo,
+        public PDAUpdateState(bool flashlightEnabled, bool hasPen, PDAIdInfoText pdaOwnerInfo,
             string? stationName, bool hasUplink = false,
             bool canPlayMusic = false, string? address = null)
         {
             FlashlightEnabled = flashlightEnabled;
             HasPen = hasPen;
-            PdaOwnerInfo = pdaOwnerInfo;
+            PDAOwnerInfo = pdaOwnerInfo;
             HasUplink = hasUplink;
             CanPlayMusic = canPlayMusic;
             StationName = stationName;
@@ -30,7 +30,7 @@ namespace Content.Shared.PDA
     }
 
     [Serializable, NetSerializable]
-    public struct PdaIdInfoText
+    public struct PDAIdInfoText
     {
         public string? ActualOwnerName;
         public string? IdOwner;

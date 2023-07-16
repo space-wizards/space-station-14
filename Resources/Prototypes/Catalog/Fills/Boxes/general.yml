@@ -111,7 +111,7 @@
     capacity: 60
     whitelist:
       components:
-      - Pda
+      - PDA
 
 - type: entity
   name: ID card box
@@ -191,8 +191,6 @@
   id: BoxHugHealing
   description: A special box for sensitive people.
   components:
-  - type: Storage
-    capacity: 30
   - type: Sprite
     layers:
       - state: box_hug
@@ -202,7 +200,7 @@
   - type: StorageFill
     contents:
       - id: Brutepack
-        amount: 3
+        amount: 6
   - type: Tag
     tags:
       - BoxHug

@@ -50,10 +50,13 @@ namespace Content.Server.Stack
             if (!Resolve(uid, ref stack))
                 return null;
 
+            if (stack.StackTypeId == null)
+                return null;
+
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
                 ? stackType.Spawn
-                : Prototype(uid)?.ID;
+                : Prototype(stack.Owner)?.ID;
 
             // Try to remove the amount of things we want to split from the original stack...
             if (!Use(uid, amount, stack))
@@ -110,7 +113,7 @@ namespace Content.Server.Stack
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || args.Hands == null || stack.Count == 1)
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
                 return;
 
             AlternativeVerb halve = new()
@@ -155,7 +158,7 @@ namespace Content.Server.Stack
 
             if (amount <= 0)
             {
-                Popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), userUid, PopupType.Medium);
+                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), userUid, PopupType.Medium);
                 return;
             }
 
@@ -168,9 +171,9 @@ namespace Content.Server.Stack
                 _storage.UpdateStorageUI(container.Owner, storage);
             }
 
-            Hands.PickupOrDrop(userUid, split);
+            HandsSystem.PickupOrDrop(userUid, split);
 
-            Popup.PopupCursor(Loc.GetString("comp-stack-split"), userUid);
+            PopupSystem.PopupCursor(Loc.GetString("comp-stack-split"), userUid);
         }
     }
 }

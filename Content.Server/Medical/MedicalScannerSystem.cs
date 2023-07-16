@@ -88,7 +88,7 @@ namespace Content.Server.Medical
                 !CanScannerInsert(uid, args.Using.Value, component))
                 return;
 
-            var name = "Unknown";
+            string name = "Unknown";
             if (TryComp<MetaDataComponent>(args.Using.Value, out var metadata))
                 name = metadata.EntityName;
 
@@ -109,13 +109,11 @@ namespace Content.Server.Medical
             // Eject verb
             if (IsOccupied(component))
             {
-                AlternativeVerb verb = new()
-                {
-                    Act = () => EjectBody(uid, component),
-                    Category = VerbCategory.Eject,
-                    Text = Loc.GetString("medical-scanner-verb-noun-occupant"),
-                    Priority = 1 // Promote to top to make ejecting the ALT-click action
-                };
+                AlternativeVerb verb = new();
+                verb.Act = () => EjectBody(uid, component);
+                verb.Category = VerbCategory.Eject;
+                verb.Text = Loc.GetString("medical-scanner-verb-noun-occupant");
+                verb.Priority = 1; // Promote to top to make ejecting the ALT-click action
                 args.Verbs.Add(verb);
             }
 
@@ -124,11 +122,9 @@ namespace Content.Server.Medical
                 CanScannerInsert(uid, args.User, component) &&
                 _blocker.CanMove(args.User))
             {
-                AlternativeVerb verb = new()
-                {
-                    Act = () => InsertBody(uid, args.User, component),
-                    Text = Loc.GetString("medical-scanner-verb-enter")
-                };
+                AlternativeVerb verb = new();
+                verb.Act = () => InsertBody(uid, args.User, component);
+                verb.Text = Loc.GetString("medical-scanner-verb-enter");
                 args.Verbs.Add(verb);
             }
         }
@@ -158,7 +154,7 @@ namespace Content.Server.Medical
                 _cloningConsoleSystem.RecheckConnections(component.ConnectedConsole.Value, console.CloningPod, uid, console);
                 return;
             }
-            _cloningConsoleSystem.UpdateUserInterface(component.ConnectedConsole.Value, console);
+            _cloningConsoleSystem.UpdateUserInterface(console);
         }
         private MedicalScannerStatus GetStatus(EntityUid uid, MedicalScannerComponent scannerComponent)
         {
@@ -178,7 +174,7 @@ namespace Content.Server.Medical
             return MedicalScannerStatus.Off;
         }
 
-        public static bool IsOccupied(MedicalScannerComponent scannerComponent)
+        public bool IsOccupied(MedicalScannerComponent scannerComponent)
         {
             return scannerComponent.BodyContainer.ContainedEntity != null;
         }
@@ -216,7 +212,7 @@ namespace Content.Server.Medical
             _updateDif -= UpdateRate;
 
             var query = EntityQueryEnumerator<MedicalScannerComponent>();
-            while (query.MoveNext(out var uid, out var scanner))
+            while(query.MoveNext(out var uid, out var scanner))
             {
                 UpdateAppearance(uid, scanner);
             }
@@ -242,7 +238,7 @@ namespace Content.Server.Medical
             if (!Resolve(uid, ref scannerComponent))
                 return;
 
-            if (scannerComponent.BodyContainer.ContainedEntity is not { Valid: true } contained)
+            if (scannerComponent.BodyContainer.ContainedEntity is not {Valid: true} contained)
                 return;
 
             scannerComponent.BodyContainer.Remove(contained);

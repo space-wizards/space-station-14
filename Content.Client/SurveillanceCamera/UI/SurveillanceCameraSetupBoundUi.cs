@@ -5,16 +5,15 @@ namespace Content.Client.SurveillanceCamera.UI;
 
 public sealed class SurveillanceCameraSetupBoundUi : BoundUserInterface
 {
-    [ViewVariables]
-    private readonly SurveillanceCameraSetupUiKey _type;
-
-    [ViewVariables]
     private SurveillanceCameraSetupWindow? _window;
+    private SurveillanceCameraSetupUiKey _type;
 
-    public SurveillanceCameraSetupBoundUi(EntityUid component, Enum uiKey) : base(component, uiKey)
+    public SurveillanceCameraSetupBoundUi(ClientUserInterfaceComponent component, Enum uiKey) : base(component, uiKey)
     {
         if (uiKey is not SurveillanceCameraSetupUiKey key)
+        {
             return;
+        }
 
         _type = key;
     }

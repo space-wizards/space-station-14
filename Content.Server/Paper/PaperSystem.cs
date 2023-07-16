@@ -8,7 +8,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using static Content.Shared.Paper.SharedPaperComponent;
@@ -23,8 +22,6 @@ namespace Content.Server.Paper
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -68,11 +65,7 @@ namespace Content.Server.Paper
         private void BeforeUIOpen(EntityUid uid, PaperComponent paperComp, BeforeActivatableUIOpenEvent args)
         {
             paperComp.Mode = PaperAction.Read;
-
-            if (!TryComp<ActorComponent>(args.User, out var actor))
-                return;
-
-            UpdateUserInterface(uid, paperComp, actor.PlayerSession);
+            UpdateUserInterface(uid, paperComp);
         }
 
         private void OnExamined(EntityUid uid, PaperComponent paperComp, ExaminedEvent args)
@@ -89,7 +82,7 @@ namespace Content.Server.Paper
 
             if (paperComp.StampedBy.Count > 0)
             {
-                var commaSeparated = string.Join(", ", paperComp.StampedBy);
+                string commaSeparated = string.Join(", ", paperComp.StampedBy);
                 args.PushMarkup(
                     Loc.GetString(
                         "paper-component-examine-detail-stamped-by", ("paper", uid), ("stamps", commaSeparated))
@@ -107,8 +100,8 @@ namespace Content.Server.Paper
                     return;
 
                 paperComp.Mode = PaperAction.Write;
-                _uiSystem.TryOpen(uid, PaperUiKey.Key, actor.PlayerSession);
-                UpdateUserInterface(uid, paperComp, actor.PlayerSession);
+                UpdateUserInterface(uid, paperComp);
+                _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.Open(actor.PlayerSession);
                 return;
             }
 
@@ -116,13 +109,10 @@ namespace Content.Server.Paper
             if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(uid, stampComp.StampedName, stampComp.StampState, paperComp))
             {
                 // successfully stamped, play popup
-                var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(args.Target, EntityManager)), ("stamp", args.Used));
-                _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
-
-                var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", Identity.Entity(args.Target, EntityManager)), ("stamp", args.Used));
-                _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, args.User);
-
-                _audio.PlayPvs(stampComp.Sound, uid);
+                var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", Identity.Entity(args.User, EntityManager)),("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
+                    _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
+                var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
+                    _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, args.User);
 
                 UpdateUserInterface(uid, paperComp);
             }
@@ -142,7 +132,7 @@ namespace Content.Server.Paper
                 _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Written, appearance);
 
             if (TryComp<MetaDataComponent>(uid, out var meta))
-                _metaSystem.SetEntityDescription(uid, "", meta);
+                meta.EntityDescription = "";
 
             if (args.Session.AttachedEntity != null)
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
@@ -195,13 +185,12 @@ namespace Content.Server.Paper
             _appearance.SetData(uid, PaperVisuals.Status, status, appearance);
         }
 
-        public void UpdateUserInterface(EntityUid uid, PaperComponent? paperComp = null, IPlayerSession? session = null)
+        public void UpdateUserInterface(EntityUid uid, PaperComponent? paperComp = null)
         {
             if (!Resolve(uid, ref paperComp))
                 return;
 
-            if (_uiSystem.TryGetUi(uid, PaperUiKey.Key, out var bui))
-                UserInterfaceSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode), session);
+            _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.SetState(new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode));
         }
     }
 

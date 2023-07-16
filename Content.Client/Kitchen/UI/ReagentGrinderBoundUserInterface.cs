@@ -8,20 +8,18 @@ namespace Content.Client.Kitchen.UI
 {
     public sealed class ReagentGrinderBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        [ViewVariables]
         private GrinderMenu? _menu;
 
-        public ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
+        public ReagentGrinderBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) { }
 
         protected override void Open()
         {
             base.Open();
 
-            _menu = new GrinderMenu(this, EntMan, _prototypeManager);
+            _menu = new GrinderMenu(this, _entityManager, _prototypeManager);
             _menu.OpenCentered();
             _menu.OnClose += Close;
         }
@@ -40,8 +38,10 @@ namespace Content.Client.Kitchen.UI
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (state is not ReagentGrinderInterfaceState cState)
+            if (!(state is ReagentGrinderInterfaceState cState))
+            {
                 return;
+            }
 
             _menu?.UpdateState(cState);
         }
@@ -52,29 +52,10 @@ namespace Content.Client.Kitchen.UI
             _menu?.HandleMessage(message);
         }
 
-        public void StartGrinding(BaseButton.ButtonEventArgs? _ = null)
-        {
-            SendMessage(new ReagentGrinderStartMessage(GrinderProgram.Grind));
-        }
-
-        public void StartJuicing(BaseButton.ButtonEventArgs? _ = null)
-        {
-            SendMessage(new ReagentGrinderStartMessage(GrinderProgram.Juice));
-        }
-
-        public void EjectAll(BaseButton.ButtonEventArgs? _ = null)
-        {
-            SendMessage(new ReagentGrinderEjectChamberAllMessage());
-        }
-
-        public void EjectBeaker(BaseButton.ButtonEventArgs? _ = null)
-        {
-            SendMessage(new ItemSlotButtonPressedEvent(SharedReagentGrinder.BeakerSlotId));
-        }
-
-        public void EjectChamberContent(EntityUid uid)
-        {
-            SendMessage(new ReagentGrinderEjectChamberContentMessage(uid));
-        }
+        public void StartGrinding(BaseButton.ButtonEventArgs? args = null) => SendMessage(new ReagentGrinderStartMessage(GrinderProgram.Grind));
+        public void StartJuicing(BaseButton.ButtonEventArgs? args = null) => SendMessage(new ReagentGrinderStartMessage(GrinderProgram.Juice));
+        public void EjectAll(BaseButton.ButtonEventArgs? args = null) => SendMessage(new ReagentGrinderEjectChamberAllMessage());
+        public void EjectBeaker(BaseButton.ButtonEventArgs? args = null) => SendMessage(new ItemSlotButtonPressedEvent(SharedReagentGrinder.BeakerSlotId));
+        public void EjectChamberContent(EntityUid uid) => SendMessage(new ReagentGrinderEjectChamberContentMessage(uid));
     }
 }

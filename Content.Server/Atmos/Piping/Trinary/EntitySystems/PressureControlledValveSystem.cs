@@ -2,7 +2,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Trinary.Components;
 using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Audio;
@@ -19,7 +18,6 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -38,9 +36,9 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
                 || !EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.InletName, out PipeNode? inletNode)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.ControlName, out PipeNode? controlNode)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? outletNode))
+                || !nodeContainer.TryGetNode(comp.InletName, out PipeNode? inletNode)
+                || !nodeContainer.TryGetNode(comp.ControlName, out PipeNode? controlNode)
+                || !nodeContainer.TryGetNode(comp.OutletName, out PipeNode? outletNode))
             {
                 _ambientSoundSystem.SetAmbience(comp.Owner, false);
                 comp.Enabled = false;

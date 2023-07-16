@@ -67,16 +67,6 @@
     Cryoxadone: 3
 
 - type: reaction
-  id: Doxarubixadone
-  reactants:
-    Cryoxadone:
-      amount: 1
-    UnstableMutagen:
-      amount: 1
-  products:
-    Doxarubixadone: 2
-
-- type: reaction
   id: Epinephrine
   reactants:
     Phenol:
@@ -154,9 +144,7 @@
 - type: reaction
   id: Ipecac
   reactants:
-    Potassium:
-      amount: 1
-    Nitrogen:
+    Dylovene:
       amount: 1
     Ammonia:
       amount: 1
@@ -211,27 +199,14 @@
     Phalanximine: 3
 
 - type: reaction
-  id: Ambuzol
+  id: Romerol
   reactants:
-    Dylovene:
+    Phalanximine:
       amount: 1
-    Ammonia:
+    Tricordrazine:
       amount: 1
-    Blood:
-      amount: 2
   products:
-    Ambuzol: 4
-
-- type: reaction
-  id: AmbuzolPlus
-  reactants:
-    Ambuzol:
-      amount: 5
-    ZombieBlood:
-      amount: 15
-  products:
-    Blood: 15
-    AmbuzolPlus: 5
+    Romerol: 2
 
 - type: reaction
   id: Synaptizine
@@ -388,13 +363,13 @@
   impact: Medium
   minTemp: 370
   reactants:
-    SodiumCarbonate:
+    SodiumCarbonate: 
       amount: 1
     Kelotane:
       amount: 1
     Water:
       amount: 1
-    Sugar:
+    Sugar: 
       amount: 1
   products:
     Sigynate: 4

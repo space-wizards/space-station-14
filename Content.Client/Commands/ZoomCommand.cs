@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.Movement.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;

@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Dataset;
+using Content.Shared.Procedural.Loot;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage.Expeditions;
@@ -65,9 +66,9 @@ public abstract class SharedSalvageSystem : EntitySystem
             case DifficultyRating.Moderate:
                 return 4;
             case DifficultyRating.Hazardous:
-                return 8;
+                return 6;
             case DifficultyRating.Extreme:
-                return 16;
+                return 8;
             default:
                 throw new ArgumentOutOfRangeException(nameof(rating), rating, null);
         }
@@ -97,25 +98,14 @@ public abstract class SharedSalvageSystem : EntitySystem
         var rand = new System.Random(seed);
         var faction = GetMod<SalvageFactionPrototype>(rand, ref rating);
         var biome = GetMod<SalvageBiomeMod>(rand, ref rating);
-        var dungeon = GetBiomeMod<SalvageDungeonMod>(biome.ID, rand, ref rating);
+        var dungeon = GetDungeon(biome.ID, rand, ref rating);
         var mods = new List<string>();
 
-        var air = GetBiomeMod<SalvageAirMod>(biome.ID, rand, ref rating);
-        if (air.Description != string.Empty)
-        {
-            mods.Add(air.Description);
-        }
+        SalvageLightMod? light = null;
 
-        // only show the description if there is an atmosphere since wont matter otherwise
-        var temp = GetBiomeMod<SalvageTemperatureMod>(biome.ID, rand, ref rating);
-        if (temp.Description != string.Empty && !air.Space)
+        if (biome.BiomePrototype != null)
         {
-            mods.Add(temp.Description);
-        }
-
-        var light = GetBiomeMod<SalvageLightMod>(biome.ID, rand, ref rating);
-        if (light.Description != string.Empty)
-        {
+            light = GetLight(biome.ID, rand, ref rating);
             mods.Add(light.Description);
         }
 
@@ -125,24 +115,46 @@ public abstract class SharedSalvageSystem : EntitySystem
         exactDuration = MathF.Round(exactDuration / 15f) * 15f;
         var duration = TimeSpan.FromSeconds(exactDuration);
 
-        if (time.Description != string.Empty)
+        if (time.ID != "StandardTime")
         {
             mods.Add(time.Description);
         }
 
-        var rewards = GetRewards(difficulty, rand);
-        return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, air.ID, temp.Temperature, light.Color, duration, rewards, mods);
+        var loots = GetLoot(config, _proto.EnumeratePrototypes<SalvageLootPrototype>().Where(o => !o.Guaranteed).ToList(), GetDifficulty(difficulty), seed);
+        return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration, loots, mods);
     }
 
-    public T GetBiomeMod<T>(string biome, System.Random rand, ref float rating) where T : class, IPrototype, IBiomeSpecificMod
+    public SalvageDungeonMod GetDungeon(string biome, System.Random rand, ref float rating)
     {
-        var mods = _proto.EnumeratePrototypes<T>().ToList();
+        var mods = _proto.EnumeratePrototypes<SalvageDungeonMod>().ToList();
         mods.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         rand.Shuffle(mods);
 
         foreach (var mod in mods)
         {
-            if (mod.Cost > rating || (mod.Biomes != null && !mod.Biomes.Contains(biome)))
+            if (mod.BiomeMods?.Contains(biome) == false ||
+                mod.Cost > rating)
+            {
+                continue;
+            }
+
+            rating -= (int) mod.Cost;
+
+            return mod;
+        }
+
+        throw new InvalidOperationException();
+    }
+
+    public SalvageLightMod GetLight(string biome, System.Random rand, ref float rating)
+    {
+        var mods = _proto.EnumeratePrototypes<SalvageLightMod>().ToList();
+        mods.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
+        rand.Shuffle(mods);
+
+        foreach (var mod in mods)
+        {
+            if (mod.Biomes?.Contains(biome) == false || mod.Cost > rating)
                 continue;
 
             rating -= mod.Cost;
@@ -172,43 +184,28 @@ public abstract class SharedSalvageSystem : EntitySystem
         throw new InvalidOperationException();
     }
 
-    private List<string> GetRewards(DifficultyRating difficulty, System.Random rand)
+    private Dictionary<string, int> GetLoot(SalvageMissionType mission, List<SalvageLootPrototype> loots, int count, int seed)
     {
-        var rewards = new List<string>(3);
-        var ids = RewardsForDifficulty(difficulty);
-        foreach (var id in ids)
+        var results = new Dictionary<string, int>();
+        var adjustedSeed = new System.Random(seed + 2);
+
+        for (var i = 0; i < count; i++)
         {
-            // pick a random reward to give
-            var weights = _proto.Index<WeightedRandomPrototype>(id);
-            rewards.Add(weights.Pick(rand));
+            adjustedSeed.Shuffle(loots);
+
+            foreach (var loot in loots)
+            {
+                if (loot.Blacklist.Contains(mission))
+                    continue;
+
+                var weh = results.GetOrNew(loot.ID);
+                weh++;
+                results[loot.ID] = weh;
+                break;
+            }
         }
 
-        return rewards;
-    }
-
-    /// <summary>
-    /// Get a list of WeightedRandomPrototype IDs with the rewards for a certain difficulty.
-    /// </summary>
-    private string[] RewardsForDifficulty(DifficultyRating rating)
-    {
-        var common = "SalvageRewardCommon";
-        var rare = "SalvageRewardRare";
-        var epic = "SalvageRewardEpic";
-        switch (rating)
-        {
-            case DifficultyRating.Minimal:
-                return new string[] { common, common, common };
-            case DifficultyRating.Minor:
-                return new string[] { common, common, rare };
-            case DifficultyRating.Moderate:
-                return new string[] { common, rare, rare };
-            case DifficultyRating.Hazardous:
-                return new string[] { rare, rare, rare, epic };
-            case DifficultyRating.Extreme:
-                return new string[] { rare, rare, epic, epic, epic };
-            default:
-                throw new NotImplementedException();
-        }
+        return results;
     }
 }
 

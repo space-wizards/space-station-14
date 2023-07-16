@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Administration.Logs;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -133,7 +132,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         var eventHorizonOwner = eventHorizon.Owner;
 
         if (!EntityManager.IsQueuedForDeletion(uid) && // I saw it log twice a few times for some reason?
-            (HasComp<MindContainerComponent>(uid) ||
+            (HasComp<MindComponent>(uid) ||
              _tagSystem.HasTag(uid, "HighRiskItem") ||
              HasComp<ContainmentFieldGeneratorComponent>(uid)))
             _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(uid)} entered the event horizon of {ToPrettyString(eventHorizonOwner)} and was deleted");

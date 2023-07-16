@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using System.Runtime.InteropServices;
 using Content.Client.Actions;
 using Content.Client.Construction;
@@ -72,10 +71,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _menuDragHelper = new DragDropHelper<ActionButton>(OnMenuBeginDrag, OnMenuContinueDrag, OnMenuEndDrag);
         _dragShadow = new TextureRect
         {
-            MinSize = new Vector2(64, 64),
+            MinSize = (64, 64),
             Stretch = StretchMode.Scale,
             Visible = false,
-            SetSize = new Vector2(64, 64),
+            SetSize = (64, 64),
             MouseFilter = MouseFilterMode.Ignore
         };
 
@@ -669,18 +668,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (args.Function == EngineKeyFunctions.UIClick)
         {
-            if (button.Action == null)
-            {
-                var ev = new FillActionSlotEvent();
-                EntityManager.EventBus.RaiseEvent(EventSource.Local, ev);
-                if (ev.Action != null)
-                    SetAction(button, ev.Action);
-            }
-            else
-            {
-                _menuDragHelper.MouseDown(button);
-            }
-
+            _menuDragHelper.MouseDown(button);
             args.Handle();
         }
         else if (args.Function == EngineKeyFunctions.UIRightClick)
@@ -739,13 +727,13 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             }
         }
 
-        LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - new Vector2(32, 32));
+        LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - (32, 32));
         return true;
     }
 
     private bool OnMenuContinueDrag(float frameTime)
     {
-        LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - new Vector2(32, 32));
+        LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - (32, 32));
         _dragShadow.Visible = true;
         return true;
     }

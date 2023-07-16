@@ -1,6 +1,5 @@
 using Content.Shared.Power;
 using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
@@ -15,8 +14,8 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
     private float _updateTimer = 0.0f;
     private const float UpdateTime = 1.0f;
 
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency]
+    private UserInterfaceSystem _userInterfaceSystem = default!;
 
     public override void Update(float frameTime)
     {
@@ -24,11 +23,9 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         if (_updateTimer >= UpdateTime)
         {
             _updateTimer -= UpdateTime;
-
-            var query = EntityQueryEnumerator<PowerMonitoringConsoleComponent>();
-            while (query.MoveNext(out var uid, out var component))
+            foreach (var component in EntityQuery<PowerMonitoringConsoleComponent>())
             {
-                UpdateUIState(uid, component);
+                UpdateUIState(component.Owner, component);
             }
         }
     }
@@ -51,10 +48,8 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
             return new PowerMonitoringConsoleEntry(md.EntityName, prototype, rate, isBattery);
         }
         // Right, so, here's what needs to be considered here.
-        if (!_nodeContainer.TryGetNode<Node>(ncComp, "hv", out var node))
-            return;
-
-        if (node.NodeGroup is PowerNet netQ)
+        var netQ = ncComp.GetNode<Node>("hv").NodeGroup as PowerNet;
+        if (netQ != null)
         {
             foreach (PowerConsumerComponent pcc in netQ.Consumers)
             {
@@ -93,10 +88,9 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         // Sort
         loads.Sort(CompareLoadOrSources);
         sources.Sort(CompareLoadOrSources);
-
         // Actually set state.
-        if (_userInterfaceSystem.TryGetUi(target, PowerMonitoringConsoleUiKey.Key, out var bui))
-            UserInterfaceSystem.SetUiState(bui, new PowerMonitoringConsoleBoundInterfaceState(totalSources, totalLoads, sources.ToArray(), loads.ToArray()));
+        var state = new PowerMonitoringConsoleBoundInterfaceState(totalSources, totalLoads, sources.ToArray(), loads.ToArray());
+        _userInterfaceSystem.GetUiOrNull(target, PowerMonitoringConsoleUiKey.Key)?.SetState(state);
     }
 
     private int CompareLoadOrSources(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)

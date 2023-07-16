@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
@@ -52,7 +51,7 @@ namespace Content.Client.ParticleAccelerator.UI
 
         public ParticleAcceleratorControlMenu(ParticleAcceleratorBoundUserInterface owner)
         {
-            SetSize = new Vector2(400, 320);
+            SetSize = (400, 320);
             _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("Greyscale").Instance();
 
             _owner = owner;
@@ -160,11 +159,11 @@ namespace Content.Client.ParticleAccelerator.UI
                     new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = StyleNano.NanoGold},
-                        MinSize = new Vector2(0, 2),
+                        MinSize = (0, 2),
                     },
                     new Control
                     {
-                        MinSize = new Vector2(0, 4)
+                        MinSize = (0, 4)
                     },
 
                     new BoxContainer
@@ -211,7 +210,7 @@ namespace Content.Client.ParticleAccelerator.UI
                                     },
                                     new Control
                                     {
-                                        MinSize = new Vector2(0, 10),
+                                        MinSize = (0, 10),
                                     },
                                     _drawLabel,
                                     new Control
@@ -238,7 +237,7 @@ namespace Content.Client.ParticleAccelerator.UI
                             new BoxContainer
                             {
                                 Orientation = LayoutOrientation.Vertical,
-                                MinSize = new Vector2(186, 0),
+                                MinSize = (186, 0),
                                 Children =
                                 {
                                     (_statusLabel = new Label
@@ -247,7 +246,7 @@ namespace Content.Client.ParticleAccelerator.UI
                                     }),
                                     new Control
                                     {
-                                        MinSize = new Vector2(0, 20)
+                                        MinSize = (0, 20)
                                     },
                                     new PanelContainer
                                     {

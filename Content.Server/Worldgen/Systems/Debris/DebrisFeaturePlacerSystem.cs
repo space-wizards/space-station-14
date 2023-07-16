@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Numerics;
 using Content.Server.Worldgen.Components;
 using Content.Server.Worldgen.Components.Debris;
 using Content.Server.Worldgen.Systems.GC;
@@ -232,8 +231,8 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
     private List<Vector2> GeneratePointsInChunk(EntityUid chunk, float density, Vector2 coords, EntityUid map)
     {
         var offs = (int) ((WorldGen.ChunkSize - WorldGen.ChunkSize / 8.0f) / 2.0f);
-        var topLeft = new Vector2(-offs, -offs);
-        var lowerRight = new Vector2(offs, offs);
+        var topLeft = (-offs, -offs);
+        var lowerRight = (offs, offs);
         var enumerator = _sampler.SampleRectangle(topLeft, lowerRight, density);
         var debrisPoints = new List<Vector2>();
 

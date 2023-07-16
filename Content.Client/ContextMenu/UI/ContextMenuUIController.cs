@@ -1,4 +1,3 @@
-using System.Numerics;
 using System.Threading;
 using Content.Client.CombatMode;
 using Content.Client.Gameplay;
@@ -172,8 +171,8 @@ namespace Content.Client.ContextMenu.UI
             // open pop-up adjacent to the parent element. We want the sub-menu elements to align with this element
             // which depends on the panel container style margins.
             var altPos = element.GlobalPosition;
-            var pos = altPos + new Vector2(element.Width + 2 * ContextMenuElement.ElementMargin, -2 * ContextMenuElement.ElementMargin);
-            element.SubMenu.Open(UIBox2.FromDimensions(pos, new Vector2(1, 1)), altPos);
+            var pos = altPos + (element.Width + 2 * ContextMenuElement.ElementMargin, -2 * ContextMenuElement.ElementMargin);
+            element.SubMenu.Open(UIBox2.FromDimensions(pos, (1, 1)), altPos);
 
             // draw on top of other menus
             element.SubMenu.SetPositionLast();

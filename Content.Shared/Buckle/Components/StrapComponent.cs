@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Alert;
 using Content.Shared.Vehicle;
 using Content.Shared.Whitelist;

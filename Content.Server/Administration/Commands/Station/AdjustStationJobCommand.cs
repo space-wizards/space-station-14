@@ -1,4 +1,3 @@
-using Content.Server.Commands;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
@@ -58,27 +57,5 @@ public sealed class AdjustStationJobCommand : IConsoleCommand
         }
 
         stationJobs.TrySetJobSlot(station, job, amount, true);
-    }
-
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
-    {
-        if (args.Length == 1)
-        {
-            var options = ContentCompletionHelper.StationIds(_entityManager);
-            return CompletionResult.FromHintOptions(options, "<station id>");
-        }
-
-        if (args.Length == 2)
-        {
-            var options = CompletionHelper.PrototypeIDs<JobPrototype>();
-            return CompletionResult.FromHintOptions(options, "<job id>");
-        }
-
-        if (args.Length == 3)
-        {
-            return CompletionResult.FromHint("<amount>");
-        }
-
-        return CompletionResult.Empty;
     }
 }

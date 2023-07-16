@@ -446,9 +446,7 @@ public abstract class SharedDoorSystem : EntitySystem
             if (otherPhysics == physics)
                 continue;
 
-            //TODO: Make only shutters ignore these objects upon colliding instead of all airlocks
-            // Excludes Glasslayer for windows, GlassAirlockLayer for windoors, TableLayer for tables
-            if (!otherPhysics.CanCollide || otherPhysics.CollisionLayer == (int) CollisionGroup.GlassLayer || otherPhysics.CollisionLayer == (int) CollisionGroup.GlassAirlockLayer || otherPhysics.CollisionLayer == (int) CollisionGroup.TableLayer)
+            if (!otherPhysics.CanCollide)
                 continue;
 
             //If the colliding entity is a slippable item ignore it by the airlock
@@ -661,7 +659,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
             case DoorState.Welded:
                 // A welded door? This should never have been active in the first place.
-                Log.Error($"Welded door was in the list of active doors. Door: {ToPrettyString(door.Owner)}");
+                Logger.Error($"Welded door was in the list of active doors. Door: {ToPrettyString(door.Owner)}");
                 break;
         }
     }

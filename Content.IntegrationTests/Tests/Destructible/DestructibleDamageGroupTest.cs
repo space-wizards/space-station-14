@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -18,11 +20,7 @@ namespace Content.IntegrationTests.Tests.Destructible
         [Test]
         public async Task AndTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -53,7 +51,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
+                Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
             });
 
             await server.WaitAssertion(() =>
@@ -68,40 +66,34 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage, true);
 
                 // No thresholds reached yet, the earliest one is at 10 damage
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
+                Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise brute damage to 10
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage, true);
 
                 // No threshold reached, burn needs to be 10 as well
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
+                Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise burn damage to 10
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity, burnDamage * 2, true);
 
                 // One threshold reached, brute 10 + burn 10
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Has.Count.EqualTo(1));
+                Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
 
                 // Threshold brute 10 + burn 10
                 var msg = sTestThresholdListenerSystem.ThresholdsReached[0];
                 var threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
-                Assert.Multiple(() =>
-                {
-                    Assert.That(threshold.Behaviors, Is.Empty);
-                    Assert.That(threshold.Trigger, Is.Not.Null);
-                    Assert.That(threshold.Triggered, Is.True);
-                    Assert.That(threshold.Trigger, Is.InstanceOf<AndTrigger>());
-                });
+                Assert.That(threshold.Behaviors, Is.Empty);
+                Assert.NotNull(threshold.Trigger);
+                Assert.That(threshold.Triggered, Is.True);
+                Assert.IsInstanceOf<AndTrigger>(threshold.Trigger);
 
                 var trigger = (AndTrigger) threshold.Trigger;
 
-                Assert.Multiple(() =>
-                {
-                    Assert.That(trigger.Triggers[0], Is.InstanceOf<DamageGroupTrigger>());
-                    Assert.That(trigger.Triggers[1], Is.InstanceOf<DamageGroupTrigger>());
-                });
+                Assert.IsInstanceOf<DamageGroupTrigger>(trigger.Triggers[0]);
+                Assert.IsInstanceOf<DamageGroupTrigger>(trigger.Triggers[1]);
 
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
@@ -109,29 +101,26 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage * 2, true);
 
                 // No new thresholds reached
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
+                Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise burn damage to 20
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity, burnDamage * 2, true);
 
                 // No new thresholds reached
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
+                Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Lower brute damage to 0
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage * -10);
-                Assert.Multiple(() =>
-                {
-                    Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.New(20)));
+                Assert.That(sDamageableComponent.TotalDamage,Is.EqualTo(FixedPoint2.New(20)));
 
-                    // No new thresholds reached, healing should not trigger it
-                    Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
-                });
+                // No new thresholds reached, healing should not trigger it
+                Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise brute damage back up to 10
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage * 2, true);
 
                 // 10 brute + 10 burn threshold reached, brute was healed and brought back to its threshold amount and slash stayed the same
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Has.Count.EqualTo(1));
+                Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
 
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
@@ -139,40 +128,34 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDamageableSystem.SetAllDamage(sDestructibleEntity, sDamageableComponent, 0);
 
                 // No new thresholds reached, healing should not trigger it
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
+                Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise brute damage to 10
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage * 2, true);
 
                 // No new thresholds reached
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
+                Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise burn damage to 10
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity, burnDamage * 2, true);
 
                 // Both classes of damage were healed and then raised again, the threshold should have been reached as triggers once is default false
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Has.Count.EqualTo(1));
+                Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
 
                 // Threshold brute 10 + burn 10
                 msg = sTestThresholdListenerSystem.ThresholdsReached[0];
                 threshold = msg.Threshold;
 
                 // Check that it matches the YAML prototype
-                Assert.Multiple(() =>
-                {
-                    Assert.That(threshold.Behaviors, Is.Empty);
-                    Assert.That(threshold.Trigger, Is.Not.Null);
-                    Assert.That(threshold.Triggered, Is.True);
-                    Assert.That(threshold.Trigger, Is.InstanceOf<AndTrigger>());
-                });
+                Assert.That(threshold.Behaviors, Is.Empty);
+                Assert.NotNull(threshold.Trigger);
+                Assert.That(threshold.Triggered, Is.True);
+                Assert.IsInstanceOf<AndTrigger>(threshold.Trigger);
 
                 trigger = (AndTrigger) threshold.Trigger;
 
-                Assert.Multiple(() =>
-                {
-                    Assert.That(trigger.Triggers[0], Is.InstanceOf<DamageGroupTrigger>());
-                    Assert.That(trigger.Triggers[1], Is.InstanceOf<DamageGroupTrigger>());
-                });
+                Assert.IsInstanceOf<DamageGroupTrigger>(trigger.Triggers[0]);
+                Assert.IsInstanceOf<DamageGroupTrigger>(trigger.Triggers[1]);
 
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
@@ -183,19 +166,19 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDamageableSystem.SetAllDamage(sDestructibleEntity, sDamageableComponent, 0);
 
                 // No new thresholds reached from healing
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
+                Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise brute damage to 10
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage * 2, true);
 
                 // No new thresholds reached
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
+                Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise burn damage to 10
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity, burnDamage * 2, true);
 
                 // No new thresholds reached as triggers once is set to true and it already triggered before
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
+                Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
             });
             await pairTracker.CleanReturnAsync();
         }

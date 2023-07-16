@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Destructible;
@@ -101,12 +100,11 @@ public sealed partial class PathfindingSystem
         // Still run even when paused.
         var query = AllEntityQuery<GridPathfindingComponent>();
 
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out var comp))
         {
-            // TODO: Dump all this shit and just do it live it's probably fast enough.
             if (comp.DirtyChunks.Count == 0 ||
-                curTime < comp.NextUpdate ||
-                !TryComp<MapGridComponent>(uid, out var mapGridComp))
+                comp.NextUpdate < curTime ||
+                !TryComp<MapGridComponent>(comp.Owner, out var mapGridComp))
             {
                 continue;
             }
@@ -121,7 +119,7 @@ public sealed partial class PathfindingSystem
 
             foreach (var origin in comp.DirtyChunks)
             {
-                var chunk = GetChunk(origin, uid, comp);
+                var chunk = GetChunk(origin, comp.Owner, comp);
                 dirt[idx] = chunk;
                 idx++;
             }
@@ -354,7 +352,7 @@ public sealed partial class PathfindingSystem
 
         var currentTime = _timing.CurTime;
 
-        if (comp.NextUpdate < currentTime && !MetaData(gridUid).EntityPaused)
+        if (comp.NextUpdate < currentTime)
             comp.NextUpdate = currentTime + UpdateCooldown;
 
         var chunks = comp.DirtyChunks;

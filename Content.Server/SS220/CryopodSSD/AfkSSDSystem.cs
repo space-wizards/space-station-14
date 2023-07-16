@@ -51,7 +51,7 @@ public sealed class AfkSSDSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        foreach (var pair in _entityEnteredSSDTimes.Where(uid => HasComp<MindContainerComponent>(uid.Key.Item1)))
+        foreach (var pair in _entityEnteredSSDTimes.Where(uid => HasComp<MindComponent>(uid.Key.Item1)))
         {
             if (pair.Value.Item2 && IsTeleportAfkToCryoTime(pair.Value.Item1)
                 && _cryopodSSDSystem.TeleportEntityToCryoStorageWithDelay(pair.Key.Item1))
@@ -74,7 +74,7 @@ public sealed class AfkSSDSystem : EntitySystem
         {
             case SessionStatus.Disconnected:
                 if (e.Session.AttachedEntity is null
-                    || !HasComp<MindContainerComponent>(e.Session.AttachedEntity)
+                    || !HasComp<MindComponent>(e.Session.AttachedEntity)
                     || !HasComp<BodyComponent>(e.Session.AttachedEntity))
                 {
                     break;

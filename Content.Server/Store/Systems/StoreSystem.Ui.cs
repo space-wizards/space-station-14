@@ -98,7 +98,7 @@ public sealed partial class StoreSystem
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
         var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter);
-        UserInterfaceSystem.SetUiState(ui, state);
+        _ui.SetUiState(ui, state);
     }
 
     private void OnRequestUpdate(EntityUid uid, StoreComponent component, StoreRequestUpdateInterfaceMessage args)
@@ -119,7 +119,7 @@ public sealed partial class StoreSystem
         var listing = component.Listings.FirstOrDefault(x => x.Equals(msg.Listing));
         if (listing == null) //make sure this listing actually exists
         {
-            Log.Debug("listing does not exist");
+            Logger.Debug("listing does not exist");
             return;
         }
 
@@ -205,7 +205,7 @@ public sealed partial class StoreSystem
         if (proto.Cash == null || !proto.CanWithdraw)
             return;
 
-        if (msg.Session.AttachedEntity is not { Valid: true } buyer)
+        if (msg.Session.AttachedEntity is not { Valid: true} buyer)
             return;
 
         FixedPoint2 amountRemaining = msg.Amount;

@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Content.Shared.Physics;
+﻿using Content.Shared.Physics;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;

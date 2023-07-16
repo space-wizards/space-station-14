@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using Content.Client.Message;
 using Content.Shared.GameTicking;
 using Robust.Client.GameObjects;
@@ -20,7 +19,7 @@ namespace Content.Client.RoundEnd
         {
             _entityManager = entityManager;
 
-            MinSize = SetSize = new Vector2(520, 580);
+            MinSize = SetSize = (520, 580);
 
             Title = Loc.GetString("round-end-summary-window-title");
 
@@ -132,7 +131,7 @@ namespace Content.Client.RoundEnd
                         Sprite = sprite,
                         OverrideDirection = Direction.South,
                         VerticalAlignment = VAlignment.Center,
-                        SetSize = new Vector2(32, 32),
+                        SetSize = (32, 32),
                         VerticalExpand = true,
                     });
                 }

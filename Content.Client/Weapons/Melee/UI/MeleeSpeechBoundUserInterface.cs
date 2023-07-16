@@ -8,10 +8,9 @@ namespace Content.Client.Weapons.Melee.UI;
 /// </summary>
 public sealed class MeleeSpeechBoundUserInterface : BoundUserInterface
 {
-    [ViewVariables]
     private MeleeSpeechWindow? _window;
 
-    public MeleeSpeechBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public MeleeSpeechBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
@@ -51,9 +50,7 @@ public sealed class MeleeSpeechBoundUserInterface : BoundUserInterface
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        _window?.Dispose();
-    }
+        if (!disposing) return;
+		_window?.Dispose();
+	}
 }

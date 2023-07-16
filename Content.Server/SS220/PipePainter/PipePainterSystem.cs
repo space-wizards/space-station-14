@@ -1,4 +1,4 @@
-// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using System.Linq;
 using Content.Server.Atmos.Piping.Components;
@@ -20,7 +20,6 @@ public sealed class PipePainterSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly AtmosPipeColorSystem _pipeColorSystem = default!;
-
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -81,9 +80,7 @@ public sealed class PipePainterSystem : EntitySystem
             return;
 
         UpdateUiState(uid, component);
-        _userInterfaceSystem.TryGetUi(uid, PipePainterUiKey.Key, out var bui);
-        if (bui != null)
-            _userInterfaceSystem.OpenUi(bui,actor.PlayerSession);
+        component.Owner.GetUIOrNull(PipePainterUiKey.Key)?.Open(actor.PlayerSession);
         args.Handled = true;
     }
 

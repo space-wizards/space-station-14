@@ -38,24 +38,23 @@ public sealed class EntityPainter
 
         // TODO cache this shit what are we insane
         entities.Sort(Comparer<EntityData>.Create((x, y) => x.Sprite.DrawDepth.CompareTo(y.Sprite.DrawDepth)));
-        var xformSystem = _sEntityManager.System<SharedTransformSystem>();
 
         foreach (var entity in entities)
         {
-            Run(canvas, entity, xformSystem);
+            Run(canvas, entity);
         }
 
         Console.WriteLine($"{nameof(EntityPainter)} painted {entities.Count} entities in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
     }
 
-    public void Run(Image canvas, EntityData entity, SharedTransformSystem xformSystem)
+    public void Run(Image canvas, EntityData entity)
     {
         if (!entity.Sprite.Visible || entity.Sprite.ContainerOccluded)
         {
             return;
         }
 
-        var worldRotation = xformSystem.GetWorldRotation(entity.Owner);
+        var worldRotation = _sEntityManager.GetComponent<TransformComponent>(entity.Sprite.Owner).WorldRotation;
         foreach (var layer in entity.Sprite.AllLayers)
         {
             if (!layer.Visible)
@@ -71,7 +70,7 @@ public sealed class EntityPainter
             var rsi = layer.ActualRsi;
             Image image;
 
-            if (rsi == null || !rsi.TryGetState(layer.RsiState, out var state))
+            if (rsi == null || rsi.Path == null || !rsi.TryGetState(layer.RsiState, out var state))
             {
                 image = _errorImage;
             }
@@ -90,7 +89,7 @@ public sealed class EntityPainter
 
             image = image.CloneAs<Rgba32>();
 
-            static (int, int, int, int) GetRsiFrame(RSI? rsi, Image image, EntityData entity, ISpriteLayer layer, int direction)
+            (int, int, int, int) GetRsiFrame(RSI? rsi, Image image, EntityData entity, ISpriteLayer layer, int direction)
             {
                 if (rsi is null)
                     return (0, 0, EyeManager.PixelsPerMeter, EyeManager.PixelsPerMeter);
@@ -116,7 +115,7 @@ public sealed class EntityPainter
             var rect = new Rectangle(x, y, width, height);
             if (!new Rectangle(Point.Empty, image.Size()).Contains(rect))
             {
-                Console.WriteLine($"Invalid layer {rsi!.Path}/{layer.RsiState.Name}.png for entity {_sEntityManager.ToPrettyString(entity.Owner)} at ({entity.X}, {entity.Y})");
+                Console.WriteLine($"Invalid layer {rsi!.Path}/{layer.RsiState.Name}.png for entity {_sEntityManager.ToPrettyString(entity.Sprite.Owner)} at ({entity.X}, {entity.Y})");
                 return;
             }
 

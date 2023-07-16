@@ -10,6 +10,7 @@
     size: 30
   - type: Storage
     capacity: 30
+    size: 10
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

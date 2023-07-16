@@ -60,7 +60,7 @@ namespace Content.Server.Access.Systems
 
             if (!_prototypeManager.TryIndex(id.JobName, out JobPrototype? job))
             {
-                Log.Error($"Invalid job id ({id.JobName}) for preset card");
+                Logger.ErrorS("access", $"Invalid job id ({id.JobName}) for preset card");
                 return;
             }
 

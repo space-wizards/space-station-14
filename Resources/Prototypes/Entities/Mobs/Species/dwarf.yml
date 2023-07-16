@@ -45,7 +45,7 @@
   - type: Vocal
     sounds:
       Male: UnisexDwarf
-      Female: FemaleDwarf
+      Female: UnisexDwarf
       Unsexed: UnisexDwarf
   - type: ReplacementAccent
     accent: dwarf

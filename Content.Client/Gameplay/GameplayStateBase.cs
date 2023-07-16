@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using Content.Client.Clickable;
 using Content.Client.ContextMenu.UI;
 using Robust.Client.ComponentTrees;
@@ -91,7 +90,7 @@ namespace Content.Client.Gameplay
         {
             // Find all the entities intersecting our click
             var spriteTree = _entityManager.EntitySysManager.GetEntitySystem<SpriteTreeSystem>();
-            var entities = spriteTree.QueryAabb(coordinates.MapId, Box2.CenteredAround(coordinates.Position, new Vector2(1, 1)));
+            var entities = spriteTree.QueryAabb(coordinates.MapId, Box2.CenteredAround(coordinates.Position, (1, 1)), true);
 
             // Check the entities against whether or not we can click them
             var foundEntities = new List<(EntityUid, int, uint, float)>(entities.Count);

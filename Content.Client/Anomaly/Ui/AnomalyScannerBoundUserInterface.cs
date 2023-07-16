@@ -9,7 +9,7 @@ public sealed class AnomalyScannerBoundUserInterface : BoundUserInterface
 {
     private AnomalyScannerMenu? _menu;
 
-    public AnomalyScannerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public AnomalyScannerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
 
     }

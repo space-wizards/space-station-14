@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
@@ -135,18 +134,18 @@ public abstract partial class SharedHandsSystem : EntitySystem
     private Vector2 GetFinalDropCoordinates(EntityUid user, MapCoordinates origin, MapCoordinates target)
     {
         var dropVector = target.Position - origin.Position;
-        var requestedDropDistance = dropVector.Length();
+        var requestedDropDistance = dropVector.Length;
 
-        if (dropVector.Length() > SharedInteractionSystem.InteractionRange)
+        if (dropVector.Length > SharedInteractionSystem.InteractionRange)
         {
-            dropVector = dropVector.Normalized() * SharedInteractionSystem.InteractionRange;
+            dropVector = dropVector.Normalized * SharedInteractionSystem.InteractionRange;
             target = new MapCoordinates(origin.Position + dropVector, target.MapId);
         }
 
         var dropLength = _interactionSystem.UnobstructedDistance(origin, target, predicate: e => e == user);
 
         if (dropLength < requestedDropDistance)
-            return origin.Position + dropVector.Normalized() * dropLength;
+            return origin.Position + dropVector.Normalized * dropLength;
         return target.Position;
     }
 
@@ -165,7 +164,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         if (!hand.Container.Remove(entity, EntityManager))
         {
-            Log.Error($"Failed to remove {ToPrettyString(entity)} from users hand container when dropping. User: {ToPrettyString(uid)}. Hand: {hand.Name}.");
+            Logger.Error($"Failed to remove {ToPrettyString(entity)} from users hand container when dropping. User: {ToPrettyString(uid)}. Hand: {hand.Name}.");
             return;
         }
 

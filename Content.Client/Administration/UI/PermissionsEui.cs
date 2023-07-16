@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using Content.Client.Administration.Managers;
 using Content.Client.Eui;
 using Content.Client.Stylesheets;
@@ -340,7 +339,7 @@ namespace Content.Client.Administration.UI
                 Contents.AddChild(tab);
             }
 
-            protected override Vector2 ContentsMinimumSize => new Vector2(600, 400);
+            protected override Vector2 ContentsMinimumSize => (600, 400);
         }
 
         private sealed class EditAdminWindow : DefaultWindow
@@ -357,7 +356,7 @@ namespace Content.Client.Administration.UI
 
             public EditAdminWindow(PermissionsEui ui, PermissionsEuiState.AdminData? data)
             {
-                MinSize = new Vector2(600, 400);
+                MinSize = (600, 400);
                 SourceData = data;
 
                 Control nameControl;
@@ -535,7 +534,7 @@ namespace Content.Client.Administration.UI
             public EditAdminRankWindow(PermissionsEui ui, KeyValuePair<int, PermissionsEuiState.AdminRankData>? data)
             {
                 Title = Loc.GetString("permissions-eui-edit-admin-rank-window-title");
-                MinSize = new Vector2(600, 400);
+                MinSize = (600, 400);
                 SourceId = data?.Key;
 
                 NameEdit = new LineEdit

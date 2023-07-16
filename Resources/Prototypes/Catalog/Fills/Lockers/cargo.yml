@@ -14,6 +14,7 @@
 #      - id: ClothingEyesGlassesMeson
       - id: ClothingBeltUtilityFilled
       - id: SurvivalKnife
+      - id: WeaponProtoKineticAccelerator
 
 - type: entity
   id: LockerSalvageSpecialistFilled
@@ -26,3 +27,4 @@
 #      - id: ClothingEyesGlassesMeson
       - id: ClothingBeltUtilityFilled
       - id: SurvivalKnife
+      - id: WeaponProtoKineticAccelerator

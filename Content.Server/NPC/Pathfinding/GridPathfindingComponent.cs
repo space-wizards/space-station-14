@@ -14,7 +14,7 @@ public sealed class GridPathfindingComponent : Component
     /// <summary>
     /// Next time the graph is allowed to update.
     /// </summary>
-    /// Removing this datafield is the lazy fix HOWEVER I want to purge this anyway and do pathfinding at runtime.
+    [ViewVariables, DataField("nextUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextUpdate;
 
     [ViewVariables]

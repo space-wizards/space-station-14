@@ -41,7 +41,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
-        density: 75
+        density: 145
         mask:
         - MachineMask
         layer:
@@ -180,12 +180,10 @@
 #I am terribly sorry for duplicating the closet almost-wholesale, but the game malds at me if I don't so here we are.
 - type: entity
   id: SuitStorageBase
-  parent: BaseStructure
+  parent: BaseStructureDynamic
   name: suit storage unit
   description: A fancy hi-tech storage unit made for storing space suits.
   components:
-  - type: Anchorable
-    delay: 2
   - type: StaticPrice
     price: 80
   - type: ResistLocker
@@ -216,7 +214,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
-        density: 350
+        density: 145
         mask:
         - MachineMask
         layer:
@@ -236,13 +234,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
+        damage: 300
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 150
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -257,5 +255,5 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBase: base
-    stateDoorOpen: base
+    stateDoorOpen: base 
     stateDoorClosed: closed

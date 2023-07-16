@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.Parallax.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Parallax.Biomes;
@@ -47,7 +46,7 @@ public sealed class ParallaxOverlay : Overlay
             return;
 
         var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
-        var worldHandle = args.WorldHandle;
+        var screenHandle = args.WorldHandle;
 
         var layers = _parallax.GetParallaxLayers(args.MapId);
         var realTime = (float) _timing.RealTime.TotalSeconds;
@@ -61,7 +60,7 @@ public sealed class ParallaxOverlay : Overlay
             else
                 shader = null;
 
-            worldHandle.UseShader(shader);
+            screenHandle.UseShader(shader);
             var tex = layer.Texture;
 
             // Size of the texture in world units.
@@ -102,17 +101,17 @@ public sealed class ParallaxOverlay : Overlay
                 {
                     for (var y = flooredBL.Y; y < args.WorldAABB.Top; y += size.Y)
                     {
-                        worldHandle.DrawTextureRect(tex, Box2.FromDimensions(new Vector2(x, y), size));
+                        screenHandle.DrawTextureRect(tex, Box2.FromDimensions((x, y), size));
                     }
                 }
             }
             else
             {
-                worldHandle.DrawTextureRect(tex, Box2.FromDimensions(originBL, size));
+                screenHandle.DrawTextureRect(tex, Box2.FromDimensions(originBL, size));
             }
         }
 
-        worldHandle.UseShader(null);
+        screenHandle.UseShader(null);
     }
 }
 

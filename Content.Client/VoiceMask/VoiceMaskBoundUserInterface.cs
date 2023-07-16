@@ -5,12 +5,11 @@ namespace Content.Client.VoiceMask;
 
 public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
 {
-    [ViewVariables]
-    private VoiceMaskNameChangeWindow? _window;
-
-    public VoiceMaskBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public VoiceMaskBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
     }
+
+    private VoiceMaskNameChangeWindow? _window;
 
     protected override void Open()
     {

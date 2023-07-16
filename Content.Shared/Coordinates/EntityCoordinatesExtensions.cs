@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Robust.Shared.Map;
+﻿using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Coordinates

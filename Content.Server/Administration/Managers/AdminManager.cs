@@ -292,11 +292,7 @@ namespace Content.Server.Administration.Managers
 
         private async Task<(AdminData dat, int? rankId, bool specialLogin)?> LoadAdminData(IPlayerSession session)
         {
-            var promoteHost = IsLocal(session) && _cfg.GetCVar(CCVars.ConsoleLoginLocal)
-                              || _promotedPlayers.Contains(session.UserId)
-                              || session.Name == _cfg.GetCVar(CCVars.ConsoleLoginHostUser);
-
-            if (promoteHost)
+            if (IsLocal(session) && _cfg.GetCVar(CCVars.ConsoleLoginLocal) || _promotedPlayers.Contains(session.UserId))
             {
                 var data = new AdminData
                 {

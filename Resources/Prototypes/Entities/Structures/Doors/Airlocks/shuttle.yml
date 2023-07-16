@@ -1,8 +1,8 @@
 - type: entity
-  parent: Airlock
   id: AirlockShuttle
-  suffix: Docking
+  parent: Airlock
   name: external airlock
+  suffix: Docking
   description: Necessary for connecting two space craft together.
   components:
   - type: Docking

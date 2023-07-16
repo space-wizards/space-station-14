@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.Tabletop.UI;
 using Content.Client.Viewport;
 using Content.Shared.Tabletop;

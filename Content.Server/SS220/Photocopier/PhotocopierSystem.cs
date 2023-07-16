@@ -148,7 +148,7 @@ public sealed class PhotocopierSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    private void OnExamine(EntityUid uid, PhotocopierComponent component, ExaminedEvent args)
+    private static void OnExamine(EntityUid uid, PhotocopierComponent component, ExaminedEvent args)
     {
         if (component.PaperSlot.Item is null)
             return;

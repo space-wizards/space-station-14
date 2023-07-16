@@ -127,7 +127,7 @@ public sealed class RadioSystem : EntitySystem
         else
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} on {channel.LocalizedName}: {message}");
 
-        _replay.RecordServerMessage(chat);
+        _replay.QueueReplayMessage(chat);
         _messages.Remove(message);
     }
 

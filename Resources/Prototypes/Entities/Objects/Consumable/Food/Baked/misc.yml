@@ -246,9 +246,6 @@
       map: ["pancakes9"]
       visible: false
   - type: Appearance
-  - type: Tag
-    tags:
-    - Pancake
 
 - type: entity
   name: blueberry pancake
@@ -279,9 +276,6 @@
       map: ["pancakesbb3"]
       visible: false
   - type: Appearance
-  - type: Tag
-    tags:
-    - Pancake
 
 - type: entity
   name: chocolate chip pancake
@@ -321,9 +315,6 @@
           Quantity: 5
         - ReagentId: Theobromine
           Quantity: 1
-  - type: Tag
-    tags:
-    - Pancake
 
 - type: entity
   name: waffles
@@ -433,22 +424,3 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
-
-- type: entity
-  name: dumplings
-  parent: FoodBakedBase
-  id: FoodBakedDumplings
-  description: Average recipe for meat in doughs.
-  components:
-  - type: Sprite
-    state: dumplings
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Protein
-          Quantity: 2
-

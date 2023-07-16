@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Content.Server.Worldgen.Components;
+﻿using Content.Server.Worldgen.Components;
 using JetBrains.Annotations;
 
 namespace Content.Server.Worldgen.Systems;

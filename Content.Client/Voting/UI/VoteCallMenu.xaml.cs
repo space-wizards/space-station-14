@@ -1,5 +1,4 @@
 using System;
-using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Shared.Administration;
 using Content.Shared.Voting;

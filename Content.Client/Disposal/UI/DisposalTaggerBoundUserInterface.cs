@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 
 namespace Content.Client.Disposal.UI
@@ -10,10 +11,9 @@ namespace Content.Client.Disposal.UI
     [UsedImplicitly]
     public sealed class DisposalTaggerBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
         private DisposalTaggerWindow? _window;
 
-        public DisposalTaggerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public DisposalTaggerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

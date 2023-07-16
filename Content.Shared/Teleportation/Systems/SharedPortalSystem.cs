@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Shared.Directions;
 using Content.Shared.Projectiles;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
@@ -9,6 +8,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Teleportation.Systems;
@@ -20,15 +20,11 @@ public abstract class SharedPortalSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly INetManager _netMan = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPullingSystem _pulling = default!;
 
     private const string PortalFixture = "portalFixture";
     private const string ProjectileFixture = "projectile";
-
-    private const int MaxRandomTeleportAttempts = 20;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -121,7 +117,9 @@ public abstract class SharedPortalSystem : EntitySystem
             return;
 
         // no linked entity--teleport randomly
-        TeleportRandomly(uid, subject, component);
+        var randVector = _random.NextVector2(component.MaxRandomRadius);
+        var newCoords = Transform(uid).Coordinates.Offset(randVector);
+        TeleportEntity(uid, subject, newCoords);
     }
 
     private void OnEndCollide(EntityUid uid, PortalComponent component, ref EndCollideEvent args)
@@ -157,31 +155,10 @@ public abstract class SharedPortalSystem : EntitySystem
 
         LogTeleport(portal, subject, Transform(subject).Coordinates, target);
 
-        _transform.SetCoordinates(subject, target);
+        Transform(subject).Coordinates = target;
 
         _audio.PlayPredicted(departureSound, portal, subject);
         _audio.PlayPredicted(arrivalSound, subject, subject);
-    }
-
-    private void TeleportRandomly(EntityUid portal, EntityUid subject, PortalComponent? component = null)
-    {
-        if (!Resolve(portal, ref component))
-            return;
-
-        var xform = Transform(portal);
-        var coords = xform.Coordinates;
-        var newCoords = coords.Offset(_random.NextVector2(component.MaxRandomRadius));
-        for (var i = 0; i < MaxRandomTeleportAttempts; i++)
-        {
-            var randVector = _random.NextVector2(component.MaxRandomRadius);
-            newCoords = coords.Offset(randVector);
-            if (!_lookup.GetEntitiesIntersecting(newCoords.ToMap(EntityManager, _transform), LookupFlags.Static).Any())
-            {
-                break;
-            }
-        }
-
-        TeleportEntity(portal, subject, newCoords);
     }
 
     protected virtual void LogTeleport(EntityUid portal, EntityUid subject, EntityCoordinates source,

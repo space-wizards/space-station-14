@@ -13,7 +13,8 @@ salvage-expedition-window-hostiles = Hostiles:
 salvage-expedition-window-duration = Duration:
 salvage-expedition-window-biome = Biome:
 salvage-expedition-window-modifiers = Modifiers:
-salvage-expedition-window-rewards = Rewards:
+salvage-expedition-window-loot = Loot:
+salvage-expedition-window-none = N/A
 salvage-expedition-window-claimed = Claimed
 salvage-expedition-window-claim = Claim
 
@@ -45,4 +46,3 @@ salvage-expedition-announcement-countdown-minutes = {$duration} minutes remainin
 salvage-expedition-announcement-countdown-seconds = {$duration} seconds remaining to complete the expedition.
 salvage-expedition-announcement-dungeon = Dungeon is located {$direction}.
 salvage-expedition-completed = Expedition is completed.
-salvage-expedition-reward-description = Mission completion reward

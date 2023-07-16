@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;

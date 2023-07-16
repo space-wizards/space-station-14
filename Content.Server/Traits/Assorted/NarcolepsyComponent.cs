@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace Content.Server.Traits.Assorted;
+﻿namespace Content.Server.Traits.Assorted;
 
 /// <summary>
 /// This is used for the narcolepsy trait.

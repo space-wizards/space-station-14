@@ -7,7 +7,7 @@
   components:
   - type: ContentEye
     maxZoom: 1.44,1.44
-  - type: MindContainer
+  - type: Mind
   - type: Clickable
   - type: InteractionOutline
   - type: Physics

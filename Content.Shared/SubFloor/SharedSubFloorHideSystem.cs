@@ -1,5 +1,4 @@
 using Content.Shared.Audio;
-using Content.Shared.Explosion;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
@@ -32,13 +31,6 @@ namespace Content.Shared.SubFloor
             SubscribeLocalEvent<SubFloorHideComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
             SubscribeLocalEvent<SubFloorHideComponent, GettingInteractedWithAttemptEvent>(OnInteractionAttempt);
             SubscribeLocalEvent<SubFloorHideComponent, GettingAttackedAttemptEvent>(OnAttackAttempt);
-            SubscribeLocalEvent<SubFloorHideComponent, GetExplosionResistanceEvent>(OnGetExplosionResistance);
-        }
-
-        private void OnGetExplosionResistance(EntityUid uid, SubFloorHideComponent component, GetExplosionResistanceEvent args)
-        {
-            if (component.BlockInteractions && component.IsUnderCover)
-                args.DamageCoefficient = 0;
         }
 
         private void OnAttackAttempt(EntityUid uid, SubFloorHideComponent component, ref GettingAttackedAttemptEvent args)

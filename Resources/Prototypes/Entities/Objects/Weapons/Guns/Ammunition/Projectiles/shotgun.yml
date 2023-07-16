@@ -46,7 +46,7 @@
   id: PelletShotgunIncendiary
   name: pellet (.50 incendiary)
   noSpawn: true
-  parent: BaseBulletIncendiary
+  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -55,6 +55,13 @@
     damage:
       groups:
         Burn: 7
+  - type: PointLight
+    enabled: true
+    color: "#ff4300"
+    radius: 2.0
+    energy: 7.0
+  - type: IgniteOnCollide
+    fireStacks: 1
 
 - type: entity
   id: PelletShotgunPractice

@@ -2617,6 +2617,8 @@ entities:
       type: GridAtmosphere
     - type: OccluderTree
     - type: Shuttle
+    - nextUpdate: 539.6480757
+      type: GridPathfinding
     - type: RadiationGridResistance
     - nextShake: 0
       shakeTimes: 10
@@ -18969,7 +18971,7 @@ entities:
     - pos: 5.655767,-42.432423
       parent: 1668
       type: Transform
-- proto: ClothingOuterArmorBasic
+- proto: ClothingOuterVestKevlar
   entities:
   - uid: 3723
     components:

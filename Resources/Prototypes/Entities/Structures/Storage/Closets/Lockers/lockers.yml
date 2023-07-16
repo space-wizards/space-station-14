@@ -145,28 +145,20 @@
 
 # Freezer
 - type: entity
-  id: LockerFreezerBase
+  id: LockerFreezer
   parent: LockerBase
   name: freezer
-  suffix: No Access
   components:
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: freezer
     stateDoorOpen: freezer_open
     stateDoorClosed: freezer_door
+  - type: AccessReader
+    access: [ [ "Kitchen" ] ]
   - type: ExplosionResistance
     resistance: 0.90
   - type: AntiRottingContainer
-
-- type: entity
-  id: LockerFreezer
-  parent: LockerFreezerBase
-  name: freezer
-  suffix: Kitchen, Locked
-  components:
-  - type: AccessReader
-    access: [ [ "Kitchen" ] ]
 
 # Botanist
 - type: entity

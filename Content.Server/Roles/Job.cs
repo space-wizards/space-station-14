@@ -2,7 +2,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Shared.Roles;
 using System.Globalization;
-using Content.Server.Mind;
 
 namespace Content.Server.Roles
 {
@@ -36,11 +35,8 @@ namespace Content.Server.Roles
         public override void Greet()
         {
             base.Greet();
-            
-            var entityManager = IoCManager.Resolve<EntityManager>();
-            var mindSystem = entityManager.System<MindSystem>();
 
-            if (mindSystem.TryGetSession(Mind, out var session))
+            if (Mind.TryGetSession(out var session))
             {
                 var chatMgr = IoCManager.Resolve<IChatManager>();
                 chatMgr.DispatchServerMessage(session, Loc.GetString("job-greet-introduce-job-name",

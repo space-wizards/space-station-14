@@ -7,9 +7,6 @@
   components:
   - type: HTN
     rootTask: SimpleHostileCompound
-    blackboard:
-      NavSmash: !type:Bool
-        true
   - type: Faction
     factions:
     - SimpleHostile
@@ -34,6 +31,7 @@
       75: Dead
   - type: Stamina
     excess: 50
+  - type: Appearance
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -49,7 +47,7 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 6
+        Slash: 3
   - type: ReplacementAccent
     accent: genericAggressive
 
@@ -77,7 +75,7 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 8
+        Slash: 5
 
 - type: entity
   parent: BaseMobFlesh
@@ -107,7 +105,7 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 8
+        Slash: 5
 
 - type: entity
   parent: BaseMobFlesh

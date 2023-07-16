@@ -44,7 +44,6 @@
     bodyType: Static
   - type: Anchorable
   - type: Pullable
-  - type: Occluder
   - type: Storage
     capacity: 200
     whitelist:

@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
+using NUnit.Framework;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
 

@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Interaction;
 using Robust.Shared.Map;
 

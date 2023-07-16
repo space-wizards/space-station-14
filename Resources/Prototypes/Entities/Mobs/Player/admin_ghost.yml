@@ -9,7 +9,6 @@
     maxZoom: 8.916104, 8.916104
   - type: Tag
     tags:
-    - InstantDoAfters
     - CanPilot
     - BypassInteractionRangeChecks
   - type: Input

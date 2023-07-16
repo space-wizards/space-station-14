@@ -1,7 +1,12 @@
 using System.Linq;
+using System.Threading.Tasks;
+using NUnit.Framework;
 using Robust.Server.Player;
+using Robust.Shared;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.IntegrationTests.Tests.Networking
 {
@@ -18,10 +23,8 @@ namespace Content.IntegrationTests.Tests.Networking
             // Basic checks to ensure that they're connected and data got replicated.
 
             var playerManager = server.ResolveDependency<IPlayerManager>();
-#pragma warning disable NUnit2045 // Interdependent assertions.
             Assert.That(playerManager.PlayerCount, Is.EqualTo(1));
             Assert.That(playerManager.Sessions.First().Status, Is.EqualTo(SessionStatus.InGame));
-#pragma warning restore NUnit2045
 
             var clEntityManager = client.ResolveDependency<IEntityManager>();
             var svEntityManager = server.ResolveDependency<IEntityManager>();

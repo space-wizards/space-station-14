@@ -86,10 +86,6 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/glasses.rsi
   - type: VisionCorrection
-  - type: Tag
-    tags:
-    - HamsterWearable
-    - WhitelistChameleon
 
 - type: entity
   parent: ClothingEyesBase
@@ -117,10 +113,6 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
-  - type: Tag
-    tags:
-    - HamsterWearable
-    - WhitelistChameleon
 
 - type: entity
   parent: ClothingEyesBase
@@ -135,10 +127,6 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
-  - type: Tag
-    tags:
-    - HamsterWearable
-    - WhitelistChameleon
 
 - type: entity
   parent: ClothingEyesBase

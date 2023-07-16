@@ -1,4 +1,4 @@
-- type: guideEntry
+﻿- type: guideEntry
   id: Jobs
   name: guide-entry-jobs
   text: "/ServerInfo/Guidebook/Jobs.xml"
@@ -10,7 +10,6 @@
   - Science
   - Security
   - Janitorial
-  - Cargo
   - Salvage
   - Medical
 
@@ -27,22 +26,21 @@
 - type: guideEntry
   id: Janitorial
   name: guide-entry-janitorial
-  text: "/ServerInfo/Guidebook/Service/Janitorial.xml"
+  text: "/ServerInfo/Guidebook/Janitorial.xml"
 
 - type: guideEntry
   id: Bartender
   name: guide-entry-bartender
-  text: "/ServerInfo/Guidebook/Service/Bartender.xml"
+  text: "/ServerInfo/Guidebook/Bartender.xml"
 
 - type: guideEntry
   id: Chef
   name: guide-entry-chef
-  text: "/ServerInfo/Guidebook/Service/Chef.xml"
+  text: "/ServerInfo/Guidebook/Chef.xml"
   children:
   - Food Recipes
 
 - type: guideEntry
   id: Food Recipes
   name: guide-entry-foodrecipes
-  text: "/ServerInfo/Guidebook/Service/FoodRecipes.xml"
-
+  text: "/ServerInfo/Guidebook/Food Recipes.xml"

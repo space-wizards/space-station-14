@@ -75,7 +75,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
-    [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
 
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
@@ -705,8 +704,11 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/zoom.png")),
             Act = () =>
             {
-                var eye = EnsureComp<ContentEyeComponent>(args.Target);
-                _eyeSystem.SetZoom(args.Target, eye.TargetZoom * 0.2f, ignoreLimits: true);
+                var eye = EnsureComp<EyeComponent>(args.Target);
+
+                eye.Zoom *= Vector2.One * 0.2f;
+
+                Dirty(eye);
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-zoom-in-description"),
@@ -720,8 +722,11 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/flip.png")),
             Act = () =>
             {
-                var eye = EnsureComp<ContentEyeComponent>(args.Target);
-                _eyeSystem.SetZoom(args.Target, eye.TargetZoom * -1, ignoreLimits: true);
+                var eye = EnsureComp<EyeComponent>(args.Target);
+
+                eye.Zoom *= -1;
+
+                Dirty(eye);
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-flip-eye-description"),

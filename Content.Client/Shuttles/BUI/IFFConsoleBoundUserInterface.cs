@@ -9,17 +9,16 @@ namespace Content.Client.Shuttles.BUI;
 [UsedImplicitly]
 public sealed class IFFConsoleBoundUserInterface : BoundUserInterface
 {
-    [ViewVariables]
     private IFFConsoleWindow? _window;
 
-    public IFFConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public IFFConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
+
     }
 
     protected override void Open()
     {
         base.Open();
-
         _window = new IFFConsoleWindow();
         _window.OnClose += Close;
         _window.ShowIFF += SendIFFMessage;

@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Content.Server.Beam.Components;
+﻿using Content.Server.Beam.Components;
 using Content.Shared.Beam;
 using Content.Shared.Beam.Components;
 using Content.Shared.Physics;
@@ -75,10 +74,10 @@ public sealed class BeamSystem : SharedBeamSystem
         var beamSpawnPos = beamStartPos;
         var ent = Spawn(prototype, beamSpawnPos);
         var shape = new EdgeShape(distanceCorrection, new Vector2(0,0));
+        var distanceLength = distanceCorrection.Length;
 
         if (!TryComp<PhysicsComponent>(ent, out var physics) || !TryComp<BeamComponent>(ent, out var beam))
             return;
-
         FixturesComponent? manager = null;
         _fixture.TryCreateFixture(
             ent,
@@ -94,8 +93,6 @@ public sealed class BeamSystem : SharedBeamSystem
         _physics.SetCanCollide(ent, true, manager: manager, body: physics);
         _broadphase.RegenerateContacts(ent, physics, manager);
 
-        var distanceLength = distanceCorrection.Length();
-
         var beamVisualizerEvent = new BeamVisualizerEvent(ent, distanceLength, userAngle, bodyState, shader);
         RaiseNetworkEvent(beamVisualizerEvent);
 
@@ -107,7 +104,7 @@ public sealed class BeamSystem : SharedBeamSystem
             var controllerEnt = Spawn("VirtualBeamEntityController", beamSpawnPos);
             beam.VirtualBeamController = controllerEnt;
 
-            _audio.PlayPvs(beam.Sound, ent);
+            _audio.PlayPvs(beam.Sound, beam.Owner);
 
             var beamControllerCreatedEvent = new BeamControllerCreatedEvent(ent, controllerEnt);
             RaiseLocalEvent(controllerEnt, beamControllerCreatedEvent);
@@ -116,7 +113,7 @@ public sealed class BeamSystem : SharedBeamSystem
         //Create the rest of the beam, sprites handled through the BeamVisualizerEvent
         for (var i = 0; i < distanceLength-1; i++)
         {
-            beamSpawnPos = beamSpawnPos.Offset(calculatedDistance.Normalized());
+            beamSpawnPos = beamSpawnPos.Offset(calculatedDistance.Normalized);
             var newEnt = Spawn(prototype, beamSpawnPos);
 
             var ev = new BeamVisualizerEvent(newEnt, distanceLength, userAngle, bodyState, shader);
@@ -153,10 +150,10 @@ public sealed class BeamSystem : SharedBeamSystem
             return;
 
         //Where the start of the beam will spawn
-        var beamStartPos = userMapPos.Offset(calculatedDistance.Normalized());
+        var beamStartPos = userMapPos.Offset(calculatedDistance.Normalized);
 
         //Don't divide by zero
-        if (calculatedDistance.Length() == 0)
+        if (calculatedDistance.Length == 0)
             return;
 
         if (controller != null && TryComp<BeamComponent>(controller, out var controllerBeamComp))
@@ -165,7 +162,7 @@ public sealed class BeamSystem : SharedBeamSystem
             controllerBeamComp.HitTargets.Add(target);
         }
 
-        var distanceCorrection = calculatedDistance - calculatedDistance.Normalized();
+        var distanceCorrection = calculatedDistance - calculatedDistance.Normalized;
 
         CreateBeam(bodyPrototype, userAngle, calculatedDistance, beamStartPos, distanceCorrection, controller, bodyState, shader);
 

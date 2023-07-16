@@ -26,7 +26,7 @@
       - id: SyringeInaprovaline
       - id: Ointment
         amount: 4
-      - id: PillDermaline
+      - id: PillKelotane
         amount: 5
 
 - type: entity
@@ -42,8 +42,6 @@
       - id: Bloodpack
       - id: SyringeTranexamicAcid
       - id: PillIron
-        amount: 5
-      - id: PillBicaridine
         amount: 5
 
 - type: entity
@@ -113,7 +111,6 @@
       - id: HandheldHealthAnalyzer
       - id: SyringeEphedrine
       - id: SyringeTranexamicAcid
-      - id: SyringeBicaridine
       - id: AntiPoisonMedipen
       - id: Bloodpack
         amount: 2

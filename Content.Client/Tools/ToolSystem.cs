@@ -62,10 +62,5 @@ namespace Content.Client.Tools
             welder.Lit = state.Lit;
             welder.UiUpdateNeeded = true;
         }
-
-        protected override bool IsWelder(EntityUid uid)
-        {
-            return HasComp<WelderComponent>(uid);
-        }
     }
 }

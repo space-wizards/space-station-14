@@ -38,7 +38,9 @@ namespace Content.Client.Stack
                 return;
             }
 
-            component.UiUpdateNeeded = true;
+            // Dirty the UI now that the stack count has changed.
+            if (component is StackComponent clientComp)
+                clientComp.UiUpdateNeeded = true;
         }
 
         private void OnAppearanceChange(EntityUid uid, StackComponent comp, ref AppearanceChangeEvent args)

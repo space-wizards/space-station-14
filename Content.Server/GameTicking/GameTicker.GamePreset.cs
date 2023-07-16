@@ -8,6 +8,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 
@@ -16,6 +17,8 @@ namespace Content.Server.GameTicking
     public sealed partial class GameTicker
     {
         public const float PresetFailedCooldownIncrease = 30f;
+
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
         public GamePresetPrototype? Preset { get; private set; }
 
@@ -185,10 +188,10 @@ namespace Content.Server.GameTicking
 
             if (mind.VisitingEntity != default)
             {
-                _mind.UnVisit(mind);
+                mind.UnVisit();
             }
 
-            var position = Exists(playerEntity)
+            var position = playerEntity is {Valid: true}
                 ? Transform(playerEntity.Value).Coordinates
                 : GetObserverSpawnPoint();
 
@@ -203,11 +206,11 @@ namespace Content.Server.GameTicking
             // + If we're in a mob that is critical, and we're supposed to be able to return if possible,
             //   we're succumbing - the mob is killed. Therefore, character is dead. Ghosting OK.
             //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
-            var canReturn = canReturnGlobal && _mind.IsCharacterDeadPhysically(mind);
+            var canReturn = canReturnGlobal && mind.CharacterDeadPhysically;
 
             if (canReturnGlobal && TryComp(playerEntity, out MobStateComponent? mobState))
             {
-                if (_mobState.IsCritical(playerEntity.Value, mobState))
+                if (_mobStateSystem.IsCritical(playerEntity.Value, mobState))
                 {
                     canReturn = true;
 
@@ -245,9 +248,9 @@ namespace Content.Server.GameTicking
             _ghosts.SetCanReturnToBody(ghostComponent, canReturn);
 
             if (canReturn)
-                _mind.Visit(mind, ghost);
+                mind.Visit(ghost);
             else
-                _mind.TransferTo(mind, ghost);
+                mind.TransferTo(ghost);
             return true;
         }
 

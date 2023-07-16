@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 
 namespace Content.Client.Disposal.UI
@@ -10,10 +11,9 @@ namespace Content.Client.Disposal.UI
     [UsedImplicitly]
     public sealed class DisposalRouterBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
         private DisposalRouterWindow? _window;
 
-        public DisposalRouterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public DisposalRouterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

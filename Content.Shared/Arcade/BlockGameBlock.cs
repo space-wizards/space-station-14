@@ -71,8 +71,7 @@ namespace Content.Shared.Arcade
         }
     }
 
-    public static class BlockGameVector2Extensions
-    {
+    public static class BlockGameVector2Extensions{
         public static BlockGameBlock ToBlockGameBlock(this Vector2i vector2, BlockGameBlock.BlockGameBlockColor gameBlockColor)
         {
             return new(vector2, gameBlockColor);
@@ -91,5 +90,6 @@ namespace Content.Shared.Arcade
         {
             return new(-vector.Y, vector.X);
         }
+
     }
 }

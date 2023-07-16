@@ -144,7 +144,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         RaiseLocalEvent((aui).Owner, bae, false);
 
         SetCurrentSingleUser((aui).Owner, actor.PlayerSession, aui);
-        _uiSystem.ToggleUi(ui, actor.PlayerSession);
+        ui.Toggle(actor.PlayerSession);
 
         //Let the component know a user opened it so it can do whatever it needs to do
         var aae = new AfterActivatableUIOpenEvent(user, actor.PlayerSession);
@@ -167,12 +167,8 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     public void CloseAll(EntityUid uid, ActivatableUIComponent? aui = null)
     {
-        if (!Resolve(uid, ref aui, false))
-            return;
-        if (aui.UserInterface is null)
-            return;
-
-        _uiSystem.CloseAll(aui.UserInterface);
+        if (!Resolve(uid, ref aui, false)) return;
+        aui.UserInterface?.CloseAll();
     }
 
     private void OnHandDeselected(EntityUid uid, ActivatableUIComponent? aui, HandDeselectedEvent args)

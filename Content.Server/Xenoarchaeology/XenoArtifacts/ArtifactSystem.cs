@@ -17,7 +17,6 @@ public sealed partial class ArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -174,7 +173,6 @@ public sealed partial class ArtifactSystem : EntitySystem
         if (component.CurrentNodeId == null)
             return;
 
-        _audio.PlayPvs(component.ActivationSound, uid);
         component.LastActivationTime = _gameTiming.CurTime;
 
         var ev = new ArtifactActivatedEvent
@@ -301,7 +299,7 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </summary>
     private void OnRoundEnd(RoundEndTextAppendEvent ev)
     {
-        //return; // Corvax: No fun allowed // SS220: fun allowed
+        return; // Corvax: No fun allowed
         var query = EntityQueryEnumerator<ArtifactComponent>();
         while (query.MoveNext(out var ent, out var artifactComp))
         {

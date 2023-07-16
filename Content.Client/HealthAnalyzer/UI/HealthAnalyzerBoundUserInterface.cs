@@ -7,10 +7,9 @@ namespace Content.Client.HealthAnalyzer.UI
     [UsedImplicitly]
     public sealed class HealthAnalyzerBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
         private HealthAnalyzerWindow? _window;
 
-        public HealthAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public HealthAnalyzerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -19,7 +18,7 @@ namespace Content.Client.HealthAnalyzer.UI
             base.Open();
             _window = new HealthAnalyzerWindow
             {
-                Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName,
+                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
             _window.OnClose += Close;
             _window.OpenCentered();

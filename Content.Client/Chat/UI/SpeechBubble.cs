@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.Chat.Managers;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -81,7 +80,7 @@ namespace Content.Client.Chat.UI
 
             ForceRunStyleUpdate();
 
-            bubble.Measure(Vector2Helpers.Infinity);
+            bubble.Measure(Vector2.Infinity);
             ContentSize = bubble.DesiredSize;
             _verticalOffsetAchieved = -ContentSize.Y;
         }
@@ -131,7 +130,7 @@ namespace Content.Client.Chat.UI
             var worldPos = xform.WorldPosition + offset;
 
             var lowerCenter = _eyeManager.WorldToScreen(worldPos) / UIScale;
-            var screenPos = lowerCenter - new Vector2(ContentSize.X / 2, ContentSize.Y + _verticalOffsetAchieved);
+            var screenPos = lowerCenter - (ContentSize.X / 2, ContentSize.Y + _verticalOffsetAchieved);
             // Round to nearest 0.5
             screenPos = (screenPos * 2).Rounded() / 2;
             LayoutContainer.SetPosition(this, screenPos);

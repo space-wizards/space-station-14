@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Database;

@@ -20,7 +20,7 @@ public sealed class MutationSystem : EntitySystem
     {
         if (!seed.Unique)
         {
-            Log.Error($"Attempted to mutate a shared seed");
+            Logger.Error($"Attempted to mutate a shared seed");
             return;
         }
 

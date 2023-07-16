@@ -5,12 +5,10 @@ namespace Content.Client.StationRecords;
 
 public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInterface
 {
-    [ViewVariables]
     private GeneralStationRecordConsoleWindow? _window = default!;
 
-    public GeneralStationRecordConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
+    public GeneralStationRecordConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    {}
 
     protected override void Open()
     {

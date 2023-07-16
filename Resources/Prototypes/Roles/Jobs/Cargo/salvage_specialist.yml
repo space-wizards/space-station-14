@@ -9,7 +9,7 @@
       time: 10800 # SS220-RoleTime
   icon: "ShaftMiner"
   startingGear: SalvageSpecialistGear
-  supervisors: job-supervisors-qm
+  supervisors: job-supervisors-hop-qm
   access:
   - Cargo
   - Salvage

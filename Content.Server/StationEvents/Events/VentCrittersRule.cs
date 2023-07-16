@@ -1,9 +1,7 @@
 using Content.Server.StationEvents.Components;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Station.Components;
-using Content.Shared.Storage;
-using Robust.Shared.Map;
 using Robust.Shared.Random;
+using System.Linq;
+using Content.Server.GameTicking.Rules.Components;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -18,41 +16,23 @@ public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleCompon
     {
         base.Started(uid, component, gameRule, args);
 
-        if (!TryGetRandomStation(out var station))
-        {
-            return;
-        }
+        var spawnChoice = RobustRandom.Pick(component.Entries);
+        // TODO: What we should actually do is take the component count and then multiply a prob by that
+        // then just iterate until we get it
+        // This will be on average twice as fast.
+        var spawnLocations = EntityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
+        RobustRandom.Shuffle(spawnLocations);
 
-        var locations = EntityQueryEnumerator<VentCritterSpawnLocationComponent, TransformComponent>();
-        var validLocations = new List<EntityCoordinates>();
-        while (locations.MoveNext(out _, out _, out var transform))
+        // A small colony of critters.
+        var spawnAmount = RobustRandom.Next(spawnChoice.Amount, spawnChoice.MaxAmount);
+        Sawmill.Info($"Spawning {spawnAmount} of {spawnChoice}");
+        foreach (var location in spawnLocations)
         {
-            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station)
-            {
-                validLocations.Add(transform.Coordinates);
-                foreach (var spawn in EntitySpawnCollection.GetSpawns(component.Entries, RobustRandom))
-                {
-                    Spawn(spawn, transform.Coordinates);
-                }
-            }
-        }
+            if (spawnAmount-- == 0)
+                break;
 
-        if (component.SpecialEntries.Count == 0 || validLocations.Count == 0)
-        {
-            return;
-        }
-
-        // guaranteed spawn
-        var specialEntry = RobustRandom.Pick(component.SpecialEntries);
-        var specialSpawn = RobustRandom.Pick(validLocations);
-        Spawn(specialEntry.PrototypeId, specialSpawn);
-
-        foreach (var location in validLocations)
-        {
-            foreach (var spawn in EntitySpawnCollection.GetSpawns(component.SpecialEntries, RobustRandom))
-            {
-                Spawn(spawn, location);
-            }
+            var coords = Transform(location.Owner);
+            Spawn(spawnChoice.PrototypeId, coords.Coordinates);
         }
     }
 }

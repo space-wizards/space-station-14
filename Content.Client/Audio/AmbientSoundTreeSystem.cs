@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Audio;
 using Robust.Shared.ComponentTrees;
 using Robust.Shared.Physics;
@@ -14,7 +13,7 @@ public sealed class AmbientSoundTreeSystem : ComponentTreeSystem<AmbientSoundTre
     protected override bool Recursive => true;
 
     protected override Box2 ExtractAabb(in ComponentTreeEntry<AmbientSoundComponent> entry, Vector2 pos, Angle rot)
-        => new Box2(pos - entry.Component.RangeVector, pos + entry.Component.RangeVector);
+        => new Box2(pos - entry.Component.Range, pos + entry.Component.Range);
 
     protected override Box2 ExtractAabb(in ComponentTreeEntry<AmbientSoundComponent> entry)
     {

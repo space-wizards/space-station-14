@@ -134,17 +134,6 @@
             - tool: Welding
               doAfter: 20
 
-        - to: meatWall
-          completed:
-            - !type:SnapToGrid
-              southRotation: true
-          conditions:
-            - !type:EntityAnchored {}
-          steps:
-            - material: MeatSheets
-              amount: 2
-              doAfter: 2
-
     - node: wall
       entity: WallSolid
       edges:
@@ -250,18 +239,6 @@
               doAfter: 20
             - tool: Prying
               doAfter: 10
-
-    - node: meatWall
-      entity: WallMeat
-      edges:
-        - to: girder
-          completed:
-            - !type:GivePrototype
-              prototype: MaterialSheetMeat1
-              amount: 2
-          steps:
-            - tool: Prying
-              doAfter: 5
 
     - node: reinforcedGirder
       entity: ReinforcedGirder

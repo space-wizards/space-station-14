@@ -13,7 +13,7 @@ public sealed class PhotocopierBoundUi : BoundUserInterface
 {
     private PhotocopierWindow? _window;
 
-    public PhotocopierBoundUi(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public PhotocopierBoundUi(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 

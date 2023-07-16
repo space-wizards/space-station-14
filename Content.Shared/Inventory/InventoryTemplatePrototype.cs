@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 

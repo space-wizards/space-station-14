@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.Roles;
@@ -176,7 +175,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
                 {
                     var icon = new TextureRect()
                     {
-                        TextureScale = new Vector2(2, 2),
+                        TextureScale = (2, 2),
                         Stretch = TextureRect.StretchMode.KeepCentered
                     };
 

@@ -8,7 +8,6 @@ namespace Content.Server.UserInterface;
 public sealed class IntrinsicUISystem : EntitySystem
 {
     [Dependency] private readonly ActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
@@ -55,7 +54,7 @@ public sealed class IntrinsicUISystem : EntitySystem
         if (attempt.Cancelled)
             return false;
 
-        _uiSystem.ToggleUi(ui, actor.PlayerSession);
+        ui.Toggle(actor.PlayerSession);
         return true;
     }
 

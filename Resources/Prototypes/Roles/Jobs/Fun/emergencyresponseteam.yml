@@ -18,10 +18,10 @@
     jumpsuit: ClothingUniformJumpsuitERTLeader
     back: ClothingBackpackERTLeaderFilled
     shoes: ClothingShoesBootsJack
-    head: ClothingHeadHelmetERTLeader
+    head: ClothingHeadHelmetHelmet
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
-    outerClothing: ClothingOuterArmorBulletproof
+    outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
@@ -33,7 +33,7 @@
     jumpsuit: ClothingUniformJumpsuitERTLeader
     back: ClothingBackpackERTLeaderFilled
     shoes: ClothingShoesBootsMag
-    mask: ClothingMaskGasERT
+    mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTLeader
@@ -63,10 +63,10 @@
     jumpsuit: ClothingUniformJumpsuitERTEngineer
     back: ClothingBackpackERTEngineerFilled
     shoes: ClothingShoesBootsWork
-    head: ClothingHeadHelmetERTEngineer
+    head: ClothingHeadHelmetHelmet
     eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesColorYellow
-    outerClothing: ClothingOuterArmorBulletproof
+    outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltChiefEngineerFilled
@@ -78,7 +78,7 @@
     jumpsuit: ClothingUniformJumpsuitERTEngineer
     back: ClothingBackpackERTEngineerFilled
     shoes: ClothingShoesBootsMagAdv
-    mask: ClothingMaskGasERT
+    mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesColorYellow
     outerClothing: ClothingOuterHardsuitERTEngineer
@@ -108,10 +108,10 @@
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurityFilled
     shoes: ClothingShoesBootsJack
-    head: ClothingHeadHelmetERTSecurity
+    head: ClothingHeadHelmetHelmet
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
-    outerClothing: ClothingOuterArmorBulletproof
+    outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
@@ -123,7 +123,7 @@
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurityFilled
     shoes: ClothingShoesBootsMag
-    mask: ClothingMaskGasERT
+    mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTSecurity
@@ -153,10 +153,10 @@
     jumpsuit: ClothingUniformJumpsuitERTMedic
     back: ClothingBackpackERTMedicalFilled
     shoes: ClothingShoesBootsJack
-    head: ClothingHeadHelmetERTMedic
+    head: ClothingHeadHelmetHelmet
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesColorBlack
-    outerClothing: ClothingOuterArmorBulletproof
+    outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltMedicalFilled
@@ -169,7 +169,7 @@
     jumpsuit: ClothingUniformJumpsuitERTMedic
     back: ClothingBackpackERTMedicalFilled
     shoes: ClothingShoesBootsMag
-    mask: ClothingMaskGasERT
+    mask: ClothingMaskBreath
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTMedical
@@ -200,9 +200,9 @@
     jumpsuit: ClothingUniformJumpsuitERTJanitor
     back: ClothingBackpackERTJanitorFilled
     shoes: ClothingShoesGaloshes
-    head: ClothingHeadHelmetERTJanitor
+    head: ClothingHeadHelmetHelmet
     gloves: ClothingHandsGlovesColorBlack
-    outerClothing: ClothingOuterArmorBulletproof
+    outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltJanitorFilled

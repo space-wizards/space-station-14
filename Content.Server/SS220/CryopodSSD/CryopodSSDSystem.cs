@@ -1,4 +1,4 @@
-// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 using Content.Server.Mind.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Audio;
@@ -175,7 +175,7 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
             return;
         }
         
-        if (!TryComp(args.Dragged, out MindContainerComponent? mind) || !mind.HasMind)
+        if (!TryComp(args.Dragged, out MindComponent? mind) || !mind.HasMind)
         {
             _sawmill.Info($"{ToPrettyString(args.User)} tries to put non-playable entity into SSD cryopod {ToPrettyString(args.Dragged)}");
             return;

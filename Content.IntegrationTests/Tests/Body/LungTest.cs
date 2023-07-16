@@ -1,17 +1,16 @@
+using System.Threading.Tasks;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
+using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
-using System.Linq;
-using System.Numerics;
 
 namespace Content.IntegrationTests.Tests.Body
 {
@@ -53,10 +52,7 @@ namespace Content.IntegrationTests.Tests.Body
         {
             // --- Setup
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             await server.WaitIdleAsync();
@@ -72,22 +68,17 @@ namespace Content.IntegrationTests.Tests.Body
             BodyComponent body = default;
             EntityUid human = default;
             GridAtmosphereComponent relevantAtmos = default;
-            var startingMoles = 0.0f;
+            float startingMoles = 0.0f;
 
             var testMapName = "Maps/Test/Breathing/3by3-20oxy-80nit.yml";
 
             await server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
-                Assert.That(mapLoader.TryLoad(mapId, testMapName, out var roots));
-
-                var query = entityManager.GetEntityQuery<MapGridComponent>();
-                var grids = roots.Where(x => query.HasComponent(x));
-                Assert.That(grids, Is.Not.Empty);
-                grid = grids.First();
+                grid = mapLoader.LoadGrid(mapId, testMapName);
             });
 
-            Assert.That(grid, Is.Not.Null, $"Test blueprint {testMapName} not found.");
+            Assert.NotNull(grid, $"Test blueprint {testMapName} not found.");
 
             float GetMapMoles()
             {
@@ -105,15 +96,13 @@ namespace Content.IntegrationTests.Tests.Body
                 var coords = new Vector2(0.5f, -1f);
                 var coordinates = new EntityCoordinates(grid.Value, coords);
                 human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
-                respSys = entityManager.System<RespiratorSystem>();
-                metaSys = entityManager.System<MetabolizerSystem>();
+                respSys = EntitySystem.Get<RespiratorSystem>();
+                metaSys = EntitySystem.Get<MetabolizerSystem>();
                 relevantAtmos = entityManager.GetComponent<GridAtmosphereComponent>(grid.Value);
                 startingMoles = GetMapMoles();
 
-#pragma warning disable NUnit2045
-                Assert.That(entityManager.TryGetComponent(human, out body), Is.True);
-                Assert.That(entityManager.HasComponent<RespiratorComponent>(human), Is.True);
-#pragma warning restore NUnit2045
+                Assert.True(entityManager.TryGetComponent(human, out body));
+                Assert.True(entityManager.HasComponent<RespiratorComponent>(human));
             });
 
             // --- End setup
@@ -142,10 +131,7 @@ namespace Content.IntegrationTests.Tests.Body
         public async Task NoSuffocationTest()
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -163,16 +149,10 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
-
-                Assert.That(mapLoader.TryLoad(mapId, testMapName, out var ents), Is.True);
-                var query = entityManager.GetEntityQuery<MapGridComponent>();
-                grid = ents
-                    .Select<EntityUid, EntityUid?>(x => x)
-                    .FirstOrDefault((uid) => uid.HasValue && query.HasComponent(uid.Value), null);
-                Assert.That(grid, Is.Not.Null);
+                grid = mapLoader.LoadGrid(mapId, testMapName);
             });
 
-            Assert.That(grid, Is.Not.Null, $"Test blueprint {testMapName} not found.");
+            Assert.NotNull(grid, $"Test blueprint {testMapName} not found.");
 
             await server.WaitAssertion(() =>
             {
@@ -182,12 +162,11 @@ namespace Content.IntegrationTests.Tests.Body
                 human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
 
                 var mixture = entityManager.System<AtmosphereSystem>().GetContainingMixture(human);
-#pragma warning disable NUnit2045
                 Assert.That(mixture.TotalMoles, Is.GreaterThan(0));
-                Assert.That(entityManager.HasComponent<BodyComponent>(human), Is.True);
-                Assert.That(entityManager.TryGetComponent(human, out respirator), Is.True);
-                Assert.That(respirator.SuffocationCycles, Is.LessThanOrEqualTo(respirator.SuffocationCycleThreshold));
-#pragma warning restore NUnit2045
+
+                Assert.True(entityManager.HasComponent<BodyComponent>(human));
+                Assert.True(entityManager.TryGetComponent(human, out respirator));
+                Assert.False(respirator.SuffocationCycles > respirator.SuffocationCycleThreshold);
             });
 
             var increment = 10;
@@ -200,7 +179,7 @@ namespace Content.IntegrationTests.Tests.Body
                 await server.WaitRunTicks(increment);
                 await server.WaitAssertion(() =>
                 {
-                    Assert.That(respirator.SuffocationCycles, Is.LessThanOrEqualTo(respirator.SuffocationCycleThreshold),
+                    Assert.False(respirator.SuffocationCycles > respirator.SuffocationCycleThreshold,
                         $"Entity {entityManager.GetComponent<MetaDataComponent>(human).EntityName} is suffocating on tick {tick}");
                 });
             }

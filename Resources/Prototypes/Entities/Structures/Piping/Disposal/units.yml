@@ -16,6 +16,8 @@
       map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
     - state: disposal
       map: [ "enum.DisposalUnitVisualLayers.Base" ]
+    - state: disposal-charging
+      map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
     - state: disposal-flush
       map: [ "enum.DisposalUnitVisualLayers.BaseFlush" ]
     - state: dispover-charge
@@ -68,9 +70,9 @@
       type: DisposalUnitBoundUserInterface
   - type: ContainerContainer
     containers:
-      disposals: !type:Container
+      DisposalUnit: !type:Container
   - type: StaticPrice
-    price: 62
+    price: 100
   - type: PowerSwitch
 
 - type: entity
@@ -82,6 +84,9 @@
     graph: DisposalMachine
     node: disposal_unit
   - type: DisposalUnit
+    flushSound:
+      path: /Audio/Machines/disposalflush.ogg
+    flushTime: 2
   - type: UserInterface
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
@@ -118,6 +123,9 @@
   - type: DisposalUnit
     autoEngageEnabled: false
     mobsCanEnter: false
+    flushSound:
+      path: /Audio/Machines/disposalflush.ogg
+    flushTime: 2
   - type: MailingUnit
   - type: DeviceNetwork
     deviceNetId: Wired

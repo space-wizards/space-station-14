@@ -4,23 +4,32 @@
     roomWhitelist:
       - SalvageExperiment
     presets:
-      - Bucket
-      - Wow
-      - SpaceShip
-      - Tall
+      - Cross
+      - SpaceMan
+      - FourSquare
   postGeneration:
-    - !type:CorridorPostGen
-      width: 3
+    - !type:MiddleConnectionPostGen
+      overlapCount: 3
+      count: 3
+      entities:
+        - CableApcExtension
+        - AirlockGlass
+      edgeEntities:
+        - Grille
+        - Window
 
-    - !type:DungeonEntrancePostGen
-      count: 2
-
-    - !type:RoomEntrancePostGen
+    - !type:MiddleConnectionPostGen
+      count: 1
       entities:
         - CableApcExtension
         - AirlockGlass
 
-    - !type:EntranceFlankPostGen
+    - !type:EntrancePostGen
+      count: 2
+      entities:
+        - AirlockGlass
+
+    - !type:InternalWindowPostGen
       entities:
         - Grille
         - Window
@@ -49,37 +58,6 @@
       tile: FloorSteel
       wall: WallSolid
       cornerWall: WallReinforced
-
-    - !type:JunctionPostGen
-      width: 1
-
-    - !type:JunctionPostGen
-
-    - !type:AutoCablingPostGen
-
-    - !type:CornerClutterPostGen
-      contents:
-        - id: PottedPlantRandom
-          amount: 1
-
-    - !type:CorridorDecalSkirtingPostGen
-      color: "#D381C996"
-      cardinalDecals:
-        South: BrickTileWhiteLineS
-        East: BrickTileWhiteLineE
-        North: BrickTileWhiteLineN
-        West: BrickTileWhiteLineW
-      cornerDecals:
-        SouthEast: BrickTileWhiteCornerSe
-        SouthWest: BrickTileWhiteCornerSw
-        NorthEast: BrickTileWhiteCornerNe
-        NorthWest: BrickTileWhiteCornerNw
-      pocketDecals:
-        SouthWest: BrickTileWhiteInnerSw
-        SouthEast: BrickTileWhiteInnerSe
-        NorthWest: BrickTileWhiteInnerNw
-        NorthEast: BrickTileWhiteInnerNe
-
 
 - type: dungeonConfig
   id: LavaBrig
@@ -87,23 +65,32 @@
     roomWhitelist:
       - LavaBrig
     presets:
-      - Bucket
-      - Wow
-      - SpaceShip
-      - Tall
+      - Cross
+      - SpaceMan
+      - FourSquare
   postGeneration:
-    - !type:CorridorPostGen
-      width: 3
+    - !type:MiddleConnectionPostGen
+      overlapCount: 3
+      count: 3
+      entities:
+        - CableApcExtension
+        - AirlockSecurityGlassLocked
+      edgeEntities:
+        - Grille
+        - Window
 
-    - !type:DungeonEntrancePostGen
-      count: 2
-
-    - !type:RoomEntrancePostGen
+    - !type:MiddleConnectionPostGen
+      count: 1
       entities:
         - CableApcExtension
         - AirlockSecurityGlassLocked
 
-    - !type:EntranceFlankPostGen
+    - !type:EntrancePostGen
+      count: 2
+      entities:
+        - AirlockSecurityGlassLocked
+
+    - !type:InternalWindowPostGen
       entities:
         - Grille
         - Window
@@ -111,7 +98,7 @@
     - !type:ExternalWindowPostGen
       entities:
         - Grille
-        - Window
+        - ReinforcedWindow
 
     - !type:WallMountPostGen
       spawns:
@@ -130,35 +117,5 @@
 
     - !type:BoundaryWallPostGen
       tile: FloorSteel
-      wall: WallSolid
+      wall: WallReinforced
       cornerWall: WallReinforced
-
-    - !type:JunctionPostGen
-      width: 1
-
-    - !type:JunctionPostGen
-
-    - !type:AutoCablingPostGen
-
-    - !type:CornerClutterPostGen
-      contents:
-        - id: PottedPlantRandom
-          amount: 1
-
-    - !type:CorridorDecalSkirtingPostGen
-      color: "#DE3A3A96"
-      cardinalDecals:
-        South: BrickTileWhiteLineS
-        East: BrickTileWhiteLineE
-        North: BrickTileWhiteLineN
-        West: BrickTileWhiteLineW
-      cornerDecals:
-        SouthEast: BrickTileWhiteCornerSe
-        SouthWest: BrickTileWhiteCornerSw
-        NorthEast: BrickTileWhiteCornerNe
-        NorthWest: BrickTileWhiteCornerNw
-      pocketDecals:
-        SouthWest: BrickTileWhiteInnerSw
-        SouthEast: BrickTileWhiteInnerSe
-        NorthWest: BrickTileWhiteInnerNw
-        NorthEast: BrickTileWhiteInnerNe

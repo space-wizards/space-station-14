@@ -10,7 +10,6 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
-using System.Numerics;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -524,13 +523,13 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (GridImpulse && tileCount > 0)
             {
-                var direction = ((Vector2)_depressurizeTiles[tileCount - 1].GridIndices - tile.GridIndices).Normalized();
+                var direction = ((Vector2)_depressurizeTiles[tileCount - 1].GridIndices - tile.GridIndices).Normalized;
 
                 var gridPhysics = Comp<PhysicsComponent>(mapGrid.Owner);
 
                 // TODO ATMOS: Come up with better values for these.
                 _physics.ApplyLinearImpulse(mapGrid.Owner, direction * totalMolesRemoved * gridPhysics.Mass, body: gridPhysics);
-                _physics.ApplyAngularImpulse(mapGrid.Owner, Vector2Helpers.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved, body: gridPhysics);
+                _physics.ApplyAngularImpulse(mapGrid.Owner, Vector2.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved, body: gridPhysics);
             }
 
             if(tileCount > 10 && (totalMolesRemoved / tileCount) > 10)

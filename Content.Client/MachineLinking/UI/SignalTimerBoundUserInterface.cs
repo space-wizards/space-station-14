@@ -8,10 +8,9 @@ public sealed class SignalTimerBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-    [ViewVariables]
     private SignalTimerWindow? _window;
 
-    public SignalTimerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public SignalTimerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 

@@ -1,24 +1,10 @@
-﻿using Content.Client.Atmos.Components;
-using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.EntitySystems;
-using Robust.Shared.GameStates;
+﻿using Content.Shared.Atmos.EntitySystems;
+using JetBrains.Annotations;
 
-namespace Content.Client.Atmos.EntitySystems;
-
-public sealed class AtmosphereSystem : SharedAtmosphereSystem
+namespace Content.Client.Atmos.EntitySystems
 {
-    public override void Initialize()
+    [UsedImplicitly]
+    public sealed class AtmosphereSystem : SharedAtmosphereSystem
     {
-        base.Initialize();
-        SubscribeLocalEvent<MapAtmosphereComponent, ComponentHandleState>(OnMapHandleState);
-    }
-
-    private void OnMapHandleState(EntityUid uid, MapAtmosphereComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not MapAtmosphereComponentState state)
-            return;
-
-        // Struct so should just copy by value.
-        component.OverlayData = state.Overlay;
     }
 }

@@ -8,9 +8,6 @@
     size: 60
   - type: Storage
     capacity: 60
-  - type: Tag
-    tags:
-    - Briefcase
 
 - type: entity
   name: brown briefcase

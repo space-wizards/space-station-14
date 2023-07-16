@@ -1,16 +1,13 @@
-using Content.Server.Cargo.Components;
-using Content.Server.Cargo.Systems;
+using System.Linq;
+using System.Threading;
+using Robust.Shared.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
+using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.Salvage;
-using Robust.Shared.CPUJob.JobQueues;
-using Robust.Shared.CPUJob.JobQueues.Queues;
-using System.Linq;
-using System.Threading;
-using Content.Shared.Salvage.Expeditions;
-using Robust.Shared.GameStates;
 
 namespace Content.Server.Salvage;
 
@@ -39,7 +36,6 @@ public sealed partial class SalvageSystem
 
         SubscribeLocalEvent<SalvageExpeditionComponent, ComponentShutdown>(OnExpeditionShutdown);
         SubscribeLocalEvent<SalvageExpeditionComponent, EntityUnpausedEvent>(OnExpeditionUnpaused);
-        SubscribeLocalEvent<SalvageExpeditionComponent, ComponentGetState>(OnExpeditionGetState);
 
         SubscribeLocalEvent<SalvageStructureComponent, ExaminedEvent>(OnStructureExamine);
 
@@ -47,14 +43,6 @@ public sealed partial class SalvageSystem
         _failedCooldown = _configurationManager.GetCVar(CCVars.SalvageExpeditionFailedCooldown);
         _configurationManager.OnValueChanged(CCVars.SalvageExpeditionCooldown, SetCooldownChange);
         _configurationManager.OnValueChanged(CCVars.SalvageExpeditionFailedCooldown, SetFailedCooldownChange);
-    }
-
-    private void OnExpeditionGetState(EntityUid uid, SalvageExpeditionComponent component, ref ComponentGetState args)
-    {
-        args.State = new SalvageExpeditionComponentState()
-        {
-            Stage = component.Stage
-        };
     }
 
     private void ShutdownExpeditions()
@@ -111,7 +99,7 @@ public sealed partial class SalvageSystem
         // Finish mission
         if (TryComp<SalvageExpeditionDataComponent>(component.Station, out var data))
         {
-            FinishExpedition(data, uid, component, null);
+            FinishExpedition(data, component, null);
         }
     }
 
@@ -153,7 +141,7 @@ public sealed partial class SalvageSystem
         }
     }
 
-    private void FinishExpedition(SalvageExpeditionDataComponent component, EntityUid uid, SalvageExpeditionComponent expedition, EntityUid? shuttle)
+    private void FinishExpedition(SalvageExpeditionDataComponent component, SalvageExpeditionComponent expedition, EntityUid? shuttle)
     {
         // Finish mission cleanup.
         switch (expedition.MissionParams.MissionType)
@@ -162,7 +150,7 @@ public sealed partial class SalvageSystem
             case SalvageMissionType.Mining:
                 expedition.Completed = true;
 
-                if (shuttle != null && TryComp<SalvageMiningExpeditionComponent>(uid, out var mining))
+                if (shuttle != null && TryComp<SalvageMiningExpeditionComponent>(expedition.Owner, out var mining))
                 {
                     var xformQuery = GetEntityQuery<TransformComponent>();
                     var entities = new List<EntityUid>();
@@ -181,19 +169,18 @@ public sealed partial class SalvageSystem
                 break;
         }
 
-        // Handle payout after expedition has finished
+        // Payout already handled elsewhere.
         if (expedition.Completed)
         {
-            Log.Debug($"Completed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
+            _sawmill.Debug($"Completed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + TimeSpan.FromSeconds(_cooldown);
-            Announce(uid, Loc.GetString("salvage-expedition-mission-completed"));
-            GiveRewards(expedition);
+            Announce(expedition.Owner, Loc.GetString("salvage-expedition-mission-completed"));
         }
         else
         {
-            Log.Debug($"Failed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
+            _sawmill.Debug($"Failed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + TimeSpan.FromSeconds(_failedCooldown);
-            Announce(uid, Loc.GetString("salvage-expedition-mission-failed"));
+            Announce(expedition.Owner, Loc.GetString("salvage-expedition-mission-failed"));
         }
 
         component.ActiveMission = 0;
@@ -267,7 +254,7 @@ public sealed partial class SalvageSystem
             _timing,
             _mapManager,
             _prototypeManager,
-            _anchorable,
+            _tileDefManager,
             _biome,
             _dungeon,
             this,
@@ -282,20 +269,5 @@ public sealed partial class SalvageSystem
     private void OnStructureExamine(EntityUid uid, SalvageStructureComponent component, ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("salvage-expedition-structure-examine"));
-    }
-
-    private void GiveRewards(SalvageExpeditionComponent comp)
-    {
-        // send it to cargo, no rewards otherwise.
-        if (!TryComp<StationCargoOrderDatabaseComponent>(comp.Station, out var cargoDb))
-            return;
-
-        foreach (var reward in comp.Rewards)
-        {
-            var sender = Loc.GetString("cargo-gift-default-sender");
-            var desc = Loc.GetString("salvage-expedition-reward-description");
-            var dest = Loc.GetString("cargo-gift-default-dest");
-            _cargo.AddAndApproveOrder(comp.Station, reward, 0, 1, sender, desc, dest, cargoDb);
-        }
     }
 }

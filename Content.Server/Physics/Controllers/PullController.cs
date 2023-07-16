@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-using Content.Shared.Gravity;
-using Content.Shared.Pulling;
+﻿using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Rotatable;
 using Robust.Shared.Physics;
@@ -38,8 +36,6 @@ namespace Content.Server.Physics.Controllers
         private const float MinimumMovementDistance = 0.005f;
 
         [Dependency] private readonly SharedPullingSystem _pullableSystem = default!;
-        [Dependency] private readonly SharedGravitySystem _gravity = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         // TODO: Move this stuff to pullingsystem
         /// <summary>
@@ -67,19 +63,19 @@ namespace Content.Server.Physics.Controllers
 
         private void OnPullerMove(EntityUid uid, SharedPullerComponent component, ref MoveEvent args)
         {
-            if (component.Pulling is not { } pullable || !TryComp<SharedPullableComponent>(pullable, out var pullableComponent))
-                return;
+            if (component.Pulling == null ||
+                !TryComp<SharedPullableComponent>(component.Pulling.Value, out var pullable)) return;
 
-            UpdatePulledRotation(uid, pullable);
+            UpdatePulledRotation(uid, pullable.Owner);
 
             if (args.NewPosition.EntityId == args.OldPosition.EntityId &&
-                (args.NewPosition.Position - args.OldPosition.Position).LengthSquared() < MinimumMovementDistance * MinimumMovementDistance)
+                (args.NewPosition.Position - args.OldPosition.Position).LengthSquared < MinimumMovementDistance * MinimumMovementDistance)
                 return;
 
-            if (TryComp<PhysicsComponent>(pullable, out var physics))
-                PhysicsSystem.WakeBody(pullable, body: physics);
+            if (TryComp<PhysicsComponent>(pullable.Owner, out var physics))
+                PhysicsSystem.WakeBody(pullable.Owner, body: physics);
 
-            _pullableSystem.StopMoveTo(pullableComponent);
+            _pullableSystem.StopMoveTo(pullable);
         }
 
         private void UpdatePulledRotation(EntityUid puller, EntityUid pulled)
@@ -99,13 +95,13 @@ namespace Content.Server.Physics.Controllers
             var pulledData = TransformSystem.GetWorldPositionRotation(pulledXform, xforms);
 
             var dir = pullerData.WorldPosition - pulledData.WorldPosition;
-            if (dir.LengthSquared() > ThresholdRotDistance * ThresholdRotDistance)
+            if (dir.LengthSquared > ThresholdRotDistance * ThresholdRotDistance)
             {
                 var oldAngle = pulledData.WorldRotation;
                 var newAngle = Angle.FromWorldVec(dir);
 
                 var diff = newAngle - oldAngle;
-                if (Math.Abs(diff.Degrees) > ThresholdRotAngle / 2f)
+                if (Math.Abs(diff.Degrees) > (ThresholdRotAngle / 2f))
                 {
                     // Ok, so this bit is difficult because ideally it would look like it's snapping to sane angles.
                     // Otherwise PIANO DOOR STUCK! happens.
@@ -130,45 +126,47 @@ namespace Content.Server.Physics.Controllers
                 //  or due to being deleted.
 
                 if (pullable.Deleted)
+                {
                     continue;
+                }
 
                 if (pullable.MovingTo == null)
+                {
                     continue;
+                }
 
                 if (pullable.Puller is not {Valid: true} puller)
+                {
                     continue;
-
-                var pullableEnt = pullable.Owner;
-                var pullableXform = Transform(pullableEnt);
-                var pullerXform = Transform(puller);
+                }
 
                 // Now that's over with...
 
-                var pullerPosition = pullerXform.MapPosition;
-                var movingTo = pullable.MovingTo.Value.ToMap(EntityManager, _transform);
+                var pullerPosition = EntityManager.GetComponent<TransformComponent>(puller).MapPosition;
+                var movingTo = pullable.MovingTo.Value.ToMap(EntityManager);
                 if (movingTo.MapId != pullerPosition.MapId)
                 {
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
 
-                if (!TryComp<PhysicsComponent?>(pullableEnt, out var physics) ||
+                if (!EntityManager.TryGetComponent<PhysicsComponent?>(pullable.Owner, out var physics) ||
                     physics.BodyType == BodyType.Static ||
-                    movingTo.MapId != pullableXform.MapID)
+                    movingTo.MapId != EntityManager.GetComponent<TransformComponent>(pullable.Owner).MapID)
                 {
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
 
                 var movingPosition = movingTo.Position;
-                var ownerPosition = pullableXform.MapPosition.Position;
+                var ownerPosition = EntityManager.GetComponent<TransformComponent>(pullable.Owner).MapPosition.Position;
 
                 var diff = movingPosition - ownerPosition;
-                var diffLength = diff.Length();
+                var diffLength = diff.Length;
 
-                if (diffLength < MaximumSettleDistance && physics.LinearVelocity.Length() < MaximumSettleVelocity)
+                if (diffLength < MaximumSettleDistance && (physics.LinearVelocity.Length < MaximumSettleVelocity))
                 {
-                    PhysicsSystem.SetLinearVelocity(pullableEnt, Vector2.Zero, body: physics);
+                    PhysicsSystem.SetLinearVelocity(pullable.Owner, Vector2.Zero, body: physics);
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
@@ -177,27 +175,19 @@ namespace Content.Server.Physics.Controllers
                 var impulseModifier = MathHelper.Lerp(AccelModifierLow, AccelModifierHigh, impulseModifierLerp);
                 var multiplier = diffLength < 1 ? impulseModifier * diffLength : impulseModifier;
                 // Note the implication that the real rules of physics don't apply to pulling control.
-                var accel = diff.Normalized() * multiplier;
+                var accel = diff.Normalized * multiplier;
                 // Now for the part where velocity gets shutdown...
-                if (diffLength < SettleShutdownDistance && physics.LinearVelocity.Length() >= SettleMinimumShutdownVelocity)
+                if ((diffLength < SettleShutdownDistance) && (physics.LinearVelocity.Length >= SettleMinimumShutdownVelocity))
                 {
                     // Shutdown velocity increases as we get closer to centre
                     var scaling = (SettleShutdownDistance - diffLength) / SettleShutdownDistance;
                     accel -= physics.LinearVelocity * SettleShutdownMultiplier * scaling;
                 }
 
-                PhysicsSystem.WakeBody(pullableEnt, body: physics);
+                PhysicsSystem.WakeBody(pullable.Owner, body: physics);
 
                 var impulse = accel * physics.Mass * frameTime;
-                PhysicsSystem.ApplyLinearImpulse(pullableEnt, impulse, body: physics);
-
-                // if the puller is weightless, then we apply the inverse impulse.
-                // doing it under gravity produces an unsatisfying wiggling when pulling.
-                if (_gravity.IsWeightless(puller) && pullerXform.GridUid == null)
-                {
-                    PhysicsSystem.WakeBody(puller);
-                    PhysicsSystem.ApplyLinearImpulse(puller, -impulse);
-                }
+                PhysicsSystem.ApplyLinearImpulse(pullable.Owner, impulse, body: physics);
             }
         }
     }

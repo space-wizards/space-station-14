@@ -2,43 +2,31 @@ using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 
-namespace Content.Shared.Construction.Conditions;
-
-[UsedImplicitly]
-[DataDefinition]
-public sealed class TileNotBlocked : IConstructionCondition
+namespace Content.Shared.Construction.Conditions
 {
-    [DataField("filterMobs")] private bool _filterMobs = false;
-    [DataField("failIfSpace")] private bool _failIfSpace = true;
-    [DataField("failIfNotSturdy")] private bool _failIfNotSturdy = true;
-
-    public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
+    [UsedImplicitly]
+    [DataDefinition]
+    public sealed class TileNotBlocked : IConstructionCondition
     {
-        var tileRef = location.GetTileRef();
+        [DataField("filterMobs")] private bool _filterMobs = false;
+        [DataField("failIfSpace")] private bool _failIfSpace = true;
 
-        if (tileRef == null)
+        public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
-            return false;
+            var tileRef = location.GetTileRef();
+
+            if (tileRef == null || tileRef.Value.IsSpace())
+                return !_failIfSpace;
+
+            return !tileRef.Value.IsBlockedTurf(_filterMobs);
         }
 
-        if (tileRef.Value.IsSpace() && _failIfSpace)
+        public ConstructionGuideEntry GenerateGuideEntry()
         {
-            return false;
+            return new ConstructionGuideEntry
+            {
+                Localization = "construction-step-condition-tile-not-blocked",
+            };
         }
-
-        if (!tileRef.Value.GetContentTileDefinition().Sturdy && _failIfNotSturdy)
-        {
-            return false;
-        }
-
-        return !tileRef.Value.IsBlockedTurf(_filterMobs);
-    }
-
-    public ConstructionGuideEntry GenerateGuideEntry()
-    {
-        return new ConstructionGuideEntry
-        {
-            Localization = "construction-step-condition-tile-not-blocked",
-        };
     }
 }

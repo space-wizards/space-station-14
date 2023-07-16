@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
+using NUnit.Framework;
 using Robust.Server.GameObjects;
+using Robust.Server.Maps;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
@@ -83,22 +85,10 @@ public sealed class SaveLoadReparentTest
                 });
             }
 
-            // Converts an entity query enumerator to an enumerable.
-            static IEnumerable<(EntityUid Uid, TComp Comp)> EnumerateQueryEnumerator<TComp>(EntityQueryEnumerator<TComp> query)
-                where TComp : Component
-            {
-                while (query.MoveNext(out var uid, out var comp))
-                    yield return (uid, comp);
-            }
-
-            Assert.That(
-                EnumerateQueryEnumerator(
-                    entities.EntityQueryEnumerator<BodyComponent>()
-                ).Where((e) =>
-                    entities.GetComponent<MetaDataComponent>(e.Uid).EntityPrototype!.Name == "HumanBodyDummy"
-                ),
-                Is.Not.Empty
-            );
+            Assert.That(entities
+                .EntityQuery<BodyComponent>()
+                .Where(e => entities.GetComponent<MetaDataComponent>(e.Owner).EntityPrototype!.Name ==
+                            "HumanBodyDummy"), Is.Not.Empty);
 
             const string mapPath = $"/{nameof(SaveLoadReparentTest)}{nameof(Test)}map.yml";
 
@@ -106,26 +96,22 @@ public sealed class SaveLoadReparentTest
             maps.DeleteMap(mapId);
 
             mapId = maps.CreateMap();
-            Assert.That(mapLoader.TryLoad(mapId, mapPath, out _), Is.True);
+            mapLoader.LoadMap(mapId, mapPath);
 
-            var query = EnumerateQueryEnumerator(
-                    entities.EntityQueryEnumerator<BodyComponent>()
-                ).Where((e) =>
-                    entities.GetComponent<MetaDataComponent>(e.Uid).EntityPrototype!.Name == "HumanBodyDummy"
-                ).ToArray();
+            var query = entities
+                .EntityQuery<BodyComponent>()
+                .Where(e => entities.GetComponent<MetaDataComponent>(e.Owner).EntityPrototype!.Name == "HumanBodyDummy")
+                .ToArray();
 
             Assert.That(query, Is.Not.Empty);
-            foreach (var (uid, body) in query)
+            foreach (var body in query)
             {
-                human = uid;
+                human = body.Owner;
                 parts = bodySystem.GetBodyChildren(human).ToArray();
                 organs = bodySystem.GetBodyOrgans(human).ToArray();
 
-                Assert.Multiple(() =>
-                {
-                    Assert.That(parts, Is.Not.Empty);
-                    Assert.That(organs, Is.Not.Empty);
-                });
+                Assert.That(parts, Is.Not.Empty);
+                Assert.That(organs, Is.Not.Empty);
 
                 foreach (var (id, component) in parts)
                 {

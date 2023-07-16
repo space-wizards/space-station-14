@@ -10,21 +10,19 @@ namespace Content.Client.Access.UI
     public sealed class IdCardConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        private readonly SharedIdCardConsoleSystem _idCardConsoleSystem = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private IdCardConsoleWindow? _window;
-
-        public IdCardConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public IdCardConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
-            _idCardConsoleSystem = EntMan.System<SharedIdCardConsoleSystem>();
         }
+        private IdCardConsoleWindow? _window;
 
         protected override void Open()
         {
             base.Open();
             List<string> accessLevels;
 
-            if (EntMan.TryGetComponent<IdCardConsoleComponent>(Owner, out var idCard))
+            if (_entityManager.TryGetComponent<IdCardConsoleComponent>(Owner.Owner, out var idCard))
             {
                 accessLevels = idCard.AccessLevels;
                 accessLevels.Sort();
@@ -32,13 +30,10 @@ namespace Content.Client.Access.UI
             else
             {
                 accessLevels = new List<string>();
-                _idCardConsoleSystem.Log.Error($"No IdCardConsole component found for {EntMan.ToPrettyString(Owner)}!");
+                Logger.ErrorS(SharedIdCardConsoleSystem.Sawmill, $"No IdCardConsole component found for {_entityManager.ToPrettyString(Owner.Owner)}!");
             }
 
-            _window = new IdCardConsoleWindow(this, _prototypeManager, accessLevels)
-            {
-                Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName
-            };
+            _window = new IdCardConsoleWindow(this, _prototypeManager, accessLevels) {Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
 
             _window.CrewManifestButton.OnPressed += _ => SendMessage(new CrewManifestOpenUiMessage());
             _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));

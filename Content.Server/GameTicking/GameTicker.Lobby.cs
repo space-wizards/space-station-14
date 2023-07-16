@@ -78,6 +78,22 @@ namespace Content.Server.GameTicking
                 ("roundId", RoundId), ("playerCount", playerCount), ("readyCount", readyCount), ("mapName", stationNames.ToString()),("gmTitle", gmTitle),("desc", desc));
         }
 
+        private TickerLobbyReadyEvent GetStatusSingle(ICommonSession player, PlayerGameStatus gameStatus)
+        {
+            return new (new Dictionary<NetUserId, PlayerGameStatus> { { player.UserId, gameStatus } });
+        }
+
+        private TickerLobbyReadyEvent GetPlayerStatus()
+        {
+            var players = new Dictionary<NetUserId, PlayerGameStatus>();
+            foreach (var player in _playerGameStatuses.Keys)
+            {
+                _playerGameStatuses.TryGetValue(player, out var status);
+                players.Add(player, status);
+            }
+            return new TickerLobbyReadyEvent(players);
+        }
+
         private TickerLobbyStatusEvent GetStatusMsg(IPlayerSession session)
         {
             _playerGameStatuses.TryGetValue(session.UserId, out var status);
@@ -144,6 +160,7 @@ namespace Content.Server.GameTicking
                 if (!_playerManager.TryGetSessionById(playerUserId, out var playerSession))
                     continue;
                 RaiseNetworkEvent(GetStatusMsg(playerSession), playerSession.ConnectedClient);
+                RaiseNetworkEvent(GetStatusSingle(playerSession, status));
             }
         }
 
@@ -163,6 +180,7 @@ namespace Content.Server.GameTicking
             var status = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;
             _playerGameStatuses[player.UserId] = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;
             RaiseNetworkEvent(GetStatusMsg(player), player.ConnectedClient);
+            RaiseNetworkEvent(GetStatusSingle(player, status));
             // update server info to reflect new ready count
             UpdateInfoText();
         }

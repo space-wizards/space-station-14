@@ -51,11 +51,3 @@
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleRubber
-
-- type: entity
-  id: CartridgeLightRifleIncendiary
-  name: cartridge (.30 rifle incendiary)
-  parent: BaseCartridgeLightRifle
-  components:
-  - type: CartridgeAmmo
-    proto: BulletLightRifleIncendiary

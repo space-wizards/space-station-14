@@ -129,13 +129,13 @@ namespace Content.Client.Cargo.UI
 
             foreach (var order in orders)
             {
-                var product = _protoManager.Index<EntityPrototype>(order.ProductId);
+                var product = _protoManager.Index<CargoProductPrototype>(order.ProductId);
                 var productName = product.Name;
 
                 var row = new CargoOrderRow
                 {
                     Order = order,
-                    Icon = { Texture = _spriteSystem.Frame0(product) },
+                    Icon = { Texture = _spriteSystem.Frame0(product.Icon) },
                     ProductName =
                     {
                         Text = Loc.GetString(

@@ -3,45 +3,51 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
 
-namespace Content.Client.Arcade.UI;
-
-public sealed class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
+namespace Content.Client.Arcade.UI
 {
-    [ViewVariables] private SpaceVillainArcadeMenu? _menu;
-
-    //public SharedSpaceVillainArcadeComponent SpaceVillainArcade;
-
-    public SpaceVillainArcadeBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public sealed class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
     {
-        SendAction(PlayerAction.RequestData);
-    }
+        [ViewVariables] private SpaceVillainArcadeMenu? _menu;
 
-    public void SendAction(PlayerAction action)
-    {
-        SendMessage(new SpaceVillainArcadePlayerActionMessage(action));
-    }
+        //public SharedSpaceVillainArcadeComponent SpaceVillainArcade;
 
-    protected override void Open()
-    {
-        base.Open();
+        public SpaceVillainArcadeBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        {
+            SendAction(PlayerAction.RequestData);
+        }
 
-        _menu = new SpaceVillainArcadeMenu(this);
+        public void SendAction(PlayerAction action)
+        {
+            SendMessage(new SpaceVillainArcadePlayerActionMessage(action));
+        }
 
-        _menu.OnClose += Close;
-        _menu.OpenCentered();
-    }
+        protected override void Open()
+        {
+            base.Open();
 
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-    {
-        if (message is SpaceVillainArcadeDataUpdateMessage msg)
-            _menu?.UpdateInfo(msg);
-    }
+            /*if(!Owner.Owner.TryGetComponent(out SharedSpaceVillainArcadeComponent spaceVillainArcade))
+            {
+                return;
+            }
 
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
+            SpaceVillainArcade = spaceVillainArcade;*/
 
-        if (disposing)
-            _menu?.Dispose();
+            _menu = new SpaceVillainArcadeMenu(this);
+
+            _menu.OnClose += Close;
+            _menu.OpenCentered();
+        }
+
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            if (message is SpaceVillainArcadeDataUpdateMessage msg) _menu?.UpdateInfo(msg);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing) _menu?.Dispose();
+        }
     }
 }

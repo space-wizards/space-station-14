@@ -266,6 +266,8 @@ entities:
 
     - type: OccluderTree
     - type: Shuttle
+    - nextUpdate: 3754.1875118
+      type: GridPathfinding
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -5577,6 +5579,8 @@ entities:
 
     - type: OccluderTree
     - type: Shuttle
+    - nextUpdate: 0.45
+      type: GridPathfinding
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -5683,6 +5687,8 @@ entities:
 
     - type: OccluderTree
     - type: Shuttle
+    - nextUpdate: 0.45
+      type: GridPathfinding
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity

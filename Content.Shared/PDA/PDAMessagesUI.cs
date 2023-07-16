@@ -3,37 +3,37 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.PDA;
 
 [Serializable, NetSerializable]
-public sealed class PdaToggleFlashlightMessage : BoundUserInterfaceMessage
+public sealed class PDAToggleFlashlightMessage : BoundUserInterfaceMessage
 {
-    public PdaToggleFlashlightMessage() { }
+    public PDAToggleFlashlightMessage() { }
 }
 
 [Serializable, NetSerializable]
-public sealed class PdaShowRingtoneMessage : BoundUserInterfaceMessage
+public sealed class PDAShowRingtoneMessage : BoundUserInterfaceMessage
 {
-    public PdaShowRingtoneMessage() { }
+    public PDAShowRingtoneMessage() { }
 }
 
 [Serializable, NetSerializable]
-public sealed class PdaShowUplinkMessage : BoundUserInterfaceMessage
+public sealed class PDAShowUplinkMessage : BoundUserInterfaceMessage
 {
-    public PdaShowUplinkMessage() { }
+    public PDAShowUplinkMessage() { }
 }
 
 [Serializable, NetSerializable]
-public sealed class PdaLockUplinkMessage : BoundUserInterfaceMessage
+public sealed class PDALockUplinkMessage : BoundUserInterfaceMessage
 {
-    public PdaLockUplinkMessage() { }
+    public PDALockUplinkMessage() { }
 }
 
 [Serializable, NetSerializable]
-public sealed class PdaShowMusicMessage : BoundUserInterfaceMessage
+public sealed class PDAShowMusicMessage : BoundUserInterfaceMessage
 {
-    public PdaShowMusicMessage() { }
+    public PDAShowMusicMessage() { }
 }
 
 [Serializable, NetSerializable]
-public sealed class PdaRequestUpdateInterfaceMessage : BoundUserInterfaceMessage
+public sealed class PDARequestUpdateInterfaceMessage : BoundUserInterfaceMessage
 {
-    public PdaRequestUpdateInterfaceMessage() { }
+    public PDARequestUpdateInterfaceMessage() { }
 }

@@ -6,7 +6,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: AmePart
+      - id: AMEPart
         amount: 9
 
 - type: entity
@@ -15,7 +15,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: AmeJar
+      - id: AMEJar
         amount: 3
 
 - type: entity
@@ -24,7 +24,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: AmeControllerUnanchored
+      - id: AMEControllerUnanchored
 
 # Singularity
 

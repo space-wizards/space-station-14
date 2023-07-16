@@ -1,5 +1,3 @@
-using System.Numerics;
-using Content.Client.Atmos.Components;
 using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -9,7 +7,6 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -139,126 +136,75 @@ namespace Content.Client.Atmos.Overlays
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            if (args.MapId == MapId.Nullspace)
-                return;
-
             var drawHandle = args.WorldHandle;
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
             var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
-            var gridState = (args.WorldBounds,
-                args.WorldHandle,
-                _gasCount,
-                _frames,
-                _frameCounter,
-                _fireFrames,
-                _fireFrameCounter,
-                _shader,
-                overlayQuery,
-                xformQuery);
 
-            var mapUid = _mapManager.GetMapEntityId(args.MapId);
-
-            if (_entManager.TryGetComponent<MapAtmosphereComponent>(mapUid, out var atmos))
+            foreach (var mapGrid in _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds))
             {
-                var bottomLeft = args.WorldAABB.BottomLeft.Floored();
-                var topRight = args.WorldAABB.TopRight.Ceiled();
-
-                for (var x = bottomLeft.X; x <= topRight.X; x++)
+                if (!overlayQuery.TryGetComponent(mapGrid.Owner, out var comp) ||
+                    !xformQuery.TryGetComponent(mapGrid.Owner, out var gridXform))
                 {
-                    for (var y = bottomLeft.Y; y <= topRight.Y; y++)
+                    continue;
+                }
+
+                var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                drawHandle.SetTransform(worldMatrix);
+                var floatBounds = invMatrix.TransformBox(in args.WorldBounds).Enlarged(mapGrid.TileSize);
+                var localBounds = new Box2i(
+                    (int) MathF.Floor(floatBounds.Left),
+                    (int) MathF.Floor(floatBounds.Bottom),
+                    (int) MathF.Ceiling(floatBounds.Right),
+                    (int) MathF.Ceiling(floatBounds.Top));
+
+                // Currently it would be faster to group drawing by gas rather than by chunk, but if the textures are
+                // ever moved to a single atlas, that should no longer be the case. So this is just grouping draw calls
+                // by chunk, even though its currently slower.
+
+                drawHandle.UseShader(null);
+                foreach (var chunk in comp.Chunks.Values)
+                {
+                    var enumerator = new GasChunkEnumerator(chunk);
+
+                    while (enumerator.MoveNext(out var gas))
                     {
-                        var tilePosition = new Vector2(x, y);
+                        if (gas.Opacity == null!)
+                            continue;
 
-                        for (var i = 0; i < atmos.OverlayData.Opacity.Length; i++)
+                        var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
+                        if (!localBounds.Contains(tilePosition))
+                            continue;
+
+                        for (var i = 0; i < _gasCount; i++)
                         {
-                            var opacity = atmos.OverlayData.Opacity[i];
-
+                            var opacity = gas.Opacity[i];
                             if (opacity > 0)
-                                args.WorldHandle.DrawTexture(_frames[i][_frameCounter[i]], tilePosition, Color.White.WithAlpha(opacity));
+                                drawHandle.DrawTexture(_frames[i][_frameCounter[i]], tilePosition, Color.White.WithAlpha(opacity));
                         }
                     }
                 }
-            }
 
-            // TODO: WorldBounds callback.
-            _mapManager.FindGridsIntersecting(args.MapId, args.WorldAABB, ref gridState,
-                static (EntityUid uid, MapGridComponent grid,
-                    ref (Box2Rotated WorldBounds,
-                        DrawingHandleWorld drawHandle,
-                        int gasCount,
-                        Texture[][] frames,
-                        int[] frameCounter,
-                        Texture[][] fireFrames,
-                        int[] fireFrameCounter,
-                        ShaderInstance shader,
-                        EntityQuery<GasTileOverlayComponent> overlayQuery,
-                        EntityQuery<TransformComponent> xformQuery) state) =>
+                // And again for fire, with the unshaded shader
+                drawHandle.UseShader(_shader);
+                foreach (var chunk in comp.Chunks.Values)
                 {
-                    if (!state.overlayQuery.TryGetComponent(uid, out var comp) ||
-                        !state.xformQuery.TryGetComponent(uid, out var gridXform))
-                        {
-                            return true;
-                        }
+                    var enumerator = new GasChunkEnumerator(chunk);
 
-                    var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
-                    state.drawHandle.SetTransform(worldMatrix);
-                    var floatBounds = invMatrix.TransformBox(in state.WorldBounds).Enlarged(grid.TileSize);
-                    var localBounds = new Box2i(
-                        (int) MathF.Floor(floatBounds.Left),
-                        (int) MathF.Floor(floatBounds.Bottom),
-                        (int) MathF.Ceiling(floatBounds.Right),
-                        (int) MathF.Ceiling(floatBounds.Top));
-
-                    // Currently it would be faster to group drawing by gas rather than by chunk, but if the textures are
-                    // ever moved to a single atlas, that should no longer be the case. So this is just grouping draw calls
-                    // by chunk, even though its currently slower.
-
-                    state.drawHandle.UseShader(null);
-                    foreach (var chunk in comp.Chunks.Values)
+                    while (enumerator.MoveNext(out var gas))
                     {
-                        var enumerator = new GasChunkEnumerator(chunk);
+                        if (gas.FireState == 0)
+                            continue;
 
-                        while (enumerator.MoveNext(out var gas))
-                        {
-                            if (gas.Opacity == null!)
-                                continue;
+                        var index = chunk.Origin + (enumerator.X, enumerator.Y);
+                        if (!localBounds.Contains(index))
+                            continue;
 
-                            var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
-                            if (!localBounds.Contains(tilePosition))
-                                continue;
-
-                            for (var i = 0; i < state.gasCount; i++)
-                            {
-                                var opacity = gas.Opacity[i];
-                                if (opacity > 0)
-                                    state.drawHandle.DrawTexture(state.frames[i][state.frameCounter[i]], tilePosition, Color.White.WithAlpha(opacity));
-                            }
-                        }
+                        var state = gas.FireState - 1;
+                        var texture = _fireFrames[state][_fireFrameCounter[state]];
+                        drawHandle.DrawTexture(texture, index);
                     }
-
-                    // And again for fire, with the unshaded shader
-                    state.drawHandle.UseShader(state.shader);
-                    foreach (var chunk in comp.Chunks.Values)
-                    {
-                        var enumerator = new GasChunkEnumerator(chunk);
-
-                        while (enumerator.MoveNext(out var gas))
-                        {
-                            if (gas.FireState == 0)
-                                continue;
-
-                            var index = chunk.Origin + (enumerator.X, enumerator.Y);
-                            if (!localBounds.Contains(index))
-                                continue;
-
-                            var fireState = gas.FireState - 1;
-                            var texture = state.fireFrames[fireState][state.fireFrameCounter[fireState]];
-                            state.drawHandle.DrawTexture(texture, index);
-                        }
-                    }
-
-                    return true;
-                });
+                }
+            }
 
             drawHandle.UseShader(null);
             drawHandle.SetTransform(Matrix3.Identity);

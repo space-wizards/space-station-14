@@ -48,7 +48,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
     private const string StatusEffectKey = "Electrocution";
     private const string DamageType = "Shock";
@@ -266,7 +265,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         Node? TryNode(string? id)
         {
             if (id != null &&
-                _nodeContainer.TryGetNode<Node>(nodeContainer, id, out var tryNode) &&
+                nodeContainer.TryGetNode<Node>(id, out var tryNode) &&
                 tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: > 0 } })
             {
                 return tryNode;
@@ -321,12 +320,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return true;
 
         var electrocutionEntity = Spawn($"VirtualElectrocutionLoad{node.NodeGroupID}", sourceTransform.Coordinates);
-
-        var nodeContainer = Comp<NodeContainerComponent>(electrocutionEntity);
-
-        if (!_nodeContainer.TryGetNode<ElectrocutionNode>(nodeContainer, "electrocution", out var electrocutionNode))
-            return false;
-
+        var electrocutionNode = Comp<NodeContainerComponent>(electrocutionEntity).GetNode<ElectrocutionNode>("electrocution");
         var electrocutionComponent = Comp<ElectrocutionComponent>(electrocutionEntity);
 
         // This shows up in the power monitor.

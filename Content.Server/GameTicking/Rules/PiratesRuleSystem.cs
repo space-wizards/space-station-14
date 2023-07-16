@@ -1,10 +1,8 @@
 using System.Linq;
-using System.Numerics;
 using Content.Server.Administration.Commands;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Mind;
 using Content.Server.Preferences.Managers;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
@@ -42,7 +40,6 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly NamingSystem _namingSystem = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     /// <inheritdoc/>
@@ -161,12 +158,9 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 aabb.Union(aabbs[i]);
             }
 
-            // (Not commented?)
-            var a = MathF.Max(aabb.Height / 2f, aabb.Width / 2f) * 2.5f;
-
             var gridId = _map.LoadGrid(GameTicker.DefaultMap, map, new MapLoadOptions
             {
-                Offset = aabb.Center + new Vector2(a, a),
+                Offset = aabb.Center + MathF.Max(aabb.Height / 2f, aabb.Width / 2f) * 2.5f
             });
 
             if (!gridId.HasValue)
@@ -211,13 +205,16 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 var name = _namingSystem.GetName("Human", gender);
 
                 var session = ops[i];
-                var newMind = _mindSystem.CreateMind(session.UserId, name);
-                _mindSystem.SetUserId(newMind, session.UserId);
+                var newMind = new Mind.Mind(session.UserId)
+                {
+                    CharacterName = name
+                };
+                newMind.ChangeOwningPlayer(session.UserId);
 
                 var mob = Spawn("MobHuman", _random.Pick(spawns));
                 MetaData(mob).EntityName = name;
 
-                _mindSystem.TransferTo(newMind, mob);
+                newMind.TransferTo(mob);
                 var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
                 _stationSpawningSystem.EquipStartingGear(mob, pirateGear, profile);
 

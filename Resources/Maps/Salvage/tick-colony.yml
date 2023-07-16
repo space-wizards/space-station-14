@@ -296,6 +296,8 @@ entities:
       type: GridAtmosphere
     - type: OccluderTree
     - type: Shuttle
+    - nextUpdate: 739.7009161
+      type: GridPathfinding
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: SpreaderGrid

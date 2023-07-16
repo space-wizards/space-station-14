@@ -15,7 +15,6 @@
     supportedDisciplines:
     - Industrial
     - Biochemical
-    - Arsenal
     - Experimental
     - CivilianServices
   - type: ApcPowerReceiver

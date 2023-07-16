@@ -156,10 +156,3 @@
   icon: { sprite: SS220/Structures/Machines/cryopodSSD.rsi, state: icon }
   checkCanInteract: false
   event: !type:CryopodSSDLeaveActionEvent
-
-- type: instantAction
-  id: ActivateHonkImplant
-  name: action-name-honk
-  description: action-desc-honk
-  icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
-  event: !type:ActivateImplantEvent

@@ -1,7 +1,6 @@
 using Content.Server.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
-using Robust.Shared.Random;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -9,7 +8,6 @@ public sealed class RehydratableSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -32,10 +30,7 @@ public sealed class RehydratableSystem : EntitySystem
     {
         _popups.PopupEntity(Loc.GetString("rehydratable-component-expands-message", ("owner", uid)), uid);
 
-        var randomMob = _random.Pick(comp.PossibleSpawns);
-
-        var target = Spawn(randomMob, Transform(uid).Coordinates);
-
+        var target = Spawn(comp.TargetPrototype, Transform(uid).Coordinates);
         Transform(target).AttachToGridOrMap();
         var ev = new GotRehydratedEvent(target);
         RaiseLocalEvent(uid, ref ev);

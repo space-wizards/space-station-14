@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using NUnit.Framework;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Access
@@ -12,82 +14,63 @@ namespace Content.IntegrationTests.Tests.Access
         [Test]
         public async Task TestTags()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
-            var entityManager = server.ResolveDependency<IEntityManager>();
 
 
             await server.WaitAssertion(() =>
             {
-                var system = entityManager.System<AccessReaderSystem>();
+                var system = EntitySystem.Get<AccessReaderSystem>();
 
                 // test empty
                 var reader = new AccessReaderComponent();
-                Assert.Multiple(() =>
-                {
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "Foo" }, reader), Is.True);
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "Bar" }, reader), Is.True);
-                    Assert.That(system.AreAccessTagsAllowed(Array.Empty<string>(), reader), Is.True);
-                });
+                Assert.That(system.AreAccessTagsAllowed(new[] { "Foo" }, reader), Is.True);
+                Assert.That(system.AreAccessTagsAllowed(new[] { "Bar" }, reader), Is.True);
+                Assert.That(system.AreAccessTagsAllowed(new string[] { }, reader), Is.True);
 
                 // test deny
                 reader = new AccessReaderComponent();
                 reader.DenyTags.Add("A");
-                Assert.Multiple(() =>
-                {
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "Foo" }, reader), Is.True);
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "A" }, reader), Is.False);
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "A", "Foo" }, reader), Is.False);
-                    Assert.That(system.AreAccessTagsAllowed(Array.Empty<string>(), reader), Is.True);
-                });
+                Assert.That(system.AreAccessTagsAllowed(new[] { "Foo" }, reader), Is.True);
+                Assert.That(system.AreAccessTagsAllowed(new[] { "A" }, reader), Is.False);
+                Assert.That(system.AreAccessTagsAllowed(new[] { "A", "Foo" }, reader), Is.False);
+                Assert.That(system.AreAccessTagsAllowed(new string[] { }, reader), Is.True);
 
                 // test one list
                 reader = new AccessReaderComponent();
                 reader.AccessLists.Add(new HashSet<string> { "A" });
-                Assert.Multiple(() =>
-                {
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "A" }, reader), Is.True);
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "B" }, reader), Is.False);
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "A", "B" }, reader), Is.True);
-                    Assert.That(system.AreAccessTagsAllowed(Array.Empty<string>(), reader), Is.False);
-                });
+                Assert.That(system.AreAccessTagsAllowed(new[] { "A" }, reader), Is.True);
+                Assert.That(system.AreAccessTagsAllowed(new[] { "B" }, reader), Is.False);
+                Assert.That(system.AreAccessTagsAllowed(new[] { "A", "B" }, reader), Is.True);
+                Assert.That(system.AreAccessTagsAllowed(new string[] { }, reader), Is.False);
 
                 // test one list - two items
                 reader = new AccessReaderComponent();
                 reader.AccessLists.Add(new HashSet<string> { "A", "B" });
-                Assert.Multiple(() =>
-                {
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "A" }, reader), Is.False);
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "B" }, reader), Is.False);
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "A", "B" }, reader), Is.True);
-                    Assert.That(system.AreAccessTagsAllowed(Array.Empty<string>(), reader), Is.False);
-                });
+                Assert.That(system.AreAccessTagsAllowed(new[] { "A" }, reader), Is.False);
+                Assert.That(system.AreAccessTagsAllowed(new[] { "B" }, reader), Is.False);
+                Assert.That(system.AreAccessTagsAllowed(new[] { "A", "B" }, reader), Is.True);
+                Assert.That(system.AreAccessTagsAllowed(new string[] { }, reader), Is.False);
 
                 // test two list
                 reader = new AccessReaderComponent();
                 reader.AccessLists.Add(new HashSet<string> { "A" });
                 reader.AccessLists.Add(new HashSet<string> { "B", "C" });
-                Assert.Multiple(() =>
-                {
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "A" }, reader), Is.True);
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "B" }, reader), Is.False);
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "A", "B" }, reader), Is.True);
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "C", "B" }, reader), Is.True);
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "C", "B", "A" }, reader), Is.True);
-                    Assert.That(system.AreAccessTagsAllowed(Array.Empty<string>(), reader), Is.False);
-                });
+                Assert.That(system.AreAccessTagsAllowed(new[] { "A" }, reader), Is.True);
+                Assert.That(system.AreAccessTagsAllowed(new[] { "B" }, reader), Is.False);
+                Assert.That(system.AreAccessTagsAllowed(new[] { "A", "B" }, reader), Is.True);
+                Assert.That(system.AreAccessTagsAllowed(new[] { "C", "B" }, reader), Is.True);
+                Assert.That(system.AreAccessTagsAllowed(new[] { "C", "B", "A" }, reader), Is.True);
+                Assert.That(system.AreAccessTagsAllowed(new string[] { }, reader), Is.False);
 
                 // test deny list
                 reader = new AccessReaderComponent();
                 reader.AccessLists.Add(new HashSet<string> { "A" });
                 reader.DenyTags.Add("B");
-                Assert.Multiple(() =>
-                {
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "A" }, reader), Is.True);
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "B" }, reader), Is.False);
-                    Assert.That(system.AreAccessTagsAllowed(new[] { "A", "B" }, reader), Is.False);
-                    Assert.That(system.AreAccessTagsAllowed(Array.Empty<string>(), reader), Is.False);
-                });
+                Assert.That(system.AreAccessTagsAllowed(new[] { "A" }, reader), Is.True);
+                Assert.That(system.AreAccessTagsAllowed(new[] { "B" }, reader), Is.False);
+                Assert.That(system.AreAccessTagsAllowed(new[] { "A", "B" }, reader), Is.False);
+                Assert.That(system.AreAccessTagsAllowed(new string[] { }, reader), Is.False);
             });
             await pairTracker.CleanReturnAsync();
         }

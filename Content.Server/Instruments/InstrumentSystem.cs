@@ -198,9 +198,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
                 // Just in case
                 Clean((instrument).Owner);
-
-                if (instrument.UserInterface is not null)
-                    _userInterfaceSystem.CloseAll(instrument.UserInterface);
+                instrument.UserInterface?.CloseAll();
             }
 
             instrument.Timer += frameTime;
@@ -219,7 +217,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (_userInterfaceSystem.TryGetUi(uid, InstrumentUiKey.Key, out var bui))
-            _userInterfaceSystem.ToggleUi(bui, session);
+        var ui = uid.GetUIOrNull(InstrumentUiKey.Key);
+        ui?.Toggle(session);
     }
 }

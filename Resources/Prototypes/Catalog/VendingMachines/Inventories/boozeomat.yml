@@ -9,7 +9,7 @@
     DrinkShaker: 5
     DrinkAbsintheBottleFull: 2
     DrinkAleBottleFull: 5
-    DrinkBeerBottleFull: 5
+    DrinkBeer: 5 # Needs to be renamed DrinkBeerBottleFull
     DrinkBlueCuracaoBottleFull: 2
     DrinkCognacBottleFull: 4
     DrinkColaBottleFull: 4

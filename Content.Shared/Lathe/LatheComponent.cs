@@ -20,7 +20,7 @@ namespace Content.Shared.Lathe
         /// All of the recipes that the lathe is capable of researching
         /// </summary>
         [DataField("dynamicRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public readonly List<string> DynamicRecipes = new();
+        public readonly List<string>? DynamicRecipes;
 
         /// <summary>
         /// The lathe's construction queue

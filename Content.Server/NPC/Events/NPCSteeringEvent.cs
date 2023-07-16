@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.NPC.Components;
 
 namespace Content.Server.NPC.Events;

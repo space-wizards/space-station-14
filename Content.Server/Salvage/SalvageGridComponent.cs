@@ -9,6 +9,6 @@
         /// <summary>
         /// The magnet that spawned this grid.
         /// </summary>
-        public EntityUid? SpawnerMagnet;
+        public SalvageMagnetComponent? SpawnerMagnet;
     }
 }

@@ -353,10 +353,6 @@
     solutions:
       food:
         maxVol: 30
-  - type: RefillableSolution
-    solution: food
-  - type: Spillable
-    solution: food
   - type: SolutionTransfer
     canChangeTransferAmount: true
     minTransferAmount: 5

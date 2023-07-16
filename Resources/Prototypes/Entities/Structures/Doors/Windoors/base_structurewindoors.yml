@@ -56,7 +56,6 @@
       - Close
       - Toggle
       - AutoClose
-      - DoorBolt
   - type: DeviceLinkSource
     ports:
     - DoorStatus

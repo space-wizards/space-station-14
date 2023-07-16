@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chemistry;
@@ -60,7 +59,7 @@ namespace Content.Client.Chemistry.UI
                 {
                     Access = AccessLevel.Public,
                     StyleClasses = { styleBase },
-                    MaxSize = new Vector2(42, 28),
+                    MaxSize = (42, 28),
                     Group = pillTypeGroup
                 };
 
@@ -69,7 +68,7 @@ namespace Content.Client.Chemistry.UI
                 TextureRect pillTypeTexture = new TextureRect
                 {
                     Texture = specifier.Frame0(),
-                    TextureScale = new Vector2(1.75f, 1.75f),
+                    TextureScale = (1.75f, 1.75f),
                     Stretch = TextureRect.StretchMode.KeepCentered,
                 };
 

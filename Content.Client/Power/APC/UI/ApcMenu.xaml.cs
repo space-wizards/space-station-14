@@ -18,12 +18,12 @@ namespace Content.Client.Power.APC.UI
     public sealed partial class ApcMenu : FancyWindow
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        public ApcMenu(ApcBoundUserInterface owner)
+        public ApcMenu(ApcBoundUserInterface owner, ClientUserInterfaceComponent component)
         {
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
 
-            EntityView.SetEntity(owner.Owner);
+            EntityView.Sprite = _entityManager.GetComponent<SpriteComponent>(component.Owner);
             BreakerButton.OnPressed += _ => owner.BreakerPressed();
         }
 

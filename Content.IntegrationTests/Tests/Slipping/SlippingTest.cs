@@ -1,8 +1,10 @@
 #nullable enable
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Slippery;
 using Content.Shared.Stunnable;
+using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Maths;
@@ -32,24 +34,20 @@ public sealed class SlippingTest : MovementTest
         await SpawnTarget("TrashBananaPeel");
 
         // Player is to the left of the banana peel and has not slipped.
-#pragma warning disable NUnit2045
         Assert.That(Delta(), Is.GreaterThan(0.5f));
-        Assert.That(sys.Slipped, Does.Not.Contain(Player));
-#pragma warning restore NUnit2045
+        Assert.That(sys.Slipped.Contains(Player), Is.False);
 
         // Walking over the banana slowly does not trigger a slip.
         await SetKey(EngineKeyFunctions.Walk, BoundKeyState.Down);
         await Move(DirectionFlag.East, 1f);
-#pragma warning disable NUnit2045
         Assert.That(Delta(), Is.LessThan(0.5f));
-        Assert.That(sys.Slipped, Does.Not.Contain(Player));
-#pragma warning restore NUnit2045
+        Assert.That(sys.Slipped.Contains(Player), Is.False);
         AssertComp<KnockedDownComponent>(false, Player);
 
         // Moving at normal speeds does trigger a slip.
         await SetKey(EngineKeyFunctions.Walk, BoundKeyState.Up);
         await Move(DirectionFlag.West, 1f);
-        Assert.That(sys.Slipped, Does.Contain(Player));
+        Assert.That(sys.Slipped.Contains(Player), Is.True);
         AssertComp<KnockedDownComponent>(true, Player);
     }
 }

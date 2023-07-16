@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Chat;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -98,7 +97,7 @@ public sealed class ChannelSelectorButton : Button
         {
             var globalLeft = GlobalPosition.X;
             var globalBot = GlobalPosition.Y + Height;
-            var box = UIBox2.FromDimensions(new Vector2(globalLeft, globalBot), new Vector2(SizeBox.Width, SelectorDropdownOffset));
+            var box = UIBox2.FromDimensions((globalLeft, globalBot), (SizeBox.Width, SelectorDropdownOffset));
             _channelSelectorPopup.Open(box);
         }
         else

@@ -1,22 +1,25 @@
 using Content.Shared.Medical.CrewMonitoring;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Medical.CrewMonitoring
 {
     public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
+        private readonly IEntityManager _entManager;
         private CrewMonitoringWindow? _menu;
 
-        public CrewMonitoringBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public CrewMonitoringBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
+            _entManager = IoCManager.Resolve<IEntityManager>();
         }
 
         protected override void Open()
         {
             EntityUid? gridUid = null;
 
-            if (EntMan.TryGetComponent<TransformComponent>(Owner, out var xform))
+            if (_entManager.TryGetComponent<TransformComponent>(Owner.Owner, out var xform))
             {
                 gridUid = xform.GridUid;
             }
@@ -34,7 +37,7 @@ namespace Content.Client.Medical.CrewMonitoring
             switch (state)
             {
                 case CrewMonitoringState st:
-                    EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
+                    _entManager.TryGetComponent<TransformComponent>(Owner.Owner, out var xform);
 
                     _menu?.ShowSensors(st.Sensors, xform?.Coordinates, st.Snap, st.Precision);
                     break;

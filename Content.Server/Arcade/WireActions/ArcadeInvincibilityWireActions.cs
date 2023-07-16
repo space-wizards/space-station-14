@@ -1,4 +1,4 @@
-using Content.Server.Arcade.SpaceVillain;
+using Content.Server.Arcade.Components;
 using Content.Server.Wires;
 using Content.Shared.Arcade;
 using Content.Shared.Wires;
@@ -15,26 +15,23 @@ public sealed class ArcadePlayerInvincibleWireAction : BaseToggleWireAction
 
     public override void ToggleValue(EntityUid owner, bool setting)
     {
-        if (EntityManager.TryGetComponent<SpaceVillainArcadeComponent>(owner, out var arcade)
-        && arcade.Game != null)
+        if (EntityManager.TryGetComponent<SpaceVillainArcadeComponent>(owner, out var arcade))
         {
-            arcade.Game.PlayerChar.Invincible = !setting;
+            arcade.PlayerInvincibilityFlag = !setting;
         }
     }
 
     public override bool GetValue(EntityUid owner)
     {
         return EntityManager.TryGetComponent<SpaceVillainArcadeComponent>(owner, out var arcade)
-            && arcade.Game != null
-            && !arcade.Game.PlayerChar.Invincible;
+            && !arcade.PlayerInvincibilityFlag;
     }
 
     public override StatusLightState? GetLightState(Wire wire)
     {
-        if (EntityManager.TryGetComponent<SpaceVillainArcadeComponent>(wire.Owner, out var arcade)
-        && arcade.Game != null)
+        if (EntityManager.TryGetComponent<SpaceVillainArcadeComponent>(wire.Owner, out var arcade))
         {
-            return arcade.Game.PlayerChar.Invincible || arcade.Game.VillainChar.Invincible
+            return arcade.PlayerInvincibilityFlag || arcade.EnemyInvincibilityFlag
                 ? StatusLightState.BlinkingSlow
                 : StatusLightState.On;
         }
@@ -52,24 +49,19 @@ public sealed class ArcadeEnemyInvincibleWireAction : BaseToggleWireAction
 
     public override void ToggleValue(EntityUid owner, bool setting)
     {
-        if (EntityManager.TryGetComponent<SpaceVillainArcadeComponent>(owner, out var arcade)
-        && arcade.Game != null)
+        if (EntityManager.TryGetComponent<SpaceVillainArcadeComponent>(owner, out var arcade))
         {
-            arcade.Game.VillainChar.Invincible = !setting;
+            arcade.PlayerInvincibilityFlag = !setting;
         }
     }
 
     public override bool GetValue(EntityUid owner)
     {
         return EntityManager.TryGetComponent<SpaceVillainArcadeComponent>(owner, out var arcade)
-            && arcade.Game != null
-            && !arcade.Game.VillainChar.Invincible;
+            && !arcade.PlayerInvincibilityFlag;
     }
 
-    public override StatusLightData? GetStatusLightData(Wire wire)
-    {
-        return null;
-    }
+    public override StatusLightData? GetStatusLightData(Wire wire) => null;
 }
 
 public enum ArcadeInvincibilityWireActionKeys : short

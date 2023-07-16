@@ -15,10 +15,12 @@ namespace Content.Shared.Movement.Systems;
 
 public abstract class SharedJetpackSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _network = default!;
     [Dependency] protected readonly MovementSpeedModifierSystem MovementSpeedModifier = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
 
     public override void Initialize()
@@ -47,15 +49,15 @@ public abstract class SharedJetpackSystem : EntitySystem
         var gridUid = ev.ChangedGridIndex;
         var jetpackQuery = GetEntityQuery<JetpackComponent>();
 
-        var query = EntityQueryEnumerator<JetpackUserComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var user, out var transform))
+        foreach (var (user, transform) in EntityQuery<JetpackUserComponent, TransformComponent>(true))
         {
             if (transform.GridUid == gridUid && ev.HasGravity &&
                 jetpackQuery.TryGetComponent(user.Jetpack, out var jetpack))
             {
-                _popup.PopupClient(Loc.GetString("jetpack-to-grid"), uid, uid);
+                if (_timing.IsFirstTimePredicted)
+                    _popups.PopupEntity(Loc.GetString("jetpack-to-grid"), user.Jetpack, user.Owner);
 
-                SetEnabled(jetpack, false, uid);
+                SetEnabled(jetpack, false, user.Owner);
             }
         }
     }
@@ -91,7 +93,8 @@ public abstract class SharedJetpackSystem : EntitySystem
         {
             SetEnabled(jetpack, false, uid);
 
-            _popup.PopupClient(Loc.GetString("jetpack-to-grid"), uid, uid);
+            if (_timing.IsFirstTimePredicted && _network.IsClient)
+                _popups.PopupEntity(Loc.GetString("jetpack-to-grid"), uid, uid);
         }
     }
 
@@ -115,7 +118,8 @@ public abstract class SharedJetpackSystem : EntitySystem
 
         if (TryComp<TransformComponent>(uid, out var xform) && !CanEnableOnGrid(xform.GridUid))
         {
-            _popup.PopupClient(Loc.GetString("jetpack-no-station"), uid, args.Performer);
+            if (_timing.IsFirstTimePredicted)
+                _popups.PopupEntity(Loc.GetString("jetpack-no-station"), uid, args.Performer);
 
             return;
         }

@@ -1,6 +1,5 @@
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Audio;
@@ -18,7 +17,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     {
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -57,8 +55,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         {
             component.Open = value;
             if (TryComp(uid, out NodeContainerComponent? nodeContainer)
-                && _nodeContainer.TryGetNode(nodeContainer, component.InletName, out PipeNode? inlet)
-                && _nodeContainer.TryGetNode(nodeContainer, component.OutletName, out PipeNode? outlet))
+                && nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet)
+                && nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
             {
                 if (TryComp<AppearanceComponent>(component.Owner,out var appearance))
                 {

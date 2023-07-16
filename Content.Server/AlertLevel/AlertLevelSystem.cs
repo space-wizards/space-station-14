@@ -139,6 +139,7 @@ public sealed class AlertLevelSystem : EntitySystem
                 return;
             }
 
+            component.CurrentDelay = AlertLevelComponent.Delay;
             component.ActiveDelay = true;
         }
 
@@ -187,19 +188,19 @@ public sealed class AlertLevelSystem : EntitySystem
 
         RaiseLocalEvent(new AlertLevelChangedEvent(station, level));
 
-        var pdas = EntityQueryEnumerator<PdaComponent>();
+        var pdas = EntityQueryEnumerator<PDAComponent>();
         while (pdas.MoveNext(out var ent, out var comp))
         {
-            RaiseLocalEvent(ent, new AlertLevelChangedEvent(station, level));
+            RaiseLocalEvent(ent,new AlertLevelChangedEvent(station, level));
         }
     }
 }
 
 public sealed class AlertLevelDelayFinishedEvent : EntityEventArgs
-{ }
+{}
 
 public sealed class AlertLevelPrototypeReloadedEvent : EntityEventArgs
-{ }
+{}
 
 public sealed class AlertLevelChangedEvent : EntityEventArgs
 {

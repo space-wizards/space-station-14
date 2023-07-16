@@ -5,7 +5,6 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Clickable
     - type: Sprite
       sprite: /Textures/Tiles/Planet/basalt.rsi
       layers:

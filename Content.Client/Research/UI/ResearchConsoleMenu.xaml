@@ -21,7 +21,10 @@
                 <!-- This is where we put all of the little graphics that display discipline tiers!-->
             </BoxContainer>
             <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalAlignment="Right">
-                <Button Name="ServerButton" Text="{Loc 'research-console-menu-server-selection-button'}" MinHeight="40"/>
+                <Button Name="ServerButton" Text="{Loc 'research-console-menu-server-selection-button'}" VerticalExpand="True"/>
+                <Control MinHeight="5"/>
+                <!--todo is this button even necessary?!-->
+                <Button Name="SyncButton" Text="{Loc 'research-console-menu-server-sync-button'}" VerticalExpand="True"/>
             </BoxContainer>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal"

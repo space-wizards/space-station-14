@@ -23,7 +23,6 @@
     jumpsuit: ClothingUniformJumpsuitChef
     head: ClothingHeadHatChef
     back: ClothingBackpackFilled
-    mask: ClothingMaskItalianMoustache
     shoes: ClothingShoesColorBlack
     id: ChefPDA
     ears: ClothingHeadsetService

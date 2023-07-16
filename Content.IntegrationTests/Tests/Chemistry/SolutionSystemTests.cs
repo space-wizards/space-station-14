@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
+using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -45,11 +47,7 @@ public sealed class SolutionSystemTests
     [Test]
     public async Task TryAddTwoNonReactiveReagent()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
-        });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
         var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
@@ -78,11 +76,8 @@ public sealed class SolutionSystemTests
 
             solution.TryGetReagent("Water", out var water);
             solution.TryGetReagent("Oil", out var oil);
-            Assert.Multiple(() =>
-            {
-                Assert.That(water, Is.EqualTo(waterQuantity));
-                Assert.That(oil, Is.EqualTo(oilQuantity));
-            });
+            Assert.That(water, Is.EqualTo(waterQuantity));
+            Assert.That(oil, Is.EqualTo(oilQuantity));
         });
 
         await pairTracker.CleanReturnAsync();
@@ -93,11 +88,7 @@ public sealed class SolutionSystemTests
     [Test]
     public async Task TryAddTooMuchNonReactiveReagent()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
-        });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
         var server = pairTracker.Pair.Server;
 
         var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -127,11 +118,8 @@ public sealed class SolutionSystemTests
 
             solution.TryGetReagent("Water", out var water);
             solution.TryGetReagent("Oil", out var oil);
-            Assert.Multiple(() =>
-            {
-                Assert.That(water, Is.EqualTo(waterQuantity));
-                Assert.That(oil, Is.EqualTo(FixedPoint2.Zero));
-            });
+            Assert.That(water, Is.EqualTo(waterQuantity));
+            Assert.That(oil, Is.EqualTo(FixedPoint2.Zero));
         });
 
         await pairTracker.CleanReturnAsync();
@@ -141,11 +129,7 @@ public sealed class SolutionSystemTests
     [Test]
     public async Task TryMixAndOverflowTooMuchReagent()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
-        });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
         var server = pairTracker.Pair.Server;
 
 
@@ -157,10 +141,10 @@ public sealed class SolutionSystemTests
 
         EntityUid beaker;
 
-        await server.WaitAssertion(() =>
+        await server.WaitAssertion((System.Action)(() =>
         {
-            var ratio = 9;
-            var threshold = 20;
+            int ratio = 9;
+            int threshold = 20;
             var waterQuantity = FixedPoint2.New(10);
             var oilQuantity = FixedPoint2.New(ratio * waterQuantity.Int());
 
@@ -175,23 +159,18 @@ public sealed class SolutionSystemTests
             Assert.That(containerSystem
                 .TryMixAndOverflow(beaker, solution, oilAdded, threshold, out var overflowingSolution));
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(solution.Volume, Is.EqualTo(FixedPoint2.New(threshold)));
+            Assert.That(solution.Volume, Is.EqualTo(FixedPoint2.New(threshold)));
+            solution.TryGetReagent("Water", out var waterMix);
+            solution.TryGetReagent("Oil", out var oilMix);
+            Assert.That(waterMix, Is.EqualTo(FixedPoint2.New(threshold / (ratio + 1))));
+            Assert.That(oilMix, Is.EqualTo(FixedPoint2.New(threshold / (ratio + 1) * ratio)));
 
-                solution.TryGetReagent("Water", out var waterMix);
-                solution.TryGetReagent("Oil", out var oilMix);
-                Assert.That(waterMix, Is.EqualTo(FixedPoint2.New(threshold / (ratio + 1))));
-                Assert.That(oilMix, Is.EqualTo(FixedPoint2.New(threshold / (ratio + 1) * ratio)));
-
-                Assert.That(overflowingSolution.Volume, Is.EqualTo(FixedPoint2.New(80)));
-
-                overflowingSolution.TryGetReagent("Water", out var waterOverflow);
-                overflowingSolution.TryGetReagent("Oil", out var oilOverFlow);
-                Assert.That(waterOverflow, Is.EqualTo(waterQuantity - waterMix));
-                Assert.That(oilOverFlow, Is.EqualTo(oilQuantity - oilMix));
-            });
-        });
+            Assert.That(overflowingSolution.Volume, Is.EqualTo(FixedPoint2.New(80)));
+            overflowingSolution.TryGetReagent("Water", out var waterOverflow);
+            overflowingSolution.TryGetReagent("Oil", out var oilOverFlow);
+            Assert.That(waterOverflow, Is.EqualTo(waterQuantity - waterMix));
+            Assert.That(oilOverFlow, Is.EqualTo(oilQuantity - oilMix));
+        }));
 
         await pairTracker.CleanReturnAsync();
     }
@@ -200,11 +179,7 @@ public sealed class SolutionSystemTests
     [Test]
     public async Task TryMixAndOverflowTooBigOverflow()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
-        });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
         var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
@@ -217,8 +192,8 @@ public sealed class SolutionSystemTests
 
         await server.WaitAssertion(() =>
         {
-            var ratio = 9;
-            var threshold = 60;
+            int ratio = 9;
+            int threshold = 60;
             var waterQuantity = FixedPoint2.New(10);
             var oilQuantity = FixedPoint2.New(ratio * waterQuantity.Int());
 

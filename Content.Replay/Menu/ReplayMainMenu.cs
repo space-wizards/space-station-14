@@ -1,4 +1,3 @@
-using System.IO.Compression;
 using System.Linq;
 using Content.Client.Message;
 using Content.Client.UserInterface.Systems.EscapeMenu;
@@ -11,10 +10,11 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.ContentPack;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Utility;
-using static Robust.Shared.Replays.ReplayConstants;
+using TerraFX.Interop.Windows;
+using static Robust.Shared.Replays.IReplayRecordingManager;
+using IResourceManager = Robust.Shared.ContentPack.IResourceManager;
 
 namespace Content.Replay.Menu;
 
@@ -72,10 +72,8 @@ public sealed class ReplayMainScreen : State
             return;
         }
 
-        using var fileReader = new ReplayFileReaderZip(
-            new ZipArchive(_resMan.UserData.OpenRead(replay)), ReplayZipFolder);
         if (!_resMan.UserData.Exists(replay)
-            || _loadMan.LoadYamlMetadata(fileReader) is not { } data)
+            || _loadMan.LoadYamlMetadata(_resMan.UserData, replay) is not { } data)
         {
             info.SetMarkup(Loc.GetString("replay-info-invalid"));
             info.HorizontalAlignment = Control.HAlignment.Center;
@@ -85,19 +83,18 @@ public sealed class ReplayMainScreen : State
         }
 
         var file = replay.ToRelativePath().ToString();
-        data.TryGet<ValueDataNode>(MetaKeyTime, out var timeNode);
-        data.TryGet<ValueDataNode>(MetaFinalKeyDuration, out var durationNode);
+        data.TryGet<ValueDataNode>(Time, out var timeNode);
+        data.TryGet<ValueDataNode>(Duration, out var durationNode);
         data.TryGet<ValueDataNode>("roundId", out var roundIdNode);
-        data.TryGet<ValueDataNode>(MetaKeyTypeHash, out var hashNode);
-        data.TryGet<ValueDataNode>(MetaKeyComponentHash, out var compHashNode);
+        data.TryGet<ValueDataNode>(Hash, out var hashNode);
+        data.TryGet<ValueDataNode>(CompHash, out var compHashNode);
         DateTime.TryParse(timeNode?.Value, out var time);
         TimeSpan.TryParse(durationNode?.Value, out var duration);
 
         var forkId = string.Empty;
-        if (data.TryGet<ValueDataNode>(MetaKeyForkId, out var forkNode))
+        if (data.TryGet<ValueDataNode>(Fork, out var forkNode))
         {
-            // TODO Replay client build info.
-            // When distributing the client we need to distribute a build.json or provide these cvars some other way?
+            // TODO REPLAYS somehow distribute and load from build.json?
             var clientFork = _cfg.GetCVar(CVars.BuildForkId);
             if (string.IsNullOrWhiteSpace(clientFork))
                 forkId = forkNode.Value;
@@ -108,7 +105,7 @@ public sealed class ReplayMainScreen : State
         }
 
         var forkVersion = string.Empty;
-        if (data.TryGet<ValueDataNode>(MetaKeyForkVersion, out var versionNode))
+        if (data.TryGet<ValueDataNode>(ForkVersion, out var versionNode))
         {
             forkVersion = versionNode.Value;
             // Why does this not have a try-convert function? I just want to check if it looks like a hash code.
@@ -165,7 +162,7 @@ public sealed class ReplayMainScreen : State
         }
 
         var engineVersion = string.Empty;
-        if (data.TryGet<ValueDataNode>(MetaKeyEngineVersion, out var engineNode))
+        if (data.TryGet<ValueDataNode>(Engine, out var engineNode))
         {
             var clientVer = _cfg.GetCVar(CVars.BuildEngineVersion);
             if (string.IsNullOrWhiteSpace(clientVer))
@@ -179,12 +176,11 @@ public sealed class ReplayMainScreen : State
         // Strip milliseconds. Apparently there is no general format string that suppresses milliseconds.
         duration = new((int)Math.Floor(duration.TotalDays), duration.Hours, duration.Minutes, duration.Seconds);
 
-        data.TryGet<ValueDataNode>(MetaKeyName, out var nameNode);
+        data.TryGet<ValueDataNode>(Name, out var nameNode);
         var name = nameNode?.Value ?? string.Empty;
 
         info.HorizontalAlignment = Control.HAlignment.Left;
         info.VerticalAlignment = Control.VAlignment.Top;
-
         info.SetMarkup(Loc.GetString(
             "replay-info-info",
             ("file", file),
@@ -208,11 +204,7 @@ public sealed class ReplayMainScreen : State
     private void OnLoadpressed(BaseButton.ButtonEventArgs obj)
     {
         if (_selected.HasValue)
-        {
-            var fileReader = new ReplayFileReaderZip(
-                new ZipArchive(_resMan.UserData.OpenRead(_selected.Value)), ReplayZipFolder);
-            _loadMan.LoadAndStartReplay(fileReader);
-        }
+            _loadMan.LoadAndStartReplay(_resMan.UserData, _selected.Value);
     }
 
     private void RefreshReplays()
@@ -224,14 +216,11 @@ public sealed class ReplayMainScreen : State
             var file = _directory / entry;
             try
             {
-                using var fileReader = new ReplayFileReaderZip(
-                    new ZipArchive(_resMan.UserData.OpenRead(file)), ReplayZipFolder);
-
-                var data = _loadMan.LoadYamlMetadata(fileReader);
+                var data = _loadMan.LoadYamlMetadata(_resMan.UserData, file);
                 if (data == null)
                     continue;
 
-                var name = data.Get<ValueDataNode>(MetaKeyName).Value;
+                var name = data.Get<ValueDataNode>(Name).Value;
                 _replays.Add((name, file));
 
             }
