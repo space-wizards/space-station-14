@@ -22,7 +22,8 @@
   components:
     - type: SubdermalImplant
     - type: TriggerOnMobstateChange
-      mobState: Dead
+      mobState:
+      - Dead
     - type: EmitSoundOnTrigger
       sound:
         collection: SadTrombone
@@ -97,6 +98,11 @@
     - type: StationLimitedNetwork
     - type: WirelessNetworkConnection
       range: 500
+    - type: TriggerOnMobstateChange
+      mobState:
+      - Critical
+    - type: Rattle
+      radioChannel: "Security"
 
 #Traitor implants
 
@@ -163,7 +169,8 @@
       permanent: true
       implantAction: ActivateMicroBomb
     - type: TriggerOnMobstateChange
-      mobState: Dead
+      mobState:
+      - Dead
     - type: TriggerImplantAction
     - type: ExplodeOnTrigger
     - type: GibOnTrigger
@@ -191,7 +198,8 @@
     - type: SubdermalImplant
       permanent: true
     - type: TriggerOnMobstateChange #Chains with OnUseTimerTrigger
-      mobState: Dead
+      mobState:
+      - Dead
       preventSuicide: true
     - type: OnUseTimerTrigger
       delay: 7
@@ -213,3 +221,19 @@
         - SubdermalImplant
         - HideContextMenu
         - MacroBomb
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: DeathRattleImplant
+  name: deathrattle implant
+  description: sends a message with your location to the syndicate radio channel when you fall into a critical state or die.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      permanent: true
+    - type: TriggerOnMobstateChange
+      mobState:
+      - Critical
+      - Dead
+    - type: Rattle
+
