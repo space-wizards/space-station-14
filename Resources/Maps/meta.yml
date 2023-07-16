@@ -5047,7 +5047,8 @@ entities:
           1,-4:
             0: 65535
           2,-4:
-            0: 65535
+            0: 49151
+            1: 16384
           2,-3:
             0: 65535
           2,-2:
@@ -5272,7 +5273,7 @@ entities:
             0: 65535
           8,-4:
             0: 61713
-            1: 3822
+            2: 3822
           8,-3:
             0: 65535
           8,-2:
@@ -5280,7 +5281,7 @@ entities:
           8,-1:
             0: 65535
           9,-4:
-            1: 7
+            2: 7
             0: 65528
           9,-3:
             0: 65535
@@ -5314,14 +5315,14 @@ entities:
             0: 65535
           8,-5:
             0: 8191
-            1: 57344
+            2: 57344
           9,-7:
             0: 65535
           9,-6:
             0: 65535
           9,-5:
             0: 36863
-            1: 28672
+            2: 28672
           10,-7:
             0: 65535
           10,-6:
@@ -6332,18 +6333,18 @@ entities:
             0: 65535
           12,-8:
             0: 30591
-            2: 34944
+            3: 34944
           13,-8:
             0: 17487
-            2: 13104
-            3: 34944
+            3: 13104
+            4: 34944
           13,-7:
             0: 65535
           13,-6:
             0: 65535
           14,-8:
             0: 52431
-            3: 13104
+            4: 13104
           14,-7:
             0: 65535
           14,-6:
@@ -6364,44 +6365,44 @@ entities:
             0: 65535
           16,-4:
             0: 32631
-            4: 136
-            5: 32768
+            5: 136
+            6: 32768
           16,-3:
             0: 32631
-            5: 32904
+            6: 32904
           16,-2:
             0: 65399
-            5: 136
+            6: 136
           16,-1:
             0: 13299
           17,-4:
-            4: 51
+            5: 51
             0: 53196
-            5: 12288
+            6: 12288
           17,-3:
-            5: 12339
+            6: 12339
             0: 53196
           17,-2:
-            5: 51
+            6: 51
             0: 65484
           16,-7:
             0: 65522
           16,-6:
             0: 32767
-            5: 32768
+            6: 32768
           16,-5:
             0: 32631
-            5: 136
-            4: 32768
+            6: 136
+            5: 32768
           17,-7:
             0: 65527
           17,-6:
             0: 53247
-            5: 12288
+            6: 12288
           17,-5:
-            5: 51
+            6: 51
             0: 53196
-            4: 12288
+            5: 12288
           12,-9:
             0: 61941
           13,-9:
@@ -6522,7 +6523,7 @@ entities:
             0: 4010
           18,-4:
             0: 43690
-            5: 5
+            6: 5
           18,-2:
             0: 43690
           19,-3:
@@ -6531,7 +6532,7 @@ entities:
             0: 7970
           19,-4:
             0: 8738
-            5: 34957
+            6: 34957
           19,-2:
             0: 8930
           16,-8:
@@ -6552,7 +6553,7 @@ entities:
             0: 8754
           19,-5:
             0: 8994
-            5: 34944
+            6: 34944
           12,-10:
             0: 61696
           13,-10:
@@ -7041,7 +7042,7 @@ entities:
             0: 65535
           3,-14:
             0: 61713
-            5: 3822
+            6: 3822
           3,-13:
             0: 65535
           -2,-16:
@@ -7286,7 +7287,7 @@ entities:
             0: 32655
           19,3:
             0: 30583
-            5: 32768
+            6: 32768
           16,4:
             0: 4383
           16,5:
@@ -7339,7 +7340,7 @@ entities:
             0: 61423
           23,3:
             0: 52974
-            5: 12288
+            6: 12288
           20,-3:
             0: 61440
           20,-2:
@@ -7366,7 +7367,7 @@ entities:
             0: 65535
           23,-4:
             0: 52428
-            5: 3
+            6: 3
           24,0:
             0: 61439
           24,1:
@@ -7375,7 +7376,7 @@ entities:
             0: 56797
           24,3:
             0: 13305
-            5: 51200
+            6: 51200
           25,0:
             0: 65535
           25,1:
@@ -7402,7 +7403,7 @@ entities:
             0: 35315
           24,-4:
             0: 47923
-            5: 140
+            6: 140
           24,-3:
             0: 48063
           24,-2:
@@ -7435,7 +7436,7 @@ entities:
             0: 65399
           24,4:
             0: 65523
-            5: 8
+            6: 8
           24,5:
             0: 15
           25,4:
@@ -7488,7 +7489,7 @@ entities:
             0: 61440
           24,-5:
             0: 16383
-            5: 32768
+            6: 32768
           25,-6:
             0: 65008
           25,-5:
@@ -7526,33 +7527,48 @@ entities:
           10,15:
             0: 3
           20,3:
-            5: 62532
+            6: 62532
           21,3:
-            5: 62532
+            6: 62532
           22,3:
-            5: 62532
+            6: 62532
           20,-4:
-            5: 34959
+            6: 34959
           21,-4:
-            5: 34959
+            6: 34959
           22,-4:
-            5: 15
+            6: 15
           20,4:
-            5: 1092
+            6: 1092
           21,4:
-            5: 1092
+            6: 1092
           22,4:
-            5: 1092
+            6: 1092
           20,-5:
-            5: 34944
+            6: 34944
           21,-5:
-            5: 34944
+            6: 34944
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
           moles:
           - 21.824879
           - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 23.61947
+          - 88.8542
           - 0
           - 0
           - 0
@@ -7646,8 +7662,7 @@ entities:
     - type: Shuttle
     - type: GasTileOverlay
     - type: RadiationGridResistance
-    - nextUpdate: 0
-      type: SpreaderGrid
+    - type: SpreaderGrid
     - type: GridPathfinding
 - proto: AcousticGuitarInstrument
   entities:
@@ -12401,7 +12416,7 @@ entities:
     - pos: -17.5,-71.5
       parent: 5350
       type: Transform
-- proto: AMEController
+- proto: AmeController
   entities:
   - uid: 23971
     components:
@@ -13529,8 +13544,6 @@ entities:
     - pos: -15.644806,-26.365438
       parent: 5350
       type: Transform
-    - nextAttack: 1374.3738653
-      type: MeleeWeapon
   - uid: 16484
     components:
     - pos: -54.463097,-54.219025
@@ -13894,6 +13907,15 @@ entities:
     - pos: 32.50686,14.562178
       parent: 5350
       type: Transform
+  - uid: 26609
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 1932
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: BikeHornInstrument
   entities:
   - uid: 3210
@@ -61071,8 +61093,6 @@ entities:
       pos: -9.5,-33.5
       parent: 5350
       type: Transform
-    - nextAttack: 3609.3286078
-      type: MeleeWeapon
 - proto: ChairFoldingSpawnFolded
   entities:
   - uid: 24159
@@ -61965,29 +61985,21 @@ entities:
     - pos: -15.650829,-22.419653
       parent: 5350
       type: Transform
-    - nextAttack: 2104.5674098
-      type: MeleeWeapon
   - uid: 14385
     components:
     - pos: -15.525829,-22.169653
       parent: 5350
       type: Transform
-    - nextAttack: 2105.0638582
-      type: MeleeWeapon
   - uid: 14857
     components:
     - pos: -15.400829,-22.419653
       parent: 5350
       type: Transform
-    - nextAttack: 2107.2619066
-      type: MeleeWeapon
   - uid: 14858
     components:
     - pos: -15.291454,-22.138403
       parent: 5350
       type: Transform
-    - nextAttack: 2108.9662715
-      type: MeleeWeapon
 - proto: ChemistryHotplate
   entities:
   - uid: 16075
@@ -65492,19 +65504,7 @@ entities:
     - pos: -40.532333,-25.270031
       parent: 5350
       type: Transform
-- proto: ClothingHeadHelmetEVA
-  entities:
-  - uid: 7303
-    components:
-    - pos: -14.579267,45.526848
-      parent: 5350
-      type: Transform
-  - uid: 7739
-    components:
-    - pos: -16.735516,45.511223
-      parent: 5350
-      type: Transform
-- proto: ClothingHeadHelmetHelmetOld
+- proto: ClothingHeadHelmetBasic
   entities:
   - uid: 10424
     components:
@@ -65519,6 +65519,18 @@ entities:
   - uid: 10426
     components:
     - pos: -5.3470535,40.47909
+      parent: 5350
+      type: Transform
+- proto: ClothingHeadHelmetEVA
+  entities:
+  - uid: 7303
+    components:
+    - pos: -14.579267,45.526848
+      parent: 5350
+      type: Transform
+  - uid: 7739
+    components:
+    - pos: -16.735516,45.511223
       parent: 5350
       type: Transform
 - proto: ClothingHeadHelmetRiot
@@ -65855,6 +65867,40 @@ entities:
     - pos: 37.5058,-31.421124
       parent: 5350
       type: Transform
+- proto: ClothingOuterArmorBasic
+  entities:
+  - uid: 26620
+    components:
+    - pos: -1.6187449,37.43342
+      parent: 5350
+      type: Transform
+  - uid: 26621
+    components:
+    - pos: -1.6187449,37.43342
+      parent: 5350
+      type: Transform
+  - uid: 26622
+    components:
+    - pos: -1.6187449,37.43342
+      parent: 5350
+      type: Transform
+- proto: ClothingOuterArmorBulletproof
+  entities:
+  - uid: 26623
+    components:
+    - pos: -1.4624949,37.40217
+      parent: 5350
+      type: Transform
+  - uid: 26624
+    components:
+    - pos: -1.4624949,37.40217
+      parent: 5350
+      type: Transform
+  - uid: 26625
+    components:
+    - pos: -1.4624949,37.40217
+      parent: 5350
+      type: Transform
 - proto: ClothingOuterArmorRiot
   entities:
   - uid: 10357
@@ -65935,6 +65981,17 @@ entities:
     - pos: -5.527274,-39.534935
       parent: 5350
       type: Transform
+- proto: ClothingOuterHardsuitBasic
+  entities:
+  - uid: 26611
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 1932
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: ClothingOuterHardsuitEVAPrisoner
   entities:
   - uid: 8249
@@ -66751,8 +66808,6 @@ entities:
       pos: -33.5,12.5
       parent: 5350
       type: Transform
-    - nextPrintTime: 21.5667713
-      type: CargoBountyConsole
 - proto: ComputerCargoOrders
   entities:
   - uid: 5126
@@ -68340,6 +68395,17 @@ entities:
     - pos: -27.5,-65.5
       parent: 5350
       type: Transform
+- proto: CrayonRainbow
+  entities:
+  - uid: 26610
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 1932
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: Crematorium
   entities:
   - uid: 21810
@@ -68478,15 +68544,11 @@ entities:
     - pos: -35.546013,-49.426834
       parent: 5350
       type: Transform
-    - nextUpdate: 27.5632284
-      type: PowerCellDraw
   - uid: 18423
     components:
     - pos: -25.546011,-49.44246
       parent: 5350
       type: Transform
-    - nextUpdate: 28.9164612
-      type: PowerCellDraw
 - proto: DefibrillatorCabinetFilled
   entities:
   - uid: 5343
@@ -68573,8 +68635,6 @@ entities:
     - pos: -8.590656,-27.399559
       parent: 5350
       type: Transform
-    - nextAttack: 3033.0467846
-      type: MeleeWeapon
 - proto: DiceBag
   entities:
   - uid: 2761
@@ -76056,6 +76116,11 @@ entities:
   - uid: 24620
     components:
     - pos: 19.5,-27.5
+      parent: 5350
+      type: Transform
+  - uid: 26615
+    components:
+    - pos: -29.5,-42.5
       parent: 5350
       type: Transform
 - proto: ExtinguisherCabinetOpen
@@ -122924,8 +122989,6 @@ entities:
     - pos: 42.042435,37.355846
       parent: 5350
       type: Transform
-    - nextAttack: 1342.3605519
-      type: MeleeWeapon
 - proto: hydroponicsTray
   entities:
   - uid: 3073
@@ -123932,8 +123995,6 @@ entities:
     - pos: -15.441681,-26.256063
       parent: 5350
       type: Transform
-    - nextAttack: 1376.471092
-      type: MeleeWeapon
   - uid: 16481
     components:
     - pos: -54.57247,-49.0741
@@ -124970,8 +125031,8 @@ entities:
         immutable: False
         temperature: 293.1495
         moles:
-        - 3.848459
-        - 14.477538
+        - 2.053867
+        - 7.7264524
         - 0
         - 0
         - 0
@@ -124992,9 +125053,13 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 1942
-          - 2478
           - 1938
+          - 2478
+          - 26609
+          - 1942
+          - 26610
+          - 26611
+          - 26612
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -127303,8 +127368,6 @@ entities:
     - pos: -6.50108,-35.54017
       parent: 5350
       type: Transform
-    - nextAttack: 3595.5228284
-      type: MeleeWeapon
 - proto: NuclearBomb
   entities:
   - uid: 1933
@@ -127488,6 +127551,13 @@ entities:
   - uid: 17931
     components:
     - pos: -29.5,-5.5
+      parent: 5350
+      type: Transform
+- proto: PaintingSadClown
+  entities:
+  - uid: 26617
+    components:
+    - pos: 38.5,-8.5
       parent: 5350
       type: Transform
 - proto: PaintingSkeletonCigarette
@@ -128629,11 +128699,30 @@ entities:
     - pos: 44.5,-13.5
       parent: 5350
       type: Transform
+- proto: PosterLegitAnatomyPoster
+  entities:
+  - uid: 26613
+    components:
+    - pos: -30.5,-38.5
+      parent: 5350
+      type: Transform
+  - uid: 26614
+    components:
+    - pos: -26.5,-43.5
+      parent: 5350
+      type: Transform
 - proto: PosterLegitBuild
   entities:
   - uid: 12294
     components:
     - pos: 44.5,5.5
+      parent: 5350
+      type: Transform
+- proto: PosterLegitCarpMount
+  entities:
+  - uid: 26619
+    components:
+    - pos: -30.5,13.5
       parent: 5350
       type: Transform
 - proto: PosterLegitCleanliness
@@ -128667,6 +128756,13 @@ entities:
     - pos: 13.5,-38.5
       parent: 5350
       type: Transform
+- proto: PosterLegitHelpOthers
+  entities:
+  - uid: 26616
+    components:
+    - pos: -23.5,-42.5
+      parent: 5350
+      type: Transform
 - proto: PosterLegitIan
   entities:
   - uid: 1389
@@ -128679,6 +128775,13 @@ entities:
   - uid: 1390
     components:
     - pos: -13.5,0.5
+      parent: 5350
+      type: Transform
+- proto: PosterLegitMime
+  entities:
+  - uid: 26618
+    components:
+    - pos: 39.5,-13.5
       parent: 5350
       type: Transform
 - proto: PosterLegitNanomichiAd
@@ -140698,7 +140801,7 @@ entities:
     - pos: 9.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -24481.41
+    - SecondsUntilStateChange: -25007.025
       state: Closing
       type: Door
     - inputs:
@@ -140713,7 +140816,7 @@ entities:
     - pos: 10.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -24481.41
+    - SecondsUntilStateChange: -25007.025
       state: Closing
       type: Door
     - inputs:
@@ -140728,7 +140831,7 @@ entities:
     - pos: 11.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -24481.41
+    - SecondsUntilStateChange: -25007.025
       state: Closing
       type: Door
     - inputs:
@@ -140743,7 +140846,7 @@ entities:
     - pos: 13.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -24481.41
+    - SecondsUntilStateChange: -25007.025
       state: Closing
       type: Door
     - inputs:
@@ -140758,7 +140861,7 @@ entities:
     - pos: 14.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -24481.41
+    - SecondsUntilStateChange: -25007.025
       state: Closing
       type: Door
     - inputs:
@@ -140773,7 +140876,7 @@ entities:
     - pos: 15.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -24481.41
+    - SecondsUntilStateChange: -25007.025
       state: Closing
       type: Door
     - inputs:
@@ -143129,15 +143232,11 @@ entities:
       pos: -43.5,27.5
       parent: 5350
       type: Transform
-    - nextChargeTime: 287.513468
-      type: SolutionRegeneration
   - uid: 6157
     components:
     - pos: -22.5,-22.5
       parent: 5350
       type: Transform
-    - nextChargeTime: 2466.2628163
-      type: SolutionRegeneration
   - uid: 12696
     components:
     - rot: -1.5707963267948966 rad
@@ -143265,8 +143364,6 @@ entities:
     - pos: 25.5,-15.5
       parent: 5350
       type: Transform
-    - nextChargeTime: 2452.9494029
-      type: SolutionRegeneration
   - uid: 16796
     components:
     - rot: 1.5707963267948966 rad
@@ -144839,6 +144936,17 @@ entities:
     - pos: -5.417899,-39.628685
       parent: 5350
       type: Transform
+- proto: SpaceCash1000
+  entities:
+  - uid: 26612
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 1932
+      type: Transform
+    - canCollide: False
+      type: Physics
+    - type: InsideEntityStorage
 - proto: SpaceMedipen
   entities:
   - uid: 16249
@@ -152050,8 +152158,6 @@ entities:
     - pos: -23.5,-22.5
       parent: 5350
       type: Transform
-    - nextEmpEject: 1783.2015653
-      type: VendingMachine
 - proto: VendingMachineChemicals
   entities:
   - uid: 14515
@@ -152061,8 +152167,6 @@ entities:
     - pos: -20.5,-22.5
       parent: 5350
       type: Transform
-    - nextEmpEject: 1138.1384564
-      type: VendingMachine
 - proto: VendingMachineCigs
   entities:
   - uid: 1082
@@ -152330,8 +152434,6 @@ entities:
     - pos: 26.5,0.5
       parent: 5350
       type: Transform
-    - nextEmpEject: 93.5618202
-      type: VendingMachine
 - proto: VendingMachineDetDrobe
   entities:
   - uid: 9978
@@ -152501,8 +152603,6 @@ entities:
     - pos: -5.5,-31.5
       parent: 5350
       type: Transform
-    - nextEmpEject: 3289.9117938
-      type: VendingMachine
 - proto: VendingMachineMediDrobe
   entities:
   - uid: 14497
@@ -152546,8 +152646,6 @@ entities:
     - pos: -39.5,28.5
       parent: 5350
       type: Transform
-    - nextEmpEject: 47.272158
-      type: VendingMachine
 - proto: VendingMachineSciDrobe
   entities:
   - uid: 22580
@@ -152614,8 +152712,6 @@ entities:
     - pos: -19.5,-28.5
       parent: 5350
       type: Transform
-    - nextEmpEject: 836.7551207
-      type: VendingMachine
   - uid: 15157
     components:
     - flags: SessionSpecific
@@ -152817,8 +152913,6 @@ entities:
     - pos: 25.5,19.5
       parent: 5350
       type: Transform
-    - nextEmpEject: 3965.0257929
-      type: VendingMachine
 - proto: VendingMachineYouTool
   entities:
   - uid: 3815
@@ -170817,8 +170911,6 @@ entities:
     - pos: 18.538572,39.67288
       parent: 5350
       type: Transform
-    - nextFire: 647.0521771
-      type: Gun
 - proto: WeaponLaserCarbine
   entities:
   - uid: 24712
@@ -170843,8 +170935,6 @@ entities:
     - pos: 18.527746,39.344753
       parent: 5350
       type: Transform
-    - nextFire: 641.384507
-      type: Gun
 - proto: WeaponRevolverDeckard
   entities:
   - uid: 1942

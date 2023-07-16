@@ -23,7 +23,6 @@ public sealed class LubeSystem : EntitySystem
         SubscribeLocalEvent<LubeComponent, AfterInteractEvent>(OnInteract);
     }
 
-    // When glue bottle is used on item it will apply the glued and unremoveable components.
     private void OnInteract(EntityUid uid, LubeComponent component, AfterInteractEvent args)
     {
         if (args.Handled)

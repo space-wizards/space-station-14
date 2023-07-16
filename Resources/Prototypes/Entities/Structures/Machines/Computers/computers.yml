@@ -385,6 +385,8 @@
     priority: Low
   - type: Computer
     board: ResearchComputerCircuitboard
+  - type: AccessReader
+    access: [["Research"]]
   - type: PointLight
     radius: 1.5
     energy: 1.6

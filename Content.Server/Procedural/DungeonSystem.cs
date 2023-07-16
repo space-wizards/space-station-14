@@ -5,6 +5,8 @@ using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
 using Content.Shared.CCVar;
+using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -31,6 +33,9 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     private ISawmill _sawmill = default!;
 
     private const double DungeonJobTime = 0.005;
+
+    public const int CollisionMask = (int) CollisionGroup.Impassable;
+    public const int CollisionLayer = (int) CollisionGroup.Impassable;
 
     private readonly JobQueue _dungeonJobQueue = new(DungeonJobTime);
     private readonly Dictionary<DungeonJob, CancellationTokenSource> _dungeonJobs = new();

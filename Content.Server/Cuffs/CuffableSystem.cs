@@ -2,25 +2,18 @@ using Content.Shared.Cuffs;
 using JetBrains.Annotations;
 using Content.Shared.Cuffs.Components;
 using Robust.Shared.GameStates;
-using Content.Shared.Buckle.Components;
-using Content.Shared.Hands.Components;
-using Robust.Shared.Network;
-using Content.Server.Popups;
 
 namespace Content.Server.Cuffs
 {
     [UsedImplicitly]
     public sealed class CuffableSystem : SharedCuffableSystem
     {
-        [Dependency] private readonly INetManager _netManager = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<HandcuffComponent, ComponentGetState>(OnHandcuffGetState);
             SubscribeLocalEvent<CuffableComponent, ComponentGetState>(OnCuffableGetState);
-            SubscribeLocalEvent<CuffableComponent, BuckleAttemptEvent>(OnBuckleAttemptEvent);
         }
 
         private void OnHandcuffGetState(EntityUid uid, HandcuffComponent component, ref ComponentGetState args)
@@ -45,17 +38,6 @@ namespace Content.Server.Cuffs
                 cuffs?.Color);
             // the iconstate is formatted as blah-2, blah-4, blah-6, etc.
             // the number corresponds to how many hands are cuffed.
-        }
-
-        private void OnBuckleAttemptEvent(EntityUid uid, CuffableComponent component, ref BuckleAttemptEvent args)
-        {
-            if (TryComp<HandsComponent>(uid, out var hands) && component.CuffedHandCount == hands.Count)
-            {
-                args.Cancelled = true;
-                var message = Loc.GetString("handcuff-component-cuff-interrupt-buckled-message");
-                if (_netManager.IsServer)
-                    _popupSystem.PopupEntity(message, uid);
-            }
         }
     }
 }
