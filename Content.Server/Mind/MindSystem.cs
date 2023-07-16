@@ -127,8 +127,8 @@ public sealed class MindSystem : EntitySystem
         if (!Resolve(uid, ref mind, false))
             return;
 
-        RaiseLocalEvent(uid, new MindRemovedMessage(), true);
         mind.Mind = null;
+        RaiseLocalEvent(uid, new MindRemovedMessage(), true);
     }
 
     private void OnVisitingTerminating(EntityUid uid, VisitingMindComponent component, ref EntityTerminatingEvent args)
@@ -556,7 +556,7 @@ public sealed class MindSystem : EntitySystem
     public bool TryGetMind(EntityUid uid, [NotNullWhen(true)] out Mind? mind, MindContainerComponent? mindContainerComponent = null)
     {
         mind = null;
-        if (!Resolve(uid, ref mindContainerComponent))
+        if (!Resolve(uid, ref mindContainerComponent, false))
             return false;
 
         if (!mindContainerComponent.HasMind)

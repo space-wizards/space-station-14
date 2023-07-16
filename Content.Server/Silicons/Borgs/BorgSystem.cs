@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Mind;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Interaction;
@@ -10,9 +11,11 @@ using Content.Shared.Silicons.Borgs.Components;
 namespace Content.Server.Silicons.Borgs;
 
 /// <inheritdoc/>
-public sealed class BorgSystem : SharedBorgSystem
+public sealed partial class BorgSystem : SharedBorgSystem
 {
     [Dependency] private readonly BodySystem _bobby = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -20,8 +23,11 @@ public sealed class BorgSystem : SharedBorgSystem
         base.Initialize();
 
         SubscribeLocalEvent<BorgChassisComponent, AfterInteractUsingEvent>(OnChassisInteractUsing);
+
+        InitializeMMI();
     }
 
+    //todo we're gonna tear this shit up
     private void OnChassisInteractUsing(EntityUid uid, BorgChassisComponent component, AfterInteractUsingEvent args)
     {
         if (component.BrainEntity == null &&
