@@ -75,6 +75,11 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("weather")] public bool Weather = false;
 
+        /// <summary>
+        /// Is this tile immune to RCD deconstruct.
+        /// </summary>
+        [DataField("indestructible")] public bool Indestructible = false;
+
         public void AssignTileId(ushort id)
         {
             TileId = id;
