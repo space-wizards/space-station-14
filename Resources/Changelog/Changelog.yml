@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Caves now have crystals in them., type: Add}
-  id: 3758
-  time: '2023-05-14T11:38:54.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Arrivals will auto-orient your camera upon traversal., type: Add}
   id: 3759
   time: '2023-05-14T11:46:29.0000000+00:00'
@@ -2966,3 +2961,9 @@ Entries:
   - {message: Dwarves now have access to all the same tattoos that humans do., type: Tweak}
   id: 4257
   time: '2023-07-16T07:05:31.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added collectible toy figurines based on the jobs & legends surrounding
+      the station. Find them in your local Good Clean Fun vendor today!, type: Add}
+  id: 4258
+  time: '2023-07-16T07:07:47.0000000+00:00'
