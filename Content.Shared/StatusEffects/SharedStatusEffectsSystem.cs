@@ -1,12 +1,15 @@
+using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.StatusEffects.Components;
+using Content.Shared.StatusEffects.Prototypes;
 using Content.Shared.StatusIcon.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.StatusEffects;
 
@@ -21,6 +24,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly MobThresholdSystem _thresholdSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly ISawmill _sawmill = default!;
 
     public override void Initialize()
@@ -57,61 +61,79 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         comp.EndTime = Timing.CurTime + TimeSpan.FromSeconds(comp.DefaultLength);
     }
 
-    // TODO: Might be good to just rewrite some of this.
-
     #endregion
 
     #region Funcitons
 
-    // /// <summary>
-    // /// Used to apply a status effect onto an entity "The Intended Way™"
-    // /// </summary>
-    // /// <param name="uid">The player that is recieving the status effect</param>
-    // /// <param name="effectProto">The prototype of the status effect being applied</param>
-    // /// <param name="stacks">How powerful is the effect?</param>
-    // /// <param name="newLength">How long should the effect last</param>
-    // /// <param name="addOn">Should this add stacks to the entity or simply just override it?</param>
-    // /// <param name="overrideEffect">If true, and there is already an effect present, it will be overwritten</param>
-    // /// <param name="comp"></param>
-    // public EntityUid? ApplyEffect(
-    //     EntityUid uid,
-    //     string effectProtoStr,
-    //     int stacks = 1,
-    //     TimeSpan? newLength = null,
-    //     bool addOn = true,
-    //     bool overrideEffect = false,
-    //     StatusEffectsComponent? comp = null)
-    // {
-    //     if (!Resolve(uid, ref comp) || comp.StatusContainer == null || stacks <= 0)
-    //         return null;
+    /// <summary>
+    /// Used to apply a status effect onto an entity. It should first check if the entity should have the effect anyways. Returns null/the effect entity when successfully applied.
+    /// </summary>
+    /// <param name="effectApplyType">Use the EffectModifyMode enum.</param>
+    public EntityUid? TryApplyStatusEffect(
+        EntityUid uid,
+        string effectID,
+        int stacks,
+        TimeSpan? length = null,
+        EffectModifyMode effectApplyType = EffectModifyMode.Override,
+        StatusEffectsComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp) || comp.StatusContainer == null)
+            return null;
 
-    //     if (!PrototypeManager.TryIndex<EntityPrototype>(effectProtoStr, out var effectPrototype))
-    //     {
-    //         Log.Error($"Entity prototype of '{effectProtoStr}' could not be found.");
-    //         return null;
-    //     }
+        if (comp.EffectsWhitelist != null)
+        {
+            if (!_protoManager.TryIndex<StatusEffectWhitelistPrototype>(comp.EffectsWhitelist, out var whitelist)) // In case of misspelling, don't leave the coder in shambles trying to figure out what went wrong.
+            {
+                _sawmill.Warning($"The effect whitelist prototype '{comp.EffectsWhitelist}' does not exist. Have you tried creating one?");
+                return null;
+            }
+            if (!whitelist.Effects.Any(effect => effect == effectID))
+                return null;
+        }
 
-    //     foreach (var storedEffect in comp.StatusContainer.ContainedEntities)
-    //     {
-    //         if (TryComp<StatusEffectComponent>(storedEffect, out var effectComp) &&
-    //             TryComp<MetaDataComponent>(storedEffect, out var metaData) && metaData.EntityPrototype == effectPrototype)
-    //         {
-    //             if (addOn)
-    //                 ModifyEffect(storedEffect, effectComp.Stacks + stacks, newLength, overrideEffect, effectComp);
-    //             else
-    //                 ModifyEffect(storedEffect, stacks, newLength, overrideEffect, effectComp);
+        var effect = ApplyStatusEffect(uid, effectID, stacks, length, effectApplyType, comp);
+        return effect;
+    }
 
-    //             return storedEffect;
-    //         }
-    //     }
+    /// <summary>
+    /// Used to apply a status effect onto an entity. Returns null/the effect entity when successfully applied.
+    /// </summary>
+    /// <param name="effectApplyType">Use the EffectModifyMode enum.</param>
+    public EntityUid? ApplyStatusEffect(
+        EntityUid uid,
+        string effectID,
+        int stacks,
+        TimeSpan? length = null,
+        EffectModifyMode effectApplyType = EffectModifyMode.Override,
+        StatusEffectsComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp) || comp.StatusContainer == null || stacks <= 0)
+            return null;
 
-    //     var effect = Spawn(effectProtoStr, Transform(uid).Coordinates);
-    //     ModifyEffect(effect, stacks, newLength, true);
+        if (!PrototypeManager.TryIndex<EntityPrototype>(effectID, out var effectPrototype))
+        {
+            Log.Error($"Entity prototype of '{effectID}' could not be found.");
+            return null;
+        }
 
-    //     comp.StatusContainer.Insert(effect);
+        foreach (var storedEffect in comp.StatusContainer.ContainedEntities)
+        {
+            if (TryComp<StatusEffectComponent>(storedEffect, out var effectComp) &&
+                TryComp<MetaDataComponent>(storedEffect, out var metaData) && metaData.EntityPrototype == effectPrototype)
+            {
+                ModifyEffect(storedEffect, stacks, length, effectApplyType, effectComp);
 
-    //     return effect;
-    // }
+                return storedEffect;
+            }
+        }
+
+        var effect = Spawn(effectID, Transform(uid).Coordinates);
+        ModifyEffect(effect, stacks, length, EffectModifyMode.Override);
+
+        comp.StatusContainer.Insert(effect);
+
+        return effect;
+    }
 
     public void ModifyEffect(
         EntityUid uid,
@@ -133,7 +155,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
                 if (newLength != null)
                     comp.EndTime = curTime + newLength.Value;
                 break;
-            case EffectModifyMode.UseHighestStack:
+            case EffectModifyMode.UseStrongest:
                 if (newStacks < comp.Stacks)
                     break;
                 comp.Stacks = newStacks;
@@ -155,6 +177,9 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
                 break;
             case EffectModifyMode.AddStacks:
                 comp.Stacks = ModifyStacks(comp.Stacks + newStacks, comp.MaxStacks);
+                break;
+            default:
+                _sawmill.Warning($"'{effectApplyType}'is not an actual apply type.");
                 break;
         }
     }
@@ -210,7 +235,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 public enum EffectModifyMode
 {
     Override, // Should completely override the effect.
-    UseHighestStack, // Uses the highest stack effect
+    UseStrongest, // Uses the highest stack effect, then uses the one with the highest length.
     AddTime, // Adds the time of the two effects together, considering their stack sizes. It will also override
     AddStacks, // Adds the stacks together. Doesn't modify the time.
 }

@@ -36,7 +36,7 @@ public sealed class StatusEffectTimeoutEvent : EntityEventArgs
 public sealed class StatusEffectActivateEvent : EntityEventArgs
 {
     public EntityUid Afflicted;
-    public StatusEffectActivateEvent(EntityUid victim)
+    public StatusEffectActivateEvent(EntityUid afflicted)
     {
         Afflicted = afflicted;
     }

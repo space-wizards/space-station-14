@@ -1,6 +1,7 @@
-using Content.Shared.StatusEffects;
+using Content.Shared.StatusEffects.Prototypes;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.StatusEffects.Components;
 
@@ -9,6 +10,9 @@ public sealed class StatusEffectsComponent : Component
 {
     [DataField("statusContainerId")]
     public string StatusContainerId = "status-effect-container";
+
+    [DataField("effectsWhitelist", customTypeSerializer: typeof(PrototypeIdSerializer<StatusEffectWhitelistPrototype>))]
+    public string? EffectsWhitelist;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public Container? StatusContainer = default!;
