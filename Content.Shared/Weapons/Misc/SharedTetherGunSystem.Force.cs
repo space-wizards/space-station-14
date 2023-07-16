@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Interaction;
 using Robust.Shared.Map;
 
@@ -43,7 +44,7 @@ public abstract partial class SharedTetherGunSystem
         {
             // Pickup
             if (TryTether(uid, args.Target.Value, args.User, component))
-                TransformSystem.SetCoordinates(component.TetherEntity!.Value, new EntityCoordinates(uid, new Vector2(0.0f, -0.8f)));
+                TransformSystem.SetCoordinates(component.TetherEntity!.Value, new EntityCoordinates(uid, new Vector2(0f, 0f)));
         }
     }
 

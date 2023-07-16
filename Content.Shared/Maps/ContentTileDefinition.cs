@@ -50,7 +50,7 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("barestepSounds")] public SoundSpecifier? BarestepSounds { get; } = new SoundCollectionSpecifier("BarestepHard");
 
-        [DataField("friction")] public float Friction { get; set; } = 0.3f;
+        [DataField("friction")] public float Friction { get; set; } = 0.2f;
 
         [DataField("variants")] public byte Variants { get; set; } = 1;
 
@@ -74,6 +74,11 @@ namespace Content.Shared.Maps
         /// Can weather affect this tile.
         /// </summary>
         [DataField("weather")] public bool Weather = false;
+
+        /// <summary>
+        /// Is this tile immune to RCD deconstruct.
+        /// </summary>
+        [DataField("indestructible")] public bool Indestructible = false;
 
         public void AssignTileId(ushort id)
         {

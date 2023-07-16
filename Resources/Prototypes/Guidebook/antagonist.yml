@@ -1,0 +1,11 @@
+- type: guideEntry
+  id: Antagonists
+  name: guide-entry-antagonists
+  text: "/ServerInfo/Guidebook/Antagonist/Antagonists.xml"
+  children:
+  - NuclearOperatives
+
+- type: guideEntry
+  id: NuclearOperatives
+  name: guide-entry-nuclear-operatives
+  text: "/ServerInfo/Guidebook/Antagonist/Nuclear Operatives.xml" 

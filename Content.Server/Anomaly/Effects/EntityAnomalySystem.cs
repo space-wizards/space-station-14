@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Numerics;
 using Content.Server.Maps;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
@@ -31,17 +32,20 @@ public sealed class EntityAnomalySystem : EntitySystem
         var amount = (int) (component.MaxSpawnAmount * args.Severity + 0.5f);
 
         var xform = Transform(uid);
-        SpawnMonstersOnOpenTiles(component, xform, amount, range);
+        SpawnMonstersOnOpenTiles(component, xform, amount, range, component.Spawns);
     }
 
     private void OnSupercritical(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
         var xform = Transform(uid);
-        SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange);
+        // A cluster of monsters
+        SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, component.Spawns);
+        // And so much meat (for the meat anomaly at least)
         Spawn(component.SupercriticalSpawn, xform.Coordinates);
+        SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, new List<string>(){component.SupercriticalSpawn});
     }
 
-    private void SpawnMonstersOnOpenTiles(EntitySpawnAnomalyComponent component, TransformComponent xform, int amount, float radius)
+    private void SpawnMonstersOnOpenTiles(EntitySpawnAnomalyComponent component, TransformComponent xform, int amount, float radius, List<string> spawns)
     {
         if (!component.Spawns.Any())
             return;
@@ -51,7 +55,7 @@ public sealed class EntityAnomalySystem : EntitySystem
 
         var localpos = xform.Coordinates.Position;
         var tilerefs = grid.GetLocalTilesIntersecting(
-            new Box2(localpos + (-radius, -radius), localpos + (radius, radius))).ToArray();
+            new Box2(localpos + new Vector2(-radius, -radius), localpos + new Vector2(radius, radius))).ToArray();
 
         if (tilerefs.Length == 0)
             return;
@@ -76,7 +80,7 @@ public sealed class EntityAnomalySystem : EntitySystem
             if (!valid)
                 continue;
             amountCounter++;
-            Spawn(_random.Pick(component.Spawns), tileref.GridIndices.ToEntityCoordinates(xform.GridUid.Value, _map));
+            Spawn(_random.Pick(spawns), tileref.GridIndices.ToEntityCoordinates(xform.GridUid.Value, _map));
             if (amountCounter >= amount)
                 return;
         }

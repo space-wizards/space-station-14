@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -106,6 +107,10 @@ public sealed partial class VehicleComponent : Component
     [DataField("autoAnimate")]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool AutoAnimate = true;
+
+    [DataField("useHand")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool UseHand = true;
 
     [DataField("hideRider")]
     [ViewVariables(VVAccess.ReadWrite)]

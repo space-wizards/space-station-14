@@ -69,3 +69,11 @@
   frequency: 1213
   color: "#8f4a4b"
   longRange: true
+
+- type: radioChannel
+  id: Handheld
+  name: chat-radio-handheld
+  frequency: 1330
+  color: "#d39f01"
+  # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
+  longRange: true

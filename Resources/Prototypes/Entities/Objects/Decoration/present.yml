@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Decoration/present.rsi
-    netsync: false
     layers:
       - state: present
 
@@ -55,6 +54,8 @@
         orGroup: GiftPool
       - id: JetpackMiniFilled
         orGroup: GiftPool
+      - id: PlushieGhost
+        orGroup: GiftPool
       - id: PlushieBee
         orGroup: GiftPool
       - id: PlushieRGBee
@@ -97,7 +98,7 @@
         orGroup: GiftPool
       - id: ToyNuke
         orGroup: GiftPool
-      - id: ToyAssistant
+      - id: ToyFigurinePassenger
         orGroup: GiftPool
       - id: ToyGriffin
         orGroup: GiftPool
@@ -370,7 +371,6 @@
   components:
   - type: Sprite
     sprite: Objects/Decoration/present.rsi
-    netsync: false
     layers:
       - state: unwrapped
   - type: Tag

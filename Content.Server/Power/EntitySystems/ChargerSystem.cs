@@ -1,11 +1,12 @@
+using Content.Server.Construction;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
+using Content.Shared.Power;
 using Content.Shared.PowerCell.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Content.Shared.Power;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Power.EntitySystems;
@@ -20,6 +21,8 @@ internal sealed class ChargerSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<ChargerComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<ChargerComponent, RefreshPartsEvent>(OnRefreshParts);
+        SubscribeLocalEvent<ChargerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         SubscribeLocalEvent<ChargerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<ChargerComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<ChargerComponent, EntRemovedFromContainerMessage>(OnRemoved);
@@ -34,7 +37,7 @@ internal sealed class ChargerSystem : EntitySystem
 
     private void OnChargerExamine(EntityUid uid, ChargerComponent component, ExaminedEvent args)
     {
-        args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", component.ChargeRate)));
+        args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", (int) component.ChargeRate)));
     }
 
     public override void Update(float frameTime)
@@ -49,6 +52,17 @@ internal sealed class ChargerSystem : EntitySystem
 
             TransferPower(charger.Owner, slot.Item!.Value, charger, frameTime);
         }
+    }
+
+    private void OnRefreshParts(EntityUid uid, ChargerComponent component, RefreshPartsEvent args)
+    {
+        var modifierRating = args.PartRatings[component.MachinePartChargeRateModifier];
+        component.ChargeRate = component.BaseChargeRate * MathF.Pow(component.PartRatingChargeRateModifier, modifierRating - 1);
+    }
+
+    private void OnUpgradeExamine(EntityUid uid, ChargerComponent component, UpgradeExamineEvent args)
+    {
+        args.AddPercentageUpgrade("charger-component-charge-rate", component.ChargeRate / component.BaseChargeRate);
     }
 
     private void OnPowerChanged(EntityUid uid, ChargerComponent component, ref PowerChangedEvent args)

@@ -103,16 +103,16 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             }
 
             // If it's an unarmed attack then do a disarm
-            if (weaponUid == entity)
+            if (weapon.AltDisarm && weaponUid == entity)
             {
                 EntityUid? target = null;
 
                 var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
                 EntityCoordinates coordinates;
 
-                if (MapManager.TryFindGridAt(mousePos, out var grid))
+                if (MapManager.TryFindGridAt(mousePos, out var gridUid, out _))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, TransformSystem, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(gridUid, mousePos, TransformSystem, EntityManager);
                 }
                 else
                 {
@@ -128,7 +128,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 return;
             }
 
-            // Otherwise do heavy attack if it's a weapon.
+            // Otherwise do heavy attack.
 
             // Start a windup
             if (weapon.WindUpStart == null)
@@ -145,9 +145,9 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
                 // Bro why would I want a ternary here
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-                if (MapManager.TryFindGridAt(mousePos, out var grid))
+                if (MapManager.TryFindGridAt(mousePos, out var gridUid, out _))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, TransformSystem, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(gridUid, mousePos, TransformSystem, EntityManager);
                 }
                 else
                 {
@@ -177,7 +177,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             var attackerPos = Transform(entity).MapPosition;
 
             if (mousePos.MapId != attackerPos.MapId ||
-                (attackerPos.Position - mousePos.Position).Length > weapon.Range)
+                (attackerPos.Position - mousePos.Position).Length() > weapon.Range)
             {
                 return;
             }
@@ -186,9 +186,9 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
             // Bro why would I want a ternary here
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-            if (MapManager.TryFindGridAt(mousePos, out var grid))
+            if (MapManager.TryFindGridAt(mousePos, out var gridUid, out _))
             {
-                coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, TransformSystem, EntityManager);
+                coordinates = EntityCoordinates.FromMap(gridUid, mousePos, TransformSystem, EntityManager);
             }
             else
             {
@@ -276,7 +276,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         var userPos = TransformSystem.GetWorldPosition(userXform);
         var direction = targetMap.Position - userPos;
-        var distance = Math.Min(component.Range, direction.Length);
+        var distance = MathF.Min(component.Range, direction.Length());
 
         // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
         // Server will validate it with InRangeUnobstructed.

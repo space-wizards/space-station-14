@@ -197,6 +197,25 @@
               Toxin: -4
 
 - type: reagent
+  id: Doxarubixadone
+  name: reagent-name-doxarubixadone
+  group: Medicine
+  desc: reagent-desc-doxarubixadone
+  physicalDesc: reagent-physical-desc-bubbling
+  flavor: medicine
+  color: "#32cd32"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:Temperature
+            max: 150.0
+          damage:
+            types:
+             Cellular: -2
+
+- type: reagent
   id: Dermaline
   name: reagent-name-dermaline
   group: Medicine
@@ -540,20 +559,37 @@
         probability: 0.05
 
 - type: reagent
-  id: Romerol
-  name: reagent-name-romerol
+  id: Ambuzol
+  name: reagent-name-ambuzol
   group: Medicine
-  desc: reagent-desc-romerol
-  physicalDesc: reagent-physical-desc-acrid
+  desc: reagent-desc-ambuzol
+  physicalDesc: reagent-physical-desc-crisp
   flavor: medicine
-  color: "#7e916e"
+  color: "#86caf7"
   metabolisms:
     Medicine:
       effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 0.5
+        - !type:CureZombieInfection
+          conditions:
+            - !type:ReagentThreshold
+              min: 10
+
+- type: reagent
+  id: AmbuzolPlus
+  name: reagent-name-ambuzol-plus
+  group: Medicine
+  desc: reagent-desc-ambuzol-plus
+  physicalDesc: reagent-physical-desc-crisp
+  flavor: medicine
+  color: "#1274b5"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:CureZombieInfection
+          innoculate: true
+          conditions:
+            - !type:ReagentThreshold
+              min: 5
 
 - type: reagent
   id: PulpedBananaPeel

@@ -68,6 +68,7 @@
   - GeneratorUraniumMachineCircuitboard
   - PowerComputerCircuitboard #the actual solar panel itself should be in here
   - SolarControlComputerCircuitboard
+  - SolarTrackerElectronics
   - EmitterCircuitboard
 
 - type: technology
@@ -84,6 +85,18 @@
   - GasRecyclerMachineCircuitboard
 
 # Tier 2
+
+- type: technology
+  id: Grappling
+  name: research-technology-grappling
+  icon:
+    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+    state: base
+  discipline: Industrial
+  tier: 2
+  cost: 5000
+  recipeUnlocks:
+    - WeaponGrapplingGun
 
 - type: technology
   id: RapidConstruction
@@ -169,10 +182,10 @@
   tier: 2
   cost: 10000
   recipeUnlocks:
-    - WelderIndustrialAdvanced
+    - WelderExperimental
     - PowerDrill
     - JawsOfLife
-    
+
 # Tier 3
 
 - type: technology

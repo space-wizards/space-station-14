@@ -17,7 +17,7 @@
       types:
         Blunt: 8
   - type: Item
-    size: 20
+    size: 80
   - type: Clothing
     quickEquip: false
     slots:
@@ -25,3 +25,6 @@
   - type: Construction
     graph: WoodenBat
     node: bat
+  - type: Tag
+    tags:
+    - BaseballBat

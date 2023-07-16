@@ -95,7 +95,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/chemistry.rsi
-    
+
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelVirology
@@ -104,7 +104,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/virology.rsi
-    
+
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelGenetics
@@ -230,3 +230,5 @@
       shader: unshaded
   - type: Storage
     capacity: 9999
+  - type: ClothingSpeedModifier
+    sprintModifier: 1 # makes its stats identical to other variants of bag of holding

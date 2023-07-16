@@ -26,7 +26,6 @@ public sealed class ToggleableClothingSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedStrippableSystem _strippable = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
     private Queue<EntityUid> _toInsert = new();
 

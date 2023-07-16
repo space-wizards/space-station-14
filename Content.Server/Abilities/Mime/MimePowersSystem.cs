@@ -1,7 +1,7 @@
 using Content.Server.Popups;
-using Content.Server.Coordinates.Helpers;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Physics;
 using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
@@ -9,6 +9,8 @@ using Content.Shared.Mobs.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 using Content.Server.Speech.Muting;
+using Robust.Shared.Containers;
+using Robust.Shared.Map;
 
 namespace Content.Server.Abilities.Mime
 {
@@ -18,7 +20,9 @@ namespace Content.Server.Abilities.Mime
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
-
+        [Dependency] private readonly TurfSystem _turf = default!;
+        [Dependency] private readonly IMapManager _mapMan = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
@@ -61,21 +65,28 @@ namespace Content.Server.Abilities.Mime
             if (!component.Enabled)
                 return;
 
+            if (_container.IsEntityOrParentInContainer(uid))
+                return;
+
             var xform = Transform(uid);
             // Get the tile in front of the mime
-            var offsetValue = xform.LocalRotation.ToWorldVec().Normalized;
-            var coords = xform.Coordinates.Offset(offsetValue).SnapToGrid(EntityManager);
-            var tile = coords.GetTileRef();
+            var offsetValue = xform.LocalRotation.ToWorldVec();
+            var coords = xform.Coordinates.Offset(offsetValue).SnapToGrid(EntityManager, _mapMan);
+            var tile = coords.GetTileRef(EntityManager, _mapMan);
             if (tile == null)
                 return;
 
-            // Check there are no walls or mobs there
-            foreach (var entity in _lookupSystem.GetEntitiesIntersecting(tile.Value, flags: LookupFlags.Static))
+            // Check there are no walls there
+            if (_turf.IsTileBlocked(tile.Value, CollisionGroup.Impassable))
             {
-                PhysicsComponent? physics = null; // We use this to check if it's impassable
-                if (HasComp<MobStateComponent>(entity) && entity != uid // Is it a mob?
-                || Resolve(entity, ref physics, false) && (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0 // Is it impassable?
-                    && !(TryComp<DoorComponent>(entity, out var door) && door.State != DoorState.Closed)) // Is it a door that's open and so not actually impassable?
+                _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-failed"), uid, uid);
+                return;
+            }
+
+            // Check there are no mobs there
+            foreach (var entity in _lookupSystem.GetEntitiesIntersecting(tile.Value))
+            {
+                if (HasComp<MobStateComponent>(entity) && entity != uid)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-failed"), uid, uid);
                     return;
@@ -83,7 +94,7 @@ namespace Content.Server.Abilities.Mime
             }
             _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-popup", ("mime", uid)), uid);
             // Make sure we set the invisible wall to despawn properly
-            Spawn(component.WallPrototype, coords);
+            Spawn(component.WallPrototype, _turf.GetTileCenter(tile.Value));
             // Handle args so cooldown works
             args.Handled = true;
         }

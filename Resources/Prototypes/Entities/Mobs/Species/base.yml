@@ -67,6 +67,7 @@
         Bloodloss:
           -1
   - type: Stamina
+  - type: StatusIcon
   - type: StatusEffects
     allowed:
       - Stun
@@ -93,7 +94,6 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: full
   - type: Sprite
-    netsync: false
     noRot: true
     drawdepth: Mobs
     layers:
@@ -111,16 +111,16 @@
         # sprite refactor when
         state: l_leg
       - shader: StencilMask
-        map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+        map: ["enum.HumanoidVisualLayers.StencilMask"]
         sprite: Mobs/Customization/masking_helpers.rsi
-        state: female_full
+        state: unisex_full
         visible: false
-      - map: [ "jumpsuit" ]
-      - map: [ "enum.HumanoidVisualLayers.LHand" ]
-      - map: [ "enum.HumanoidVisualLayers.RHand" ]
-      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      - map: ["jumpsuit"]
+      - map: ["enum.HumanoidVisualLayers.LFoot"]
+      - map: ["enum.HumanoidVisualLayers.RFoot"]
+      - map: ["enum.HumanoidVisualLayers.LHand"]
+      - map: ["enum.HumanoidVisualLayers.RHand"]
+      - map: ["enum.HumanoidVisualLayers.Handcuffs"]
         color: "#ffffff"
         sprite: Objects/Misc/handcuffs.rsi
         state: body-overlay-2
@@ -301,6 +301,7 @@
   - type: MobPrice
     price: 1500 # Kidnapping a living person and selling them for cred is a good move.
     deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.
+  - type: ContentEye
 
 - type: entity
   save: false
@@ -317,7 +318,6 @@
       sprite: Mobs/Species/Human/parts.rsi
       state: full
     - type: Sprite
-      netsync: false
       drawdepth: Mobs
       noRot: true
       # TODO BODY Turn these into individual body parts?
@@ -334,16 +334,16 @@
           sprite: Mobs/Species/Human/parts.rsi
           state: l_leg
         - shader: StencilMask
-          map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+          map: ["enum.HumanoidVisualLayers.StencilMask"]
           sprite: Mobs/Customization/masking_helpers.rsi
-          state: female_full
+          state: unisex_full
           visible: false
-        - map: [ "jumpsuit" ]
-        - map: [ "enum.HumanoidVisualLayers.LHand" ]
-        - map: [ "enum.HumanoidVisualLayers.RHand" ]
-        - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-        - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-        - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+        - map: ["jumpsuit"]
+        - map: ["enum.HumanoidVisualLayers.LFoot"]
+        - map: ["enum.HumanoidVisualLayers.RFoot"]
+        - map: ["enum.HumanoidVisualLayers.LHand"]
+        - map: ["enum.HumanoidVisualLayers.RHand"]
+        - map: ["enum.HumanoidVisualLayers.Handcuffs"]
           color: "#ffffff"
           sprite: Objects/Misc/handcuffs.rsi
           state: body-overlay-2

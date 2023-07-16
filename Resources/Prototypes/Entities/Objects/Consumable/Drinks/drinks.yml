@@ -75,6 +75,8 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 25
+  - type: ExaminableSolution
+    solution: drink
 
 # Transformable container - normal glass
 - type: entity
@@ -105,6 +107,7 @@
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
+  - type: TransformableContainer
 
 - type: entity
   name: Coupe glass
@@ -394,23 +397,6 @@
           Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/berryjuice.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkBilkGlass
-  name: bilk
-  description: A brew of milk and beer. For those alcoholics who fear osteoporosis.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Bilk
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/glass_brown.rsi
 
 - type: entity
   parent: DrinkGlassBase
