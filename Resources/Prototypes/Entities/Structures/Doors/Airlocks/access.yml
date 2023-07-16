@@ -98,7 +98,7 @@
 - type: entity
   parent: AirlockFreezer
   id: AirlockFreezerLocked
-  suffix: Service, Locked
+  suffix: Kitchen, Locked
   components:
   - type: AccessReader
     access: [["Kitchen"]]

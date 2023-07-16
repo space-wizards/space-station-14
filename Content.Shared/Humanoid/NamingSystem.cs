@@ -21,7 +21,7 @@ namespace Content.Shared.Humanoid
             if (!_prototypeManager.TryIndex(species, out SpeciesPrototype? speciesProto))
             {
                 speciesProto = _prototypeManager.Index<SpeciesPrototype>("Human");
-                Logger.Warning($"Unable to find species {species} for name, falling back to Human");
+                Log.Warning($"Unable to find species {species} for name, falling back to Human");
             }
 
             switch (speciesProto.Naming)

@@ -78,7 +78,7 @@
   frequency: 2300
 
 - type: deviceFrequency
-  id: PDA
+  id: Pda
   name: device-frequency-prototype-name-pdas
   frequency: 2202
 

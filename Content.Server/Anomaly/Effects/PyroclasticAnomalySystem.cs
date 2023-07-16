@@ -1,6 +1,5 @@
 ﻿using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Interaction;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
 using Robust.Shared.Map;
@@ -14,7 +13,6 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FlammableSystem _flammable = default!;
-    [Dependency] private readonly InteractionSystem _interaction = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -41,10 +39,7 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
         foreach (var flammable in _lookup.GetComponentsInRange<FlammableComponent>(coordinates, radius))
         {
             var ent = flammable.Owner;
-            if (!_interaction.InRangeUnobstructed(coordinates.ToMap(EntityManager), ent, -1))
-                continue;
-
-            var stackAmount = 1 + (int) (severity / 0.25f);
+            var stackAmount = 1 + (int) (severity / 0.15f);
             _flammable.AdjustFireStacks(ent, stackAmount, flammable);
             _flammable.Ignite(ent, flammable);
         }

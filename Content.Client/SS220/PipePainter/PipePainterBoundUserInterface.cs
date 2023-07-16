@@ -1,4 +1,4 @@
-﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using Content.Client.SS220.PipePainter.UI;
 using Content.Shared.SS220.PipePainter;
@@ -10,7 +10,7 @@ public sealed class PipePainterBoundUserInterface : BoundUserInterface
 {
     private PipePainterWindow? _window;
 
-    public PipePainterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public PipePainterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 

@@ -25,7 +25,7 @@ namespace Content.Server.Construction
             if (args.Handled)
                 return;
 
-            args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, component.RefineTime, component.QualityNeeded, new WelderRefineDoAfterEvent(), component.RefineFuel);
+            args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, component.RefineTime, component.QualityNeeded, new WelderRefineDoAfterEvent());
         }
 
         private void OnDoAfter(EntityUid uid, WelderRefinableComponent component, WelderRefineDoAfterEvent args)

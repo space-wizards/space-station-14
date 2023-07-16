@@ -1,5 +1,5 @@
-<Document>
-  # ДНК
+﻿<Document>
+  # DNA and Fingerprints
 
   ## Как узнать чью-либо ДНК?
 
@@ -7,11 +7,24 @@
   <Box>
     <GuideEntityEmbed Entity="ForensicScanner"/>
   </Box>
-  Помните это, прежде чем начинать драку с кем-то.
+  So be careful before fighting with someone.
+  
+  Same scanner can also get fingerprint information about who touched pretty much any object. If the possible perpetrator was using gloves, then your scanner will print out which fibers were left on the crimescene.
 
   ## Я нашёл ДНК. Как мне узнать, чья она?
 
-  Вы можете распечатать заключение криминалистической экспертизы об объекте, который вы просканировали, чтобы ничего не упустить. Теперь, имея отчёт с ДНК, воспользуйтесь [color=#a4885c]консолью станционного учёта[/color], введите ДНК в поле поиска, и вы увидите обладателя данной ДНК.
+  You can print the forensic information of the object you scanned so you never miss it. Now with the paper containing DNA you can simply find a [color=#a4885c]Station Records Computer[/color] and look for a person whose DNA matches. Same applies to finding whose fingerprint is is.
+  
+  ## Taking Fingerprints
+  It is also possible to take someones fingerprints while on scene if you make them take off their gloves and appy a forensic pad to their fingers. No need to run back to [color=#a4885c]Station Records Computer[/color] check if the butler did it!
+  
+  <GuideEntityEmbed Entity="ForensicPad"/>
+  
+  ## Fibers
+  Whenenever people wearing gloves touch anything on the station, they are bound to leave behind some fibers. This complicates things, but nothing is unsolvable for a real detective.
+  
+  There are up to [color=red]16[/color] different types of fibers possible. Can that stop you from solving the case?
+  
   <Box>
     <GuideEntityEmbed Entity="ComputerStationRecords"/>
   </Box>

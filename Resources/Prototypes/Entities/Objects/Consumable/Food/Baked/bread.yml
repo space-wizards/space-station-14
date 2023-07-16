@@ -11,6 +11,9 @@
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bread.rsi
+  - type: Tag
+    tags:
+    - Bread
   - type: SolutionContainerManager
     solutions:
       food:
@@ -29,6 +32,8 @@
   - type: FlavorProfile
     flavors:
       - bread
+  - type: Tag
+    tags: [] #override bread
   - type: SolutionContainerManager
     solutions:
       food:

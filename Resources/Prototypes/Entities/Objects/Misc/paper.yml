@@ -128,6 +128,19 @@
     headerMargin: 0.0, 12.0, 0.0, 0.0
 
 - type: entity
+  id: PaperCargoBountyManifest
+  parent: PaperCargoInvoice
+  name: bounty manifest
+  description: A paper label designating a crate as containing a bounty. Selling a crate with this label will fulfill the bounty.
+  components:
+  - type: CargoBountyLabel
+  - type: StaticPrice
+    price: 0
+  - type: GuideHelp
+    guides:
+    - CargoBounties
+
+- type: entity
   parent: Paper
   id: PaperWritten
   noSpawn: true
@@ -376,6 +389,7 @@
   - type: Stamp
     stampedName: stamp-component-stamped-name-mime
     stampState: "paper_stamp-mime"
+    sound: /Audio/Items/Stamp/thick_stamp_sub.ogg
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-mime
@@ -453,6 +467,7 @@
   - type: Stamp
     stampedName: stamp-component-stamped-name-denied
     stampState: "paper_stamp-deny"
+    sound: /Audio/Items/Stamp/automatic_stamp.ogg
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-deny
@@ -465,6 +480,7 @@
   - type: Stamp
     stampedName: stamp-component-stamped-name-approved
     stampState: "paper_stamp-approve" # Corvax-Resprite: Use correct state
+    sound: /Audio/Items/Stamp/automatic_stamp.ogg
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-approve # Corvax-Resprite

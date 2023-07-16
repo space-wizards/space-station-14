@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Medical.SuitSensor;
@@ -21,6 +22,7 @@ namespace Content.Client.Medical.CrewMonitoring
         private readonly IEntityManager _entManager;
         private readonly IEyeManager _eye;
         private EntityUid? _stationUid;
+        private CrewMonitoringButton? _trackedButton;
 
         public static int IconSize = 16; // XAML has a `VSeparationOverride` of 20 for each row.
 
@@ -52,27 +54,29 @@ namespace Content.Client.Medical.CrewMonitoring
             // TODO scroll container
             // TODO filter by name & occupation
             // TODO make each row a xaml-control. Get rid of some of this c# control creation.
+            if (stSensors.Count == 0)
+            {
+                NoServerLabel.Visible = true;
+                return;
+            }
+            NoServerLabel.Visible = false;
 
             // add a row for each sensor
             foreach (var sensor in stSensors.OrderBy(a => a.Name))
             {
-                // add users name
-                // format: UserName
-                var nameLabel = new PanelContainer()
+                // add button with username
+                var nameButton = new CrewMonitoringButton()
                 {
-                    PanelOverride = new StyleBoxFlat()
-                    {
-                        BackgroundColor = StyleNano.ButtonColorDisabled,
-                    },
-                    Children =
-                    {
-                        new Label()
-                        {
-                            Text = sensor.Name,
-                            Margin = new Thickness(5f, 5f),
-                        }
-                    }
+                    SuitSensorUid = sensor.SuitSensorUid,
+                    Coordinates = sensor.Coordinates,
+                    Text = sensor.Name,
+                    Margin = new Thickness(5f, 5f),
                 };
+                if (sensor.SuitSensorUid == _trackedButton?.SuitSensorUid)
+                    nameButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+                SetColorLabel(nameButton.Label, sensor.TotalDamage, sensor.IsAlive);
+                SensorsTable.AddChild(nameButton);
+                _rowsContent.Add(nameButton);
 
                 // add users job
                 // format: JobName
@@ -81,9 +85,7 @@ namespace Content.Client.Medical.CrewMonitoring
                     Text = sensor.Job,
                     HorizontalExpand = true
                 };
-
-                SensorsTable.AddChild(nameLabel);
-                _rowsContent.Add(nameLabel);
+                SetColorLabel(jobLabel, sensor.TotalDamage, sensor.IsAlive);
                 SensorsTable.AddChild(jobLabel);
                 _rowsContent.Add(jobLabel);
 
@@ -100,56 +102,57 @@ namespace Content.Client.Medical.CrewMonitoring
                 {
                     Text = statusText
                 };
+                SetColorLabel(statusLabel, sensor.TotalDamage, sensor.IsAlive);
                 SensorsTable.AddChild(statusLabel);
                 _rowsContent.Add(statusLabel);
 
                 // add users positions
                 // format: (x, y)
-                var box = GetPositionBox(sensor.Coordinates, monitorCoordsInStationSpace ?? Vector2.Zero, snap, precision);
+                var box = GetPositionBox(sensor, monitorCoordsInStationSpace ?? Vector2.Zero, snap, precision);
 
                 SensorsTable.AddChild(box);
                 _rowsContent.Add(box);
 
                 if (sensor.Coordinates != null && NavMap.Visible)
                 {
-                    NavMap.TrackedCoordinates.TryAdd(sensor.Coordinates.Value, (true, Color.FromHex("#B02E26")));
-                    nameLabel.MouseFilter = MouseFilterMode.Stop;
+                    NavMap.TrackedCoordinates.TryAdd(sensor.Coordinates.Value,
+                        (true, sensor.SuitSensorUid == _trackedButton?.SuitSensorUid ? StyleNano.PointGreen : StyleNano.PointRed));
 
-                    // Hide all others upon mouseover.
-                    nameLabel.OnMouseEntered += args =>
+                    nameButton.OnButtonUp += args =>
                     {
-                        foreach (var (coord, value) in NavMap.TrackedCoordinates)
-                        {
-                            if (coord == sensor.Coordinates)
-                                continue;
+                        if (_trackedButton != null && _trackedButton?.Coordinates != null)
+                            //Make previous point red
+                            NavMap.TrackedCoordinates[_trackedButton.Coordinates.Value] = (true, StyleNano.PointRed);
 
-                            NavMap.TrackedCoordinates[coord] = (false, value.Color);
-                        }
-                    };
+                        NavMap.TrackedCoordinates[sensor.Coordinates.Value] = (true, StyleNano.PointGreen);
+                        NavMap.CenterToCoordinates(sensor.Coordinates.Value);
 
-                    nameLabel.OnMouseExited += args =>
-                    {
-                        foreach (var (coord, value) in NavMap.TrackedCoordinates)
-                        {
-                            NavMap.TrackedCoordinates[coord] = (true, value.Color);
+                        nameButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+                        if (_trackedButton != null)
+                        {   //Make previous button default
+                            var previosButton = SensorsTable.GetChild(_trackedButton.IndexInTable);
+                            previosButton.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
                         }
+                        _trackedButton = nameButton;
+                        _trackedButton.IndexInTable = nameButton.GetPositionInParent();
                     };
                 }
             }
-            // For debugging.
-            //if (monitorCoords != null)
-            //    NavMap.TrackedCoordinates.Add(monitorCoords.Value, (true, Color.FromHex("#FF00FF")));
+            // Show monitor point
+            if (monitorCoords != null)
+                NavMap.TrackedCoordinates.Add(monitorCoords.Value, (true, StyleNano.PointMagenta));
         }
 
-        private BoxContainer GetPositionBox(EntityCoordinates? coordinates, Vector2 monitorCoordsInStationSpace, bool snap, float precision)
+        private BoxContainer GetPositionBox(SuitSensorStatus sensor, Vector2 monitorCoordsInStationSpace, bool snap, float precision)
         {
+            EntityCoordinates? coordinates = sensor.Coordinates;
             var box = new BoxContainer() { Orientation = LayoutOrientation.Horizontal };
 
             if (coordinates == null || _stationUid == null)
             {
                 var dirIcon = new DirectionIcon()
                 {
-                    SetSize = (IconSize, IconSize),
+                    SetSize = new Vector2(IconSize, IconSize),
                     Margin = new(0, 0, 4, 0)
                 };
                 box.AddChild(dirIcon);
@@ -162,11 +165,13 @@ namespace Content.Client.Medical.CrewMonitoring
                 var displayPos = local.Floored();
                 var dirIcon = new DirectionIcon(snap, precision)
                 {
-                    SetSize = (IconSize, IconSize),
+                    SetSize = new Vector2(IconSize, IconSize),
                     Margin = new(0, 0, 4, 0)
                 };
                 box.AddChild(dirIcon);
-                box.AddChild(new Label() { Text = displayPos.ToString() });
+                Label label = new Label() { Text = displayPos.ToString() };
+                SetColorLabel(label, sensor.TotalDamage, sensor.IsAlive);
+                box.AddChild(label);
                 _directionIcons.Add((dirIcon, local - monitorCoordsInStationSpace));
             }
 
@@ -203,10 +208,65 @@ namespace Content.Client.Medical.CrewMonitoring
             {
                 SensorsTable.RemoveChild(child);
             }
-
             _rowsContent.Clear();
             _directionIcons.Clear();
             NavMap.TrackedCoordinates.Clear();
         }
+
+        private void SetColorLabel(Label label, int? totalDamage, bool isAlive)
+        {
+            var startColor = Color.White;
+            var critColor = Color.Yellow;
+            var endColor = Color.Red;
+
+            if (!isAlive)
+            {
+                label.FontColorOverride = endColor;
+                return;
+            }
+
+            //Convert from null to regular int
+            int damage;
+            if (totalDamage == null) return;
+            else damage = (int) totalDamage;
+
+            if (damage <= 0)
+            {
+                label.FontColorOverride = startColor;
+            }
+            else if (damage >= 200)
+            {
+                label.FontColorOverride = endColor;
+            }
+            else if (damage >= 0 && damage <= 100)
+            {
+                label.FontColorOverride = GetColorLerp(startColor, critColor, damage);
+            }
+            else if (damage >= 100 && damage <= 200)
+            {
+                //We need a number from 0 to 100. Divide the number from 100 to 200 by 2
+                damage /= 2;
+                label.FontColorOverride = GetColorLerp(critColor, endColor, damage);
+            }
+        }
+
+        private Color GetColorLerp(Color startColor, Color endColor, int damage)
+        {
+            //Smooth transition from one color to another depending on the percentage
+            var t = damage / 100f;
+            var r = MathHelper.Lerp(startColor.R, endColor.R, t);
+            var g = MathHelper.Lerp(startColor.G, endColor.G, t);
+            var b = MathHelper.Lerp(startColor.B, endColor.B, t);
+            var a = MathHelper.Lerp(startColor.A, endColor.A, t);
+
+            return new Color(r, g, b, a);
+        }
+    }
+
+    public sealed class CrewMonitoringButton : Button
+    {
+        public int IndexInTable;
+        public EntityUid? SuitSensorUid;
+        public EntityCoordinates? Coordinates;
     }
 }

@@ -130,13 +130,13 @@ namespace Content.Server.Administration.Systems
             if (!match.Success)
             {
                 // TODO: Ideally, CVar validation during setting should be better integrated
-                Logger.Warning("Webhook URL does not appear to be valid. Using anyways...");
+                Log.Warning("Webhook URL does not appear to be valid. Using anyways...");
                 return;
             }
 
             if (match.Groups.Count <= 2)
             {
-                Logger.Error("Could not get webhook ID or token.");
+                Log.Error("Could not get webhook ID or token.");
                 return;
             }
 

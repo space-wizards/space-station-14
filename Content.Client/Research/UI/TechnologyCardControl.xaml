@@ -3,7 +3,7 @@
     <BoxContainer Name="MainContainer" Orientation="Vertical" Margin="10 0 10 10">
         <PanelContainer Name="Background"
                         Access="Public"
-                        StyleClasses="PDABackground"
+                        StyleClasses="PdaBackground"
                         MinHeight="15"
                         VerticalExpand="False"
                         HorizontalExpand="True"

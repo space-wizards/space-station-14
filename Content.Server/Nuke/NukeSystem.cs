@@ -1,13 +1,13 @@
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
-using Content.Server.Coordinates.Helpers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Audio;
 using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Nuke;
 using Content.Shared.Popups;
@@ -32,6 +32,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
+        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         /// <summary>
         ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -83,16 +84,16 @@ namespace Content.Server.Nuke
         {
             base.Update(frameTime);
 
-            var query = EntityQuery<NukeComponent>();
-            foreach (var nuke in query)
+            var query = EntityQueryEnumerator<NukeComponent>();
+            while (query.MoveNext(out var uid, out var nuke))
             {
                 switch (nuke.Status)
                 {
                     case NukeStatus.ARMED:
-                        TickTimer(nuke.Owner, frameTime, nuke);
+                        TickTimer(uid, frameTime, nuke);
                         break;
                     case NukeStatus.COOLDOWN:
-                        TickCooldown(nuke.Owner, frameTime, nuke);
+                        TickCooldown(uid, frameTime, nuke);
                         break;
                 }
             }
@@ -181,8 +182,11 @@ namespace Content.Server.Nuke
 
             // manually set transform anchor (bypassing anchorable)
             // todo: it will break pullable system
-            transform.Coordinates = transform.Coordinates.SnapToGrid();
-            transform.Anchored = !transform.Anchored;
+            _xformSystem.SetCoordinates(uid, transform, transform.Coordinates.SnapToGrid());
+            if (transform.Anchored)
+                _xformSystem.Unanchor(uid, transform);
+            else
+                _xformSystem.AnchorEntity(uid, transform);
 
             UpdateUserInterface(uid, component);
         }
@@ -244,7 +248,7 @@ namespace Content.Server.Nuke
 
         private void OnDoAfter(EntityUid uid, NukeComponent component, DoAfterEvent args)
         {
-            if(args.Handled || args.Cancelled)
+            if (args.Handled || args.Cancelled)
                 return;
 
             DisarmBomb(uid, component);
@@ -318,7 +322,6 @@ namespace Content.Server.Nuke
                         component.Status = NukeStatus.AWAIT_CODE;
                     break;
                 case NukeStatus.AWAIT_CODE:
-                {
                     if (!component.DiskSlot.HasItem)
                     {
                         component.Status = NukeStatus.AWAIT_DISK;
@@ -340,7 +343,6 @@ namespace Content.Server.Nuke
                     }
 
                     break;
-                }
                 case NukeStatus.AWAIT_ARM:
                     // do nothing, wait for arm button to be pressed
                     break;
@@ -379,7 +381,7 @@ namespace Content.Server.Nuke
                 CooldownTime = (int) component.CooldownTime
             };
 
-            _ui.SetUiState(ui, state);
+            UserInterfaceSystem.SetUiState(ui, state);
         }
 
         private void PlayNukeKeypadSound(EntityUid uid, int number, NukeComponent? component = null)
@@ -445,7 +447,7 @@ namespace Content.Server.Nuke
             if (stationUid != null)
                 _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, true, true, true, true);
 
-            var pos =  nukeXform.MapPosition;
+            var pos = nukeXform.MapPosition;
             var x = (int) pos.X;
             var y = (int) pos.Y;
             var posText = $"({x}, {y})";
@@ -459,7 +461,7 @@ namespace Content.Server.Nuke
             _soundSystem.PlayGlobalOnStation(uid, _audio.GetSound(component.ArmSound));
 
             _itemSlots.SetLock(uid, component.DiskSlot, true);
-            nukeXform.Anchored = true;
+            _xformSystem.AnchorEntity(uid, nukeXform);
             component.Status = NukeStatus.ARMED;
             UpdateUserInterface(uid, component);
         }

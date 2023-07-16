@@ -1,7 +1,7 @@
 cuffable-component-cannot-interact-message = You can't do that!
 cuffable-component-cannot-remove-cuffs-too-far-message = You are too far away to remove the cuffs.
 
-cuffable-component-start-uncuffing-self = You start uncuffing yourself.
+cuffable-component-start-uncuffing-self = You start to painfully wriggle out of your cuffs.
 cuffable-component-start-uncuffing-observer = {$user} starts uncuffing {$target}!
 cuffable-component-start-uncuffing-target-message = You start uncuffing {$targetName}.
 cuffable-component-start-uncuffing-by-other-message = {$otherName} starts uncuffing you!

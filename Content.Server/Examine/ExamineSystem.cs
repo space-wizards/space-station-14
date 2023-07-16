@@ -14,21 +14,14 @@ namespace Content.Server.Examine
     {
         [Dependency] private readonly VerbSystem _verbSystem = default!;
 
-        private static readonly FormattedMessage _entityNotFoundMessage;
-
-        private static readonly FormattedMessage _entityOutOfRangeMessage;
-
-        static ExamineSystem()
-        {
-            _entityNotFoundMessage = new FormattedMessage();
-            _entityNotFoundMessage.AddText(Loc.GetString("examine-system-entity-does-not-exist"));
-            _entityOutOfRangeMessage = new FormattedMessage();
-            _entityOutOfRangeMessage.AddText(Loc.GetString("examine-system-cant-see-entity"));
-        }
+        private readonly FormattedMessage _entityNotFoundMessage = new();
+        private readonly FormattedMessage _entityOutOfRangeMessage = new();
 
         public override void Initialize()
         {
             base.Initialize();
+            _entityNotFoundMessage.AddText(Loc.GetString("examine-system-entity-does-not-exist"));
+            _entityOutOfRangeMessage.AddText(Loc.GetString("examine-system-cant-see-entity"));
 
             SubscribeNetworkEvent<ExamineSystemMessages.RequestExamineInfoMessage>(ExamineInfoRequest);
         }

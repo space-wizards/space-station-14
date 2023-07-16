@@ -31,8 +31,6 @@
     states:
       Alive:
         Base: bat
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -96,17 +94,13 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      5: Critical
       10: Dead
   - type: Stamina
     excess: 10
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: 0
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Tag
@@ -170,13 +164,26 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Chicken
+  - type: Reproductive
+    breedChance: 0.05
+    birthPopup: reproductive-laid-egg-popup
+    makeOffspringInfant: false
+    partnerWhitelist:
+      tags:
+      - Chicken
+    offspring:
+    - id: FoodEggChickenFertilized
+      maxAmount: 3
+  - type: ReproductivePartner
   - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: chicken-0
-      Critical:
-        Base: dead-0
       Dead:
         Base: dead-0
   - type: Butcherable
@@ -205,6 +212,21 @@
     - Passive
 
 - type: entity
+  id: FoodEggChickenFertilized
+  parent: FoodEgg
+  suffix: Fertilized, Chicken
+  components:
+  - type: Timer
+  - type: TimedSpawner
+    prototypes:
+    - MobChicken
+    intervalSeconds: 20
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn #delete the egg after the chicken spawns
+    lifetime: 21
+
+- type: entity
   name: mallard duck #Quack
   parent: SimpleMobBase
   id: MobDuckMallard
@@ -215,7 +237,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: duck-0
-      sprite: Mobs/Animals/duck.rsi
+    sprite: Mobs/Animals/duck.rsi
   - type: Fixtures
     fixtures:
       fix1:
@@ -227,13 +249,26 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Tag
+    tags:
+      - DoorBumpOpener
+      - Duck
+  - type: Reproductive
+    breedChance: 0.05
+    birthPopup: reproductive-laid-egg-popup
+    makeOffspringInfant: false
+    partnerWhitelist:
+      tags:
+      - Duck
+    offspring:
+    - id: FoodEggDuckFertilized
+      maxAmount: 3
+  - type: ReproductivePartner
   - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: duck-0
-      Critical:
-        Base: dead-0
       Dead:
         Base: dead-0
   - type: Butcherable
@@ -266,18 +301,13 @@
   description: An adorable white duck, it's fluffy and soft!
   components:
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: duck-1
-      sprite: Mobs/Animals/duck.rsi
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: duck-1
-      Critical:
-        Base: dead-1
       Dead:
         Base: dead-1
 
@@ -288,20 +318,32 @@
   description: An adorable brown duck, it's fluffy and soft!
   components:
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: duck-2
-      sprite: Mobs/Animals/duck.rsi
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: duck-2
-      Critical:
-        Base: dead-2
       Dead:
         Base: dead-2
+
+- type: entity
+  id: FoodEggDuckFertilized
+  parent: FoodEgg
+  suffix: Fertilized, Duck
+  components:
+    - type: Timer
+    - type: TimedSpawner
+      prototypes:
+      - MobDuckMallard
+      - MobDuckWhite
+      - MobDuckBrown
+      intervalSeconds: 20
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 1
+    - type: TimedDespawn #delete the egg after the chicken spawns
+      lifetime: 21
 
 - type: entity
   name: butterfly
@@ -334,19 +376,15 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      5: Critical
       10: Dead
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:
           butterfly: Rainbow
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: butterfly
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Bloodstream
@@ -369,6 +407,17 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cow
       sprite: Mobs/Animals/cow.rsi
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Cow
+  - type: Reproductive
+    partnerWhitelist:
+      tags:
+      - Cow
+    offspring:
+    - id: MobCow
+  - type: ReproductivePartner
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -381,13 +430,10 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: cow
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: SolutionContainerManager
@@ -453,13 +499,10 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: crab
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -496,13 +539,22 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Goat
+  - type: Reproductive
+    partnerWhitelist:
+      tags:
+      - Goat
+    offspring:
+    - id: MobGoat
+  - type: ReproductivePartner
   - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: goat
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: SolutionContainerManager
@@ -551,7 +603,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goose
       sprite: Mobs/Animals/goose.rsi
-  - type: Appearance
   - type: Fixtures
     fixtures:
       fix1:
@@ -567,8 +618,6 @@
     states:
       Alive:
         Base: goose
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -612,13 +661,10 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: crawling
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -656,7 +702,6 @@
         layer:
         - MobLayer
   - type: Physics
-  - type: Appearance
   - type: Inventory
     speciesId: kangaroo
     templateId: kangaroo
@@ -787,7 +832,6 @@
   - type: Body
     prototype: Primate
     requiredLegs: 1 # TODO: More than 1 leg
-  - type: Appearance
   - type: CreamPied
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
@@ -884,7 +928,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -914,6 +957,7 @@
     tags:
     - Trash
     - CannotSuicide
+    - Mouse
   - type: Respirator
     damage:
       types:
@@ -947,17 +991,25 @@
 
 - type: entity
   parent: MobMouse
+  id: MobMouseAdmeme
+  suffix: Admeme
+  components:
+  # allow admeme mouse to eat pills
+  - type: IgnoreBadFood
+  # intended for swarms that eat pills so only temporary
+  - type: TimedDespawn
+    lifetime: 60
+
+- type: entity
+  parent: MobMouse
   id: MobMouse1
   components:
   - type: Sprite
-    drawdepth: SmallMobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-1
-      sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
     equippedPrefix: 1
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -966,22 +1018,17 @@
         Base: dead-1
       Dead:
         Base: splat-1
-  - type: Bloodstream
-    bloodMaxVolume: 50
 
 - type: entity
   parent: MobMouse
   id: MobMouse2
   components:
   - type: Sprite
-    drawdepth: SmallMobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-2
-      sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    equippedPrefix: 1
-  - type: Appearance
+    equippedPrefix: 2
   - type: DamageStateVisuals
     states:
       Alive:
@@ -990,8 +1037,6 @@
         Base: dead-2
       Dead:
         Base: splat-2
-  - type: Bloodstream
-    bloodMaxVolume: 50
 
 - type: entity
   name: lizard #Weh
@@ -1020,13 +1065,10 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: lizard
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -1075,13 +1117,10 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: slug
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -1122,13 +1161,10 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: frog
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -1174,13 +1210,10 @@
         - FlyingMobMask
         layer:
         - FlyingMobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: parrot
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -1221,13 +1254,10 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: penguin
-      Critical:
-        Base: penguin_dead
       Dead:
         Base: penguin_dead
   - type: Butcherable
@@ -1278,13 +1308,10 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: penguin
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -1350,8 +1377,6 @@
     states:
       Alive:
         Base: snake
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -1396,13 +1421,10 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: tarantula
-      Critical:
-        Base: tarantula_dead
       Dead:
         Base: tarantula_dead
   - type: Butcherable
@@ -1413,7 +1435,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      90: Critical
       150: Dead
   - type: MeleeWeapon
     hidden: true
@@ -1458,6 +1479,52 @@
     - type: GhostTakeoverAvailable
 
 - type: entity
+  name: clown spider
+  parent: MobGiantSpiderAngry
+  id: MobClownSpider
+  description: Combines the two most terrifying things in existence, spiders and clowns.
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+      - map: ["enum.DamageStateVisualLayers.Base"]
+        state: clown
+        sprite: Mobs/Animals/clownspider.rsi
+    - type: Butcherable
+      spawned:
+        - id: MaterialBananium1
+          amount: 1
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: clown
+        Dead:
+          Base: dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        180: Dead
+    - type: Spider
+      webPrototype: SpiderWebClown
+    - type: Tag
+      tags:
+      - DoorBumpOpener
+      - FootstepSound
+    - type: MeleeWeapon
+      hidden: true
+      angle: 0
+      animation: WeaponArcBite
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      damage:
+        types:
+          Piercing: 8
+          Poison: 6
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepClownFast
+
+- type: entity
   name: possum
   parent: SimpleMobBase
   id: MobPossum
@@ -1481,7 +1548,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: possum
     templateId: pet
@@ -1495,8 +1561,6 @@
     states:
       Alive:
         Base: possum
-      Critical:
-        Base: possum_dead
       Dead:
         Base: possum_dead
   - type: Butcherable
@@ -1537,7 +1601,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: possum #close enough
     templateId: pet
@@ -1551,8 +1614,6 @@
     states:
       Alive:
         Base: raccoon
-      Critical:
-        Base: raccoon_dead
       Dead:
         Base: raccoon_dead
   - type: Butcherable
@@ -1593,7 +1654,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: fox
     templateId: pet
@@ -1607,8 +1667,6 @@
     states:
       Alive:
         Base: fox
-      Critical:
-        Base: fox_dead
       Dead:
         Base: fox_dead
   - type: Butcherable
@@ -1664,11 +1722,8 @@
     states:
       Alive:
         Base: corgi
-      Critical:
-        Base: corgi_dead
       Dead:
         Base: corgi_dead
-  - type: Appearance
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1701,13 +1756,10 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: narsian
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: narsian
-      Critical:
-        Base: narsian_dead
       Dead:
         Base: narsian_dead
   - type: MeleeWeapon
@@ -1763,7 +1815,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: puppy
-  - type: Appearance
   - type: Inventory
     speciesId: puppy
     templateId: pet
@@ -1772,8 +1823,6 @@
     states:
       Alive:
         Base: puppy
-      Critical:
-        Base: puppy_dead
       Dead:
         Base: puppy_dead
   - type: Grammar
@@ -1804,7 +1853,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: cat
     templateId: pet
@@ -1818,8 +1866,6 @@
     states:
       Alive:
         Base: cat
-      Critical:
-        Base: cat_dead
       Dead:
         Base: cat_dead
   - type: Butcherable
@@ -1847,23 +1893,15 @@
   description: Feline pet, very funny.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat2
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: cat2
-      Critical:
-        Base: cat2_dead
       Dead:
         Base: cat2_dead
-  - type: Grammar
-    attributes:
-      gender: epicene
 
 - type: entity
   name: space cat
@@ -1872,18 +1910,13 @@
   description: Feline pet, prepared for the worst.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: spacecat
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: spacecat
-      Critical:
-        Base: spacecat_dead
       Dead:
         Base: spacecat_dead
   - type: InteractionPopup
@@ -1892,9 +1925,6 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
-  - type: Grammar
-    attributes:
-      gender: epicene
 
 - type: entity
   name: caracal cat
@@ -1903,23 +1933,16 @@
   description: Hilarious.
   components:
   - type: Sprite
-    drawdepth: Mobs
     sprite: Mobs/Pets/caracal.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: caracal_flop
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: caracal_flop
-      Critical:
-        Base: caracal_dead
       Dead:
         Base: caracal_dead
-  - type: Grammar
-    attributes:
-      gender: epicene
 
 - type: entity
   name: sloth
@@ -1948,7 +1971,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: sloth
     templateId: pet
@@ -1962,8 +1984,6 @@
     states:
       Alive:
         Base: sloth
-      Critical:
-        Base: sloth_dead
       Dead:
         Base: sloth_dead
   - type: Butcherable
@@ -2004,7 +2024,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: fox #close enough
     templateId: pet
@@ -2018,8 +2037,6 @@
     states:
       Alive:
         Base: ferret
-      Critical:
-        Base: ferret_dead
       Dead:
         Base: ferret_dead
   - type: Butcherable
@@ -2081,10 +2098,9 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 4
-  - type: Appearance
   - type: Inventory
     speciesId: hamster
-    templateId: pet
+    templateId: hamster
   - type: InventorySlots
   - type: Strippable
   - type: UserInterface
@@ -2182,10 +2198,20 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: pig
     templateId: pet
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Pig
+  - type: Reproductive
+    partnerWhitelist:
+      tags:
+      - Pig
+    offspring:
+    - id: MobPig
+  - type: ReproductivePartner
   - type: InventorySlots
   - type: Strippable
   - type: UserInterface
@@ -2196,8 +2222,6 @@
     states:
       Alive:
         Base: pig
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
