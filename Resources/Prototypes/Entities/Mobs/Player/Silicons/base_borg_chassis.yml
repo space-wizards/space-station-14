@@ -1,0 +1,55 @@
+﻿- type: entity
+  id: BaseBorgChassis
+  name: borg chassis
+  save: false
+  abstract: true
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Input
+    context: "human"
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4.5
+    baseSprintSpeed : 2.5
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+  - type: Physics
+    bodyType: KinematicController
+  - type: Hands
+    showInHands: false
+  - type: Body
+    prototype: Drone
+  - type: BorgChassis
+  - type: DoAfter
+  - type: Pullable
+  - type: Examiner
+  - type: StandingState
+  - type: Alerts
+  - type: Tag
+    tags:
+    - ShoesRequiredStepTriggerImmune
+    - FootstepSound
+    - DoorBumpOpener

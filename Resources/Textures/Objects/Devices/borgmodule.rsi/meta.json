@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by EmoGarbage404 (github) for Space Station 14.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cargo"
+    },
+    {
+      "name": "engineering"
+    },
+    {
+      "name": "generic"
+    },
+    {
+      "name": "icon-template"
+    },
+    {
+      "name": "medical"
+    },
+    {
+      "name": "science"
+    },
+    {
+      "name": "security"
+    },
+    {
+      "name": "service"
+    },
+    {
+      "name": "syndicate"
+    }
+  ]
+}

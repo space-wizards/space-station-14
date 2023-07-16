@@ -1,0 +1,59 @@
+﻿# Crewsimov
+- type: siliconLaw
+  id: Crewsimov1
+  lawString: law-crewsimov-1
+
+- type: siliconLaw
+  id: Crewsimov2
+  lawString: law-crewsimov-2
+
+- type: siliconLaw
+  id: Crewsimov3
+  lawString: law-crewsimov-3
+
+# Corporate
+- type: siliconLaw
+  id: Corporate1
+  lawString: law-corporate-1
+
+- type: siliconLaw
+  id: Corporate2
+  lawString: law-corporate-2
+
+- type: siliconLaw
+  id: Corporate3
+  lawString: law-corporate-3
+
+- type: siliconLaw
+  id: Corporate4
+  lawString: law-corporate-4
+
+# NT Default
+- type: siliconLaw
+  id: NTDefault1
+  lawString: law-ntdefault-1
+
+- type: siliconLaw
+  id: NTDefault2
+  lawString: law-ntdefault-2
+
+- type: siliconLaw
+  id: NTDefault3
+  lawString: law-ntdefault-3
+
+- type: siliconLaw
+  id: NTDefault4
+  lawString: law-ntdefault-4
+
+#Drone
+- type: siliconLaw
+  id: Drone1
+  lawString: law-drone-1
+
+- type: siliconLaw
+  id: Drone2
+  lawString: law-drone-2
+
+- type: siliconLaw
+  id: Drone3
+  lawString: law-drone-3
