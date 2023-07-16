@@ -159,7 +159,7 @@
   description: uplink-grenadier-rig-desc
   productEntity: ClothingBeltMilitaryWebbingGrenadeFilled
   cost:
-    Telecrystal: 18
+    Telecrystal: 12
   categories:
   - UplinkExplosives
   conditions:
