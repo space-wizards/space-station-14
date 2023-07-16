@@ -1,18 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix docked grids failing to split., type: Fix}
-  id: 3756
-  time: '2023-05-14T03:29:50.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Reduced FTL time from 30s to 20s and FTL cooldown from 30s to 10s.,
-    type: Tweak}
-  - {message: Arrivals turnaround reduced from 90s to 50s., type: Tweak}
-  id: 3757
-  time: '2023-05-14T08:00:36.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Caves now have crystals in them., type: Add}
   id: 3758
   time: '2023-05-14T11:38:54.0000000+00:00'
@@ -2968,3 +2956,13 @@ Entries:
       security channel when they go into a critical state., type: Tweak}
   id: 4255
   time: '2023-07-16T02:59:47.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: fixed chameleon menu not working, type: Fix}
+  id: 4256
+  time: '2023-07-16T07:04:51.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Dwarves now have access to all the same tattoos that humans do., type: Tweak}
+  id: 4257
+  time: '2023-07-16T07:05:31.0000000+00:00'
