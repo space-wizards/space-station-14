@@ -6,22 +6,21 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobHeadOfPersonnel
-      time: 21600 #6 hrs
+      time: 7200 #Imperial role timers
     - !type:RoleTimeRequirement
       role: JobHeadOfSecurity
-      time: 21600 #6 hrs
+      time: 7200 #Imperial role timers
     - !type:RoleTimeRequirement
       role: JobChiefMedicalOfficer
-      time: 21600 #6 hrs
+      time: 7200 #Imperial role timers
     - !type:RoleTimeRequirement
       role: JobChiefEngineer
-      time: 21600 #6 hrs
+      time: 7200 #Imperial role timers
     - !type:RoleTimeRequirement
       role: JobResearchDirector
-      time: 21600 #6 hrs
-    - !type:RoleTimeRequirement
-      role: JobQuartermaster
-      time: 21600 #6 hrs
+      time: 7200 #Imperial role timers
+    - !type:OverallPlaytimeRequirement
+      time: 180000 #Imperial role timers
   weight: 20
   startingGear: CaptainGear
   icon: "Captain"

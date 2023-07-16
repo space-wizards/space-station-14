@@ -6,7 +6,10 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 108000 # 30 hrs
+      time: 21600 #Imperial role timers
+    - !type:RoleTimeRequirement
+      role: JobScientist
+      time: 10800 #Imperial role timers
   weight: 10
   startingGear: ResearchDirectorGear
   icon: "ResearchDirector"

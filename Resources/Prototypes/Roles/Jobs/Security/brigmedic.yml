@@ -6,10 +6,10 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 18000
+      time: 7200 #Imperial role timers
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 7200
+      time: 7200 #Imperial role timers
   startingGear: BrigmedicGear
   icon: "Brigmedic"
   supervisors: job-supervisors-hos

@@ -4,9 +4,9 @@
   description: job-description-chemist
   playTimeTracker: JobChemist
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 1800
+    - !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 7200 #Imperial role timers
   startingGear: ChemistGear
   icon: "Chemist"
   supervisors: job-supervisors-cmo

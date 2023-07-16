@@ -4,9 +4,8 @@
   description: job-description-chef
   playTimeTracker: JobChef
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Civilian
-      time: 1800
+    - !type:OverallPlaytimeRequirement
+      time: 3600 #Imperial role timers
   startingGear: ChefGear
   icon: "Chef"
   supervisors: job-supervisors-hop

@@ -4,6 +4,13 @@
   description: job-description-clown
   playTimeTracker: JobClown
   startingGear: ClownGear
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobMime
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 7200 #Imperial role timers
   icon: "Clown"
   supervisors: job-supervisors-hop
   access:

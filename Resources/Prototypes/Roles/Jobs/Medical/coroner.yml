@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 0
+      time: 14400 #Imperial role timers
   startingGear: CoronerGear
   icon: "Coroner"
   supervisors: job-supervisors-medicine

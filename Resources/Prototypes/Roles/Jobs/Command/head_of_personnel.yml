@@ -6,16 +6,19 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 54000 # 15 hrs
+      time: 10800 #Imperial role timers
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 54000 # 15 hrs
+      time: 10800 #Imperial role timers
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 54000 # 15 hrs
+      time: 7200 #Imperial role timers
     - !type:DepartmentTimeRequirement
-      department: Command
-      time: 72000 # 20 hrs
+      department: Cargo
+      time: 3600 #Imperial role timers
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 3600 #Imperial role timers
   weight: 20
   startingGear: HoPGear
   icon: "HeadOfPersonnel"
