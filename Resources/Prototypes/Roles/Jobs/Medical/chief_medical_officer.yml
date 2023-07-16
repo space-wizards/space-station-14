@@ -8,13 +8,13 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobChemist
-      time: 21600 #6 hrs
+      time: 7200 #Imperial role timers
     - !type:RoleTimeRequirement
       role: JobMedicalDoctor
-      time: 21600 #6 hrs
+      time: 7200 #Imperial role timers
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 108000 # 30 hrs
+      time: 28800 #Imperial role timers
   weight: 10
   startingGear: CMOGear
   icon: "ChiefMedicalOfficer"

@@ -6,16 +6,7 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 21600 #6 hrs
-    - !type:RoleTimeRequirement
-      role: JobDetective
-      time: 7200 #2 hrs
-    - !type:RoleTimeRequirement
-      role: JobSecurityOfficer
-      time: 36000 #10 hrs
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 108000 # 30 hrs
+      time: 10800 #Imperial role timers
   weight: 10
   startingGear: HoSGear
   icon: "HeadOfSecurity"

@@ -5,14 +5,11 @@
   playTimeTracker: JobQuartermaster
   requirements:
     - !type:RoleTimeRequirement
-      role: JobCargoTechnician
-      time: 21600 #6 hrs
-    - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 21600 #6 hrs
+      time: 3600 #Imperial role timers
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 108000 # 30 hrs
+      time: 21600 #Imperial role timers
   weight: 10
   startingGear: QuartermasterGear
   icon: "QuarterMaster"

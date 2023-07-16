@@ -3,6 +3,10 @@
   name: job-name-lawyer
   description: job-description-lawyer
   playTimeTracker: JobLawyer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 7200 #Imperial role timers
   startingGear: LawyerGear
   icon: "Lawyer"
   supervisors: job-supervisors-hop

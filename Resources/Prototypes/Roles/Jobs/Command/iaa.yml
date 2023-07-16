@@ -3,12 +3,12 @@
   name: job-name-iaa
   playTimeTracker: JobIAA
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Command
-      time: 30000
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 30000
+    - !type:RoleTimeRequirement
+      role: JobLawyer
+      time: 3600 #Imperial role timers
+    - !type:RoleTimeRequirement
+      role: JobWarden
+      time: 7200 #Imperial role timers
   startingGear: IAAGear
   icon: "IAA"
   supervisors: job-supervisors-centcom
