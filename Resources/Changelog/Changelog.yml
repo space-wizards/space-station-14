@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The RPED can now quickly pick up machine parts on the ground like a
-      trashbag., type: Tweak}
-  id: 3754
-  time: '2023-05-14T02:14:38.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Added the proto-kinetic crusher for salvagers., type: Add}
@@ -2964,3 +2958,8 @@ Entries:
   - {message: Make minibomb a little louder., type: Tweak}
   id: 4253
   time: '2023-07-16T01:59:10.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Quartermaster airlock now has command sprite, type: Tweak}
+  id: 4254
+  time: '2023-07-16T02:21:32.0000000+00:00'
