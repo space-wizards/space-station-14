@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
-using Content.IntegrationTests;
+using Content.Tests;
 using Content.Server.Maps;
 using Robust.Benchmarks.Configs;
 using Robust.Shared.Prototypes;

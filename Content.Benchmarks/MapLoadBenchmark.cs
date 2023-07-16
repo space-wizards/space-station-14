@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using Content.IntegrationTests;
+using Content.Tests;
 using Content.Server.Maps;
 using Robust.Server.GameObjects;
 using Robust.Shared;

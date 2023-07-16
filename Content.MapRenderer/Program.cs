@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.IntegrationTests;
+using Content.Tests;
 using Content.MapRenderer.Painters;
 using Content.Server.Maps;
 using Newtonsoft.Json;

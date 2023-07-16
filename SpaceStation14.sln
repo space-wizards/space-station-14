@@ -34,7 +34,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.UnitTesting", "Robus
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Shared", "RobustToolbox\Robust.Shared\Robust.Shared.csproj", "{0529F740-0000-0000-0000-000000000000}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.IntegrationTests", "Content.IntegrationTests\Content.IntegrationTests.csproj", "{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Tests", "Content.Tests\Content.Tests.csproj", "{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Benchmarks", "Content.Benchmarks\Content.Benchmarks.csproj", "{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}"
 EndProject
