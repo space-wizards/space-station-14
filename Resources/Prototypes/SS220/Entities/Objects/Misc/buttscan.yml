@@ -2,20 +2,32 @@
   name: butt scan
   parent: BaseItem
   id: ButtScan
-  description: "A paper with a grayscale copy of the butt, apparently made using photocopier."
+  description: A paper with a grayscale copy of the butt, apparently made using photocopier.
   components:
   - type: Sprite
-    sprite: SS220/Objects/Misc/butt_scan.rsi
-    netsync: false
+    sprite: Objects/Misc/bureaucracy.rsi
     layers:
-    - state: icon
+      - state: butt_scan
+      - state: paper_words
+        map: [ "enum.PaperVisualLayers.Writing" ]
+        visible: false
+      - state: paper_stamp-generic
+        map: [ "enum.PaperVisualLayers.Stamp" ]
+        visible: false
   - type: ActivatableUI
-    key: enum.ButtScanUiKey.Key
+    key: enum.PaperUiKey.Key
     closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
-    - key: enum.ButtScanUiKey.Key
+    - key: enum.PaperUiKey.Key
       type: ButtScanBoundUserInterface
+  - type: Paper
+    writable: false
+  - type: Appearance
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 30.0, 30.0, 30.0, 30.0
   - type: ButtScan
   - type: Item
     size: 1
@@ -23,3 +35,12 @@
     tags:
     - Document
     - Trash
+
+- type: entity
+  name: strange butt scan
+  parent: ButtScan
+  id: StrangeButtScan
+  description: "What is this creature? Why did it do that? Where did it came from? This is the case of your entire career, detective."
+  components:
+  - type: ButtScan
+    buttTexturePath: "/Textures/SS220/Interface/Butts/vulp.png"

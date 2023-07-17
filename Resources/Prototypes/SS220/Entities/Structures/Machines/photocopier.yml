@@ -11,6 +11,8 @@
     layers:
     - state: "off"
       map: ["enum.PhotocopierVisualLayers.Base"]
+    - state: no_cover
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
     - state: "led_powered"
       map: ["enum.PhotocopierVisualLayers.Led"]
       shader: unshaded
@@ -23,23 +25,18 @@
       map: ["enum.PhotocopierVisualLayers.PrintAnim"]
   - type: Appearance
   - type: Climbable
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 150
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
   - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
+  - type: ShapeCollisionTracker
+    enabled: true
+    shape:
+      !type:PhysShapeCircle
+      radius: 0.2
   - type: Photocopier
     formCollections: [ "nanotrasen_station" ]
-    emagButtDamage:
+    contrabandFormCollections: [ "syndicate" ]
+    buttDamage:
       types:
         Heat: 10
     paperSlot:
@@ -63,19 +60,36 @@
     interfaces:
       - key: enum.PhotocopierUiKey.Key
         type: PhotocopierBoundUi
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
   - type: ItemSlots
   - type: ContainerContainer
     containers:
       CopierScan: !type:ContainerSlot
       TonerCartridge: !type:ContainerSlot
+  - type: WiresPanel
+  - type: Wires
+    BoardName: "Photocopier"
+    LayoutId: Photocopier
+  - type: WiresVisuals
+  - type: Tag
+    tags:
+      - EmagImmune
 
 - type: entity
   id: PhotocopierCentralCommand
   parent: PhotocopierBase
   name: central command photocopier
   components:
-    - type: Photocopier
-      formCollections: [ "nanotrasen_station", "nanotrasen_central_command" ]
+  - type: Photocopier
+    formCollections: [ "nanotrasen_station", "nanotrasen_central_command" ]
+    tonerSlot:
+      insertSound: /Audio/Machines/screwdriveropen.ogg
+      ejectSound: /Audio/Machines/screwdriverclose.ogg
+      startingItem: BluespaceTonerCartridge
+      whitelist:
+        components:
+          - TonerCartridge
 
 - type: entity
   name: toner cartridge
@@ -96,3 +110,23 @@
     charges: 60
   - type: StaticPrice
     price: 10
+
+- type: entity
+  name: bluespace toner cartridge
+  parent: TonerCartridge
+  id: BluespaceTonerCartridge
+  description: An extremely expensive bluespace cartridge that contains a huge amount of toner. Meant to be used in a photocopier.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: SS220/Objects/Misc/toner_cartridge.rsi
+    layers:
+    - state: "icon_bluespace"
+  - type: Item
+    size: 20
+    sprite: SS220/Objects/Misc/toner_cartridge.rsi
+  - type: TonerCartridge
+    capacity: 10000
+    charges: 10000
+  - type: StaticPrice
+    price: 2500

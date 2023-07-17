@@ -1,4 +1,9 @@
+wire-name-photocopier-burn = ЯРК
+wire-name-photocopier-contraband = ДАНН
+
 photocopier-ui-window = Копировальный аппарат
+
+photocopier-ui-search-placeholder = Поиск...
 
 photocopier-ui-toner = Тонер:
 photocopier-ui-amount = Количество:
@@ -13,6 +18,9 @@ photocopier-ui-scan-surface-empty = [color=red]пусто[/color]
 photocopier-ui-scan-surface-item = [color=lime]есть предмет[/color]
 photocopier-ui-scan-surface-posterior = [color=orange]есть... предмет?[/color]
 photocopier-examine-scan-got-item = На нём что-то лежит.
+
+photocopier-popup-butt-scan = Копир сканирует задницу.
+photocopier-popup-butt-burn = Копир обжигает задницу!
 
 photocopier-ui-stop-button = Отмена
 photocopier-ui-eject-button = Извлечь
@@ -37,7 +45,10 @@ ent-PhotocopierBase = копировальный аппарат
     .desc = Может печатать различные формы или копировать любой ((документ)) положенный на него.
 
 ent-PhotocopierCentralCommand = копировальный аппарат ЦентКома
-    .desc = Может печатать различные формы или копировать любой ((документ)) положенный на него.
+    .desc = { ent-PhotocopierBase.desc }
 
 ent-TonerCartridge = тонер-картридж
     .desc = Картридж с тонером. Предназначен для копировального аппарата.
+	
+ent-BluespaceTonerCartridge = блюспейс тонер-картридж
+    .desc = Необычайно дорогой блюспейс картридж с тонером. Содержит огромное количество тонера. Предназначен для копировального аппарата.

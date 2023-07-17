@@ -19,12 +19,13 @@ public sealed class FormManager : EntitySystem
     [Dependency] private readonly IResourceManager _resourceManager = default!;
     private readonly ISawmill _sawmill = Logger.GetSawmill("form-manager");
 
-        /// <summary>
+    /// <summary>
     /// Path at which index file is located. The file contains names of groups and paths of form XML files.
     /// </summary>
     private readonly ResPath _indexPath = new("/PhotocopierForms/FormIndex.yml");
 
-    private Dictionary<string, Dictionary<string, FormGroup>> _collections = new();
+    private List<FormCollection> _collections = new();
+    private Dictionary<string, Dictionary<string, FormGroup>> _collectionsDict = new();
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -44,7 +45,7 @@ public sealed class FormManager : EntitySystem
     {
         try
         {
-            if (!_collections.TryGetValue(descriptor.CollectionId, out var collection))
+            if (!_collectionsDict.TryGetValue(descriptor.CollectionId, out var collection))
             {
                 _sawmill.Error("Unsuccessful attempt to access collection " + descriptor.CollectionId);
                 return null;
@@ -90,12 +91,12 @@ public sealed class FormManager : EntitySystem
         }
 
         // Parse index
-        Dictionary<string, Dictionary<string, DeserializedFormGroup>> parsedIndex;
+        List<DeserializedCollection> parsedIndex;
         try
         {
             var yamlDeserializer = new Deserializer();
             parsedIndex = yamlDeserializer
-                .Deserialize<Dictionary<string, Dictionary<string, DeserializedFormGroup>>>(indexContentsString);
+                .Deserialize<List<DeserializedCollection>>(indexContentsString);
         }
         catch (Exception e)
         {
@@ -107,23 +108,38 @@ public sealed class FormManager : EntitySystem
         _sawmill.Debug("Starting to reconstruct index and deserialize forms");
 
         var newCollectionsDict = new Dictionary<string, Dictionary<string, FormGroup>>();
+        var newCollections = new List<FormCollection>();
+
         var xmlDeserializer = new XmlSerializer(typeof(Form));
         var totalAddedForms = 0;
         foreach (var deserializedCollection in parsedIndex)
         {
-            var collection = new Dictionary<string, FormGroup>();
-            newCollectionsDict.Add(deserializedCollection.Key, collection);
+            var groupDict = new Dictionary<string, FormGroup>();
+            newCollectionsDict.Add(deserializedCollection.Id, groupDict);
 
-            foreach (var deserializedFormGroup in deserializedCollection.Value)
+            var newFormCollection = new FormCollection(deserializedCollection.Id);
+            newCollections.Add(newFormCollection);
+
+            foreach (var deserializedFormGroup in deserializedCollection.Groups)
             {
-                var formGroup = new FormGroup(
-                    deserializedFormGroup.Value.Name,
-                    deserializedFormGroup.Key);
+                Color groupColor;
 
-                collection.Add(deserializedFormGroup.Key, formGroup);
+                if (deserializedFormGroup.Color is { } colorString)
+                    groupColor = Color.TryFromHex(colorString) ?? Color.LightGray;
+                else
+                    groupColor = Color.LightGray;
+
+                var formGroup = new FormGroup(
+                    deserializedFormGroup.Name,
+                    deserializedFormGroup.Id,
+                    groupColor,
+                    deserializedFormGroup.IconPath);
+
+                groupDict.Add(deserializedFormGroup.Id, formGroup);
+                newFormCollection.Groups.Add(formGroup);
 
                 // deserialize forms in a group
-                foreach (var formPath in deserializedFormGroup.Value.Forms)
+                foreach (var formPath in deserializedFormGroup.Forms)
                 {
                     TryReadAllText(new ResPath(formPath), out var formXmlContents);
                     if (string.IsNullOrEmpty(formXmlContents))
@@ -158,7 +174,8 @@ public sealed class FormManager : EntitySystem
         }
 
         _sawmill.Info("Successfully parsed " + totalAddedForms.ToString() + " forms");
-        _collections = newCollectionsDict;
+        _collectionsDict = newCollectionsDict;
+        _collections = newCollections;
     }
 
     /// <summary>
@@ -194,6 +211,20 @@ public sealed class FormManager : EntitySystem
 /// </summary>
 internal struct DeserializedFormGroup
 {
+    public string Id;
     public string Name;
+    public string? Color;
+    public string? IconPath;
     public HashSet<string> Forms;
 }
+
+/// <summary>
+/// Exists entirely for deserialization purposes,
+/// for the purpose of storing parsed forms a Dictionary should be a good enough choice.
+/// </summary>
+internal struct DeserializedCollection
+{
+    public string Id;
+    public List<DeserializedFormGroup> Groups;
+}
+

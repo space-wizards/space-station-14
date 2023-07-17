@@ -21517,9 +21517,9 @@ entities:
       type: Transform
 - proto: FaxMachineCentcom
   entities:
-  - uid: 76
+  - uid: 647
     components:
-    - pos: -2.5,-2.5
+    - pos: -3.5,-2.5
       parent: 1668
       type: Transform
     - name: CentComm
@@ -27227,7 +27227,7 @@ entities:
   entities:
   - uid: 6630
     components:
-    - pos: -3.5,-2.5
+    - pos: -1.5,0.5
       parent: 1668
       type: Transform
 - proto: ParchisBoard
@@ -27266,6 +27266,13 @@ entities:
   - uid: 3876
     components:
     - pos: -26.67884,-3.3787808
+      parent: 1668
+      type: Transform
+- proto: PhotocopierCentralCommand
+  entities:
+  - uid: 4398
+    components:
+    - pos: -2.5,-2.5
       parent: 1668
       type: Transform
 - proto: PianoInstrument
@@ -32619,11 +32626,6 @@ entities:
   - uid: 646
     components:
     - pos: 1.5,-2.5
-      parent: 1668
-      type: Transform
-  - uid: 647
-    components:
-    - pos: -2.5,-2.5
       parent: 1668
       type: Transform
   - uid: 648

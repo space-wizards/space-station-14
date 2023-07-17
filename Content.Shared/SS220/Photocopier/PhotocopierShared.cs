@@ -12,6 +12,14 @@ public enum PhotocopierUiKey : byte
 }
 
 [Serializable, NetSerializable]
+public enum PhotocopierState : byte
+{
+    Idle,
+    Copying,
+    Printing
+}
+
+[Serializable, NetSerializable]
 public sealed class PhotocopierUiState : BoundUserInterfaceState
 {
     public bool IsPaperInserted { get; }
@@ -73,7 +81,32 @@ public sealed class PhotocopierStopMessage : BoundUserInterfaceMessage
 {
 }
 
-[Serializable, NetSerializable]
-public sealed class PhotocopierRefreshUiMessage : BoundUserInterfaceMessage
+public interface IPhotocopiedComponentData
 {
+    public void RestoreFromData(EntityUid uid, Component someComponent);
+}
+
+public interface IPhotocopyableComponent
+{
+    public IPhotocopiedComponentData GetPhotocopiedData();
+}
+
+[Serializable, NetSerializable]
+public sealed class PhotocopyableMetaData
+{
+    public string? EntityName;
+    public string? EntityDescription;
+    public string? PrototypeId;
+}
+
+[Serializable, NetSerializable]
+public enum BurnButtWireKey : byte
+{
+    StatusKey,
+}
+
+[Serializable, NetSerializable]
+public enum SusFormsWireKey : byte
+{
+    StatusKey,
 }

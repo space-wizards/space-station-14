@@ -34,6 +34,9 @@
     {
       "name": "top_paper"
     },
+	    {
+      "name": "no_cover"
+    },
     {
       "name": "printing_paper",
       "delays": [

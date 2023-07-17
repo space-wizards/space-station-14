@@ -82,11 +82,11 @@ public sealed partial class TreeItem : PanelContainer
     public void UpdateIcon()
     {
         if (Body.ChildCount == 0)
-            Icon.Texture = Tree.IconNoChildren;
+            FoldIcon.Texture = Tree.IconNoChildren;
         else
-            Icon.Texture = Expanded ? Tree.IconExpanded : Tree.IconCollapsed;
+            FoldIcon.Texture = Expanded ? Tree.IconExpanded : Tree.IconCollapsed;
 
-        Icon.Modulate = Tree.IconColor;
-        Icon.Visible = Icon.Texture != null || !Tree.HideEmptyIcon;
+        FoldIcon.Modulate = Tree.IconColor;
+        FoldIcon.Visible = FoldIcon.Texture != null || !Tree.HideEmptyIcon;
     }
 }

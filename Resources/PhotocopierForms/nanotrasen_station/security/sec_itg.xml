@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>sec_itg</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormSec</PrototypeId>
   <EntityName>форма НТ-СБ-РОЗ</EntityName>
   <PhotocopierTitle>Постановление о розыске</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-СБ-РОЗ

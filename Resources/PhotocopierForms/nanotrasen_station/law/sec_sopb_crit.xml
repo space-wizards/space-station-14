@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>sec_sopb_crit</FormId>
+  <PrototypeId>PaperNtFormLaw</PrototypeId>
+  <EntityName>форма НТ-СБ-КНСРП</EntityName>
+  <PhotocopierTitle>Сообщение о критическом нарушении</PhotocopierTitle>
+  <Content><![CDATA[Форма НТ-СБ-КНСРП
+Сообщение о критическом нарушении
+Дата: ДЕНЬ/МЕСЯЦ/ГОД
+
+Имя нарушителя (один на бланк): (ПОЛНОЕ ИМЯ)
+Должность нарушителя: (ПОЛНОЕ НАЗВАНИЕ ДОЛЖНОСТИ)
+СРП которые были нарушены:
+Дополнительные сведения:
+
+Место для печати АВД]]></Content>
+</Form>

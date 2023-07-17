@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>sec_dty</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormSec</PrototypeId>
   <EntityName>форма НТ-СБ-ПОД</EntityName>
   <PhotocopierTitle>Приказ о дежурствах</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-СБ-ПОД

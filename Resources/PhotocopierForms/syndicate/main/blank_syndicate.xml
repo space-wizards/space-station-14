@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>blank_syndicate</FormId>
+  <PrototypeId>PaperSyndieForm</PrototypeId>
+  <EntityName>бумага</EntityName>
+  <PhotocopierTitle><![CDATA[Свободный бланк Синд%@#^&]]></PhotocopierTitle>
+  <Content></Content>
+</Form>

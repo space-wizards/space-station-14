@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>cmd_cc_frs</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormCmd</PrototypeId>
   <EntityName>форма НТ-КОМ-ЦК-ЗОБР</EntityName>
   <PhotocopierTitle>Запрос на вызов ОБР</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-КОМ-ЦК-ЗОБР

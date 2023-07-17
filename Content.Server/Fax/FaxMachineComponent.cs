@@ -1,4 +1,5 @@
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.SS220.Photocopier;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -132,31 +133,19 @@ public sealed class FaxMachineComponent : Component
 [DataDefinition]
 public sealed class FaxPrintout
 {
-    [DataField("name", required: true)]
-    public string Name { get; } = default!;
+    [DataField("dataToCopy")]
+    public Dictionary<Type, IPhotocopiedComponentData>? DataToCopy;
 
-    [DataField("content", required: true)]
-    public string Content { get; } = default!;
-
-    [DataField("prototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public string PrototypeId { get; } = default!;
-
-    [DataField("stampState")]
-    public string? StampState { get; }
-
-    [DataField("stampedBy")]
-    public List<string> StampedBy { get; } = new();
+    [DataField("metaData")]
+    public PhotocopyableMetaData? MetaData;
 
     private FaxPrintout()
     {
     }
 
-    public FaxPrintout(string content, string name, string? prototypeId = null, string? stampState = null, List<string>? stampedBy = null)
+    public FaxPrintout(Dictionary<Type, IPhotocopiedComponentData>? dataToCopy, PhotocopyableMetaData? metaData)
     {
-        Content = content;
-        Name = name;
-        PrototypeId = prototypeId ?? "";
-        StampState = stampState;
-        StampedBy = stampedBy ?? new List<string>();
+        DataToCopy = dataToCopy;
+        MetaData = metaData;
     }
 }

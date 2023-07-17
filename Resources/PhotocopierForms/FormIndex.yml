@@ -1,40 +1,67 @@
-nanotrasen_central_command:
-  main:
+- Id: nanotrasen_central_command
+  Groups:
+  - Id: main
     Name: ЦентКом
+    IconPath: /Textures/SS220/DepartmentIcons/Centcom_dep.png
     Forms:
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_evac.xml
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_goal_rep.xml
     - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_shift_end.xml
-nanotrasen_station:
-  command:
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_exec.xml
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_goal.xml
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_hire.xml
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_sitrep.xml
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_sop.xml
+    - /PhotocopierForms/nanotrasen_central_command/main/cc_cmd_dcr_law.xml
+  - Id: blank_сс
+    Name: Свободные бланки ЦентКома
+    IconPath: /Textures/SS220/DepartmentIcons/Centcom_dep.png
+    Forms:
+    - /PhotocopierForms/nanotrasen_central_command/blank/blank_regular_cc.xml
+    - /PhotocopierForms/nanotrasen_central_command/blank/blank_secure_cc.xml
+- Id: nanotrasen_station
+  Groups:
+  - Id: command
     Name: Командование
+    Color: "#5555FFFF"
+    IconPath: /Textures/SS220/DepartmentIcons/Cmd_dep.png
     Forms:
     - /PhotocopierForms/nanotrasen_station/command/cc_req_bonus.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_acap.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_acom.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_acr.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_acwt.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_afe.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_cc_frs.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_cc_goal.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_cc_inv.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_cc_srt.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_dcr_award.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_dsc.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_ept.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_fcom.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_qlf.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_req_id.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_req_pda.xml
-  internal_affairs:
-    Name: Агент Внутренних Дел
+  - Id: hr
+    Name: Отдел кадров
+    Color: "#5555FFFF"
+    IconPath: /Textures/SS220/DepartmentIcons/Cmd_dep.png
     Forms:
-    - /PhotocopierForms/nanotrasen_station/internal_affairs/cmd_comp.xml
-    - /PhotocopierForms/nanotrasen_station/internal_affairs/sec_gop.xml
-    - /PhotocopierForms/nanotrasen_station/internal_affairs/sec_rep_ia.xml
-    - /PhotocopierForms/nanotrasen_station/internal_affairs/sec_sopb.xml
-  security:
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_qlf.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_req_id.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_req_pda.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_afe.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_dsc.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_ept.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_acr.xml
+    - /PhotocopierForms/nanotrasen_station/hr/cmd_acwt.xml
+  - Id: law
+    Name: Юридический отдел
+    Color: "#DD4040FF"
+    IconPath: /Textures/SS220/DepartmentIcons/Law_dep.png
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/law/cmd_comp.xml
+    - /PhotocopierForms/nanotrasen_station/law/sec_gop.xml
+    - /PhotocopierForms/nanotrasen_station/law/sec_rep_ia.xml
+    - /PhotocopierForms/nanotrasen_station/law/sec_sopb.xml
+    - /PhotocopierForms/nanotrasen_station/law/sec_sopb_crit.xml
+  - Id: security
     Name: Служба Безопасности
+    Color: "#DD4040FF"
+    IconPath: /Textures/SS220/DepartmentIcons/Sec_dep.png
     Forms:
     - /PhotocopierForms/nanotrasen_station/security/sec_awt.xml
     - /PhotocopierForms/nanotrasen_station/security/sec_dty.xml
@@ -49,31 +76,67 @@ nanotrasen_station:
     - /PhotocopierForms/nanotrasen_station/security/sec_vdc.xml
     - /PhotocopierForms/nanotrasen_station/security/sec_vdc_gop.xml
     - /PhotocopierForms/nanotrasen_station/security/sup_ord_wep.xml
-  medical:
+    - /PhotocopierForms/nanotrasen_station/security/sec_sitrep.xml
+  - Id: medical
     Name: Медицинский отдел
+    Color: "#8585FFFF"
+    IconPath: /Textures/SS220/DepartmentIcons/Med_dep.png
     Forms:
     - /PhotocopierForms/nanotrasen_station/medical/med_eut.xml
     - /PhotocopierForms/nanotrasen_station/medical/med_ord_chem.xml
     - /PhotocopierForms/nanotrasen_station/medical/med_rcp.xml
     - /PhotocopierForms/nanotrasen_station/medical/med_rep_death.xml
     - /PhotocopierForms/nanotrasen_station/medical/med_rep_psych.xml
-  engineering:
+    - /PhotocopierForms/nanotrasen_station/medical/med_sitrep.xml
+  - Id: engineering
     Name: Инженерный отдел
+    Color: "#FCA503FF"
+    IconPath: /Textures/SS220/DepartmentIcons/Eng_dep.png
     Forms:
     - /PhotocopierForms/nanotrasen_station/engineering/eng_permit.xml
     - /PhotocopierForms/nanotrasen_station/engineering/eng_permit_2.xml
     - /PhotocopierForms/nanotrasen_station/engineering/eng_req_tw.xml
-  science:
+    - /PhotocopierForms/nanotrasen_station/engineering/eng_sitrep.xml
+  - Id: science
     Name: Научный отдел
+    Color: "#AB2EFFFF"
+    IconPath: /Textures/SS220/DepartmentIcons/Sci_dep.png
     Forms:
     - /PhotocopierForms/nanotrasen_station/science/rnd_ord.xml
     - /PhotocopierForms/nanotrasen_station/science/rnd_rnt.xml
-  cargo:
+    - /PhotocopierForms/nanotrasen_station/science/rnd_rar.xml
+    - /PhotocopierForms/nanotrasen_station/science/rnd_ror.xml
+  - Id: cargo
     Name: Отдел снабжения
+    Color: "#C2904AFF"
+    IconPath: /Textures/SS220/DepartmentIcons/Cargo_dep.png
     Forms:
     - /PhotocopierForms/nanotrasen_station/cargo/sup_ord.xml
-  service:
+    - /PhotocopierForms/nanotrasen_station/cargo/sup_ord_dng.xml
+    - /PhotocopierForms/nanotrasen_station/cargo/sup_sitrep.xml
+  - Id: service
     Name: Отдел обслуживания
+    Color: "#81D962FF"
+    IconPath: /Textures/SS220/DepartmentIcons/Serv_dep.png
     Forms:
     - /PhotocopierForms/nanotrasen_station/service/svc_mcf.xml
     - /PhotocopierForms/nanotrasen_station/service/svc_mds.xml
+    - /PhotocopierForms/nanotrasen_station/service/svc_sitrep.xml
+  - Id: blank
+    Name: Свободные бланки
+    IconPath: /Textures/SS220/DepartmentIcons/empty.png
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular.xml
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular_cargo.xml
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular_cmd.xml
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular_eng.xml
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular_med.xml
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular_sci.xml
+    - /PhotocopierForms/nanotrasen_station/blank/blank_regular_sec.xml
+- Id: syndicate
+  Groups:
+  - Id: syndicate
+    Name: "ER%&R"
+    IconPath: /Textures/SS220/DepartmentIcons/empty.png
+    Forms:
+    - /PhotocopierForms/syndicate/main/blank_syndicate.xml

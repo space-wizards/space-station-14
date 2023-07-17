@@ -1,0 +1,6 @@
+- type: wireLayout
+  id: Photocopier
+  dummyWires: 2
+  wires:
+  - !type:PhotocopierSusFormsWireAction
+  - !type:PhotocopierBurnButtWireAction

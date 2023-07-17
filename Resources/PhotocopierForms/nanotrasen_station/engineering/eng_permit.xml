@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>eng_permit</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormEng</PrototypeId>
   <EntityName>форма НТ-ИНЖ-РАЗР-01</EntityName>
   <PhotocopierTitle>Разрешение на строительство</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-ИНЖ-РАЗР-01

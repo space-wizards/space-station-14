@@ -1,0 +1,7 @@
+- type: entity
+  id: CratePhotocopier
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: PhotocopierBase

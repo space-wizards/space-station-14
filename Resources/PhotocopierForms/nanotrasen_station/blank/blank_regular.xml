@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>blank</FormId>
+  <PrototypeId>PaperNtForm</PrototypeId>
+  <EntityName>бумага</EntityName>
+  <PhotocopierTitle>Свободный бланк</PhotocopierTitle>
+  <Content></Content>
+</Form>

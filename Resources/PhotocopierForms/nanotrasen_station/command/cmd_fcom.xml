@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>cmd_fcom</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormCmd</PrototypeId>
   <EntityName>форма НТ-КОМ-УКОМ</EntityName>
   <PhotocopierTitle>Заявление об увольнении Главы отдела</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-КОМ-УКОМ

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>med_eut</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormMed</PrototypeId>
   <EntityName>форма НТ-МЕД-ЭВТ</EntityName>
   <PhotocopierTitle>Запрос на проведение эвтаназии</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-МЕД-ЭВТ

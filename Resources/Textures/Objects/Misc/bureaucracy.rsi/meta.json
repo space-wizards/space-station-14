@@ -311,6 +311,9 @@
     {
       "name": "clipboard-equipped-BELT",
       "directions": 4
+    },
+	{
+      "name": "butt_scan"
     }
   ]
 }

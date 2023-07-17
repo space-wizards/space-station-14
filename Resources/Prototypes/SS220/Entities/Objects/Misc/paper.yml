@@ -2,10 +2,130 @@
   name: paper
   parent: Paper
   id: PaperNtForm
-  description: "A sheet paper with a NanoTrasen logo on it."
+  description: "A sheet of paper with a NanoTrasen logo on it."
   components:
     - type: PaperVisuals
       headerImagePath: "/Textures/SS220/Interface/Paper/nanotrasen_form_header.png"
+      backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 32.0, 16.0, 32.0, 0.0
+
+- type: entity
+  name: paper
+  parent: Paper
+  id: PaperNtFormSec
+  description: "A sheet of paper with a NanoTrasen logo on it. There is a security department label on it."
+  components:
+    - type: PaperVisuals
+      headerImagePath: "/Textures/SS220/Interface/Paper/nanotrasen_sec_form_header.png"
+      backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 32.0, 16.0, 32.0, 0.0
+
+- type: entity
+  name: paper
+  parent: Paper
+  id: PaperNtFormLaw
+  description: "A sheet of paper with a NanoTrasen logo on it. There is a law department label on it."
+  components:
+    - type: PaperVisuals
+      headerImagePath: "/Textures/SS220/Interface/Paper/nanotrasen_law_form_header.png"
+      backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 32.0, 16.0, 32.0, 0.0
+
+- type: entity
+  name: paper
+  parent: Paper
+  id: PaperNtFormSci
+  description: "A sheet of paper with a NanoTrasen logo on it. There is a science department label on it."
+  components:
+    - type: PaperVisuals
+      headerImagePath: "/Textures/SS220/Interface/Paper/nanotrasen_sci_form_header.png"
+      backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 32.0, 16.0, 32.0, 0.0
+
+- type: entity
+  name: paper
+  parent: Paper
+  id: PaperNtFormCmd
+  description: "A sheet of office paper with a NanoTrasen logo on it. There is a command department label on it."
+  components:
+    - type: PaperVisuals
+      headerImagePath: "/Textures/SS220/Interface/Paper/nanotrasen_cmd_form_header.png"
+      backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 32.0, 16.0, 32.0, 0.0
+
+- type: entity
+  name: paper
+  parent: Paper
+  id: PaperNtFormMed
+  description: "A sheet of office paper with a NanoTrasen logo on it. There is a medical department label on it."
+  components:
+    - type: PaperVisuals
+      headerImagePath: "/Textures/SS220/Interface/Paper/nanotrasen_med_form_header.png"
+      backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 32.0, 16.0, 32.0, 0.0
+
+- type: entity
+  name: paper
+  parent: Paper
+  id: PaperNtFormCargo
+  description: "A sheet of office paper with a NanoTrasen logo on it. There is a cargo department label on it."
+  components:
+    - type: PaperVisuals
+      headerImagePath: "/Textures/SS220/Interface/Paper/nanotrasen_cargo_form_header.png"
+      backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 32.0, 16.0, 32.0, 0.0
+
+- type: entity
+  name: paper
+  parent: Paper
+  id: PaperNtFormEng
+  description: "A sheet of office paper with a NanoTrasen logo on it. There is an engineering department label on it."
+  components:
+    - type: PaperVisuals
+      headerImagePath: "/Textures/SS220/Interface/Paper/nanotrasen_eng_form_header.png"
+      backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 32.0, 16.0, 32.0, 0.0
+
+- type: entity
+  name: paper
+  parent: Paper
+  id: PaperNtFormCc
+  description: "A sheet of office paper with a NanoTrasen logo on it. There is a central command label on it."
+  components:
+    - type: PaperVisuals
+      headerImagePath: "/Textures/SS220/Interface/Paper/nanotrasen_cc_form_header.png"
+      backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 32.0, 16.0, 32.0, 0.0
+
+- type: entity
+  name: paper
+  parent: Paper
+  id: PaperNtFormCcSecure
+  description: "A sheet of office paper with a NanoTrasen logo on it. There is a central command label on it."
+  components:
+    - type: PaperVisuals
+      headerImagePath: "/Textures/SS220/Interface/Paper/nanotrasen_cc_secure_form_header.png"
+      backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 32.0, 16.0, 32.0, 0.0
+      
+- type: entity
+  name: paper
+  parent: Paper
+  id: PaperSyndieForm
+  description: "A sheet of office paper. The logo on it looks very suspicious."
+  components:
+    - type: PaperVisuals
+      headerImagePath: "/Textures/SS220/Interface/Paper/syndie_form_header.png"
       backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
       backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
       contentMargin: 32.0, 16.0, 32.0, 0.0

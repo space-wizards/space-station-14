@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>rnd_rnt</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormSci</PrototypeId>
   <EntityName>форма НТ-ИСЛ-ПРС</EntityName>
   <PhotocopierTitle>Признание разумности существа</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-ИСЛ-ПРС

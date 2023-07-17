@@ -10,8 +10,8 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Paper.UI
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class PaperWindow : BaseWindow
+    [GenerateTypedNameReferences, Virtual]
+    public partial class PaperWindow : BaseWindow
     {
         // <summary>
         // Size of resize handles around the paper

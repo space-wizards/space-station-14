@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>blank_med</FormId>
+  <PrototypeId>PaperNtFormMed</PrototypeId>
+  <EntityName>бумага</EntityName>
+  <PhotocopierTitle>Свободный бланк медицинского отдела</PhotocopierTitle>
+  <Content></Content>
+</Form>

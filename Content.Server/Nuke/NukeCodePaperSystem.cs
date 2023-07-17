@@ -5,6 +5,7 @@ using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.SS220.Photocopier;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -61,12 +62,22 @@ namespace Content.Server.Nuke
                     continue;
                 }
 
-                var printout = new FaxPrintout(
-                    paperContent,
-                    Loc.GetString("nuke-codes-fax-paper-name"),
-                    null,
-                    "paper_stamp-cent",
-                    new() { Loc.GetString("stamp-component-stamped-name-centcom") });
+                var dataToCopy = new Dictionary<Type, IPhotocopiedComponentData>();
+                var paperDataToCopy = new PaperPhotocopiedData()
+                {
+                    Content = paperContent,
+                    StampState = "paper_stamp-cent",
+                    StampedBy = new List<string>{Loc.GetString("stamp-component-stamped-name-centcom")}
+                };
+                dataToCopy.Add(typeof(PaperComponent), paperDataToCopy);
+
+                var metaData = new PhotocopyableMetaData()
+                {
+                    EntityName = Loc.GetString("nuke-codes-fax-paper-name"),
+                    PrototypeId = "PaperNtFormCcSecure"
+                };
+
+                var printout = new FaxPrintout(dataToCopy, metaData);
                 _faxSystem.Receive(faxEnt, printout, null, fax);
 
                 wasSent = true;

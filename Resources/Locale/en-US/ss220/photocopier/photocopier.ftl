@@ -1,4 +1,9 @@
+wire-name-photocopier-burn = BGHT
+wire-name-photocopier-contraband = DATA
+
 photocopier-ui-window = Photocopier
+
+photocopier-ui-search-placeholder = Search...
 
 photocopier-ui-toner = Toner:
 photocopier-ui-amount = Amount:
@@ -13,6 +18,9 @@ photocopier-ui-scan-surface-empty = [color=red]empty[/color]
 photocopier-ui-scan-surface-item = [color=lime]got an item[/color]
 photocopier-ui-scan-surface-posterior = [color=orange]got an... item?[/color]
 photocopier-examine-scan-got-item = There is something on the scanner.
+
+photocopier-popup-butt-scan = Photocopier scans the butt on top.
+photocopier-popup-butt-burn = Photocopier burns the butt on top!
 
 photocopier-ui-stop-button = Cancel
 photocopier-ui-eject-button = Eject

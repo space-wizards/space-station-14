@@ -1,4 +1,4 @@
-<!-- // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt -->
+<!-- © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt -->
 
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,18 +10,19 @@
                       Title="{Loc 'photocopier-ui-window'}"
                       Resizable="True"
                       MinSize="550 353"
-                      SetSize="600 353">
+                      SetSize="750 453">
 
     <BoxContainer Orientation="Vertical">
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
             <!-- Tree of form templates -->
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Name="TreeBox" MinWidth="100">
-                <!-- FIX LATER (31.05.2023): FancyTree содержит скролл, но горизонтальный не работает
-                в некоторых случаях после ресайза из-за ReturnMeasure, поэтому заворачиваю еще в один, так вроде всё ок -->
-                <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="2 0 0 0">
-                    <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True"/>
-                </ScrollContainer>
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" MinWidth="100">
+
+                <BoxContainer Margin="5 2 0 0" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Name="TreeBox">
+                    <LineEdit Name="SearchBar" PlaceHolder="{Loc photocopier-ui-search-placeholder}"/>
+                    <fancyTree:FancyTree Name="Tree" Margin="0 2 0 0" VerticalExpand="True" HorizontalExpand="True"/>
+                </BoxContainer>
+
                 <cc:VSeparator StyleClasses="LowDivider" Margin="4 0"/>
             </BoxContainer>
 
@@ -101,15 +102,6 @@
                         Align="End">
 
                         <ui:IconButton
-                            Name="RefreshButton"
-                            Margin="0 0 2 0"
-                            SetWidth="64"
-                            IconTexture="/Textures/SS220/Interface/Misc/alternate-sync.png"
-                            HorizontalExpand="True"
-                            VerticalExpand="True"
-                            ToolTip="{Loc 'photocopier-ui-refresh-button'}"
-                            StyleClasses="OpenRight"/>
-                        <ui:IconButton
                             Name="EjectButton"
                             Margin="0 0"
                             SetWidth="64"
@@ -117,8 +109,7 @@
                             Disabled="True"
                             HorizontalExpand="True"
                             VerticalExpand="True"
-                            ToolTip="{Loc 'photocopier-ui-eject-button'}"
-                            StyleClasses="OpenLeft"/>
+                            ToolTip="{Loc 'photocopier-ui-eject-button'}"/>
                     </BoxContainer>
                 </BoxContainer>
                 <Button Name="CopyButton"

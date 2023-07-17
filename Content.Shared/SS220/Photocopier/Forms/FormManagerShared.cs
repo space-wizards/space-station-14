@@ -12,9 +12,9 @@ public sealed class RequestPhotocopierFormsMessage : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class PhotocopierFormsMessage : EntityEventArgs
 {
-    public Dictionary<string, Dictionary<string, FormGroup>> Data;
+    public List<FormCollection> Data;
 
-    public PhotocopierFormsMessage(Dictionary<string, Dictionary<string, FormGroup>> data)
+    public PhotocopierFormsMessage(List<FormCollection> data)
     {
         Data = data;
     }

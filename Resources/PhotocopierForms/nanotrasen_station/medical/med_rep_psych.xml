@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>med_rep_psych</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormMed</PrototypeId>
   <EntityName>форма НТ-МЕД-ПЗКЛ</EntityName>
   <PhotocopierTitle>Заключение о психологическом здоровье</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-МЕД-ПЗКЛ

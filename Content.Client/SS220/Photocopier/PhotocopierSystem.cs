@@ -10,7 +10,7 @@ public sealed class PhotocopierSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     private readonly PhotocopierCombinedVisualState _fallbackVisualState =
-        new(PhotocopierVisualState.Off, false, false);
+        new(PhotocopierVisualState.Off, false, false, false);
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -83,10 +83,16 @@ public sealed class PhotocopierSystem : EntitySystem
                 SetLayerState(PhotocopierVisualLayers.Led, "led_printing", sprite);
                 SetLayerState(
                     PhotocopierVisualLayers.Top,
-                    visualState.Emagged ? "top_scanning_emagged" : "top_scanning",
+                    visualState.BurnsButts ? "top_scanning_emagged" : "top_scanning",
                     sprite);
                 SetLayerState(PhotocopierVisualLayers.PrintAnim, "printing_paper", sprite);
                 break;
+        }
+
+        if (visualState.State != PhotocopierVisualState.Off && visualState.BurnsButtManually)
+        {
+            SetLayerState(PhotocopierVisualLayers.Led, "led_printing", sprite);
+            SetLayerState(PhotocopierVisualLayers.Top, "top_scanning_emagged", sprite);
         }
 
         if (visualState.GotItem)

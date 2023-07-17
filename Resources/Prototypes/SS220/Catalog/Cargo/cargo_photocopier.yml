@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: CargoPhotocopier
+  icon:
+    sprite: SS220/Structures/Machines/photocopier.rsi
+    state: off
+  product: CratePhotocopier
+  cost: 1250
+  category: Service
+  group: market

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>sec_pmt</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormSec</PrototypeId>
   <EntityName>форма НТ-СБ-РНО</EntityName>
   <PhotocopierTitle>Разрешение на ношение оружия</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-СБ-РНО

@@ -2,6 +2,7 @@
 
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.SS220.Photocopier.Forms;
 
@@ -65,6 +66,11 @@ public sealed class FormGroup
     [DataField("groupId", required: true)]
     public readonly string GroupId = default!;
 
+    [DataField("color", required: true)]
+    public readonly Color Color = default!;
+
+    public readonly string? IconPath;
+
     [DataField("forms")]
     public readonly Dictionary<string, Form> Forms = new();
 
@@ -72,9 +78,30 @@ public sealed class FormGroup
     {
     }
 
-    public FormGroup(string name, string groupId)
+    public FormGroup(string name, string groupId, Color? color, string? iconPath)
     {
         Name = name;
         GroupId = groupId;
+        Color = color ?? Color.White;
+        IconPath = iconPath;
+    }
+}
+
+[Serializable, DataDefinition]
+public sealed class FormCollection
+{
+    [DataField("collectionId", required: true)]
+    public readonly string CollectionId = default!;
+
+    [DataField("groups")]
+    public readonly List<FormGroup> Groups = new();
+
+    private FormCollection()
+    {
+    }
+
+    public FormCollection(string collectionId)
+    {
+        CollectionId = collectionId;
     }
 }

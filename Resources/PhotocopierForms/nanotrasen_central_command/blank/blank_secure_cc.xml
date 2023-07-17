@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form>
+  <FormId>blank_cc_secure</FormId>
+  <PrototypeId>PaperNtFormCcSecure</PrototypeId>
+  <EntityName>бумага</EntityName>
+  <PhotocopierTitle>Свободный бланк ЦентКома 02</PhotocopierTitle>
+  <Content></Content>
+</Form>

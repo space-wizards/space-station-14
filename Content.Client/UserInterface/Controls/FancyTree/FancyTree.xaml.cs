@@ -129,7 +129,7 @@ public sealed partial class FancyTree : Control
         };
 
         Items.Add(item);
-        item.Icon.SetSize = new Vector2(Indentation, Indentation);
+        item.FoldIcon.SetSize = new Vector2(Indentation, Indentation);
         item.Button.OnPressed += (_) => OnPressed(item);
 
         if (parent == null)

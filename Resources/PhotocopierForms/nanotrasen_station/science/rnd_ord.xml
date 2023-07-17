@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>rnd_ord</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormSci</PrototypeId>
   <EntityName>форма НТ-ИСЛ-ЗАК</EntityName>
   <PhotocopierTitle>Заказ на производство продукта</PhotocopierTitle>
   <Content><![CDATA[Форма: НТ-ИСЛ-ЗАК

@@ -2,7 +2,7 @@
 
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
-using Content.Shared.SS220.Photocopier.Forms;
+using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
 using Robust.Shared.Audio;
 
@@ -17,9 +17,18 @@ public sealed class PhotocopierComponent : Component
     public const string TonerSlotId = "TonerCartridge";
 
     /// <summary>
+    /// Minimal time interval between attempts to manually cause photocopier to burn someone's butt.
+    /// Also is the manual butt burn animation duration.
+    /// </summary>
+    [DataField("manualButtBurnDuration")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float ManualButtBurnDuration = 1.0f;
+
+    /// <summary>
     /// Used by the server to determine how long the photocopier stays in the "Printing" state.
     /// </summary>
     [DataField("printingTime")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public float PrintingTime = 2.0f;
 
     /// <summary>
@@ -50,13 +59,7 @@ public sealed class PhotocopierComponent : Component
         };
 
     /// <summary>
-    /// Sound to play when component has been emagged
-    /// </summary>
-    [DataField("emagSound")]
-    public SoundSpecifier EmagSound = new SoundCollectionSpecifier("sparks");
-
-    /// <summary>
-    /// Sound that plays when an emagged photocopier burns someones butt
+    /// Sound that plays when a hacked photocopier burns someones butt
     /// </summary>
     [DataField("buttDamageSound")]
     public SoundSpecifier ButtDamageSound =
@@ -79,36 +82,6 @@ public sealed class PhotocopierComponent : Component
     /// </summary>
     [DataField("tonerSlot", required: true)]
     public ItemSlot TonerSlot = new();
-
-    /// <summary>
-    /// Remaining time of printing
-    /// </summary>
-    [DataField("printingTimeRemaining")]
-    public float PrintingTimeRemaining;
-
-    /// <summary>
-    /// Remaining amount of copies to print
-    /// </summary>
-    [ViewVariables]
-    [DataField("copiesQueued")]
-    public int CopiesQueued;
-
-    /// <summary>
-    /// Whether this photocopier is currently scanning.
-    /// Used by server to unlock the slot after copying and to change appearance.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public bool IsScanning;
-
-    /// <summary>
-    /// Whether this photocopier is currently copying butt.
-    /// Is used by server to determine whether an entity overlap check at the end of the printing is needed.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public bool IsCopyingButt;
-
-    [ViewVariables(VVAccess.ReadOnly)]
-    public bool IsCopyingPhysicalButt;
 
     /// <summary>
     /// Collections of forms available in UI
@@ -136,34 +109,81 @@ public sealed class PhotocopierComponent : Component
     private int _maxQueueLength = 10;
 
     /// <summary>
-    /// Damage dealt to a creature when they try to photocopy their butt on an emagged photocopier.
+    /// Damage dealt to a creature when they try to photocopy their butt on a hacked photocopier.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("emagButtDamage")]
-    public DamageSpecifier? EmagButtDamage;
+    [DataField("buttDamage")]
+    public DamageSpecifier? ButtDamage;
 
-    /// <summary>
-    /// A content that is cached for copying.
-    /// </summary>
-    [ViewVariables]
-    public Form? DataToCopy;
-
-    /// <summary>
-    /// Used by photocopier to determine what to print out as a result of a copy operation
-    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public string? ButtTextureToCopy;
+    [DataField("contrabandFormCollections")]
+    public HashSet<string> ContrabandFormCollections = new();
+
+    /// STATE
 
     /// <summary>
     /// Used by photocopier to determine whether the species on top of the photocopier is the same as it was
     /// without having to fetch the texture every tick.
     /// </summary>
+    [ViewVariables]
     public string? ButtSpecies;
+
+    /// <summary>
+    /// Whether this photocopier currently burns butts or not. Set by WireAction.
+    /// </summary>
+    [DataField("burnsButts")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool BurnsButts = false;
+
+    /// <summary>
+    /// Whether this photocopier currently provides contraband forms or not. Set by WireAction.
+    /// </summary>
+    [DataField("susFormsUnlocked")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool SusFormsUnlocked = false;
+
+    /// <summary>
+    /// Contains fields of components that will be copied.
+    /// Is applied to a new entity that is created as a result of photocopying.
+    /// </summary>
+    [ViewVariables]
+    public Dictionary<Type, IPhotocopiedComponentData>? DataToCopy;
+
+    /// <summary>
+    /// Contains metadata that will be copied.
+    /// Is applied to a new entity that is created as a result of photocopying.
+    /// </summary>
+    public PhotocopyableMetaData? MetaDataToCopy;
 
     /// <summary>
     /// An audio stream of printing sound.
     /// Is saved in a variable so sound can be stopped later.
     /// </summary>
     public IPlayingAudioStream? PrintAudioStream;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public PhotocopierState State = PhotocopierState.Idle;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public EntityUid? EntityOnTop;
+
+    public HumanoidAppearanceComponent? HumanoidAppearanceOnTop;
+
+    /// <summary>
+    /// Remaining time of printing
+    /// </summary>
+    public float PrintingTimeRemaining;
+
+    /// <summary>
+    /// Remaining amount of copies to print
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public int CopiesQueued;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool IsCopyingPhysicalButt;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public float? ManualButtBurnAnimationRemainingTime;
 }
 

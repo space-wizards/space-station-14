@@ -35,13 +35,15 @@ public sealed class PhotocopierCombinedVisualState : ICloneable
 {
     public PhotocopierVisualState State { get; }
     public bool GotItem { get; }
-    public bool Emagged { get; }
+    public bool BurnsButts { get; }
+    public bool BurnsButtManually { get; }
 
-    public PhotocopierCombinedVisualState(PhotocopierVisualState state, bool gotItem, bool emagged)
+    public PhotocopierCombinedVisualState(PhotocopierVisualState state, bool gotItem, bool burnsButts, bool burnsButtManually)
     {
         State = state;
         GotItem = gotItem;
-        Emagged = emagged;
+        BurnsButts = burnsButts;
+        BurnsButtManually = burnsButtManually;
     }
 
     public object Clone() => MemberwiseClone();

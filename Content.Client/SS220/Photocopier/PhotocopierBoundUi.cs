@@ -30,12 +30,6 @@ public sealed class PhotocopierBoundUi : BoundUserInterface
         _window.CopyButtonPressed += OnCopyButtonPressed;
         _window.EjectButtonPressed += OnEjectButtonPressed;
         _window.StopButtonPressed += OnStopButtonPressed;
-        _window.RefreshButtonPressed += OnRefreshButtonPressed;
-    }
-
-    private void OnRefreshButtonPressed()
-    {
-        SendMessage(new PhotocopierRefreshUiMessage());
     }
 
     private void OnPrintButtonPressed(int amount, FormDescriptor descriptor)

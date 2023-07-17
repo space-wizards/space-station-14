@@ -4,7 +4,15 @@
         <ContainerButton Name="Button" Access="Public">
             <BoxContainer Orientation="Horizontal">
                 <Control Name="Padding" Access="Public"/>
-                <TextureRect Name="Icon" Access="Public" Stretch="KeepCentered" Visible="False"/>
+                <TextureRect Name="FoldIcon" Access="Public" Stretch="KeepCentered" Visible="False"/>
+                <TextureRect
+                    Name="Icon"
+                    Margin="2 0 0 0"
+                    Access="Public"
+                    Stretch="Scale"
+                    VerticalExpand="True"
+                    VerticalAlignment="Center"
+                    Visible="False"/>
                 <Label Margin="2 0 2 0" Name="Label" Access="Public"/>
             </BoxContainer>
         </ContainerButton>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>med_rcp</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormMed</PrototypeId>
   <EntityName>форма НТ-МЕД-РЦП</EntityName>
   <PhotocopierTitle>Рецепт</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-МЕД-РЦП

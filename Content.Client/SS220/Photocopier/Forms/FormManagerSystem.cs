@@ -11,16 +11,16 @@ namespace Content.Client.SS220.Photocopier.Forms;
 /// </summary>
 public sealed class FormManager : EntitySystem
 {
-    private Dictionary<string, Dictionary<string, FormGroup>> _collections = new();
+    private List<FormCollection> _collections = new();
     private readonly ISawmill _sawmill = Logger.GetSawmill("form-manager");
 
     /// <summary>
     /// Provides a tree of forms, used by photocopier's UI.
     /// </summary>
     /// <returns>An immutable dictionary of collections, which are represented as immutable dictionaries of FormGroups</returns>
-    public ImmutableDictionary<string, ImmutableDictionary<string, FormGroup>> GetImmutableFormsTree()
+    public ImmutableList<FormCollection> GetImmutableFormsTree()
     {
-        return _collections.ToImmutableDictionary(pair => pair.Key, pair => pair.Value.ToImmutableDictionary());
+        return _collections.ToImmutableList();
     }
 
     /// <inheritdoc/>

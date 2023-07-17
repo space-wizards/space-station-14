@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
   <FormId>cmd_cc_goal</FormId>
-  <PrototypeId>PaperNtForm</PrototypeId>
+  <PrototypeId>PaperNtFormCmd</PrototypeId>
   <EntityName>форма НТ-КОМ-ЦК-ОВЦ</EntityName>
-  <PhotocopierTitle>Отчет о выполнении цели</PhotocopierTitle>
+  <PhotocopierTitle>Отчёт о выполнении цели</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-КОМ-ЦК-ОВЦ
 Отчет о выполнении цели
 Дата: ДЕНЬ/МЕСЯЦ/ГОД
