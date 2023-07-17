@@ -33,10 +33,11 @@ public sealed class RemoveComponent : ReagentEffect
             if (!compFactory.TryGetRegistration(entry, out var registration, true))
             {
                 Logger.Warning("Component '{0}' doesn't exist!", entry);
-                return;
             }
-
-            entityManager.RemoveComponent(uid, registration.Type);
+            else
+            {
+                entityManager.RemoveComponent(uid, registration.Type);
+            }
         }
     }
 }
