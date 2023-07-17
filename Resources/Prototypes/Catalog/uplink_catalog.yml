@@ -169,7 +169,7 @@
   description: uplink-emp-grenade-desc
   productEntity: EmpGrenade
   cost:
-    Telecrystal: 2
+    Telecrystal: 3
   categories:
   - UplinkExplosives
 
