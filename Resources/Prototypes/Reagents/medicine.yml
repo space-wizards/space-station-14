@@ -843,10 +843,12 @@
           min: 5
       - !type:RemoveComponent
         component: ReplacementAccent
+        conditions:
         - !type:ReagentThreshold
           min: 5
       - !type:RemoveComponent
         component: MonkeyAccent
+        conditions:
         - !type:ReagentThreshold
           min: 5
 
