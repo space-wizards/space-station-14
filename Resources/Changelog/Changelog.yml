@@ -1,9 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: Dame Dame coat side sprite fixes, type: Fix}
-  id: 3762
-  time: '2023-05-14T14:21:42.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: added space glue - its sticky and funny! When consumed mutes you and
@@ -2974,3 +2969,12 @@ Entries:
   - {message: The atmos fireaxe and the syndicate fire axe can now pry plating., type: Add}
   id: 4261
   time: '2023-07-17T07:47:20.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: 'Nanotrasen has decided to supply their librarians with the famous game
+      Crypts and Carps'' character sheets, and have advised people to avoid calling
+      it by a similarly named board game that starts with D.', type: Add}
+  - {message: 'You can now put in and take out objects from and into tabletop games
+      (chess, battlemaps, more).', type: Add}
+  id: 4262
+  time: '2023-07-17T09:03:18.0000000+00:00'
