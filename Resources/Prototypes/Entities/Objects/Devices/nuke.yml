@@ -11,7 +11,7 @@
     noRot: true
     state: nuclearbomb_base
   - type: Physics
-    bodyType: Static
+    bodyType: Dynamic
   - type: Fixtures
     fixtures:
       fix1:
@@ -63,8 +63,6 @@
   components:
   - type: Transform
     anchored: false
-  - type: Physics
-    bodyType: Dynamic
 
 - type: entity
   parent: StorageTank
