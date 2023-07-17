@@ -15,6 +15,7 @@
     - trigger:
         !type:DamageTrigger
         damage: 50
+
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -192,9 +193,6 @@
       - id: ClothingShoesWizard
         prob: 0.03
         orGroup: dressermainloot
-      - id: dressersecondloot
-        prob: 0.03
-        orGroup: dressersecondloot
       - id: ClothingOuterDameDane
         prob: 0.03
         orGroup: dressersecondloot
