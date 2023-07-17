@@ -13,7 +13,7 @@ public sealed class TriggerOnMobstateChangeComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField("mobState", required: true)]
-    public MobState MobState = MobState.Alive;
+    public List<MobState> MobState = new();
 
     /// <summary>
     /// If true, prevents suicide attempts for the trigger to prevent cheese.

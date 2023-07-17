@@ -71,6 +71,7 @@ public sealed class PlanetCommand : IConsoleCommand
 
         var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
         gravity.Enabled = true;
+        gravity.Inherent = true;
         _entManager.Dirty(gravity, metadata);
 
         // Day lighting
