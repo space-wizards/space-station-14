@@ -1,4 +1,6 @@
 ﻿using Content.Shared.Actions;
+using Content.Shared.Radio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Implants.Components;
 

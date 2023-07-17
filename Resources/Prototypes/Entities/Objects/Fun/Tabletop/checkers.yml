@@ -1,6 +1,6 @@
 # Uses the chessboard and generic pieces
 - type: entity
-  parent: BaseItem
+  parent: BaseBoardEntity
   id: CheckerBoard
   name: checkerboard
   description: A checkerboard. Pieces included!
@@ -11,35 +11,26 @@
   - type: TabletopGame
     boardName: tabletop-checkers-board-name
     size: 338, 274
-    setup: !type:TabletopCheckerSetup
+    setup:
+      !type:TabletopCheckerSetup
+      boardPrototype: CheckerBoardTabletop
 
 # Checkerboard tabletop item (item only visible in tabletop game)
 - type: entity
   id: CheckerBoardTabletop
   name: checkerboard
+  parent: BaseBoardTabletop
   noSpawn: true
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chessboard_tabletop.rsi
     state: chessboard_tabletop
-    noRot: false
-    drawdepth: FloorTiles
-
-- type: entity
-  id: BaseCheckerPiece
-  parent: BaseItem
-  noSpawn: true
-  components:
-  - type: TabletopDraggable
-  - type: Sprite
-    noRot: true
-  - type: Appearance
 
 # The pieces
 - type: entity
   id: WhiteCheckerPiece
   name: white piece
-  parent: BaseCheckerPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/checker_pieces.rsi
@@ -48,7 +39,7 @@
 - type: entity
   id: WhiteCheckerQueen
   name: white queen
-  parent: BaseCheckerPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/checker_pieces.rsi
@@ -57,7 +48,7 @@
 - type: entity
   id: BlackCheckerPiece
   name: black piece
-  parent: BaseCheckerPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/checker_pieces.rsi
@@ -66,7 +57,7 @@
 - type: entity
   id: BlackCheckerQueen
   name: black queen
-  parent: BaseCheckerPiece
+  parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/checker_pieces.rsi
