@@ -3,3 +3,4 @@ administration-ui-round-tab-start-round = Начать раунд
 administration-ui-round-tab-restart-round = Перезапустить раунд
 administration-ui-round-tab-end-round = Закончить раунд
 administration-ui-round-tab-delay-start = Отложить начало
+administration-ui-round-tab-active-gamerules = Активные Game rules

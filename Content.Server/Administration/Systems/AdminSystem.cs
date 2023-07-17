@@ -1,7 +1,8 @@
 using System.Globalization;
 using System.Linq;
 using Content.Server.Administration.Managers;
-using Content.Server.GameTicking.Events;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.IdentityManagement;
 using Content.Server.Players;
 using Content.Server.Roles;
@@ -20,6 +21,7 @@ namespace Content.Server.Administration.Systems
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
 
         private readonly Dictionary<NetUserId, PlayerInfo> _playerList = new();
 
@@ -29,6 +31,8 @@ namespace Content.Server.Administration.Systems
         public IReadOnlySet<NetUserId> RoundActivePlayers => _roundActivePlayers;
 
         private readonly HashSet<NetUserId> _roundActivePlayers = new();
+
+        private List<GameRuleInfo> _gameRulesList = new();
 
         public override void Initialize()
         {
@@ -42,6 +46,9 @@ namespace Content.Server.Administration.Systems
             SubscribeLocalEvent<RoleAddedEvent>(OnRoleEvent);
             SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
+            SubscribeLocalEvent<GameRuleAddedEvent>(OnGameRuleAdded);
+            SubscribeLocalEvent<GameRuleStartedEvent>(OnGameRuleStarted);
+            SubscribeLocalEvent<GameRuleEndedEvent>(OnGameRuleEnded);
         }
 
         private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
@@ -134,6 +141,8 @@ namespace Content.Server.Administration.Systems
 
             _roundActivePlayers.Add(ev.Player.UserId);
             UpdatePlayerList(ev.Player);
+
+            SendGameRulesList();
         }
 
         public override void Shutdown()
@@ -148,6 +157,21 @@ namespace Content.Server.Administration.Systems
             UpdatePlayerList(e.Session);
         }
 
+        private void OnGameRuleAdded(ref GameRuleAddedEvent ev)
+        {
+            SendGameRulesList();
+        }
+
+        private void OnGameRuleStarted(ref GameRuleStartedEvent ev)
+        {
+            SendGameRulesList();
+        }
+
+        private void OnGameRuleEnded(ref GameRuleEndedEvent ev)
+        {
+            SendGameRulesList();
+        }
+
         private void SendFullPlayerList(IPlayerSession playerSession)
         {
             var ev = new FullPlayerListEvent();
@@ -155,6 +179,18 @@ namespace Content.Server.Administration.Systems
             ev.PlayersInfo = _playerList.Values.ToList();
 
             RaiseNetworkEvent(ev, playerSession.ConnectedClient);
+        }
+
+        private void SendGameRulesList()
+        {
+            var ev = new GameRulesListEvent();
+
+            _gameRulesList = _gameTicker.GetAddedGameRules()
+                .Select(gr => new GameRuleInfo(gr, MetaData(gr).EntityPrototype?.ID ?? string.Empty)).ToList();
+
+            ev.ActiveGameRules = _gameRulesList;
+
+            RaiseNetworkEvent(ev);
         }
 
         private PlayerInfo GetPlayerInfo(IPlayerData data, IPlayerSession? session)

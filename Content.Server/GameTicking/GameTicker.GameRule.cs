@@ -174,6 +174,11 @@ public sealed partial class GameTicker
         }
     }
 
+    public List<CompletionOption> GetActiveGameRulesList()
+    {
+        return GetAddedGameRules().Select(ent => new CompletionOption(ent.ToString(), ToPrettyString(ent))).ToList();
+    }
+
     /// <summary>
     /// Gets all the gamerule entities which are currently active.
     /// </summary>
@@ -255,8 +260,7 @@ public sealed partial class GameTicker
 
     private CompletionResult EndGameRuleCompletions(IConsoleShell shell, string[] args)
     {
-        var opts = GetAddedGameRules().Select(ent => new CompletionOption(ent.ToString(), ToPrettyString(ent))).ToList();
-        return CompletionResult.FromHintOptions(opts, "<added rule>");
+        return CompletionResult.FromHintOptions(GetActiveGameRulesList(), "<added rule>");
     }
 
     [AdminCommand(AdminFlags.Fun)]

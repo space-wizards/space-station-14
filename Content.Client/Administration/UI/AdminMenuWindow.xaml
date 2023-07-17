@@ -3,6 +3,7 @@
     xmlns:adminTab="clr-namespace:Content.Client.Administration.UI.Tabs.AdminTab"
     xmlns:adminbusTab="clr-namespace:Content.Client.Administration.UI.Tabs.AdminbusTab"
     xmlns:atmosTab="clr-namespace:Content.Client.Administration.UI.Tabs.AtmosTab"
+    xmlns:roundTab="clr-namespace:Content.Client.Administration.UI.Tabs.RoundTab"
     xmlns:tabs="clr-namespace:Content.Client.Administration.UI.Tabs"
     xmlns:playerTab="clr-namespace:Content.Client.Administration.UI.Tabs.PlayerTab"
     xmlns:objectsTab="clr-namespace:Content.Client.Administration.UI.Tabs.ObjectsTab">
@@ -10,7 +11,7 @@
         <adminTab:AdminTab />
         <adminbusTab:AdminbusTab />
         <atmosTab:AtmosTab />
-        <tabs:RoundTab />
+        <roundTab:RoundTab />
         <tabs:ServerTab />
         <playerTab:PlayerTab Name="PlayerTabControl" Access="Public" />
         <objectsTab:ObjectsTab Name="ObjectsTabControl" Access="Public" />

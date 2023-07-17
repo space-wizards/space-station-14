@@ -10,6 +10,8 @@ namespace Content.Client.Administration.Systems
     {
         public event Action<List<PlayerInfo>>? PlayerListChanged;
 
+        public event Action<List<GameRuleInfo>>? GameRulesListChanged;
+
         private Dictionary<NetUserId, PlayerInfo>? _playerList;
         public IReadOnlyList<PlayerInfo> PlayerList
         {
@@ -21,6 +23,17 @@ namespace Content.Client.Administration.Systems
             }
         }
 
+        private List<GameRuleInfo>? _gameRulesList;
+        public IReadOnlyList<GameRuleInfo> GameRulesList
+        {
+            get
+            {
+                if (_gameRulesList != null) return _gameRulesList;
+
+                return new List<GameRuleInfo>();
+            }
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -28,6 +41,7 @@ namespace Content.Client.Administration.Systems
             InitializeOverlay();
             SubscribeNetworkEvent<FullPlayerListEvent>(OnPlayerListChanged);
             SubscribeNetworkEvent<PlayerInfoChangedEvent>(OnPlayerInfoChanged);
+            SubscribeNetworkEvent<GameRulesListEvent>(OnGameRulesListChanged);
         }
 
         public override void Shutdown()
@@ -50,6 +64,12 @@ namespace Content.Client.Administration.Systems
         {
             _playerList = msg.PlayersInfo.ToDictionary(x => x.SessionId, x => x);
             PlayerListChanged?.Invoke(msg.PlayersInfo);
+        }
+
+        private void OnGameRulesListChanged(GameRulesListEvent msg)
+        {
+            _gameRulesList = msg.ActiveGameRules;
+            GameRulesListChanged?.Invoke(msg.ActiveGameRules);
         }
     }
 }
