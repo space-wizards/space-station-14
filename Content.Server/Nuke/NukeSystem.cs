@@ -177,7 +177,6 @@ public sealed class NukeSystem : EntitySystem
         if (component.Status == NukeStatus.ARMED)
             return;
 
-        Log.Info("nuke", "error - anchor pressed");
         // manually set transform anchor (bypassing anchorable)
         // todo: it will break pullable system
         var xform = Transform(uid);
