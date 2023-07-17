@@ -51,7 +51,7 @@ public sealed partial class ToolSystem
                 $"{ToPrettyString(args.User):actor} pried {_tileDefinitionManager[tile.Tile.TypeId].Name} at {center}");
         }
 
-        _tile.PryTile(tile);
+        _tile.PryTile(tile, component.Advanced);
     }
 
     private bool TryPryTile(EntityUid toolEntity, EntityUid user, TilePryingComponent component, EntityCoordinates clickLocation)
@@ -71,7 +71,7 @@ public sealed partial class ToolSystem
 
         var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
 
-        if (!tileDef.CanCrowbar)
+        if (!tileDef.CanCrowbar && !(tileDef.CanAxe && component.Advanced))
             return false;
 
         var ev = new TilePryingDoAfterEvent(coordinates);

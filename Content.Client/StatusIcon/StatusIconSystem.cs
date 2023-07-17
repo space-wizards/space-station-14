@@ -53,12 +53,17 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
             _overlay.AddOverlay(new StatusIconOverlay());
     }
 
-    public List<StatusIconData> GetStatusIcons(EntityUid uid)
+    public List<StatusIconData> GetStatusIcons(EntityUid uid, MetaDataComponent? meta = null)
     {
-        if (!Exists(uid) || Terminating(uid))
-            return new();
+        var list = new List<StatusIconData>();
+        if (!Resolve(uid, ref meta))
+            return list;
 
-        var ev = new GetStatusIconsEvent(new());
+        if (meta.EntityLifeStage >= EntityLifeStage.Terminating)
+            return list;
+
+        var inContainer = (meta.Flags & MetaDataFlags.InContainer) != 0;
+        var ev = new GetStatusIconsEvent(list, inContainer);
         RaiseLocalEvent(uid, ref ev);
         return ev.StatusIcons;
     }

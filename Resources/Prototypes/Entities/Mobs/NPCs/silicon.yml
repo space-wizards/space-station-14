@@ -38,7 +38,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleNeutral
   - type: HealthExaminable

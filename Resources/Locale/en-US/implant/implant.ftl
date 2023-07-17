@@ -29,3 +29,8 @@ open-uplink-implant-action-description = Opens the syndicate uplink embedded und
 
 action-name-honk = Honk!
 action-desc-honk = Activates your honking implant, which will produce the signature sound of the clown.
+
+## Implanter Messages
+
+deathrattle-implant-dead-message = {$user} has died at {$position}.
+deathrattle-implant-critical-message = {$user} life signs critical, immediate assistance required at {$position}.

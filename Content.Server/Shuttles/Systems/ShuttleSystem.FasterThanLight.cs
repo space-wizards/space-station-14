@@ -10,6 +10,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using System.Linq;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
@@ -309,12 +310,25 @@ public sealed partial class ShuttleSystem
 
                     if (comp.TargetUid != null && shuttle != null)
                     {
-                        if (comp.Dock)
-                            TryFTLDock(uid, shuttle, comp.TargetUid.Value, comp.PriorityTag);
-                        else
-                            TryFTLProximity(uid, shuttle, comp.TargetUid.Value);
+                        if (!Deleted(comp.TargetUid))
+                        {
+                            if (comp.Dock)
+                                TryFTLDock(uid, shuttle, comp.TargetUid.Value, comp.PriorityTag);
+                            else
+                                TryFTLProximity(uid, shuttle, comp.TargetUid.Value);
 
-                        mapId = Transform(comp.TargetUid.Value).MapID;
+                            mapId = Transform(comp.TargetUid.Value).MapID;
+                        }
+                        // oh boy, fallback time
+                        else
+                        {
+                            // Pick earliest map?
+                            var maps = EntityQuery<MapComponent>().Select(o => o.MapId).ToList();
+                            var map = maps.Min(o => o.GetHashCode());
+
+                            mapId = new MapId(map);
+                            TryFTLProximity(uid, shuttle, _mapManager.GetMapEntityId(mapId));
+                        }
                     }
                     else
                     {

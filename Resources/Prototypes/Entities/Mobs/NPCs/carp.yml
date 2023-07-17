@@ -12,7 +12,7 @@
       blackboard:
         NavSmash: !type:Bool
           true
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - SimpleHostile
     - type: Sprite

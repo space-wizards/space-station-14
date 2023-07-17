@@ -37,6 +37,7 @@
     qualities:
       - Prying
   - type: TilePrying
+    advanced: true
 
 - type: entity
   id: FireAxeFlaming
