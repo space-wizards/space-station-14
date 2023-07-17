@@ -28,6 +28,9 @@ public sealed partial class TechnologyDatabaseComponent : Component
     [DataField("supportedDisciplines", customTypeSerializer: typeof(PrototypeIdListSerializer<TechDisciplinePrototype>))]
     public List<string> SupportedDisciplines = new();
 
+    [DataField("allowUnlimitedTechnoligies"), ViewVariables(VVAccess.ReadWrite)]
+    public bool AllowUnlimitedTechnoligies = true;
+
     /// <summary>
     /// The ids of all the technologies which have been unlocked.
     /// </summary>
