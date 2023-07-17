@@ -172,7 +172,10 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
-    state: peel
+    layers:
+    - state: peel
+    - state: primed
+      shader: unshaded
   - type: Item
     sprite: Objects/Specific/Hydroponics/banana.rsi
     heldPrefix: peel
