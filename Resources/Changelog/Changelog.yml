@@ -1,9 +1,4 @@
 Entries:
-- author: GoodWheatley
-  changes:
-  - {message: Pun Pun has lost PDA privileges., type: Remove}
-  id: 3764
-  time: '2023-05-14T15:38:49.0000000+00:00'
 - author: lzk
   changes:
   - {message: Paper can be attached to closets and lockers, type: Tweak}
@@ -2978,3 +2973,8 @@ Entries:
       Just flavor!', type: Add}
   id: 4263
   time: '2023-07-17T10:02:42.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: Dionas don't starve extremely fast anymore, type: Fix}
+  id: 4264
+  time: '2023-07-17T19:18:12.0000000+00:00'
