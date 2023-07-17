@@ -1,9 +1,4 @@
 Entries:
-- author: Owai-Seek
-  changes:
-  - {message: 'Rotting takes 10 minutes, up from 5.', type: Tweak}
-  id: 3772
-  time: '2023-05-15T15:52:31.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: slime puddles now slow you down by 25%, type: Add}
@@ -2981,3 +2976,13 @@ Entries:
   - {message: Fixed nukies' nuke being anchored., type: Fix}
   id: 4271
   time: '2023-07-17T19:37:34.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'Using cells extracted from a changeling the Syndicate has found a way
+      to safely alter the DNA of their operators, agents can now purchase the DNA
+      scrambler implanter from the uplink.', type: Add}
+  - {message: 'The Syndicate succeeded in making their EMP devices even smaller, agents
+      can now purchase the EMP implanter from the uplink.', type: Add}
+  - {message: EMP grenades are now cheaper to purchase, type: Tweak}
+  id: 4272
+  time: '2023-07-17T19:48:10.0000000+00:00'
