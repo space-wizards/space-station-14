@@ -1,9 +1,4 @@
 Entries:
-- author: Ilya246
-  changes:
-  - {message: Big cardboard boxes no longer choose their driver randomly, type: Tweak}
-  id: 3761
-  time: '2023-05-14T12:46:19.0000000+00:00'
 - author: Jackal298
   changes:
   - {message: Dame Dame coat side sprite fixes, type: Fix}
@@ -2974,3 +2969,8 @@ Entries:
   - {message: Failing to butcher now gives proper player feedback., type: Tweak}
   id: 4260
   time: '2023-07-17T03:54:39.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: The atmos fireaxe and the syndicate fire axe can now pry plating., type: Add}
+  id: 4261
+  time: '2023-07-17T07:47:20.0000000+00:00'
