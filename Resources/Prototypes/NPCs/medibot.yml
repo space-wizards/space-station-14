@@ -14,7 +14,12 @@
         - id: MedibotSpeakPrimitive
         - id: MoveToAccessiblePrimitive
         - id: SetIdleTimePrimitive
-        - id: WaitIdleTimePrimitive
+        - !type:htnPrimitive
+          operator: !type:WaitOperator
+            key: IdleTime
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: IdleTime
         - id: MedibotInjectPrimitive
 
 - type: htnPrimitive

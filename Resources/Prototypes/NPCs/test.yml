@@ -3,13 +3,12 @@
   id: MoveToPathfindPointCompound
   branches:
     - tasks:
-        - id: PickPathfindPointPrimitive
-        - id: MoveToAccessiblePrimitive
+        - !type:htnPrimitive
+          operator: !type:PickPathfindPointOperator
+        - !type:htnPrimitive
+          operator: !type:MoveToOperator
+            pathfindInPlanning: false
 
-
-- type: htnPrimitive
-  id: PickPathfindPointPrimitive
-  operator: !type:PickPathfindPointOperator
 
 - type: entity
   id: MobPathfindDummy

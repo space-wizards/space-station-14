@@ -15,7 +15,11 @@
     - tasks:
         - id: PickAccessibleNearFollowPrimitive
         - id: IdleNearFollowPrimitive
-        - id: RandomIdleTimePrimitive
+        - !type:htnPrimitive
+          operator: !type:RandomOperator
+            targetKey: IdleTime
+            minKey: MinimumIdleTime
+            maxKey: MaximumIdleTime
         - id: WaitFollowPrimitive
 
 
