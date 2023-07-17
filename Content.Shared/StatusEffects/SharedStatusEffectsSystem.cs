@@ -1,12 +1,23 @@
 using System.Linq;
 using Content.Shared.Damage;
+using Content.Shared.Hands;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Item;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
+using Content.Shared.Standing;
 using Content.Shared.StatusEffects.Components;
 using Content.Shared.StatusEffects.Prototypes;
 using Content.Shared.StatusIcon.Components;
+using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -33,13 +44,6 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
         SubscribeLocalEvent<StatusEffectsComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StatusEffectComponent, ComponentStartup>(OnEffectStartup);
-
-        // Event relays down here
-        SubscribeLocalEvent<StatusEffectsComponent, MeleeHitEvent>(RelayEvent);
-        SubscribeLocalEvent<StatusEffectsComponent, BeforeDamageChangedEvent>(RefRelayEvent);
-        SubscribeLocalEvent<StatusEffectsComponent, DamageModifyEvent>(RelayEvent);
-        SubscribeLocalEvent<StatusEffectsComponent, DamageChangedEvent>(RelayEvent);
-        SubscribeLocalEvent<StatusEffectsComponent, GetStatusIconsEvent>(RefRelayEvent);
 
         // InitializeActivation();
         // InitializeEffects();
@@ -137,8 +141,8 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
     public void ModifyEffect(
         EntityUid uid,
-        int newStacks,
-        TimeSpan? newLength = null,
+        int? stacks = null,
+        TimeSpan? length = null,
         EffectModifyMode effectApplyType = EffectModifyMode.Override,
         StatusEffectComponent? comp = null)
     {
@@ -146,42 +150,49 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
             return;
 
         var curTime = Timing.CurTime;
-        newStacks = ModifyStacks(newStacks, comp.MaxStacks);
 
         switch (effectApplyType)
         {
             case EffectModifyMode.Override:
-                comp.Stacks = newStacks;
-                if (newLength != null)
-                    comp.EndTime = curTime + newLength.Value;
+                if (stacks != null)
+                    comp.Stacks = ModifyStacks(stacks.Value, comp.MaxStacks);
+                if (length != null)
+                    comp.EndTime = curTime + length.Value;
                 break;
             case EffectModifyMode.UseStrongest:
-                if (newStacks < comp.Stacks)
+                stacks ??= ModifyStacks(comp.Stacks, comp.MaxStacks);
+                if (stacks < comp.Stacks)
                     break;
-                comp.Stacks = newStacks;
 
-                if (newLength != null && curTime + newLength.Value <= comp.EndTime)
-                    comp.EndTime = curTime + newLength.Value;
+                comp.Stacks = stacks.Value;
+                if (length != null && curTime + length.Value <= comp.EndTime)
+                    comp.EndTime = curTime + length.Value;
                 break;
             case EffectModifyMode.AddTime:
-                if (newLength == null)
+                if (length == null)
                     break;
 
-                if (newStacks > comp.Stacks)
+                stacks ??= ModifyStacks(comp.Stacks, comp.MaxStacks);
+
+                if (stacks > comp.Stacks)
                 {
-                    comp.EndTime = curTime + newLength.Value + (comp.EndTime - curTime) * (comp.Stacks / newStacks);
-                    comp.Stacks = newStacks;
+                    comp.EndTime = curTime + length.Value + (comp.EndTime - curTime) * (comp.Stacks / stacks.Value);
+                    comp.Stacks = stacks.Value;
                 }
                 else
-                    comp.EndTime = curTime + (comp.EndTime - curTime) + newLength.Value * (newStacks / comp.Stacks);
+                    comp.EndTime = curTime + (comp.EndTime - curTime) + length.Value * (stacks.Value / comp.Stacks);
                 break;
             case EffectModifyMode.AddStacks:
-                comp.Stacks = ModifyStacks(comp.Stacks + newStacks, comp.MaxStacks);
+                stacks ??= 1;
+                comp.Stacks = ModifyStacks(comp.Stacks + stacks.Value, comp.MaxStacks);
                 break;
             default:
                 _sawmill.Warning($"'{effectApplyType}'is not an actual apply type.");
                 break;
         }
+
+        if (comp.Stacks <= 0)
+            QueueDel(uid);
     }
 
     private static int ModifyStacks(int stacks, int maxStacks)
@@ -199,7 +210,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
     /// <summary>
     /// Used to relay an event that an entity recieved into it's effects so that the event can be modified by the effects.
     /// </summary>
-    private void RelayEvent<TEvent>(EntityUid uid, StatusEffectsComponent comp, TEvent args)
+    protected void RelayEvent<TEvent>(EntityUid uid, StatusEffectsComponent comp, TEvent args)
     {
         var relayedArgs = new StatusEffectRelayEvent<TEvent>(args, uid);
 
@@ -215,7 +226,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
     /// <summary>
     /// A ref version of RelayEvent, which is used to relay an event that an entity recieved into it's effects.
     /// </summary>
-    private void RefRelayEvent<TEvent>(EntityUid uid, StatusEffectsComponent comp, ref TEvent args)
+    protected void RefRelayEvent<TEvent>(EntityUid uid, StatusEffectsComponent comp, ref TEvent args)
     {
         var relayedArgs = new StatusEffectRelayEvent<TEvent>(args, uid);
 
