@@ -1,11 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: added space glue - its sticky and funny! When consumed mutes you and
-      makes you see rainbows., type: Add}
-  - {message: space glue can now appear in vent clog events. Less lube for you!, type: Add}
-  id: 3763
-  time: '2023-05-14T15:35:11.0000000+00:00'
 - author: GoodWheatley
   changes:
   - {message: Pun Pun has lost PDA privileges., type: Remove}
@@ -2978,3 +2971,10 @@ Entries:
       (chess, battlemaps, more).', type: Add}
   id: 4262
   time: '2023-07-17T09:03:18.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: 'Saline can now be made with water and salt, it can treat dehydration
+      and bloodloss. Salt now makes you dehydrated and no longer fills your belly.
+      Just flavor!', type: Add}
+  id: 4263
+  time: '2023-07-17T10:02:42.0000000+00:00'
