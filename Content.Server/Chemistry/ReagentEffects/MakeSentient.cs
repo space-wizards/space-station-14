@@ -17,12 +17,6 @@ public sealed class MakeSentient : ReagentEffect
         var entityManager = args.EntityManager;
         var uid = args.SolutionEntity;
 
-        // This makes it so it doesn't affect things that are already sentient
-        if (entityManager.HasComponent<MindContainerComponent>(uid))
-        {
-            return;
-        }
-
         // This makes it so it doesn't add a ghost role to things that are already sentient
         if (entityManager.HasComponent<MindContainerComponent>(uid))
         {
