@@ -220,3 +220,7 @@
     canCreateVacuum: true
   - type: OnUseTimerTrigger
     delay: 3 # by canon
+  - type: PointLight
+    radius: 7
+    energy: 3
+    netsync: false
