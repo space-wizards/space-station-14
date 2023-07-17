@@ -77,7 +77,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
-    
+
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterChef
@@ -342,6 +342,7 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
   - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
   - type: Armor
     modifiers:
       coefficients:
