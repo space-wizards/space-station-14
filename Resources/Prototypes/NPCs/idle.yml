@@ -11,8 +11,13 @@
               key: IdleTime
     # Pick a new spot and wait there.
     - tasks:
-        - id: PickAccessiblePrimitive
-        - id: MoveToAccessiblePrimitive
+        - !type:htnPrimitive
+          operator: !type:PickAccessibleOperator
+            rangeKey: IdleRange
+            targetKey: Target
+        - !type:htnPrimitive
+          operator: !type:MoveToOperator
+            pathfindInPlanning: false
         - !type:htnPrimitive
           operator: !type:RandomOperator
             targetKey: IdleTime
@@ -43,8 +48,12 @@
               key: IdleTime
     # Pick a new angle and spin there
     - tasks:
-        - id: PickRandomRotationPrimitive
-        - id: RotateToTargetPrimitive
+        - !type:htnPrimitive
+          operator: !type:PickRandomRotationOperator
+            targetKey: RotateTarget
+        - !type:htnPrimitive
+          operator: !type:RotateToTargetOperator
+            targetKey: RotateTarget
         - !type:htnPrimitive
           operator: !type:RandomOperator
             targetKey: IdleTime

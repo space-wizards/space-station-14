@@ -7,53 +7,49 @@
   branches:
     # Head to follow target
     - tasks:
-        - id: FollowPrimitive
+        - !type:htnPrimitive
+          preconditions:
+            - !type:CoordinatesNotInRangePrecondition
+              targetKey: FollowTarget
+              rangeKey: FollowRange
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+            targetKey: FollowTarget
+            rangeKey: FollowCloseRange
+            removeKeyOnFinish: false
     # Keep idling near follow target
     - tasks:
-        - id: WaitFollowPrimitive
+        - !type:htnPrimitive
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: IdleTime
+            - !type:CoordinatesInRangePrecondition
+              targetKey: FollowTarget
+              rangeKey: FollowRange
+          operator: !type:WaitOperator
+            key: IdleTime
     # Pick a new idle spot near the follow target
     - tasks:
-        - id: PickAccessibleNearFollowPrimitive
-        - id: IdleNearFollowPrimitive
+        - !type:htnPrimitive
+          operator: !type:PickAccessibleOperator
+            # originKey: FollowTarget
+            rangeKey: FollowCloseRange
+            targetKey: FollowIdleTarget
+        - !type:htnPrimitive
+          operator: !type:MoveToOperator
+            targetKey: FollowIdleTarget
         - !type:htnPrimitive
           operator: !type:RandomOperator
             targetKey: IdleTime
             minKey: MinimumIdleTime
             maxKey: MaximumIdleTime
-        - id: WaitFollowPrimitive
+        - !type:htnPrimitive
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: IdleTime
+            - !type:CoordinatesInRangePrecondition
+              targetKey: FollowTarget
+              rangeKey: FollowRange
+          operator: !type:WaitOperator
+            key: IdleTime
 
-
-- type: htnPrimitive
-  id: WaitFollowPrimitive
-  operator: !type:WaitOperator
-    key: IdleTime
-  preconditions:
-    - !type:KeyExistsPrecondition
-      key: IdleTime
-    - !type:CoordinatesInRangePrecondition
-      targetKey: FollowTarget
-      rangeKey: FollowRange
-
-- type: htnPrimitive
-  id: PickAccessibleNearFollowPrimitive
-  operator: !type:PickAccessibleOperator
-    # originKey: FollowTarget
-    rangeKey: FollowCloseRange
-    targetKey: FollowIdleTarget
-
-- type: htnPrimitive
-  id: IdleNearFollowPrimitive
-  operator: !type:MoveToOperator
-    targetKey: FollowIdleTarget
-
-- type: htnPrimitive
-  id: FollowPrimitive
-  operator: !type:MoveToOperator
-    pathfindInPlanning: true
-    targetKey: FollowTarget
-    rangeKey: FollowCloseRange
-    removeKeyOnFinish: false
-  preconditions:
-    - !type:CoordinatesNotInRangePrecondition
-      targetKey: FollowTarget
-      rangeKey: FollowRange

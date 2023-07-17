@@ -48,7 +48,10 @@
 #    #      maxPercent: 0.0
 #    # Discard gun if no ammo
 #    - tasks:
-#        - id: DiscardActiveHandPrimitive
+#        - !type:htnPrimitive
+#           preconditions:
+#           - !type:ActiveHandEntityPrecondition
+#           operator: !type:DropOperator
 #      preconditions:
 #        - !type:ActiveHandComponentPrecondition
 #          components:
