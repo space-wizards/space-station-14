@@ -224,3 +224,6 @@
     radius: 7
     energy: 3
     netsync: false
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/hallelujah.ogg
