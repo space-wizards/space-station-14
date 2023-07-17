@@ -30,4 +30,4 @@
     - type: Faction
       factions:
         - NanoTrasen
-    - type: Pacifist # Corvax-DionaPacifist
+    # - type: Pacifist # Corvax-DionaPacifist
