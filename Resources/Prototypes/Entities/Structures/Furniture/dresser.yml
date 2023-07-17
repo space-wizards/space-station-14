@@ -265,9 +265,6 @@
       - id: ClothingUniformJumpskirtJanimaidmini
         prob: 0.005
         orGroup: dressermainloot
-      - id: ClothingBeltSuspenders
-        prob: 0.005
-        orGroup: dresserbeltloot
       - id: ClothingNeckScarfStripedSyndieRed
         prob: 0.005
         orGroup: dressermainloot
