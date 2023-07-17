@@ -606,6 +606,22 @@
         amount: -0.5
 
 - type: reagent
+  id: Saline
+  name: reagent-name-saline
+  group: Medicine
+  desc: reagent-desc-saline
+  physicalDesc: reagent-physical-desc-salty
+  flavor: salty
+  color: "#0064C8"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 6
+        - !type:ModifyBloodLevel
+          amount: 6
+
+- type: reagent
   id: Siderlac
   name: reagent-name-siderlac
   group: Medicine
