@@ -5,8 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.ReagentEffects;
 
 /// <summary>
-/// Removes designated component.
-/// You can apply this effect to the same reagent multiple times for multiple components and it'll still work.
+/// Removes designated component or components.
 /// </summary>
 [UsedImplicitly]
 public sealed class RemoveComponent : ReagentEffect
@@ -14,11 +13,11 @@ public sealed class RemoveComponent : ReagentEffect
     /// <summary>
     /// Name of component to remove, as a string
     /// Note: component name shouldn't have the "component" postfix
-    /// WRONG: [component: ReplacementAccentComponent]
-    /// RIGHT: [component: ReplacementAccent]
+    /// WRONG: [- ReplacementAccentComponent]
+    /// RIGHT: [- ReplacementAccent]
     /// </summary>
-    [DataField("component")]
-    public string Component = String.Empty;
+    [DataField("components")]
+    public HashSet<string> Components = new();
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-remove-component", ("chance", Probability));
@@ -29,12 +28,15 @@ public sealed class RemoveComponent : ReagentEffect
         var entityManager = args.EntityManager;
         var uid = args.SolutionEntity;
 
-        if (!compFactory.TryGetRegistration(Component, out var registration, true))
+        foreach (var entry in Components)
         {
-            Logger.Warning("Component '{0}' doesn't exist!", Component);
-            return;
-        }
+            if (!compFactory.TryGetRegistration(entry, out var registration, true))
+            {
+                Logger.Warning("Component '{0}' doesn't exist!", entry);
+                return;
+            }
 
-        entityManager.RemoveComponent(uid, registration.Type);
+            entityManager.RemoveComponent(uid, registration.Type);
+        }
     }
 }
