@@ -11,8 +11,9 @@
     starvationDamage:
       types:
         Bloodloss: 0.5
+    baseDecayRate: 2.0
   - type: Thirst
-    baseDecayRate: 0.3
+    baseDecayRate: 2.0
   - type: Icon
     sprite: Mobs/Species/Diona/parts.rsi
     state: full
