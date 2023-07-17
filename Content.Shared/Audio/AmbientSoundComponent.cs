@@ -50,4 +50,7 @@ public sealed class AmbientSoundComponentState : ComponentState
     public bool Enabled { get; init; }
     public float Range { get; init; }
     public float Volume { get; init; }
+    // Begin Nyano-code: allow changing of SoundSpecifier.
+    public SoundSpecifier Sound { get; init; } = default!;
+    // End Nyano-code.
 }
