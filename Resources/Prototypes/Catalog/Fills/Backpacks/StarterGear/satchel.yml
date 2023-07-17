@@ -225,7 +225,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackSatchel # need to sprite mime's satchel
+  parent: ClothingBackpackSatchelMime
   id: ClothingBackpackSatchelMimeFilled
   components:
   - type: StorageFill
