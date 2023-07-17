@@ -843,8 +843,12 @@
           min: 5
       - !type:RemoveComponent
         component: ReplacementAccent
+        - !type:ReagentThreshold
+          min: 5
       - !type:RemoveComponent
         component: MonkeyAccent
+        - !type:ReagentThreshold
+          min: 5
 
 - type: reagent
   id: Ethyloxyephedrine
