@@ -25,12 +25,11 @@ public sealed class RemoveComponent : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
+        var compFactory = IoCManager.Resolve<IComponentFactory>();
         var entityManager = args.EntityManager;
         var uid = args.SolutionEntity;
-        // TODO: This is hot garbage (allegedly) and probably needs an engine change to not be a POS. Allegedly.
-        var _compFactory = IoCManager.Resolve<IComponentFactory>();
 
-        if (!_compFactory.TryGetRegistration(Component, out var registration, true))
+        if (!compFactory.TryGetRegistration(Component, out var registration, true))
         {
             Logger.Warning("Component '{0}' doesn't exist!", Component);
             return;
