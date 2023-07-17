@@ -2,7 +2,7 @@
   name: t-ray scanner
   parent: BaseItem
   id: trayScanner
-  description: A high-tech scanning device that uses T-rays (terahertz radiation) to detect and analyze objects.
+  description: A high-tech scanning device that uses Terahertz Radiation to detect subfloor objects.
   components:
   - type: Sprite
     sprite: Objects/Tools/t-ray.rsi
