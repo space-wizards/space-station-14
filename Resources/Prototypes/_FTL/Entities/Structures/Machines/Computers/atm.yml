@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseComputer
-  id: ComputerATM
+  id: ComputerVAM
   name: vault access machine
   description: The vault access machine (VAM) is used to siphon and deposit credits into secure accounts which can be used for cargo purposes, or general storage.
   components:
@@ -8,13 +8,64 @@
       noRot: true
       sprite: _FTL/Structures/Machines/atm.rsi
       layers:
-      - map: ["computerLayerBody"]
-        state: icon
-      - map: ["computerLayerScreen"]
-        state: unshaded
+        - map: ["computerLayerBody"]
+          state: icon
+        - map: ["computerLayerScreen"]
+          state: unshaded
     - type: NoAnchor
     - type: ExtensionCableReceiver
     - type: OutpostATM
+    - type: PointLight
+      radius: 0.8
+      energy: 0.5
+      color: "#b53ca1"
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerATM
+  name: automated teller machine
+  description: It's an ATM! You put your ID in and other stuff...
+  components:
+    - type: Sprite
+      noRot: true
+      sprite: _FTL/Structures/Machines/atm.rsi
+      layers:
+        - map: ["computerLayerBody"]
+          state: icon
+        - map: ["computerLayerScreen"]
+          state: unshaded
+    - type: NoAnchor
+    - type: IdAtm
+      moneySlot:
+        name: Credits
+        ejectSound: /Audio/Machines/id_swipe.ogg
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        whitelist:
+          tags:
+            - Credit
+      idSlot:
+        priority: 1
+        name: ID card
+        ejectSound: /Audio/Machines/id_swipe.ogg
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        whitelist:
+          components:
+            - IdCard
+    - type: EmitSoundOnUIOpen
+      sound:
+        collection: Keyboard
+    - type: ContainerContainer
+      containers:
+        board: !type:Container
+        Money-Slot: !type:ContainerSlot {}
+        Id-Slot: !type:ContainerSlot {}
+    - type: ItemSlots
+    - type: ActivatableUI
+      key: enum.IdAtmUiKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.IdAtmUiKey.Key
+          type: IdAtmBoundUserInterface
     - type: PointLight
       radius: 0.8
       energy: 0.5

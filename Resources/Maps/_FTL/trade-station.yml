@@ -4644,7 +4644,7 @@ entities:
     - pos: 5.534777,12.445309
       parent: 2
       type: Transform
-- proto: ComputerATM
+- proto: ComputerVAM
   entities:
   - uid: 737
     components:

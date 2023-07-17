@@ -1,9 +1,9 @@
-namespace Content.Server._FTL.OutpostATM;
+namespace Content.Server._FTL.Economy;
 
 /// <summary>
 /// This is used for tracking credits
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(EconomySystem))]
 public sealed class CreditComponent : Component
 {
 

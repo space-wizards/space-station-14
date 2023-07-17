@@ -1,0 +1,79 @@
+<controls:FancyWindow
+                             xmlns="https://spacestation14.io"
+                             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                             Margin="1 0 2 0"
+                             SetSize="450 360"
+                             MaxSize="450 360"
+                             Title="{Loc 'credit-app-ui-title'}"
+                             Resizable="False">
+    <!-- <PanelContainer StyleClasses="BackgroundDark"></PanelContainer> -->
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" Name="NoIdCard" Visible="False" MaxWidth="350" HorizontalAlignment="Center" HorizontalExpand="True" VerticalExpand="True" Margin="0 5 0 5">
+            <RichTextLabel Name="NoIdCardMessage"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical" Name="PinScreen" Visible="False" MaxWidth="350" HorizontalAlignment="Center" HorizontalExpand="True" VerticalExpand="True" Margin="0 5 0 5">
+            <RichTextLabel Name="LockedIdCardMessage"/>
+            <LineEdit Name="PinEdit" MaxWidth="250" />
+            <Button Name="RequestUnlock" Text="{Loc 'credit-app-ui-generic-unlock'}" Disabled="True" MaxWidth="250" VerticalAlignment="Center" Margin="4"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical" Visible="False" Name="WithIdCard" MaxWidth="350" HorizontalAlignment="Center" HorizontalExpand="True" VerticalExpand="True" Margin="0 5 0 5">
+            <RichTextLabel Name="WelcomeMessage"/>
+            <Control MinHeight="2" />
+            <PanelContainer StyleClasses="LowDivider" />
+            <Control MinHeight="2" />
+            <!-- Requests -->
+            <BoxContainer Orientation="Vertical" Name="RequestMenu" HorizontalExpand="True" VerticalExpand="True" HorizontalAlignment="Center">
+                <Label Text="{Loc 'credit-app-ui-request-message'}"/>
+                <!-- <PanelContainer MinHeight="10"/> -->
+                <Button Name="RequestWithdraw" Text="{Loc 'credit-app-ui-withdraw-button-message'}" MaxWidth="250" VerticalAlignment="Center" Margin="4"/>
+                <Button Name="RequestDeposit" Text="{Loc 'credit-app-ui-deposit-button-message'}" MaxWidth="250" VerticalAlignment="Center" Margin="4"/>
+                <Button Name="RequestLock" Text="{Loc 'credit-app-ui-generic-lock'}" MaxWidth="250" VerticalAlignment="Center" Margin="4"/>
+                <Button Name="RequestPinChange" Text="{Loc 'credit-app-ui-change-pin-button-message'}" MaxWidth="250" VerticalAlignment="Center" Margin="4"/>
+            </BoxContainer>
+
+            <!-- PIN Change -->
+            <BoxContainer Orientation="Vertical" Name="CPinScreen" Visible="False" HorizontalAlignment="Center" HorizontalExpand="True" VerticalExpand="True" Margin="0 5 0 5">
+                <RichTextLabel Name="CPinMessage"/>
+                <LineEdit Name="CPinEdit" MaxWidth="250" />
+                <Button Name="CPinChange" Text="{Loc 'credit-app-ui-generic-confirm'}" Disabled="True" MaxWidth="250" VerticalAlignment="Center" Margin="4"/>
+            </BoxContainer>
+
+            <!-- Withdraw -->
+            <BoxContainer Orientation="Vertical" Name="WithdrawMenu" Visible="False" HorizontalExpand="True" VerticalExpand="True" HorizontalAlignment="Center">
+                <SliderIntInput Name="AmountEdit" MinWidth="300" MinValue="0" MaxValue="0" />
+                <Button Name="WithdrawButton" Text="{Loc 'credit-app-ui-withdraw-button-message'}" MaxWidth="250" VerticalAlignment="Center" Margin="4"/>
+                <Button Name="CancelWithdrawal" Text="{Loc 'credit-app-ui-generic-cancel'}" MaxWidth="250" VerticalAlignment="Center" Margin="4"/>
+            </BoxContainer>
+
+            <!-- ConfirmWithdraw -->
+            <BoxContainer Orientation="Vertical" Name="ConfirmWithdrawMenu" Visible="False" HorizontalExpand="True" VerticalExpand="True" HorizontalAlignment="Center">
+                <RichTextLabel Name="ConfirmWithdrawalMessage"/>
+                <Button Name="ConfirmWithdrawButton" Text="{Loc 'credit-app-ui-withdraw-button-message'}" MaxWidth="250" VerticalAlignment="Center" Margin="4"/>
+                <Button Name="ConfirmCancelWithdrawal" Text="{Loc 'credit-app-ui-generic-cancel'}" MaxWidth="250" VerticalAlignment="Center" Margin="4"/>
+            </BoxContainer>
+
+            <!-- Deposit -->
+            <BoxContainer Orientation="Vertical" Name="DepositMenu" Visible="False" HorizontalExpand="True" VerticalExpand="True" HorizontalAlignment="Center">
+                <RichTextLabel Name="DepositWarning"/>
+                <Button Name="DepositButton" Text="{Loc 'credit-app-ui-deposit-button-message'}" MaxWidth="250" VerticalAlignment="Center" Margin="4"/>
+                <Button Name="CancelDeposit" Text="{Loc 'credit-app-ui-generic-cancel'}" MaxWidth="250" VerticalAlignment="Center" Margin="4"/>
+            </BoxContainer>
+
+            <!-- Success -->
+            <BoxContainer Orientation="Vertical" Name="SuccessMenu" Visible="False" HorizontalExpand="True" VerticalExpand="True" HorizontalAlignment="Center">
+                <RichTextLabel Name="SuccessMenuLabel"/>
+                <Button Name="CloseSuccessMenu" Text="{Loc 'credit-app-ui-generic-close'}" HorizontalExpand="True" VerticalAlignment="Center" Margin="4"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+    <!-- flavor -->
+    <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
+        <PanelContainer StyleClasses="LowDivider" />
+        <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+            <Label Text="{Loc 'credit-app-ui-flavor-text-left'}" StyleClasses="WindowFooterText"
+                   HorizontalAlignment="Left" HorizontalExpand="True"  Margin="0 0 5 0" />
+            <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                         VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

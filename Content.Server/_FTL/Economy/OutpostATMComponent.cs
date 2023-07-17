@@ -1,9 +1,11 @@
-namespace Content.Server._FTL.OutpostATM;
+using Content.Server._FTL.Economy;
+
+namespace Content.Server._FTL.Economy;
 
 /// <summary>
 /// This is used for tracking outpost ATMs
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(EconomySystem))]
 public sealed class OutpostATMComponent : Component
 {
     /// <summary>
