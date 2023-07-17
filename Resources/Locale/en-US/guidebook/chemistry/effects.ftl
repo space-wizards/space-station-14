@@ -327,6 +327,12 @@ reagent-effect-guidebook-innoculate-zombie-infection =
         *[other] cure
     } an ongoing zombie infection, and provides immunity to future infections
 
+reagent-effect-guidebook-remove-component =
+    { $chance ->
+        [1] Removes
+        *[other] remove
+    } a component
+
 reagent-effect-guidebook-missing =
     { $chance ->
         [1] Causes

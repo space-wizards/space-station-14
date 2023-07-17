@@ -27,7 +27,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         public string Component = String.Empty;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-            => null;
+            => Loc.GetString("reagent-effect-guidebook-remove-component", ("chance", Probability), ("component", Component));
 
         public override void Effect(ReagentEffectArgs args)
         {
