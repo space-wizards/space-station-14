@@ -119,12 +119,13 @@
 - type: weightedRandom
   id: FTLPoints
   weights:
-    StationPoint: 0.5
-    NoDangerPoint: 1
     LoDangerPoint: 7
+    ConfDangerPoint: 5
     HiDangerPoint: 3
-    ConfDangerPoint: 0.5
+    NoDangerPoint: 1
     StarPoint: 1
     PlanetPoint: 1
+    AsteroidPoint: 0.5
+    StationPoint: 0.5
     MoonPoint: 0.25
     RuinPoint: 0.15
