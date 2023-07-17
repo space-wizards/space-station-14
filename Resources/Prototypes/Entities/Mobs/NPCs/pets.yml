@@ -86,7 +86,7 @@
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - PetsNT
   - type: HTN
@@ -104,7 +104,7 @@
   parent: MobCatCalico
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - PetsNT
   - type: Grammar
@@ -477,7 +477,7 @@
   id: MobSpiderShiva
   description: The first defender of the station.
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - PetsNT
   - type: Sprite

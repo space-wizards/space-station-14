@@ -1,63 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: Health Analyzer's that run out of power/don't have a power cell in them
-      will turn off and their screen will go black until a power cell with power is
-      inserted again, type: Tweak}
-  id: 3751
-  time: '2023-05-13T16:28:11.0000000+00:00'
-- author: Interrobang01
-  changes:
-  - {message: 'Kelotane can now cause an overdose above 30u, greatly decreasing the
-      body''s ability to retain water.', type: Tweak}
-  id: 3752
-  time: '2023-05-13T21:18:06.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Added suit storage units, for storing EVA-capable suits.', type: Add}
-  - {message: 'Most lockers with space suits no longer contain them, in lieu of suit
-      storage units.', type: Tweak}
-  id: 3753
-  time: '2023-05-14T01:36:47.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The RPED can now quickly pick up machine parts on the ground like a
-      trashbag., type: Tweak}
-  id: 3754
-  time: '2023-05-14T02:14:38.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added the proto-kinetic crusher for salvagers., type: Add}
-  id: 3755
-  time: '2023-05-14T03:15:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix docked grids failing to split., type: Fix}
-  id: 3756
-  time: '2023-05-14T03:29:50.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Reduced FTL time from 30s to 20s and FTL cooldown from 30s to 10s.,
-    type: Tweak}
-  - {message: Arrivals turnaround reduced from 90s to 50s., type: Tweak}
-  id: 3757
-  time: '2023-05-14T08:00:36.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Caves now have crystals in them., type: Add}
-  id: 3758
-  time: '2023-05-14T11:38:54.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Arrivals will auto-orient your camera upon traversal., type: Add}
-  id: 3759
-  time: '2023-05-14T11:46:29.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Secret''s gamemode weights have been tweaked. Zombies are now much
-      more common, and nuclear emergency is twice as rare.', type: Tweak}
-  id: 3760
-  time: '2023-05-14T12:09:03.0000000+00:00'
 - author: Ilya246
   changes:
   - {message: Big cardboard boxes no longer choose their driver randomly, type: Tweak}
@@ -2967,3 +2908,69 @@ Entries:
       the uplink.', type: Add}
   id: 4250
   time: '2023-07-14T04:48:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: All bounties will last for at least 10 to 15 minutes., type: Tweak}
+  id: 4251
+  time: '2023-07-15T18:15:12.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: Nanotrasen released a new software update for their medibots making
+      them actually inject people again. They also got equipped with new wheels that
+      can be locked with a wrench., type: Tweak}
+  id: 4252
+  time: '2023-07-15T19:59:46.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: Make minibomb a little louder., type: Tweak}
+  id: 4253
+  time: '2023-07-16T01:59:10.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Quartermaster airlock now has command sprite, type: Tweak}
+  id: 4254
+  time: '2023-07-16T02:21:32.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: In an effort to reduce the amount of manpower lost during Syndicate
+      missions operators can now order deathrattle implants from the uplink. These
+      implants send your coordinates to the syndicate radio when going into a critical
+      state and upon dying., type: Add}
+  - {message: Tracking implants now relay the location of an implanted person to the
+      security channel when they go into a critical state., type: Tweak}
+  id: 4255
+  time: '2023-07-16T02:59:47.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: fixed chameleon menu not working, type: Fix}
+  id: 4256
+  time: '2023-07-16T07:04:51.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Dwarves now have access to all the same tattoos that humans do., type: Tweak}
+  id: 4257
+  time: '2023-07-16T07:05:31.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added collectible toy figurines based on the jobs & legends surrounding
+      the station. Find them in your local Good Clean Fun vendor today!, type: Add}
+  id: 4258
+  time: '2023-07-16T07:07:47.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added instrument bands. Choose a person as your band "leader" and your
+      instrument playback will be synced with them! You can even become a one-man
+      band by playing multiple instruments at once and syncing them together., type: Add}
+  - {message: 'Added MIDI channel filtering to instruments. You can now choose which
+      channels your instrument will play! Useful with instrument bands, so each person
+      can play a different "track" of the song, if the MIDI file supports it.', type: Add}
+  - {message: Fixed some cases where custom instruments (such as the gilded bike horn)
+      would sound like a piano instead., type: Fix}
+  - {message: Fixed user soundfonts not being loaded., type: Fix}
+  id: 4259
+  time: '2023-07-16T19:12:53.0000000+00:00'
+- author: Partmedia
+  changes:
+  - {message: Failing to butcher now gives proper player feedback., type: Tweak}
+  id: 4260
+  time: '2023-07-17T03:54:39.0000000+00:00'
