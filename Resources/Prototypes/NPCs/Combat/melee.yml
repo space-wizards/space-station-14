@@ -8,7 +8,8 @@
         - !type:htnPrimitive
           operator: !type:UtilityOperator
             proto: NearbyMeleeTargets
-        - id: MeleeAttackTargetCompound
+        - !type:htnCompound
+          task: MeleeAttackTargetCompound
 
 # Tries to melee attack our target.
 - type: htnCompound

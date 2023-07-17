@@ -3,32 +3,41 @@
   id: SimpleHostileCompound
   branches:
     - tasks:
-        - id: MeleeCombatCompound
+        - !type:htnCompound
+          task: MeleeCombatCompound
     - tasks:
-        - id: IdleCompound
+        - !type:htnCompound
+          task: IdleCompound
 
 - type: htnCompound
   id: MouseCompound
   branches:
     - tasks:
-        - id: FoodCompound
+        - !type:htnCompound
+          task: FoodCompound
     - tasks:
-        - id: IdleCompound
+        - !type:htnCompound
+          task: IdleCompound
 
 - type: htnCompound
   id: RuminantCompound
   branches:
   - tasks:
-    - id: FoodCompound
+    - !type:htnCompound
+      task: FoodCompound
   - tasks:
-    - id: IdleCompound
+    - !type:htnCompound
+      task: IdleCompound
 
 - type: htnCompound
   id: DragonCarpCompound
   branches:
     - tasks:
-        - id: MeleeCombatCompound
+        - !type:htnCompound
+          task: MeleeCombatCompound
     - tasks:
-        - id: FollowCompound
+        - !type:htnCompound
+          task: FollowCompound
     - tasks:
-        - id: IdleCompound
+        - !type:htnCompound
+          task: IdleCompound

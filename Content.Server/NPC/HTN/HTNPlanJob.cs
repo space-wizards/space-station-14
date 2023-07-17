@@ -117,6 +117,12 @@ public sealed class HTNPlanJob : Job<HTNPlan>
             return null;
         }
 
+        // TODO:
+        // Don't use the primitives as a "finalPlan"
+        // Use the BTR
+        // Once we determine it's valid then derive the actual tasks (decomposing compound but keeping others).
+        // then get that sauce.
+
         var branchTraversalRecord = decompHistory.Reverse().Select(o => o.BranchTraversal).ToList();
 
         return new HTNPlan(finalPlan, branchTraversalRecord, appliedStates);
