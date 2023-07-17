@@ -1,10 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: 'Secret''s gamemode weights have been tweaked. Zombies are now much
-      more common, and nuclear emergency is twice as rare.', type: Tweak}
-  id: 3760
-  time: '2023-05-14T12:09:03.0000000+00:00'
 - author: Ilya246
   changes:
   - {message: Big cardboard boxes no longer choose their driver randomly, type: Tweak}
@@ -2975,3 +2969,8 @@ Entries:
   - {message: Fixed user soundfonts not being loaded., type: Fix}
   id: 4259
   time: '2023-07-16T19:12:53.0000000+00:00'
+- author: Partmedia
+  changes:
+  - {message: Failing to butcher now gives proper player feedback., type: Tweak}
+  id: 4260
+  time: '2023-07-17T03:54:39.0000000+00:00'
