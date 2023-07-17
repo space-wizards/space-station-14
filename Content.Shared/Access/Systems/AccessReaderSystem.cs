@@ -83,7 +83,7 @@ namespace Content.Shared.Access.Systems
         public bool IsAllowed(EntityUid source, EntityUid target, AccessReaderComponent? reader = null)
         {
             var ev = new GetRequiredAccessEvent();
-            RaiseLocalEvent(target, ref ev);
+            RaiseLocalEvent(target, ev);
 
             if (!ev.Handled && Resolve(target, ref reader, false))
                 ev.Access = reader;

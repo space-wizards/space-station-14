@@ -60,7 +60,6 @@ public sealed class AccessReaderComponentState : ComponentState
     }
 }
 
-[ByRefEvent]
 public sealed class GetRequiredAccessEvent : HandledEntityEventArgs
 {
     public AccessReaderComponent Access = new();
