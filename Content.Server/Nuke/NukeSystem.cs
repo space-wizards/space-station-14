@@ -173,14 +173,23 @@ public sealed class NukeSystem : EntitySystem
 
     private async void OnAnchorButtonPressed(EntityUid uid, NukeComponent component, NukeAnchorMessage args)
     {
+        // malicious client sanity check
+        if (component.Status == NukeStatus.ARMED)
+            return;
+
+        Log.Info("nuke", "error - anchor pressed");
         // manually set transform anchor (bypassing anchorable)
         // todo: it will break pullable system
         var xform = Transform(uid);
-        _transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid());
         if (xform.Anchored)
+        {
             _transform.Unanchor(uid, xform);
+        }
         else
+        {
+            _transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid());
             _transform.AnchorEntity(uid, xform);
+        }
 
         UpdateUserInterface(uid, component);
     }
