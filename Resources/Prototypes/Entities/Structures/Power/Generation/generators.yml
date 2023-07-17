@@ -315,3 +315,69 @@
             max: 5
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+# TEG
+
+- type: entity
+  parent: BaseGenerator
+  id: GeneratorTEG
+  name: thermoelectric generator
+  description: A thermoelectric Generator for long term power. I don't know either.
+  components:
+    - type: ThermoelectricGenerator
+    - type: PowerSupplier
+      supplyRate: 0
+    - type: Sprite
+      sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+      granularLayersRendering: true
+      layers:
+        - state: freezerOff
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        - state: freezerPanelOpen
+          map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+        - state: pipe
+          map: [ "enum.PipeVisualLayers.Pipe" ]
+          renderingStrategy: Default
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { state: freezerOn }
+            False: { state: freezerOff }
+    - type: AmbientSound
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/buzzing.ogg
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 600
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 300
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        output:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+        cold:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+          volume: 100
+        hot:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+          volume: 100
