@@ -1,25 +1,4 @@
 Entries:
-- author: Skyedra
-  changes:
-  - {message: Returned the action hotkey numbers to their UI holding cells after mime
-      let them out., type: Fix}
-  id: 3768
-  time: '2023-05-15T03:45:56.0000000+00:00'
-- author: 08A
-  changes:
-  - {message: Added a shortcut to flip prototype in the construction menu, type: Add}
-  id: 3769
-  time: '2023-05-15T04:13:24.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Crystals can now deflect guns., type: Add}
-  id: 3770
-  time: '2023-05-15T05:21:06.0000000+00:00'
-- author: TemporalOroboros
-  changes:
-  - {message: The orb rolls., type: Tweak}
-  id: 3771
-  time: '2023-05-15T05:32:17.0000000+00:00'
 - author: Owai-Seek
   changes:
   - {message: 'Rotting takes 10 minutes, up from 5.', type: Tweak}
@@ -2978,3 +2957,27 @@ Entries:
   - {message: CentCom PDAs have the right ID cards now., type: Fix}
   id: 4267
   time: '2023-07-17T19:31:35.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: explosive banana peel is now easier to spot in dark, type: Tweak}
+  id: 4268
+  time: '2023-07-17T19:35:58.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Cybersun Industries rediscovered the art of creating artefacts of unbelievable
+      power - holy hand grenades - to be used by syndicate chaplain agents for 20
+      TC, type: Add}
+  id: 4269
+  time: '2023-07-17T19:36:37.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Buffed the E-Pen to do 18 damage per hit., type: Tweak}
+  - {message: The Jetpack & Energy Pen in the syndicate uplink now only cost 2tc.,
+    type: Tweak}
+  id: 4270
+  time: '2023-07-17T19:37:11.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed nukies' nuke being anchored., type: Fix}
+  id: 4271
+  time: '2023-07-17T19:37:34.0000000+00:00'
