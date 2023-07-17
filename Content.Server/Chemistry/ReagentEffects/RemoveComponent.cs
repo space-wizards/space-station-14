@@ -32,7 +32,7 @@ public sealed class RemoveComponent : ReagentEffect
 
         if (!_compFactory.TryGetRegistration(Component, out var registration, true))
         {
-            System.Console.WriteLine("component '{0}' doesn't exist", Component);
+            Logger.Warning("Component '{0}' doesn't exist!", Component);
             return;
         }
 
