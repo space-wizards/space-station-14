@@ -16,13 +16,13 @@
           overflowJobs:
             - Passenger
           availableJobs:
-            CargoTechnician: [ 2, 2 ]
-            Passenger: [ -1, -1 ]
-            Captain: [ 1, 1 ]
+            Captain: [ 1, 1 ] # Command
             Pilot: [ 1, 1 ]
-            StationEngineer: [ 2, 2 ]
             ChiefMedicalOfficer: [ 1, 1 ]
-            MedicalDoctor: [ 3, 3 ]
             HeadOfSecurity: [ 1, 1 ]
-            SecurityOfficer: [ 3, 3 ]
+            SecurityOfficer: [ 3, 3 ] # Security
+            CargoTechnician: [ 2, 2 ]
+            StationEngineer: [ 2, 2 ] # Engi
+            MedicalDoctor: [ 3, 3 ] # Medical
+            Passenger: [ -1, -1 ] # Everyone else
             # SalvageSpecialist: [ 2, 2 ] # One day
