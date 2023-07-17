@@ -136,7 +136,6 @@
     uncuffTime: 5.5
     stunBonus: 4
     bodyIconState: body-overlay
-    isJacket: true
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
     state: icon
