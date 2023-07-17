@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: slime puddles now slow you down by 25%, type: Add}
-  id: 3773
-  time: '2023-05-15T18:49:49.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The autolathe catalog has been expanded., type: Add}
@@ -2986,3 +2981,8 @@ Entries:
   - {message: EMP grenades are now cheaper to purchase, type: Tweak}
   id: 4272
   time: '2023-07-17T19:48:10.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Fixed the warden's armored winter coat sprite., type: Fix}
+  id: 4273
+  time: '2023-07-17T22:52:47.0000000+00:00'
