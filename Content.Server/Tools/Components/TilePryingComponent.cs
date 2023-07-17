@@ -12,6 +12,12 @@ namespace Content.Server.Tools.Components
 
         [DataField("qualityNeeded", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string QualityNeeded = "Prying";
+		
+        /// <summary>
+        /// Whether this tool can pry tiles with CanAxe.
+        /// </summary>
+        [DataField("advanced")]
+        public bool Advanced = false;
 
         [DataField("delay")]
         public float Delay = 1f;
