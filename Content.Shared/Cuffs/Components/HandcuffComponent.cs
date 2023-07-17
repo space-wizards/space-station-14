@@ -75,9 +75,6 @@ public sealed class HandcuffComponent : Component
     [DataField("color"), ViewVariables(VVAccess.ReadWrite)]
     public Color Color = Color.White;
 
-    [DataField("isJacket"), ViewVariables(VVAccess.ReadWrite)]
-    public bool IsJacket = false;
-
     [DataField("startCuffSound"), ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier StartCuffSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_start.ogg");
 

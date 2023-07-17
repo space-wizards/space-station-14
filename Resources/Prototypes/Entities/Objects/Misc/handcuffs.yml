@@ -121,7 +121,7 @@
 - type: entity
   parent: Handcuffs
   id: ClothingOuterStraightjacket
-  name: strait jacket
+  name: straitjacket
   description: You should probably be wearing this.
   components:
   - type: Item
@@ -131,7 +131,7 @@
     breakoutTime: 60
     damageOnResist:
       types:
-        Blunt: 20
+        Blunt: 0
     cuffTime: 6.5
     uncuffTime: 5.5
     stunBonus: 4
