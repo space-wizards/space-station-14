@@ -8,7 +8,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite

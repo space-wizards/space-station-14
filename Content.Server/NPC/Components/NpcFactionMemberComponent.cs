@@ -4,14 +4,14 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.NPC.Components
 {
     [RegisterComponent]
-    [Access(typeof(FactionSystem))]
-    public sealed class FactionComponent : Component
+    [Access(typeof(NpcFactionSystem))]
+    public sealed class NpcFactionMemberComponent : Component
     {
         /// <summary>
         /// Factions this entity is a part of.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite),
-         DataField("factions", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<FactionPrototype>))]
+         DataField("factions", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<NpcFactionPrototype>))]
         public HashSet<string> Factions = new();
 
         /// <summary>
