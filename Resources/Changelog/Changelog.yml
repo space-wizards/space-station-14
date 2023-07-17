@@ -1,20 +1,4 @@
 Entries:
-- author: lzk
-  changes:
-  - {message: Paper can be attached to closets and lockers, type: Tweak}
-  id: 3765
-  time: '2023-05-14T19:02:42.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Salvage ore will only spawn on existing walls., type: Tweak}
-  id: 3766
-  time: '2023-05-15T02:01:30.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Stackable items will now show a count in the storage window and will
-      also natively stack when you try to insert them into storage., type: Add}
-  id: 3767
-  time: '2023-05-15T02:24:46.0000000+00:00'
 - author: Skyedra
   changes:
   - {message: Returned the action hotkey numbers to their UI holding cells after mime
@@ -2978,3 +2962,19 @@ Entries:
   - {message: Dionas don't starve extremely fast anymore, type: Fix}
   id: 4264
   time: '2023-07-17T19:18:12.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifact containers weigh less., type: Tweak}
+  id: 4265
+  time: '2023-07-17T19:30:52.0000000+00:00'
+- author: onoira
+  changes:
+  - {message: Nanotrasen has applied a new finish to all station bookshelves allowing
+      labels to stick properly., type: Fix}
+  id: 4266
+  time: '2023-07-17T19:31:12.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: CentCom PDAs have the right ID cards now., type: Fix}
+  id: 4267
+  time: '2023-07-17T19:31:35.0000000+00:00'
