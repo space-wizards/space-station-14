@@ -21,7 +21,7 @@ public sealed class RemoveComponent : ReagentEffect
     public string Component = String.Empty;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("reagent-effect-guidebook-remove-component", ("chance", Probability), ("component", Component));
+        => Loc.GetString("reagent-effect-guidebook-remove-component", ("chance", Probability));
 
     public override void Effect(ReagentEffectArgs args)
     {
