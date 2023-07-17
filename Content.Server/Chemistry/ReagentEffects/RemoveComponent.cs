@@ -1,12 +1,6 @@
 using Content.Shared.Chemistry.Reagent;
-using Content.Server.Medical;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
