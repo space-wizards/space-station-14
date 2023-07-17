@@ -61,7 +61,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_dagger.rsi, state: icon }
   productEntity: EnergyDaggerBox
   cost:
-    Telecrystal: 3
+    Telecrystal: 2
   categories:
   - UplinkWeapons
 
@@ -286,7 +286,7 @@
   description: uplink-black-jetpack-desc
   productEntity: JetpackBlackFilled
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkUtility
 
