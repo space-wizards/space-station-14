@@ -182,7 +182,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
     private bool TryFindSatisfiedMethod(HTNCompoundTask compoundId, Queue<HTNTask> tasksToProcess, NPCBlackboard blackboard, ref int mtrIndex)
     {
         var compound = _protoManager.Index<HTNCompoundPrototype>(compoundId.Task);
-        var compBranches = _htn.CompoundBranches[compoundId];
+        var compBranches = _htn.CompoundBranches[compound];
 
         for (var i = mtrIndex; i < compound.Branches.Count; i++)
         {

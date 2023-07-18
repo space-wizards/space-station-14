@@ -12,6 +12,6 @@ namespace Content.Server.NPC.HTN;
 [Prototype("htnParallel")]
 public sealed class HTNParallelTask : HTNTask
 {
-    [DataField("tasks", required: true, customTypeSerializer:typeof(HTNTaskListSerializer))]
-    public List<string> Tasks = new();
+    [DataField("tasks", required: true)]
+    public List<HTNTask> Tasks = new();
 }

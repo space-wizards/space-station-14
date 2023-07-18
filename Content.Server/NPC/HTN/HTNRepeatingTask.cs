@@ -8,6 +8,6 @@ namespace Content.Server.NPC.HTN;
 [Prototype("htnRepeating")]
 public sealed class HTNRepeatingTask : HTNTask
 {
-    [DataField("tasks", required: true, customTypeSerializer:typeof(HTNTaskListSerializer))]
-    public List<string> Tasks = default!;
+    [DataField("tasks", required: true)]
+    public List<HTNTask> Tasks = default!;
 }

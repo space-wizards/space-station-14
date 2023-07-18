@@ -24,9 +24,9 @@ public sealed class NPCTest
         {
             var counts = new Dictionary<string, int>();
 
-            foreach (var compound in protoManager.EnumeratePrototypes<HTNCompoundTask>())
+            foreach (var compound in protoManager.EnumeratePrototypes<HTNCompoundPrototype>())
             {
-                Count(compound, counts, htnSystem);
+                Count(compound, counts, htnSystem, protoManager);
                 counts.Clear();
             }
         });
@@ -34,7 +34,7 @@ public sealed class NPCTest
         await pool.CleanReturnAsync();
     }
 
-    private static void Count(HTNCompoundTask compound, Dictionary<string, int> counts, HTNSystem htnSystem)
+    private static void Count(HTNCompoundPrototype compound, Dictionary<string, int> counts, HTNSystem htnSystem, IPrototypeManager protoManager)
     {
         var compoundBranches = htnSystem.CompoundBranches[compound];
 
@@ -49,7 +49,7 @@ public sealed class NPCTest
 
                     Assert.That(count, Is.LessThan(50));
                     counts[compound.ID] = count;
-                    Count(compoundTask, counts, htnSystem);
+                    Count(protoManager.Index<HTNCompoundPrototype>(compoundTask.Task), counts, htnSystem, protoManager);
                 }
             }
         }

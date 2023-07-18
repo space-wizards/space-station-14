@@ -15,6 +15,6 @@ public sealed class HTNBranch
     /// <summary>
     /// Due to how serv3 works we need to defer getting the actual tasks until after they have all been serialized.
     /// </summary>
-    [DataField("tasks", required: true, customTypeSerializer:typeof(HTNTaskListSerializer))]
-    public List<HTNTask> TaskPrototypes = default!;
+    [DataField("tasks", required: true, customTypeSerializer: typeof(HTNTaskListSerializer))]
+    public List<HTNTask> Tasks = new();
 }
