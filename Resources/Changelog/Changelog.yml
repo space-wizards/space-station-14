@@ -1,9 +1,4 @@
 Entries:
-- author: PixelTK
-  changes:
-  - {message: 3 new markings for arachnids. Have fun!, type: Add}
-  id: 3788
-  time: '2023-05-16T15:26:29.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: Changed sexyclown mask icon, type: Tweak}
@@ -2970,3 +2965,8 @@ Entries:
       on, type: Tweak}
   id: 4287
   time: '2023-07-18T21:11:43.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Removed desword from nukie uplink., type: Remove}
+  id: 4288
+  time: '2023-07-18T22:23:53.0000000+00:00'
