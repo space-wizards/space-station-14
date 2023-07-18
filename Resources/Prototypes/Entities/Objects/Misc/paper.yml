@@ -141,6 +141,37 @@
     - CargoBounties
 
 - type: entity
+  name: character sheet
+  parent: Paper
+  id: PaperCNCSheet # legally gray zone of using "D&D" and "DND"
+  description: 'A sheet for your Carps and Crypts characters.'
+  components:
+  - type: Paper
+    contentSize: 10000
+    escapeFormatting: false
+    content: book-cnc-sheet
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    netsync: false
+    layers:
+      - state: paper
+        color: "#cccccc"
+      - state: paper_words
+        map: ["enum.PaperVisualLayers.Writing"]
+        color: "#cccccc" #aaaaaaaaaaaaaaaaaaaaaaa
+        visible: false
+      - state: paper_stamp-generic
+        map: ["enum.PaperVisualLayers.Stamp"]
+        visible: false
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundModulate: "#cccccc"
+    contentImageModulate: "#cccccc"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
+
+- type: entity
   parent: Paper
   id: PaperWritten
   noSpawn: true
@@ -436,10 +467,10 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-centcom
-    stampState: "paper_stamp-cent"
+    stampState: "paper_stamp-centcom"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-cent
+    state: stamp-centcom
 
 - type: entity
   name: chaplain's rubber stamp
@@ -596,10 +627,10 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-approved
-    stampState: "paper_stamp-iaa"
+    stampState: "paper_stamp-ok"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-iaa
+    state: stamp-ok
 
 - type: entity
   name: DENIED rubber stamp
