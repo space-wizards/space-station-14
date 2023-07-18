@@ -63,17 +63,14 @@ namespace Content.Server.Bed.Sleep
                 EnsureComp<StunnedComponent>(uid);
                 EnsureComp<KnockedDownComponent>(uid);
 
-                var emitSound = EnsureComp<SpamEmitSoundComponent>(uid);
-
-                // TODO WTF is this, these should a data fields and not hard-coded.
-                emitSound.Sound = new SoundCollectionSpecifier("Snores", AudioParams.Default.WithVariation(0.2f));
-                if (TryComp<ClumsyComponent>(uid, out var clumsy) && clumsy.SleepingSound != null)
+                if (TryComp<SleepEmitSoundComponent>(uid, out var sleepSound))
                 {
-                    emitSound.Sound = clumsy.SleepingSound;
+                    var emitSound = EnsureComp<SpamEmitSoundComponent>(uid);
+                    emitSound.Sound = sleepSound.Snore;
+                    emitSound.PlayChance = sleepSound.Chance;
+                    emitSound.RollInterval = sleepSound.Interval;
+                    emitSound.PopUp = sleepSound.PopUp;
                 }
-                emitSound.PlayChance = 0.33f;
-                emitSound.RollInterval = 5f;
-                emitSound.PopUp = "sleep-onomatopoeia";
 
                 if (wakeAction != null)
                 {

@@ -19,7 +19,9 @@
           Piercing: 4
         groups:
           Burn: 3
-      sleepingSound: /Audio/Voice/Misc/snore_mimimi.ogg
+    - type: SleepEmitSound
+      snore: /Audio/Voice/Misc/snore_mimimi.ogg
+      chance: 1.0
   - !type:AddImplantSpecial
     implants: [ SadTromboneImplant ]
 
