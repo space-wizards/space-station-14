@@ -1,9 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - {message: Changed sexyclown mask icon, type: Tweak}
-  id: 3789
-  time: '2023-05-16T22:16:50.0000000+00:00'
 - author: EEASAS
   changes:
   - {message: Nanotrasen has allocated more budget towards Saltern., type: Tweak}
@@ -2970,3 +2965,8 @@ Entries:
   - {message: Removed desword from nukie uplink., type: Remove}
   id: 4288
   time: '2023-07-18T22:23:53.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Captain's Sabre now has a chance to reflect projectiles., type: Tweak}
+  id: 4289
+  time: '2023-07-18T22:55:29.0000000+00:00'
