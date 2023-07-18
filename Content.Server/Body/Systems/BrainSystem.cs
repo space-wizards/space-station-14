@@ -40,12 +40,12 @@ namespace Content.Server.Body.Systems
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
         {
-            EntityManager.EnsureComponent<MindContainerComponent>(newEntity);
-            var oldMind = EntityManager.EnsureComponent<MindContainerComponent>(oldEntity);
+            EnsureComp<MindContainerComponent>(newEntity);
+            var oldMind = EnsureComp<MindContainerComponent>(oldEntity);
 
-            EnsureComp<GhostOnMoveComponent>(newEntity);
+            var ghostOnMove = EnsureComp<GhostOnMoveComponent>(newEntity);
             if (HasComp<BodyComponent>(newEntity))
-                Comp<GhostOnMoveComponent>(newEntity).MustBeDead = true;
+                ghostOnMove.MustBeDead = true;
 
             // TODO: This is an awful solution.
             // Our greatest minds still can't figure out how to allow brains/heads to ghost without giving them the

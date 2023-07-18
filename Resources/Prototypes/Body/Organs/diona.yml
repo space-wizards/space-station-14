@@ -28,7 +28,6 @@
   - type: Organ
   - type: Input
     context: "ghost"
-  - type: InputMover
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -40,6 +39,7 @@
         maxVol: 100
         canReact: False
   - type: Brain
+  - type: BlockMovement
   - type: Lung #lungs in they head. why they there tho?
   - type: Metabolizer
     removeEmpty: true

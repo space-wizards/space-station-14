@@ -9,6 +9,9 @@
       state: brain
     - type: Organ
     - type: Brain
+    - type: BlockMovement
+    - type: Input
+      context: "ghost"
     - type: Stomach
     - type: Metabolizer
       maxReagents: 6

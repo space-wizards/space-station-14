@@ -39,21 +39,19 @@ public sealed partial class BorgSystem
         linked.LinkedMMI = uid;
 
         if (_mind.TryGetMind(ent, out var mind))
-        {
             _mind.TransferTo(mind, uid, true);
-        }
 
-        UpdateMMIVisuals(uid, true, component);
+        _appearance.SetData(uid, MMIVisuals.BrainPresent, true);
     }
 
     private void OnMMIMindAdded(EntityUid uid, MMIComponent component, MindAddedMessage args)
     {
-        UpdateMMIVisuals(uid, true, component);
+        _appearance.SetData(uid, MMIVisuals.HasMind, true);
     }
 
     private void OnMMIMindRemoved(EntityUid uid, MMIComponent component, MindRemovedMessage args)
     {
-        UpdateMMIVisuals(uid, true, component);
+        _appearance.SetData(uid, MMIVisuals.HasMind, false);
     }
 
     private void OnMMILinkedMindAdded(EntityUid uid, MMILinkedComponent component, MindAddedMessage args)
@@ -65,21 +63,13 @@ public sealed partial class BorgSystem
 
     private void OnMMILinkedRemoved(EntityUid uid, MMILinkedComponent component, EntGotRemovedFromContainerMessage args)
     {
-        if (component.LinkedMMI is not {} linked)
+        if (component.LinkedMMI is not { } linked)
             return;
+        RemComp(uid, component);
+
         if (_mind.TryGetMind(linked, out var mind))
             _mind.TransferTo(mind, uid, true);
-        UpdateMMIVisuals(linked, false);
-        RemCompDeferred(uid, component);
-    }
 
-    private void UpdateMMIVisuals(EntityUid uid, bool hasBrain, MMIComponent? component = null, AppearanceComponent? appearance = null)
-    {
-        if (!Resolve(uid, ref component, ref appearance, false))
-            return;
-
-        _appearance.SetData(uid, MMIVisuals.BrainPresent, hasBrain, appearance);
-        var hasMind = TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind;
-        _appearance.SetData(uid, MMIVisuals.HasMind, hasMind, appearance);
+        _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
     }
 }

@@ -27,6 +27,7 @@ public sealed class MindSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ActorSystem _actor = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -435,7 +436,7 @@ public sealed class MindSystem : EntitySystem
         // Player is CURRENTLY connected.
         if (mind.Session != null && !alreadyAttached && mind.VisitingEntity == null)
         {
-            mind.Session.AttachToEntity(entity);
+            _actor.Attach(entity, mind.Session, true);
             Log.Info($"Session {mind.Session.Name} transferred to entity {entity}.");
         }
     }
