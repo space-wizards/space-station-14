@@ -1,12 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Fixed a bug where anomaly locators would constantly drain power, even
-      when turned off.', type: Fix}
-  - {message: Fixed a bug where anomaly locators would beep strangely quickly when
-      nearing anomalies or being turned on., type: Fix}
-  id: 3779
-  time: '2023-05-16T00:19:40.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fixed a bug causing actions (toggle light, combat mode, etc) to not
@@ -2981,3 +2973,8 @@ Entries:
   - {message: Fix trash bags., type: Fix}
   id: 4278
   time: '2023-07-18T11:44:00.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Non-command role requirements have been modified., type: Tweak}
+  id: 4279
+  time: '2023-07-18T19:04:26.0000000+00:00'
