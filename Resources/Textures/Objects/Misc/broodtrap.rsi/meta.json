@@ -8,6 +8,10 @@
   },
   "states": [
     {
+      "name": "alive",
+      "directions": 4
+    },
+    {
       "name": "cuff"
     },
 	  {

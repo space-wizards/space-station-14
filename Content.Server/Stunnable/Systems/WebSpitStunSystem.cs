@@ -14,6 +14,8 @@ using Content.Server.Actions;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Popups;
+using Content.Server.Polymorph.Systems;
+using Content.Server.Polymorph.Components;
 
 namespace Content.Server.Stunnable
 {
@@ -26,6 +28,7 @@ namespace Content.Server.Stunnable
         [Dependency] private readonly GunSystem _gunSystem = default!;
         [Dependency] private readonly ActionsSystem _action = default!;
         [Dependency] private readonly SharedCuffableSystem _cuff = default!;
+        [Dependency] private readonly PolymorphSystem _poly = default!;
 
         public override void Initialize()
         {
@@ -78,21 +81,34 @@ namespace Content.Server.Stunnable
 
 
 
-                _stunSystem.TryParalyze(target, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+
+                if (!HasComp<TransformComponent>(target))
+                {
+                    EntityManager.AddComponent<TransformComponent>(target);
+                }
 
 
-                CuffableComponent cuffed;
-                EntityManager.TryGetComponent(target, out cuffed!);
-                var cuffs = EntityManager.SpawnEntity("BroodyTrap", EntityManager.GetComponent<TransformComponent>(target).Coordinates);
-                _cuff.TryAddNewCuffs(target, target, cuffs, cuffed);
+                var polytarget = _poly.PolymorphEntity(target, component.WebPolymorph);
 
-                _popup.PopupEntity(Loc.GetString("Ваши руки связанны паутиной!"), target, target, PopupType.LargeCaution);
+                if (polytarget == null)
+                {
+                    return;
+                }
 
 
+                _stunSystem.TryParalyze(polytarget.Value, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+
+                if (TryComp(polytarget, out CuffableComponent? cuffcomp))
+                {
+                    var cuffs = Spawn(component.WebTrap, Transform(polytarget.Value).Coordinates);
+                    _cuff.TryAddNewCuffs(polytarget.Value, polytarget.Value, cuffs, cuffcomp);
+                    _popup.PopupEntity(Loc.GetString("Your hands are tied with cobwebs!"), polytarget.Value, polytarget.Value, PopupType.LargeCaution);
+                }
 
             }
 
         }
+
 
 
 
