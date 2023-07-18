@@ -1347,6 +1347,18 @@
         damage: 50
       behaviors:
       - !type:ExplodeBehavior
+      
+- type: entity
+  parent: MobMonkey
+  id: MobMonkeySyndicateAgent
+  name: Monkey Syndicate Agent
+  components:
+    - type: Loadout
+      prototype: SyndicateOperativeGearMonkey
+      prototypes: [SyndicateOperativeGearMonkey]
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity

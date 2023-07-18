@@ -321,6 +321,17 @@
       whitelist:
         tags:
           - NukeOpsUplink
+          
+- type: listing
+  id: UplinkReinforcementRadioSyndicateMonkey
+  name: uplink-reinforcement-radio-monkey-name
+  description: uplink-reinforcement-radio-monkey-desc
+  productEntity: ReinforcementRadioSyndicateMonkey
+  icon: { sprite: Objects/Devices/communication.rsi, state: old-radio }
+  cost:
+    Telecrystal: 9
+  categories:
+  - UplinkUtility
 
 - type: listing
   id: UplinkStealthBox
@@ -330,7 +341,7 @@
   cost:
     Telecrystal: 5
   categories:
-    - UplinkUtility
+  - UplinkUtility
 
 #TODO: Remove this from the uplink
 - type: listing
