@@ -2,7 +2,7 @@ using System.Numerics;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 
-namespace Content.Server._FTL.Cryopod;
+namespace Content.Server._FTL.SleeperCryopod;
 [RegisterComponent]
 public sealed class SleeperCryopodComponent : Component
 {
