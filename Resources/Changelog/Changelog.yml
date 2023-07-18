@@ -1,15 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix salvage expeditions mercilessly deleting people., type: Fix}
-  id: 3786
-  time: '2023-05-16T12:55:49.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Salvage expedition early launches now allowed if everyone is onboard.,
-    type: Tweak}
-  id: 3787
-  time: '2023-05-16T13:18:37.0000000+00:00'
 - author: PixelTK
   changes:
   - {message: 3 new markings for arachnids. Have fun!, type: Add}
@@ -2970,3 +2959,14 @@ Entries:
   - {message: Added craftable improvised shotguns. Ammo not included., type: Add}
   id: 4285
   time: '2023-07-18T21:10:07.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: Windows can go next to eachother, type: Fix}
+  id: 4286
+  time: '2023-07-18T21:11:28.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: now during power grid check event affected APCs can't be turned back
+      on, type: Tweak}
+  id: 4287
+  time: '2023-07-18T21:11:43.0000000+00:00'
