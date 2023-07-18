@@ -76,6 +76,11 @@ public sealed class HTNSystem : EntitySystem
 
             if (comp.Plan != null)
             {
+                foreach (var plan in GetPrimitiveTasks(comp.Plan))
+                {
+
+                }
+
                 var currentOperator = comp.Plan.CurrentOperator;
                 currentOperator.Shutdown(comp.Blackboard, HTNOperatorStatus.Failed);
                 comp.Plan = null;

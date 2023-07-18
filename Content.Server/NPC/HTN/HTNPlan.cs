@@ -16,11 +16,6 @@ public sealed class HTNPlan
 
     public int Index = 0;
 
-    /// <summary>
-    /// Used for repeating tasks where we need to track
-    /// </summary>
-    public int SubIndex = 0;
-
     public HTNPlan(List<HTNTask> tasks, List<int> branchTraversalRecord, List<Dictionary<string, object>?> effects)
     {
         Tasks = tasks;
