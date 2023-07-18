@@ -112,6 +112,12 @@ uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespa
 uplink-freedom-implanter-name = Freedom Implanter
 uplink-freedom-implanter-desc = Get away from those nasty sec officers with this three use implant!
 
+uplink-dna-scrambler-implanter-name = DNA Scrambler Implanter
+uplink-dna-scrambler-implanter-desc = A single use implant that can be activated to modify your DNA and give you a completely new look, also has the function of undoing the change. Unable to scramble already scrambled DNA.
+
+uplink-emp-implanter-name = EMP Implanter
+uplink-emp-implanter-desc = Detonates a small EMP pulse on activation that drains nearby electronics of their power, can be used three times before the internal battery runs out.
+
 uplink-micro-bomb-implanter-name = Micro Bomb Implanter
 uplink-micro-bomb-implanter-desc = Explode on death or manual activation with this implant. Destroys the body with all equipment.
 
