@@ -17,6 +17,9 @@ namespace Content.Shared.Paper
         public string StampState { get; set; } = "paper_stamp-generic";
 
         [DataField("sound")]
-        public SoundSpecifier? Sound;
+        public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Items/Stamp/thick_stamp_sub.ogg")
+        {
+            Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(5f)
+        };
     }
 }

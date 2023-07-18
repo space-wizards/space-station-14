@@ -1,3 +1,40 @@
+# Contains several biomes
+- type: biomeTemplate
+  id: Continental
+  layers:
+    - !type:BiomeMetaLayer
+      template: Lava
+    - !type:BiomeMetaLayer
+      template: Caves
+      threshold: -0.5
+      noise:
+        frequency: 0.001
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+        gain: 0.5
+    - !type:BiomeMetaLayer
+      template: Grasslands
+      threshold: 0
+      noise:
+        frequency: 0.001
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+        gain: 0.5
+    - !type:BiomeMetaLayer
+      template: Snow
+      threshold: 0.5
+      noise:
+        frequency: 0.001
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+        gain: 0.5
+
 # Desert
 # TODO: Water in desert
 - type: biomeTemplate
