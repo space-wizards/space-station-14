@@ -5,6 +5,7 @@
   components:
     - type: StorageFill
       contents:
+        - id: Telescopichka
         - id: BoxSurvival
         - id: BriefcaseIAAFilled
 

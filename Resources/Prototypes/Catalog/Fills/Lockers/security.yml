@@ -118,6 +118,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: Telescopichka
       - id: ClothingHeadHatFedoraBrown
       - id: ClothingNeckTieDet
       - id: ClothingOuterVestDetective

@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "license": "CC-BY-3.0",
+  "copyright": "Sprited by mixnikita",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "telescope_on"
+    },
+    {
+      "name": "telescope_off"
+    },
+	{
+      "name": "off-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "off-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "on-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "on-inhand-right",
+      "directions": 4
+    }
+  ]
+}

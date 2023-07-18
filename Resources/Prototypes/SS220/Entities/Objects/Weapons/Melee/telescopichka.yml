@@ -1,0 +1,47 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: entity
+  name: telescopichka
+  parent: BaseItem
+  id: Telescopichka
+  description: Very loud and very dangerous energy sword that can reflect shots. Can be stored in pockets when turned off.
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Weapons/Melee/telescopichka.rsi
+    layers:
+    - state: telescope_off
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: SwitchableWeapon
+    openSound: "/Audio/SS220/Weapons/telescopichka/batonextend.ogg"
+    closeSound: "/Audio/SS220/Weapons/telescopichka/batonextend.ogg"
+    bonkSound: "/Audio/SS220/Weapons/telescopichka/bonk-sound-effect.ogg"
+    damageOpen:
+      types:
+        Blunt: 1
+    damageFolded:
+      types:
+        Blunt: 0
+    staminaDamageFolded: 0
+    staminaDamageOpen: 28
+    sizeOpened: 15
+    sizeClosed: 5
+  - type: StaminaDamageOnHit
+    damage: 0
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0
+  - type: Item
+    size: 5
+    sprite: SS220/Objects/Weapons/Melee/telescopichka.rsi
+  - type: UseDelay
+    delay: 1.0
+  - type: DisarmMalus
+    malus: 0
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+     enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: telescope_on}
+          False: {state: telescope_off}
