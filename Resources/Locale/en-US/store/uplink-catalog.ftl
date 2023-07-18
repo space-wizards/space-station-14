@@ -109,6 +109,12 @@ uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespa
 uplink-freedom-implanter-name = Freedom Implanter
 uplink-freedom-implanter-desc = Get away from those nasty sec officers with this three use implant!
 
+uplink-dna-scrambler-implanter-name = DNA Scrambler Implanter
+uplink-dna-scrambler-implanter-desc = A single use implant that can be activated to modify your DNA and give you a completely new look, also has the function of undoing the change. Unable to scramble already scrambled DNA.
+
+uplink-emp-implanter-name = EMP Implanter
+uplink-emp-implanter-desc = Detonates a small EMP pulse on activation that drains nearby electronics of their power, can be used three times before the internal battery runs out.
+
 uplink-macro-bomb-implanter-name = Macro Bomb Implanter
 uplink-macro-bomb-implanter-desc = Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
 
@@ -165,6 +171,9 @@ uplink-rigged-boxing-gloves-desc = Float like a butterfly, sting like a bee.
 
 uplink-necronomicon-name = Necronomicon
 uplink-necronomicon-desc = An unholy book capable of summoning a demonic familiar.
+
+uplink-holy-hand-grenade-name = Holy Hand Grenade
+uplink-holy-hand-grenade-desc = O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
 
 uplink-revolver-cap-gun-fake-name = Fake Cap Gun
 uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and magnum bullets. Comes loaded with magnum bullets.

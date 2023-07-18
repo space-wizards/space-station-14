@@ -32,3 +32,8 @@
   license: "CC0-1.0"
   copyright: "Taken from thisusernameis via freesound.org + mixed from stereo to mono."
   source: "https://freesound.org/people/thisusernameis/sounds/426891/"
+
+- files: ["hallelujah.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Composer: Georg Friedrich Händel; Performed by: MIT Concert Choir; Directed by William C. Cutter; + cropped and mixed from stereo to mono"
+  source: "https://en.wikipedia.org/wiki/File:Handel_-_messiah_-_44_hallelujah.ogg"
