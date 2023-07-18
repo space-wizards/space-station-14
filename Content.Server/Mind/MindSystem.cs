@@ -381,7 +381,7 @@ public sealed class MindSystem : EntitySystem
     /// <exception cref="ArgumentException">
     ///     Thrown if <paramref name="entity"/> is already owned by another mind.
     /// </exception>
-    public void TransferTo(Mind mind, EntityUid? entity, bool ghostCheckOverride = false)
+    public void  TransferTo(Mind mind, EntityUid? entity, bool ghostCheckOverride = false)
     {
         if (entity == mind.OwnedEntity)
             return;
@@ -414,8 +414,6 @@ public sealed class MindSystem : EntitySystem
             InternalEjectMind(oldEntity.Value, oldComp);
 
         SetOwnedEntity(mind, entity, component);
-        if (mind.OwnedComponent != null)
-            InternalAssignMind(mind.OwnedEntity!.Value, mind, mind.OwnedComponent);
 
         // Don't do the full deletion cleanup if we're transferring to our VisitingEntity
         if (alreadyAttached)
@@ -439,6 +437,9 @@ public sealed class MindSystem : EntitySystem
             _actor.Attach(entity, mind.Session, true);
             Log.Info($"Session {mind.Session.Name} transferred to entity {entity}.");
         }
+
+        if (mind.OwnedComponent != null)
+            InternalAssignMind(mind.OwnedEntity!.Value, mind, mind.OwnedComponent);
     }
 
     /// <summary>

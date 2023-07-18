@@ -1,5 +1,7 @@
-﻿using Content.Shared.Whitelist;
+﻿using Content.Shared.Roles;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -21,4 +23,7 @@ public sealed class BorgChassisComponent : Component
     public ContainerSlot BrainContainer = default!;
 
     public EntityUid? BrainEntity => BrainContainer.ContainedEntity;
+
+    [DataField("borgJobId", customTypeSerializer: typeof(PrototypeIdSerializer<JobPrototype>))]
+    public string BorgJobId = "Borg";
 }

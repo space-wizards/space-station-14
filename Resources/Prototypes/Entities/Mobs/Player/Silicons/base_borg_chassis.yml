@@ -65,8 +65,14 @@
   - type: WiresPanel
   - type: Wires
     LayoutId: Borg
+  - type: NameIdentifier
+    group: Silicon
   - type: DoAfter
   - type: Actions
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechSounds: Pai
   - type: Flashable
   - type: Pullable
   - type: Examiner

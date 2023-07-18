@@ -15,8 +15,21 @@
   maxValue: 99999
 
 - type: nameIdentifierGroup
-  id: Borg
-  prefix: CYBG
+  id: MMI
+  prefix: MMI
+  fullName: true
+  minValue: 100
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: PositronicBrain
+  prefix: PB
+  minValue: 10
+  maxValue: 99
+
+- type: nameIdentifierGroup
+  id: Silicon
+  prefix: Si
   minValue: 1000
   maxValue: 9999
 

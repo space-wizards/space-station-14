@@ -23,7 +23,7 @@
     channels:
     - Common
   - type: NameIdentifier
-    group: Borg
+    group: MMI
   - type: DoAfter
   - type: Actions
   - type: TypingIndicator
@@ -77,7 +77,7 @@
       channels:
       - Common
     - type: NameIdentifier
-      group: Borg
+      group: PositronicBrain
     - type: DoAfter
     - type: Actions
     - type: TypingIndicator
