@@ -1,13 +1,6 @@
 Entries:
 - author: tom-leys
   changes:
-  - {message: '"Dead" zombies have a chance to spring back to life at any moment,
-      they also passively heal most damage types slowly while alive. If you crit or
-      kill them you have a chance to perma-kill.', type: Tweak}
-  id: 3783
-  time: '2023-05-16T03:58:36.0000000+00:00'
-- author: tom-leys
-  changes:
   - {message: Zombie Patient 0 will get 20-30 minutes before they are forced to be
       a zombie. As before they have a zombify self action on the left., type: Tweak}
   - {message: 'Players zombifiying will spend less time in Crit, generally 10s at
@@ -2977,3 +2970,8 @@ Entries:
       powering back on., type: Fix}
   id: 4282
   time: '2023-07-18T20:56:52.0000000+00:00'
+- author: kseandi
+  changes:
+  - {message: Added machine frame completion popup., type: Add}
+  id: 4283
+  time: '2023-07-18T21:03:14.0000000+00:00'
