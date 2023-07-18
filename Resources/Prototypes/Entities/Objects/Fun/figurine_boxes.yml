@@ -1,0 +1,88 @@
+- type: entity
+  id: MysteryFigureBoxTrash
+  parent: BaseItem
+  name: unfolded cardboard box
+  description: A small, unfolded cardboard toy box.
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 50
+  - type: Sprite
+    sprite: Objects/Fun/figurines.rsi
+    state: fig_box_unfolded
+  - type: Tag
+    tags:
+    - Trash
+  - type: SpaceGarbage
+
+- type: entity
+  parent: PresentRandom
+  id: MysteryFigureBox
+  name: mystery spacemen minifigure box
+  description: A box containing a mystery minifigure. The side of the box depicts a few blacked-out 'rare' figures, including one with a large, non-humanoid shilouette.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/figurines.rsi
+    layers:
+      - state: fig_box
+  - type: SpawnItemsOnUse
+    items:
+      - id: MysteryFigureBoxTrash
+      - id: ToyFigurinePassenger
+        orGroup: SpacemenFig
+      - id: ToyFigurineClown
+        orGroup: SpacemenFig
+      - id: ToyFigurineMime
+        orGroup: SpacemenFig
+      - id: ToyFigurineCaptain
+        orGroup: SpacemenFig
+      - id: ToyFigurineSecurity
+        orGroup: SpacemenFig
+      - id: ToyFigurineCargoTech
+        orGroup: SpacemenFig
+      - id: ToyFigurineSalvage
+        orGroup: SpacemenFig
+      - id: ToyFigurineQuartermaster
+        orGroup: SpacemenFig
+      - id: ToyFigurineAtmosTech
+        orGroup: SpacemenFig
+      - id: ToyFigurineEngineer
+        orGroup: SpacemenFig
+      - id: ToyFigurineEngineer
+        orGroup: SpacemenFig
+      - id: ToyFigurineScientist
+        orGroup: SpacemenFig
+      - id: ToyFigurineMedicalDoctor
+        orGroup: SpacemenFig
+      - id: ToyFigurineLibrarian
+        orGroup: SpacemenFig
+      - id: ToyFigurineNukie
+        orGroup: SpacemenFig
+      - id: ToyFigurineNukieElite
+        orGroup: SpacemenFig
+      - id: ToyFigurineFootsoldier
+        orGroup: SpacemenFig
+      - id: ToyFigurineWizardFake
+        orGroup: SpacemenFig
+      - id: ToyFigurineSlime
+        orGroup: SpacemenFig
+      - id: ToyFigurineGreytider
+        orGroup: SpacemenFig
+      - id: ToyFigurineWizard
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineNukieCommander
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyGriffin
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyOwlman
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToySkeleton
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineQueen
+        prob: 0.25
+        orGroup: SpacemenFig

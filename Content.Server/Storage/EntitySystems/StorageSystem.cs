@@ -275,7 +275,8 @@ namespace Content.Server.Storage.EntitySystems
                     {
                         RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid,
                             new List<EntityUid> { target },
-                            new List<EntityCoordinates> { position }));
+                            new List<EntityCoordinates> { position },
+                            new List<Angle> { transformOwner.LocalRotation }));
                     }
                 }
             }
@@ -288,6 +289,7 @@ namespace Content.Server.Storage.EntitySystems
 
             var successfullyInserted = new List<EntityUid>();
             var successfullyInsertedPositions = new List<EntityCoordinates>();
+            var successfullyInsertedAngles = new List<Angle>();
             var itemQuery = GetEntityQuery<ItemComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
             xformQuery.TryGetComponent(uid, out var xform);
@@ -313,10 +315,13 @@ namespace Content.Server.Storage.EntitySystems
                     _transform
                 );
 
+                var angle = targetXform.LocalRotation;
+
                 if (PlayerInsertEntityInWorld(uid, args.Args.User, entity, component))
                 {
                     successfullyInserted.Add(entity);
                     successfullyInsertedPositions.Add(position);
+                    successfullyInsertedAngles.Add(angle);
                 }
             }
 
@@ -324,7 +329,7 @@ namespace Content.Server.Storage.EntitySystems
             if (successfullyInserted.Count > 0)
             {
                 _audio.PlayPvs(component.StorageInsertSound, uid);
-                RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid, successfullyInserted, successfullyInsertedPositions));
+                RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid, successfullyInserted, successfullyInsertedPositions, successfullyInsertedAngles));
             }
 
             args.Handled = true;

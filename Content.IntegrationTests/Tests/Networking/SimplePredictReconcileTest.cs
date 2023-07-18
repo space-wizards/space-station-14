@@ -396,21 +396,11 @@ namespace Content.IntegrationTests.Tests.Networking
         public sealed class PredictionTestComponent : Component
         {
             public bool Foo;
+        }
 
-            public override ComponentState GetComponentState()
-            {
-                return new PredictionComponentState(Foo);
-            }
-
-            public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-            {
-                if (curState is not PredictionComponentState state)
-                    return;
-
-                Foo = state.Foo;
-                Dirty();
-            }
-
+        [Reflect(false)]
+        public sealed class PredictionTestEntitySystem : EntitySystem
+        {
             [Serializable, NetSerializable]
             private sealed class PredictionComponentState : ComponentState
             {
@@ -421,11 +411,7 @@ namespace Content.IntegrationTests.Tests.Networking
                     Foo = foo;
                 }
             }
-        }
 
-        [Reflect(false)]
-        public sealed class PredictionTestEntitySystem : EntitySystem
-        {
             public bool Allow { get; set; } = true;
 
             // Queue of all the events that come in so we can test that they come in perfectly as expected.
@@ -440,6 +426,23 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 SubscribeNetworkEvent<SetFooMessage>(HandleMessage);
                 SubscribeLocalEvent<SetFooMessage>(HandleMessage);
+
+                SubscribeLocalEvent<PredictionTestComponent, ComponentGetState>(OnGetState);
+                SubscribeLocalEvent<PredictionTestComponent, ComponentHandleState>(OnHandleState);
+            }
+
+            private void OnHandleState(EntityUid uid, PredictionTestComponent component, ref ComponentHandleState args)
+            {
+                if (args.Current is not PredictionComponentState state)
+                    return;
+
+                component.Foo = state.Foo;
+                Dirty(component);
+            }
+
+            private void OnGetState(EntityUid uid, PredictionTestComponent component, ref ComponentGetState args)
+            {
+                args.State = new PredictionComponentState(component.Foo);
             }
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)

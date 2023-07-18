@@ -36,6 +36,7 @@
         acts: ["Destruction"]
   - type: Tag
     tags:
+    - Structure
     - Wooden
   - type: Transform
     anchored: true
