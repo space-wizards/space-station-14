@@ -1,1 +1,1 @@
-base-computer-ui-component-not-powered = Компьютер не получает питание.
+base-computer-ui-component-not-powered = {CAPITALIZE($machine)} не получает питание.
