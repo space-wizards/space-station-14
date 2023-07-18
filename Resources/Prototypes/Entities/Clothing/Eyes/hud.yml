@@ -110,7 +110,7 @@
 
 - type: entity
   parent: ClothingEyesBase
-  id: ClothingEyesHudBeer
+  id: ClothingEyesHudOmni
   name: omni hud
   description: Filler
   components:
