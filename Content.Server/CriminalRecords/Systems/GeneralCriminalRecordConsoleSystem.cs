@@ -19,14 +19,14 @@ namespace Content.Server.CriminalRecords.Systems;
 
 public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly CriminalRecordsSystem _criminalRecordsSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly RadioSystem _radioSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecordsSystem = default!;
-    [Dependency] private readonly RadioSystem _radioSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly CriminalRecordsSystem _criminalRecordsSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
 
     public override void Initialize()
     {
@@ -82,7 +82,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
             var messages = new Dictionary<SecurityStatus, string>()
             {
                 { SecurityStatus.Detained, Loc.GetString("general-criminal-record-console-detained-with-reason", ("name", msg.Name), ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) },
-                { SecurityStatus.None, Loc.GetString("general-criminal-record-console-undetained-with-reason", ("name", msg.Name), ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
+                { SecurityStatus.None, Loc.GetString("general-criminal-record-console-released-with-reason", ("name", msg.Name), ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
             };
 
             _radioSystem.SendRadioMessage(uid, messages[status],
@@ -94,7 +94,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
             var messages = new Dictionary<SecurityStatus, string>()
             {
                 { SecurityStatus.Detained, Loc.GetString("general-criminal-record-console-detained-without-reason", ("name", msg.Name), ("goodguyname", Name(msg.Session.AttachedEntity.Value))) },
-                { SecurityStatus.None, Loc.GetString("general-criminal-record-console-undetained-without-reason", ("name", msg.Name), ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
+                { SecurityStatus.None, Loc.GetString("general-criminal-record-console-released-without-reason", ("name", msg.Name), ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
             };
 
             _radioSystem.SendRadioMessage(uid, messages[status],

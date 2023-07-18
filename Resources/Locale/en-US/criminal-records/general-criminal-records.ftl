@@ -24,10 +24,10 @@ general-criminal-record-console-record-status = Status: {$status}
 general-criminal-record-console-detained-with-reason = {$name} has been detained for {$reason} by {$goodguyname}
 general-criminal-record-console-detained-without-reason = {$name} has been detained by {$goodguyname}
 
-general-criminal-record-console-undetained-with-reason = {$name} has been released from the detention for {$reason} by {$goodguyname}
-general-criminal-record-console-undetained-without-reason = {$name} has been released from the detention by {$goodguyname}
+general-criminal-record-console-released-with-reason = {$name} has been released from the detention for {$reason} by {$goodguyname}
+general-criminal-record-console-released-without-reason = {$name} has been released from the detention by {$goodguyname}
 
-## On status changed
+### On status changed
 
 general-criminal-record-console-wanted-with-reason = {$name} is wanted for {$reason} by {$goodguyname}
 general-criminal-record-console-wanted-without-reason = {$name} is wanted by {$goodguyname}
