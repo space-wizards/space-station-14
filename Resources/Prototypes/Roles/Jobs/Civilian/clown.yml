@@ -19,6 +19,7 @@
           Piercing: 4
         groups:
           Burn: 3
+      sleepingSound: /Audio/Voice/Misc/snore_mimimi.ogg
   - !type:AddImplantSpecial
     implants: [ SadTromboneImplant ]
 

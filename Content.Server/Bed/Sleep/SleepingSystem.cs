@@ -19,6 +19,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Interaction.Components;
 
 namespace Content.Server.Bed.Sleep
 {
@@ -66,6 +67,10 @@ namespace Content.Server.Bed.Sleep
 
                 // TODO WTF is this, these should a data fields and not hard-coded.
                 emitSound.Sound = new SoundCollectionSpecifier("Snores", AudioParams.Default.WithVariation(0.2f));
+                if (TryComp<ClumsyComponent>(uid, out var clumsy) && clumsy.SleepingSound != null)
+                {
+                    emitSound.Sound = clumsy.SleepingSound;
+                }
                 emitSound.PlayChance = 0.33f;
                 emitSound.RollInterval = 5f;
                 emitSound.PopUp = "sleep-onomatopoeia";

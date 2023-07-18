@@ -18,5 +18,11 @@ namespace Content.Shared.Interaction.Components
         /// </summary>
         [DataField("clumsySound")]
         public SoundSpecifier ClumsySound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
+
+        /// <summary>
+        ///     Funny sound to play when sleeping
+        /// </summary>
+        [DataField("sleepingSound")]
+        public SoundSpecifier? SleepingSound;
     }
 }
