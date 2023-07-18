@@ -1,19 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: Zombie Patient 0 will get 20-30 minutes before they are forced to be
-      a zombie. As before they have a zombify self action on the left., type: Tweak}
-  - {message: 'Players zombifiying will spend less time in Crit, generally 10s at
-      most. A lot less if they fought the initial infection.', type: Tweak}
-  - {message: How long you have to live as a zombie victim now varies from 1-4 minutes.,
-    type: Tweak}
-  id: 3784
-  time: '2023-05-16T05:59:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix potential server crash upon reconnection., type: Fix}
-  id: 3785
-  time: '2023-05-16T11:23:44.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix salvage expeditions mercilessly deleting people., type: Fix}
@@ -2975,3 +2960,13 @@ Entries:
   - {message: Added machine frame completion popup., type: Add}
   id: 4283
   time: '2023-07-18T21:03:14.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Added Machete and Pistol Crate to Expedition Rewards, type: Add}
+  id: 4284
+  time: '2023-07-18T21:09:14.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added craftable improvised shotguns. Ammo not included., type: Add}
+  id: 4285
+  time: '2023-07-18T21:10:07.0000000+00:00'
