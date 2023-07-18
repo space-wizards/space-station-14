@@ -7,6 +7,8 @@ using Content.Shared.Body.Part;
 using Content.Shared.Interaction;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Wires;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Silicons.Borgs;
 
@@ -23,27 +25,42 @@ public sealed partial class BorgSystem : SharedBorgSystem
         base.Initialize();
 
         SubscribeLocalEvent<BorgChassisComponent, AfterInteractUsingEvent>(OnChassisInteractUsing);
+        SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
+        SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
 
         InitializeMMI();
     }
 
-    //todo we're gonna tear this shit up
     private void OnChassisInteractUsing(EntityUid uid, BorgChassisComponent component, AfterInteractUsingEvent args)
     {
+        if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
+            return;
+
+        var used = args.Used;
+
         if (component.BrainEntity == null &&
-            HasComp<BrainComponent>(args.Used) &&
-            TryComp<BodyComponent>(uid, out var bodyComponent) &&
-            bodyComponent.Root?.Child is { } root &&
-            TryComp<BodyPartComponent>(root, out var bodyPartComponent) &&
-            component.BrainWhitelist?.IsValid(args.Used) != false)
+            HasComp<BorgBrainComponent>(used) &&
+            component.BrainWhitelist?.IsValid(used) != false)
         {
-            var slot = bodyPartComponent.Organs.Keys.Contains(component.BrainOrganSlotId)
-                ? bodyPartComponent.Organs[component.BrainOrganSlotId]
-                : _bobby.CreateOrganSlot(component.BrainOrganSlotId, root);
-            if (slot == null)
-                return;
-            _bobby.InsertOrgan(args.Used, slot);
-            component.BrainEntity = args.Used;
+            component.BrainContainer.Insert(used);
+        }
+    }
+
+    private void OnInserted(EntityUid uid, BorgChassisComponent component, EntInsertedIntoContainerMessage args)
+    {
+        if (HasComp<BorgBrainComponent>(args.Entity))
+        {
+            if (_mind.TryGetMind(args.Entity, out var mind))
+                _mind.TransferTo(mind, uid);
+        }
+    }
+
+    private void OnRemoved(EntityUid uid, BorgChassisComponent component, EntRemovedFromContainerMessage args)
+    {
+        if (HasComp<BorgBrainComponent>(args.Entity))
+        {
+            if (_mind.TryGetMind(uid, out var mind))
+                _mind.TransferTo(mind, args.Entity);
         }
     }
 }

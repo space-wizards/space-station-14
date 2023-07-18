@@ -17,7 +17,6 @@
 - type: nameIdentifierGroup
   id: Borg
   prefix: CYBG
-  fullName: true
   minValue: 1000
   maxValue: 9999
 

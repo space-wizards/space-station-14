@@ -62,6 +62,9 @@
   - type: Body
     prototype: Borg
   - type: BorgChassis
+  - type: WiresPanel
+  - type: Wires
+    LayoutId: Borg
   - type: DoAfter
   - type: Actions
   - type: Flashable

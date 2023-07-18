@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Whitelist;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -10,11 +11,14 @@ namespace Content.Shared.Silicons.Borgs.Components;
 [RegisterComponent]
 public sealed class BorgChassisComponent : Component
 {
-    [DataField("brainEntity")]
-    public EntityUid? BrainEntity;
-
     [DataField("brainWhitelist")]
     public EntityWhitelist? BrainWhitelist;
 
-    public string BrainOrganSlotId = "BorgBrainSlot";
+    [DataField("brainContainerId")]
+    public string BrainContainerId = "borg_brain";
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public ContainerSlot BrainContainer = default!;
+
+    public EntityUid? BrainEntity => BrainContainer.ContainedEntity;
 }
