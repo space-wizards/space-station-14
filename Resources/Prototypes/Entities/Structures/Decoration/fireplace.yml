@@ -12,11 +12,11 @@
         shader: unshaded
       - state: fireplace_glow
         shader: unshaded
-  - type: AmbientSound # Ambient sound is a nyano change (but should probably get upstreamed)
+  - type: AmbientSound
     volume: -6
     range: 5
     sound:
-      path: /Audio/Nyanotrasen/Ambience/Objects/fireplace.ogg
+      path: /Audio/Ambience/Objects/fireplace.ogg
   - type: PointLight
     radius: 3
     energy: 3
