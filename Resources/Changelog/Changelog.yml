@@ -1,15 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed toggle-light actions for flashlights and hardsuits not appearing.,
-    type: Fix}
-  id: 3781
-  time: '2023-05-16T03:26:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix vomit causing duplicate puddles., type: Fix}
-  id: 3782
-  time: '2023-05-16T03:26:12.0000000+00:00'
 - author: tom-leys
   changes:
   - {message: '"Dead" zombies have a chance to spring back to life at any moment,
@@ -2977,3 +2966,14 @@ Entries:
   - {message: Fixed the PA even more for real this time pinky promise I swear., type: Fix}
   id: 4280
   time: '2023-07-18T20:55:18.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Added new stamp sprites from TG Station., type: Add}
+  id: 4281
+  time: '2023-07-18T20:56:35.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Airlocks which have had their bolt wire cut will no longer re-bolt when
+      powering back on., type: Fix}
+  id: 4282
+  time: '2023-07-18T20:56:52.0000000+00:00'
