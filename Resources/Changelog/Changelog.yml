@@ -1,14 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The autolathe catalog has been expanded., type: Add}
-  - {message: You can now see what recipes a technology unlocks., type: Add}
-  - {message: The research console can now only select technologies from the specific
-      options given to the player., type: Tweak}
-  - {message: Technologies are now sorted into disciplines. Unlock all the techs in
-      a discipline to unlock higher tiered tech., type: Tweak}
-  id: 3774
-  time: '2023-05-15T20:17:31.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'After a terrible accident involving an unfortunately rotated circuit
@@ -2986,3 +2976,8 @@ Entries:
   - {message: Fixed the warden's armored winter coat sprite., type: Fix}
   id: 4273
   time: '2023-07-17T22:52:47.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: The Particle Accelerator should reliably scan parts again., type: Fix}
+  id: 4274
+  time: '2023-07-18T05:57:59.0000000+00:00'
