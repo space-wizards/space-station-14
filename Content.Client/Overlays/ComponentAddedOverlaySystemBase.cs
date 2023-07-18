@@ -93,7 +93,6 @@ namespace Content.Client.Overlays
             if (TryComp<T>(uid, out var component))
             {
                 ApplyOverlay(component);
-                return;
             }
 
             if (!(TryComp(uid, out InventoryComponent? inventoryComponent)
