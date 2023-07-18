@@ -12,10 +12,7 @@ namespace Content.Client.Overlays
     public sealed class ShowSecurityIconsSystem : ComponentAddedOverlaySystemBase<ShowSecurityIconsComponent>
     {
         [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
-
-        private Dictionary<string, StatusIconPrototype> _jobIcons = new();
 
         public override void Initialize()
         {
@@ -27,7 +24,9 @@ namespace Content.Client.Overlays
         private void OnGetStatusIconsEvent(EntityUid uid, BodyComponent _, ref GetStatusIconsEvent @event)
         {
             if (!IsActive)
+            {
                 return;
+            }
 
             var healthIcons = DecideSecurityIcon(uid);
 
@@ -37,7 +36,7 @@ namespace Content.Client.Overlays
         private IReadOnlyList<StatusIconPrototype> DecideSecurityIcon(EntityUid uid)
         {
             var result = new List<StatusIconPrototype>();
-            if (_entManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
+            if (TryComp<MetaDataComponent>(uid, out var metaDataComponent) &&
                 metaDataComponent.Flags.HasFlag(MetaDataFlags.InContainer))
             {
                 return result;
@@ -47,12 +46,12 @@ namespace Content.Client.Overlays
             if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
             {
                 // PDA
-                if (EntityManager.TryGetComponent(idUid, out PdaComponent? pda))
+                if (TryComp(idUid, out PdaComponent? pda))
                 {
                     iconToGet = pda.ContainedId?.JobTitle ?? string.Empty;
                 }
                 // ID Card
-                else if (EntityManager.TryGetComponent(idUid, out IdCardComponent? id))
+                else if (TryComp(idUid, out IdCardComponent? id))
                 {
                     iconToGet = id.JobTitle ?? string.Empty;
                 }
@@ -60,31 +59,23 @@ namespace Content.Client.Overlays
                 iconToGet = iconToGet.Replace(" ", "");
             }
 
-            iconToGet = EnsureIcon(iconToGet, _jobIcons);
-            result.Add(_jobIcons[iconToGet]);
+            var icon = GetJobIcon(iconToGet);
+            result.Add(icon);
 
             // Add arrest icons here, WYCI.
 
             return result;
         }
 
-        private string EnsureIcon(string iconKey, Dictionary<string, StatusIconPrototype> icons)
+        private StatusIconPrototype GetJobIcon(string iconKey)
         {
-            if (!icons.ContainsKey(iconKey))
+            if (_prototypeMan.TryIndex<StatusIconPrototype>($"JobIcon_{iconKey}", out var securityIcon))
             {
-                if (_prototypeMan.TryIndex<StatusIconPrototype>($"JobIcon_{iconKey}", out var securityIcon))
-                {
-                    icons.Add(iconKey, securityIcon);
-                    return iconKey;
-                }
-            }
-            else
-            {
-                return iconKey;
+                return securityIcon;
             }
 
             iconKey = "Unknown";
-            return EnsureIcon(iconKey, icons);
+            return GetJobIcon(iconKey);
         }
     }
 }

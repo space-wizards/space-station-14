@@ -10,8 +10,7 @@ namespace Content.Client.Overlays
     public abstract class ComponentAddedOverlaySystemBase<T> : EntitySystem where T : IComponent
     {
         [Dependency] private readonly IPlayerManager _player = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        private InventorySystem _invSystem = default!;
+        [Dependency] private readonly InventorySystem _invSystem = default!;
 
         protected bool IsActive = false;
 
@@ -29,8 +28,6 @@ namespace Content.Client.Overlays
             SubscribeLocalEvent<T, GotUnequippedEvent>(OnCompUnequip);
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-
-            _invSystem = _entityManager.System<InventorySystem>();
         }
 
         public void ApplyOverlay(T component)
@@ -51,65 +48,80 @@ namespace Content.Client.Overlays
 
         private void OnInit(EntityUid uid, T component, ComponentInit args)
         {
-            if (_player.LocalPlayer?.ControlledEntity == uid)
-            {
-                ApplyOverlay(component);
-            }
+            RefreshOverlay(uid);
         }
 
         private void OnRemove(EntityUid uid, T component, ComponentRemove args)
         {
-            if (_player.LocalPlayer?.ControlledEntity == uid)
-            {
-                RemoveOverlay();
-            }
+            RefreshOverlay(uid);
         }
 
         private void OnPlayerAttached(PlayerAttachedEvent args)
         {
-            if (TryComp<T>(args.Entity, out var component))
-                ApplyOverlay(component);
-
-            if (TryComp(args.Entity, out InventoryComponent? inventoryComponent)
-                && _invSystem.TryGetSlots(args.Entity, out var slotDefinitions, inventoryComponent))
-            {
-                foreach (var slot in slotDefinitions)
-                {
-                    if (_invSystem.TryGetSlotEntity(args.Entity, slot.Name, out var itemUid)
-                        && TryComp(itemUid.Value, out component))
-                    {
-                        OnCompEquip(itemUid.Value, component, new GotEquippedEvent(args.Entity, itemUid.Value, slot));
-                    }
-                }
-            }
+            RefreshOverlay(args.Entity);
         }
 
         private void OnPlayerDetached(PlayerDetachedEvent args)
         {
-            RemoveOverlay();
+            RefreshOverlay(args.Entity);
         }
 
         private void OnCompEquip(EntityUid uid, T component, GotEquippedEvent args)
         {
-            if (!TryComp<ClothingComponent>(uid, out var clothing)) return;
-
-            if (args.Equipee != _player.LocalPlayer?.ControlledEntity) return;
-
-            if (!clothing.Slots.HasFlag(args.SlotFlags)) return;
-
-            ApplyOverlay(component);
+            RefreshOverlay(args.Equipee);
         }
 
         private void OnCompUnequip(EntityUid uid, T component, GotUnequippedEvent args)
         {
-            if (args.Equipee != _player.LocalPlayer?.ControlledEntity) return;
-
-            RemoveOverlay();
+            RefreshOverlay(args.Equipee);
         }
 
         private void OnRoundRestart(RoundRestartCleanupEvent args)
         {
             RemoveOverlay();
+        }
+
+        private void RefreshOverlay(EntityUid uid)
+        {
+            RemoveOverlay();
+
+            if (uid != _player.LocalPlayer?.ControlledEntity)
+            {
+                return;
+            }
+
+            if (TryComp<T>(uid, out var component))
+            {
+                ApplyOverlay(component);
+                return;
+            }
+
+            if (!(TryComp(uid, out InventoryComponent? inventoryComponent)
+                && _invSystem.TryGetSlots(uid, out var slotDefinitions, inventoryComponent)))
+            {
+                return;
+            }
+
+            foreach (var slot in slotDefinitions)
+            {
+                if (!(_invSystem.TryGetSlotEntity(uid, slot.Name, out var itemUid)
+                    && TryComp(itemUid.Value, out component)))
+                {
+                    continue;
+                }
+
+                if (!TryComp<ClothingComponent>(itemUid, out var clothing))
+                {
+                    continue;
+                }
+
+                if (!clothing.Slots.HasFlag(slot.SlotFlags))
+                {
+                    continue;
+                }
+
+                ApplyOverlay(component);
+            }
         }
     }
 }
