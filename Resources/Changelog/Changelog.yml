@@ -1,11 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'After a terrible accident involving an unfortunately rotated circuit
-      board revision, the crew monitoring devices now should show the correct directions
-      again and shouldn''t be too harmful to look at for long periods of time.', type: Fix}
-  id: 3775
-  time: '2023-05-15T20:38:41.0000000+00:00'
 - author: SijyKijy
   changes:
   - {message: Fix out of range exception on `AddBodyPartCommand`, type: Fix}
@@ -2981,3 +2974,13 @@ Entries:
   - {message: The Particle Accelerator should reliably scan parts again., type: Fix}
   id: 4274
   time: '2023-07-18T05:57:59.0000000+00:00'
+- author: PrPleGoo
+  changes:
+  - {message: Added onion goggles for the chef. It displays hunger icons for hungry/overfed
+      mobs. Can also be eaten., type: Add}
+  - {message: The chef's starting gear now includes the onion goggles, type: Tweak}
+  - {message: The beer goggles now display thirst icons for thirsty/overhydrated mobs.,
+    type: Tweak}
+  - {message: The bartender's starting gear now includes the beer goggles, type: Tweak}
+  id: 4275
+  time: '2023-07-18T06:01:22.0000000+00:00'
