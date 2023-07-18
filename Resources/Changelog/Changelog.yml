@@ -1,12 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: 'Fixed a bug causing actions (toggle light, combat mode, etc) to not
-      update properly.', type: Fix}
-  id: 3780
-  time: '2023-05-16T03:00:14.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Fixed toggle-light actions for flashlights and hardsuits not appearing.,
     type: Fix}
   id: 3781
@@ -2978,3 +2972,8 @@ Entries:
   - {message: Non-command role requirements have been modified., type: Tweak}
   id: 4279
   time: '2023-07-18T19:04:26.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Fixed the PA even more for real this time pinky promise I swear., type: Fix}
+  id: 4280
+  time: '2023-07-18T20:55:18.0000000+00:00'
