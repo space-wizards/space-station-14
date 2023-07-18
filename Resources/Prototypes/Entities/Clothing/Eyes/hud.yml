@@ -30,3 +30,40 @@
     sprite: Clothing/Eyes/Hud/sec.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/sec.rsi
+  - type: ShowSecurityIcons
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudChef
+  name: onion goggles
+  description: Two onion rings that fused together while frying. They scan the humanoids in view and provide accurate data about their peckishness. Can be eaten as a little treat.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/friedoniongoggles.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/friedoniongoggles.rsi
+  - type: ShowHungerIcons
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+  - type: FlavorProfile
+    flavors:
+      - onion
+      - greasey
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesBeer
+  name: beer goggles
+  description: A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/beergoggles.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/beergoggles.rsi
+  - type: ShowThirstIcons
