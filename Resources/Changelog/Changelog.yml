@@ -1,10 +1,4 @@
 Entries:
-- author: SijyKijy
-  changes:
-  - {message: Fix out of range exception on `AddBodyPartCommand`, type: Fix}
-  - {message: Fix out of range exception on `RoleUnbanCommand`, type: Fix}
-  id: 3776
-  time: '2023-05-15T21:24:03.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: Cloner console now tells you to use the network configurator to link
@@ -2984,3 +2978,8 @@ Entries:
   - {message: The bartender's starting gear now includes the beer goggles, type: Tweak}
   id: 4275
   time: '2023-07-18T06:01:22.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Zombies have been removed as a round start game mode on secret., type: Remove}
+  id: 4276
+  time: '2023-07-18T09:21:08.0000000+00:00'
