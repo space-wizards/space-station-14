@@ -182,6 +182,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         {
             switch (task)
             {
+                // TODO: Need to make sure on the plan that teh compounds inside parallel etc are decomposed properly.
                 case HTNCompoundTask compound:
                     var compBranch = _protoManager.Index<HTNCompoundPrototype>(compound.Task).Branches[branchTraversalRecord[finalBtrIndex]];
 

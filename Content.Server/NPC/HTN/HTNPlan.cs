@@ -1,5 +1,3 @@
-using Content.Server.NPC.HTN.PrimitiveTasks;
-
 namespace Content.Server.NPC.HTN;
 
 /// <summary>
@@ -18,7 +16,10 @@ public sealed class HTNPlan
 
     public int Index = 0;
 
-    public HTNTask CurrentTask => Tasks[Index];
+    /// <summary>
+    /// Used for repeating tasks where we need to track
+    /// </summary>
+    public int SubIndex = 0;
 
     public HTNPlan(List<HTNTask> tasks, List<int> branchTraversalRecord, List<Dictionary<string, object>?> effects)
     {

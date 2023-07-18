@@ -125,7 +125,7 @@ public sealed class HTNSystem : EntitySystem
     {
         switch (task)
         {
-            case HTNCompoundTask compTask:
+            case HTNCompoundTask:
                 // NOOP, handled elsewhere
                 break;
             case HTNPrimitiveTask primitive:
@@ -167,6 +167,29 @@ public sealed class HTNSystem : EntitySystem
     public void Replan(HTNComponent component)
     {
         component.PlanAccumulator = 0f;
+    }
+
+    private IEnumerable<HTNPrimitiveTask> GetPrimitiveTasks(HTNPlan plan)
+    {
+        var current = plan.Tasks[plan.Index];
+
+        switch (current)
+        {
+            case HTNRepeatingTask repeating:
+                break;
+            case HTNParallelTask parallel:
+                foreach (var sub in parallel.Tasks)
+                {
+                    yield return sub;
+                }
+
+                break;
+            case HTNPrimitiveTask primitive:
+                yield return primitive;
+                break;
+            default:
+                throw new NotImplementedException();
+        }
     }
 
     public void UpdateNPC(ref int count, int maxUpdates, float frameTime)
