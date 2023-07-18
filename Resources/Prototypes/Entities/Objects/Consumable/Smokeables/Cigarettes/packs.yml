@@ -110,8 +110,8 @@
 - type: entity
   id: CigPackSyndicate
   parent: CigPackBase
-  name: Syndicate Smokes packet
-  description: Elite cigarettes for elite agents. Infused with medicine for when you need to do more than calm your nerves.
+  name: Interdyne herbals packet
+  description: Elite cigarettes for elite syndicate agents. Infused with medicine for when you need to do more than calm your nerves.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi

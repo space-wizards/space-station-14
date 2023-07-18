@@ -22,7 +22,7 @@
         true
       NavSmash: !type:Bool
         true
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Dragon
   - type: Speech

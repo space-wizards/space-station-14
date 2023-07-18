@@ -13,12 +13,14 @@ namespace Content.Shared.Shuttles.Components
     [NetworkedComponent]
     public sealed class PilotComponent : Component
     {
-        [ViewVariables] public SharedShuttleConsoleComponent? Console { get; set; }
+        [ViewVariables]
+        public EntityUid? Console { get; set; }
 
         /// <summary>
         /// Where we started piloting from to check if we should break from moving too far.
         /// </summary>
-        [ViewVariables] public EntityCoordinates? Position { get; set; }
+        [ViewVariables]
+        public EntityCoordinates? Position { get; set; }
 
         public const float BreakDistance = 0.25f;
 

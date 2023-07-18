@@ -37,6 +37,9 @@ namespace Content.Shared.Paper
         public Color StampedColor = Color.FromHex("#BB3232"); // StyleNano.DangerousRedFore
 
         [DataField("sound")]
-        public SoundSpecifier? Sound;
+        public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Items/Stamp/thick_stamp_sub.ogg")
+        {
+            Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(5f)
+        };
     }
 }

@@ -173,6 +173,20 @@
     deconstructionTarget: null
 
 - type: entity
+  name: sawn-off shogun
+  parent: WeaponShotgunSawn
+  id: WeaponShotgunSawnEmpty
+  description: Groovy! Uses .50 shotgun shells.
+  suffix: Empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Construction
+    graph: ShotgunSawn
+    node: shotgunsawn
+    deconstructionTarget: null
+
+- type: entity
   name: handmade pistol
   parent: BaseWeaponShotgun
   id: WeaponShotgunHandmade

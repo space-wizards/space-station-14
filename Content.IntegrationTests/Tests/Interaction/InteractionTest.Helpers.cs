@@ -753,22 +753,26 @@ public abstract partial class InteractionTest
             return false;
         }
 
-        if (!CEntMan.TryGetComponent(target, out ClientUserInterfaceComponent? ui))
+        if (!CEntMan.TryGetComponent<ClientUserInterfaceComponent>(target, out var ui))
         {
             if (shouldSucceed)
                 Assert.Fail($"Entity {SEntMan.ToPrettyString(target.Value)} does not have a bui component");
             return false;
         }
 
-        bui = ui.Interfaces.FirstOrDefault(x => x.UiKey.Equals(key));
-        if (bui == null)
+        if (!ui.OpenInterfaces.TryGetValue(key, out bui))
         {
             if (shouldSucceed)
                 Assert.Fail($"Entity {SEntMan.ToPrettyString(target.Value)} does not have an open bui with key {key.GetType()}.{key}.");
             return false;
         }
 
-        Assert.That(shouldSucceed, Is.True);
+        var bui2 = bui;
+        Assert.Multiple(() =>
+        {
+            Assert.That(bui2.UiKey, Is.EqualTo(key), $"Bound user interface {bui2} is indexed by a key other than the one assigned to it somehow. {bui2.UiKey} != {key}");
+            Assert.That(shouldSucceed, Is.True);
+        });
         return true;
     }
 

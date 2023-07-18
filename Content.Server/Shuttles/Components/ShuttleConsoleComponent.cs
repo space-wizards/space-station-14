@@ -7,7 +7,7 @@ namespace Content.Server.Shuttles.Components
     public sealed class ShuttleConsoleComponent : SharedShuttleConsoleComponent
     {
         [ViewVariables]
-        public readonly List<PilotComponent> SubscribedPilots = new();
+        public readonly List<EntityUid> SubscribedPilots = new();
 
         /// <summary>
         /// How much should the pilot's eye be zoomed by when piloting using this console?

@@ -10,16 +10,16 @@ namespace Content.Client.Paper.UI
     [UsedImplicitly]
     public sealed class PaperBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private PaperWindow? _window;
 
-        public PaperBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public PaperBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
         protected override void Open()
         {
             base.Open();
-            var entityMgr = IoCManager.Resolve<IEntityManager>();
 
             _window = new PaperWindow();
             _window.OnClose += Close;
@@ -33,10 +33,9 @@ namespace Content.Client.Paper.UI
                 }
             };
 
-            var paperEntity = Owner.Owner;
-            if (entityMgr.TryGetComponent<PaperVisualsComponent>(paperEntity, out var visuals))
+            if (EntMan.TryGetComponent<PaperVisualsComponent>(Owner, out var visuals))
             {
-                _window.InitVisuals(paperEntity, visuals);
+                _window.InitVisuals(Owner, visuals);
             }
 
             _window.OpenCentered();
