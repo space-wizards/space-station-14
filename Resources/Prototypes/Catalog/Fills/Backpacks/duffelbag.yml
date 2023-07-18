@@ -310,8 +310,8 @@
       - id: MedkitCombatFilled
       - id: Defibrillator
       - id: CombatMedipen
-        amount: 2
+        amount: 3
       - id: ClothingHandsGlovesLatex
-      - id: Gauze
+      - id: SyringeTranexamicAcid
       - id: SyringeSpaceacillin
       - id: SyringeHyronalin
