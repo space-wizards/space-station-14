@@ -18,6 +18,7 @@ job-description-paramedic = Rescue critically injured patients all over the stat
 job-description-detective = Investigate crime scenes using forensic tools, ensure that the guilty party is found, and have a couple smokes.
 job-description-doctor = Diagnose and heal crewmembers through medicinal chemicals, vaccinations, along with cloning the dead.
 job-description-engineer = Keep the station's main engine & solars active, optimize the power network, and make emergency repairs using your hardsuit.
+job-description-senior-engineer = Teach new engineers the basics of the station's engine, repairing, atmospherics and power while acting as the CE's second in command.
 job-description-ertengineer = Ensure that the station has power and clean air.
 job-description-ertjanitor = Ensure that the station is properly cleaned--for morale.
 job-description-ertleader = Lead the Emergency Response Team in dealing with threats to Nanotrasen assets.

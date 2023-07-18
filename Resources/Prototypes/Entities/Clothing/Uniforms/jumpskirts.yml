@@ -718,3 +718,14 @@
       sprite: Clothing/Uniforms/Jumpskirt/skirtoflife.rsi
     - type: Clothing
       sprite: Clothing/Uniforms/Jumpskirt/skirtoflife.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtSeniorEngineer
+  name: senior engineer jumpskirt
+  description: A sign of skill and prestige within the engineering department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/senior_engineer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/senior_engineer.rsi

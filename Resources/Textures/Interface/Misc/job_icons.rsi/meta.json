@@ -147,6 +147,9 @@
         },
         {
             "name": "Zookeeper"
-        }
+        },
+		{
+			"name": "SeniorEngineer"
+		}
     ]
 }

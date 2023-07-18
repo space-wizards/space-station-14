@@ -1192,3 +1192,14 @@
       sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
     - type: Clothing
       sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorEngineer
+  name: senior engineer jumpsuit
+  description: A sign of skill and prestige within the engineering department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/senior_engineer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/senior_engineer.rsi

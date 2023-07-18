@@ -874,3 +874,17 @@
         - Write
   - type: Unremoveable
 
+- type: entity
+  parent: BasePDA
+  id: SeniorEngineerPDA
+  name: senior engineer PDA
+  description: Beaten, battered, dusty and broken, but just barely useable.
+  components:
+  - type: Pda
+    id: SeniorEngineerIDCard
+    state: pda-seniorengineer
+  - type: PdaBorderColor
+    borderColor: "#949137"
+    accentVColor: "#CD6900"
+  - type: Icon
+    state: pda-seniorengineer

@@ -9,7 +9,7 @@
       time: 3600
   startingGear: AtmosphericTechnicianGear
   icon: "AtmosphericTechnician"
-  supervisors: job-supervisors-ce
+  supervisors: job-supervisors-high-engineering
   access:
   - Maintenance
   - Engineering
