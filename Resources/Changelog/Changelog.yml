@@ -1,10 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: Cloner console now tells you to use the network configurator to link
-      it up., type: Fix}
-  id: 3777
-  time: '2023-05-15T22:14:03.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Cargo trade stations now offer better prices for artifacts that have
@@ -2983,3 +2977,8 @@ Entries:
   - {message: Zombies have been removed as a round start game mode on secret., type: Remove}
   id: 4276
   time: '2023-07-18T09:21:08.0000000+00:00'
+- author: ArthurMousatov
+  changes:
+  - {message: Dead mobs now appear above puddles!, type: Fix}
+  id: 4277
+  time: '2023-07-18T11:14:00.0000000+00:00'
