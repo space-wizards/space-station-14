@@ -1,10 +1,8 @@
 ﻿using Content.Server.Mining.Components;
 using Content.Shared.Destructible;
-using Content.Shared.Hands.Components;
 using Content.Shared.Mining;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -17,72 +15,30 @@ public sealed class MiningSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<OreVeinComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<OreVeinComponent, DestructionEventArgs>(OnDestruction);
     }
 
     private void OnDestruction(EntityUid uid, OreVeinComponent component, DestructionEventArgs args)
     {
-        if (!_random.Prob(component.OreChance))
+        if (component.CurrentOre == null)
             return;
 
-        string? currentOre = null;
+        var proto = _proto.Index<OrePrototype>(component.CurrentOre);
 
-        if (component.CurrentOre != null)
-        {
-            currentOre = component.CurrentOre;
-        }
-        else
-        {
-            string? weightedRandom = null;
-
-            if (component.MappedTools != null)
-            {
-                var gatherUser = args.GatherUser;
-                var gatherTool = args.GatherTool;
-
-                foreach (var (toolTag, mappedWeightedRandom) in component.MappedTools)
-                {
-                    if (gatherTool != null && _tagSystem.HasTag(gatherTool.Value, toolTag) || toolTag == "Hand" && gatherTool == null && TryComp<HandsComponent>(gatherUser, out var _) || toolTag == "All")
-                    {
-                        weightedRandom = mappedWeightedRandom;
-                        break;
-                    }
-                }
-            }
-
-            if (weightedRandom == null && component.OreRarityPrototypeId != null)
-            {
-                weightedRandom = component.OreRarityPrototypeId;
-            }
-
-            if (weightedRandom != null)
-            {
-                currentOre = _proto.Index<WeightedRandomPrototype>(weightedRandom).Pick(_random);
-            }
-        }
-
-        OrePrototype? proto = null;
-
-        if (currentOre != null)
-        {
-            proto = _proto.Index<OrePrototype>(currentOre);
-        }
-
-        if (proto?.OreEntity == null)
+        if (proto.OreEntity == null)
             return;
 
         var coords = Transform(uid).Coordinates;
-        var amountToSpawn = _random.Next(proto.MinOreYield, proto.MaxOreYield);
-
-        for (var i = 0; i < amountToSpawn; i++)
+        var toSpawn = _random.Next(proto.MinOreYield, proto.MaxOreYield);
+        for (var i = 0; i < toSpawn; i++)
         {
-            Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(component.Radius)));
+            Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.2f)));
         }
     }
 

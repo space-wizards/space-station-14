@@ -62,6 +62,7 @@
       chance: 0.6
       offset: 0.0
 
+
 - type: entity
   name: Maint Loot Spawner
   suffix: Tools+Cells+Mats
@@ -140,9 +141,9 @@
       layers:
         - state: red
         - sprite: Objects/Misc/spaceshroom.rsi
-          state: structure
+          state: spaceshroom
     - type: RandomSpawner
       prototypes:
-        - Spaceshroom
+        - FoodSpaceshroom
       chance: 0.6
       offset: 0.0

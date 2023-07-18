@@ -18,12 +18,6 @@
         Slash: 10
   - type: Item
     sprite: Objects/Tools/Hydroponics/hoe.rsi
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 50
-    gatheringTime: 0.50
-    MaxGatheringEntities: 1
 
 - type: entity
   name: plant clippers
@@ -44,12 +38,6 @@
         Slash: 7
   - type: Item
     sprite: Objects/Tools/Hydroponics/clippers.rsi
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 50
-    gatheringTime: 1.0
-    MaxGatheringEntities: 1
 
 - type: entity
   name: scythe
@@ -57,9 +45,6 @@
   id: HydroponicsToolScythe
   description: A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow.
   components:
-  - type: Tag
-    tags:
-    - BotanyScythe
   - type: Sharp
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi
@@ -77,12 +62,6 @@
     - back
   - type: StaticPrice
     price: 40
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 50
-    gatheringTime: 1.0
-    MaxGatheringEntities: 2
 
 - type: entity
   name: hatchet
@@ -105,12 +84,6 @@
         Piercing: 5
   - type: Item
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 50
-    gatheringTime: 1.0
-    MaxGatheringEntities: 1
 
 - type: entity
   name: spade
@@ -133,12 +106,6 @@
         Piercing: 5 # I guess you can stab it into them?
   - type: Item
     sprite: Objects/Tools/Hydroponics/spade.rsi
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 50
-    gatheringTime: 0.50
-    MaxGatheringEntities: 1
 
 - type: entity
   name: plant bag

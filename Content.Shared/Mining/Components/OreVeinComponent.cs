@@ -1,8 +1,6 @@
 ﻿using Content.Shared.Mining;
 using Content.Shared.Random;
-using Content.Shared.Tag;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Mining.Components;
 
@@ -26,23 +24,9 @@ public sealed class OreVeinComponent : Component
     public string? OreRarityPrototypeId;
 
     /// <summary>
-    /// The weighted random prototype used for determining what ore will be dropped.
-    /// Keyed to a specific tool.
-    /// </summary>
-    [DataField("mappedTools", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<string, TagPrototype>))]
-    public Dictionary<string, string>? MappedTools = new();
-
-    /// <summary>
     /// The ore that this entity holds.
     /// If set in the prototype, it will not be overriden.
     /// </summary>
     [DataField("currentOre", customTypeSerializer: typeof(PrototypeIdSerializer<OrePrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string? CurrentOre;
-
-    /// <summary>
-    ///     The radius of the circle that the dropped entities can be randomly spawned in.
-    ///     Centered on the entity.
-    /// </summary>
-    [DataField("radius")]
-    public float Radius = 0.2f;
 }

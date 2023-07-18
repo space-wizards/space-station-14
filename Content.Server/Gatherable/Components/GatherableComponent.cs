@@ -14,8 +14,18 @@ public sealed class GatherableComponent : Component
     public EntityWhitelist? ToolWhitelist;
 
     /// <summary>
-    ///     The amount of time in seconds it takes to complete the gathering action by hand.
+    ///     YAML example below
+    ///     (Tag1, Tag2, LootTableID1, LootTableID2 are placeholders for example)
+    ///     --------------------
+    ///     useMappedLoot: true
+    ///     whitelist:
+    ///       tags:
+    ///        - Tag1
+    ///        - Tag2
+    ///     mappedLoot:
+    ///       Tag1: LootTableID1
+    ///       Tag2: LootTableID2
     /// </summary>
-    [DataField("harvestTime")]
-    public float HarvestTime = 1.0f;
+    [DataField("loot")]
+    public Dictionary<string, string>? MappedLoot = new();
 }

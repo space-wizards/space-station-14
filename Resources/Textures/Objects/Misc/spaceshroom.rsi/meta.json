@@ -8,13 +8,10 @@
     },
     "states": [
         {
-            "name": "structure"
+            "name": "spaceshroom"
         },
         {
-            "name": "object"
-        },
-        {
-            "name": "object_cooked"
+            "name": "spaceshroom_cooked"
         }
     ]
 }
