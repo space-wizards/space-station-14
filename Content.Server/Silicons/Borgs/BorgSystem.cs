@@ -1,11 +1,14 @@
 ﻿using Content.Server.Administration.Managers;
 using Content.Server.Body.Systems;
-using Content.Server.Ghost.Roles;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players.PlayTimeTracking;
+using Content.Server.PowerCell;
+using Content.Shared.Alert;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.PowerCell.Components;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Throwing;
@@ -21,9 +24,11 @@ public sealed partial class BorgSystem : SharedBorgSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly RoleBanManager _roleBan = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly BodySystem _bobby = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PlayTimeTrackingSystem _playTimeTracking = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
 
@@ -32,15 +37,21 @@ public sealed partial class BorgSystem : SharedBorgSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<BorgChassisComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<BorgChassisComponent, AfterInteractUsingEvent>(OnChassisInteractUsing);
         SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<BorgChassisComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<BorgChassisComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<BorgChassisComponent, PowerCellChangedEvent>(OnPowerCellChanged);
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
 
         InitializeMMI();
+    }
+    private void OnMapInit(EntityUid uid, BorgChassisComponent component, MapInitEvent args)
+    {
+        UpdateBatteryAlert(uid);
     }
 
     private void OnChassisInteractUsing(EntityUid uid, BorgChassisComponent component, AfterInteractUsingEvent args)
@@ -98,6 +109,11 @@ public sealed partial class BorgSystem : SharedBorgSystem
         BorgShutdown(uid, component);
     }
 
+    private void OnPowerCellChanged(EntityUid uid, BorgChassisComponent component, PowerCellChangedEvent args)
+    {
+        UpdateBatteryAlert(uid);
+    }
+
     private void OnBrainMindAdded(EntityUid uid, BorgBrainComponent component, MindAddedMessage args)
     {
         if (!Container.TryGetOuterContainer(uid, Transform(uid), out var container))
@@ -123,15 +139,33 @@ public sealed partial class BorgSystem : SharedBorgSystem
         _mind.TransferTo(mind, containerEnt);
     }
 
+    private void UpdateBatteryAlert(EntityUid uid, PowerCellSlotComponent? slotComponent = null)
+    {
+        var chargePercent = 0f;
+        if (_powerCell.TryGetBatteryFromSlot(uid, out var battery, slotComponent))
+        {
+            chargePercent = MathF.Round(battery.CurrentCharge / battery.MaxCharge * 10f);
+
+            // we make sure 0 only shows if they have absolutely no battery.
+            if (chargePercent < 1 && battery.CurrentCharge != 0)
+            {
+                chargePercent = 1;
+            }
+        }
+
+        _alerts.ShowAlert(uid, AlertType.BorgBattery, (short) chargePercent);
+    }
+
     public void BorgStartup(EntityUid uid, BorgChassisComponent component)
     {
         Popup.PopupEntity(Loc.GetString("borg-mind-added", ("name", Identity.Name(uid, EntityManager))), uid);
+        _powerCell.SetPowerCellDrawEnabled(uid, true);
     }
 
     public void BorgShutdown(EntityUid uid, BorgChassisComponent component)
     {
         Popup.PopupEntity(Loc.GetString("borg-mind-removed", ("name", Identity.Name(uid, EntityManager))), uid);
-
+        _powerCell.SetPowerCellDrawEnabled(uid, false);
     }
 
     /// <summary>

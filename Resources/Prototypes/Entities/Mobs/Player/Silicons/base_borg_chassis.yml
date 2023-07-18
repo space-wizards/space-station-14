@@ -67,6 +67,19 @@
     LayoutId: Borg
   - type: NameIdentifier
     group: Silicon
+  - type: ContainerContainer
+    containers:
+      borg_brain: !type:ContainerSlot { }
+      cell_slot: !type:ContainerSlot { }
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    fitsInCharger: false
+  - type: PowerCellDraw
+    drawRate: 0.6
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
   - type: DoAfter
   - type: Actions
   - type: TypingIndicator

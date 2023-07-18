@@ -259,6 +259,12 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
             }
 
+            var ev = new ItemSlotInsertAttemptEvent(uid, usedUid, slot);
+            RaiseLocalEvent(uid, ref ev);
+            RaiseLocalEvent(usedUid, ref ev);
+            if (ev.Cancelled)
+                return false;
+
             return slot.ContainerSlot?.CanInsertIfEmpty(usedUid, EntityManager) ?? false;
         }
 
@@ -317,9 +323,15 @@ namespace Content.Shared.Containers.ItemSlots
 
         #region Eject
 
-        public bool CanEject(ItemSlot slot)
+        public bool CanEject(EntityUid uid, ItemSlot slot)
         {
             if (slot.Locked || slot.Item == null)
+                return false;
+
+            var ev = new ItemSlotEjectAttemptEvent(uid, slot.Item.Value, slot);
+            RaiseLocalEvent(uid, ref ev);
+            RaiseLocalEvent(slot.Item.Value, ref ev);
+            if (ev.Cancelled)
                 return false;
 
             return slot.ContainerSlot?.CanRemove(slot.Item.Value, EntityManager) ?? false;
@@ -352,7 +364,7 @@ namespace Content.Shared.Containers.ItemSlots
             item = null;
 
             // This handles logic with the slot itself
-            if (!CanEject(slot))
+            if (!CanEject(uid, slot))
                 return false;
 
             item = slot.Item;
@@ -467,7 +479,7 @@ namespace Content.Shared.Containers.ItemSlots
                     // alt-click verb, there will be a "Take item" primary interaction verb.
                     continue;
 
-                if (!CanEject(slot))
+                if (!CanEject(uid, slot))
                     continue;
 
                 if (!_actionBlockerSystem.CanPickup(args.User, slot.Item!.Value))
@@ -504,7 +516,7 @@ namespace Content.Shared.Containers.ItemSlots
             // If there are any slots that eject on left-click, add a "Take <item>" verb.
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!slot.EjectOnInteract || !CanEject(slot))
+                if (!slot.EjectOnInteract || !CanEject(uid, slot))
                     continue;
 
                 if (!_actionBlockerSystem.CanPickup(args.User, slot.Item!.Value))

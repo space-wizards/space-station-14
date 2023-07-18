@@ -381,7 +381,7 @@ public sealed class MindSystem : EntitySystem
     /// <exception cref="ArgumentException">
     ///     Thrown if <paramref name="entity"/> is already owned by another mind.
     /// </exception>
-    public void  TransferTo(Mind mind, EntityUid? entity, bool ghostCheckOverride = false)
+    public void TransferTo(Mind mind, EntityUid? entity, bool ghostCheckOverride = false)
     {
         if (entity == mind.OwnedEntity)
             return;

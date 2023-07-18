@@ -331,7 +331,7 @@ namespace Content.Server.Strip
 
                 if (!_inventorySystem.CanUnequip(user, target, slot, out var reason))
                 {
-                    _popup.PopupCursor(reason, user);
+                    _popup.PopupCursor(Loc.GetString(reason), user);
                     return false;
                 }
 
