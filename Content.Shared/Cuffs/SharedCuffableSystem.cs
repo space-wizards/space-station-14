@@ -276,8 +276,8 @@ namespace Content.Shared.Cuffs
                 return;
             }
 
-            var result = TryCuffing(args.User, target, uid, component);
-            args.Handled = result;
+            TryCuffing(args.User, target, uid, component);
+            args.Handled = false;
         }
 
         private void OnCuffMeleeHit(EntityUid uid, HandcuffComponent component, MeleeHitEvent args)

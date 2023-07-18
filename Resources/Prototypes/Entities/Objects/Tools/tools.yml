@@ -92,6 +92,7 @@
   id: Wrench
   description: 'A common tool for assembly and disassembly. Remember: righty tighty, lefty loosey.'
   components:
+  - type: UnPlaceable
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/wrench_drop.ogg

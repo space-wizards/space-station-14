@@ -258,9 +258,11 @@ namespace Content.Server.Tools
                 {
                     _popupSystem.PopupEntity(Loc.GetString("welder-component-no-fuel-in-tank", ("owner", args.Target)), uid, args.User);
                 }
+                args.Handled = true;
+                return;
             }
 
-            args.Handled = true;
+            args.Handled = false;
         }
 
         private void OnWelderToolUseAttempt(EntityUid uid, WelderComponent welder, DoAfterAttemptEvent<ToolDoAfterEvent> args)

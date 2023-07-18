@@ -6,8 +6,10 @@ using Content.Server.Extinguisher;
 using Content.Server.Fluids.Components;
 using Content.Server.Popups;
 using Content.Shared.Cooldown;
+using Content.Shared.Disposal.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Placeable;
 using Content.Shared.Vapor;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -37,6 +39,13 @@ public sealed class SpraySystem : EntitySystem
     {
         if (args.Handled)
             return;
+
+        //do not spray on table and disposal unit
+        if (HasComp<PlaceableSurfaceComponent>(args.Target)
+            || HasComp<SharedDisposalUnitComponent>(args.Target))
+        {
+            return;
+        }
 
         args.Handled = true;
 

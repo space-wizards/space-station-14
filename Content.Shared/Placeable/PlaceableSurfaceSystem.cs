@@ -64,6 +64,9 @@ namespace Content.Shared.Placeable
             if (HasComp<DumpableComponent>(args.Used))
                 return;
 
+            if (HasComp<UnPlaceableComponent>(args.Used))
+                return;
+
             if (!_handsSystem.TryDrop(args.User, args.Used))
                 return;
 

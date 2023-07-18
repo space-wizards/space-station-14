@@ -12,10 +12,12 @@ using Content.Shared.Interaction.Events;
 using Robust.Shared.GameStates;
 using Content.Shared.DoAfter;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Placeable;
 using Content.Shared.Verbs;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
 using Content.Shared.Popups;
+using Linguini.Syntax.Ast;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -69,7 +71,7 @@ public sealed partial class ChemistrySystem
         }
     }
 
-    private void UseInjector(EntityUid target, EntityUid user, EntityUid injector, InjectorComponent component)
+    private bool UseInjector(EntityUid target, EntityUid user, EntityUid injector, InjectorComponent component)
     {
         // Handle injecting/drawing for solutions
         if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
@@ -86,6 +88,10 @@ public sealed partial class ChemistrySystem
             {
                 TryInjectIntoBloodstream(component, injector, target, bloodstream, user);
             }
+            else if (HasComp<PlaceableSurfaceComponent>(target))
+            {
+                return false;
+            }
             else
             {
                 _popup.PopupEntity(Loc.GetString("injector-component-cannot-transfer-message",
@@ -98,7 +104,7 @@ public sealed partial class ChemistrySystem
             if (TryComp<BloodstreamComponent>(target, out var stream))
             {
                 TryDraw(component, injector, target, stream.BloodSolution, user, stream);
-                return;
+                return true;
             }
 
             // Draw from an object (food, beaker, etc)
@@ -106,12 +112,18 @@ public sealed partial class ChemistrySystem
             {
                 TryDraw(component, injector, target, drawableSolution, user);
             }
+            else if (HasComp<PlaceableSurfaceComponent>(target))
+            {
+                return false;
+            }
             else
             {
                 _popup.PopupEntity(Loc.GetString("injector-component-cannot-draw-message",
                     ("target", Identity.Entity(target, EntityManager))), injector, user);
             }
         }
+
+        return true;
     }
 
     private void OnSolutionChange(EntityUid uid, InjectorComponent component, SolutionChangedEvent args)
@@ -134,8 +146,7 @@ public sealed partial class ChemistrySystem
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
-        UseInjector(args.Args.Target.Value, args.Args.User, uid, component);
-        args.Handled = true;
+        args.Handled = UseInjector(args.Args.Target.Value, args.Args.User, uid, component);
     }
 
     private void OnInjectorAfterInteract(EntityUid uid, InjectorComponent component, AfterInteractEvent args)
@@ -159,8 +170,7 @@ public sealed partial class ChemistrySystem
             return;
         }
 
-        UseInjector(target, args.User, uid, component);
-        args.Handled = true;
+        args.Handled = UseInjector(target, args.User, uid, component);
     }
 
     private void OnInjectorStartup(EntityUid uid, InjectorComponent component, ComponentStartup args)
@@ -312,7 +322,7 @@ public sealed partial class ChemistrySystem
 
         // Move units from attackSolution to targetSolution
         Solution removedSolution;
-        if (TryComp<StackComponent>(targetEntity, out var stack)) 
+        if (TryComp<StackComponent>(targetEntity, out var stack))
             removedSolution = _solutions.SplitStackSolution(injector, solution, realTransferAmount, stack.Count);
         else
           removedSolution = _solutions.SplitSolution(injector, solution, realTransferAmount);
