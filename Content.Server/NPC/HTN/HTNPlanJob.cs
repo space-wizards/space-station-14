@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.NPC.HTN.PrimitiveTasks;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN;
 
@@ -15,6 +16,8 @@ public sealed class HTNPlanJob : Job<HTNPlan>
     private readonly HTNCompoundTask _rootTask;
     private NPCBlackboard _blackboard;
 
+    private IPrototypeManager _protoManager;
+
     /// <summary>
     /// Branch traversal of an existing plan (if applicable).
     /// </summary>
@@ -22,12 +25,14 @@ public sealed class HTNPlanJob : Job<HTNPlan>
 
     public HTNPlanJob(
         double maxTime,
+        IPrototypeManager protoManager,
         HTNSystem htn,
         HTNCompoundTask rootTask,
         NPCBlackboard blackboard,
         List<int>? branchTraversal,
         CancellationToken cancellationToken = default) : base(maxTime, cancellationToken)
     {
+        _protoManager = protoManager;
         _htn = htn;
         _rootTask = rootTask;
         _blackboard = blackboard;
@@ -97,6 +102,17 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                         RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, finalPlan, ref primitiveCount, ref _blackboard, ref btrIndex, ref btr);
                     }
                     break;
+                case HTNParallelTask parallel:
+                    // Treated similar to a compound.
+                    await SuspendIfOutOfTime();
+
+                    break;
+                case HTNRepeatingTask repeating:
+                    // Also treated similar to a compound.
+                    await SuspendIfOutOfTime();
+
+                    break;
+
                 case HTNPrimitiveTask primitive:
                     if (await WaitAsyncTask(PrimitiveConditionMet(primitive, _blackboard, appliedStates)))
                     {
@@ -163,9 +179,10 @@ public sealed class HTNPlanJob : Job<HTNPlan>
     /// <summary>
     /// Goes through each compound task branch and tries to find an appropriate one.
     /// </summary>
-    private bool TryFindSatisfiedMethod(HTNCompoundTask compound, Queue<HTNTask> tasksToProcess, NPCBlackboard blackboard, ref int mtrIndex)
+    private bool TryFindSatisfiedMethod(HTNCompoundTask compoundId, Queue<HTNTask> tasksToProcess, NPCBlackboard blackboard, ref int mtrIndex)
     {
-        var compBranches = _htn.CompoundBranches[compound];
+        var compound = _protoManager.Index<HTNCompoundPrototype>(compoundId.Task);
+        var compBranches = _htn.CompoundBranches[compoundId];
 
         for (var i = mtrIndex; i < compound.Branches.Count; i++)
         {
