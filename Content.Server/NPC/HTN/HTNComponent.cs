@@ -11,8 +11,8 @@ public sealed class HTNComponent : NPCComponent
     /// The base task to use for planning
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite),
-     DataField("rootTask", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<HTNCompoundTask>))]
-    public string RootTask = default!;
+     DataField("rootTask", required: true)]
+    public HTNTask RootTask = default!;
 
     /// <summary>
     /// Check any active services for our current plan. This is used to find new targets for example without changing our plan.

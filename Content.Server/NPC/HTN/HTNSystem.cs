@@ -67,7 +67,9 @@ public sealed class HTNSystem : EntitySystem
     private void OnLoad()
     {
         // Clear all NPCs in case they're hanging onto stale tasks
-        foreach (var comp in EntityQuery<HTNComponent>(true))
+        var query = AllEntityQuery<HTNComponent>();
+
+        while (query.MoveNext(out var comp))
         {
             comp.PlanningToken?.Cancel();
             comp.PlanningToken = null;
@@ -232,7 +234,7 @@ public sealed class HTNSystem : EntitySystem
                         {
                             text.AppendLine($"BTR: {string.Join(", ", comp.Plan.BranchTraversalRecord)}");
                             text.AppendLine($"tasks:");
-                            var root = _prototypeManager.Index<HTNCompoundTask>(comp.RootTask);
+                            var root = comp.RootTask;
                             var btr = new List<int>();
                             var level = -1;
                             AppendDebugText(root, text, comp.Plan.BranchTraversalRecord, btr, ref level);
@@ -272,7 +274,7 @@ public sealed class HTNSystem : EntitySystem
 
         if (task is HTNPrimitiveTask primitive)
         {
-            text.AppendLine(primitive.ID);
+            text.AppendLine(primitive.ToString());
             return;
         }
 
@@ -408,7 +410,7 @@ public sealed class HTNSystem : EntitySystem
             0.02,
             _prototypeManager,
             this,
-            _prototypeManager.Index<HTNCompoundTask>(component.RootTask),
+            component.RootTask,
             component.Blackboard.ShallowClone(), branchTraversal, cancelToken.Token);
 
         _planQueue.EnqueueJob(job);
@@ -432,13 +434,13 @@ public sealed class HTNSystem : EntitySystem
 
         if (task is HTNPrimitiveTask primitive)
         {
-            builder.AppendLine(buffer + $"Primitive: {task.ID}");
+            builder.AppendLine(buffer + $"Primitive: {task}");
             builder.AppendLine(buffer + $"  operator: {primitive.Operator.GetType().Name}");
         }
         else if (task is HTNCompoundTask compTask)
         {
             var compound = _prototypeManager.Index<HTNCompoundPrototype>(compTask.Task);
-            builder.AppendLine(buffer + $"Compound: {task.ID}");
+            builder.AppendLine(buffer + $"Compound: {task}");
             var compoundBranches = CompoundBranches[compound];
 
             for (var i = 0; i < compound.Branches.Count; i++)

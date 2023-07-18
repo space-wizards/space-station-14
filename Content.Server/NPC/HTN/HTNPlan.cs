@@ -12,17 +12,15 @@ public sealed class HTNPlan
     /// </summary>
     public readonly List<Dictionary<string, object>?> Effects;
 
-    public List<int> BranchTraversalRecord;
+    public readonly List<int> BranchTraversalRecord;
 
-    public List<HTNPrimitiveTask> Tasks;
+    public readonly List<HTNTask> Tasks;
 
     public int Index = 0;
 
-    public HTNPrimitiveTask CurrentTask => Tasks[Index];
+    public HTNTask CurrentTask => Tasks[Index];
 
-    public HTNOperator CurrentOperator => CurrentTask.Operator;
-
-    public HTNPlan(List<HTNPrimitiveTask> tasks, List<int> branchTraversalRecord, List<Dictionary<string, object>?> effects)
+    public HTNPlan(List<HTNTask> tasks, List<int> branchTraversalRecord, List<Dictionary<string, object>?> effects)
     {
         Tasks = tasks;
         BranchTraversalRecord = branchTraversalRecord;
