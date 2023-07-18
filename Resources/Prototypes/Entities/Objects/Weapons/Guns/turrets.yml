@@ -11,6 +11,24 @@
       drawdepth: WallMountedItems
       layers:
         - state: syndie_broken
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 450
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 2
+                  max: 4
 
 - type: entity
   parent: BaseStructure
@@ -98,16 +116,57 @@
   id: WeaponTurretSyndicate
   suffix: Syndicate
   components:
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - Syndicate
+
+- type: entity
+  parent: BaseWeaponTurret
+  name: disposable ballistic turret
+  id: WeaponTurretSyndicateDisposable
+  suffix: Syndicate, Disposable
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 600
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                WeaponTurretSyndicateBroken:
+                  min: 1
+                  max: 1
+    - type: Gun
+      fireRate: 2.5
+      selectedMode: FullAuto
+      availableModes:
+        - FullAuto
+      soundGunshot: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
+    - type: BallisticAmmoProvider
+      proto: CartridgePistol
+      capacity: 125
 
 - type: entity
   parent: BaseWeaponTurret
   id: WeaponTurretNanoTrasen
   suffix: NanoTrasen
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - NanoTrasen
 
@@ -116,7 +175,7 @@
   id: WeaponTurretHostile
   suffix: Hostile
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
 
@@ -127,7 +186,7 @@
   id: WeaponTurretXeno
   suffix: Xeno
   components:
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - Xeno
     - type: Sprite

@@ -44,14 +44,14 @@ namespace Content.Shared.Zombies
         /// The baseline infection chance you have if you are completely nude
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MaxZombieInfectionChance = 0.30f;
+        public float MaxZombieInfectionChance = 0.50f;
 
         /// <summary>
         /// The minimum infection chance possible. This is simply to prevent
         /// being invincible by bundling up.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MinZombieInfectionChance = 0.05f;
+        public float MinZombieInfectionChance = 0.20f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float ZombieMovementSpeedDebuff = 0.70f;
@@ -140,5 +140,17 @@ namespace Content.Shared.Zombies
         /// </summary>
         [DataField("greetSoundNotification")]
         public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
+
+        /// <summary>
+        /// The blood reagent of the humanoid to restore in case of cloning
+        /// </summary>
+        [DataField("beforeZombifiedBloodReagent")]
+        public string BeforeZombifiedBloodReagent = String.Empty;
+
+        /// <summary>
+        /// The blood reagent to give the zombie. In case you want zombies that bleed milk, or something.
+        /// </summary>
+        [DataField("newBloodReagent")]
+        public string NewBloodReagent = "ZombieBlood";
     }
 }

@@ -9,6 +9,7 @@ namespace Content.Server.Atmos.Monitor.Components;
 public sealed class AirAlarmComponent : Component
 {
     [ViewVariables] public AirAlarmMode CurrentMode { get; set; } = AirAlarmMode.Filtering;
+    [ViewVariables] public bool AutoMode { get; set; } = true;
 
     // Remember to null this afterwards.
     [ViewVariables] public IAirAlarmModeUpdate? CurrentModeUpdater { get; set; }

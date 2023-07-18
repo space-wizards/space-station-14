@@ -506,6 +506,53 @@
           Quantity: 5
 
 - type: entity
+  name: chèvre log
+  parent: FoodBakingBase
+  id: FoodChevre
+  description: A soft log of creamy Chèvre.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nutty
+      - creamy
+  - type: Sprite
+    state: chevrelog
+  - type: SliceableFood
+    count: 3
+    slice: FoodChevreSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 0.6
+
+- type: entity
+  name: chèvre disk
+  parent: FoodBakingBase
+  id: FoodChevreSlice
+  description: A small disk of creamy Chèvre. An ideal adornment for French side dishes.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nutty
+      - creamy
+  - type: Sprite
+    state: chevredisk
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 0.2
+
+- type: entity
   name: tofu
   parent: FoodBakingBase
   id: FoodTofu

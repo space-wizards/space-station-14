@@ -142,7 +142,5 @@
     Food:
       effects:
       # eating salt on its own kinda sucks, kids
-      - !type:SatiateHunger
-        factor: 0.5
       - !type:SatiateThirst
         factor: -0.5
