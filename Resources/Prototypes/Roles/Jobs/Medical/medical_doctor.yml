@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 1800
+      time: 14400 #4 hrs
   startingGear: DoctorGear
   icon: "MedicalDoctor"
   supervisors: job-supervisors-cmo
