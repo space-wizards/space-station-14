@@ -338,6 +338,7 @@ entities:
     - id: Kestrel
       type: BecomesStation
     - type: RadiationGridResistance
+    - type: MainCharacterShip
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 467
