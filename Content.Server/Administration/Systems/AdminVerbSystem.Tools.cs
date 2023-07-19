@@ -83,7 +83,7 @@ public sealed partial class AdminVerbSystem
                     Message = Loc.GetString(bolts.BoltsDown
                         ? "admin-trick-unbolt-description"
                         : "admin-trick-bolt-description"),
-                    Priority = (int) TricksVerbPriorities.ToggleBolt,
+                    Priority = (int) (bolts.BoltsDown ? TricksVerbPriorities.Unbolt : TricksVerbPriorities.Bolt),
                 };
                 args.Verbs.Add(bolt);
             }
@@ -103,7 +103,7 @@ public sealed partial class AdminVerbSystem
                     Message = Loc.GetString(airlock.EmergencyAccess
                         ? "admin-trick-emergency-access-off-description"
                         : "admin-trick-emergency-access-on-description"),
-                    Priority = (int) TricksVerbPriorities.ToggleEmergencyAccess,
+                    Priority = (int) (airlock.EmergencyAccess ? TricksVerbPriorities.EmergencyAccessOff : TricksVerbPriorities.EmergencyAccessOn),
                 };
                 args.Verbs.Add(emergencyAccess);
             }
@@ -139,7 +139,7 @@ public sealed partial class AdminVerbSystem
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-make-indestructible-description"),
-                    Priority = (int) TricksVerbPriorities.ToggleGodmode,
+                    Priority = (int) TricksVerbPriorities.MakeIndestructible,
                 };
                 args.Verbs.Add(makeIndestructible);
             }
@@ -156,7 +156,7 @@ public sealed partial class AdminVerbSystem
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-make-vulnerable-description"),
-                    Priority = (int) TricksVerbPriorities.ToggleGodmode,
+                    Priority = (int) TricksVerbPriorities.MakeVulnerable,
                 };
                 args.Verbs.Add(makeVulnerable);
             }
@@ -895,32 +895,35 @@ public sealed partial class AdminVerbSystem
 
     public enum TricksVerbPriorities
     {
-        ToggleBolt = 0,
-        ToggleEmergencyAccess = -1,
-        ToggleGodmode = -2,
-        BlockUnanchoring = -3,
-        RefillBattery = -4,
-        DrainBattery = -5,
-        RefillOxygen = -6,
-        RefillNitrogen = -7,
-        RefillPlasma = -8,
-        SendToTestArena = -9,
-        GrantAllAccess = -10,
-        RevokeAllAccess = -11,
-        Rejuvenate = -12,
-        AdjustStack = -13,
-        FillStack = -14,
-        Rename = -15,
-        Redescribe = -16,
-        RenameAndRedescribe = -17,
-        BarJobSlots = -18,
-        LocateCargoShuttle = -19,
-        InfiniteBattery = -20,
-        HaltMovement = -21,
-        Unpause = -22,
-        Pause = -23,
-        SnapJoints = -24,
-        MakeMinigun = -25,
-        SetBulletAmount = -26,
+        Bolt = 0,
+        Unbolt = -1,
+        EmergencyAccessOn = -2,
+        EmergencyAccessOff = -3,
+        MakeIndestructible = -4,
+        MakeVulnerable = -5,
+        BlockUnanchoring = -6,
+        RefillBattery = -7,
+        DrainBattery = -8,
+        RefillOxygen = -9,
+        RefillNitrogen = -10,
+        RefillPlasma = -11,
+        SendToTestArena = -12,
+        GrantAllAccess = -13,
+        RevokeAllAccess = -14,
+        Rejuvenate = -15,
+        AdjustStack = -16,
+        FillStack = -17,
+        Rename = -18,
+        Redescribe = -19,
+        RenameAndRedescribe = -20,
+        BarJobSlots = -21,
+        LocateCargoShuttle = -22,
+        InfiniteBattery = -23,
+        HaltMovement = -24,
+        Unpause = -25,
+        Pause = -26,
+        SnapJoints = -27,
+        MakeMinigun = -28,
+        SetBulletAmount = -29,
     }
 }
