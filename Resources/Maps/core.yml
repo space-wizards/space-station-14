@@ -5879,17 +5879,6 @@ entities:
     - type: RadiationGridResistance
     - id: Core
       type: BecomesStation
-    - joints:
-        docking47690: !type:WeldJoint
-          bodyB: 18594
-          bodyA: 2
-          id: docking47690
-          localAnchorB: 11,0.49999997
-          localAnchorA: 82,28.5
-          referenceAngle: 3.1415927
-          damping: 1684.6119
-          stiffness: 15121.043
-      type: Joint
   - uid: 18593
     components:
     - type: MetaData
@@ -6119,17 +6108,6 @@ entities:
       type: GridAtmosphere
     - type: GasTileOverlay
     - type: RadiationGridResistance
-    - joints:
-        docking47690: !type:WeldJoint
-          bodyB: 18594
-          bodyA: 2
-          id: docking47690
-          localAnchorB: 11,0.49999997
-          localAnchorA: 82,28.5
-          referenceAngle: 3.1415927
-          damping: 1684.6119
-          stiffness: 15121.043
-      type: Joint
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 3
@@ -9511,9 +9489,6 @@ entities:
       pos: 81.5,28.5
       parent: 2
       type: Transform
-    - dockJointId: docking47690
-      dockedWith: 18603
-      type: Docking
   - uid: 18601
     components:
     - rot: -1.5707963267948966 rad
@@ -9523,21 +9498,15 @@ entities:
   - uid: 18602
     components:
     - rot: 1.5707963267948966 rad
-      pos: 10.5,0.5
-      parent: 18594
-      type: Transform
-    - dockJointId: docking47690
-      dockedWith: 18311
-      type: Docking
-  - uid: 18603
-    components:
-    - rot: 1.5707963267948966 rad
       pos: 10.5,2.5
       parent: 18594
       type: Transform
-    - dockJointId: docking47690
-      dockedWith: 18311
-      type: Docking
+  - uid: 18603
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 10.5,0.5
+      parent: 18594
+      type: Transform
 - proto: AirlockHeadOfPersonnelGlassLocked
   entities:
   - uid: 277
@@ -88371,7 +88340,7 @@ entities:
     - pos: 44.5,7.5
       parent: 2
       type: Transform
-    - SecondsUntilStateChange: -11584.844
+    - SecondsUntilStateChange: -11634.197
       state: Opening
       type: Door
   - uid: 11091
@@ -88379,7 +88348,7 @@ entities:
     - pos: 62.5,21.5
       parent: 2
       type: Transform
-    - SecondsUntilStateChange: -151335.4
+    - SecondsUntilStateChange: -151384.77
       state: Opening
       type: Door
   - uid: 11092
