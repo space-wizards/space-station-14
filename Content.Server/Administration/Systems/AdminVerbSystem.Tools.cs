@@ -803,7 +803,7 @@ public sealed partial class AdminVerbSystem
 
         var mixSize = tankComponent.Air.Volume;
         var newMix = new GasMixture(mixSize);
-        newMix.SetMoles(gasType, (1000.0f * mixSize) / (Atmospherics.R * Atmospherics.T20C)); // Fill the tank to 1000KPA. // TODO: Sort out linter warnings.
+        newMix.SetMoles(gasType, (1000.0f * mixSize) / (Atmospherics.R * Atmospherics.T20C)); // Fill the tank to 1000KPA.
         newMix.Temperature = Atmospherics.T20C;
         tankComponent.Air = newMix;
     }
