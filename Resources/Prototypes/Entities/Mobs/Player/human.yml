@@ -103,7 +103,7 @@
   - type: Loadout
     prototype: SpaceNinjaGear
     prototypes: [SpaceNinjaGear]
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Syndicate
   - type: SpaceNinja
