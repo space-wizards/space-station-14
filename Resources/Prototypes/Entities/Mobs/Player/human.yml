@@ -85,3 +85,4 @@
   name: Scrambled Human
   components:
     - type: RandomHumanoidAppearance
+    - type: NukeOperative
