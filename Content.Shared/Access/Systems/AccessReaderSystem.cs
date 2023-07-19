@@ -6,6 +6,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking.Events;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.StationRecords;
@@ -18,6 +19,7 @@ namespace Content.Shared.Access.Systems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {
@@ -74,6 +76,35 @@ namespace Content.Shared.Access.Systems
         }
 
         /// <summary>
+        /// Finds all AccessReaderComponents in the container of the
+        /// required entity.
+        /// </summary>
+        /// <param name="target">The entity to search for a container</param>
+        private List<AccessReaderComponent> FindAccessReadersInContainer(
+            EntityUid target,
+            AccessReaderComponent? accessReader = null)
+        {
+            List<AccessReaderComponent> result = new();
+
+            if (!Resolve(target, ref accessReader))
+                return result;
+
+            if (accessReader.ContainerName == null)
+                return result;
+
+            if (!_containerSystem.TryGetContainer(target, accessReader.ContainerName, out var container))
+                return result;
+
+            foreach (var entity in container.ContainedEntities)
+            {
+                if (TryComp<AccessReaderComponent>(entity, out var entityAccessReader))
+                    result.Append(entityAccessReader);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Searches the source for access tags
         /// then compares it with the all targets accesses to see if it is allowed.
         /// </summary>
@@ -82,13 +113,25 @@ namespace Content.Shared.Access.Systems
         /// <param name="reader">Optional reader from the target entity</param>
         public bool IsAllowed(EntityUid source, EntityUid target, AccessReaderComponent? reader = null)
         {
+            List<AccessReaderComponent> accessReaders = new();
+
+            if (Resolve(target, ref reader))
+                accessReaders.Append(reader);
+
             var ev = new GetRequiredAccessEvent();
             RaiseLocalEvent(target, ev);
 
-            if (!ev.Handled && Resolve(target, ref reader, false))
-                ev.Access = reader;
+            if (ev.Handled)
+                accessReaders.Append(ev.Access);
 
-            return IsAllowed(source, ev.Access);
+            accessReaders.AddRange(FindAccessReadersInContainer(target, reader));
+
+            foreach (var accessReader in accessReaders)
+            {
+                if (IsAllowed(source, accessReader))
+                    return true;
+            }
+            return false;
         }
 
         /// <summary>
