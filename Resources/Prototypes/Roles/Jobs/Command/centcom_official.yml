@@ -20,7 +20,7 @@
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterArmorBasic
-    id: CentcomIDCard
+    id: CentcomPDA
     ears: ClothingHeadsetAltCentCom
     pocket1: BoxFolderBlack
     pocket2: PenCentcom
