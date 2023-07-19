@@ -45,7 +45,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             Musician: [ 1, 1 ]
-            AtmosphericTechnician: [ 3, 3 ]
+            AtmosphericTechnician: [ 2, 2 ]
             TechnicalAssistant: [ 2, 3 ]
             MedicalIntern: [ 2, 3 ]
             ServiceWorker: [ 2, 3 ]
