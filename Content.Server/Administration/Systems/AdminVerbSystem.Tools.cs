@@ -10,6 +10,7 @@ using Content.Server.Damage.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -49,6 +50,9 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly AdminTestArenaSystem _adminTestArenaSystem = default!;
     [Dependency] private readonly StationJobsSystem _stationJobsSystem = default!;
     [Dependency] private readonly JointSystem _jointSystem = default!;
+    [Dependency] private readonly BatterySystem _batterySystem = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
@@ -169,8 +173,8 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/fill_battery.png")),
                     Act = () =>
                     {
-                        battery.CurrentCharge = battery.MaxCharge;
-                        Dirty(battery);
+                        _batterySystem.SetCharge(args.Target, battery.MaxCharge, battery);
+                        Dirty(args.Target, battery);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-refill-battery-description"),
@@ -185,8 +189,8 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/drain_battery.png")),
                     Act = () =>
                     {
-                        battery.CurrentCharge = 0;
-                        Dirty(battery);
+                        _batterySystem.SetCharge(args.Target, 0, battery);
+                        Dirty(args.Target, battery);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-drain-battery-description"),
@@ -386,7 +390,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var (mapUid, gridUid) = _adminTestArenaSystem.AssertArenaLoaded(player);
-                    Transform(args.Target).Coordinates = new EntityCoordinates(gridUid ?? mapUid, Vector2.One);
+                    _xformSystem.SetCoordinates(args.Target, new EntityCoordinates(gridUid ?? mapUid, Vector2.One));
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-send-to-test-arena-description"),
@@ -509,7 +513,7 @@ public sealed partial class AdminVerbSystem
             {
                 _quickDialog.OpenDialog(player, "Rename", "Name", (string newName) =>
                 {
-                    MetaData(args.Target).EntityName = newName;
+                    _metaSystem.SetEntityName(args.Target, newName);
                 });
             },
             Impact = LogImpact.Medium,
@@ -527,7 +531,7 @@ public sealed partial class AdminVerbSystem
             {
                 _quickDialog.OpenDialog(player, "Redescribe", "Description", (LongString newDescription) =>
                 {
-                    MetaData(args.Target).EntityDescription = newDescription.String;
+                    _metaSystem.SetEntityDescription(args.Target, newDescription.String);
                 });
             },
             Impact = LogImpact.Medium,
@@ -547,8 +551,8 @@ public sealed partial class AdminVerbSystem
                     (string newName, LongString newDescription) =>
                     {
                         var meta = MetaData(args.Target);
-                        meta.EntityName = newName;
-                        meta.EntityDescription = newDescription.String;
+                        _metaSystem.SetEntityName(args.Target, newName, meta);
+                        _metaSystem.SetEntityDescription(args.Target, newDescription.String, meta);
                     });
             },
             Impact = LogImpact.Medium,
@@ -592,7 +596,7 @@ public sealed partial class AdminVerbSystem
                     if (shuttle is null)
                         return;
 
-                    Transform(args.User).Coordinates = new EntityCoordinates(shuttle.Value, Vector2.Zero);
+                    _xformSystem.SetCoordinates(args.User, new EntityCoordinates(shuttle.Value, Vector2.Zero));
                 },
                 Impact = LogImpact.Low,
                 Message = Loc.GetString("admin-trick-locate-cargo-shuttle-description"),
@@ -615,8 +619,8 @@ public sealed partial class AdminVerbSystem
                         if (!HasComp<StationInfiniteBatteryTargetComponent>(ent))
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
-                        battery.CurrentCharge = battery.MaxCharge;
-                        Dirty(battery);
+                        _batterySystem.SetCharge(ent, battery.MaxCharge, battery);
+                        Dirty(ent, battery);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -637,8 +641,8 @@ public sealed partial class AdminVerbSystem
                         if (!HasComp<StationInfiniteBatteryTargetComponent>(ent))
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
-                        battery.CurrentCharge = 0;
-                        Dirty(battery);
+                        _batterySystem.SetCharge(ent, 0, battery);
+                        Dirty(ent, battery);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -743,7 +747,7 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/snap_joints.png")),
                 Act = () =>
                 {
-                    _jointSystem.ClearJoints(joints);
+                    _jointSystem.ClearJoints(args.Target, joints);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-snap-joints-description"),
@@ -799,7 +803,7 @@ public sealed partial class AdminVerbSystem
 
         var mixSize = tankComponent.Air.Volume;
         var newMix = new GasMixture(mixSize);
-        newMix.SetMoles(gasType, (1000.0f * mixSize) / (Atmospherics.R * Atmospherics.T20C)); // Fill the tank to 1000KPA.
+        newMix.SetMoles(gasType, (1000.0f * mixSize) / (Atmospherics.R * Atmospherics.T20C)); // Fill the tank to 1000KPA. // TODO: Sort out linter warnings.
         newMix.Temperature = Atmospherics.T20C;
         tankComponent.Air = newMix;
     }
@@ -892,6 +896,7 @@ public sealed partial class AdminVerbSystem
         _accessSystem.TrySetTags(entity, Array.Empty<string>());
     }
 
+#pragma warning disable CA1069
     public enum TricksVerbPriorities
     {
         Bolt = 0,
@@ -925,4 +930,5 @@ public sealed partial class AdminVerbSystem
         MakeMinigun = -25,
         SetBulletAmount = -26,
     }
+#pragma warning restore CA1069
 }
