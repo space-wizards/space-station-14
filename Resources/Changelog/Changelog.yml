@@ -1,10 +1,4 @@
 Entries:
-- author: cath
-  changes:
-  - {message: 'Due to a rare budget increase, CBURN teams now have incendiary shells
-      instead of flares.', type: Fix}
-  id: 3791
-  time: '2023-05-17T00:36:24.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed an error causing some textures/icons to not appear., type: Fix}
@@ -2971,3 +2965,9 @@ Entries:
       and medical equipment. Check your uplink for new offers., type: Add}
   id: 4290
   time: '2023-07-19T06:05:54.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: 'Nanotrasen has hired a group of architects to change up their selection
+      with the introduction of the new mid-pop space station, Core!', type: Add}
+  id: 4291
+  time: '2023-07-19T07:23:48.0000000+00:00'
