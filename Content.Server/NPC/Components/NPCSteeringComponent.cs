@@ -45,6 +45,9 @@ public sealed class NPCSteeringComponent : Component
     [DataField("nextSteer", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextSteer = TimeSpan.Zero;
 
+    [DataField("lastSteerIndex")]
+    public int LastSteerIndex = -1;
+
     [DataField("lastSteerDirection")]
     public Vector2 LastSteerDirection = Vector2.Zero;
 

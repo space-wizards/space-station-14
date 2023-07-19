@@ -14,6 +14,7 @@ namespace Content.Shared.Storage.EntitySystems;
 public sealed class DumpableSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedDisposalUnitSystem _disposalUnitSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -126,6 +127,9 @@ public sealed class DumpableSystem : EntitySystem
             dumpQueue.Enqueue(entity);
         }
 
+        if (dumpQueue.Count == 0)
+            return;
+
         foreach (var entity in dumpQueue)
         {
             var transform = Transform(entity);
@@ -136,23 +140,33 @@ public sealed class DumpableSystem : EntitySystem
         if (args.Args.Target == null)
             return;
 
+        var dumped = false;
+
         if (HasComp<SharedDisposalUnitComponent>(args.Args.Target.Value))
         {
+            dumped = true;
+
             foreach (var entity in dumpQueue)
             {
                 _disposalUnitSystem.DoInsertDisposalUnit(args.Args.Target.Value, entity, args.Args.User);
             }
-            return;
         }
-
-        if (HasComp<PlaceableSurfaceComponent>(args.Args.Target.Value))
+        else if (HasComp<PlaceableSurfaceComponent>(args.Args.Target.Value))
         {
+            dumped = true;
+
             var targetPos = _xformQuery.GetComponent(args.Args.Target.Value).LocalPosition;
 
             foreach (var entity in dumpQueue)
             {
                 _transformSystem.SetLocalPosition(entity, targetPos + _random.NextVector2Box() / 4);
             }
+        }
+
+        if (dumped)
+        {
+            // TODO: Predicted when above predicted
+            _audio.PlayPvs(component.DumpSound, uid);
         }
     }
 }

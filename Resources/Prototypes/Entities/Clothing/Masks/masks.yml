@@ -167,11 +167,9 @@
     sprite: Clothing/Mask/clown.rsi
   - type: BreathMask
   - type: IdentityBlocker
-  # for H.O.N.K. construction
   - type: Tag
     tags:
     - ClownMask
-    - HamsterWearable
     - WhitelistChameleon
 
 - type: entity
@@ -180,6 +178,8 @@
   components:
   - type: Tag
     tags:
+    - ClownMask
+    - HamsterWearable
     - WhitelistChameleon
 
 - type: entity

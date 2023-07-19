@@ -271,15 +271,33 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         var structureCount = _salvage.GetStructureCount(mission.Difficulty);
         var shaggy = faction.Configs["DefenseStructure"];
+        var validSpawns = new List<Vector2i>();
 
         // Spawn the objectives
         for (var i = 0; i < structureCount; i++)
         {
             var structureRoom = availableRooms[random.Next(availableRooms.Count)];
-            var spawnTile = structureRoom.Tiles.ElementAt(random.Next(structureRoom.Tiles.Count));
-            var uid = _entManager.SpawnEntity(shaggy, grid.GridTileToLocal(spawnTile));
-            _entManager.AddComponent<SalvageStructureComponent>(uid);
-            structureComp.Structures.Add(uid);
+            validSpawns.Clear();
+            validSpawns.AddRange(structureRoom.Tiles);
+            random.Shuffle(validSpawns);
+
+            while (validSpawns.Count > 0)
+            {
+                var spawnTile = validSpawns[^1];
+                validSpawns.RemoveAt(validSpawns.Count - 1);
+
+                if (!_anchorable.TileFree(grid, spawnTile, (int) CollisionGroup.MachineLayer,
+                        (int) CollisionGroup.MachineLayer))
+                {
+                    continue;
+                }
+
+                var spawnPosition = grid.GridTileToLocal(spawnTile);
+                var uid = _entManager.SpawnEntity(shaggy, spawnPosition);
+                _entManager.AddComponent<SalvageStructureComponent>(uid);
+                structureComp.Structures.Add(uid);
+                break;
+            }
         }
     }
 
@@ -335,27 +353,28 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                 validSpawns.AddRange(spawnRoom.Tiles);
                 random.Shuffle(validSpawns);
 
-                while (validSpawns.Count > 0)
+                foreach (var entry in EntitySpawnCollection.GetSpawns(mobGroup.Entries, random))
                 {
-                    var spawnTile = validSpawns[^1];
-
-                    if (!_anchorable.TileFree(grid, spawnTile, (int) CollisionGroup.MachineLayer, (int) CollisionGroup.MachineLayer))
+                    while (validSpawns.Count > 0)
                     {
+                        var spawnTile = validSpawns[^1];
                         validSpawns.RemoveAt(validSpawns.Count - 1);
-                        continue;
-                    }
 
-                    var spawnPosition = grid.GridTileToLocal(spawnTile);
+                        if (!_anchorable.TileFree(grid, spawnTile, (int) CollisionGroup.MachineLayer,
+                                (int) CollisionGroup.MachineLayer))
+                        {
+                            continue;
+                        }
 
-                    foreach (var entry in EntitySpawnCollection.GetSpawns(mobGroup.Entries, random))
-                    {
+                        var spawnPosition = grid.GridTileToLocal(spawnTile);
+
                         var uid = _entManager.CreateEntityUninitialized(entry, spawnPosition);
                         _entManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
                         _entManager.RemoveComponent<GhostRoleComponent>(uid);
                         _entManager.InitializeAndStartEntity(uid);
-                    }
 
-                    break;
+                        break;
+                    }
                 }
 
                 await SuspendIfOutOfTime();

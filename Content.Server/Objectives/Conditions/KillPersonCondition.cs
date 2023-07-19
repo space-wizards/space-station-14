@@ -71,7 +71,7 @@ namespace Content.Server.Objectives.Conditions
                     return 1f;
 
                 // if evac is still here and target hasn't boarded, show 50% to give you an indicator that you are doing good
-                return emergencyShuttle.EmergencyShuttleArrived ? 0f : 0.5f;
+                return emergencyShuttle.EmergencyShuttleArrived ? 0.5f : 0f;
             }
         }
 

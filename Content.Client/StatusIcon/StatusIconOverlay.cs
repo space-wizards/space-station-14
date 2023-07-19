@@ -35,19 +35,23 @@ public sealed class StatusIconOverlay : Overlay
         var scaleMatrix = Matrix3.CreateScale(new Vector2(1, 1));
         var rotationMatrix = Matrix3.CreateRotation(-eyeRot);
 
-        var query = _entity.AllEntityQueryEnumerator<StatusIconComponent, SpriteComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var sprite, out var xform))
+        var query = _entity.AllEntityQueryEnumerator<StatusIconComponent, SpriteComponent, TransformComponent, MetaDataComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var sprite, out var xform, out var meta))
         {
             if (xform.MapID != args.MapId)
                 continue;
 
-            var icons = _statusIcon.GetStatusIcons(uid);
+            var icons = _statusIcon.GetStatusIcons(uid, meta);
             if (icons.Count == 0)
                 continue;
 
             var bounds = comp.Bounds ?? sprite.Bounds;
 
             var worldPos = _transform.GetWorldPosition(xform, xformQuery);
+
+            if (!bounds.Translated(worldPos).Intersects(args.WorldAABB))
+                continue;
+
             var worldMatrix = Matrix3.CreateTranslation(worldPos);
             Matrix3.Multiply(scaleMatrix, worldMatrix, out var scaledWorld);
             Matrix3.Multiply(rotationMatrix, scaledWorld, out var matty);

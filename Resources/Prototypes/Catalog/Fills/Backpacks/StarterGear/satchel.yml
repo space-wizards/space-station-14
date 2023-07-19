@@ -40,6 +40,7 @@
     contents:
       - id: BoxSurvivalSecurity
       - id: Flash
+      - id: MagazinePistol
 
 - type: entity
   noSpawn: true
@@ -135,6 +136,7 @@
     contents:
       - id: BoxSurvivalSecurity
       - id: Flash
+      - id: MagazinePistol
 
 - type: entity
   noSpawn: true
@@ -237,7 +239,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackSatchel # need to sprite mime's satchel
+  parent: ClothingBackpackSatchelMime
   id: ClothingBackpackSatchelMimeFilled
   components:
   - type: StorageFill

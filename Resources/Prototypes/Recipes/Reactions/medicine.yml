@@ -398,3 +398,13 @@
       amount: 1
   products:
     Sigynate: 4
+
+- type: reaction
+  id: Saline
+  reactants:
+    Water:
+      amount: 4
+    TableSalt:
+      amount: 1
+  products:
+    Saline: 5
