@@ -24,6 +24,8 @@ public abstract class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BorgChassisComponent, ItemSlotInsertAttemptEvent>(OnItemSlotInsertAttempt);
         SubscribeLocalEvent<BorgChassisComponent, ItemSlotEjectAttemptEvent>(OnItemSlotEjectAttempt);
+        SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
+        SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
     }
 
     private void OnItemSlotInsertAttempt(EntityUid uid, BorgChassisComponent component, ref ItemSlotInsertAttemptEvent args)
@@ -61,5 +63,15 @@ public abstract class SharedBorgSystem : EntitySystem
     private void OnStartup(EntityUid uid, BorgChassisComponent component, ComponentStartup args)
     {
         component.BrainContainer = Container.EnsureContainer<ContainerSlot>(uid, component.BrainContainerId);
+    }
+
+    protected virtual void OnInserted(EntityUid uid, BorgChassisComponent component, EntInsertedIntoContainerMessage args)
+    {
+
+    }
+
+    protected virtual void OnRemoved(EntityUid uid, BorgChassisComponent component, EntRemovedFromContainerMessage args)
+    {
+
     }
 }

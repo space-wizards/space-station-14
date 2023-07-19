@@ -36,6 +36,7 @@
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4.5
   - type: Sprite
+    sprite: Mobs/Silicon/chassis.rsi
     noRot: true
     drawdepth: Mobs
   - type: MobState
@@ -87,8 +88,41 @@
   - type: Speech
     speechSounds: Pai
   - type: Flashable
+  - type: HandheldLight
+    wattage: 0.2
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      id: radiating
+      interpolate: Linear
+      maxDuration: 2.0
+      startValue: 3.0
+      endValue: 2.0
+      isLooped: true
+      property: Radius
+      enabled: false
+      reverseWhenFinished: true
+    - !type:PulseBehaviour
+      id: blinking
+      interpolate: Nearest
+      maxDuration: 1.0
+      minValue: 0.1
+      maxValue: 2.0
+      isLooped: true
+      property: Radius
+      enabled: false
+  - type: ToggleableLightVisuals
+  - type: PointLight
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 4
+    netsync: false
   - type: Pullable
   - type: Examiner
+  - type: Appearance
   - type: StandingState
   - type: Alerts
   - type: Tag

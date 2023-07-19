@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Roles;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Silicons.Borgs.Components;
@@ -26,4 +27,22 @@ public sealed class BorgChassisComponent : Component
 
     [DataField("borgJobId", customTypeSerializer: typeof(PrototypeIdSerializer<JobPrototype>))]
     public string BorgJobId = "Borg";
+
+    [DataField("hasMindState")]
+    public string HasMindState = string.Empty;
+
+    [DataField("noMindState")]
+    public string NoMindState = string.Empty;
+}
+
+[Serializable, NetSerializable]
+public enum BorgVisuals : byte
+{
+    HasPlayer
+}
+
+[Serializable, NetSerializable]
+public enum BorgVisualLayers : byte
+{
+    Light
 }

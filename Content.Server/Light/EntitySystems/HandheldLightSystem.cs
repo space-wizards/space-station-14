@@ -23,6 +23,7 @@ namespace Content.Server.Light.EntitySystems
     [UsedImplicitly]
     public sealed class HandheldLightSystem : SharedHandheldLightSystem
     {
+        [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -39,6 +40,9 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<HandheldLightComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<HandheldLightComponent, ComponentGetState>(OnGetState);
+
+            SubscribeLocalEvent<HandheldLightComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<HandheldLightComponent, ComponentShutdown>(OnShutdown);
 
             SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<HandheldLightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerb);
@@ -98,6 +102,24 @@ namespace Content.Server.Light.EntitySystems
         private void OnGetState(EntityUid uid, HandheldLightComponent component, ref ComponentGetState args)
         {
             args.State = new HandheldLightComponent.HandheldLightComponentState(component.Activated, GetLevel(uid, component));
+        }
+
+        private void OnStartup(EntityUid uid, HandheldLightComponent component, ComponentStartup args)
+        {
+            if (component.ToggleAction == null
+                && _proto.TryIndex(component.ToggleActionId, out InstantActionPrototype? act))
+            {
+                component.ToggleAction = new(act);
+            }
+
+            if (component.ToggleAction != null)
+                _actions.AddAction(uid, component.ToggleAction, null);
+        }
+
+        private void OnShutdown(EntityUid uid, HandheldLightComponent component, ComponentShutdown args)
+        {
+            if (component.ToggleAction != null)
+                _actions.RemoveAction(uid, component.ToggleAction);
         }
 
         private byte? GetLevel(EntityUid uid, HandheldLightComponent component)

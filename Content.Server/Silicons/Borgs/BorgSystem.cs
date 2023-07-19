@@ -5,7 +5,6 @@ using Content.Server.Mind.Components;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.PowerCell;
 using Content.Shared.Alert;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.PowerCell.Components;
@@ -39,8 +38,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         SubscribeLocalEvent<BorgChassisComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<BorgChassisComponent, AfterInteractUsingEvent>(OnChassisInteractUsing);
-        SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
-        SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<BorgChassisComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<BorgChassisComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<BorgChassisComponent, PowerCellChangedEvent>(OnPowerCellChanged);
@@ -83,16 +80,20 @@ public sealed partial class BorgSystem : SharedBorgSystem
     }
 
     // todo: consider transferring over the ghost role? managing that might suck.
-    private void OnInserted(EntityUid uid, BorgChassisComponent component, EntInsertedIntoContainerMessage args)
+    protected override void OnInserted(EntityUid uid, BorgChassisComponent component, EntInsertedIntoContainerMessage args)
     {
+        base.OnInserted(uid, component, args);
+
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mind))
         {
             _mind.TransferTo(mind, uid);
         }
     }
 
-    private void OnRemoved(EntityUid uid, BorgChassisComponent component, EntRemovedFromContainerMessage args)
+    protected override void OnRemoved(EntityUid uid, BorgChassisComponent component, EntRemovedFromContainerMessage args)
     {
+        base.OnRemoved(uid, component, args);
+
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(uid, out var mind))
         {
             _mind.TransferTo(mind, args.Entity);
@@ -141,31 +142,34 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
     private void UpdateBatteryAlert(EntityUid uid, PowerCellSlotComponent? slotComponent = null)
     {
-        var chargePercent = 0f;
+        short chargePercent = 0;
         if (_powerCell.TryGetBatteryFromSlot(uid, out var battery, slotComponent))
         {
-            chargePercent = MathF.Round(battery.CurrentCharge / battery.MaxCharge * 10f);
+            chargePercent = (short) MathF.Round(battery.CurrentCharge / battery.MaxCharge * 10f);
 
             // we make sure 0 only shows if they have absolutely no battery.
-            if (chargePercent < 1 && battery.CurrentCharge != 0)
+            // also account for floating point imprecision
+            if (chargePercent == 0 && battery.CurrentCharge >= 0.01)
             {
                 chargePercent = 1;
             }
         }
 
-        _alerts.ShowAlert(uid, AlertType.BorgBattery, (short) chargePercent);
+        _alerts.ShowAlert(uid, AlertType.BorgBattery, chargePercent);
     }
 
     public void BorgStartup(EntityUid uid, BorgChassisComponent component)
     {
         Popup.PopupEntity(Loc.GetString("borg-mind-added", ("name", Identity.Name(uid, EntityManager))), uid);
         _powerCell.SetPowerCellDrawEnabled(uid, true);
+        _appearance.SetData(uid, BorgVisuals.HasPlayer, true);
     }
 
     public void BorgShutdown(EntityUid uid, BorgChassisComponent component)
     {
         Popup.PopupEntity(Loc.GetString("borg-mind-removed", ("name", Identity.Name(uid, EntityManager))), uid);
         _powerCell.SetPowerCellDrawEnabled(uid, false);
+        _appearance.SetData(uid, BorgVisuals.HasPlayer, false);
     }
 
     /// <summary>

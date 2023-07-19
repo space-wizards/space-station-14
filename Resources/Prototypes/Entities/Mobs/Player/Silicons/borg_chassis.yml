@@ -3,5 +3,16 @@
   parent: BaseBorgChassis
   components:
   - type: Sprite
-    sprite: Mobs/Silicon/drone.rsi
-    state: drone
+    layers:
+    - state: robot
+    - state: robot_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: robot_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    hasMindState: robot_e
+    noMindState: robot_e_r
