@@ -1,9 +1,4 @@
 Entries:
-- author: EEASAS
-  changes:
-  - {message: Nanotrasen has allocated more budget towards Saltern., type: Tweak}
-  id: 3790
-  time: '2023-05-16T22:53:47.0000000+00:00'
 - author: cath
   changes:
   - {message: 'Due to a rare budget increase, CBURN teams now have incendiary shells
@@ -2970,3 +2965,9 @@ Entries:
   - {message: Captain's Sabre now has a chance to reflect projectiles., type: Tweak}
   id: 4289
   time: '2023-07-18T22:55:29.0000000+00:00'
+- author: vanx
+  changes:
+  - {message: The Nuclear Operatives have found a reliable supplier of ammunition
+      and medical equipment. Check your uplink for new offers., type: Add}
+  id: 4290
+  time: '2023-07-19T06:05:54.0000000+00:00'
