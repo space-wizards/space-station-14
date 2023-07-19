@@ -4,9 +4,9 @@
   description: job-description-warden
   playTimeTracker: JobWarden
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 10800
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 36000 #10 hrs
   startingGear: WardenGear
   icon: "Warden"
   supervisors: job-supervisors-hos
@@ -32,6 +32,7 @@
     id: WardenPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
+    pocket1: WeaponPistolMk58Nonlethal
   innerclothingskirt: ClothingUniformJumpskirtWarden
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

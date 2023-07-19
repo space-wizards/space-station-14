@@ -1,33 +1,38 @@
+using System.Collections;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Instruments;
 
-[NetworkedComponent, Access(typeof(SharedInstrumentSystem))]
-public abstract class SharedInstrumentComponent : Component
+[NetworkedComponent]
+[AutoGenerateComponentState(true)]
+[Access(typeof(SharedInstrumentSystem))]
+public abstract partial class SharedInstrumentComponent : Component
 {
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public bool Playing { get; set; }
 
-    [DataField("program"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("program"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public byte InstrumentProgram { get; set; }
 
-    [DataField("bank"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("bank"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public byte InstrumentBank { get; set; }
 
-    [DataField("allowPercussion"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("allowPercussion"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool AllowPercussion { get; set; }
 
-    [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool AllowProgramChange { get ; set; }
 
-    [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool RespectMidiLimits { get; set; } = true;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [Access(typeof(SharedInstrumentSystem), Other = AccessPermissions.ReadWrite)] // FIXME Friends
-    public bool DirtyRenderer { get; set; }
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public EntityUid? Master { get; set; } = null;
+
+    [ViewVariables, AutoNetworkedField]
+    public BitArray FilteredChannels { get; set; } = new(RobustMidiEvent.MaxChannels, true);
 }
 
 
@@ -42,6 +47,40 @@ public sealed class InstrumentStopMidiEvent : EntityEventArgs
     public InstrumentStopMidiEvent(EntityUid uid)
     {
         Uid = uid;
+    }
+}
+
+/// <summary>
+///     Send from the client to the server to set a master instrument.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class InstrumentSetMasterEvent : EntityEventArgs
+{
+    public EntityUid Uid { get; }
+    public EntityUid? Master { get; }
+
+    public InstrumentSetMasterEvent(EntityUid uid, EntityUid? master)
+    {
+        Uid = uid;
+        Master = master;
+    }
+}
+
+/// <summary>
+///     Send from the client to the server to set a master instrument channel.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class InstrumentSetFilteredChannelEvent : EntityEventArgs
+{
+    public EntityUid Uid { get; }
+    public int Channel { get; }
+    public bool Value { get; }
+
+    public InstrumentSetFilteredChannelEvent(EntityUid uid, int channel, bool value)
+    {
+        Uid = uid;
+        Channel = channel;
+        Value = value;
     }
 }
 
@@ -72,27 +111,6 @@ public sealed class InstrumentMidiEventEvent : EntityEventArgs
     {
         Uid = uid;
         MidiEvent = midiEvent;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class InstrumentState : ComponentState
-{
-    public bool Playing { get; }
-    public byte InstrumentProgram { get; }
-    public byte InstrumentBank { get; }
-    public bool AllowPercussion { get; }
-    public bool AllowProgramChange { get; }
-    public bool RespectMidiLimits { get; }
-
-    public InstrumentState(bool playing, byte instrumentProgram, byte instrumentBank, bool allowPercussion, bool allowProgramChange, bool respectMidiLimits)
-    {
-        Playing = playing;
-        InstrumentProgram = instrumentProgram;
-        InstrumentBank = instrumentBank;
-        AllowPercussion = allowPercussion;
-        AllowProgramChange = allowProgramChange;
-        RespectMidiLimits = respectMidiLimits;
     }
 }
 

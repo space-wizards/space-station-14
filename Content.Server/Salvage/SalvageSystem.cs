@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Server.Cargo.Systems;
 using Content.Server.Construction;
 using Content.Server.GameTicking;
 using Content.Server.Radio.EntitySystems;
@@ -21,6 +22,7 @@ using Content.Server.Procedural;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Server.Maps;
@@ -37,8 +39,9 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+        [Dependency] private readonly AnchorableSystem _anchorable = default!;
         [Dependency] private readonly BiomeSystem _biome = default!;
+        [Dependency] private readonly CargoSystem _cargo = default!;
         [Dependency] private readonly DungeonSystem _dungeon = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
