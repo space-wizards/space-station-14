@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: You can now make glue by heating a mixture of lube and slime., type: Tweak}
-  id: 3795
-  time: '2023-05-17T13:39:44.0000000+00:00'
 - author: Skyedra
   changes:
   - {message: Syndicate R&D has greatly improved the explosion of the power sink.,
@@ -2972,3 +2967,8 @@ Entries:
       them up.', type: Tweak}
   id: 4294
   time: '2023-07-19T21:22:08.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Added syndicate monkey reinforcement teleporter. Ook!, type: Add}
+  id: 4295
+  time: '2023-07-19T21:23:23.0000000+00:00'
