@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed an error causing some textures/icons to not appear., type: Fix}
-  - {message: Fixed a bug that was causing some UI slowdown/lag over time., type: Fix}
-  id: 3792
-  time: '2023-05-17T00:38:28.0000000+00:00'
 - author: tom-leys
   changes:
   - {message: No more shutting firelocks on your friends and family., type: Tweak}
@@ -2971,3 +2965,10 @@ Entries:
       with the introduction of the new mid-pop space station, Core!', type: Add}
   id: 4291
   time: '2023-07-19T07:23:48.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Singularities no longer bounce off of things they can eat., type: Fix}
+  - {message: 'Singularities will reach through the containment field to eat the emitters
+      less often, maybe never.', type: Fix}
+  id: 4292
+  time: '2023-07-19T08:01:27.0000000+00:00'
