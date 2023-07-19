@@ -1,9 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: No more shutting firelocks on your friends and family., type: Tweak}
-  id: 3793
-  time: '2023-05-17T06:37:38.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed admin logs next button not working for rounds older than the last
@@ -2972,3 +2967,8 @@ Entries:
       less often, maybe never.', type: Fix}
   id: 4292
   time: '2023-07-19T08:01:27.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: clowns now make funny sound when sleeping, type: Add}
+  id: 4293
+  time: '2023-07-19T08:55:50.0000000+00:00'
