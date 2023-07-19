@@ -1,0 +1,80 @@
+- type: entity
+  save: false
+  name: Urist McIPC
+  parent: BaseMobOrganic # TODO make metallic
+  id: BaseMobIPC
+  abstract: true
+  components:
+    # The important nessessities
+    - type: MovementSpeedModifier
+    - type: Body
+      prototype: IPC
+      requiredLegs: 2
+    - type: HumanoidAppearance
+      species: IPC
+    - type: Damageable
+      damageContainer: Biological
+      damageModifierSet: Metallic
+    - type: Icon
+      sprite: Mobs/Species/Arachnid/parts.rsi
+      state: full
+    # Damage and speed
+    - type: Bloodstream
+      bloodReagent: Oil
+      bloodlossDamage:
+        types:
+          Heat: 1.0
+    - type: Temperature
+      heatDamageThreshold: 452.875 # melting point of iron 1/4th, cause fuck physics you know
+      coldDamageThreshold: 288 # 15c aka "cold" should fuck (freeze) em up
+      currentTemperature: 313.15
+      specificHeat: 46
+      coldDamage:
+        types:
+          Blunt: 1
+      heatDamage:
+        types:
+          Blunt: 1
+    - type: Respirator
+      damage:
+        types:
+          Blunt: 1.0 # it cant cool or something
+      damageRecovery:
+        types:
+          Blunt: -1.0
+    - type: Repairable
+      fuelcost: 5 # cause most of the fuel is used how long its turned on for
+      doAfterDelay: 7 # ~1 minute to reach max hp
+      damage:
+        types:
+          Blunt: -35.0
+    - type: Barotrauma
+      damage:
+        types:
+          Blunt: 1
+    - type: SlowOnDamage
+      speedModifierThresholds:
+        50: 0.6
+        70: 0.4
+    # Misc
+    - type: Speech
+      speechSounds: IPC
+    - type: Vocal
+      sounds:
+        Male: UnisexIPC
+        Female: UnisexIPC
+        Unsexed: UnisexIPC
+    - type: Inventory
+      templateId: ipc
+
+- type: entity
+  name: Urist McIPC
+  parent: MobHumanDummy
+  id: MobIPCDummy
+  noSpawn: true
+  save: false
+  components:
+    - type: Inventory
+      templateId: ipc
+    - type: HumanoidAppearance
+      species: IPC

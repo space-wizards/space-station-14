@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Obtained from https://github.com/yogstation13/Yogstation/blob/59f8cbb1a573c6c977cb4344615e9030310e5ad7/icons/obj/assemblies.dmi and modified by Just-a-Unity-Dev",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "r_arm",
+      "directions": 4
+    },
+    {
+      "name": "l_arm",
+      "directions": 4
+    },
+    {
+      "name": "r_hand",
+      "directions": 4
+    },
+    {
+      "name": "l_hand",
+      "directions": 4
+    },
+    {
+        "name": "r_leg",
+        "directions": 4
+    },
+    {
+        "name": "l_leg",
+        "directions": 4
+    },
+    {
+        "name": "r_foot",
+        "directions": 4
+    },
+    {
+        "name": "l_foot",
+        "directions": 4
+    },
+    {
+      "name": "chest",
+      "directions": 4
+    },
+    {
+      "name": "head",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+- type: emoteSounds
+  id: UnisexIPC
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Effects/beep1.ogg
+    Laugh:
+      path: /Audio/Effects/sparks1.ogg
