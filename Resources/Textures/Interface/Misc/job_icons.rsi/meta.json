@@ -149,7 +149,10 @@
             "name": "Zookeeper"
         },
 		{
-			"name": "SeniorEngineer"
+		    "name": "SeniorEngineer"
+		},
+		{
+		    "name": "SeniorResearcher"
 		}
     ]
 }

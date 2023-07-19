@@ -175,8 +175,11 @@
     {
       "name": "musician"
     },
-	{
-	  "name": "seniorengineer"
-	}
+    {
+      "name": "seniorengineer"
+    },
+    {
+      "name": "seniorresearcher"
+    }
   ]
 }

@@ -16,7 +16,6 @@ job-name-chemist = Chemist
 job-name-technical-assistant = Technical Assistant
 job-name-engineer = Station Engineer
 job-name-atmostech = Atmospheric Technician
-job-name-senior-engineer = Senior Engineer
 job-name-hop = Head of Personnel
 job-name-captain = Captain
 job-name-serviceworker = Service Worker
@@ -44,6 +43,8 @@ job-name-ertmedic = ERT Medic
 job-name-ertjanitor = ERT Janitor
 job-name-boxer = Boxer
 job-name-zookeeper = Zookeeper
+job-name-senior-engineer = Senior Engineer
+job-name-senior-researcher = Senior Researcher
 
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = Atmospheric Technician
@@ -87,6 +88,7 @@ JobScientist = Scientist
 JobSecurityCadet = Security Cadet
 JobSecurityOfficer = Security Officer
 JobSeniorEngineer = Senior Engineer
+JobSeniorResearcher = Senior Researcher
 JobServiceWorker = Service Worker
 JobStationEngineer = Station Engineer
 JobTechnicalAssistant = Technical Assistant

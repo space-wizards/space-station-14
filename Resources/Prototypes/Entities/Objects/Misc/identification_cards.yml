@@ -629,3 +629,15 @@
     - state: idseniorengineer
   - type: PresetIdCard
     job: SeniorEngineer
+
+- type: entity
+  parent: IDCardStandard
+  id: SeniorResearcherIDCard
+  name: senior researcher ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idseniorresearcher
+  - type: PresetIdCard
+    job: SeniorResearcher
