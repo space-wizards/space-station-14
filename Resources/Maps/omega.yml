@@ -9620,16 +9620,6 @@ entities:
       type: BarSign
 - proto: Beaker
   entities:
-  - uid: 7731
-    components:
-    - pos: -14.534683,-25.485569
-      parent: 4812
-      type: Transform
-  - uid: 7796
-    components:
-    - pos: -14.284683,-25.329319
-      parent: 4812
-      type: Transform
   - uid: 9030
     components:
     - pos: -40.278786,-34.952698
@@ -30066,11 +30056,6 @@ entities:
       pos: 19.5,20.5
       parent: 4812
       type: Transform
-  - uid: 3269
-    components:
-    - pos: 23.5,13.5
-      parent: 4812
-      type: Transform
   - uid: 3704
     components:
     - pos: 17.5,30.5
@@ -34962,6 +34947,18 @@ entities:
   - uid: 7219
     components:
     - pos: -13.5,-25.5
+      parent: 4812
+      type: Transform
+- proto: CryoxadoneBeakerSmall
+  entities:
+  - uid: 3269
+    components:
+    - pos: -14.53001,-25.469097
+      parent: 4812
+      type: Transform
+  - uid: 7151
+    components:
+    - pos: -14.264385,-25.312847
       parent: 4812
       type: Transform
 - proto: CultAltarSpawner
@@ -58841,41 +58838,6 @@ entities:
     - pos: -5.446512,23.457329
       parent: 4812
       type: Transform
-- proto: Intercom
-  entities:
-  - uid: 4935
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -9.5,-40.5
-      parent: 4812
-      type: Transform
-  - uid: 12391
-    components:
-    - pos: -17.5,3.5
-      parent: 4812
-      type: Transform
-  - uid: 12392
-    components:
-    - pos: 5.5,23.5
-      parent: 4812
-      type: Transform
-  - uid: 12393
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 26.5,-5.5
-      parent: 4812
-      type: Transform
-  - uid: 12396
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -6.5,1.5
-      parent: 4812
-      type: Transform
-  - uid: 12397
-    components:
-    - pos: -4.5,21.5
-      parent: 4812
-      type: Transform
 - proto: IntercomAll
   entities:
   - uid: 4850
@@ -58922,6 +58884,41 @@ entities:
   - uid: 12400
     components:
     - pos: 11.5,54.5
+      parent: 4812
+      type: Transform
+- proto: IntercomCommon
+  entities:
+  - uid: 4935
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -9.5,-40.5
+      parent: 4812
+      type: Transform
+  - uid: 12391
+    components:
+    - pos: -17.5,3.5
+      parent: 4812
+      type: Transform
+  - uid: 12392
+    components:
+    - pos: 5.5,23.5
+      parent: 4812
+      type: Transform
+  - uid: 12393
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 26.5,-5.5
+      parent: 4812
+      type: Transform
+  - uid: 12396
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -6.5,1.5
+      parent: 4812
+      type: Transform
+  - uid: 12397
+    components:
+    - pos: -4.5,21.5
       parent: 4812
       type: Transform
 - proto: IntercomEngineering
@@ -64546,14 +64543,6 @@ entities:
       type: Transform
     - powerLoad: 0
       type: ApcPowerReceiver
-  - uid: 7151
-    components:
-    - rot: 3.141592653589793 rad
-      pos: -29.5,-19.5
-      parent: 4812
-      type: Transform
-    - powerLoad: 0
-      type: ApcPowerReceiver
   - uid: 7152
     components:
     - pos: -29.5,-14.5
@@ -64577,6 +64566,18 @@ entities:
       type: Transform
     - powerLoad: 0
       type: ApcPowerReceiver
+  - uid: 7731
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -28.5,-20.5
+      parent: 4812
+      type: Transform
+  - uid: 7796
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -32.5,-19.5
+      parent: 4812
+      type: Transform
   - uid: 8146
     components:
     - pos: -26.5,20.5
