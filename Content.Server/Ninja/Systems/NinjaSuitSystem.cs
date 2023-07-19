@@ -106,7 +106,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         // 1% charge per tile
         var katana = ninja.Katana.Value;
         var coords = _transform.GetWorldPosition(katana);
-        var distance = (_transform.GetWorldPosition(user) - coords).Length;
+        var distance = (_transform.GetWorldPosition(user) - coords).Length();
         var chargeNeeded = (float) distance * 3.6f;
         if (!_ninja.TryUseCharge(user, chargeNeeded) || _useDelay.ActiveDelay(user))
         {
