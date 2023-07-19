@@ -358,6 +358,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitKimono
+  name: kimono
+  description: traditional chinese clothing
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/kimono.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/kimono.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMedicalDoctor
   name: medical doctor jumpsuit
   description: It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel.
@@ -1162,14 +1173,14 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitSyndieFormalDress
-  name: syndicate formal dress
+  id: ClothingUniformJumpsuitSyndieFormal
+  name: syndicate formal suit
   description: "The syndicate's uniform is made in an elegant style, it's even a pity to do dirty tricks in this."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/syndieformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/syndieformal.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/syndieformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/syndieformal.rsi
 
 - type: entity
   parent: ClothingUniformBase

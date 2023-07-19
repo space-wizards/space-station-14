@@ -11,7 +11,7 @@
       groups:
         Flammable: [Touch]
         Extinguish: [Touch]
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - SimpleHostile
     - type: Physics
