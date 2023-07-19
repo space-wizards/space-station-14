@@ -1,0 +1,45 @@
+- type: entity
+  id: PelletClusterRubber
+  name: pellet (ball, Rubber)
+  noSpawn: true
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 4
+  - type: StaminaDamageOnCollide
+    damage: 55
+
+- type: entity
+  id: PelletClusterLethal
+  name: pellet (ball, Lethal)
+  noSpawn: true
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 20
+
+- type: entity
+  id: PelletClusterIncendiary
+  name: pellet (ball, incendiary)
+  parent: BaseBulletIncendiary
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot-flare
+  - type: Projectile
+    damage:
+      groups:
+        Burn: 5
+  - type: IgniteOnCollide
+    fireStacks: 1
+    count: 2

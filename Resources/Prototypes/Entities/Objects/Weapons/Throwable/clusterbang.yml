@@ -14,6 +14,10 @@
   - type: ContainerContainer
     containers:
       cluster-flash: !type:Container
+  - type: OnUseTimerTrigger
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
 
 - type: entity
   parent: ClusterBang
@@ -24,3 +28,192 @@
     state: base-3
   - type: ClusterGrenade
     fillPrototype: GrenadeFlashBang
+
+- type: entity
+  parent: GrenadeBase
+  id: ClusterBomb
+  name: cluster bomb
+  description: Spreads 3 explosive grenades.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/clusterbomb.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ClusterGrenade
+    maxGrenadesCount: 3
+    fillPrototype: ExGrenade
+    bombletDelayMax: 0
+    bombletDelayMin: 0
+    minimumDelay: 1000
+    distance: 5
+    releaseSound: "/Audio/Effects/beep1.ogg"
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: TimerTriggerVisuals
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2
+
+- type: entity
+  parent: BaseItem
+  id: BananaBomb
+  name: banana bomb
+  description: Spreads 6 explosive banana peels.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: produce
+  - type: Appearance
+  - type: ClusterGrenade
+    maxGrenadesCount: 6
+    fillPrototype: TrashBananaPeelExplosive
+    bombletDelayMax: 1000
+    bombletDelayMin: 1000
+    minimumDelay: 20000
+    distance: 1.1
+    delay: 2
+    releaseSound: "/Audio/Items/bikehorn.ogg"
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 10
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  parent: GrenadeBase
+  id: StingerGrenade
+  name: stinger grenade
+  description: move on, nothing to see here please disperse
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/stingergrenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ClusterGrenade
+    maxGrenadesCount: 30
+    fillPrototype: PelletClusterRubber
+    grenadeType: "shoot"
+  - type: FlashOnTrigger
+    range: 7
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+  - type: SpawnOnTrigger
+    proto: GrenadeFlashEffect
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  parent: GrenadeBase
+  id: PyroGrenade
+  name: pyro grenade
+  description: releases a spray of incendiary bullets
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/pyrogrenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ClusterGrenade
+    maxGrenadesCount: 30
+    fillPrototype: PelletClusterIncendiary
+    grenadeType: "shoot"
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: TimerTriggerVisuals
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2
+
+- type: entity
+  parent: GrenadeBase
+  id: ShrapnelGrenade
+  name: shrapnel grenade
+  description: releases a spray of shrapnel
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/shrapnelgrenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ClusterGrenade
+    maxGrenadesCount: 30
+    fillPrototype: PelletClusterLethal
+    grenadeType: "shoot"
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: TimerTriggerVisuals
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2
+
+- type: entity
+  parent: Soap
+  id: SlipocalypseClusterBang
+  name: soap
+  description: we heard you like soap so we put soap in your soap
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    state: syndie
+  - type: Appearance
+  - type: ClusterGrenade
+    bombletDelayMax: 0
+    bombletDelayMin: 0
+    minimumDelay: 20000
+    maxGrenadesCount: 4
+    fillPrototype: SoapSyndie
+    randomSpread: true
+    bombletVelocity: 3
+    distance: 1
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 10
+  - type: FlashOnTrigger
+    range: 0.1
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+  - type: SpawnOnTrigger
+    proto: GrenadeFlashEffect
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Slippery
+    paralyzeTime: 5
+    launchForwardsMultiplier: 2.5
+  - type: StepTrigger

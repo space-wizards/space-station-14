@@ -7,6 +7,8 @@ using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
+using Content.Server.Weapons.Ranged.Systems;
+using System.Numerics;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -14,9 +16,10 @@ public sealed class ClusterGrenadeSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly TriggerSystem _trigger = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly GunSystem _gun = default!;
 
     public override void Initialize()
     {
@@ -24,7 +27,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         SubscribeLocalEvent<ClusterGrenadeComponent, ComponentInit>(OnClugInit);
         SubscribeLocalEvent<ClusterGrenadeComponent, ComponentStartup>(OnClugStartup);
         SubscribeLocalEvent<ClusterGrenadeComponent, InteractUsingEvent>(OnClugUsing);
-        SubscribeLocalEvent<ClusterGrenadeComponent, UseInHandEvent>(OnClugUse);
+        SubscribeLocalEvent<ClusterGrenadeComponent, TriggerEvent>(OnClugTrigger);
     }
 
     private void OnClugInit(EntityUid uid, ClusterGrenadeComponent component, ComponentInit args)
@@ -55,48 +58,58 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnClugUse(EntityUid uid, ClusterGrenadeComponent component, UseInHandEvent args)
+    private void OnClugTrigger(EntityUid uid, ClusterGrenadeComponent component, TriggerEvent args)
     {
-        if (component.CountDown || (component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount) <= 0)
-            return;
-
-        // TODO: Should be an Update loop
-        uid.SpawnTimer((int) (component.Delay * 1000), () =>
-        {
-            if (Deleted(component.Owner))
-                return;
-
-            component.CountDown = true;
-            var delay = 20;
-            var grenadesInserted = component.GrenadesContainer.ContainedEntities.Count + component.UnspawnedCount;
-            var thrownCount = 0;
-            var segmentAngle = 360 / grenadesInserted;
-            while (TryGetGrenade(component, out var grenade))
-            {
-                var angleMin = segmentAngle * thrownCount;
-                var angleMax = segmentAngle * (thrownCount + 1);
-                var angle = Angle.FromDegrees(_random.Next(angleMin, angleMax));
-                // var distance = random.NextFloat() * _throwDistance;
-
-                delay += _random.Next(550, 900);
-                thrownCount++;
-
-                // TODO: Suss out throw strength
-                _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized() * component.ThrowDistance);
-
-                grenade.SpawnTimer(delay, () =>
-                {
-                    if ((!EntityManager.EntityExists(grenade) ? EntityLifeStage.Deleted : MetaData(grenade).EntityLifeStage) >= EntityLifeStage.Deleted)
-                        return;
-
-                    _trigger.Trigger(grenade, args.User);
-                });
-            }
-
-            EntityManager.DeleteEntity(uid);
-        });
-
+        component.CountDown = true;
         args.Handled = true;
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        var query = EntityQueryEnumerator<ClusterGrenadeComponent>();
+
+        while (query.MoveNext(out var uid, out var clug))
+        {
+            if (clug.CountDown == true)
+            {
+                _audio.PlayPvs(clug.ReleaseSound, uid);
+                var grenadesInserted = clug.GrenadesContainer.ContainedEntities.Count + clug.UnspawnedCount;
+                var thrownCount = 0;
+                var segmentAngle = 360 / grenadesInserted;
+                var bombletDelay = 0;
+                while (TryGetGrenade(clug, out var grenade))
+                {
+                    // var distance = random.NextFloat() * _throwDistance;
+                    var angleMin = segmentAngle * thrownCount;
+                    var angleMax = segmentAngle * (thrownCount + 1);
+                    var angle = Angle.FromDegrees(_random.Next(angleMin, angleMax));
+                    //var angle = _random.NextAngle();
+                    bombletDelay += _random.Next(clug.BombletDelayMin, clug.BombletDelayMax);
+                    thrownCount++;
+
+                    if (clug.GrenadeType == "shoot")
+                        if (clug.RandomSpread == true)
+                            _gun.ShootProjectile(grenade, _random.NextVector2().Normalized(), Vector2.One.Normalized(), uid);
+                        else _gun.ShootProjectile(grenade, angle.ToVec().Normalized(), Vector2.One.Normalized(), uid);
+                    if (clug.GrenadeType == "throw")
+                        if (clug.RandomSpread == true)
+                            _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized() * _random.NextFloat(0.1f, 3f), clug.BombletVelocity);
+                        else _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized() * clug.ThrowDistance, clug.BombletVelocity);
+
+                    // give an active timer trigger to the contained grenades when they get launched
+                    if (clug.TriggerBomblets == true)
+                    {
+                        var bomblet = grenade.EnsureComponent<ActiveTimerTriggerComponent>();
+                        bomblet.TimeRemaining = (clug.MinimumDelay + bombletDelay) / 1000;
+                        var ev = new ActiveTimerTriggerEvent(grenade, uid);
+                        RaiseLocalEvent(uid, ref ev);
+                    }
+                }
+                // delete the empty shell of the clusterbomb
+                EntityManager.DeleteEntity(uid);
+            }
+        }
     }
 
     private bool TryGetGrenade(ClusterGrenadeComponent component, out EntityUid grenade)
