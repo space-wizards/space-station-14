@@ -131,6 +131,43 @@
           prob: 0.20
         - id: DrinkSpaceLube
           prob: 0.20
+        # Syndicate loot
+        - id: null
+          prob: 0.95
+          orGroup: syndiemaintloot
+        - id: ClothingUniformJumpskirtOperative
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ClothingUniformJumpsuitOperative
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ClothingBackpackDuffelSyndicate
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: CyberPen
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: CigPackSyndicate
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ClothingBackpackDuffelSyndicatePyjamaBundle
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ClothingBeltMilitaryWebbing
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ClothingShoesBootsCombatFilled
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ToolboxSyndicateFilled
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: BalloonSyn
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: WeaponSniperMosin
+          prob: 0.0010
+          orGroup: syndiemaintloot
 
 - type: entity
   id: ClosetWallMaintenanceFilledRandom
@@ -171,3 +208,46 @@
           prob: 0.1
         - id: ClothingHandsGlovesColorYellowBudget
           prob: 0.25
+        # Syndicate loot
+        - id: null
+          prob: 0.95
+          orGroup: syndiemaintloot
+        - id: ClothingUniformJumpskirtOperative
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ClothingUniformJumpsuitOperative
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ClothingBackpackDuffelSyndicate
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: CyberPen
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ClothingHeadHatOutlawHat
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ClothingEyesGlassesOutlawGlasses
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: CigPackSyndicate
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ClothingBackpackDuffelSyndicatePyjamaBundle
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ClothingBeltMilitaryWebbing
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ClothingShoesBootsCombatFilled
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: ToolboxSyndicateFilled
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: BalloonSyn
+          prob: 0.005
+          orGroup: syndiemaintloot
+        - id: WeaponSniperMosin
+          prob: 0.0010
+          orGroup: syndiemaintloot

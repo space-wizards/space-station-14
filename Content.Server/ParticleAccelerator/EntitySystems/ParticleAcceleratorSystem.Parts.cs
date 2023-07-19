@@ -131,7 +131,7 @@ public sealed partial class ParticleAcceleratorSystem
         {
             if (compQuery.TryGetComponent(entity, out comp)
             && TryComp<ParticleAcceleratorPartComponent>(entity, out var partState) && partState.Master == null
-            && (rotation == null || MathHelper.CloseTo(Transform(entity).LocalRotation.Theta, rotation!.Value.Theta)))
+            && (rotation == null || Transform(entity).LocalRotation.EqualsApprox(rotation!.Value.Theta)))
             {
                 part = entity;
                 return true;

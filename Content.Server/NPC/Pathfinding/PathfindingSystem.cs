@@ -238,7 +238,7 @@ namespace Content.Server.NPC.Pathfinding
             PathFlags flags = PathFlags.None)
         {
             if (!TryComp<TransformComponent>(entity, out var start))
-                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
+                return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
 
             var layer = 0;
             var mask = 0;
@@ -252,7 +252,7 @@ namespace Content.Server.NPC.Pathfinding
             var path = await GetPath(request);
 
             if (path.Result != PathResult.Path)
-                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
+                return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
 
             return new PathResultEvent(PathResult.Path, path.Path);
         }
@@ -280,14 +280,13 @@ namespace Content.Server.NPC.Pathfinding
                 return 0f;
 
             var distance = 0f;
-            var node = path.Path.Dequeue();
-            var lastNode = node;
+            var lastNode = path.Path[0];
 
-            do
+            for (var i = 1; i < path.Path.Count; i++)
             {
+                var node = path.Path[i];
                 distance += GetTileCost(request, lastNode, node);
-                lastNode = node;
-            } while (path.Path.TryDequeue(out node));
+            }
 
             return distance;
         }
@@ -301,7 +300,7 @@ namespace Content.Server.NPC.Pathfinding
         {
             if (!TryComp<TransformComponent>(entity, out var xform) ||
                 !TryComp<TransformComponent>(target, out var targetXform))
-                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
+                return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
 
             var request = GetRequest(entity, xform.Coordinates, targetXform.Coordinates, range, cancelToken, flags);
             return await GetPath(request);
@@ -471,7 +470,7 @@ namespace Content.Server.NPC.Pathfinding
 
             if (!request.Task.IsCompletedSuccessfully)
             {
-                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
+                return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
             }
 
             // Same context as do_after and not synchronously blocking soooo

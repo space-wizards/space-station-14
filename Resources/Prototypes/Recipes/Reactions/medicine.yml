@@ -223,6 +223,17 @@
     Ambuzol: 4
 
 - type: reaction
+  id: AmbuzolPlus
+  reactants:
+    Ambuzol:
+      amount: 5
+    ZombieBlood:
+      amount: 15
+  products:
+    Blood: 15
+    AmbuzolPlus: 5
+
+- type: reaction
   id: Synaptizine
   reactants:
     Lithium:
@@ -387,3 +398,13 @@
       amount: 1
   products:
     Sigynate: 4
+
+- type: reaction
+  id: Saline
+  reactants:
+    Water:
+      amount: 4
+    TableSalt:
+      amount: 1
+  products:
+    Saline: 5

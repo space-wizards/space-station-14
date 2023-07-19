@@ -38,7 +38,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleNeutral
   - type: HealthExaminable
@@ -246,7 +246,7 @@
   - type: EmaggableMedibot
     # when you are fine, medibot will help you go sleep
     standardMed: ChloralHydrate
-    standardMedAmount: 5
+    standardMedAmount: 15
     # when you are crit, medibot will help you have fun
     emergencyMed: SpaceDrugs
     emergencyMedAmount: 25
@@ -260,6 +260,8 @@
   - type: Construction
     graph: MediBot
     node: bot
+  - type: NoSlip
+  - type: Anchorable
   - type: InteractionPopup
     interactSuccessString: petting-success-medibot
     interactFailureString: petting-failure-medibot
