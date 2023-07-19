@@ -25,8 +25,24 @@ namespace Content.Client.Overlays
 
         protected override void OnApplyOverlay(ShowHealthIconsComponent component)
         {
+            base.OnApplyOverlay(component);
+
+            foreach (var damageContainerId in component.DamageContainers)
+            {
+                if (DamageContainers.Contains(damageContainerId))
+                {
+                    continue;
+                }
+
+                DamageContainers.Add(damageContainerId);
+            }
+        }
+
+        protected override void OnRemoveOverlay()
+        {
+            base.OnRemoveOverlay();
+
             DamageContainers.Clear();
-            DamageContainers.AddRange(component.DamageContainers);
         }
 
         private void OnGetStatusIconsEvent(EntityUid uid, DamageableComponent damageableComponent, ref GetStatusIconsEvent @event)

@@ -17,13 +17,26 @@ namespace Content.Client.Overlays
 
         protected override void OnApplyOverlay(ShowHealthBarsComponent component)
         {
+            base.OnApplyOverlay(component);
+
+            foreach (var damageContainerId in component.DamageContainers)
+            {
+                if (_overlay.DamageContainers.Contains(damageContainerId))
+                {
+                    continue;
+                }
+
+                _overlay.DamageContainers.Add(damageContainerId);
+            }
+
             _overlayMan.AddOverlay(_overlay);
-            _overlay.DamageContainers.Clear();
-            _overlay.DamageContainers.AddRange(component.DamageContainers);
         }
 
         protected override void OnRemoveOverlay()
         {
+            base.OnRemoveOverlay();
+
+            _overlay.DamageContainers.Clear();
             _overlayMan.RemoveOverlay(_overlay);
         }
     }
