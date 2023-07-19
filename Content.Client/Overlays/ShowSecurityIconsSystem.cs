@@ -23,7 +23,7 @@ namespace Content.Client.Overlays
 
         private void OnGetStatusIconsEvent(EntityUid uid, BodyComponent _, ref GetStatusIconsEvent @event)
         {
-            if (!IsActive)
+            if (!IsActive || @event.InContainer)
             {
                 return;
             }
@@ -36,11 +36,6 @@ namespace Content.Client.Overlays
         private IReadOnlyList<StatusIconPrototype> DecideSecurityIcon(EntityUid uid)
         {
             var result = new List<StatusIconPrototype>();
-            if (TryComp<MetaDataComponent>(uid, out var metaDataComponent) &&
-                metaDataComponent.Flags.HasFlag(MetaDataFlags.InContainer))
-            {
-                return result;
-            }
 
             var iconToGet = "NoId";
             if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
