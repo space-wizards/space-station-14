@@ -13,8 +13,6 @@ namespace Content.Client.Overlays
 
         public List<string> DamageContainers = new();
 
-        private StatusIconPrototype? _healthyIcon;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -72,10 +70,9 @@ namespace Content.Client.Overlays
 
             // Here you could check health status, diseases, mind status, etc. and pick a good icon, or multiple depending on whatever.
             if (damageableComponent?.DamageContainerID == "Biological" &&
-                (_healthyIcon != null ||
-                _prototypeMan.TryIndex("HealthIcon_Fine", out _healthyIcon)))
+                (_prototypeMan.TryIndex<StatusIconPrototype>("HealthIcon_Fine", out var healthyIcon)))
             {
-                result.Add(_healthyIcon);
+                result.Add(healthyIcon);
             }
 
             return result;

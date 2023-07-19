@@ -8,6 +8,7 @@ namespace Content.Client.Overlays
         [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
         private EntityHealthBarOverlay _overlay = default!;
+
         public override void Initialize()
         {
             base.Initialize();
