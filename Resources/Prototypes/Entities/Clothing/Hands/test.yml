@@ -1,0 +1,12 @@
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: testGlowes
+  name: test clothing
+  description: it cam do boooom!!!
+  components:
+  - type: Speech
+    speechSounds: Pai
+  - type: ClothingFactionExplosion
+    chance: 0.95
+    minRandomTime: 3
+    maxRandomTime: 5

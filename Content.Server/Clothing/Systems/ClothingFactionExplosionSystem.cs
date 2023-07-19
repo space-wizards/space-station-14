@@ -1,56 +1,133 @@
-using Content.Shared.Clothing.Components;
-using Content.Shared.Humanoid;
-using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Item;
-using Content.Shared.Tag;
-using Robust.Shared.GameStates;
-using Content.Server.Chat.Managers;
-using Content.Server.Administration.Managers;
 using Content.Server.Clothing.Components;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Chat.Systems;
+using Content.Server.NPC.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.Clothing.Systems;
 
 public sealed class ClothingFactionExplosionSystem : EntitySystem
 {
-    [Dependency] private readonly SharedItemSystem _itemSys = default!;
-    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<ClothingFactionExplosionComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingFactionExplosionComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<ClothingFactionExplosionComponent, ComponentInit>(OnComponentInit);
+    }
+
+    private void OnComponentInit(EntityUid uid, ClothingFactionExplosionComponent component, ComponentInit args)
+    {
+        component.TimerDelay = _random.NextFloat(component.MinRandomTime, component.MaxRandomTime);
+        component.TimerDuration = component.VVTimerDuration;
+        if (_random.NextFloat(0f, 1f) > component.Chance)
+        {
+            component.VVTimerEnabled = false;
+        }
     }
 
     private void OnGotEquipped(EntityUid uid, ClothingFactionExplosionComponent component, GotEquippedEvent args)
     {
-        SoundSystem.Play("/Audio/Effects/ame_overloading_admin_alert.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), AudioParams.Default.WithVolume(-4f));
-        DoExplode(uid);
-        // component.InSlot = args.Slot;
-        // if (args.Slot == "head" && _tagSystem.HasTag(args.Equipment, "HidesHair"))
-        //     _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Hair, false);
+        var sysMan = IoCManager.Resolve<IEntityManager>();
+        if (!sysMan.TryGetComponent<FactionComponent>(args.Equipee, out var factionComponent))
+            return;
+        var ownerIsFriendly = false;
+        if (factionComponent != null)
+        {
+            foreach (var faction in factionComponent.Factions)
+            {
+                if (component.Faction == faction)
+                    ownerIsFriendly = true;
+            }
+        }
+        if (!ownerIsFriendly)
+        {
+            component.TimerOn = true;
+            if (component.AnnouncementWas)
+            {
+                component.WearCount += 1;
+                if (component.WearCount >= component.WearCountPermanentExplosion)
+                {
+                    DoExplode(uid);
+                }
+            }
+        }
     }
 
     private void OnGotUnequipped(EntityUid uid, ClothingFactionExplosionComponent component, GotUnequippedEvent args)
     {
-        SoundSystem.Play("/Audio/Effects/ame_overloading_admin_alert.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), AudioParams.Default.WithVolume(-4f));
-        // component.InSlot = null;
-        // if (args.Slot == "head" && _tagSystem.HasTag(args.Equipment, "HidesHair"))
-        //     _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Hair, true);
+        if (!component.CountdownWas)
+        {
+            if (component.AnnouncementWas && component.WearCount < component.WearCountMax)
+            {
+                SayMessage(uid, "Неизвестное ДНК потеряно!");
+                component.Timer = component.TimerDelay - 1f;
+                component.TimerDuration = component.VVTimerDuration;
+                component.AnnouncementWarnig = false;
+                component.AnnouncementMessage = false;
+            }
+            component.TimerOn = false;
+            component.CountdownOn = false;
+        }
     }
 
     private void DoExplode(EntityUid coords)
     {
         var sysMan = IoCManager.Resolve<IEntitySystemManager>();
-        sysMan.GetEntitySystem<ExplosionSystem>().QueueExplosion(coords, "Default", 5, 5, 5);
+        sysMan.GetEntitySystem<ExplosionSystem>().QueueExplosion(coords, "Default", 13, 13, 13);
         QueueDel(coords);
+    }
+
+    private void SayMessage(EntityUid uid, string msg)
+    {
+        _chat.TrySendInGameICMessage(uid, msg, InGameICChatType.Speak, true);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        var query = EntityQueryEnumerator<ClothingFactionExplosionComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.TimerOn && comp.VVTimerEnabled)
+            {
+                comp.Timer += frameTime;
+                if (comp.Timer >= comp.TimerDelay && !comp.AnnouncementWarnig)
+                {
+                    SayMessage(uid, "Обнаружено неизвестное ДНК!");
+                    comp.AnnouncementWarnig = true;
+                    comp.AnnouncementWas = true;
+                }
+                if (comp.Timer >= comp.TimerDelay + 2f && !comp.AnnouncementMessage)
+                {
+                    SayMessage(uid, "Запускается протокол самоуничтожения!");
+                    comp.AnnouncementMessage = true;
+                    comp.CountdownOn = true;
+                }
+                if (comp.Timer >= comp.TimerDelay + 2f && !comp.CountdownOn)
+                {
+                    comp.CountdownOn = true;
+                }
+                if (comp.CountdownOn)
+                {
+                    if (comp.TimerDuration < 0)
+                    {
+                        DoExplode(uid);
+                    }
+                    comp.TimerCountdown += frameTime;
+                    if (comp.TimerCountdown >= comp.CountdownDelay)
+                    {
+                        comp.CountdownWas = true;
+                        SayMessage(uid, comp.TimerDuration.ToString());
+                        comp.TimerDuration -= 1;
+                        comp.TimerCountdown = 0f;
+                    }
+                }
+            }
+        }
     }
 }
