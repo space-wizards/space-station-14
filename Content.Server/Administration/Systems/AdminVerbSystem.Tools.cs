@@ -83,8 +83,7 @@ public sealed partial class AdminVerbSystem
                     Message = Loc.GetString(bolts.BoltsDown
                         ? "admin-trick-unbolt-description"
                         : "admin-trick-bolt-description"),
-                    Priority = (int) (bolts.BoltsDown ? TricksVerbPriorities.Unbolt : TricksVerbPriorities.Bolt),
-
+                    Priority = (int) TricksVerbPriorities.ToggleBolt,
                 };
                 args.Verbs.Add(bolt);
             }
@@ -104,9 +103,7 @@ public sealed partial class AdminVerbSystem
                     Message = Loc.GetString(airlock.EmergencyAccess
                         ? "admin-trick-emergency-access-off-description"
                         : "admin-trick-emergency-access-on-description"),
-                    Priority = (int) (airlock.EmergencyAccess
-                        ? TricksVerbPriorities.EmergencyAccessOff
-                        : TricksVerbPriorities.EmergencyAccessOn),
+                    Priority = (int) TricksVerbPriorities.ToggleEmergencyAccess,
                 };
                 args.Verbs.Add(emergencyAccess);
             }
@@ -142,7 +139,7 @@ public sealed partial class AdminVerbSystem
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-make-indestructible-description"),
-                    Priority = (int) TricksVerbPriorities.MakeIndestructible,
+                    Priority = (int) TricksVerbPriorities.ToggleGodmode,
                 };
                 args.Verbs.Add(makeIndestructible);
             }
@@ -159,7 +156,7 @@ public sealed partial class AdminVerbSystem
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-make-vulnerable-description"),
-                    Priority = (int) TricksVerbPriorities.MakeVulnerable,
+                    Priority = (int) TricksVerbPriorities.ToggleGodmode,
                 };
                 args.Verbs.Add(makeVulnerable);
             }
@@ -896,15 +893,11 @@ public sealed partial class AdminVerbSystem
         _accessSystem.TrySetTags(entity, Array.Empty<string>());
     }
 
-#pragma warning disable CA1069
     public enum TricksVerbPriorities
     {
-        Bolt = 0,
-        Unbolt = 0,
-        EmergencyAccessOn = -1, // These are separate intentionally for `invokeverb` shenanigans.
-        EmergencyAccessOff = -1,
-        MakeIndestructible = -2,
-        MakeVulnerable = -2,
+        ToggleBolt = 0,
+        ToggleEmergencyAccess = -1,
+        ToggleGodmode = -2,
         BlockUnanchoring = -3,
         RefillBattery = -4,
         DrainBattery = -5,
@@ -930,5 +923,4 @@ public sealed partial class AdminVerbSystem
         MakeMinigun = -25,
         SetBulletAmount = -26,
     }
-#pragma warning restore CA1069
 }
