@@ -17,11 +17,17 @@ namespace Content.Shared.Access.Systems
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly ILogManager _log = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+
+        public const string Sawmill = "access";
+        private ISawmill _sawmill = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+            _sawmill = _log.GetSawmill(Sawmill);
+
             SubscribeLocalEvent<AccessReaderComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
             SubscribeLocalEvent<AccessReaderComponent, LinkAttemptEvent>(OnLinkAttempt);
@@ -61,7 +67,7 @@ namespace Content.Shared.Access.Systems
             {
                 if (!_prototypeManager.HasIndex<AccessLevelPrototype>(level))
                 {
-                    Logger.ErrorS("access", $"Invalid access level: {level}");
+                    _sawmill.Error($"Invalid access level: {level}");
                 }
             }
         }

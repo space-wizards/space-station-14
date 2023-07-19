@@ -21,9 +21,8 @@ public sealed class IdExaminableSystem : EntitySystem
 
     private void OnGetExamineVerbs(EntityUid uid, IdExaminableComponent component, GetVerbsEvent<ExamineVerb> args)
     {
-
         var detailsRange = _examineSystem.IsInDetailsRange(args.User, uid);
-        var info = GetInfo(component.Owner) ?? Loc.GetString("id-examinable-component-verb-no-id");
+        var info = GetInfo(uid) ?? Loc.GetString("id-examinable-component-verb-no-id");
 
         var verb = new ExamineVerb()
         {

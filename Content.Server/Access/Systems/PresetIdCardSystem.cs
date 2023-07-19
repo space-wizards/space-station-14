@@ -26,15 +26,16 @@ namespace Content.Server.Access.Systems
         {
             // Go over all ID cards and make sure they're correctly configured for extended access.
 
-            foreach (var card in EntityQuery<PresetIdCardComponent>())
+            var query = EntityQueryEnumerator<PresetIdCardComponent>();
+            while (query.MoveNext(out var uid, out var card))
             {
-                var station = _stationSystem.GetOwningStation(card.Owner);
+                var station = _stationSystem.GetOwningStation(uid);
 
                 // If we're not on an extended access station, the ID is already configured correctly from MapInit.
                 if (station == null || !Comp<StationJobsComponent>(station.Value).ExtendedAccess)
                     return;
 
-                SetupIdAccess(card.Owner, card, true);
+                SetupIdAccess(uid, card, true);
             }
         }
 
@@ -45,7 +46,7 @@ namespace Content.Server.Access.Systems
             // or may not yet know whether it is on extended access (players not spawned yet).
             // PlayerJobsAssigned makes sure extended access is configured correctly in that case.
 
-            var station = _stationSystem.GetOwningStation(id.Owner);
+            var station = _stationSystem.GetOwningStation(uid);
             var extended = false;
             if (station != null)
                 extended = Comp<StationJobsComponent>(station.Value).ExtendedAccess;
