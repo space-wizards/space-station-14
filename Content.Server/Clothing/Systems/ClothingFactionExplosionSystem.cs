@@ -4,6 +4,9 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.NPC.Components;
 using Robust.Shared.Random;
+using Content.Server.Administration.Logs;
+using Content.Shared.Database;
+using Content.Server.Chat.Managers;
 
 namespace Content.Server.Clothing.Systems;
 
@@ -11,16 +14,18 @@ public sealed class ClothingFactionExplosionSystem : EntitySystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<ClothingFactionExplosionComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingFactionExplosionComponent, GotUnequippedEvent>(OnGotUnequipped);
-        SubscribeLocalEvent<ClothingFactionExplosionComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<ClothingFactionExplosionComponent, ComponentStartup>(OnComponentInit);
     }
 
-    private void OnComponentInit(EntityUid uid, ClothingFactionExplosionComponent component, ComponentInit args)
+    private void OnComponentInit(EntityUid uid, ClothingFactionExplosionComponent component, ComponentStartup args)
     {
         component.TimerDelay = _random.NextFloat(component.MinRandomTime, component.MaxRandomTime);
         component.TimerDuration = component.VVTimerDuration;
@@ -30,21 +35,38 @@ public sealed class ClothingFactionExplosionSystem : EntitySystem
         }
     }
 
-    private void OnGotEquipped(EntityUid uid, ClothingFactionExplosionComponent component, GotEquippedEvent args)
+    private bool SearchFriendlyFaction(EntityUid uid, ClothingFactionExplosionComponent component)
     {
         var sysMan = IoCManager.Resolve<IEntityManager>();
-        if (!sysMan.TryGetComponent<FactionComponent>(args.Equipee, out var factionComponent))
-            return;
-        var ownerIsFriendly = false;
+        var res = false;
+        if (!sysMan.TryGetComponent<FactionComponent>(uid, out var factionComponent))
+            res = false;
         if (factionComponent != null)
         {
             foreach (var faction in factionComponent.Factions)
             {
                 if (component.Faction == faction)
-                    ownerIsFriendly = true;
+                    res = true;
             }
         }
-        if (!ownerIsFriendly)
+        component.OwnerIsFriendly = res;
+        return res;
+    }
+    private void OnGotEquipped(EntityUid uid, ClothingFactionExplosionComponent component, GotEquippedEvent args)
+    {
+        component.LastUser = args.Equipee;
+        // if (!sysMan.TryGetComponent<FactionComponent>(args.Equipee, out var factionComponent))
+        //     ownerIsFriendly = false;
+        // if (factionComponent != null)
+        // {
+        //     foreach (var faction in factionComponent.Factions)
+        //     {
+        //         if (component.Faction == faction)
+        //             ownerIsFriendly = true;
+        //     }
+        // }
+        SearchFriendlyFaction(args.Equipee, component);
+        if (!component.OwnerIsFriendly)
         {
             component.TimerOn = true;
             if (component.AnnouncementWas)
@@ -52,7 +74,7 @@ public sealed class ClothingFactionExplosionSystem : EntitySystem
                 component.WearCount += 1;
                 if (component.WearCount >= component.WearCountPermanentExplosion)
                 {
-                    DoExplode(uid);
+                    DoExplode(uid, component.LastUser);
                 }
             }
         }
@@ -64,7 +86,10 @@ public sealed class ClothingFactionExplosionSystem : EntitySystem
         {
             if (component.AnnouncementWas && component.WearCount < component.WearCountMax)
             {
-                SayMessage(uid, Loc.GetString("clothing-faction-explosion-unknown-dna-lose"));
+                if (!component.OwnerIsFriendly)
+                {
+                    SayMessage(uid, Loc.GetString("clothing-faction-explosion-unknown-dna-lose"));
+                }
                 component.Timer = component.TimerDelay - 1f;
                 component.TimerDuration = component.VVTimerDuration;
                 component.AnnouncementWarnig = false;
@@ -75,8 +100,11 @@ public sealed class ClothingFactionExplosionSystem : EntitySystem
         }
     }
 
-    private void DoExplode(EntityUid coords)
+    private void DoExplode(EntityUid coords, EntityUid user)
     {
+        _adminLogger.Add(LogType.Explosion, LogImpact.High,
+            $"{ToPrettyString(coords):suit} exploded. Last user was {ToPrettyString(user):lastUser}");
+        _chatManager.SendAdminAlert(Loc.GetString("clothing-faction-explosion-admin-alert", ("suit", MetaData(coords).EntityName),("user", MetaData(user).EntityName),("suitUid", coords.ToString()), ("userUid", user.ToString())));
         var sysMan = IoCManager.Resolve<IEntitySystemManager>();
         sysMan.GetEntitySystem<ExplosionSystem>().QueueExplosion(coords, "Default", 13, 13, 13);
         QueueDel(coords);
@@ -93,11 +121,17 @@ public sealed class ClothingFactionExplosionSystem : EntitySystem
         var query = EntityQueryEnumerator<ClothingFactionExplosionComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.TimerOn && comp.VVTimerEnabled)
+            if (comp.TimerOn && comp.VVTimerEnabled && !comp.OwnerIsFriendly)
             {
                 comp.Timer += frameTime;
                 if (comp.Timer >= comp.TimerDelay && !comp.AnnouncementWarnig)
                 {
+                    if (SearchFriendlyFaction(comp.LastUser, comp))
+                    {
+                        comp.Timer = 0f;
+                        comp.TimerOn = false;
+                        continue;
+                    }
                     SayMessage(uid, Loc.GetString("clothing-faction-explosion-unknown-dna"));
                     comp.AnnouncementWarnig = true;
                     comp.AnnouncementWas = true;
@@ -116,7 +150,7 @@ public sealed class ClothingFactionExplosionSystem : EntitySystem
                 {
                     if (comp.TimerDuration < 0)
                     {
-                        DoExplode(uid);
+                        DoExplode(uid, comp.LastUser);
                     }
                     comp.TimerCountdown += frameTime;
                     if (comp.TimerCountdown >= comp.CountdownDelay)
