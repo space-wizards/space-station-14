@@ -74,7 +74,6 @@
   description: With this bad boy, you'll be the cooleste kid at the summer barbecue.
   components:
   - type: Gun
-    clumsyProof: true
     cameraRecoilScalar: 0 #no recoil
     fireRate: 2
     selectedMode: FullAuto
