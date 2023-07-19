@@ -1,11 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed admin logs next button not working for rounds older than the last
-      three., type: Fix}
-  - {message: Added a round's total log count to the admin logs UI., type: Add}
-  id: 3794
-  time: '2023-05-17T11:04:28.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: You can now make glue by heating a mixture of lube and slime., type: Tweak}
@@ -2972,3 +2965,10 @@ Entries:
   - {message: clowns now make funny sound when sleeping, type: Add}
   id: 4293
   time: '2023-07-19T08:55:50.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'Water guns, pneumatic cannons and cap guns got extra safety measures,
+      clowns and monkeys will be able to use them again without accidentally blowing
+      them up.', type: Tweak}
+  id: 4294
+  time: '2023-07-19T21:22:08.0000000+00:00'
