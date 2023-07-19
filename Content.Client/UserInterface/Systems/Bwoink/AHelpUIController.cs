@@ -485,7 +485,7 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
             TitleClass = "windowTitleAlert",
             HeaderClass = "windowHeaderAlert",
             Title = Loc.GetString("bwoink-user-title"),
-            MinSize = (500, 200),
+            MinSize = new Vector2(500, 200),
         };
         _window.OnClose += () => { OnClose?.Invoke(); };
         _window.OnOpen += () => { OnOpen?.Invoke(); };
