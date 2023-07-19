@@ -19,7 +19,6 @@ ui-options-lobby-volume = Громкость лобби и окончания р
 ui-options-ambience-max-sounds = Кол-во одновременных звуков окружения:
 ui-options-lobby-music = Музыка в лобби
 ui-options-restart-sounds = Звуки перезапуска раунда
-ui-options-event-ahelp = Звук сообщения AHelp
 ui-options-event-music = Музыка событий
 ui-options-admin-sounds = Музыка админов
 ui-options-volume-label = Громкость
