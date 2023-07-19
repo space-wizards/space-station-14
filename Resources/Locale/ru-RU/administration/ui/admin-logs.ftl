@@ -1,6 +1,8 @@
 admin-logs-title = Панель админ логов
 admin-logs-count = Показано { $showing }/{ $total }
 admin-logs-pop-out = Поп-аут
+admin-logs-copy-mode = Копирование
+admin-logs-view-mode = Просмотр
 # Round
 admin-logs-round = Раунд{ " " }
 admin-logs-reset = Сбросить
