@@ -141,6 +141,26 @@
   - type: Implanter
     implant: UplinkImplant
 
+- type: entity
+  id: EmpImplanter
+  name: EMP implanter
+  description: a single use implanter, the implant creates an EMP pulse when you activate it.
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: EmpImplant
+
+- type: entity
+  id: DnaScramblerImplanter
+  name: dna scrambler implanter
+  description: a single use implanter, the implant allows you to randomly change your appearance and name once.
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: DnaScramblerImplant
+      currentMode: Inject
+      implantOnly: false
+
 #Nuclear Operative/Special implanters
 
 - type: entity
@@ -160,3 +180,12 @@
   components:
     - type: Implanter
       implant: MacroBombImplant
+
+- type: entity
+  id: DeathRattleImplanter
+  name: Deathrattle implanter
+  description: a single use implanter, the implant will inform anyone with access to the syndicate radio channel of your death.
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: DeathRattleImplant

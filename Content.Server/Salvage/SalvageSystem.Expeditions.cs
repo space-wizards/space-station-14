@@ -1,5 +1,4 @@
 using Content.Server.Cargo.Components;
-using Content.Server.Cargo.Systems;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Shared.CCVar;
@@ -20,7 +19,7 @@ public sealed partial class SalvageSystem
      * Handles setup / teardown of salvage expeditions.
      */
 
-    private const int MissionLimit = 5;
+    private const int MissionLimit = 3;
 
     private readonly JobQueue _salvageQueue = new();
     private readonly List<(SpawnSalvageMissionJob Job, CancellationTokenSource CancelToken)> _salvageJobs = new();
@@ -225,20 +224,27 @@ public sealed partial class SalvageSystem
         component.Missions.Clear();
         var configs = Enum.GetValues<SalvageMissionType>().ToList();
 
-        if (configs.Count == 0)
-            return;
-
         // Temporarily removed coz it SUCKS
         configs.Remove(SalvageMissionType.Mining);
+
+        // this doesn't support having more missions than types of ratings
+        // but the previous system didn't do that either.
+        var allDifficulties = Enum.GetValues<DifficultyRating>();
+        _random.Shuffle(allDifficulties);
+        var difficulties = allDifficulties.Take(MissionLimit).ToList();
+        difficulties.Sort();
+
+        if (configs.Count == 0)
+            return;
 
         for (var i = 0; i < MissionLimit; i++)
         {
             _random.Shuffle(configs);
-            var rating = (DifficultyRating) i;
+            var rating = difficulties[i];
 
             foreach (var config in configs)
             {
-                var mission = new SalvageMissionParams()
+                var mission = new SalvageMissionParams
                 {
                     Index = component.NextIndex,
                     MissionType = config,

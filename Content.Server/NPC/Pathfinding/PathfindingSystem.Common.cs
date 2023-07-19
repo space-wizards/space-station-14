@@ -24,7 +24,7 @@ public sealed partial class PathfindingSystem
 
     private static readonly PathComparer PathPolyComparer = new();
 
-    private Queue<PathPoly> ReconstructPath(Dictionary<PathPoly, PathPoly> path, PathPoly currentNodeRef)
+    private List<PathPoly> ReconstructPath(Dictionary<PathPoly, PathPoly> path, PathPoly currentNodeRef)
     {
         var running = new List<PathPoly> { currentNodeRef };
         while (path.ContainsKey(currentNodeRef))
@@ -35,10 +35,8 @@ public sealed partial class PathfindingSystem
             running.Add(currentNodeRef);
         }
 
-        running = Simplify(running);
         running.Reverse();
-        var result = new Queue<PathPoly>(running);
-        return result;
+        return running;
     }
 
     private float GetTileCost(PathRequest request, PathPoly start, PathPoly end)

@@ -256,7 +256,9 @@ public sealed partial class CargoSystem
         if (component.Bounties.Count >= component.MaxBounties)
             return false;
 
-        var endTime = _timing.CurTime + _random.Pick(component.BountyDurations) + TimeSpan.FromSeconds(_random.Next(-10, 10));
+        var duration = MathF.Round(_random.NextFloat(component.MinBountyTime, component.MaxBountyTime) / 15) * 15;
+        var endTime = _timing.CurTime + TimeSpan.FromSeconds(duration);
+
         component.Bounties.Add(new CargoBountyData(component.TotalBounties, bounty.ID, endTime));
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {ToPrettyString(uid)}");
         component.TotalBounties++;
