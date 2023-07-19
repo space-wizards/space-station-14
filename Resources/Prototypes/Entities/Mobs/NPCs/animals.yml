@@ -134,7 +134,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Bloodstream
@@ -207,7 +207,7 @@
     flavorKind: station-event-random-sentience-flavor-organic
   - type: Puller
     needsHands: true
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
 
@@ -290,7 +290,7 @@
     accent: duck
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
 
@@ -464,7 +464,7 @@
       path: /Audio/Animals/cow_moo.ogg
   - type: Perishable
     molsPerSecondPerUnitMass: 0.0015
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
   - type: Body
@@ -582,7 +582,7 @@
     interactFailureString: petting-failure-goat
     interactSuccessSound:
       path: /Audio/Animals/goat_bah.ogg
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
   - type: Body
@@ -633,7 +633,7 @@
   - type: Bloodstream
     bloodMaxVolume: 100
   - type: Puller
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
 
@@ -764,7 +764,7 @@
     prototypes: [ BoxingKangarooGear ]
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
 
@@ -844,7 +844,7 @@
   - type: MonkeyAccent
   - type: Puller
   - type: CanHostGuardian
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
   - type: GhostRole
@@ -902,7 +902,7 @@
     equippedPrefix: 0
     slots:
     - HEAD
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - Mouse
   - type: HTN
@@ -1270,7 +1270,7 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/penguin_squawk.ogg
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
 
@@ -1287,7 +1287,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Syndicate
   - type: Sprite
@@ -1465,7 +1465,7 @@
   id: MobGiantSpiderAngry
   suffix: Angry
   components:
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - Xeno
     - type: InputMover
@@ -1776,7 +1776,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: InteractionPopup
@@ -2241,6 +2241,6 @@
     accent: pig
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive

@@ -1,0 +1,9 @@
+<DefaultWindow Title="{Loc 'instruments-component-band-menu'}" MinSize="250 350" xmlns="https://spacestation14.io"
+               xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+    <BoxContainer Orientation="Vertical" Align="Center" HorizontalExpand="true" VerticalExpand="true">
+        <ItemList Name="BandList" SelectMode="Button" Margin="3 3 3 3"
+                  HorizontalExpand="true" VerticalExpand="true" SizeFlagsStretchRatio="8"/>
+        <Button Name="RefreshButton" Text="{Loc 'instrument-component-band-refresh'}" TextAlign="Center"
+                HorizontalExpand="true" Margin="5 5 5 5" SizeFlagsStretchRatio="1"/>
+    </BoxContainer>
+</DefaultWindow>

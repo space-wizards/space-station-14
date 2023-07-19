@@ -140,8 +140,13 @@
       - id: BackgammonBoard
       - id: ParchisBoard
       - id: CheckerBoard
-      - id: d6Dice
-        amount: 4
+      - id: ShipBattlemap
+      - id: SnowBattlemap
+      - id: SandBattlemap
+      - id: MoonBattlemap
+      - id: GrassBattlemap
+      - id: DiceBag
+        amount: 6
 
 - type: entity
   id: CrateFunATV
