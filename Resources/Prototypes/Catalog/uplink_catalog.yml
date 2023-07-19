@@ -100,7 +100,17 @@
       blacklist:
         tags:
           - NukeOpsUplink
-          
+
+- type: listing
+  id: UplinkDisposableTurret
+  name: uplink-disposable-turret-name
+  description: uplink-disposable-turret-desc
+  productEntity: ToolboxElectricalTurretFilled
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkWeapons
+
 # Explosives
 
 - type: listing
@@ -892,16 +902,6 @@
     - Zookeeper
     - Scientist
     - Chef
-
-- type: listing
-  id: UplinkDisposableTurret
-  name: uplink-disposable-turret-name
-  description: uplink-disposable-turret-desc
-  productEntity: ToolboxElectricalTurretFilled
-  cost:
-    Telecrystal: 12
-  categories:
-  - UplinkJob
 
 # Armor
 
