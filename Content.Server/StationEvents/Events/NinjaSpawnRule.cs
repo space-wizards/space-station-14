@@ -36,7 +36,7 @@ public sealed class NinjaSpawnRule : StationEventSystem<NinjaSpawnRuleComponent>
         }
 
         // figure out its AABB size and use that as a guide to how far ninja should be
-        var size = grid.LocalAABB.Size.Length / 2;
+        var size = grid.LocalAABB.Size.Length() / 2;
         var distance = size + comp.SpawnDistance;
         var angle = RobustRandom.NextAngle();
         // position relative to station center
