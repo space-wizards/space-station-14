@@ -61,3 +61,8 @@ public sealed class OpenUplinkImplantEvent : InstantActionEvent
 {
 
 }
+
+public sealed class UseDnaScramblerImplantEvent : InstantActionEvent
+{
+
+}

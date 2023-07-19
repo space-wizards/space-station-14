@@ -156,6 +156,31 @@
     - key: enum.StoreUiKey.Key
       type: StoreBoundUserInterface
 
+- type: entity
+  parent: BaseSubdermalImplant
+  id: EmpImplant
+  name: EMP implant
+  description: allows the user to release a small EMP pulse
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActivateEmpImplant
+    - type: TriggerImplantAction
+    - type: EmpOnTrigger
+      range: 1.75
+      energyConsumption: 50000
+      disableDuration: 10
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: DnaScramblerImplant
+  name: DNA scrambler implant
+  description: allows the user to change their appearance and name
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActivateDnaScramblerImplant
+
 #Nuclear Operative/Special Exclusive implants
 
 - type: entity
