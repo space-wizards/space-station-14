@@ -52,3 +52,6 @@
             Detective: [ 1, 1 ]
             ResearchAssistant: [ 4, 4 ]
             Paramedic: [ 1, 1 ]
+            Psychologist: [ 1, 1]
+            Reporter: [ 1, 1 ]
+            Boxer: [ 2, 2]
