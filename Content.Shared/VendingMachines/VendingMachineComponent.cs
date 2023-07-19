@@ -1,6 +1,8 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -11,6 +13,8 @@ namespace Content.Shared.VendingMachines
     [RegisterComponent, NetworkedComponent]
     public sealed class VendingMachineComponent : Component
     {
+        public const string ContainerId = "VendingMachine";
+
         /// <summary>
         /// PrototypeID for the vending machine's inventory, see <see cref="VendingMachineInventoryPrototype"/>
         /// </summary>
@@ -41,12 +45,16 @@ namespace Content.Shared.VendingMachines
         [ViewVariables]
         public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = new();
 
+        [DataField("whitelist")]
+        public EntityWhitelist? Whitelist;
+
         public bool Contraband;
 
         public bool Ejecting;
         public bool Denying;
         public bool DispenseOnHitCoolingDown;
 
+        public EntityUid? NextEntityToEject;
         public string? NextItemToEject;
 
         public bool Broken;
@@ -122,6 +130,11 @@ namespace Content.Shared.VendingMachines
         [DataField("nextEmpEject", customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan NextEmpEject = TimeSpan.Zero;
 
+        /// <summary>
+        ///     Container of unique entities stored inside this vending machine.
+        /// </summary>
+        [ViewVariables] public Container Container = default!;
+
         #region Client Visuals
         /// <summary>
         /// RSI state for when the vending machine is unpowered.
@@ -185,11 +198,19 @@ namespace Content.Shared.VendingMachines
         public string ID;
         [ViewVariables(VVAccess.ReadWrite)]
         public uint Amount;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public List<EntityUid> EntityUids = new();
         public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
         {
             Type = type;
             ID = id;
             Amount = amount;
+        }
+
+        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount, EntityUid firstUid)
+            : this(type, id, amount)
+        {
+            EntityUids = new List<EntityUid> { firstUid };
         }
     }
 
