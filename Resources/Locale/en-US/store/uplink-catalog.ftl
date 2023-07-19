@@ -45,6 +45,9 @@ uplink-c4-desc = Use it to breach walls, airlocks or sabotage equipment. It can 
 uplink-c4-bundle-name = C-4 bundle
 uplink-c4-bundle-desc = Because sometimes quantity is quality. Contains 8 C-4 plastic explosives.
 
+uplink-grenadier-rig-name = grenadier chest rig
+uplink-grenadier-rig-desc = All you need for a loud party: 4 explosive grenades, 2 EMP grenades and 2 minibombs in a chest rig.
+
 uplink-emp-grenade-name = EMP Grenade
 uplink-emp-grenade-desc = A grenade designed to disrupt electronic systems. Useful for disrupting communications, security's energy weapons, and APCs when you're in a tight spot."
 
@@ -61,7 +64,7 @@ uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 catridges. Compat
 uplink-speedloader-magnum-name = Speedloader (.45 magnum)
 uplink-speedloader-magnu-desc = Revolver speedloader with 6 catridges. Compatible with Python.
 
-uplink-mosin-ammo-name = Box of .30 rifle magazines
+uplink-mosin-ammo-name = ammunition box (.30 rifle)
 uplink-mosin-ammo-desc = A box of cartridges for the surplus rifle.
 
 # Utility
@@ -115,6 +118,9 @@ uplink-dna-scrambler-implanter-desc = A single use implant that can be activated
 uplink-emp-implanter-name = EMP Implanter
 uplink-emp-implanter-desc = Detonates a small EMP pulse on activation that drains nearby electronics of their power, can be used three times before the internal battery runs out.
 
+uplink-micro-bomb-implanter-name = Micro Bomb Implanter
+uplink-micro-bomb-implanter-desc = Explode on death or manual activation with this implant. Destroys the body with all equipment.
+
 uplink-macro-bomb-implanter-name = Macro Bomb Implanter
 uplink-macro-bomb-implanter-desc = Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
 
@@ -125,6 +131,12 @@ uplink-deathrattle-implant-name = Box Of Deathrattle Implants
 uplink-deathrattle-implant-desc = A box containing enough deathrattle implants for the whole squad. Relays a message containing your position to the syndicate channel when you go into a critical state or die.
 
 # Bundles
+uplink-meds-bundle-name = Medical Bundle
+uplink-meds-bundle-desc = All you need to get your comrades back in the fight: mainly a combat medkit, a defibrillator and three combat medipens.
+
+uplink-ammo-bundle-name = Ammo Bundle
+uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW.
+
 uplink-c20r-bundle-name = C-20r Bundle
 uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundled with three magazines.
 
@@ -239,6 +251,12 @@ uplink-ultrabright-lantern-desc = Blinding.
 
 uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
 uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for your target to stand up.
+
+uplink-combat-medkit-name = Combat Medical Kit
+uplink-combat-medkit-desc = A medkit made for fixing combat injuries.
+
+uplink-combat-medipen-name = Combat Medipen
+uplink-combat-medipen-desc = A single-use medipen containing chemicals that regenerate most types of damage.
 
 uplink-stimpack-name = Stimpack
 uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 30 seconds.

@@ -116,10 +116,9 @@
       - id: SyringeEphedrine
       - id: SyringeTranexamicAcid
       - id: SyringeBicaridine
+      - id: SyringeDermaline
       - id: AntiPoisonMedipen
       - id: Bloodpack
-      - id: PillTricordrazine
-        amount: 2
 
 - type: entity
   id: StimkitFilled
