@@ -88340,7 +88340,7 @@ entities:
     - pos: 44.5,7.5
       parent: 2
       type: Transform
-    - SecondsUntilStateChange: -11634.197
+    - SecondsUntilStateChange: -11865.46
       state: Opening
       type: Door
   - uid: 11091
@@ -88348,7 +88348,7 @@ entities:
     - pos: 62.5,21.5
       parent: 2
       type: Transform
-    - SecondsUntilStateChange: -151384.77
+    - SecondsUntilStateChange: -151616.03
       state: Opening
       type: Door
   - uid: 11092
@@ -90871,17 +90871,17 @@ entities:
       type: Transform
   - uid: 11394
     components:
-    - pos: 4.4214196,-38.396507
+    - pos: 4.451738,-38.38852
       parent: 2
       type: Transform
-    - stampState: paper_stamp-cent
+    - stampState: paper_stamp-centcom
       stampedBy:
       - CentCom
       content: >-
-        Dear Chief Engineer, 
+        Dear Chief Engineer,
 
 
-        The encryption keys need sorted out to their respective servers.
+        The encryption keys need to be sorted out to their respective servers.
 
         It is critical that you do this soon.
 
@@ -90890,17 +90890,17 @@ entities:
       type: Paper
   - uid: 11395
     components:
-    - pos: 58.53924,4.7579083
+    - pos: 58.480293,4.6848125
       parent: 2
       type: Transform
-    - stampState: paper_stamp-cent
+    - stampState: paper_stamp-centcom
       stampedBy:
       - CentCom
       content: >-
-        Oh yeah, we didn't have enough time to setup cryo so have fun
+        Oh yeah, we didn't have enough time to setup cryo so have fun.
 
 
-        - Your dear CentCom
+        From CentCom
       type: Paper
 - proto: PaperBin10
   entities:
