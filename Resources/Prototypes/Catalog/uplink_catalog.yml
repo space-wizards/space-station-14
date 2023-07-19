@@ -801,7 +801,8 @@
   id: UplinkClothingOuterHardsuitJuggernaut
   name: uplink-clothing-outer-hardsuit-juggernaut-name
   description: uplink-clothing-outer-hardsuit-juggernaut-desc
-  productEntity: ClothingOuterHardsuitJuggernaut
+  #productEntity: ClothingOuterHardsuitJuggernaut
+  productEntity: ClothingOuterHardsuitJuggernautFactionExplosion #Imperial explosiong nukeops hardsuits
   cost:
     Telecrystal: 12
   categories:

@@ -64,7 +64,7 @@ public sealed class ClothingFactionExplosionSystem : EntitySystem
         {
             if (component.AnnouncementWas && component.WearCount < component.WearCountMax)
             {
-                SayMessage(uid, "Неизвестное ДНК потеряно!");
+                SayMessage(uid, Loc.GetString("clothing-faction-explosion-unknown-dna-lose"));
                 component.Timer = component.TimerDelay - 1f;
                 component.TimerDuration = component.VVTimerDuration;
                 component.AnnouncementWarnig = false;
@@ -98,13 +98,13 @@ public sealed class ClothingFactionExplosionSystem : EntitySystem
                 comp.Timer += frameTime;
                 if (comp.Timer >= comp.TimerDelay && !comp.AnnouncementWarnig)
                 {
-                    SayMessage(uid, "Обнаружено неизвестное ДНК!");
+                    SayMessage(uid, Loc.GetString("clothing-faction-explosion-unknown-dna"));
                     comp.AnnouncementWarnig = true;
                     comp.AnnouncementWas = true;
                 }
                 if (comp.Timer >= comp.TimerDelay + 2f && !comp.AnnouncementMessage)
                 {
-                    SayMessage(uid, "Запускается протокол самоуничтожения!");
+                    SayMessage(uid, Loc.GetString("clothing-faction-explosion-start-detonation"));
                     comp.AnnouncementMessage = true;
                     comp.CountdownOn = true;
                 }

@@ -1,0 +1,33 @@
+- type: entity
+  parent: ClothingOuterHardsuitSyndieCommander
+  id: ClothingOuterHardsuitSyndieCommanderFactionExplosion
+  components:
+    - type: Speech
+      speechSounds: Pai
+    - type: ClothingFactionExplosion
+
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitSyndieFactionExplosion
+  components:
+    - type: Speech
+      speechSounds: Pai
+    - type: ClothingFactionExplosion
+
+- type: entity
+  parent: ClothingOuterHardsuitSyndieElite
+  id: ClothingOuterHardsuitSyndieEliteFactionExplosion
+  components:
+    - type: Speech
+      speechSounds: Pai
+    - type: ClothingFactionExplosion
+
+- type: entity
+  parent: ClothingOuterHardsuitJuggernaut
+  id: ClothingOuterHardsuitJuggernautFactionExplosion
+  components:
+    - type: Speech
+      speechSounds: Pai
+    - type: ClothingFactionExplosion
+      maxRandomTime: 10
+      minRandomTime: 20
