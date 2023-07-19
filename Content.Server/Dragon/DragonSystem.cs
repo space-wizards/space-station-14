@@ -1,32 +1,31 @@
-using System.Numerics;
 using Content.Server.Body.Systems;
-using Content.Server.Popups;
-using Content.Shared.Actions;
-using Content.Shared.Chemistry.Components;
-using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules;
 using Content.Server.NPC;
+using Content.Server.NPC.Systems;
+using Content.Server.Popups;
+using Content.Server.Station.Systems;
+using Content.Shared.Actions;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Content.Shared.Dragon;
 using Content.Shared.Examine;
+using Content.Shared.Humanoid;
 using Content.Shared.Maps;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Systems;
+using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
-using Content.Server.NPC.Systems;
-using Content.Server.Station.Systems;
-using Content.Shared.DoAfter;
-using Content.Shared.Humanoid;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
+using System.Numerics;
 
 namespace Content.Server.Dragon
 {
-    public sealed partial class DragonSystem : GameRuleSystem<DragonRuleComponent>
+    public sealed partial class DragonSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -39,7 +38,6 @@ namespace Content.Server.Dragon
         [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-        [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
 
         /// <summary>
