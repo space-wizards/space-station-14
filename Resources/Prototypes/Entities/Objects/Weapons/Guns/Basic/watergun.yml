@@ -12,6 +12,7 @@
     sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
     size: 10
   - type: Gun
+    clumsyProof: true
     cameraRecoilScalar: 0 #no recoil
     fireRate: 1
     selectedMode: SemiAuto
@@ -73,6 +74,7 @@
   description: With this bad boy, you'll be the cooleste kid at the summer barbecue.
   components:
   - type: Gun
+    clumsyProof: true
     cameraRecoilScalar: 0 #no recoil
     fireRate: 2
     selectedMode: FullAuto
