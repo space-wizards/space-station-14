@@ -902,12 +902,6 @@
     Telecrystal: 12
   categories:
   - UplinkJob
-  conditions:
-    - !type:BuyerJobCondition
-      whitelist:
-        - StationEngineer
-        - AtmosphericTechnician
-        - Scientist
 
 # Armor
 
