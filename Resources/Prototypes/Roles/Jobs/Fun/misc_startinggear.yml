@@ -99,7 +99,7 @@
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
     #outerClothing: ClothingOuterHardsuitSyndieCommander
-    outerClothing: ClothingOuterHardsuitSyndieCommander #Imperial explosiong nukeops hardsuits
+    outerClothing: ClothingOuterHardsuitSyndieCommanderFactionExplosion #Imperial explosiong nukeops hardsuits
     shoes: ClothingShoesBootsCombatFilled
     id: SyndiPDA
     pocket1: ExtendedEmergencyOxygenTankFilled
