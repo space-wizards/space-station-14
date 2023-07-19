@@ -390,7 +390,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("message", FormattedMessage.EscapeText(obfuscatedMessage)));
 
 
-        foreach (var (session, data) in GetRecipients(source, VoiceRange))
+        foreach (var (session, data) in GetRecipients(source, WhisperMuffledRange))
         {
             EntityUid listener;
 
