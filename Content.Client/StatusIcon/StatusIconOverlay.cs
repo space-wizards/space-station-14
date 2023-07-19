@@ -42,15 +42,15 @@ public sealed class StatusIconOverlay : Overlay
             if (xform.MapID != args.MapId)
                 continue;
 
-            var icons = _statusIcon.GetStatusIcons(uid, meta);
-            if (icons.Count == 0)
-                continue;
-
             var bounds = comp.Bounds ?? sprite.Bounds;
 
             var worldPos = _transform.GetWorldPosition(xform, xformQuery);
 
             if (!bounds.Translated(worldPos).Intersects(args.WorldAABB))
+                continue;
+
+            var icons = _statusIcon.GetStatusIcons(uid, meta);
+            if (icons.Count == 0)
                 continue;
 
             var worldMatrix = Matrix3.CreateTranslation(worldPos);
