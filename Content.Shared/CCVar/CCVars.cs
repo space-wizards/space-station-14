@@ -70,6 +70,18 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AmbienceVolume =
             CVarDef.Create("ambience.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+
+        /// <summary>
+        /// AHelp volume.
+        /// </summary>
+        public static readonly CVarDef<float> AHelpVolume =
+            CVarDef.Create("ahelp.volume", 0.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /// <summary>
+        /// AHelp Sound on/off.
+        /// </summary>
+        public static readonly CVarDef<bool> AHelpSoundsEnabled =
+            CVarDef.Create("audio.ahelp_sounds_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
         // Midi is on engine so deal
         public const float MidiMultiplier = 3f;
 

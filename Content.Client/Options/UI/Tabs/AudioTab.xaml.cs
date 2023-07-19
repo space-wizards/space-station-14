@@ -26,6 +26,7 @@ namespace Content.Client.Options.UI.Tabs
             RestartSoundsCheckBox.Pressed = _cfg.GetCVar(CCVars.RestartSoundsEnabled);
             EventMusicCheckBox.Pressed = _cfg.GetCVar(CCVars.EventMusicEnabled);
             AdminSoundsCheckBox.Pressed = _cfg.GetCVar(CCVars.AdminSoundsEnabled);
+            AHelpSoundsCheckBox.Pressed = _cfg.GetCVar(CCVars.AHelpSoundsEnabled);
 
             ApplyButton.OnPressed += OnApplyButtonPressed;
             ResetButton.OnPressed += OnResetButtonPressed;
@@ -33,6 +34,7 @@ namespace Content.Client.Options.UI.Tabs
             MidiVolumeSlider.OnValueChanged += OnMidiVolumeSliderChanged;
             AmbientMusicVolumeSlider.OnValueChanged += OnAmbientMusicVolumeSliderChanged;
             AmbienceVolumeSlider.OnValueChanged += OnAmbienceVolumeSliderChanged;
+            AHelpVolumeSlider.OnValueChanged += OnAHelpVolumeSliderChanged;
             AmbienceSoundsSlider.OnValueChanged += OnAmbienceSoundsSliderChanged;
             LobbyVolumeSlider.OnValueChanged += OnLobbyVolumeSliderChanged;
             TtsVolumeSlider.OnValueChanged += OnTtsVolumeSliderChanged; // Corvax-TTS
@@ -41,6 +43,7 @@ namespace Content.Client.Options.UI.Tabs
             RestartSoundsCheckBox.OnToggled += OnRestartSoundsCheckToggled;
             EventMusicCheckBox.OnToggled += OnEventMusicCheckToggled;
             AdminSoundsCheckBox.OnToggled += OnAdminSoundsCheckToggled;
+            AHelpSoundsCheckBox.OnToggled += OnAHelpSoundsCheckToggled;
 
             AmbienceSoundsSlider.MinValue = _cfg.GetCVar(CCVars.MinMaxAmbientSourcesConfigured);
             AmbienceSoundsSlider.MaxValue = _cfg.GetCVar(CCVars.MaxMaxAmbientSourcesConfigured);
@@ -56,6 +59,7 @@ namespace Content.Client.Options.UI.Tabs
             MidiVolumeSlider.OnValueChanged -= OnMidiVolumeSliderChanged;
             AmbientMusicVolumeSlider.OnValueChanged -= OnAmbientMusicVolumeSliderChanged;
             AmbienceVolumeSlider.OnValueChanged -= OnAmbienceVolumeSliderChanged;
+            AHelpVolumeSlider.OnValueChanged -= OnAHelpVolumeSliderChanged;
             LobbyVolumeSlider.OnValueChanged -= OnLobbyVolumeSliderChanged;
             TtsVolumeSlider.OnValueChanged -= OnTtsVolumeSliderChanged; // Corvax-TTS
             TtsAnnounceVolumeSlider.OnValueChanged -= OnTtsAnnounceVolumeSliderChanged;
@@ -73,6 +77,11 @@ namespace Content.Client.Options.UI.Tabs
         }
 
         private void OnAmbienceVolumeSliderChanged(Range obj)
+        {
+            UpdateChanges();
+        }
+
+        private void OnAHelpVolumeSliderChanged(Range obj)
         {
             UpdateChanges();
         }
@@ -118,6 +127,11 @@ namespace Content.Client.Options.UI.Tabs
         {
             UpdateChanges();
         }
+        private void OnAHelpSoundsCheckToggled(BaseButton.ButtonEventArgs args)
+        {
+            UpdateChanges();
+        }
+
         private void OnEventMusicCheckToggled(BaseButton.ButtonEventArgs args)
         {
             UpdateChanges();
@@ -135,15 +149,17 @@ namespace Content.Client.Options.UI.Tabs
             // For the UI we just display 0-100 still elsewhere
             _cfg.SetCVar(CVars.MidiVolume, LV100ToDB(MidiVolumeSlider.Value, CCVars.MidiMultiplier));
             _cfg.SetCVar(CCVars.AmbienceVolume, LV100ToDB(AmbienceVolumeSlider.Value, CCVars.AmbienceMultiplier));
-             _cfg.SetCVar(CCVars.LobbyMusicVolume, LV100ToDB(LobbyVolumeSlider.Value));
+            _cfg.SetCVar(CCVars.LobbyMusicVolume, LV100ToDB(LobbyVolumeSlider.Value));
+            _cfg.SetCVar(CCVars.AHelpVolume, LV100ToDB(AHelpVolumeSlider.Value));
             _cfg.SetCVar(CCCVars.TTSVolume, LV100ToDB(TtsVolumeSlider.Value)); // Corvax-TTS
             _cfg.SetCVar(CCCVars.TTSRadioVolume, LV100ToDB(TtsRadioVolumeSlider.Value));
             _cfg.SetCVar(CCCVars.TTSAnnounceVolume, LV100ToDB(TtsAnnounceVolumeSlider.Value));
-            _cfg.SetCVar(CCVars.MaxAmbientSources, (int)AmbienceSoundsSlider.Value);
+            _cfg.SetCVar(CCVars.MaxAmbientSources, (int) AmbienceSoundsSlider.Value);
             _cfg.SetCVar(CCVars.LobbyMusicEnabled, LobbyMusicCheckBox.Pressed);
             _cfg.SetCVar(CCVars.RestartSoundsEnabled, RestartSoundsCheckBox.Pressed);
             _cfg.SetCVar(CCVars.EventMusicEnabled, EventMusicCheckBox.Pressed);
             _cfg.SetCVar(CCVars.AdminSoundsEnabled, AdminSoundsCheckBox.Pressed);
+            _cfg.SetCVar(CCVars.AHelpSoundsEnabled, AHelpSoundsCheckBox.Pressed);
             _cfg.SaveToFile();
             UpdateChanges();
         }
@@ -159,6 +175,7 @@ namespace Content.Client.Options.UI.Tabs
             MidiVolumeSlider.Value = DBToLV100(_cfg.GetCVar(CVars.MidiVolume), CCVars.MidiMultiplier);
             AmbienceVolumeSlider.Value = DBToLV100(_cfg.GetCVar(CCVars.AmbienceVolume), CCVars.AmbienceMultiplier);
             LobbyVolumeSlider.Value = DBToLV100(_cfg.GetCVar(CCVars.LobbyMusicVolume));
+            AHelpVolumeSlider.Value = DBToLV100(_cfg.GetCVar(CCVars.AHelpVolume));
             TtsVolumeSlider.Value = DBToLV100(_cfg.GetCVar(CCCVars.TTSVolume)); // Corvax-TTS
             TtsRadioVolumeSlider.Value = DBToLV100(_cfg.GetCVar(CCCVars.TTSRadioVolume));
             TtsAnnounceVolumeSlider.Value = DBToLV100(_cfg.GetCVar(CCCVars.TTSAnnounceVolume));
@@ -167,6 +184,7 @@ namespace Content.Client.Options.UI.Tabs
             RestartSoundsCheckBox.Pressed = _cfg.GetCVar(CCVars.RestartSoundsEnabled);
             EventMusicCheckBox.Pressed = _cfg.GetCVar(CCVars.EventMusicEnabled);
             AdminSoundsCheckBox.Pressed = _cfg.GetCVar(CCVars.AdminSoundsEnabled);
+            AHelpSoundsCheckBox.Pressed = _cfg.GetCVar(CCVars.AHelpSoundsEnabled);
             UpdateChanges();
         }
 
@@ -197,17 +215,20 @@ namespace Content.Client.Options.UI.Tabs
                 Math.Abs(AmbientMusicVolumeSlider.Value - DBToLV100(_cfg.GetCVar(CCVars.AmbientMusicVolume), CCVars.AmbientMusicMultiplier)) < 0.01f;
             var isLobbyVolumeSame =
                 Math.Abs(LobbyVolumeSlider.Value - DBToLV100(_cfg.GetCVar(CCVars.LobbyMusicVolume))) < 0.01f;
+            var isAHelpVolumeSame =
+                Math.Abs(AHelpVolumeSlider.Value - DBToLV100(_cfg.GetCVar(CCVars.AHelpVolume))) < 0.01f;
             var isTtsVolumeSame =
                 Math.Abs(TtsVolumeSlider.Value - DBToLV100(_cfg.GetCVar(CCCVars.TTSVolume))) < 0.01f; // Corvax-TTS
             var isTtsRadioVolumeSame =
                 Math.Abs(TtsRadioVolumeSlider.Value - DBToLV100(_cfg.GetCVar(CCCVars.TTSRadioVolume))) < 0.01f;
             var isTtsAnnounceVolumeSame = Math.Abs(TtsAnnounceVolumeSlider.Value - DBToLV100(_cfg.GetCVar(CCCVars.TTSAnnounceVolume))) < 0.01f;
-            var isAmbientSoundsSame = (int)AmbienceSoundsSlider.Value == _cfg.GetCVar(CCVars.MaxAmbientSources);
+            var isAmbientSoundsSame = (int) AmbienceSoundsSlider.Value == _cfg.GetCVar(CCVars.MaxAmbientSources);
             var isLobbySame = LobbyMusicCheckBox.Pressed == _cfg.GetCVar(CCVars.LobbyMusicEnabled);
             var isRestartSoundsSame = RestartSoundsCheckBox.Pressed == _cfg.GetCVar(CCVars.RestartSoundsEnabled);
             var isEventSame = EventMusicCheckBox.Pressed == _cfg.GetCVar(CCVars.EventMusicEnabled);
             var isAdminSoundsSame = AdminSoundsCheckBox.Pressed == _cfg.GetCVar(CCVars.AdminSoundsEnabled);
-            var isEverythingSame = isMasterVolumeSame && isMidiVolumeSame && isAmbientVolumeSame && isAmbientMusicVolumeSame && isAmbientSoundsSame && isLobbySame && isRestartSoundsSame && isEventSame && isAdminSoundsSame && isLobbyVolumeSame && isTtsRadioVolumeSame;
+            var isAHelpSoundsSame = AHelpSoundsCheckBox.Pressed == _cfg.GetCVar(CCVars.AHelpSoundsEnabled);
+            var isEverythingSame = isMasterVolumeSame && isMidiVolumeSame && isAHelpVolumeSame && isAHelpSoundsSame && isAmbientVolumeSame && isAmbientMusicVolumeSame && isAmbientSoundsSame && isLobbySame && isRestartSoundsSame && isEventSame && isAdminSoundsSame && isLobbyVolumeSame && isTtsRadioVolumeSame;
             isEverythingSame = isEverythingSame && isTtsVolumeSame && isTtsAnnounceVolumeSame; // Corvax-TTS
             ApplyButton.Disabled = isEverythingSame;
             ResetButton.Disabled = isEverythingSame;
@@ -219,6 +240,8 @@ namespace Content.Client.Options.UI.Tabs
                 Loc.GetString("ui-options-volume-percent", ("volume", AmbientMusicVolumeSlider.Value / 100));
             AmbienceVolumeLabel.Text =
                 Loc.GetString("ui-options-volume-percent", ("volume", AmbienceVolumeSlider.Value / 100));
+            AHelpVolumeLabel.Text =
+                Loc.GetString("ui-options-volume-percent", ("volume", AHelpVolumeSlider.Value / 100));
             LobbyVolumeLabel.Text =
                 Loc.GetString("ui-options-volume-percent", ("volume", LobbyVolumeSlider.Value / 100));
             TtsVolumeLabel.Text =
@@ -227,7 +250,7 @@ namespace Content.Client.Options.UI.Tabs
                 Loc.GetString("ui-options-volume-percent", ("volume", TtsRadioVolumeSlider.Value / 100)); // Corvax-TTS
             TtsAnnounceVolumeLabel.Text =
                 Loc.GetString("ui-options-volume-percent", ("volume", TtsAnnounceVolumeSlider.Value / 100));
-            AmbienceSoundsLabel.Text = ((int)AmbienceSoundsSlider.Value).ToString();
+            AmbienceSoundsLabel.Text = ((int) AmbienceSoundsSlider.Value).ToString();
         }
     }
 }

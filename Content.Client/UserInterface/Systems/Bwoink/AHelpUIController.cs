@@ -20,17 +20,21 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 
 namespace Content.Client.UserInterface.Systems.Bwoink;
 
 [UsedImplicitly]
-public sealed class AHelpUIController: UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<BwoinkSystem>
+public sealed class AHelpUIController : UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<BwoinkSystem>
 {
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
+    private AudioParams _AHelpParams = new();
+    private bool _AHelpSoundsEnabled = true;
     private BwoinkSystem? _bwoinkSystem;
     private MenuButton? AhelpButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AHelpButton;
     public IAHelpUIHandler? UIHelper;
@@ -39,10 +43,21 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     public override void Initialize()
     {
         base.Initialize();
-
+        _AHelpParams = new(_configManager.GetCVar(CCVars.AHelpVolume), 1, "Master", 0, 0, 0, false, 0f); // Set AHelp volume on start
+        _AHelpSoundsEnabled = _configManager.GetCVar(CCVars.AHelpSoundsEnabled);
+        _configManager.OnValueChanged(CCVars.AHelpVolume, AHelpVolumeCVarChanged); // Track AHekp volume change
+        _configManager.OnValueChanged(CCVars.AHelpSoundsEnabled, AHelpSoundsEnabledCVarChanged); // Track AHekp sound change
         SubscribeNetworkEvent<BwoinkDiscordRelayUpdated>(DiscordRelayUpdated);
     }
 
+    private void AHelpVolumeCVarChanged(float volume)
+    {
+        _AHelpParams.Volume = volume;
+    }
+    private void AHelpSoundsEnabledCVarChanged(bool ahelpsounds)
+    {
+        _AHelpSoundsEnabled = ahelpsounds;
+    }
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(UIHelper == null);
@@ -126,15 +141,15 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         }
         EnsureUIHelper();
 
-        if ((localPlayer.UserId != message.TrueSender) &&
+        if ((localPlayer.UserId != message.TrueSender) && (_AHelpSoundsEnabled) && // Game icon didn't blink when there is no sound
             ((localPlayer.UserId == message.UserId) // SS220
              || (UIHelper!.IsAdmin && !message.IsSenderAdmin) // SS220
              || (!UIHelper!.IsAdmin))) // SS220
         {
-            SoundSystem.Play("/Audio/Effects/adminhelp.ogg", Filter.Local());
+            SoundSystem.Play("/Audio/Effects/adminhelp.ogg", Filter.Local(), _AHelpParams);
             _clyde.RequestWindowAttention();
         }
-        
+
         if (!UIHelper!.IsOpen)
         {
             AhelpButton?.StyleClasses.Add(MenuButton.StyleClassRedTopButton);
@@ -162,7 +177,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
         UIHelper.SendMessageAction = (userId, textMessage) => _bwoinkSystem?.Send(userId, textMessage);
         UIHelper.OnClose += () => { SetAHelpPressed(false); };
-        UIHelper.OnOpen +=  () => { SetAHelpPressed(true); };
+        UIHelper.OnOpen += () => { SetAHelpPressed(true); };
         SetAHelpPressed(UIHelper.IsOpen);
     }
 
@@ -467,10 +482,10 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
         _chatPanel.RelayedToDiscordLabel.Visible = relayActive;
         _window = new DefaultWindow()
         {
-            TitleClass="windowTitleAlert",
-            HeaderClass="windowHeaderAlert",
-            Title=Loc.GetString("bwoink-user-title"),
-            MinSize = new Vector2(500, 200),
+            TitleClass = "windowTitleAlert",
+            HeaderClass = "windowHeaderAlert",
+            Title = Loc.GetString("bwoink-user-title"),
+            MinSize = (500, 200),
         };
         _window.OnClose += () => { OnClose?.Invoke(); };
         _window.OnOpen += () => { OnOpen?.Invoke(); };
