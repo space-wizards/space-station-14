@@ -110,6 +110,11 @@
     Telecrystal: 12
   categories:
   - UplinkWeapons
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
 
 # Explosives
 
