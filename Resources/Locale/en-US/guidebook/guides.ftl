@@ -44,3 +44,4 @@ guide-entry-dna = DNA
 
 guide-entry-antagonists = Antagonists
 guide-entry-nuclear-operatives = Nuclear Operatives
+guide-entry-space-ninja = Space Ninja
