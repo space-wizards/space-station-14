@@ -12,6 +12,7 @@ namespace Content.Client.Guidebook.RichText;
 public sealed class TextLinkTag : IMarkupTag
 {
     public string Name => "textlink";
+    public bool IsUnsafe => true;
 
     public Control? Control;
 
