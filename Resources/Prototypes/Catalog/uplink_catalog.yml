@@ -910,7 +910,7 @@
   description: uplink-disposable-turret-desc
   productEntity: ToolboxElectricalTurretFilled
   cost:
-    Telecrystal: 12
+    Telecrystal: 8
   categories:
   - UplinkJob
   conditions:
