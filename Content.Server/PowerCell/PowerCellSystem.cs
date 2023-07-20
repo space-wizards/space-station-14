@@ -88,6 +88,9 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
     {
         base.OnCellRemoved(uid, component, args);
 
+        if (args.Container.ID != component.CellSlotId)
+            return;
+
         var ev = new PowerCellSlotEmptyEvent();
         RaiseLocalEvent(uid, ref ev);
     }

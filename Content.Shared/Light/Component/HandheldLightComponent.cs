@@ -40,6 +40,13 @@ namespace Content.Shared.Light
         [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
         public string ToggleActionId = "ToggleLight";
 
+        /// <summary>
+        /// Whether or not the light can be toggled via standard interactions
+        /// (alt verbs, using in hand, etc)
+        /// </summary>
+        [DataField("toggleOnInteract")]
+        public bool ToggleOnInteract = true;
+
         [DataField("toggleAction")]
         public InstantAction? ToggleAction;
 

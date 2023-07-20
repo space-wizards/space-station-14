@@ -143,7 +143,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnActivate(EntityUid uid, HandheldLightComponent component, ActivateInWorldEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !component.ToggleOnInteract)
                 return;
 
             if (ToggleStatus(args.User, uid, component))
@@ -198,7 +198,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetVerbsEvent<ActivationVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract || !component.ToggleOnInteract)
                 return;
 
             ActivationVerb verb = new()

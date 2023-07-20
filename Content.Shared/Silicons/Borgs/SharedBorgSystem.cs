@@ -1,5 +1,4 @@
-﻿using Content.Shared.Body.Systems;
-using Content.Shared.Containers.ItemSlots;
+﻿using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Silicons.Borgs.Components;
@@ -9,11 +8,10 @@ using Robust.Shared.Containers;
 namespace Content.Shared.Silicons.Borgs;
 
 /// <summary>
-/// This handles...
+/// This handles logic, interactions, and UI related to <see cref="BorgChassisComponent"/> and other related components.
 /// </summary>
 public abstract class SharedBorgSystem : EntitySystem
 {
-    [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] protected readonly ItemSlotsSystem ItemSlots = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
@@ -40,7 +38,7 @@ public abstract class SharedBorgSystem : EntitySystem
         if (!ItemSlots.TryGetSlot(uid, cellSlotComp.CellSlotId, out var cellSlot) || cellSlot != args.Slot)
             return;
 
-        if (!panel.Open)
+        if (!panel.Open || args.User == uid)
             args.Cancelled = true;
     }
 
@@ -56,13 +54,16 @@ public abstract class SharedBorgSystem : EntitySystem
         if (!ItemSlots.TryGetSlot(uid, cellSlotComp.CellSlotId, out var cellSlot) || cellSlot != args.Slot)
             return;
 
-        if (!panel.Open)
+        if (!panel.Open || args.User == uid)
             args.Cancelled = true;
     }
 
     private void OnStartup(EntityUid uid, BorgChassisComponent component, ComponentStartup args)
     {
-        component.BrainContainer = Container.EnsureContainer<ContainerSlot>(uid, component.BrainContainerId);
+        var containerManager = EnsureComp<ContainerManagerComponent>(uid);
+
+        component.BrainContainer = Container.EnsureContainer<ContainerSlot>(uid, component.BrainContainerId, containerManager);
+        component.ModuleContainer = Container.EnsureContainer<Container>(uid, component.ModuleContainerId, containerManager);
     }
 
     protected virtual void OnInserted(EntityUid uid, BorgChassisComponent component, EntInsertedIntoContainerMessage args)

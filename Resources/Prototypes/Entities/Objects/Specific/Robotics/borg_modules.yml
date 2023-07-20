@@ -1,0 +1,101 @@
+﻿- type: entity
+  id: BaseBorgModule
+  parent: BaseItem
+  name: borg module
+  description: A module that can be inserted into cyborgs in order to grant them new abilities.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/borgmodule.rsi
+  - type: BorgModule
+
+- type: entity
+  id: BaseProviderBorgModule
+  abstract: true
+  components:
+  - type: ContainerContainer
+    containers:
+      provided_container: !type:Container { }
+
+# generic modules
+- type: entity
+  id: BorgModuleTool
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: tool module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-tools
+  - type: ProvideItemBorgModule
+    items:
+    - Omnitool
+    - WelderExperimental
+
+- type: entity
+  id: BorgModuleCable
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: cable module
+  components:
+  - type: Sprite
+    layers:
+      - state: generic
+      - state: icon-cables
+  - type: ProvideItemBorgModule
+    items:
+    - CableApcStackLingering10
+    - CableMVStackLingering10
+    - CableHVStackLingering10
+
+# science modules
+- type: entity
+  id: BorgModuleArtifact
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: artifact module
+  components:
+  - type: Sprite
+    layers:
+    - state: science
+    - state: icon-artifacts
+  - type: ProvideItemBorgModule
+    items:
+    - NodeScanner
+
+- type: entity
+  id: BorgModuleAnomaly
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: anomaly module
+  components:
+  - type: Sprite
+    layers:
+    - state: science
+    - state: icon-anomalies
+  - type: ProvideItemBorgModule
+    items:
+    - AnomalyScanner
+
+- type: entity
+  id: BorgModuleTest1
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: borg module (test1)
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicate
+        - state: icon-tools
+    - type: ProvideItemBorgModule
+      items:
+      - BikeHorn
+
+- type: entity
+  id: BorgModuleTest2
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: borg module (test2)
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicate
+        - state: icon-tools
+    - type: ProvideItemBorgModule
+      items:
+      - EnergyDagger

@@ -14,6 +14,7 @@ namespace Content.Shared.Silicons.Borgs.Components;
 [RegisterComponent]
 public sealed class BorgChassisComponent : Component
 {
+    #region Brain
     [DataField("brainWhitelist")]
     public EntityWhitelist? BrainWhitelist;
 
@@ -24,15 +25,34 @@ public sealed class BorgChassisComponent : Component
     public ContainerSlot BrainContainer = default!;
 
     public EntityUid? BrainEntity => BrainContainer.ContainedEntity;
+    #endregion
+
+    #region Modules
+    [DataField("moduleWhitelist")]
+    public EntityWhitelist? ModuleWhitelist;
+
+    [DataField("maxModules"), ViewVariables(VVAccess.ReadWrite)]
+    public int MaxModules = 3;
+
+    [DataField("moduleContainerId")]
+    public string ModuleContainerId = "borg_module";
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public Container ModuleContainer = default!;
+    #endregion
 
     [DataField("borgJobId", customTypeSerializer: typeof(PrototypeIdSerializer<JobPrototype>))]
     public string BorgJobId = "Borg";
 
+    [DataField("currentProviderModule")]
+    public EntityUid? CurrentProviderModule;
+    #region Visuals
     [DataField("hasMindState")]
     public string HasMindState = string.Empty;
 
     [DataField("noMindState")]
     public string NoMindState = string.Empty;
+    #endregion
 }
 
 [Serializable, NetSerializable]

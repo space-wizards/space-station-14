@@ -32,7 +32,7 @@ namespace Content.Client.Stack
             base.SetCount(uid, amount, component);
 
             // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
-            if (component.Count <= 0)
+            if (component.Count <= 0 && !component.Lingering)
             {
                 Xform.DetachParentToNull(uid, Transform(uid));
                 return;
@@ -60,6 +60,12 @@ namespace Content.Client.Stack
                 _counterSystem.ProcessCompositeSprite(uid, actual, maxCount, comp.LayerStates, hidden, sprite: args.Sprite);
             else
                 _counterSystem.ProcessOpaqueSprite(uid, comp.BaseLayer, actual, maxCount, comp.LayerStates, hidden, sprite: args.Sprite);
+
+            // tint the stack gray and make it transparent if it's lingering.
+            var color = actual == 0 && comp.Lingering
+                ? Color.DarkGray.WithAlpha(0.65f)
+                : Color.White;
+            args.Sprite.LayerSetColor(comp.BaseLayer, color);
         }
     }
 }

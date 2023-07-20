@@ -63,6 +63,18 @@ namespace Content.Client.Hands.Systems
                 return;
 
             var handsModified = component.Hands.Count != state.Hands.Count;
+            // we need to check that, even if we have the same amount, that the individual hands didn't change.
+            if (!handsModified)
+            {
+                foreach (var hand in component.Hands.Values)
+                {
+                    if (state.Hands.Contains(hand))
+                        continue;
+                    handsModified = true;
+                    break;
+                }
+            }
+
             var manager = EnsureComp<ContainerManagerComponent>(uid);
 
             if (handsModified)
@@ -97,7 +109,7 @@ namespace Content.Client.Hands.Systems
 
             _stripSys.UpdateUi(uid);
 
-            if (component.ActiveHand == null && state.ActiveHand == null)
+            if (component.ActiveHand == null || state.ActiveHand == null)
                 return; //edge case
 
             if (component.ActiveHand != null && state.ActiveHand != component.ActiveHand.Name)

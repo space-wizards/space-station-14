@@ -1,5 +1,6 @@
-﻿using Content.Server.Administration.Managers;
-using Content.Server.Body.Systems;
+﻿using Content.Server.Actions;
+using Content.Server.Administration.Managers;
+using Content.Server.Hands.Systems;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players.PlayTimeTracking;
@@ -7,6 +8,7 @@ using Content.Server.PowerCell;
 using Content.Shared.Alert;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
@@ -23,8 +25,9 @@ public sealed partial class BorgSystem : SharedBorgSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly RoleBanManager _roleBan = default!;
+    [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly BodySystem _bobby = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PlayTimeTrackingSystem _playTimeTracking = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
@@ -41,11 +44,14 @@ public sealed partial class BorgSystem : SharedBorgSystem
         SubscribeLocalEvent<BorgChassisComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<BorgChassisComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<BorgChassisComponent, PowerCellChangedEvent>(OnPowerCellChanged);
+        SubscribeLocalEvent<BorgChassisComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
 
+        InitializeModules();
         InitializeMMI();
     }
+
     private void OnMapInit(EntityUid uid, BorgChassisComponent component, MapInitEvent args)
     {
         UpdateBatteryAlert(uid);
@@ -53,11 +59,14 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
     private void OnChassisInteractUsing(EntityUid uid, BorgChassisComponent component, AfterInteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || uid == args.User)
             return;
 
         if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
+        {
+            //todo: if you're using a module, brain, or leg: show a popup to open the panel
             return;
+        }
 
         args.Handled = true;
         var used = args.Used;
@@ -76,6 +85,12 @@ public sealed partial class BorgSystem : SharedBorgSystem
             }
 
             component.BrainContainer.Insert(used);
+        }
+
+        if (TryComp<BorgModuleComponent>(used, out var module) &&
+            CanInsertModule(uid, used, component, module))
+        {
+            component.ModuleContainer.Insert(used);
         }
     }
 
@@ -102,17 +117,42 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
     private void OnMindAdded(EntityUid uid, BorgChassisComponent component, MindAddedMessage args)
     {
-        BorgStartup(uid, component);
+        BorgActivate(uid, component);
     }
 
     private void OnMindRemoved(EntityUid uid, BorgChassisComponent component, MindRemovedMessage args)
     {
-        BorgShutdown(uid, component);
+        BorgDeactivate(uid, component);
     }
 
     private void OnPowerCellChanged(EntityUid uid, BorgChassisComponent component, PowerCellChangedEvent args)
     {
         UpdateBatteryAlert(uid);
+
+        if (!TryComp<PowerCellDrawComponent>(uid, out var draw))
+            return;
+
+        // if we eject the battery or run out of charge, then disable
+        if (args.Ejected || !_powerCell.HasDrawCharge(uid))
+        {
+            DisableAllModules(uid, component);
+            return;
+        }
+
+        // if we aren't drawing and suddenly get enough power to draw again, reeanble.
+        if (!draw.Drawing && _powerCell.HasDrawCharge(uid, draw))
+        {
+            // only reenable the powerdraw if a player has the role.
+            if (_mind.TryGetMind(uid, out _))
+                _powerCell.SetPowerCellDrawEnabled(uid, true);
+
+            EnableAllModules(uid, component);
+        }
+    }
+
+    private void OnPowerCellSlotEmpty(EntityUid uid, BorgChassisComponent component, ref PowerCellSlotEmptyEvent args)
+    {
+        DisableAllModules(uid, component);
     }
 
     private void OnBrainMindAdded(EntityUid uid, BorgBrainComponent component, MindAddedMessage args)
@@ -158,14 +198,14 @@ public sealed partial class BorgSystem : SharedBorgSystem
         _alerts.ShowAlert(uid, AlertType.BorgBattery, chargePercent);
     }
 
-    public void BorgStartup(EntityUid uid, BorgChassisComponent component)
+    public void BorgActivate(EntityUid uid, BorgChassisComponent component)
     {
         Popup.PopupEntity(Loc.GetString("borg-mind-added", ("name", Identity.Name(uid, EntityManager))), uid);
         _powerCell.SetPowerCellDrawEnabled(uid, true);
         _appearance.SetData(uid, BorgVisuals.HasPlayer, true);
     }
 
-    public void BorgShutdown(EntityUid uid, BorgChassisComponent component)
+    public void BorgDeactivate(EntityUid uid, BorgChassisComponent component)
     {
         Popup.PopupEntity(Loc.GetString("borg-mind-removed", ("name", Identity.Name(uid, EntityManager))), uid);
         _powerCell.SetPowerCellDrawEnabled(uid, false);

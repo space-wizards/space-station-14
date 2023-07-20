@@ -72,6 +72,7 @@
     containers:
       borg_brain: !type:ContainerSlot { }
       cell_slot: !type:ContainerSlot { }
+      borg_module: !type:Container { }
   - type: PowerCellSlot
     cellSlotId: cell_slot
     fitsInCharger: false
@@ -89,6 +90,7 @@
     speechSounds: Pai
   - type: Flashable
   - type: HandheldLight
+    toggleOnInteract: false
     wattage: 0.2
     blinkingBehaviourId: blinking
     radiatingBehaviourId: radiating

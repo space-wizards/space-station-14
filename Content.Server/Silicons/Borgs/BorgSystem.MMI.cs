@@ -60,6 +60,9 @@ public sealed partial class BorgSystem
 
     private void OnMMILinkedRemoved(EntityUid uid, MMILinkedComponent component, EntGotRemovedFromContainerMessage args)
     {
+        if (Terminating(uid))
+            return;
+
         if (component.LinkedMMI is not { } linked)
             return;
         RemComp(uid, component);

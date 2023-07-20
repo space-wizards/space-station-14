@@ -66,6 +66,15 @@
     size: 10
 
 - type: entity
+  parent: CableHVStack10
+  id: CableHVStackLingering10
+  suffix: Lingering, 10
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
+
+- type: entity
   parent: CableHVStack
   id: CableHVStack1
   suffix: 1
@@ -116,6 +125,15 @@
     size: 10
 
 - type: entity
+  parent: CableMVStack10
+  id: CableMVStackLingering10
+  suffix: Lingering, 10
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
+
+- type: entity
   parent: CableMVStack
   id: CableMVStack1
   suffix: 1
@@ -163,6 +181,15 @@
       count: 10
     - type: Item
       size: 10
+
+- type: entity
+  parent: CableApcStack10
+  id: CableApcStackLingering10
+  suffix: Lingering, 10
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
 
 - type: entity
   parent: CableApcStack

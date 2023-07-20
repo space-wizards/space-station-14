@@ -17,7 +17,19 @@
       "name": "generic"
     },
     {
+      "name": "icon-anomalies"
+    },
+    {
+      "name": "icon-artifacts"
+    },
+    {
+      "name": "icon-cables"
+    },
+    {
       "name": "icon-template"
+    },
+    {
+      "name": "icon-tools"
     },
     {
       "name": "medical"
