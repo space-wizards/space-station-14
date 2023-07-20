@@ -304,6 +304,12 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (ev.Ammo.Count <= 0)
         {
+            if (gun.TriggerWhenEmpty)
+            {
+                ExplodeGun(gunUid);
+                return;
+            }
+
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
             if (shots > 0)
@@ -355,6 +361,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         out bool userImpulse,
         EntityUid? user = null,
         bool throwItems = false);
+
+    public abstract void ExplodeGun(EntityUid gunUid);
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 

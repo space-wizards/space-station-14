@@ -157,9 +157,10 @@
       availableModes:
         - FullAuto
       soundGunshot: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
+      triggerWhenEmpty: true
     - type: BallisticAmmoProvider
       proto: CartridgePistol
-      capacity: 50
+      capacity: 0
       cycleable: false
     - type: Construction
       deconstructionTarget: null
@@ -168,6 +169,13 @@
     - type: Repairable
       qualityNeeded: "Anchoring"
       doAfterDelay: 3
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 10
+      intensitySlope: 1.5
+      totalIntensity: 30
+      canCreateVacuum: false
 
 - type: entity
   parent: BaseWeaponTurret

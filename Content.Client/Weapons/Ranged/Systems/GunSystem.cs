@@ -243,6 +243,11 @@ public sealed partial class GunSystem : SharedGunSystem
         _recoil.KickCamera(user.Value, recoil.Normalized() * 0.5f * recoilScalar);
     }
 
+    public override void ExplodeGun(EntityUid gunUid)
+    {
+        ExplodeGun(gunUid);
+    }
+
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)
     {
         if (uid == null || user == null || !Timing.IsFirstTimePredicted)
