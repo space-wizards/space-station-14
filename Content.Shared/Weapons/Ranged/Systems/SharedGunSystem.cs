@@ -306,7 +306,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         {
             if (gun.TriggerWhenEmpty)
             {
-                ExplodeGun(gunUid);
+                TriggerGun(gunUid);
                 return;
             }
 
@@ -362,7 +362,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         EntityUid? user = null,
         bool throwItems = false);
 
-    public abstract void ExplodeGun(EntityUid gunUid);
+    public abstract void TriggerGun(EntityUid gunUid);
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 

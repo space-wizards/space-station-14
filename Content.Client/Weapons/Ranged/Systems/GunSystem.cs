@@ -243,9 +243,9 @@ public sealed partial class GunSystem : SharedGunSystem
         _recoil.KickCamera(user.Value, recoil.Normalized() * 0.5f * recoilScalar);
     }
 
-    public override void ExplodeGun(EntityUid gunUid)
+    public override void TriggerGun(EntityUid gunUid)
     {
-        ExplodeGun(gunUid);
+        TriggerGun(gunUid);
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)

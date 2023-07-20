@@ -291,7 +291,7 @@ public sealed partial class GunSystem : SharedGunSystem
         ShootProjectile(uid, mapDirection, gunVelocity, gunUid, user, gun.ProjectileSpeed);
     }
 
-    public override void ExplodeGun(EntityUid gunUid)
+    public override void TriggerGun(EntityUid gunUid)
     {
         _triggerSystem.Trigger(gunUid);
         return;
