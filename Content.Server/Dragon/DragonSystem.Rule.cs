@@ -29,9 +29,7 @@ public sealed partial class DragonSystem
 
     private void OnRiftRoundEnd(RoundEndTextAppendEvent args)
     {
-        var dragons = EntityQuery<DragonComponent>().ToList();
-
-        if (dragons.Count == 0)
+        if (EntityQuery<DragonComponent>().Count() == 0)
             return;
 
         args.AddLine(Loc.GetString("dragon-round-end-summary"));
