@@ -18,27 +18,11 @@
     - !type:KeyExistsPrecondition
       key: Target
   branches:
-    # Keep hitting them if they're in range
-    - tasks:
-        - !type:htnPrimitive
-          operator: !type:MeleeOperator
-            targetKey: Target
-          preconditions:
-            - !type:KeyExistsPrecondition
-              key: Target
-            - !type:TargetInRangePrecondition
-              targetKey: Target
-              rangeKey: MeleeRange
-          services:
-            - !type:UtilityService
-              id: MeleeService
-              proto: NearbyMeleeTargets
-              key: Target
-
     # Move to melee range and hit them
     - tasks:
         - !type:htnPrimitive
           operator: !type:MoveToOperator
+            shutdownState: PlanFinished
             pathfindInPlanning: true
             removeKeyOnFinish: false
             targetKey: TargetCoordinates

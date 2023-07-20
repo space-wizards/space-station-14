@@ -160,6 +160,24 @@ public sealed class MoveToOperator : HTNOperator
     {
         base.TaskShutdown(blackboard, status);
 
+        if (ShutdownOnState == HTNPlanState.PlanFinished)
+            return;
+
+        Shutdown(blackboard);
+    }
+
+    public override void PlanShutdown(NPCBlackboard blackboard)
+    {
+        base.PlanShutdown(blackboard);
+
+        if (ShutdownOnState == HTNPlanState.Running)
+            return;
+
+        Shutdown(blackboard);
+    }
+
+    private void Shutdown(NPCBlackboard blackboard)
+    {
         // Cleanup the blackboard and remove steering.
         if (blackboard.TryGetValue<CancellationTokenSource>(MovementCancelToken, out var cancelToken, _entManager))
         {
@@ -176,12 +194,6 @@ public sealed class MoveToOperator : HTNOperator
         }
 
         _steering.Unregister(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
-    }
-
-    public override void PlanShutdown()
-    {
-        base.PlanShutdown();
-
     }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)

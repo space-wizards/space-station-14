@@ -5,7 +5,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Audio;
 
-namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Ranged;
+namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Ranged;
 
 public sealed class GunOperator : HTNOperator
 {

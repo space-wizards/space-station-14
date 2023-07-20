@@ -4,13 +4,15 @@ using Content.Server.NPC.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 
-namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Melee;
+namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Melee;
 
 /// <summary>
 /// Attacks the specified key in melee combat.
 /// </summary>
 public sealed class MeleeOperator : HTNOperator
 {
+    // TODO: Shutdown state, probably interface, and only shut it down on plan failure or w/e
+
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     /// <summary>

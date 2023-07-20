@@ -4,5 +4,5 @@ public enum HTNPlanState : byte
 {
     Running,
 
-    Finished,
+    PlanFinished,
 }

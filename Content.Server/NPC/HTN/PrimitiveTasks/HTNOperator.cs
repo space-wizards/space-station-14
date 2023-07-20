@@ -43,7 +43,7 @@ public abstract class HTNOperator
     /// <summary>
     /// Called when the plan has finished running.
     /// </summary>
-    public virtual void PlanShutdown()
+    public virtual void PlanShutdown(NPCBlackboard blackboard)
     {
 
     }
