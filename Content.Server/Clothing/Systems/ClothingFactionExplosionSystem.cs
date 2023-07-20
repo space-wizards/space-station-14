@@ -55,16 +55,6 @@ public sealed class ClothingFactionExplosionSystem : EntitySystem
     private void OnGotEquipped(EntityUid uid, ClothingFactionExplosionComponent component, GotEquippedEvent args)
     {
         component.LastUser = args.Equipee;
-        // if (!sysMan.TryGetComponent<FactionComponent>(args.Equipee, out var factionComponent))
-        //     ownerIsFriendly = false;
-        // if (factionComponent != null)
-        // {
-        //     foreach (var faction in factionComponent.Factions)
-        //     {
-        //         if (component.Faction == faction)
-        //             ownerIsFriendly = true;
-        //     }
-        // }
         SearchFriendlyFaction(args.Equipee, component);
         if (!component.OwnerIsFriendly)
         {
