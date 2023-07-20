@@ -1,5 +1,6 @@
 using Robust.Shared.GameStates;
 using Content.Shared.Singularity.EntitySystems;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Singularity.Components;
 
@@ -54,7 +55,7 @@ public sealed class EventHorizonComponent : Component
     public TimeSpan TargetConsumePeriod { get; set; } = TimeSpan.FromSeconds(0.5);
 
     /// <summary>
-    /// The last time at which this consumed everything it overlapped with.
+    /// The next time at which this consumes everything it overlaps with.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     [Access(typeof(SharedEventHorizonSystem))]
