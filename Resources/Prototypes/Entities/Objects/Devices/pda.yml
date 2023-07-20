@@ -904,3 +904,23 @@
     accentVColor: "#8900c9"
   - type: Icon
     state: pda-seniorresearcher
+
+- type: entity
+  parent: BasePDA
+  id: SeniorPhysicianPDA
+  name: senior physician PDA
+  description: Smells faintly like iron and chemicals. Has a built-in health analyzer.
+  components:
+  - type: Pda
+    id: SeniorPhysicianIDCard
+    state: pda-seniorphysician
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentHColor: "#447987"
+    accentVColor: "#B34200"
+  - type: Icon
+    state: pda-seniorphysician
+  - type: HealthAnalyzer
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"

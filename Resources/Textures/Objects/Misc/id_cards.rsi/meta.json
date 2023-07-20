@@ -202,12 +202,15 @@
 	{
       "name": "idcluwne"
     },
-	{
-	  "name": "idseniorengineer"
-	},
-	{
-	  "name": "idseniorresearcher"
-	},
+    {
+      "name": "idseniorengineer"
+    },
+    {
+      "name": "idseniorresearcher"
+    },
+    {
+      "name": "idseniorphysician"
+    },
     {
       "name": "gold-inhand-left",
       "directions": 4

@@ -11,7 +11,7 @@
       time: 54000
   startingGear: ParamedicGear
   icon: "Paramedic"
-  supervisors: job-supervisors-cmo
+  supervisors: job-supervisors-senior-medical
   access:
   - Medical
   - Maintenance

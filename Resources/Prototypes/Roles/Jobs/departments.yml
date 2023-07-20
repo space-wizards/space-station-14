@@ -65,6 +65,7 @@
   roles:
   - Chemist
   - ChiefMedicalOfficer
+  - SeniorPhysician
   - MedicalDoctor
   - MedicalIntern
   - Psychologist

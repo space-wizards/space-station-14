@@ -1214,3 +1214,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/senior_researcher.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/senior_researcher.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorPhysician
+  name: senior physician jumpsuit
+  description: A sign of skill and prestige within the medical department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/senior_physician.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/senior_physician.rsi

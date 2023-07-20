@@ -45,3 +45,4 @@ job-description-warden = Patrol the security department, ensure that no one is s
 job-description-zookeeper = Put on a joyful display of cute animals and space carps for all the crew to see. Currently available on Kettle Station.
 job-description-senior-engineer = Teach new engineers the basics of the station's engine, repairing, atmospherics and power while acting as the CE's second in-command.
 job-description-senior-researcher = Teach new scientists the basics of item printing, artifact research and anomalous objects while acting as the RD's second in-command.
+job-description-senior-physician = Teach new medics the basics of tending to the wounded, chemistry, diagnosing the diseased and disposing of the dead while acting as the CMO's second in-command.
