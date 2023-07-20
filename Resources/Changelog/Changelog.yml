@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Adjust salvage crusher colour to be slightly more muted., type: Tweak}
-  id: 3798
-  time: '2023-05-17T15:11:17.0000000+00:00'
 - author: themias
   changes:
   - {message: Fixed visuals for cigarette packs and donut boxes, type: Fix}
@@ -2973,3 +2968,11 @@ Entries:
   - {message: Added psychologist's office at Box Station, type: Add}
   id: 4297
   time: '2023-07-20T06:50:47.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 'Arachnids have a few more appendages, chest markings, and now show
+      off their chelicerae.', type: Add}
+  - {message: Arachnids now have a few different organ sprites, type: Add}
+  - {message: Arachnids no longer have webs strapped to their appendages, type: Remove}
+  id: 4298
+  time: '2023-07-20T21:55:50.0000000+00:00'
