@@ -160,7 +160,7 @@
       triggerWhenEmpty: true
     - type: BallisticAmmoProvider
       proto: CartridgePistol
-      capacity: 0
+      capacity: 50
       cycleable: false
     - type: Construction
       deconstructionTarget: null
