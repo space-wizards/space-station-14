@@ -22,16 +22,16 @@
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitMercenary
+    jumpsuit: ClothingUniformJumpsuitSec
     back: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesBootsMerc
-    eyes: ClothingEyesGlassesSunglasses
-    gloves: ClothingHandsGlovesMercFingerless
-    outerClothing: ClothingOuterVestWeb
+    shoes: ClothingShoesBootsCombatFilled
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHelmetBasic
+    outerClothing: ClothingOuterArmorBasic
     id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58
-  innerclothingskirt: ClothingUniformJumpsuitMercenary
+  innerclothingskirt: ClothingUniformJumpskirtSec
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled
