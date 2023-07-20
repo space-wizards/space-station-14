@@ -52,7 +52,7 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     public bool Cycled = true;
 
     /// <summary>
-    /// Is the gun allowed to be cycled
+    /// Is the magazine allowed to be cycled
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("cycleable")]
     [AutoNetworkedField]
