@@ -57,7 +57,7 @@
       params:
         volume: 5
     initialBeepDelay: 0
-    beepInterval: 2
+    beepInterval: 0.5
 
 - type: entity
   parent: BaseItem
@@ -175,12 +175,12 @@
 - type: entity
   parent: Soap
   id: SlipocalypseClusterBang
-  name: soap
+  name: slipocalypse clusterbang
   description: we heard you like soap so we put soap in your soap
   components:
   - type: Sprite
-    sprite: Objects/Specific/Janitorial/soap.rsi
-    state: syndie
+    sprite: Objects/Weapons/Grenades/clusterbang.rsi
+    state: base-3
   - type: Appearance
   - type: ClusterGrenade
     bombletDelayMax: 0
@@ -196,7 +196,7 @@
       types:
         Blunt: 10
   - type: FlashOnTrigger
-    range: 0.1
+    range: 0.5
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
