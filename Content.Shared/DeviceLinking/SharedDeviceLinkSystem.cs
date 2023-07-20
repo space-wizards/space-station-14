@@ -1,3 +1,5 @@
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
@@ -9,6 +11,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     private ISawmill _sawmill = default!;
 
     public const string InvokedPort = "link_port";
@@ -255,6 +258,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         if (!Resolve(sourceUid, ref sourceComponent) || !Resolve(sinkUid, ref sinkComponent))
             return;
 
+        if (userId != null)
+            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{ToPrettyString(userId.Value):actor} is linking defaults between {ToPrettyString(sourceUid):source} and {ToPrettyString(sinkUid):sink}");
+        else
+            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"linking defaults between {ToPrettyString(sourceUid):source} and {ToPrettyString(sinkUid):sink}");
+
         var sourcePorts = GetSourcePorts(sourceUid, sourceComponent);
         var defaults = GetDefaults(sourcePorts);
         SaveLinks(userId, sourceUid, sinkUid, defaults, sourceComponent, sinkComponent);
@@ -413,6 +421,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
         if (linkedPorts.Contains((source, sink)))
         {
+            if (userId != null)
+                _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{ToPrettyString(userId.Value):actor} unlinked {ToPrettyString(sourceUid):source} {source} and {ToPrettyString(sinkUid):sink} {sink}");
+            else
+                _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"unlinked {ToPrettyString(sourceUid):source} {source} and {ToPrettyString(sinkUid):sink} {sink}");
+
             RaiseLocalEvent(sourceUid, new PortDisconnectedEvent(source));
             RaiseLocalEvent(sinkUid, new PortDisconnectedEvent(sink));
 
@@ -497,6 +510,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
     private void SendNewLinkEvent(EntityUid? user, EntityUid sourceUid, string source, EntityUid sinkUid, string sink)
     {
+        if (user != null)
+            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{ToPrettyString(user.Value):actor} linked {ToPrettyString(sourceUid):source} {source} and {ToPrettyString(sinkUid):sink} {sink}");
+        else
+            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"linked {ToPrettyString(sourceUid):source} {source} and {ToPrettyString(sinkUid):sink} {sink}");
+
         var newLinkEvent = new NewLinkEvent(user, sourceUid, source, sinkUid, sink);
         RaiseLocalEvent(sourceUid, newLinkEvent);
         RaiseLocalEvent(sinkUid, newLinkEvent);

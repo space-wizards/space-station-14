@@ -49,7 +49,7 @@ namespace Content.Server.Objectives.Conditions
             {
                 var entityManager = IoCManager.Resolve<EntityManager>();
                 var mindSystem = entityManager.System<MindSystem>();
-                return _target == null || mindSystem.IsCharacterDeadIc(_target) ? 1f : 0f;
+                return _target == null || !mindSystem.IsCharacterDeadIc(_target) ? 1f : 0f;
             }
         }
 

@@ -11,6 +11,10 @@
   - type: BreathMask
   - type: IngestionBlocker
   - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskGas
@@ -152,7 +156,8 @@
 
 - type: entity
   parent: ClothingMaskBase
-  id: ClothingMaskClown
+  id: ClothingMaskClownBase
+  abstract: true
   name: clown wig and mask
   description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
   components:
@@ -162,10 +167,20 @@
     sprite: Clothing/Mask/clown.rsi
   - type: BreathMask
   - type: IdentityBlocker
-  # for H.O.N.K. construction
   - type: Tag
     tags:
     - ClownMask
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingMaskClownBase
+  id: ClothingMaskClown
+  components:
+  - type: Tag
+    tags:
+    - ClownMask
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskBase
@@ -178,6 +193,7 @@
   - type: Clothing
     sprite: Clothing/Mask/joy.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -191,6 +207,10 @@
     sprite: Clothing/Mask/mime.rsi
   - type: BreathMask
   - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -210,17 +230,17 @@
   name: muzzle
   description: To stop that awful noise.
   components:
-    - type: Sprite
-      sprite: Clothing/Mask/muzzle.rsi
-    - type: Clothing
-      sprite: Clothing/Mask/muzzle.rsi
-    - type: IngestionBlocker
-    - type: AddAccentClothing
-      accent: ReplacementAccent
-      replacement: mumble
-    - type: Construction
-      graph: Muzzle
-      node: muzzle
+  - type: Sprite
+    sprite: Clothing/Mask/muzzle.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/muzzle.rsi
+  - type: IngestionBlocker
+  - type: AddAccentClothing
+    accent: ReplacementAccent
+    replacement: mumble
+  - type: Construction
+    graph: Muzzle
+    node: muzzle
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -237,7 +257,7 @@
   - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingMaskClown
+  parent: ClothingMaskClownBase
   id: ClothingMaskCluwne
   name: cluwne face and hair
   suffix: Unremoveable
@@ -316,6 +336,11 @@
   - type: Clothing
     sprite: Clothing/Mask/rat.rsi
   - type: BreathMask
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -328,6 +353,7 @@
   - type: Clothing
     sprite: Clothing/Mask/fox.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -340,6 +366,7 @@
   - type: Clothing
     sprite: Clothing/Mask/bee.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -352,6 +379,7 @@
   - type: Clothing
     sprite: Clothing/Mask/bear.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -364,6 +392,7 @@
   - type: Clothing
     sprite: Clothing/Mask/raven.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -376,6 +405,7 @@
   - type: Clothing
     sprite: Clothing/Mask/jackal.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -388,9 +418,25 @@
   - type: Clothing
     sprite: Clothing/Mask/bat.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingMaskClown
+  parent: ClothingMaskBase
+  id: ClothingMaskNeckGaiter
+  name: neck gaiter
+  description: Stylish neck gaiter for your neck, can protect from the cosmic wind?...
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/neckgaiter.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/neckgaiter.rsi
+  - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingMaskClownBase
   id: ClothingMaskSexyClown
   name: sexy clown mask
   description: Some naughty clowns think this is what the Honkmother looks like.
@@ -432,3 +478,17 @@
     sprite: Clothing/Mask/scaredmime.rsi
   - type: Clothing
     sprite: Clothing/Mask/scaredmime.rsi
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskItalianMoustache
+  name: italian moustache
+  description: Made from authentic Italian moustache hairs. Gives the wearer an irresistable urge to gesticulate wildly.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/italian_moustache.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/italian_moustache.rsi
+  - type: AddAccentClothing
+    accent: ReplacementAccent
+    replacement: italian

@@ -132,13 +132,13 @@ public abstract partial class SharedGunSystem
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
-
-        args.Verbs.Add(new Verb()
-        {
-            Text = Loc.GetString("gun-ballistic-cycle"),
-            Disabled = GetBallisticShots(component) == 0,
-            Act = () => ManualCycle(uid, component, Transform(uid).MapPosition, args.User),
-        });
+        if (component.Cycleable == true)
+            args.Verbs.Add(new Verb()
+            {
+                Text = Loc.GetString("gun-ballistic-cycle"),
+                Disabled = GetBallisticShots(component) == 0,
+                Act = () => ManualCycle(uid, component, Transform(uid).MapPosition, args.User),
+            });
     }
 
     private void OnBallisticExamine(EntityUid uid, BallisticAmmoProviderComponent component, ExaminedEvent args)

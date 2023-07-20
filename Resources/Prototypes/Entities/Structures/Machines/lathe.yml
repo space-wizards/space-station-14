@@ -98,6 +98,7 @@
       - GasAnalyzer
       - UtilityBelt
       - Pickaxe
+      - ModularReceiver
       - AppraisalTool
       - SheetRGlass
       - Beaker
@@ -269,6 +270,7 @@
       - SurveillanceWirelessCameraAnchoredCircuitboard
       - HydroponicsTrayMachineCircuitboard
       - SolarControlComputerCircuitboard
+      - SolarTrackerElectronics
       - PowerComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
