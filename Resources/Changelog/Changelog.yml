@@ -1,10 +1,4 @@
 Entries:
-- author: Skyedra
-  changes:
-  - {message: Syndicate R&D has greatly improved the explosion of the power sink.,
-    type: Tweak}
-  id: 3796
-  time: '2023-05-17T13:55:42.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: 'Too many people were drinking space glue puddles, so rationing has
@@ -2972,3 +2966,11 @@ Entries:
   - {message: Added syndicate monkey reinforcement teleporter. Ook!, type: Add}
   id: 4295
   time: '2023-07-19T21:23:23.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: Disposable turret price lowered to 8 tc and rate of fire lowered by
+      20%., type: Tweak}
+  - {message: Disposable turrets can now be turned back into a toolbox using a screwdriver
+      and repaired using a wrench., type: Tweak}
+  id: 4296
+  time: '2023-07-20T02:16:09.0000000+00:00'
