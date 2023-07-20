@@ -63,7 +63,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         var appliedStates = new List<Dictionary<string, object>?>();
 
         var tasksToProcess = new Queue<HTNTask>();
-        var finalPlanCount = 0;
+        var finalPlan = new List<HTNPrimitiveTask>();
         tasksToProcess.Enqueue(_rootTask);
 
         // How many primitive tasks we've added since last record.
@@ -101,122 +101,32 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, ref finalPlanCount, ref primitiveCount, ref _blackboard, ref btrIndex, ref btr);
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, finalPlan, ref primitiveCount, ref _blackboard, ref btrIndex, ref btr);
                     }
                     break;
-                case HTNParallelTask parallel:
-                    // Treated similar to a compound.
-                    await SuspendIfOutOfTime();
-
-                    // Push all of them to taskstoprocess
-                    if (PushTasks(parallel.Tasks, parallel.Preconditions, tasksToProcess, _blackboard, ref btrIndex))
-                    {
-                        decompHistory.Push(new DecompositionState()
-                        {
-                            Blackboard = _blackboard.ShallowClone(),
-                            CompoundTask = parallel,
-                            BranchTraversal = btrIndex,
-                            PrimitiveCount = primitiveCount,
-                        });
-
-                        btr.Add(btrIndex);
-                        primitiveCount = 0;
-                        // Reset method traversal
-                        btrIndex = 0;
-                    }
-
-                    break;
-                case HTNRepeatingTask repeating:
-                    // Also treated similar to a compound.
-                    await SuspendIfOutOfTime();
-
-                    // Push all of them to taskstoprocess
-                    if (PushTasks(repeating.Tasks, repeating.Preconditions, tasksToProcess, _blackboard, ref btrIndex))
-                    {
-                        decompHistory.Push(new DecompositionState()
-                        {
-                            Blackboard = _blackboard.ShallowClone(),
-                            CompoundTask = repeating,
-                            BranchTraversal = btrIndex,
-                            PrimitiveCount = primitiveCount,
-                        });
-
-                        btr.Add(btrIndex);
-                        primitiveCount = 0;
-                        // Reset method traversal
-                        btrIndex = 0;
-                    }
-
-                    break;
-
                 case HTNPrimitiveTask primitive:
                     if (await WaitAsyncTask(PrimitiveConditionMet(primitive, _blackboard, appliedStates)))
                     {
                         primitiveCount++;
-                        finalPlanCount++;
+                        finalPlan.Add(primitive);
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, ref finalPlanCount, ref primitiveCount, ref _blackboard, ref btrIndex, ref btr);
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, finalPlan, ref primitiveCount, ref _blackboard, ref btrIndex, ref btr);
                     }
 
                     break;
             }
         }
 
-        if (finalPlanCount == 0)
+        if (finalPlan.Count == 0)
         {
             return null;
         }
 
         var branchTraversalRecord = decompHistory.Reverse().Select(o => o.BranchTraversal).ToList();
 
-        var plan = new List<HTNTask>();
-        var tasks = new Queue<HTNTask>();
-        tasks.Enqueue(_rootTask);
-        var finalBtrIndex = 0;
-
-        // Reconstruct the plan
-        // Compound tasks get decomposed, while other tasks get added as is.
-        while (tasks.TryDequeue(out var task))
-        {
-            switch (task)
-            {
-                // TODO: Need to make sure on the plan that teh compounds inside parallel etc are decomposed properly.
-                case HTNCompoundTask compound:
-                    var compBranch = _protoManager.Index<HTNCompoundPrototype>(compound.Task).Branches[branchTraversalRecord[finalBtrIndex]];
-
-                    foreach (var sub in compBranch.Tasks)
-                    {
-                        tasks.Enqueue(sub);
-                    }
-
-                    finalBtrIndex++;
-
-                    break;
-                case HTNParallelTask parallel:
-                    DebugTools.Assert(finalBtrIndex == 0);
-                    tasks.Enqueue(parallel);
-                    break;
-                case HTNRepeatingTask repeating:
-                    DebugTools.Assert(finalBtrIndex == 0);
-                    tasks.Enqueue(repeating);
-                    break;
-                case HTNPrimitiveTask primitive:
-                    DebugTools.Assert(finalBtrIndex == 0);
-                    tasks.Enqueue(primitive);
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
-        return new HTNPlan(plan, branchTraversalRecord, appliedStates);
-    }
-
-    private void AddFinalTasks(HTNTask task, int branch, List<HTNTask> tasks)
-    {
-
+        return new HTNPlan(finalPlan, branchTraversalRecord, appliedStates);
     }
 
     private async Task<bool> PrimitiveConditionMet(HTNPrimitiveTask primitive, NPCBlackboard blackboard, List<Dictionary<string, object>?> appliedStates)
@@ -289,25 +199,6 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         return false;
     }
 
-    private bool PushTasks(List<HTNTask> tasks, List<HTNPrecondition> preconditions, Queue<HTNTask> tasksToProcess, NPCBlackboard blackboard,
-        ref int mtrIndex)
-    {
-        foreach (var con in preconditions)
-        {
-            if (con.IsMet(blackboard))
-                continue;
-
-            return false;
-        }
-
-        foreach (var task in tasks)
-        {
-            tasksToProcess.Enqueue(task);
-        }
-
-        return true;
-    }
-
     /// <summary>
     /// Restores the planner state.
     /// </summary>
@@ -315,7 +206,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         Stack<DecompositionState> decompHistory,
         Queue<HTNTask> tasksToProcess,
         List<Dictionary<string, object>?> appliedStates,
-        ref int finalPlan,
+        List<HTNPrimitiveTask> finalPlan,
         ref int primitiveCount,
         ref NPCBlackboard blackboard,
         ref int mtrIndex,
@@ -330,14 +221,17 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         // Increment MTR so next time we try the next method on the compound task.
         mtrIndex = lastDecomp.BranchTraversal + 1;
 
+        var count = finalPlan.Count;
+        var reduction = count - primitiveCount;
+
         // Final plan only has primitive tasks added to it so we can just remove the count we've tracked since the last decomp.
-        finalPlan -= primitiveCount;
-        appliedStates.RemoveRange(finalPlan, primitiveCount);
-        btr.RemoveRange(finalPlan, primitiveCount);
+        finalPlan.RemoveRange(reduction, primitiveCount);
+        appliedStates.RemoveRange(reduction, primitiveCount);
+        btr.RemoveRange(reduction, primitiveCount);
 
         primitiveCount = lastDecomp.PrimitiveCount;
         blackboard = lastDecomp.Blackboard;
-        tasksToProcess.Enqueue((HTNTask) lastDecomp.CompoundTask);
+        tasksToProcess.Enqueue(lastDecomp.CompoundTask);
     }
 
     /// <summary>
@@ -358,7 +252,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         /// <summary>
         /// The task that owns this decomposition.
         /// </summary>
-        public IHTNCompound CompoundTask = default!;
+        public HTNCompoundTask CompoundTask = default!;
 
         // This may not be necessary for planning but may be useful for debugging so I didn't remove it.
         /// <summary>

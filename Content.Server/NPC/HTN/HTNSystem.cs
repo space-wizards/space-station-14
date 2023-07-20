@@ -76,13 +76,8 @@ public sealed class HTNSystem : EntitySystem
 
             if (comp.Plan != null)
             {
-                foreach (var plan in GetPrimitiveTasks(comp.Plan))
-                {
-
-                }
-
                 var currentOperator = comp.Plan.CurrentOperator;
-                currentOperator.Shutdown(comp.Blackboard, HTNOperatorStatus.Failed);
+                currentOperator.TaskShutdown(comp.Blackboard, HTNOperatorStatus.Failed);
                 comp.Plan = null;
             }
         }
@@ -99,6 +94,9 @@ public sealed class HTNSystem : EntitySystem
 
     private void OnPrototypeLoad(PrototypesReloadedEventArgs obj)
     {
+        if (!obj.ByType.ContainsKey(typeof(HTNCompoundPrototype)))
+            return;
+
         OnLoad();
     }
 
@@ -141,19 +139,6 @@ public sealed class HTNSystem : EntitySystem
 
                 primitive.Operator.Initialize(EntityManager.EntitySysManager);
                 break;
-            case HTNParallelTask parallel:
-                foreach (var sub in parallel.Tasks)
-                {
-                    UpdateTask(sub);
-                }
-                break;
-            case HTNRepeatingTask repeating:
-                foreach (var sub in repeating.Tasks)
-                {
-                    UpdateTask(sub);
-                }
-
-                break;
             default:
                 throw new NotImplementedException();
         }
@@ -172,29 +157,6 @@ public sealed class HTNSystem : EntitySystem
     public void Replan(HTNComponent component)
     {
         component.PlanAccumulator = 0f;
-    }
-
-    private IEnumerable<HTNPrimitiveTask> GetPrimitiveTasks(HTNPlan plan)
-    {
-        var current = plan.Tasks[plan.Index];
-
-        switch (current)
-        {
-            case HTNRepeatingTask repeating:
-                break;
-            case HTNParallelTask parallel:
-                foreach (var sub in parallel.Tasks)
-                {
-                    yield return sub;
-                }
-
-                break;
-            case HTNPrimitiveTask primitive:
-                yield return primitive;
-                break;
-            default:
-                throw new NotImplementedException();
-        }
     }
 
     public void UpdateNPC(ref int count, int maxUpdates, float frameTime)
@@ -244,7 +206,7 @@ public sealed class HTNSystem : EntitySystem
                 if (comp.Plan == null || newPlanBetter)
                 {
                     comp.CheckServices = false;
-                    comp.Plan?.CurrentTask.Operator.Shutdown(comp.Blackboard, HTNOperatorStatus.BetterPlan);
+                    comp.Plan?.CurrentTask.Operator.TaskShutdown(comp.Blackboard, HTNOperatorStatus.BetterPlan);
                     comp.Plan = comp.PlanningJob.Result;
 
                     // Startup the first task and anything else we need to do.
@@ -380,12 +342,12 @@ public sealed class HTNSystem : EntitySystem
                 case HTNOperatorStatus.Continuing:
                     break;
                 case HTNOperatorStatus.Failed:
-                    currentOperator.Shutdown(blackboard, status);
+                    currentOperator.TaskShutdown(blackboard, status);
                     component.Plan = null;
                     break;
                 // Operator completed so go to the next one.
                 case HTNOperatorStatus.Finished:
-                    currentOperator.Shutdown(blackboard, status);
+                    currentOperator.TaskShutdown(blackboard, status);
                     component.Plan.Index++;
 
                     // Plan finished!

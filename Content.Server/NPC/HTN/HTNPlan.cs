@@ -1,3 +1,5 @@
+using Content.Server.NPC.HTN.PrimitiveTasks;
+
 namespace Content.Server.NPC.HTN;
 
 /// <summary>
@@ -12,11 +14,18 @@ public sealed class HTNPlan
 
     public readonly List<int> BranchTraversalRecord;
 
-    public readonly List<HTNTask> Tasks;
+    public readonly List<HTNPrimitiveTask> Tasks;
 
+    public HTNPrimitiveTask CurrentTask => Tasks[Index];
+
+    public HTNOperator CurrentOperator => CurrentTask.Operator;
+
+    /// <summary>
+    /// Where we are up to in the <see cref="Tasks"/>
+    /// </summary>
     public int Index = 0;
 
-    public HTNPlan(List<HTNTask> tasks, List<int> branchTraversalRecord, List<Dictionary<string, object>?> effects)
+    public HTNPlan(List<HTNPrimitiveTask> tasks, List<int> branchTraversalRecord, List<Dictionary<string, object>?> effects)
     {
         Tasks = tasks;
         BranchTraversalRecord = branchTraversalRecord;

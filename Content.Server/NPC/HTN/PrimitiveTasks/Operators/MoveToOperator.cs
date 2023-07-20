@@ -20,6 +20,12 @@ public sealed class MoveToOperator : HTNOperator
     private SharedTransformSystem _transform = default!;
 
     /// <summary>
+    /// When to shut the task down.
+    /// </summary>
+    [DataField("shutdownState")]
+    public HTNPlanState ShutdownOnState = HTNPlanState.Running;
+
+    /// <summary>
     /// Should we assume the MovementTarget is reachable during planning or should we pathfind to it?
     /// </summary>
     [DataField("pathfindInPlanning")]
@@ -150,9 +156,9 @@ public sealed class MoveToOperator : HTNOperator
         }
     }
 
-    public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
+    public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
-        base.Shutdown(blackboard, status);
+        base.TaskShutdown(blackboard, status);
 
         // Cleanup the blackboard and remove steering.
         if (blackboard.TryGetValue<CancellationTokenSource>(MovementCancelToken, out var cancelToken, _entManager))
@@ -170,6 +176,12 @@ public sealed class MoveToOperator : HTNOperator
         }
 
         _steering.Unregister(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+    }
+
+    public override void PlanShutdown()
+    {
+        base.PlanShutdown();
+
     }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)

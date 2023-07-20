@@ -60,9 +60,9 @@ public sealed class GunOperator : HTNOperator
         }
     }
 
-    public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
+    public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
-        base.Shutdown(blackboard, status);
+        base.TaskShutdown(blackboard, status);
         _entManager.RemoveComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
         blackboard.Remove<EntityUid>(TargetKey);
     }
