@@ -1,5 +1,4 @@
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.StatusIcon;
@@ -23,12 +22,6 @@ public class StatusIconData : IComparable<StatusIconData>
     [DataField("priority")]
     public int Priority = 10;
 
-    /// <summary>
-    /// A preference for where the icon will be displayed. None | Left | Right
-    /// </summary>
-    [DataField("locationPreference")]
-    public StatusIconLocationPreference LocationPreference = StatusIconLocationPreference.None;
-
     public int CompareTo(StatusIconData? other)
     {
         return Priority.CompareTo(other?.Priority ?? int.MaxValue);
@@ -44,12 +37,4 @@ public sealed class StatusIconPrototype : StatusIconData, IPrototype
     /// <inheritdoc/>
     [IdDataField]
     public string ID { get; } = default!;
-}
-
-[Serializable, NetSerializable]
-public enum StatusIconLocationPreference : byte
-{
-    None,
-    Left,
-    Right,
 }

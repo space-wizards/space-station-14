@@ -23,6 +23,9 @@ public sealed partial class ParticleAcceleratorSystem
         if (!Resolve(uid, ref controller))
             return;
 
+        if (controller.CurrentlyRescanning)
+            return;
+
         SwitchOff(uid, user, controller);
 
         var partQuery = GetEntityQuery<ParticleAcceleratorPartComponent>();
@@ -66,6 +69,11 @@ public sealed partial class ParticleAcceleratorSystem
             UpdateUI(uid, controller);
             return;
         }
+
+        // When we call SetLocalRotation down there to rotate the control box,
+        // that ends up re-entrantly calling RescanParts() through the move event.
+        // You'll have to take my word for it that that breaks everything, yeah?
+        controller.CurrentlyRescanning = true;
 
         // Align ourselves to match fuel chamber orientation.
         // This means that if you mess up the orientation of the control box it's not a big deal,
@@ -111,6 +119,8 @@ public sealed partial class ParticleAcceleratorSystem
             if (partQuery.TryGetComponent(part, out var partState))
                 partState.Master = uid;
         }
+
+        controller.CurrentlyRescanning = false;
 
         UpdatePowerDraw(uid, controller);
         UpdateUI(uid, controller);

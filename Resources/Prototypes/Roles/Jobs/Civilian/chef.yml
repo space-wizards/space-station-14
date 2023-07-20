@@ -23,7 +23,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitChef
     head: ClothingHeadHatChef
-    eyes: ClothingEyesHudChef
     back: ClothingBackpackFilled
     mask: ClothingMaskItalianMoustache
     shoes: ClothingShoesColorBlack
