@@ -306,6 +306,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> GameAlertLevelChangeDelay =
             CVarDef.Create("game.alert_level_change_delay", 30, CVar.SERVERONLY);
 
+        /// <summary>
+        /// True: Artifacts will grief on round end.
+        /// False: They won't.
+        /// </summary>
+        public static readonly CVarDef<bool> ArtifactRoundEndGrief = CVarDef.Create("game.artifact_round_end_grief", true, CVar.NOTIFY | CVar.REPLICATED);
+
         /*
          * Discord
          */
