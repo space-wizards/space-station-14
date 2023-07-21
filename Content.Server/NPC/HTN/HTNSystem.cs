@@ -13,8 +13,7 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.HTN;
 
@@ -78,7 +77,8 @@ public sealed class HTNSystem : EntitySystem
             {
                 var currentOperator = comp.Plan.CurrentOperator;
                 currentOperator.TaskShutdown(comp.Blackboard, HTNOperatorStatus.Failed);
-                comp.Plan = null;
+                ConditionalShutdown(comp, HTNPlanState.PlanFinished);
+                ShutdownPlan(comp);
             }
         }
 
@@ -343,7 +343,8 @@ public sealed class HTNSystem : EntitySystem
                     break;
                 case HTNOperatorStatus.Failed:
                     currentOperator.TaskShutdown(blackboard, status);
-                    component.Plan = null;
+                    ConditionalShutdown(component, HTNPlanState.PlanFinished);
+                    ShutdownPlan(component);
                     break;
                 // Operator completed so go to the next one.
                 case HTNOperatorStatus.Finished:
@@ -353,16 +354,45 @@ public sealed class HTNSystem : EntitySystem
                     // Plan finished!
                     if (component.Plan.Tasks.Count <= component.Plan.Index)
                     {
-                        component.Plan = null;
+                        ConditionalShutdown(component, HTNPlanState.PlanFinished);
+                        ShutdownPlan(component);
                         break;
                     }
 
+                    ConditionalShutdown(component, HTNPlanState.Running);
                     StartupTask(component.Plan.Tasks[component.Plan.Index], component.Blackboard, component.Plan.Effects[component.Plan.Index]);
                     break;
                 default:
                     throw new InvalidOperationException();
             }
         }
+    }
+
+    private void ShutdownPlan(HTNComponent component)
+    {
+        DebugTools.Assert(component.Plan != null);
+
+        foreach (var task in component.Plan.Tasks)
+        {
+            task.Operator.PlanShutdown(component.Blackboard);
+        }
+
+        component.Plan = null;
+    }
+
+    private void ConditionalShutdown(HTNComponent component, HTNPlanState state)
+    {
+        var plan = component.Plan;
+        var currentOperator = plan!.CurrentOperator;
+
+        if (currentOperator is not IHtnConditionalShutdown conditional)
+            return;
+
+        if ((conditional.ShutdownOnState & state) == 0x0)
+            return;
+
+        var blackboard = component.Blackboard;
+        conditional.ConditionalShutdown(blackboard);
     }
 
     /// <summary>

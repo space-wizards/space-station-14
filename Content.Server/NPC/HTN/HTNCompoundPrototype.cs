@@ -11,6 +11,6 @@ public sealed class HTNCompoundPrototype : IPrototype
 {
     [DataField("id", required: true)] public string ID { get; } = string.Empty;
 
-    [DataField("branches", required: true, customTypeSerializer:typeof(HTNTaskListSerializer))]
+    [DataField("branches", required: true)]
     public List<HTNBranch> Branches = new();
 }

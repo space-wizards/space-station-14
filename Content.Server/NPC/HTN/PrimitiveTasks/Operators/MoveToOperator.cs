@@ -11,7 +11,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// <summary>
 /// Moves an NPC to the specified target key. Hands the actual steering off to NPCSystem.Steering
 /// </summary>
-public sealed class MoveToOperator : HTNOperator
+public sealed class MoveToOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -23,7 +23,7 @@ public sealed class MoveToOperator : HTNOperator
     /// When to shut the task down.
     /// </summary>
     [DataField("shutdownState")]
-    public HTNPlanState ShutdownOnState = HTNPlanState.Running;
+    public HTNPlanState ShutdownOnState { get; } = HTNPlanState.Running;
 
     /// <summary>
     /// Should we assume the MovementTarget is reachable during planning or should we pathfind to it?
@@ -156,27 +156,23 @@ public sealed class MoveToOperator : HTNOperator
         }
     }
 
-    public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
+    public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
-        base.TaskShutdown(blackboard, status);
+        var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (ShutdownOnState == HTNPlanState.PlanFinished)
-            return;
+        if (!_entManager.TryGetComponent<NPCSteeringComponent>(owner, out var steering))
+            return HTNOperatorStatus.Failed;
 
-        Shutdown(blackboard);
+        return steering.Status switch
+        {
+            SteeringStatus.InRange => HTNOperatorStatus.Finished,
+            SteeringStatus.NoPath => HTNOperatorStatus.Failed,
+            SteeringStatus.Moving => HTNOperatorStatus.Continuing,
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 
-    public override void PlanShutdown(NPCBlackboard blackboard)
-    {
-        base.PlanShutdown(blackboard);
-
-        if (ShutdownOnState == HTNPlanState.Running)
-            return;
-
-        Shutdown(blackboard);
-    }
-
-    private void Shutdown(NPCBlackboard blackboard)
+    public void ConditionalShutdown(NPCBlackboard blackboard)
     {
         // Cleanup the blackboard and remove steering.
         if (blackboard.TryGetValue<CancellationTokenSource>(MovementCancelToken, out var cancelToken, _entManager))
@@ -194,21 +190,5 @@ public sealed class MoveToOperator : HTNOperator
         }
 
         _steering.Unregister(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
-    }
-
-    public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
-    {
-        var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-
-        if (!_entManager.TryGetComponent<NPCSteeringComponent>(owner, out var steering))
-            return HTNOperatorStatus.Failed;
-
-        return steering.Status switch
-        {
-            SteeringStatus.InRange => HTNOperatorStatus.Finished,
-            SteeringStatus.NoPath => HTNOperatorStatus.Failed,
-            SteeringStatus.Moving => HTNOperatorStatus.Continuing,
-            _ => throw new ArgumentOutOfRangeException()
-        };
     }
 }

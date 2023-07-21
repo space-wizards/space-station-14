@@ -1,8 +1,9 @@
 namespace Content.Server.NPC.HTN;
 
+[Flags]
 public enum HTNPlanState : byte
 {
-    Running,
+    Running = 1 << 0,
 
-    PlanFinished,
+    PlanFinished = 1 << 1,
 }
