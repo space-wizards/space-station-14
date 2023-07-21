@@ -40,6 +40,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     public void Initialize()
     {
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+
+        _netManager.RegisterNetMessage<MsgRoleBans>();
     }
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -212,6 +214,11 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
         var length = expires == null ? Loc.GetString("cmd-roleban-inf") : Loc.GetString("cmd-roleban-until", ("expires", expires));
         _chat.SendAdminAlert(Loc.GetString("cmd-roleban-success", ("target", targetUsername ?? "null"), ("role", role), ("reason", reason), ("length", length)));
+
+        if (target != null)
+        {
+            SendRoleBans(target.Value);
+        }
     }
 
     public HashSet<string>? GetJobBans(NetUserId playerUserId)
