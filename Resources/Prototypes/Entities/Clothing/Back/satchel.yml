@@ -59,6 +59,15 @@
 
 - type: entity
   parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelMime
+  name: mime satchel
+  description: A satchel designed for the silent and expressive art of miming.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/mime.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelMedical
   name: medical satchel
   description: A sterile satchel used in medical departments.

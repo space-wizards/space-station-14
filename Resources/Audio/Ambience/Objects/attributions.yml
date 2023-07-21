@@ -57,3 +57,8 @@
   license: "CC0-1.0"
   copyright: "Taken from source"
   source: "https://freesound.org/people/cmorris035/sounds/319152/"
+
+- files: ["fireplace.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Taken and edited from source"
+  source: "https://freesound.org/people/juskiddink/sounds/215658/"

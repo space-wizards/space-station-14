@@ -26,6 +26,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatCasa
+  name: casa
+  description: Cone-shaped hat
+  components:
+    - type: Sprite
+      sprite: Clothing/Head/Hats/casa.rsi
+    - type: Clothing
+      sprite: Clothing/Head/Hats/casa.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBeretRND
   name: scientific beret
   description: A beret for real scientists.

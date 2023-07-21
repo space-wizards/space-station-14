@@ -47,6 +47,7 @@
         # Corvax-Pins-End
         - CluwneHorn
         - ClothingMaskRat
+        - MysteryFigureBox
       rareChance: 0.01
       prototypes:
         - Lighter
