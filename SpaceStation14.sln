@@ -125,7 +125,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Replay", "Content.R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Shared.CompNetworkGenerator", "RobustToolbox\Robust.Shared.CompNetworkGenerator\Robust.Shared.CompNetworkGenerator.csproj", "{07CA34A1-1D37-4771-A2E3-495A1044AE0B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content.ServerSecret", "Content.ServerSecret", "{12A0AA69-1BC8-48CA-A53B-DE4C42B12EF8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.ServerSecret", "Content.ServerSecret\Content.ServerSecret.csproj", "{866B0DB8-D018-46AC-8A73-04EB378545F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -422,6 +422,14 @@ Global
 		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.DebugOpt|Any CPU.Build.0 = DebugOpt|Any CPU
 		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
 		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Tools|Any CPU.Build.0 = Tools|Any CPU
+		{866B0DB8-D018-46AC-8A73-04EB378545F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{866B0DB8-D018-46AC-8A73-04EB378545F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{866B0DB8-D018-46AC-8A73-04EB378545F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{866B0DB8-D018-46AC-8A73-04EB378545F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{866B0DB8-D018-46AC-8A73-04EB378545F3}.DebugOpt|Any CPU.ActiveCfg = Debug|Any CPU
+		{866B0DB8-D018-46AC-8A73-04EB378545F3}.DebugOpt|Any CPU.Build.0 = Debug|Any CPU
+		{866B0DB8-D018-46AC-8A73-04EB378545F3}.Tools|Any CPU.ActiveCfg = Debug|Any CPU
+		{866B0DB8-D018-46AC-8A73-04EB378545F3}.Tools|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
