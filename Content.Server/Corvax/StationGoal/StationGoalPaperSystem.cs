@@ -52,7 +52,7 @@ namespace Content.Server.Corvax.StationGoal
                 var paperDataToCopy = new PaperPhotocopiedData()
                 {
                     Content = Loc.GetString(goal.Text),
-                    StampState = "paper_stamp-centcomm",
+                    StampState = "paper_stamp-centcom",
                     StampedBy = new List<string>{Loc.GetString("stamp-component-stamped-name-centcom")}
                 };
                 dataToCopy.Add(typeof(PaperComponent), paperDataToCopy);
