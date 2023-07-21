@@ -8,11 +8,9 @@ namespace Content.Client.VendingMachines
 {
     public sealed class VendingMachineBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
-        private VendingMachineMenu? _menu;
+        [ViewVariables] private VendingMachineMenu? _menu;
 
-        [ViewVariables]
-        private List<VendingMachineInventoryEntry> _cachedInventory = new();
+        [ViewVariables] private List<VendingMachineInventoryEntry> _cachedInventory = new();
 
         public VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -58,7 +56,7 @@ namespace Content.Client.VendingMachines
             if (selectedItem == null)
                 return;
 
-            SendMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
+            SendMessage(new VendingMachineEjectMessage(selectedItem.TypeId, selectedItem.ItemId));
         }
 
         protected override void Dispose(bool disposing)
