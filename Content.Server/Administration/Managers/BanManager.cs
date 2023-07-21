@@ -40,6 +40,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     public void Initialize()
     {
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+
+        _netManager.RegisterNetMessage<MsgRoleBans>();
     }
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
