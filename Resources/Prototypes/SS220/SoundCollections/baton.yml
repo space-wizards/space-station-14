@@ -1,0 +1,5 @@
+- type: soundCollection
+  id: BatonHit
+  files:
+  - /Audio/SS220/Weapons/telescopichka/bonk-sound-effect.ogg
+  - /Audio/SS220/Weapons/telescopichka/woodhit.ogg

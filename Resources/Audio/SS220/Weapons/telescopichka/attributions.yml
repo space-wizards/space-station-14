@@ -1,4 +1,4 @@
-- files: ["batonextend.ogg"]
+- files: ["batonextend.ogg", "woodhit.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Is taken from paradise station at commit d30399a2e556227f53d6392ba531b4afe0cc61f3"
   source: "https://github.com/ParadiseSS13/Paradise/blob/master/sound/weapons/batonextend.ogg"
