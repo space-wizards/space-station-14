@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Add lathe recipe for tethergun., type: Add}
-  id: 3802
-  time: '2023-05-18T02:07:11.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed Next on the admin logs UI resending the same logs., type: Fix}
@@ -2982,3 +2977,8 @@ Entries:
   - {message: Nitrogen tank settings have been adjusted to avoid gas wastage, type: Tweak}
   id: 4301
   time: '2023-07-21T19:02:39.0000000+00:00'
+- author: JimGamemaster
+  changes:
+  - {message: Space Creatures can now float in space, type: Tweak}
+  id: 4302
+  time: '2023-07-21T20:10:21.0000000+00:00'
