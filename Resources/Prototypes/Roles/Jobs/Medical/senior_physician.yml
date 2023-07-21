@@ -16,6 +16,7 @@
   startingGear: SeniorPhysicianGear
   icon: "SeniorPhysician"
   supervisors: job-supervisors-cmo
+  canBeAntag: false
   access:
   - Medical
   - Maintenance

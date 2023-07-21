@@ -1225,3 +1225,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/senior_physician.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/senior_physician.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorOfficer
+  name: senior officer jumpsuit
+  description: A sign of skill and prestige within the security department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi

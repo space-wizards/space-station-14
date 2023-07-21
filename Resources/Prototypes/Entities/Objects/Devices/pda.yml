@@ -878,7 +878,7 @@
   parent: BasePDA
   id: SeniorEngineerPDA
   name: senior engineer PDA
-  description: Beaten, battered, dusty and broken, but just barely useable.
+  description: Seems to have been taken apart and put back together several times.
   components:
   - type: Pda
     id: SeniorEngineerIDCard
@@ -924,3 +924,18 @@
     scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
+
+- type: entity
+  parent: BasePDA
+  id: SeniorOfficerPDA
+  name: senior officer PDA
+  description: Beaten, battered and broken, but just barely useable.
+  components:
+  - type: Pda
+    id: SeniorOfficerIDCard
+    state: pda-seniorofficer
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
+    accentVColor: "#DFDFDF"
+  - type: Icon
+    state: pda-seniorofficer

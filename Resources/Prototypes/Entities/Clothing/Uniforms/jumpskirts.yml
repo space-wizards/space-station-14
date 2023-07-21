@@ -751,3 +751,14 @@
     sprite: Clothing/Uniforms/Jumpskirt/senior_physician.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/senior_physician.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtSeniorOfficer
+  name: senior officer jumpskirt
+  description: A sign of skill and prestige within the security department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi

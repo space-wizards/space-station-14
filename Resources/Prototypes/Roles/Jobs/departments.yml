@@ -65,11 +65,11 @@
   roles:
   - Chemist
   - ChiefMedicalOfficer
-  - SeniorPhysician
   - MedicalDoctor
   - MedicalIntern
   - Psychologist
   - Paramedic
+  - SeniorPhysician
 
 - type: department
   id: Security
@@ -79,6 +79,7 @@
   - HeadOfSecurity
   - SecurityCadet
   - SecurityOfficer
+  - SeniorOfficer
   - Detective
   - Warden
 

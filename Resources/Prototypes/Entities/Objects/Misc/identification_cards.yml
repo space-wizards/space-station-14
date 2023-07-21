@@ -653,3 +653,15 @@
     - state: idseniorphysician
   - type: PresetIdCard
     job: SeniorPhysician
+
+- type: entity
+  parent: IDCardStandard
+  id: SeniorOfficerIDCard
+  name: senior officer ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idseniorofficer
+  - type: PresetIdCard
+    job: SeniorOfficer

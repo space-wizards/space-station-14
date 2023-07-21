@@ -212,6 +212,9 @@
       "name": "idseniorphysician"
     },
     {
+      "name": "idseniorofficer"
+    },
+    {
       "name": "gold-inhand-left",
       "directions": 4
     },
