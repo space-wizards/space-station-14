@@ -15,6 +15,11 @@ using Content.Shared.Popups;
 using Robust.Shared.Map;
 using Content.Shared.Radio.Components;
 using Content.Server.Power.Components;
+using Content.Shared.Access.Components;
+using Content.Shared.Humanoid;
+using Content.Shared.Inventory;
+using Content.Shared.PDA;
+using System.Globalization;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -27,6 +32,7 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -70,12 +76,25 @@ public sealed class RadioSystem : EntitySystem
 
         name = FormattedMessage.EscapeText(name);
 
+        var formattedName = name;
+        if (TryComp<HumanoidAppearanceComponent>(messageSource, out var humanoidComp))
+        {
+            formattedName = $"[color={humanoidComp.SpeakerColor.ToHex()}]{GetIdCardName(messageSource)}{name}[/color]";
+        }
+
         // most radios are relayed to chat, so lets parse the chat message beforehand
         var chat = new ChatMessage(
             ChatChannel.Radio,
             message,
-            Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name), ("message", FormattedMessage.EscapeText(message))),
+            Loc.GetString(
+                "chat-radio-message-wrap",
+                ("color", channel.Color),
+                ("channel", $"\\[{channel.LocalizedName}\\]"),
+                ("name", formattedName),
+                ("message", FormattedMessage.EscapeText(message))
+            ),
             EntityUid.Invalid);
+
         var chatMsg = new MsgChatMessage { Message = chat };
         var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg, new());
 
@@ -129,6 +148,30 @@ public sealed class RadioSystem : EntitySystem
 
         _replay.RecordServerMessage(chat);
         _messages.Remove(message);
+    }
+
+    private string GetIdCardName(EntityUid senderUid)
+    {
+        var idCardTitle = Loc.GetString("chat-radio-no-id");
+
+        if (_inventorySystem.TryGetSlotEntity(senderUid, "id", out var idUid))
+        {
+            if (EntityManager.TryGetComponent(idUid, out PdaComponent? pda) && pda.ContainedId is not null)
+            {
+                // PDA
+                idCardTitle = pda.ContainedId.JobTitle ?? idCardTitle;
+            }
+            else if (EntityManager.TryGetComponent(idUid, out IdCardComponent? id))
+            {
+                // ID Card
+                idCardTitle = id.JobTitle ?? idCardTitle;
+            }
+        }
+
+        var textInfo = CultureInfo.CurrentCulture.TextInfo;
+        idCardTitle = textInfo.ToTitleCase(idCardTitle);
+
+        return $"\\[{idCardTitle}\\] ";
     }
 
     /// <inheritdoc cref="TelecomServerComponent"/>
