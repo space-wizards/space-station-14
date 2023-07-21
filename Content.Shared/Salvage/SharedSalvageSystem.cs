@@ -121,7 +121,7 @@ public abstract class SharedSalvageSystem : EntitySystem
 
         var time = GetMod<SalvageTimeMod>(rand, ref rating);
         // Round the duration to nearest 15 seconds.
-        var exactDuration = time.MinDuration + (time.MaxDuration - time.MinDuration) * rand.NextFloat();
+        var exactDuration = MathHelper.Lerp(time.MinDuration, time.MaxDuration, rand.NextFloat());
         exactDuration = MathF.Round(exactDuration / 15f) * 15f;
         var duration = TimeSpan.FromSeconds(exactDuration);
 

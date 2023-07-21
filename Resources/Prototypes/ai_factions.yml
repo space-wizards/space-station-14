@@ -1,4 +1,4 @@
-- type: faction
+- type: npcFaction
   id: Dragon
   hostile:
     - NanoTrasen
@@ -6,29 +6,29 @@
     - Xeno
     - PetsNT
 
-- type: faction
+- type: npcFaction
   id: NanoTrasen
   hostile:
   - SimpleHostile
   - Syndicate
   - Xeno
 
-- type: faction
+- type: npcFaction
   id: Mouse
   hostile:
     - PetsNT
 
-- type: faction
+- type: npcFaction
   id: Passive
 
-- type: faction
+- type: npcFaction
   id: PetsNT
   hostile:
   - Mouse
   - SimpleHostile
   - Xeno
 
-- type: faction
+- type: npcFaction
   id: SimpleHostile
   hostile:
   - NanoTrasen
@@ -36,10 +36,10 @@
   - Passive
   - PetsNT
 
-- type: faction
+- type: npcFaction
   id: SimpleNeutral
 
-- type: faction
+- type: npcFaction
   id: Syndicate
   hostile:
   - NanoTrasen
@@ -47,7 +47,7 @@
   - Xeno
   - PetsNT
 
-- type: faction
+- type: npcFaction
   id: Xeno
   hostile:
   - NanoTrasen

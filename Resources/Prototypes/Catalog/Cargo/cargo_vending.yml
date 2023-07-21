@@ -82,7 +82,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockChemVendFilled
-  cost: 3500
+  cost: 3820
   category: Medical
   group: market
 
