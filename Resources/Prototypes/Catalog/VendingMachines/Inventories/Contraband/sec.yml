@@ -1,0 +1,8 @@
+  # security officers need to follow a diet regimen!
+- type: vendingMachineInventory
+  id: SecTechContrabandInventory
+  inventory:
+    FoodDonutHomer: 12
+    FoodBoxDonut: 2
+    #box evidence
+  inventoryType: ContrabandInventory

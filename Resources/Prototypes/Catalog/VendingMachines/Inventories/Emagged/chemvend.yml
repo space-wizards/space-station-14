@@ -1,0 +1,5 @@
+- type: vendingMachineInventory
+  id: ChemVendEmaggedInventory
+  inventory:
+    ToxinChemistryBottle: 1
+  inventoryType: EmaggedInventory
