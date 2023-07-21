@@ -202,9 +202,9 @@ namespace Content.IntegrationTests.Tests
             VendingMachineVisualStateComponent visualStateComponent = default!;
             BrokeComponent brokeComponent = default!;
 
-            VendingMachineRestockComponent restockRightComponent;
-            VendingMachineRestockComponent restockWrongComponent;
-            WiresPanelComponent machineWiresPanel;
+            VendingMachineRestockComponent restockRightComponent = default!;
+            VendingMachineRestockComponent restockWrongComponent = default!;
+            WiresPanelComponent machineWiresPanel = default!;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
 
