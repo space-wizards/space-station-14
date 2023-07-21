@@ -55,7 +55,7 @@ namespace Content.Server.VentCraw
             AlternativeVerb verb = new()
             {
                 Act = () => TryEnter(uid, args.User, ventCrawlerComponent),
-                Text = Loc.GetString("Залезть")
+                Text = Loc.GetString("comp-climbable-verb-climb")
             };
             args.Verbs.Add(verb);
         }
