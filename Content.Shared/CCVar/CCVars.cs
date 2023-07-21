@@ -306,6 +306,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> GameAlertLevelChangeDelay =
             CVarDef.Create("game.alert_level_change_delay", 30, CVar.SERVERONLY);
 
+        /// <summary>
+        /// How many times per second artifacts when the round is over. 
+        /// If set to 0, they won't activate (on a timer) when the round ends. 
+        /// </summary>
+        public static readonly CVarDef<float> ArtifactRoundEndTimer = CVarDef.Create("game.artifact_round_end_timer", 0.5f, CVar.NOTIFY | CVar.REPLICATED);
+
         /*
          * Discord
          */
