@@ -1,10 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: 'The laws of physics smile on you! Tritium (thus Frezon) is easier to
-      make, at up to a 3:96 Plasma:Oxy ratio you''ll get some Tritium.', type: Tweak}
-  id: 3800
-  time: '2023-05-17T19:22:56.0000000+00:00'
 - author: VigersRay
   changes:
   - {message: 'Added alert level, instruction and shift duration in PDA!', type: Add}
@@ -2977,3 +2971,15 @@ Entries:
     type: Tweak}
   id: 4299
   time: '2023-07-21T08:49:11.0000000+00:00'
+- author: Riggle
+  changes:
+  - {message: admin notes have more options than before, type: Add}
+  - {message: admins can now select a severity when adding a note, type: Add}
+  - {message: watchlists and messages, type: Add}
+  - {message: expiring notes, type: Add}
+  - {message: 'notes now fade when they reach a certain age, adjustable in config',
+    type: Add}
+  - {message: bans automatically add a note, type: Add}
+  - {message: new and improved ban panel, type: Add}
+  id: 4300
+  time: '2023-07-21T11:38:53.0000000+00:00'
