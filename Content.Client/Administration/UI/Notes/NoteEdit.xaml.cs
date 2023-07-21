@@ -163,7 +163,7 @@ public sealed partial class NoteEdit : FancyWindow
             return;
         if (DeleteResetOn is null)
         {
-            DeleteResetOn = _gameTiming.CurTime.Add(TimeSpan.FromSeconds(3));
+            DeleteResetOn = _gameTiming.RealTime + TimeSpan.FromSeconds(3);
             SubmitButton.Text = Loc.GetString("admin-note-editor-submit-confirm");
             SubmitButton.ModulateSelfOverride = Color.Red;
             // Task.Delay(3000).ContinueWith(_ => ResetSubmitButton()); // TODO: fix
@@ -185,7 +185,7 @@ public sealed partial class NoteEdit : FancyWindow
     {
         base.FrameUpdate(args);
         // This checks for null for free, do not invert it as null always produces a false value
-        if (DeleteResetOn > _gameTiming.CurTime)
+        if (DeleteResetOn < _gameTiming.RealTime)
         {
             ResetSubmitButton();
             DeleteResetOn = null;
