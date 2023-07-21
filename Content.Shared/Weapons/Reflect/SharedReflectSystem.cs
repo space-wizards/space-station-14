@@ -5,6 +5,7 @@ using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Inventory.Events;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
@@ -31,11 +32,15 @@ public abstract class SharedReflectSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<HandsComponent, ProjectileReflectAttemptEvent>(OnHandReflectProjectile);
         SubscribeLocalEvent<HandsComponent, HitScanReflectAttemptEvent>(OnHandsReflectHitscan);
 
         SubscribeLocalEvent<ReflectComponent, ProjectileCollideEvent>(OnReflectCollide);
         SubscribeLocalEvent<ReflectComponent, HitScanReflectAttemptEvent>(OnReflectHitscan);
+
+        SubscribeLocalEvent<ReflectComponent, GotEquippedEvent>(OnReflectEquipped);
+        SubscribeLocalEvent<ReflectComponent, GotUnequippedEvent>(OnReflectUnequipped);
     }
 
     private void OnReflectCollide(EntityUid uid, ReflectComponent component, ref ProjectileCollideEvent args)
@@ -160,4 +165,41 @@ public abstract class SharedReflectSystem : EntitySystem
 
         return true;
     }
+
+    private void OnReflectEquipped(EntityUid uid, ReflectComponent comp, GotEquippedEvent args) {
+
+        if (!TryComp(args.Equipee, out ReflectComponent? reflection))
+            return;
+
+        reflection.Enabled = true;
+        reflection.Layers += 1;
+
+        // reflection probability should be: (1 - old probability) * newly-equipped item probability + old probability
+        // example: if entity has .25 reflection and newly-equipped item has .7, entity should have (1 - .25) * .7 + .25 = .775
+        reflection.ReflectProb += (1 - reflection.ReflectProb) * comp.ReflectProb;
+
+    }
+
+    private void OnReflectUnequipped(EntityUid uid, ReflectComponent comp, GotUnequippedEvent args) {
+
+        if (!TryComp(args.Equipee, out ReflectComponent? reflection))
+            return;
+
+        reflection.Layers -= 1;
+        if (reflection.Layers < 1)
+            reflection.Enabled = false;
+
+        // to undo the above example, take .775 minus .7, then divide by 1 minus .7:
+        // (.775 - .7) / (1 - .7) = .075/.3 = .25 (+ float error)
+        try
+        {
+            reflection.ReflectProb = (reflection.ReflectProb - comp.ReflectProb) / (1 - comp.ReflectProb);
+        }
+        catch (DivideByZeroException e)
+        {
+            reflection.ReflectProb = 0;
+            Logger.Error("encountered a component with reflectProb 1", e.ToString());
+        }
+    }
+
 }
