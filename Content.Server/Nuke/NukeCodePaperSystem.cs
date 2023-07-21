@@ -66,7 +66,7 @@ namespace Content.Server.Nuke
                 var paperDataToCopy = new PaperPhotocopiedData()
                 {
                     Content = paperContent,
-                    StampState = "paper_stamp-cent",
+                    StampState = "paper_stamp-centcom",
                     StampedBy = new List<string>{Loc.GetString("stamp-component-stamped-name-centcom")}
                 };
                 dataToCopy.Add(typeof(PaperComponent), paperDataToCopy);
