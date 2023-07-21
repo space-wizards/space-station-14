@@ -41,10 +41,11 @@ public sealed class AccessReaderComponent : Component
 
 
     /// <summary>
-    ///     Name of the container with additional AccessReaderComponents.
+    ///     The name of the container in which additional
+    ///     AccessReaderComponents may be found.
     /// </summary>
-    [DataField("containerName")]
-    public String? ContainerName = null;
+    [DataField("containerAccessProvider")]
+    public string? ContainerAccessProvider = null;
 }
 
 [Serializable, NetSerializable]

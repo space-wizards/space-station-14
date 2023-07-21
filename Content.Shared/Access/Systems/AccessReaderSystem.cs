@@ -89,10 +89,10 @@ namespace Content.Shared.Access.Systems
             if (!Resolve(target, ref accessReader))
                 return result;
 
-            if (accessReader.ContainerName == null)
+            if (accessReader.ContainerAccessProvider == null)
                 return result;
 
-            if (!_containerSystem.TryGetContainer(target, accessReader.ContainerName, out var container))
+            if (!_containerSystem.TryGetContainer(target, accessReader.ContainerAccessProvider, out var container))
                 return result;
 
             foreach (var entity in container.ContainedEntities)
