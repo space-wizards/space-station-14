@@ -38,7 +38,6 @@ research-technology-optimized-ballistics = Optimized Ballistics
 research-technology-concentrated-laser-weaponry = Concentrated Laser Weaponry
 research-technology-wave-particle-harnessing = Wave Particle Harnessing
 research-technology-handheld-electrical-propulsion = Handheld Electrical Propulsion
-research-technology-advanced-shields = Advanced Shield Technology
 
 research-technology-basic-robotics = Basic Robotics
 research-technology-basic-anomalous-research = Basic Anomalous Research

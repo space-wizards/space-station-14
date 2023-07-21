@@ -449,9 +449,6 @@
       - MagazineBoxMagnumIncendiary
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxRifleIncendiary
-      - RiotLaserShield
-      - RiotBulletShield
-      - ClothingOuterArmorReflective
       - Signaller
       - SignalTrigger
       - VoiceTrigger
