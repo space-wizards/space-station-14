@@ -122,18 +122,18 @@
   parent: Handcuffs
   id: ClothingOuterStraightjacket
   name: straitjacket
-  description: You should probably be wearing this.
+  description: Used to restrain those who may cause harm to themselves or others.
   components:
   - type: Item
-    size: 10
+    size: 20
   - type: Handcuff
     cuffedRSI: Clothing/OuterClothing/Misc/straight_jacket.rsi
-    breakoutTime: 60
+    breakoutTime: 100
     damageOnResist:
       types:
         Blunt: 0
-    cuffTime: 6.5
-    uncuffTime: 5.5
+    cuffTime: 10
+    uncuffTime: 10
     stunBonus: 4
     bodyIconState: body-overlay
   - type: Sprite
