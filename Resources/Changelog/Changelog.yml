@@ -1,10 +1,4 @@
 Entries:
-- author: VigersRay
-  changes:
-  - {message: 'Added alert level, instruction and shift duration in PDA!', type: Add}
-  - {message: Fix uknown station name in PDA for latejoin!, type: Fix}
-  id: 3801
-  time: '2023-05-17T20:35:41.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Add lathe recipe for tethergun., type: Add}
@@ -2983,3 +2977,8 @@ Entries:
   - {message: new and improved ban panel, type: Add}
   id: 4300
   time: '2023-07-21T11:38:53.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Nitrogen tank settings have been adjusted to avoid gas wastage, type: Tweak}
+  id: 4301
+  time: '2023-07-21T19:02:39.0000000+00:00'
