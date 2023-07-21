@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: RoboDrobeInventory
-  startingInventory:
+  inventory:
     ClothingOuterCoatRobo: 2
     ClothingUniformJumpsuitRoboticist: 2
     ClothingUniformJumpskirtRoboticist: 2
@@ -10,3 +10,4 @@
     ClothingHeadBandSkull: 2
     ClothingHeadsetRobotics: 2
     ClothingOuterWinterRobo: 2
+  inventoryType: RegularInventory

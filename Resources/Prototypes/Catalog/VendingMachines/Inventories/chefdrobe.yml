@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: ChefDrobeInventory
-  startingInventory:
+  inventory:
     ClothingHeadsetService: 2
     ClothingOuterApronChef: 3
     ClothingOuterWinterChef: 2
@@ -10,3 +10,4 @@
     ClothingUniformJumpskirtChef:  2
     ClothingHeadHatChef: 2
     ClothingShoesColorBlack: 2
+  inventoryType: RegularInventory

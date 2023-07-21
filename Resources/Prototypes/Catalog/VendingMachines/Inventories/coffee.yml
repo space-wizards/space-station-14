@@ -1,9 +1,8 @@
 ﻿- type: vendingMachineInventory
   id: HotDrinksMachineInventory
-  startingInventory:
+  inventory:
     DrinkHotCoffee: 5
     DrinkCafeLatte: 5
     DrinkTeacup: 5
     DrinkGreenTea: 5
-  emaggedInventory:
-    DrinkNothing: 2
+  inventoryType: RegularInventory

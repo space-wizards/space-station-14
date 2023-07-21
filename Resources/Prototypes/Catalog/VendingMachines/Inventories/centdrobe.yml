@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: CentDrobeInventory
-  startingInventory:
+  inventory:
     ClothingShoesBootsLaceup: 3
     ClothingShoesBootsJack: 3
     ClothingHandsGlovesCombat: 3
@@ -14,4 +14,4 @@
     ClothingHeadsetCentCom: 3
     ClothingOuterWinterCentcom: 3
     ClothingNeckScarfStripedCentcom: 3
-    
+  inventoryType: RegularInventory

@@ -1,10 +1,10 @@
 - type: vendingMachineInventory
   id: GetmoreChocolateCorpInventory
-  startingInventory:
+  inventory:
     FoodSnackRaisins: 3
     FoodSnackChocolate: 3
     FoodSnackPopcorn: 3
     FoodSnackSyndi: 3
     DrinkRamen: 3
     DrinkHellRamen: 2
-
+  inventoryType: RegularInventory

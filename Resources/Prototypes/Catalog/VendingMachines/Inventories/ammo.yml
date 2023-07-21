@@ -1,6 +1,6 @@
 ﻿- type: vendingMachineInventory
   id: AmmoVendInventory
-  startingInventory:
+  inventory:
     MagazineBoxCaselessRifle: 3
     MagazineBoxCaselessRifleHighVelocity: 3
     MagazineBoxCaselessRiflePractice: 3
@@ -25,3 +25,4 @@
     MagazineBoxRifleHighVelocity: 3
     MagazineBoxRiflePractice: 3
     MagazineBoxRifleRubber: 3
+  inventoryType: RegularInventory

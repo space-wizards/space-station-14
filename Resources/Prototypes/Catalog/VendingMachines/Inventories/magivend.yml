@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: MagiVendInventory
-  startingInventory:
+  inventory:
     ClothingHeadHatWizard: 3
     ClothingOuterWizard: 3
     ClothingHeadHatWizardFake: 3
@@ -12,3 +12,4 @@
     #TO DO:
     #only missing staff
     #and if wizarditis reagent when hacked if we want this.
+  inventoryType: RegularInventory

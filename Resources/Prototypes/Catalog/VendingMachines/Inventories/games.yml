@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: GoodCleanFunInventory
-  startingInventory:
+  inventory:
     DiceBag: 6
     Paper: 8
     d6Dice: 8
@@ -16,3 +16,4 @@
     PaperCNCSheet: 6
     MysteryFigureBox: 2
     BooksBag: 3
+  inventoryType: RegularInventory

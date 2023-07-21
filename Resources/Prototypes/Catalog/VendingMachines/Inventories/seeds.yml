@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: MegaSeedServitorInventory
-  startingInventory:
+  inventory:
     AloeSeeds: 3
     AmbrosiaVulgarisSeeds: 3
     AppleSeeds: 5
@@ -31,5 +31,4 @@
     TowercapSeeds: 5
     WheatSeeds: 5
     WatermelonSeeds: 5
-  emaggedInventory:
-    FlyAmanitaSeeds: 1
+  inventoryType: RegularInventory

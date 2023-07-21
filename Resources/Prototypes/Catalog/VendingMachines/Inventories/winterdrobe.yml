@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: WinterDrobeInventory
-  startingInventory:
+  inventory:
     ClothingNeckScarfStripedRed: 3
     ClothingNeckScarfStripedGreen: 3
     ClothingNeckScarfStripedBlue: 3
@@ -13,8 +13,4 @@
     ClothingOuterCoatBomber: 3
     ClothingHeadHatSantahat: 2
     ClothingHeadHatXmasCrown: 2
-
-  emaggedInventory:
-    ClothingNeckScarfStripedSyndieGreen: 3
-    ClothingNeckScarfStripedSyndieRed: 3
-    ClothingNeckScarfStripedCentcom: 3
+  inventoryType: RegularInventory

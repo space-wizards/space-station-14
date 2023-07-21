@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: VendomatInventory
-  startingInventory:
+  inventory:
     RemoteSignaller: 1
     Wirecutter: 1
     CableApcStack: 2
@@ -9,3 +9,4 @@
     MatterBinStockPart: 4
     CapacitorStockPart: 4
     MicroManipulatorStockPart: 4
+  inventoryType: RegularInventory

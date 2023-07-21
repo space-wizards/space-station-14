@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: HyDrobeInventory
-  startingInventory:
+  inventory:
     ClothingBackpackHydroponics: 2
     ClothingBackpackSatchelHydroponics: 2
     ClothingBackpackDuffelHydroponics: 2
@@ -11,3 +11,4 @@
     ClothingHeadBandBotany: 3
     ClothingHeadsetService: 2
     ClothingOuterWinterHydro: 2
+  inventoryType: RegularInventory

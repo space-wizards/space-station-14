@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: SecDrobeInventory
-  startingInventory:
+  inventory:
     ClothingBackpackSecurity: 3
     ClothingBackpackSatchelSecurity: 3
     ClothingBackpackDuffelSecurity: 3
@@ -19,3 +19,4 @@
     ClothingOuterArmorBasicSlim: 2 
     ClothingEyesBlindfold: 1
     ClothingShoesBootsCombat: 1
+  inventoryType: RegularInventory

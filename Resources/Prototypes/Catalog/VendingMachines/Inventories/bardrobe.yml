@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: BarDrobeInventory
-  startingInventory:
+  inventory:
     ClothingHeadHatBowlerHat: 2
     ClothingHeadHatTophat: 2
     ClothingEyesGlassesBeer: 2
@@ -14,3 +14,4 @@
     ClothingOuterVest: 2
     ClothingBeltBandolier: 2
     ClothingEyesGlassesSunglasses: 2
+  inventoryType: RegularInventory

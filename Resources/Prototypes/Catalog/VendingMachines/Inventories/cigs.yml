@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: CigaretteMachineInventory
-  startingInventory:
+  inventory:
     CigPackGreen: 2
     CigPackRed: 2
     CigPackBlue: 2
@@ -12,5 +12,4 @@
     PackPaperRollingFilters: 3
     CheapLighter: 4
     Lighter: 1
-  emaggedInventory:
-    CigPackSyndicate: 1
+  inventoryType: RegularInventory
