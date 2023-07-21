@@ -12,7 +12,8 @@
       description: ghost-role-information-behonker-description
     - type: GhostTakeoverAvailable
     - type: HTN
-      rootTask: SimpleHostileCompound
+      rootTask: !type:HTNCompoundTask
+        task: SimpleHostileCompound
     - type: Faction
       factions:
         - SimpleHostile

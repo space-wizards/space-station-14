@@ -42,3 +42,6 @@
               id: MeleeService
               proto: NearbyMeleeTargets
               key: Target
+        - !type:HTNPrimitiveTask
+          operator: !type:JukeOperator
+            jukeType: Away

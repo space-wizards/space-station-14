@@ -21,7 +21,7 @@
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
         - !type:HTNPrimitiveTask
-          operator: !type:RangedCombatOperator
+          operator: !type:GunOperator
         - !type:HTNPrimitiveTask
           operator: !type:JukeOperator
             type: AdjacentTile

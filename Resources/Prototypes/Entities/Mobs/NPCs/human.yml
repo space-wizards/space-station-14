@@ -24,7 +24,8 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: PirateCompound
+    rootTask: !type:HTNCompoundTask
+      task: PirateCompound
 
 - type: entity
   parent: BaseMobHuman

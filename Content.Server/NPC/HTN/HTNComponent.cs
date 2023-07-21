@@ -11,7 +11,7 @@ public sealed class HTNComponent : NPCComponent
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite),
      DataField("rootTask", required: true)]
-    public HTNTask RootTask = default!;
+    public HTNCompoundTask RootTask = default!;
 
     /// <summary>
     /// Check any active services for our current plan. This is used to find new targets for example without changing our plan.

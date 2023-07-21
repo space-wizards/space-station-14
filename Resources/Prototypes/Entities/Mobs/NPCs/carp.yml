@@ -8,7 +8,8 @@
     - type: InputMover
     - type: MobMover
     - type: HTN
-      rootTask: SimpleHostileCompound
+      rootTask: !type:HTNCompoundTask
+        task: SimpleHostileCompound
       blackboard:
         NavSmash: !type:Bool
           true

@@ -106,7 +106,8 @@
       proto: CartridgeCaselessRifle
       capacity: 500
     - type: HTN
-      rootTask: TurretCompound
+      rootTask: !type:HTNCompoundTask
+        task: TurretCompound
       blackboard:
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Effects/double_beep.ogg

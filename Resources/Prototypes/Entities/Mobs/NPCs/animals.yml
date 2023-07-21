@@ -470,8 +470,9 @@
     - Passive
   - type: Body
     prototype: AnimalRuminant
-#  - type: HTN
-#    rootTask: RuminantCompound
+  - type: HTN
+    rootTask: !type:HTNCompoundTask
+      task: RuminantCompound
   - type: GuideHelp
     guides:
     - Chef
@@ -589,7 +590,8 @@
   - type: Body
     prototype: AnimalRuminant
   - type: HTN
-    rootTask: RuminantCompound
+    rootTask: !type:HTNCompoundTask
+      task: RuminantCompound
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -908,7 +910,8 @@
     factions:
       - Mouse
   - type: HTN
-    rootTask: MouseCompound
+    rootTask: !type:HTNCompoundTask
+      task: MouseCompound
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -1474,7 +1477,8 @@
     - type: InputMover
     - type: MobMover
     - type: HTN
-      rootTask: SimpleHostileCompound
+      rootTask: !type:HTNCompoundTask
+        task: SimpleHostileCompound
     - type: GhostRole
       makeSentient: true
       name: ghost-role-information-giant-spider-name

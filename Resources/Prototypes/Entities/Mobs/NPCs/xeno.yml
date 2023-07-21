@@ -10,7 +10,8 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: XenoCompound
+    rootTask: !type:HTNCompoundTask
+      task: XenoCompound
     blackboard:
       NavInteract: !type:Bool
         true
