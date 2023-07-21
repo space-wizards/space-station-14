@@ -74,7 +74,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         // Try a clumsy roll
         // TODO: Who put this here
-        if (TryComp<ClumsyComponent>(user, out var clumsy))
+        if (TryComp<ClumsyComponent>(user, out var clumsy) && gun.ClumsyProof == false)
         {
             for (var i = 0; i < ammo.Count; i++)
             {

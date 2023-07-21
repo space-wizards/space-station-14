@@ -118,7 +118,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("htnPrimitive");
             _prototypeManager.RegisterIgnore("gameMap");
             _prototypeManager.RegisterIgnore("gameMapPool");
-            _prototypeManager.RegisterIgnore("faction");
+            _prototypeManager.RegisterIgnore("npcFaction");
             _prototypeManager.RegisterIgnore("lobbyBackground");
             _prototypeManager.RegisterIgnore("advertisementsPack");
             _prototypeManager.RegisterIgnore("metabolizerType");

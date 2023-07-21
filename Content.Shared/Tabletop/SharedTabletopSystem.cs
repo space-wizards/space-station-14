@@ -86,6 +86,13 @@ namespace Content.Shared.Tabletop
             }
         }
 
+        [Serializable, NetSerializable]
+        public sealed class TabletopRequestTakeOut : EntityEventArgs
+        {
+            public EntityUid Entity;
+            public EntityUid TableUid;
+        }
+
         #region Utility
 
         /// <summary>

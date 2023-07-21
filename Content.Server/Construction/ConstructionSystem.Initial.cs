@@ -252,7 +252,7 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var newEntityProto = graph.Nodes[edge.Target].Entity;
+            var newEntityProto = graph.Nodes[edge.Target].Entity.GetId(null, user, new(EntityManager));
             var newEntity = EntityManager.SpawnEntity(newEntityProto, EntityManager.GetComponent<TransformComponent>(user).Coordinates);
 
             if (!TryComp(newEntity, out ConstructionComponent? construction))
