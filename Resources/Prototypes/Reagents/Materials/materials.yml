@@ -71,6 +71,7 @@
   price: 0.2
 
 - type: material
+
   id: Paper
   stackEntity: SheetPaper1
   name: materials-paper
@@ -85,3 +86,10 @@
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: ink }
   color: "#454642"
   price: 0.1
+
+  id: Meaterial # you can't take this pun from me
+  name: materials-meat
+  icon: { sprite: Objects/Materials/Sheets/meaterial.rsi, state: meat }
+  color: "#c53648"
+  price: 0.05
+

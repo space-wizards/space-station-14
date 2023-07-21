@@ -8,6 +8,7 @@
     sprite: Objects/Materials/Sheets/other.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/other.rsi
+    size: 30
   - type: ItemStatus
   - type: Tag
     tags:
@@ -60,6 +61,8 @@
     state: paper
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -108,6 +111,8 @@
     state: plasma
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -138,6 +143,7 @@
       map: ["base"]
   - type: Item
     heldPrefix: plastic
+    size: 30
   - type: Appearance
 
 - type: entity
@@ -148,6 +154,8 @@
   components:
   - type: Sprite
     state: plastic
+  - type: Item
+    size: 1
   - type: Stack
     count: 1
 
@@ -160,6 +168,7 @@
   - type: Material
   - type: Food
     transferAmount: 10
+  - type: BadFood
   - type: PhysicalComposition
     materialComposition:
       Uranium: 100
@@ -195,6 +204,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -233,3 +244,46 @@
     state: ink
   - type: Stack
     count: 1
+
+- type: entity
+  parent: SheetOtherBase
+  id: MaterialSheetMeat
+  name: meat sheet
+  suffix: Full
+  components:
+    - type: Sprite
+      sprite: Objects/Materials/Sheets/meaterial.rsi
+      layers:
+      - state: meat_3
+        map: [ "base" ]
+    - type: Tag
+      tags:
+      - Sheet
+      - DroneUsable
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        Meaterial: 100
+    - type: Stack
+      stackType: MeatSheets
+      baseLayer: base
+      layerStates:
+        - meat
+        - meat_2
+        - meat_3
+    - type: Item
+      sprite: Objects/Materials/Sheets/meaterial.rsi
+      heldPrefix: meat
+    - type: Appearance
+
+- type: entity
+  parent: MaterialSheetMeat
+  id: MaterialSheetMeat1
+  suffix: Single
+  components:
+    - type: Sprite
+      state: meat
+    - type: Stack
+      count: 1
+    - type: Item
+      size: 1

@@ -26,7 +26,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly FactionSystem _faction = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly FoodSystem _food = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
@@ -121,6 +121,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
     private float GetScore(NPCBlackboard blackboard, EntityUid targetUid, UtilityConsideration consideration)
     {
+        var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         switch (consideration)
         {
             case FoodValueCon:
@@ -128,9 +129,12 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (!TryComp<FoodComponent>(targetUid, out var food))
                     return 0f;
 
-                var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-
                 if (!_food.IsDigestibleBy(owner, targetUid, food))
+                    return 0f;
+
+                // no mouse don't eat the uranium-235
+                var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
+                if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
                     return 0f;
 
                 return 1f;
@@ -160,7 +164,6 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case TargetDistanceCon:
             {
-                var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
                 var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
 
                 if (!TryComp<TransformComponent>(targetUid, out var targetXform) ||
@@ -183,14 +186,12 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case TargetInLOSCon:
             {
-                var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
                 var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
 
                 return ExamineSystemShared.InRangeUnOccluded(owner, targetUid, radius + 0.5f, null) ? 1f : 0f;
             }
             case TargetInLOSOrCurrentCon:
             {
-                var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
                 var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
                 const float bufferRange = 0.5f;
 
@@ -263,7 +264,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 break;
             case NearbyHostilesQuery:
-                foreach (var ent in _faction.GetNearbyHostiles(owner, vision))
+                foreach (var ent in _npcFaction.GetNearbyHostiles(owner, vision))
                 {
                     entities.Add(ent);
                 }

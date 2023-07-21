@@ -28,7 +28,7 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Xeno
   - type: Hands
@@ -64,6 +64,7 @@
   - type: Bloodstream
     bloodReagent: FluorosulfuricAcid
   - type: MeleeWeapon
+    altDisarm: false
     hidden: true
     angle: 0
     soundHit:
@@ -72,7 +73,6 @@
     damage:
       groups:
         Brute: 6
-  - type: Appearance
   - type: DamageStateVisuals
     rotate: true
     states:
@@ -359,7 +359,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: purple_snake
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -376,7 +375,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Xeno
   - type: MeleeWeapon
@@ -419,7 +418,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: small_purple_snake
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:

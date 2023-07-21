@@ -28,6 +28,9 @@
     - type: Rotatable
     - type: Pullable
     - type: Construction
+      containers:
+        - machine_board
+        - machine_parts
       graph: Machine
       node: missingWires
     - type: ContainerContainer
@@ -83,6 +86,9 @@
       graph: Machine
       node: machineFrame
       defaultTarget: machine
+      containers:
+        - machine_board
+        - machine_parts
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic

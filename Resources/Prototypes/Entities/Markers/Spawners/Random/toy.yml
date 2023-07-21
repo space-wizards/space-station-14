@@ -37,20 +37,20 @@
       offset: 0.2
 
 - type: entity
-  name: Figure Spawner
+  name: Prize Figurine Spawner
   id: FigureSpawner
   parent: MarkerBase
   components:
     - type: Sprite
       layers:
         - state: red
-        - sprite: Objects/Fun/toys.rsi
-          state: ripleytoy
+        - sprite: Objects/Fun/mech_figurines.rsi
+          state: ripley
     - type: RandomSpawner
       prototypes:
         - ToyAi
         - ToyNuke
-        - ToyAssistant
+        - ToyFigurinePassenger
         - ToyGriffin
         - ToyHonk
         - ToyIan
@@ -67,5 +67,49 @@
         - ToySeraph
         - ToyDurand
         - ToySkeleton
+        - MysteryFigureBox
       chance: 0.5
+      offset: 0.2
+
+- type: entity
+  name: Spacemen Minifigure Spawner
+  suffix: Librarian only, map with care!
+  id: SpacemenFigureSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Objects/Fun/figurines.rsi
+          state: figurine_spawner
+    - type: RandomSpawner
+      rarePrototypes:
+      - ToyFigurineNukieElite
+      - ToyFigurineNukieCommander
+      rareChance: 0.05
+      prototypes:
+      - ToyFigurinePassenger
+      - ToyFigurineClown
+      - ToyFigurineMime
+      - ToyFigurineCaptain
+      - ToyFigurineSecurity
+      - ToyFigurineCargoTech
+      - ToyFigurineSalvage
+      - ToyFigurineQuartermaster   
+      - ToyFigurineAtmosTech
+      - ToyFigurineEngineer 
+      - ToyFigurineEngineer
+      - ToyFigurineScientist
+      - ToyFigurineMedicalDoctor
+      - ToyFigurineLibrarian
+      - ToyFigurineNukie
+      - ToyFigurineFootsoldier
+      - ToyFigurineWizardFake
+      - ToyFigurineSlime
+      - ToyFigurineGreytider
+      - ToyFigurineWizard
+      - ToyGriffin
+      - ToyOwlman
+      - ToySkeleton
+      - ToyFigurineQueen
+      chance: 0.90
       offset: 0.2

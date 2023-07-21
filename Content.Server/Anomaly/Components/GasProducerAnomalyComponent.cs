@@ -3,7 +3,7 @@ using Content.Shared.Atmos;
 namespace Content.Server.Anomaly.Components;
 
 /// <summary>
-/// This component is used for handling gas producing anomalies
+/// This component is used for handling gas producing anomalies. Will always spawn one on the tile with the anomaly, and in a random radius around it.
 /// </summary>
 [RegisterComponent]
 public sealed class GasProducerAnomalyComponent : Component
@@ -37,4 +37,22 @@ public sealed class GasProducerAnomalyComponent : Component
     /// </summary>
     [DataField("passiveMoleAmount")]
     public float PassiveMoleAmount = 1f;
+
+    /// <summary>
+    /// The radius of random gas spawns.
+    /// </summary>
+    [DataField("spawnRadius", required: true)]
+    public float spawnRadius = 3;
+
+    /// <summary>
+    /// The number of tiles which will be modified. 
+    /// </summary>
+    [DataField("tileCount")]
+    public int tileCount = 1;
+    
+    /// <summary>
+    /// The the amount the tempurature should be modified by (negative for decreasing temp)
+    /// </summary>
+    [DataField("tempChange")]
+    public float tempChange = 0;
 }

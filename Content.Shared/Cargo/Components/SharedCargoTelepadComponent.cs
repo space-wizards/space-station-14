@@ -17,13 +17,13 @@ public sealed class CargoTelepadComponent : Component
     /// The base amount of time it takes to teleport from the telepad
     /// </summary>
     [DataField("baseDelay"), ViewVariables(VVAccess.ReadWrite)]
-    public float BaseDelay = 45f;
+    public float BaseDelay = 10f;
 
     /// <summary>
     /// The actual amount of time it takes to teleport from the telepad
     /// </summary>
     [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
-    public float Delay = 45f;
+    public float Delay = 10f;
 
     /// <summary>
     /// The machine part that affects <see cref="Delay"/>

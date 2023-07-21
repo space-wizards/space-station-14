@@ -446,17 +446,17 @@ namespace Content.Shared.Interaction
         {
             var dir = other.Position - origin.Position;
 
-            if (dir.LengthSquared.Equals(0f))
+            if (dir.LengthSquared().Equals(0f))
                 return 0f;
 
             predicate ??= _ => false;
-            var ray = new CollisionRay(origin.Position, dir.Normalized, collisionMask);
-            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var ray = new CollisionRay(origin.Position, dir.Normalized(), collisionMask);
+            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length(), predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0)
-                return dir.Length;
+                return dir.Length();
 
-            return (rayResults[0].HitPos - origin.Position).Length;
+            return (rayResults[0].HitPos - origin.Position).Length();
         }
 
         /// <summary>
@@ -496,7 +496,7 @@ namespace Content.Shared.Interaction
                 return true;
 
             var dir = other.Position - origin.Position;
-            var length = dir.Length;
+            var length = dir.Length();
 
             // If range specified also check it
             if (range > 0f && length > range)
@@ -513,7 +513,7 @@ namespace Content.Shared.Interaction
                 length = MaxRaycastRange;
             }
 
-            var ray = new CollisionRay(origin.Position, dir.Normalized, (int) collisionMask);
+            var ray = new CollisionRay(origin.Position, dir.Normalized(), (int) collisionMask);
             var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
 
             return rayResults.Count == 0;
@@ -623,7 +623,7 @@ namespace Content.Shared.Interaction
                 {
                     // We'll still do the raycast from the centres but we'll bump the range as we know they're in range.
                     originPos = xformA.MapPosition;
-                    range = (originPos.Position - targetPos.Position).Length;
+                    range = (originPos.Position - targetPos.Position).Length();
                 }
             }
             // No fixtures, e.g. wallmounts.

@@ -21,6 +21,7 @@ materials-uranium = uranium
 materials-bananium = bananium
 materials-paper = paper
 materials-ink = ink
+materials-meat = meat
 
 # Material Reclaimer
 material-reclaimer-upgrade-process-rate = process rate

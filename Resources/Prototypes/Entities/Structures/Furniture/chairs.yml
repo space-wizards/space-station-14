@@ -47,7 +47,7 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
   - type: StaticPrice
-    price: 50
+    price: 10
 
 - type: entity
   name: chair
@@ -207,6 +207,20 @@
     node: chairRitual
 
 - type: entity
+  id: ChairMeat
+  parent: SeatBase
+  name: meat chair
+  description: Uncomfortably sweaty.
+  components:
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: meat
+  - type: Construction
+    graph: Seat
+    node: chairMeat
+
+- type: entity
   name: cursed chair
   id: ChairCursed
   parent: SeatBase
@@ -254,7 +268,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 15
+        Blunt: 8
   - type: Construction
     graph: Seat
     node: chairFolding

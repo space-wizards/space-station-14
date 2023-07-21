@@ -1,4 +1,5 @@
-﻿using Content.Server.Worldgen.Components;
+﻿using System.Numerics;
+using Content.Server.Worldgen.Components;
 using Content.Server.Worldgen.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;

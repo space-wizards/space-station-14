@@ -13,3 +13,5 @@ handcuff-component-cuff-self-success-message = You cuff yourself.
 handcuff-component-cuff-interrupt-message = You were interrupted while cuffing {$targetName}!
 handcuff-component-cuff-interrupt-other-message = You interrupt {$otherName} while they are cuffing you!
 handcuff-component-cuff-interrupt-self-message = You were interrupted while cuffing yourself.
+handcuff-component-cuff-interrupt-buckled-message = You can't buckle while cuffed!
+handcuff-component-cuff-interrupt-unbuckled-message = You can't unbuckle while cuffed!
