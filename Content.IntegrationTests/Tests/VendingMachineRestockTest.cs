@@ -272,19 +272,19 @@ namespace Content.IntegrationTests.Tests
                             user, machine), Is.True, "Package with valid canRestock is unable to restock machine");
 
                     // Make sure there's something in there to begin with.
-                    Assert.That(systemMachine.GetAvailableInventory(machine, inventoryComponent).Count,
-                        Is.GreaterThan(0),
+                    Assert.That(systemMachine.GetAvailableInventory(machine, inventoryComponent),
+                        Has.Count.GreaterThan(0),
                         "Machine inventory is empty before emptying.");
                 });
 
                 // Empty the inventory.
                 systemMachine.EjectRandom(machine, false, true, ejectComponent);
-                Assert.That(systemMachine.GetAvailableInventory(machine, inventoryComponent).Count, Is.EqualTo(0),
+                Assert.That(systemMachine.GetAvailableInventory(machine, inventoryComponent), Has.Count.EqualTo(0),
                     "Machine inventory is not empty after ejecting.");
 
                 // Test that the inventory is actually restocked.
                 systemMachine.TryRestockInventory(machine, inventoryComponent);
-                Assert.That(systemMachine.GetAvailableInventory(machine, inventoryComponent).Count, Is.GreaterThan(0),
+                Assert.That(systemMachine.GetAvailableInventory(machine, inventoryComponent), Has.Count.GreaterThan(0),
                     "Machine available inventory count is not greater than zero after restock.");
 
                 mapManager.DeleteMap(testMap.MapId);
