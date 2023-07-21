@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Fixed visuals for cigarette packs and donut boxes, type: Fix}
-  id: 3799
-  time: '2023-05-17T19:19:24.0000000+00:00'
 - author: tom-leys
   changes:
   - {message: 'The laws of physics smile on you! Tritium (thus Frezon) is easier to
@@ -2976,3 +2971,9 @@ Entries:
   - {message: Arachnids no longer have webs strapped to their appendages, type: Remove}
   id: 4298
   time: '2023-07-20T21:55:50.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Artifacts going insane at round-end can now be disabled per-server.,
+    type: Tweak}
+  id: 4299
+  time: '2023-07-21T08:49:11.0000000+00:00'
