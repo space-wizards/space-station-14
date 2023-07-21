@@ -9,10 +9,15 @@ namespace Content.Shared.Access.Systems
     public abstract class SharedAccessSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly ILogManager _log = default!;
+
+        public const string Sawmill = "accesssystem";
+        protected ISawmill _sawmill = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+            _sawmill = _log.GetSawmill(Sawmill);
 
             SubscribeLocalEvent<AccessComponent, MapInitEvent>(OnAccessInit);
             SubscribeLocalEvent<AccessComponent, ComponentGetState>(OnAccessGetState);
