@@ -87,7 +87,7 @@
   name: nitrogen tank
   components:
     - type: GasTank
-      outputPressure: 101.325
+      outputPressure: 21.27825
       air:
         volume: 15
         moles:

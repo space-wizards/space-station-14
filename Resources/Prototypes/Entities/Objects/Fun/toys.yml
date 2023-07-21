@@ -599,6 +599,7 @@
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver_357.ogg
+    clumsyProof: true
   - type: RevolverAmmoProvider
     whitelist:
       tags:
