@@ -2,3 +2,8 @@
 	path = RobustToolbox
 	url = https://github.com/space-wizards/RobustToolbox.git
 	branch = master
+[submodule "Secrets"]
+	path = Secrets
+	url = https://github.com/ekrixi-14/secrets
+	branch = master
+	update = none

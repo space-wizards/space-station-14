@@ -305,3 +305,8 @@ Resources/MapImages
 
 # Direnv stuff
 .direnv/
+
+# Moony taught me this :godo:
+Content.ServerSecret/Code
+Resources/SecretResources
+Secrets
