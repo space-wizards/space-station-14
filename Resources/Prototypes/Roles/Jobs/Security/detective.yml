@@ -9,7 +9,7 @@
     time: 7200 #2 hrs
   startingGear: DetectiveGear
   icon: "Detective"
-  supervisors: job-supervisors-senior-security
+  supervisors: job-supervisors-hos
   canBeAntag: false
   access:
   - Security

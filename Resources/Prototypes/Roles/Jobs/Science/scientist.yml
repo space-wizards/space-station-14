@@ -9,7 +9,7 @@
       time: 1800
   startingGear: ScientistGear
   icon: "Scientist"
-  supervisors: job-supervisors-senior-science
+  supervisors: job-supervisors-rd
   access:
   - Research
   - Maintenance

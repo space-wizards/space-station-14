@@ -9,7 +9,7 @@
       time: 1800
   startingGear: ChemistGear
   icon: "Chemist"
-  supervisors: job-supervisors-senior-medical
+  supervisors: job-supervisors-cmo
   access:
   - Medical
   - Chemistry

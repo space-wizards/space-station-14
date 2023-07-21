@@ -9,7 +9,7 @@
       time: 1800
   startingGear: StationEngineerGear
   icon: "StationEngineer"
-  supervisors: job-supervisors-senior-engineering
+  supervisors: job-supervisors-ce
   access:
   - Maintenance
   - Engineering

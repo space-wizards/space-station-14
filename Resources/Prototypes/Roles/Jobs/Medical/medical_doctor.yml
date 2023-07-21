@@ -9,7 +9,7 @@
       time: 1800
   startingGear: DoctorGear
   icon: "MedicalDoctor"
-  supervisors: job-supervisors-senior-medical
+  supervisors: job-supervisors-cmo
   access:
   - Medical
   - Maintenance
