@@ -304,14 +304,15 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </summary>
     private void OnRoundEnd(RoundEndTextAppendEvent ev)
     {
-        if (_configurationManager.GetCVar(CCVars.ArtifactRoundEndGrief) == true)
+        var RoundEndTimer = _configurationManager.GetCVar(CCVars.ArtifactRoundEndTimer);
+        if (RoundEndTimer != 0)
         {
             var query = EntityQueryEnumerator<ArtifactComponent>();
             while (query.MoveNext(out var ent, out var artifactComp))
             {
                 artifactComp.CooldownTime = TimeSpan.Zero;
                 var timerTrigger = EnsureComp<ArtifactTimerTriggerComponent>(ent);
-                timerTrigger.ActivationRate = TimeSpan.FromSeconds(0.5); //HAHAHAHAHAHAHAHAHAH -emo
+                timerTrigger.ActivationRate = TimeSpan.FromSeconds(RoundEndTimer); //HAHAHAHAHAHAHAHAHAH -emo
             }
         }
     }
