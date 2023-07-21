@@ -304,6 +304,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (ev.Ammo.Count <= 0)
         {
+            // triggers effects on the gun when it's empty
             if (gun.TriggerWhenEmpty)
             {
                 TriggerGun(gunUid);
