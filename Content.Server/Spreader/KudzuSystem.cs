@@ -47,16 +47,16 @@ public sealed class KudzuSystem : EntitySystem
 
     private void OnKudzuSpread(EntityUid uid, KudzuComponent component, ref SpreadNeighborsEvent args)
     {
-        if (TryComp<GrowingKudzuComponent>(uid, out var growing) && growing.GrowthLevel < 3)
+        if (TryComp<GrowingKudzuComponent>(uid, out var growing) /*&& growing.GrowthLevel < 3 */)
         {
             return;
         }
 
-        if (args.NeighborFreeTiles.Count == 0)
-        {
-            RemCompDeferred<EdgeSpreaderComponent>(uid);
-            return;
-        }
+       // if (args.NeighborFreeTiles.Count == 0)
+       // {
+       //     RemCompDeferred<EdgeSpreaderComponent>(uid);
+       //     return;
+       // }
 
         var prototype = MetaData(uid).EntityPrototype?.ID;
 
@@ -66,8 +66,8 @@ public sealed class KudzuSystem : EntitySystem
             return;
         }
 
-        if (!_robustRandom.Prob(component.SpreadChance))
-            return;
+        //if (!_robustRandom.Prob(component.SpreadChance))
+        //    return;
 
         foreach (var neighbor in args.NeighborFreeTiles)
         {
@@ -118,7 +118,7 @@ public sealed class KudzuSystem : EntitySystem
                 continue;
             }
 
-            grow.NextTick = curTime + TimeSpan.FromSeconds(0.5);
+            grow.NextTick = curTime + TimeSpan.FromSeconds(0.5); // was 0.5
 
             if (!_robustRandom.Prob(kudzu.GrowthTickChance))
             {

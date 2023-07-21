@@ -76,6 +76,7 @@
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
     - type: EdgeSpreader
+      spreadUpdateCooldown: 10
     - type: NodeContainer
       nodes:
         kudzu:

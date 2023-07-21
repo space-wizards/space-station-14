@@ -33,6 +33,7 @@ public sealed class SpreaderSystem : EntitySystem
 
     private const string IgnoredTag = "SpreaderIgnore";
 
+    private TimeSpan bixTime;
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -94,6 +95,11 @@ public sealed class SpreaderSystem : EntitySystem
     public override void Update(float frameTime)
     {
         var curTime = _timing.CurTime;
+      //  if(bixTime > curTime)
+      //  {
+      //     return;
+      //  }
+      //  bixTime = curTime + SpreadUpdateCooldown;
 
         // Check which grids are valid for spreading.
         var spreadable = new ValueList<EntityUid>();
