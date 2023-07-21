@@ -225,7 +225,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi, state: red-icon }
   productEntity: MagazinePistolSubMachineGun
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkAmmo
   conditions:
