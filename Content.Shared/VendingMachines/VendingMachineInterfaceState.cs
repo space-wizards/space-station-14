@@ -16,12 +16,13 @@ namespace Content.Shared.VendingMachines
     [Serializable, NetSerializable]
     public sealed class VendingMachineEjectMessage : BoundUserInterfaceMessage
     {
-        public readonly InventoryType Type;
-        public readonly string ID;
-        public VendingMachineEjectMessage(InventoryType type, string id)
+        public readonly string TypeId;
+        public readonly string Id;
+
+        public VendingMachineEjectMessage(string typeId, string id)
         {
-            Type = type;
-            ID = id;
+            TypeId = typeId;
+            Id = id;
         }
     }
 

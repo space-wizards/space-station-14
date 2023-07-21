@@ -1,10 +1,11 @@
 using Content.Shared.Emag.Components;
-using Robust.Shared.Prototypes;
-using System.Linq;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.VendingMachines.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Shared.VendingMachines;
 
@@ -19,56 +20,80 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<VendingMachineComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<VendingMachineInventoryComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<VendingMachineRestockComponent, AfterInteractEvent>(OnAfterInteract);
     }
 
-    protected virtual void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
+    protected virtual void OnComponentInit(EntityUid uid, VendingMachineInventoryComponent component,
+        ComponentInit args)
     {
         RestockInventoryFromPrototype(uid, component);
     }
 
     public void RestockInventoryFromPrototype(EntityUid uid,
-        VendingMachineComponent? component = null)
+        VendingMachineInventoryComponent? component = null)
     {
         if (!Resolve(uid, ref component))
         {
             return;
         }
 
-        if (!PrototypeManager.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
-            return;
+        foreach (var pack in component.PackPrototypeId)
+        {
+            if (!PrototypeManager.TryIndex(pack,
+                    out VendingMachineInventoryPrototype? packPrototype))
+                continue;
 
-        AddInventoryFromPrototype(uid, packPrototype.StartingInventory, InventoryType.Regular, component);
-        AddInventoryFromPrototype(uid, packPrototype.EmaggedInventory, InventoryType.Emagged, component);
-        AddInventoryFromPrototype(uid, packPrototype.ContrabandInventory, InventoryType.Contraband, component);
+            if (!PrototypeManager.TryIndex(packPrototype.InventoryTypePrototypeId,
+                    out VendingMachineInventoryTypePrototype? inventoryType))
+                continue;
+
+            AddInventoryFromPrototype(uid, packPrototype.Inventory, inventoryType.ID, component);
+        }
     }
 
     /// <summary>
     /// Returns all of the vending machine's inventory. Only includes emagged and contraband inventories if
-    /// <see cref="EmaggedComponent"/> exists and <see cref="VendingMachineComponent.Contraband"/> is true
-    /// are <c>true</c> respectively.
+    /// <see cref="EmaggedComponent"/> exists and <see cref="VendingMachineContrabandInventoryComponent.Contraband"/>
+    /// is true are <c>true</c> respectively.
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="component"></param>
     /// <returns></returns>
-    public List<VendingMachineInventoryEntry> GetAllInventory(EntityUid uid, VendingMachineComponent? component = null)
+    public List<VendingMachineInventoryEntry> GetAllInventory(EntityUid uid,
+        VendingMachineInventoryComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return new();
 
-        var inventory = new List<VendingMachineInventoryEntry>(component.Inventory.Values);
+        var inventory = new List<VendingMachineInventoryEntry>();
 
-        if (HasComp<EmaggedComponent>(uid))
-            inventory.AddRange(component.EmaggedInventory.Values);
+        foreach (var items in component.Items)
+        {
+            if (items.Key == VendingMachinesInventoryTypeNames.Emagged)
+            {
+                if(HasComp<EmaggedComponent>(uid))
+                    inventory.AddRange(items.Value);
 
-        if (component.Contraband)
-            inventory.AddRange(component.ContrabandInventory.Values);
+                continue;
+            }
+
+            if (items.Key == VendingMachinesInventoryTypeNames.Contraband)
+            {
+                if(component.Contraband)
+                    inventory.AddRange(items.Value);
+
+                continue;
+            }
+
+            inventory.AddRange(items.Value);
+        }
 
         return inventory;
     }
 
-    public List<VendingMachineInventoryEntry> GetAvailableInventory(EntityUid uid, VendingMachineComponent? component = null)
+    public List<VendingMachineInventoryEntry> GetAvailableInventory(EntityUid uid,
+        VendingMachineInventoryComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return new();
@@ -76,46 +101,58 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         return GetAllInventory(uid, component).Where(_ => _.Amount > 0).ToList();
     }
 
-    private void AddInventoryFromPrototype(EntityUid uid, Dictionary<string, uint>? entries,
-        InventoryType type,
-        VendingMachineComponent? component = null)
+    private void AddInventoryFromPrototype(EntityUid uid,
+        Dictionary<string, uint>? entries,
+        string typeId,
+        VendingMachineInventoryComponent? component = null)
     {
         if (!Resolve(uid, ref component) || entries == null)
         {
             return;
         }
 
-        Dictionary<string, VendingMachineInventoryEntry> inventory;
-        switch (type)
+        var inventory = GetInventory(typeId, component);
+
+        var inventoryIsEmpty = inventory.Count == 0;
+
+        if (inventoryIsEmpty)
         {
-            case InventoryType.Regular:
-                inventory = component.Inventory;
-                break;
-            case InventoryType.Emagged:
-                inventory = component.EmaggedInventory;
-                break;
-            case InventoryType.Contraband:
-                inventory = component.ContrabandInventory;
-                break;
-            default:
-                return;
+            foreach (var (id, amount) in entries)
+            {
+                inventory.Add(new VendingMachineInventoryEntry(id, typeId, amount));
+            }
+
+            component.Items.Add(typeId, inventory);
+
+            return;
         }
 
         foreach (var (id, amount) in entries)
         {
-            if (PrototypeManager.HasIndex<EntityPrototype>(id))
+            foreach (var item in inventory)
             {
-                if (inventory.TryGetValue(id, out var entry))
-                    // Prevent a machine's stock from going over three times
-                    // the prototype's normal amount. This is an arbitrary
-                    // number and meant to be a convenience for someone
-                    // restocking a machine who doesn't want to force vend out
-                    // all the items just to restock one empty slot without
-                    // losing the rest of the restock.
-                    entry.Amount = Math.Min(entry.Amount + amount, 3 * amount);
-                else
-                    inventory.Add(id, new VendingMachineInventoryEntry(type, id, amount));
+                if(item.ItemId == id)
+                    item.Amount = Math.Min(item.Amount + amount, 3 * amount);
             }
         }
+
+        component.Items.Remove(typeId);
+        component.Items.Add(typeId, inventory);
+    }
+
+    private List<VendingMachineInventoryEntry> GetInventory(string typeId,
+        VendingMachineInventoryComponent component)
+    {
+        foreach (var itemsTypeId in component.Items.Keys)
+        {
+            if (typeId != itemsTypeId)
+                continue;
+
+            component.Items.TryGetValue(itemsTypeId, out var inventory);
+
+            return inventory ?? new List<VendingMachineInventoryEntry>();
+        }
+
+        return new List<VendingMachineInventoryEntry>();
     }
 }
