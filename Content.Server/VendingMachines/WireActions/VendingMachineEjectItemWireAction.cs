@@ -1,10 +1,11 @@
 using Content.Server.Wires;
 using Content.Shared.VendingMachines;
+using Content.Shared.VendingMachines.Components;
 using Content.Shared.Wires;
 
-namespace Content.Server.VendingMachines;
+namespace Content.Server.VendingMachines.WireActions;
 
-public sealed class VendingMachineEjectItemWireAction : ComponentWireAction<VendingMachineComponent>
+public sealed class VendingMachineEjectItemWireAction : ComponentWireAction<VendingMachineEjectComponent>
 {
     private VendingMachineSystem _vendingMachineSystem = default!;
 
@@ -13,7 +14,7 @@ public sealed class VendingMachineEjectItemWireAction : ComponentWireAction<Vend
 
     public override object? StatusKey { get; } = EjectWireKey.StatusKey;
 
-    public override StatusLightState? GetLightState(Wire wire, VendingMachineComponent comp)
+    public override StatusLightState? GetLightState(Wire wire, VendingMachineEjectComponent comp)
         => comp.CanShoot ? StatusLightState.BlinkingFast : StatusLightState.On;
 
     public override void Initialize()
@@ -23,20 +24,20 @@ public sealed class VendingMachineEjectItemWireAction : ComponentWireAction<Vend
         _vendingMachineSystem = EntityManager.System<VendingMachineSystem>();
     }
 
-    public override bool Cut(EntityUid user, Wire wire, VendingMachineComponent vending)
+    public override bool Cut(EntityUid user, Wire wire, VendingMachineEjectComponent vending)
     {
         _vendingMachineSystem.SetShooting(wire.Owner, true, vending);
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, VendingMachineComponent vending)
+    public override bool Mend(EntityUid user, Wire wire, VendingMachineEjectComponent vending)
     {
         _vendingMachineSystem.SetShooting(wire.Owner, false, vending);
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, VendingMachineComponent vending)
+    public override void Pulse(EntityUid user, Wire wire, VendingMachineEjectComponent vending)
     {
-        _vendingMachineSystem.EjectRandom(wire.Owner, true, vendComponent: vending);
+        _vendingMachineSystem.EjectRandom(wire.Owner, true, ejectComponent: vending);
     }
 }

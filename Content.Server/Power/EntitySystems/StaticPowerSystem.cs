@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using Content.Server.Power.Components;
 
 namespace Content.Server.Power.EntitySystems;
