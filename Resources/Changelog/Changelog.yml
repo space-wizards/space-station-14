@@ -2963,3 +2963,17 @@ Entries:
   - {message: Added psychologist's office at Box Station, type: Add}
   id: 4297
   time: '2023-07-20T06:50:47.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 'Arachnids have a few more appendages, chest markings, and now show
+      off their chelicerae.', type: Add}
+  - {message: Arachnids now have a few different organ sprites, type: Add}
+  - {message: Arachnids no longer have webs strapped to their appendages, type: Remove}
+  id: 4298
+  time: '2023-07-20T21:55:50.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Artifacts going insane at round-end can now be disabled per-server.,
+    type: Tweak}
+  id: 4299
+  time: '2023-07-21T08:49:11.0000000+00:00'
