@@ -67,6 +67,7 @@
   id: Drone
   parent: PlayerSiliconBase
   components:
+  - type: VentCrawler
   - type: Drone
   - type: InnateTool
     tools:

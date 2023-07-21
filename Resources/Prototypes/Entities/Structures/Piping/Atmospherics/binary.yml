@@ -62,6 +62,12 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/gas_pump.ogg
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
+  - type: ContainerContainer
+    containers:
+      VentCrawTube: !type:Container
 
 - type: entity
   parent: GasBinaryBase
@@ -102,6 +108,12 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_pump.ogg
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawTransit
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
 
 - type: entity
   parent: GasBinaryBase
@@ -131,6 +143,12 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawTransit
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
 
 - type: entity
   parent: GasBinaryBase
@@ -179,6 +197,12 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawTransit
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
 
 - type: entity
   parent: GasBinaryBase
@@ -237,6 +261,12 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/gas_hiss.ogg
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
+  - type: ContainerContainer
+    containers:
+      VentCrawTube: !type:Container
 
 - type: entity
   parent: GasBinaryBase
@@ -266,6 +296,14 @@
     - type: Construction
       graph: GasBinary
       node: port
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawJunction
+      degrees:
+        - 0
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
 
 - type: entity
   parent: GasVentPump

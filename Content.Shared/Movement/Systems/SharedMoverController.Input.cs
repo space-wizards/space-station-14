@@ -293,7 +293,7 @@ namespace Content.Shared.Movement.Systems
 
             // Relay the fact we had any movement event.
             // TODO: Ideally we'd do these in a tick instead of out of sim.
-            var moveEvent = new MoveInputEvent(entity);
+            var moveEvent = new MoveInputEvent(entity, dir, state);
             RaiseLocalEvent(entity, ref moveEvent);
 
             // For stuff like "Moving out of locker" or the likes
