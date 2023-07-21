@@ -124,6 +124,3 @@
   - type: Tag
     tags:
       - SpeedLoaderMagnum357
-    whitelist:
-      tags:
-        - CartridgeMagnum357
