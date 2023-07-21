@@ -8,7 +8,7 @@
     - type: InputMover
     - type: MobMover
     - type: HTN
-      rootTask: !type:HTNCompoundTask
+      rootTask:
         task: SimpleHostileCompound
       blackboard:
         NavSmash: !type:Bool
@@ -156,7 +156,8 @@
       description: ghost-role-information-sentient-carp-description
     - type: GhostTakeoverAvailable
     - type: HTN
-      rootTask: DragonCarpCompound
+      rootTask:
+        task: DragonCarpCompound
 
 - type: entity
   id: MobCarpDungeon

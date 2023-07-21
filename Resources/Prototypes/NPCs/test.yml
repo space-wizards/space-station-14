@@ -17,4 +17,5 @@
   parent: MobXenoRouny
   components:
   - type: HTN
-    rootTask: MoveToPathfindPointCompound
+    rootTask:
+      task: MoveToPathfindPointCompound

@@ -90,7 +90,7 @@
     factions:
       - PetsNT
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: SimpleHostileCompound
   - type: Grammar
     attributes:
@@ -488,7 +488,7 @@
       state: shiva
       sprite: Mobs/Pets/shiva.rsi
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: SimpleHostileCompound
   - type: Physics
   - type: Fixtures

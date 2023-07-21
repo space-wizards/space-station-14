@@ -13,6 +13,11 @@ public sealed class MeleeOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
+    /*
+     * TODO: Juking looks fucking weird
+     * If we get NoPath on movement need to cancel the plan.
+     */
+
     // TODO: JukeOperator
     // Needs to cancel steering when active, needs to check for melee or whatever
     // Add enum for different juke types
@@ -24,7 +29,7 @@ public sealed class MeleeOperator : HTNOperator, IHtnConditionalShutdown
     /// When to shut the task down.
     /// </summary>
     [DataField("shutdownState")]
-    public HTNPlanState ShutdownState { get; } = HTNPlanState.Running;
+    public HTNPlanState ShutdownState { get; } = HTNPlanState.PlanFinished;
 
     /// <summary>
     /// Key that contains the target entity.
@@ -108,9 +113,10 @@ public sealed class MeleeOperator : HTNOperator, IHtnConditionalShutdown
             status = HTNOperatorStatus.Failed;
         }
 
-        if (status != HTNOperatorStatus.Continuing)
+        // Mark it as finished to continue the plan.
+        if (status == HTNOperatorStatus.Continuing && ShutdownState == HTNPlanState.PlanFinished)
         {
-            _entManager.RemoveComponent<NPCMeleeCombatComponent>(owner);
+            status = HTNOperatorStatus.Finished;
         }
 
         return status;

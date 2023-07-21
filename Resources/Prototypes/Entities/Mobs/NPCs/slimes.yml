@@ -9,7 +9,7 @@
     factions:
     - SimpleNeutral
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: SimpleHostileCompound
   - type: Sprite
     drawdepth: Mobs

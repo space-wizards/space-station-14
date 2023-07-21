@@ -36,11 +36,9 @@ public sealed class NPCTest
 
     private static void Count(HTNCompoundPrototype compound, Dictionary<string, int> counts, HTNSystem htnSystem, IPrototypeManager protoManager)
     {
-        var compoundBranches = htnSystem.CompoundBranches[compound];
-
-        for (var i = 0; i < compound.Branches.Count; i++)
+        foreach (var branch in compound.Branches)
         {
-            foreach (var task in compoundBranches[i])
+            foreach (var task in branch.Tasks)
             {
                 if (task is HTNCompoundTask compoundTask)
                 {

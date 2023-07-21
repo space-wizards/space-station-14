@@ -6,7 +6,7 @@
   abstract: true
   components:
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: SimpleHostileCompound
     blackboard:
       NavSmash: !type:Bool

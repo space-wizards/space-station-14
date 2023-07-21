@@ -133,7 +133,7 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: SimpleHostileCompound
   - type: Faction
     factions:
@@ -471,7 +471,7 @@
   - type: Body
     prototype: AnimalRuminant
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: RuminantCompound
   - type: GuideHelp
     guides:
@@ -590,7 +590,7 @@
   - type: Body
     prototype: AnimalRuminant
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: RuminantCompound
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
@@ -766,7 +766,7 @@
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: SimpleHostileCompound
   - type: Faction
     factions:
@@ -910,7 +910,7 @@
     factions:
       - Mouse
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: MouseCompound
   - type: Physics
   - type: Fixtures
@@ -1291,7 +1291,7 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: SimpleHostileCompound
   - type: Faction
     factions:
@@ -1477,7 +1477,7 @@
     - type: InputMover
     - type: MobMover
     - type: HTN
-      rootTask: !type:HTNCompoundTask
+      rootTask:
         task: SimpleHostileCompound
     - type: GhostRole
       makeSentient: true
@@ -1782,7 +1782,7 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: SimpleHostileCompound
   - type: Faction
     factions:

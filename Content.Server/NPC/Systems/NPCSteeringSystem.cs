@@ -332,15 +332,22 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         var body = _physicsQuery.GetComponent(uid);
         var dangerPoints = steering.DangerPoints;
         dangerPoints.Clear();
-
-        for (var i = 0; i < InterestDirections; i++)
-        {
-            steering.Interest[i] = 0f;
-            steering.Danger[i] = 0f;
-        }
+        steering.CanSeek = true;
 
         var ev = new NPCSteeringEvent(steering);
         RaiseLocalEvent(uid, ref ev);
+
+        // If still using regular steering then clear our interest
+        // otherwise use what we may have been provided.
+        if (steering.CanSeek)
+        {
+            for (var i = 0; i < InterestDirections; i++)
+            {
+                steering.Interest[i] = 0f;
+                steering.Danger[i] = 0f;
+            }
+        }
+
         // If seek has arrived at the target node for example then immediately re-steer.
         var forceSteer = true;
 

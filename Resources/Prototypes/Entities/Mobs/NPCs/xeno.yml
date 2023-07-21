@@ -10,7 +10,7 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: XenoCompound
     blackboard:
       NavInteract: !type:Bool
@@ -375,7 +375,7 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: SimpleHostileCompound
   - type: Faction
     factions:

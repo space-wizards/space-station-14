@@ -11,7 +11,7 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: SimpleHostileCompound
   - type: Reactive
     groups:
@@ -177,7 +177,7 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: SimpleHostileCompound
   - type: Reactive
     groups:

@@ -106,7 +106,7 @@
       proto: CartridgeCaselessRifle
       capacity: 500
     - type: HTN
-      rootTask: !type:HTNCompoundTask
+      rootTask:
         task: TurretCompound
       blackboard:
         SoundTargetInLOS: !type:SoundPathSpecifier
@@ -203,7 +203,8 @@
       selectedMode: FullAuto
       soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
     - type: HTN
-      rootTask: TurretCompound
+      rootTask:
+        task: TurretCompound
       blackboard:
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Animals/snake_hiss.ogg

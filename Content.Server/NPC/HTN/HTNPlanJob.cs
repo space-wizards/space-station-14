@@ -1,11 +1,9 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.NPC.HTN.Preconditions;
 using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.NPC.HTN.PrimitiveTasks;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.HTN;
 
@@ -14,7 +12,6 @@ namespace Content.Server.NPC.HTN;
 /// </summary>
 public sealed class HTNPlanJob : Job<HTNPlan>
 {
-    private readonly HTNSystem _htn;
     private readonly HTNTask _rootTask;
     private NPCBlackboard _blackboard;
 
@@ -28,14 +25,12 @@ public sealed class HTNPlanJob : Job<HTNPlan>
     public HTNPlanJob(
         double maxTime,
         IPrototypeManager protoManager,
-        HTNSystem htn,
         HTNTask rootTask,
         NPCBlackboard blackboard,
         List<int>? branchTraversal,
         CancellationToken cancellationToken = default) : base(maxTime, cancellationToken)
     {
         _protoManager = protoManager;
-        _htn = htn;
         _rootTask = rootTask;
         _blackboard = blackboard;
         _branchTraversal = branchTraversal;
@@ -167,7 +162,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
     private bool TryFindSatisfiedMethod(HTNCompoundTask compoundId, Queue<HTNTask> tasksToProcess, NPCBlackboard blackboard, ref int mtrIndex)
     {
         var compound = _protoManager.Index<HTNCompoundPrototype>(compoundId.Task);
-        var compBranches = _htn.CompoundBranches[compound];
+        var compBranches = compound.Branches;
 
         for (var i = mtrIndex; i < compound.Branches.Count; i++)
         {
@@ -186,9 +181,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
             if (!isValid)
                 continue;
 
-            var branchTasks = compBranches[i];
-
-            foreach (var task in branchTasks)
+            foreach (var task in branch.Tasks)
             {
                 tasksToProcess.Enqueue(task);
             }

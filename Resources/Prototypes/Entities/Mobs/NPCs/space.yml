@@ -6,7 +6,7 @@
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: HTN
-    rootTask: !type:HTNCompoundTask
+    rootTask:
       task: SimpleHostileCompound
   - type: Faction
     factions:

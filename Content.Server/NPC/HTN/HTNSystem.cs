@@ -28,10 +28,6 @@ public sealed class HTNSystem : EntitySystem
 
     private readonly HashSet<ICommonSession> _subscribers = new();
 
-    // hngngghghgh
-    public IReadOnlyDictionary<HTNCompoundPrototype, List<HTNTask>[]> CompoundBranches => _compoundBranches;
-    private Dictionary<HTNCompoundPrototype, List<HTNTask>[]> _compoundBranches = new();
-
     // Hierarchical Task Network
     public override void Initialize()
     {
@@ -82,8 +78,6 @@ public sealed class HTNSystem : EntitySystem
             }
         }
 
-        _compoundBranches.Clear();
-
         // Add dependencies for all operators.
         // We put code on operators as I couldn't think of a clean way to put it on systems.
         foreach (var compound in _prototypeManager.EnumeratePrototypes<HTNCompoundPrototype>())
@@ -102,21 +96,15 @@ public sealed class HTNSystem : EntitySystem
 
     private void UpdateCompound(HTNCompoundPrototype compound)
     {
-        var branchies = new List<HTNTask>[compound.Branches.Count];
-        _compoundBranches.Add(compound, branchies);
-
         for (var i = 0; i < compound.Branches.Count; i++)
         {
             var branch = compound.Branches[i];
-            var brancho = new List<HTNTask>(branch.Tasks.Count);
-            branchies[i] = brancho;
 
             foreach (var precon in branch.Preconditions)
             {
                 precon.Initialize(EntityManager.EntitySysManager);
             }
 
-            // Didn't do this in a typeserializer because we can't recursively grab our own prototype during it, woohoo!
             foreach (var task in branch.Tasks)
             {
                 UpdateTask(task);
@@ -273,15 +261,15 @@ public sealed class HTNSystem : EntitySystem
             var compound = _prototypeManager.Index<HTNCompoundPrototype>(compTask.Task);
             level++;
             text.AppendLine(compound.ID);
-            var branches = _compoundBranches[compound];
+            var branches = compound.Branches;
 
-            for (var i = 0; i < branches.Length; i++)
+            for (var i = 0; i < branches.Count; i++)
             {
                 var branch = branches[i];
                 btr.Add(i);
                 text.AppendLine($" branch {string.Join(", ", btr)}:");
 
-                foreach (var sub in branch)
+                foreach (var sub in branch.Tasks)
                 {
                     AppendDebugText(sub, text, planBtr, btr, ref level);
                 }
@@ -429,7 +417,6 @@ public sealed class HTNSystem : EntitySystem
         var job = new HTNPlanJob(
             0.02,
             _prototypeManager,
-            this,
             component.RootTask,
             component.Blackboard.ShallowClone(), branchTraversal, cancelToken.Token);
 
@@ -461,7 +448,6 @@ public sealed class HTNSystem : EntitySystem
         {
             var compound = _prototypeManager.Index<HTNCompoundPrototype>(compTask.Task);
             builder.AppendLine(buffer + $"Compound: {task}");
-            var compoundBranches = CompoundBranches[compound];
 
             for (var i = 0; i < compound.Branches.Count; i++)
             {
@@ -469,9 +455,8 @@ public sealed class HTNSystem : EntitySystem
 
                 builder.AppendLine(buffer + "  branch:");
                 indent++;
-                var branchTasks = compoundBranches[i];
 
-                foreach (var branchTask in branchTasks)
+                foreach (var branchTask in branch.Tasks)
                 {
                     AppendDomain(builder, branchTask, ref indent);
                 }
