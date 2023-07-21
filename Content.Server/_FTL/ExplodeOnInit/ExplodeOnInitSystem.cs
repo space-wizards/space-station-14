@@ -18,7 +18,14 @@ public sealed class ExplodeOnInitSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var explodeOnInitComponent, out var explosiveComponent))
         {
-            _explosionSystem.TriggerExplosive(uid, explosiveComponent);
+            if (explodeOnInitComponent.ExplodeOnInit || explodeOnInitComponent.TimeUntilDetonation <= 0)
+            {
+                _explosionSystem.TriggerExplosive(uid, explosiveComponent);
+            }
+            else
+            {
+                explodeOnInitComponent.TimeUntilDetonation -= frameTime;
+            }
         }
     }
 }

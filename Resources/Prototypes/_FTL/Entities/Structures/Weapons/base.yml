@@ -12,6 +12,8 @@
     - type: FTLWeapon
     - type: InteractionOutline
     - type: Clickable
+    - type: Anchorable
+      delay: 5
     - type: Transform
       anchored: true
     - type: Destructible
@@ -25,10 +27,6 @@
                 collection: GlassBreak
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
-#    - type: UserInterface
-#      interfaces:
-#        - key: enum.WeaponTargetingUiKey.Key
-#          type: WeaponTargetingBoundUserInterface
     - type: DeviceNetwork
       deviceNetId: Wireless
       receiveFrequencyId: BasicDevice
@@ -37,3 +35,5 @@
     - type: DeviceLinkSink
       ports:
         - WeaponInputPort
+    - type: StaticPrice
+      price: 1500 # these should be super rare

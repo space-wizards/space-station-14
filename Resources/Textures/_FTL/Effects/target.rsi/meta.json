@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "target.png and outline.png obtained from https://github.com/yogstation13/Yogstation/tree/94dd9adc93114ee2c50dd1291aa9d26c78c2a5aa, alert.png created by Just-a-Unity-Dev",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "target"
+    },
+    {
+      "name": "outline"
+    },
+    {
+      "name": "alert",
+      "delays": [
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ]
+      ]
+    }
+  ]
+}
