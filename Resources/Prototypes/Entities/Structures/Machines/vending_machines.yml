@@ -92,6 +92,11 @@
     price: 100
   - type: Appearance
   - type: WiresVisuals
+  - type: ContainerContainer
+    containers:
+      VendingMachine: !type:Container
+        ents: []
+      
 
 - type: entity
   parent: VendingMachine
