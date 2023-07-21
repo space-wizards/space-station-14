@@ -54,3 +54,13 @@
   - Syndicate
   - Passive
   - PetsNT
+
+- type: faction
+  id: Zombie
+  hostile:
+  - NanoTrasen
+  - SimpleNeutral
+  - SimpleHostile
+  - Syndicate
+  - Passive
+  - PetsNT
