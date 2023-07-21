@@ -109,7 +109,7 @@
     - !type:ComponentQuery
       components:
         - type: Clothing
-    - !type:ClothingFilter
+    - !type:ClothingSlotFilter
       slotFlags: Feet
   considerations:
     - !type:TargetDistanceCon

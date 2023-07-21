@@ -1,4 +1,3 @@
-using Content.Server.NPC.HTN.Preconditions;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN;
@@ -9,7 +8,7 @@ namespace Content.Server.NPC.HTN;
 [Prototype("htnCompound")]
 public sealed class HTNCompoundPrototype : IPrototype
 {
-    [DataField("id", required: true)] public string ID { get; } = string.Empty;
+    [IdDataField] public string ID { get; } = string.Empty;
 
     [DataField("branches", required: true)]
     public List<HTNBranch> Branches = new();

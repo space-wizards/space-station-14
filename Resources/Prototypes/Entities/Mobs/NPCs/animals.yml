@@ -132,8 +132,9 @@
         Piercing: 1
   - type: InputMover
   - type: MobMover
-#  - type: HTN
-#    rootTask: SimpleHostileCompound
+  - type: HTN
+    rootTask: !type:HTNCompoundTask
+      task: SimpleHostileCompound
   - type: Faction
     factions:
     - SimpleHostile
@@ -762,8 +763,9 @@
   components:
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
-#  - type: HTN
-#    rootTask: SimpleHostileCompound
+  - type: HTN
+    rootTask: !type:HTNCompoundTask
+      task: SimpleHostileCompound
   - type: Faction
     factions:
     - SimpleHostile
@@ -1285,8 +1287,9 @@
     baseSprintSpeed : 5
   - type: InputMover
   - type: MobMover
-#  - type: HTN
-#    rootTask: SimpleHostileCompound
+  - type: HTN
+    rootTask: !type:HTNCompoundTask
+      task: SimpleHostileCompound
   - type: Faction
     factions:
     - Syndicate
@@ -1774,8 +1777,9 @@
         Slash: 5
   - type: InputMover
   - type: MobMover
-#  - type: HTN
-#    rootTask: SimpleHostileCompound
+  - type: HTN
+    rootTask: !type:HTNCompoundTask
+      task: SimpleHostileCompound
   - type: Faction
     factions:
     - SimpleHostile

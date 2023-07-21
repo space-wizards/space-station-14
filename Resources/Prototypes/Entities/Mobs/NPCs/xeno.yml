@@ -373,8 +373,9 @@
       gender: male
   - type: InputMover
   - type: MobMover
-#  - type: HTN
-#    rootTask: SimpleHostileCompound
+  - type: HTN
+    rootTask: !type:HTNCompoundTask
+      task: SimpleHostileCompound
   - type: Faction
     factions:
     - Xeno

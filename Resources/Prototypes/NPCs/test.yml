@@ -3,9 +3,9 @@
   id: MoveToPathfindPointCompound
   branches:
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:PickPathfindPointOperator
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             pathfindInPlanning: false
 

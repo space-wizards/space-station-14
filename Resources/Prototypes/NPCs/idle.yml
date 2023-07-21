@@ -3,7 +3,7 @@
   id: IdleCompound
   branches:
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:WaitOperator
             key: IdleTime
           preconditions:
@@ -11,19 +11,19 @@
               key: IdleTime
     # Pick a new spot and wait there.
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:PickAccessibleOperator
             rangeKey: IdleRange
             targetKey: Target
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             pathfindInPlanning: false
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:RandomOperator
             targetKey: IdleTime
             minKey: MinimumIdleTime
             maxKey: MaximumIdleTime
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:WaitOperator
             key: IdleTime
           preconditions:
@@ -40,7 +40,7 @@
   id: IdleSpinCompound
   branches:
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:WaitOperator
             key: IdleTime
           preconditions:
@@ -48,18 +48,18 @@
               key: IdleTime
     # Pick a new angle and spin there
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:PickRandomRotationOperator
             targetKey: RotateTarget
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:RotateToTargetOperator
             targetKey: RotateTarget
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:RandomOperator
             targetKey: IdleTime
             minKey: MinimumIdleTime
             maxKey: MaximumIdleTime
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:WaitOperator
             key: IdleTime
           preconditions:

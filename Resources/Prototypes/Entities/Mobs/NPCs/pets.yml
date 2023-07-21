@@ -89,8 +89,9 @@
   - type: Faction
     factions:
       - PetsNT
-#  - type: HTN
-#    rootTask: SimpleHostileCompound
+  - type: HTN
+    rootTask: !type:HTNCompoundTask
+      task: SimpleHostileCompound
   - type: Grammar
     attributes:
       gender: female
@@ -486,8 +487,9 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: shiva
       sprite: Mobs/Pets/shiva.rsi
-#  - type: HTN
-#    rootTask: SimpleHostileCompound
+  - type: HTN
+    rootTask: !type:HTNCompoundTask
+      task: SimpleHostileCompound
   - type: Physics
   - type: Fixtures
     fixtures:

@@ -7,7 +7,7 @@
   branches:
     # Head to follow target
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           preconditions:
             - !type:CoordinatesNotInRangePrecondition
               targetKey: FollowTarget
@@ -19,7 +19,7 @@
             removeKeyOnFinish: false
     # Keep idling near follow target
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           preconditions:
             - !type:KeyExistsPrecondition
               key: IdleTime
@@ -30,20 +30,20 @@
             key: IdleTime
     # Pick a new idle spot near the follow target
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:PickAccessibleOperator
             # originKey: FollowTarget
             rangeKey: FollowCloseRange
             targetKey: FollowIdleTarget
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             targetKey: FollowIdleTarget
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:RandomOperator
             targetKey: IdleTime
             minKey: MinimumIdleTime
             maxKey: MaximumIdleTime
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           preconditions:
             - !type:KeyExistsPrecondition
               key: IdleTime

@@ -2,10 +2,10 @@
   id: MedibotCompound
   branches:
     - tasks:
-        - !type:htnCompound
+        - !type:HTNCompoundTask
           task: InjectNearbyCompound
     - tasks:
-        - !type:htnCompound
+        - !type:HTNCompoundTask
           task: IdleCompound
 
 - type: htnCompound
@@ -13,27 +13,27 @@
   branches:
     - tasks:
         # TODO: Kill this shit
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:PickNearbyInjectableOperator
             targetKey: InjectTarget
             targetMoveKey: MovementTarget
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:SpeakOperator
             speech: medibot-start-inject
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             pathfindInPlanning: false
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:SetFloatOperator
             targetKey: IdleTime
             amount: 3
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:WaitOperator
             key: IdleTime
           preconditions:
             - !type:KeyExistsPrecondition
               key: IdleTime
         # TODO: Kill this
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:MedibotInjectOperator
             targetKey: InjectTarget

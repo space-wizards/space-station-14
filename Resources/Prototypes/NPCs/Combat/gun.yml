@@ -4,10 +4,10 @@
   id: GunCombatCompound
   branches:
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyGunTargets
-        - !type:htnCompound
+        - !type:HTNCompoundTask
           task: GunAttackTargetCompound
 
 # Tries to Gun attack our target.
@@ -16,7 +16,7 @@
   branches:
     # Keep hitting them if they're in LOS
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           preconditions:
             - !type:KeyExistsPrecondition
               key: Target
@@ -37,14 +37,14 @@
 
     # Move to range and hit them
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             pathfindInPlanning: true
             removeKeyOnFinish: false
             targetKey: TargetCoordinates
             pathfindKey: TargetPathfind
             rangeKey: MeleeRange
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           preconditions:
             - !type:KeyExistsPrecondition
               key: Target
@@ -69,12 +69,12 @@
   branches:
     # Find ammo then pick it up.
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyAmmo
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           preconditions:
             - !type:TargetInRangePrecondition
               targetKey: Target
@@ -89,12 +89,12 @@
   id: PickupGunCompound
   branches:
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyGuns
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           preconditions:
             - !type:TargetInRangePrecondition
               targetKey: Target

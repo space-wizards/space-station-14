@@ -1,36 +1,30 @@
 # Specific Root compound tasks being used for NPCs.
 
 # Tries to shoot a target in LOS in range.
-#- type: htnCompound
-#  id: TurretCompound
-#  branches:
-#    - tasks:
-#        - id: GunCombatCompound
-#    - tasks:
-#        - id: IdleSpinCompound
+- type: htnCompound
+  id: TurretCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: GunCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleSpinCompound
 
 # TODO: Need a thing to recharge a laser gun
 # TODO: When selecting pickup guns also add chargers or easy container grabs.
-
-# TODO: Making juking its own operator, then melee is just a repeatingtask
-# - MoveTo
-# - Hit
-# - Juke.
-# - Then for juke we can make it a compound and combine different jukes.
 
 - type: htnCompound
   id: RangedCompound
   branches:
     - tasks:
-        - !type:htnRepeating
-          tasks:
-            - !type:htnPrimitive
-              operator: !type:MoveToOperator
-            - !type:htnPrimitive
-              operator: !type:RangedCombatOperator
-            - !type:htnPrimitive
-              operator: !type:JukeOperator
-                type: AdjacentTile
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+        - !type:HTNPrimitiveTask
+          operator: !type:RangedCombatOperator
+        - !type:HTNPrimitiveTask
+          operator: !type:JukeOperator
+            type: AdjacentTile
     # Shoot if ammo
 #    - tasks:
 #        - id: GunCombatCompound
@@ -48,7 +42,7 @@
 #    #      maxPercent: 0.0
 #    # Discard gun if no ammo
 #    - tasks:
-#        - !type:htnPrimitive
+#        - !type:HTNPrimitiveTask
 #           preconditions:
 #           - !type:ActiveHandEntityPrecondition
 #           operator: !type:DropOperator

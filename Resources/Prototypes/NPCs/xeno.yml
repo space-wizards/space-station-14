@@ -2,8 +2,8 @@
   id: XenoCompound
   branches:
     - tasks:
-        - !type:htnCompound
+        - !type:HTNCompoundTask
           task: MeleeCombatCompound
     - tasks:
-        - !type:htnCompound
+        - !type:HTNCompoundTask
           task: IdleCompound

@@ -5,10 +5,10 @@
   branches:
     # Unarmed combat
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyMeleeTargets
-        - !type:htnCompound
+        - !type:HTNCompoundTask
           task: MeleeAttackTargetCompound
 
 # Tries to melee attack our target.
@@ -20,7 +20,7 @@
   branches:
     # Move to melee range and hit them
     - tasks:
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             shutdownState: PlanFinished
             pathfindInPlanning: true
@@ -28,7 +28,7 @@
             targetKey: TargetCoordinates
             pathfindKey: TargetPathfind
             rangeKey: MeleeRange
-        - !type:htnPrimitive
+        - !type:HTNPrimitiveTask
           operator: !type:MeleeOperator
             targetKey: Target
           preconditions:
