@@ -10,6 +10,37 @@
       size: 100
     - type: Damageable
       damageContainer: Shield
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 1.2
+          Slash: 1.2
+          Piercing: 1.2
+          Heat: 1.2
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.6
+          Heat: 0.6
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100 #This is probably enough damage before it breaks
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel:
+                  min: 2
+                  max: 2
+                SheetGlass:
+                  min: 2
+                  max: 2
     - type: StaticPrice
       price: 50
 
@@ -25,38 +56,6 @@
       state: riot-icon
     - type: Item
       heldPrefix: riot
-    - type: Blocking
-      passiveBlockModifier:
-        coefficients:
-          Blunt: 0.5
-          Slash: 0.5
-          Piercing: 1.3
-          Heat: 2
-      activeBlockModifier:
-        coefficients:
-          Blunt: 0.25
-          Slash: 0.35
-        flatReductions:
-          Blunt: 2
-          Slash: 2
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 40 #This is probably enough damage before it breaks
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                SheetSteel:
-                  min: 2
-                  max: 2
-                SheetGlass:
-                  min: 2
-                  max: 2
     - type: StaticPrice
       price: 100
 
@@ -74,20 +73,21 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 2
-          Slash: 2
-          Piercing: 2
-          Heat: 0.7
+          Blunt: 1.2
+          Slash: 1.2
+          Piercing: 1.2
+          Heat: 1.2
       activeBlockModifier:
         coefficients:
-          Heat: 0.5
-        flatReductions:
-          Heat: 2
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.6
+          Heat: 0.6
     - type: Destructible
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 40 #This is probably enough damage before it breaks
+            damage: 100
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -106,7 +106,7 @@
     - type: Reflect
       reflects:
         - Energy
-      reflectProb: 0.75
+      reflectProb: 0.5
 
 
 - type: entity
@@ -122,20 +122,21 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 2
-          Slash: 2
-          Piercing: 0.4
-          Heat: 2
+          Blunt: 1.2
+          Slash: 1.2
+          Piercing: 0.6
+          Heat: 1.2
       activeBlockModifier:
         coefficients:
-          Piercing: 0.25
-        flatReductions:
-          Piercing: 2
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.3
+          Heat: 0.6
     - type: Destructible
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 40 #This is probably enough damage before it breaks
+            damage: 100
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -166,19 +167,20 @@
     - type: Item
       heldPrefix: buckler
     - type: Blocking
+      passiveBlockFraction: 0.4 #small shield so more attacks go past it
+      activeBlockFraction: 0.8 # smaller shield so some attacks go past it
       passiveBlockModifier:
         coefficients:
-          Blunt: 0.7
-          Slash: 0.85
-          Piercing: 1.3
-          Heat: 2
+          Blunt: 1.2
+          Slash: 1.2
+          Piercing: 1.2
+          Heat: 1.2
       activeBlockModifier:
         coefficients:
-          Blunt: 0.55
-          Slash: 0.55
-        flatReductions:
-          Blunt: 1
-          Slash: 1
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.6
+          Heat: 0.6
     - type: Construction
       graph: WoodenBuckler
       node: woodenBuckler
@@ -186,7 +188,7 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 25 #Weaker shield
+            damage: 100
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -213,19 +215,16 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 0.8
-          Slash: 0.85
-          Piercing: 0.85
-          Heat: 1.1
+          Blunt: 1.2
+          Slash: 1.2
+          Piercing: 1.2
+          Heat: 1.2
       activeBlockModifier:
         coefficients:
-          Blunt: 0.55
-          Slash: 0.55
-          Piercing: 0.55
-        flatReductions:
-          Blunt: 1
-          Slash: 1
-          Piercing: 1
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.6
+          Heat: 0.6
     - type: Construction
       graph: MakeshiftShield
       node: makeshiftShield
@@ -233,7 +232,7 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 30 #Weaker shield
+            damage: 70 #Weaker shield
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -260,24 +259,21 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 0.75
-          Slash: 0.75
-          Piercing: 0.95
-          Heat: 2
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.6
+          Heat: 4.8
       activeBlockModifier:
         coefficients:
-          Blunt: 0.5
-          Slash: 0.5
-          Piercing: 0.5
-        flatReductions:
-          Blunt: 1
-          Slash: 1
-          Piercing: 1
+          Blunt: 0.3
+          Slash: 0.3
+          Piercing: 0.3
+          Heat: 4.8
     - type: Destructible
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 30 #Weaker shield
+            damage: 100
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -300,28 +296,24 @@
       state: mirror-icon
     - type: Item
       heldPrefix: mirror
-    - type: Blocking #Mirror shield should reflect heat/laser eventually, but be relatively weak to everything else.
+    - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 2
-          Slash: 2
-          Piercing: 2
-          Heat: 0.6
+          Blunt: 4.8
+          Slash: 4.8
+          Piercing: 4.8
       activeBlockModifier:
         coefficients:
-          Blunt: 1.2
-          Slash: 1.2
-          Piercing: 1.2
-          Heat: 0.4
-        flatReductions:
-          Heat: 1
+          Blunt: 2.4
+          Slash: 2.4
+          Piercing: 2.4
       blockSound: !type:SoundPathSpecifier
         path: /Audio/Effects/glass_step.ogg
     - type: Destructible
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 30 #Weaker shield
+            damage: 100
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -335,7 +327,7 @@
     - type: Reflect
       reflects:
         - Energy
-      reflectProb: 0.75
+      reflectProb: 1
 
 - type: entity
   name: energy shield
@@ -382,62 +374,12 @@
       color: blue
     - type: Reflect
       enabled: false
-      reflectProb: 0.95
+      reflectProb: 1
       reflects:
         - Energy
     - type: Blocking
-      passiveBlockModifier:
-        coefficients:
-          Blunt: 1.0
-          Slash: 0.9
-          Piercing: 0.85
-          Heat: 0.6
-      activeBlockModifier:
-        coefficients:
-          Blunt: 1.2
-          Slash: 0.85
-          Piercing: 0.5
-          Heat: 0.4
-        flatReductions:
-          Heat: 1
-          Piercing: 1
+      passiveBlockFraction: 0.25
+      activeBlockFraction: 0.5
     - type: Appearance
-    - type: Damageable
-      damageContainer: Shield
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 180
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 150
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                BrokenEnergyShield:
-                  min: 1
-                  max: 1
     - type: StaticPrice
       price: 350
-
-- type: entity
-  name: broken energy shield
-  parent: BaseItem
-  id: BrokenEnergyShield
-  description: Something inside is burned out, it is no longer functional.
-  components:
-    - type: Sprite
-      sprite: Objects/Weapons/Melee/e_shield.rsi
-      state: eshield-icon
-    - type: Item
-      sprite: Objects/Weapons/Melee/e_shield.rsi
-      size: 5
-      heldPrefix: eshield
