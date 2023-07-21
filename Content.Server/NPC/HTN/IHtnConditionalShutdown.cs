@@ -8,10 +8,10 @@ public interface IHtnConditionalShutdown
     /// <summary>
     /// When to shut the task down.
     /// </summary>
-    HTNPlanState ShutdownOnState { get; }
+    HTNPlanState ShutdownState { get; }
 
     /// <summary>
-    /// Run whenever the <see cref="ShutdownOnState"/> specifies.
+    /// Run whenever the <see cref="ShutdownState"/> specifies.
     /// </summary>
     void ConditionalShutdown(NPCBlackboard blackboard);
 }

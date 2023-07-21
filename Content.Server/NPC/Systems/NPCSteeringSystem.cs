@@ -339,7 +339,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
             steering.Danger[i] = 0f;
         }
 
-        var ev = new NPCSteeringEvent(steering, interest, danger, agentRadius, offsetRot, worldPos);
+        var ev = new NPCSteeringEvent(steering);
         RaiseLocalEvent(uid, ref ev);
         // If seek has arrived at the target node for example then immediately re-steer.
         var forceSteer = true;

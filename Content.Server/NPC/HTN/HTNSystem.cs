@@ -388,7 +388,7 @@ public sealed class HTNSystem : EntitySystem
         if (currentOperator is not IHtnConditionalShutdown conditional)
             return;
 
-        if ((conditional.ShutdownOnState & state) == 0x0)
+        if ((conditional.ShutdownState & state) == 0x0)
             return;
 
         var blackboard = component.Blackboard;

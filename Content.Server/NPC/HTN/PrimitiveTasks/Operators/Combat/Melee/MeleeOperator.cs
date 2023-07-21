@@ -13,11 +13,18 @@ public sealed class MeleeOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
+    // TODO: JukeOperator
+    // Needs to cancel steering when active, needs to check for melee or whatever
+    // Add enum for different juke types
+    // Test melee with move + melee + juke and only shutting down on plan shutdown.
+    // Services are probably bloating NPC times so if possible run that shit in parallel.
+    // Make sure ranged is using services.
+
     /// <summary>
     /// When to shut the task down.
     /// </summary>
     [DataField("shutdownState")]
-    public HTNPlanState ShutdownOnState { get; } = HTNPlanState.Running;
+    public HTNPlanState ShutdownState { get; } = HTNPlanState.Running;
 
     /// <summary>
     /// Key that contains the target entity.

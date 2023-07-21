@@ -18,66 +18,6 @@ public sealed partial class NPCCombatSystem
     {
         SubscribeLocalEvent<NPCMeleeCombatComponent, ComponentStartup>(OnMeleeStartup);
         SubscribeLocalEvent<NPCMeleeCombatComponent, ComponentShutdown>(OnMeleeShutdown);
-        SubscribeLocalEvent<NPCMeleeCombatComponent, NPCSteeringEvent>(OnMeleeSteering);
-    }
-
-    private void OnMeleeSteering(EntityUid uid, NPCMeleeCombatComponent component, ref NPCSteeringEvent args)
-    {
-        args.Steering.CanSeek = true;
-
-        if (TryComp<MeleeWeaponComponent>(component.Weapon, out var weapon))
-        {
-            var cdRemaining = weapon.NextAttack - _timing.CurTime;
-            var attackCooldown = TimeSpan.FromSeconds(1f / _melee.GetAttackRate(component.Weapon, uid, weapon));
-
-            // Might as well get in range.
-            if (cdRemaining < attackCooldown * 0.45f)
-                return;
-
-            if (!_physics.TryGetNearestPoints(uid, component.Target, out var pointA, out var pointB))
-                return;
-
-            var obstacleDirection = pointB - args.WorldPosition;
-
-            // If they're moving away then pursue anyway.
-            // If just hit then always back up a bit.
-            if (cdRemaining < attackCooldown * 0.90f &&
-                TryComp<PhysicsComponent>(component.Target, out var targetPhysics) &&
-                Vector2.Dot(targetPhysics.LinearVelocity, obstacleDirection) > 0f)
-            {
-                return;
-            }
-
-            if (cdRemaining < TimeSpan.FromSeconds(1f / _melee.GetAttackRate(component.Weapon, uid, weapon)) * 0.45f)
-                return;
-
-            var idealDistance = weapon.Range * 4f;
-            var obstacleDistance = obstacleDirection.Length();
-
-            if (obstacleDistance > idealDistance || obstacleDistance == 0f)
-            {
-                // Don't want to get too far.
-                return;
-            }
-
-            args.Steering.CanSeek = false;
-            obstacleDirection = args.OffsetRotation.RotateVec(obstacleDirection);
-            var norm = obstacleDirection.Normalized();
-
-            var weight = (obstacleDistance <= args.AgentRadius
-                ? 1f
-                : (idealDistance - obstacleDistance) / idealDistance);
-
-            for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
-            {
-                var result = -Vector2.Dot(norm, NPCSteeringSystem.Directions[i]) * weight;
-
-                if (result < 0f)
-                    continue;
-
-                args.Interest[i] = MathF.Max(args.Interest[i], result);
-            }
-        }
     }
 
     private void OnMeleeShutdown(EntityUid uid, NPCMeleeCombatComponent component, ComponentShutdown args)
@@ -87,7 +27,7 @@ public sealed partial class NPCCombatSystem
             _combat.SetInCombatMode(uid, false, combatMode);
         }
 
-        _steering.Unregister(component.Owner);
+        _steering.Unregister(uid);
     }
 
     private void OnMeleeStartup(EntityUid uid, NPCMeleeCombatComponent component, ComponentStartup args)
@@ -107,11 +47,10 @@ public sealed partial class NPCCombatSystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         var physicsQuery = GetEntityQuery<PhysicsComponent>();
         var curTime = _timing.CurTime;
+        var query = EntityQueryEnumerator<NPCMeleeCombatComponent, ActiveNPCComponent>();
 
-        foreach (var (comp, _) in EntityQuery<NPCMeleeCombatComponent, ActiveNPCComponent>())
+        while (query.MoveNext(out var uid, out var comp, out _))
         {
-            var uid = comp.Owner;
-
             if (!combatQuery.TryGetComponent(uid, out var combat) || !combat.IsInCombatMode)
             {
                 RemComp<NPCMeleeCombatComponent>(uid);

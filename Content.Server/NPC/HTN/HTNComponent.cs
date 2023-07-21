@@ -1,6 +1,5 @@
 using System.Threading;
 using Content.Server.NPC.Components;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.NPC.HTN;
 
