@@ -44,7 +44,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (args.Session.AttachedEntity is not { Valid: true } player)
             return;
 
-        TryWriteToTargetId(uid, args.FullName, args.JobTitle, args.AccessList, args.JobPrototype, player, component);
+        TryWriteToTargetId(uid, args.FullName, args.JobTitle, args.JobIcon, args.AccessList, args.JobPrototype, player, component);
 
         UpdateUserInterface(uid, component, args);
     }
@@ -115,6 +115,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     private void TryWriteToTargetId(EntityUid uid,
         string newFullName,
         string newJobTitle,
+        string newJobIcon,
         List<string> newAccessList,
         string newJobProto,
         EntityUid player,
@@ -128,6 +129,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         _idCard.TryChangeFullName(targetId, newFullName, player: player);
         _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
+        _idCard.TryChangeJobIcon(targetId, newJobIcon, player: player);
 
         if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
         {

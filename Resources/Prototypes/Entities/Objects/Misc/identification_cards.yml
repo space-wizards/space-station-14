@@ -19,6 +19,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+  - type: JobIcon
 
 #IDs with layers
 

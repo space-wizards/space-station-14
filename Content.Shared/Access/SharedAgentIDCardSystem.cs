@@ -53,4 +53,14 @@ namespace Content.Shared.Access.Systems
             Job = job;
         }
     }
+
+    [Serializable, NetSerializable]
+    public sealed class AgentIDCardJobIconChangedMessage : BoundUserInterfaceMessage
+    {
+        public string JobIcon { get; }
+        public AgentIDCardJobIconChangedMessage(string jobIcon)
+        {
+            JobIcon = jobIcon;
+        }
+    }
 }

@@ -80,7 +80,7 @@ namespace Content.Shared.Roles
         [DataField("jobEntity", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? JobEntity = null;
 
-        [DataField("icon")] public string Icon { get; } = string.Empty;
+        [DataField("icon")] public string Icon { get; } = "Unknown";
 
         [DataField("special", serverOnly:true)]
         public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();

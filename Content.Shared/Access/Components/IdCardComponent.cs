@@ -20,5 +20,13 @@ namespace Content.Shared.Access.Components
         [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem),
             Other = AccessPermissions.ReadWrite)]
         public string? JobTitle;
+
+        /// <summary>
+        /// The state of the job icon rsi.
+        /// </summary>
+        [DataField("jobIcon")]
+        [AutoNetworkedField]
+        public string JobIcon = "Unknown";
+
     }
 }

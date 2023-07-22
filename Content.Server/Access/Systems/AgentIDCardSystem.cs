@@ -22,6 +22,7 @@ namespace Content.Server.Access.Systems
             SubscribeLocalEvent<AgentIDCardComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardNameChangedMessage>(OnNameChanged);
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobChangedMessage>(OnJobChanged);
+            SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobIconChangedMessage>(OnJobIconChanged);
         }
 
         private void OnAfterInteract(EntityUid uid, AgentIDCardComponent component, AfterInteractEvent args)
@@ -79,6 +80,14 @@ namespace Content.Server.Access.Systems
                 return;
 
             _cardSystem.TryChangeFullName(uid, args.Name, idCard);
+        }
+
+        private void OnJobIconChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardJobIconChangedMessage args)
+        {
+            if (!TryComp<IdCardComponent>(uid, out var idCard))
+                return;
+
+            _cardSystem.TryChangeJobIcon(uid, args.JobIcon, idCard);
         }
     }
 }

@@ -117,6 +117,37 @@ namespace Content.Server.Access.Systems
             return true;
         }
 
+
+        public bool TryChangeJobIcon(EntityUid uid, string? jobIcon, IdCardComponent? id = null, EntityUid? player = null)
+        {
+            if (!Resolve(uid, ref id))
+            {
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(jobIcon))
+            {
+                return false;
+            }
+
+            if (id.JobIcon == jobIcon)
+            {
+                return true;
+            }
+
+            id.JobIcon = jobIcon;
+            Dirty(id);
+            UpdateEntityName(uid, id);
+
+            if (player != null)
+            {
+                _adminLogger.Add(LogType.Identity, LogImpact.Low,
+                    $"{ToPrettyString(player.Value):player} has changed the job icon of {ToPrettyString(id.Owner):entity} to {jobIcon} ");
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Attempts to change the full name of a card.
         /// Returns true/false.

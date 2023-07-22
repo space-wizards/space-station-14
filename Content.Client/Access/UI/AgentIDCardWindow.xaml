@@ -7,4 +7,7 @@
         <Label Name="CurrentJob" Text="{Loc 'agent-id-card-current-job'}" />
         <LineEdit Name="JobLineEdit" />
     </BoxContainer>
+    <GridContainer Name="Grid" Columns="10">
+        <!-- Job icon buttons are generated in the code -->
+    </GridContainer>
 </DefaultWindow>
