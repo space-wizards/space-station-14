@@ -52,17 +52,29 @@ public sealed partial class NPCSteeringSystem
     {
         var ourCoordinates = xform.Coordinates;
         var destinationCoordinates = steering.Coordinates;
+        var inLos = true;
 
         // Check if we're in LOS if that's required.
         // TODO: Need something uhh better not sure on the interaction between these.
-        if (steering.ArriveOnLineOfSight && _interaction.InRangeUnobstructed(uid, steering.Coordinates, 10f))
+        if (steering.ArriveOnLineOfSight)
         {
-            steering.LineOfSightTimer += frameTime;
+            // TODO: use vision range
+            inLos = _interaction.InRangeUnobstructed(uid, steering.Coordinates, 10f);
 
-            if (steering.LineOfSightTimer >= steering.LineOfSightTimeRequired)
+            if (inLos)
             {
-                steering.Status = SteeringStatus.InRange;
-                return true;
+                steering.LineOfSightTimer += frameTime;
+
+                if (steering.LineOfSightTimer >= steering.LineOfSightTimeRequired)
+                {
+                    steering.Status = SteeringStatus.InRange;
+                    ResetStuck(steering, ourCoordinates);
+                    return true;
+                }
+            }
+            else
+            {
+                steering.LineOfSightTimer = 0f;
             }
         }
         else
@@ -72,9 +84,11 @@ public sealed partial class NPCSteeringSystem
 
         // We've arrived, nothing else matters.
         if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var targetDistance) &&
+            inLos &&
             targetDistance <= steering.Range)
         {
             steering.Status = SteeringStatus.InRange;
+            ResetStuck(steering, ourCoordinates);
             return true;
         }
 
@@ -109,7 +123,7 @@ public sealed partial class NPCSteeringSystem
         // This is to avoid popping it too early
         else if (steering.CurrentPath.TryPeek(out var node) && node.Data.IsFreeSpace)
         {
-            arrivalDistance = MathF.Min(node.Box.Width / 2f, node.Box.Height / 2f) - 0.01f;
+            arrivalDistance = MathF.Max(0.05f, MathF.Min(node.Box.Width / 2f, node.Box.Height / 2f) - 0.05f);
         }
         // Try getting into blocked range I guess?
         // TODO: Consider melee range or the likes.
@@ -197,9 +211,7 @@ public sealed partial class NPCSteeringSystem
             }
             else
             {
-                // This probably shouldn't happen as we check above but eh.
-                steering.Status = SteeringStatus.NoPath;
-                return false;
+                needsPath = true;
             }
         }
         // Stuck detection
@@ -220,13 +232,24 @@ public sealed partial class NPCSteeringSystem
                 // B) NPCs still try to move in locked containers (e.g. cow, hamster)
                 // and I don't want to spam grafana even harder than it gets spammed rn.
                 Log.Debug($"NPC {ToPrettyString(uid)} found stuck at {ourCoordinates}");
-                steering.Status = SteeringStatus.NoPath;
-                return false;
+                needsPath = true;
+
+                if (stuckTime.TotalSeconds > maxStuckTime * 3)
+                {
+                    steering.Status = SteeringStatus.NoPath;
+                    return false;
+                }
             }
         }
         else
         {
             ResetStuck(steering, ourCoordinates);
+        }
+
+        // If not in LOS and no path then get a new one fam.
+        if (!inLos && steering.CurrentPath.Count == 0)
+        {
+            needsPath = true;
         }
 
         // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
@@ -449,7 +472,7 @@ public sealed partial class NPCSteeringSystem
             if (distance > detectionRadius)
                 continue;
 
-            var weight = 0.5f;
+            var weight = 0.25f;
             var obstacleDirection = pointB - pointA;
 
             // Inside each other so just use worldPos
