@@ -746,7 +746,7 @@
     destroySound:
       path: /Audio/Effects/metalbreak.ogg
   - type: Reflect
-    reflectProb: 0.1
+    reflectProb: 1
   - type: IconSmooth
     key: walls
     base: state
