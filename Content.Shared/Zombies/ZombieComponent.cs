@@ -33,13 +33,6 @@ public sealed class ZombieComponent : Component
     public float ZombieMovementSpeedDebuff = 0.70f;
 
     /// <summary>
-    /// How long it takes our bite victims to turn in seconds (max).
-    ///   Will roll 25% - 100% of this on bite.
-    /// </summary>
-    [DataField("zombieInfectionTurnTime"), ViewVariables(VVAccess.ReadWrite)]
-    public float ZombieInfectionTurnTime = 480.0f;
-
-    /// <summary>
     /// The skin color of the zombie
     /// </summary>
     [DataField("skinColor")]
@@ -113,6 +106,12 @@ public sealed class ZombieComponent : Component
     };
 
     /// <summary>
+    /// A multiplier applied to <see cref="PassiveHealing"/> when the entity is in critical condition.
+    /// </summary>
+    [DataField("passiveHealingCritMultiplier")]
+    public float PassiveHealingCritMultiplier = 2f;
+
+    /// <summary>
     /// Healing given when a zombie bites a living being.
     /// </summary>
     [DataField("healingOnBite")]
@@ -120,9 +119,9 @@ public sealed class ZombieComponent : Component
     {
         DamageDict = new()
         {
-            { "Blunt", -2.5 },
-            { "Slash", -2.5 },
-            { "Piercing", -2.5 }
+            { "Blunt", -2 },
+            { "Slash", -2 },
+            { "Piercing", -2 }
         }
     };
 

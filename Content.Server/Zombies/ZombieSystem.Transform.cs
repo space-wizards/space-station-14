@@ -17,8 +17,11 @@ using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Server.Mind;
+using Content.Server.NPC;
 using Content.Server.NPC.Components;
+using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
+using Content.Server.RoundEnd;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -27,9 +30,12 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Audio;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Zombies
 {
@@ -43,13 +49,13 @@ namespace Content.Server.Zombies
     {
         [Dependency] private readonly SharedHandsSystem _hands = default!;
         [Dependency] private readonly ServerInventorySystem _inventory = default!;
-        [Dependency] private readonly FactionSystem _faction = default!;
+        [Dependency] private readonly NpcFactionSystem _faction = default!;
+        [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
         [Dependency] private readonly IdentitySystem _identity = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
-        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly MindSystem _mind = default!;
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -112,14 +118,6 @@ namespace Content.Server.Zombies
             melee.ClickAnimation = zombiecomp.AttackAnimation;
             melee.WideAnimation = zombiecomp.AttackAnimation;
             melee.Range = 1.2f;
-            Dirty(melee);
-
-            var factionComp = EnsureComp<FactionComponent>(target);
-            foreach (var id in new List<string>(factionComp.Factions))
-            {
-                _faction.RemoveFaction(target, id);
-            }
-            _faction.AddFaction(target, "Zombie");
 
             if (mobState.CurrentState == MobState.Alive)
             {
@@ -162,7 +160,16 @@ namespace Content.Server.Zombies
                     }
                 };
                 melee.Damage = dspec;
+
+                // humanoid zombies get to pry open doors and shit
+                var tool = EnsureComp<ToolComponent>(target);
+                tool.SpeedModifier = 0.75f;
+                tool.Qualities = new ("Prying");
+                tool.UseSound = new SoundPathSpecifier("/Audio/Items/crowbar.ogg");
+                Dirty(tool);
             }
+
+            Dirty(melee);
 
             //The zombie gets the assigned damage weaknesses and strengths
             _damageable.SetDamageModifierSetId(target, "Zombie");
@@ -192,11 +199,15 @@ namespace Content.Server.Zombies
             //Heals the zombie from all the damage it took while human
             if (TryComp<DamageableComponent>(target, out var damageablecomp))
                 _damageable.SetAllDamage(target, damageablecomp, 0);
+            _mobState.ChangeMobState(target, MobState.Alive);
             _mobThreshold.SetAllowRevives(target, false);
 
-            // Revive them now
-            if (TryComp<MobStateComponent>(target, out var mobstate) && mobstate.CurrentState==MobState.Dead)
-                _mobState.ChangeMobState(target, MobState.Alive, mobstate);
+            var factionComp = EnsureComp<NpcFactionMemberComponent>(target);
+            foreach (var id in new List<string>(factionComp.Factions))
+            {
+                _faction.RemoveFaction(target, id);
+            }
+            _faction.AddFaction(target, "Zombie");
 
             //gives it the funny "Zombie ___" name.
             var meta = MetaData(target);
@@ -210,13 +221,20 @@ namespace Content.Server.Zombies
             if (_mind.TryGetMind(target, out var mind, mindComp) && _mind.TryGetSession(mind, out var session))
             {
                 //Zombie role for player manifest
-                _mind.AddRole(mind, new ZombieRole(mind, _proto.Index<AntagPrototype>(zombiecomp.ZombieRoleId)));
+                _mind.AddRole(mind, new ZombieRole(mind, _protoManager.Index<AntagPrototype>(zombiecomp.ZombieRoleId)));
 
                 //Greeting message for new bebe zombers
                 _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
 
                 // Notificate player about new role assignment
                 _audio.PlayGlobal(zombiecomp.GreetSoundNotification, session);
+            }
+            else
+            {
+                var htn = EnsureComp<HTNComponent>(target);
+                htn.RootTask = "SimpleHostileCompound";
+                htn.Blackboard.SetValue(NPCBlackboard.Owner, target);
+                _npc.WakeNPC(target, htn);
             }
 
             if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !mindComp.HasMind) //this specific component gives build test trouble so pop off, ig
@@ -231,13 +249,18 @@ namespace Content.Server.Zombies
 
             //Goes through every hand, drops the items in it, then removes the hand
             //may become the source of various bugs.
-            foreach (var hand in _hands.EnumerateHands(target))
+            if (TryComp<HandsComponent>(target, out var hands))
             {
-                _hands.SetActiveHand(target, hand);
-                _hands.DoDrop(target, hand);
-                _hands.RemoveHand(target, hand.Name);
+                foreach (var hand in _hands.EnumerateHands(target))
+                {
+                    _hands.SetActiveHand(target, hand, hands);
+                    _hands.DoDrop(target, hand, handsComp: hands);
+                    _hands.RemoveHand(target, hand.Name, hands);
+                }
+
+                RemComp(target, hands);
             }
-            RemComp<HandsComponent>(target);
+
             // No longer waiting to become a zombie:
             // Requires deferral because this is (probably) the event which called ZombifyEntity in the first place.
             RemCompDeferred<PendingZombieComponent>(target);

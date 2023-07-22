@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
@@ -10,6 +11,7 @@ using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
+using Content.Server.Station.Systems;
 using Content.Server.Zombies;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
@@ -25,6 +27,7 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -34,14 +37,18 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
-    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -50,7 +57,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
-        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnJobAssigned);
 
         SubscribeLocalEvent<EntityZombifiedEvent>(OnEntityZombified);
         SubscribeLocalEvent<ZombifyOnDeathComponent, ZombifySelfActionEvent>(OnZombifySelf);
@@ -127,7 +133,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     private void CheckRoundEnd(EntityUid target)
     {
         var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out _, out var gameRule))
+        while (query.MoveNext(out var uid, out var comp, out var gameRule))
         {
             if (!GameTicker.IsGameRuleActive(uid, gameRule))
                 continue;
@@ -140,8 +146,19 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             var healthy = GetHealthyHumans();
             if (healthy.Count == 1) // Only one human left. spooky
                 _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
+
+            if (!comp.ShuttleCalled && fraction >= comp.ZombieShuttleCallPercentage)
+            {
+                comp.ShuttleCalled = true;
+                foreach (var station in _station.GetStations())
+                {
+                    _chat.DispatchStationAnnouncement(station, Loc.GetString("zombie-shuttle-call"), colorOverride: Color.Crimson);
+                }
+                _roundEnd.RequestRoundEnd(null, false);
+            }
+
             if (fraction >= 1) // Oops, all zombies
-                _roundEndSystem.EndRound();
+                _roundEnd.EndRound();
         }
     }
 
@@ -150,7 +167,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out _, out var gameRule))
         {
-            continue;
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
 
@@ -175,18 +191,20 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     protected override void Started(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
-        InfectInitialPlayers(component);
+        component.StartTime = _timing.CurTime + _random.Next(component.MinStartDelay, component.MaxStartDelay);
     }
 
-    private void OnJobAssigned(RulePlayerJobsAssignedEvent ev)
+    protected override void ActiveTick(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
-        var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var component, out var gameRule))
-        {
-            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-                continue;
-            InfectInitialPlayers(component);
-        }
+        base.ActiveTick(uid, component, gameRule, frameTime);
+
+        if (component.InfectedChosen || component.StartTime == null)
+            return;
+
+        if (_timing.CurTime < component.StartTime)
+            return;
+
+        InfectInitialPlayers(component);
     }
 
     private void OnZombifySelf(EntityUid uid, ZombifyOnDeathComponent component, ZombifySelfActionEvent args)
@@ -231,6 +249,10 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     /// </remarks>
     private void InfectInitialPlayers(ZombieRuleComponent component)
     {
+        if (component.InfectedChosen)
+            return;
+        component.InfectedChosen = true;
+
         var allPlayers = _playerManager.ServerSessions.ToList();
         var playerList = new List<IPlayerSession>();
         var prefList = new List<IPlayerSession>();
@@ -241,19 +263,16 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             playerList.Add(player);
 
             var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(player.UserId).SelectedCharacter;
-            if (pref.AntagPreferences.Contains(component.PatientZeroPrototypeID))
+            if (pref.AntagPreferences.Contains(component.PatientZeroPrototypeId))
                 prefList.Add(player);
         }
 
         if (playerList.Count == 0)
             return;
 
-        var playersPerInfected = _cfg.GetCVar(CCVars.ZombiePlayersPerInfected);
-        var maxInfected = _cfg.GetCVar(CCVars.ZombieMaxInitialInfected);
-
         var numInfected = Math.Max(1,
             (int) Math.Min(
-                Math.Floor((double) playerList.Count / playersPerInfected), maxInfected));
+                Math.Floor((double) playerList.Count / component.PlayersPerInfected), component.MaxInitialInfected));
 
         var totalInfected = 0;
         while (totalInfected < numInfected)
@@ -282,9 +301,12 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
             totalInfected++;
 
-            _mindSystem.AddRole(mind, new ZombieRole(mind, _prototypeManager.Index<AntagPrototype>(component.PatientZeroPrototypeID)));
+            _mindSystem.AddRole(mind, new ZombieRole(mind, _prototypeManager.Index<AntagPrototype>(component.PatientZeroPrototypeId)));
 
+            var pending = EnsureComp<PendingZombieComponent>(ownedEntity);
+            pending.GracePeriod = _random.Next(component.MinInitialInfectedGrace, component.MaxInitialInfectedGrace);
             EnsureComp<ZombifyOnDeathComponent>(ownedEntity);
+            EnsureComp<IncurableZombieComponent>(ownedEntity);
             var inCharacterName = MetaData(ownedEntity).EntityName;
             var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombieRuleComponent.ZombifySelfActionPrototype));
             _action.AddAction(mind.OwnedEntity.Value, action, null);
@@ -300,6 +322,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             // You got a free T-shirt!?!?
             _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message,
                wrappedMessage, default, false, zombie.ConnectedClient, Color.Plum);
+            _audio.PlayGlobal(component.InitialInfectedSound, ownedEntity);
         }
     }
 }

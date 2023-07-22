@@ -11,6 +11,8 @@ zombie-infection-underway = Your blood begins to thicken
 
 zombie-alone = You feel entirely alone.
 
+zombie-shuttle-call = High amount of undead detected onboard the station. Dispatching an emergency shuttle to collect remaining personnel.
+
 zombie-round-end-initial-count = {$initialCount ->
     [one] There was one initial infected:
     *[other] There were {$initialCount} initial infected:
