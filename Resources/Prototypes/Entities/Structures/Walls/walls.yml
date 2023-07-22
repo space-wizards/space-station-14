@@ -673,7 +673,7 @@
   - type: Physics
     bodyType: Static
   - type: Reflect
-    reflectProb: 0.1
+    reflectProb: 1
   - type: Pullable
   - type: Airtight
     noAirWhenFullyAirBlocked: false
