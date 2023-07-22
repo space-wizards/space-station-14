@@ -149,12 +149,6 @@ public partial class GunComponent : Component
     /// </summary>
     [DataField("clumsyProof")]
     public bool ClumsyProof = false;
-
-    /// <summary>
-    /// Does the gun get triggered when empty
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("triggerWhenEmpty")]
-    public bool TriggerWhenEmpty = false;
 }
 
 [Flags]

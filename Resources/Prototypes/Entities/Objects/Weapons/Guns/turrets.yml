@@ -150,7 +150,6 @@
       availableModes:
         - FullAuto
       soundGunshot: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
-      triggerWhenEmpty: true
     - type: BallisticAmmoProvider
       proto: CartridgePistol
       capacity: 50
@@ -162,6 +161,7 @@
     - type: Repairable
       qualityNeeded: "Anchoring"
       doAfterDelay: 3
+    - type: TriggerWhenEmpty
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Default

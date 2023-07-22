@@ -7,7 +7,6 @@ using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
@@ -304,12 +303,9 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (ev.Ammo.Count <= 0)
         {
-            // triggers effects on the gun when it's empty
-            if (gun.TriggerWhenEmpty)
-            {
-                TriggerGun(gunUid);
-                return;
-            }
+            // triggers effects on the gun if it's empty
+            var emptyEvent = new EmptyEvent();
+            RaiseLocalEvent(gunUid, ref emptyEvent);
 
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
@@ -362,8 +358,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         out bool userImpulse,
         EntityUid? user = null,
         bool throwItems = false);
-
-    public abstract void TriggerGun(EntityUid gunUid);
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 
@@ -455,6 +449,12 @@ public record struct AttemptShootEvent(EntityUid User, string? Message, bool Can
 /// <param name="User">The user that fired this gun.</param>
 [ByRefEvent]
 public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
+
+/// <summary>
+/// Raised directed on the gun when it's ammo count reaches 0
+/// </summary>
+[ByRefEvent]
+public record struct EmptyEvent(EntityUid EmptyGun);
 
 public enum EffectLayers : byte
 {

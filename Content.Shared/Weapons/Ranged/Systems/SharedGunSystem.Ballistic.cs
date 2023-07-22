@@ -130,7 +130,7 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticVerb(EntityUid uid, BallisticAmmoProviderComponent component, GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null || component.Cycleable == false)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || !component.Cycleable)
             return;
         args.Verbs.Add(new Verb()
         {
@@ -150,7 +150,7 @@ public abstract partial class SharedGunSystem
 
     private void ManualCycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates, EntityUid? user = null, GunComponent? gunComp = null)
     {
-        if (component.Cycleable == false)
+        if (!component.Cycleable)
             return;
 
         // Reset shotting for cycling

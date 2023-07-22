@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
-using Content.Shared.Input;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -241,11 +240,6 @@ public sealed partial class GunSystem : SharedGunSystem
             return;
 
         _recoil.KickCamera(user.Value, recoil.Normalized() * 0.5f * recoilScalar);
-    }
-
-    public override void TriggerGun(EntityUid gunUid)
-    {
-        TriggerGun(gunUid);
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)
