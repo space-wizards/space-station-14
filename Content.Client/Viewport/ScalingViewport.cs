@@ -255,10 +255,24 @@ namespace Content.Client.Viewport
             var matrix = Matrix3.Invert(GetLocalToScreenMatrix());
             coords = matrix.Transform(coords);
 
-            var ev = new ProjectScreenToMapEvent(this, _viewport!, coords);
+            return _viewport!.LocalToWorld(coords);
+        }
+
+        /// <inheritdoc/>
+        public MapCoordinates PixelToMap(Vector2 coords)
+        {
+            if (_eye == null)
+                return default;
+
+            EnsureViewportCreated();
+
+            var matrix = Matrix3.Invert(GetLocalToScreenMatrix());
+            coords = matrix.Transform(coords);
+
+            var ev = new PixelToMapEvent(coords, this, _viewport!);
             _entityManager.EventBus.RaiseEvent(EventSource.Local, ref ev);
 
-            return _viewport!.LocalToWorld(ev.ScreenPosition);
+            return _viewport!.LocalToWorld(ev.VisiblePosition);
         }
 
         public Vector2 WorldToScreen(Vector2 map)
@@ -272,10 +286,7 @@ namespace Content.Client.Viewport
 
             var matrix = GetLocalToScreenMatrix();
 
-            var ev = new ProjectMapToScreenEvent(this, _viewport!, vpLocal);
-            _entityManager.EventBus.RaiseEvent(EventSource.Local, ref ev);
-
-            return matrix.Transform(ev.ScreenPosition);
+            return matrix.Transform(vpLocal);
         }
 
         public Matrix3 GetWorldToScreenMatrix()
@@ -344,23 +355,5 @@ namespace Content.Client.Viewport
         ///     Ceiling to the closest integer scale possible.
         /// </summary>
         CeilInt
-    }
-
-    [ByRefEvent]
-    public record struct ProjectScreenToMapEvent
-    (ScalingViewport viewport, IClydeViewport clydeViewport, Vector2 screenPosition)
-    {
-        public readonly ScalingViewport Viewport = viewport;
-        public readonly IClydeViewport ClydeViewport = clydeViewport;
-        public Vector2 ScreenPosition = screenPosition;
-    }
-
-    [ByRefEvent]
-    public record struct ProjectMapToScreenEvent
-    (ScalingViewport viewport, IClydeViewport clydeViewport, Vector2 screenPosition)
-    {
-        public readonly ScalingViewport Viewport = viewport;
-        public readonly IClydeViewport ClydeViewport = clydeViewport;
-        public Vector2 ScreenPosition = screenPosition;
     }
 }

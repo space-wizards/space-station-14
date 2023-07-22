@@ -60,7 +60,7 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
     protected override void Draw(in OverlayDrawArgs args)
     {
         var mouseScreenPosition = _inputManager.MouseScreenPosition;
-        var mousePosMap = _eye.ScreenToMap(mouseScreenPosition);
+        var mousePosMap = _eye.PixelToMap(mouseScreenPosition);
         if (mousePosMap.MapId != args.MapId)
             return;
 

@@ -65,7 +65,7 @@ namespace Content.Client.NodeContainer
             var mousePos = _inputManager.MouseScreenPosition.Position;
             _mouseWorldPos = args
                 .ViewportControl!
-                .ScreenToMap(new Vector2(mousePos.X, mousePos.Y))
+                .PixelToMap(mousePos)
                 .Position;
 
             if (_hovered == null)

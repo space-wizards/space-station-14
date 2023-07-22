@@ -1,6 +1,6 @@
-using Content.Client.Viewport;
 using Content.Shared.Singularity.Components;
 using Robust.Client.Graphics;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using System.Numerics;
@@ -31,7 +31,8 @@ namespace Content.Client.Singularity
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("Singularity").Instance().Duplicate();
             _shader.SetParameter("maxDistance", MaxDistance * EyeManager.PixelsPerMeter);
-            _entMan.EventBus.SubscribeEvent<ProjectScreenToMapEvent>(EventSource.Local, this, OnProjectFromScreenToMap);
+            _entMan.EventBus.SubscribeEvent<PixelToMapEvent>(EventSource.Local, this, OnProjectFromScreenToMap);
+            ZIndex = 101; // Should be drawn after the placement overlay so admins placing items near the singularity can tell where they're going.
         }
 
         private readonly Vector2[] _positions = new Vector2[MaxCount];
@@ -97,10 +98,10 @@ namespace Content.Client.Singularity
         /// <summary>
         /// Repeats the transformation applied by the shader in <see cref="Resources/Textures/Shaders/singularity.swsl"/>
         /// </summary>
-        private void OnProjectFromScreenToMap(ref ProjectScreenToMapEvent args)
+        private void OnProjectFromScreenToMap(ref PixelToMapEvent args)
         {   // Mostly copypasta from the singularity shader.
             var maxDistance = MaxDistance * EyeManager.PixelsPerMeter;
-            var finalCoords = args.ScreenPosition;
+            var finalCoords = args.VisiblePosition;
 
             for (var i = 0; i < MaxCount && i < _count; i++)
             {
@@ -112,9 +113,9 @@ namespace Content.Client.Singularity
                 // As a minor optimization the locations of the singularities are transformed into fragment space in BeforeDraw so the shader doesn't need to.
                 // We need to undo that here or this will transform the cursor position as if the singularities were mirrored vertically relative to the center of the viewport.
                 var localPosition = _positions[i];
-                localPosition.Y = args.ClydeViewport.Size.Y - localPosition.Y;
-                var delta = args.ScreenPosition - localPosition;
-                var distance = (delta / args.ClydeViewport.RenderScale).Length();
+                localPosition.Y = args.Viewport.Size.Y - localPosition.Y;
+                var delta = args.VisiblePosition - localPosition;
+                var distance = (delta / args.Viewport.RenderScale).Length();
 
                 var deformation = _intensities[i] / MathF.Pow(distance, _falloffPowers[i]);
 
@@ -132,7 +133,11 @@ namespace Content.Client.Singularity
                 finalCoords -= delta * deformation;
             }
 
-            args.ScreenPosition = finalCoords;
+            finalCoords.X = MathF.IEEERemainder(finalCoords.X, args.Viewport.Size.X * 2); // Imitate texture/framebuffer wrapping behaviour.
+            finalCoords.Y = MathF.IEEERemainder(finalCoords.Y, args.Viewport.Size.Y * 2);
+            finalCoords.X = (finalCoords.X >= args.Viewport.Size.X) ? ((args.Viewport.Size.X * 2) - finalCoords.X) : finalCoords.X;
+            finalCoords.Y = (finalCoords.Y >= args.Viewport.Size.Y) ? ((args.Viewport.Size.Y * 2) - finalCoords.Y) : finalCoords.Y;
+            args.VisiblePosition = finalCoords;
         }
     }
 }

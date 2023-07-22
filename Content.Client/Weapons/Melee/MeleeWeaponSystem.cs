@@ -107,7 +107,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             {
                 EntityUid? target = null;
 
-                var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+                var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
                 EntityCoordinates coordinates;
 
                 if (MapManager.TryFindGridAt(mousePos, out var gridUid, out _))
@@ -140,7 +140,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // Try to do a heavy attack.
             if (useDown == BoundKeyState.Down)
             {
-                var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+                var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
                 EntityCoordinates coordinates;
 
                 // Bro why would I want a ternary here
@@ -173,7 +173,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 return;
             }
 
-            var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
             var attackerPos = Transform(entity).MapPosition;
 
             if (mousePos.MapId != attackerPos.MapId ||
