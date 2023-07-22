@@ -52,7 +52,7 @@
   - type: GasTank
     outputPressure: 21.3
     air:
-      volume: 5
+      volume: 15
       temperature: 293.15
     tankLowPressure: 30.0
   - type: Clothing
@@ -100,7 +100,7 @@
   - type: GasTank
     outputPressure: 21.3
     air:
-      volume: 0.66
+      volume: 2
       temperature: 293.15
   - type: Item
     size: 10
@@ -129,7 +129,7 @@
   - type: GasTank
     outputPressure: 21.3
     air:
-      volume: 2
+      volume: 6
       temperature: 293.15
   - type: Item
     size: 10
@@ -151,7 +151,7 @@
   - type: GasTank
     outputPressure: 21.3
     air:
-      volume: 3.33
+      volume: 10
       temperature: 293.15
   - type: Item
     size: 10
@@ -178,7 +178,7 @@
     - type: GasTank
       outputPressure: 101.3
       air:
-        volume: 5
+        volume: 15
         temperature: 293.15
     - type: Clothing
       sprite: Objects/Tanks/generic.rsi
@@ -197,7 +197,7 @@
     - type: GasTank
       outputPressure: 30.4
       air:
-        volume: 5
+        volume: 15
         temperature: 293.15
     - type: Clothing
       sprite: Objects/Tanks/anesthetic.rsi
@@ -216,7 +216,7 @@
     - type: GasTank
       outputPressure: 101.3
       air:
-        volume: 5
+        volume: 15
         temperature: 293.15
     - type: Item
       size: 15
