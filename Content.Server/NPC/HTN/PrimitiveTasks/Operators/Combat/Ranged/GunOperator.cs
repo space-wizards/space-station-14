@@ -51,6 +51,8 @@ public sealed class GunOperator : HTNOperator, IHtnConditionalShutdown
     {
         base.Startup(blackboard);
         var ranged = _entManager.EnsureComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        // Reset status
+        ranged.Status = CombatStatus.Normal;
         ranged.Target = blackboard.GetValue<EntityUid>(TargetKey);
 
         if (blackboard.TryGetValue<float>(NPCBlackboard.RotateSpeed, out var rotSpeed, _entManager))

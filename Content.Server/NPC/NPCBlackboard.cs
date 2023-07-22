@@ -31,7 +31,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         {"MovementRangeClose", 0.2f},
         {"MovementRange", 1.5f},
         {"RangedRange", 10f},
-        {"RotateSpeed", MathF.PI},
+        {"RotateSpeed", float.MaxValue},
         {"VisionRadius", 10f},
     };
 
