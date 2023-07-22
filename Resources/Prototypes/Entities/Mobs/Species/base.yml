@@ -152,7 +152,6 @@
   - type: Reflect
     enabled: false
     reflectProb: 0
-    layers: 0
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
       fix1:

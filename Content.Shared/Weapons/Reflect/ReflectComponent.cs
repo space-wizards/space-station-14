@@ -27,12 +27,6 @@ public sealed partial class ReflectComponent : Component
     [DataField("reflectProb"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float ReflectProb = 0.25f;
 
-    /// <summary>
-    /// Reflection sources on an entity from e.g. equipped gear
-    /// </summary>
-    [DataField("layers"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public Dictionary<EntityUid, float> Layers = new();
-
     [DataField("spread"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public Angle Spread = Angle.FromDegrees(45);
 
