@@ -121,9 +121,7 @@ public sealed class SpreaderSystem : EntitySystem
         var gridQuery = GetEntityQuery<SpreaderGridComponent>();
 
         // Each INode group has a certain number of updates
-        // allowed per SpreadCooldown.
-        // This "updates" int value is how many new spreader entities are spawned
-        // next to EdgeSpreaders per SpreadCooldown.
+        // allowed per SpreadCooldown
         var groupUpdates = new Dictionary<INodeGroup, int>();
 
         var spreaders = new List<(EntityUid Uid, EdgeSpreaderComponent Comp)>(Count<EdgeSpreaderComponent>());
@@ -181,11 +179,16 @@ public sealed class SpreaderSystem : EntitySystem
                     updates = (int) (spreadEv.UpdatesPerSecond * SpreadCooldown / TimeSpan.FromSeconds(1));
                 }
 
-                //
+                // "updates" integer dictates the amount of nodes that
+                // are to be spawned around a NodeGroup
                 if (updates <= 0)
                 {
                     continue;
                 }
+
+                // Edge detection logic is to be handled
+                // by the subscribing system, see KudzuSystem
+                // for a simple example
 
                 Spread(uid, node, node.NodeGroup, ref updates);
                 groupUpdates[node.NodeGroup] = updates;
