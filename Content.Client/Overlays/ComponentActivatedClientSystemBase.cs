@@ -7,7 +7,8 @@ using Robust.Client.Player;
 
 namespace Content.Client.Overlays
 {
-    public abstract class ComponentAddedOverlaySystemBase<T> : EntitySystem where T : IComponent
+    // TODO RENAME
+    public abstract class ComponentActivatedClientSystemBase<T> : EntitySystem where T : IComponent
     {
         [Dependency] private readonly IPlayerManager _player = default!;
         [Dependency] private readonly InventorySystem _invSystem = default!;
@@ -18,7 +19,7 @@ namespace Content.Client.Overlays
         {
             base.Initialize();
 
-            SubscribeLocalEvent<T, ComponentInit>(OnInit);
+            SubscribeLocalEvent<T, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<T, ComponentRemove>(OnRemove);
 
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
@@ -46,7 +47,7 @@ namespace Content.Client.Overlays
 
         protected virtual void OnRemoveOverlay() { }
 
-        private void OnInit(EntityUid uid, T component, ComponentInit args)
+        private void OnStartup(EntityUid uid, T component, ComponentStartup args)
         {
             RefreshOverlay(uid);
         }
@@ -81,6 +82,7 @@ namespace Content.Client.Overlays
             RemoveOverlay();
         }
 
+        // TODO THIS should fire some event
         private void RefreshOverlay(EntityUid uid)
         {
             RemoveOverlay();
@@ -95,16 +97,16 @@ namespace Content.Client.Overlays
                 ApplyOverlay(component);
             }
 
-            if (!(TryComp(uid, out InventoryComponent? inventoryComponent)
-                && _invSystem.TryGetSlots(uid, out var slotDefinitions, inventoryComponent)))
+            if (!TryComp(uid, out InventoryComponent? inventoryComponent)
+                || !_invSystem.TryGetSlots(uid, out var slotDefinitions, inventoryComponent))
             {
                 return;
             }
 
             foreach (var slot in slotDefinitions)
             {
-                if (!(_invSystem.TryGetSlotEntity(uid, slot.Name, out var itemUid)
-                    && TryComp(itemUid.Value, out component)))
+                if (!_invSystem.TryGetSlotEntity(uid, slot.Name, out var itemUid)
+                    || !TryComp(itemUid.Value, out component))
                 {
                     continue;
                 }

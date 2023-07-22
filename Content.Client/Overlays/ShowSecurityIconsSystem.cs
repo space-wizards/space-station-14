@@ -1,5 +1,4 @@
 using Content.Shared.Access.Components;
-using Content.Shared.Body.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Overlays;
 using Content.Shared.PDA;
@@ -9,19 +8,23 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays
 {
-    public sealed class ShowSecurityIconsSystem : ComponentAddedOverlaySystemBase<ShowSecurityIconsComponent>
+    public sealed class ShowSecurityIconsSystem : ComponentActivatedClientSystemBase<ShowSecurityIconsComponent>
     {
         [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+
+        private const string JobIconForNoId = "NoId";
+        private const string JobIconPostfixForNoIconFound = "Uknown";
+        private const string JobIconPrefix = "JobIcon";
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<BodyComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
+            SubscribeLocalEvent<StatusIconComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
         }
 
-        private void OnGetStatusIconsEvent(EntityUid uid, BodyComponent _, ref GetStatusIconsEvent @event)
+        private void OnGetStatusIconsEvent(EntityUid uid, StatusIconComponent _, ref GetStatusIconsEvent @event)
         {
             if (!IsActive || @event.InContainer)
             {
@@ -37,7 +40,7 @@ namespace Content.Client.Overlays
         {
             var result = new List<StatusIconPrototype>();
 
-            var iconToGet = "NoId";
+            var iconToGet = JobIconForNoId;
             if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
             {
                 // PDA
@@ -64,12 +67,12 @@ namespace Content.Client.Overlays
 
         private StatusIconPrototype GetJobIcon(string iconKey)
         {
-            if (_prototypeMan.TryIndex<StatusIconPrototype>($"JobIcon_{iconKey}", out var securityIcon))
+            if (_prototypeMan.TryIndex<StatusIconPrototype>($"{JobIconPrefix}{iconKey}", out var securityIcon))
             {
                 return securityIcon;
             }
 
-            iconKey = "Unknown";
+            iconKey = JobIconPostfixForNoIconFound;
             return GetJobIcon(iconKey);
         }
     }
