@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Guidebook.RichText;
+using Content.Client.UserInterface.ControlExtensions;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Controls.FancyTree;
 using JetBrains.Annotations;
@@ -18,6 +19,8 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
     [Dependency] private readonly IResourceManager _resourceManager = default!;
     [Dependency] private readonly DocumentParsingManager _parsingMan = default!;
 
+    private readonly List<string> _filterEnabledEntries = new() { "Chemicals", "Medicine", "Botanicals" };
+
     private Dictionary<string, GuideEntry> _entries = new();
 
     public GuidebookWindow()
@@ -26,6 +29,16 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         IoCManager.InjectDependencies(this);
 
         Tree.OnSelectedItemChanged += OnSelectionChanged;
+
+        SearchBar.OnTextChanged += _ =>
+        {
+            HandleFilter();
+        };
+
+        ClearSearch.OnPressed += _ =>
+        {
+            HandleClearFilter();
+        };
     }
 
     private void OnSelectionChanged(TreeItem? item)
@@ -48,8 +61,11 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         Scroll.SetScrollValue(default);
         Placeholder.Visible = false;
         EntryContainer.Visible = true;
+        SearchBar.Text = "";
         EntryContainer.RemoveAllChildren();
         using var file = _resourceManager.ContentFileReadText(entry.Text);
+
+        SearchContainer.Visible = _filterEnabledEntries.Contains(entry.Id);
 
         if (!_parsingMan.TryAddMarkup(EntryContainer, file.ReadToEnd()))
         {
@@ -158,5 +174,27 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         {
             ShowGuide(entry);
         }
+    }
+
+    private void HandleFilter()
+    {
+        var clearSearch = SearchBar.Text.Trim().Length == 0;
+
+        var foundElements = GetFilterableElements(EntryContainer);
+
+        foreach (var element in foundElements)
+        {
+            element.Visible = clearSearch || element.ChildrenContainText(SearchBar.Text.Trim());
+        }
+    }
+
+    private void HandleClearFilter()
+    {
+        SearchBar.Text = "";
+    }
+
+    private List<Control> GetFilterableElements(Control Container)
+    {
+        return Container.GetControlOfType<Control>("GuideReagentEmbed");
     }
 }
