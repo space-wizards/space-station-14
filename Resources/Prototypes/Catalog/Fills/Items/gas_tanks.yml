@@ -6,7 +6,6 @@
 # 1000 / (Atmospherics.R * temperature / volume)
 # (What the hell is Atmospherics.R ?)
 
-
 # Filling 15 liters at exactly 1000 kpa and 293.15K takes 6.154137219 moles
 # Multiply/divide total moles in proportion to tank size to keep it at 1000 kpa pressure
 
@@ -14,6 +13,10 @@
 # 15 liters tank :   6.154137219 moles
 #  5 liters tank :   6.154137219 / 3 = 2.051379073 moles
 # Yes, you do need all those digits or your pressure wont end up *exactly* 1000
+
+
+# If you change the filling amounts, you can calculate the new gas supply times with:
+# (moles / outputPressure) * 325 = minutes
 
 - type: entity
   id: OxygenTankFilled
