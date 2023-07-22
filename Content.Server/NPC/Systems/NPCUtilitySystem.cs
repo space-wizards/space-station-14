@@ -284,17 +284,32 @@ public sealed class NPCUtilitySystem : EntitySystem
         {
             case ComponentQuery compQuery:
                 var mapPos = Transform(owner).MapPosition;
-                foreach (var compReg in compQuery.Components.Values)
+                var comps = compQuery.Components.Values.ToList();
+                var compZero = comps[0];
+                comps.RemoveAt(0);
+
+                foreach (var comp in _lookup.GetComponentsInRange(compZero.Component.GetType(), mapPos, vision))
                 {
-                    foreach (var comp in _lookup.GetComponentsInRange(compReg.Component.GetType(), mapPos, vision))
+                    var ent = comp.Owner;
+
+                    if (ent == owner)
+                        continue;
+
+                    var othersFound = true;
+
+                    foreach (var compOther in comps)
                     {
-                        var ent = comp.Owner;
-
-                        if (ent == owner)
+                        if (!HasComp(ent, compOther.Component.GetType()))
+                        {
+                            othersFound = false;
                             continue;
-
-                        entities.Add(ent);
+                        }
                     }
+
+                    if (!othersFound)
+                        continue;
+
+                    entities.Add(ent);
                 }
 
                 break;

@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Components;
+using Content.Shared.CombatMode;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 
@@ -61,7 +62,9 @@ public sealed class MeleeOperator : HTNOperator, IHtnConditionalShutdown
 
     public void ConditionalShutdown(NPCBlackboard blackboard)
     {
-        _entManager.RemoveComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
+        _entManager.System<SharedCombatModeSystem>().SetInCombatMode(owner, false);
+        _entManager.RemoveComponent<NPCMeleeCombatComponent>(owner);
         blackboard.Remove<EntityUid>(TargetKey);
     }
 

@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Components;
+using Content.Shared.CombatMode;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Audio;
@@ -63,6 +64,14 @@ public sealed class GunOperator : HTNOperator, IHtnConditionalShutdown
         }
     }
 
+    public void ConditionalShutdown(NPCBlackboard blackboard)
+    {
+        var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
+        _entManager.System<SharedCombatModeSystem>().SetInCombatMode(owner, false);
+        _entManager.RemoveComponent<NPCRangedCombatComponent>(owner);
+        blackboard.Remove<EntityUid>(TargetKey);
+    }
+
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         base.Update(blackboard, frameTime);
@@ -109,11 +118,5 @@ public sealed class GunOperator : HTNOperator, IHtnConditionalShutdown
         }
 
         return status;
-    }
-
-    public void ConditionalShutdown(NPCBlackboard blackboard)
-    {
-        _entManager.RemoveComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
-        blackboard.Remove<EntityUid>(TargetKey);
     }
 }
