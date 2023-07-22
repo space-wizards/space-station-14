@@ -19,10 +19,10 @@
           Heat: 1.2
       activeBlockModifier:
         coefficients:
-          Blunt: 0.6
-          Slash: 0.6
-          Piercing: 0.6
-          Heat: 0.6
+          Blunt: 0.2
+          Slash: 0.2
+          Piercing: 0.2
+          Heat: 0.2
     - type: Destructible
       thresholds:
         - trigger:
@@ -79,10 +79,10 @@
           Heat: 1.2
       activeBlockModifier:
         coefficients:
-          Blunt: 0.6
-          Slash: 0.6
-          Piercing: 0.6
-          Heat: 0.6
+          Blunt: 0.2
+          Slash: 0.2
+          Piercing: 0.2
+          Heat: 0.2
     - type: Destructible
       thresholds:
         - trigger:
@@ -124,14 +124,14 @@
         coefficients:
           Blunt: 1.2
           Slash: 1.2
-          Piercing: 0.6
+          Piercing: 1.2
           Heat: 1.2
       activeBlockModifier:
         coefficients:
-          Blunt: 0.6
-          Slash: 0.6
-          Piercing: 0.3
-          Heat: 0.6
+          Blunt: 0.2
+          Slash: 0.2
+          Piercing: 0.2
+          Heat: 0.2
     - type: Destructible
       thresholds:
         - trigger:
@@ -152,6 +152,10 @@
                   max: 2
     - type: StaticPrice
       price: 100
+    - type: Reflect
+      reflects:
+        - NonEnergy
+      reflectProb: 0.5
 
 
 #Craftable shields
@@ -168,7 +172,7 @@
       heldPrefix: buckler
     - type: Blocking
       passiveBlockFraction: 0.4 #small shield so more attacks go past it
-      activeBlockFraction: 0.8 # smaller shield so some attacks go past it
+      activeBlockFraction: 0.8 # small shield so some attacks go past it even while actively blocking
       passiveBlockModifier:
         coefficients:
           Blunt: 1.2
@@ -177,10 +181,10 @@
           Heat: 1.2
       activeBlockModifier:
         coefficients:
-          Blunt: 0.6
-          Slash: 0.6
-          Piercing: 0.6
-          Heat: 0.6
+          Blunt: 0.2
+          Slash: 0.2
+          Piercing: 0.2
+          Heat: 0.2
     - type: Construction
       graph: WoodenBuckler
       node: woodenBuckler
@@ -221,10 +225,10 @@
           Heat: 1.2
       activeBlockModifier:
         coefficients:
-          Blunt: 0.6
-          Slash: 0.6
-          Piercing: 0.6
-          Heat: 0.6
+          Blunt: 0.2
+          Slash: 0.2
+          Piercing: 0.2
+          Heat: 0.2
     - type: Construction
       graph: MakeshiftShield
       node: makeshiftShield
@@ -259,15 +263,15 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 0.6
-          Slash: 0.6
-          Piercing: 0.6
+          Blunt: 1.2
+          Slash: 1.2
+          Piercing: 1.2
           Heat: 4.8
       activeBlockModifier:
         coefficients:
-          Blunt: 0.3
-          Slash: 0.3
-          Piercing: 0.3
+          Blunt: 0.2
+          Slash: 0.2
+          Piercing: 0.2
           Heat: 4.8
     - type: Destructible
       thresholds:
@@ -284,6 +288,10 @@
                 SheetSteel:
                   min: 5
                   max: 5
+    - type: Reflect
+      reflects:
+        - NonEnergy
+      reflectProb: 0.5
       #Have it break into brass when clock cult is in
 
 - type: entity
@@ -380,6 +388,12 @@
     - type: Blocking
       passiveBlockFraction: 0.25
       activeBlockFraction: 0.5
+      passiveBlockModifier:
+        coefficients:
+          Heat: 1.0
+      activeBlockModifier:
+        coefficients:
+          Heat: 1.0
     - type: Appearance
     - type: StaticPrice
       price: 350

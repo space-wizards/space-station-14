@@ -72,4 +72,29 @@ public sealed class BlockingComponent : Component
     /// </summary>
     [DataField("activeBlockFraction"), ViewVariables(VVAccess.ReadWrite)]
     public float ActiveBlockFraction = 1.0f;
+
+    /// <summary>
+    /// Fraction of original damage the user will take as stamina damage
+    /// when blocking
+    /// </summary>
+    [DataField("staminaDamageMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    public float StaminaDamageMultiplier = 0.4f;
+
+    /// <summary>
+    /// The walk speed the user will get after raising their shield
+    /// </summary>
+    [DataField("activeWalkSpeed")]
+    public float ActiveWalkSpeed = 0.5f;
+
+    /// <summary>
+    /// The sprint speed the user will get after raising their shield
+    /// </summary>
+    [DataField("activeSprintSpeed")]
+    public float ActiveSprintSpeed = 0.5f;
+
+    /// <summary>
+    /// The acceleration rate the user will get after raising their shield
+    /// </summary>
+    [DataField("activeAcceleration")]
+    public float ActiveAcceleration = 20f;
 }

@@ -22,6 +22,9 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
+using Content.Shared.Damage.Systems;
 
 namespace Content.Shared.Blocking;
 
@@ -37,6 +40,8 @@ public sealed partial class BlockingSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private readonly StaminaSystem _stamina = default!;
 
     public override void Initialize()
     {
@@ -65,9 +70,17 @@ public sealed partial class BlockingSystem : EntitySystem
             var userComp = EnsureComp<BlockingUserComponent>(args.User);
             userComp.BlockingItem = uid;
             userComp.OriginalBodyType = physicsComponent.BodyType;
-        }
-    }
 
+            //Makes sure the movement speed is set back to it's original value
+            if (TryComp<MovementSpeedModifierComponent>(args.User, out var movementComponent))
+            {
+                userComp.OriginalWalkSpeed = movementComponent.BaseWalkSpeed;
+                userComp.OriginalSprintSpeed = movementComponent.BaseSprintSpeed;
+                userComp.OriginalAcceleration = movementComponent.Acceleration;
+            }
+        }
+
+    }
     private void OnUnequip(EntityUid uid, BlockingComponent component, GotUnequippedHandEvent args)
     {
         StopBlockingHelper(uid, component, args.User);
@@ -154,12 +167,12 @@ public sealed partial class BlockingSystem : EntitySystem
 
         if (component.BlockingToggleAction != null)
         {
-            //Don't allow someone to block if they're not parented to a grid
-            if (xform.GridUid != xform.ParentUid)
-            {
-                CantBlockError(user);
-                return false;
-            }
+            // //Don't allow someone to block if they're not parented to a grid
+            // if (xform.GridUid != xform.ParentUid)
+            // {
+            //     CantBlockError(user);
+            //     return false;
+            // }
 
             //Don't allow someone to block if someone else is on the same tile
             var playerTileRef = xform.Coordinates.GetTileRef();
@@ -177,13 +190,13 @@ public sealed partial class BlockingSystem : EntitySystem
                 }
             }
 
-            //Don't allow someone to block if they're somehow not anchored.
-            _transformSystem.AnchorEntity(user, xform);
-            if (!xform.Anchored)
-            {
-                CantBlockError(user);
-                return false;
-            }
+            // //Don't allow someone to block if they're somehow not anchored.
+            // _transformSystem.AnchorEntity(user, xform);
+            // if (!xform.Anchored)
+            // {
+            //     CantBlockError(user);
+            //     return false;
+            // }
             _actionsSystem.SetToggled(component.BlockingToggleAction, true);
             _popupSystem.PopupEntity(msgUser, user, user);
             _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
@@ -191,6 +204,10 @@ public sealed partial class BlockingSystem : EntitySystem
 
         if (TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
+            // Makes the user able to push things around with their body and slows them greatly
+            _physics.SetBodyType(user, BodyType.Dynamic);
+            _movement.ChangeBaseSpeed(user, component.ActiveWalkSpeed, component.ActiveSprintSpeed, component.ActiveAcceleration);
+
             _fixtureSystem.TryCreateFixture(user,
                 component.Shape,
                 BlockingComponent.BlockFixtureID,
@@ -248,6 +265,7 @@ public sealed partial class BlockingSystem : EntitySystem
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _fixtureSystem.DestroyFixture(user, BlockingComponent.BlockFixtureID, body: physicsComponent);
             _physics.SetBodyType(user, blockingUserComponent.OriginalBodyType, body: physicsComponent);
+            _movement.ChangeBaseSpeed(user, blockingUserComponent.OriginalWalkSpeed, blockingUserComponent.OriginalSprintSpeed, 100f);
             _popupSystem.PopupEntity(msgUser, user, user);
             _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
         }

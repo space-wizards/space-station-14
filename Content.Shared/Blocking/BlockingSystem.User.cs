@@ -47,10 +47,11 @@ public sealed partial class BlockingSystem
             blockFraction = Math.Clamp(blockFraction, 0, 1);
             _damageable.TryChangeDamage(component.BlockingItem, blockFraction * args.OriginalDamage);
 
-            args.Damage *= (1 - blockFraction);
+            args.Damage *= 1 - blockFraction;
 
             if (blocking.IsBlocking)
             {
+                _stamina.TakeStaminaDamage(uid, (args.OriginalDamage.Total * blocking.StaminaDamageMultiplier).Float());
                 _audio.PlayPvs(blocking.BlockSound, uid, AudioParams.Default.WithVariation(0.2f));
             }
         }
