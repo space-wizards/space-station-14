@@ -1,12 +1,8 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceNetwork;
-using Content.Server.MachineLinking.System;
-using Content.Shared.Audio;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 
 namespace Content.Server.DeviceLinking.Systems;
 
@@ -36,7 +32,11 @@ public sealed class SignalSwitchSystem : EntitySystem
             return;
 
         comp.State = !comp.State;
+        _appearance.SetData(uid, SignalSwitchVisuals.State, comp.State);
         _deviceLink.InvokePort(uid, comp.State ? comp.OnPort : comp.OffPort);
+        _audio.PlayPvs(comp.ClickSound, uid);
+
+        // Invoke status port
         var data = new NetworkPayload
         {
             [DeviceNetworkConstants.LogicState] = comp.State ? SignalState.High : SignalState.Low
@@ -48,18 +48,4 @@ public sealed class SignalSwitchSystem : EntitySystem
             _deviceLink.InvokePort(uid, comp.StatusPort, data);
         }
     }
-
-    /*private void OnActivated(EntityUid uid, SignalSwitchComponent component, ActivateInWorldEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        component.State = !component.State;
-
-        _appearance.SetData(uid, SignalSwitchVisuals.State, component.State);
-        _deviceLink.InvokePort(uid, component.State ? component.OnPort : component.OffPort);
-
-        _audio.PlayPvs(component.ClickSound, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
-        args.Handled = true;
-    }*/
 }
