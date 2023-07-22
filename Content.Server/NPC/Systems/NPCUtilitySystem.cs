@@ -302,7 +302,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                         if (!HasComp(ent, compOther.Component.GetType()))
                         {
                             othersFound = false;
-                            continue;
+                            break;
                         }
                     }
 
