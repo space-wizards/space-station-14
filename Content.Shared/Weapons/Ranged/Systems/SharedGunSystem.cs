@@ -451,7 +451,7 @@ public record struct AttemptShootEvent(EntityUid User, string? Message, bool Can
 public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
 
 /// <summary>
-/// Raised directed on the gun when it's ammo count reaches 0
+/// Raised directed on the gun when trying to fire it while it's out of ammo
 /// </summary>
 [ByRefEvent]
 public record struct EmptyEvent(EntityUid EmptyGun);
