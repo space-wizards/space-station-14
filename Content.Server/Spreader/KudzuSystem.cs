@@ -118,7 +118,7 @@ public sealed class KudzuSystem : EntitySystem
                 continue;
             }
 
-            grow.NextTick = curTime + TimeSpan.FromSeconds(0.5); // was 0.5
+            grow.NextTick = curTime + TimeSpan.FromSeconds(0.5);
 
             if (!_robustRandom.Prob(kudzu.GrowthTickChance))
             {

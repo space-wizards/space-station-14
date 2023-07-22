@@ -33,7 +33,6 @@ public sealed class SpreaderSystem : EntitySystem
 
     private const string IgnoredTag = "SpreaderIgnore";
 
-    private TimeSpan bixTime;
     /// <inheritdoc/>
     public override void Initialize()
     {
