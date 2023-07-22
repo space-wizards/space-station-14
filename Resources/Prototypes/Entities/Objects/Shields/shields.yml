@@ -172,19 +172,21 @@
       heldPrefix: buckler
     - type: Blocking
       passiveBlockFraction: 0.4 #small shield so more attacks go past it
-      activeBlockFraction: 0.8 # small shield so some attacks go past it even while actively blocking
+      activeBlockFraction: 0.8 #small shield so some attacks go past it even while actively blocking
+      activeWalkSpeed: 1 #a small shield allows you to walk a little bit faster while raised compared to other shields
+      activeSprintSpeed: 1
       passiveBlockModifier:
         coefficients:
           Blunt: 1.2
           Slash: 1.2
           Piercing: 1.2
-          Heat: 1.2
+          Heat: 2.4
       activeBlockModifier:
         coefficients:
           Blunt: 0.2
           Slash: 0.2
           Piercing: 0.2
-          Heat: 0.2
+          Heat: 0.4
     - type: Construction
       graph: WoodenBuckler
       node: woodenBuckler
