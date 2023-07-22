@@ -1,5 +1,7 @@
+using Content.Client.Guidebook.Controls;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using System.Linq;
 
 namespace Content.Client.UserInterface.ControlExtensions
 {
@@ -37,7 +39,30 @@ namespace Content.Client.UserInterface.ControlExtensions
 
                 if (fullTreeSearch || searchDeeper)
                 {
-                    controlList.AddRange(child.GetControlOfType<T>(childType));
+                    controlList.AddRange(child.GetControlOfType<T>(childType, fullTreeSearch));
+                }
+            }
+
+            return controlList;
+        }
+
+        public static List<ISearchableControl> GetSearchableControls(this Control parent, bool fullTreeSearch = false)
+        {
+            List<ISearchableControl> controlList = new List<ISearchableControl>();
+
+            foreach (var child in parent.Children)
+            {
+                var hasChildren = child.ChildCount > 0;
+                var searchDeeper = hasChildren && child is not ISearchableControl;
+
+                if (child is ISearchableControl searchableChild)
+                {
+                    controlList.Add(searchableChild);
+                }
+
+                if (fullTreeSearch || searchDeeper)
+                {
+                    controlList.AddRange(child.GetSearchableControls(fullTreeSearch));
                 }
             }
 

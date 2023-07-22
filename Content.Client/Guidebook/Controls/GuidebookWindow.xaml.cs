@@ -59,7 +59,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         EntryContainer.RemoveAllChildren();
         using var file = _resourceManager.ContentFileReadText(entry.Text);
 
-        SearchContainer.Visible = entry.FilterByType != null && entry.FilterByType.Length > 0;
+        SearchContainer.Visible = entry.FilterEnabled;
 
         if (!_parsingMan.TryAddMarkup(EntryContainer, file.ReadToEnd()))
         {
@@ -174,13 +174,13 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
     {
         var emptySearch = SearchBar.Text.Trim().Length == 0;
 
-        if (Tree.SelectedItem != null && Tree.SelectedItem.Metadata is GuideEntry entry && entry.FilterByType.Length > 0)
+        if (Tree.SelectedItem != null && Tree.SelectedItem.Metadata is GuideEntry entry && entry.FilterEnabled)
         {
-            var foundElements = EntryContainer.GetControlOfType<Control>(entry.FilterByType);
+            var foundElements = EntryContainer.GetSearchableControls();
 
             foreach (var element in foundElements)
             {
-                element.Visible = emptySearch || element.ChildrenContainText(SearchBar.Text.Trim());
+                element.SetHiddenState(true, SearchBar.Text.Trim());
             }
         }
 
