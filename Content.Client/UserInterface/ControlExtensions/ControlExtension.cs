@@ -5,18 +5,37 @@ namespace Content.Client.UserInterface.ControlExtensions
 {
     public static class ControlExtension
     {
-        public static List<T> GetControlOfType<T> (this Control parent, string childType) where T : Control
+        public static List<T> GetControlOfType<T>(this Control parent) where T : Control
+        {
+            return parent.GetControlOfType<T>(typeof(T).Name, false);
+        }
+        public static List<T> GetControlOfType<T>(this Control parent, string childType) where T : Control
+        {
+            return parent.GetControlOfType<T>(childType, false);
+        }
+
+        public static List<T> GetControlOfType<T>(this Control parent, bool fullTreeSearch) where T : Control
+        {
+            return parent.GetControlOfType<T>(typeof(T).Name, fullTreeSearch);
+        }
+
+        public static List<T> GetControlOfType<T>(this Control parent, string childType, bool fullTreeSearch) where T : Control
         {
             List<T> controlList = new List<T>();
 
             foreach (var child in parent.Children)
             {
-                if (child.GetType().Name == childType)
+                var isType = child.GetType().Name == childType;
+                var hasChildren = child.ChildCount > 0;
+
+                var searchDeeper = hasChildren && !isType;
+
+                if (isType)
                 {
                     controlList.Add((T) child);
                 }
 
-                if (child.ChildCount > 0)
+                if (fullTreeSearch || searchDeeper)
                 {
                     controlList.AddRange(child.GetControlOfType<T>(childType));
                 }
@@ -27,8 +46,8 @@ namespace Content.Client.UserInterface.ControlExtensions
 
         public static bool ChildrenContainText(this Control parent, string search)
         {
-            var labels = parent.GetControlOfType<Label>("Label");
-            var richTextLabels = parent.GetControlOfType<RichTextLabel>("RichTextLabel");
+            var labels = parent.GetControlOfType<Label>();
+            var richTextLabels = parent.GetControlOfType<RichTextLabel>();
 
             foreach (var label in labels)
             {
@@ -40,9 +59,9 @@ namespace Content.Client.UserInterface.ControlExtensions
 
             foreach (var label in richTextLabels)
             {
-                var message = label.GetMessage();
+                var text = label.GetMessage();
 
-                if (message != null && message.Contains(search, StringComparison.OrdinalIgnoreCase))
+                if (text != null && text.Contains(search, StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }

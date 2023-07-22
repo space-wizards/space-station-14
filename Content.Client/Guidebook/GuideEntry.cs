@@ -30,6 +30,11 @@ public class GuideEntry
     public List<string> Children = new();
 
     /// <summary>
+    ///     Element type that will get searched by the filter.
+    /// </summary>
+    [DataField("filterByType")] public string FilterByType = default!;
+
+    /// <summary>
     ///     Priority for sorting top-level guides when shown in a tree / table of contents.
     ///     If the guide is the child of some other guide, the order simply determined by the order of children in <see cref="Children"/>.
     /// </summary>

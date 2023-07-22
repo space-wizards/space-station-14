@@ -3,16 +3,16 @@
   name: guide-entry-jobs
   text: "/ServerInfo/Guidebook/Jobs.xml"
   children:
-  - Bartender
-  - Chef
-  - Botany
-  - Engineering
-  - Science
-  - Security
-  - Janitorial
-  - Cargo
-  - Salvage
-  - Medical
+    - Bartender
+    - Chef
+    - Botany
+    - Engineering
+    - Science
+    - Security
+    - Janitorial
+    - Cargo
+    - Salvage
+    - Medical
 
 - type: guideEntry
   id: Survival
@@ -23,6 +23,7 @@
   id: Chemicals
   name: guide-entry-chemicals
   text: "/ServerInfo/Guidebook/Chemicals.xml"
+  filterByType: GuideReagentEmbed
 
 - type: guideEntry
   id: Janitorial
@@ -39,10 +40,9 @@
   name: guide-entry-chef
   text: "/ServerInfo/Guidebook/Service/Chef.xml"
   children:
-  - Food Recipes
+    - Food Recipes
 
 - type: guideEntry
   id: Food Recipes
   name: guide-entry-foodrecipes
   text: "/ServerInfo/Guidebook/Service/FoodRecipes.xml"
-
