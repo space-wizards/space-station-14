@@ -470,6 +470,11 @@
     - CannotSuicide
     - Trash
     - Hamster
+  - type: CombatMode
+    combatToggleAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-combat
 
 - type: entity
   name: Shiva

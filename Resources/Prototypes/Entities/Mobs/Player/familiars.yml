@@ -29,6 +29,11 @@
     - PetsNT
   - type: Alerts
   - type: Familiar
+  - type: CombatMode
+    combatToggleAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-combat
 
 - type: entity
   name: Cerberus
