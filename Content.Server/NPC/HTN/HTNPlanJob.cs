@@ -49,7 +49,6 @@ public sealed class HTNPlanJob : Job<HTNPlan>
 
         // branch traversal record. Whenever we find a new compound task this updates.
         var btrIndex = 0;
-        var btr = new List<int>();
 
         // For some tasks we may do something expensive or want to re-use the planning result.
         // e.g. pathfind to a target before deciding to attack it.
@@ -85,8 +84,6 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                             PrimitiveCount = primitiveCount,
                         });
 
-                        btr.Add(btrIndex);
-
                         // TODO: Early out if existing plan is better and save lots of time.
                         // my brain is not working rn AAA
 
@@ -96,7 +93,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, finalPlan, ref primitiveCount, ref _blackboard, ref btrIndex, ref btr);
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, finalPlan, ref primitiveCount, ref _blackboard, ref btrIndex);
                     }
                     break;
                 case HTNPrimitiveTask primitive:
@@ -107,7 +104,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, finalPlan, ref primitiveCount, ref _blackboard, ref btrIndex, ref btr);
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, finalPlan, ref primitiveCount, ref _blackboard, ref btrIndex);
                     }
 
                     break;
@@ -162,7 +159,6 @@ public sealed class HTNPlanJob : Job<HTNPlan>
     private bool TryFindSatisfiedMethod(HTNCompoundTask compoundId, Queue<HTNTask> tasksToProcess, NPCBlackboard blackboard, ref int mtrIndex)
     {
         var compound = _protoManager.Index<HTNCompoundPrototype>(compoundId.Task);
-        var compBranches = compound.Branches;
 
         for (var i = mtrIndex; i < compound.Branches.Count; i++)
         {
@@ -202,8 +198,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         List<HTNPrimitiveTask> finalPlan,
         ref int primitiveCount,
         ref NPCBlackboard blackboard,
-        ref int mtrIndex,
-        ref List<int> btr)
+        ref int mtrIndex)
     {
         tasksToProcess.Clear();
 
@@ -220,7 +215,6 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         // Final plan only has primitive tasks added to it so we can just remove the count we've tracked since the last decomp.
         finalPlan.RemoveRange(reduction, primitiveCount);
         appliedStates.RemoveRange(reduction, primitiveCount);
-        btr.RemoveRange(reduction, primitiveCount);
 
         primitiveCount = lastDecomp.PrimitiveCount;
         blackboard = lastDecomp.Blackboard;

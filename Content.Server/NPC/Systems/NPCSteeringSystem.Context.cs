@@ -53,9 +53,26 @@ public sealed partial class NPCSteeringSystem
         var ourCoordinates = xform.Coordinates;
         var destinationCoordinates = steering.Coordinates;
 
+        // Check if we're in LOS if that's required.
+        // TODO: Need something uhh better not sure on the interaction between these.
+        if (steering.ArriveOnLineOfSight && _interaction.InRangeUnobstructed(uid, steering.Coordinates, 10f))
+        {
+            steering.LineOfSightTimer += frameTime;
+
+            if (steering.LineOfSightTimer >= steering.LineOfSightTimeRequired)
+            {
+                steering.Status = SteeringStatus.InRange;
+                return true;
+            }
+        }
+        else
+        {
+            steering.LineOfSightTimer = 0f;
+        }
+
         // We've arrived, nothing else matters.
-        if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var distance) &&
-            distance <= steering.Range)
+        if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var targetDistance) &&
+            targetDistance <= steering.Range)
         {
             steering.Status = SteeringStatus.InRange;
             return true;
@@ -147,7 +164,7 @@ public sealed partial class NPCSteeringSystem
                         steering.Status = SteeringStatus.NoPath;
                         return false;
                     case SteeringObstacleStatus.Continuing:
-                        CheckPath(uid, steering, xform, needsPath, distance);
+                        CheckPath(uid, steering, xform, needsPath, targetDistance);
                         return true;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -212,16 +229,8 @@ public sealed partial class NPCSteeringSystem
             ResetStuck(steering, ourCoordinates);
         }
 
-        // Do we have no more nodes to follow OR has the target moved sufficiently? If so then re-path.
-        if (!needsPath)
-        {
-            // TODO: Uhh just don't want to get stuck on table pickups for now.
-            needsPath = steering.CurrentPath.Count > 0 && (steering.CurrentPath.Peek().Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0 ||
-                        distance > steering.Range + 0.5f;
-        }
-
         // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
-        CheckPath(uid, steering, xform, needsPath, distance);
+        CheckPath(uid, steering, xform, needsPath, targetDistance);
 
         // If we don't have a path yet then do nothing; this is to avoid stutter-stepping if it turns out there's no path
         // available but we assume there was.
@@ -274,6 +283,8 @@ public sealed partial class NPCSteeringSystem
 
         if (!needsPath && steering.CurrentPath.Count > 0)
         {
+            needsPath = steering.CurrentPath.Count > 0 && (steering.CurrentPath.Peek().Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0;
+
             // If the target has sufficiently moved.
             var lastNode = GetCoordinates(steering.CurrentPath.Last());
 

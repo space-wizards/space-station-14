@@ -19,6 +19,7 @@
               rangeKey: RangedRange
           operator: !type:GunOperator
             targetKey: Target
+            requireLOS: true
           services:
             - !type:UtilityService
               id: RangedService

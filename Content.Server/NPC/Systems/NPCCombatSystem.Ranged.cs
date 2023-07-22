@@ -13,6 +13,7 @@ public sealed partial class NPCCombatSystem
     [Dependency] private readonly RotateToFaceSystem _rotate = default!;
 
     private EntityQuery<CombatModeComponent> _combatQuery;
+    private EntityQuery<NPCSteeringComponent> _steeringQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -28,6 +29,7 @@ public sealed partial class NPCCombatSystem
     {
         _combatQuery = GetEntityQuery<CombatModeComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
+        _steeringQuery = GetEntityQuery<NPCSteeringComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<NPCRangedCombatComponent, ComponentStartup>(OnRangedStartup);
@@ -62,6 +64,13 @@ public sealed partial class NPCCombatSystem
         {
             if (comp.Status == CombatStatus.Unspecified)
                 continue;
+
+            if (_steeringQuery.TryGetComponent(uid, out var steering) && steering.Status == SteeringStatus.NoPath)
+            {
+                comp.Status = CombatStatus.TargetUnreachable;
+                comp.ShootAccumulator = 0f;
+                continue;
+            }
 
             if (!_xformQuery.TryGetComponent(comp.Target, out var targetXform) ||
                 !_physicsQuery.TryGetComponent(comp.Target, out var targetBody))
@@ -120,7 +129,7 @@ public sealed partial class NPCCombatSystem
             if (!comp.TargetInLOS)
             {
                 comp.ShootAccumulator = 0f;
-                comp.Status = CombatStatus.TargetUnreachable;
+                comp.Status = CombatStatus.NotInSight;
                 continue;
             }
 
@@ -171,6 +180,7 @@ public sealed partial class NPCCombatSystem
             }
 
             _gun.AttemptShoot(uid, gunUid, gun, targetCordinates);
+            comp.Status = CombatStatus.Normal;
         }
     }
 }

@@ -27,6 +27,12 @@ public sealed class GunOperator : HTNOperator, IHtnConditionalShutdown
     [DataField("targetState")]
     public MobState TargetState = MobState.Alive;
 
+    /// <summary>
+    /// Do we require line of sight of the target before failing.
+    /// </summary>
+    [DataField("requireLOS")]
+    public bool RequireLOS = false;
+
     // Like movement we add a component and pass it off to the dedicated system.
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
@@ -51,8 +57,6 @@ public sealed class GunOperator : HTNOperator, IHtnConditionalShutdown
     {
         base.Startup(blackboard);
         var ranged = _entManager.EnsureComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
-        // Reset status
-        ranged.Status = CombatStatus.Normal;
         ranged.Target = blackboard.GetValue<EntityUid>(TargetKey);
 
         if (blackboard.TryGetValue<float>(NPCBlackboard.RotateSpeed, out var rotSpeed, _entManager))
@@ -96,8 +100,13 @@ public sealed class GunOperator : HTNOperator, IHtnConditionalShutdown
                 switch (combat.Status)
                 {
                     case CombatStatus.TargetUnreachable:
-                    case CombatStatus.NotInSight:
                         status = HTNOperatorStatus.Failed;
+                        break;
+                    case CombatStatus.NotInSight:
+                        if (RequireLOS)
+                            status = HTNOperatorStatus.Failed;
+                        else
+                            status = HTNOperatorStatus.Continuing;
                         break;
                     case CombatStatus.Normal:
                         status = HTNOperatorStatus.Continuing;
