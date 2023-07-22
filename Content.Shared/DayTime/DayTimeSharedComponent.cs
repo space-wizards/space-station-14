@@ -5,28 +5,38 @@ namespace Content.Shared.DayTime;
 [RegisterComponent, NetworkedComponent]
 public sealed class DayTimeComponent : Component
 {
-    [DataField("dayColor")]
-    public Color DayColor = Color.White;
+    [DataField("colorFrom")] //От какого цвета
+    public Color ColorFrom;
+    [DataField("colorTo")] // К какому цвету
+    public Color ColorTo;
 
-    [DataField("nightColor")]
-    public Color NightColor = Color.Black;
+    [DataField("colorCurrent")] // Текущий цвет
+    public Color ColorCurrent;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("targetColor")]
-    public Color TargetColor;
+    [DataField("colorStage")] // Массив цветов
+    public Color[]? ColorStage = new Color[5]
+    {
+        Color.FromHex("#000000FF"),
+        Color.FromHex("#FFAA00FF"),
+        Color.FromHex("#000000FF"),
+        Color.FromHex("#FF00FFFF"),
+        Color.FromHex("#000000FF")
+    };
 
-    [DataField("stepTime")]
-    public float StepTime = 1f;
+    [DataField("timeStage")] // Массив периодов между цветами
+    public float[]? TimeStage = new float[5] { 10f, 10f, 1f, 10f, 5f };
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("currentColor")]
-    public Color CurrentColor;
+    [DataField("stepsPerSeconds")] // Количество шагов в секунду
+    public int StepsPerSecond = 10;
 
-    public MapLightComponent? MapLightComponent;
+    [DataField("currentStage")] // Текущий этап цвета
+    public int CurrentStage = 0;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("time")]
-    public float Time = 0.5f;
-    public float Timer = 0f;
+    [ViewVariables(VVAccess.ReadWrite), DataField("stageTime")] // Время
+    public float StageTimer;
+    [ViewVariables(VVAccess.ReadOnly), DataField("colorTimer")] // Таймер
+    public float ColorTimer;
 
-    [DataField("testColor")]
-    public Vector4? color1;
+    public MapLightComponent? MapLightComponent; // Компонент MapLight
 }
 
