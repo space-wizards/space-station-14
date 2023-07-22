@@ -240,7 +240,7 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 70 #Weaker shield
+            damage: 65 #Weaker shield
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -270,13 +270,13 @@
           Blunt: 1.2
           Slash: 1.2
           Piercing: 1.2
-          Heat: 4.8
+          Heat: 4.8 # Extremely weak to lasers
       activeBlockModifier:
         coefficients:
           Blunt: 0.2
           Slash: 0.2
           Piercing: 0.2
-          Heat: 4.8
+          Heat: 0.8
     - type: Destructible
       thresholds:
         - trigger:
@@ -311,14 +311,14 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 4.8
-          Slash: 4.8
-          Piercing: 4.8
+          Blunt: 1.68 # takes 40% more damage than a riot shield
+          Slash: 1.68
+          Piercing: 1.68
       activeBlockModifier:
         coefficients:
-          Blunt: 2.4
-          Slash: 2.4
-          Piercing: 2.4
+          Blunt: 0.28
+          Slash: 0.28
+          Piercing: 0.28
       blockSound: !type:SoundPathSpecifier
         path: /Audio/Effects/glass_step.ogg
     - type: Destructible
