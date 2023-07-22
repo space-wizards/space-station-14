@@ -52,7 +52,7 @@ public sealed class KudzuSystem : EntitySystem
             return;
         }
 
-        if (args.NeighborFreeTiles.Count == 0 && args.Neighbors.Count == 4)
+        if (args.Neighbors.Count == 4)
         {
             RemCompDeferred<EdgeSpreaderComponent>(uid);
             return;
