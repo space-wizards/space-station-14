@@ -26,7 +26,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         {"MaximumIdleTime", 7f},
         {MedibotInjectRange, 4f},
         {MeleeMissChance, 0.3f},
-        {"MeleeRange", 1f},
+        {"MeleeRange", 1.5f},
         {"MinimumIdleTime", 2f},
         {"MovementRangeClose", 0.2f},
         {"MovementRange", 1.5f},
