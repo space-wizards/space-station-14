@@ -41,6 +41,8 @@
                 SheetGlass:
                   min: 2
                   max: 2
+    - type: DisarmMalus
+      malus: 1
     - type: StaticPrice
       price: 50
 
@@ -346,7 +348,7 @@
   description: Exotic energy shield, when folded, can even fit in your pocket.
   components:
     - type: ItemToggle
-      activatedDisarmMalus: 0.6
+      activatedDisarmMalus: 1
       activateSound:
         path: /Audio/Weapons/ebladeon.ogg
       deActivateSound:
