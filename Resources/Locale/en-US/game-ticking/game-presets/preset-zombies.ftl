@@ -1,10 +1,10 @@
 ﻿zombie-title = Zombies
-zombie-description = A the undead have been unleashed on the station! Work with the crew to survive the outbreak.
+zombie-description = The undead have been unleashed on the station! Work with the crew to survive the outbreak.
 
 zombie-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Zombies.
 zombie-no-one-ready = No players readied up! Can't start Zombies.
 
-zombie-patientzero-role-greeting = You are an initial infected. Get supplies and prepare for your eventual transformation. Once you transform, your goal is to infect and transform as many people as possible.
+zombie-patientzero-role-greeting = You are an initial infected. Get supplies and prepare for your eventual transformation. Once you transform, your goal is to infect as many people as possible and overtake the station.
 zombie-healing = You feel a stirring in your flesh
 zombie-infection-warning = You feel the zombie virus take hold
 zombie-infection-underway = Your blood begins to thicken
