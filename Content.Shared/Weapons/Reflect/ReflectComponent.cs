@@ -22,16 +22,16 @@ public sealed partial class ReflectComponent : Component
     public ReflectType Reflects = ReflectType.Energy | ReflectType.NonEnergy;
 
     /// <summary>
-    /// Probability for a projectile to be reflected. [0,1); do not set to 1.
+    /// Probability for a projectile to be reflected
     /// </summary>
     [DataField("reflectProb"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float ReflectProb = 0.25f;
 
     /// <summary>
-    /// Number of reflection sources on an entity from e.g. equipped gear
+    /// Reflection sources on an entity from e.g. equipped gear
     /// </summary>
     [DataField("layers"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public int Layers = 1;
+    public Dictionary<EntityUid, float> Layers = new();
 
     [DataField("spread"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public Angle Spread = Angle.FromDegrees(45);

@@ -172,7 +172,7 @@ public abstract class SharedReflectSystem : EntitySystem
             return;
 
         reflection.Enabled = true;
-        reflection.Layers += 1;
+        reflection.Layers.Add(uid, comp.ReflectProb);
 
         // reflection probability should be: (1 - old probability) * newly-equipped item probability + old probability
         // example: if entity has .25 reflection and newly-equipped item has .7, entity should have (1 - .25) * .7 + .25 = .775
@@ -185,20 +185,33 @@ public abstract class SharedReflectSystem : EntitySystem
         if (!TryComp(args.Equipee, out ReflectComponent? reflection))
             return;
 
-        reflection.Layers -= 1;
-        if (reflection.Layers < 1)
-            reflection.Enabled = false;
+        if (!reflection.Layers.TryGetValue(uid, out float oldProb))
+            return;
 
-        // to undo the above example, take .775 minus .7, then divide by 1 minus .7:
-        // (.775 - .7) / (1 - .7) = .075/.3 = .25 (+ float error)
-        try
+        reflection.Layers.Remove(uid);
+
+        if (comp.ReflectProb >= 1)
         {
-            reflection.ReflectProb = (reflection.ReflectProb - comp.ReflectProb) / (1 - comp.ReflectProb);
+            var newProb = 0f;
+            foreach (float prob in reflection.Layers.Values)
+            {
+                newProb += (1 - newProb) * prob;
+            }
+            reflection.ReflectProb = newProb;
         }
-        catch (DivideByZeroException e)
+        else
         {
-            reflection.ReflectProb = 0;
-            Logger.Error("encountered a component with reflectProb 1", e.ToString());
+            // to undo the above example, take .775 minus .7, then divide by 1 minus .7:
+            // (.775 - .7) / (1 - .7) = .075/.3 = .25 (+ float error)
+            try
+            {
+                reflection.ReflectProb = (reflection.ReflectProb - comp.ReflectProb) / (1 - comp.ReflectProb);
+            }
+            catch (DivideByZeroException e)
+            {
+                reflection.ReflectProb = 0;
+                Logger.Error("component with reflectprob 1 should've been pruned", e.ToString());
+            }
         }
     }
 
