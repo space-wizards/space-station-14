@@ -17,9 +17,11 @@ namespace Content.YAMLLinter
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var errors = await RunValidation();
+            var (errors, staticIdErrors) = await RunValidation();
 
-            if (errors.Count == 0)
+            var count = errors.Count + staticIdErrors.Count;
+
+            if (count == 0)
             {
                 Console.WriteLine($"No errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
                 return 0;
@@ -33,17 +35,22 @@ namespace Content.YAMLLinter
                 }
             }
 
-            Console.WriteLine($"{errors.Count} errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
+            foreach (var err in staticIdErrors)
+            {
+                Console.WriteLine(err);
+            }
+
+            Console.WriteLine($"{count} errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
             return -1;
         }
 
-        private static async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
+        private static async Task<(Dictionary<string, HashSet<ErrorNode>>, List<string>)> ValidateClient()
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { DummyTicker = true, Disconnected = true });
             var client = pairTracker.Pair.Client;
 
             var cPrototypeManager = client.ResolveDependency<IPrototypeManager>();
-            var clientErrors = new Dictionary<string, HashSet<ErrorNode>>();
+            (Dictionary<string, HashSet<ErrorNode>>, List<string>) clientErrors = default;
 
             await client.WaitPost(() =>
             {
@@ -55,13 +62,13 @@ namespace Content.YAMLLinter
             return clientErrors;
         }
 
-        private static async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
+        private static async Task<(Dictionary<string, HashSet<ErrorNode>>, List<string>)> ValidateServer()
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { DummyTicker = true, Disconnected = true });
             var server = pairTracker.Pair.Server;
 
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
-            var serverErrors = new Dictionary<string, HashSet<ErrorNode>>();
+            (Dictionary<string, HashSet<ErrorNode>>, List<string>) serverErrors = default;
 
             await server.WaitPost(() =>
             {
@@ -73,40 +80,44 @@ namespace Content.YAMLLinter
             return serverErrors;
         }
 
-        public static async Task<Dictionary<string, HashSet<ErrorNode>>> RunValidation()
+        public static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors , List<string> StaticIdErrors)>
+            RunValidation()
         {
-            var allErrors = new Dictionary<string, HashSet<ErrorNode>>();
+            var yamlErrors = new Dictionary<string, HashSet<ErrorNode>>();
 
             var serverErrors = await ValidateServer();
             var clientErrors = await ValidateClient();
 
-            foreach (var (key, val) in serverErrors)
+            foreach (var (key, val) in serverErrors.Item1)
             {
                 // Include all server errors marked as always relevant
                 var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
 
                 // We include sometimes-relevant errors if they exist both for the client & server
-                if (clientErrors.TryGetValue(key, out var clientVal))
+                if (clientErrors.Item1.TryGetValue(key, out var clientVal))
                     newErrors.UnionWith(val.Intersect(clientVal));
 
                 if (newErrors.Count != 0)
-                    allErrors[key] = newErrors;
+                    yamlErrors[key] = newErrors;
             }
 
-            // Finally add any always-relevant client errors.
-            foreach (var (key, val) in clientErrors)
+            // Next add any always-relevant client errors.
+            foreach (var (key, val) in clientErrors.Item1)
             {
                 var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
                 if (newErrors.Count == 0)
                     continue;
 
-                if (allErrors.TryGetValue(key, out var errors))
+                if (yamlErrors.TryGetValue(key, out var errors))
                     errors.UnionWith(val.Where(n => n.AlwaysRelevant));
                 else
-                    allErrors[key] = newErrors;
+                    yamlErrors[key] = newErrors;
             }
 
-            return allErrors;
+            // This will contain duplicate errors for shared files, but it doesn't really matter.
+            var staticIdErrors = serverErrors.Item2.Concat(clientErrors.Item2).ToList();
+
+            return (yamlErrors, staticIdErrors);
         }
     }
 }
