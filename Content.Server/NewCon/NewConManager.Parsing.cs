@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Server.NewCon.Commands.TypeParsers;
+using Content.Server.NewCon.TypeParsers;
 
 namespace Content.Server.NewCon;
 
@@ -14,6 +14,7 @@ public sealed partial class NewConManager
         foreach (var parserType in parsers)
         {
             var parser = (ITypeParser)_typeFactory.CreateInstance(parserType);
+            Logger.Debug($"Setting up {parserType}, {parser.Parses}");
             _consoleTypeParsers.Add(parser.Parses, parser);
         }
     }
@@ -31,12 +32,18 @@ public sealed partial class NewConManager
         return null;
     }
 
+    public bool TryParse<T>(ForwardParser parser, [NotNullWhen(true)] out object? parsed)
+    {
+        return TryParse(parser, typeof(T), out parsed);
+    }
+
     public bool TryParse(ForwardParser parser, Type t, [NotNullWhen(true)] out object? parsed)
     {
         var impl = GetParserForType(t);
 
         if (impl is null)
         {
+            Logger.Debug("FUCK");
             parsed = null;
             return false;
         }

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Content.Server.NewCon.Commands.TypeParsers;
+namespace Content.Server.NewCon.TypeParsers;
 
 public sealed class ComponentTypeParser : TypeParser<ComponentType>
 {
@@ -27,4 +27,9 @@ public sealed class ComponentTypeParser : TypeParser<ComponentType>
     }
 }
 
-public readonly record struct ComponentType(Type Ty);
+public readonly record struct ComponentType(Type Ty) : IAsType
+{
+    public Type AsType() => Ty;
+};
+
+

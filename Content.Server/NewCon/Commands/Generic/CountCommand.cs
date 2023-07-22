@@ -6,7 +6,7 @@ namespace Content.Server.NewCon.Commands.Generic;
 [ConsoleCommand]
 public sealed class CountCommand : ConsoleCommand
 {
-    [CommandImplementation]
+    [CommandImplementation, TakesPipedTypeAsGeneric]
     public int Count<T>([PipedArgument] T enumerable)
         where T : IEnumerable
     {

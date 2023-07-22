@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Content.Server.NewCon.Commands.TypeParsers;
+namespace Content.Server.NewCon.TypeParsers;
 
 public sealed class QuantityParser : TypeParser<Quantity>
 {

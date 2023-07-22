@@ -37,6 +37,11 @@ public sealed class CommandInvertedAttribute : Attribute
 
 [AttributeUsage(AttributeTargets.Parameter)]
 [MeansImplicitUse]
-public sealed class PipedArgumentTypeAttribute : Attribute
+public sealed class CommandInvocationContextAttribute : Attribute
+{
+}
+
+[AttributeUsage(AttributeTargets.Method)]
+public sealed class TakesPipedTypeAsGeneric : Attribute
 {
 }

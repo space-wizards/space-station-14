@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using System.Reflection;
-using Content.Server.NewCon.Commands.TypeParsers;
+using Content.Server.NewCon.TypeParsers;
 using Microsoft.Extensions.Logging;
 using Robust.Shared.Random;
 
@@ -10,7 +10,7 @@ namespace Content.Server.NewCon.Commands.Generic;
 [ConsoleCommand]
 public sealed class SelectCommand : ConsoleCommand
 {
-    public override bool TryGetReturnType(Type? pipedType, out Type? type)
+    public override bool TryGetReturnType(Type? pipedType, Type[] typeArguments, out Type? type)
     {
         if (pipedType is null)
         {
@@ -28,7 +28,7 @@ public sealed class SelectCommand : ConsoleCommand
         return false;
     }
 
-    [CommandImplementation]
+    [CommandImplementation, TakesPipedTypeAsGeneric]
     public T Select<T>([PipedArgument] T enumerable, [CommandArgument] Quantity quantity, [CommandInverted] bool inverted)
         where T: IEnumerable
     {

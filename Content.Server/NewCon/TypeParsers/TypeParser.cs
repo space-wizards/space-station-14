@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
 
-namespace Content.Server.NewCon.Commands.TypeParsers;
+namespace Content.Server.NewCon.TypeParsers;
 
 public interface ITypeParser
 {

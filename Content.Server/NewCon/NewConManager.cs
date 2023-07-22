@@ -1,11 +1,13 @@
 ﻿using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Content.Server.NewCon.Commands.TypeParsers;
+using Content.Server.NewCon.Syntax;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.Reflection;
+using Robust.Shared.Timing;
 
 namespace Content.Server.NewCon;
 
@@ -59,6 +61,11 @@ public sealed partial class NewConManager
         _conHost.RegisterCommand("|", Callback);
     }
 
+    public bool TryGetCommand(string commandName, [NotNullWhen(true)] out ConsoleCommand? command)
+    {
+        return _commands.TryGetValue(commandName, out command);
+    }
+
     [AnyCommand]
     private void Callback(IConsoleShell shell, string argstr, string[] args)
     {
@@ -70,26 +77,19 @@ public sealed partial class NewConManager
         var parser = new ForwardParser(argstr);
         parser.GetWord(); // shell is annoying, discard the first word.
 
-        object? value = null;
-        Type? lastRetType = null;
-        while (parser.GetWord() is { } cmd)
+        if (!Expression.TryParse(parser, null, null, false, out var expr) || parser.Index < parser.MaxIndex)
         {
-            var cmdImpl = _commands[cmd];
-            var piped = lastRetType;
-            cmdImpl.TryGetImplementation(lastRetType, null, out var impl);
-            cmdImpl.TryGetReturnType(lastRetType, out lastRetType);
-
-            if (impl is not null)
-            {
-                value = impl.Invoke(new CommandInvocationArguments() {Arguments = cmdImpl.ParseArguments(parser), PipedArgument = value, PipedArgumentType = piped, Inverted = false});
-            }
-            else
-            {
-                throw new NotImplementedException("Missing implementation for command");
-            }
+            parser.DebugPrint();
+            _log.Warning("Could not parse command.");
+            return;
         }
 
+        var watch = new Stopwatch();
+        watch.Start();
+        var value = expr.Invoke(null);
+
         shell.WriteLine(PrettyPrintType(value));
+        shell.WriteLine($"Elapsed: {watch.Elapsed}");
     }
 
     public string PrettyPrintType(object? value)

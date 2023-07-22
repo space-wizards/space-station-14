@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Content.Server.NewCon.Commands.TypeParsers;
+using Content.Server.NewCon.TypeParsers;
 
 namespace Content.Server.NewCon.Commands.Entities;
 
