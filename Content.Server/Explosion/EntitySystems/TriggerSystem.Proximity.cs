@@ -68,7 +68,7 @@ public sealed partial class TriggerSystem
             collisionLayer: component.Layer);
     }
 
-    private bool ShouldCollideThroughWall(EntityUid uid, TriggerOnProximityComponent component,ref StartCollideEvent args)
+    private bool ShouldCollideThroughWall(EntityUid uid, TriggerOnProximityComponent component, ref StartCollideEvent args)
     {
         if (component.TriggerBehindWall)
             return true;
@@ -77,14 +77,19 @@ public sealed partial class TriggerSystem
         if (TryComp<TransformComponent>(uid, out var entTransform) &&
                 TryComp<TransformComponent>(args.OtherBody.Owner, out var otherTranform))
         {
-            SharedPhysicsSystem physSystem = EntityManager.System<SharedPhysicsSystem>();
+            var physSystem = EntityManager.System<SharedPhysicsSystem>();
 
             var startPos = otherTranform.MapPosition.Position;
             var endPos = entTransform.MapPosition.Position;
 
             float distance = (startPos - endPos).Length();
+            var direction = (endPos - startPos).Normalized();
 
-            var rayRes = physSystem.IntersectRay(otherTranform.MapID, new CollisionRay(startPos, (endPos - startPos).Normalized(), (int)CollisionGroup.Impassable), distance/2).ToList();
+            // If entity that caused activation is so close that direction becomes non-1, we assume that it can collide
+            if (!MathHelper.CloseToPercent(direction.LengthSquared(), 1))
+                return true;
+
+            var rayRes = physSystem.IntersectRay(otherTranform.MapID, new CollisionRay(startPos, direction, (int)CollisionGroup.Impassable), distance/2).ToList();
 
             if (!rayRes.Any())
                 return true;
