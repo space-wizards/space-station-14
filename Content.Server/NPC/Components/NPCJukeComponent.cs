@@ -7,10 +7,4 @@ public sealed class NPCJukeComponent : Component
 {
     [DataField("jukeType")]
     public JukeType JukeType = JukeType.Away;
-
-    /// <summary>
-    /// Are we actively juking
-    /// </summary>
-    [DataField("juking")]
-    public bool Juking = false;
 }

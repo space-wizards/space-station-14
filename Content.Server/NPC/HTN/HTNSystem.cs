@@ -73,8 +73,9 @@ public sealed class HTNSystem : EntitySystem
             {
                 var currentOperator = comp.Plan.CurrentOperator;
                 currentOperator.TaskShutdown(comp.Blackboard, HTNOperatorStatus.Failed);
-                ConditionalShutdown(comp, HTNPlanState.PlanFinished);
                 ShutdownPlan(comp);
+                comp.Plan = null;
+                RequestPlan(comp);
             }
         }
 
@@ -331,23 +332,21 @@ public sealed class HTNSystem : EntitySystem
                     break;
                 case HTNOperatorStatus.Failed:
                     currentOperator.TaskShutdown(blackboard, status);
-                    ConditionalShutdown(component, HTNPlanState.PlanFinished);
                     ShutdownPlan(component);
                     break;
                 // Operator completed so go to the next one.
                 case HTNOperatorStatus.Finished:
                     currentOperator.TaskShutdown(blackboard, status);
+                    ConditionalShutdown(component, HTNPlanState.TaskFinished);
                     component.Plan.Index++;
 
                     // Plan finished!
                     if (component.Plan.Tasks.Count <= component.Plan.Index)
                     {
-                        ConditionalShutdown(component, HTNPlanState.PlanFinished);
                         ShutdownPlan(component);
                         break;
                     }
 
-                    ConditionalShutdown(component, HTNPlanState.Running);
                     StartupTask(component.Plan.Tasks[component.Plan.Index], component.Blackboard, component.Plan.Effects[component.Plan.Index]);
                     break;
                 default:
@@ -359,15 +358,25 @@ public sealed class HTNSystem : EntitySystem
     private void ShutdownPlan(HTNComponent component)
     {
         DebugTools.Assert(component.Plan != null);
+        var blackboard = component.Blackboard;
 
         foreach (var task in component.Plan.Tasks)
         {
+            if (task.Operator is IHtnConditionalShutdown conditional &&
+                (conditional.ShutdownState & HTNPlanState.PlanFinished) != 0x0)
+            {
+                conditional.ConditionalShutdown(blackboard);
+            }
+
             task.Operator.PlanShutdown(component.Blackboard);
         }
 
         component.Plan = null;
     }
 
+    /// <summary>
+    /// Shuts down the current operator conditionally.
+    /// </summary>
     private void ConditionalShutdown(HTNComponent component, HTNPlanState state)
     {
         var plan = component.Plan;

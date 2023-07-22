@@ -28,6 +28,9 @@
             pathfindKey: TargetPathfind
             rangeKey: MeleeRange
         - !type:HTNPrimitiveTask
+          operator: !type:JukeOperator
+            jukeType: Away
+        - !type:HTNPrimitiveTask
           operator: !type:MeleeOperator
             targetKey: Target
           preconditions:
@@ -41,6 +44,3 @@
               id: MeleeService
               proto: NearbyMeleeTargets
               key: Target
-        - !type:HTNPrimitiveTask
-          operator: !type:JukeOperator
-            jukeType: Away

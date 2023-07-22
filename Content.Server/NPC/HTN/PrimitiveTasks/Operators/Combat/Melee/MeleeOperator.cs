@@ -14,8 +14,9 @@ public sealed class MeleeOperator : HTNOperator, IHtnConditionalShutdown
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     /*
-     * TODO: Juking looks fucking weird
-     * If we get NoPath on movement need to cancel the plan.
+     * TODO: Just use the events and make it identical to before
+     * TODO: Split juking into different operators, i.e. JukeAwayOperator, JukeAdjacentTileOperator, etc.
+     * TODO: Put juke before melee and have melee finish as appropriate, juke just does the uhh thingie.
      */
 
     // TODO: JukeOperator
@@ -29,7 +30,7 @@ public sealed class MeleeOperator : HTNOperator, IHtnConditionalShutdown
     /// When to shut the task down.
     /// </summary>
     [DataField("shutdownState")]
-    public HTNPlanState ShutdownState { get; } = HTNPlanState.PlanFinished;
+    public HTNPlanState ShutdownState { get; } = HTNPlanState.TaskFinished;
 
     /// <summary>
     /// Key that contains the target entity.

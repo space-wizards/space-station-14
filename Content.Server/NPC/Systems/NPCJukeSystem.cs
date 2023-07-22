@@ -3,7 +3,6 @@ using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 using Content.Server.Weapons.Melee;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NPC;
 using Content.Shared.Weapons.Melee;
@@ -21,54 +20,39 @@ public sealed class NPCJukeSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private EntityQuery<NPCMeleeCombatComponent> _meleeQuery;
-    private EntityQuery<NPCRangedCombatComponent> _rangedQuery;
+    private EntityQuery<NPCMeleeCombatComponent> _npcMeleeQuery;
+    private EntityQuery<NPCRangedCombatComponent> _npcRangedQuery;
 
     public override void Initialize()
     {
         base.Initialize();
-        _meleeQuery = GetEntityQuery<NPCMeleeCombatComponent>();
-        _rangedQuery = GetEntityQuery<NPCRangedCombatComponent>();
+        _npcMeleeQuery = GetEntityQuery<NPCMeleeCombatComponent>();
+        _npcRangedQuery = GetEntityQuery<NPCRangedCombatComponent>();
 
-        SubscribeLocalEvent<NPCJukeComponent, NPCSteeringEvent>(OnMeleeSteering);
+        SubscribeLocalEvent<NPCJukeComponent, NPCSteeringEvent>(OnJukeSteering);
     }
 
-    public override void Update(float frameTime)
+    private void OnJukeSteering(EntityUid uid, NPCJukeComponent component, ref NPCSteeringEvent args)
     {
-        base.Update(frameTime);
-        var query = EntityQueryEnumerator<NPCJukeComponent, NPCSteeringComponent, InputMoverComponent, TransformComponent>();
-
-        while (query.MoveNext(out var uid, out var juke, out var steering, out var mover, out var xform))
+        if (_npcMeleeQuery.TryGetComponent(uid, out var melee))
         {
-            var result = TryJuke(uid, juke, steering, mover, xform);
-            juke.Juking = result;
-        }
-    }
-
-    private bool TryJuke(EntityUid uid, NPCJukeComponent juke, NPCSteeringComponent steering, InputMoverComponent mover, TransformComponent xform)
-    {
-        if (_meleeQuery.TryGetComponent(uid, out var melee))
-        {
-            var worldPosition = _transform.GetWorldPosition(xform);
-            var offsetRot = -_mover.GetParentGridAngle(mover);
-
-            switch (juke.JukeType)
+            switch (component.JukeType)
             {
                 case JukeType.Away:
                     if (!TryComp<MeleeWeaponComponent>(melee.Weapon, out var weapon))
-                        return false;
+                        return;
 
                     var cdRemaining = weapon.NextAttack - _timing.CurTime;
                     var attackCooldown = TimeSpan.FromSeconds(1f / _melee.GetAttackRate(melee.Weapon, uid, weapon));
 
                     // Might as well get in range.
                     if (cdRemaining < attackCooldown * 0.45f)
-                        return false;
+                        return;
 
                     if (!_physics.TryGetNearestPoints(uid, melee.Target, out var pointA, out var pointB))
-                        return false;
+                        return;
 
-                    var obstacleDirection = pointB - worldPosition;
+                    var obstacleDirection = pointB - args.WorldPosition;
 
                     // If they're moving away then pursue anyway.
                     // If just hit then always back up a bit.
@@ -76,11 +60,11 @@ public sealed class NPCJukeSystem : EntitySystem
                         TryComp<PhysicsComponent>(melee.Target, out var targetPhysics) &&
                         Vector2.Dot(targetPhysics.LinearVelocity, obstacleDirection) > 0f)
                     {
-                        return false;
+                        return;
                     }
 
                     if (cdRemaining < TimeSpan.FromSeconds(1f / _melee.GetAttackRate(melee.Weapon, uid, weapon)) * 0.45f)
-                        return false;
+                        return;
 
                     var idealDistance = weapon.Range * 4f;
                     var obstacleDistance = obstacleDirection.Length();
@@ -88,13 +72,13 @@ public sealed class NPCJukeSystem : EntitySystem
                     if (obstacleDistance > idealDistance || obstacleDistance == 0f)
                     {
                         // Don't want to get too far.
-                        return false;
+                        return;
                     }
 
-                    obstacleDirection = offsetRot.RotateVec(obstacleDirection);
+                    obstacleDirection = args.OffsetRotation.RotateVec(obstacleDirection);
                     var norm = obstacleDirection.Normalized();
 
-                    var weight = obstacleDistance <= steering.Radius
+                    var weight = obstacleDistance <= args.Steering.Radius
                         ? 1f
                         : (idealDistance - obstacleDistance) / idealDistance;
 
@@ -105,30 +89,21 @@ public sealed class NPCJukeSystem : EntitySystem
                         if (result < 0f)
                             continue;
 
-                        steering.Interest[i] = MathF.Max(steering.Interest[i], result);
+                        args.Steering.Interest[i] = MathF.Max(args.Steering.Interest[i], result);
                     }
                     break;
                 default:
                     throw new NotImplementedException();
             }
 
-            return true;
+            args.Steering.CanSeek = false;
+            return;
         }
 
         // TODO: Just use some cooldown
-        if (_rangedQuery.TryGetComponent(uid, out var ranged))
+        if (_npcRangedQuery.TryGetComponent(uid, out var ranged))
         {
 
         }
-
-        return false;
-    }
-
-    private void OnMeleeSteering(EntityUid uid, NPCJukeComponent component, ref NPCSteeringEvent args)
-    {
-        if (!component.Juking)
-            return;
-
-        args.Steering.CanSeek = false;
     }
 }

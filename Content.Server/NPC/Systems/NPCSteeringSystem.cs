@@ -236,8 +236,16 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
             return;
 
         // Not every mob has the modifier component so do it as a separate query.
-        var npcs = EntityQuery<ActiveNPCComponent, NPCSteeringComponent, InputMoverComponent, TransformComponent>()
-            .Select(o => (o.Item1.Owner, o.Item2, o.Item3, o.Item4)).ToArray();
+        var npcs = new (EntityUid, NPCSteeringComponent, InputMoverComponent, TransformComponent)[Count<ActiveNPCComponent>()];
+
+        var query = EntityQueryEnumerator<ActiveNPCComponent, NPCSteeringComponent, InputMoverComponent, TransformComponent>();
+        var index = 0;
+
+        while (query.MoveNext(out var uid, out _, out var steering, out var mover, out var xform))
+        {
+            npcs[index] = (uid, steering, mover, xform);
+            index++;
+        }
 
         // Dependency issues across threads.
         var options = new ParallelOptions
@@ -246,7 +254,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         };
         var curTime = _timing.CurTime;
 
-        Parallel.For(0, npcs.Length, options, i =>
+        Parallel.For(0, index, options, i =>
         {
             var (uid, steering, mover, xform) = npcs[i];
             Steer(uid, steering, mover, xform, frameTime, curTime);
@@ -332,22 +340,17 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         var body = _physicsQuery.GetComponent(uid);
         var dangerPoints = steering.DangerPoints;
         dangerPoints.Clear();
-        steering.CanSeek = true;
 
-        var ev = new NPCSteeringEvent(steering);
-        RaiseLocalEvent(uid, ref ev);
-
-        // If still using regular steering then clear our interest
-        // otherwise use what we may have been provided.
-        if (steering.CanSeek)
+        for (var i = 0; i < InterestDirections; i++)
         {
-            for (var i = 0; i < InterestDirections; i++)
-            {
-                steering.Interest[i] = 0f;
-                steering.Danger[i] = 0f;
-            }
+            steering.Interest[i] = 0f;
+            steering.Danger[i] = 0f;
         }
 
+        steering.CanSeek = true;
+
+        var ev = new NPCSteeringEvent(mover, steering, xform, worldPos, offsetRot);
+        RaiseLocalEvent(uid, ref ev);
         // If seek has arrived at the target node for example then immediately re-steer.
         var forceSteer = true;
 

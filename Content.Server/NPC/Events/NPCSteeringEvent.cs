@@ -1,4 +1,6 @@
+using System.Numerics;
 using Content.Server.NPC.Components;
+using Content.Shared.Movement.Components;
 
 namespace Content.Server.NPC.Events;
 
@@ -7,7 +9,8 @@ namespace Content.Server.NPC.Events;
 /// </summary>
 [ByRefEvent]
 public readonly record struct NPCSteeringEvent(
-    NPCSteeringComponent Steering)
-{
-    public readonly NPCSteeringComponent Steering = Steering;
-}
+    InputMoverComponent Mover,
+    NPCSteeringComponent Steering,
+    TransformComponent Transform,
+    Vector2 WorldPosition,
+    Angle OffsetRotation);
