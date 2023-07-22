@@ -263,10 +263,12 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 
         if (_subscribedSessions.Count > 0)
         {
-            var data = new List<NPCSteeringDebugData>(npcs.Length);
+            var data = new List<NPCSteeringDebugData>(index);
 
-            foreach (var (uid, steering, mover, _) in npcs)
+            for (var i = 0; i < index; i++)
             {
+                var (uid, steering, mover, _) = npcs[i];
+
                 data.Add(new NPCSteeringDebugData(
                     uid,
                     mover.CurTickSprintMovement,
