@@ -77,7 +77,7 @@ public abstract class ConsoleCommand
 
     public List<MethodInfo> GetConcreteImplementations(Type? pipedType, Type[] typeArguments)
     {
-        return GetGenericImplementations()
+        var impls = GetGenericImplementations()
             .Select(x =>
         {
             if (x.IsGenericMethodDefinition)
@@ -90,6 +90,8 @@ public abstract class ConsoleCommand
 
             return x;
         }).ToList();
+
+        return impls;
     }
 
     public List<MethodInfo> GetGenericImplementations()
@@ -123,7 +125,6 @@ public abstract class ConsoleCommand
         {
             if (!_newCon.TryParse(parser, TypeParameterParsers[i], out var parsed) || parsed is not IAsType ty)
             {
-                Logger.Debug($"AWAWA {parsed} {TypeParameterParsers[i]}");
                 resolvedTypeArguments = Array.Empty<Type>();
                 args = null;
                 return false;
@@ -136,7 +137,6 @@ public abstract class ConsoleCommand
         {
             if (!_newCon.TryParse(parser, param.Value, out var parsed))
             {
-                Logger.Debug("fuck");
                 args = null;
                 return false;
             }
@@ -244,6 +244,13 @@ public sealed class ConsoleCommandImplementor
                 continue;
             }
 
+            if (param.GetCustomAttribute<CommandInvocationContextAttribute>() is { } _)
+            {
+                // args.Context
+                paramList.Add(Expression.Property(args, nameof(CommandInvocationArguments.Context)));
+                continue;
+            }
+
         }
 
         Expression partialShim = Expression.Call(Expression.Constant(Owner), unshimmed, paramList);
@@ -329,6 +336,7 @@ public static class ReflectionExtensions
 public sealed class CommandInvocationArguments
 {
     public required object? PipedArgument;
+    public required IInvocationContext Context { get; set; }
     public required CommandArgumentBundle Bundle;
     public Dictionary<string, object?> Arguments => Bundle.Arguments;
     public bool Inverted => Bundle.Inverted;

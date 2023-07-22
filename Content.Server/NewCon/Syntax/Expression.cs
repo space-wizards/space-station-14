@@ -36,12 +36,12 @@ public sealed class Expression
         return true;
     }
 
-    public object? Invoke(object? input)
+    public object? Invoke(object? input, IInvocationContext ctx)
     {
         var ret = input;
         foreach (var cmd in Commands)
         {
-            ret = cmd.Invoke(ret);
+            ret = cmd.Invoke(ret, ctx);
         }
 
         return ret;

@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Content.Server.NewCon.Invocation;
 using Content.Server.NewCon.Syntax;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -84,12 +85,9 @@ public sealed partial class NewConManager
             return;
         }
 
-        var watch = new Stopwatch();
-        watch.Start();
-        var value = expr.Invoke(null);
+        var value = expr.Invoke(null, new OldShellInvocationContext(shell));
 
         shell.WriteLine(PrettyPrintType(value));
-        shell.WriteLine($"Elapsed: {watch.Elapsed}");
     }
 
     public string PrettyPrintType(object? value)

@@ -11,9 +11,17 @@ public sealed class CompCommand : ConsoleCommand
     public override Type[] TypeParameterParsers => new[] {typeof(ComponentType)};
 
     [CommandImplementation]
-    public IEnumerable<T> With<T>([PipedArgument] IEnumerable<EntityUid> input)
+    public IEnumerable<T> CompEnumerable<T>([PipedArgument] IEnumerable<EntityUid> input)
         where T: IComponent
     {
         return input.Where(x => _entity.HasComponent<T>(x)).Select(x => _entity.GetComponent<T>(x));
     }
+
+    /*[CommandImplementation]
+    public T? CompDirect<T>([PipedArgument] EntityUid input)
+        where T : Component
+    {
+        _entity.TryGetComponent(input, out T? res);
+        return res;
+    }*/
 }

@@ -102,8 +102,8 @@ public sealed class ParsedCommand
         return true;
     }
 
-    public object? Invoke(object? pipedIn)
+    public object? Invoke(object? pipedIn, IInvocationContext ctx)
     {
-        return Invocable.Invoke(new CommandInvocationArguments() {Bundle = Bundle, PipedArgument = pipedIn});
+        return Invocable.Invoke(new CommandInvocationArguments() {Bundle = Bundle, PipedArgument = pipedIn, Context = ctx});
     }
 }

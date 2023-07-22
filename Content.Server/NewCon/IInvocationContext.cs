@@ -15,10 +15,10 @@ public interface IInvocationContext
         // Cut markup for server.
         if (Session is null)
         {
-            WriteLine(line.Nodes.Where(x => x.Name is null).Select(x => x.Value.StringValue!).Aggregate((x, y) => x + y));
+            WriteLine(line.ToString());
             return;
         }
 
-        WriteLine(line.ToString());
+        WriteLine(line.ToMarkup());
     }
 }
