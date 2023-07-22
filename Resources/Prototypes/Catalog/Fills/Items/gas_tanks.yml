@@ -10,9 +10,10 @@
 # Filling 15 liters at exactly 1000 kpa and 293.15K takes 6.154137219 moles
 # Multiply/divide total moles in proportion to tank size to keep it at 1000 kpa pressure
 
-# For simple folk like me:
+# For practical folk:
 # 15 liters tank = 6.154137219 moles
-#  5 liters tank = 1/3 as many
+#  5 liters tank = 6.154137219 / 3 = 2.051379073 moles
+# Yes, you do need all those digits
 
 - type: entity
   id: OxygenTankFilled
