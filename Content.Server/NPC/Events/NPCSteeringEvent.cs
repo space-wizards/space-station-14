@@ -7,6 +7,8 @@ namespace Content.Server.NPC.Events;
 /// Raised directed on an NPC when steering.
 /// </summary>
 [ByRefEvent]
-public readonly record struct NPCSteeringEvent(NPCSteeringComponent Steering,
+public readonly record struct NPCSteeringEvent(
+    NPCSteeringComponent Steering,
+    TransformComponent Transform,
     Vector2 WorldPosition,
     Angle OffsetRotation);

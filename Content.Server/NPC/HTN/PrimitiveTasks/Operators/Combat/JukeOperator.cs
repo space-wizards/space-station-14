@@ -6,13 +6,17 @@ public sealed class JukeOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
+    [DataField("jukeType")]
+    public JukeType JukeType = JukeType.AdjacentTile;
+
     [DataField("shutdownState")]
     public HTNPlanState ShutdownState { get; } = HTNPlanState.PlanFinished;
 
     public override void Startup(NPCBlackboard blackboard)
     {
         base.Startup(blackboard);
-        _entManager.EnsureComponent<NPCJukeComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        var juke = _entManager.EnsureComponent<NPCJukeComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        juke.JukeType = JukeType;
     }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
@@ -24,14 +28,4 @@ public sealed class JukeOperator : HTNOperator, IHtnConditionalShutdown
     {
         _entManager.RemoveComponent<NPCJukeComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
     }
-}
-
-public enum JukeType : byte
-{
-    /// <summary>
-    /// Will move directly away from target if applicable.
-    /// </summary>
-    Away,
-
-    AdjacentTile
 }

@@ -5,8 +5,10 @@ using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 using Content.Server.Weapons.Melee;
 using Content.Shared.NPC;
 using Content.Shared.Weapons.Melee;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems;
@@ -14,6 +16,7 @@ namespace Content.Server.NPC.Systems;
 public sealed class NPCJukeSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MeleeWeaponSystem _melee = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
@@ -31,76 +34,118 @@ public sealed class NPCJukeSystem : EntitySystem
 
     private void OnJukeSteering(EntityUid uid, NPCJukeComponent component, ref NPCSteeringEvent args)
     {
-        if (_npcMeleeQuery.TryGetComponent(uid, out var melee))
+        if (component.JukeType == JukeType.AdjacentTile)
         {
-            switch (component.JukeType)
+            if (_timing.CurTime < component.NextJuke)
             {
-                case JukeType.Away:
-                    if (!TryComp<MeleeWeaponComponent>(melee.Weapon, out var weapon))
-                        return;
+                component.TargetTile = null;
+                return;
+            }
 
-                    var cdRemaining = weapon.NextAttack - _timing.CurTime;
-                    var attackCooldown = TimeSpan.FromSeconds(1f / _melee.GetAttackRate(melee.Weapon, uid, weapon));
+            if (!TryComp<MapGridComponent>(args.Transform.GridUid, out var grid))
+            {
+                return;
+            }
 
-                    // Might as well get in range.
-                    if (cdRemaining < attackCooldown * 0.45f)
-                        return;
+            var currentTile = grid.CoordinatesToTile(args.Transform.Coordinates);
 
-                    if (!_physics.TryGetNearestPoints(uid, melee.Target, out var pointA, out var pointB))
-                        return;
+            if (component.TargetTile == null)
+            {
+                var targetTile = currentTile;
+                targetTile += _random.NextAngle().GetCardinalDir().ToIntVec();
+                component.TargetTile ??= targetTile;
+            }
 
-                    var obstacleDirection = pointB - args.WorldPosition;
+            var elapsed = _timing.CurTime - component.NextJuke;
 
-                    // If they're moving away then pursue anyway.
-                    // If just hit then always back up a bit.
-                    if (cdRemaining < attackCooldown * 0.90f &&
-                        TryComp<PhysicsComponent>(melee.Target, out var targetPhysics) &&
-                        Vector2.Dot(targetPhysics.LinearVelocity, obstacleDirection) > 0f)
-                    {
-                        return;
-                    }
+            // Finished juke, reset timer.
+            if (elapsed.TotalSeconds > component.JukeDuration ||
+                currentTile == component.TargetTile)
+            {
+                component.TargetTile = null;
+                component.NextJuke = _timing.CurTime + TimeSpan.FromSeconds(component.JukeDuration);
+                return;
+            }
 
-                    if (cdRemaining < TimeSpan.FromSeconds(1f / _melee.GetAttackRate(melee.Weapon, uid, weapon)) * 0.45f)
-                        return;
+            var targetCoords = grid.GridTileToWorld(component.TargetTile.Value);
+            var targetDir = (targetCoords.Position - args.WorldPosition);
+            targetDir = args.OffsetRotation.RotateVec(targetDir);
+            const float weight = 1f;
+            var norm = targetDir.Normalized();
 
-                    var idealDistance = weapon.Range * 4f;
-                    var obstacleDistance = obstacleDirection.Length();
+            for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
+            {
+                var result = -Vector2.Dot(norm, NPCSteeringSystem.Directions[i]) * weight;
 
-                    if (obstacleDistance > idealDistance || obstacleDistance == 0f)
-                    {
-                        // Don't want to get too far.
-                        return;
-                    }
+                if (result < 0f)
+                    continue;
 
-                    obstacleDirection = args.OffsetRotation.RotateVec(obstacleDirection);
-                    var norm = obstacleDirection.Normalized();
-
-                    var weight = obstacleDistance <= args.Steering.Radius
-                        ? 1f
-                        : (idealDistance - obstacleDistance) / idealDistance;
-
-                    for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
-                    {
-                        var result = -Vector2.Dot(norm, NPCSteeringSystem.Directions[i]) * weight;
-
-                        if (result < 0f)
-                            continue;
-
-                        args.Steering.Interest[i] = MathF.Max(args.Steering.Interest[i], result);
-                    }
-                    break;
-                default:
-                    throw new NotImplementedException();
+                args.Steering.Interest[i] = MathF.Max(args.Steering.Interest[i], result);
             }
 
             args.Steering.CanSeek = false;
-            return;
         }
 
-        // TODO: Just use some cooldown
-        if (_npcRangedQuery.TryGetComponent(uid, out var ranged))
+        if (component.JukeType == JukeType.Away)
         {
+            // TODO: Ranged away juking
+            if (_npcMeleeQuery.TryGetComponent(uid, out var melee))
+            {
+                if (!TryComp<MeleeWeaponComponent>(melee.Weapon, out var weapon))
+                    return;
 
+                var cdRemaining = weapon.NextAttack - _timing.CurTime;
+                var attackCooldown = TimeSpan.FromSeconds(1f / _melee.GetAttackRate(melee.Weapon, uid, weapon));
+
+                // Might as well get in range.
+                if (cdRemaining < attackCooldown * 0.45f)
+                    return;
+
+                if (!_physics.TryGetNearestPoints(uid, melee.Target, out var pointA, out var pointB))
+                    return;
+
+                var obstacleDirection = pointB - args.WorldPosition;
+
+                // If they're moving away then pursue anyway.
+                // If just hit then always back up a bit.
+                if (cdRemaining < attackCooldown * 0.90f &&
+                    TryComp<PhysicsComponent>(melee.Target, out var targetPhysics) &&
+                    Vector2.Dot(targetPhysics.LinearVelocity, obstacleDirection) > 0f)
+                {
+                    return;
+                }
+
+                if (cdRemaining < TimeSpan.FromSeconds(1f / _melee.GetAttackRate(melee.Weapon, uid, weapon)) * 0.45f)
+                    return;
+
+                var idealDistance = weapon.Range * 4f;
+                var obstacleDistance = obstacleDirection.Length();
+
+                if (obstacleDistance > idealDistance || obstacleDistance == 0f)
+                {
+                    // Don't want to get too far.
+                    return;
+                }
+
+                obstacleDirection = args.OffsetRotation.RotateVec(obstacleDirection);
+                var norm = obstacleDirection.Normalized();
+
+                var weight = obstacleDistance <= args.Steering.Radius
+                    ? 1f
+                    : (idealDistance - obstacleDistance) / idealDistance;
+
+                for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
+                {
+                    var result = -Vector2.Dot(norm, NPCSteeringSystem.Directions[i]) * weight;
+
+                    if (result < 0f)
+                        continue;
+
+                    args.Steering.Interest[i] = MathF.Max(args.Steering.Interest[i], result);
+                }
+            }
+
+            args.Steering.CanSeek = false;
         }
     }
 }
