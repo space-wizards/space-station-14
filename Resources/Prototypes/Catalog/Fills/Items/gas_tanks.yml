@@ -8,12 +8,12 @@
   suffix: Filled
   components: &oxyTankFill
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 21.3
     air:
-      volume: 15
+      volume: 5
       moles:
         # 1000 / (Atmospherics.R * temperature / volume)
-        - 6.154137219
+        - 2.051379073
       temperature: 293.15
 
 - type: entity
@@ -28,12 +28,12 @@
   suffix: Filled
   components:
     - type: GasTank
-      outputPressure: 21.27825
+      outputPressure: 21.3
       air:
-        volume: 2
+        volume: 0.66
         moles:
           # 1000 / (Atmospherics.R * temperature / volume)
-          - 0.820551629 # oxygen
+          - 0.270782038 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -42,12 +42,12 @@
   suffix: Filled
   components:
     - type: GasTank
-      outputPressure: 21.27825
+      outputPressure: 21.3
       air:
-        volume: 6
+        volume: 2
         moles:
           # 1000 / (Atmospherics.R * temperature / volume)
-          - 2.461654887 # oxygen
+          - 0.820551629 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -56,12 +56,12 @@
   suffix: Filled
   components:
     - type: GasTank
-      outputPressure: 21.27825
+      outputPressure: 21.3
       air:
-        volume: 10
+        volume: 3.33
         moles:
           # 1000 / (Atmospherics.R * temperature / volume)
-          - 4.102725815 # oxygen
+          - 1.366218462 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -70,14 +70,14 @@
   suffix: Filled
   components:
     - type: GasTank
-      outputPressure: 101.325
+      outputPressure: 101.3
       air:
-        volume: 15
+        volume: 5
         moles:
           # (1000 * .22) / (Atmospherics.R * temperature / volume)
-          - 1.353910188 # oxygen
+          - 0.451303396 # oxygen
           # (1000 * .78) / (Atmospherics.R * temperature / volume)
-          - 4.800227031 # nitrogen
+          - 1.600075677 # nitrogen
         temperature: 293.15
 
 - type: entity
@@ -87,13 +87,13 @@
   name: nitrogen tank
   components:
     - type: GasTank
-      outputPressure: 21.27825
+      outputPressure: 21.3
       air:
-        volume: 15
+        volume: 5
         moles:
           - 0 # oxygen
           # 1000 / (Atmospherics.R * temperature / volume)
-          - 6.154137219 # nitrogen
+          - 2.051379073 # nitrogen
         temperature: 293.15
 
 - type: entity
@@ -108,12 +108,12 @@
       #  * 101.325 | one atmosphere
       # __________
       #    30.3975   optimal output pressure
-      outputPressure: 30.3975
+      outputPressure: 30.4
       air:
-        volume: 15
+        volume: 5
         moles:
           # (1000 * .7) / (Atmospherics.R * temperature / volume)
-          - 4.307896053 # oxygen
+          - 1.435965351 # oxygen
           - 0 # Nitrogen
           - 0 # CO2
           - 0 # Plasma
@@ -121,7 +121,7 @@
           - 0 # Water vapor
           - 0 # Miasma
           # (1000 * .3) / (Atmospherics.R * temperature / volume)
-          - 1.846241166 # N2O
+          - 0.615413722 # N2O
         temperature: 293.15
 
 - type: entity
@@ -131,13 +131,13 @@
   suffix: Filled
   components:
     - type: GasTank
-      outputPressure: 101.325
+      outputPressure: 101.3
       air:
-        volume: 15
+        volume: 5
         moles:
           - 0
           - 0
           - 0
           # 1000 / (Atmospherics.R * temperature / volume)
-          - 6.154137219 # plasma
+          - 2.051379073 # plasma
         temperature: 293.15
