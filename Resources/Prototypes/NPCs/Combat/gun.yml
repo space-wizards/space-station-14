@@ -3,40 +3,12 @@
 - type: htnCompound
   id: GunCombatCompound
   branches:
+    # Pick target, then move into range and shoot them.
     - tasks:
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyGunTargets
-        - !type:HTNCompoundTask
-          task: GunAttackTargetCompound
 
-# Tries to Gun attack our target.
-- type: htnCompound
-  id: GunAttackTargetCompound
-  branches:
-    # Keep hitting them if they're in LOS
-    - tasks:
-        - !type:HTNPrimitiveTask
-          preconditions:
-            - !type:KeyExistsPrecondition
-              key: Target
-            - !type:TargetInRangePrecondition
-              targetKey: Target
-              # TODO: Non-scuffed
-              rangeKey: RangedRange
-            - !type:TargetInLOSPrecondition
-              targetKey: Target
-              rangeKey: RangedRange
-          operator: !type:GunOperator
-            targetKey: Target
-          services:
-            - !type:UtilityService
-              id: RangedService
-              proto: NearbyGunTargets
-              key: Target
-
-    # Move to range and hit them
-    - tasks:
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             pathfindInPlanning: true
@@ -44,6 +16,11 @@
             targetKey: TargetCoordinates
             pathfindKey: TargetPathfind
             rangeKey: MeleeRange
+
+        - !type:HTNPrimitiveTask
+          operator: !type:JukeOperator
+            jukeType: AdjacentTile
+
         - !type:HTNPrimitiveTask
           preconditions:
             - !type:KeyExistsPrecondition
@@ -72,8 +49,10 @@
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyAmmo
+
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
+
         - !type:HTNPrimitiveTask
           preconditions:
             - !type:TargetInRangePrecondition
@@ -92,8 +71,10 @@
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyGuns
+
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
+
         - !type:HTNPrimitiveTask
           preconditions:
             - !type:TargetInRangePrecondition
@@ -101,6 +82,3 @@
               rangeKey: InteractRange
           operator: !type:InteractWithOperator
             targetKey: Target
-
-# Primitive
-

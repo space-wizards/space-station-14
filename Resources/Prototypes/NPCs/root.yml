@@ -5,8 +5,26 @@
   id: TurretCompound
   branches:
     - tasks:
-        - !type:HTNCompoundTask
-          task: GunCombatCompound
+        # Shoot target if in range
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              # TODO: Non-scuffed
+              rangeKey: RangedRange
+            - !type:TargetInLOSPrecondition
+              targetKey: Target
+              rangeKey: RangedRange
+          operator: !type:GunOperator
+            targetKey: Target
+          services:
+            - !type:UtilityService
+              id: RangedService
+              proto: NearbyGunTargets
+              key: Target
+
     - tasks:
         - !type:HTNCompoundTask
           task: IdleSpinCompound
@@ -17,52 +35,41 @@
 - type: htnCompound
   id: RangedCompound
   branches:
-    - tasks:
-        - !type:HTNPrimitiveTask
-          operator: !type:MoveToOperator
-        - !type:HTNPrimitiveTask
-          operator: !type:GunOperator
-        - !type:HTNPrimitiveTask
-          operator: !type:JukeOperator
-            type: AdjacentTile
-    # Shoot if ammo
-#    - tasks:
-#        - id: GunCombatCompound
-#      preconditions:
-#        - !type:GunAmmoPrecondition
-#          minPercent: 0.001
-#    # TODO: Equip a gun from inventory if one found, preferring over pickup.
-#
-#    # Pickup ammo if any nearby
-#    # TODO: Need nearby ammo
-#    #- tasks:
-#    #    - id: GunAmmoPickupCompound
-#    #  preconditions:
-#    #    - !type:GunAmmoPrecondition
-#    #      maxPercent: 0.0
-#    # Discard gun if no ammo
-#    - tasks:
-#        - !type:HTNPrimitiveTask
-#           preconditions:
-#           - !type:ActiveHandEntityPrecondition
-#           operator: !type:DropOperator
-#      preconditions:
-#        - !type:ActiveHandComponentPrecondition
-#          components:
-#            - type: Gun
-#        - !type:GunAmmoPrecondition
-#          maxPercent: 0.001
-#    # Pickup gun if no ammo
-#    - tasks:
-#        - id: PickupGunCompound
-#      preconditions:
-#        - !type:ActiveHandComponentPrecondition
-#          components:
-#            - type: Gun
-#          invert: true
+    # Move to target and shoot them if ammo
+    - preconditions:
+        - !type:GunAmmoPrecondition
+          minPercent: 0.001
+      tasks:
+        - !type:HTNCompoundTask
+          task: GunAttackTargetCompound
+    # TODO: Equip a gun from inventory if one found, preferring over pickup.
 
+    # Pickup ammo if any nearby
+    # TODO: Need nearby ammo
+    #- tasks:
+    #    - id: GunAmmoPickupCompound
+    #  preconditions:
+    #    - !type:GunAmmoPrecondition
+    #      maxPercent: 0.0
+    # Discard gun if no ammo
+    - preconditions:
+        - !type:ActiveHandComponentPrecondition
+          components:
+            - type: Gun
+        - !type:GunAmmoPrecondition
+          maxPercent: 0.001
+      tasks:
+        - !type:HTNPrimitiveTask
+           preconditions:
+           - !type:ActiveHandEntityPrecondition
+           operator: !type:DropOperator
 
-# Changes:
-# Make melee combat and movement separate
-# Melee just does the hit and then moves at the target.
-# If target out of double melee range then fail.
+    # Pickup gun if no ammo
+    -  preconditions:
+        - !type:ActiveHandComponentPrecondition
+          components:
+            - type: Gun
+          invert: true
+       tasks:
+        - !type:HTNCompoundTask
+          task: PickupGunCompound

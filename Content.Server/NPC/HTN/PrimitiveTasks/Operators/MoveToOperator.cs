@@ -55,6 +55,12 @@ public sealed class MoveToOperator : HTNOperator, IHtnConditionalShutdown
     [DataField("rangeKey")]
     public string RangeKey = "MovementRange";
 
+    /// <summary>
+    /// Do we only need to move into line of sight.
+    /// </summary>
+    [DataField("stopOnLineOfSight")]
+    public bool StopOnLineOfSight = false;
+
     private const string MovementCancelToken = "MovementCancelToken";
 
     public override void Initialize(IEntitySystemManager sysManager)
@@ -138,6 +144,7 @@ public sealed class MoveToOperator : HTNOperator, IHtnConditionalShutdown
 
         // Re-use the path we may have if applicable.
         var comp = _steering.Register(uid, targetCoordinates);
+        comp.ArriveOnLineOfSight = StopOnLineOfSight;
 
         if (blackboard.TryGetValue<float>(RangeKey, out var range, _entManager))
         {

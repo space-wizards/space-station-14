@@ -13,19 +13,6 @@ public sealed class MeleeOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    /*
-     * TODO: Just use the events and make it identical to before
-     * TODO: Split juking into different operators, i.e. JukeAwayOperator, JukeAdjacentTileOperator, etc.
-     * TODO: Put juke before melee and have melee finish as appropriate, juke just does the uhh thingie.
-     */
-
-    // TODO: JukeOperator
-    // Needs to cancel steering when active, needs to check for melee or whatever
-    // Add enum for different juke types
-    // Test melee with move + melee + juke and only shutting down on plan shutdown.
-    // Services are probably bloating NPC times so if possible run that shit in parallel.
-    // Make sure ranged is using services.
-
     /// <summary>
     /// When to shut the task down.
     /// </summary>
