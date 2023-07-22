@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed Next on the admin logs UI resending the same logs., type: Fix}
-  id: 3803
-  time: '2023-05-18T05:51:17.0000000+00:00'
 - author: FluffiestFloof
   changes:
   - {message: Updated the Suit Storage look., type: Tweak}
@@ -2982,3 +2977,8 @@ Entries:
   - {message: Space Creatures can now float in space, type: Tweak}
   id: 4302
   time: '2023-07-21T20:10:21.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Strait Jackets can now be used to restrain individuals., type: Add}
+  id: 4303
+  time: '2023-07-22T22:14:25.0000000+00:00'
