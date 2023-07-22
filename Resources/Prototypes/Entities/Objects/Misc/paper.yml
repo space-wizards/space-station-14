@@ -467,10 +467,10 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-centcom
-    stampState: "paper_stamp-cent"
+    stampState: "paper_stamp-centcom"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-cent
+    state: stamp-centcom
 
 - type: entity
   name: chaplain's rubber stamp
@@ -627,10 +627,10 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-approved
-    stampState: "paper_stamp-iaa"
+    stampState: "paper_stamp-ok"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-iaa
+    state: stamp-ok
 
 - type: entity
   name: DENIED rubber stamp
