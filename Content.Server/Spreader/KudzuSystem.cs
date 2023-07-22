@@ -52,11 +52,11 @@ public sealed class KudzuSystem : EntitySystem
             return;
         }
 
-       if (args.NeighborFreeTiles.Count == 0 && args.Neighbors.Count == 4)
-       {
-           RemCompDeferred<EdgeSpreaderComponent>(uid);
-           return;
-       }
+        if (args.NeighborFreeTiles.Count == 0 && args.Neighbors.Count == 4)
+        {
+            RemCompDeferred<EdgeSpreaderComponent>(uid);
+            return;
+        }
 
         var prototype = MetaData(uid).EntityPrototype?.ID;
 
