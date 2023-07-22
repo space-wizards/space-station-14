@@ -133,8 +133,8 @@ namespace Content.Client.Singularity
                 finalCoords -= delta * deformation;
             }
 
-            finalCoords.X = MathF.IEEERemainder(finalCoords.X, args.Viewport.Size.X * 2); // Imitate texture/framebuffer wrapping behaviour.
-            finalCoords.Y = MathF.IEEERemainder(finalCoords.Y, args.Viewport.Size.Y * 2);
+            finalCoords.X -= MathF.Floor(finalCoords.X / (args.Viewport.Size.X * 2)) * args.Viewport.Size.X * 2; // Manually handle the wrapping reflection behaviour used by the viewport texture.
+            finalCoords.Y -= MathF.Floor(finalCoords.Y / (args.Viewport.Size.Y * 2)) * args.Viewport.Size.Y * 2;
             finalCoords.X = (finalCoords.X >= args.Viewport.Size.X) ? ((args.Viewport.Size.X * 2) - finalCoords.X) : finalCoords.X;
             finalCoords.Y = (finalCoords.Y >= args.Viewport.Size.Y) ? ((args.Viewport.Size.Y * 2) - finalCoords.Y) : finalCoords.Y;
             args.VisiblePosition = finalCoords;
