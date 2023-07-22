@@ -1,4 +1,3 @@
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.Spreader;
 
 /// <summary>
@@ -8,6 +7,4 @@ namespace Content.Server.Spreader;
 [RegisterComponent, Access(typeof(SpreaderSystem))]
 public sealed class EdgeSpreaderComponent : Component
 {
-    [DataField("spreadUpdateCooldown", customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public TimeSpan SpreadUpdateCooldown = TimeSpan.FromSeconds(1);
 }

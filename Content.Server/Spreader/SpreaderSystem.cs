@@ -95,16 +95,14 @@ public sealed class SpreaderSystem : EntitySystem
     public override void Update(float frameTime)
     {
         var curTime = _timing.CurTime;
-      //  if(bixTime > curTime)
-      //  {
-      //     return;
-      //  }
-      //  bixTime = curTime + SpreadUpdateCooldown;
 
-        // Check which grids are valid for spreading.
+        // Check which grids are valid for spreading
+        // Every map seems to have a single "SpreaderGrid" component
         var spreadable = new ValueList<EntityUid>();
         var spreadGrids = EntityQueryEnumerator<SpreaderGridComponent>();
 
+        // The following while() and if() essentially just let execution continue
+        // one time every second (SpreadCooldown)
         while (spreadGrids.MoveNext(out var uid, out var grid))
         {
             if (grid.NextUpdate > curTime)
@@ -122,10 +120,15 @@ public sealed class SpreaderSystem : EntitySystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         var gridQuery = GetEntityQuery<SpreaderGridComponent>();
 
-        // Events and stuff
+        // Each INode group has a certain number of updates
+        // allowed per SpreadCooldown.
+        // This "updates" int value is how many new spreader entities are spawned
+        // next to EdgeSpreaders per SpreadCooldown.
         var groupUpdates = new Dictionary<INodeGroup, int>();
+
         var spreaders = new List<(EntityUid Uid, EdgeSpreaderComponent Comp)>(Count<EdgeSpreaderComponent>());
 
+        // Build a list of all existing Edgespreaders, shuffle them
         while (query.MoveNext(out var uid, out var comp))
         {
             spreaders.Add((uid, comp));
@@ -133,6 +136,8 @@ public sealed class SpreaderSystem : EntitySystem
 
         _robustRandom.Shuffle(spreaders);
 
+        // Remove the EdgeSpreaderComponent from any entity
+        // that doesn't meet a few trivial prerequisites
         foreach (var (uid, comp) in spreaders)
         {
             if (!xformQuery.TryGetComponent(uid, out var xform) ||
@@ -143,9 +148,12 @@ public sealed class SpreaderSystem : EntitySystem
                 continue;
             }
 
+            // _spreaderGroups is a string list of the different
+            // possible spreader types, as of writing "kudzu", "puddle"
+            // or "smoke"
             foreach (var sGroup in _spreaderGroups)
             {
-                // Cleanup
+                // Get the NodeContainer and Node from every EdgeSpreader entity found
                 if (!nodeQuery.TryGetComponent(uid, out var nodeContainer))
                 {
                     RemCompDeferred<EdgeSpreaderComponent>(uid);
@@ -153,7 +161,9 @@ public sealed class SpreaderSystem : EntitySystem
                 }
 
                 if (!_nodeContainer.TryGetNode<SpreaderNode>(nodeContainer, sGroup, out var node))
+                {
                     continue;
+                }
 
                 // Not allowed this tick?
                 if (node.NodeGroup == null ||
@@ -162,8 +172,8 @@ public sealed class SpreaderSystem : EntitySystem
                     continue;
                 }
 
-                // While we could check if it's an edge here the subscribing system may have its own definition
-                // of an edge so we'll let them handle it.
+                // Try get an integer update rate associated with a node group,
+                // getting it instead from the spreader itself on failure
                 if (!groupUpdates.TryGetValue(node.NodeGroup, out var updates))
                 {
                     var spreadEv = new SpreadGroupUpdateRate(node.Name);
@@ -171,6 +181,7 @@ public sealed class SpreaderSystem : EntitySystem
                     updates = (int) (spreadEv.UpdatesPerSecond * SpreadCooldown / TimeSpan.FromSeconds(1));
                 }
 
+                //
                 if (updates <= 0)
                 {
                     continue;
