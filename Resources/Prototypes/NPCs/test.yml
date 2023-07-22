@@ -5,6 +5,7 @@
     - tasks:
         - !type:HTNPrimitiveTask
           operator: !type:PickPathfindPointOperator
+
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             pathfindInPlanning: false

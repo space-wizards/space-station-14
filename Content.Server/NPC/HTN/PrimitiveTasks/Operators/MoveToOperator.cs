@@ -23,7 +23,7 @@ public sealed class MoveToOperator : HTNOperator, IHtnConditionalShutdown
     /// When to shut the task down.
     /// </summary>
     [DataField("shutdownState")]
-    public HTNPlanState ShutdownState { get; } = HTNPlanState.PlanFinished;
+    public HTNPlanState ShutdownState { get; } = HTNPlanState.TaskFinished;
 
     /// <summary>
     /// Should we assume the MovementTarget is reachable during planning or should we pathfind to it?
@@ -59,7 +59,7 @@ public sealed class MoveToOperator : HTNOperator, IHtnConditionalShutdown
     /// Do we only need to move into line of sight.
     /// </summary>
     [DataField("stopOnLineOfSight")]
-    public bool StopOnLineOfSight = false;
+    public bool StopOnLineOfSight;
 
     private const string MovementCancelToken = "MovementCancelToken";
 
@@ -169,6 +169,12 @@ public sealed class MoveToOperator : HTNOperator, IHtnConditionalShutdown
 
         if (!_entManager.TryGetComponent<NPCSteeringComponent>(owner, out var steering))
             return HTNOperatorStatus.Failed;
+
+        // Just keep moving in the background and let the other tasks handle it.
+        if (ShutdownState == HTNPlanState.PlanFinished && steering.Status == SteeringStatus.Moving)
+        {
+            return HTNOperatorStatus.Finished;
+        }
 
         return steering.Status switch
         {

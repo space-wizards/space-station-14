@@ -41,7 +41,7 @@
           minPercent: 0.001
       tasks:
         - !type:HTNCompoundTask
-          task: GunAttackTargetCompound
+          task: GunCombatCompound
     # TODO: Equip a gun from inventory if one found, preferring over pickup.
 
     # Pickup ammo if any nearby

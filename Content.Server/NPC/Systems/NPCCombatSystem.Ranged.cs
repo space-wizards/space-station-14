@@ -13,6 +13,10 @@ public sealed partial class NPCCombatSystem
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly RotateToFaceSystem _rotate = default!;
 
+    private EntityQuery<CombatModeComponent> _combatQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
+
     // TODO: Don't predict for hitscan
     private const float ShootSpeed = 20f;
 
@@ -23,6 +27,10 @@ public sealed partial class NPCCombatSystem
 
     private void InitializeRanged()
     {
+        _combatQuery = GetEntityQuery<CombatModeComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+
         SubscribeLocalEvent<NPCRangedCombatComponent, ComponentStartup>(OnRangedStartup);
         SubscribeLocalEvent<NPCRangedCombatComponent, ComponentShutdown>(OnRangedShutdown);
     }
@@ -49,9 +57,6 @@ public sealed partial class NPCCombatSystem
 
     private void UpdateRanged(float frameTime)
     {
-        var bodyQuery = GetEntityQuery<PhysicsComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var combatQuery = GetEntityQuery<CombatModeComponent>();
         var query = EntityQueryEnumerator<NPCRangedCombatComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out var comp, out var xform))
@@ -59,8 +64,8 @@ public sealed partial class NPCCombatSystem
             if (comp.Status == CombatStatus.Unspecified)
                 continue;
 
-            if (!xformQuery.TryGetComponent(comp.Target, out var targetXform) ||
-                !bodyQuery.TryGetComponent(comp.Target, out var targetBody))
+            if (!_xformQuery.TryGetComponent(comp.Target, out var targetXform) ||
+                !_physicsQuery.TryGetComponent(comp.Target, out var targetBody))
             {
                 comp.Status = CombatStatus.TargetUnreachable;
                 comp.ShootAccumulator = 0f;
@@ -74,7 +79,7 @@ public sealed partial class NPCCombatSystem
                 continue;
             }
 
-            if (combatQuery.TryGetComponent(uid, out var combatMode))
+            if (_combatQuery.TryGetComponent(uid, out var combatMode))
             {
                 _combat.SetInCombatMode(uid, true, combatMode);
             }
@@ -98,8 +103,8 @@ public sealed partial class NPCCombatSystem
 
             comp.LOSAccumulator -= frameTime;
 
-            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(xform, xformQuery);
-            var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
+            var worldPos = _transform.GetWorldPosition(xform);
+            var targetPos = _transform.GetWorldPosition(targetXform);
 
             // We'll work out the projected spot of the target and shoot there instead of where they are.
             var distance = (targetPos - worldPos).Length();

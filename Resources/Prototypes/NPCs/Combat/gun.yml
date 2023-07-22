@@ -11,11 +11,13 @@
 
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
+            shutdownState: PlanFinished
             pathfindInPlanning: true
             removeKeyOnFinish: false
             targetKey: TargetCoordinates
             pathfindKey: TargetPathfind
-            rangeKey: MeleeRange
+            stopOnLineOfSight: true
+            rangeKey: RangedRange
 
         - !type:HTNPrimitiveTask
           operator: !type:JukeOperator

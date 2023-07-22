@@ -22,6 +22,7 @@
     - tasks:
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
+            shutdownState: PlanFinished
             pathfindInPlanning: true
             removeKeyOnFinish: false
             targetKey: TargetCoordinates

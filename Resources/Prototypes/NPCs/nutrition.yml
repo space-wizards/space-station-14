@@ -6,6 +6,7 @@
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyFood
+
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             pathfindInPlanning: true
@@ -13,11 +14,13 @@
             targetKey: TargetCoordinates
             pathfindKey: TargetPathfind
             rangeKey: MeleeRange
+
         - !type:HTNPrimitiveTask
           preconditions:
             - !type:KeyExistsPrecondition
               key: Target
           operator: !type:AltInteractOperator
+
         - !type:HTNPrimitiveTask
           preconditions:
             - !type:KeyExistsPrecondition

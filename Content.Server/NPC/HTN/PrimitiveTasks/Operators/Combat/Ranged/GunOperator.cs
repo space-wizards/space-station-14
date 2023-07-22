@@ -7,9 +7,12 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Ranged;
 
-public sealed class GunOperator : HTNOperator
+public sealed class GunOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+
+    [DataField("shutdownState")]
+    public HTNPlanState ShutdownState { get; } = HTNPlanState.TaskFinished;
 
     /// <summary>
     /// Key that contains the target entity.
@@ -60,13 +63,6 @@ public sealed class GunOperator : HTNOperator
         }
     }
 
-    public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
-    {
-        base.TaskShutdown(blackboard, status);
-        _entManager.RemoveComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
-        blackboard.Remove<EntityUid>(TargetKey);
-    }
-
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         base.Update(blackboard, frameTime);
@@ -106,11 +102,18 @@ public sealed class GunOperator : HTNOperator
             status = HTNOperatorStatus.Failed;
         }
 
-        if (status != HTNOperatorStatus.Continuing)
+        // Mark it as finished to continue the plan.
+        if (status == HTNOperatorStatus.Continuing && ShutdownState == HTNPlanState.PlanFinished)
         {
-            _entManager.RemoveComponent<NPCRangedCombatComponent>(owner);
+            status = HTNOperatorStatus.Finished;
         }
 
         return status;
+    }
+
+    public void ConditionalShutdown(NPCBlackboard blackboard)
+    {
+        _entManager.RemoveComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        blackboard.Remove<EntityUid>(TargetKey);
     }
 }

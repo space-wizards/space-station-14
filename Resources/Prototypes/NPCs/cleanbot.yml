@@ -16,6 +16,7 @@
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyPuddles
+
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             pathfindInPlanning: true

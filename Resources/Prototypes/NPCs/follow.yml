@@ -17,6 +17,7 @@
             targetKey: FollowTarget
             rangeKey: FollowCloseRange
             removeKeyOnFinish: false
+
     # Keep idling near follow target
     - tasks:
         - !type:HTNPrimitiveTask
@@ -28,6 +29,7 @@
               rangeKey: FollowRange
           operator: !type:WaitOperator
             key: IdleTime
+
     # Pick a new idle spot near the follow target
     - tasks:
         - !type:HTNPrimitiveTask
@@ -35,14 +37,17 @@
             # originKey: FollowTarget
             rangeKey: FollowCloseRange
             targetKey: FollowIdleTarget
+
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             targetKey: FollowIdleTarget
+
         - !type:HTNPrimitiveTask
           operator: !type:RandomOperator
             targetKey: IdleTime
             minKey: MinimumIdleTime
             maxKey: MaximumIdleTime
+
         - !type:HTNPrimitiveTask
           preconditions:
             - !type:KeyExistsPrecondition
@@ -52,4 +57,3 @@
               rangeKey: FollowRange
           operator: !type:WaitOperator
             key: IdleTime
-
