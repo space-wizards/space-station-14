@@ -5,6 +5,7 @@ using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Popups;
@@ -166,13 +167,13 @@ public abstract class SharedReflectSystem : EntitySystem
         return true;
     }
 
-    private void OnReflectEquipped(EntityUid uid, ReflectComponent comp, GotEquippedEvent args) {
+    private void OnReflectEquipped(EntityUid uid, ReflectComponent comp, GotEquippedEvent args)
+    {
 
         if (!TryComp(args.Equipee, out ReflectComponent? reflection))
             return;
 
         reflection.Enabled = true;
-        reflection.Layers.Add(uid, comp.ReflectProb);
 
         // reflection probability should be: (1 - old probability) * newly-equipped item probability + old probability
         // example: if entity has .25 reflection and newly-equipped item has .7, entity should have (1 - .25) * .7 + .25 = .775
@@ -180,24 +181,25 @@ public abstract class SharedReflectSystem : EntitySystem
 
     }
 
-    private void OnReflectUnequipped(EntityUid uid, ReflectComponent comp, GotUnequippedEvent args) {
+    private void OnReflectUnequipped(EntityUid uid, ReflectComponent comp, GotUnequippedEvent args)
+    {
 
         if (!TryComp(args.Equipee, out ReflectComponent? reflection))
             return;
 
-        if (!reflection.Layers.TryGetValue(uid, out float oldProb))
-            return;
-
-        reflection.Layers.Remove(uid);
-
-        if (comp.ReflectProb >= 1)
+        if (comp.ReflectProb == 1)
         {
-            var newProb = 0f;
-            foreach (float prob in reflection.Layers.Values)
+            float newProb = 1;
+
+            foreach (var reflector in GetSlots(args.Equipee))
             {
-                newProb += (1 - newProb) * prob;
+                if (!TryComp(reflector, out ReflectComponent? refcomp))
+                    continue;
+
+                var prob = refcomp.ReflectProb;
+                newProb -= newProb * prob;
             }
-            reflection.ReflectProb = newProb;
+            reflection.ReflectProb = 1 - newProb;
         }
         else
         {
