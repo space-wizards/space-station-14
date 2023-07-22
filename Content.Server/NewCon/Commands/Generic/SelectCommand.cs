@@ -10,9 +10,9 @@ namespace Content.Server.NewCon.Commands.Generic;
 [ConsoleCommand]
 public sealed class SelectCommand : ConsoleCommand
 {
-    public override bool TryGetReturnType(Type? pipedType, Type[] typeArguments, out Type? type)
+    public override bool TryGetReturnType(string? subCommand, Type? pipedType, Type[] typeArguments, out Type? type)
     {
-        if (pipedType is null)
+        if (pipedType is null || subCommand is not null)
         {
             type = null;
             return false;

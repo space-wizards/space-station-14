@@ -18,17 +18,19 @@ public abstract class ConsoleCommand
 {
     [Dependency] private readonly NewConManager _newCon = default!;
 
-    public bool HasSubCommands { get; init; }
+    public bool HasSubCommands { get; }
 
     public readonly SortedDictionary<string, Type>? Parameters;
 
     public virtual Type[] TypeParameterParsers => Array.Empty<Type>();
 
-    private ConsoleCommandImplementor Implementor;
+    private readonly Dictionary<string, ConsoleCommandImplementor> Implementors = new();
+
 
     public ConsoleCommand()
     {
-        Implementor =
+        HasSubCommands = false;
+        Implementors[""] =
             new ConsoleCommandImplementor
             {
                 Owner = this,
@@ -39,8 +41,16 @@ public abstract class ConsoleCommand
 
         foreach (var impl in impls)
         {
-            if (impl.GetCustomAttribute<CommandImplementationAttribute>() is {SubCommand: { } _})
-                throw new NotImplementedException("opgfdhush ough no subcommands");
+            if (impl.GetCustomAttribute<CommandImplementationAttribute>() is {SubCommand: { } x})
+            {
+                HasSubCommands = true;
+                Implementors[x] =
+                    new ConsoleCommandImplementor
+                    {
+                        Owner = this,
+                        SubCommand = x
+                    };
+            }
 
             Parameters = new();
 
@@ -62,9 +72,9 @@ public abstract class ConsoleCommand
     }
 
 
-    public virtual bool TryGetReturnType(Type? pipedType, Type[] typeArguments, out Type? type)
+    public virtual bool TryGetReturnType(string? subCommand, Type? pipedType, Type[] typeArguments, out Type? type)
     {
-        var impls = GetConcreteImplementations(pipedType, typeArguments).ToList();
+        var impls = GetConcreteImplementations(pipedType, typeArguments, subCommand).ToList();
 
         if (impls.Count == 1)
         {
@@ -72,12 +82,13 @@ public abstract class ConsoleCommand
             return true;
         }
 
-        throw new NotImplementedException("write your own TryGetReturnType your command is too clamplicated.");
+        throw new NotImplementedException($"write your own TryGetReturnType your command is too clamplicated. Got {impls.Count} implementations for {subCommand ?? "[no subcommand]"}.");
     }
 
-    public List<MethodInfo> GetConcreteImplementations(Type? pipedType, Type[] typeArguments)
+    public List<MethodInfo> GetConcreteImplementations(Type? pipedType, Type[] typeArguments, string? subCommand)
     {
         var impls = GetGenericImplementations()
+            .Where(x => x.GetCustomAttribute<CommandImplementationAttribute>()?.SubCommand == subCommand)
             .Select(x =>
         {
             if (x.IsGenericMethodDefinition)
@@ -105,12 +116,7 @@ public abstract class ConsoleCommand
 
     public bool TryGetImplementation(Type? pipedType, string? subCommand, Type[] typeArguments, [NotNullWhen(true)] out Invocable? impl)
     {
-        if (subCommand is not null)
-        {
-            throw new NotImplementedException("subcommands");
-        }
-
-        return Implementor.TryGetImplementation(pipedType, typeArguments, out impl);
+        return Implementors[subCommand ?? ""].TryGetImplementation(pipedType, typeArguments, out impl);
     }
 
     public bool TryParseArguments(ForwardParser parser, [NotNullWhen(true)] out Dictionary<string, object?>? args, out Type[] resolvedTypeArguments)
@@ -160,7 +166,7 @@ public sealed class ConsoleCommandImplementor
     {
         var discrim = new CommandDiscriminator(pipedType, typeArguments);
 
-        if (!Owner.TryGetReturnType(pipedType, typeArguments, out var ty))
+        if (!Owner.TryGetReturnType(SubCommand, pipedType, typeArguments, out var ty))
         {
             impl = null;
             return false;
@@ -171,7 +177,7 @@ public sealed class ConsoleCommandImplementor
 
         // Okay we need to build a new shim.
 
-        var possibleImpls = Owner.GetConcreteImplementations(pipedType, typeArguments).Where(x => x.GetCustomAttribute<CommandImplementationAttribute>()?.SubCommand == SubCommand);
+        var possibleImpls = Owner.GetConcreteImplementations(pipedType, typeArguments, SubCommand);
 
         IEnumerable<MethodInfo> impls;
 
@@ -255,7 +261,7 @@ public sealed class ConsoleCommandImplementor
 
         Expression partialShim = Expression.Call(Expression.Constant(Owner), unshimmed, paramList);
 
-        if (ty is not null && ty.IsPrimitive)
+        if (ty is not null && ty.IsValueType)
             partialShim = Expression.Convert(partialShim, typeof(object)); // Have to box primitives.
 
         if (unshimmed.ReturnType == typeof(void))

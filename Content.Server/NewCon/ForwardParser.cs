@@ -73,16 +73,17 @@ public sealed class ForwardParser
         Logger.DebugS("parser", builder.ToString());
     }
 
-    private string? MaybeGetWord(bool advanceIndex)
+    private string? MaybeGetWord(bool advanceIndex, Func<char, bool>? test)
     {
         var startingIndex = Index;
+        test ??= static c => c != ' ';
 
         var builder = new StringBuilder();
 
         Consume(char.IsWhiteSpace);
 
         // Walk forward until we run into whitespace
-        while (PeekChar() is not ' ' and { } c) { builder.Append(GetChar()); }
+        while (PeekChar() is { } c && test(c)) { builder.Append(GetChar()); }
 
         if (startingIndex == Index)
             return null;
@@ -93,9 +94,9 @@ public sealed class ForwardParser
         return builder.ToString();
     }
 
-    public string? PeekWord() => MaybeGetWord(false);
+    public string? PeekWord(Func<char, bool>? test = null) => MaybeGetWord(false, test);
 
-    public string? GetWord() => MaybeGetWord(true);
+    public string? GetWord(Func<char, bool>? test = null) => MaybeGetWord(true, test);
 
     public ParserRestorePoint Save()
     {

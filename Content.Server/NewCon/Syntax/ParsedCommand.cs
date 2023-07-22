@@ -22,8 +22,8 @@ public sealed class ParsedCommand
             {Arguments = new(), Inverted = false, PipedArgumentType = pipedArgumentType, TypeArguments = Array.Empty<Type>()};
 
         if (!TryDigestModifiers(parser, bundle)
-            || !TryParseCommand(parser, bundle, out var invocable, out var command)
-            || !command.TryGetReturnType(pipedArgumentType, bundle.TypeArguments, out var retType)
+            || !TryParseCommand(parser, bundle, out var subCommand, out var invocable, out var command)
+            || !command.TryGetReturnType(subCommand, pipedArgumentType, bundle.TypeArguments, out var retType)
             )
         {
             result = null;
@@ -55,9 +55,10 @@ public sealed class ParsedCommand
         return true;
     }
 
-    private static bool TryParseCommand(ForwardParser parser, CommandArgumentBundle bundle, [NotNullWhen(true)] out Invocable? invocable, [NotNullWhen(true)] out ConsoleCommand? command)
+    private static bool TryParseCommand(ForwardParser parser, CommandArgumentBundle bundle, out string? subCommand, [NotNullWhen(true)] out Invocable? invocable, [NotNullWhen(true)] out ConsoleCommand? command)
     {
-        var cmd = parser.GetWord();
+        var cmd = parser.GetWord(char.IsAsciiLetterOrDigit);
+        subCommand = null;
         invocable = null;
         command = null;
         if (cmd is null)
@@ -70,9 +71,11 @@ public sealed class ParsedCommand
             return false;
         }
 
-        string? subCommand = null;
         if (cmdImpl.HasSubCommands)
         {
+            if (parser.GetChar() is not ':')
+                return false;
+
             if (parser.GetWord() is not { } subcmd)
             {
                 return false;

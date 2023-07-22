@@ -53,3 +53,32 @@ public sealed class Expression
         Commands = commands;
     }
 }
+
+
+public sealed class Expression<TRes>
+{
+    public Expression InnerExpression;
+
+    public static bool TryParse(ForwardParser parser, Type? pipedType, bool once,
+        [NotNullWhen(true)] out Expression<TRes>? expr)
+    {
+        if (!Expression.TryParse(parser, pipedType, typeof(TRes), once, out var innerExpr))
+        {
+            expr = null;
+            return false;
+        }
+
+        expr = new Expression<TRes>(innerExpr);
+        return true;
+    }
+
+    public TRes? Invoke(object? input, IInvocationContext ctx)
+    {
+        return (TRes?) InnerExpression.Invoke(input, ctx);
+    }
+
+    private Expression(Expression expression)
+    {
+        InnerExpression = expression;
+    }
+}

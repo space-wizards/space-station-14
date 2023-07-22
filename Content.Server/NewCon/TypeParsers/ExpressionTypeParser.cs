@@ -12,3 +12,13 @@ public sealed class ExpressionTypeParser : TypeParser<Expression>
         return res;
     }
 }
+
+public sealed class ExpressionTypeParser<T> : TypeParser<Expression<T>>
+{
+    public override bool TryParse(ForwardParser parser, [NotNullWhen(true)] out object? result)
+    {
+        var res = Expression<T>.TryParse(parser, null, false, out var r);
+        result = r;
+        return res;
+    }
+}

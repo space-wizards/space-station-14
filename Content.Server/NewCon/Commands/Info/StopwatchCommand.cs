@@ -13,7 +13,7 @@ public sealed class StopwatchCommand : ConsoleCommand
         var watch = new Stopwatch();
         watch.Start();
         var result = expr.Invoke(null, ctx);
-        ctx.WriteLine(FormattedMessage.FromMarkup($"Ran expression in [color={Color.Aqua.ToHex()}]{watch.Elapsed:g}[/color]"));
+        ctx.WriteMarkup($"Ran expression in [color={Color.Aqua.ToHex()}]{watch.Elapsed:g}[/color]");
         return result;
     }
 }

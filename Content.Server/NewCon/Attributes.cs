@@ -14,6 +14,11 @@ public sealed class ConsoleCommandAttribute : Attribute
 public sealed class CommandImplementationAttribute :  Attribute
 {
     public readonly string? SubCommand = null;
+
+    public CommandImplementationAttribute(string? subCommand = null)
+    {
+        SubCommand = subCommand;
+    }
 }
 
 [AttributeUsage(AttributeTargets.Parameter)]

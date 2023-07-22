@@ -21,4 +21,9 @@ public interface IInvocationContext
 
         WriteLine(line.ToMarkup());
     }
+
+    public void WriteMarkup(string markup)
+    {
+        WriteLine(FormattedMessage.FromMarkup(markup));
+    }
 }
