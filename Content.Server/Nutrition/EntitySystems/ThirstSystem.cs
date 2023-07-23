@@ -24,10 +24,12 @@ namespace Content.Server.Nutrition.EntitySystems
             base.Initialize();
 
             _sawmill = Logger.GetSawmill("thirst");
+
             SubscribeLocalEvent<ThirstComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
             SubscribeLocalEvent<ThirstComponent, ComponentStartup>(OnComponentStartup);
             SubscribeLocalEvent<ThirstComponent, RejuvenateEvent>(OnRejuvenate);
         }
+
         private void OnComponentStartup(EntityUid uid, ThirstComponent component, ComponentStartup args)
         {
             // Do not change behavior unless starting value is explicitly defined
@@ -40,13 +42,13 @@ namespace Content.Server.Nutrition.EntitySystems
             component.CurrentThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
             component.LastThirstThreshold = ThirstThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
             // TODO: Check all thresholds make sense and throw if they don't.
-            UpdateEffects(component);
+            UpdateEffects(uid, component);
         }
 
         private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
         {
             // TODO: This should really be taken care of somewhere else
-            if (_jetpack.IsUserFlying(component.Owner))
+            if (_jetpack.IsUserFlying(uid))
                 return;
 
             var mod = component.CurrentThirstThreshold <= ThirstThreshold.Parched ? 0.75f : 1.0f;
@@ -100,22 +102,22 @@ namespace Content.Server.Nutrition.EntitySystems
             }
         }
 
-        private void UpdateEffects(ThirstComponent component)
+        private void UpdateEffects(EntityUid uid, ThirstComponent component)
         {
             if (IsMovementThreshold(component.LastThirstThreshold) != IsMovementThreshold(component.CurrentThirstThreshold) &&
-                    TryComp(component.Owner, out MovementSpeedModifierComponent? movementSlowdownComponent))
+                    TryComp(uid, out MovementSpeedModifierComponent? movementSlowdownComponent))
             {
-                _movement.RefreshMovementSpeedModifiers(component.Owner, movementSlowdownComponent);
+                _movement.RefreshMovementSpeedModifiers(uid, movementSlowdownComponent);
             }
 
             // Update UI
             if (ThirstComponent.ThirstThresholdAlertTypes.TryGetValue(component.CurrentThirstThreshold, out var alertId))
             {
-                _alerts.ShowAlert(component.Owner, alertId);
+                _alerts.ShowAlert(uid, alertId);
             }
             else
             {
-                _alerts.ClearAlertCategory(component.Owner, AlertCategory.Thirst);
+                _alerts.ClearAlertCategory(uid, AlertCategory.Thirst);
             }
 
             switch (component.CurrentThirstThreshold)
@@ -136,7 +138,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     component.ActualDecayRate = component.BaseDecayRate * 0.8f;
                     return;
                 case ThirstThreshold.Parched:
-                    _movement.RefreshMovementSpeedModifiers(component.Owner);
+                    _movement.RefreshMovementSpeedModifiers(uid);
                     component.LastThirstThreshold = component.CurrentThirstThreshold;
                     component.ActualDecayRate = component.BaseDecayRate * 0.6f;
                     return;
@@ -149,20 +151,22 @@ namespace Content.Server.Nutrition.EntitySystems
                     throw new ArgumentOutOfRangeException($"No thirst threshold found for {component.CurrentThirstThreshold}");
             }
         }
+
         public override void Update(float frameTime)
         {
             _accumulatedFrameTime += frameTime;
 
             if (_accumulatedFrameTime > 1)
             {
-                foreach (var component in EntityManager.EntityQuery<ThirstComponent>())
+                var query = EntityManager.EntityQueryEnumerator<ThirstComponent>();
+                while (query.MoveNext(out var uid, out var comp))
                 {
-                    UpdateThirst(component, - component.ActualDecayRate);
-                    var calculatedThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
-                    if (calculatedThirstThreshold != component.CurrentThirstThreshold)
+                    UpdateThirst(comp, - comp.ActualDecayRate);
+                    var calculatedThirstThreshold = GetThirstThreshold(comp, comp.CurrentThirst);
+                    if (calculatedThirstThreshold != comp.CurrentThirstThreshold)
                     {
-                        component.CurrentThirstThreshold = calculatedThirstThreshold;
-                        UpdateEffects(component);
+                        comp.CurrentThirstThreshold = calculatedThirstThreshold;
+                        UpdateEffects(uid, comp);
                     }
                 }
                 _accumulatedFrameTime -= 1;
