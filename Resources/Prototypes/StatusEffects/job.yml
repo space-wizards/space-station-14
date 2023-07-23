@@ -5,7 +5,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Detective
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -20,7 +19,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: QuarterMaster
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -28,7 +26,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Botanist
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -36,7 +33,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Boxer
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -44,7 +40,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: AtmosphericTechnician
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -52,7 +47,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Nanotrasen
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -60,7 +54,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Prisoner
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -68,7 +61,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Janitor
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -76,7 +68,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Chemist
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -84,7 +75,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: StationEngineer
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -92,7 +82,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: SecurityOfficer
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -100,7 +89,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: NoId
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -108,7 +96,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: ChiefMedicalOfficer
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -116,7 +103,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Roboticist
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -124,7 +110,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Chaplain
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -132,7 +117,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Lawyer
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -140,7 +124,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Unknown
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -148,7 +131,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Librarian
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -156,7 +138,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: CargoTechnician
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -164,7 +145,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Scientist
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -172,7 +152,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: ResearchAssistant
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -180,7 +159,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Geneticist
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -188,7 +166,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Clown
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -196,7 +173,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Captain
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -204,7 +180,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: HeadOfPersonnel
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -212,7 +187,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Virologist
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -220,7 +194,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: ShaftMiner
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -228,7 +201,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Passenger
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -236,7 +208,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: ChiefEngineer
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -244,7 +215,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Bartender
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -252,7 +222,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: HeadOfSecurity
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -260,7 +229,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Brigmedic
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -268,7 +236,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: MedicalDoctor
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -276,7 +243,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Paramedic
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -284,7 +250,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Chef
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -292,7 +257,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Warden
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -300,7 +264,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: ResearchDirector
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -308,7 +271,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Mime
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -316,7 +278,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Musician
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -324,7 +285,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Reporter
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -332,7 +292,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Psychologist
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -340,7 +299,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: MedicalIntern
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -348,7 +306,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: TechnicalAssistant
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -356,7 +313,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: ServiceWorker
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -364,7 +320,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: SecurityCadet
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -372,7 +327,6 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Zombie
-  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -380,4 +334,3 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Zookeeper
-  locationPreference: Left
