@@ -12,6 +12,7 @@ using Content.Server.Storage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition.Components;
 using Robust.Server.Containers;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
@@ -133,6 +134,10 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (!_food.IsDigestibleBy(owner, targetUid, food))
                     return 0f;
 
+                // only eat when hungry
+                if (TryComp<HungerComponent>(owner, out var hunger) && hunger.CurrentThreshold > HungerThreshold.Okay)
+                    return 0f;
+
                 // no mouse don't eat the uranium-235
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
                 if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
@@ -143,6 +148,10 @@ public sealed class NPCUtilitySystem : EntitySystem
             case DrinkValueCon:
             {
                 if (!TryComp<DrinkComponent>(targetUid, out var drink) || !drink.Opened)
+                    return 0f;
+
+                // only drink when thirsty
+                if (TryComp<ThirstComponent>(owner, out var thirst) && thirst.CurrentThirstThreshold > ThirstThreshold.Okay)
                     return 0f;
 
                 // needs to have something that will satiate thirst, mice wont try to drink 100% pure mutagen.
