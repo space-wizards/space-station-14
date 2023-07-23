@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Content.Server.NewCon.Errors;
 using Content.Server.NewCon.TypeParsers;
-using Robust.Shared.Exceptions;
 using Robust.Shared.Utility;
 
 using Invocable = System.Func<Content.Server.NewCon.CommandInvocationArguments, object?>;
@@ -18,6 +18,8 @@ public abstract class ConsoleCommand
 {
     [Dependency] private readonly NewConManager _newCon = default!;
 
+    public string Name { get; }
+
     public bool HasSubCommands { get; }
 
     public readonly SortedDictionary<string, Type>? Parameters;
@@ -26,9 +28,26 @@ public abstract class ConsoleCommand
 
     private readonly Dictionary<string, ConsoleCommandImplementor> Implementors = new();
 
+    public IEnumerable<string> Subcommands => Implementors.Keys.Where(x => x != "");
 
     public ConsoleCommand()
     {
+        var name = GetType().GetCustomAttribute<ConsoleCommandAttribute>()!.Name;
+
+        if (name is null)
+        {
+            var typeName = GetType().Name;
+            const string commandStr = "Command";
+
+            if (!typeName.EndsWith(commandStr))
+            {
+                throw new InvalidComponentNameException($"Component {GetType()} must end with the word Component");
+            }
+
+            name = typeName[..^commandStr.Length].ToLowerInvariant();
+        }
+
+        Name = name;
         HasSubCommands = false;
         Implementors[""] =
             new ConsoleCommandImplementor
@@ -85,7 +104,25 @@ public abstract class ConsoleCommand
         throw new NotImplementedException($"write your own TryGetReturnType your command is too clamplicated. Got {impls.Count} implementations for {subCommand ?? "[no subcommand]"}.");
     }
 
-    public List<MethodInfo> GetConcreteImplementations(Type? pipedType, Type[] typeArguments, string? subCommand)
+    private Dictionary<(CommandDiscriminator, string?), List<MethodInfo>> _concreteImplementations = new();
+
+    public List<MethodInfo> GetConcreteImplementations(Type? pipedType, Type[] typeArguments,
+        string? subCommand)
+    {
+        var idx = (new CommandDiscriminator(pipedType, typeArguments), subCommand);
+        if (_concreteImplementations.TryGetValue(idx,
+                out var impl))
+        {
+            return impl;
+        }
+
+        impl = GetConcreteImplementationsInternal(pipedType, typeArguments, subCommand);
+        _concreteImplementations[idx] = impl;
+        return impl;
+
+    }
+
+    private List<MethodInfo> GetConcreteImplementationsInternal(Type? pipedType, Type[] typeArguments, string? subCommand)
     {
         var impls = GetGenericImplementations()
             .Where(x => x.GetCustomAttribute<CommandImplementationAttribute>()?.SubCommand == subCommand)
@@ -94,7 +131,11 @@ public abstract class ConsoleCommand
             if (x.IsGenericMethodDefinition)
             {
                 if (x.HasCustomAttribute<TakesPipedTypeAsGeneric>())
-                    return x.MakeGenericMethod(typeArguments.Append(pipedType!).ToArray());
+                {
+                    var paramT = x.ConsoleGetPipedArgument()!.ParameterType;
+                    var t = pipedType!.Intersect(paramT);
+                    return x.MakeGenericMethod(typeArguments.Append(t).ToArray());
+                }
                 else
                     return x.MakeGenericMethod(typeArguments);
             }
@@ -119,7 +160,7 @@ public abstract class ConsoleCommand
         return Implementors[subCommand ?? ""].TryGetImplementation(pipedType, typeArguments, out impl);
     }
 
-    public bool TryParseArguments(ForwardParser parser, [NotNullWhen(true)] out Dictionary<string, object?>? args, out Type[] resolvedTypeArguments)
+    public bool TryParseArguments(ForwardParser parser, [NotNullWhen(true)] out Dictionary<string, object?>? args, out Type[] resolvedTypeArguments, out IConError? error)
     {
         if (Parameters is null)
             throw new NotImplementedException("dhfshbfghd");
@@ -129,7 +170,7 @@ public abstract class ConsoleCommand
 
         for (var i = 0; i < TypeParameterParsers.Length; i++)
         {
-            if (!_newCon.TryParse(parser, TypeParameterParsers[i], out var parsed) || parsed is not IAsType ty)
+            if (!_newCon.TryParse(parser, TypeParameterParsers[i], out var parsed, out error) || parsed is not IAsType ty)
             {
                 resolvedTypeArguments = Array.Empty<Type>();
                 args = null;
@@ -141,7 +182,7 @@ public abstract class ConsoleCommand
 
         foreach (var param in Parameters)
         {
-            if (!_newCon.TryParse(parser, param.Value, out var parsed))
+            if (!_newCon.TryParse(parser, param.Value, out var parsed, out error))
             {
                 args = null;
                 return false;
@@ -150,6 +191,7 @@ public abstract class ConsoleCommand
         }
 
         args = output;
+        error = null;
         return true;
     }
 }
@@ -184,18 +226,15 @@ public sealed class ConsoleCommandImplementor
         if (pipedType is null)
         {
             impls = possibleImpls.Where(x =>
-                x.GetParameters().Any(param =>
-                    param.GetCustomAttribute<PipedArgumentAttribute>() is not null && param.ParameterType.CanBeEmpty()
-                    )
-                || !x.GetParameters().Any(param => param.GetCustomAttribute<PipedArgumentAttribute>() is not null)
-                || x.GetParameters().Length == 0);
+                        x.ConsoleGetPipedArgument() is {} param && param.ParameterType.CanBeEmpty()
+                        || x.ConsoleGetPipedArgument() is null
+                        || x.GetParameters().Length == 0);
         }
         else
         {
             impls = possibleImpls.Where(x =>
-                x.GetParameters().Any(param =>
-                    param.GetCustomAttribute<PipedArgumentAttribute>() is not null && pipedType.IsAssignableTo(param.ParameterType)
-                ) || x.IsGenericMethodDefinition);
+                x.ConsoleGetPipedArgument() is {} param && pipedType!.IsAssignableTo(param.ParameterType)
+                || x.IsGenericMethodDefinition);
         }
 
         var implArray = impls.ToArray();
@@ -261,81 +300,16 @@ public sealed class ConsoleCommandImplementor
 
         Expression partialShim = Expression.Call(Expression.Constant(Owner), unshimmed, paramList);
 
-        if (ty is not null && ty.IsValueType)
-            partialShim = Expression.Convert(partialShim, typeof(object)); // Have to box primitives.
-
         if (unshimmed.ReturnType == typeof(void))
             partialShim = Expression.Block(partialShim, Expression.Constant(null));
+        else if (ty is not null && ty.IsValueType)
+            partialShim = Expression.Convert(partialShim, typeof(object)); // Have to box primitives.
 
         var lambda = Expression.Lambda<Invocable>(partialShim, args);
 
         Implementations[discrim] = lambda.Compile();
         impl = Implementations[discrim];
         return true;
-    }
-}
-
-public static class ReflectionExtensions
-{
-    public static bool CanBeNull(this Type t)
-    {
-        return !t.IsValueType || t.IsGenericType(typeof(Nullable<>));
-    }
-
-    public static bool CanBeEmpty(this Type t)
-    {
-        return t.CanBeNull() || t.IsGenericType(typeof(IEnumerable<>));
-    }
-
-    public static bool IsGenericType(this Type t, Type genericType)
-    {
-        return t.IsGenericType && t.GetGenericTypeDefinition() == genericType;
-    }
-
-    public static Expression CreateEmptyExpr(this Type t)
-    {
-        if (!t.CanBeEmpty())
-            throw new TypeArgumentException();
-
-        if (t.IsGenericType(typeof(IEnumerable<>)))
-        {
-            var array = Array.CreateInstance(t.GetGenericArguments().First(), 0);
-            return Expression.Constant(array, t);
-        }
-
-        if (t.CanBeNull())
-        {
-            if (Nullable.GetUnderlyingType(t) is not null)
-                return Expression.Constant(t.GetConstructor(BindingFlags.CreateInstance, Array.Empty<Type>())!.Invoke(null, null), t);
-
-            return Expression.Constant(null, t);
-        }
-
-        throw new NotImplementedException();
-    }
-
-    public static PropertyInfo? FindIndexerProperty(
-        this Type type)
-    {
-        var defaultPropertyAttribute = type.GetCustomAttributes<DefaultMemberAttribute>().FirstOrDefault();
-
-        return defaultPropertyAttribute == null
-            ? null
-            : type.GetRuntimeProperties()
-                .FirstOrDefault(
-                    pi =>
-                        pi.Name == defaultPropertyAttribute.MemberName
-                        && pi.IsIndexerProperty()
-                        && pi.SetMethod?.GetParameters() is { } parameters
-                        && parameters.Length == 2
-                        && parameters[0].ParameterType == typeof(string));
-    }
-
-    public static bool IsIndexerProperty(this PropertyInfo propertyInfo)
-    {
-        var indexParams = propertyInfo.GetIndexParameters();
-        return indexParams.Length == 1
-               && indexParams[0].ParameterType == typeof(string);
     }
 }
 

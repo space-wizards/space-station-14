@@ -6,7 +6,7 @@ namespace Content.Server.NewCon;
 [MeansImplicitUse]
 public sealed class ConsoleCommandAttribute : Attribute
 {
-    public readonly string? Name = null;
+    public string? Name = null;
 }
 
 [AttributeUsage(AttributeTargets.Method)]

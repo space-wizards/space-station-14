@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.NewCon.Errors;
 using Content.Server.NewCon.TypeParsers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.NewCon;
 
@@ -56,22 +58,36 @@ public sealed partial class NewConManager
         return null;
     }
 
-    public bool TryParse<T>(ForwardParser parser, [NotNullWhen(true)] out object? parsed)
+    public bool TryParse<T>(ForwardParser parser, [NotNullWhen(true)] out object? parsed, out IConError? error)
     {
-        return TryParse(parser, typeof(T), out parsed);
+        return TryParse(parser, typeof(T), out parsed, out error);
     }
 
-    public bool TryParse(ForwardParser parser, Type t, [NotNullWhen(true)] out object? parsed)
+    public bool TryParse(ForwardParser parser, Type t, [NotNullWhen(true)] out object? parsed, out IConError? error)
     {
         var impl = GetParserForType(t);
 
         if (impl is null)
         {
-            Logger.Debug("FUCK");
             parsed = null;
+            error = new UnparseableValueError(t);
             return false;
         }
 
-        return impl.TryParse(parser, out parsed);
+        return impl.TryParse(parser, out parsed, out error);
     }
+}
+
+public record struct UnparseableValueError(Type T) : IConError
+{
+    public FormattedMessage DescribeInner()
+    {
+        var msg = FormattedMessage.FromMarkup($"The type {T.PrettyName()} has no parser available and cannot be parsed.");
+        msg.AddText("Please contact a programmer with this error, they'd probably like to see it.");
+        msg.AddMarkup("[bold][color=red]THIS IS A BUG.[/color][/bold]");
+        return msg;
+    }
+
+    public string? Expression { get; set; }
+    public Vector2i? IssueSpan { get; set; }
 }

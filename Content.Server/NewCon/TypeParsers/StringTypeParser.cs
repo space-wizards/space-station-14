@@ -1,13 +1,15 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using Content.Server.NewCon.Errors;
 using Microsoft.Extensions.Primitives;
 
 namespace Content.Server.NewCon.TypeParsers;
 
 public sealed class StringTypeParser : TypeParser<string>
 {
-    public override bool TryParse(ForwardParser parser, [NotNullWhen(true)] out object? result)
+    public override bool TryParse(ForwardParser parser, [NotNullWhen(true)] out object? result, out IConError? error)
     {
+        error = null;
         if (parser.PeekChar() is not '"')
         {
             result = null;

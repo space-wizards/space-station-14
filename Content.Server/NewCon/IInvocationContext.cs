@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Server.NewCon.Errors;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
 
@@ -26,4 +27,10 @@ public interface IInvocationContext
     {
         WriteLine(FormattedMessage.FromMarkup(markup));
     }
+
+    public void ReportError(IConError err);
+
+    public IEnumerable<IConError> GetErrors();
+
+    public void ClearErrors();
 }

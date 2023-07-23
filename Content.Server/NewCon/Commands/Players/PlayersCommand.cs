@@ -9,7 +9,5 @@ public sealed class PlayersCommand : ConsoleCommand
 
     [CommandImplementation]
     public IEnumerable<IPlayerSession> Players()
-    {
-        return _playerManager.ServerSessions;
-    }
+        => _playerManager.ServerSessions;
 }

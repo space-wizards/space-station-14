@@ -10,38 +10,13 @@ namespace Content.Server.NewCon.Commands.Generic;
 [ConsoleCommand]
 public sealed class SelectCommand : ConsoleCommand
 {
-    public override bool TryGetReturnType(string? subCommand, Type? pipedType, Type[] typeArguments, out Type? type)
-    {
-        if (pipedType is null || subCommand is not null)
-        {
-            type = null;
-            return false;
-        }
-
-        if (pipedType.IsGenericType(typeof(IEnumerable<>)))
-        {
-            type = pipedType;
-            return true;
-        }
-
-        type = null;
-        return false;
-    }
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     [CommandImplementation, TakesPipedTypeAsGeneric]
-    public T Select<T>([PipedArgument] T enumerable, [CommandArgument] Quantity quantity, [CommandInverted] bool inverted)
-        where T: IEnumerable
+    public IEnumerable<TR> Select<TR>([PipedArgument] IEnumerable<TR> enumerable, [CommandArgument] Quantity quantity, [CommandInverted] bool inverted)
     {
-        // todo: cache this
-        var castMethodGeneric = typeof(Enumerable).GetMethod("Cast", BindingFlags.Public | BindingFlags.Static)!;
-        var castMethod = castMethodGeneric.MakeGenericMethod(typeof(T).GetGenericArguments()[0]);
-
-        return (T)(IEnumerable)castMethod.Invoke(null, new [] {SelectInner(enumerable, quantity, inverted)})!;
-    }
-
-    private IEnumerable SelectInner(IEnumerable input, Quantity quantity, bool inverted)
-    {
-        var arr = input.Cast<object?>().OrderBy(_ => Guid.NewGuid()).ToArray();
+        var arr = enumerable.ToArray();
+        _random.Shuffle(arr);
 
         if (quantity is {Amount: { } amount})
         {

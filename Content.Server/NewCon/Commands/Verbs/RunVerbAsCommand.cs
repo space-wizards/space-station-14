@@ -17,6 +17,9 @@ public sealed class RunVerbAsCommand : ConsoleCommand
     {
         verb = verb.ToLowerInvariant();
         var runnerEid = runner.Invoke(null, ctx);
+        if (ctx.GetErrors().Any())
+            yield break;
+
         var sys = EntitySystem.Get<SharedVerbSystem>();
         foreach (var i in input)
         {

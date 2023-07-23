@@ -37,27 +37,13 @@ public sealed partial class NewConManager
                 continue;
             }
 
-            var name = ty.GetCustomAttribute<ConsoleCommandAttribute>()!.Name;
-
-            if (name is null)
-            {
-                var typeName = ty.Name;
-                const string commandStr = "Command";
-
-                if (!typeName.EndsWith(commandStr))
-                {
-                    throw new InvalidComponentNameException($"Component {ty} must end with the word Component");
-                }
-
-                name = typeName[..^commandStr.Length].ToLowerInvariant();
-            }
-
             var command = (ConsoleCommand)_typeFactory.CreateInstance(ty, false, true);
 
-            _commands.Add(name, command);
+            _commands.Add(command.Name, command);
         }
 
         InitializeParser();
+        InitializeQueries();
 
         _conHost.RegisterCommand("|", Callback);
     }
@@ -70,60 +56,25 @@ public sealed partial class NewConManager
     [AnyCommand]
     private void Callback(IConsoleShell shell, string argstr, string[] args)
     {
-        if (!_commands.ContainsKey(args[0]))
+        var parser = new ForwardParser(argstr[2..]);
+        var ctx = new OldShellInvocationContext(shell);
+        if (!Expression.TryParse(parser, null, null, false, out var expr, out var err) || parser.Index < parser.MaxIndex)
         {
-            shell.WriteError($"Unknown command {args[0]}");
-        }
+            if (err is not null)
+            {
+                ctx.ReportError(err);
+                ctx.WriteLine(err.Describe());
+            }
+            else
+            {
+                ctx.WriteLine("Got some unknown error while parsing.");
+            }
 
-        var parser = new ForwardParser(argstr);
-        parser.GetWord(); // shell is annoying, discard the first word.
-
-        if (!Expression.TryParse(parser, null, null, false, out var expr) || parser.Index < parser.MaxIndex)
-        {
-            parser.DebugPrint();
-            _log.Warning("Could not parse command.");
             return;
         }
 
-        var value = expr.Invoke(null, new OldShellInvocationContext(shell));
+        var value = expr.Invoke(null, ctx);
 
         shell.WriteLine(PrettyPrintType(value));
-    }
-
-    public string PrettyPrintType(object? value)
-    {
-        if (value is null)
-            return "null";
-
-        if (value is EntityUid uid)
-        {
-            return _entity.ToPrettyString(uid);
-        }
-
-        if (value.GetType().IsAssignableTo(typeof(IEnumerable<EntityUid>)))
-        {
-            return string.Join(", ", ((IEnumerable<EntityUid>)value).Select(_entity.ToPrettyString));
-        }
-
-        if (value.GetType().IsAssignableTo(typeof(IEnumerable)))
-        {
-            return string.Join(", ", ((IEnumerable) value).Cast<object?>().Select(PrettyPrintType));
-        }
-
-        if (value.GetType().IsAssignableTo(typeof(IDictionary)))
-        {
-            var dict = ((IDictionary) value).GetEnumerator();
-
-            var kvList = new List<string>();
-
-            do
-            {
-                kvList.Add($"({PrettyPrintType(dict.Key)}, {PrettyPrintType(dict.Value)}");
-            } while (dict.MoveNext());
-
-            return $"Dictionary {{{string.Join(", ", kvList)}}}";
-        }
-
-        return value.ToString() ?? "[unrepresentable]";
     }
 }

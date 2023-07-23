@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text;
+using Content.Server.NewCon.Errors;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NewCon;
@@ -161,3 +162,14 @@ public sealed class ForwardParser
 }
 
 public readonly record struct ParserRestorePoint(int Index);
+
+public record struct OutOfInputError : IConError
+{
+    public FormattedMessage DescribeInner()
+    {
+        return FormattedMessage.FromMarkup("Ran out of input data when data was expected.");
+    }
+
+    public string? Expression { get; set; }
+    public Vector2i? IssueSpan { get; set; }
+}
