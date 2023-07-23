@@ -1,128 +1,146 @@
-using Content.Shared.Clothing.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using System.Linq;
 
-namespace Content.Client.Overlays
+namespace Content.Client.Overlays;
+
+public abstract class ComponentActivatedClientSystemBase<T> : EntitySystem where T : IComponent
 {
-    // TODO RENAME
-    public abstract class ComponentActivatedClientSystemBase<T> : EntitySystem where T : IComponent
+    [Dependency] private readonly IPlayerManager _player = default!;
+    //[Dependency] private readonly InventorySystem _invSystem = default!;
+
+    protected bool IsActive = false;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IPlayerManager _player = default!;
-        [Dependency] private readonly InventorySystem _invSystem = default!;
+        base.Initialize();
 
-        protected bool IsActive = false;
+        SubscribeLocalEvent<T, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<T, ComponentRemove>(OnRemove);
 
-        public override void Initialize()
+        SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
+
+        SubscribeLocalEvent<T, GotEquippedEvent>(OnCompEquip);
+        SubscribeLocalEvent<T, GotUnequippedEvent>(OnCompUnequip);
+
+        SubscribeLocalEvent<T, GetActivatingComponentsEvent<T>>(OnGetActivatingComponentsEvent);
+        SubscribeLocalEvent<T, InventoryRelayedEvent<GetActivatingComponentsEvent<T>>>(UnpackageRelayAndRelay);
+
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+    }
+
+    public void Activate(IReadOnlyList<T> components)
+    {
+        IsActive = true;
+        OnActivate(components);
+    }
+
+    public void Deactivate()
+    {
+        IsActive = false;
+        OnDeactivate();
+    }
+
+    protected virtual void OnActivate(IReadOnlyList<T> component) { }
+
+    protected virtual void OnDeactivate() { }
+
+    private void OnStartup(EntityUid uid, T component, ComponentStartup args)
+    {
+        RefreshOverlay(uid);
+    }
+
+    private void OnRemove(EntityUid uid, T component, ComponentRemove args)
+    {
+        RefreshOverlay(uid);
+    }
+
+    private void OnPlayerAttached(PlayerAttachedEvent args)
+    {
+        RefreshOverlay(args.Entity);
+    }
+
+    private void OnPlayerDetached(PlayerDetachedEvent args)
+    {
+        RefreshOverlay(args.Entity);
+    }
+
+    private void OnCompEquip(EntityUid uid, T component, GotEquippedEvent args)
+    {
+        RefreshOverlay(args.Equipee);
+    }
+
+    private void OnCompUnequip(EntityUid uid, T component, GotUnequippedEvent args)
+    {
+        RefreshOverlay(args.Equipee);
+    }
+
+    private void OnRoundRestart(RoundRestartCleanupEvent args)
+    {
+        Deactivate();
+    }
+
+    private void UnpackageRelayAndRelay(EntityUid uid, T component, InventoryRelayedEvent<GetActivatingComponentsEvent<T>> args)
+    {
+        OnGetActivatingComponentsEvent(uid, component, args.Args);
+    }
+
+    private void OnGetActivatingComponentsEvent(EntityUid uid, T component, GetActivatingComponentsEvent<T> args)
+    {
+        args.Components.Add(component);
+    }
+
+    private void RefreshOverlay(EntityUid uid)
+    {
+        Deactivate();
+
+        if (uid != _player.LocalPlayer?.ControlledEntity)
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<T, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<T, ComponentRemove>(OnRemove);
-
-            SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
-
-            SubscribeLocalEvent<T, GotEquippedEvent>(OnCompEquip);
-            SubscribeLocalEvent<T, GotUnequippedEvent>(OnCompUnequip);
-
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+            return;
         }
 
-        public void ApplyOverlay(T component)
+        var ev = new GetActivatingComponentsEvent<T>();
+        RaiseLocalEvent(uid, ev);
+
+        if (ev.Components.Any())
         {
-            IsActive = true;
-            OnApplyOverlay(component);
+            Activate(ev.Components);
         }
 
-        public void RemoveOverlay()
-        {
-            IsActive = false;
-            OnRemoveOverlay();
-        }
+        //if (TryComp<T>(uid, out var component))
+        //{
+        //    Activate(component);
+        //}
 
-        protected virtual void OnApplyOverlay(T component) { }
+        //if (!TryComp(uid, out InventoryComponent? inventoryComponent)
+        //    || !_invSystem.TryGetSlots(uid, out var slotDefinitions, inventoryComponent))
+        //{
+        //    return;
+        //}
 
-        protected virtual void OnRemoveOverlay() { }
+        //foreach (var slot in slotDefinitions)
+        //{
+        //    if (!_invSystem.TryGetSlotEntity(uid, slot.Name, out var itemUid)
+        //        || !TryComp(itemUid.Value, out component))
+        //    {
+        //        continue;
+        //    }
 
-        private void OnStartup(EntityUid uid, T component, ComponentStartup args)
-        {
-            RefreshOverlay(uid);
-        }
+        //    if (!TryComp<ClothingComponent>(itemUid, out var clothing))
+        //    {
+        //        continue;
+        //    }
 
-        private void OnRemove(EntityUid uid, T component, ComponentRemove args)
-        {
-            RefreshOverlay(uid);
-        }
+        //    if (!clothing.Slots.HasFlag(slot.SlotFlags))
+        //    {
+        //        continue;
+        //    }
 
-        private void OnPlayerAttached(PlayerAttachedEvent args)
-        {
-            RefreshOverlay(args.Entity);
-        }
-
-        private void OnPlayerDetached(PlayerDetachedEvent args)
-        {
-            RefreshOverlay(args.Entity);
-        }
-
-        private void OnCompEquip(EntityUid uid, T component, GotEquippedEvent args)
-        {
-            RefreshOverlay(args.Equipee);
-        }
-
-        private void OnCompUnequip(EntityUid uid, T component, GotUnequippedEvent args)
-        {
-            RefreshOverlay(args.Equipee);
-        }
-
-        private void OnRoundRestart(RoundRestartCleanupEvent args)
-        {
-            RemoveOverlay();
-        }
-
-        // TODO THIS should fire some event
-        private void RefreshOverlay(EntityUid uid)
-        {
-            RemoveOverlay();
-
-            if (uid != _player.LocalPlayer?.ControlledEntity)
-            {
-                return;
-            }
-
-            if (TryComp<T>(uid, out var component))
-            {
-                ApplyOverlay(component);
-            }
-
-            if (!TryComp(uid, out InventoryComponent? inventoryComponent)
-                || !_invSystem.TryGetSlots(uid, out var slotDefinitions, inventoryComponent))
-            {
-                return;
-            }
-
-            foreach (var slot in slotDefinitions)
-            {
-                if (!_invSystem.TryGetSlotEntity(uid, slot.Name, out var itemUid)
-                    || !TryComp(itemUid.Value, out component))
-                {
-                    continue;
-                }
-
-                if (!TryComp<ClothingComponent>(itemUid, out var clothing))
-                {
-                    continue;
-                }
-
-                if (!clothing.Slots.HasFlag(slot.SlotFlags))
-                {
-                    continue;
-                }
-
-                ApplyOverlay(component);
-            }
-        }
+        //    Activate(component);
+        //}
     }
 }
