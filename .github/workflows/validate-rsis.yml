@@ -35,5 +35,6 @@ jobs:
         run: |
           pip3 install --ignore-installed --user pillow jsonschema
       - name: Validate RSIs
+      # Schema fork for SS220 CLA addition
         run: |
-          python3 RobustToolbox/Schemas/validate_rsis.py Resources/
+          python3 Schemas/validate_rsis.py Resources/
