@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server.NodeContainer;
 using Content.Shared.Doors.Components;
@@ -21,9 +22,6 @@ public sealed partial class DungeonJob
     /*
      * Run after the main dungeon generation
      */
-
-    private const int CollisionMask = (int) CollisionGroup.Impassable;
-    private const int CollisionLayer = (int) CollisionGroup.Impassable;
 
     private bool HasWall(MapGridComponent grid, Vector2i tile)
     {
@@ -193,7 +191,7 @@ public sealed partial class DungeonJob
             if (dungeon.RoomTiles.Contains(neighbor))
                 continue;
 
-            if (!_anchorable.TileFree(grid, neighbor, CollisionLayer, CollisionMask))
+            if (!_anchorable.TileFree(grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
             tiles.Add((neighbor, _tileDefManager.GetVariantTile(tileDef, random)));
@@ -204,7 +202,7 @@ public sealed partial class DungeonJob
             if (dungeon.RoomTiles.Contains(index))
                 continue;
 
-            if (!_anchorable.TileFree(grid, index, CollisionLayer, CollisionMask))
+            if (!_anchorable.TileFree(grid, index, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
             tiles.Add((index, _tileDefManager.GetVariantTile(tileDef, random)));
@@ -216,7 +214,7 @@ public sealed partial class DungeonJob
         for (var i = 0; i < tiles.Count; i++)
         {
             var index = tiles[i];
-            if (!_anchorable.TileFree(grid, index.Index, CollisionLayer, CollisionMask))
+            if (!_anchorable.TileFree(grid, index.Index, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
             // If no cardinal neighbors in dungeon then we're a corner.
@@ -301,7 +299,7 @@ public sealed partial class DungeonJob
 
                 if (!blocked)
                     continue;
-                
+
                 var nextDir = (Direction) ((i + 1) * 2 % 8);
                 blocked = HasWall(grid, tile + nextDir.ToIntVec());
 
@@ -326,7 +324,7 @@ public sealed partial class DungeonJob
         var pocketDirections = new ValueList<Direction>(4);
         var doorQuery = _entManager.GetEntityQuery<DoorComponent>();
         var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
-        var offset = new Vector2(-_grid.TileSize / 2f, -_grid.TileSize / 2f);
+        var offset = -_grid.TileSizeHalfVector;
         var color = decks.Color;
 
         foreach (var tile in dungeon.CorridorTiles)
@@ -468,13 +466,13 @@ public sealed partial class DungeonJob
                     }
 
                     // Check if exterior spot free.
-                    if (!_anchorable.TileFree(_grid, tile, CollisionLayer, CollisionMask))
+                    if (!_anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                     {
                         continue;
                     }
 
                     // Check if interior spot free (no guarantees on exterior but ClearDoor should handle it)
-                    if (!_anchorable.TileFree(_grid, dirVec, CollisionLayer, CollisionMask))
+                    if (!_anchorable.TileFree(_grid, dirVec, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                     {
                         continue;
                     }
@@ -541,7 +539,7 @@ public sealed partial class DungeonJob
                 break;
 
             // Room tile / already used.
-            if (!_anchorable.TileFree(_grid, tile, CollisionLayer, CollisionMask) ||
+            if (!_anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask) ||
                 takenTiles.Contains(tile))
             {
                 continue;
@@ -561,7 +559,7 @@ public sealed partial class DungeonJob
 
                     if (!allExterior.Contains(neighbor) ||
                         takenTiles.Contains(neighbor) ||
-                        !_anchorable.TileFree(grid, neighbor, CollisionLayer, CollisionMask))
+                        !_anchorable.TileFree(grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                     {
                         isValid = false;
                         break;
@@ -576,7 +574,7 @@ public sealed partial class DungeonJob
 
                         if (allExterior.Contains(perpTile) ||
                             takenTiles.Contains(neighbor) ||
-                            !_anchorable.TileFree(_grid, perpTile, CollisionLayer, CollisionMask))
+                            !_anchorable.TileFree(_grid, perpTile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                         {
                             isValid = false;
                             break;
@@ -649,7 +647,7 @@ public sealed partial class DungeonJob
 
                 foreach (var tile in room.Tiles)
                 {
-                    var tileAngle = ((Vector2) tile + grid.TileSize / 2f - room.Center).ToAngle();
+                    var tileAngle = ((Vector2) tile + grid.TileSizeHalfVector - room.Center).ToAngle();
                     var roundedAngle = Math.Round(tileAngle.Theta / (Math.PI / 2)) * (Math.PI / 2);
 
                     var tileVec = (Vector2i) new Angle(roundedAngle).ToVec().Rounded();
@@ -683,13 +681,13 @@ public sealed partial class DungeonJob
 
                     var windowTile = tile + dirVec;
 
-                    if (!_anchorable.TileFree(grid, windowTile, CollisionLayer, CollisionMask))
+                    if (!_anchorable.TileFree(grid, windowTile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                         continue;
 
                     validTiles.Add(windowTile);
                 }
 
-                validTiles.Sort((x, y) => ((Vector2) x + grid.TileSize / 2f - room.Center).LengthSquared.CompareTo(((Vector2) y + grid.TileSize / 2f - room.Center).LengthSquared));
+                validTiles.Sort((x, y) => ((Vector2) x + grid.TileSizeHalfVector - room.Center).LengthSquared().CompareTo((y + grid.TileSizeHalfVector - room.Center).LengthSquared));
 
                 for (var j = 0; j < Math.Min(validTiles.Count, 3); j++)
                 {
@@ -795,7 +793,7 @@ public sealed partial class DungeonJob
             foreach (var entrance in room.Entrances)
             {
                 // Just so we can still actually get in to the entrance we won't deter from a tile away from it.
-                var normal = ((Vector2) entrance + grid.TileSize / 2f - room.Center).ToWorldAngle().GetCardinalDir().ToIntVec();
+                var normal = ((Vector2) entrance + grid.TileSizeHalfVector - room.Center).ToWorldAngle().GetCardinalDir().ToIntVec();
                 deterredTiles.Remove(entrance + normal);
             }
         }
@@ -929,7 +927,7 @@ public sealed partial class DungeonJob
         // N-wide junctions
         foreach (var tile in dungeon.CorridorTiles)
         {
-            if (!_anchorable.TileFree(_grid, tile, CollisionLayer, CollisionMask))
+            if (!_anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
             // Check each direction:
@@ -966,7 +964,7 @@ public sealed partial class DungeonJob
                     }
 
                     // If we're not at the end tile then check it + perpendicular are free.
-                    if (!_anchorable.TileFree(_grid, neighbor, CollisionLayer, CollisionMask))
+                    if (!_anchorable.TileFree(_grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                     {
                         isValid = false;
                         break;
@@ -975,13 +973,13 @@ public sealed partial class DungeonJob
                     var perp1 = tile + neighborVec * j + ((Direction) ((i * 2 + 2) % 8)).ToIntVec();
                     var perp2 = tile + neighborVec * j + ((Direction) ((i * 2 + 6) % 8)).ToIntVec();
 
-                    if (!_anchorable.TileFree(_grid, perp1, CollisionLayer, CollisionMask))
+                    if (!_anchorable.TileFree(_grid, perp1, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                     {
                         isValid = false;
                         break;
                     }
 
-                    if (!_anchorable.TileFree(_grid, perp2, CollisionLayer, CollisionMask))
+                    if (!_anchorable.TileFree(_grid, perp2, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                     {
                         isValid = false;
                         break;
@@ -1003,7 +1001,7 @@ public sealed partial class DungeonJob
                         var cornerVec = cornerDir.ToIntVec();
                         var cornerNeighbor = tile + neighborVec * j + cornerVec;
 
-                        if (_anchorable.TileFree(_grid, cornerNeighbor, CollisionLayer, CollisionMask))
+                        if (_anchorable.TileFree(_grid, cornerNeighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                         {
                             freeCount++;
                         }
@@ -1070,7 +1068,7 @@ public sealed partial class DungeonJob
                         if (dungeon.RoomTiles.Contains(neighbor))
                             continue;
 
-                        if (!_anchorable.TileFree(grid, neighbor, CollisionLayer, CollisionMask))
+                        if (!_anchorable.TileFree(grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                             continue;
 
                         roomEdges.Add(neighbor);
@@ -1112,7 +1110,7 @@ public sealed partial class DungeonJob
 
                 foreach (var node in flipp)
                 {
-                    center += (Vector2) node + grid.TileSize / 2f;
+                    center += (Vector2) node + grid.TileSizeHalfVector;
                 }
 
                 center /= flipp.Count;
@@ -1121,7 +1119,7 @@ public sealed partial class DungeonJob
 
                 foreach (var node in flipp)
                 {
-                    nodeDistances.Add((node, ((Vector2) node + grid.TileSize / 2f - center).LengthSquared));
+                    nodeDistances.Add((node, ((Vector2) node + grid.TileSizeHalfVector - center).LengthSquared()));
                 }
 
                 nodeDistances.Sort((x, y) => x.Distance.CompareTo(y.Distance));
@@ -1132,7 +1130,7 @@ public sealed partial class DungeonJob
                 {
                     var node = nodeDistances[i].Node;
                     var gridPos = grid.GridTileToLocal(node);
-                    if (!_anchorable.TileFree(grid, node, CollisionLayer, CollisionMask))
+                    if (!_anchorable.TileFree(grid, node, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                         continue;
 
                     width--;
@@ -1192,8 +1190,8 @@ public sealed partial class DungeonJob
                 {
                     if (!physicsQuery.TryGetComponent(ent, out var physics) ||
                         !physics.Hard ||
-                        (CollisionMask & physics.CollisionLayer) == 0x0 &&
-                        (CollisionLayer & physics.CollisionMask) == 0x0)
+                        (DungeonSystem.CollisionMask & physics.CollisionLayer) == 0x0 &&
+                        (DungeonSystem.CollisionLayer & physics.CollisionMask) == 0x0)
                     {
                         continue;
                     }
@@ -1216,7 +1214,7 @@ public sealed partial class DungeonJob
         foreach (var neighbor in allExterior)
         {
             // Occupado
-            if (dungeon.RoomTiles.Contains(neighbor) || checkedTiles.Contains(neighbor) || !_anchorable.TileFree(grid, neighbor, CollisionLayer, CollisionMask))
+            if (dungeon.RoomTiles.Contains(neighbor) || checkedTiles.Contains(neighbor) || !_anchorable.TileFree(grid, neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
             if (!random.Prob(gen.Prob) || !checkedTiles.Add(neighbor))

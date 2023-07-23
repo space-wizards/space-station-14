@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
@@ -48,7 +49,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
-    [Dependency] private readonly FactionSystem _faction = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
@@ -180,9 +181,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         // we can only currently guarantee that NT stations are the only station to
         // exist in the base game.
 
-        var eligible = EntityQuery<StationEventEligibleComponent, FactionComponent>()
+        var eligible = EntityQuery<StationEventEligibleComponent, NpcFactionMemberComponent>()
             .Where(x =>
-                _faction.IsFactionHostile(component.Faction, x.Item2.Owner, x.Item2))
+                _npcFaction.IsFactionHostile(component.Faction, x.Item2.Owner, x.Item2))
             .Select(x => x.Item1.Owner)
             .ToList();
 
@@ -640,7 +641,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         component.NukieOutpost = outpostGrids[0];
 
         // Listen I just don't want it to overlap.
-        if (!_map.TryLoad(mapId, shuttlePath.ToString(), out var grids, new MapLoadOptions {Offset = Vector2.One*1000f}) || !grids.Any())
+        if (!_map.TryLoad(mapId, shuttlePath.ToString(), out var grids, new MapLoadOptions {Offset = Vector2.One * 1000f}) || !grids.Any())
         {
             Logger.ErrorS("nukies", $"Error loading grid {shuttlePath} for nukies!");
             return false;
@@ -711,8 +712,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (component.StartingGearPrototypes.TryGetValue(gear, out var gearPrototype))
             _stationSpawningSystem.EquipStartingGear(mob, gearPrototype, profile);
 
-        _faction.RemoveFaction(mob, "NanoTrasen", false);
-        _faction.AddFaction(mob, "Syndicate");
+        _npcFaction.RemoveFaction(mob, "NanoTrasen", false);
+        _npcFaction.AddFaction(mob, "Syndicate");
     }
 
     private void SpawnOperatives(int spawnCount, List<IPlayerSession> sessions, bool addSpawnPoints, NukeopsRuleComponent component)

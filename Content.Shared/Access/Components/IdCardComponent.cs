@@ -1,7 +1,6 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.PDA;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access.Components
 {
@@ -17,8 +16,7 @@ namespace Content.Shared.Access.Components
 
         [DataField("jobTitle")]
         [AutoNetworkedField]
-        [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem),
-            Other = AccessPermissions.ReadWrite)]
+        [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite)]
         public string? JobTitle;
     }
 }

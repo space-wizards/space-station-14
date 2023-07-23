@@ -22,8 +22,10 @@
   parent: OrganAnimalStomach
   name: Stomach
   description: "Gross. This is hard to stomach."
-  noSpawn: true
   components:
+  - type: Sprite
+    sprite: Mobs/Species/Arachnid/organs.rsi
+    state: stomach
   - type: Stomach
     updateInterval: 1.5
   - type: SolutionContainerManager
@@ -34,11 +36,41 @@
     updateFrequency: 1.5
 
 - type: entity
+  id: OrganArachnidLungs
+  parent: BaseArachnidOrgan
+  name: lungs
+  description: "Filters oxygen from an atmosphere... just more greedily."
+  components:
+  - type: Sprite
+    layers:
+      - state: lung-l
+      - state: lung-r
+  - type: Organ
+  - type: Lung
+  - type: Metabolizer
+    updateFrequency: 1.5
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Human ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      Lung:
+        maxVol: 100.0
+        canReact: false
+
+- type: entity
   id: OrganArachnidHeart
-  parent: BaseHumanOrgan
+  parent: BaseArachnidOrgan
   name: heart
-  description: "I feel bad for the heartless bastard who lost this."
-  noSpawn: true
+  description: "A disgustingly persistent little biological pump made for spiders."
   components:
   - type: Sprite
     state: heart-on
@@ -93,7 +125,7 @@
   id: OrganArachnidEyes
   parent: BaseArachnidOrgan
   name: eyes
-  description: "Eyes see you!"
+  description: "Two was already too many."
   components:
   - type: Sprite
     layers:

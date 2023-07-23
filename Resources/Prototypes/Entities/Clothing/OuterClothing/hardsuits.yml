@@ -20,7 +20,7 @@
         Piercing: 0.9
         Heat: 0.9
         Radiation: 0.9
-        Caustic: 0.9
+        Caustic: 0.85
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: ClothingSpeedModifier
@@ -53,8 +53,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.4
-        Radiation: 0.25
-        Caustic: 0.85
+        Radiation: 0.75
+        Caustic: 0.50
   - type: TemperatureProtection
     coefficient: 0.001
   - type: ExplosionResistance
@@ -83,11 +83,12 @@
     modifiers:
       coefficients:
         Blunt: 0.9
-        Slash: 0.85
-        Piercing: 0.85
+        Slash: 0.9
+        Piercing: 0.95
         Heat: 0.7
-        Radiation: 0.35
-        Caustic: 0.85
+        Shock: 0.8
+        Caustic: 0.75        
+        Radiation: 0.25
   - type: ExplosionResistance
     damageCoefficient: 0.2
   - type: ToggleableClothing
@@ -117,8 +118,8 @@
         Slash: 0.9
         Piercing: 0.95
         Heat: 0.9
-        Radiation: 0.5
-        Caustic: 0.9
+        Radiation: 0.75 #salv is supposed to have radiation hazards in the future
+        Caustic: 0.85
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpatio
 
@@ -146,7 +147,7 @@
         Slash: 0.7
         Piercing: 0.7
         Heat: 0.85
-        Radiation: 0.5
+        Radiation: 0.50
         Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.3
@@ -177,7 +178,6 @@
         Slash: 0.6
         Piercing: 0.6
         Heat: 0.8
-        Radiation: 0.25
         Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.4
@@ -208,7 +208,6 @@
         Slash: 0.8
         Piercing: 0.75
         Heat: 0.9
-        Radiation: 0.30
         Caustic: 0.2
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
@@ -234,7 +233,7 @@
         Slash: 0.6
         Piercing: 0.6
         Heat: 0.8
-        Radiation: 0.25
+        Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.4
   - type: ToggleableClothing
@@ -264,7 +263,7 @@
         Slash: 0.8
         Piercing: 0.75
         Heat: 0.3
-        Radiation: 0.1
+        Radiation: 0.50
         Caustic: 0.6
   - type: ExplosionResistance
     damageCoefficient: 0.5
@@ -296,7 +295,7 @@
         Piercing: 0.8
         Heat: 0.4
         Radiation: 0.0
-        Caustic: 0.85
+        Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.2
   - type: ToggleableClothing
@@ -323,7 +322,6 @@
     modifiers:
       coefficients:
         Heat: 0.90
-        Radiation: 0.25
         Caustic: 0.1
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMedical
@@ -423,7 +421,7 @@
         Slash: 0.6
         Piercing: 0.5
         Heat: 0.4
-        Radiation: 0.20
+        Radiation: 0.50
         Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.5
@@ -454,7 +452,7 @@
         Slash: 0.2
         Piercing: 0.2
         Heat: 0.5
-        Radiation: 0.1
+        Radiation: 0.25
         Caustic: 0.35
   - type: ExplosionResistance
     damageCoefficient: 0.8
@@ -487,7 +485,7 @@
         Slash: 0.5
         Piercing: 0.4
         Heat: 0.2
-        Radiation: 0.20
+        Radiation: 0.25
         Caustic: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.3
@@ -518,7 +516,7 @@
         Slash: 0.4
         Piercing: 0.3
         Heat: 0.3
-        Radiation: 0.20
+        Radiation: 0.25
         Caustic: 0.4
   - type: ExplosionResistance
     damageCoefficient: 0.5
@@ -549,7 +547,7 @@
         Slash: 0.6
         Piercing: 0.4
         Heat: 0.25
-        Radiation: 0.20
+        Radiation: 0.25
         Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.5
@@ -580,7 +578,6 @@
         Slash: 0.95
         Piercing: 1
         Heat: 0.5
-        Radiation: 0.3
   - type: ExplosionResistance
     damageCoefficient: 0.2
   - type: ToggleableClothing
@@ -609,7 +606,7 @@
         Slash: 0.8
         Piercing: 0.9
         Heat: 0.4
-        Radiation: 0.2
+        Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.7
   - type: ToggleableClothing
@@ -639,7 +636,7 @@
         Slash: 0.8
         Piercing: 0.85
         Heat: 0.4
-        Radiation: 0.2
+        Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.6
   - type: ToggleableClothing
@@ -737,7 +734,7 @@
         Slash: 0.2
         Piercing: 0.2
         Heat: 0.2
-        Radiation: 0.2
+        Radiation: 0.1
         Caustic: 0.2
   - type: ExplosionResistance
     damageCoefficient: 0.2
@@ -800,6 +797,7 @@
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
+        Caustic: 0.85
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: Construction

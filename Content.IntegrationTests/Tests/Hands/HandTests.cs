@@ -1,8 +1,6 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -40,7 +38,7 @@ public sealed class HandTests
 
         // run ticks here is important, as errors may happen within the container system's frame update methods.
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-        Assert.That(hands.ActiveHandEntity == item);
+        Assert.That(hands.ActiveHandEntity, Is.EqualTo(item));
 
         await server.WaitPost(() =>
         {
@@ -48,7 +46,7 @@ public sealed class HandTests
         });
 
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-        Assert.That(hands.ActiveHandEntity == null);
+        Assert.That(hands.ActiveHandEntity, Is.Null);
 
         await server.WaitPost(() => mapMan.DeleteMap(data.MapId));
         await pairTracker.CleanReturnAsync();

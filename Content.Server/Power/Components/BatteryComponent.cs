@@ -10,6 +10,7 @@ namespace Content.Server.Power.Components
     public class BatteryComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        public string SolutionName = "battery";
 
         /// <summary>
         /// Maximum charge of the battery in joules (ie. watt seconds)
