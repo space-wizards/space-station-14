@@ -95,7 +95,12 @@
     Telecrystal: 16
   categories:
   - UplinkWeapons
-
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+          
 # Explosives
 
 - type: listing
@@ -152,6 +157,21 @@
     Telecrystal: 4
   categories:
   - UplinkExplosives
+
+- type: listing
+  id: UplinkGrenadierRig
+  name: uplink-grenadier-rig-name
+  description: uplink-grenadier-rig-desc
+  productEntity: ClothingBeltMilitaryWebbingGrenadeFilled
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkC4Bundle
@@ -226,7 +246,7 @@
   id: UplinkMosinAmmo
   name: uplink-mosin-ammo-name
   description: uplink-mosin-ammo-desc
-  productEntity: BoxMagazineLightRifle
+  productEntity: MagazineBoxLightRifle
   cost:
     Telecrystal: 1
   categories:
@@ -321,6 +341,17 @@
       whitelist:
         tags:
           - NukeOpsUplink
+          
+- type: listing
+  id: UplinkReinforcementRadioSyndicateMonkey
+  name: uplink-reinforcement-radio-monkey-name
+  description: uplink-reinforcement-radio-monkey-desc
+  productEntity: ReinforcementRadioSyndicateMonkey
+  icon: { sprite: Objects/Devices/communication.rsi, state: old-radio }
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkUtility
 
 - type: listing
   id: UplinkStealthBox
@@ -330,7 +361,7 @@
   cost:
     Telecrystal: 5
   categories:
-    - UplinkUtility
+  - UplinkUtility
 
 #TODO: Remove this from the uplink
 - type: listing
@@ -410,14 +441,29 @@
   icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: freedom }
   productEntity: FreedomImplanter
   cost:
-    Telecrystal: 10
+    Telecrystal: 8
+  categories:
+    - UplinkImplants
+
+- type: listing
+  id: UplinkMicroBombImplanter
+  name: uplink-micro-bomb-implanter-name
+  description: uplink-micro-bomb-implanter-desc
+  icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: explosive }
+  productEntity: MicroBombImplanter
+  cost:
+    Telecrystal: 2
   categories:
     - UplinkImplants
   conditions:
     - !type:StoreWhitelistCondition
-      blacklist:
+      whitelist:
         tags:
           - NukeOpsUplink
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
 
 - type: listing
   id: UplinkDnaScramblerImplant
@@ -448,7 +494,7 @@
   icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: explosive }
   productEntity: MacroBombImplanter
   cost:
-    Telecrystal: 25
+    Telecrystal: 20
   categories:
     - UplinkImplants
   conditions:
@@ -497,6 +543,44 @@
           - SurplusBundle
 
 # Bundles
+
+- type: listing
+  id: UplinkAmmoBundle
+  name: uplink-ammo-bundle-name
+  description: uplink-ammo-bundle-desc
+  productEntity: ClothingBackpackDuffelSyndicateAmmoFilled
+  cost:
+    Telecrystal: 15
+  categories:
+  - UplinkBundles
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
+
+- type: listing
+  id: UplinkMedsBundle
+  name: uplink-meds-bundle-name
+  description: uplink-meds-bundle-desc
+  productEntity: ClothingBackpackDuffelSyndicateMedicalBundleFilled
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkBundles
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
 
 - type: listing
   id: UplinkC20RBundle
@@ -826,7 +910,7 @@
   description: uplink-disposable-turret-desc
   productEntity: ToolboxElectricalTurretFilled
   cost:
-    Telecrystal: 12
+    Telecrystal: 8
   categories:
   - UplinkJob
   conditions:
@@ -1001,6 +1085,26 @@
   productEntity: NocturineChemistryBottle
   cost:
     Telecrystal: 5
+  categories:
+  - UplinkMisc
+
+- type: listing
+  id: UplinkCombatMedkit
+  name: uplink-combat-medkit-name
+  description: uplink-combat-medkit-desc
+  productEntity: MedkitCombatFilled
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkMisc
+
+- type: listing
+  id: UplinkCombatMedipen
+  name: uplink-combat-medipen-name
+  description: uplink-combat-medipen-desc
+  productEntity: CombatMedipen
+  cost:
+    Telecrystal: 8
   categories:
   - UplinkMisc
 
