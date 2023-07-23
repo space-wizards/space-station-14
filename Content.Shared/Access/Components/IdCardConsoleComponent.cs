@@ -27,15 +27,13 @@ public sealed class IdCardConsoleComponent : Component
     {
         public readonly string FullName;
         public readonly string JobTitle;
-        public readonly string JobIcon;
         public readonly List<string> AccessList;
         public readonly string JobPrototype;
 
-        public WriteToTargetIdMessage(string fullName, string jobTitle, string jobIcon, List<string> accessList, string jobPrototype)
+        public WriteToTargetIdMessage(string fullName, string jobTitle, List<string> accessList, string jobPrototype)
         {
             FullName = fullName;
             JobTitle = jobTitle;
-            JobIcon = jobIcon;
             AccessList = accessList;
             JobPrototype = jobPrototype;
         }
