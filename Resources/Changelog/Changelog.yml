@@ -1,16 +1,4 @@
 Entries:
-- author: GoodWheatley
-  changes:
-  - {message: Regular monkeys are now very rarely available for ghosts to control.,
-    type: Remove}
-  id: 3809
-  time: '2023-05-19T07:00:28.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: NT has granted stations access to research the new technology called
-      'Advanced Tools'., type: Add}
-  id: 3810
-  time: '2023-05-19T07:07:59.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Add the force gun as a counterpart to the tether gun., type: Add}
@@ -2983,3 +2971,14 @@ Entries:
   - {message: Changed Hop Cap's description, type: Tweak}
   id: 4308
   time: '2023-07-23T19:15:53.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Emergency and Double oxygen tanks that spawn empty now have the same
+      internal volume as filled ones., type: Fix}
+  id: 4309
+  time: '2023-07-23T19:17:32.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Salt is now white instead of red., type: Tweak}
+  id: 4310
+  time: '2023-07-23T19:17:46.0000000+00:00'
