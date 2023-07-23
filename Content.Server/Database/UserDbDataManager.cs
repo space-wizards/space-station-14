@@ -63,7 +63,12 @@ public sealed class UserDbDataManager
 
     public bool IsLoadComplete(IPlayerSession session)
     {
-        return _users[session.UserId].Task.IsCompleted;
+        return GetLoadTask(session).IsCompleted;
+    }
+
+    public Task GetLoadTask(IPlayerSession session)
+    {
+        return _users[session.UserId].Task;
     }
 
     private sealed record UserData(CancellationTokenSource Cancel, Task Task);
