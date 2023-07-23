@@ -114,7 +114,8 @@ namespace Content.YAMLLinter
                     yamlErrors[key] = newErrors;
             }
 
-            // This will contain duplicate errors for shared files, but it doesn't really matter.
+            // Finally, just add all prototype ID field errors. This will contain some duplicate errors for shared
+            // files, but it doesn't really matter.
             var staticIdErrors = serverErrors.Item2.Concat(clientErrors.Item2).ToList();
 
             return (yamlErrors, staticIdErrors);
