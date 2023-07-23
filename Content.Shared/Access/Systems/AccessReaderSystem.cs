@@ -68,29 +68,24 @@ public sealed class AccessReaderSystem : EntitySystem
     /// required entity.
     /// </summary>
     /// <param name="target">The entity to search for a container</param>
-    private List<AccessReaderComponent> FindAccessReadersInContainer(
-        EntityUid target,
-        AccessReaderComponent? accessReader = null)
-    {
-        List<AccessReaderComponent> result = new();
-
-        if (!Resolve(target, ref accessReader))
-            return result;
-
-        if (accessReader.ContainerAccessProvider == null)
-            return result;
-
-        if (!_containerSystem.TryGetContainer(target, accessReader.ContainerAccessProvider, out var container))
-            return result;
-
-        foreach (var entity in container.ContainedEntities)
+        private bool FindAccessReadersInContainer(EntityUid target, AccessReaderComponent accessReader, out List<AccessReaderComponent> result)
         {
-            if (TryComp<AccessReaderComponent>(entity, out var entityAccessReader))
-                result.Append(entityAccessReader);
-        }
+            if (accessReader.ContainerAccessProvider == null)
+                return false;
 
-        return result;
-    }
+            if (!_containerSystem.TryGetContainer(target, accessReader.ContainerAccessProvider, out var container))
+                return false;
+
+            result = new();
+            foreach (var entity in container.ContainedEntities)
+            {
+                if (TryComp<AccessReaderComponent>(entity, out var entityAccessReader))
+                    //Append allocates more than Add
+                    result.Add(entityAccessReader);
+            }
+
+            return result.Any();
+        }
 
     /// <summary>
     /// Searches the source for access tags
@@ -101,27 +96,20 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="reader">Optional reader from the target entity</param>
     public bool IsAllowed(EntityUid source, EntityUid target, AccessReaderComponent? reader = null)
     {
-        List<AccessReaderComponent> accessReaders = new();
-
-        if (Resolve(target, ref reader))
-            accessReaders.Append(reader);
-
-        var ev = new GetRequiredAccessEvent();
-        RaiseLocalEvent(target, ev);
-
-        if (ev.Handled)
-            accessReaders.Append(ev.Access);
-
-        accessReaders.AddRange(FindAccessReadersInContainer(target, reader));
-
-        foreach (var accessReader in accessReaders)
-        {
-            if (IsAllowed(source, accessReader))
+            if (!Resolve(target, ref reader, false))
                 return true;
-        }
-        return false;
-    }
-    
+
+            if (FindAccessReadersInContainer(target, reader.Value, out var accessReaderList))
+            {
+                foreach (var access in accessReaderList)
+                {
+                    if (IsAllowed(source, access))
+                        return true;
+                }
+            }
+
+            return IsAllowed(source, reader);
+        }    
     /// <summary>
     /// Searches the given entity for access tags
     /// then compares it with the readers access list to see if it is allowed.
