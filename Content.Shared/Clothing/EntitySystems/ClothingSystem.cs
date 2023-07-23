@@ -14,7 +14,7 @@ public abstract class ClothingSystem : EntitySystem
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
-    [PrototypeId<TagPrototype>]
+    [ValidatePrototypeId<TagPrototype>]
     private const string HairTag = "HidesHair";
 
     public override void Initialize()

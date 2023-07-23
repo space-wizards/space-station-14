@@ -7,6 +7,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.UnitTesting;
 
 namespace Content.YAMLLinter
 {
@@ -17,9 +18,9 @@ namespace Content.YAMLLinter
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var (errors, staticIdErrors) = await RunValidation();
+            var (errors, fieldErrors) = await RunValidation();
 
-            var count = errors.Count + staticIdErrors.Count;
+            var count = errors.Count + fieldErrors.Count;
 
             if (count == 0)
             {
@@ -35,52 +36,52 @@ namespace Content.YAMLLinter
                 }
             }
 
-            foreach (var err in staticIdErrors)
+            foreach (var error in fieldErrors)
             {
-                Console.WriteLine(err);
+                Console.WriteLine(error);
             }
 
             Console.WriteLine($"{count} errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
             return -1;
         }
 
-        private static async Task<(Dictionary<string, HashSet<ErrorNode>>, List<string>)> ValidateClient()
+        private static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
+            ValidateClient()
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { DummyTicker = true, Disconnected = true });
             var client = pairTracker.Pair.Client;
-
-            var cPrototypeManager = client.ResolveDependency<IPrototypeManager>();
-            (Dictionary<string, HashSet<ErrorNode>>, List<string>) clientErrors = default;
-
-            await client.WaitPost(() =>
-            {
-                clientErrors = cPrototypeManager.ValidateDirectory(new ResPath("/Prototypes"));
-            });
-
+            var result = await ValidateInstance(client);
             await pairTracker.CleanReturnAsync();
-
-            return clientErrors;
+            return result;
         }
 
-        private static async Task<(Dictionary<string, HashSet<ErrorNode>>, List<string>)> ValidateServer()
+        private static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
+            ValidateServer()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { DummyTicker = true, Disconnected = true });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { DummyTicker = true, NoClient = true });
             var server = pairTracker.Pair.Server;
-
-            var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
-            (Dictionary<string, HashSet<ErrorNode>>, List<string>) serverErrors = default;
-
-            await server.WaitPost(() =>
-            {
-                serverErrors = sPrototypeManager.ValidateDirectory(new ResPath("/Prototypes"));
-            });
-
+            var result = await ValidateInstance(server);
             await pairTracker.CleanReturnAsync();
-
-            return serverErrors;
+            return result;
         }
 
-        public static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors , List<string> StaticIdErrors)>
+        private static async Task<(Dictionary<string, HashSet<ErrorNode>>, List<string>)> ValidateInstance(
+            RobustIntegrationTest.IntegrationInstance instance)
+        {
+            var protoMan = instance.ResolveDependency<IPrototypeManager>();
+            Dictionary<string, HashSet<ErrorNode>> yamlErrors = default!;
+            List<string> fieldErrors = default!;
+
+            await instance.WaitPost(() =>
+            {
+                yamlErrors = protoMan.ValidateDirectory(new ResPath("/Prototypes"), out var prototypes);
+                fieldErrors = protoMan.ValidateFields(prototypes);
+            });
+
+            return (yamlErrors, fieldErrors);
+        }
+
+        public static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors , List<string> FieldErrors)>
             RunValidation()
         {
             var yamlErrors = new Dictionary<string, HashSet<ErrorNode>>();
@@ -88,7 +89,7 @@ namespace Content.YAMLLinter
             var serverErrors = await ValidateServer();
             var clientErrors = await ValidateClient();
 
-            foreach (var (key, val) in serverErrors.Item1)
+            foreach (var (key, val) in serverErrors.YamlErrors)
             {
                 // Include all server errors marked as always relevant
                 var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
@@ -102,7 +103,7 @@ namespace Content.YAMLLinter
             }
 
             // Next add any always-relevant client errors.
-            foreach (var (key, val) in clientErrors.Item1)
+            foreach (var (key, val) in clientErrors.YamlErrors)
             {
                 var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
                 if (newErrors.Count == 0)
@@ -114,11 +115,13 @@ namespace Content.YAMLLinter
                     yamlErrors[key] = newErrors;
             }
 
-            // Finally, just add all prototype ID field errors. This will contain some duplicate errors for shared
-            // files, but it doesn't really matter.
-            var staticIdErrors = serverErrors.Item2.Concat(clientErrors.Item2).ToList();
+            // Finally, combine the prototype ID field errors.
+            var fieldErrors = serverErrors.FieldErrors
+                .Concat(clientErrors.FieldErrors)
+                .Distinct()
+                .ToList();
 
-            return (yamlErrors, staticIdErrors);
+            return (yamlErrors, fieldErrors);
         }
     }
 }
