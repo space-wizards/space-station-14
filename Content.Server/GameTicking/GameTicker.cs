@@ -119,7 +119,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly StationJobsSystem _stationJobs = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly GhostSystem _ghosts = default!;
-        [Dependency] private readonly RoleBanManager _roleBanManager = default!;
+        [Dependency] private readonly IBanManager _banManager = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
         [Dependency] private readonly PlayTimeTrackingSystem _playTimeTrackings = default!;

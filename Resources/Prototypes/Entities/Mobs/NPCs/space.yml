@@ -7,7 +7,7 @@
   components:
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite
@@ -36,6 +36,7 @@
       150: Dead
   - type: Stamina
     excess: 150
+  - type: MovementAlwaysTouching
   - type: Bloodstream
     bloodMaxVolume: 300
     bloodReagent: Cryoxadone

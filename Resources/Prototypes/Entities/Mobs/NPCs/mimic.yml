@@ -9,7 +9,7 @@
     - FootstepSound
   - type: InputMover
   - type: MobMover
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Hands
