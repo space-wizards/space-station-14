@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Threading;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.DoAfter;
@@ -44,10 +45,13 @@ public sealed class NPCSteeringComponent : Component
     [DataField("nextSteer", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextSteer = TimeSpan.Zero;
 
+    [DataField("lastSteerIndex")]
+    public int LastSteerIndex = -1;
+
     [DataField("lastSteerDirection")]
     public Vector2 LastSteerDirection = Vector2.Zero;
 
-    public const int SteeringFrequency = 10;
+    public const int SteeringFrequency = 5;
 
     /// <summary>
     /// Last position we considered for being stuck.

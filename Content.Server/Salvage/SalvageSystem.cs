@@ -1,4 +1,6 @@
 using System.Linq;
+using System.Numerics;
+using Content.Server.Cargo.Systems;
 using Content.Server.Construction;
 using Content.Server.GameTicking;
 using Content.Server.Radio.EntitySystems;
@@ -19,8 +21,8 @@ using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
-using Content.Server.Worldgen.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Server.Maps;
@@ -37,8 +39,9 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+        [Dependency] private readonly AnchorableSystem _anchorable = default!;
         [Dependency] private readonly BiomeSystem _biome = default!;
+        [Dependency] private readonly CargoSystem _cargo = default!;
         [Dependency] private readonly DungeonSystem _dungeon = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -51,7 +54,7 @@ namespace Content.Server.Salvage
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
-        private const int SalvageLocationPlaceAttempts = 16;
+        private const int SalvageLocationPlaceAttempts = 25;
 
         // TODO: This is probably not compatible with multi-station
         private readonly Dictionary<EntityUid, SalvageGridState> _salvageGridStates = new();
@@ -307,8 +310,13 @@ namespace Content.Server.Salvage
         private bool TryGetSalvagePlacementLocation(EntityUid uid, SalvageMagnetComponent component, Box2 bounds, out MapCoordinates coords, out Angle angle)
         {
             var xform = Transform(uid);
+            var smallestBound = (bounds.Height < bounds.Width
+                ? bounds.Height
+                : bounds.Width) / 2f;
+            var maxRadius = component.OffsetRadiusMax + smallestBound;
+
             angle = Angle.Zero;
-            coords = new EntityCoordinates(uid, new Vector2(0, -component.OffsetRadiusMax)).ToMap(EntityManager, _transform);
+            coords = new EntityCoordinates(uid, new Vector2(0, -maxRadius)).ToMap(EntityManager, _transform);
 
             if (xform.GridUid is not null)
                 angle = _transform.GetWorldRotation(Transform(xform.GridUid.Value));
@@ -316,8 +324,8 @@ namespace Content.Server.Salvage
             for (var i = 0; i < SalvageLocationPlaceAttempts; i++)
             {
                 var randomRadius = _random.NextFloat(component.OffsetRadiusMax);
-                var randomOffset = _random.NextAngle().ToWorldVec() * randomRadius;
-                var finalCoords = coords.Offset(randomOffset);
+                var randomOffset = _random.NextAngle().ToVec() * randomRadius;
+                var finalCoords = new MapCoordinates(coords.Position + randomOffset, coords.MapId);
 
                 var box2 = Box2.CenteredAround(finalCoords.Position, bounds.Size);
                 var box2Rot = new Box2Rotated(box2, angle, finalCoords.Position);

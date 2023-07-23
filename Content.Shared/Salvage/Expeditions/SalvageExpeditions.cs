@@ -72,7 +72,7 @@ public sealed class SalvageExpeditionDataComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed record SalvageMissionParams
+public sealed record SalvageMissionParams : IComparable<SalvageMissionParams>
 {
     [ViewVariables]
     public ushort Index;
@@ -86,6 +86,14 @@ public sealed record SalvageMissionParams
     /// Base difficulty for this mission.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public DifficultyRating Difficulty;
+
+    public int CompareTo(SalvageMissionParams? other)
+    {
+        if (other == null)
+            return -1;
+
+        return Difficulty.CompareTo(other.Difficulty);
+    }
 }
 
 /// <summary>
@@ -100,6 +108,7 @@ public sealed record SalvageMission(
     SalvageMissionType Mission,
     string Biome,
     string Air,
+    float Temperature,
     Color? Color,
     TimeSpan Duration,
     List<string> Rewards,
@@ -139,6 +148,11 @@ public sealed record SalvageMission(
     /// Air mixture to be used for the mission's planet.
     /// </summary>
     public readonly string Air = Air;
+
+    /// <summary>
+    /// Temperature of the planet's atmosphere.
+    /// </summary>
+    public readonly float Temperature = Temperature;
 
     /// <summary>
     /// Lighting color to be used (AKA outdoor lighting).

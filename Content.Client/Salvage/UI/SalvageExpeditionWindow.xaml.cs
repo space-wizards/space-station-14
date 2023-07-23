@@ -16,6 +16,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Salvage.UI;
 
@@ -194,10 +195,19 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                 Text = Loc.GetString("salvage-expedition-window-rewards")
             });
 
-            // there will always be 3 rewards so no need for 0 check
+            var rewards = new Dictionary<string, int>();
+            foreach (var reward in mission.Rewards)
+            {
+                var name = _prototype.Index<EntityPrototype>(reward).Name;
+                var count = rewards.GetOrNew(name);
+                count++;
+                rewards[name] = count;
+            }
+
+            // there will always be 3 or more rewards so no need for 0 check
             lBox.AddChild(new Label()
             {
-                Text = string.Join("\n", mission.Rewards.Select(id => "- " + _prototype.Index<EntityPrototype>(id).Name)),
+                Text = string.Join("\n", rewards.Select(o => "- " + o.Key + (o.Value > 1 ? $" x {o.Value}" : ""))).TrimEnd(),
                 FontColorOverride = StyleNano.ConcerningOrangeFore,
                 HorizontalAlignment = HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f)

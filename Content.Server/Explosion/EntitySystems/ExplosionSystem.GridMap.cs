@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -100,7 +101,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             var matrix = offsetMatrix * gridWorldMatrix * targetMatrix;
             var angle = gridWorldRotation - targetAngle;
 
-            var (x, y) = angle.RotateVec((tileSize / 4f, tileSize / 4f));
+            var (x, y) = angle.RotateVec(new Vector2(tileSize / 4f, tileSize / 4f));
 
             foreach (var (tile, dir) in edges)
             {
@@ -166,9 +167,9 @@ public sealed partial class ExplosionSystem : EntitySystem
                 data.UnblockedDirections = AtmosDirection.Invalid; // all directions are blocked automatically.
 
                 if ((dir & NeighborFlag.Cardinal) == 0)
-                    data.BlockingGridEdges.Add(new(default, null, ((Vector2) tile + 0.5f) * tileSize, 0, tileSize));
+                    data.BlockingGridEdges.Add(new(default, null, (tile + Vector2Helpers.Half) * tileSize, 0, tileSize));
                 else
-                    data.BlockingGridEdges.Add(new(tile, referenceGrid.Value, ((Vector2) tile + 0.5f) * tileSize, 0, tileSize));
+                    data.BlockingGridEdges.Add(new(tile, referenceGrid.Value, (tile + Vector2Helpers.Half) * tileSize, 0, tileSize));
             }
         }
 
@@ -189,7 +190,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (data.UnblockedDirections == AtmosDirection.Invalid)
                 continue; // already all blocked.
 
-            var tileCenter = ((Vector2) tile + 0.5f) * tileSize;
+            var tileCenter = (tile + new Vector2(0.5f, 0.5f)) * tileSize;
             foreach (var edge in data.BlockingGridEdges)
             {
                 // if a blocking edge contains the center of the tile, block all directions
@@ -200,19 +201,19 @@ public sealed partial class ExplosionSystem : EntitySystem
                 }
 
                 // check north
-                if (edge.Box.Contains(tileCenter + (0, tileSize / 2f)))
+                if (edge.Box.Contains(tileCenter + new Vector2(0, tileSize / 2f)))
                     data.UnblockedDirections &= ~AtmosDirection.North;
 
                 // check south
-                if (edge.Box.Contains(tileCenter + (0, -tileSize / 2f)))
+                if (edge.Box.Contains(tileCenter + new Vector2(0, -tileSize / 2f)))
                     data.UnblockedDirections &= ~AtmosDirection.South;
 
                 // check east
-                if (edge.Box.Contains(tileCenter + (tileSize / 2f, 0)))
+                if (edge.Box.Contains(tileCenter + new Vector2(tileSize / 2f, 0)))
                     data.UnblockedDirections &= ~AtmosDirection.East;
 
                 // check west
-                if (edge.Box.Contains(tileCenter + (-tileSize / 2f, 0)))
+                if (edge.Box.Contains(tileCenter + new Vector2(-tileSize / 2f, 0)))
                     data.UnblockedDirections &= ~AtmosDirection.West;
             }
         }
@@ -382,7 +383,7 @@ public sealed class BlockedSpaceTile
         {
             Tile = tile;
             Grid = grid;
-            Box = new(Box2.CenteredAround(center, (size, size)), angle, center);
+            Box = new(Box2.CenteredAround(center, new Vector2(size, size)), angle, center);
         }
     }
 }

@@ -8,14 +8,14 @@ namespace Content.Client.Lathe.UI
     [UsedImplicitly]
     public sealed class LatheBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables] private LatheMenu? _menu;
-        [ViewVariables] private LatheQueueMenu? _queueMenu;
+        [ViewVariables]
+        private LatheMenu? _menu;
 
-        public EntityUid Lathe;
+        [ViewVariables]
+        private LatheQueueMenu? _queueMenu;
 
-        public LatheBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public LatheBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-            Lathe = owner.Owner;
         }
 
         protected override void Open()
@@ -55,8 +55,8 @@ namespace Content.Client.Lathe.UI
                 case LatheUpdateState msg:
                     if (_menu != null)
                         _menu.Recipes = msg.Recipes;
-                    _menu?.PopulateRecipes(Lathe);
-                    _menu?.PopulateMaterials(Lathe);
+                    _menu?.PopulateRecipes(Owner);
+                    _menu?.PopulateMaterials(Owner);
                     _queueMenu?.PopulateList(msg.Queue);
                     _queueMenu?.SetInfo(msg.CurrentlyProducing);
                     break;

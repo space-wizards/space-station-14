@@ -1,6 +1,4 @@
 #nullable enable
-using NUnit.Framework;
-using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.Stacks;
 using Content.Shared.Materials;
@@ -22,7 +20,7 @@ namespace Content.IntegrationTests.Tests.Materials
         [Test]
         public async Task MaterialPrototypeSpawnsStackMaterial()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
 

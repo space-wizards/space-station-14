@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Construction;
 using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Decals;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Content.Shared.Procedural.PostGeneration;

@@ -6,11 +6,10 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 3600
+      time: 54000 # 15 hrs
   startingGear: AtmosphericTechnicianGear
   icon: "AtmosphericTechnician"
   supervisors: job-supervisors-ce
-  antagAdvantage: 10
   access:
   - Maintenance
   - Engineering
