@@ -119,6 +119,21 @@
       - id: CaptainSabre
 
 - type: entity
+  id: ClothingBeltMilitaryWebbingGrenadeFilled
+  parent: ClothingBeltMilitaryWebbing
+  name: grenadier chest rig
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: ExGrenade
+        amount: 4
+      - id: SyndieMiniBomb
+        amount: 2
+      - id: EmpGrenade
+        amount: 2
+
+- type: entity
   id: ClothingBeltMilitaryWebbingMedFilled
   parent: ClothingBeltMilitaryWebbingMed
   suffix: Filled

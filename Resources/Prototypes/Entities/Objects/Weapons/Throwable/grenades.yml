@@ -110,7 +110,7 @@
     primingSound:
       path: /Audio/Effects/minibombcountdown.ogg
       params:
-        volume: 8
+        volume: 12
 
 - type: entity
   name: the nuclear option
@@ -202,3 +202,28 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: holy hand grenade
+  description: O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
+  parent: GrenadeBase
+  id: HolyHandGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/holyhandgrenade.rsi
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default # same as macrobomb
+    totalIntensity: 3500
+    intensitySlope: 15
+    maxIntensity: 70
+    canCreateVacuum: true
+  - type: OnUseTimerTrigger
+    delay: 3 # by canon
+  - type: PointLight
+    radius: 7
+    energy: 3
+    netsync: false
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/hallelujah.ogg

@@ -29,7 +29,7 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Xeno
   - type: Hands
@@ -377,7 +377,7 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Xeno
   - type: MeleeWeapon

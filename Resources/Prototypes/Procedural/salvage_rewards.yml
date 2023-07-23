@@ -37,6 +37,7 @@
     CloningConsoleComputerCircuitboard: 0.5
     BiomassReclaimerMachineCircuitboard: 0.5
     # basic weapons
+    Machete: 0.25
     Katana: 0.25
     KukriKnife: 0.25
     WeaponLaserGun: 0.25
@@ -62,6 +63,7 @@
     CrateArmorySMG: 1.0
     CrateArmoryLaser: 1.0
     CrateArmoryShotgun: 1.0
+    CrateArmoryPistols: 1.0
     # rare armor
     ClothingOuterArmorRiot: 1.0
     # rare chemicals

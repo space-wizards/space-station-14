@@ -238,7 +238,10 @@
   components:
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/banana.rsi
-      state: primed
+      layers:
+      - state: peel
+      - state: primed
+        shader: unshaded
     - type: TriggerOnSlip
     - type: ExplodeOnTrigger
     - type: Explosive

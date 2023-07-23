@@ -7085,6 +7085,16 @@ entities:
       type: DeviceList
 - proto: AirCanister
   entities:
+  - uid: 2078
+    components:
+    - pos: 28.5,-23.5
+      parent: 2
+      type: Transform
+  - uid: 4555
+    components:
+    - pos: 28.5,-24.5
+      parent: 2
+      type: Transform
   - uid: 4572
     components:
     - pos: 32.5,-26.5
@@ -39509,6 +39519,16 @@ entities:
     - pos: 27.5,1.5
       parent: 2
       type: Transform
+  - uid: 12837
+    components:
+    - pos: 26.5,-27.5
+      parent: 2
+      type: Transform
+  - uid: 12838
+    components:
+    - pos: 26.5,-26.5
+      parent: 2
+      type: Transform
 - proto: DisposalTrunk
   entities:
   - uid: 183
@@ -62388,6 +62408,13 @@ entities:
     - pos: 55.5,9.5
       parent: 2
       type: Transform
+- proto: OreProcessor
+  entities:
+  - uid: 12839
+    components:
+    - pos: 9.5,20.5
+      parent: 2
+      type: Transform
 - proto: OreProcessorMachineCircuitboard
   entities:
   - uid: 12364
@@ -62405,16 +62432,6 @@ entities:
   - uid: 2833
     components:
     - pos: 42.5,-37.5
-      parent: 2
-      type: Transform
-  - uid: 4555
-    components:
-    - pos: 28.5,-24.5
-      parent: 2
-      type: Transform
-  - uid: 4556
-    components:
-    - pos: 28.5,-23.5
       parent: 2
       type: Transform
   - uid: 4570
@@ -62798,11 +62815,6 @@ entities:
   - uid: 484
     components:
     - pos: 4.5,-14.5
-      parent: 2
-      type: Transform
-  - uid: 2078
-    components:
-    - pos: 9.5,20.5
       parent: 2
       type: Transform
   - uid: 5874
@@ -72408,8 +72420,7 @@ entities:
       type: SurveillanceCamera
   - uid: 12721
     components:
-    - rot: 3.141592653589793 rad
-      pos: 10.5,7.5
+    - pos: 10.5,3.5
       parent: 2
       type: Transform
     - setupAvailableNetworks:
@@ -85937,10 +85948,21 @@ entities:
       type: Transform
 - proto: WindoorSecureCargoLocked
   entities:
+  - uid: 4556
+    components:
+    - pos: 9.5,20.5
+      parent: 2
+      type: Transform
   - uid: 10119
     components:
     - rot: -1.5707963267948966 rad
       pos: 21.5,22.5
+      parent: 2
+      type: Transform
+  - uid: 12840
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 9.5,20.5
       parent: 2
       type: Transform
 - proto: WindoorSecureChemistryLocked

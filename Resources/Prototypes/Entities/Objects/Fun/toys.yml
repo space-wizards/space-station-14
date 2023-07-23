@@ -458,11 +458,11 @@
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
 
-## Figurines
+## Cheapo Figurines
 
 - type: entity
   parent: BaseItem
-  id: BaseFigurine
+  id: BaseFigurineCheapo
   name: figurine
   description: A small miniature.
   abstract: true
@@ -473,13 +473,13 @@
     materialComposition:
       Plastic: 100
   - type: StaticPrice
-    price: 10
+    price: 25
   - type: Tag
     tags:
     - Figurine
 
 - type: entity
-  parent: BaseFigurine
+  parent: BaseFigurineCheapo
   id: ToyAi
   name: AI toy
   description: A scaled-down toy AI core.
@@ -488,7 +488,7 @@
     state: AI
 
 - type: entity
-  parent: BaseFigurine
+  parent: BaseFigurineCheapo
   id: ToyNuke
   name: nuke toy
   description: A plastic model of a Nuclear Fission Explosive. No uranium included... probably.
@@ -511,36 +511,6 @@
         maxdistance: 10
 
 - type: entity
-  parent: BaseFigurine
-  id: ToyAssistant # TODO rename but needs map changes
-  name: passenger toy
-  description: Grey tide world wide!
-  components:
-  - type: Sprite
-    state: doll
-  - type: Item
-    sprite: Objects/Fun/toys.rsi
-    heldPrefix: doll
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyGriffin
-  name: griffin toy
-  description: An action figure modeled after 'The Griffin', criminal mastermind.
-  components:
-  - type: Sprite
-    state: griffinprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyHonk
-  name: H.O.N.K. toy
-  description: Mini-Mecha action figure! 'Mecha No. 6/12' is written on the back.
-  components:
-  - type: Sprite
-    state: honkprize
-
-- type: entity
   parent: BasePlushie
   id: ToyIan
   name: ian toy
@@ -554,127 +524,6 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Items/Toys/ian.ogg
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyMarauder
-  name: marauder toy
-  description: Mini-Mecha action figure! 'Mecha No. 7/12' is written on the back.
-  components:
-  - type: Sprite
-    state: marauderprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyMauler
-  name: mauler toy
-  description: Mini-Mecha action figure! 'Mecha No. 9/12' is written on the back.
-  components:
-  - type: Sprite
-    state: maulerprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyGygax
-  name: gygax toy
-  description: Mini-Mecha action figure! 'Mecha No. 4/12' is written on the back.
-  components:
-  - type: Sprite
-    state: gygaxtoy
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyOdysseus
-  name: odysseus toy
-  description: Mini-Mecha action figure! 'Mecha No. 10/12' is written on the back.
-  components:
-  - type: Sprite
-    state: odysseusprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyOwlman
-  name: owl toy
-  description: An action figure modeled after 'The Owl', defender of justice.
-  components:
-  - type: Sprite
-    state: owlprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyDeathRipley
-  name: deathripley toy
-  description: Mini-Mecha action figure! 'Mecha No. 3/12' is written on the back.
-  components:
-  - type: Sprite
-    state: deathripleytoy
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyPhazon
-  name: phazon toy
-  description: Mini-Mecha action figure! 'Mecha No. 11/12' is written on the back.
-  components:
-  - type: Sprite
-    state: phazonprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyFireRipley
-  name: fire ripley
-  description: Mini-Mecha action figure! 'Mecha No. 2/12' is written on the back.
-  components:
-  - type: Sprite
-    state: fireripleytoy
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyReticence
-  name: reticence toy
-  description: Mini-Mecha action figure! 'Mecha No. 12/12' is written on the back.
-  components:
-  - type: Sprite
-    state: reticenceprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyRipley
-  name: ripley toy
-  description: Mini-Mecha action figure! 'Mecha No. 1/12' is written on the back.
-  components:
-  - type: Sprite
-    state: ripleytoy
-
-- type: entity
-  parent: BaseFigurine
-  id: ToySeraph
-  name: seraph toy
-  description: Mini-Mecha action figure! 'Mecha No. 8/12' is written on the back.
-  components:
-  - type: Sprite
-    state: seraphprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyDurand
-  name: durand toy
-  description: Mini-Mecha action figure! 'Mecha No. 5/12' is written on the back.
-  components:
-  - type: Sprite
-    state: durandprize
-
-
-### Yeah I left these all mixed up for a future coder to puzzle over, it's lore.
-### Help i'm sorting these and my previous self let this message here to taunt me aaaaa
-
-- type: entity
-  parent: BaseFigurine
-  id: ToySkeleton
-  name: skeleton toy
-  description: Spooked ya!
-  components:
-  - type: Sprite
-    state: skeletonprize
 
 ## Toyweapons
 
@@ -748,6 +597,7 @@
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    clumsyProof: true
   - type: RevolverAmmoProvider
     whitelist:
       tags:

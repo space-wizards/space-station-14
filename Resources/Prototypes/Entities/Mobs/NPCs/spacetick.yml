@@ -9,7 +9,7 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite
