@@ -8329,4 +8329,5 @@ entities:
       pos: 8.5,7.5
       parent: 1
       type: Transform
+
 ...
