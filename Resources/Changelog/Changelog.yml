@@ -1,10 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Mobs that are in critical condition no longer appear as dead on the
-      crew monitor, type: Fix}
-  id: 3806
-  time: '2023-05-18T23:49:55.0000000+00:00'
 - author: OctoRocket
   changes:
   - {message: 'Antifreeze tastes warm now, because it is antifreeze.', type: Tweak}
@@ -2984,3 +2978,8 @@ Entries:
       escape pods., type: Fix}
   id: 4305
   time: '2023-07-23T03:57:13.0000000+00:00'
+- author: FillerVK
+  changes:
+  - {message: Departure Terminal update., type: Tweak}
+  id: 4306
+  time: '2023-07-23T05:32:04.0000000+00:00'
