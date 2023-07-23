@@ -29,6 +29,7 @@ public abstract class SharedReflectSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
     public override void Initialize()
     {
@@ -187,34 +188,28 @@ public abstract class SharedReflectSystem : EntitySystem
         if (!TryComp(args.Equipee, out ReflectComponent? reflection))
             return;
 
-        if (comp.ReflectProb == 1)
-        {
-            float newProb = 1;
+        if (!_inventorySystem.TryGetSlots(args.Equipee, out var slotDef))
+            return;
 
-            foreach (var reflector in GetSlots(args.Equipee))
-            {
-                if (!TryComp(reflector, out ReflectComponent? refcomp))
-                    continue;
+        // you could recalculate reflectprob with new = (old - component) / (1 - component), but component=1 introduces loss
+        // still need to either maintain a counter or loop through all slots to determine reflection.enabled anyway?
+        float newProb = 1;
+        var reflecting = false;
 
-                var prob = refcomp.ReflectProb;
-                newProb -= newProb * prob;
-            }
-            reflection.ReflectProb = 1 - newProb;
-        }
-        else
+        foreach (var slot in slotDef)
         {
-            // to undo the above example, take .775 minus .7, then divide by 1 minus .7:
-            // (.775 - .7) / (1 - .7) = .075/.3 = .25 (+ float error)
-            try
-            {
-                reflection.ReflectProb = (reflection.ReflectProb - comp.ReflectProb) / (1 - comp.ReflectProb);
-            }
-            catch (DivideByZeroException e)
-            {
-                reflection.ReflectProb = 0;
-                Logger.Error("component with reflectprob 1 should've been pruned", e.ToString());
-            }
+            if (!_inventorySystem.TryGetSlotEntity(args.Equipee, slot.Name, out var slotEnt))
+                continue;
+
+            if (!TryComp(slotEnt, out ReflectComponent? refcomp))
+                continue;
+
+            reflecting = true;
+            var prob = refcomp.ReflectProb;
+            newProb -= newProb * prob;
         }
+
+        reflection.ReflectProb = 1 - newProb;
+        reflection.Enabled = reflecting;
     }
-
 }
