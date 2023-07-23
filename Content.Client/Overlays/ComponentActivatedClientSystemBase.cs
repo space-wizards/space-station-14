@@ -10,7 +10,6 @@ namespace Content.Client.Overlays;
 public abstract class ComponentActivatedClientSystemBase<T> : EntitySystem where T : IComponent
 {
     [Dependency] private readonly IPlayerManager _player = default!;
-    //[Dependency] private readonly InventorySystem _invSystem = default!;
 
     protected bool IsActive = false;
 
@@ -110,37 +109,5 @@ public abstract class ComponentActivatedClientSystemBase<T> : EntitySystem where
         {
             Activate(ev.Components);
         }
-
-        //if (TryComp<T>(uid, out var component))
-        //{
-        //    Activate(component);
-        //}
-
-        //if (!TryComp(uid, out InventoryComponent? inventoryComponent)
-        //    || !_invSystem.TryGetSlots(uid, out var slotDefinitions, inventoryComponent))
-        //{
-        //    return;
-        //}
-
-        //foreach (var slot in slotDefinitions)
-        //{
-        //    if (!_invSystem.TryGetSlotEntity(uid, slot.Name, out var itemUid)
-        //        || !TryComp(itemUid.Value, out component))
-        //    {
-        //        continue;
-        //    }
-
-        //    if (!TryComp<ClothingComponent>(itemUid, out var clothing))
-        //    {
-        //        continue;
-        //    }
-
-        //    if (!clothing.Slots.HasFlag(slot.SlotFlags))
-        //    {
-        //        continue;
-        //    }
-
-        //    Activate(component);
-        //}
     }
 }
