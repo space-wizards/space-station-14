@@ -11,7 +11,7 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
 
     private DoorElectronicsConfigurationMenu? _window;
 
-    public DoorElectronicsBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public DoorElectronicsBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
@@ -20,7 +20,7 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
         base.Open();
         List<string> accessLevels;
 
-        if (_entityManager.TryGetComponent<DoorElectronicsComponent>(Owner.Owner, out var doorElectronics))
+        if (_entityManager.TryGetComponent<DoorElectronicsComponent>(Owner, out var doorElectronics))
         {
             accessLevels = doorElectronics.AccessLevels;
             accessLevels.Sort();
@@ -28,7 +28,7 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
         else
         {
             accessLevels = new List<string>();
-            Logger.ErrorS(SharedDoorElectronicsSystem.Sawmill, $"No DoorElectronicsComponent component found for {_entityManager.ToPrettyString(Owner.Owner)}!");
+            Logger.ErrorS(SharedDoorElectronicsSystem.Sawmill, $"No DoorElectronicsComponent component found for {_entityManager.ToPrettyString(Owner)}!");
         }
 
         _window = new DoorElectronicsConfigurationMenu(this, accessLevels, _prototypeManager);

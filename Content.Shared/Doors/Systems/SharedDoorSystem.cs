@@ -486,8 +486,9 @@ public abstract class SharedDoorSystem : EntitySystem
     /// <summary>
     ///     Does the user have the permissions required to open this door?
     /// </summary>
-    public bool HasAccess(EntityUid uid, EntityUid? user = null, DoorComponent? door = null, AccessReaderComponent? access = null)
+    public bool HasAccess(EntityUid uid, EntityUid? user = null, DoorComponent? door = null, AccessReaderComponent? doorAccess = null)
     {
+        AccessReaderComponent? access = null;
         // TODO network AccessComponent for predicting doors
 
         // if there is no "user" we skip the access checks. Access is also ignored in some game-modes.
@@ -503,7 +504,9 @@ public abstract class SharedDoorSystem : EntitySystem
             TryComp<FirelockComponent>(uid, out var firelock))
             return false;
 
-        Resolve(uid, ref access, false);
+        // You can still find some access readers in the container below.
+        if (Resolve(uid, ref doorAccess))
+            access = doorAccess;
 
         if (_containerSystem.TryGetContainer(uid, "board", out var boardContainer))
         {

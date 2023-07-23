@@ -23,8 +23,7 @@ public sealed partial class AccessLevelControl : GridContainer
         {
             if (!prototypeManager.TryIndex<AccessLevelPrototype>(access, out var accessLevel))
             {
-                Logger.ErrorS(AccessLevelSystem.Sawmill, $"Unable to find accesslevel for {ac
-cess}");
+                Logger.ErrorS(SharedAccessSystem.Sawmill, $"Unable to find accesslevel for {access}");
                 continue;
             }
 
