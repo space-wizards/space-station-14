@@ -3,7 +3,6 @@ using Content.Shared.DayTime;
 
 namespace Content.Server.DayTime
 {
-
     public sealed class DayTimeSystem : EntitySystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -13,10 +12,9 @@ namespace Content.Server.DayTime
             SubscribeLocalEvent<DayTimeComponent, ComponentStartup>(OnStartupComponent);
         }
 
-
         public void OnStartupComponent(EntityUid uid, DayTimeComponent comp, ComponentStartup args)
         {
-            if(comp.TimeStage==null)
+            if (comp.TimeStage == null)
                 return;
             comp.StageTimer = comp.TimeStage[comp.CurrentStage];
         }
@@ -71,11 +69,6 @@ namespace Content.Server.DayTime
 
         private Color ColorMoveTowards(Color colFrom, Color colTo, Color colCurrent, float delta)
         {
-            // var deltaR = Math.Abs(colFrom.R - colTo.R) / delta;
-            // var deltaG = Math.Abs(colFrom.G - colTo.G) / delta;
-            // var deltaB = Math.Abs(colFrom.B - colTo.B) / delta;
-            // var deltaA = Math.Abs(colFrom.A - colTo.A) / delta;
-
             var colRes = new Color
             (
                 ColorMakeThings(colCurrent.R, colTo.R, Math.Abs(colFrom.R - colTo.R) / delta),
@@ -89,9 +82,9 @@ namespace Content.Server.DayTime
         private float ColorMakeThings(float col1, float col2, float delta)
         {
             var colRes = col1;
-            if (col1 < col2 + 1f/256f && col1 > col2 - 1f/256f)
+            if (col1 < col2 + 1f / 256f && col1 > col2 - 1f / 256f)
                 return col2;
-            if(col1 == col2)
+            if (col1 == col2)
             {
                 return col2;
             }
@@ -114,19 +107,6 @@ namespace Content.Server.DayTime
                 return colRes;
             }
             return colRes;
-
         }
-
-        // private Vector4 ColorToVector4(Color col)
-        // {
-        //     return new Vector4
-        //     {
-        //         X = col.R,
-        //         Y = col.G,
-        //         Z = col.B,
-        //         W = col.A
-        //     };
-        // }
-
     }
 }

@@ -5,38 +5,60 @@ namespace Content.Shared.DayTime;
 [RegisterComponent, NetworkedComponent]
 public sealed class DayTimeComponent : Component
 {
-    [DataField("colorFrom")] //От какого цвета
+    [ViewVariables(VVAccess.ReadOnly), DataField("colorFrom")]
     public Color ColorFrom;
-    [DataField("colorTo")] // К какому цвету
+    [ViewVariables(VVAccess.ReadOnly), DataField("colorTo")]
     public Color ColorTo;
 
-    [DataField("colorCurrent")] // Текущий цвет
+    [ViewVariables(VVAccess.ReadOnly), DataField("colorCurrent")]
     public Color ColorCurrent;
 
-    [DataField("colorStage")] // Массив цветов
-    public Color[]? ColorStage = new Color[5]
+    [ViewVariables(VVAccess.ReadOnly), DataField("colorStage")]
+    public Color[]? ColorStage = new Color[12]
     {
-        Color.FromHex("#000000FF"),
-        Color.FromHex("#FFAA00FF"),
-        Color.FromHex("#000000FF"),
-        Color.FromHex("#FF00FFFF"),
-        Color.FromHex("#000000FF")
+        Color.FromHex("#FF9430FF"), //восход
+        Color.FromHex("#E3D554FF"), //утро
+        Color.FromHex("#FCF39AFF"), //полдень
+        Color.FromHex("#FCF39AFF"), //полдень
+        Color.FromHex("#E8721EFF"), //закат
+        Color.FromHex("#6C858CFF"), //сумерки вечерние
+        Color.FromHex("#303847FF"), //начало ночи
+        Color.FromHex("#060608FF"), //темно
+        Color.FromHex("#020203FF"), //пиздец темно
+        Color.FromHex("#020203FF"), //пиздец темно
+        Color.FromHex("#382E2AFF"), //утренние сумерки начало
+        Color.FromHex("#9E664DFF") //утренние сумерки конец
     };
 
-    [DataField("timeStage")] // Массив периодов между цветами
-    public float[]? TimeStage = new float[5] { 10f, 10f, 1f, 10f, 5f };
+    [ViewVariables(VVAccess.ReadOnly), DataField("timeStage")]
+    public float[]? TimeStage = new float[12]
+    {
+        30f,
+        30f,
+        30f,
+        150f,
+        60f,
+        30f,
+        60f,
+        30f,
+        30f,
+        180f,
+        30f,
+        60f,
 
-    [DataField("stepsPerSeconds")] // Количество шагов в секунду
-    public int StepsPerSecond = 10;
+        //720 секунд
+        // 12 минут цикл
+    };
 
-    [DataField("currentStage")] // Текущий этап цвета
+    [ViewVariables(VVAccess.ReadWrite), DataField("stepsPerSeconds")] // Количество шагов в секунду
+    public int StepsPerSecond = 2;
+
+    [ViewVariables(VVAccess.ReadOnly), DataField("currentStage")] // Текущий этап цвета
     public int CurrentStage = 0;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("stageTime")] // Время
+    [ViewVariables(VVAccess.ReadOnly), DataField("stageTime")] // Время
     public float StageTimer;
     [ViewVariables(VVAccess.ReadOnly), DataField("colorTimer")] // Таймер
     public float ColorTimer;
-
-    public MapLightComponent? MapLightComponent; // Компонент MapLight
 }
 
