@@ -134,12 +134,13 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (!_food.IsDigestibleBy(owner, targetUid, food))
                     return 0f;
 
-                // only eat when hungry
-                if (TryComp<HungerComponent>(owner, out var hunger) && hunger.CurrentThreshold > HungerThreshold.Okay)
+                var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
+
+                // only eat when hungry or if it will eat anything
+                if (TryComp<HungerComponent>(owner, out var hunger) && hunger.CurrentThreshold > HungerThreshold.Okay && avoidBadFood)
                     return 0f;
 
                 // no mouse don't eat the uranium-235
-                var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
                 if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
                     return 0f;
 
