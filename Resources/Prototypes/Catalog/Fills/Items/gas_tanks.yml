@@ -79,7 +79,7 @@
         # 63 minutes
         volume: 10
         moles:
-          - 4.10275814 # oxygen
+          - 4.102758145 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -95,7 +95,7 @@
         moles:
           - 1.353910188 # 22% oxygen
           - 4.800227031 # 78% nitrogen
-          # 6.15413721        total
+          # 6.154137219       total
         temperature: 293.15
 
 - type: entity
@@ -154,8 +154,8 @@
         # 20 minutes of agony
         volume: 15
         moles:
-          - 0          # oxygen
-          - 0          # nitrogen
-          - 0          # CO2
+          - 0           # oxygen
+          - 0           # nitrogen
+          - 0           # CO2
           - 6.154137219 # plasma
         temperature: 293.15
