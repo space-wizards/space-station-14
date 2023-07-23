@@ -31,7 +31,7 @@
       # 94 minutes
       volume: 15
       moles:
-        - 6.15413721 # oxygen
+        - 6.154137219 # oxygen
       temperature: 293.15
 
 - type: entity
@@ -51,7 +51,7 @@
         # 13 minutes
         volume: 2
         moles:
-          - 0.82055162 # oxygen
+          - 0.820551629 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -65,7 +65,7 @@
         # 38 minutes
         volume: 6
         moles:
-          - 2.46165488 # oxygen
+          - 2.461654887 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -93,9 +93,9 @@
         # 20 minutes due to output pressure
         volume: 15
         moles:
-          - 1.35391018 # 22% oxygen
-          - 4.80022703 # 78% nitrogen
-          # 6.15413721       total
+          - 1.353910188 # 22% oxygen
+          - 4.800227031 # 78% nitrogen
+          # 6.15413721        total
         temperature: 293.15
 
 - type: entity
@@ -110,8 +110,8 @@
         # 94 minutes
         volume: 15
         moles:
-          - 0          # oxygen not included
-          - 6.15413721 # nitrogen
+          - 0           # oxygen not included
+          - 6.154137219 # nitrogen
         temperature: 293.15
 
 - type: entity
@@ -157,5 +157,5 @@
           - 0          # oxygen
           - 0          # nitrogen
           - 0          # CO2
-          - 6.15413721 # plasma
+          - 6.154137219 # plasma
         temperature: 293.15
