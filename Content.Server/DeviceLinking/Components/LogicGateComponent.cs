@@ -36,19 +36,19 @@ public sealed class LogicGateComponent : Component
     /// <summary>
     /// Name of the first input port.
     /// </summary>
-    [DataField("inputPortA", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+    [DataField("inputPortA", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
     public string InputPortA = "InputA";
 
     /// <summary>
     /// Name of the second input port.
     /// </summary>
-    [DataField("inputPortB", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+    [DataField("inputPortB", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
     public string InputPortB = "InputB";
 
     /// <summary>
     /// Name of the output port.
     /// </summary>
-    [DataField("outputPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+    [DataField("outputPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
     public string OutputPort = "Output";
 
     // Initial state
