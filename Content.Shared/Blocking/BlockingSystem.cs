@@ -265,7 +265,7 @@ public sealed partial class BlockingSystem : EntitySystem
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _fixtureSystem.DestroyFixture(user, BlockingComponent.BlockFixtureID, body: physicsComponent);
             _physics.SetBodyType(user, blockingUserComponent.OriginalBodyType, body: physicsComponent);
-            _movement.ChangeBaseSpeed(user, blockingUserComponent.OriginalWalkSpeed, blockingUserComponent.OriginalSprintSpeed, 100f);
+            _movement.ChangeBaseSpeed(user, blockingUserComponent.OriginalWalkSpeed, blockingUserComponent.OriginalSprintSpeed, blockingUserComponent.OriginalAcceleration);
             _popupSystem.PopupEntity(msgUser, user, user);
             _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
         }

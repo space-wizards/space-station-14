@@ -175,6 +175,7 @@
     - type: Blocking
       passiveBlockFraction: 0.4 #small shield so more attacks go past it
       activeBlockFraction: 0.8 #small shield so some attacks go past it even while actively blocking
+      staminaDamageMultiplier: 0.32
       activeWalkSpeed: 1 #a small shield allows you to walk a little bit faster while raised compared to other shields
       activeSprintSpeed: 1
       passiveBlockModifier:
@@ -221,6 +222,7 @@
     - type: Item
       heldPrefix: metal
     - type: Blocking
+      staminaDamageMultiplier: 0.6 #heavy shield, loses stamina 50% faster compared to riot shield
       passiveBlockModifier:
         coefficients:
           Blunt: 1.2
@@ -276,7 +278,7 @@
           Blunt: 0.2
           Slash: 0.2
           Piercing: 0.2
-          Heat: 0.8
+          Heat: 1.2
     - type: Destructible
       thresholds:
         - trigger:
@@ -390,8 +392,6 @@
       reflects:
         - Energy
     - type: Blocking
-      passiveBlockFraction: 0.25
-      activeBlockFraction: 0.5
       passiveBlockModifier:
         coefficients:
           Heat: 1.0
