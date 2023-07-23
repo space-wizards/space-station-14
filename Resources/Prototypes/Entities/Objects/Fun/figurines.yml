@@ -1,0 +1,249 @@
+#HUMANOID FIGURINES
+
+- type: entity
+  parent: BaseItem
+  id: BaseFigurine
+  name: figurine
+  description: A small miniature.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/figurines.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 100
+  - type: StaticPrice
+    price: 75
+  - type: Tag
+    tags:
+    - Figurine
+    
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurinePassenger
+  name: passenger figure
+  description: A figurine depicting an every day, run-of-the-mill passenger. No funny business here.
+  components:
+  - type: Sprite
+    state: passenger
+    
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineGreytider
+  name: greytider figure
+  description: A figurine depicting a dubious-looking passenger. Greytide worldwide!
+  components:
+  - type: Sprite
+    state: passenger_greytide
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineClown
+  name: clown figure
+  description: A figurine depicting a clown. You shudder to think of what people have probably done to this figurine before.
+  components:
+  - type: Sprite
+    state: clown
+    
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineMime
+  name: mime figure
+  description: A figurine depicting that silent bastard you are all too familiar with.
+  components:
+  - type: Sprite
+    state: mime
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCaptain
+  name: captain figure
+  description: A figurine depicting the standard outfit of a captain belonging to a civilian-sector Nanotrasen vessel.
+  components:
+  - type: Sprite
+    state: captain
+ 
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineSecurity
+  name: security officer figure
+  description: A figurine depicting a Security Officer holding a stunbaton, ready to defend the station.
+  components:
+  - type: Sprite
+    state: security
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCargoTech
+  name: cargo technican figure
+  description: A figurine depicting a reptillian Cargo Technican.
+  components:
+  - type: Sprite
+    state: cargotech
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineSalvage
+  name: salvage technican figure
+  description: A figurine depicting a Salvage Technician holding a survival knife.
+  components:
+  - type: Sprite
+    state: salvage
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineQuartermaster
+  name: quartermaster figure
+  description: A figurine depicting the glorious head of the Cargo department.
+  components:
+  - type: Sprite
+    state: qm
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineEngineer
+  name: station engineer figure
+  description: A figurine depicting a Station Engineer holding a crowbar at-ready.
+  components:
+  - type: Sprite
+    state: engineer
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineAtmosTech
+  name: atmospheric technician figure
+  description: A figurine depicting an Atmos Tech holding an unlit welder.
+  components:
+  - type: Sprite
+    state: atmos
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineScientist
+  name: scientist figurine
+  description: A figurine depicting a Scienist donning a labcoat.
+  components:
+  - type: Sprite
+    state: scientist
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineMedicalDoctor
+  name: medical doctor figure
+  description: A figurine depicting a Medical Doctor, donning a labcoat & syringe.
+  components:
+  - type: Sprite
+    state: medical
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineLibrarian
+  name: librarian figure
+  description: A figurine depicting the one-and-only librarian.
+  components:
+  - type: Sprite
+    state: librarian
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineNukie
+  name: syndicate operative figure
+  description: A figurine depicting someone in a blood-red hardsuit, similar to what someone on a nuclear operative team might wear.
+  components:
+  - type: Sprite
+    state: nukie
+ 
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineNukieElite
+  name: elite syndicate operative figure
+  description: A figurine depicting someone in an elite blood-red hardsuit, similar to what the medic of a nuclear operative team might wear.
+  components:
+  - type: Sprite
+    state: nukie_elite
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineNukieCommander
+  name: syndicate operative commander figure
+  description: A figurine depicting someone in a beefed-up blood-red hardsuit, similar to what the commander of a nuclear operative team might wear.
+  components:
+  - type: Sprite
+    state: nukie_commander
+ 
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineFootsoldier
+  name: syndicate footsoldier figure
+  description: A figurine depicting the outfit of a syndicate footsoldier.
+  components:
+  - type: Sprite
+    state: footsoldier
+ 
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineWizard
+  name: wizard figure
+  description: A figurine depicting someone with a long, silky beard wearing a wizard outfit. Warlocks wish they had anything on this.
+  components:
+  - type: Sprite
+    state: wizard
+ 
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineWizardFake
+  name: fake wizard figure
+  description: A figurine depicting someone in a fake-ass wizard costume. What a ripoff!
+  components:
+  - type: Sprite
+    state: wizard_fake
+
+#Nonhuman Figurines
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineQueen
+  name: xeno queen figure
+  description: A large figurine depicting a xeno queen, ready to attack.
+  components:
+  - type: Sprite
+    state: queen
+ 
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineSlime
+  name: slime figure
+  description: A figurine depicting a translucent blue slime.
+  components:
+  - type: Sprite
+    state: slime
+
+#TODO: Convert these to the new figurine sprite template and rename their sprite name.
+#Yes, these are humanoids, but they need to be updated first.
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyGriffin
+  name: griffin figure
+  description: An action figure modeled after 'The Griffin', criminal mastermind.
+  components:
+  - type: Sprite
+    state: griffinprize
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyOwlman
+  name: owl figure
+  description: An action figure modeled after 'The Owl', defender of justice.
+  components:
+  - type: Sprite
+    state: owlprize
+
+- type: entity
+  parent: BaseFigurine
+  id: ToySkeleton
+  name: skeleton figure
+  description: Spooked ya!
+  components:
+  - type: Sprite
+    state: skeletonprize

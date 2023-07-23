@@ -141,6 +141,37 @@
     - CargoBounties
 
 - type: entity
+  name: character sheet
+  parent: Paper
+  id: PaperCNCSheet # legally gray zone of using "D&D" and "DND"
+  description: 'A sheet for your Carps and Crypts characters.'
+  components:
+  - type: Paper
+    contentSize: 10000
+    escapeFormatting: false
+    content: book-cnc-sheet
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    netsync: false
+    layers:
+      - state: paper
+        color: "#cccccc"
+      - state: paper_words
+        map: ["enum.PaperVisualLayers.Writing"]
+        color: "#cccccc" #aaaaaaaaaaaaaaaaaaaaaaa
+        visible: false
+      - state: paper_stamp-generic
+        map: ["enum.PaperVisualLayers.Stamp"]
+        visible: false
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundModulate: "#cccccc"
+    contentImageModulate: "#cccccc"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
+
+- type: entity
   parent: Paper
   id: PaperWritten
   noSpawn: true
@@ -380,15 +411,22 @@
       color: "#3f3f3f"
     - state: folder-base
 
+# Stamps
 - type: entity
-  name: mime's rubber stamp
+  name: generic rubber stamp
   parent: BaseItem
-  id: RubberStampMime
+  id: RubberStampBase
   description: A rubber stamp for stamping important documents.
+  abstract: true
   components:
   - type: Stamp
-    stampedName: stamp-component-stamped-name-mime
-    stampState: "paper_stamp-mime"
+    stampedName: stamp-component-stamped-name-default
+    stampState: "paper_stamp-generic"
+    sound:
+      path: /Audio/Items/Stamp/thick_stamp_sub.ogg
+      params:
+        volume: -2
+        maxdistance: 5
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-mime
@@ -396,8 +434,23 @@
     size: 3
 
 - type: entity
+  name: alternate rubber stamp
+  parent: RubberStampBase
+  id: RubberStampBaseAlt
+  abstract: true
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-default
+    stampState: "paper_stamp-generic"
+    sound:
+      path: /Audio/Items/Stamp/automatic_stamp.ogg
+      params:
+        volume: -2
+        maxdistance: 5
+
+- type: entity
   name: captain's rubber stamp
-  parent: RubberStampMime
+  parent: RubberStampBase
   id: RubberStampCaptain
   components:
   - type: Stamp
@@ -409,19 +462,19 @@
 
 - type: entity
   name: CentCom rubber stamp
-  parent: RubberStampMime
+  parent: RubberStampBase
   id: RubberStampCentcom
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-centcom
-    stampState: "paper_stamp-cent"
+    stampState: "paper_stamp-centcom"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-cent
+    state: stamp-centcom
 
 - type: entity
   name: chaplain's rubber stamp
-  parent: RubberStampMime
+  parent: RubberStampBase
   id: RubberStampChaplain
   components:
   - type: Stamp
@@ -433,7 +486,7 @@
 
 - type: entity
   name: clown's rubber stamp
-  parent: RubberStampMime
+  parent: RubberStampBase
   id: RubberStampClown
   components:
   - type: Stamp
@@ -447,8 +500,20 @@
       - ClownRubberStamp
 
 - type: entity
+  name: chief engineer's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampCE
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-ce
+    stampState: "paper_stamp-ce"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-ce
+
+- type: entity
   name: chief medical officer's rubber stamp
-  parent: RubberStampMime
+  parent: RubberStampBase
   id: RubberStampCMO
   components:
   - type: Stamp
@@ -459,32 +524,8 @@
     state: stamp-cmo
 
 - type: entity
-  name: DENIED rubber stamp
-  parent: RubberStampMime
-  id: RubberStampDenied
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-denied
-    stampState: "paper_stamp-deny"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-deny
-
-- type: entity
-  name: APPROVED rubber stamp
-  parent: RubberStampMime
-  id: RubberStampApproved
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-approved
-    stampState: "paper_stamp-iaa"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-iaa
-
-- type: entity
   name: head of personnel's rubber stamp
-  parent: RubberStampMime
+  parent: RubberStampBase
   id: RubberStampHop
   components:
   - type: Stamp
@@ -496,7 +537,7 @@
 
 - type: entity
   name: head of security's rubber stamp
-  parent: RubberStampMime
+  parent: RubberStampBase
   id: RubberStampHos
   components:
   - type: Stamp
@@ -507,8 +548,21 @@
     state: stamp-hos
 
 - type: entity
+  name: mime's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampMime
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-mime
+    stampState: "paper_stamp-mime"
+    # TODO remove sound from mime's rubber stamp
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-mime
+
+- type: entity
   name: quartermaster's rubber stamp
-  parent: RubberStampMime
+  parent: RubberStampBase
   id: RubberStampQm
   components:
   - type: Stamp
@@ -520,7 +574,7 @@
 
 - type: entity
   name: research director's rubber stamp
-  parent: RubberStampMime
+  parent: RubberStampBase
   id: RubberStampRd
   components:
   - type: Stamp
@@ -531,20 +585,8 @@
     state: stamp-rd
 
 - type: entity
-  name: warden's rubber stamp
-  parent: RubberStampMime
-  id: RubberStampWarden
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-warden
-    stampState: "paper_stamp-warden"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-warden
-
-- type: entity
   name: trader's rubber stamp
-  parent: RubberStampMime
+  parent: RubberStampBase
   id: RubberStampTrader
   components:
   - type: Stamp
@@ -556,7 +598,7 @@
 
 - type: entity
   name: syndicate rubber stamp
-  parent: RubberStampMime
+  parent: RubberStampBase
   id: RubberStampSyndicate
   components:
   - type: Stamp
@@ -567,13 +609,37 @@
     state: stamp-syndicate
 
 - type: entity
-  name: chief engineer's rubber stamp
-  parent: RubberStampMime
-  id: RubberStampCE
+  name: warden's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampWarden
   components:
   - type: Stamp
-    stampedName: stamp-component-stamped-name-ce
-    stampState: "paper_stamp-ce"
+    stampedName: stamp-component-stamped-name-warden
+    stampState: "paper_stamp-warden"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-ce
+    state: stamp-warden
+
+- type: entity
+  name: APPROVED rubber stamp
+  parent: RubberStampBaseAlt
+  id: RubberStampApproved
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-approved
+    stampState: "paper_stamp-ok"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-ok
+
+- type: entity
+  name: DENIED rubber stamp
+  parent: RubberStampBaseAlt
+  id: RubberStampDenied
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-denied
+    stampState: "paper_stamp-deny"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-deny

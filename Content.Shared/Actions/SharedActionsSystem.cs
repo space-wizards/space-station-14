@@ -241,7 +241,7 @@ public abstract class SharedActionsSystem : EntitySystem
             if (action.Range <= 0)
                 return true;
 
-            var distance = (_transformSystem.GetWorldPosition(xform) - _transformSystem.GetWorldPosition(targetXform)).Length;
+            var distance = (_transformSystem.GetWorldPosition(xform) - _transformSystem.GetWorldPosition(targetXform)).Length();
             return distance <= action.Range;
         }
 

@@ -19,7 +19,7 @@
     head: ClothingHeadHatCentcom
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesColorBlack
-    outerClothing: ClothingOuterVestKevlar
+    outerClothing: ClothingOuterArmorBasic
     id: CentcomPDA
     ears: ClothingHeadsetAltCommand
     pocket1: PaperOffice
