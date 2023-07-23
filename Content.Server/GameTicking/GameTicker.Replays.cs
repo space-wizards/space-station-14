@@ -28,7 +28,7 @@ public sealed partial class GameTicker
 
         if (_replays.IsRecording)
         {
-            _sawmillReplays.Warning("Already a replay recording before the start of the round, not starting automatic recording.");
+            _sawmillReplays.Warning("Already an active replay recording before the start of the round, not starting automatic recording.");
             return;
         }
 
