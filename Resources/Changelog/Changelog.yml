@@ -1,9 +1,4 @@
 Entries:
-- author: OctoRocket
-  changes:
-  - {message: 'Antifreeze tastes warm now, because it is antifreeze.', type: Tweak}
-  id: 3807
-  time: '2023-05-19T02:21:57.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Disabled zombies preset temporarily until they have more work done.,
@@ -2983,3 +2978,8 @@ Entries:
   - {message: Departure Terminal update., type: Tweak}
   id: 4306
   time: '2023-07-23T05:32:04.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Changed the roundstart traitor sound effect back to the old one., type: Tweak}
+  id: 4307
+  time: '2023-07-23T05:53:01.0000000+00:00'
