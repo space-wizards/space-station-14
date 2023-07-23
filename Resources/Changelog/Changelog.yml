@@ -1,48 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed Next on the admin logs UI resending the same logs., type: Fix}
-  id: 3803
-  time: '2023-05-18T05:51:17.0000000+00:00'
-- author: FluffiestFloof
-  changes:
-  - {message: Updated the Suit Storage look., type: Tweak}
-  id: 3804
-  time: '2023-05-18T17:52:05.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Vending machines can now be completely destroyed., type: Fix}
-  id: 3805
-  time: '2023-05-18T23:48:14.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Mobs that are in critical condition no longer appear as dead on the
-      crew monitor, type: Fix}
-  id: 3806
-  time: '2023-05-18T23:49:55.0000000+00:00'
-- author: OctoRocket
-  changes:
-  - {message: 'Antifreeze tastes warm now, because it is antifreeze.', type: Tweak}
-  id: 3807
-  time: '2023-05-19T02:21:57.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Disabled zombies preset temporarily until they have more work done.,
-    type: Tweak}
-  id: 3808
-  time: '2023-05-19T04:11:36.0000000+00:00'
-- author: GoodWheatley
-  changes:
-  - {message: Regular monkeys are now very rarely available for ghosts to control.,
-    type: Remove}
-  id: 3809
-  time: '2023-05-19T07:00:28.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: NT has granted stations access to research the new technology called
-      'Advanced Tools'., type: Add}
-  id: 3810
-  time: '2023-05-19T07:07:59.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Add the force gun as a counterpart to the tether gun., type: Add}
@@ -2982,3 +2938,47 @@ Entries:
   - {message: Space Creatures can now float in space, type: Tweak}
   id: 4302
   time: '2023-07-21T20:10:21.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Strait Jackets can now be used to restrain individuals., type: Add}
+  id: 4303
+  time: '2023-07-22T22:14:25.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Beds and medical beds now heal blunt and cold specifically instead of
+      brute and burn groups., type: Tweak}
+  id: 4304
+  time: '2023-07-23T03:18:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Midround anomaly spawns no longer have a high chance of spawning in
+      escape pods., type: Fix}
+  id: 4305
+  time: '2023-07-23T03:57:13.0000000+00:00'
+- author: FillerVK
+  changes:
+  - {message: Departure Terminal update., type: Tweak}
+  id: 4306
+  time: '2023-07-23T05:32:04.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Changed the roundstart traitor sound effect back to the old one., type: Tweak}
+  id: 4307
+  time: '2023-07-23T05:53:01.0000000+00:00'
+- author: Skarlet
+  changes:
+  - {message: Added Cap's Cap, type: Add}
+  - {message: Changed Hop Cap's description, type: Tweak}
+  id: 4308
+  time: '2023-07-23T19:15:53.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Emergency and Double oxygen tanks that spawn empty now have the same
+      internal volume as filled ones., type: Fix}
+  id: 4309
+  time: '2023-07-23T19:17:32.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Salt is now white instead of red., type: Tweak}
+  id: 4310
+  time: '2023-07-23T19:17:46.0000000+00:00'

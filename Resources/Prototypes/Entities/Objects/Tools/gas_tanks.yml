@@ -45,12 +45,12 @@
   parent: GasTankBase
   id: OxygenTank
   name: oxygen tank
-  description: A tank of oxygen, this one is blue.
+  description: A standard cylindrical gas tank for oxygen.
   components:
   - type: Sprite
     sprite: Objects/Tanks/oxygen.rsi
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 21.3
     air:
       volume: 15
       temperature: 293.15
@@ -65,7 +65,7 @@
   parent: OxygenTank
   id: YellowOxygenTank
   name: oxygen tank
-  description: A tank of oxygen. This one is in yellow.
+  description: A standard cylindrical gas tank for oxygen. This one is yellow.
   components:
   - type: Sprite
     sprite: Objects/Tanks/yellow.rsi
@@ -79,7 +79,7 @@
   parent: OxygenTank
   id: NitrogenTank
   name: nitrogen tank
-  description: A tank of nitrogen.
+  description: A standard cylindrical gas tank for nitrogen.
   components:
   - type: Sprite
     sprite: Objects/Tanks/red.rsi
@@ -93,14 +93,14 @@
   parent: OxygenTank
   id: EmergencyOxygenTank
   name: emergency oxygen tank
-  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
+  description: An easily portable tank for emergencies. Contains very little oxygen, rated for survival use only.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency.rsi
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 21.3
     air:
-      volume: 3
+      volume: 2
       temperature: 293.15
   - type: Item
     size: 10
@@ -122,12 +122,12 @@
   parent: EmergencyOxygenTank
   id: ExtendedEmergencyOxygenTank
   name: extended-capacity emergency oxygen tank
-  description: Used for emergencies. Contains little oxygen, so try to conserve it until you actually need it.
+  description: An emergency tank with extended capacity. Technically rated for prolonged use.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_yellow.rsi
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 21.3
     air:
       volume: 6
       temperature: 293.15
@@ -144,13 +144,14 @@
   parent: ExtendedEmergencyOxygenTank
   id: DoubleEmergencyOxygenTank
   name: double emergency oxygen tank
+  description: A high-grade dual-tank emergency life support container. It holds a decent amount of oxygen for it's small size.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_double.rsi
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 21.3
     air:
-      volume: 12
+      volume: 10
       temperature: 293.15
   - type: Item
     size: 10
@@ -175,7 +176,7 @@
     - type: Sprite
       sprite: Objects/Tanks/generic.rsi
     - type: GasTank
-      outputPressure: 101.325
+      outputPressure: 101.3
       air:
         volume: 15
         temperature: 293.15
@@ -194,7 +195,7 @@
     - type: Sprite
       sprite: Objects/Tanks/anesthetic.rsi
     - type: GasTank
-      outputPressure: 30.3975
+      outputPressure: 30.4
       air:
         volume: 15
         temperature: 293.15
@@ -213,12 +214,12 @@
     - type: Sprite
       sprite: Objects/Tanks/plasma.rsi
     - type: GasTank
-      outputPressure: 101.325
+      outputPressure: 101.3
       air:
         volume: 15
         temperature: 293.15
     - type: Item
-      size: 10
+      size: 15
     - type: Clothing
       sprite: Objects/Tanks/plasma.rsi
       slots:
