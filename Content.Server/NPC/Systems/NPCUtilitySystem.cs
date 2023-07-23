@@ -23,12 +23,13 @@ namespace Content.Server.NPC.Systems;
 /// </summary>
 public sealed class NPCUtilitySystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly DrinkSystem _drink = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly FoodSystem _food = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
@@ -135,6 +136,18 @@ public sealed class NPCUtilitySystem : EntitySystem
                 // no mouse don't eat the uranium-235
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
                 if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
+                    return 0f;
+
+                return 1f;
+            }
+            case DrinkValueCon:
+            {
+                if (!TryComp<DrinkComponent>(targetUid, out var drink) || !drink.Opened)
+                    return 0f;
+
+                // needs to have something that will satiate thirst, mice wont try to drink 100% pure mutagen.
+                var hydration = _drink.TotalHydration(targetUid, drink);
+                if (hydration <= 1.0f)
                     return 0f;
 
                 return 1f;
