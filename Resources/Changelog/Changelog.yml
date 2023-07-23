@@ -1,9 +1,4 @@
 Entries:
-- author: FluffiestFloof
-  changes:
-  - {message: Updated the Suit Storage look., type: Tweak}
-  id: 3804
-  time: '2023-05-18T17:52:05.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Vending machines can now be completely destroyed., type: Fix}
@@ -2982,3 +2977,9 @@ Entries:
   - {message: Strait Jackets can now be used to restrain individuals., type: Add}
   id: 4303
   time: '2023-07-22T22:14:25.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Beds and medical beds now heal blunt and cold specifically instead of
+      brute and burn groups., type: Tweak}
+  id: 4304
+  time: '2023-07-23T03:18:06.0000000+00:00'
