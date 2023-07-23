@@ -388,7 +388,6 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         TransformSystem.SetLocalRotation(xform, Random.NextAngle());
         TransformSystem.SetCoordinates(entity, xform, coordinates);
-        xform.LocalRotation = Random.NextAngle();
 
         if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
         {
