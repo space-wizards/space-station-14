@@ -15,7 +15,7 @@ public sealed class EdgeDetectorComponent : Component
     /// <summary>
     /// Name of the input port.
     /// </summary>
-    [DataField("inputPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
+    [DataField("inputPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
     public string InputPort = "Input";
 
     /// <summary>

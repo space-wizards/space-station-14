@@ -34,10 +34,10 @@ public sealed class ConveyorComponent : Component
     [DataField("forwardPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
     public string ForwardPort = "Forward";
 
-    [DataField("reversePort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+    [DataField("reversePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
     public string ReversePort = "Reverse";
 
-    [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+    [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
     public string OffPort = "Off";
 
     [ViewVariables]
