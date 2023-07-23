@@ -37,7 +37,7 @@ public class StatusIconData : IComparable<StatusIconData>
 public sealed class StatusIconPrototype : StatusIconData, IPrototype, IInheritingPrototype
 {
     /// <inheritdoc />
-    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<EntityPrototype>))]
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<StatusIconPrototype>))]
     public string[]? Parents { get; }
 
     /// <inheritdoc />
