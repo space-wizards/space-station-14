@@ -1,21 +1,23 @@
-# The number 1000 used in the rest of this file refers to the default
-# MaxReleasePressure for a GasCanister, which is 10 * Atmospherics.OneAtmosphere,
-# rounded down.
-
-# Moles calculation:
-# 1000 / (Atmospherics.R * temperature / volume)
-# (What the hell is Atmospherics.R ?)
-
-# Filling 15 liters at exactly 1000 kpa and 293.15K takes 6.154137219 moles
-# Multiply/divide total moles in proportion to tank size to keep it at 1000 kpa pressure
+# Moles calculation
 #
-# More practically:
-# Temperature must be exactly 293.15
-# moles = volume * 0.4102758146
-# Yes, you do need all those digits or your pressure wont end up *exactly* 1000
+#   moles = 1000 / (8.31446261 * 293.15 / volume)
+#
+#   More practically:
+#
+#   moles = volume * 0.41027581
+#
+#   Yes, you do need all those digits or your pressure wont end up exactly 1000
+#
+#
+# The number 1000 comes from the default MaxReleasePressure for a GasCanister,
+# which is 10 * Atmospherics.OneAtmosphere, rounded down.
+#
+# 8.31446261 is the universal gas constant
+#
+# 293.15 is our default atmospheric temperature
+#
 
-
-# If you change the filling amounts, you can calculate the new gas supply times with:
+# If you change the mole amounts, you can calculate the new gas supply times with:
 # minutes = (moles / outputPressure) * 325
 
 - type: entity
@@ -29,7 +31,7 @@
       # 94 minutes
       volume: 15
       moles:
-        - 6.154137219 # oxygen
+        - 6.15413721 # oxygen
       temperature: 293.15
 
 - type: entity
@@ -49,7 +51,7 @@
         # 13 minutes
         volume: 2
         moles:
-          - 0.820551629 # oxygen
+          - 0.82055162 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -63,7 +65,7 @@
         # 38 minutes
         volume: 6
         moles:
-          - 2.461654887 # oxygen
+          - 2.46165488 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -77,7 +79,7 @@
         # 63 minutes
         volume: 10
         moles:
-          - 4.102725815 # oxygen
+          - 4.10275814 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -91,9 +93,9 @@
         # 20 minutes due to output pressure
         volume: 15
         moles:
-          - 1.353910188 # 22% oxygen
-          - 4.800227031 # 78% nitrogen
-          # 6.154137219       total
+          - 1.35391018 # 22% oxygen
+          - 4.80022703 # 78% nitrogen
+          # 6.15413721       total
         temperature: 293.15
 
 - type: entity
@@ -108,8 +110,8 @@
         # 94 minutes
         volume: 15
         moles:
-          - 0           # oxygen not included
-          - 6.154137219 # nitrogen
+          - 0          # oxygen not included
+          - 6.15413721 # nitrogen
         temperature: 293.15
 
 - type: entity
@@ -129,15 +131,15 @@
         # only 66 minutes due to pressure
         volume: 15
         moles:
-          - 4.307896053 #     70% oxygen
+          - 4.30789605 # 70% oxygen
           - 0 # nitrogen
           - 0 # CO2
           - 0 # plasma
           - 0 # tritium
           - 0 # water vapor
           - 0 # miasma
-          - 1.846241166 #     30% N2O
-          # 6.154137219       total
+          - 1.84624116 # 30% N2O
+          # 6.15413721       total
         temperature: 293.15
 
 - type: entity
@@ -152,8 +154,8 @@
         # 20 minutes of agony
         volume: 15
         moles:
-          - 0 # oxygen
-          - 0 # nitrogen
-          - 0 # CO2
-          - 6.154137219 # plasma
+          - 0          # oxygen
+          - 0          # nitrogen
+          - 0          # CO2
+          - 6.15413721 # plasma
         temperature: 293.15
