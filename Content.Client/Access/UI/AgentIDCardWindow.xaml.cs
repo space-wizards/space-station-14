@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
 
@@ -16,17 +17,22 @@ namespace Content.Client.Access.UI
     public sealed partial class AgentIDCardWindow : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly SpriteSystem _spriteSystem = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        private readonly SpriteSystem _spriteSystem = default!;
 
         private const string JobIconPrarentId = "JobIcon";
+        private const int JobIconColumnCount = 10;
 
         public event Action<string>? OnNameChanged;
         public event Action<string>? OnJobChanged;
         public readonly List<Button> JobIconButtons = new();
+        public readonly Dictionary<int, string> StateByIndex = new();
 
         public AgentIDCardWindow()
         {
             RobustXamlLoader.Load(this);
+            IoCManager.InjectDependencies(this);
+            _spriteSystem = _entitySystem.GetEntitySystem<SpriteSystem>();
 
             NameLineEdit.OnTextEntered += e => OnNameChanged?.Invoke(e.Text);
             NameLineEdit.OnFocusExit += e => OnNameChanged?.Invoke(e.Text);
@@ -44,16 +50,18 @@ namespace Content.Client.Access.UI
                     continue;
                 }
 
-                // For every button decide which stylebase to have
-                // Every row has 10 buttons
+                var specifier = jobIcon.Icon as SpriteSpecifier.Rsi;
+                if (specifier == null)
+                {
+                    continue;
+                }
+
                 String styleBase = StyleBase.ButtonOpenBoth;
-                var modulo = i % 10;
-                if (i > 0 && modulo == 0)
+                var modulo = i % JobIconColumnCount;
+                if (modulo == 0)
                     styleBase = StyleBase.ButtonOpenRight;
-                else if (modulo == 9)
+                else if (modulo == JobIconColumnCount - 1)
                     styleBase = StyleBase.ButtonOpenLeft;
-                else if (i == 0)
-                    styleBase = StyleBase.ButtonOpenRight;
 
                 // Generate buttons
                 var jobIconButton = new Button
@@ -63,19 +71,23 @@ namespace Content.Client.Access.UI
                     MaxSize = new Vector2(42, 28),
                     Group = jobIconGroup,
                     Pressed = i == 0,
+                    ToolTip = specifier.RsiState,
+                    TooltipDelay = 0.2f,
                 };
 
                 // Generate buttons textures
-                var specifier = jobIcon.Icon;
                 TextureRect jobIconTexture = new TextureRect
                 {
                     Texture = _spriteSystem.Frame0(specifier),
-                    TextureScale = new Vector2(1.75f, 1.75f),
+                    TextureScale = new Vector2(2.5f, 2.5f),
                     Stretch = TextureRect.StretchMode.KeepCentered,
                 };
 
+                jobIconButton.AddChild(jobIconTexture);
+
                 JobIconButtons.Add(jobIconButton);
                 Grid.AddChild(jobIconButton);
+                StateByIndex.Add(i, specifier.RsiState);
 
                 i++;
             }

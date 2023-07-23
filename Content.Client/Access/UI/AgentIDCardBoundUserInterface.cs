@@ -1,5 +1,7 @@
 using Content.Shared.Access.Systems;
 using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Access.UI
 {
@@ -27,6 +29,11 @@ namespace Content.Client.Access.UI
             _window.OnClose += Close;
             _window.OnNameChanged += OnNameChanged;
             _window.OnJobChanged += OnJobChanged;
+            for (var i = 0; i < _window.JobIconButtons.Count; i++)
+            {
+                var key = i;
+                _window.JobIconButtons[i].OnPressed += _ => OnJobIconChanged(_window.StateByIndex[key]);
+            }
         }
 
         private void OnNameChanged(string newName)
@@ -37,6 +44,11 @@ namespace Content.Client.Access.UI
         private void OnJobChanged(string newJob)
         {
             SendMessage(new AgentIDCardJobChangedMessage(newJob));
+        }
+
+        private void OnJobIconChanged(string newJobIcon)
+        {
+            SendMessage(new AgentIDCardJobIconChangedMessage(newJobIcon));
         }
 
         /// <summary>
