@@ -11,12 +11,12 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent]
 public sealed class NukeOperativeSpawnerComponent : Component
 {
-    [DataField("name")]
-    public string OperativeName = "";
+    [DataField("name", required:true)]
+    public string OperativeName = default!;
 
-    [DataField("rolePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<AntagPrototype>))]
-    public string? OperativeRolePrototype;
+    [DataField("rolePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<AntagPrototype>), required:true)]
+    public string OperativeRolePrototype = default!;
 
-    [DataField("startingGearPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<StartingGearPrototype>))]
-    public string? OperativeStartingGear;
+    [DataField("startingGearPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<StartingGearPrototype>), required:true)]
+    public string OperativeStartingGear = default!;
 }

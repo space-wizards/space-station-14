@@ -567,9 +567,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         // todo: this is kinda awful for multi-nukies
         foreach (var nukeops in EntityQuery<NukeopsRuleComponent>())
         {
-            if (nukeOpSpawner.OperativeStartingGear == null || nukeOpSpawner.OperativeRolePrototype == null)
+            if (nukeOpSpawner.OperativeName == null
+                || nukeOpSpawner.OperativeStartingGear == null
+                || nukeOpSpawner.OperativeRolePrototype == null)
             {
-                // TODO wtf is going on, why are these data-fields not required? Why did they default to empty strings AAAAAAAAAaaaaa
+                // I have no idea what is going on with nuke ops code, but I'm pretty sure this shouldn't be possible.
                 Log.Error($"Invalid nuke op spawner: {ToPrettyString(spawner)}");
                 continue;
             }
