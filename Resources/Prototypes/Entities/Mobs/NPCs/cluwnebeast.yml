@@ -13,9 +13,9 @@
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: Faction
+  - type: NpcFactionMember
     factions:
-    - SimpleHostile
+      - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/cluwnebeast.rsi

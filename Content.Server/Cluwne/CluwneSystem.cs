@@ -92,7 +92,7 @@ public sealed class CluwneSystem : EntitySystem
             SetOutfitCommand.SetOutfit(uid, "CluwneGear", EntityManager);
         }
 
-        if (component.IsBeast == true)
+        if (component.IsBeast)
         {
             Spawn(component.Portal, Transform(uid).Coordinates);
             SetOutfitCommand.SetOutfit(uid, "CluwneBeastGear", EntityManager);
