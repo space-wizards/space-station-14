@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Vending machines can now be completely destroyed., type: Fix}
-  id: 3805
-  time: '2023-05-18T23:48:14.0000000+00:00'
 - author: themias
   changes:
   - {message: Mobs that are in critical condition no longer appear as dead on the
@@ -2983,3 +2978,9 @@ Entries:
       brute and burn groups., type: Tweak}
   id: 4304
   time: '2023-07-23T03:18:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Midround anomaly spawns no longer have a high chance of spawning in
+      escape pods., type: Fix}
+  id: 4305
+  time: '2023-07-23T03:57:13.0000000+00:00'
