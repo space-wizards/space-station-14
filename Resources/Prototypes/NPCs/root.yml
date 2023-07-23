@@ -43,15 +43,33 @@
       tasks:
         - !type:HTNCompoundTask
           task: GunCombatCompound
-    # TODO: Equip a gun from inventory if one found, preferring over pickup.
+
+    # Equip a gun from inventory if one found, preferring over pickup.
+    - tasks:
+      # TODO: Up to here
+       - !type:HTNCompoundTask
+         task: ClearActiveHandCompound
+
+       - !type:HTNCompoundTask
+         task: EquipInventoryGunCompound
 
     # Pickup ammo if any nearby
-    # TODO: Need nearby ammo
-    #- tasks:
-    #    - id: GunAmmoPickupCompound
-    #  preconditions:
-    #    - !type:GunAmmoPrecondition
-    #      maxPercent: 0.0
+    - preconditions:
+        - !type:GunAmmoPrecondition
+          maxPercent: 0.0
+      tasks:
+        - id: GunAmmoPickupCompound
+
+    # Pickup gun with ammo if we have no ammo
+    -  preconditions:
+        - !type:ActiveHandComponentPrecondition
+          components:
+            - type: Gun
+          invert: true
+       tasks:
+        - !type:HTNCompoundTask
+          task: PickupGunCompound
+
     # Discard gun if no ammo
     - preconditions:
         - !type:ActiveHandComponentPrecondition
@@ -61,16 +79,8 @@
           maxPercent: 0.001
       tasks:
         - !type:HTNPrimitiveTask
-           preconditions:
-           - !type:ActiveHandEntityPrecondition
-           operator: !type:DropOperator
+          preconditions:
+            - !type:ActiveHandEntityPrecondition
+          operator: !type:DropOperator
 
-    # Pickup gun if no ammo
-    -  preconditions:
-        - !type:ActiveHandComponentPrecondition
-          components:
-            - type: Gun
-          invert: true
-       tasks:
-        - !type:HTNCompoundTask
-          task: PickupGunCompound
+    # TODO: Reload a nearby gun

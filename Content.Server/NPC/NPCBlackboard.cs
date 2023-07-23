@@ -153,6 +153,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         switch (key)
         {
             case Access:
+            {
                 if (!TryGetValue(Owner, out owner, entManager))
                 {
                     return false;
@@ -161,7 +162,9 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                 var access = entManager.EntitySysManager.GetEntitySystem<AccessReaderSystem>();
                 value = access.FindAccessTags(owner);
                 return true;
+            }
             case ActiveHand:
+            {
                 if (!TryGetValue(Owner, out owner, entManager) ||
                     !entManager.TryGetComponent<HandsComponent>(owner, out var hands) ||
                     hands.ActiveHand == null)
@@ -171,7 +174,9 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
 
                 value = hands.ActiveHand;
                 return true;
+            }
             case CanMove:
+            {
                 if (!TryGetValue(Owner, out owner, entManager))
                 {
                     return false;
@@ -180,7 +185,21 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                 var blocker = entManager.EntitySysManager.GetEntitySystem<ActionBlockerSystem>();
                 value = blocker.CanMove(owner);
                 return true;
+            }
+            case FreeHands:
+            {
+                if (!TryGetValue(Owner, out owner, entManager) ||
+                    !entManager.TryGetComponent<HandsComponent>(owner, out var hands) ||
+                    hands.ActiveHand == null)
+                {
+                    return false;
+                }
+
+                value = hands.Hands;
+                return true;
+            }
             case OwnerCoordinates:
+            {
                 if (!TryGetValue(Owner, out owner, entManager))
                 {
                     return false;
@@ -193,6 +212,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                 }
 
                 return false;
+            }
             default:
                 return false;
         }
@@ -214,6 +234,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     public const string Access = "Access";
     public const string ActiveHand = "ActiveHand";
     public const string CanMove = "CanMove";
+    public const string FreeHands = "FreeHands";
     public const string FollowTarget = "FollowTarget";
     public const string MedibotInjectRange = "MedibotInjectRange";
 

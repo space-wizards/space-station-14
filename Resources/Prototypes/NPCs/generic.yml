@@ -1,0 +1,21 @@
+- type: htnCompound
+  id: ClearActiveHandCompound
+  branches:
+    # Do nothing
+    - preconditions:
+        - !type:ActiveHandFreePrecondition
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:NoOperator
+
+    # Swap to another free hand
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:SwapToFreeHandOperator
+
+    # Put active hand into storage
+    - tasks:
+
+    # Drop active hand
+    - tasks:
+        - 
