@@ -112,6 +112,8 @@
           Quantity: 10
         - ReagentId: Theobromine
           Quantity: 3
+        - ReagentId: CacaoPowder
+          Quantity: 1
 
 - type: entity
   name: energy bar

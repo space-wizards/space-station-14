@@ -577,6 +577,36 @@
         Quantity: 10
 
 - type: entity
+  name: cocao beans
+  parent: FoodProduceBase
+  id: FoodCacao
+  description: You can never have too much chocolate!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cacao
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 14
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Cacaopowder
+          Quantity: 2
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/coffea.rsi
+  - type: Produce
+    seedId: cocao
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CacaoPowder
+        Quantity: 2
+
+- type: entity
   name: ear of corn
   parent: FoodProduceBase
   id: FoodCorn
