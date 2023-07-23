@@ -139,6 +139,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
         foreach (var port in ports)
         {
+            DebugTools.Assert(_prototypeManager.HasIndex<SourcePortPrototype>(port));
             comp.Ports?.Add(port);
         }
     }
@@ -153,6 +154,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
         foreach (var port in ports)
         {
+            DebugTools.Assert(_prototypeManager.HasIndex<SinkPortPrototype>(port));
             comp.Ports?.Add(port);
         }
     }
@@ -307,6 +309,9 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         RemoveSinkFromSource(sourceUid, sinkUid, sourceComponent);
         foreach (var (source, sink) in links)
         {
+            DebugTools.Assert(_prototypeManager.HasIndex<SourcePortPrototype>(source));
+            DebugTools.Assert(_prototypeManager.HasIndex<SinkPortPrototype>(sink));
+
             if (!sourceComponent.Ports.Contains(source) || !sinkComponent.Ports.Contains(sink))
                 continue;
 
