@@ -304,8 +304,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (ev.Ammo.Count <= 0)
         {
             // triggers effects on the gun if it's empty
-            var emptyEvent = new EmptyEvent();
-            RaiseLocalEvent(gunUid, ref emptyEvent);
+            var emptyGunShotEvent = new OnEmptyGunShotEvent();
+            RaiseLocalEvent(gunUid, ref emptyGunShotEvent);
 
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
@@ -449,12 +449,6 @@ public record struct AttemptShootEvent(EntityUid User, string? Message, bool Can
 /// <param name="User">The user that fired this gun.</param>
 [ByRefEvent]
 public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
-
-/// <summary>
-/// Raised directed on the gun when trying to fire it while it's out of ammo
-/// </summary>
-[ByRefEvent]
-public record struct EmptyEvent(EntityUid EmptyGun);
 
 public enum EffectLayers : byte
 {
