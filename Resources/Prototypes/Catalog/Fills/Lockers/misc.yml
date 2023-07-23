@@ -127,6 +127,8 @@
           prob: 0.25
         - id: StrangePill
           prob: 0.20
+        - id: ModularReceiver
+          prob: 0.1
         - id: DrinkSpaceGlue
           prob: 0.20
         - id: DrinkSpaceLube
@@ -208,6 +210,12 @@
           prob: 0.1
         - id: ClothingHandsGlovesColorYellowBudget
           prob: 0.25
+        - id: StrangePill
+          prob: 0.20
+        - id: DrinkSpaceGlue
+          prob: 0.20
+        - id: ModularReceiver
+          prob: 0.1
         # Syndicate loot
         - id: null
           prob: 0.95

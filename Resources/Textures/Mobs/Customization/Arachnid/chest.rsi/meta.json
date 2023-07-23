@@ -8,30 +8,6 @@
   },
   "states": [
     {
-      "name": "long",
-      "directions": 4
-    },
-    {
-      "name": "sharp",
-      "directions": 4
-    },
-    {
-      "name": "stingers",
-      "directions": 4
-    },
-    {
-      "name": "curled",
-      "directions": 4
-    },
-    {
-      "name": "zigzag",
-      "directions": 4
-    },
-    {
-      "name": "web",
-      "directions": 4
-    },
-    {
       "name": "stripes",
       "directions": 4
     },
@@ -45,6 +21,22 @@
     },
     {
       "name": "cross",
+      "directions": 4
+    },
+    {
+      "name": "heart",
+      "directions": 4
+    },
+    {
+      "name": "hourglass",
+      "directions": 4
+    },
+    {
+      "name": "nail-and-hammer",
+      "directions": 4
+    },
+    {
+      "name": "star",
       "directions": 4
     }
   ]

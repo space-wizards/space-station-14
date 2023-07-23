@@ -295,7 +295,7 @@
     state: pda-mime
 
 - type: entity
-  name: Chaplain PDA
+  name: chaplain PDA
   parent: BasePDA
   id: ChaplainPDA
   description: God's chosen PDA.
@@ -309,7 +309,7 @@
     state: pda-chaplain
 
 - type: entity
-  name: Quartermaster PDA
+  name: quartermaster PDA
   parent: BasePDA
   id: QuartermasterPDA
   description: PDA for the guy that orders the guns.
@@ -641,7 +641,7 @@
   description: Light green sign of walking bureaucracy.
   components:
   - type: Pda
-    id: CentcomIDCardSyndie
+    id: CentcomIDCard
     state: pda-centcom
     penSlot:
       startingItem: PenCentcom
@@ -652,6 +652,22 @@
     borderColor: "#00842e"
   - type: Icon
     state: pda-centcom
+
+- type: entity
+  parent: CentcomPDA
+  id: CentcomPDAFake
+  suffix: Fake
+  components:
+  - type: Pda
+    id: CentcomIDCardSyndie
+
+- type: entity
+  parent: CentcomPDA
+  id: DeathsquadPDA
+  suffix: Deathsquad
+  components:
+  - type: Pda
+    id: CentcomIDCardDeathsquad
 
 - type: entity
   parent: BasePDA
