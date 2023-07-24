@@ -448,13 +448,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: hamster-0
-  - type: GhostRole
-    makeSentient: true
-    allowSpeech: true
-    allowMovement: true
-    name: ghost-role-information-hamlet-name
-    description: ghost-role-information-hamlet-description
-  - type: GhostTakeoverAvailable
   - type: InteractionPopup
     successChance: 1
   - type: Butcherable
