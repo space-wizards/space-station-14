@@ -41,7 +41,7 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
     /// </summary>
     public void OnTransmitterStartup(EntityUid sourceUid, SignalTransmitterComponent transmitterComponent, ComponentStartup args)
     {
-        var sourceComponent = Comp<DeviceLinkSourceComponent>(sourceUid);
+        var sourceComponent = EnsureComp<DeviceLinkSourceComponent>(sourceUid);
 
         Dictionary<EntityUid, List<(string, string)>> outputs = new();
         foreach (var (transmitterPort, receiverPorts) in transmitterComponent.Outputs)
