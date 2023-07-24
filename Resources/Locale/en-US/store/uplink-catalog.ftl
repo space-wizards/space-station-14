@@ -84,9 +84,6 @@ uplink-agent-id-card-desc = A modified ID card that can copy accesses from other
 uplink-black-jetpack-name = Black Jetpack
 uplink-black-jetpack-desc = A black jetpack. It allows you to fly around in space. Additional fuel now included!
 
-uplink-reinforcement-radio-monkey-name = Monkey Reinforcement Teleporter
-uplink-reinforcement-radio-monkey-desc =  Call in trained monkey to assist you. Comes with a single syndicate cigarette.
-
 uplink-reinforcement-radio-name = Reinforcement Teleporter
 uplink-reinforcement-radio-desc =  Radio in a reinforcement agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
 
@@ -139,6 +136,9 @@ uplink-meds-bundle-desc = All you need to get your comrades back in the fight: m
 
 uplink-ammo-bundle-name = Ammo Bundle
 uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW.
+
+uplink-sniper-bundle-name = Sniper Bundle
+uplink-sniper-bundle-desc = An inconspicuous briefcase that contains a hristov, 30 spare bullets and a convenient disguise
 
 uplink-c20r-bundle-name = C-20r Bundle
 uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundled with three magazines.
