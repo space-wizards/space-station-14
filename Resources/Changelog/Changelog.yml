@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Add the force gun as a counterpart to the tether gun., type: Add}
-  id: 3811
-  time: '2023-05-19T07:10:31.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Shuttles will delete anything they FTL on top of., type: Add}
   id: 3812
   time: '2023-05-19T07:26:28.0000000+00:00'
@@ -2982,3 +2977,9 @@ Entries:
   - {message: Salt is now white instead of red., type: Tweak}
   id: 4310
   time: '2023-07-23T19:17:46.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Due to ERT's lackluster performance CentCom has decided to slightly
+      upgrade their arsenal, type: Tweak}
+  id: 4311
+  time: '2023-07-24T03:01:29.0000000+00:00'
