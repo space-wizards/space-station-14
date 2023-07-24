@@ -2,7 +2,6 @@ using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceNetwork;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Interaction;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.DeviceLinking.Systems;
 
@@ -10,7 +9,7 @@ public sealed class SignalSwitchSystem : EntitySystem
 {
     [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

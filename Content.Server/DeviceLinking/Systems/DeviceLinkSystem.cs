@@ -2,9 +2,7 @@
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.MachineLinking.Components;
 using Content.Shared.DeviceLinking;
-using Robust.Shared.Utility;
 
 namespace Content.Server.DeviceLinking.Systems;
 
@@ -15,7 +13,6 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SignalTransmitterComponent, ComponentStartup>(OnTransmitterStartup);
         SubscribeLocalEvent<DeviceLinkSinkComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
     }
 
@@ -36,33 +33,7 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
         }
     }
 
-    /// <summary>
-    /// Moves existing links from machine linking to device linking to ensure linked things still work even when the map wasn't updated yet
-    /// </summary>
-    public void OnTransmitterStartup(EntityUid sourceUid, SignalTransmitterComponent transmitterComponent, ComponentStartup args)
-    {
-        var sourceComponent = EnsureComp<DeviceLinkSourceComponent>(sourceUid);
-
-        Dictionary<EntityUid, List<(string, string)>> outputs = new();
-        foreach (var (transmitterPort, receiverPorts) in transmitterComponent.Outputs)
-        {
-            foreach (var receiverPort in receiverPorts)
-            {
-                // Throw error if component is missing.
-                EnsureComp<DeviceLinkSinkComponent>(receiverPort.Uid);
-                outputs.GetOrNew(receiverPort.Uid).Add((transmitterPort, receiverPort.Port));
-            }
-        }
-
-        foreach (var (sinkUid, links) in outputs)
-        {
-            SaveLinks(null, sourceUid, sinkUid, links, sourceComponent);
-        }
-
-        RemCompDeferred<SignalTransmitterComponent>(sourceUid);
-    }
-
-     #region Sending & Receiving
+    #region Sending & Receiving
     /// <summary>
     /// Sends a network payload directed at the sink entity.
     /// Just raises a <see cref="SignalReceivedEvent"/> without data if the source or the sink doesn't have a <see cref="DeviceNetworkComponent"/>
