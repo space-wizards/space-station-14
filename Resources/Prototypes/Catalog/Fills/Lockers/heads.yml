@@ -92,6 +92,7 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
+      #- id: ClothingHeadHatCapcap # SS220 - removed duplicate cap from locker
       # Corvax-Resprite-Start
       - id: ClothingHeadCaptainHat
       - id: ClothingHeadCaptainCap

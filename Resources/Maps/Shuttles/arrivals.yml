@@ -181,8 +181,7 @@ entities:
       type: GridAtmosphere
     - type: GasTileOverlay
     - type: RadiationGridResistance
-    - nextUpdate: 0
-      type: SpreaderGrid
+    - type: SpreaderGrid
     - type: GridPathfinding
 - proto: AirCanister
   entities:
@@ -1394,7 +1393,7 @@ entities:
     - pos: 1.5,-5.5
       parent: 292
       type: Transform
-- proto: Intercom
+- proto: IntercomCommon
   entities:
   - uid: 264
     components:

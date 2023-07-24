@@ -266,7 +266,7 @@ namespace Content.Shared.Cuffs
 
         private void OnCuffAfterInteract(EntityUid uid, HandcuffComponent component, AfterInteractEvent args)
         {
-            if (args.Target is not {Valid: true} target)
+            if (args.Target is not { Valid: true } target)
                 return;
 
             if (!args.CanReach)
@@ -580,7 +580,7 @@ namespace Content.Shared.Cuffs
 
             if (isOwner)
             {
-                _damageSystem.TryChangeDamage(target, cuffable.DamageOnResist, true, false);
+                _damageSystem.TryChangeDamage(target, cuff.DamageOnResist, true, false);
             }
 
             if (_net.IsServer)

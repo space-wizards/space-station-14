@@ -329,7 +329,7 @@ public abstract partial class SharedGunSystem : EntitySystem
                 CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
         }
 
-        Dirty(gun);
+        Dirty(gunUid, gun);
     }
 
     public void Shoot(
@@ -366,7 +366,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     protected void SetCartridgeSpent(EntityUid uid, CartridgeAmmoComponent cartridge, bool spent)
     {
         if (cartridge.Spent != spent)
-            Dirty(cartridge);
+            Dirty(uid, cartridge);
 
         cartridge.Spent = spent;
         Appearance.SetData(uid, AmmoVisuals.Spent, spent);
@@ -380,14 +380,14 @@ public abstract partial class SharedGunSystem : EntitySystem
         bool playSound = true)
     {
         // TODO: Sound limit version.
-        var offsetPos = (Random.NextVector2(EjectOffset));
+        var offsetPos = Random.NextVector2(EjectOffset);
         var xform = Transform(entity);
 
         var coordinates = xform.Coordinates;
         coordinates = coordinates.Offset(offsetPos);
 
-        xform.LocalRotation = Random.NextAngle();
-        xform.Coordinates = coordinates;
+        TransformSystem.SetLocalRotation(xform, Random.NextAngle());
+        TransformSystem.SetCoordinates(entity, xform, coordinates);
 
         if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
         {
