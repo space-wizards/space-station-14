@@ -27,6 +27,8 @@ public sealed partial class NewConManager
     public void Initialize()
     {
         _log = _logManager.GetSawmill("newcon");
+        var watch = new Stopwatch();
+        watch.Start();
 
         var tys = _reflection.FindTypesWithAttribute<ConsoleCommandAttribute>();
         foreach (var ty in tys)
@@ -46,6 +48,7 @@ public sealed partial class NewConManager
         InitializeQueries();
 
         _conHost.RegisterCommand("|", Callback);
+        _log.Info($"Initialized console in {watch.Elapsed}");
     }
 
     public IEnumerable<(ConsoleCommand, string?)> AllCommands()

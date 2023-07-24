@@ -10,9 +10,9 @@ public interface IConError
         var msg = new FormattedMessage();
         if (Expression is { } expr && IssueSpan is { } span)
         {
-            msg.AddMessage(ConErrorHelpers.HighlightSpan(expr, span, Color.Red));
+            msg.AddMessage(ConHelpers.HighlightSpan(expr, span, Color.Red));
             msg.PushNewline();
-            msg.AddMessage(ConErrorHelpers.ArrowSpan(span));
+            msg.AddMessage(ConHelpers.ArrowSpan(span));
             msg.PushNewline();
         }
         msg.AddMessage(DescribeInner());
@@ -34,7 +34,7 @@ public interface IConError
     }
 }
 
-public static class ConErrorHelpers
+public static class ConHelpers
 {
     public static FormattedMessage HighlightSpan(string input, Vector2i span, Color color)
     {

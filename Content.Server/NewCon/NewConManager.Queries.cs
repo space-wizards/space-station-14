@@ -30,7 +30,6 @@ public sealed partial class NewConManager
                     list.Add((cmd, subcommand == "" ? null : subcommand));
                     if (cmd.TryGetReturnType(subcommand, piped, Array.Empty<Type>(), out var retType) || method.ReturnType.Constructable())
                     {
-                        Logger.Debug($"Registering {cmd} as returning {(retType ?? method.ReturnType).PrettyName()}");
                         invList.Add((retType ?? method.ReturnType));
                     }
                 }
