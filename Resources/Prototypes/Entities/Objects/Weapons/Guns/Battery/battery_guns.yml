@@ -12,6 +12,7 @@
     slots:
     - Back
     - suitStorage
+    - Belt
   - type: AmmoCounter
   - type: Gun
     fireRate: 2
@@ -41,8 +42,6 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
     quickEquip: false
-    slots:
-    - Belt
 
 - type: entity
   name: retro laser gun
@@ -283,8 +282,6 @@
     - type: Clothing
       sprite: Objects/Weapons/Guns/Battery/disabler.rsi
       quickEquip: false
-      slots:
-        - Belt
     - type: Gun
       fireRate: 2
       soundGunshot:
@@ -315,8 +312,6 @@
     - type: Clothing
       sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
       quickEquip: false
-      slots:
-        - Belt
     - type: ProjectileBatteryAmmoProvider
       proto: BulletDisablerPractice
       fireCost: 100
@@ -342,8 +337,6 @@
     heldPrefix: taser4
   - type: Clothing
     quickEquip: false
-    slots:
-    - Belt
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
