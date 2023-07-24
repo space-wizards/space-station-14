@@ -944,7 +944,7 @@
 - type: entity
   parent: BaseComputer
   id: ComputerMassMedia
-  name: mass-madia console
+  name: mass-media console
   description: Write your message to the world!
   components:
   - type: Sprite
