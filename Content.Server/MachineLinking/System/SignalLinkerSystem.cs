@@ -160,22 +160,7 @@ namespace Content.Server.MachineLinking.System
 
         private void OnReceiverStartup(EntityUid uid, SignalReceiverComponent receiver, ComponentStartup args)
         {
-            // validate links
-            Dictionary<EntityUid, SignalTransmitterComponent?> uidCache = new();
-            foreach (var rport in receiver.Inputs)
-            {
-                var toRemove = new List<PortIdentifier>();
-                foreach (var tport in rport.Value)
-                {
-                    if (!uidCache.TryGetValue(tport.Uid, out var transmitter))
-                        uidCache.Add(tport.Uid, transmitter = CompOrNull<SignalTransmitterComponent>(tport.Uid));
-                    if (transmitter == null || !transmitter.Outputs.TryGetValue(tport.Port, out var tpv))
-                        toRemove.Add(tport);
-                    else if (!tpv.Contains(new(uid, rport.Key)))
-                        tpv.Add(new(uid, rport.Key));
-                }
-                toRemove.ForEach(tport => rport.Value.Remove(tport));
-            }
+            RemCompDeferred<SignalReceiverComponent>(uid);
         }
 
         private void OnTransmitterRemoved(EntityUid uid, SignalTransmitterComponent transmitter, ComponentRemove args)

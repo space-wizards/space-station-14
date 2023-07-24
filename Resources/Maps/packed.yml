@@ -10231,11 +10231,6 @@ entities:
     - links:
       - 5685
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
   - uid: 2835
     components:
     - pos: 12.5,-27.5
@@ -10244,11 +10239,6 @@ entities:
     - links:
       - 5685
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
 - proto: BlockGameArcade
   entities:
   - uid: 1812
@@ -36062,11 +36052,6 @@ entities:
     - links:
       - 7808
       type: DeviceLinkSink
-    - inputs:
-        Reverse: []
-        Forward: []
-        Off: []
-      type: SignalReceiver
   - uid: 2038
     components:
     - rot: 1.5707963267948966 rad
@@ -36076,11 +36061,6 @@ entities:
     - links:
       - 7808
       type: DeviceLinkSink
-    - inputs:
-        Reverse: []
-        Forward: []
-        Off: []
-      type: SignalReceiver
   - uid: 2039
     components:
     - rot: -1.5707963267948966 rad
@@ -36108,11 +36088,6 @@ entities:
     - links:
       - 7808
       type: DeviceLinkSink
-    - inputs:
-        Reverse: []
-        Forward: []
-        Off: []
-      type: SignalReceiver
   - uid: 2042
     components:
     - rot: 1.5707963267948966 rad
@@ -36122,11 +36097,6 @@ entities:
     - links:
       - 7808
       type: DeviceLinkSink
-    - inputs:
-        Reverse: []
-        Forward: []
-        Off: []
-      type: SignalReceiver
   - uid: 2051
     components:
     - rot: -1.5707963267948966 rad
@@ -36145,11 +36115,6 @@ entities:
     - links:
       - 7808
       type: DeviceLinkSink
-    - inputs:
-        Reverse: []
-        Forward: []
-        Off: []
-      type: SignalReceiver
   - uid: 2066
     components:
     - rot: -1.5707963267948966 rad
@@ -69058,11 +69023,6 @@ entities:
     - links:
       - 8288
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
   - uid: 6512
     components:
     - rot: -1.5707963267948966 rad
@@ -69080,11 +69040,6 @@ entities:
     - links:
       - 8288
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
   - uid: 12425
     components:
     - pos: 51.5,1.5
@@ -69093,11 +69048,6 @@ entities:
     - links:
       - 8288
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
   - uid: 12822
     components:
     - pos: 28.5,20.5
