@@ -26,7 +26,7 @@ public sealed class NewsSystem : EntitySystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
 
-    private void OnRoundRestart()
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
         Articles.Clear();
     }
