@@ -316,7 +316,7 @@
     energy: 1.6
     color: "#1f8c28"
   - type: Computer
-    board: CriminalRecordsComputerCircuitboard
+    board: StationRecordsComputerCircuitboard
 
 - type: entity
   parent: BaseComputer
