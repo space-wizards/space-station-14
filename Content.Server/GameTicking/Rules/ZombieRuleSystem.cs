@@ -11,6 +11,7 @@ using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Zombies;
 using Content.Shared.Actions.ActionTypes;
@@ -55,10 +56,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         base.Initialize();
 
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
-        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
-
-        SubscribeLocalEvent<EntityZombifiedEvent>(OnEntityZombified);
         SubscribeLocalEvent<ZombifyOnDeathComponent, ZombifySelfActionEvent>(OnZombifySelf);
     }
 
@@ -67,7 +65,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         foreach (var zombie in EntityQuery<ZombieRuleComponent>())
         {
             // This is just the general condition thing used for determining the win/lose text
-            var fraction = GetInfectedFraction();
+            var fraction = GetInfectedFraction(true, true);
 
             if (fraction <= 0)
                 ev.AddLine(Loc.GetString("zombie-round-end-amount-none"));
@@ -112,25 +110,10 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         }
     }
 
-    /// <remarks>
-    ///     This is just checked if the last human somehow dies
-    ///     by starving or flying off into space.
-    /// </remarks>
-    private void OnMobStateChanged(MobStateChangedEvent ev)
-    {
-        CheckRoundEnd(ev.Target);
-    }
-
-    private void OnEntityZombified(EntityZombifiedEvent ev)
-    {
-        CheckRoundEnd(ev.Target);
-    }
-
     /// <summary>
     ///     The big kahoona function for checking if the round is gonna end
     /// </summary>
-    /// <param name="target">depending on this uid, we should care about the round ending</param>
-    private void CheckRoundEnd(EntityUid target)
+    private void CheckRoundEnd()
     {
         var query = EntityQueryEnumerator<ZombieRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var comp, out var gameRule))
@@ -138,16 +121,11 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             if (!GameTicker.IsGameRuleActive(uid, gameRule))
                 continue;
 
-            // We only care about players, not monkeys and such.
-            if (!HasComp<HumanoidAppearanceComponent>(target))
-                continue;
-
-            var fraction = GetInfectedFraction();
             var healthy = GetHealthyHumans();
             if (healthy.Count == 1) // Only one human left. spooky
                 _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
 
-            if (!comp.ShuttleCalled && fraction >= comp.ZombieShuttleCallPercentage)
+            if (!comp.ShuttleCalled && GetInfectedFraction(false) >= comp.ZombieShuttleCallPercentage)
             {
                 comp.ShuttleCalled = true;
                 foreach (var station in _station.GetStations())
@@ -157,7 +135,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 _roundEnd.RequestRoundEnd(null, false);
             }
 
-            if (fraction >= 1) // Oops, all zombies
+            // we include dead for this count because we don't want to end the round
+            // when everyone gets on the shuttle.
+            if (GetInfectedFraction() >= 1) // Oops, all zombies
                 _roundEnd.EndRound();
         }
     }
@@ -198,10 +178,17 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
 
-        if (component.InfectedChosen || component.StartTime == null)
+        if (component.InfectedChosen)
+        {
+            if (_timing.CurTime >= component.NextRoundEndCheck)
+            {
+                component.NextRoundEndCheck += component.EndCheckDelay;
+                CheckRoundEnd();
+            }
             return;
+        }
 
-        if (_timing.CurTime < component.StartTime)
+        if (component.StartTime == null || _timing.CurTime < component.StartTime)
             return;
 
         InfectInitialPlayers(component);
@@ -215,25 +202,54 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         _action.RemoveAction(uid, action);
     }
 
-    private float GetInfectedFraction()
+    private float GetInfectedFraction(bool includeOffStation = true, bool includeDead = false)
     {
-        var players = GetHealthyHumans();
-        var zombers = EntityQuery<HumanoidAppearanceComponent, ZombieComponent>().ToList();
+        var players = GetHealthyHumans(includeOffStation);
+        var zombieCount = 0;
+        var query = EntityQueryEnumerator<HumanoidAppearanceComponent, ZombieComponent, MobStateComponent>();
+        while (query.MoveNext(out _, out _, out _, out var mob))
+        {
+            if (!includeDead && mob.CurrentState == MobState.Dead)
+                continue;
+            zombieCount++;
+        }
 
-        return zombers.Count / (float) (players.Count + zombers.Count);
+        return zombieCount / (float) (players.Count + zombieCount);
     }
 
-    private List<EntityUid> GetHealthyHumans()
+    /// <summary>
+    /// Gets the list of humans who are alive, not zombies, and are on a station.
+    /// Flying off via a shuttle disqualifies you.
+    /// </summary>
+    /// <returns></returns>
+    private List<EntityUid> GetHealthyHumans(bool includeOffStation = true)
     {
         var healthy = new List<EntityUid>();
-        var players = AllEntityQuery<HumanoidAppearanceComponent, ActorComponent, MobStateComponent>();
-        var zombers = GetEntityQuery<ZombieComponent>();
-        while (players.MoveNext(out var uid, out _, out _, out var mob))
+
+        var stationGrids = new HashSet<EntityUid>();
+        if (!includeOffStation)
         {
-            if (_mobState.IsAlive(uid, mob) && !zombers.HasComponent(uid))
+            foreach (var station in _station.GetStationsSet())
             {
-                healthy.Add(uid);
+                if (TryComp<StationDataComponent>(station, out var data) && _station.GetLargestGrid(data) is { } grid)
+                    stationGrids.Add(grid);
             }
+        }
+
+        var players = AllEntityQuery<HumanoidAppearanceComponent, ActorComponent, MobStateComponent, TransformComponent>();
+        var zombers = GetEntityQuery<ZombieComponent>();
+        while (players.MoveNext(out var uid, out _, out _, out var mob, out var xform))
+        {
+            if (!_mobState.IsAlive(uid, mob))
+                continue;
+
+            if (zombers.HasComponent(uid))
+                continue;
+
+            if (!includeOffStation && !stationGrids.Contains(xform.GridUid ?? EntityUid.Invalid))
+                continue;
+
+            healthy.Add(uid);
         }
         return healthy;
     }

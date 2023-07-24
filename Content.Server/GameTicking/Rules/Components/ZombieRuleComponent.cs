@@ -21,6 +21,18 @@ public sealed class ZombieRuleComponent : Component
     public bool InfectedChosen;
 
     /// <summary>
+    /// When the round will next check for round end.
+    /// </summary>
+    [DataField("nextRoundEndCheck", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextRoundEndCheck;
+
+    /// <summary>
+    /// The amount of time between each check for the end of the round.
+    /// </summary>
+    [DataField("endCheckDelay")]
+    public TimeSpan EndCheckDelay = TimeSpan.FromSeconds(30);
+
+    /// <summary>
     /// The time at which the initial infected will be chosen.
     /// </summary>
     [DataField("startTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
