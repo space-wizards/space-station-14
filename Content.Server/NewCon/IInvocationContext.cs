@@ -28,6 +28,11 @@ public interface IInvocationContext
         WriteLine(FormattedMessage.FromMarkup(markup));
     }
 
+    public void WriteError(IConError error)
+    {
+        WriteLine(error.Describe());
+    }
+
     public void ReportError(IConError err);
 
     public IEnumerable<IConError> GetErrors();

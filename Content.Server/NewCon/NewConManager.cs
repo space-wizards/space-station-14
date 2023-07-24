@@ -48,6 +48,26 @@ public sealed partial class NewConManager
         _conHost.RegisterCommand("|", Callback);
     }
 
+    public IEnumerable<(ConsoleCommand, string?)> AllCommands()
+    {
+        foreach (var (_, cmd) in _commands)
+        {
+            if (cmd.HasSubCommands)
+            {
+                foreach (var subcommand in cmd.Subcommands)
+                {
+                    yield return (cmd, subcommand);
+                }
+            }
+            else
+            {
+                yield return (cmd, null);
+            }
+        }
+    }
+
+    public ConsoleCommand GetCommand(string commandName) => _commands[commandName];
+
     public bool TryGetCommand(string commandName, [NotNullWhen(true)] out ConsoleCommand? command)
     {
         return _commands.TryGetValue(commandName, out command);

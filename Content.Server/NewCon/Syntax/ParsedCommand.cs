@@ -167,7 +167,9 @@ public record struct NoImplementationError(string Cmd, Type[] Types, string? Sub
 {
     public FormattedMessage DescribeInner()
     {
-        var msg = FormattedMessage.FromMarkup($"Could not find an implementation for {Cmd} given the constraints.");
+        var newCon = IoCManager.Resolve<NewConManager>();
+
+        var msg = FormattedMessage.FromMarkup($"Could not find an implementation for {Cmd} given the input type {PipedType?.PrettyName() ?? "void"}.");
         msg.PushNewline();
 
         var typeArgs = "";
@@ -178,6 +180,25 @@ public record struct NoImplementationError(string Cmd, Type[] Types, string? Sub
         }
 
         msg.AddText($"Signature: {Cmd}{(SubCommand is not null ? $":{SubCommand}" : "")}{typeArgs} {PipedType?.PrettyName() ?? "void"} -> ???");
+
+        var piped = PipedType ?? typeof(void);
+        var cmdImpl = newCon.GetCommand(Cmd);
+        var accepted = cmdImpl.AcceptedTypes(SubCommand).ToHashSet();
+
+        foreach (var (command, subCommand) in newCon.CommandsTakingType(piped))
+        {
+            if (!command.TryGetReturnType(subCommand, piped, Array.Empty<Type>(), out var retType) || !accepted.Any(x => retType.IsAssignableTo(x)))
+                continue;
+
+            if (!cmdImpl.TryGetReturnType(SubCommand, retType, Types, out var myRetType))
+                continue;
+
+            msg.PushNewline();
+            msg.AddText($"The command {command.Name}{(subCommand is not null ? $":{subCommand}" : "")} can convert from {piped.PrettyName()} to {retType.PrettyName()}.");
+            msg.PushNewline();
+            msg.AddText($"With this fix, the new signature will be: {Cmd}{(SubCommand is not null ? $":{SubCommand}" : "")}{typeArgs} {retType?.PrettyName() ?? "void"} -> {myRetType?.PrettyName() ?? "void"}.");
+        }
+
         return msg;
     }
 

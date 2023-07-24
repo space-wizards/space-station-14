@@ -9,7 +9,8 @@ namespace Content.Server.NewCon;
 
 public sealed partial class NewConManager
 {
-    private readonly Dictionary<Type, List<(ConsoleCommand, string?)>> _commandReturnValueMap = new();
+    private readonly Dictionary<Type, List<(ConsoleCommand, string?)>> _commandPipeValueMap = new();
+    private readonly Dictionary<(ConsoleCommand, string?), HashSet<Type>> _commandReturnValueMap = new();
 
     private void InitializeQueries()
     {
@@ -20,17 +21,37 @@ public sealed partial class NewConManager
                 foreach (var method in methods)
                 {
                     var piped = method.ConsoleGetPipedArgument()?.ParameterType;
+
                     if (piped is null)
                         piped = typeof(void);
 
-                    if (cmd.Name == "select")
-                    {
-                        Logger.Debug($"AWA {piped.PrettyName()} {piped}");
-                    }
-
                     var list = GetTypeImplList(piped);
+                    var invList = GetCommandRetValuesInternal((cmd, subcommand));
                     list.Add((cmd, subcommand == "" ? null : subcommand));
+                    if (cmd.TryGetReturnType(subcommand, piped, Array.Empty<Type>(), out var retType) || method.ReturnType.Constructable())
+                    {
+                        Logger.Debug($"Registering {cmd} as returning {(retType ?? method.ReturnType).PrettyName()}");
+                        invList.Add((retType ?? method.ReturnType));
+                    }
                 }
+            }
+        }
+    }
+
+    public IEnumerable<(ConsoleCommand, string?)> CommandsFittingConstraint(Type input, Type output)
+    {
+        foreach (var (command, subcommand) in CommandsTakingType(input))
+        {
+            if (command.HasTypeParameters)
+                continue; // We don't consider these right now.
+
+            var impls = command.GetConcreteImplementations(input, Array.Empty<Type>(), subcommand);
+
+            foreach (var impl in impls)
+            {
+                Logger.Debug($"{impl.ReturnType.PrettyName()}");
+                if (impl.ReturnType.IsAssignableTo(output))
+                    yield return (command, subcommand);
             }
         }
     }
@@ -102,6 +123,20 @@ public sealed partial class NewConManager
         } while (t != oldT);
     }
 
+    public IReadOnlySet<Type> GetCommandRetValues((ConsoleCommand, string?) command)
+        => GetCommandRetValuesInternal(command);
+
+    private HashSet<Type> GetCommandRetValuesInternal((ConsoleCommand, string?) command)
+    {
+        if (!_commandReturnValueMap.TryGetValue(command, out var l))
+        {
+            l = new();
+            _commandReturnValueMap[command] = l;
+        }
+
+        return l;
+    }
+
     private List<(ConsoleCommand, string?)> GetTypeImplList(Type t)
     {
         if (!t.Constructable())
@@ -124,10 +159,10 @@ public sealed partial class NewConManager
             t = t.GetGenericTypeDefinition();
         }
 
-        if (!_commandReturnValueMap.TryGetValue(t, out var l))
+        if (!_commandPipeValueMap.TryGetValue(t, out var l))
         {
             l = new();
-            _commandReturnValueMap[t] = l;
+            _commandPipeValueMap[t] = l;
         }
 
         return l;

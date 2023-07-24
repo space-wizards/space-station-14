@@ -15,11 +15,11 @@ public sealed class CompCommand : ConsoleCommand
         return input.Where(HasComp<T>).Select(Comp<T>);
     }
 
-    /*[CommandImplementation]
+    [CommandImplementation]
     public T? CompDirect<T>([PipedArgument] EntityUid input)
-        where T : Component
+        where T : IComponent
     {
-        _entity.TryGetComponent(input, out T? res);
+        TryComp(input, out T? res);
         return res;
-    }*/
+    }
 }

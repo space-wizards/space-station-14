@@ -180,6 +180,37 @@ public static class ReflectionExtensions
         }
     }
 
+    public static bool IsAssignableToGeneric(this Type left, Type right)
+    {
+        if (left.IsAssignableTo(right))
+            return true;
+
+        if (left.Constructable() &&
+            (right.IsGenericParameter || right.IsGenericTypeParameter || right.IsGenericMethodParameter))
+        {
+            // TODO: constraint evaluation.
+            return true;
+        }
+
+        if (left.IsGenericType && right.IsGenericType && left.GenericTypeArguments.Length == right.GenericTypeArguments.Length)
+        {
+            var equal = left.GetGenericTypeDefinition() == right.GetGenericTypeDefinition();
+
+            if (!equal)
+                return false;
+
+            var res = true;
+            foreach (var (leftTy, rightTy) in left.GenericTypeArguments.Zip(right.GenericTypeArguments))
+            {
+                res &= leftTy.IsAssignableToGeneric(rightTy);
+            }
+
+            return res;
+        }
+
+        return false;
+    }
+
     public static bool IsGenericRelated(this Type t)
     {
         return t.IsGenericParameter | t.IsGenericType | t.IsGenericMethodParameter | t.IsGenericTypeDefinition | t.IsConstructedGenericType | t.IsGenericTypeParameter;

@@ -26,6 +26,8 @@ public abstract partial class ConsoleCommand
 
     public virtual Type[] TypeParameterParsers => Array.Empty<Type>();
 
+    public bool HasTypeParameters => TypeParameterParsers.Length != 0;
+
     private readonly Dictionary<string, ConsoleCommandImplementor> Implementors = new();
 
     public IEnumerable<string> Subcommands => Implementors.Keys.Where(x => x != "");
@@ -91,7 +93,7 @@ public abstract partial class ConsoleCommand
     }
 
 
-    public virtual bool TryGetReturnType(string? subCommand, Type? pipedType, Type[] typeArguments, out Type? type)
+    public virtual bool TryGetReturnType(string? subCommand, Type? pipedType, Type[] typeArguments, [NotNullWhen(true)] out Type? type)
     {
         var impls = GetConcreteImplementations(pipedType, typeArguments, subCommand).ToList();
 
@@ -101,7 +103,18 @@ public abstract partial class ConsoleCommand
             return true;
         }
 
-        throw new NotImplementedException($"write your own TryGetReturnType your command is too clamplicated. Got {impls.Count} implementations for {subCommand ?? "[no subcommand]"}.");
+        type = null;
+        return false;
+
+        throw new NotImplementedException($"write your own TryGetReturnType your command is too clamplicated. Got {impls.Count} implementations for {Name} {subCommand ?? "[no subcommand]"}.");
+    }
+
+    public IEnumerable<Type> AcceptedTypes(string? subCommand)
+    {
+        return GetGenericImplementations()
+            .Where(x => x.ConsoleGetPipedArgument() is not null)
+            .Where(x => x.GetCustomAttribute<CommandImplementationAttribute>()?.SubCommand == subCommand)
+            .Select(x => x.ConsoleGetPipedArgument()!.ParameterType);
     }
 
     private Dictionary<(CommandDiscriminator, string?), List<MethodInfo>> _concreteImplementations = new();
@@ -125,7 +138,29 @@ public abstract partial class ConsoleCommand
     private List<MethodInfo> GetConcreteImplementationsInternal(Type? pipedType, Type[] typeArguments, string? subCommand)
     {
         var impls = GetGenericImplementations()
+            .Where(x =>
+            {
+                if (x.ConsoleGetPipedArgument() is { } param)
+                {
+                    return pipedType?.IsAssignableToGeneric(param.ParameterType) ?? false;
+                }
+
+                return pipedType is null;
+            })
             .Where(x => x.GetCustomAttribute<CommandImplementationAttribute>()?.SubCommand == subCommand)
+            .Where(x =>
+            {
+                if (x.IsGenericMethodDefinition)
+                {
+                    var expectedLen = x.GetGenericArguments().Length;
+                    if (x.HasCustomAttribute<TakesPipedTypeAsGeneric>())
+                        expectedLen -= 1;
+
+                    return typeArguments.Length == expectedLen;
+                }
+
+                return typeArguments.Length == 0;
+            })
             .Select(x =>
         {
             if (x.IsGenericMethodDefinition)
@@ -240,10 +275,6 @@ public sealed class ConsoleCommandImplementor
         var implArray = impls.ToArray();
         if (implArray.Length == 0)
         {
-            if (typeArguments.Length == 0)
-                Logger.Error($"Found zero potential implementations for {pipedType} > {Owner.GetType()}");
-            else
-                Logger.Error($"Found zero potential implementations for {pipedType?.Name ?? "void"} > {Owner.GetType().Name}<{string.Join(", ", typeArguments.Select(x => x.Name))}>");
             return false;
         }
 
