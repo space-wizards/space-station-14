@@ -28,7 +28,7 @@ public sealed class NewsSystem : EntitySystem
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
-        Articles.Clear();
+        if (Articles != null) Articles.Clear();
     }
 
     public void ToggleUi(EntityUid user, EntityUid deviceEnt, NewsReadComponent? component)
