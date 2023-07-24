@@ -3,6 +3,7 @@ using Robust.Server.GameObjects;
 using Content.Shared.MassMedia.Components;
 using Content.Shared.MassMedia.Systems;
 using Content.Server.PDA.Ringer;
+using Content.Shared.GameTicking;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -21,6 +22,13 @@ public sealed class NewsSystem : EntitySystem
         SubscribeLocalEvent<NewsWriteComponent, NewsWriteDeleteMessage>(OnWriteUiMessage);
         SubscribeLocalEvent<NewsWriteComponent, NewsWriteArticlesRequestMessage>(OnWriteUiMessage);
         SubscribeLocalEvent<NewsReadComponent, NewsReadLeafMessage>(OnReadUiMessage);
+
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+    }
+
+    private void OnRoundRestart()
+    {
+        Articles.Clear();
     }
 
     public void ToggleUi(EntityUid user, EntityUid deviceEnt, NewsReadComponent? component)
