@@ -7,6 +7,8 @@ namespace Content.Server.NewCon.Commands.Verbs;
 [ConsoleCommand]
 public sealed class RunVerbAsCommand : ConsoleCommand
 {
+    private SharedVerbSystem? _verb;
+
     [CommandImplementation]
     public IEnumerable<EntityUid> RunVerbAs(
             [CommandInvocationContext] IInvocationContext ctx,
@@ -15,15 +17,15 @@ public sealed class RunVerbAsCommand : ConsoleCommand
             [CommandArgument] string verb
         )
     {
+        _verb ??= GetSys<SharedVerbSystem>();
         verb = verb.ToLowerInvariant();
         var runnerEid = runner.Invoke(null, ctx);
         if (ctx.GetErrors().Any())
             yield break;
 
-        var sys = EntitySystem.Get<SharedVerbSystem>();
         foreach (var i in input)
         {
-            var verbs = sys.GetLocalVerbs(i, runnerEid, Verb.VerbTypes, true);
+            var verbs = _verb.GetLocalVerbs(i, runnerEid, Verb.VerbTypes, true);
 
             // if the "verb name" is actually a verb-type, try run any verb of that type.
             var verbType = Verb.VerbTypes.FirstOrDefault(x => x.Name == verb);
@@ -32,7 +34,7 @@ public sealed class RunVerbAsCommand : ConsoleCommand
                 var verbTy = verbs.FirstOrDefault(v => v.GetType() == verbType);
                 if (verbTy != null)
                 {
-                    sys.ExecuteVerb(verbTy, runnerEid, i, forced: true);
+                    _verb.ExecuteVerb(verbTy, runnerEid, i, forced: true);
                     yield return i;
                 }
             }
@@ -41,7 +43,7 @@ public sealed class RunVerbAsCommand : ConsoleCommand
             {
                 if (verbTy.Text.ToLowerInvariant() == verb)
                 {
-                    sys.ExecuteVerb(verbTy, runnerEid, i, forced: true);
+                    _verb.ExecuteVerb(verbTy, runnerEid, i, forced: true);
                     yield return i;
                 }
             }

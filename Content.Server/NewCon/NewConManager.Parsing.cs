@@ -39,7 +39,6 @@ public sealed partial class NewConManager
 
         if (t.IsConstructedGenericType)
         {
-            _log.Debug($"Trying to parse {t}, {t.GetGenericTypeDefinition()}");
             if (!_genericTypeParsers.TryGetValue(t.GetGenericTypeDefinition(), out var genParser))
                 return null;
 

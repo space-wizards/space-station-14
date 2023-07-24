@@ -14,9 +14,9 @@ namespace Content.Server.NewCon;
 // SANDBOX SAFETY
 // JESUS FUCK SANDBOX SAFETY
 
-public abstract class ConsoleCommand
+public abstract partial class ConsoleCommand
 {
-    [Dependency] private readonly NewConManager _newCon = default!;
+    [Dependency] protected readonly NewConManager ConManager = default!;
 
     public string Name { get; }
 
@@ -170,7 +170,7 @@ public abstract class ConsoleCommand
 
         for (var i = 0; i < TypeParameterParsers.Length; i++)
         {
-            if (!_newCon.TryParse(parser, TypeParameterParsers[i], out var parsed, out error) || parsed is not IAsType ty)
+            if (!ConManager.TryParse(parser, TypeParameterParsers[i], out var parsed, out error) || parsed is not IAsType ty)
             {
                 resolvedTypeArguments = Array.Empty<Type>();
                 args = null;
@@ -182,7 +182,7 @@ public abstract class ConsoleCommand
 
         foreach (var param in Parameters)
         {
-            if (!_newCon.TryParse(parser, param.Value, out var parsed, out error))
+            if (!ConManager.TryParse(parser, param.Value, out var parsed, out error))
             {
                 args = null;
                 return false;

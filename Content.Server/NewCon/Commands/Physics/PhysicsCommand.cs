@@ -5,12 +5,10 @@ namespace Content.Server.NewCon.Commands.Physics;
 [ConsoleCommand]
 public sealed class PhysicsCommand : ConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entity = default!;
-
     [CommandImplementation("velocity")]
     public IEnumerable<float> Velocity([PipedArgument] IEnumerable<EntityUid> input)
     {
-        var physQuery = _entity.GetEntityQuery<PhysicsComponent>();
+        var physQuery = GetEntityQuery<PhysicsComponent>();
 
         foreach (var ent in input)
         {
@@ -24,7 +22,7 @@ public sealed class PhysicsCommand : ConsoleCommand
     [CommandImplementation("angular_velocity")]
     public IEnumerable<float> AngularVelocity([PipedArgument] IEnumerable<EntityUid> input)
     {
-        var physQuery = _entity.GetEntityQuery<PhysicsComponent>();
+        var physQuery = GetEntityQuery<PhysicsComponent>();
 
         foreach (var ent in input)
         {

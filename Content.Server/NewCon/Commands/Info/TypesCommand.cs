@@ -3,8 +3,6 @@
 [ConsoleCommand]
 public sealed class TypesCommand : ConsoleCommand
 {
-    [Dependency] private readonly NewConManager _newCon = default!;
-
     [CommandImplementation("consumers")]
     public void Consumers([CommandInvocationContext] IInvocationContext ctx, [PipedArgument] object? input)
     {
@@ -12,7 +10,7 @@ public sealed class TypesCommand : ConsoleCommand
 
         ctx.WriteLine($"Valid intakers for {t.PrettyName()}:");
 
-        foreach (var (command, subCommand) in _newCon.CommandsTakingType(t))
+        foreach (var (command, subCommand) in ConManager.CommandsTakingType(t))
         {
             if (subCommand is null)
                 ctx.WriteLine($"{command.Name}");
@@ -25,7 +23,7 @@ public sealed class TypesCommand : ConsoleCommand
     public IEnumerable<Type> Tree([CommandInvocationContext] IInvocationContext ctx, [PipedArgument] object? input)
     {
         var t = input is Type ? (Type)input : input!.GetType();
-        return _newCon.AllSteppedTypes(t);
+        return ConManager.AllSteppedTypes(t);
     }
 
     [CommandImplementation("gettype")]
