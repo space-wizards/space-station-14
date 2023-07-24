@@ -10,7 +10,7 @@ public sealed class DeleteCommand : ConsoleCommand
     {
         foreach (var ent in entities)
         {
-            _entity.DeleteEntity(ent);
+            Del(ent);
         }
     }
 }

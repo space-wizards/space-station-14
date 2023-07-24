@@ -38,6 +38,7 @@ public sealed partial class NewConManager
         if (_consoleTypeParsers.TryGetValue(t, out var parser))
             return parser;
 
+
         if (t.IsConstructedGenericType)
         {
             if (!_genericTypeParsers.TryGetValue(t.GetGenericTypeDefinition(), out var genParser))
@@ -45,7 +46,8 @@ public sealed partial class NewConManager
 
             var concreteParser = genParser.MakeGenericType(t.GenericTypeArguments);
 
-            var builtParser = (ITypeParser) _typeFactory.CreateInstance(concreteParser);
+            var builtParser = (ITypeParser) _typeFactory.CreateInstance(concreteParser, true, true);
+            builtParser.PostInject();
             _consoleTypeParsers.Add(builtParser.Parses, builtParser);
             return builtParser;
         }
@@ -82,12 +84,21 @@ public record struct UnparseableValueError(Type T) : IConError
 {
     public FormattedMessage DescribeInner()
     {
-        var msg = FormattedMessage.FromMarkup($"The type {T.PrettyName()} has no parser available and cannot be parsed.");
-        msg.PushNewline();
-        msg.AddText("Please contact a programmer with this error, they'd probably like to see it.");
-        msg.PushNewline();
-        msg.AddMarkup("[bold][color=red]THIS IS A BUG.[/color][/bold]");
-        return msg;
+
+        if (T.Constructable())
+        {
+            var msg = FormattedMessage.FromMarkup(
+                $"The type {T.PrettyName()} has no parser available and cannot be parsed.");
+            msg.PushNewline();
+            msg.AddText("Please contact a programmer with this error, they'd probably like to see it.");
+            msg.PushNewline();
+            msg.AddMarkup("[bold][color=red]THIS IS A BUG.[/color][/bold]");
+            return msg;
+        }
+        else
+        {
+            return FormattedMessage.FromMarkup($"The type {T.PrettyName()} cannot be parsed, as it cannot be constructed.");
+        }
     }
 
     public string? Expression { get; set; }

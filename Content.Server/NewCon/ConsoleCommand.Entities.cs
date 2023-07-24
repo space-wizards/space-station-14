@@ -7,6 +7,12 @@ public abstract partial class ConsoleCommand
     [Dependency] protected readonly IEntityManager EntityManager = default!;
     [Dependency] protected readonly IEntitySystemManager EntitySystemManager = default!;
 
+    protected void Del(EntityUid entityUid)
+        => EntityManager.DeleteEntity(entityUid);
+
+    protected bool Deleted(EntityUid entity)
+        => EntityManager.Deleted(entity);
+
     protected T Comp<T>(EntityUid entity)
         where T: IComponent
         => EntityManager.GetComponent<T>(entity);

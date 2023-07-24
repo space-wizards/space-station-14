@@ -13,3 +13,13 @@ public sealed class BlockTypeParser<T> : TypeParser<Block<T>>
         return r;
     }
 }
+
+public sealed class BlockTypeParser<TIn, TOut> : TypeParser<Block<TIn, TOut>>
+{
+    public override bool TryParse(ForwardParser parser, [NotNullWhen(true)] out object? result, out IConError? error)
+    {
+        var r = Block<TIn, TOut>.TryParse(parser, null, out var block, out error);
+        result = block;
+        return r;
+    }
+}

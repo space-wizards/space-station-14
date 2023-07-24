@@ -79,6 +79,36 @@ public sealed class CommandRun
     }
 }
 
+public sealed class CommandRun<TIn, TOut>
+{
+    public CommandRun InnerCommandRun;
+
+    public static bool TryParse(ForwardParser parser, bool once,
+        [NotNullWhen(true)] out CommandRun<TIn, TOut>? expr, out IConError? error)
+    {
+        if (!CommandRun.TryParse(parser, typeof(TIn), typeof(TOut), once, out var innerExpr, out error))
+        {
+            expr = null;
+            return false;
+        }
+
+        expr = new CommandRun<TIn, TOut>(innerExpr);
+        return true;
+    }
+
+    public TOut? Invoke(object? input, IInvocationContext ctx)
+    {
+        var res = InnerCommandRun.Invoke(input, ctx);
+        if (res is null)
+            return default;
+        return (TOut?) res;
+    }
+
+    private CommandRun(CommandRun commandRun)
+    {
+        InnerCommandRun = commandRun;
+    }
+}
 
 public sealed class CommandRun<TRes>
 {

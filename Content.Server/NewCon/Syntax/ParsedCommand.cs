@@ -16,17 +16,17 @@ public sealed class ParsedCommand
     public Type? PipedType => Bundle.PipedArgumentType;
     public Invocable Invocable { get; }
     public CommandArgumentBundle Bundle { get; }
+    public string? SubCommand { get; }
 
     public static bool TryParse(ForwardParser parser, Type? pipedArgumentType, [NotNullWhen(true)] out ParsedCommand? result, out IConError? error, out bool noCommand, Type? targetType = null)
     {
         noCommand = false;
-        error = null;
         var checkpoint = parser.Save();
         var bundle = new CommandArgumentBundle()
             {Arguments = new(), Inverted = false, PipedArgumentType = pipedArgumentType, TypeArguments = Array.Empty<Type>()};
 
         if (!TryDigestModifiers(parser, bundle, out error)
-            || !TryParseCommand(parser, bundle, targetType, out var subCommand, out var invocable, out var command, out error, out noCommand)
+            || !TryParseCommand(parser, bundle, pipedArgumentType, targetType, out var subCommand, out var invocable, out var command, out error, out noCommand)
             || !command.TryGetReturnType(subCommand, pipedArgumentType, bundle.TypeArguments, out var retType)
             )
         {
@@ -60,10 +60,9 @@ public sealed class ParsedCommand
         return true;
     }
 
-    private static bool TryParseCommand(ForwardParser parser, CommandArgumentBundle bundle, Type? targetType, out string? subCommand, [NotNullWhen(true)] out Invocable? invocable, [NotNullWhen(true)] out ConsoleCommand? command, out IConError? error, out bool noCommand)
+    private static bool TryParseCommand(ForwardParser parser, CommandArgumentBundle bundle, Type? pipedType, Type? targetType, out string? subCommand, [NotNullWhen(true)] out Invocable? invocable, [NotNullWhen(true)] out ConsoleCommand? command, out IConError? error, out bool noCommand)
     {
         noCommand = false;
-        error = null;
         var start = parser.Index;
         var cmd = parser.GetWord(char.IsAsciiLetterOrDigit);
         subCommand = null;
@@ -98,7 +97,13 @@ public sealed class ParsedCommand
         if (cmdImpl.HasSubCommands)
         {
             if (parser.GetChar() is not ':')
+            {
+                noCommand = true;
+                error = new OutOfInputError();
+                error.Contextualize(parser.Input, (parser.Index, parser.Index));
                 return false;
+            }
+
 
             var subCmdStart = parser.Index;
 
@@ -125,7 +130,7 @@ public sealed class ParsedCommand
 
         var argsStart = parser.Index;
 
-        if (!cmdImpl.TryParseArguments(parser, subCommand, out var args, out var types, out error))
+        if (!cmdImpl.TryParseArguments(parser, pipedType, subCommand, out var args, out var types, out error))
         {
             noCommand = true;
             error?.Contextualize(parser.Input, (argsStart, parser.Index));
@@ -151,6 +156,13 @@ public sealed class ParsedCommand
 
     public object? Invoke(object? pipedIn, IInvocationContext ctx)
     {
+        if (!ctx.CheckInvokable(Command, SubCommand, out var error))
+        {
+            // Could not invoke the command for whatever reason, i.e. permission errors.
+            if (error is not null)
+                ctx.ReportError(error);
+            return null;
+        }
         try
         {
             return Invocable.Invoke(new CommandInvocationArguments()

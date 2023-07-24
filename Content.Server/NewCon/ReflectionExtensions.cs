@@ -131,6 +131,11 @@ public static class ReflectionExtensions
         return p.FirstOrDefault();
     }
 
+    public static IEnumerable<ParameterInfo> ConsoleGetArguments(this MethodInfo method)
+    {
+        return method.GetParameters().Where(x => x.GetCustomAttribute<CommandArgumentAttribute>() is not null);
+    }
+
     public static Expression CreateEmptyExpr(this Type t)
     {
         if (!t.CanBeEmpty())

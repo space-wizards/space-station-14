@@ -7,6 +7,8 @@ namespace Content.Server.NewCon;
 
 public interface IInvocationContext
 {
+    public bool CheckInvokable(ConsoleCommand command, string? subCommand, out IConError? error);
+
     ICommonSession? Session { get; }
 
     public void WriteLine(string line);

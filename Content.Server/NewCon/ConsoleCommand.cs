@@ -1,9 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using Content.Server.NewCon.Errors;
-using Content.Server.NewCon.TypeParsers;
 using Robust.Shared.Utility;
 
 using Invocable = System.Func<Content.Server.NewCon.CommandInvocationArguments, object?>;
@@ -208,156 +206,9 @@ public abstract partial class ConsoleCommand
         return Implementors[subCommand ?? ""].TryGetImplementation(pipedType, typeArguments, out impl);
     }
 
-    public bool TryParseArguments(ForwardParser parser, string? subCommand, [NotNullWhen(true)] out Dictionary<string, object?>? args, out Type[] resolvedTypeArguments, out IConError? error)
+    public bool TryParseArguments(ForwardParser parser, Type? pipedType, string? subCommand, [NotNullWhen(true)] out Dictionary<string, object?>? args, out Type[] resolvedTypeArguments, out IConError? error)
     {
-        if (Parameters is null)
-            throw new NotImplementedException("dhfshbfghd");
-
-        var output = new Dictionary<string, object?>();
-        resolvedTypeArguments = new Type[TypeParameterParsers.Length];
-
-        for (var i = 0; i < TypeParameterParsers.Length; i++)
-        {
-            var start = parser.Index;
-            if (!ConManager.TryParse(parser, TypeParameterParsers[i], out var parsed, out error) || parsed is not IAsType<Type> ty)
-            {
-                error?.Contextualize(parser.Input, (start, parser.Index));
-                resolvedTypeArguments = Array.Empty<Type>();
-                args = null;
-                return false;
-            }
-
-            resolvedTypeArguments[i] = ty.AsType();
-        }
-
-        foreach (var param in Parameters[subCommand ?? ""])
-        {
-            var start = parser.Index;
-            if (!ConManager.TryParse(parser, param.Value, out var parsed, out error))
-            {
-                error?.Contextualize(parser.Input, (start, parser.Index));
-                args = null;
-                return false;
-            }
-            output[param.Key] = parsed;
-        }
-
-        args = output;
-        error = null;
-        return true;
-    }
-}
-
-public sealed class ConsoleCommandImplementor
-{
-    public required ConsoleCommand Owner;
-
-    public required string? SubCommand;
-
-    public Dictionary<CommandDiscriminator, Invocable> Implementations = new();
-
-    public bool TryGetImplementation(Type? pipedType, Type[] typeArguments, [NotNullWhen(true)] out Invocable? impl)
-    {
-        var discrim = new CommandDiscriminator(pipedType, typeArguments);
-
-        if (!Owner.TryGetReturnType(SubCommand, pipedType, typeArguments, out var ty))
-        {
-            impl = null;
-            return false;
-        }
-
-        if (Implementations.TryGetValue(discrim, out impl))
-            return true;
-
-        // Okay we need to build a new shim.
-
-        var possibleImpls = Owner.GetConcreteImplementations(pipedType, typeArguments, SubCommand);
-
-        IEnumerable<MethodInfo> impls;
-
-        if (pipedType is null)
-        {
-            impls = possibleImpls.Where(x =>
-                        x.ConsoleGetPipedArgument() is {} param && param.ParameterType.CanBeEmpty()
-                        || x.ConsoleGetPipedArgument() is null
-                        || x.GetParameters().Length == 0);
-        }
-        else
-        {
-            impls = possibleImpls.Where(x =>
-                x.ConsoleGetPipedArgument() is {} param && pipedType!.IsAssignableTo(param.ParameterType)
-                || x.IsGenericMethodDefinition);
-        }
-
-        var implArray = impls.ToArray();
-        if (implArray.Length == 0)
-        {
-            return false;
-        }
-
-        var unshimmed = implArray.First();
-
-        var args = Expression.Parameter(typeof(CommandInvocationArguments));
-
-        var paramList = new List<Expression>();
-
-        foreach (var param in unshimmed.GetParameters())
-        {
-            if (param.GetCustomAttribute<PipedArgumentAttribute>() is { } _)
-            {
-                if (pipedType is null)
-                {
-                    paramList.Add(param.ParameterType.CreateEmptyExpr());
-                }
-                else
-                {
-                    // (ParameterType)(args.PipedArgument)
-                    paramList.Add(Expression.Convert(Expression.Field(args, nameof(CommandInvocationArguments.PipedArgument)), pipedType));
-                }
-
-                continue;
-            }
-
-            if (param.GetCustomAttribute<CommandArgumentAttribute>() is { } arg)
-            {
-                // (ParameterType)(args.Arguments[param.Name])
-                paramList.Add(Expression.Convert(
-                    Expression.MakeIndex(
-                        Expression.Property(args, nameof(CommandInvocationArguments.Arguments)),
-                        typeof(Dictionary<string, object?>).FindIndexerProperty(),
-                        new [] {Expression.Constant(param.Name)}),
-                param.ParameterType));
-                continue;
-            }
-
-            if (param.GetCustomAttribute<CommandInvertedAttribute>() is { } _)
-            {
-                // args.Inverted
-                paramList.Add(Expression.Property(args, nameof(CommandInvocationArguments.Inverted)));
-                continue;
-            }
-
-            if (param.GetCustomAttribute<CommandInvocationContextAttribute>() is { } _)
-            {
-                // args.Context
-                paramList.Add(Expression.Property(args, nameof(CommandInvocationArguments.Context)));
-                continue;
-            }
-
-        }
-
-        Expression partialShim = Expression.Call(Expression.Constant(Owner), unshimmed, paramList);
-
-        if (unshimmed.ReturnType == typeof(void))
-            partialShim = Expression.Block(partialShim, Expression.Constant(null));
-        else if (ty is not null && ty.IsValueType)
-            partialShim = Expression.Convert(partialShim, typeof(object)); // Have to box primitives.
-
-        var lambda = Expression.Lambda<Invocable>(partialShim, args);
-
-        Implementations[discrim] = lambda.Compile();
-        impl = Implementations[discrim];
-        return true;
+        return Implementors[subCommand ?? ""].TryParseArguments(parser, subCommand, pipedType, out args, out resolvedTypeArguments, out error);
     }
 }
 

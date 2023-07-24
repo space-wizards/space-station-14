@@ -10,4 +10,10 @@ public sealed class CmdCommand : ConsoleCommand
     {
         return ConManager.AllCommands().Select(x => x.Item1);
     }
+
+    [CommandImplementation("explain")]
+    public void Explain([CommandInvocationContext] IInvocationContext ctx)
+    {
+
+    }
 }

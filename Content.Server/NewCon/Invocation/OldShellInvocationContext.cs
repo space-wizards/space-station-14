@@ -7,6 +7,11 @@ namespace Content.Server.NewCon.Invocation;
 
 public sealed class OldShellInvocationContext : IInvocationContext
 {
+    public bool CheckInvokable(ConsoleCommand command, string? subCommand, out IConError? error)
+    {
+        throw new NotImplementedException();
+    }
+
     public ICommonSession? Session => _shell.Player;
 
     private IConsoleShell _shell;

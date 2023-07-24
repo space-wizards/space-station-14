@@ -31,4 +31,10 @@ public sealed class TypesCommand : ConsoleCommand
     {
         return input?.GetType() ?? typeof(void);
     }
+
+    [CommandImplementation("fullname")]
+    public string FullName([PipedArgument] Type input)
+    {
+        return input.FullName!;
+    }
 }
