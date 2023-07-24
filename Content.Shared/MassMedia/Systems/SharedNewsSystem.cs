@@ -1,6 +1,3 @@
-using JetBrains.Annotations;
-using Robust.Shared.Utility;
-
 namespace Content.Shared.MassMedia.Systems;
 
 [Serializable]
