@@ -12,20 +12,20 @@ public sealed class ColorFlashEffectSystem : EntitySystem
     /// <summary>
     /// It's a little on the long side but given we use multiple colours denoting what happened it makes it easier to register.
     /// </summary>
-    private const float DamageAnimationLength = 0.30f;
-    private const string DamageAnimationKey = "damage-effect";
+    private const float AnimationLength = 0.30f;
+    private const string AnimationKey = "color-flash-effect";
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeAllEvent<ColorFlashEffectEvent>(OnDamageEffect);
-        SubscribeLocalEvent<ColorFlashEffectComponent, AnimationCompletedEvent>(OnEffectAnimation);
+        SubscribeAllEvent<ColorFlashEffectEvent>(OnColorFlashEffect);
+        SubscribeLocalEvent<ColorFlashEffectComponent, AnimationCompletedEvent>(OnEffectAnimationCompleted);
     }
 
-    private void OnEffectAnimation(EntityUid uid, ColorFlashEffectComponent component, AnimationCompletedEvent args)
+    private void OnEffectAnimationCompleted(EntityUid uid, ColorFlashEffectComponent component, AnimationCompletedEvent args)
     {
-        if (args.Key != DamageAnimationKey)
+        if (args.Key != AnimationKey)
             return;
 
         if (TryComp<SpriteComponent>(uid, out var sprite))
@@ -44,7 +44,7 @@ public sealed class ColorFlashEffectSystem : EntitySystem
         // 90% of them are going to be this so why allocate a new class.
         return new Animation
         {
-            Length = TimeSpan.FromSeconds(DamageAnimationLength),
+            Length = TimeSpan.FromSeconds(AnimationLength),
             AnimationTracks =
             {
                 new AnimationTrackComponentProperty
@@ -55,14 +55,14 @@ public sealed class ColorFlashEffectSystem : EntitySystem
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(color, 0f),
-                        new AnimationTrackProperty.KeyFrame(sprite.Color, DamageAnimationLength)
+                        new AnimationTrackProperty.KeyFrame(sprite.Color, AnimationLength)
                     }
                 }
             }
         };
     }
 
-    private void OnDamageEffect(ColorFlashEffectEvent ev)
+    private void OnColorFlashEffect(ColorFlashEffectEvent ev)
     {
         var color = ev.Color;
 
@@ -78,9 +78,9 @@ public sealed class ColorFlashEffectSystem : EntitySystem
 
             // Need to stop the existing animation first to ensure the sprite color is fixed.
             // Otherwise we might lerp to a red colour instead.
-            if (_animation.HasRunningAnimation(ent, player, DamageAnimationKey))
+            if (_animation.HasRunningAnimation(ent, player, AnimationKey))
             {
-                _animation.Stop(ent, player, DamageAnimationKey);
+                _animation.Stop(ent, player, AnimationKey);
             }
 
             if (!TryComp<SpriteComponent>(ent, out var sprite))
@@ -101,7 +101,7 @@ public sealed class ColorFlashEffectSystem : EntitySystem
             var comp = EnsureComp<ColorFlashEffectComponent>(ent);
             comp.NetSyncEnabled = false;
             comp.Color = sprite.Color;
-            _animation.Play(player, animation, DamageAnimationKey);
+            _animation.Play(player, animation, AnimationKey);
         }
     }
 }

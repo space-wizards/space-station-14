@@ -3,13 +3,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Effects;
 
 /// <summary>
-/// Raised on the server and sent to a client to play the damage animation.
+/// Raised on the server and sent to a client to play the color flash animation.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class ColorFlashEffectEvent : EntityEventArgs
 {
     /// <summary>
-    /// Color to play for the damage flash.
+    /// Color to play for the flash.
     /// </summary>
     public Color Color;
 

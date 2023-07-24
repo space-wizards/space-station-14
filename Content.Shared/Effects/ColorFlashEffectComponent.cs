@@ -1,7 +1,7 @@
 namespace Content.Shared.Effects;
 
 /// <summary>
-/// Stores the original sprite color for blinking entity to be able to restore it later.
+/// Stores the original sprite color for flashing entity to be able to restore it later.
 /// </summary>
 [RegisterComponent]
 public sealed class ColorFlashEffectComponent : Component
