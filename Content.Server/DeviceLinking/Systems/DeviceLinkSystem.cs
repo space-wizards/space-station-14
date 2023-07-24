@@ -15,7 +15,7 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SignalTransmitterComponent, MapInitEvent>(OnTransmitterStartup);
+        SubscribeLocalEvent<SignalTransmitterComponent, ComponentStartup>(OnTransmitterStartup);
         SubscribeLocalEvent<DeviceLinkSinkComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
     }
 
@@ -39,17 +39,18 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
     /// <summary>
     /// Moves existing links from machine linking to device linking to ensure linked things still work even when the map wasn't updated yet
     /// </summary>
-    private void OnTransmitterStartup(EntityUid sourceUid, SignalTransmitterComponent transmitterComponent, MapInitEvent args)
+    public void OnTransmitterStartup(EntityUid sourceUid, SignalTransmitterComponent transmitterComponent, ComponentStartup args)
     {
-        if (!TryComp<DeviceLinkSourceComponent?>(sourceUid, out var sourceComponent))
-            return;
+        var sourceComponent = EnsureComp<DeviceLinkSourceComponent>(sourceUid);
 
         Dictionary<EntityUid, List<(string, string)>> outputs = new();
         foreach (var (transmitterPort, receiverPorts) in transmitterComponent.Outputs)
         {
-
             foreach (var receiverPort in receiverPorts)
             {
+                // Throw error if component is missing.
+                Comp<DeviceLinkSinkComponent>(receiverPort.Uid);
+                RemCompDeferred<SignalReceiverComponent>(receiverPort.Uid);
                 outputs.GetOrNew(receiverPort.Uid).Add((transmitterPort, receiverPort.Port));
             }
         }
@@ -58,6 +59,8 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
         {
             SaveLinks(null, sourceUid, sinkUid, links, sourceComponent);
         }
+
+        RemCompDeferred<SignalTransmitterComponent>(sourceUid);
     }
 
      #region Sending & Receiving

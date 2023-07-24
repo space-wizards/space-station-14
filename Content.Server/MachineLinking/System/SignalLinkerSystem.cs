@@ -26,7 +26,6 @@ namespace Content.Server.MachineLinking.System
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SignalTransmitterComponent, ComponentStartup>(OnTransmitterStartup);
             SubscribeLocalEvent<SignalTransmitterComponent, ComponentRemove>(OnTransmitterRemoved);
             SubscribeLocalEvent<SignalTransmitterComponent, InteractUsingEvent>(OnTransmitterInteractUsing);
             SubscribeLocalEvent<SignalTransmitterComponent, GetVerbsEvent<AlternativeVerb>>(OnGetTransmitterVerbs);
@@ -156,24 +155,6 @@ namespace Content.Server.MachineLinking.System
             {
                 var eventArgs = new SignalReceivedEvent(receiver.Port, uid);
                 RaiseLocalEvent(receiver.Uid, ref eventArgs);
-            }
-        }
-
-        private void OnTransmitterStartup(EntityUid uid, SignalTransmitterComponent transmitter, ComponentStartup args)
-        {
-            // validate links
-            Dictionary<EntityUid, SignalReceiverComponent?> uidCache = new();
-            foreach (var tport in transmitter.Outputs)
-            {
-                foreach (var rport in tport.Value)
-                {
-                    if (!uidCache.TryGetValue(rport.Uid, out var receiver))
-                        uidCache.Add(rport.Uid, receiver = CompOrNull<SignalReceiverComponent>(rport.Uid));
-                    if (receiver == null || !receiver.Inputs.TryGetValue(rport.Port, out var rpv))
-                        tport.Value.Remove(rport);
-                    else if (!rpv.Contains(new(uid, tport.Key)))
-                        rpv.Add(new(uid, tport.Key));
-                }
             }
         }
 
