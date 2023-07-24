@@ -365,3 +365,16 @@
   components:
     - type: ComputerBoard
       prototype: ComputerIFFSyndicate
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerMassMediaCircuitboard
+  name: mass media console board
+  description: Write your message to the world!
+  components:
+    - type: Sprite
+      state: cpu_service
+    - type: StaticPrice
+      price: 150
+    - type: ComputerBoard
+      prototype: ComputerMassMedia
