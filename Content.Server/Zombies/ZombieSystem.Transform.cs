@@ -266,7 +266,8 @@ namespace Content.Server.Zombies
             RemCompDeferred<PendingZombieComponent>(target);
 
             //zombie gamemode stuff
-            RaiseLocalEvent(new EntityZombifiedEvent(target));
+            var ev = new EntityZombifiedEvent(target);
+            RaiseLocalEvent(target, ref ev, true);
             //zombies get slowdown once they convert
             _movementSpeedModifier.RefreshMovementSpeedModifiers(target);
         }
