@@ -1,74 +1,4 @@
 Entries:
-- author: VigersRay
-  changes:
-  - {message: 'Added alert level, instruction and shift duration in PDA!', type: Add}
-  - {message: Fix uknown station name in PDA for latejoin!, type: Fix}
-  id: 3801
-  time: '2023-05-17T20:35:41.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Add lathe recipe for tethergun., type: Add}
-  id: 3802
-  time: '2023-05-18T02:07:11.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed Next on the admin logs UI resending the same logs., type: Fix}
-  id: 3803
-  time: '2023-05-18T05:51:17.0000000+00:00'
-- author: FluffiestFloof
-  changes:
-  - {message: Updated the Suit Storage look., type: Tweak}
-  id: 3804
-  time: '2023-05-18T17:52:05.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Vending machines can now be completely destroyed., type: Fix}
-  id: 3805
-  time: '2023-05-18T23:48:14.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Mobs that are in critical condition no longer appear as dead on the
-      crew monitor, type: Fix}
-  id: 3806
-  time: '2023-05-18T23:49:55.0000000+00:00'
-- author: OctoRocket
-  changes:
-  - {message: 'Antifreeze tastes warm now, because it is antifreeze.', type: Tweak}
-  id: 3807
-  time: '2023-05-19T02:21:57.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Disabled zombies preset temporarily until they have more work done.,
-    type: Tweak}
-  id: 3808
-  time: '2023-05-19T04:11:36.0000000+00:00'
-- author: GoodWheatley
-  changes:
-  - {message: Regular monkeys are now very rarely available for ghosts to control.,
-    type: Remove}
-  id: 3809
-  time: '2023-05-19T07:00:28.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: NT has granted stations access to research the new technology called
-      'Advanced Tools'., type: Add}
-  id: 3810
-  time: '2023-05-19T07:07:59.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Add the force gun as a counterpart to the tether gun., type: Add}
-  id: 3811
-  time: '2023-05-19T07:10:31.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Shuttles will delete anything they FTL on top of., type: Add}
-  id: 3812
-  time: '2023-05-19T07:26:28.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Updated the roboticist uniform sprites., type: Tweak}
-  id: 3813
-  time: '2023-05-19T07:35:03.0000000+00:00'
 - author: tom-leys
   changes:
   - {message: 'Due to safety cutbacks, electrical devices like substations are more
@@ -2983,3 +2913,73 @@ Entries:
   - {message: new and improved ban panel, type: Add}
   id: 4300
   time: '2023-07-21T11:38:53.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Nitrogen tank settings have been adjusted to avoid gas wastage, type: Tweak}
+  id: 4301
+  time: '2023-07-21T19:02:39.0000000+00:00'
+- author: JimGamemaster
+  changes:
+  - {message: Space Creatures can now float in space, type: Tweak}
+  id: 4302
+  time: '2023-07-21T20:10:21.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Strait Jackets can now be used to restrain individuals., type: Add}
+  id: 4303
+  time: '2023-07-22T22:14:25.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Beds and medical beds now heal blunt and cold specifically instead of
+      brute and burn groups., type: Tweak}
+  id: 4304
+  time: '2023-07-23T03:18:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Midround anomaly spawns no longer have a high chance of spawning in
+      escape pods., type: Fix}
+  id: 4305
+  time: '2023-07-23T03:57:13.0000000+00:00'
+- author: FillerVK
+  changes:
+  - {message: Departure Terminal update., type: Tweak}
+  id: 4306
+  time: '2023-07-23T05:32:04.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Changed the roundstart traitor sound effect back to the old one., type: Tweak}
+  id: 4307
+  time: '2023-07-23T05:53:01.0000000+00:00'
+- author: Skarlet
+  changes:
+  - {message: Added Cap's Cap, type: Add}
+  - {message: Changed Hop Cap's description, type: Tweak}
+  id: 4308
+  time: '2023-07-23T19:15:53.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Emergency and Double oxygen tanks that spawn empty now have the same
+      internal volume as filled ones., type: Fix}
+  id: 4309
+  time: '2023-07-23T19:17:32.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Salt is now white instead of red., type: Tweak}
+  id: 4310
+  time: '2023-07-23T19:17:46.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Due to ERT's lackluster performance CentCom has decided to slightly
+      upgrade their arsenal, type: Tweak}
+  id: 4311
+  time: '2023-07-24T03:01:29.0000000+00:00'
+- author: Derby
+  changes:
+  - {message: Added 22 new figurines to collect and play with!, type: Add}
+  id: 4312
+  time: '2023-07-24T03:06:08.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: Added coffin to bury your fellow spessmen with honor., type: Add}
+  id: 4313
+  time: '2023-07-24T03:13:10.0000000+00:00'

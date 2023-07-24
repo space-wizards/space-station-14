@@ -1347,7 +1347,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             // Client side query, as EF can't do groups yet
             var bansEnumerable = bansQuery
-                    .GroupBy(ban => new { ban.BanTime, ban.CreatedBy, ban.Reason, Unbanned = ban.Unban == null })
+                    .GroupBy(ban => new { ban.BanTime, CreatedBy = (Player?)ban.CreatedBy, ban.Reason, Unbanned = ban.Unban == null })
                     .Select(banGroup => banGroup)
                     .ToArray();
 

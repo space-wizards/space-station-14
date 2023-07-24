@@ -45,11 +45,11 @@ namespace Content.Client.Construction
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenCraftingMenu,
-                    new PointerInputCmdHandler(HandleOpenCraftingMenu))
+                    new PointerInputCmdHandler(HandleOpenCraftingMenu, outsidePrediction:true))
                 .Bind(EngineKeyFunctions.Use,
                     new PointerInputCmdHandler(HandleUse, outsidePrediction: true))
                 .Bind(ContentKeyFunctions.EditorFlipObject,
-                    new PointerInputCmdHandler(HandleFlip))
+                    new PointerInputCmdHandler(HandleFlip, outsidePrediction:true))
                 .Register<ConstructionSystem>();
 
             SubscribeLocalEvent<ConstructionGhostComponent, ExaminedEvent>(HandleConstructionGhostExamined);
