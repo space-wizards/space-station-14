@@ -960,7 +960,7 @@
   name: seeds-coffea-name
   noun: seeds-noun-seeds
   displayName: seeds-coffea-display-name
-  plantRsi: Objects/Specific/Hydroponics/coffea.rsi
+  plantRsi: Objects/Specific/Hydroponics/cocoa.rsi
   packetPrototype: CocoaSeeds
   productPrototypes:
     - FoodCocoa
