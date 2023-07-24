@@ -262,7 +262,7 @@
   quantized: true
   conserveEnergy: false
   reactants:
-    CacaoPowder:
+    CocoaPowder:
       amount: 4
     Milk:
       amount: 2

@@ -956,14 +956,14 @@
       PotencyDivisor: 20
 
 - type: seed
-  id: cocao
+  id: cocoa
   name: seeds-coffea-name
   noun: seeds-noun-seeds
   displayName: seeds-coffea-display-name
   plantRsi: Objects/Specific/Hydroponics/coffea.rsi
-  packetPrototype: CoffeaSeeds
+  packetPrototype: CocoaSeeds
   productPrototypes:
-    - FoodCacao
+    - FoodCocoa
   harvestRepeat: Repeat
   lifespan: 50
   maturation: 6

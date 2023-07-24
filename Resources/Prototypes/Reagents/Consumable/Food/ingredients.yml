@@ -199,7 +199,7 @@
           probability: 0.2
 
 - type: reagent
-  id: CacaoPowder #Candy and chocolate
+  id: CocoaPowder #Candy and chocolate
   name: reagent-name-cacaopowder
   group: Foods
   desc: reagent-desc-cacaopowder

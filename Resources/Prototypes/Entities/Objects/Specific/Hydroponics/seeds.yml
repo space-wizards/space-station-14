@@ -387,11 +387,11 @@
 
 - type: entity
   parent: SeedBase
-  name: packet of cocao seeds
-  id: CoffeaSeeds
+  name: packet of cocoa seeds
+  id: CocoaSeeds
   components:
     - type: Seed
-      seedId: cocao
+      seedId: cocoa
     - type: Sprite
-      sprite: Objects/Specific/Hydroponics/coffea.rsi
+      sprite: Objects/Specific/Hydroponics/cocoa.rsi
       

@@ -112,7 +112,7 @@
           Quantity: 10
         - ReagentId: Theobromine
           Quantity: 3
-        - ReagentId: CacaoPowder
+        - ReagentId: CocaoPowder
           Quantity: 1
 
 - type: entity
