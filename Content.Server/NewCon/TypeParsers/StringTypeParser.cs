@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Content.Server.NewCon.Errors;
 using Microsoft.Extensions.Primitives;
@@ -77,4 +78,5 @@ public record struct StringMustStartWithQuote : IConError
 
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }

@@ -22,7 +22,7 @@ public abstract partial class ConsoleCommand
 
     public bool HasSubCommands { get; }
 
-    public readonly SortedDictionary<string, Type>? Parameters;
+    public readonly Dictionary<string, SortedDictionary<string, Type>>? Parameters;
 
     public virtual Type[] TypeParameterParsers => Array.Empty<Type>();
 
@@ -59,11 +59,15 @@ public abstract partial class ConsoleCommand
             };
 
         var impls = GetGenericImplementations();
+        Parameters = new();
 
         foreach (var impl in impls)
         {
+            var myParams = new SortedDictionary<string, Type>();
+            string? subCmd = null;
             if (impl.GetCustomAttribute<CommandImplementationAttribute>() is {SubCommand: { } x})
             {
+                subCmd = x;
                 HasSubCommands = true;
                 Implementors[x] =
                     new ConsoleCommandImplementor
@@ -72,8 +76,6 @@ public abstract partial class ConsoleCommand
                         SubCommand = x
                     };
             }
-
-            Parameters = new();
 
             // TODO: Error checking, all impls must have the same required attributes when not subcommands.
             foreach (var param in impl.GetParameters())
@@ -86,9 +88,20 @@ public abstract partial class ConsoleCommand
                     if (Parameters.ContainsKey(param.Name!))
                         continue;
 
-                    Parameters.Add(param.Name!, param.ParameterType);
+                    myParams.Add(param.Name!, param.ParameterType);
                 }
             }
+
+            if (Parameters.TryGetValue(subCmd ?? "", out var existing))
+            {
+                if (!existing.SequenceEqual(existing))
+                {
+                    throw new NotImplementedException("All command implementations of a given subcommand must share the same parameters!");
+                }
+            }
+            else
+                Parameters.Add(subCmd ?? "", myParams);
+
         }
     }
 
@@ -195,7 +208,7 @@ public abstract partial class ConsoleCommand
         return Implementors[subCommand ?? ""].TryGetImplementation(pipedType, typeArguments, out impl);
     }
 
-    public bool TryParseArguments(ForwardParser parser, [NotNullWhen(true)] out Dictionary<string, object?>? args, out Type[] resolvedTypeArguments, out IConError? error)
+    public bool TryParseArguments(ForwardParser parser, string? subCommand, [NotNullWhen(true)] out Dictionary<string, object?>? args, out Type[] resolvedTypeArguments, out IConError? error)
     {
         if (Parameters is null)
             throw new NotImplementedException("dhfshbfghd");
@@ -205,8 +218,10 @@ public abstract partial class ConsoleCommand
 
         for (var i = 0; i < TypeParameterParsers.Length; i++)
         {
-            if (!ConManager.TryParse(parser, TypeParameterParsers[i], out var parsed, out error) || parsed is not IAsType ty)
+            var start = parser.Index;
+            if (!ConManager.TryParse(parser, TypeParameterParsers[i], out var parsed, out error) || parsed is not IAsType<Type> ty)
             {
+                error?.Contextualize(parser.Input, (start, parser.Index));
                 resolvedTypeArguments = Array.Empty<Type>();
                 args = null;
                 return false;
@@ -215,10 +230,12 @@ public abstract partial class ConsoleCommand
             resolvedTypeArguments[i] = ty.AsType();
         }
 
-        foreach (var param in Parameters)
+        foreach (var param in Parameters[subCommand ?? ""])
         {
+            var start = parser.Index;
             if (!ConManager.TryParse(parser, param.Value, out var parsed, out error))
             {
+                error?.Contextualize(parser.Input, (start, parser.Index));
                 args = null;
                 return false;
             }

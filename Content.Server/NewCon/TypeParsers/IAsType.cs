@@ -1,6 +1,9 @@
 ﻿namespace Content.Server.NewCon.TypeParsers;
 
-public interface IAsType
+/// <summary>
+/// Generalized unboxing of a value from a containing structure.
+/// </summary>
+public interface IAsType<out T>
 {
-    public Type AsType();
+    public T AsType();
 }

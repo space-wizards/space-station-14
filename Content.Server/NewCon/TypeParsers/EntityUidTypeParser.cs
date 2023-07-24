@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.NewCon.Errors;
 using Robust.Shared.Utility;
 
@@ -39,4 +40,17 @@ public record struct InvalidEntityUid(string Value) : IConError
 
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
+}
+
+public record struct DeadEntity(EntityUid Entity) : IConError
+{
+    public FormattedMessage DescribeInner()
+    {
+        return FormattedMessage.FromMarkup($"The entity {Entity} does not exist.");
+    }
+
+    public string? Expression { get; set; }
+    public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }

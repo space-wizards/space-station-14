@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.NewCon.Errors;
 using Content.Server.NewCon.TypeParsers;
@@ -21,12 +22,12 @@ public sealed partial class NewConManager
             {
                 var t = parserType.BaseType!.GetGenericArguments().First();
                 _genericTypeParsers.Add(t.GetGenericTypeDefinition(), parserType);
-                Logger.Debug($"Setting up generic {parserType}, {t.GetGenericTypeDefinition()}");
+                _log.Debug($"Setting up {parserType.PrettyName()}, {t.GetGenericTypeDefinition().PrettyName()}");
             }
             else
             {
                 var parser = (ITypeParser) _typeFactory.CreateInstance(parserType);
-                Logger.Debug($"Setting up {parserType}, {parser.Parses}");
+                _log.Debug($"Setting up {parserType.PrettyName()}, {parser.Parses.PrettyName()}");
                 _consoleTypeParsers.Add(parser.Parses, parser);
             }
         }
@@ -82,11 +83,14 @@ public record struct UnparseableValueError(Type T) : IConError
     public FormattedMessage DescribeInner()
     {
         var msg = FormattedMessage.FromMarkup($"The type {T.PrettyName()} has no parser available and cannot be parsed.");
+        msg.PushNewline();
         msg.AddText("Please contact a programmer with this error, they'd probably like to see it.");
+        msg.PushNewline();
         msg.AddMarkup("[bold][color=red]THIS IS A BUG.[/color][/bold]");
         return msg;
     }
 
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Server.NewCon.Errors;
+using JetBrains.Annotations;
 
 namespace Content.Server.NewCon.TypeParsers;
 
@@ -10,6 +11,7 @@ public interface ITypeParser
     public bool TryParse(ForwardParser parser, [NotNullWhen(true)] out object? result, out IConError? error);
 }
 
+[MeansImplicitUse]
 public abstract class TypeParser<T> : ITypeParser
     where T: notnull
 {

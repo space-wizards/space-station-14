@@ -180,6 +180,8 @@ public static class ReflectionExtensions
         }
     }
 
+
+
     public static bool IsAssignableToGeneric(this Type left, Type right)
     {
         if (left.IsAssignableTo(right))

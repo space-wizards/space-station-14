@@ -1,30 +1,29 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.NewCon.Errors;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NewCon.Syntax;
 
-public sealed class Expression
+/// <summary>
+/// A "run" of commands. Not a true expression.
+/// </summary>
+public sealed class CommandRun
 {
     public List<(ParsedCommand, Vector2i)> Commands;
     private string _originalExpr;
 
-    public static bool TryParse(ForwardParser parser, Type? pipedType, Type? targetOutput, bool once, [NotNullWhen(true)] out Expression? expr, out IConError? error)
+    public static bool TryParse(ForwardParser parser, Type? pipedType, Type? targetOutput, bool once, [NotNullWhen(true)] out CommandRun? expr, out IConError? error)
     {
         error = null;
         var cmds = new List<(ParsedCommand, Vector2i)>();
         var start = parser.Index;
         var noCommand = false;
-        while (ParsedCommand.TryParse(parser, pipedType, out var cmd, out error, out noCommand))
+
+        while ((!once || cmds.Count < 1) && ParsedCommand.TryParse(parser, pipedType, out var cmd, out error, out noCommand, targetOutput))
         {
             var end = parser.Index;
-            if (cmds.Count != 1 && once)
-            {
-                expr = null;
-                return false;
-            }
-
             pipedType = cmd.ReturnType;
             cmds.Add((cmd, (start, end)));
             if (cmd.ReturnType == targetOutput)
@@ -32,7 +31,7 @@ public sealed class Expression
             start = parser.Index;
         }
 
-        if (error is not null and not OutOfInputError || error is not null && noCommand && cmds.Count == 0 || cmds.Count == 0 || parser.Index < parser.MaxIndex)
+        if (error is not null and not OutOfInputError || error is not null && noCommand && cmds.Count == 0 || cmds.Count == 0)
         {
             expr = null;
             return false;
@@ -40,13 +39,13 @@ public sealed class Expression
 
         if (cmds.Last().Item1.ReturnType != targetOutput && targetOutput is not null)
         {
-            Logger.Debug("Bailing due to wrong return type");
+            error = new ExpressionOfWrongType(targetOutput, cmds.Last().Item1.ReturnType!, once);
             expr = null;
             return false;
         }
 
         done:
-        expr = new Expression(cmds, parser.Input);
+        expr = new CommandRun(cmds, parser.Input);
         return true;
     }
 
@@ -73,7 +72,7 @@ public sealed class Expression
     }
 
 
-    private Expression(List<(ParsedCommand, Vector2i)> commands, string originalExpr)
+    private CommandRun(List<(ParsedCommand, Vector2i)> commands, string originalExpr)
     {
         Commands = commands;
         _originalExpr = originalExpr;
@@ -81,45 +80,54 @@ public sealed class Expression
 }
 
 
-public sealed class Expression<TRes>
+public sealed class CommandRun<TRes>
 {
-    public Expression InnerExpression;
+    public CommandRun InnerCommandRun;
 
     public static bool TryParse(ForwardParser parser, Type? pipedType, bool once,
-        [NotNullWhen(true)] out Expression<TRes>? expr, out IConError? error)
+        [NotNullWhen(true)] out CommandRun<TRes>? expr, out IConError? error)
     {
-        if (!Expression.TryParse(parser, pipedType, typeof(TRes), once, out var innerExpr, out error))
+        if (!CommandRun.TryParse(parser, pipedType, typeof(TRes), once, out var innerExpr, out error))
         {
             expr = null;
             return false;
         }
 
-        expr = new Expression<TRes>(innerExpr);
+        expr = new CommandRun<TRes>(innerExpr);
         return true;
     }
 
     public TRes? Invoke(object? input, IInvocationContext ctx)
     {
-        var res = InnerExpression.Invoke(input, ctx);
+        var res = InnerCommandRun.Invoke(input, ctx);
         if (res is null)
             return default;
         return (TRes?) res;
     }
 
-    private Expression(Expression expression)
+    private CommandRun(CommandRun commandRun)
     {
-        InnerExpression = expression;
+        InnerCommandRun = commandRun;
     }
 }
 
-public record struct ExpressionOfWrongType(Type Expected, Type Got) : IConError
+public record struct ExpressionOfWrongType(Type Expected, Type Got, bool Once) : IConError
 {
     public FormattedMessage DescribeInner()
     {
-        return FormattedMessage.FromMarkup(
+        var msg = FormattedMessage.FromMarkup(
             $"Expected an expression of type {Expected.PrettyName()}, but got {Got.PrettyName()}");
+
+        if (Once)
+        {
+            msg.PushNewline();
+            msg.AddText("Note: A single command is expected here, if you were trying to chain commands please surround the run with { } to form a block.");
+        }
+
+        return msg;
     }
 
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }

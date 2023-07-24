@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Utility;
+﻿using System.Diagnostics;
+using Robust.Shared.Utility;
 
 namespace Content.Server.NewCon.Errors;
 
@@ -14,6 +15,7 @@ public sealed class UnhandledExceptionError : IConError
 
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 
     public UnhandledExceptionError(Exception exception)
     {

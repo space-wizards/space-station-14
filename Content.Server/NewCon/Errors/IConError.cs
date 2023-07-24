@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NewCon.Errors;
@@ -16,17 +17,29 @@ public interface IConError
             msg.PushNewline();
         }
         msg.AddMessage(DescribeInner());
+#if TOOLS
+        if (Trace is not null)
+        {
+            msg.PushNewline();
+            msg.AddText(Trace.ToString());
+        }
+#endif
         return msg;
     }
 
     protected FormattedMessage DescribeInner();
     public string? Expression { get; protected set; }
     public Vector2i? IssueSpan { get; protected set; }
+    public StackTrace? Trace { get; protected set; }
 
     public IConError Contextualize(string expression, Vector2i issueSpan)
     {
         if (Expression is not null && IssueSpan is not null)
             return this;
+
+#if  TOOLS
+        Trace = new StackTrace(skipFrames: 1);
+#endif
 
         Expression = expression;
         IssueSpan = issueSpan;

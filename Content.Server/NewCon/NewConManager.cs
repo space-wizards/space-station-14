@@ -81,7 +81,7 @@ public sealed partial class NewConManager
     {
         var parser = new ForwardParser(argstr[2..]);
         var ctx = new OldShellInvocationContext(shell);
-        if (!Expression.TryParse(parser, null, null, false, out var expr, out var err) || parser.Index < parser.MaxIndex)
+        if (!CommandRun.TryParse(parser, null, null, false, out var expr, out var err) || parser.Index < parser.MaxIndex)
         {
             if (err is not null)
             {

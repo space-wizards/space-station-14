@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Players;
+﻿using System.Diagnostics;
+using Robust.Shared.Players;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NewCon.Errors;
@@ -12,4 +13,5 @@ public record struct SessionHasNoEntityError(ICommonSession Session) : IConError
 
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }

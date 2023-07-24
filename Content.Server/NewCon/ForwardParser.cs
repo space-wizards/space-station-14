@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Content.Server.NewCon.Errors;
 using Robust.Shared.Utility;
@@ -35,6 +36,17 @@ public sealed class ForwardParser
         return MaxIndex >= (Index + length - 1);
     }
 
+    public bool EatMatch(char c)
+    {
+        if (PeekChar() == c)
+        {
+            Index++;
+            return true;
+        }
+
+        return false;
+    }
+
     public char? PeekChar()
     {
         if (!SpanInRange(1))
@@ -62,8 +74,8 @@ public sealed class ForwardParser
     public void DebugPrint()
     {
         Logger.DebugS("parser", Input);
-        MakeDebugPointer(Index + 1);
-        MakeDebugPointer(MaxIndex + 1, '|');
+        MakeDebugPointer(Index);
+        MakeDebugPointer(MaxIndex, '|');
     }
 
     private void MakeDebugPointer(int pointAt, char pointer = '^')
@@ -172,4 +184,5 @@ public record struct OutOfInputError : IConError
 
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }

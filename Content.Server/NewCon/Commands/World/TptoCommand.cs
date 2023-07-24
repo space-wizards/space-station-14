@@ -14,7 +14,7 @@ public sealed class TptoCommand : ConsoleCommand
     public IEnumerable<EntityUid> TpTo(
         [CommandInvocationContext] IInvocationContext ctx,
         [PipedArgument] IEnumerable<EntityUid> input,
-        [CommandArgument] Expression<EntityUid> target
+        [CommandArgument] CommandRun<EntityUid> target
         )
     {
         _xform ??= GetSys<TransformSystem>();

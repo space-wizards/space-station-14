@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.NewCon.Syntax;
+using Content.Server.NewCon.TypeParsers;
 using Content.Shared.Verbs;
 
 namespace Content.Server.NewCon.Commands.Verbs;
@@ -13,13 +14,17 @@ public sealed class RunVerbAsCommand : ConsoleCommand
     public IEnumerable<EntityUid> RunVerbAs(
             [CommandInvocationContext] IInvocationContext ctx,
             [PipedArgument] IEnumerable<EntityUid> input,
-            [CommandArgument] Expression<EntityUid> runner,
+            [CommandArgument] Block<EntityUid> runner,
             [CommandArgument] string verb
         )
     {
         _verb ??= GetSys<SharedVerbSystem>();
         verb = verb.ToLowerInvariant();
         var runnerEid = runner.Invoke(null, ctx);
+
+        if (EntityManager.Deleted(runnerEid) && runnerEid != default)
+            ctx.ReportError(new DeadEntity(runnerEid));
+
         if (ctx.GetErrors().Any())
             yield break;
 

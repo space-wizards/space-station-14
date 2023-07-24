@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.NewCon.Errors;
 using Robust.Shared.Utility;
 
@@ -45,4 +46,5 @@ public record struct InvalidQuantity(string Value) : IConError
 
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Content.Server.NewCon.Errors;
 using Robust.Shared.Utility;
@@ -35,7 +36,7 @@ public sealed class ComponentTypeParser : TypeParser<ComponentType>
     }
 }
 
-public readonly record struct ComponentType(Type Ty) : IAsType
+public readonly record struct ComponentType(Type Ty) : IAsType<Type>
 {
     public Type AsType() => Ty;
 };
@@ -58,4 +59,5 @@ public record struct UnknownComponentError(string Component) : IConError
 
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }

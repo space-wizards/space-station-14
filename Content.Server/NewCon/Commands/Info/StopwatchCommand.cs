@@ -8,7 +8,7 @@ namespace Content.Server.NewCon.Commands.Info;
 public sealed class StopwatchCommand : ConsoleCommand
 {
     [CommandImplementation]
-    public object? Stopwatch([CommandInvocationContext] IInvocationContext ctx, [CommandArgument] Expression expr)
+    public object? Stopwatch([CommandInvocationContext] IInvocationContext ctx, [CommandArgument] CommandRun expr)
     {
         var watch = new Stopwatch();
         watch.Start();

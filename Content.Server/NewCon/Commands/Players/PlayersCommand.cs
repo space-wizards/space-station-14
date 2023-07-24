@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using Content.Server.NewCon.Errors;
 using Robust.Server.Player;
 using Robust.Shared.Network;
@@ -39,12 +40,12 @@ public sealed class PlayerCommand : ConsoleCommand
             if (Guid.TryParse(username, out var guid))
             {
                 _playerManager.TryGetSessionById(new NetUserId(guid), out session);
-
-                if (session is null)
-                {
-                    ctx.WriteError(new NoSuchPlayerError(username));
-                }
             }
+        }
+
+        if (session is null)
+        {
+            ctx.ReportError(new NoSuchPlayerError(username));
         }
 
         return session!;
@@ -54,6 +55,12 @@ public sealed class PlayerCommand : ConsoleCommand
     public IEnumerable<EntityUid> GetPlayerEntity([PipedArgument] IEnumerable<IPlayerSession> sessions)
     {
         return sessions.Select(x => x.AttachedEntity).Where(x => x is not null).Cast<EntityUid>();
+    }
+
+    [CommandImplementation("entity")]
+    public EntityUid GetPlayerEntity([PipedArgument] IPlayerSession sessions)
+    {
+        return sessions.AttachedEntity ?? default;
     }
 }
 
@@ -66,4 +73,5 @@ public record struct NoSuchPlayerError(string Username) : IConError
 
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }

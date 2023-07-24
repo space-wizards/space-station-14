@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.NewCon.Errors;
 using Robust.Shared.Utility;
@@ -16,7 +17,7 @@ public sealed class ParsedCommand
     public Invocable Invocable { get; }
     public CommandArgumentBundle Bundle { get; }
 
-    public static bool TryParse(ForwardParser parser, Type? pipedArgumentType, [NotNullWhen(true)] out ParsedCommand? result, out IConError? error, out bool noCommand)
+    public static bool TryParse(ForwardParser parser, Type? pipedArgumentType, [NotNullWhen(true)] out ParsedCommand? result, out IConError? error, out bool noCommand, Type? targetType = null)
     {
         noCommand = false;
         error = null;
@@ -25,7 +26,7 @@ public sealed class ParsedCommand
             {Arguments = new(), Inverted = false, PipedArgumentType = pipedArgumentType, TypeArguments = Array.Empty<Type>()};
 
         if (!TryDigestModifiers(parser, bundle, out error)
-            || !TryParseCommand(parser, bundle, out var subCommand, out var invocable, out var command, out error, out noCommand)
+            || !TryParseCommand(parser, bundle, targetType, out var subCommand, out var invocable, out var command, out error, out noCommand)
             || !command.TryGetReturnType(subCommand, pipedArgumentType, bundle.TypeArguments, out var retType)
             )
         {
@@ -59,7 +60,7 @@ public sealed class ParsedCommand
         return true;
     }
 
-    private static bool TryParseCommand(ForwardParser parser, CommandArgumentBundle bundle, out string? subCommand, [NotNullWhen(true)] out Invocable? invocable, [NotNullWhen(true)] out ConsoleCommand? command, out IConError? error, out bool noCommand)
+    private static bool TryParseCommand(ForwardParser parser, CommandArgumentBundle bundle, Type? targetType, out string? subCommand, [NotNullWhen(true)] out Invocable? invocable, [NotNullWhen(true)] out ConsoleCommand? command, out IConError? error, out bool noCommand)
     {
         noCommand = false;
         error = null;
@@ -70,10 +71,21 @@ public sealed class ParsedCommand
         command = null;
         if (cmd is null)
         {
-            noCommand = true;
-            error = new OutOfInputError();
-            error.Contextualize(parser.Input, (parser.Index, parser.Index));
-            return false;
+            if (parser.PeekChar() is null)
+            {
+                noCommand = true;
+                error = new OutOfInputError();
+                error.Contextualize(parser.Input, (parser.Index, parser.Index));
+                return false;
+            }
+            else
+            {
+
+                noCommand = true;
+                error = new NotValidCommandError(targetType);
+                error.Contextualize(parser.Input, (start, parser.Index));
+                return false;
+            }
         }
 
         if (!parser.NewCon.TryGetCommand(cmd, out var cmdImpl))
@@ -113,7 +125,7 @@ public sealed class ParsedCommand
 
         var argsStart = parser.Index;
 
-        if (!cmdImpl.TryParseArguments(parser, out var args, out var types, out error))
+        if (!cmdImpl.TryParseArguments(parser, subCommand, out var args, out var types, out error))
         {
             noCommand = true;
             error?.Contextualize(parser.Input, (argsStart, parser.Index));
@@ -161,6 +173,7 @@ public record struct UnknownCommandError(string Cmd) : IConError
 
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }
 
 public record struct NoImplementationError(string Cmd, Type[] Types, string? SubCommand, Type? PipedType) : IConError
@@ -204,6 +217,7 @@ public record struct NoImplementationError(string Cmd, Type[] Types, string? Sub
 
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }
 
 public record struct UnknownSubcommandError(string Cmd, string SubCmd, ConsoleCommand Command) : IConError
@@ -219,4 +233,25 @@ public record struct UnknownSubcommandError(string Cmd, string SubCmd, ConsoleCo
 
     public string? Expression { get; set; }
     public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
+}
+
+public record struct NotValidCommandError(Type? TargetType) : IConError
+{
+    public FormattedMessage DescribeInner()
+    {
+        var msg = new FormattedMessage();
+        msg.AddText("Ran into an invalid command, could not parse.");
+        if (TargetType is not null && TargetType != typeof(void))
+        {
+            msg.PushNewline();
+            msg.AddText($"The parser was trying to obtain a run of type {TargetType.PrettyName()}, make sure your run actually returns that value.");
+        }
+
+        return msg;
+    }
+
+    public string? Expression { get; set; }
+    public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }
