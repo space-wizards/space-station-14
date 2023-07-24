@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -191,6 +191,8 @@ namespace Content.Server.Database
                 ban.ExpirationTime,
                 ban.Reason,
                 aUid,
+                ban.BanningAdminName,
+                ban.Round,
                 unbanDef);
         }
 
@@ -225,7 +227,9 @@ namespace Content.Server.Database
                 BanningAdmin = serverBan.BanningAdmin?.UserId,
                 BanTime = serverBan.BanTime.UtcDateTime,
                 ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
-                UserId = serverBan.UserId?.UserId
+                UserId = serverBan.UserId?.UserId,
+                Round = serverBan.Round,
+                BanningAdminName = serverBan.BanningAdminName
             });
 
             await db.PgDbContext.SaveChangesAsync();

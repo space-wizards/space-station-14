@@ -527,6 +527,9 @@ namespace Content.Server.Database
         /// </summary>
         public Guid? BanningAdmin { get; set; }
 
+        public string? BanningAdminName { get; set; }
+        public int Round { get; set; }
+
         /// <summary>
         /// Optional flags that allow adding exemptions to the ban via <see cref="ServerBanExemption"/>.
         /// </summary>

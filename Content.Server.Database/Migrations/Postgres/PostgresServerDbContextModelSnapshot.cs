@@ -790,6 +790,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("uuid")
                         .HasColumnName("banning_admin");
 
+                    b.Property<string>("BanningAdminName")
+                        .HasColumnType("text")
+                        .HasColumnName("banning_admin_name");
+
                     b.Property<int>("ExemptFlags")
                         .HasColumnType("integer")
                         .HasColumnName("exempt_flags");
@@ -806,6 +810,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("reason");
+
+                    b.Property<int>("Round")
+                        .HasColumnType("integer")
+                        .HasColumnName("round");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uuid")
