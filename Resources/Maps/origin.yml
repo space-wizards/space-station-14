@@ -80820,7 +80820,7 @@ entities:
     - pos: -57.484028,-27.38782
       parent: 2
       type: Transform
-- proto: ClothingEyesGlassesBeer
+- proto: ClothingEyesHudBeer
   entities:
   - uid: 12174
     components:
