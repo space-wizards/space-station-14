@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Shuttles will delete anything they FTL on top of., type: Add}
-  id: 3812
-  time: '2023-05-19T07:26:28.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Updated the roboticist uniform sprites., type: Tweak}
@@ -2983,3 +2978,8 @@ Entries:
       upgrade their arsenal, type: Tweak}
   id: 4311
   time: '2023-07-24T03:01:29.0000000+00:00'
+- author: Derby
+  changes:
+  - {message: Added 22 new figurines to collect and play with!, type: Add}
+  id: 4312
+  time: '2023-07-24T03:06:08.0000000+00:00'
