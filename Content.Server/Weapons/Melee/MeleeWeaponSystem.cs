@@ -192,7 +192,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var eventArgs = new DisarmedEvent { Target = target, Source = user, PushProbability = 1 - chance };
         RaiseLocalEvent(target, eventArgs);
 
-        RaiseNetworkEvent(new DamageEffectEvent(Color.Aqua, new List<EntityUid>() { target }));
+        RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Aqua, new List<EntityUid>() { target }));
         return true;
     }
 
@@ -218,7 +218,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
     {
         var filter = Filter.Pvs(targetXform.Coordinates, entityMan: EntityManager).RemoveWhereAttachedEntity(o => o == user);
-        RaiseNetworkEvent(new DamageEffectEvent(Color.Red, targets), filter);
+        RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, targets), filter);
     }
 
     private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, CombatModeComponent disarmerComp)

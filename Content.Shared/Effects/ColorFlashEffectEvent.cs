@@ -6,7 +6,7 @@ namespace Content.Shared.Effects;
 /// Raised on the server and sent to a client to play the damage animation.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class DamageEffectEvent : EntityEventArgs
+public sealed class ColorFlashEffectEvent : EntityEventArgs
 {
     /// <summary>
     /// Color to play for the damage flash.
@@ -15,7 +15,7 @@ public sealed class DamageEffectEvent : EntityEventArgs
 
     public List<EntityUid> Entities;
 
-    public DamageEffectEvent(Color color, List<EntityUid> entities)
+    public ColorFlashEffectEvent(Color color, List<EntityUid> entities)
     {
         Color = color;
         Entities = entities;

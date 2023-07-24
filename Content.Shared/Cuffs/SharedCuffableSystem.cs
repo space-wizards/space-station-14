@@ -592,7 +592,7 @@ namespace Content.Shared.Cuffs
 
                 if (target == user)
                 {
-                    RaiseNetworkEvent(new DamageEffectEvent(Color.Red, new List<EntityUid>() { user }));
+                    RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid>() { user }));
                     _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-self"), user, user);
                 }
                 else

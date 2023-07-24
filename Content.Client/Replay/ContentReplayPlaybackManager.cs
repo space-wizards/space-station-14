@@ -140,7 +140,7 @@ public sealed class ContentReplayPlaybackManager
             case SharedGunSystem.HitscanEvent:
             case ImpactEffectEvent:
             case MuzzleFlashEvent:
-            case DamageEffectEvent:
+            case ColorFlashEffectEvent:
             case InstrumentStartMidiEvent:
             case InstrumentMidiEventEvent:
             case InstrumentStopMidiEvent:

@@ -19,11 +19,11 @@ public sealed class ColorFlashEffectSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeAllEvent<DamageEffectEvent>(OnDamageEffect);
-        SubscribeLocalEvent<DamageEffectComponent, AnimationCompletedEvent>(OnEffectAnimation);
+        SubscribeAllEvent<ColorFlashEffectEvent>(OnDamageEffect);
+        SubscribeLocalEvent<ColorFlashEffectComponent, AnimationCompletedEvent>(OnEffectAnimation);
     }
 
-    private void OnEffectAnimation(EntityUid uid, DamageEffectComponent component, AnimationCompletedEvent args)
+    private void OnEffectAnimation(EntityUid uid, ColorFlashEffectComponent component, AnimationCompletedEvent args)
     {
         if (args.Key != DamageAnimationKey)
             return;
@@ -33,7 +33,7 @@ public sealed class ColorFlashEffectSystem : EntitySystem
             sprite.Color = component.Color;
         }
 
-        RemCompDeferred<DamageEffectComponent>(uid);
+        RemCompDeferred<ColorFlashEffectComponent>(uid);
     }
 
     private Animation? GetDamageAnimation(EntityUid uid, Color color, SpriteComponent? sprite = null)
@@ -62,7 +62,7 @@ public sealed class ColorFlashEffectSystem : EntitySystem
         };
     }
 
-    private void OnDamageEffect(DamageEffectEvent ev)
+    private void OnDamageEffect(ColorFlashEffectEvent ev)
     {
         var color = ev.Color;
 
@@ -88,7 +88,7 @@ public sealed class ColorFlashEffectSystem : EntitySystem
                 continue;
             }
 
-            if (TryComp<DamageEffectComponent>(ent, out var effect))
+            if (TryComp<ColorFlashEffectComponent>(ent, out var effect))
             {
                 sprite.Color = effect.Color;
             }
@@ -98,7 +98,7 @@ public sealed class ColorFlashEffectSystem : EntitySystem
             if (animation == null)
                 continue;
 
-            var comp = EnsureComp<DamageEffectComponent>(ent);
+            var comp = EnsureComp<ColorFlashEffectComponent>(ent);
             comp.NetSyncEnabled = false;
             comp.Color = sprite.Color;
             _animation.Play(player, animation, DamageAnimationKey);
