@@ -49,8 +49,7 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
             foreach (var receiverPort in receiverPorts)
             {
                 // Throw error if component is missing.
-                Comp<DeviceLinkSinkComponent>(receiverPort.Uid);
-                RemCompDeferred<SignalReceiverComponent>(receiverPort.Uid);
+                EnsureComp<DeviceLinkSinkComponent>(receiverPort.Uid);
                 outputs.GetOrNew(receiverPort.Uid).Add((transmitterPort, receiverPort.Port));
             }
         }
