@@ -5293,11 +5293,6 @@ entities:
     - links:
       - 8225
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
   - uid: 2309
     components:
     - pos: -14.5,-27.5
@@ -5306,11 +5301,6 @@ entities:
     - links:
       - 8225
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
   - uid: 3905
     components:
     - pos: 19.5,28.5
@@ -52702,11 +52692,6 @@ entities:
     - links:
       - 8232
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
   - uid: 2137
     components:
     - rot: -1.5707963267948966 rad
@@ -52716,11 +52701,6 @@ entities:
     - links:
       - 8232
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
   - uid: 2138
     components:
     - rot: -1.5707963267948966 rad
@@ -52730,11 +52710,6 @@ entities:
     - links:
       - 8224
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
   - uid: 4693
     components:
     - rot: 1.5707963267948966 rad
@@ -52838,11 +52813,6 @@ entities:
     - links:
       - 8224
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
 - proto: ShuttersRadiationOpen
   entities:
   - uid: 9551
