@@ -4,3 +4,10 @@
   noSpawn: true
   components:
     - type: EndOnShipDestruction
+
+- type: entity
+  id: GeneratePoints
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: GeneratePoints

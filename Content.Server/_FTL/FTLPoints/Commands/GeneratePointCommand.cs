@@ -1,9 +1,12 @@
 using System.Linq;
-using Content.Server._FTL.FTLPoints;
+using Content.Server._FTL.FTLPoints.Prototypes;
+using Content.Server._FTL.FTLPoints.Systems;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
+
+namespace Content.Server._FTL.FTLPoints.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class GeneratePointCommand : IConsoleCommand

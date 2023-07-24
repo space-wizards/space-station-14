@@ -92,8 +92,9 @@ entities:
     - passiveEvasion: 0.3
       hullCapacity: 18
       hullAmount: 18
+      faction: FSCShip
       type: ShipTracker
-    - type: AutomatedCombat
+    - type: AutomatedShip
     - type: RadiationGridResistance
 - proto: AirCanister
   entities:

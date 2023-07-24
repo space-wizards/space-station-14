@@ -1,4 +1,4 @@
-namespace Content.Server._FTL.ShipHealth;
+namespace Content.Server._FTL.ShipTracker;
 
 /// <summary>
 /// This is used for tracking the damage on ships
@@ -48,6 +48,7 @@ public sealed class ShipTrackerComponent : Component
     /// <summary>
     /// How much time does it take to regen a shield layer?
     /// </summary>
+    [DataField("shieldRegenTime"), ViewVariables(VVAccess.ReadWrite)]
     public float ShieldRegenTime = 5f;
 
     /// <summary>
@@ -56,6 +57,13 @@ public sealed class ShipTrackerComponent : Component
     [DataField("passiveEvasion")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float PassiveEvasion = 0.2f;
+
+    /// <summary>
+    /// The maximum capacity of the shields
+    /// </summary>
+    [DataField("faction")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string Faction = "IndependentShip";
 }
 
 [RegisterComponent]

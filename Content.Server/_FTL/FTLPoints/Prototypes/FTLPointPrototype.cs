@@ -1,6 +1,8 @@
+using Content.Server._FTL.FTLPoints.Effects;
+using Content.Server._FTL.FTLPoints.Events;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server._FTL.FTLPoints;
+namespace Content.Server._FTL.FTLPoints.Prototypes;
 
 /// <summary>
 /// This is a prototype for getting a specific type of FTL point.

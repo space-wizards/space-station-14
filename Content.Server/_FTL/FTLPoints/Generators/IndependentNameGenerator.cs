@@ -2,7 +2,7 @@ using Content.Server.Maps.NameGenerators;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 
-namespace Content.Server._FTL.FTLPoints;
+namespace Content.Server._FTL.FTLPoints.Generators;
 
 [UsedImplicitly]
 public sealed class IndependentNameGenerator : StationNameGenerator

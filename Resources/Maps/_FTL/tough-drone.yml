@@ -121,9 +121,10 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: NavMap
-    - type: AutomatedCombat
+    - type: AutomatedShip
     - hullCapacity: 20
       hullAmount: 20
+      faction: HostileIndependentShip
       type: ShipTracker
 - proto: AirlockMaint
   entities:
