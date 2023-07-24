@@ -11,29 +11,44 @@
   - type: ClusterGrenadeVisuals
     state: base
   - type: ClusterGrenade
+  - type: OnUseTimerTrigger
+    delay: 3.5
   - type: ContainerContainer
     containers:
       cluster-flash: !type:Container
-  - type: OnUseTimerTrigger
-  - type: TimerTriggerVisuals
-    primingSound:
-      path: /Audio/Effects/countdown.ogg
-
-- type: entity
-  parent: ClusterBang
-  id: ClusterBangFull
-  suffix: Full
-  components:
-  - type: Sprite
-    state: base-3
-  - type: ClusterGrenade
-    fillPrototype: GrenadeFlashBang
 
 - type: entity
   parent: GrenadeBase
-  id: ClusterBomb
-  name: cluster bomb
-  description: Spreads 3 explosive grenades.
+  id: ClusterBangFull
+  name: ClusterBang
+  suffix: Full
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/clusterbang.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ClusterGrenade
+    fillPrototype: GrenadeFlashBang
+    bombletDelayMax: 0
+    bombletDelayMin: 0
+    minimumDelay: 1000
+    distance: 10
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: icon }
+
+- type: entity
+  parent: GrenadeBase
+  id: ClusterGrenade
+  name: clustergrenade
+  description: If one grenade just isn't enough.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/clusterbomb.rsi
@@ -41,16 +56,12 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ClusterGrenade
-    maxGrenadesCount: 3
     fillPrototype: ExGrenade
     bombletDelayMax: 0
     bombletDelayMin: 0
     minimumDelay: 1000
     distance: 5
     releaseSound: "/Audio/Effects/beep1.ogg"
-  - type: Appearance
-  - type: AnimationPlayer
-  - type: TimerTriggerVisuals
   - type: OnUseTimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
@@ -61,8 +72,8 @@
 
 - type: entity
   parent: BaseItem
-  id: BananaBomb
-  name: banana bomb
+  id: ClusterBanana
+  name: cluster banana
   description: Spreads 6 explosive banana peels.
   components:
   - type: Sprite
@@ -72,10 +83,10 @@
   - type: ClusterGrenade
     maxGrenadesCount: 6
     fillPrototype: TrashBananaPeelExplosive
-    bombletDelayMax: 1000
-    bombletDelayMin: 1000
+    bombletDelayMax: 0
+    bombletDelayMin: 0
     minimumDelay: 20000
-    distance: 1.1
+    distance: 1
     delay: 2
     releaseSound: "/Audio/Items/bikehorn.ogg"
   - type: DamageOnLand
@@ -122,8 +133,8 @@
 
 - type: entity
   parent: GrenadeBase
-  id: PyroGrenade
-  name: pyro grenade
+  id: IncendiaryGrenade
+  name: incendiary grenade
   description: releases a spray of incendiary bullets
   components:
   - type: Sprite
@@ -173,10 +184,10 @@
     beepInterval: 2
 
 - type: entity
-  parent: Soap
+  parent: SoapSyndie
   id: SlipocalypseClusterBang
   name: slipocalypse clusterbang
-  description: we heard you like soap so we put soap in your soap
+  description: spreads small pieces of syndicate soap over an area
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/clusterbang.rsi
@@ -185,9 +196,9 @@
   - type: ClusterGrenade
     bombletDelayMax: 0
     bombletDelayMin: 0
-    minimumDelay: 20000
-    maxGrenadesCount: 4
-    fillPrototype: SoapSyndie
+    minimumDelay: 60000
+    maxGrenadesCount: 30
+    fillPrototype: SoapletSyndie
     randomSpread: true
     bombletVelocity: 3
     distance: 1
@@ -195,13 +206,9 @@
     damage:
       types:
         Blunt: 10
-  - type: FlashOnTrigger
-    range: 0.5
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
-  - type: SpawnOnTrigger
-    proto: GrenadeFlashEffect
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -213,7 +220,3 @@
       - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Slippery
-    paralyzeTime: 5
-    launchForwardsMultiplier: 2.5
-  - type: StepTrigger

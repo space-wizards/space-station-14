@@ -26,12 +26,12 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 20
+        Piercing: 25
 
 - type: entity
   id: PelletClusterIncendiary
   name: pellet (ball, incendiary)
-  nospawn: true
+  noSpawn: true
   parent: BaseBulletIncendiary
   components:
   - type: Sprite
@@ -43,4 +43,4 @@
         Burn: 5
   - type: IgniteOnCollide
     fireStacks: 1
-    count: 2
+    count: 10

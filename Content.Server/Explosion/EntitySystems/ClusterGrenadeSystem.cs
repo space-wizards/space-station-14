@@ -71,7 +71,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var clug))
         {
-            if (clug.CountDown == true)
+            if (clug.CountDown && clug.UnspawnedCount > 0)
             {
                 _audio.PlayPvs(clug.ReleaseSound, uid);
                 var grenadesInserted = clug.GrenadesContainer.ContainedEntities.Count + clug.UnspawnedCount;
@@ -89,16 +89,16 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                     thrownCount++;
 
                     if (clug.GrenadeType == "shoot")
-                        if (clug.RandomSpread == true)
+                        if (clug.RandomSpread)
                             _gun.ShootProjectile(grenade, _random.NextVector2().Normalized(), Vector2.One.Normalized(), uid);
                         else _gun.ShootProjectile(grenade, angle.ToVec().Normalized(), Vector2.One.Normalized(), uid);
                     if (clug.GrenadeType == "throw")
-                        if (clug.RandomSpread == true)
+                        if (clug.RandomSpread)
                             _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized() * _random.NextFloat(0.1f, 3f), clug.BombletVelocity);
                         else _throwingSystem.TryThrow(grenade, angle.ToVec().Normalized() * clug.ThrowDistance, clug.BombletVelocity);
 
                     // give an active timer trigger to the contained grenades when they get launched
-                    if (clug.TriggerBomblets == true)
+                    if (clug.TriggerBomblets)
                     {
                         var bomblet = grenade.EnsureComponent<ActiveTimerTriggerComponent>();
                         bomblet.TimeRemaining = (clug.MinimumDelay + bombletDelay) / 1000;
