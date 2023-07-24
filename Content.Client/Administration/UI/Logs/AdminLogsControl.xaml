@@ -51,8 +51,6 @@
                 <BoxContainer Name="TopRightContainer">
                     <BoxContainer Name="LogImpactContainer" Orientation="Horizontal"/>
                     <Control HorizontalExpand="True"/>
-                    <Button Name="SwitchModeButton" Access="Public" Text="{Loc admin-logs-copy-mode}"/>
-                    <Control HorizontalExpand="True"/>
                     <Label Name="Count" Access="Public"/>
                     <Control HorizontalExpand="True"/>
                     <Button Name="PopOutButton" Access="Public" Text="{Loc admin-logs-pop-out}"/>
@@ -63,9 +61,8 @@
                     <Button Name="RefreshButton" Access="Public" Text="{Loc admin-logs-refresh}" StyleClasses="ButtonSquare"/>
                     <Button Name="NextButton" Access="Public" Text="{Loc admin-logs-next}" StyleClasses="OpenLeft"/>
                 </BoxContainer>
-                <TextEdit Name="AdminLogsTextEdit" Access="Public" VerticalExpand="True" Visible="False"/>
                 <ScrollContainer Name="AdminLogsScrollContainer" Access="Public" VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
-                    <RichTextLabel Name="AdminLogsRichTextLabel" Access="Public" VerticalExpand="True" Margin="0 0 -12 0"/>
+                    <TextEdit Name="AdminLogsTextEdit" Access="Public" VerticalExpand="True"/>
                 </ScrollContainer>
             </BoxContainer>
         </BoxContainer>
