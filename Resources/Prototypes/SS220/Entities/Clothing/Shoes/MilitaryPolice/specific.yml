@@ -1,0 +1,11 @@
+#Military Police Shoes #by MIXnikita for SS200
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesMpolice
+  name: military police shoes
+  description: they go to detention in these shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/mboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/mboots.rsi

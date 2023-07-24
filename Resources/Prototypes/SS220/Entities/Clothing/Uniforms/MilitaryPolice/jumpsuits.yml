@@ -1,0 +1,11 @@
+#Military Police suits by MIXnikita for SS200
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMPolice
+  name: Militar Police suit
+  description: few people will want to resist you.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/mpolice.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/mpolice.rsi

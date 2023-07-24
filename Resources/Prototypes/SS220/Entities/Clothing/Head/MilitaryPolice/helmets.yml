@@ -1,0 +1,22 @@
+#Military Police Helmet #by MIXnikita for SS200
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetMpolice
+  name: Military Police helmet
+  description: this is a reliable protection for detention.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/mpolice.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/mpolice.rsi
+  - type: Armor 
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.80
+        Piercing: 0.80
+        Heat: 0.80
+        Radiation: 0.80
+        Caustic: 0.95
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
