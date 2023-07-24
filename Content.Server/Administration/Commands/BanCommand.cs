@@ -3,13 +3,11 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Content.Server.Database;
-using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using System.Collections.Generic;
-using Content.Server.Players;
+
 
 namespace Content.Server.Administration.Commands
 {
@@ -17,7 +15,6 @@ namespace Content.Server.Administration.Commands
     public sealed class BanCommand : LocalizedCommands
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Command => "ban";
 
@@ -31,8 +28,6 @@ namespace Content.Server.Administration.Commands
             string target;
             string reason;
             uint minutes;
-
-            int round = 0;
 
             switch (args.Length)
             {
@@ -52,20 +47,6 @@ namespace Content.Server.Administration.Commands
                     }
 
                     break;
-                case 4:
-                    target = args[0];
-                    reason = args[1];
-
-                    if (!uint.TryParse(args[2], out minutes))
-                    {
-                        shell.WriteLine($"{args[2]} is not a valid amount of minutes.\n{Help}");
-                        return;
-                    }
-
-                    int.TryParse(args[3], out round);
-
-                    break;
-
                 default:
                     shell.WriteLine($"Invalid amount of arguments.{Help}");
                     return;
@@ -114,8 +95,6 @@ namespace Content.Server.Administration.Commands
                 expires,
                 reason,
                 player?.UserId,
-                player?.Name,
-                round,
                 null);
 
             await dbMan.AddServerBanAsync(banDef);

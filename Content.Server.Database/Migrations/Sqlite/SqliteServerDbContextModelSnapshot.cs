@@ -738,10 +738,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("banning_admin");
 
-                    b.Property<string>("BanningAdminName")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("banning_admin_name");
-
                     b.Property<int>("ExemptFlags")
                         .HasColumnType("INTEGER")
                         .HasColumnName("exempt_flags");
@@ -758,10 +754,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("reason");
-
-                    b.Property<int>("Round")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("round");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("TEXT")

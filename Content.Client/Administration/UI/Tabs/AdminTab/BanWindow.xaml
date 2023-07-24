@@ -9,11 +9,6 @@
             <LineEdit Name="PlayerNameLine" MinWidth="100" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc admin-ban-panel-window-roundid}" MinWidth="100" />
-            <Control MinWidth="50" />
-            <LineEdit Name="RoundID" MinWidth="100" HorizontalExpand="True" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc admin-ban-panel-window-reason}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <LineEdit Name="ReasonLine" MinSize="100 0" HorizontalExpand="True" />

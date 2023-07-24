@@ -19,8 +19,6 @@ namespace Content.Server.Database
         public string Reason { get; }
         public NetUserId? BanningAdmin { get; }
         public ServerUnbanDef? Unban { get; }
-        public string? BanningAdminName { get; }
-        public int Round { get; }
 
         public ServerBanDef(
             int? id,
@@ -31,8 +29,6 @@ namespace Content.Server.Database
             DateTimeOffset? expirationTime,
             string reason,
             NetUserId? banningAdmin,
-            string? banningAdminName,
-            int round,
             ServerUnbanDef? unban)
         {
             if (userId == null && address == null && hwId ==  null)
@@ -56,8 +52,6 @@ namespace Content.Server.Database
             Reason = reason;
             BanningAdmin = banningAdmin;
             Unban = unban;
-            BanningAdminName = banningAdminName;
-            Round = round;
         }
 
         public string FormatBanMessage(IConfigurationManager cfg, ILocalizationManager loc)
@@ -71,16 +65,19 @@ namespace Content.Server.Database
             }
             else
             {
-                expires = loc.GetString("ban-banned-permanent");
+                var appeal = cfg.GetCVar(CCVars.InfoLinksAppeal);
+                if (!string.IsNullOrWhiteSpace(appeal))
+                    expires = loc.GetString("ban-banned-permanent-appeal", ("link", appeal));
+                else
+                    expires = loc.GetString("ban-banned-permanent");
             }
 
             return $"""
                    {loc.GetString("ban-banned-1")}
                    {loc.GetString("ban-banned-2", ("reason", Reason))}
-                   {loc.GetString("ban-banned-6", ("round", Round != 0 ? Round : loc.GetString("ban-banned-7")))}
-                   {loc.GetString("ban-banned-4", ("admin", BanningAdminName != null ? BanningAdminName : "Console"))}
                    {expires}
                    {loc.GetString("ban-banned-3")}
+                   {loc.GetString("ban-banned-4")}
                    """;
         }
     }
