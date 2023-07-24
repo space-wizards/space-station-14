@@ -1,22 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: 'Due to safety cutbacks, electrical devices like substations are more
-      dangerous. Safety protocols demand you do not hit them. We strongly advise you
-      not to bite them either!', type: Tweak}
-  id: 3814
-  time: '2023-05-19T08:21:15.0000000+00:00'
-- author: tom-leys
-  changes:
-  - {message: 'You cannot stack Gas Filters, Mixers or several other Atmos devices
-      like pumps and valves. Pipes can still be stacked.', type: Remove}
-  - {message: Gas filters can now filter 5x faster (up to 1000 L/S) to compensate
-      for no more filter stacks. This is their new default rate, type: Tweak}
-  - {message: 'Gas Filters and mixers now have a flipped version visible in the construction
-      menu. Hint: You can still right click on an un-anchored filter / mixer and choose
-      rotate -> Flip', type: Tweak}
-  id: 3815
-  time: '2023-05-19T08:59:20.0000000+00:00'
 - author: KEEYNy
   changes:
   - {message: Added Death Squad jumpsuit, type: Add}
@@ -2983,3 +2965,15 @@ Entries:
   - {message: Added coffin to bury your fellow spessmen with honor., type: Add}
   id: 4313
   time: '2023-07-24T03:13:10.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'The Syndicate has supplied traitors with a much newer, much scarier
+      model of the Python chambered in classic .357.', type: Tweak}
+  - {message: The Mateba now fires faster and uses .357., type: Tweak}
+  id: 4314
+  time: '2023-07-24T23:02:15.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: Cigarettes can be injected again., type: Tweak}
+  id: 4315
+  time: '2023-07-24T23:02:30.0000000+00:00'
