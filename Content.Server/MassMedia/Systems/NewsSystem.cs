@@ -21,7 +21,9 @@ public sealed class NewsSystem : EntitySystem
         SubscribeLocalEvent<NewsWriteComponent, NewsWriteShareMessage>(OnWriteUiMessage);
         SubscribeLocalEvent<NewsWriteComponent, NewsWriteDeleteMessage>(OnWriteUiMessage);
         SubscribeLocalEvent<NewsWriteComponent, NewsWriteArticlesRequestMessage>(OnWriteUiMessage);
-        SubscribeLocalEvent<NewsReadComponent, NewsReadLeafMessage>(OnReadUiMessage);
+        SubscribeLocalEvent<NewsReadComponent, NewsReadNextMessage>(OnReadUiMessage);
+        SubscribeLocalEvent<NewsReadComponent, NewsReadPrevMessage>(OnReadUiMessage);
+        SubscribeLocalEvent<NewsReadComponent, NewsReadArticleRequestMessage>(OnReadUiMessage);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
@@ -39,12 +41,7 @@ public sealed class NewsSystem : EntitySystem
         if (!TryComp<ActorComponent>(user, out var actor))
             return;
 
-        if (_ui.TryToggleUi(deviceEnt, NewsReadUiKey.Key, actor.PlayerSession))
-        {
-
-        }
-
-        UpdateReadUi(deviceEnt, component);
+        _ui.TryToggleUi(deviceEnt, NewsReadUiKey.Key, actor.PlayerSession);
     }
 
     public void ToggleUi(EntityUid user, EntityUid deviceEnt, NewsWriteComponent? component)
@@ -55,12 +52,7 @@ public sealed class NewsSystem : EntitySystem
         if (!TryComp<ActorComponent>(user, out var actor))
             return;
 
-        if (_ui.TryToggleUi(deviceEnt, NewsWriteUiKey.Key, actor.PlayerSession))
-        {
-
-        }
-
-        UpdateWriteUi(deviceEnt, component);
+        _ui.TryToggleUi(deviceEnt, NewsWriteUiKey.Key, actor.PlayerSession);
     }
 
     public void UpdateWriteUi(EntityUid uid, NewsWriteComponent component)
@@ -79,13 +71,10 @@ public sealed class NewsSystem : EntitySystem
 
         if (component.ArticleNum < 0) NewsReadLeafArticle(component, false);
 
-        NewsReadBoundUserInterfaceState state;
         if (Articles.Count != 0)
-            state = new NewsReadBoundUserInterfaceState(Articles[component.ArticleNum], component.ArticleNum + 1, Articles.Count);
+            _ui.TrySetUiState(uid, NewsReadUiKey.Key, new NewsReadBoundUserInterfaceState(Articles[component.ArticleNum], component.ArticleNum + 1, Articles.Count));
         else
-            state = new NewsReadBoundUserInterfaceState(new NewsArticle(), -1, -1);
-
-        _ui.TrySetUiState(uid, NewsReadUiKey.Key, state);
+            _ui.TrySetUiState(uid, NewsReadUiKey.Key, new NewsReadEmptyBoundUserInterfaceState());
     }
 
     public void OnWriteUiMessage(EntityUid uid, NewsWriteComponent component, NewsWriteShareMessage msg)
@@ -98,8 +87,6 @@ public sealed class NewsSystem : EntitySystem
 
     public void OnWriteUiMessage(EntityUid uid, NewsWriteComponent component, NewsWriteDeleteMessage msg)
     {
-        component.Test = Articles.Count;
-
         if (msg.ArticleNum < Articles.Count)
         {
             Articles.RemoveAt(msg.ArticleNum);
@@ -113,12 +100,22 @@ public sealed class NewsSystem : EntitySystem
         UpdateWriteUi(uid, component);
     }
 
-    public void OnReadUiMessage(EntityUid uid, NewsReadComponent component, NewsReadLeafMessage msg)
+    public void OnReadUiMessage(EntityUid uid, NewsReadComponent component, NewsReadNextMessage msg)
     {
-        component.Test++;
+        NewsReadLeafArticle(component, true);
 
-        NewsReadLeafArticle(component, msg.IsNext);
+        UpdateReadUi(uid, component);
+    }
 
+    public void OnReadUiMessage(EntityUid uid, NewsReadComponent component, NewsReadPrevMessage msg)
+    {
+        NewsReadLeafArticle(component, false);
+
+        UpdateReadUi(uid, component);
+    }
+
+    public void OnReadUiMessage(EntityUid uid, NewsReadComponent component, NewsReadArticleRequestMessage msg)
+    {
         UpdateReadUi(uid, component);
     }
 
@@ -135,19 +132,13 @@ public sealed class NewsSystem : EntitySystem
 
     private void TryNotify()
     {
-        var query = EntityQueryEnumerator<NewsReadComponent>();
+        var query = EntityQueryEnumerator<NewsReadComponent, RingerComponent>();
 
-        while (query.MoveNext(out var comp))
+        while (query.MoveNext(out var comp, out var ringer))
         {
-            NewsReadTryRing(comp);
+            _ringer.RingerPlayRingtone(comp.Owner, ringer);
+            UpdateReadUi(comp.Owner, comp);
         }
-    }
-
-    private void NewsReadTryRing(NewsReadComponent component)
-    {
-        if (!EntityManager.TryGetComponent(component.Owner, out RingerComponent? ringer)) return;
-
-        _ringer.RingerPlayRingtone(component.Owner, ringer);
     }
 }
 

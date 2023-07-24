@@ -24,12 +24,33 @@ public sealed class NewsReadBoundUserInterfaceState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsReadLeafMessage : BoundUserInterfaceMessage
+public sealed class NewsReadEmptyBoundUserInterfaceState : BoundUserInterfaceState
 {
-    public bool IsNext;
-
-    public NewsReadLeafMessage(bool isNext)
+    public NewsReadEmptyBoundUserInterfaceState()
     {
-        IsNext = isNext;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class NewsReadNextMessage : BoundUserInterfaceMessage
+{
+    public NewsReadNextMessage()
+    {
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class NewsReadPrevMessage : BoundUserInterfaceMessage
+{
+    public NewsReadPrevMessage()
+    {
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class NewsReadArticleRequestMessage : BoundUserInterfaceMessage
+{
+    public NewsReadArticleRequestMessage()
+    {
     }
 }

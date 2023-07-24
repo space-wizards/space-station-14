@@ -4,9 +4,6 @@ namespace Content.Server.MassMedia.Components
     public sealed class NewsReadComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Test = 0;
-
-        [ViewVariables(VVAccess.ReadWrite)]
         public int ArticleNum;
     }
 }

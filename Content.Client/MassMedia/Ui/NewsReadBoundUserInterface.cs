@@ -27,8 +27,10 @@ namespace Content.Client.MassMedia.Ui
             _menu.OpenCentered();
             _menu.OnClose += Close;
 
-            _menu.NextButtonPressed += () => OnLeafButtonsPressed(true);
-            _menu.PastButtonPressed += () => OnLeafButtonsPressed(false);
+            _menu.NextButtonPressed += () => SendMessage(new NewsReadNextMessage());
+            _menu.PastButtonPressed += () => SendMessage(new NewsReadPrevMessage());
+
+            SendMessage(new NewsReadArticleRequestMessage());
         }
 
         protected override void Dispose(bool disposing)
@@ -44,15 +46,13 @@ namespace Content.Client.MassMedia.Ui
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (_menu == null || state is not NewsReadBoundUserInterfaceState cast)
+            if (_menu == null)
                 return;
 
-            _menu.UpdateUI(cast.Article, cast.TargetNum, cast.TotalNum);
-        }
-
-        private void OnLeafButtonsPressed(bool isNext)
-        {
-            SendMessage(new NewsReadLeafMessage(isNext));
+            if (state is NewsReadBoundUserInterfaceState cast)
+                _menu.UpdateUI(cast.Article, cast.TargetNum, cast.TotalNum);
+            if (state is NewsReadEmptyBoundUserInterfaceState)
+                _menu.UpdateEmptyUI();
         }
     }
 }

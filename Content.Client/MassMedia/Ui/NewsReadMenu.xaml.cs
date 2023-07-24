@@ -30,22 +30,25 @@ public sealed partial class NewsReadMenu : DefaultWindow
 
     public void UpdateUI(NewsArticle article, int targetNum, int totalNum)
     {
-        if (totalNum != -1)
-        {
-            PageName.Text = article.Name;
-            PageText.SetMarkup(article.Content);
+        PageNum.Visible = true;
+        PageText.Visible = true;
+        ShareTime.Visible = true;
 
-            PageNum.Text = targetNum.ToString() + "/" + totalNum.ToString();
+        PageName.Text = article.Name;
+        PageText.SetMarkup(article.Content);
 
-            string shareTime = article.ShareTime.ToString("hh\\:mm\\:ss");
-            ShareTime.SetMarkup(Loc.GetString("news-read-ui-time-prefix-text") + " " + shareTime);
-        }
-        else
-        {
-            PageName.Text = Loc.GetString("news-read-ui-not-found-text");
-            PageText.SetMarkup("");
-            PageNum.Text = "";
-            ShareTime.SetMarkup("");
-        }
+        PageNum.Text = $"{targetNum}/{totalNum}";
+
+        string shareTime = article.ShareTime.ToString("hh\\:mm\\:ss");
+        ShareTime.SetMarkup(Loc.GetString("news-read-ui-time-prefix-text") + " " + shareTime);
+    }
+
+    public void UpdateEmptyUI()
+    {
+        PageName.Text = Loc.GetString("news-read-ui-not-found-text");
+
+        PageNum.Visible = false;
+        PageText.Visible = false;
+        ShareTime.Visible = false;
     }
 }
