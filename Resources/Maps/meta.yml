@@ -13937,277 +13937,185 @@ entities:
     - pos: -45.5,15.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 4747
-      type: SignalReceiver
+    - links:
+      - 4747
+      type: DeviceLinkSink
   - uid: 4308
     components:
     - pos: -43.5,15.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 4747
-      type: SignalReceiver
+    - links:
+      - 4747
+      type: DeviceLinkSink
   - uid: 4746
     components:
     - pos: -43.5,19.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 4748
-      type: SignalReceiver
+    - links:
+      - 4748
+      type: DeviceLinkSink
   - uid: 5045
     components:
     - pos: -45.5,19.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 4748
-      type: SignalReceiver
+    - links:
+      - 4748
+      type: DeviceLinkSink
   - uid: 9437
     components:
     - pos: -40.5,41.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 9439
-      type: SignalReceiver
+    - links:
+      - 9439
+      type: DeviceLinkSink
   - uid: 9438
     components:
     - pos: -40.5,43.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 9440
-      type: SignalReceiver
+    - links:
+      - 9440
+      type: DeviceLinkSink
   - uid: 10293
     components:
     - pos: 68.5,-5.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12022
-      type: SignalReceiver
+    - links:
+      - 12022
+      type: DeviceLinkSink
   - uid: 11486
     components:
     - pos: 46.5,-35.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12021
-      type: SignalReceiver
+    - links:
+      - 12021
+      type: DeviceLinkSink
   - uid: 11487
     components:
     - pos: 48.5,-32.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12021
-      type: SignalReceiver
+    - links:
+      - 12021
+      type: DeviceLinkSink
   - uid: 19341
     components:
     - pos: 3.5,-27.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19447
-      type: SignalReceiver
+    - links:
+      - 19447
+      type: DeviceLinkSink
   - uid: 19343
     components:
     - pos: 2.5,-27.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19447
-      type: SignalReceiver
+    - links:
+      - 19447
+      type: DeviceLinkSink
   - uid: 19344
     components:
     - pos: 1.5,-27.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19447
-      type: SignalReceiver
+    - links:
+      - 19447
+      type: DeviceLinkSink
   - uid: 19345
     components:
     - pos: 16.5,-50.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19439
-      type: SignalReceiver
+    - links:
+      - 19439
+      type: DeviceLinkSink
   - uid: 19346
     components:
     - pos: 20.5,-50.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 24075
-      type: SignalReceiver
+    - links:
+      - 24075
+      type: DeviceLinkSink
   - uid: 19362
     components:
     - pos: 12.5,-55.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19438
-      type: SignalReceiver
+    - links:
+      - 19438
+      type: DeviceLinkSink
   - uid: 19363
     components:
     - pos: 12.5,-54.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19438
-      type: SignalReceiver
+    - links:
+      - 19438
+      type: DeviceLinkSink
   - uid: 19364
     components:
     - pos: 16.5,-55.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19438
-      type: SignalReceiver
+    - links:
+      - 19438
+      type: DeviceLinkSink
   - uid: 19365
     components:
     - pos: 16.5,-54.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19438
-      type: SignalReceiver
+    - links:
+      - 19438
+      type: DeviceLinkSink
   - uid: 23417
     components:
     - pos: 54.5,21.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 23796
-      type: SignalReceiver
+    - links:
+      - 23796
+      type: DeviceLinkSink
   - uid: 23418
     components:
     - pos: 54.5,20.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 23796
-      type: SignalReceiver
+    - links:
+      - 23796
+      type: DeviceLinkSink
   - uid: 23419
     components:
     - pos: 54.5,19.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 23796
-      type: SignalReceiver
+    - links:
+      - 23796
+      type: DeviceLinkSink
   - uid: 23664
     components:
     - pos: 51.5,27.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 23946
-      type: SignalReceiver
+    - links:
+      - 23946
+      type: DeviceLinkSink
   - uid: 23947
     components:
     - pos: 50.5,27.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 23946
-      type: SignalReceiver
+    - links:
+      - 23946
+      type: DeviceLinkSink
 - proto: BlastDoorExterior1Open
   entities:
   - uid: 24634
@@ -14222,109 +14130,73 @@ entities:
     - pos: 51.5,-4.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 8979
-      type: SignalReceiver
+    - links:
+      - 8979
+      type: DeviceLinkSink
   - uid: 8980
     components:
     - pos: 46.5,-4.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 8979
-      type: SignalReceiver
+    - links:
+      - 8979
+      type: DeviceLinkSink
   - uid: 8981
     components:
     - pos: 47.5,-4.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 8979
-      type: SignalReceiver
+    - links:
+      - 8979
+      type: DeviceLinkSink
   - uid: 10483
     components:
     - pos: -12.5,45.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10486
-      type: SignalReceiver
+    - links:
+      - 10486
+      type: DeviceLinkSink
   - uid: 10484
     components:
     - pos: -11.5,45.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10486
-      type: SignalReceiver
+    - links:
+      - 10486
+      type: DeviceLinkSink
   - uid: 10485
     components:
     - pos: -10.5,45.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10486
-      type: SignalReceiver
+    - links:
+      - 10486
+      type: DeviceLinkSink
   - uid: 12566
     components:
     - pos: 49.5,5.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12569
-      type: SignalReceiver
+    - links:
+      - 12569
+      type: DeviceLinkSink
   - uid: 12567
     components:
     - pos: 50.5,5.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12569
-      type: SignalReceiver
+    - links:
+      - 12569
+      type: DeviceLinkSink
   - uid: 12568
     components:
     - pos: 51.5,5.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12569
-      type: SignalReceiver
+    - links:
+      - 12569
+      type: DeviceLinkSink
 - proto: BlockGameArcade
   entities:
   - uid: 7187
@@ -15121,48 +14993,18 @@ entities:
       pos: -5.5,29.5
       parent: 5350
       type: Transform
-    - outputs:
-        Start:
-        - port: Close
-          uid: 8057
-        Timer:
-        - port: AutoClose
-          uid: 8057
-        - port: Open
-          uid: 8057
-      type: SignalTransmitter
   - uid: 5347
     components:
     - rot: 1.5707963267948966 rad
       pos: -8.5,29.5
       parent: 5350
       type: Transform
-    - outputs:
-        Start:
-        - port: Close
-          uid: 8058
-        Timer:
-        - port: AutoClose
-          uid: 8058
-        - port: Open
-          uid: 8058
-      type: SignalTransmitter
   - uid: 5348
     components:
     - rot: 1.5707963267948966 rad
       pos: -11.5,29.5
       parent: 5350
       type: Transform
-    - outputs:
-        Start:
-        - port: Close
-          uid: 8059
-        Timer:
-        - port: AutoClose
-          uid: 8059
-        - port: Open
-          uid: 8059
-      type: SignalTransmitter
 - proto: Brutepack
   entities:
   - uid: 16234
@@ -66747,22 +66589,12 @@ entities:
       pos: 13.5,-51.5
       parent: 5350
       type: Transform
-    - outputs:
-        ArtifactAnalyzerSender:
-        - port: ArtifactAnalyzerReceiver
-          uid: 19358
-      type: SignalTransmitter
   - uid: 19453
     components:
     - rot: -1.5707963267948966 rad
       pos: 22.5,-30.5
       parent: 5350
       type: Transform
-    - outputs:
-        ArtifactAnalyzerSender:
-        - port: ArtifactAnalyzerReceiver
-          uid: 19357
-      type: SignalTransmitter
 - proto: computerBodyScanner
   entities:
   - uid: 7173
@@ -67371,332 +67203,172 @@ entities:
     - pos: -38.5,7.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 4025
-        Forward:
-        - port: Left
-          uid: 4025
-        Off:
-        - port: Middle
-          uid: 4025
-      type: SignalReceiver
+    - links:
+      - 4025
+      type: DeviceLinkSink
   - uid: 3357
     components:
     - pos: -38.5,6.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 4025
-        Forward:
-        - port: Left
-          uid: 4025
-        Off:
-        - port: Middle
-          uid: 4025
-      type: SignalReceiver
+    - links:
+      - 4025
+      type: DeviceLinkSink
   - uid: 3849
     components:
     - rot: -1.5707963267948966 rad
       pos: -34.5,5.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 3860
-        Forward:
-        - port: Left
-          uid: 3860
-        Off:
-        - port: Middle
-          uid: 3860
-      type: SignalReceiver
+    - links:
+      - 3860
+      type: DeviceLinkSink
   - uid: 3905
     components:
     - rot: -1.5707963267948966 rad
       pos: -42.5,19.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 4743
-        Forward:
-        - port: Left
-          uid: 4743
-        Off:
-        - port: Middle
-          uid: 4743
-      type: SignalReceiver
+    - links:
+      - 4743
+      type: DeviceLinkSink
   - uid: 3906
     components:
     - rot: -1.5707963267948966 rad
       pos: -43.5,19.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 4743
-        Forward:
-        - port: Left
-          uid: 4743
-        Off:
-        - port: Middle
-          uid: 4743
-      type: SignalReceiver
+    - links:
+      - 4743
+      type: DeviceLinkSink
   - uid: 3907
     components:
     - rot: -1.5707963267948966 rad
       pos: -44.5,19.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 4743
-        Forward:
-        - port: Left
-          uid: 4743
-        Off:
-        - port: Middle
-          uid: 4743
-      type: SignalReceiver
+    - links:
+      - 4743
+      type: DeviceLinkSink
   - uid: 3908
     components:
     - rot: -1.5707963267948966 rad
       pos: -45.5,19.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 4743
-        Forward:
-        - port: Left
-          uid: 4743
-        Off:
-        - port: Middle
-          uid: 4743
-      type: SignalReceiver
+    - links:
+      - 4743
+      type: DeviceLinkSink
   - uid: 3909
     components:
     - rot: 1.5707963267948966 rad
       pos: -45.5,15.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 4744
-        Forward:
-        - port: Left
-          uid: 4744
-        Off:
-        - port: Middle
-          uid: 4744
-      type: SignalReceiver
+    - links:
+      - 4744
+      type: DeviceLinkSink
   - uid: 3910
     components:
     - rot: 1.5707963267948966 rad
       pos: -44.5,15.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 4744
-        Forward:
-        - port: Left
-          uid: 4744
-        Off:
-        - port: Middle
-          uid: 4744
-      type: SignalReceiver
+    - links:
+      - 4744
+      type: DeviceLinkSink
   - uid: 3911
     components:
     - rot: 1.5707963267948966 rad
       pos: -43.5,15.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 4744
-        Forward:
-        - port: Left
-          uid: 4744
-        Off:
-        - port: Middle
-          uid: 4744
-      type: SignalReceiver
+    - links:
+      - 4744
+      type: DeviceLinkSink
   - uid: 3912
     components:
     - rot: 1.5707963267948966 rad
       pos: -42.5,15.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 4744
-        Forward:
-        - port: Left
-          uid: 4744
-        Off:
-        - port: Middle
-          uid: 4744
-      type: SignalReceiver
+    - links:
+      - 4744
+      type: DeviceLinkSink
   - uid: 4022
     components:
     - rot: -1.5707963267948966 rad
       pos: -35.5,5.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 3860
-        Forward:
-        - port: Left
-          uid: 3860
-        Off:
-        - port: Middle
-          uid: 3860
-      type: SignalReceiver
+    - links:
+      - 3860
+      type: DeviceLinkSink
   - uid: 4023
     components:
     - rot: -1.5707963267948966 rad
       pos: -36.5,5.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 3860
-        Forward:
-        - port: Left
-          uid: 3860
-        Off:
-        - port: Middle
-          uid: 3860
-      type: SignalReceiver
+    - links:
+      - 3860
+      type: DeviceLinkSink
   - uid: 4027
     components:
     - pos: -38.5,8.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 4025
-        Forward:
-        - port: Left
-          uid: 4025
-        Off:
-        - port: Middle
-          uid: 4025
-      type: SignalReceiver
+    - links:
+      - 4025
+      type: DeviceLinkSink
   - uid: 9394
     components:
     - pos: -40.5,41.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 9421
-        Forward:
-        - port: Left
-          uid: 9421
-        Off:
-        - port: Middle
-          uid: 9421
-      type: SignalReceiver
+    - links:
+      - 9421
+      type: DeviceLinkSink
   - uid: 9401
     components:
     - pos: -40.5,42.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 9421
-        Forward:
-        - port: Left
-          uid: 9421
-        Off:
-        - port: Middle
-          uid: 9421
-      type: SignalReceiver
+    - links:
+      - 9421
+      type: DeviceLinkSink
   - uid: 9402
     components:
     - pos: -40.5,43.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 9421
-        Forward:
-        - port: Left
-          uid: 9421
-        Off:
-        - port: Middle
-          uid: 9421
-      type: SignalReceiver
+    - links:
+      - 9421
+      type: DeviceLinkSink
   - uid: 9418
     components:
     - pos: -40.5,40.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 9421
-        Forward:
-        - port: Left
-          uid: 9421
-        Off:
-        - port: Middle
-          uid: 9421
-      type: SignalReceiver
+    - links:
+      - 9421
+      type: DeviceLinkSink
   - uid: 9419
     components:
     - pos: -40.5,39.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 9421
-        Forward:
-        - port: Left
-          uid: 9421
-        Off:
-        - port: Middle
-          uid: 9421
-      type: SignalReceiver
+    - links:
+      - 9421
+      type: DeviceLinkSink
   - uid: 9497
     components:
     - pos: -40.5,44.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 9421
-        Forward:
-        - port: Left
-          uid: 9421
-        Off:
-        - port: Middle
-          uid: 9421
-      type: SignalReceiver
+    - links:
+      - 9421
+      type: DeviceLinkSink
 - proto: Cowbar
   entities:
   - uid: 24791
@@ -123161,40 +122833,6 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
-- proto: Intercom
-  entities:
-  - uid: 24804
-    components:
-    - pos: -24.5,-5.5
-      parent: 5350
-      type: Transform
-  - uid: 24805
-    components:
-    - pos: 4.5,-17.5
-      parent: 5350
-      type: Transform
-  - uid: 24806
-    components:
-    - pos: 24.5,5.5
-      parent: 5350
-      type: Transform
-  - uid: 24807
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -16.5,18.5
-      parent: 5350
-      type: Transform
-  - uid: 24810
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -0.5,-41.5
-      parent: 5350
-      type: Transform
-  - uid: 24823
-    components:
-    - pos: -4.5,-60.5
-      parent: 5350
-      type: Transform
 - proto: IntercomAll
   entities:
   - uid: 24723
@@ -123262,6 +122900,40 @@ entities:
     components:
     - rot: 1.5707963267948966 rad
       pos: 103.5,8.5
+      parent: 5350
+      type: Transform
+- proto: IntercomCommon
+  entities:
+  - uid: 24804
+    components:
+    - pos: -24.5,-5.5
+      parent: 5350
+      type: Transform
+  - uid: 24805
+    components:
+    - pos: 4.5,-17.5
+      parent: 5350
+      type: Transform
+  - uid: 24806
+    components:
+    - pos: 24.5,5.5
+      parent: 5350
+      type: Transform
+  - uid: 24807
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -16.5,18.5
+      parent: 5350
+      type: Transform
+  - uid: 24810
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -0.5,-41.5
+      parent: 5350
+      type: Transform
+  - uid: 24823
+    components:
+    - pos: -4.5,-60.5
       parent: 5350
       type: Transform
 - proto: IntercomEngineering
@@ -125919,21 +125591,11 @@ entities:
       pos: 24.5,-30.5
       parent: 5350
       type: Transform
-    - inputs:
-        ArtifactAnalyzerReceiver:
-        - port: ArtifactAnalyzerSender
-          uid: 19453
-      type: SignalReceiver
   - uid: 19358
     components:
     - pos: 14.5,-54.5
       parent: 5350
       type: Transform
-    - inputs:
-        ArtifactAnalyzerReceiver:
-        - port: ArtifactAnalyzerSender
-          uid: 19352
-      type: SignalReceiver
 - proto: MachineFrame
   entities:
   - uid: 10387
@@ -135753,17 +135415,9 @@ entities:
     - pos: -40.5,38.5
       parent: 5350
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 9421
-        Forward:
-        - port: Left
-          uid: 9421
-        Off:
-        - port: Middle
-          uid: 9421
-      type: SignalReceiver
+    - links:
+      - 9421
+      type: DeviceLinkSink
 - proto: ReinforcedPlasmaWindow
   entities:
   - uid: 11288
@@ -139599,10 +139253,6 @@ entities:
         - Pressed: Toggle
         24685:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 24656
-        - 24685
       type: DeviceLinkSource
 - proto: ResearchAndDevelopmentServer
   entities:
@@ -140125,13 +139775,9 @@ entities:
     - pos: -16.5,-9.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 1495
-      type: SignalReceiver
+    - links:
+      - 1495
+      type: DeviceLinkSink
   - uid: 1543
     components:
     - pos: -18.5,4.5
@@ -140163,13 +139809,9 @@ entities:
       pos: -46.5,-17.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 18402
-      type: SignalReceiver
+    - links:
+      - 18402
+      type: DeviceLinkSink
   - uid: 19405
     components:
     - rot: -1.5707963267948966 rad
@@ -140181,43 +139823,28 @@ entities:
     - pos: 27.5,-57.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20957
-        - port: Pressed
-          uid: 20956
-      type: SignalReceiver
+    - links:
+      - 20956
+      - 20957
+      type: DeviceLinkSink
   - uid: 20959
     components:
     - pos: 29.5,-57.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20957
-        - port: Pressed
-          uid: 20956
-      type: SignalReceiver
+    - links:
+      - 20956
+      - 20957
+      type: DeviceLinkSink
   - uid: 22274
     components:
     - pos: 28.5,-57.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20957
-        - port: Pressed
-          uid: 20956
-      type: SignalReceiver
+    - links:
+      - 20956
+      - 20957
+      type: DeviceLinkSink
   - uid: 24656
     components:
     - rot: 1.5707963267948966 rad
@@ -140249,313 +139876,209 @@ entities:
     - pos: -17.5,-6.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 1369
-      type: SignalReceiver
+    - links:
+      - 1369
+      type: DeviceLinkSink
   - uid: 1368
     components:
     - pos: -12.5,-6.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 1369
-      type: SignalReceiver
+    - links:
+      - 1369
+      type: DeviceLinkSink
   - uid: 1429
     components:
     - pos: 2.5,-12.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 2050
-      type: SignalReceiver
+    - links:
+      - 2050
+      type: DeviceLinkSink
   - uid: 1435
     components:
     - pos: 3.5,-16.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 2050
-      type: SignalReceiver
+    - links:
+      - 2050
+      type: DeviceLinkSink
   - uid: 1441
     components:
     - pos: -1.5,-17.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 2050
-      type: SignalReceiver
+    - links:
+      - 2050
+      type: DeviceLinkSink
   - uid: 1442
     components:
     - pos: -2.5,-17.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 2050
-      type: SignalReceiver
+    - links:
+      - 2050
+      type: DeviceLinkSink
   - uid: 1443
     components:
     - pos: -3.5,-17.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 2050
-      type: SignalReceiver
+    - links:
+      - 2050
+      type: DeviceLinkSink
   - uid: 1444
     components:
     - pos: 2.5,-17.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 2050
-      type: SignalReceiver
+    - links:
+      - 2050
+      type: DeviceLinkSink
   - uid: 1445
     components:
     - pos: -7.5,-17.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 2050
-      type: SignalReceiver
+    - links:
+      - 2050
+      type: DeviceLinkSink
   - uid: 1446
     components:
     - pos: 3.5,-15.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 2050
-      type: SignalReceiver
+    - links:
+      - 2050
+      type: DeviceLinkSink
   - uid: 1447
     components:
     - pos: 0.5,-12.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 2050
-      type: SignalReceiver
+    - links:
+      - 2050
+      type: DeviceLinkSink
   - uid: 1576
     components:
     - pos: -5.5,-12.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 2050
-      type: SignalReceiver
+    - links:
+      - 2050
+      type: DeviceLinkSink
   - uid: 1577
     components:
     - pos: -7.5,-12.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 2050
-      type: SignalReceiver
+    - links:
+      - 2050
+      type: DeviceLinkSink
   - uid: 2415
     components:
     - pos: 25.5,-6.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 3064
-      type: SignalReceiver
+    - links:
+      - 3064
+      type: DeviceLinkSink
   - uid: 2416
     components:
     - pos: 24.5,-6.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 3064
-      type: SignalReceiver
+    - links:
+      - 3064
+      type: DeviceLinkSink
   - uid: 2417
     components:
     - pos: 23.5,-6.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 3064
-      type: SignalReceiver
+    - links:
+      - 3064
+      type: DeviceLinkSink
   - uid: 2418
     components:
     - pos: 22.5,-6.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 3064
-      type: SignalReceiver
+    - links:
+      - 3064
+      type: DeviceLinkSink
   - uid: 2419
     components:
     - pos: 21.5,-6.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 3064
-      type: SignalReceiver
+    - links:
+      - 3064
+      type: DeviceLinkSink
   - uid: 2420
     components:
     - pos: 20.5,-6.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 3064
-      type: SignalReceiver
+    - links:
+      - 3064
+      type: DeviceLinkSink
   - uid: 2421
     components:
     - pos: 19.5,-6.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 3064
-      type: SignalReceiver
+    - links:
+      - 3064
+      type: DeviceLinkSink
   - uid: 2422
     components:
     - pos: 32.5,-8.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 3063
-      type: SignalReceiver
+    - links:
+      - 3063
+      type: DeviceLinkSink
   - uid: 2423
     components:
     - pos: 31.5,-8.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 3063
-      type: SignalReceiver
+    - links:
+      - 3063
+      type: DeviceLinkSink
   - uid: 2424
     components:
     - pos: 30.5,-8.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 3063
-      type: SignalReceiver
+    - links:
+      - 3063
+      type: DeviceLinkSink
   - uid: 2425
     components:
     - pos: 29.5,-8.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 3063
-      type: SignalReceiver
+    - links:
+      - 3063
+      type: DeviceLinkSink
   - uid: 2426
     components:
     - pos: 28.5,-8.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 3063
-      type: SignalReceiver
+    - links:
+      - 3063
+      type: DeviceLinkSink
   - uid: 2427
     components:
     - pos: 27.5,-8.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 3063
-      type: SignalReceiver
+    - links:
+      - 3063
+      type: DeviceLinkSink
   - uid: 6250
     components:
     - pos: -3.5,26.5
@@ -140571,231 +140094,155 @@ entities:
     - pos: -12.5,26.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 5345
-      type: SignalReceiver
+    - links:
+      - 5345
+      type: DeviceLinkSink
   - uid: 6260
     components:
     - pos: -9.5,26.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 5345
-      type: SignalReceiver
+    - links:
+      - 5345
+      type: DeviceLinkSink
   - uid: 6261
     components:
     - pos: -7.5,26.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 5345
-      type: SignalReceiver
+    - links:
+      - 5345
+      type: DeviceLinkSink
   - uid: 6474
     components:
     - pos: -15.5,26.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 7364
-      type: SignalReceiver
+    - links:
+      - 7364
+      type: DeviceLinkSink
   - uid: 6897
     components:
     - pos: -14.5,30.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 7364
-      type: SignalReceiver
+    - links:
+      - 7364
+      type: DeviceLinkSink
   - uid: 7069
     components:
     - pos: -18.5,26.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 7364
-      type: SignalReceiver
+    - links:
+      - 7364
+      type: DeviceLinkSink
   - uid: 7365
     components:
     - pos: -17.5,26.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 7364
-      type: SignalReceiver
+    - links:
+      - 7364
+      type: DeviceLinkSink
   - uid: 7745
     components:
     - pos: -13.5,26.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 5345
-      type: SignalReceiver
+    - links:
+      - 5345
+      type: DeviceLinkSink
   - uid: 7746
     components:
     - pos: -10.5,26.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 5345
-      type: SignalReceiver
+    - links:
+      - 5345
+      type: DeviceLinkSink
   - uid: 7749
     components:
     - pos: -6.5,26.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 5345
-      type: SignalReceiver
+    - links:
+      - 5345
+      type: DeviceLinkSink
   - uid: 10335
     components:
     - pos: 1.5,41.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10478
-      type: SignalReceiver
+    - links:
+      - 10478
+      type: DeviceLinkSink
   - uid: 10479
     components:
     - pos: -11.5,52.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10482
-      type: SignalReceiver
+    - links:
+      - 10482
+      type: DeviceLinkSink
   - uid: 10480
     components:
     - pos: -7.5,52.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10482
-      type: SignalReceiver
+    - links:
+      - 10482
+      type: DeviceLinkSink
   - uid: 10481
     components:
     - pos: -3.5,52.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10482
-      type: SignalReceiver
+    - links:
+      - 10482
+      type: DeviceLinkSink
   - uid: 14914
     components:
     - pos: -14.5,-32.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 14913
-      type: SignalReceiver
+    - links:
+      - 14913
+      type: DeviceLinkSink
   - uid: 14915
     components:
     - pos: -15.5,-32.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 14913
-      type: SignalReceiver
+    - links:
+      - 14913
+      type: DeviceLinkSink
   - uid: 14916
     components:
     - pos: -16.5,-32.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 14913
-      type: SignalReceiver
+    - links:
+      - 14913
+      type: DeviceLinkSink
   - uid: 14917
     components:
     - rot: -1.5707963267948966 rad
       pos: -18.5,-36.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 14913
-      type: SignalReceiver
+    - links:
+      - 14913
+      type: DeviceLinkSink
   - uid: 14918
     components:
     - rot: -1.5707963267948966 rad
       pos: -18.5,-35.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 14913
-      type: SignalReceiver
+    - links:
+      - 14913
+      type: DeviceLinkSink
   - uid: 19429
     components:
     - pos: 9.5,-47.5
@@ -140804,13 +140251,9 @@ entities:
     - SecondsUntilStateChange: -25007.025
       state: Closing
       type: Door
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19435
-      type: SignalReceiver
+    - links:
+      - 19435
+      type: DeviceLinkSink
   - uid: 19430
     components:
     - pos: 10.5,-47.5
@@ -140819,13 +140262,9 @@ entities:
     - SecondsUntilStateChange: -25007.025
       state: Closing
       type: Door
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19435
-      type: SignalReceiver
+    - links:
+      - 19435
+      type: DeviceLinkSink
   - uid: 19431
     components:
     - pos: 11.5,-47.5
@@ -140834,13 +140273,9 @@ entities:
     - SecondsUntilStateChange: -25007.025
       state: Closing
       type: Door
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19435
-      type: SignalReceiver
+    - links:
+      - 19435
+      type: DeviceLinkSink
   - uid: 19432
     components:
     - pos: 13.5,-47.5
@@ -140849,13 +140284,9 @@ entities:
     - SecondsUntilStateChange: -25007.025
       state: Closing
       type: Door
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19435
-      type: SignalReceiver
+    - links:
+      - 19435
+      type: DeviceLinkSink
   - uid: 19433
     components:
     - pos: 14.5,-47.5
@@ -140864,13 +140295,9 @@ entities:
     - SecondsUntilStateChange: -25007.025
       state: Closing
       type: Door
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19435
-      type: SignalReceiver
+    - links:
+      - 19435
+      type: DeviceLinkSink
   - uid: 19434
     components:
     - pos: 15.5,-47.5
@@ -140879,13 +140306,9 @@ entities:
     - SecondsUntilStateChange: -25007.025
       state: Closing
       type: Door
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 19435
-      type: SignalReceiver
+    - links:
+      - 19435
+      type: DeviceLinkSink
   - uid: 19443
     components:
     - rot: -1.5707963267948966 rad
@@ -140910,311 +140333,211 @@ entities:
       pos: -32.5,-73.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 21657
-      type: SignalReceiver
+    - links:
+      - 21657
+      type: DeviceLinkSink
   - uid: 21650
     components:
     - rot: -1.5707963267948966 rad
       pos: -32.5,-71.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 21657
-      type: SignalReceiver
+    - links:
+      - 21657
+      type: DeviceLinkSink
   - uid: 21651
     components:
     - rot: -1.5707963267948966 rad
       pos: -32.5,-70.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 21657
-      type: SignalReceiver
+    - links:
+      - 21657
+      type: DeviceLinkSink
   - uid: 21652
     components:
     - rot: -1.5707963267948966 rad
       pos: -32.5,-69.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 21657
-      type: SignalReceiver
+    - links:
+      - 21657
+      type: DeviceLinkSink
   - uid: 21653
     components:
     - pos: -31.5,-74.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 21657
-      type: SignalReceiver
+    - links:
+      - 21657
+      type: DeviceLinkSink
   - uid: 21654
     components:
     - pos: -28.5,-74.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 21657
-      type: SignalReceiver
+    - links:
+      - 21657
+      type: DeviceLinkSink
   - uid: 21655
     components:
     - pos: -27.5,-74.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 21657
-      type: SignalReceiver
+    - links:
+      - 21657
+      type: DeviceLinkSink
   - uid: 21656
     components:
     - pos: -26.5,-74.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 21657
-      type: SignalReceiver
+    - links:
+      - 21657
+      type: DeviceLinkSink
   - uid: 22191
     components:
     - rot: -1.5707963267948966 rad
       pos: 9.5,-23.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 22198
-      type: SignalReceiver
+    - links:
+      - 22198
+      type: DeviceLinkSink
   - uid: 22192
     components:
     - rot: -1.5707963267948966 rad
       pos: 9.5,-24.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 22198
-      type: SignalReceiver
+    - links:
+      - 22198
+      type: DeviceLinkSink
   - uid: 22193
     components:
     - rot: -1.5707963267948966 rad
       pos: 9.5,-25.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 22198
-      type: SignalReceiver
+    - links:
+      - 22198
+      type: DeviceLinkSink
   - uid: 22194
     components:
     - rot: -1.5707963267948966 rad
       pos: 9.5,-26.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 22198
-      type: SignalReceiver
+    - links:
+      - 22198
+      type: DeviceLinkSink
   - uid: 22195
     components:
     - rot: -1.5707963267948966 rad
       pos: 9.5,-28.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 22198
-      type: SignalReceiver
+    - links:
+      - 22198
+      type: DeviceLinkSink
   - uid: 22196
     components:
     - rot: -1.5707963267948966 rad
       pos: 9.5,-30.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 22198
-      type: SignalReceiver
+    - links:
+      - 22198
+      type: DeviceLinkSink
   - uid: 22197
     components:
     - rot: -1.5707963267948966 rad
       pos: 9.5,-32.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 22198
-      type: SignalReceiver
+    - links:
+      - 22198
+      type: DeviceLinkSink
   - uid: 24426
     components:
     - pos: 7.5,43.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 24430
-      type: SignalReceiver
+    - links:
+      - 24430
+      type: DeviceLinkSink
   - uid: 24427
     components:
     - pos: 8.5,43.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 24430
-      type: SignalReceiver
+    - links:
+      - 24430
+      type: DeviceLinkSink
   - uid: 24428
     components:
     - pos: 10.5,43.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 24430
-      type: SignalReceiver
+    - links:
+      - 24430
+      type: DeviceLinkSink
   - uid: 24429
     components:
     - pos: 11.5,43.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 24430
-      type: SignalReceiver
+    - links:
+      - 24430
+      type: DeviceLinkSink
   - uid: 24626
     components:
     - pos: 19.5,-33.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 24632
-      type: SignalReceiver
+    - links:
+      - 24632
+      type: DeviceLinkSink
   - uid: 24627
     components:
     - pos: 21.5,-33.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 24632
-      type: SignalReceiver
+    - links:
+      - 24632
+      type: DeviceLinkSink
   - uid: 24628
     components:
     - pos: 22.5,-33.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 24632
-      type: SignalReceiver
+    - links:
+      - 24632
+      type: DeviceLinkSink
   - uid: 24629
     components:
     - pos: 19.5,-40.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 24632
-      type: SignalReceiver
+    - links:
+      - 24632
+      type: DeviceLinkSink
   - uid: 24630
     components:
     - pos: 20.5,-40.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 24632
-      type: SignalReceiver
+    - links:
+      - 24632
+      type: DeviceLinkSink
   - uid: 24631
     components:
     - pos: 22.5,-40.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 24632
-      type: SignalReceiver
+    - links:
+      - 24632
+      type: DeviceLinkSink
   - uid: 26399
     components:
     - pos: 104.5,3.5
@@ -141227,25 +140550,17 @@ entities:
     - pos: 56.5,23.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 24303
-      type: SignalReceiver
+    - links:
+      - 24303
+      type: DeviceLinkSink
   - uid: 24302
     components:
     - pos: 56.5,17.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 24304
-      type: SignalReceiver
+    - links:
+      - 24304
+      type: DeviceLinkSink
 - proto: ShuttersWindowOpen
   entities:
   - uid: 15185
@@ -141253,73 +140568,49 @@ entities:
     - pos: -35.5,-48.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 15183
-      type: SignalReceiver
+    - links:
+      - 15183
+      type: DeviceLinkSink
   - uid: 15186
     components:
     - pos: -34.5,-48.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 15183
-      type: SignalReceiver
+    - links:
+      - 15183
+      type: DeviceLinkSink
   - uid: 15187
     components:
     - pos: -33.5,-48.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 15183
-      type: SignalReceiver
+    - links:
+      - 15183
+      type: DeviceLinkSink
   - uid: 15188
     components:
     - pos: -23.5,-48.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 15184
-      type: SignalReceiver
+    - links:
+      - 15184
+      type: DeviceLinkSink
   - uid: 15189
     components:
     - pos: -24.5,-48.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 15184
-      type: SignalReceiver
+    - links:
+      - 15184
+      type: DeviceLinkSink
   - uid: 15190
     components:
     - pos: -25.5,-48.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 15184
-      type: SignalReceiver
+    - links:
+      - 15184
+      type: DeviceLinkSink
 - proto: ShuttleConsoleCircuitboard
   entities:
   - uid: 14518
@@ -141346,139 +140637,131 @@ entities:
     - pos: -15.5,-0.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 1367
-        - port: Toggle
-          uid: 1368
-      type: SignalTransmitter
+    - linkedPorts:
+        1367:
+        - Pressed: Toggle
+        1368:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 1495
     components:
     - pos: -14.5,-13.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 1493
-      type: SignalTransmitter
+    - linkedPorts:
+        1493:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 2050
     components:
     - pos: -7.5,-15.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 1577
-        - port: Toggle
-          uid: 1576
-        - port: Toggle
-          uid: 1445
-        - port: Toggle
-          uid: 1443
-        - port: Toggle
-          uid: 1442
-        - port: Toggle
-          uid: 1441
-        - port: Toggle
-          uid: 1444
-        - port: Toggle
-          uid: 1447
-        - port: Toggle
-          uid: 1429
-        - port: Toggle
-          uid: 1446
-        - port: Toggle
-          uid: 1435
-      type: SignalTransmitter
+    - linkedPorts:
+        1577:
+        - Pressed: Toggle
+        1576:
+        - Pressed: Toggle
+        1445:
+        - Pressed: Toggle
+        1443:
+        - Pressed: Toggle
+        1442:
+        - Pressed: Toggle
+        1441:
+        - Pressed: Toggle
+        1444:
+        - Pressed: Toggle
+        1447:
+        - Pressed: Toggle
+        1429:
+        - Pressed: Toggle
+        1446:
+        - Pressed: Toggle
+        1435:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 3063
     components:
     - pos: 32.5,-12.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 2422
-        - port: Toggle
-          uid: 2423
-        - port: Toggle
-          uid: 2424
-        - port: Toggle
-          uid: 2425
-        - port: Toggle
-          uid: 2426
-        - port: Toggle
-          uid: 2427
-      type: SignalTransmitter
+    - linkedPorts:
+        2422:
+        - Pressed: Toggle
+        2423:
+        - Pressed: Toggle
+        2424:
+        - Pressed: Toggle
+        2425:
+        - Pressed: Toggle
+        2426:
+        - Pressed: Toggle
+        2427:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 3064
     components:
     - pos: 21.5,-11.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 2421
-        - port: Toggle
-          uid: 2420
-        - port: Toggle
-          uid: 2419
-        - port: Toggle
-          uid: 2418
-        - port: Toggle
-          uid: 2417
-        - port: Toggle
-          uid: 2416
-        - port: Toggle
-          uid: 2415
-      type: SignalTransmitter
+    - linkedPorts:
+        2421:
+        - Pressed: Toggle
+        2420:
+        - Pressed: Toggle
+        2419:
+        - Pressed: Toggle
+        2418:
+        - Pressed: Toggle
+        2417:
+        - Pressed: Toggle
+        2416:
+        - Pressed: Toggle
+        2415:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 4747
     components:
     - pos: -43.5,14.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 4308
-        - port: Toggle
-          uid: 4145
-      type: SignalTransmitter
+    - linkedPorts:
+        4308:
+        - Pressed: Toggle
+        4145:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 4748
     components:
     - pos: -43.5,20.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 5045
-        - port: Toggle
-          uid: 4746
-      type: SignalTransmitter
+    - linkedPorts:
+        5045:
+        - Pressed: Toggle
+        4746:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 5345
     components:
     - pos: -9.5,32.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 7745
-        - port: Toggle
-          uid: 6259
-        - port: Toggle
-          uid: 7746
-        - port: Toggle
-          uid: 6260
-        - port: Toggle
-          uid: 6261
-        - port: Toggle
-          uid: 7749
-      type: SignalTransmitter
+    - linkedPorts:
+        7745:
+        - Pressed: Toggle
+        6259:
+        - Pressed: Toggle
+        7746:
+        - Pressed: Toggle
+        6260:
+        - Pressed: Toggle
+        6261:
+        - Pressed: Toggle
+        7749:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 7364
     components:
     - pos: -14.5,29.5
@@ -141486,111 +140769,102 @@ entities:
       type: Transform
     - state: True
       type: SignalSwitch
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 6897
-        - port: Toggle
-          uid: 6474
-        - port: Toggle
-          uid: 7365
-        - port: Toggle
-          uid: 7069
-      type: SignalTransmitter
+    - linkedPorts:
+        6897:
+        - Pressed: Toggle
+        6474:
+        - Pressed: Toggle
+        7365:
+        - Pressed: Toggle
+        7069:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 8979
     components:
     - pos: 50.5,-5.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 8978
-        - port: Toggle
-          uid: 8981
-        - port: Toggle
-          uid: 8980
-      type: SignalTransmitter
+    - linkedPorts:
+        8978:
+        - Pressed: Toggle
+        8981:
+        - Pressed: Toggle
+        8980:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 9439
     components:
     - pos: -39.5,41.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 9437
-      type: SignalTransmitter
+    - linkedPorts:
+        9437:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 9440
     components:
     - pos: -39.5,42.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 9438
-      type: SignalTransmitter
+    - linkedPorts:
+        9438:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 10478
     components:
     - pos: -0.5,41.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 10335
-      type: SignalTransmitter
+    - linkedPorts:
+        10335:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 10482
     components:
     - pos: -5.5,49.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 10481
-        - port: Toggle
-          uid: 10480
-        - port: Toggle
-          uid: 10479
-      type: SignalTransmitter
+    - linkedPorts:
+        10481:
+        - Pressed: Toggle
+        10480:
+        - Pressed: Toggle
+        10479:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 10486
     components:
     - pos: -9.5,44.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 10485
-        - port: Toggle
-          uid: 10484
-        - port: Toggle
-          uid: 10483
-      type: SignalTransmitter
+    - linkedPorts:
+        10485:
+        - Pressed: Toggle
+        10484:
+        - Pressed: Toggle
+        10483:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 12021
     components:
     - pos: 45.5,-29.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 11487
-        - port: Toggle
-          uid: 11486
-      type: SignalTransmitter
+    - linkedPorts:
+        11487:
+        - Pressed: Toggle
+        11486:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 12022
     components:
     - pos: 64.5,-5.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 10293
-      type: SignalTransmitter
+    - linkedPorts:
+        10293:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 12569
     components:
     - name: Engineering Blast Doors
@@ -141598,71 +140872,66 @@ entities:
     - pos: 48.5,6.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 12566
-        - port: Toggle
-          uid: 12567
-        - port: Toggle
-          uid: 12568
-      type: SignalTransmitter
+    - linkedPorts:
+        12566:
+        - Pressed: Toggle
+        12567:
+        - Pressed: Toggle
+        12568:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 14913
     components:
     - pos: -12.5,-38.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 14916
-        - port: Toggle
-          uid: 14915
-        - port: Toggle
-          uid: 14914
-        - port: Toggle
-          uid: 14918
-        - port: Toggle
-          uid: 14917
-      type: SignalTransmitter
+    - linkedPorts:
+        14916:
+        - Pressed: Toggle
+        14915:
+        - Pressed: Toggle
+        14914:
+        - Pressed: Toggle
+        14918:
+        - Pressed: Toggle
+        14917:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 15183
     components:
     - pos: -30.5,-49.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 15187
-        - port: Toggle
-          uid: 15186
-        - port: Toggle
-          uid: 15185
-      type: SignalTransmitter
+    - linkedPorts:
+        15187:
+        - Pressed: Toggle
+        15186:
+        - Pressed: Toggle
+        15185:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 15184
     components:
     - pos: -28.5,-49.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 15190
-        - port: Toggle
-          uid: 15189
-        - port: Toggle
-          uid: 15188
-      type: SignalTransmitter
+    - linkedPorts:
+        15190:
+        - Pressed: Toggle
+        15189:
+        - Pressed: Toggle
+        15188:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 18402
     components:
     - pos: -46.5,-18.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 18218
-      type: SignalTransmitter
+    - linkedPorts:
+        18218:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 19435
     components:
     - name: Window Shutters
@@ -141670,21 +140939,20 @@ entities:
     - pos: 12.5,-48.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 19429
-        - port: Toggle
-          uid: 19430
-        - port: Toggle
-          uid: 19431
-        - port: Toggle
-          uid: 19432
-        - port: Toggle
-          uid: 19433
-        - port: Toggle
-          uid: 19434
-      type: SignalTransmitter
+    - linkedPorts:
+        19429:
+        - Pressed: Toggle
+        19430:
+        - Pressed: Toggle
+        19431:
+        - Pressed: Toggle
+        19432:
+        - Pressed: Toggle
+        19433:
+        - Pressed: Toggle
+        19434:
+        - Pressed: Toggle
+      type: DeviceLinkSource
     - type: ItemCooldown
   - uid: 19438
     components:
@@ -141693,17 +140961,16 @@ entities:
     - pos: 12.5,-51.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 19363
-        - port: Toggle
-          uid: 19362
-        - port: Toggle
-          uid: 19365
-        - port: Toggle
-          uid: 19364
-      type: SignalTransmitter
+    - linkedPorts:
+        19363:
+        - Pressed: Toggle
+        19362:
+        - Pressed: Toggle
+        19365:
+        - Pressed: Toggle
+        19364:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 19439
     components:
     - name: maint blast door
@@ -141711,11 +140978,10 @@ entities:
     - pos: 16.5,-51.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 19345
-      type: SignalTransmitter
+    - linkedPorts:
+        19345:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 19446
     components:
     - pos: 0.5,-37.5
@@ -141726,115 +140992,108 @@ entities:
     - pos: 1.5,-33.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 19344
-        - port: Toggle
-          uid: 19343
-        - port: Toggle
-          uid: 19341
-      type: SignalTransmitter
+    - linkedPorts:
+        19344:
+        - Pressed: Toggle
+        19343:
+        - Pressed: Toggle
+        19341:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 20956
     components:
     - pos: 30.5,-58.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 20959
-        - port: Toggle
-          uid: 22274
-        - port: Toggle
-          uid: 20879
-      type: SignalTransmitter
+    - linkedPorts:
+        20959:
+        - Pressed: Toggle
+        22274:
+        - Pressed: Toggle
+        20879:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 20957
     components:
     - pos: 26.5,-57.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 20879
-        - port: Toggle
-          uid: 22274
-        - port: Toggle
-          uid: 20959
-      type: SignalTransmitter
+    - linkedPorts:
+        20879:
+        - Pressed: Toggle
+        22274:
+        - Pressed: Toggle
+        20959:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 21657
     components:
     - pos: -30.5,-72.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 21652
-        - port: Toggle
-          uid: 21651
-        - port: Toggle
-          uid: 21650
-        - port: Toggle
-          uid: 21649
-        - port: Toggle
-          uid: 21653
-        - port: Toggle
-          uid: 21654
-        - port: Toggle
-          uid: 21655
-        - port: Toggle
-          uid: 21656
-      type: SignalTransmitter
+    - linkedPorts:
+        21652:
+        - Pressed: Toggle
+        21651:
+        - Pressed: Toggle
+        21650:
+        - Pressed: Toggle
+        21649:
+        - Pressed: Toggle
+        21653:
+        - Pressed: Toggle
+        21654:
+        - Pressed: Toggle
+        21655:
+        - Pressed: Toggle
+        21656:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 22198
     components:
     - pos: 9.5,-27.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 22191
-        - port: Toggle
-          uid: 22192
-        - port: Toggle
-          uid: 22193
-        - port: Toggle
-          uid: 22194
-        - port: Toggle
-          uid: 22195
-        - port: Toggle
-          uid: 22196
-        - port: Toggle
-          uid: 22197
-      type: SignalTransmitter
+    - linkedPorts:
+        22191:
+        - Pressed: Toggle
+        22192:
+        - Pressed: Toggle
+        22193:
+        - Pressed: Toggle
+        22194:
+        - Pressed: Toggle
+        22195:
+        - Pressed: Toggle
+        22196:
+        - Pressed: Toggle
+        22197:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 23796
     components:
     - pos: 54.5,18.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 23419
-        - port: Toggle
-          uid: 23418
-        - port: Toggle
-          uid: 23417
-      type: SignalTransmitter
+    - linkedPorts:
+        23419:
+        - Pressed: Toggle
+        23418:
+        - Pressed: Toggle
+        23417:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 23946
     components:
     - pos: 52.5,27.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 23664
-        - port: Toggle
-          uid: 23947
-      type: SignalTransmitter
+    - linkedPorts:
+        23664:
+        - Pressed: Toggle
+        23947:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 24075
     components:
     - name: maint blast door
@@ -141842,67 +141101,62 @@ entities:
     - pos: 20.5,-51.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 19346
-      type: SignalTransmitter
+    - linkedPorts:
+        19346:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 24303
     components:
     - pos: 57.5,23.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 24301
-      type: SignalTransmitter
+    - linkedPorts:
+        24301:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 24304
     components:
     - pos: 57.5,17.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 24302
-      type: SignalTransmitter
+    - linkedPorts:
+        24302:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 24430
     components:
     - pos: 6.5,48.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 24426
-        - port: Toggle
-          uid: 24427
-        - port: Toggle
-          uid: 24428
-        - port: Toggle
-          uid: 24429
-      type: SignalTransmitter
+    - linkedPorts:
+        24426:
+        - Pressed: Toggle
+        24427:
+        - Pressed: Toggle
+        24428:
+        - Pressed: Toggle
+        24429:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 24632
     components:
     - pos: 18.5,-39.5
       parent: 5350
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 24629
-        - port: Toggle
-          uid: 24630
-        - port: Toggle
-          uid: 24631
-        - port: Toggle
-          uid: 24626
-        - port: Toggle
-          uid: 24627
-        - port: Toggle
-          uid: 24628
-      type: SignalTransmitter
+    - linkedPorts:
+        24629:
+        - Pressed: Toggle
+        24630:
+        - Pressed: Toggle
+        24631:
+        - Pressed: Toggle
+        24626:
+        - Pressed: Toggle
+        24627:
+        - Pressed: Toggle
+        24628:
+        - Pressed: Toggle
+      type: DeviceLinkSource
 - proto: SignalButtonExt1
   entities:
   - uid: 24633
@@ -151794,177 +151048,120 @@ entities:
     - pos: -34.5,6.5
       parent: 5350
       type: Transform
-    - outputs:
-        Left:
-        - port: Forward
-          uid: 3849
-        - port: Forward
-          uid: 4022
-        - port: Forward
-          uid: 4023
-        Right:
-        - port: Reverse
-          uid: 3849
-        - port: Reverse
-          uid: 4022
-        - port: Reverse
-          uid: 4023
-        Middle:
-        - port: Off
-          uid: 3849
-        - port: Off
-          uid: 4022
-        - port: Off
-          uid: 4023
-      type: SignalTransmitter
+    - linkedPorts:
+        3849:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        4022:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        4023:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+      type: DeviceLinkSource
   - uid: 4025
     components:
     - pos: -39.5,6.5
       parent: 5350
       type: Transform
-    - outputs:
-        Left:
-        - port: Forward
-          uid: 3357
-        - port: Forward
-          uid: 1992
-        - port: Forward
-          uid: 4027
-        Right:
-        - port: Reverse
-          uid: 3357
-        - port: Reverse
-          uid: 1992
-        - port: Reverse
-          uid: 4027
-        Middle:
-        - port: Off
-          uid: 3357
-        - port: Off
-          uid: 1992
-        - port: Off
-          uid: 4027
-      type: SignalTransmitter
+    - linkedPorts:
+        3357:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        1992:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        4027:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+      type: DeviceLinkSource
   - uid: 4743
     components:
     - pos: -41.5,20.5
       parent: 5350
       type: Transform
-    - outputs:
-        Left:
-        - port: Forward
-          uid: 3905
-        - port: Forward
-          uid: 3906
-        - port: Forward
-          uid: 3907
-        - port: Forward
-          uid: 3908
-        Right:
-        - port: Reverse
-          uid: 3905
-        - port: Reverse
-          uid: 3906
-        - port: Reverse
-          uid: 3907
-        - port: Reverse
-          uid: 3908
-        Middle:
-        - port: Off
-          uid: 3905
-        - port: Off
-          uid: 3906
-        - port: Off
-          uid: 3907
-        - port: Off
-          uid: 3908
-      type: SignalTransmitter
+    - linkedPorts:
+        3905:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        3906:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        3907:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        3908:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+      type: DeviceLinkSource
   - uid: 4744
     components:
     - pos: -41.5,14.5
       parent: 5350
       type: Transform
-    - outputs:
-        Left:
-        - port: Forward
-          uid: 3912
-        - port: Forward
-          uid: 3911
-        - port: Forward
-          uid: 3910
-        - port: Forward
-          uid: 3909
-        Right:
-        - port: Reverse
-          uid: 3912
-        - port: Reverse
-          uid: 3911
-        - port: Reverse
-          uid: 3910
-        - port: Reverse
-          uid: 3909
-        Middle:
-        - port: Off
-          uid: 3912
-        - port: Off
-          uid: 3911
-        - port: Off
-          uid: 3910
-        - port: Off
-          uid: 3909
-      type: SignalTransmitter
+    - linkedPorts:
+        3912:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        3911:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        3910:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        3909:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+      type: DeviceLinkSource
   - uid: 9421
     components:
     - pos: -38.5,41.5
       parent: 5350
       type: Transform
-    - outputs:
-        Left:
-        - port: Forward
-          uid: 9402
-        - port: Forward
-          uid: 9401
-        - port: Forward
-          uid: 9394
-        - port: Forward
-          uid: 9418
-        - port: Forward
-          uid: 9419
-        - port: Forward
-          uid: 9420
-        - port: Forward
-          uid: 9497
-        Right:
-        - port: Reverse
-          uid: 9402
-        - port: Reverse
-          uid: 9401
-        - port: Reverse
-          uid: 9394
-        - port: Reverse
-          uid: 9418
-        - port: Reverse
-          uid: 9419
-        - port: Reverse
-          uid: 9420
-        - port: Reverse
-          uid: 9497
-        Middle:
-        - port: Off
-          uid: 9402
-        - port: Off
-          uid: 9401
-        - port: Off
-          uid: 9394
-        - port: Off
-          uid: 9418
-        - port: Off
-          uid: 9419
-        - port: Off
-          uid: 9420
-        - port: Off
-          uid: 9497
-      type: SignalTransmitter
+    - linkedPorts:
+        9402:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        9401:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        9394:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        9418:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        9419:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        9420:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        9497:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+      type: DeviceLinkSource
 - proto: UnfinishedMachineFrame
   entities:
   - uid: 10388
@@ -171635,52 +170832,16 @@ entities:
     - pos: -6.5,29.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open:
-        - port: Timer
-          uid: 5344
-        Close:
-        - port: Start
-          uid: 5344
-        Toggle: []
-        AutoClose:
-        - port: Timer
-          uid: 5344
-      type: SignalReceiver
   - uid: 8058
     components:
     - pos: -9.5,29.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open:
-        - port: Timer
-          uid: 5347
-        Close:
-        - port: Start
-          uid: 5347
-        Toggle: []
-        AutoClose:
-        - port: Timer
-          uid: 5347
-      type: SignalReceiver
   - uid: 8059
     components:
     - pos: -12.5,29.5
       parent: 5350
       type: Transform
-    - inputs:
-        Open:
-        - port: Timer
-          uid: 5348
-        Close:
-        - port: Start
-          uid: 5348
-        Toggle: []
-        AutoClose:
-        - port: Timer
-          uid: 5348
-      type: SignalReceiver
   - uid: 9993
     components:
     - rot: 3.141592653589793 rad
