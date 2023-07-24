@@ -12,7 +12,7 @@
 - type: entity
   id: BriefcaseSyndieSniperBundleFilled
   name: brown briefcase
-  parent: BriefcaseSyndie
+  parent: BriefcaseSyndieBase
   suffix: Filled
   components:
   - type: StorageFill
