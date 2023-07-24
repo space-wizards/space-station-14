@@ -26,7 +26,6 @@ namespace Content.Server.MachineLinking.System
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SignalTransmitterComponent, ComponentStartup>(OnTransmitterStartup);
             SubscribeLocalEvent<SignalTransmitterComponent, ComponentRemove>(OnTransmitterRemoved);
             SubscribeLocalEvent<SignalTransmitterComponent, InteractUsingEvent>(OnTransmitterInteractUsing);
             SubscribeLocalEvent<SignalTransmitterComponent, GetVerbsEvent<AlternativeVerb>>(OnGetTransmitterVerbs);
@@ -159,42 +158,9 @@ namespace Content.Server.MachineLinking.System
             }
         }
 
-        private void OnTransmitterStartup(EntityUid uid, SignalTransmitterComponent transmitter, ComponentStartup args)
-        {
-            // validate links
-            Dictionary<EntityUid, SignalReceiverComponent?> uidCache = new();
-            foreach (var tport in transmitter.Outputs)
-            {
-                foreach (var rport in tport.Value)
-                {
-                    if (!uidCache.TryGetValue(rport.Uid, out var receiver))
-                        uidCache.Add(rport.Uid, receiver = CompOrNull<SignalReceiverComponent>(rport.Uid));
-                    if (receiver == null || !receiver.Inputs.TryGetValue(rport.Port, out var rpv))
-                        tport.Value.Remove(rport);
-                    else if (!rpv.Contains(new(uid, tport.Key)))
-                        rpv.Add(new(uid, tport.Key));
-                }
-            }
-        }
-
         private void OnReceiverStartup(EntityUid uid, SignalReceiverComponent receiver, ComponentStartup args)
         {
-            // validate links
-            Dictionary<EntityUid, SignalTransmitterComponent?> uidCache = new();
-            foreach (var rport in receiver.Inputs)
-            {
-                var toRemove = new List<PortIdentifier>();
-                foreach (var tport in rport.Value)
-                {
-                    if (!uidCache.TryGetValue(tport.Uid, out var transmitter))
-                        uidCache.Add(tport.Uid, transmitter = CompOrNull<SignalTransmitterComponent>(tport.Uid));
-                    if (transmitter == null || !transmitter.Outputs.TryGetValue(tport.Port, out var tpv))
-                        toRemove.Add(tport);
-                    else if (!tpv.Contains(new(uid, rport.Key)))
-                        tpv.Add(new(uid, rport.Key));
-                }
-                toRemove.ForEach(tport => rport.Value.Remove(tport));
-            }
+            RemCompDeferred<SignalReceiverComponent>(uid);
         }
 
         private void OnTransmitterRemoved(EntityUid uid, SignalTransmitterComponent transmitter, ComponentRemove args)

@@ -159,7 +159,8 @@ public sealed class RadioSystem : EntitySystem
             if (EntityManager.TryGetComponent(idUid, out PdaComponent? pda) && pda.ContainedId is not null)
             {
                 // PDA
-                idCardTitle = pda.ContainedId.JobTitle ?? idCardTitle;
+                if (TryComp<IdCardComponent>(pda.ContainedId, out var idComp))
+                    idCardTitle = idComp.JobTitle ?? idCardTitle;
             }
             else if (EntityManager.TryGetComponent(idUid, out IdCardComponent? id))
             {

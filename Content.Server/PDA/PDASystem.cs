@@ -9,6 +9,7 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
+using Content.Shared.Access.Components;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -117,14 +118,15 @@ namespace Content.Server.PDA
             // TODO: Update the level and name of the station with each call to UpdatePdaUi is only needed for latejoin players.
             // TODO: If someone can implement changing the level and name of the station when changing the PDA grid, this can be removed.
 
+            var id = CompOrNull<IdCardComponent>(pda.ContainedId);
             var state = new PdaUpdateState(
                 pda.FlashlightOn,
                 pda.PenSlot.HasItem,
                 new PdaIdInfoText
                 {
                     ActualOwnerName = pda.OwnerName,
-                    IdOwner = pda.ContainedId?.FullName,
-                    JobTitle = pda.ContainedId?.JobTitle,
+                    IdOwner = id?.FullName,
+                    JobTitle = id?.JobTitle,
                     StationAlertLevel = pda.StationAlertLevel,
                     StationAlertColor = pda.StationAlertColor
                 },
