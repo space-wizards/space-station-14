@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.Gameplay;
 using Content.Shared.CombatMode;
+using Content.Shared.Effects;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.StatusEffect;
@@ -37,9 +38,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     public override void Initialize()
     {
         base.Initialize();
-        InitializeEffect();
         _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _player, _protoManager));
-        SubscribeAllEvent<DamageEffectEvent>(OnDamageEffect);
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
         UpdatesOutsidePrediction = true;
     }

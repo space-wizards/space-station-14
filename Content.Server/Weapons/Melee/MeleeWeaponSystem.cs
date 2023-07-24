@@ -9,11 +9,9 @@ using Content.Server.CombatMode.Disarm;
 using Content.Server.Contests;
 using Content.Server.Examine;
 using Content.Server.Movement.Systems;
-using Content.Server.Popups;
 using Content.Shared.Administration.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.CombatMode;
-using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
@@ -33,6 +31,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Shared.Effects;
 
 namespace Content.Server.Weapons.Melee;
 

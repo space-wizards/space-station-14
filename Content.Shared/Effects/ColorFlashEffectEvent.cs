@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Weapons.Melee;
+namespace Content.Shared.Effects;
 
 /// <summary>
 /// Raised on the server and sent to a client to play the damage animation.
