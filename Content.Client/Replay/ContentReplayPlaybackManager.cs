@@ -126,7 +126,7 @@ public sealed class ContentReplayPlaybackManager
         {
             case ChatMessage chat:
                 // Pass the chat message to the UI controller, skip the speech-bubble / pop-up.
-                _uiMan.GetUIController<ChatUIController>().ProcessChatMessage(chat, speechBubble: false);
+                _uiMan.GetUIController<ChatUIController>().ProcessChatMessage(chat);
                 return true;
             case RoundEndMessageEvent:
             case PopupEvent:
