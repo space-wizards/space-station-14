@@ -8978,11 +8978,6 @@ entities:
     - pos: 13.5,-44.5
       parent: 4812
       type: Transform
-  - uid: 11646
-    components:
-    - pos: 12.5,-44.5
-      parent: 4812
-      type: Transform
   - uid: 11647
     components:
     - pos: 12.5,-45.5
@@ -33302,6 +33297,13 @@ entities:
     - pos: -28.506933,-33.546886
       parent: 4812
       type: Transform
+- proto: ClothingUniformJumpskirtTacticalMaid
+  entities:
+  - uid: 8379
+    components:
+    - pos: 12.547598,-44.418983
+      parent: 4812
+      type: Transform
 - proto: ClothingUniformJumpsuitDetective
   entities:
   - uid: 10606
@@ -34097,6 +34099,13 @@ entities:
   - uid: 7366
     components:
     - pos: 19.5,-26.5
+      parent: 4812
+      type: Transform
+- proto: CrateCoffin
+  entities:
+  - uid: 9993
+    components:
+    - pos: -23.5,-35.5
       parent: 4812
       type: Transform
 - proto: CrateEmergencyInternals
@@ -58318,6 +58327,13 @@ entities:
     - pos: -36.5,19.5
       parent: 4812
       type: Transform
+- proto: GunSafeSubMachineGunDrozd
+  entities:
+  - uid: 10442
+    components:
+    - pos: -33.5,19.5
+      parent: 4812
+      type: Transform
 - proto: Handcuffs
   entities:
   - uid: 4865
@@ -60749,29 +60765,6 @@ entities:
     - pos: 4.5,-40.5
       parent: 4812
       type: Transform
-- proto: MagazinePistol
-  entities:
-  - uid: 12109
-    components:
-    - pos: -33.475456,19.662907
-      parent: 4812
-      type: Transform
-    - unspawnedCount: 10
-      type: BallisticAmmoProvider
-  - uid: 12110
-    components:
-    - pos: -33.600456,19.662907
-      parent: 4812
-      type: Transform
-    - unspawnedCount: 10
-      type: BallisticAmmoProvider
-  - uid: 12111
-    components:
-    - pos: -33.33483,19.662907
-      parent: 4812
-      type: Transform
-    - unspawnedCount: 10
-      type: BallisticAmmoProvider
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 278
@@ -64934,11 +64927,6 @@ entities:
   - uid: 8377
     components:
     - pos: -35.5,19.5
-      parent: 4812
-      type: Transform
-  - uid: 8379
-    components:
-    - pos: -33.5,19.5
       parent: 4812
       type: Transform
   - uid: 8424
@@ -83132,23 +83120,6 @@ entities:
   - uid: 12471
     components:
     - pos: -33.4461,20.218811
-      parent: 4812
-      type: Transform
-- proto: WeaponPistolMk58
-  entities:
-  - uid: 12056
-    components:
-    - pos: -33.51976,19.584782
-      parent: 4812
-      type: Transform
-  - uid: 12057
-    components:
-    - pos: -33.441635,19.491032
-      parent: 4812
-      type: Transform
-  - uid: 12083
-    components:
-    - pos: -33.379135,19.381657
       parent: 4812
       type: Transform
 - proto: WeaponRevolverDeckard
