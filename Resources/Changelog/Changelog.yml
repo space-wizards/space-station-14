@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Bags of holding now are significantly more expensive to produce., type: Tweak}
-  id: 3818
-  time: '2023-05-20T00:59:07.0000000+00:00'
 - author: WlarusFromDaSpace
   changes:
   - {message: The sad trombone implant now correctly only triggers whenever a mob
@@ -2976,3 +2971,8 @@ Entries:
   - {message: Observers move faster now., type: Tweak}
   id: 4317
   time: '2023-07-25T00:33:01.0000000+00:00'
+- author: AjexRose
+  changes:
+  - {message: Central Command has given the command locked crates a new look, type: Tweak}
+  id: 4318
+  time: '2023-07-25T20:18:02.0000000+00:00'
