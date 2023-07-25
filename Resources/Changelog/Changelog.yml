@@ -1,15 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Tech disks no longer contain exclusive discipline technology., type: Fix}
-  - {message: Printing tech disks now costs fewer points., type: Tweak}
-  id: 3821
-  time: '2023-05-20T02:10:29.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: added space glue tube (can appear in maintenance lockers), type: Add}
-  id: 3822
-  time: '2023-05-20T02:42:38.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix fire stacks not spreading to other players., type: Fix}
@@ -2975,3 +2964,28 @@ Entries:
   - {message: fixed spirete modular receiver and rifle stock, type: Fix}
   id: 4320
   time: '2023-07-25T21:29:56.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Non-human zombies now are the proper color and zombies can now identify
+      one another and are unable to harm one another., type: Add}
+  - {message: 'Removed zombie revival, decreased passive zombie healing, and adjusted
+      zombie weaknesses.', type: Add}
+  - {message: Fixed zombie NPCs continuing to attack other zombies., type: Fix}
+  - {message: Zombies can now pry open doors., type: Tweak}
+  - {message: Made initial infection selection more obvious., type: Tweak}
+  - {message: Fixed an issue where midround zombie outbreaks wouldn't create any zombies.,
+    type: Fix}
+  - {message: Initial infected selection is now delayed at the start of zombie rounds.,
+    type: Tweak}
+  - {message: The emergency shuttle is now automatically called when enough crew become
+      zombies., type: Add}
+  - {message: Reenabled zombie mode in secret., type: Add}
+  id: 4321
+  time: '2023-07-25T21:31:35.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Animals can now drink satiating liquids like water or beer when thirsty.,
+    type: Tweak}
+  - {message: Animals no longer eat with a full belly., type: Tweak}
+  id: 4322
+  time: '2023-07-25T21:32:11.0000000+00:00'
