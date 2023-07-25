@@ -13,16 +13,16 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 1.2
-          Slash: 1.2
-          Piercing: 1.2
-          Heat: 1.2
+          Blunt: 1.44
+          Slash: 1.44
+          Piercing: 1.44
+          Heat: 1.44
       activeBlockModifier:
         coefficients:
-          Blunt: 0.2
-          Slash: 0.2
-          Piercing: 0.2
-          Heat: 0.2
+          Blunt: 0.24
+          Slash: 0.24
+          Piercing: 0.24
+          Heat: 0.24
     - type: Destructible
       thresholds:
         - trigger:
@@ -72,19 +72,6 @@
       state: riot_laser-icon
     - type: Item
       heldPrefix: riot_laser
-    - type: Blocking
-      passiveBlockModifier:
-        coefficients:
-          Blunt: 1.2
-          Slash: 1.2
-          Piercing: 1.2
-          Heat: 1.2
-      activeBlockModifier:
-        coefficients:
-          Blunt: 0.2
-          Slash: 0.2
-          Piercing: 0.2
-          Heat: 0.2
     - type: Destructible
       thresholds:
         - trigger:
@@ -121,19 +108,6 @@
       state: riot_bullet-icon
     - type: Item
       heldPrefix: riot_bullet
-    - type: Blocking
-      passiveBlockModifier:
-        coefficients:
-          Blunt: 1.2
-          Slash: 1.2
-          Piercing: 1.2
-          Heat: 1.2
-      activeBlockModifier:
-        coefficients:
-          Blunt: 0.2
-          Slash: 0.2
-          Piercing: 0.2
-          Heat: 0.2
     - type: Destructible
       thresholds:
         - trigger:
@@ -173,23 +147,22 @@
     - type: Item
       heldPrefix: buckler
     - type: Blocking
-      passiveBlockFraction: 0.4 #small shield so more attacks go past it
-      activeBlockFraction: 0.8 #small shield so some attacks go past it even while actively blocking
-      staminaDamageMultiplier: 0.32
-      activeWalkSpeed: 1 #a small shield allows you to walk a little bit faster while raised compared to other shields
-      activeSprintSpeed: 1
+      passiveBlockFraction: 0.3 #small shield so more attacks go past it
+      activeBlockFraction: 0.6
+      activeWalkSpeed: 0.75 #a small shield allows you to walk a little bit faster while having it raised compared to other shields
+      activeSprintSpeed: 1.5
       passiveBlockModifier:
         coefficients:
-          Blunt: 1.2
-          Slash: 1.2
-          Piercing: 1.2
-          Heat: 2.4
+          Blunt: 1.44
+          Slash: 1.44
+          Piercing: 1.44
+          Heat: 2.88
       activeBlockModifier:
         coefficients:
-          Blunt: 0.2
-          Slash: 0.2
-          Piercing: 0.2
-          Heat: 0.4
+          Blunt: 0.24
+          Slash: 0.24
+          Piercing: 0.24
+          Heat: 2.16
     - type: Construction
       graph: WoodenBuckler
       node: woodenBuckler
@@ -223,18 +196,6 @@
       heldPrefix: metal
     - type: Blocking
       staminaDamageMultiplier: 0.6 #heavy shield, loses stamina 50% faster compared to riot shield
-      passiveBlockModifier:
-        coefficients:
-          Blunt: 1.2
-          Slash: 1.2
-          Piercing: 1.2
-          Heat: 1.2
-      activeBlockModifier:
-        coefficients:
-          Blunt: 0.2
-          Slash: 0.2
-          Piercing: 0.2
-          Heat: 0.2
     - type: Construction
       graph: MakeshiftShield
       node: makeshiftShield
@@ -269,16 +230,16 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 1.2
-          Slash: 1.2
-          Piercing: 1.2
-          Heat: 4.8 # Extremely weak to lasers
+          Blunt: 1.44
+          Slash: 1.44
+          Piercing: 1.44
+          Heat: 5.76 # Extremely weak to lasers
       activeBlockModifier:
         coefficients:
-          Blunt: 0.2
-          Slash: 0.2
-          Piercing: 0.2
-          Heat: 1.2
+          Blunt: 0.24
+          Slash: 0.24
+          Piercing: 0.24
+          Heat: 2.4
     - type: Destructible
       thresholds:
         - trigger:
@@ -313,14 +274,14 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 1.68 # takes 40% more damage than a riot shield
-          Slash: 1.68
-          Piercing: 1.68
+          Blunt: 1.73 # takes 40% more damage than a riot shield
+          Slash: 1.73
+          Piercing: 1.73
       activeBlockModifier:
         coefficients:
-          Blunt: 0.28
-          Slash: 0.28
-          Piercing: 0.28
+          Blunt: 1.02
+          Slash: 1.02
+          Piercing: 1.02
       blockSound: !type:SoundPathSpecifier
         path: /Audio/Effects/glass_step.ogg
     - type: Destructible

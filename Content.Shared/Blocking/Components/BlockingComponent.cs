@@ -64,14 +64,14 @@ public sealed class BlockingComponent : Component
     /// when not blocking
     /// </summary>
     [DataField("passiveBlockFraction"), ViewVariables(VVAccess.ReadWrite)]
-    public float PassiveBlockFraction = 0.5f;
+    public float PassiveBlockFraction = 0.4f;
 
     /// <summary>
     /// Fraction of original damage shield will take instead of user
     /// when blocking
     /// </summary>
     [DataField("activeBlockFraction"), ViewVariables(VVAccess.ReadWrite)]
-    public float ActiveBlockFraction = 1.0f;
+    public float ActiveBlockFraction = 0.8f;
 
     /// <summary>
     /// Fraction of original damage the user will take as stamina damage
@@ -90,7 +90,7 @@ public sealed class BlockingComponent : Component
     /// The sprint speed the user will get after raising their shield
     /// </summary>
     [DataField("activeSprintSpeed")]
-    public float ActiveSprintSpeed = 0.5f;
+    public float ActiveSprintSpeed = 1.0f;
 
     /// <summary>
     /// The acceleration rate the user will get after raising their shield
