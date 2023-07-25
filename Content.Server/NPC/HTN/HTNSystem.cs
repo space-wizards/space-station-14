@@ -361,7 +361,7 @@ public sealed class HTNSystem : EntitySystem
         }
     }
 
-    private void ShutdownTask(HTNOperator currentOperator, NPCBlackboard blackboard, HTNOperatorStatus status)
+    public void ShutdownTask(HTNOperator currentOperator, NPCBlackboard blackboard, HTNOperatorStatus status)
     {
         if (currentOperator is IHtnConditionalShutdown conditional &&
             (conditional.ShutdownState & HTNPlanState.TaskFinished) != 0x0)
@@ -372,7 +372,7 @@ public sealed class HTNSystem : EntitySystem
         currentOperator.TaskShutdown(blackboard, status);
     }
 
-    private void ShutdownPlan(HTNComponent component)
+    public void ShutdownPlan(HTNComponent component)
     {
         DebugTools.Assert(component.Plan != null);
         var blackboard = component.Blackboard;
