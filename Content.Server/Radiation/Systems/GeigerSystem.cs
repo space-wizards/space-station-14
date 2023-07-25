@@ -6,7 +6,9 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -15,6 +17,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly RadiationSystem _radiation = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     private static readonly float ApproxEqual = 0.01f;
 
@@ -122,6 +125,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
 
         component.User = user;
         Dirty(component);
+        UpdateSound(component.Owner, component);
     }
 
     private void SetEnabled(EntityUid uid, GeigerComponent component, bool isEnabled)
@@ -159,12 +163,20 @@ public sealed class GeigerSystem : SharedGeigerSystem
             return;
 
         component.Stream?.Stop();
-        if (component.Sounds.TryGetValue(component.DangerLevel, out var sounds))
-        {
-            var sound = _audio.GetSound(sounds);
-            var param = sounds.Params.WithLoop(true).WithVolume(-4f);
-            component.Stream = _audio.PlayPvs(sound, uid, param);
-        }
+
+        if (!component.Sounds.TryGetValue(component.DangerLevel, out var sounds))
+            return;
+
+        if (component.User == null)
+            return;
+
+        if (!_player.TryGetSessionByEntity(component.User.Value, out var session))
+            return;
+
+        var sound = _audio.GetSound(sounds);
+        var param = sounds.Params.WithLoop(true).WithVolume(-4f);
+
+        component.Stream = _audio.PlayGlobal(sound, session, param);
     }
 
     public static GeigerDangerLevel RadsToLevel(float rads)
