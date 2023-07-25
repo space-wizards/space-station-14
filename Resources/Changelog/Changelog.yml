@@ -1,16 +1,4 @@
 Entries:
-- author: KEEYNy
-  changes:
-  - {message: Added Death Squad jumpsuit, type: Add}
-  - {message: Death Squad equipment now includes jumpsuit and Chef Engineer magboots,
-    type: Tweak}
-  id: 3816
-  time: '2023-05-19T10:21:36.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: updated sprites for changeling's sting drink, type: Tweak}
-  id: 3817
-  time: '2023-05-19T20:11:25.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Bags of holding now are significantly more expensive to produce., type: Tweak}
@@ -2977,3 +2965,14 @@ Entries:
   - {message: Cigarettes can be injected again., type: Tweak}
   id: 4315
   time: '2023-07-24T23:02:30.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'The space dragon event now only spawns a dragon when a ghost takes
+      the role, and in a random location.', type: Tweak}
+  id: 4316
+  time: '2023-07-25T00:32:12.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Observers move faster now., type: Tweak}
+  id: 4317
+  time: '2023-07-25T00:33:01.0000000+00:00'
