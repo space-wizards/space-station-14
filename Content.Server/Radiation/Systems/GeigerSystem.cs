@@ -6,6 +6,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.GameStates;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -13,6 +14,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly RadiationSystem _radiation = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
 
     private static readonly float ApproxEqual = 0.01f;
 
@@ -107,6 +109,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         if (curLevel != newLevel)
         {
             UpdateAppearance(uid, component);
+            UpdateSound(uid, component);
         }
 
         Dirty(component);
@@ -136,6 +139,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         _radiation.SetCanReceive(uid, isEnabled);
 
         UpdateAppearance(uid, component);
+        UpdateSound(uid, component);
         Dirty(component);
     }
 
@@ -147,6 +151,20 @@ public sealed class GeigerSystem : SharedGeigerSystem
 
         _appearance.SetData(uid, GeigerVisuals.IsEnabled, component.IsEnabled, appearance);
         _appearance.SetData(uid, GeigerVisuals.DangerLevel, component.DangerLevel, appearance);
+    }
+
+    private void UpdateSound(EntityUid uid, GeigerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        component.Stream?.Stop();
+        if (component.Sounds.TryGetValue(component.DangerLevel, out var sounds))
+        {
+            var sound = _audio.GetSound(sounds);
+            var param = sounds.Params.WithLoop(true).WithVolume(-4f);
+            component.Stream = _audio.PlayPvs(sound, uid, param);
+        }
     }
 
     public static GeigerDangerLevel RadsToLevel(float rads)
@@ -161,5 +179,3 @@ public sealed class GeigerSystem : SharedGeigerSystem
         };
     }
 }
-
-
