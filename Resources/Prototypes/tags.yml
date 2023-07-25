@@ -137,6 +137,9 @@
   id: CartridgeMagnum
 
 - type: Tag
+  id: CartridgeMagnum357
+
+- type: Tag
   id: CartridgePistol
 
 - type: Tag
@@ -148,6 +151,9 @@
 # Allows you to walk over tile entities such as lava without steptrigger
 - type: Tag
   id: Catwalk
+
+- type: Tag
+  id: Chicken
 
 - type: Tag
   id: Cigarette
@@ -175,6 +181,9 @@
 
 - type: Tag #Ohioans die happy
   id: Corn
+
+- type: Tag
+  id: Cow
 
 - type: Tag
   id: Crayon
@@ -264,6 +273,9 @@
   id: DroneUsable
 
 - type: Tag
+  id: Duck
+
+- type: Tag
   id: Ectoplasm
 
 - type: Tag
@@ -343,6 +355,9 @@
 
 - type: Tag
   id: GlassShard
+
+- type: Tag
+  id: Goat
 
 - type: Tag
   id: Grenade
@@ -608,6 +623,9 @@
   id: Pie
 
 - type: Tag
+  id: Pig
+
+- type: Tag
   id: PillCanister
 
 - type: Tag
@@ -748,6 +766,9 @@
   id: SpeedLoaderMagnum
 
 - type: Tag
+  id: SpeedLoaderMagnum357
+
+- type: Tag
   id: SpeedLoaderPistol
 
 - type: Tag
@@ -785,6 +806,12 @@
 
 - type: Tag
   id: Taser
+
+- type: Tag
+  id: TabletopBoard
+
+- type: Tag
+  id: TabletopPiece
 
 - type: Tag
   id: TimerBrigElectronics
@@ -854,3 +881,9 @@
 
 - type: Tag
   id: Write
+
+- type: Tag
+  id: RifleStock
+
+- type: Tag
+  id: ModularReceiver

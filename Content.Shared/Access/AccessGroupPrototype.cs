@@ -14,6 +14,6 @@ public sealed class AccessGroupPrototype : IPrototype
     [IdDataField]
     public string ID { get; } = default!;
 
-    [DataField("tags", required: true, customTypeSerializer:typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
+    [DataField("tags", required: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
     public HashSet<string> Tags = default!;
 }

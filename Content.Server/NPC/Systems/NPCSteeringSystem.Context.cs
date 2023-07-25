@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Examine;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
@@ -113,7 +114,7 @@ public sealed partial class NPCSteeringSystem
         var direction = targetMap.Position - ourMap.Position;
 
         // Are we in range
-        if (direction.Length <= arrivalDistance)
+        if (direction.Length() <= arrivalDistance)
         {
             // Node needs some kind of special handling like access or smashing.
             if (steering.CurrentPath.TryPeek(out var node) && !node.Data.IsFreeSpace)
@@ -126,7 +127,7 @@ public sealed partial class NPCSteeringSystem
                 lock (_obstacles)
                 {
                     // We're still coming to a stop so wait for the do_after.
-                    if (body.LinearVelocity.LengthSquared > 0.01f)
+                    if (body.LinearVelocity.LengthSquared() > 0.01f)
                     {
                         return true;
                     }
@@ -231,21 +232,21 @@ public sealed partial class NPCSteeringSystem
             return false;
         }
 
-        var input = direction.Normalized;
+        var input = direction.Normalized();
         var tickMovement = moveSpeed * frameTime;
 
         // We have the input in world terms but need to convert it back to what movercontroller is doing.
         input = offsetRot.RotateVec(input);
-        var norm = input.Normalized;
-        var weight = MapValue(direction.Length, tickMovement * 0.5f, tickMovement * 0.75f);
+        var norm = input.Normalized();
+        var weight = MapValue(direction.Length(), tickMovement * 0.5f, tickMovement * 0.75f);
 
         ApplySeek(interest, norm, weight);
 
         // Prefer our current direction
-        if (weight > 0f && body.LinearVelocity.LengthSquared > 0f)
+        if (weight > 0f && body.LinearVelocity.LengthSquared() > 0f)
         {
             const float sameDirectionWeight = 0.1f;
-            norm = body.LinearVelocity.Normalized;
+            norm = body.LinearVelocity.Normalized();
 
             ApplySeek(interest, norm, sameDirectionWeight);
         }
@@ -291,13 +292,38 @@ public sealed partial class NPCSteeringSystem
     /// <summary>
     /// We may be pathfinding and moving at the same time in which case early nodes may be out of date.
     /// </summary>
-    public void PrunePath(EntityUid uid, MapCoordinates mapCoordinates, Vector2 direction, Queue<PathPoly> nodes)
+    public void PrunePath(EntityUid uid, MapCoordinates mapCoordinates, Vector2 direction, List<PathPoly> nodes)
     {
         if (nodes.Count <= 1)
             return;
 
-        // Prune the first node as it's irrelevant (normally it is our node so we don't want to backtrack).
-        nodes.Dequeue();
+        // Work out if we're inside any nodes, then use the next one as the starting point.
+        var index = 0;
+        var found = false;
+
+        for (var i = 0; i < nodes.Count; i++)
+        {
+            var node = nodes[i];
+            var matrix = _transform.GetWorldMatrix(node.GraphUid);
+
+            // Always want to prune the poly itself so we point to the next poly and don't backtrack.
+            if (matrix.TransformBox(node.Box).Contains(mapCoordinates.Position))
+            {
+                index = i + 1;
+                found = true;
+                break;
+            }
+        }
+
+        if (found)
+        {
+            nodes.RemoveRange(0, index);
+            _pathfindingSystem.Simplify(nodes);
+            return;
+        }
+
+        // Otherwise, take the node after the nearest node.
+
         // TODO: Really need layer support
         CollisionGroup mask = 0;
 
@@ -309,11 +335,11 @@ public sealed partial class NPCSteeringSystem
         // If we have to backtrack (for example, we're behind a table and the target is on the other side)
         // Then don't consider pruning.
         var goal = nodes.Last().Coordinates.ToMap(EntityManager, _transform);
-        var canPrune =
-            _interaction.InRangeUnobstructed(mapCoordinates, goal, (goal.Position - mapCoordinates.Position).Length + 0.1f, mask);
 
-        while (nodes.TryPeek(out var node))
+        for (var i = 0; i < nodes.Count; i++)
         {
+            var node = nodes[i];
+
             if (!node.Data.IsFreeSpace)
                 break;
 
@@ -321,16 +347,17 @@ public sealed partial class NPCSteeringSystem
 
             // If any nodes are 'behind us' relative to the target we'll prune them.
             // This isn't perfect but should fix most cases of stutter stepping.
-            if (canPrune &&
-                nodeMap.MapId == mapCoordinates.MapId &&
+            if (nodeMap.MapId == mapCoordinates.MapId &&
                 Vector2.Dot(direction, nodeMap.Position - mapCoordinates.Position) < 0f)
             {
-                nodes.Dequeue();
+                nodes.RemoveAt(i);
                 continue;
             }
 
             break;
         }
+
+        _pathfindingSystem.Simplify(nodes);
     }
 
     /// <summary>
@@ -424,12 +451,12 @@ public sealed partial class NPCSteeringSystem
                 continue;
 
             obstacleDirection = offsetRot.RotateVec(obstacleDirection);
-            var norm = obstacleDirection.Normalized;
+            var norm = obstacleDirection.Normalized();
 
             for (var i = 0; i < InterestDirections; i++)
             {
                 var dot = Vector2.Dot(norm, Directions[i]);
-                danger[i] = MathF.Max(dot * weight * 0.9f, danger[i]);
+                danger[i] = MathF.Max(dot * weight, danger[i]);
             }
         }
 
@@ -456,7 +483,7 @@ public sealed partial class NPCSteeringSystem
         var objectRadius = 0.25f;
         var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
         var ourVelocity = body.LinearVelocity;
-        var factionQuery = GetEntityQuery<FactionComponent>();
+        var factionQuery = GetEntityQuery<NpcFactionMemberComponent>();
         factionQuery.TryGetComponent(uid, out var ourFaction);
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Dynamic))
@@ -469,7 +496,7 @@ public sealed partial class NPCSteeringSystem
                 (mask & otherBody.CollisionLayer) == 0x0 &&
                 (layer & otherBody.CollisionMask) == 0x0 ||
                 !factionQuery.TryGetComponent(ent, out var otherFaction) ||
-                !_faction.IsEntityFriendly(uid, ent, ourFaction, otherFaction) ||
+                !_npcFaction.IsEntityFriendly(uid, ent, ourFaction, otherFaction) ||
                 // Use <= 0 so we ignore stationary friends in case.
                 Vector2.Dot(otherBody.LinearVelocity, ourVelocity) <= 0f)
             {
@@ -506,7 +533,7 @@ public sealed partial class NPCSteeringSystem
             }
 
             obstacleDirection = offsetRot.RotateVec(obstacleDirection);
-            var norm = obstacleDirection.Normalized;
+            var norm = obstacleDirection.Normalized();
             weight *= 0.25f;
 
             for (var i = 0; i < InterestDirections; i++)

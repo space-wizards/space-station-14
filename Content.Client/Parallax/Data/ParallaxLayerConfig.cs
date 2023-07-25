@@ -1,7 +1,4 @@
-using System;
-using Robust.Client.Graphics;
-using Content.Client.Parallax.Data;
-using Robust.Shared.Serialization.Manager.Attributes;
+using System.Numerics;
 
 namespace Content.Client.Parallax.Data;
 

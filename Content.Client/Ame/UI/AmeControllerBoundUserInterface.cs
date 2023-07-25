@@ -9,7 +9,7 @@ namespace Content.Client.Ame.UI
     {
         private AmeWindow? _window;
 
-        public AmeControllerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public AmeControllerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

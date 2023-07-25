@@ -119,7 +119,7 @@
       - id: WeaponRevolverInspector
       - id: DrinkDetFlask
       - id: SpeedLoaderMagnum
-      - id: ForensicGloves
+      - id: ClothingHandsGlovesForensic
 
 - type: entity
   id: ClosetBombFilled

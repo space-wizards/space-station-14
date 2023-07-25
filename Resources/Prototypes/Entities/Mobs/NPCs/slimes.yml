@@ -5,7 +5,7 @@
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleNeutral
   - type: HTN
@@ -135,7 +135,7 @@
   id: MobAdultSlimesBlueAngry
   suffix: Angry
   components:
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - SimpleHostile
     - type: GhostRole
@@ -170,7 +170,7 @@
   id: MobAdultSlimesGreenAngry
   suffix: Angry
   components:
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - SimpleHostile
     - type: GhostRole
@@ -205,7 +205,7 @@
   id: MobAdultSlimesYellowAngry
   suffix: Angry
   components:
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - SimpleHostile
     - type: GhostRole
