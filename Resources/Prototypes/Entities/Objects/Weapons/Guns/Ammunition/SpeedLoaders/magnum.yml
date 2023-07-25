@@ -124,3 +124,13 @@
   - type: Tag
     tags:
       - SpeedLoaderMagnum357
+
+#.357 rounds (used in the syndicate Python revolver) 
+- type: entity
+  id: SpeedLoaderMagnum357Incendiary
+  name: "speed loader (.357 magnum incendiary)"
+  parent: SpeedLoaderMagnum357
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnum357Incendiary
+    capacity: 7

@@ -67,3 +67,15 @@
     damage:
       types:
         Piercing: 54
+
+#.357 incendiary
+- type: entity
+  id: BulletMagnum357Incendiary
+  name: bullet (.357 magnum incendiary)
+  parent: BaseBulletIncendiary
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 48
