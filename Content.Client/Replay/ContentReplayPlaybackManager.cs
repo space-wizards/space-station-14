@@ -122,12 +122,6 @@ public sealed class ContentReplayPlaybackManager
                 return true;
         }
 
-        if (!skipEffects)
-        {
-            // Don't mark as handled -- the event get raised as a normal networked event.
-            return false;
-        }
-
         switch (message)
         {
             case ChatMessage chat:
