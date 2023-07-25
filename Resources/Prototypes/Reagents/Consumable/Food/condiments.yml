@@ -121,7 +121,7 @@
   desc: reagent-desc-table-salt
   physicalDesc: reagent-physical-desc-grainy
   flavor: salty
-  color: "#a1000b"
+  color: "#cfd1d0"
   recognizable: true
   boilingPoint: 1465.0
   meltingPoint: 800.7
