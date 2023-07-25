@@ -41,6 +41,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _player, _protoManager));
         SubscribeAllEvent<DamageEffectEvent>(OnDamageEffect);
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
+        UpdatesOutsidePrediction = true;
     }
 
     public override void Shutdown()
