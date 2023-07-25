@@ -25,7 +25,7 @@
   - type: MobMover
   - type: HTN
     rootTask:
-      task: RangedCompound
+      task: RangedCombatCompound
 
 - type: entity
   parent: BaseMobHuman

@@ -36,7 +36,7 @@
           operator: !type:PickAccessibleOperator
             # originKey: FollowTarget
             rangeKey: FollowCloseRange
-            targetKey: FollowIdleTarget
+            targetCoordinates: FollowIdleTarget
 
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator

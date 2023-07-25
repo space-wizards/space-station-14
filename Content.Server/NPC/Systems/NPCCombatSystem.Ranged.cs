@@ -1,6 +1,7 @@
 using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
+using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -14,6 +15,7 @@ public sealed partial class NPCCombatSystem
 
     private EntityQuery<CombatModeComponent> _combatQuery;
     private EntityQuery<NPCSteeringComponent> _steeringQuery;
+    private EntityQuery<RechargeBasicEntityAmmoComponent> _rechargeQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -29,6 +31,7 @@ public sealed partial class NPCCombatSystem
     {
         _combatQuery = GetEntityQuery<CombatModeComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
+        _rechargeQuery = GetEntityQuery<RechargeBasicEntityAmmoComponent>();
         _steeringQuery = GetEntityQuery<NPCSteeringComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
 
@@ -104,6 +107,12 @@ public sealed partial class NPCCombatSystem
 
             if (ammoEv.Count == 0)
             {
+                // Recharging then?
+                if (_rechargeQuery.HasComponent(gunUid))
+                {
+                    continue;
+                }
+
                 comp.Status = CombatStatus.Unspecified;
                 comp.ShootAccumulator = 0f;
                 continue;

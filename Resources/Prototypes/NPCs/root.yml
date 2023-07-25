@@ -29,3 +29,16 @@
     - tasks:
         - !type:HTNCompoundTask
           task: IdleSpinCompound
+
+- type: htnCompound
+  id: SimpleRangedHostileCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: InnateRangedCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound

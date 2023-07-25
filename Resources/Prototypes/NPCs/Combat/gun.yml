@@ -80,9 +80,9 @@
 # TODO: Need a thing to recharge a laser gun
 # TODO: When selecting pickup guns also add chargers or easy container grabs.
 
-# Shorted version of RangedCompound for entities that are guns themselves.
+# Shorted version of RangedCombatCompound for entities that are guns themselves.
 - type: htnCompound
-  id: InnateRangedCompound
+  id: InnateRangedCombatCompound
   branches:
     - preconditions:
         - !type:GunAmmoPrecondition
@@ -93,7 +93,7 @@
 
 
 - type: htnCompound
-  id: RangedCompound
+  id: RangedCombatCompound
   branches:
     # Move to target and shoot them if ammo
     - preconditions:

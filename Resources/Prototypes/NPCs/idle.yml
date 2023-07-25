@@ -2,20 +2,16 @@
 - type: htnCompound
   id: IdleCompound
   branches:
-    - tasks:
-        - !type:HTNPrimitiveTask
-          operator: !type:WaitOperator
-            key: IdleTime
-          preconditions:
-            - !type:KeyExistsPrecondition
-              key: IdleTime
-
     # Pick a new spot and wait there.
-    - tasks:
+    - preconditions:
+        - !type:BuckledPrecondition
+          isBuckled: false
+        - !type:PulledPrecondition
+          isPulled: false
+      tasks:
         - !type:HTNPrimitiveTask
           operator: !type:PickAccessibleOperator
             rangeKey: IdleRange
-            targetKey: Target
 
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
@@ -33,11 +29,6 @@
           preconditions:
             - !type:KeyExistsPrecondition
               key: IdleTime
-      preconditions:
-        - !type:BuckledPrecondition
-          isBuckled: false
-        - !type:PulledPrecondition
-          isPulled: false
 
 # Spin to a random rotation and idle.
 - type: htnCompound

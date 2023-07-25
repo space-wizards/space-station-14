@@ -4,7 +4,7 @@
     # Do nothing
     - preconditions:
         - !type:ActiveHandFreePrecondition
-    - tasks:
+      tasks:
         - !type:HTNPrimitiveTask
           operator: !type:NoOperator
 
@@ -20,5 +20,6 @@
     #      operator: !type:StashActiveHandOperator
 
     # Drop active hand
-    - !type:HTNPrimitiveTask
-      operator: !type:DropOperator
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:DropOperator

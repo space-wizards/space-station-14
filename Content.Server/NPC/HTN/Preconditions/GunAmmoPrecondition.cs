@@ -1,9 +1,11 @@
-using Content.Shared.Hands.Components;
-using Content.Shared.Weapons.Ranged.Components;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Ranged.Events;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 
+/// <summary>
+/// Gets ammo for this NPC's selected gun; either active hand or itself.
+/// </summary>
 public sealed class GunAmmoPrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
@@ -16,14 +18,16 @@ public sealed class GunAmmoPrecondition : HTNPrecondition
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
-        if (!blackboard.TryGetValue(NPCBlackboard.ActiveHand, out Hand? hand, _entManager) ||
-            !_entManager.TryGetComponent<GunComponent>(hand.HeldEntity, out var gun))
+        var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
+        var gunSystem = _entManager.System<GunSystem>();
+
+        if (!gunSystem.TryGetGun(owner, out var gunUid, out _))
         {
             return false;
         }
 
         var ammoEv = new GetAmmoCountEvent();
-        _entManager.EventBus.RaiseLocalEvent(hand.HeldEntity.Value, ref ammoEv);
+        _entManager.EventBus.RaiseLocalEvent(gunUid, ref ammoEv);
         float percent;
 
         if (ammoEv.Capacity == 0)
