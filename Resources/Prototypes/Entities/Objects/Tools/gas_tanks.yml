@@ -13,6 +13,7 @@
     - key: enum.SharedGasTankUiKey.Key
       type: GasTankBoundUserInterface
   - type: Item
+    # If gas tank size is changed, adjust MinimumTritiumOxyburnEnergy in Atmospherics.cs by the same proportions
     size: 15
     sprite: Objects/Tanks/generic.rsi
   - type: GasTank
