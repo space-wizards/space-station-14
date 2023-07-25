@@ -456,7 +456,7 @@
 - type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltSyndieHolster
-  name: syndicate shoulder holster
+  name: red shoulder holster
   description: A deep shoulder holster capable of holding many types of ballistics.
   components:
   - type: Sprite
@@ -510,7 +510,7 @@
   parent: ClothingBeltStorageBase
   id: ClothingBeltMilitaryWebbing
   name: chest rig
-  description: A set of tactical webbing worn by Syndicate boarding parties.
+  description: A set of tactical webbing worn by boarding parties.
   components:
   - type: Sprite
     sprite: Clothing/Belt/militarywebbing.rsi

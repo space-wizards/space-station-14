@@ -13,7 +13,7 @@
   parent: ClothingShoesStorageBase
   id: ClothingShoesBootsJack
   name: jackboots
-  description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
+  description: Standard-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/jackboots.rsi
@@ -23,7 +23,7 @@
     whitelist:
       tags:
         - Knife
-  
+
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsSalvage

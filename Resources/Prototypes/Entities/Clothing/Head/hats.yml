@@ -493,7 +493,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadPyjamaSyndicateBlack
-  name: syndicate black pyjama hat
+  name: IncSek black pyjama hat
   description: For keeping that traitor head of yours warm.
   components:
   - type: Sprite

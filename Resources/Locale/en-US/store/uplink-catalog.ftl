@@ -37,7 +37,7 @@ uplink-mini-bomb-name = Minibomb
 uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a five-second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.
 
 uplink-penguin-grenade-name = Grenade Penguin
-uplink-penguin-grenade-desc = A small, highly-aggressive penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
+uplink-penguin-grenade-desc = A small, highly-aggressive penguin with a grenade strapped around its neck. Harvested from icy shit-hole planets.
 
 uplink-c4-name = C-4
 uplink-c4-desc = Use it to breach walls, airlocks or sabotage equipment. It can be attached to almost all objects and has a modifiable timer with a minimum setting of 10 seconds.
@@ -73,7 +73,7 @@ uplink-holster-name = Shoulder Holster
 uplink-holster-desc = A deep shoulder holster capable of holding many types of ballistics.
 
 uplink-emag-name = Emag
-uplink-emag-desc = The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
+uplink-emag-desc = The true business card, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
 
 uplink-agent-id-card-name = Agent ID Card
 uplink-agent-id-card-desc = A modified ID card that can copy accesses from other cards and change its name and job title at-will.
@@ -87,10 +87,10 @@ uplink-reinforcement-radio-desc =  Radio in a reinforcement agent of extremely q
 uplink-stealth-box-name = Stealth Box
 uplink-stealth-box-desc = A box outfitted with stealth technology, sneak around with this and don't move too fast now!
 
-uplink-headset-name = Syndicate Over-ear Headset
-uplink-headset-desc = A headset that allows you to communicate with other syndicate operatives. Has 4 slots for encryption keys.
+uplink-headset-name = FSC Over-ear Headset
+uplink-headset-desc = A headset that allows you to communicate with other FSC operatives. Has 4 slots for encryption keys.
 
-uplink-encryption-key-name = Syndicate Encryption Keys
+uplink-encryption-key-name = FSC Encryption Keys
 uplink-encryption-key-desc = Two encryption keys for access to the secret frequency of our special agents. Give the spare to a friend, but make sure it doesn't fall into enemy hands.
 
 uplink-hypopen-name = Hypopen
@@ -122,7 +122,7 @@ uplink-uplink-implanter-name = Uplink Implanter
 uplink-uplink-implanter-desc = Stealthily order equipment without the need for a PDA. Swallow telecrystals to top up the uplink.
 
 uplink-deathrattle-implant-name = Box Of Deathrattle Implants
-uplink-deathrattle-implant-desc = A box containing enough deathrattle implants for the whole squad. Relays a message containing your position to the syndicate channel when you go into a critical state or die.
+uplink-deathrattle-implant-desc = A box containing enough deathrattle implants for the whole squad. Relays a message containing your position to the FSC channel when you go into a critical state or die.
 
 # Bundles
 uplink-c20r-bundle-name = C-20r Bundle
@@ -137,18 +137,18 @@ uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled
 uplink-l6-saw-bundle-name = L6 Saw Bundle
 uplink-l6-saw-bundle-desc = More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines.
 
-uplink-zombie-bundle-name = Syndicate Zombie Bundle
+uplink-zombie-bundle-name = Zombie Bundle
 uplink-zombie-bundle-desc = An all-in-one kit for unleashing the undead upon a station.
 
 uplink-surplus-bundle-name = Surplus Crate
-uplink-surplus-bundle-desc = Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
+uplink-surplus-bundle-desc = Contains 50 telecrystals worth of completely random items. It can be useless junk or really good.
 
 uplink-super-surplus-bundle-name = Super Surplus Crate
-uplink-super-surplus-bundle-desc = Contains 125 telecrystals worth of completely random Syndicate items.
+uplink-super-surplus-bundle-desc = Contains 125 telecrystals worth of completely random items.
 
 # Tools
 uplink-toolbox-name = Toolbox
-uplink-toolbox-desc = A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves, syndicate gas mask and a utility belt.
+uplink-toolbox-desc = A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves, a gas mask and a utility belt.
 
 uplink-syndicate-jaws-of-life-name = Jaws Of Life
 uplink-syndicate-jaws-of-life-desc = A combined prying and cutting tool. Useful for entering the station or its departments.
@@ -191,7 +191,7 @@ uplink-proximity-mine-name = Proximity Mine
 uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
 
 uplink-disposable-turret-name = Disposable Ballistic Turret
-uplink-disposable-turret-desc = Looks and functions like a normal electrical toolbox. Upon hitting the toolbox it will transform into a ballistic turret, theoretically shooting at anyone except members of the syndicate.
+uplink-disposable-turret-desc = Looks and functions like a normal electrical toolbox. Upon hitting the toolbox it will transform into a ballistic turret, theoretically shooting at anyone.
 
 # Armor
 uplink-chameleon-name = Chameleon Kit
@@ -206,26 +206,26 @@ uplink-clothing-thieving-gloves-desc = Discretely steal from pockets and increas
 uplink-clothing-outer-vest-web-name = Web Vest
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
 
-uplink-hardsuit-syndie-name = Syndicate Hardsuit
-uplink-hardsuit-syndie-desc = The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
+uplink-hardsuit-syndie-name = FSC Hardsuit
+uplink-hardsuit-syndie-desc = The FSC's well known armored blood red hardsuit, capable of space walks and bullet resistant.
 
 uplink-clothing-shoes-boots-mag-syndie-name = Blood-red Magboots
 uplink-clothing-shoes-boots-mag-syndie-desc = A pair of magnetic boots that will keep you on the ground if the gravity fails or is sabotaged, giving you a mobility advantage. If activated with gravity they will protect from slips, but they will slow you down.
 
-uplink-eva-syndie-name = Syndicate EVA Bundle
+uplink-eva-syndie-name = IncSek EVA Bundle
 uplink-eva-syndie-desc = A simple EVA suit that offers no protection other than what's needed to survive in space.
 
-uplink-clothing-outer-hardsuit-juggernaut-name = Cybersun Juggernaut Suit
+uplink-clothing-outer-hardsuit-juggernaut-name = IncSek Juggernaut Suit
 uplink-clothing-outer-hardsuit-juggernaut-desc = Hyper resilient armor made of materials tested in the Tau chromosphere facility. The only thing that's going to be slowing you down is this suit... and tasers.
 
 # Misc
-uplink-cyberpen-name = Cybersun Pen
+uplink-cyberpen-name = IncSek Pen
 uplink-cyberpen-desc = Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
 
 uplink-decoy-disk-name = Decoy Nuclear Disk
 uplink-decoy-disk-desc = A piece of plastic with a lenticular printing, made to look like a nuclear auth disk.
 
-uplink-cigarettes-name = Syndicate Smokes Packet
+uplink-cigarettes-name = IncSek Smokes Packet
 uplink-cigarettes-desc = Elite cigarettes for elite agents. Infused with medicine for when you need to do more than calm your nerves.
 
 uplink-eshield-name = Energy Shield
@@ -241,22 +241,22 @@ uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
 uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for your target to stand up.
 
 uplink-stimpack-name = Stimpack
-uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 30 seconds.
+uplink-stimpack-desc = The legendary chemical produced by IncSek. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 30 seconds.
 
 uplink-stimkit-name = Stimkit
 uplink-stimkit-desc = A medkit containing 6 stimulant microinjectors, which each inject you with enough stimulants to last for 15 seconds.
 
-uplink-syndicate-segway-crate-name = Syndicate Segway
+uplink-syndicate-segway-crate-name = Segway
 uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!
 
-uplink-syndicate-sponge-box-name = Syndicate Sponge Box
-uplink-syndicate-sponge-box-desc = A box containing 6 syndicate sponges disguised as monkey cubes, these cubes turn into a variety of angry wildlife after coming into contact with water.
+uplink-syndicate-sponge-box-name = IncSek Sponge Box
+uplink-syndicate-sponge-box-desc = A box containing 6 IncSek sponges disguised as monkey cubes, these cubes turn into a variety of angry wildlife after coming into contact with water.
 
 # Pointless
 uplink-revolver-cap-gun-name = Cap Gun
 uplink-revolver-cap-gun-desc = Looks almost like the real thing! Ages 8 and up.
 
-uplink-syndicate-stamp-name = Syndicate Rubber Stamp
+uplink-syndicate-stamp-name = IncSek Rubber Stamp
 uplink-syndicate-stamp-desc = A rubber stamp for stamping important documents.
 
 uplink-cat-ears-name = Cat Ears
@@ -268,8 +268,8 @@ uplink-outlaw-hat-desc = A hat that makes you look like you carry a notched pist
 uplink-outlaw-glasses-name = Outlaw Glasses
 uplink-outlaw-glasses-desc = A must for every self-respecting undercover agent.
 
-uplink-costume-pyjama-name = Syndicate Pyjama Duffel Bag
-uplink-costume-pyjama-desc = Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
+uplink-costume-pyjama-name = IncSek Pyjama Duffel Bag
+uplink-costume-pyjama-desc = Contains 3 pairs of IncSek pyjamas and 3 plushies for the ultimate sleepover.
 
 uplink-costume-clown-name = Clown Costume Duffel Bag
 uplink-costume-clown-desc = Contains a complete Clown outfit. Includes PDA and service radio.
@@ -283,9 +283,9 @@ uplink-operative-skirt-desc = A skirt given to our nuclear operatives with fine 
 uplink-balloon-name = Syndie Balloon
 uplink-balloon-desc = Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
 
-uplink-scarf-syndie-red-name = striped syndicate red scarf
-uplink-scarf-syndie-red-desc = A stylish striped syndicate red scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
+uplink-scarf-syndie-red-name = striped red scarf
+uplink-scarf-syndie-red-desc = A stylish striped red scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
 
-uplink-scarf-syndie-green-name = striped syndicate green scarf
-uplink-scarf-syndie-green-desc = A stylish striped syndicate green scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
+uplink-scarf-syndie-green-name = striped green scarf
+uplink-scarf-syndie-green-desc = A stylish striped green scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
 

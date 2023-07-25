@@ -91,7 +91,7 @@
   parent: ClothingBackpack
   id: ClothingBackpackCaptain
   name: captain's backpack
-  description: It's a special backpack made exclusively for Nanotrasen officers.
+  description: It's a special backpack awarded to the person who bought the ship.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/captain.rsi
@@ -230,7 +230,7 @@
   parent: ClothingBackpack
   id: ClothingBackpackHolding
   name: bag of holding
-  description: A backpack that opens into a localized pocket of bluespace.
+  description: A backpack that opens into a localized pocket of spinavi.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/holding.rsi

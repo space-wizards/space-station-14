@@ -31,7 +31,7 @@
   id: BannerNanotrasen
   parent: BannerBase
   name: nanotrasen banner
-  description: A banner displaying the Nanotrasen logo. It looks rather cheap.
+  description: A banner displaying the fictional Nanotrasen logo. It looks rather cheap.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi

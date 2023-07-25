@@ -74,7 +74,7 @@
   parent: ClothingHeadset
   id: ClothingHeadsetCentCom
   name: CentCom headset
-  description: A headset used by the upper echelons of Nanotrasen.
+  description: A headset used by the upper echelons of CoreGov.
   components:
   - type: ContainerFill
     containers:

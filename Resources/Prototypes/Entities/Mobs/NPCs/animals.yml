@@ -1278,7 +1278,7 @@
   name: grenade penguin
   parent: SimpleMobBase
   id: MobGrenadePenguin
-  description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
+  description: A small penguin with a grenade strapped around its neck. Harvested from icy shit-hole planets.
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5

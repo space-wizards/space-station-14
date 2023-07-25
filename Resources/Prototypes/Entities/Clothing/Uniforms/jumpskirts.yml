@@ -343,7 +343,7 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtWarden
   name: warden's uniform
-  description: A formal security suit for officers complete with Nanotrasen belt buckle.
+  description: A formal security suit for officers complete with a belt buckle.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/warden.rsi

@@ -222,7 +222,7 @@
         canReact: false
 
 - type: entity
-  name: bluespace beaker
+  name: spinavi beaker
   parent: BaseBeakerMetallic
   description: Powered by experimental bluespace technology.
   id: BluespaceBeaker
@@ -332,8 +332,8 @@
 - type: entity
   id: SyringeBluespace
   parent: BaseSyringe
-  name: bluespace syringe
-  description: Injecting with advanced bluespace technology.
+  name: spinavi syringe
+  description: Injecting with advanced spinavi technology.
   components:
   - type: Sprite
     layers:
