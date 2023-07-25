@@ -5,8 +5,8 @@ using Robust.Shared.RTShell.Syntax;
 
 namespace Content.Server.NewCon.Commands.World;
 
-[ConsoleCommand]
-public sealed class TptoCommand : ConsoleCommand
+[RtShellCommand]
+public sealed class TptoCommand : RtShellCommand
 {
     [Dependency] private readonly IEntityManager _entity = default!;
     private TransformSystem? _xform;

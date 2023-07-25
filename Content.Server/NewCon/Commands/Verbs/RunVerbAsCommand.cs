@@ -6,8 +6,8 @@ using Robust.Shared.RTShell.TypeParsers;
 
 namespace Content.Server.NewCon.Commands.Verbs;
 
-[ConsoleCommand]
-public sealed class RunVerbAsCommand : ConsoleCommand
+[RtShellCommand]
+public sealed class RunVerbAsCommand : RtShellCommand
 {
     private SharedVerbSystem? _verb;
 

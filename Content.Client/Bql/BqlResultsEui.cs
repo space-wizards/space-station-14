@@ -23,7 +23,7 @@ public sealed class BqlResultsEui : BaseEui
 
     public override void HandleState(EuiStateBase state)
     {
-        if (state is not BqlResultsEuiState castState)
+        if (state is not RtShellVisualizeEuiState castState)
             return;
 
         _window.Update(castState.Entities);
