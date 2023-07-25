@@ -60,7 +60,6 @@ namespace Content.Server.IoC
             IoCManager.Register<UserDbDataManager>();
             IoCManager.Register<ServerInfoManager>();
             IoCManager.Register<PoissonDiskSampler>();
-            IoCManager.Register<NewConManager>();
         }
     }
 }

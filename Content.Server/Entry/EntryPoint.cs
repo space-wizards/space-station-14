@@ -13,14 +13,12 @@ using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
 using Content.Server.Maps;
-using Content.Server.NewCon;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
-using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
 using Robust.Server;
@@ -31,9 +29,7 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Server.Station.Systems;
 using Content.Shared.Localizations;
-using Robust.Shared.RTShell;
 
 namespace Content.Server.Entry
 {
@@ -114,7 +110,6 @@ namespace Content.Server.Entry
                 _voteManager.Initialize();
                 _updateManager.Initialize();
                 _playTimeTracking.Initialize();
-                IoCManager.Resolve<NewConManager>().Initialize();
             }
         }
 
