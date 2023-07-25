@@ -15422,31 +15422,67 @@ entities:
     - pos: -32.5,-5.5
       parent: 60
       type: Transform
+    - linkedPorts:
+        230:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 1485
     components:
     - pos: -32.5,-8.5
       parent: 60
       type: Transform
+    - linkedPorts:
+        268:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 1486
     components:
     - pos: -32.5,-11.5
       parent: 60
       type: Transform
+    - linkedPorts:
+        243:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 1488
     components:
     - pos: -20.5,-8.5
       parent: 60
       type: Transform
+    - linkedPorts:
+        151:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 6971
     components:
     - pos: -20.5,-5.5
       parent: 60
       type: Transform
+    - linkedPorts:
+        843:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 6972
     components:
     - pos: -20.5,-11.5
       parent: 60
       type: Transform
+    - linkedPorts:
+        72:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
 - proto: BrokenBottle
   entities:
   - uid: 23662
@@ -63999,6 +64035,10 @@ entities:
       pos: -47.5,16.5
       parent: 60
       type: Transform
+    - linkedPorts:
+        9442:
+        - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
+      type: DeviceLinkSource
 - proto: computerBodyScanner
   entities:
   - uid: 627
@@ -114115,6 +114155,9 @@ entities:
     - pos: -50.5,17.5
       parent: 60
       type: Transform
+    - links:
+      - 466
+      type: DeviceLinkSink
 - proto: MachineFrame
   entities:
   - uid: 945
@@ -127482,6 +127525,14 @@ entities:
     - pos: -11.495448,-28.362686
       parent: 60
       type: Transform
+    - linkedPorts:
+        7697:
+        - Pressed: Toggle
+        914:
+        - Pressed: Toggle
+        920:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 4898
     components:
     - name: Cell 5 Shutters
@@ -128033,6 +128084,7 @@ entities:
       parent: 60
       type: Transform
     - links:
+      - 3017
       - 1189
       type: DeviceLinkSink
   - uid: 920
@@ -128041,6 +128093,7 @@ entities:
       parent: 60
       type: Transform
     - links:
+      - 3017
       - 1189
       type: DeviceLinkSink
   - uid: 2307
@@ -128081,6 +128134,7 @@ entities:
       parent: 60
       type: Transform
     - links:
+      - 3017
       - 1189
       type: DeviceLinkSink
   - uid: 11253
@@ -156929,36 +156983,54 @@ entities:
       pos: -20.5,-12.5
       parent: 60
       type: Transform
+    - links:
+      - 6972
+      type: DeviceLinkSink
   - uid: 151
     components:
     - rot: 1.5707963267948966 rad
       pos: -20.5,-9.5
       parent: 60
       type: Transform
+    - links:
+      - 1488
+      type: DeviceLinkSink
   - uid: 230
     components:
     - rot: -1.5707963267948966 rad
       pos: -32.5,-6.5
       parent: 60
       type: Transform
+    - links:
+      - 1468
+      type: DeviceLinkSink
   - uid: 243
     components:
     - rot: -1.5707963267948966 rad
       pos: -32.5,-12.5
       parent: 60
       type: Transform
+    - links:
+      - 1486
+      type: DeviceLinkSink
   - uid: 268
     components:
     - rot: -1.5707963267948966 rad
       pos: -32.5,-9.5
       parent: 60
       type: Transform
+    - links:
+      - 1485
+      type: DeviceLinkSink
   - uid: 843
     components:
     - rot: 1.5707963267948966 rad
       pos: -20.5,-6.5
       parent: 60
       type: Transform
+    - links:
+      - 6971
+      type: DeviceLinkSink
   - uid: 4078
     components:
     - rot: 3.141592653589793 rad

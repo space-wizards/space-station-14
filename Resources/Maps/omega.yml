@@ -10421,11 +10421,23 @@ entities:
     - pos: -27.5,18.5
       parent: 4812
       type: Transform
+    - linkedPorts:
+        7786:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 4811
     components:
     - pos: -27.5,15.5
       parent: 4812
       type: Transform
+    - linkedPorts:
+        7785:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
 - proto: Bucket
   entities:
   - uid: 1477
@@ -33629,6 +33641,10 @@ entities:
       pos: 22.5,-26.5
       parent: 4812
       type: Transform
+    - linkedPorts:
+        6319:
+        - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
+      type: DeviceLinkSource
 - proto: computerBodyScanner
   entities:
   - uid: 4921
@@ -60706,6 +60722,9 @@ entities:
     - pos: 22.5,-29.5
       parent: 4812
       type: Transform
+    - links:
+      - 6313
+      type: DeviceLinkSink
 - proto: MachineFrame
   entities:
   - uid: 3952
@@ -83544,12 +83563,18 @@ entities:
       pos: -27.5,16.5
       parent: 4812
       type: Transform
+    - links:
+      - 4811
+      type: DeviceLinkSink
   - uid: 7786
     components:
     - rot: 1.5707963267948966 rad
       pos: -27.5,19.5
       parent: 4812
       type: Transform
+    - links:
+      - 4810
+      type: DeviceLinkSink
 - proto: WindoorTheatreLocked
   entities:
   - uid: 896

@@ -19219,6 +19219,8 @@ entities:
       parent: 1668
       type: Transform
     - linkedPorts:
+        723:
+        - MedicalScannerSender: MedicalScannerReceiver
         722:
         - CloningPodSender: CloningPodReceiver
       type: DeviceLinkSource
@@ -26761,6 +26763,9 @@ entities:
     - pos: 9.5,-14.5
       parent: 1668
       type: Transform
+    - links:
+      - 575
+      type: DeviceLinkSink
 - proto: MedicalTechFab
   entities:
   - uid: 616
