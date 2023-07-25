@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Hands.Systems;
+using Content.Shared.Hands.Components;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 
@@ -14,7 +15,8 @@ public sealed class SwapToFreeHandOperator : HTNOperator
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard, CancellationToken cancelToken)
     {
-        if (!blackboard.TryGetValue<List<string>>(NPCBlackboard.FreeHands, out var hands, _entManager))
+        if (!blackboard.TryGetValue<List<string>>(NPCBlackboard.FreeHands, out var hands, _entManager) ||
+            !_entManager.TryGetComponent<HandsComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner), out var handsComp))
         {
             return (false, null);
         }
@@ -24,7 +26,7 @@ public sealed class SwapToFreeHandOperator : HTNOperator
             return (true, new Dictionary<string, object>()
             {
                 {
-                    NPCBlackboard.ActiveHand, hand
+                    NPCBlackboard.ActiveHand, handsComp.Hands[hand]
                 },
                 {
                     NPCBlackboard.ActiveHandFree, true

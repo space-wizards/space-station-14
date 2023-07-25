@@ -3,6 +3,8 @@
 - type: htnCompound
   id: MeleeCombatCompound
   branches:
+    # Armed combat
+    # TODO:
     # Unarmed combat
     - tasks:
         - !type:HTNPrimitiveTask

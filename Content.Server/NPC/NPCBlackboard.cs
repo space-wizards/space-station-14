@@ -173,7 +173,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                     return false;
                 }
 
-                value = hands.ActiveHand.Name;
+                value = hands.ActiveHand;
                 return true;
             }
             case ActiveHandFree:
