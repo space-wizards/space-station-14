@@ -1,0 +1,36 @@
+{
+    "version":1,
+    "size":{
+        "x":32,
+        "y":32
+    },
+    "license":"CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation and modified by Just-a-Unity-Dev",
+    "states":[
+        {
+            "name": "activated",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "idle",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

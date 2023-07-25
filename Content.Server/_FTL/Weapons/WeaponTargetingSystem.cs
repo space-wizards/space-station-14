@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server._FTL.ShipTracker;
+using Content.Server._FTL.ShipTracker.Systems;
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
@@ -11,6 +12,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
@@ -174,7 +176,7 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
             }
 
             if (weaponPad.HasValue)
-                _popupSystem.PopupEntity(Loc.GetString(localeMessage, ("hull", shipTrackerComponent.HullAmount), ("maxHull", shipTrackerComponent.HullCapacity), ("shields", shipTrackerComponent.ShieldAmount)), weaponPad.Value);
+                _popupSystem.PopupEntity(Loc.GetString(localeMessage), weaponPad.Value);
         }
         _audioSystem.PlayPvs(component.FireSound, uid);
 
@@ -258,11 +260,14 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
         if (shipTrackerComponent == null)
             return;
 
+        if (!_shipTrackerSystem.TryGetShieldHealth(args.SelectedGrid, out var shieldAmount, out var shieldCapacity, shipTrackerComponent))
+            return;
+
         var message = Loc.GetString("weapon-pad-message-scan-text",
             ("hull", shipTrackerComponent.HullAmount),
             ("maxHull", shipTrackerComponent.HullCapacity),
-            ("shields", shipTrackerComponent.ShieldAmount),
-            ("maxShields", shipTrackerComponent.ShieldCapacity)
+            ("shields", shieldAmount),
+            ("maxShields", shieldCapacity)
         );
         UpdateState(uid, component.CanFire, message);
     }

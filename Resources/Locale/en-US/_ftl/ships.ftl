@@ -8,7 +8,6 @@ ship-inbound-message = Alert! Sensor array output have detected {$amount ->
       *[other] {$amount} ships
     } in the area. Hostility unknown. Automatically elevating to Blue alert.
 
-
 ship-ftl-tag-star = STAR
 ship-ftl-tag-base = BASE
 ship-ftl-tag-danger = !!!!
@@ -18,3 +17,9 @@ ship-ftl-tag-moon = MOON
 ship-ftl-tag-ruin = RUIN
 ship-ftl-tag-yard = YARD
 ship-ftl-tag-asteroid = ROID
+
+ship-state-tag-neutral = NTRL
+ship-state-tag-hostile = HSTL
+
+ship-shield-examine-inactive-message = The shield generator is [color=#ff0000]inactive[/color].
+ship-shield-examine-active-message = The shield generator is [color=#00ff00]active[/color].

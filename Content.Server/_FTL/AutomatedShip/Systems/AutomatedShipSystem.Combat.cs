@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server._FTL.AutomatedShip.Components;
 using Content.Server._FTL.ShipTracker;
 using Content.Server._FTL.ShipTracker.Events;
@@ -38,7 +37,7 @@ public sealed partial class AutomatedShipSystem
 
         var weapon = _random.Pick(GetWeaponsOnGrid(entity));
 
-       if (!TryComp<FTLWeaponComponent>(weapon, out var weaponComponent) ||  !TryFindRandomTile(mainShip, out _, out var coordinates))
+       if (!TryComp<FTLWeaponComponent>(weapon, out var weaponComponent) ||  !_shipTracker.TryFindRandomTile(mainShip, out _, out var coordinates))
            return;
 
        activeComponent.TimeSinceLastAttack = 0;

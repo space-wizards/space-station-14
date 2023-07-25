@@ -2,15 +2,10 @@ using System.Linq;
 using Content.Server._FTL.AutomatedShip.Components;
 using Content.Server._FTL.ShipTracker;
 using Content.Server._FTL.ShipTracker.Events;
+using Content.Server._FTL.ShipTracker.Systems;
 using Content.Server._FTL.Weapons;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
-using Robust.Server.GameObjects;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server._FTL.AutomatedShip.Systems;
 
@@ -21,9 +16,9 @@ public sealed partial class AutomatedShipSystem : EntitySystem
 {
     [Dependency] private readonly WeaponTargetingSystem _weaponTargetingSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private readonly ShipTrackerSystem _shipTracker = default!;
     [Dependency] private readonly NpcFactionSystem _npcFactionSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
 
     public override void Initialize()
     {
@@ -36,40 +31,21 @@ public sealed partial class AutomatedShipSystem : EntitySystem
     private void OnInit(EntityUid uid, AutomatedShipComponent component, ComponentInit args)
     {
         EnsureComp<ActiveAutomatedShipComponent>(uid);
+        UpdateName(uid, component);
     }
 
-    private bool TryFindRandomTile(EntityUid targetGrid, out Vector2i tile, out EntityCoordinates targetCoords)
+    public void UpdateName(EntityUid uid, AutomatedShipComponent component)
     {
-        tile = default;
+        var meta = MetaData(uid);
+        var tag = component.AiState == AutomatedShipComponent.AiStates.Cruising ? Loc.GetString("ship-state-tag-neutral") : Loc.GetString("ship-state-tag-hostile");
 
-        targetCoords = EntityCoordinates.Invalid;
-
-        if (!TryComp<MapGridComponent>(targetGrid, out var gridComp))
-            return false;
-
-        var found = false;
-        var (gridPos, _, gridMatrix) = _transformSystem.GetWorldPositionRotationMatrix(targetGrid);
-        var gridBounds = gridMatrix.TransformBox(gridComp.LocalAABB);
-
-        for (var i = 0; i < 10; i++)
+        // has the tag
+        if (meta.EntityName.StartsWith("["))
         {
-            var randomX = _random.Next((int) gridBounds.Left, (int) gridBounds.Right);
-            var randomY = _random.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
-
-            tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-            if (_atmosphereSystem.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tile,
-                    mapGridComp: gridComp)
-                || _atmosphereSystem.IsTileAirBlocked(targetGrid, tile, mapGridComp: gridComp))
-            {
-                continue;
-            }
-
-            found = true;
-            targetCoords = gridComp.GridTileToLocal(tile);
-            break;
+            _metaDataSystem.SetEntityName(uid,tag + meta.EntityName.Substring(5, meta.EntityName.Length));
+            return;
         }
-
-        return found;
+        _metaDataSystem.SetEntityName(uid, tag + meta.EntityName);
     }
 
     public void AutomatedShipJump()
@@ -105,6 +81,8 @@ public sealed partial class AutomatedShipSystem : EntitySystem
                 continue;
 
             var mainShip = _random.Pick(hostileShips).Owner;
+
+            UpdateName(entity, aiComponent);
 
             // I seperated these into partial systems because I hate large line counts!!!
             switch (aiComponent.AiState)

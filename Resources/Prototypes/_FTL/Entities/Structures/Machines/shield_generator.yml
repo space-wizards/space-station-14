@@ -1,0 +1,60 @@
+- type: entity
+  id: ShieldGenerator
+  parent: BaseMachinePowered
+  name: shield generator
+  description: The reliable shield generator, even while used in the old-world - is still reliable after hundreds of thousands of improvements. No shield generator is the same internally, but they function the same regardless.
+  placement:
+    mode: AlignTileAny
+  components:
+    - type: AmbientSound
+      enabled: false
+      volume: -6
+      range: 7
+      sound:
+        path: /Audio/Ambience/Objects/gravity_gen_hum.ogg
+    - type: Transform
+      anchored: true
+    - type: Physics
+      bodyType: Static
+    - type: Sprite
+      sprite: Structures/Machines/gravity_generator_mini.rsi
+      snapCardinals: true
+      layers:
+        - state: on
+          map: ["base"]
+        - sprite: _FTL/Structures/Machines/shield_generator_core.rsi
+          state: activated
+          shader: unshaded
+          map: ["core"]
+          scale: "0.4,0.4"
+          offset: "0,0.2"
+    - type: GenericVisualizer
+      visuals:
+        enum.ShieldGeneratorVisuals.State:
+          core:
+            True: {state: activated}
+            False: {state: idle}
+          base:
+            True: {state: on}
+            False: {state: off}
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
+          density: 3125
+          mask:
+            - LargeMobMask
+          layer:
+            - WallLayer
+    - type: StaticPrice
+      price: 2500
+    - type: Appearance
+    - type: PointLight
+      radius: 2.5
+      energy: 0.5
+      # Gravity generator is a large machine, not casting shadows is fine within the radius set above.
+      castShadows: false
+      color: "#a8acff"
+    - type: ShieldGenerator
