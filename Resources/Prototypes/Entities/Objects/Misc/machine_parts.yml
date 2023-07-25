@@ -134,9 +134,9 @@
 
 - type: entity
   id: QuadraticCapacitorStockPart
-  name: bluespace capacitor
+  name: spinavi capacitor
   parent: CapacitorStockPart
-  description: A bluespace capacitor used in the construction of a variety of devices.
+  description: A spinavi capacitor used in the construction of a variety of devices.
   suffix: Rating 4
   components:
     - type: Sprite
@@ -146,9 +146,9 @@
 
 - type: entity
   id: FemtoManipulatorStockPart
-  name: bluespace manipulator
+  name: spinavi manipulator
   parent: MicroManipulatorStockPart
-  description: A bluespace manipulator used in the construction of a variety of devices.
+  description: A spinavi manipulator used in the construction of a variety of devices.
   suffix: Rating 4
   components:
     - type: Sprite
@@ -158,9 +158,9 @@
 
 - type: entity
   id: BluespaceMatterBinStockPart
-  name: bluespace matter bin
+  name: spinavi matter bin
   parent: MatterBinStockPart
-  description: A bluespace matter bin used in the construction of a variety of devices.
+  description: A spinavi matter bin used in the construction of a variety of devices.
   suffix: Rating 4
   components:
     - type: Sprite

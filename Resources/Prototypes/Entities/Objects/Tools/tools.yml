@@ -367,7 +367,7 @@
   parent: RCD
   suffix: Admeme
   name: experimental rcd
-  description: A bluespace-enhanced RCD that regenerates charges passively.
+  description: A spinavi-enhanced RCD that regenerates charges passively.
   components:
   - type: AutoRecharge
     rechargeDuration: 5

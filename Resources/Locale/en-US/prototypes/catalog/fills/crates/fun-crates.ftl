@@ -40,7 +40,7 @@ ent-CrateFunParty = Party Crate
 ent-CrateFunWaterGuns = Water Gun Crate
     .desc = A summer special with a variety of brightly colored water guns. Water not included.
 
-ent-CrateFunSyndicateSegway = Syndicate segway crate
+ent-CrateFunSyndicateSegway = segway crate
     .desc = A crate containing a two-wheeler that will help you escape from the security officers. Or not.
 
 ent-CrateFunBoxing = Boxing Crate

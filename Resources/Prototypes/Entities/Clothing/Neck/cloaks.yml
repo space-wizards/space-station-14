@@ -74,7 +74,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckCloakNanotrasen
   name: nanotrasen cloak
-  description: A stately blue cloak to represent NanoTrasen.
+  description: A stately blue cloak to represent the fictional corporation NanoTrasen.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/nanotrasen.rsi

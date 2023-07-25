@@ -25,7 +25,7 @@ use-freedom-implant-action-name = Break Free
 use-freedom-implant-action-description = Activating your freedom implant will free you from any hand restraints
 
 open-uplink-implant-action-name = Open Uplink
-open-uplink-implant-action-description = Opens the syndicate uplink embedded under your skin
+open-uplink-implant-action-description = Opens the uplink embedded under your skin
 
 action-name-honk = Honk!
 action-desc-honk = Activates your honking implant, which will produce the signature sound of the clown.

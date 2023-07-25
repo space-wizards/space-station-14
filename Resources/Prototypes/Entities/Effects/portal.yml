@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: BasePortal
   abstract: true
-  name: bluespace portal
+  name: spinavi portal
   description: Transports you to a linked destination!
   components:
   - type: InteractionOutline

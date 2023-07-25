@@ -511,7 +511,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSecGrey
   name: grey security jumpsuit
-  description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
+  description: A tactical relic of years past before someone decided it was cheaper to dye the suits red instead of washing out the blood.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/security_grey.rsi
@@ -522,7 +522,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitWarden
   name: warden's uniform
-  description: A formal security suit for officers complete with Nanotrasen belt buckle.
+  description: A formal security suit for officers complete with a belt buckle.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
@@ -832,7 +832,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitNanotrasen
   name: nanotrasen jumpsuit
-  description: A stately blue jumpsuit to represent NanoTrasen.
+  description: A stately blue jumpsuit to represent the fictional corporation NanoTrasen.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/nanotrasen.rsi

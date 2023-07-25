@@ -93,7 +93,7 @@
   name: omega soap
   id: SoapOmega
   parent: Soap
-  description: The most advanced soap known to mankind. Smells of bluespace.
+  description: The most advanced soap known to mankind. Smells of spinavi.
   components:
   - type: Sprite
     state: omega

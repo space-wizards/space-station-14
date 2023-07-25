@@ -18,7 +18,7 @@ traitor-user-was-a-traitor-with-objectives = [color=gray]{$user}[/color] was a t
 traitor-user-was-a-traitor-with-objectives-named = [color=White]{$name}[/color] ([color=gray]{$user}[/color]) was a traitor who had the following objectives:
 traitor-was-a-traitor-with-objectives-named = [color=White]{$name}[/color] was a traitor who had the following objectives:
 
-preset-traitor-objective-issuer-syndicate = [color=#87cefa]The Syndicate[/color]
+preset-traitor-objective-issuer-syndicate = [color=#87cefa]The Company[/color]
 
 # Shown at the end of a round of Traitor
 traitor-objective-condition-success = {$condition} | [color={$markupColor}]Success![/color]
@@ -42,14 +42,14 @@ traitor-death-match-end-round-description-entry = {$originalName}'s PDA, with {$
 
 # TraitorRole
 traitor-role-greeting =
-    You are a syndicate agent.
+    You are a traitor.
     Your objectives and codewords are listed in the character menu.
     Use the uplink loaded into your PDA to buy the tools you'll need for this mission.
     Death to CoreGov!
 traitor-role-codewords =
     The codewords are:
     {$codewords}.
-    Codewords can be used in regular conversation to identify yourself discretely to other syndicate agents.
+    Codewords can be used in regular conversation to identify yourself discretely to other traitors.
     Listen for them, and keep them secret.
 traitor-role-uplink-code =
     Set your ringtone to the notes {$code} to lock or unlock your uplink.

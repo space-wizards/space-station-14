@@ -29,7 +29,7 @@
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetSyndicate
-  name: syndicate EVA helmet
+  name: IncSek EVA helmet
   description: A simple, stylish EVA helmet. Designed for maximum humble space-badassery.
   components:
   - type: Sprite

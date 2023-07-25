@@ -132,6 +132,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("ftlAmmo");
             _prototypeManager.RegisterIgnore("ftlPoint");
             _prototypeManager.RegisterIgnore("flavor");
+            _prototypeManager.RegisterIgnore("printerPaper");
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();

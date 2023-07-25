@@ -96,6 +96,8 @@
         - FloorLowDesert
       entities:
         - MobGiantSpiderAngry
+        - MobCrab
+        - MobSnake
 
 # Grass
 - type: biomeTemplate
@@ -131,7 +133,7 @@
     # Dense vegetation
     - !type:BiomeDecalLayer
       allowedTiles:
-      - FloorPlanetGrass
+        - FloorPlanetGrass
       divisions: 1
       threshold: -0.35
       noise:
@@ -255,8 +257,18 @@
       allowedTiles:
         - FloorPlanetGrass
       entities:
-        - MobWildlifeWolf
+        - MobCow
+        - MobDuckMallard
+        - MobBee
+        - MobButterfly
+        - MobGoose
+        - MobGorilla
+        - MobMonkey
+        - MobFrog
+        - MobParrot
+        - MobPig
         - MobWildlifeBear
+        - MobChicken
 
 # Lava
 - type: biomeTemplate
@@ -489,6 +501,7 @@
       entities:
         - MobWildlifeWolf
         - MobWildlifeBear
+        - MobPenguin
 
 # Caves
 - type: biomeTemplate

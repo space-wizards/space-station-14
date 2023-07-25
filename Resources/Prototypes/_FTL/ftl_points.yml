@@ -4,7 +4,7 @@
   effects:
     - !type:SpawnStationEffect
     - !type:ApplyWorldGenConfigEffect
-      probability: 0.15
+      probability: 0.65
 
 - type: ftlPoint
   id: LoDangerPoint
@@ -89,7 +89,6 @@
   tag: ship-ftl-tag-asteroid
   effects:
     - !type:ApplyWorldGenConfigEffect
-      config: Packed
     - !type:SpawnDungeonEffect
       range: 1500
       maxSpawn: 7
@@ -125,7 +124,7 @@
     NoDangerPoint: 1
     StarPoint: 1
     PlanetPoint: 1
-    AsteroidPoint: 0.5
+    #AsteroidPoint: 0.5 #my server!!!
     StationPoint: 0.5
     MoonPoint: 0.25
     RuinPoint: 0.15

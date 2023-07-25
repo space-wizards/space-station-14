@@ -60,7 +60,7 @@
 - type: entity
   parent: VehicleKeyJanicart
   id: VehicleKeySyndicateSegway
-  name: syndicate segway keys
+  name: segway keys
   description: Patterned after the iconic EMAG design.
   components:
     - type: Tag

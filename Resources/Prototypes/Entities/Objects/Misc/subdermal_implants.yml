@@ -110,7 +110,7 @@
   parent: BaseSubdermalImplant
   id: StorageImplant
   name: storage implant
-  description: made with bluespace technology, allows the user to fit a few items in hidden storage
+  description: made with spinavi technology, allows the user to fit a few items in hidden storage
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -251,7 +251,7 @@
   parent: BaseSubdermalImplant
   id: DeathRattleImplant
   name: deathrattle implant
-  description: sends a message with your location to the syndicate radio channel when you fall into a critical state or die.
+  description: sends a message with your location to the FSC radio channel when you fall into a critical state or die.
   noSpawn: true
   components:
     - type: SubdermalImplant

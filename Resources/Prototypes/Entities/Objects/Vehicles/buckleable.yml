@@ -275,7 +275,7 @@
 - type: entity
   id: VehicleSyndicateSegway
   parent: BaseVehicle
-  name: syndicate segway
+  name: segway
   description: Be an enemy of the corporation, in style.
   components:
     - type: Vehicle
