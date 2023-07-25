@@ -1,7 +1,7 @@
 - type: species
   id: Arachnid
   name: species-name-arachnid
-  roundStart: false # Corvax
+  roundStart: true # SS220
   prototype: MobArachnid
   sprites: MobArachnidSprites
   defaultSkinTone: "#385878"
