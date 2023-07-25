@@ -1,7 +1,7 @@
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 
-namespace Content.Server._FTL.FTLPoints;
+namespace Content.Server._FTL.FTLPoints.Events;
 
 /// <summary>
 /// The type of FTL point.

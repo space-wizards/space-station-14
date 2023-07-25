@@ -7,3 +7,4 @@
   showInVote: true
   rules:
     - EndOnShipDestruction
+    - GeneratePoints

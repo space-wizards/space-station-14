@@ -92,8 +92,9 @@ entities:
     - type: GasTileOverlay
     - hullCapacity: 10
       hullAmount: 10
+      faction: HostileIndependentShip
       type: ShipTracker
-    - type: AutomatedCombat
+    - type: AutomatedShip
     - type: RadiationGridResistance
 - proto: AirlockEngineering
   entities:

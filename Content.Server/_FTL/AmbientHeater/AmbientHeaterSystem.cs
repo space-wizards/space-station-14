@@ -1,12 +1,8 @@
-using System.Linq;
-using Content.Server._FTL.AmbientHeater;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
-using Content.Server.Temperature.Systems;
 using Robust.Server.GameObjects;
 
-namespace Content.Server._Frigid.AmbientHeater;
+namespace Content.Server._FTL.AmbientHeater;
 
 public sealed class AmbientHeaterSystem : EntitySystem
 {

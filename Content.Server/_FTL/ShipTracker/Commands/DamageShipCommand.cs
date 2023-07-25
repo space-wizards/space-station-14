@@ -1,11 +1,12 @@
-using Content.Server._FTL.FTLPoints;
-using Content.Server._FTL.ShipHealth;
 using Content.Server._FTL.Weapons;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-sealed class DamageShipCommand : LocalizedCommands
+
+namespace Content.Server._FTL.ShipTracker.Commands;
+
+public sealed class DamageShipCommand : LocalizedCommands
 {
     [Dependency] private readonly EntityManager _ent = default!;
     [Dependency] private readonly IMapManager _map = default!;
@@ -33,7 +34,7 @@ sealed class DamageShipCommand : LocalizedCommands
             return;
         }
 
-        var outcome = _ent.System<ShipTrackerSystem>().TryDamageShip(gridUid, _proto.Index<FTLAmmoType>(args[1]));
+        var outcome = _ent.System<ShipTrackerSystem>().TryDamageShip(gridUid, _proto.Index<FTLAmmoType>(args[1]), null);
 
         shell.WriteLine("Damaged ship. Hit: " + outcome.ToString());
     }

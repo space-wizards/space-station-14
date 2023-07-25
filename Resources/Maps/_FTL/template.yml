@@ -84,6 +84,7 @@ entities:
       shieldAmount: 0
       hullCapacity: 10
       hullAmount: 10
+      faction: HostileIndependentShip
       type: ShipTracker
-    - type: AutomatedCombat
+    - type: AutomatedShip
 ...

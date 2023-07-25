@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Server._FTL.ShipHealth;
+using Content.Server._FTL.ShipTracker;
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
@@ -120,12 +120,21 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
         TryFireWeapon(uid, component, targetGrid, coordinates, weaponPad);
     }
 
+    /// <summary>
+    /// Attempts to fire a weapon.
+    /// </summary>
+    /// <param name="uid">The weapon entity</param>
+    /// <param name="component">The weapon component</param>
+    /// <param name="targetGrid">The grid being targeted</param>
+    /// <param name="coordinates">The entity coordinates of where it is being shot at</param>
+    /// <param name="weaponPad">The connected weapon pad</param>
     public void TryFireWeapon(EntityUid uid, FTLWeaponComponent component, EntityUid targetGrid, EntityCoordinates coordinates, EntityUid? weaponPad)
     {
         TryComp<FTLWeaponSiloComponent>(uid, out var siloComponent);
-        string? ammoPrototypeString = null;
+        var ammoPrototypeString = component.Prototype;
 
-        if (siloComponent != null && siloComponent.ContainedEntities != null)
+        // we have to do some stuff for silos
+        if (siloComponent is {ContainedEntities: not null})
         {
             foreach (var entity in siloComponent.ContainedEntities)
             {
@@ -145,32 +154,31 @@ public sealed class WeaponTargetingSystem : SharedWeaponTargetingSystem
                 _entityManager.DeleteEntity(entity);
             }
         }
-        else
-        {
-            ammoPrototypeString = component.Prototype;
-        }
 
+        // play popup and sfx
         var localeMessage = "weapon-pad-message-miss-text";
         if (ammoPrototypeString == null)
         {
             _audioSystem.PlayPvs(component.CooldownSound, uid);
             return;
         }
+        // deal damage
         var ammoPrototype = _prototypeManager.Index<FTLAmmoType>(ammoPrototypeString);
-        TryComp<ShipTrackerComponent>(targetGrid, out var shipHealthComponent);
-        if (shipHealthComponent != null)
+        TryComp<ShipTrackerComponent>(targetGrid, out var shipTrackerComponent);
+        if (shipTrackerComponent != null)
         {
-            if (_shipTrackerSystem.TryDamageShip(shipHealthComponent, ammoPrototype))
+            if (_shipTrackerSystem.TryDamageShip(targetGrid, ammoPrototype, shipTrackerComponent, Transform(uid).GridUid))
             {
                 _entityManager.SpawnEntity(ammoPrototype.BulletPrototype, coordinates);
                 localeMessage = "weapon-pad-message-hit-text";
             }
 
             if (weaponPad.HasValue)
-                _popupSystem.PopupEntity(Loc.GetString(localeMessage, ("hull", shipHealthComponent.HullAmount), ("maxHull", shipHealthComponent.HullCapacity), ("shields", shipHealthComponent.ShieldAmount)), weaponPad.Value);
+                _popupSystem.PopupEntity(Loc.GetString(localeMessage, ("hull", shipTrackerComponent.HullAmount), ("maxHull", shipTrackerComponent.HullCapacity), ("shields", shipTrackerComponent.ShieldAmount)), weaponPad.Value);
         }
         _audioSystem.PlayPvs(component.FireSound, uid);
 
+        // cooldown weapon
         component.CanBeUsed = false;
         TryCooldownWeapon(uid, component);
     }

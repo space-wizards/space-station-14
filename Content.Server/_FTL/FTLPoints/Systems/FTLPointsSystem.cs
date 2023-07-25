@@ -1,5 +1,7 @@
-using Content.Server.GameTicking.Events;
-using Content.Server.Maps;
+using Content.Server._FTL.FTLPoints.Components;
+using Content.Server._FTL.FTLPoints.Effects;
+using Content.Server._FTL.FTLPoints.Events;
+using Content.Server._FTL.FTLPoints.Prototypes;
 using Content.Server.Parallax;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
@@ -12,12 +14,12 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server._FTL.FTLPoints;
+namespace Content.Server._FTL.FTLPoints.Systems;
 
 /// <summary>
 /// This handles the generation of FTL points
 /// </summary>
-public sealed class FTLPointsSystem : EntitySystem
+public sealed partial class FTLPointsSystem : EntitySystem
 {
     [Dependency] private readonly EntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -25,7 +27,6 @@ public sealed class FTLPointsSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ShuttleConsoleSystem _consoleSystem = default!;
-    [Dependency] private readonly ParallaxSystem _parallaxSystem = default!;
 
     public void RegeneratePoints()
     {

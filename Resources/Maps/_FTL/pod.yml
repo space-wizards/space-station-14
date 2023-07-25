@@ -88,8 +88,10 @@ entities:
       shieldAmount: 0
       hullCapacity: 4
       hullAmount: 4
+      stranded: true
+      faction: IndependentShip
       type: ShipTracker
-    - type: AutomatedCombat
+    - type: AutomatedShip
     - type: RadiationGridResistance
 - proto: APCBasic
   entities:

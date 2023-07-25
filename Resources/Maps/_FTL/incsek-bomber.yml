@@ -94,8 +94,9 @@ entities:
       shieldAmount: 2
       hullCapacity: 19
       hullAmount: 19
+      faction: IncSekShip
       type: ShipTracker
-    - type: AutomatedCombat
+    - type: AutomatedShip
     - type: RadiationGridResistance
 - proto: AirlockCommandLocked
   entities:

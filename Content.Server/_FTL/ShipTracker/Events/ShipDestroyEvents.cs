@@ -1,6 +1,3 @@
-using Content.Server._FTL.ShipHealth;
-using Robust.Shared.Map;
-
 namespace Content.Server._FTL.ShipTracker.Events;
 
 /// <summary>
