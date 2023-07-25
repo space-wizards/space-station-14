@@ -1,10 +1,4 @@
 Entries:
-- author: WlarusFromDaSpace
-  changes:
-  - {message: The sad trombone implant now correctly only triggers whenever a mob
-      dies, type: Fix}
-  id: 3819
-  time: '2023-05-20T01:15:18.0000000+00:00'
 - author: MrGreen and OctoRocket
   changes:
   - {message: Added tons more scarfs for you to enjoy at your departments!, type: Add}
@@ -2976,3 +2970,8 @@ Entries:
   - {message: Central Command has given the command locked crates a new look, type: Tweak}
   id: 4318
   time: '2023-07-25T20:18:02.0000000+00:00'
+- author: Phill101
+  changes:
+  - {message: Added bleeding status icon, type: Add}
+  id: 4319
+  time: '2023-07-25T21:28:35.0000000+00:00'
