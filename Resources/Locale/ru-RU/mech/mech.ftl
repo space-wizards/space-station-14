@@ -9,3 +9,4 @@ mech-menu-title = Панель управления меха
 mech-integrity-display = Целостность: { $amount }%
 mech-energy-display = Энергия: { $amount }%
 mech-slot-display = Доступно слотов: { $amount }
+mech-no-enter = Вы не можете пилотировать это.

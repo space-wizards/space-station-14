@@ -48,3 +48,6 @@ ent-CrateRodentCage = хомячья клетка
     .desc = { ent-CrateGeneric.desc }
 ent-CratePirate = пиратский сундук
     .desc = Сундук космического пирата, не для станционных крыс.
+ent-CrateToyBox = коробка игрушек
+    .desc = Коробка, переполненная весельем.
+    .suffix = Пустой

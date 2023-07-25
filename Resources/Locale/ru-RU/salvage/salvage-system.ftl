@@ -23,3 +23,4 @@ salvage-system-magnet-examined-cooling-down =
         [few] { $timeLeft } секунды.
        *[other] { $timeLeft } секунд.
     }.
+salvage-system-magnet-delay-upgrade = задержка притягивания/остывания

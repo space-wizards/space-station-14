@@ -54,8 +54,8 @@
         toggleAction:
           name: action-name-show-solar-console
           description: action-description-show-solar-console
-          icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-          iconOn: Structures/Machines/parts.rsi/box_2.png
+          icon: Corvax/Interface/AdminActions/solar.png # Corvax-Resprite
+          iconOn: Corvax/Interface/AdminActions/solar.png # Corvax-Resprite
           keywords: [ "AI", "console", "interface" ]
           priority: -10
           event: !type:ToggleIntrinsicUIEvent
@@ -63,8 +63,8 @@
         toggleAction:
           name: action-name-show-communications-console
           description: action-description-show-communications-console
-          icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-          iconOn: Structures/Machines/parts.rsi/box_2.png
+          icon: Corvax/Interface/AdminActions/communications.png # Corvax-Resprite
+          iconOn: Corvax/Interface/AdminActions/communications.png # Corvax-Resprite
           keywords: [ "AI", "console", "interface" ]
           priority: -10
           event: !type:ToggleIntrinsicUIEvent
@@ -72,8 +72,8 @@
         toggleAction:
           name: action-name-show-radar-console
           description: action-description-show-radar-console
-          icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-          iconOn: Structures/Machines/parts.rsi/box_2.png
+          icon: Corvax/Interface/AdminActions/radar.png # Corvax-Resprite
+          iconOn: Corvax/Interface/AdminActions/radar.png # Corvax-Resprite
           keywords: [ "AI", "console", "interface" ]
           priority: -10
           event: !type:ToggleIntrinsicUIEvent
@@ -81,8 +81,8 @@
         toggleAction:
           name: action-name-show-cargo-console
           description: action-description-show-cargo-console
-          icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-          iconOn: Structures/Machines/parts.rsi/box_2.png
+          icon: Corvax/Interface/AdminActions/cargo.png # Corvax-Resprite
+          iconOn: Corvax/Interface/AdminActions/cargo.png # Corvax-Resprite
           keywords: [ "AI", "console", "interface" ]
           priority: -10
           event: !type:ToggleIntrinsicUIEvent
@@ -90,8 +90,8 @@
         toggleAction:
           name: action-name-show-crew-monitoring-console
           description: action-description-crew-monitoring-console
-          icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-          iconOn: Structures/Machines/parts.rsi/box_2.png
+          icon: Corvax/Interface/AdminActions/monitoring.png # Corvax-Resprite
+          iconOn: Corvax/Interface/AdminActions/monitoring.png # Corvax-Resprite
           keywords: [ "AI", "console", "interface" ]
           priority: -10
           event: !type:ToggleIntrinsicUIEvent
@@ -99,8 +99,8 @@
         toggleAction:
           name: action-name-show-station-records-console
           description: action-description-station-records-console
-          icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-          iconOn: Structures/Machines/parts.rsi/box_2.png
+          icon: Corvax/Interface/AdminActions/records.png # Corvax-Resprite
+          iconOn: Corvax/Interface/AdminActions/records.png # Corvax-Resprite
           keywords: [ "AI", "console", "interface" ]
           priority: -10
           event: !type:ToggleIntrinsicUIEvent

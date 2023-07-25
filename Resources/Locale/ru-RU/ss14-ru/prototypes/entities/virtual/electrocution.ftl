@@ -1,6 +1,8 @@
-ent-VirtualElectrocutionLoadHVPower = ЭЛЕКТРИЧЕСКИЙ УДАР, ВЫ НЕ ДОЛЖНЫ ВИДЕТЬ ЭТО
+ent-VirtualElectrocutionLoadBase = { "" }
     .desc = { "" }
-ent-VirtualElectrocutionLoadMVPower = ЭЛЕКТРИЧЕСКИЙ УДАР, ВЫ НЕ ДОЛЖНЫ ВИДЕТЬ ЭТО
-    .desc = { "" }
-ent-VirtualElectrocutionLoadApc = ЭЛЕКТРИЧЕСКИЙ УДАР, ВЫ НЕ ДОЛЖНЫ ВИДЕТЬ ЭТО
-    .desc = { "" }
+ent-VirtualElectrocutionLoadHVPower = { ent-VirtualElectrocutionLoadBase }
+    .desc = { ent-VirtualElectrocutionLoadBase.desc }
+ent-VirtualElectrocutionLoadMVPower = { ent-VirtualElectrocutionLoadBase }
+    .desc = { ent-VirtualElectrocutionLoadBase.desc }
+ent-VirtualElectrocutionLoadApc = { ent-VirtualElectrocutionLoadBase }
+    .desc = { ent-VirtualElectrocutionLoadBase.desc }

@@ -8,3 +8,5 @@ action-name-show-cargo-console = Интерфейс заказа товаров
 action-description-show-cargo-console = Просмотр интерфейса заказа товаров.
 action-name-show-crew-monitoring-console = Интерфейс мониторинга экипажа.
 action-description-crew-monitoring-console = Просмотр интерфейса мониторинга экипажа.
+action-name-show-station-records-console = Интерфейс станционного учёта
+action-description-show-station-records-console = Просмотр интерфейса станционного учёта.

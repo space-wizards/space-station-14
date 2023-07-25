@@ -22,3 +22,5 @@ use-freedom-implant-action-name = Активировать имплант Сво
 use-freedom-implant-action-description = Освобождает вас от наручников и других ограничителей.
 open-uplink-implant-action-name = Открыть аплинк
 open-uplink-implant-action-description = Открывает аплинк Синдиката, скрытый под вашей кожей.
+action-name-honk = Хонк!
+action-desc-honk = Активирует ваш хонк-имплант, который будет издавать фирменный звук клоуна.

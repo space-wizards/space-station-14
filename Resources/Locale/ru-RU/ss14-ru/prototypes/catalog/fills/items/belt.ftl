@@ -1,6 +1,9 @@
 ent-ClothingBeltUtilityFilled = { ent-ClothingBeltUtility }
     .desc = { ent-ClothingBeltUtility.desc }
     .suffix = Заполненный
+ent-ClothingBeltUtilityEngineering = { ent-ClothingBeltUtility }
+    .suffix = Инженерный
+    .desc = { ent-ClothingBeltUtility.desc }
 ent-ClothingBeltChiefEngineerFilled = { ent-ClothingBeltChiefEngineer }
     .desc = { ent-ClothingBeltChiefEngineer.desc }
     .suffix = Заполненный

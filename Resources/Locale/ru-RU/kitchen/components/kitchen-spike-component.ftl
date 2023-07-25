@@ -1,6 +1,6 @@
 comp-kitchen-spike-deny-collect = На { CAPITALIZE($this) } уже что-то есть, закончите сначала собирать мясо!
 comp-kitchen-spike-deny-butcher = { CAPITALIZE($victim) } не может быть разделан на { $this }.
-comp-kitchen-spike-deny-butcher-knife = { CAPITALIZE(THE($victim)) } can't be butchered on { THE($this) }, you need to butcher it using a knife.
+comp-kitchen-spike-deny-butcher-knife = { CAPITALIZE($victim) } не может быть разделан на { $this }, вам нужно разделать это, используя нож.
 comp-kitchen-spike-deny-not-dead = { CAPITALIZE($victim) } не может быть разделан. { CAPITALIZE(SUBJECT($victim)) } { $victim } не умер!
 comp-kitchen-spike-begin-hook-victim = { $user } начинает насаживать вас на { $this }!
 comp-kitchen-spike-begin-hook-self = Вы начинаете насаживать себя на { $this }!

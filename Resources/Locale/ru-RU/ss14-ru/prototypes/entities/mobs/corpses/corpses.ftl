@@ -1,5 +1,5 @@
-ent-MobRandomServiceCorpse = неопознанный труп
-    .desc = Я думаю, он мёртв.
+ent-MobRandomServiceCorpse = { ent-SalvageHumanCorpse }
+    .desc = { ent-SalvageHumanCorpse.desc }
     .suffix = Мёртвый, Сервис
 ent-MobRandomEngineerCorpse = { ent-SalvageHumanCorpse }
     .suffix = Мёртвый, Инженер

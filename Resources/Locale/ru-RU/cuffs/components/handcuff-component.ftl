@@ -13,3 +13,5 @@ handcuff-component-cuff-by-other-success-message = Вы были закован�
 handcuff-component-cuff-interrupt-message = Вам помешали заковать { $targetName }!
 handcuff-component-cuff-interrupt-self-message = Вам помешали заковать себя.
 handcuff-component-cuff-interrupt-other-message = Вы помешали { $otherName } заковать вас!
+handcuff-component-cuff-interrupt-buckled-message = Вы не можете пристегнуться в наручниках!
+handcuff-component-cuff-interrupt-unbuckled-message = Вы не можете отстегнуться в наручниках!

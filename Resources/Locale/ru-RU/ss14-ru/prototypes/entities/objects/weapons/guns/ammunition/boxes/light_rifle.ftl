@@ -10,3 +10,5 @@ ent-MagazineBoxLightRiflePractice = коробка патронов (.30 вин�
     .desc = { ent-BaseMagazineBoxLightRifle.desc }
 ent-MagazineBoxLightRifleRubber = коробка патронов (.30 винтовочные резиновые)
     .desc = { ent-BaseMagazineBoxLightRifle.desc }
+ent-MagazineBoxLightRifleIncendiary = коробка патронов (.30 винтовочные зажигательные)
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }

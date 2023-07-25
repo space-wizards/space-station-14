@@ -23,5 +23,5 @@ ent-NitrousOxideTankFilled = баллон оксида азота
     .suffix = Заполненный
     .desc = { ent-NitrousOxideTank.desc }
 ent-PlasmaTankFilled = баллон плазмы
-    .desc = Содержит плазму высокого класса опасности. Не вдыхать. Внимание: чрезвычайно огнеопасно.
     .suffix = Заполненный
+    .desc = { ent-PlasmaTank.desc }

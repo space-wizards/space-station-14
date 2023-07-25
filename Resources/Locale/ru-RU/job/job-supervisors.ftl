@@ -5,6 +5,7 @@ job-supervisors-hop-qm = квартирмейстеру и главе персо
 job-supervisors-hos = главе службы безопасности
 job-supervisors-ce = старшему инженеру
 job-supervisors-cmo = главному врачу
+job-supervisors-qm = квартирмейстеру
 job-supervisors-rd = научному руководителю
 job-supervisors-service = поварам, ботаникам, барменам, и главе персонала
 job-supervisors-engineering = инженерам, атмосферным техникам, и старшему инженеру

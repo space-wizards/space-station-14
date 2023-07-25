@@ -16,6 +16,7 @@ ent-RipleyRArm = правая рука Рипли
     .desc = Правая рука меха Рипли АВП. Устанавливается на шасси меха.
 ent-RipleyChassis = шасси Рипли
     .desc = Незавершённое шасси меха Рипли АВП.
+
 ent-BaseHonkerPart = { ent-BaseMechPart }
     .desc = { ent-BaseMechPart.desc }
 ent-BaseHonkerPartItem = { ent-BaseHonkerPart }
@@ -32,6 +33,7 @@ ent-HonkerRArm = правая рука Х.О.Н.К.
     .desc = Правая рука меха Х.О.Н.К., с уникальными гнёздами, в которые можно поместить странное оружие, разработанное учёными-клоунами.
 ent-HonkerChassis = шасси Х.О.Н.К.
     .desc = Незавершённое шасси меха Х.О.Н.К. Содержит блок хиханек, бананиумовое ядро, и систему хонкообеспечения.
+
 ent-BaseHamtrPart = { ent-BaseMechPart }
     .desc = { ent-BaseMechPart.desc }
 ent-BaseHamtrPartItem = { ent-BaseHamtrPart }

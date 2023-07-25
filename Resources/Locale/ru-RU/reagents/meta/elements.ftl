@@ -42,3 +42,5 @@ reagent-name-uranium = уран
 reagent-desc-uranium = Серый металлический химический элемент из серии актинидов, слабо радиоактивный.
 reagent-name-bananium = бананиум
 reagent-desc-bananium = Жёлтое радиоактивное органическое твёрдое вещество.
+reagent-name-zinc = цинк
+reagent-desc-zinc = Серебристый, хрупкий металл, часто используемый в батареях для хранения заряда.

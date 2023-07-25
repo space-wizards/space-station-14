@@ -1,3 +1,5 @@
+ent-BaseLathe = лат
+  .desc = { ent-['BaseMachinePowered', 'ConstructibleMachine'].desc }
 ent-Autolathe = автолат
     .desc = Он производит изделия из металла и стекла.
 ent-Protolathe = протолат
@@ -14,3 +16,5 @@ ent-UniformPrinter = принтер униформы
     .desc = Печать новой или запасной униформы.
 ent-OreProcessor = переработчик руды
     .desc = Он производит металлические листы и слитки из руды.
+ent-Sheetifier = лист-мастер 2000
+    .desc = Довольно мяссивное устройство.

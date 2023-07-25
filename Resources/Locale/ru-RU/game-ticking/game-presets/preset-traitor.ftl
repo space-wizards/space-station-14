@@ -21,7 +21,7 @@ traitor-objective-condition-success = { $condition } | [color={ $markupColor }]�
 traitor-objective-condition-fail = { $condition } | [color={ $markupColor }]Провал![/color] ({ $progress }%)
 traitor-title = Предатели
 traitor-description = Среди нас есть предатели...
-traitor-not-enough-ready-players = Недостаточно игроков готовы к игре! Из { $minimumPlayers } необходимых игроков готовы { $readyPlayersCount }.
+traitor-not-enough-ready-players = Недостаточно игроков готовы к игре! Из { $minimumPlayers } необходимых игроков готовы { $readyPlayersCount }. Не удалось начать режим Предателя.
 traitor-no-one-ready = Нет готовых игроков! Не удалось начать режим Предателя.
 
 ## TraitorDeathMatch
