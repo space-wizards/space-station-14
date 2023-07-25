@@ -155,6 +155,10 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (TryComp<ThirstComponent>(owner, out var thirst) && thirst.CurrentThirstThreshold > ThirstThreshold.Okay)
                     return 0f;
 
+                // no janicow don't drink the blood puddle
+                if (HasComp<BadDrinkComponent>(targetUid))
+                    return 0f;
+
                 // needs to have something that will satiate thirst, mice wont try to drink 100% pure mutagen.
                 var hydration = _drink.TotalHydration(targetUid, drink);
                 if (hydration <= 1.0f)
