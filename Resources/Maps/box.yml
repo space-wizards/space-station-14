@@ -15529,16 +15529,31 @@ entities:
     - pos: -3.5,25.5
       parent: 8364
       type: Transform
+    - linkedPorts:
+        8624:
+        - Start: Close
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 25829
     components:
     - pos: -7.5,25.5
       parent: 8364
       type: Transform
+    - linkedPorts:
+        8625:
+        - Start: Close
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 26575
     components:
     - pos: -11.5,25.5
       parent: 8364
       type: Transform
+    - linkedPorts:
+        8626:
+        - Start: Close
+        - Timer: Open
+      type: DeviceLinkSource
 - proto: Bucket
   entities:
   - uid: 10718
@@ -77033,6 +77048,10 @@ entities:
     - pos: 71.5,-43.5
       parent: 8364
       type: Transform
+    - linkedPorts:
+        21199:
+        - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
+      type: DeviceLinkSource
 - proto: computerBodyScanner
   entities:
   - uid: 19054
@@ -132027,6 +132046,9 @@ entities:
     - pos: 71.5,-40.5
       parent: 8364
       type: Transform
+    - links:
+      - 17552
+      type: DeviceLinkSink
 - proto: MachineFrame
   entities:
   - uid: 17860
@@ -179007,6 +179029,9 @@ entities:
     - pos: -1.5,25.5
       parent: 8364
       type: Transform
+    - links:
+      - 8743
+      type: DeviceLinkSink
   - uid: 8625
     components:
     - name: Cell 2
@@ -179014,6 +179039,9 @@ entities:
     - pos: -5.5,25.5
       parent: 8364
       type: Transform
+    - links:
+      - 25829
+      type: DeviceLinkSink
   - uid: 8626
     components:
     - name: Cell 1
@@ -179021,6 +179049,9 @@ entities:
     - pos: -9.5,25.5
       parent: 8364
       type: Transform
+    - links:
+      - 26575
+      type: DeviceLinkSink
   - uid: 8973
     components:
     - pos: -4.5,40.5

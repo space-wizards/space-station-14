@@ -25277,6 +25277,10 @@ entities:
       pos: -15.5,-22.5
       parent: 31
       type: Transform
+    - linkedPorts:
+        8320:
+        - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
+      type: DeviceLinkSource
 - proto: ComputerCargoBounty
   entities:
   - uid: 7126
@@ -46198,6 +46202,9 @@ entities:
     - pos: -14.5,-25.5
       parent: 31
       type: Transform
+    - links:
+      - 8321
+      type: DeviceLinkSink
 - proto: MachineFrame
   entities:
   - uid: 1319

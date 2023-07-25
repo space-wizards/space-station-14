@@ -71623,6 +71623,10 @@ entities:
     - pos: 30.5,75.5
       parent: 82
       type: Transform
+    - linkedPorts:
+        25797:
+        - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
+      type: DeviceLinkSource
 - proto: computerBodyScanner
   entities:
   - uid: 2917
@@ -124913,6 +124917,9 @@ entities:
     - pos: 30.5,78.5
       parent: 82
       type: Transform
+    - links:
+      - 25808
+      type: DeviceLinkSink
 - proto: MachineFrame
   entities:
   - uid: 9499

@@ -16353,18 +16353,36 @@ entities:
       pos: -45.5,41.5
       parent: 30
       type: Transform
+    - linkedPorts:
+        1761:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 1982
     components:
     - rot: -1.5707963267948966 rad
       pos: -41.5,41.5
       parent: 30
       type: Transform
+    - linkedPorts:
+        1759:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 1993
     components:
     - rot: -1.5707963267948966 rad
       pos: -37.5,41.5
       parent: 30
       type: Transform
+    - linkedPorts:
+        1760:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
 - proto: Bucket
   entities:
   - uid: 318
@@ -148065,16 +148083,25 @@ entities:
     - pos: -43.5,41.5
       parent: 30
       type: Transform
+    - links:
+      - 1982
+      type: DeviceLinkSink
   - uid: 1760
     components:
     - pos: -39.5,41.5
       parent: 30
       type: Transform
+    - links:
+      - 1993
+      type: DeviceLinkSink
   - uid: 1761
     components:
     - pos: -47.5,41.5
       parent: 30
       type: Transform
+    - links:
+      - 1981
+      type: DeviceLinkSink
   - uid: 2230
     components:
     - rot: 1.5707963267948966 rad
