@@ -1,7 +1,8 @@
 ﻿using System.Linq;
-using Content.Server.NewCon.Syntax;
-using Content.Server.NewCon.TypeParsers;
 using Content.Shared.Verbs;
+using Robust.Shared.RTShell;
+using Robust.Shared.RTShell.Syntax;
+using Robust.Shared.RTShell.TypeParsers;
 
 namespace Content.Server.NewCon.Commands.Verbs;
 

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
-using Content.Server.NewCon.Syntax;
 using Robust.Server.GameObjects;
+using Robust.Shared.RTShell;
+using Robust.Shared.RTShell.Syntax;
 
 namespace Content.Server.NewCon.Commands.World;
 
