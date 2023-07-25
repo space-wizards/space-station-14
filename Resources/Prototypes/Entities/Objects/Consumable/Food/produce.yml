@@ -579,7 +579,7 @@
 - type: entity
   name: cocoa beans
   parent: FoodProduceBase
-  id: FoodCocao
+  id: FoodCocoa
   description: You can never have too much chocolate!
   components:
   - type: FlavorProfile
