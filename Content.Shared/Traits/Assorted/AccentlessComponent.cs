@@ -11,6 +11,6 @@ public sealed class AccentlessComponent : Component
     /// <summary>
     ///     The accents removed by the accentless trait.
     /// </summary>
-    [DataField("components")]
+    [DataField("removes"), ViewVariables(VVAccess.ReadWrite)]
     public ComponentRegistry RemovedAccents = new();
 }

@@ -1,3 +1,5 @@
+using Robust.Shared.Serialization.Manager;
+
 namespace Content.Shared.Traits.Assorted;
 
 /// <summary>
@@ -17,7 +19,8 @@ public sealed class AccentlessSystem : EntitySystem
     {
         foreach (var accent in component.RemovedAccents.Values)
         {
-            RemComp(uid, accent.Component);
+            var accentComponent = accent.Component;
+            RemComp(uid, accentComponent);
         }
     }
 }

@@ -18,7 +18,7 @@
   description: trait-accentless-desc
   components:
   - type: Accentless
-    components:
+    removes:
     - type: LizardAccent
     - type: ReplacementAccent
       accent: dwarf
