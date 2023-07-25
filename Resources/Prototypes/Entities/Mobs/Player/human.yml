@@ -40,7 +40,6 @@
   name: Syndicate Agent
   components:
     - type: Loadout
-      prototype: SyndicateOperativeGearExtremelyBasic
       prototypes: [SyndicateOperativeGearExtremelyBasic]
     - type: RandomMetadata
       nameSegments: [names_death_commando]
