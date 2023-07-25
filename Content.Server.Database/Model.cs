@@ -643,6 +643,10 @@ namespace Content.Server.Database
         [ForeignKey("CreatedBy")]
         public Guid? BanningAdmin { get; set; }
 
+        public string? BanningAdminName { get; set; }
+
+        public int StatedRound { get; set; }
+
         public Player? CreatedBy { get; set; }
 
         /// <summary>

@@ -36,6 +36,8 @@ admin-notes-for = for {$player}
 admin-notes-days = {$days} days
 admin-notes-hours = {$hours} hours
 admin-notes-minutes = {$minutes} minutes
+admin-notes-stated-round = Violation round: 
+admin-notes-stated-round-not-specified = not specified
 
 # Note editor UI
 admin-note-editor-title-new = Creating a new note for {$player}

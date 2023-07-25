@@ -112,7 +112,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     }
 
     #region Server Bans
-    public async void CreateServerBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, uint? minutes, NoteSeverity severity, string reason)
+    public async void CreateServerBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, uint? minutes, NoteSeverity severity, string? banningAdminName, int statedRound, string reason)
     {
         DateTimeOffset? expires = null;
         if (minutes > 0)
@@ -136,6 +136,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             reason,
             severity,
             banningAdmin,
+            banningAdminName,
+            statedRound,
             null);
 
         await _db.AddServerBanAsync(banDef);

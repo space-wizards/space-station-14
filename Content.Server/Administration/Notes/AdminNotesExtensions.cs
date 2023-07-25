@@ -16,6 +16,8 @@ public static class AdminNotesExtensions
         string? unbannedByName = null;
         DateTime? unbannedTime = null;
         bool? seen = null;
+        int statedRound = 0;
+
         switch (note)
         {
             case AdminNote adminNote:
@@ -36,6 +38,7 @@ public static class AdminNotesExtensions
                 severity = ban.Severity;
                 unbannedTime = ban.UnbanTime;
                 unbannedByName = ban.UnbanningAdmin?.LastSeenUserName ?? Loc.GetString("system-user");
+                statedRound = ban.StatedRound;
                 break;
             case ServerRoleBanNote roleBan:
                 type = NoteType.RoleBan;
@@ -69,6 +72,7 @@ public static class AdminNotesExtensions
             bannedRoles,
             unbannedTime,
             unbannedByName,
+            statedRound,
             seen
         );
     }

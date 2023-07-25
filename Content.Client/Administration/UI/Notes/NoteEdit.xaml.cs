@@ -87,7 +87,7 @@ public sealed partial class NoteEdit : FancyWindow
 
     private string PlayerName { get; }
     private int NoteId { get; }
-    private bool IsSecret { get; set; }
+    private bool IsSecret { get; set; } = true; // SS220 Secret Default
     private NoteType NoteType { get; set; }
     private NoteSeverity? NoteSeverity { get; set; } = Shared.Database.NoteSeverity.None;
     private DateTime? ExpiryTime { get; set; }
@@ -101,7 +101,7 @@ public sealed partial class NoteEdit : FancyWindow
             case (int) NoteType.Note: // Note: your standard note, does nothing special
                 NoteType = NoteType.Note;
                 SecretCheckBox.Disabled = false;
-                SecretCheckBox.Pressed = false;
+                SecretCheckBox.Pressed = true; // SS220 Secret Default
                 SeverityOption.Disabled = false;
                 PermanentCheckBox.Pressed = true;
                 UpdatePermanentCheckboxFields();

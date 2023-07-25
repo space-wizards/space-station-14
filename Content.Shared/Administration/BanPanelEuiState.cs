@@ -33,8 +33,9 @@ public static class BanPanelEuiStateMsg
         public string[]? Roles { get; set; }
         public bool UseLastIp { get; set; }
         public bool UseLastHwid { get; set; }
+        public int StatedRound { get; set; }
 
-        public CreateBanRequest(string? player, (IPAddress, int)? ipAddress, bool useLastIp, byte[]? hwid, bool useLastHwid, uint minutes, string reason, NoteSeverity severity, string[]? roles)
+        public CreateBanRequest(string? player, (IPAddress, int)? ipAddress, bool useLastIp, byte[]? hwid, bool useLastHwid, uint minutes, string reason, NoteSeverity severity, int statedRound, string[]? roles)
         {
             Player = player;
             IpAddress = ipAddress == null ? null : $"{ipAddress.Value.Item1}/{ipAddress.Value.Item2}";
@@ -45,6 +46,7 @@ public static class BanPanelEuiStateMsg
             Reason = reason;
             Severity = severity;
             Roles = roles;
+            StatedRound = statedRound;
         }
     }
 

@@ -12,8 +12,13 @@
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <OptionButton Name="TypeOption" HorizontalAlignment="Center" />
             <OptionButton Name="SeverityOption" HorizontalAlignment="Center" />
-            <CheckBox Name="SecretCheckBox" Text="{Loc admin-note-editor-secret}"
+
+            <!-- SS220 Secret Default -->
+            <CheckBox Name="SecretCheckBox"
+                      Pressed="True"
+                      Text="{Loc admin-note-editor-secret}"
                       ToolTip="{Loc admin-note-editor-secret-tooltip}" />
+
             <CheckBox Name="PermanentCheckBox" Pressed="True" Text="{Loc admin-note-editor-expiry-checkbox}"
                       ToolTip="{Loc admin-note-editor-expiry-checkbox-tooltip}" />
             <Button Name="SubmitButton" Text="{Loc admin-note-editor-submit}" HorizontalAlignment="Right" />

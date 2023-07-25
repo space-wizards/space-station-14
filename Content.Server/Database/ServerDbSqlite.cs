@@ -161,7 +161,9 @@ namespace Content.Server.Database
                 ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
                 RoundId = serverBan.RoundId,
                 PlaytimeAtNote = serverBan.PlaytimeAtNote,
-                PlayerUserId = serverBan.UserId?.UserId
+                PlayerUserId = serverBan.UserId?.UserId,
+                BanningAdminName = serverBan.BanningAdminName,
+                StatedRound = serverBan.StatedRound
             });
 
             await db.SqliteDbContext.SaveChangesAsync();
@@ -386,6 +388,8 @@ namespace Content.Server.Database
                 ban.Reason,
                 ban.Severity,
                 aUid,
+                ban.BanningAdminName,
+                ban.StatedRound,
                 unban);
         }
 

@@ -28,6 +28,11 @@
                     <Control MinWidth="50" />
                     <Label Name="ExpiresLabel" />
                 </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin="2">
+                    <Label Name="StatedRoundLabel" Text="{Loc ban-panel-stated-round}"/>
+                    <Control MinWidth="50" />
+                    <LineEdit Name="StatedRoundLine" MaxWidth="200" MinWidth="70" PlaceHolder="0" />
+                </BoxContainer>
                 <BoxContainer Orientation="Horizontal" Margin="4">
                     <OptionButton Name="TypeOption" />
                     <Control MinWidth="30"></Control>

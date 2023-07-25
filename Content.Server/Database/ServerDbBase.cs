@@ -1076,7 +1076,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             var player = await db.DbContext.Player.SingleOrDefaultAsync(p => p.UserId == ban.PlayerUserId);
             return new ServerBanNote(ban.Id, ban.RoundId, ban.Round, ban.PlayerUserId, player,
-                ban.PlaytimeAtNote, ban.Reason, ban.Severity, ban.CreatedBy, ban.BanTime,
+                ban.PlaytimeAtNote, ban.Reason, ban.Severity, ban.StatedRound, ban.CreatedBy, ban.BanTime,
                 ban.LastEditedBy, ban.LastEditedAt, ban.ExpirationTime, ban.Hidden,
                 ban.Unban?.UnbanningAdmin == null
                     ? null
@@ -1326,7 +1326,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             foreach (var ban in bans)
             {
                 var banNote = new ServerBanNote(ban.Id, ban.RoundId, ban.Round, ban.PlayerUserId, player,
-                    ban.PlaytimeAtNote, ban.Reason, ban.Severity, ban.CreatedBy, ban.BanTime,
+                    ban.PlaytimeAtNote, ban.Reason, ban.Severity, ban.StatedRound, ban.CreatedBy, ban.BanTime,
                     ban.LastEditedBy, ban.LastEditedAt, ban.ExpirationTime, ban.Hidden,
                     ban.Unban?.UnbanningAdmin == null
                         ? null

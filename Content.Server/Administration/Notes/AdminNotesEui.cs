@@ -82,7 +82,9 @@ public sealed class AdminNotesEui : BaseEui
                         break;
                     }
 
-                    await _notesMan.AddAdminRemark(Player, NotedPlayer, request.NoteType, request.Message, request.NoteSeverity, request.Secret, request.ExpiryTime);
+                    var safeSeverity = request.NoteSeverity ?? NoteSeverity.None;
+
+                    await _notesMan.AddAdminRemark(Player, NotedPlayer, request.NoteType, request.Message, safeSeverity, request.Secret, request.ExpiryTime);
                     break;
                 }
             case DeleteNoteRequest request:
