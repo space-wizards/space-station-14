@@ -234,7 +234,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             (HasComp<GhostComponent>(source) || _mobStateSystem.IsDead(source)))
             sendType = InGameOOCChatType.Dead;
 
-        // If crit player LOOC is disabled, unless you're an admin, don't send the message at all.
+        // If crit player LOOC is disabled, don't send the message at all.
         if (!_critLoocEnabled && _mobStateSystem.IsCritical(source))
             return;
 
