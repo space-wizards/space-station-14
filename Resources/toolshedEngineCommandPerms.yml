@@ -1,0 +1,27 @@
+﻿- Flags: QUERY
+  Commands:
+    - comp
+    - delete
+    - do
+    - entities
+    - named
+    - nearby
+    - paused
+    - prototyped
+    - with
+    - count
+    - map
+    - select
+    - unique
+    - types
+    - physics
+- Commands:
+    - fuck
+    - ent
+    - as
+    - buildinfo
+    - help
+    - explain
+    - cmd
+    - stopwatch
+    - self

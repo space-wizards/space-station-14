@@ -1,13 +1,14 @@
 ﻿using System.Linq;
+using Content.Server.Administration;
+using Content.Shared.Administration;
 using Content.Shared.Verbs;
-using Robust.Shared.RTShell;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Server.NewCon.Commands.Verbs;
 
-[RtShellCommand]
+[ToolshedCommand, AdminCommand(AdminFlags.Admin)]
 public sealed class RunVerbAsCommand : ToolshedCommand
 {
     private SharedVerbSystem? _verb;

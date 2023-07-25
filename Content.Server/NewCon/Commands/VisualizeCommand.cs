@@ -1,18 +1,20 @@
 ﻿using System.Linq;
+using Content.Server.Administration;
 using Content.Server.EUI;
+using Content.Shared.Administration;
 using Content.Shared.Bql;
 using Content.Shared.Eui;
 using Robust.Server.Player;
-using Robust.Shared.RTShell;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
 
 namespace Content.Server.NewCon.Commands;
 
-[RtShellCommand]
+[ToolshedCommand, AdminCommand(AdminFlags.Admin)]
 public sealed class VisualizeCommand : ToolshedCommand
 {
     [Dependency] private readonly EuiManager _euiManager = default!;
+
     [CommandImplementation]
     public void VisualizeEntities(
             [CommandInvocationContext] IInvocationContext ctx,
@@ -25,25 +27,25 @@ public sealed class VisualizeCommand : ToolshedCommand
             return;
         }
 
-        var ui = new RtShellVisualizeEui(
+        var ui = new ToolshedVisualizeEui(
             input.Select(e => (EntName(e), e)).ToArray()
         );
         _euiManager.OpenEui(ui, (IPlayerSession) ctx.Session);
         _euiManager.QueueStateUpdate(ui);
     }
 }
-internal sealed class RtShellVisualizeEui : BaseEui
+internal sealed class ToolshedVisualizeEui : BaseEui
 {
     private readonly (string name, EntityUid entity)[] _entities;
 
-    public RtShellVisualizeEui((string name, EntityUid entity)[] entities)
+    public ToolshedVisualizeEui((string name, EntityUid entity)[] entities)
     {
         _entities = entities;
     }
 
     public override EuiStateBase GetNewState()
     {
-        return new RtShellVisualizeEuiState(_entities);
+        return new ToolshedVisualizeEuiState(_entities);
     }
 }
 
