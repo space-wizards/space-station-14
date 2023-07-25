@@ -1,7 +1,7 @@
 using Content.Server.Hands.Systems;
 using Content.Shared.Hands.Components;
 
-namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
+namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 
 /// <summary>
 /// Drops the active hand entity underneath us.

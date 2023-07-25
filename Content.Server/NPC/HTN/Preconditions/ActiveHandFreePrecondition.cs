@@ -11,12 +11,6 @@ public sealed class ActiveHandFreePrecondition : HTNPrecondition
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
-        // TODO: Make this also effect applyable.
-        if (!blackboard.TryGetValue<Hand>(NPCBlackboard.ActiveHand, out var hand, _entManager))
-        {
-            return false;
-        }
-
-        return hand.IsEmpty;
+        return blackboard.TryGetValue<bool>(NPCBlackboard.ActiveHandFree, out var handFree, _entManager) && handFree;
     }
 }

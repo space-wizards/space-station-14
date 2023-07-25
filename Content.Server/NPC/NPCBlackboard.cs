@@ -5,6 +5,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
 
@@ -172,7 +173,19 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                     return false;
                 }
 
-                value = hands.ActiveHand;
+                value = hands.ActiveHand.Name;
+                return true;
+            }
+            case ActiveHandFree:
+            {
+                if (!TryGetValue(Owner, out owner, entManager) ||
+                    !entManager.TryGetComponent<HandsComponent>(owner, out var hands) ||
+                    hands.ActiveHand == null)
+                {
+                    return false;
+                }
+
+                value = hands.ActiveHand.IsEmpty;
                 return true;
             }
             case CanMove:
@@ -195,7 +208,39 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                     return false;
                 }
 
-                value = hands.Hands;
+                var handos = new List<string>();
+
+                foreach (var (id, hand) in hands.Hands)
+                {
+                    if (!hand.IsEmpty)
+                        continue;
+
+                    handos.Add(id);
+                }
+
+                value = handos;
+                return true;
+            }
+            case Inventory:
+            {
+                if (!TryGetValue(Owner, out owner, entManager) ||
+                    !entManager.TryGetComponent<HandsComponent>(owner, out var hands) ||
+                    hands.ActiveHand == null)
+                {
+                    return false;
+                }
+
+                var handos = new List<string>();
+
+                foreach (var (id, hand) in hands.Hands)
+                {
+                    if (!hand.IsEmpty)
+                        continue;
+
+                    handos.Add(id);
+                }
+
+                value = handos;
                 return true;
             }
             case OwnerCoordinates:
@@ -233,9 +278,11 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
 
     public const string Access = "Access";
     public const string ActiveHand = "ActiveHand";
+    public const string ActiveHandFree = "ActiveHandFree";
     public const string CanMove = "CanMove";
     public const string FreeHands = "FreeHands";
     public const string FollowTarget = "FollowTarget";
+    public const string Inventory = "Inventory";
     public const string MedibotInjectRange = "MedibotInjectRange";
 
     public const string MeleeMissChance = "MeleeMissChance";

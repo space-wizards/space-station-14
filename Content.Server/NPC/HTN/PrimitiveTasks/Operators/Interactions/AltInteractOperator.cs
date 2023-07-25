@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 
-namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
+namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 
 public sealed class AltInteractOperator : HTNOperator
 {

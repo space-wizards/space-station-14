@@ -2,7 +2,7 @@ using Content.Server.Interaction;
 using Content.Shared.CombatMode;
 using Content.Shared.Timing;
 
-namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
+namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 
 public sealed class InteractWithOperator : HTNOperator
 {

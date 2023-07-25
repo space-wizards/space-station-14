@@ -1,4 +1,15 @@
 - type: utilityQuery
+  id: InventoryGuns
+  query:
+    - !type:InventoryQuery
+    - !type:ComponentFilter
+      components:
+        - type: Gun
+  considerations:
+    - !type:TargetAmmoCon
+      curve: !type:QuadraticCurve
+
+- type: utilityQuery
   id: NearbyAmmo
   query:
     - !type:ComponentQuery
@@ -43,7 +54,7 @@
         - type: Item
   considerations:
     # TODO: Prefer highest DPC probably?
-    - !type:TargetHasAmmoCon
+    - !type:TargetAmmoCon
       curve: !type:BoolCurve
     - !type:TargetDistanceCon
       curve: !type:PresetCurve

@@ -13,9 +13,12 @@
         - !type:HTNPrimitiveTask
           operator: !type:SwapToFreeHandOperator
 
+    # TODO: Need to make sure this works with blackboard and handles storage + pockets + inventory slots
     # Put active hand into storage
-    - tasks:
+    #- tasks:
+    #    - !type:HTNPrimitiveTask
+    #      operator: !type:StashActiveHandOperator
 
     # Drop active hand
-    - tasks:
-        - 
+    - !type:HTNPrimitiveTask
+      operator: !type:DropOperator

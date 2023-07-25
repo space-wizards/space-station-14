@@ -1,4 +1,3 @@
-# -- Ranged --
 # Tries to shoot a target at range.
 - type: htnCompound
   id: GunCombatCompound
@@ -37,7 +36,7 @@
 
 # Selects ammo in range, then moves to it and picks it up
 - type: htnCompound
-  id: GunAmmoPickupCompound
+  id: PickupAmmoCompound
   branches:
     # Find ammo then pick it up.
     - tasks:
@@ -77,3 +76,83 @@
               rangeKey: InteractRange
           operator: !type:InteractWithOperator
             targetKey: Target
+
+# TODO: Need a thing to recharge a laser gun
+# TODO: When selecting pickup guns also add chargers or easy container grabs.
+
+# Shorted version of RangedCompound for entities that are guns themselves.
+- type: htnCompound
+  id: InnateRangedCompound
+  branches:
+    - preconditions:
+        - !type:GunAmmoPrecondition
+          minPercent: 0.001
+      tasks:
+        - !type:HTNCompoundTask
+          task: GunCombatCompound
+
+
+- type: htnCompound
+  id: RangedCompound
+  branches:
+    # Move to target and shoot them if ammo
+    - preconditions:
+        - !type:GunAmmoPrecondition
+          minPercent: 0.001
+      tasks:
+        - !type:HTNCompoundTask
+          task: GunCombatCompound
+
+    # Reload gun
+    # TODO
+
+    # Equip a gun from inventory if one found, preferring over pickup.
+    # TODO: Doing inventory cleanly will be a PITA so deferring to later
+    # The issue is recursively checking items but also ignoring some recursive entities
+    # i.e. we need to recursively go into storage containers.
+    #- tasks:
+    #   - !type:HTNCompoundTask
+    #     task: ClearActiveHandCompound
+    #
+    #   - !type:HTNPrimitiveTask
+    #     operator: !type:UtilityOperator
+    #       proto: InventoryGuns
+    #
+    #   - !type:HTNPrimitiveTask
+    #     operator: !type:EquipOperator
+
+    # Pickup ammo if any nearby
+    #- preconditions:
+    #    - !type:GunAmmoPrecondition
+    #      maxPercent: 0.0
+    #  tasks:
+    #    - !type:HTNCompoundTask
+    #      task: ClearActiveHandCompound
+#
+#        - !type:HTNCompoundTask
+#          task: PickupAmmoCompound
+
+    # Pickup gun with ammo if we have no ammo
+    -  preconditions:
+         - !type:ActiveHandComponentPrecondition
+           components:
+             - type: Gun
+           invert: true
+       tasks:
+         - !type:HTNCompoundTask
+           task: PickupGunCompound
+
+    # Discard gun if no ammo
+    - preconditions:
+        - !type:ActiveHandComponentPrecondition
+          components:
+            - type: Gun
+        - !type:GunAmmoPrecondition
+          maxPercent: 0.001
+      tasks:
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:ActiveHandEntityPrecondition
+          operator: !type:DropOperator
+
+# TODO: Reload a nearby gun

@@ -12,6 +12,7 @@ using Content.Server.Storage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Hands.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -29,12 +30,21 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly FoodSystem _food = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
+
+    private EntityQuery<TransformComponent> _xformQuery;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+    }
 
     /// <summary>
     /// Runs the UtilityQueryPrototype and returns the best-matching entities.
@@ -116,7 +126,7 @@ public sealed class NPCUtilitySystem : EntitySystem
             case PresetCurve presetCurve:
                 return GetScore(_proto.Index<UtilityCurvePresetPrototype>(presetCurve.Preset).Curve, conScore);
             case QuadraticCurve quadraticCurve:
-                return Math.Clamp(quadraticCurve.Slope * (float) Math.Pow(conScore - quadraticCurve.XOffset, quadraticCurve.Exponent) + quadraticCurve.YOffset, 0f, 1f);
+                return Math.Clamp(quadraticCurve.Slope * MathF.Pow(conScore - quadraticCurve.XOffset, quadraticCurve.Exponent) + quadraticCurve.YOffset, 0f, 1f);
             default:
                 throw new NotImplementedException();
         }
@@ -198,7 +208,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return Math.Clamp(distance / radius, 0f, 1f);
             }
-            case TargetHasAmmoCon:
+            case TargetAmmoCon:
             {
                 if (!HasComp<GunComponent>(targetUid))
                     return 0f;
@@ -283,6 +293,7 @@ public sealed class NPCUtilitySystem : EntitySystem
         switch (query)
         {
             case ComponentQuery compQuery:
+            {
                 var mapPos = Transform(owner).MapPosition;
                 var comps = compQuery.Components.Values.ToList();
                 var compZero = comps[0];
@@ -313,14 +324,45 @@ public sealed class NPCUtilitySystem : EntitySystem
                 }
 
                 break;
+            }
+            case InventoryQuery:
+            {
+                if (!_inventory.TryGetContainerSlotEnumerator(owner, out var enumerator))
+                    break;
+
+                while (enumerator.MoveNext(out var slot))
+                {
+                    foreach (var child in slot.ContainedEntities)
+                    {
+                        RecursiveAdd(child, entities);
+                    }
+                }
+
+                break;
+            }
             case NearbyHostilesQuery:
+            {
                 foreach (var ent in _npcFaction.GetNearbyHostiles(owner, vision))
                 {
                     entities.Add(ent);
                 }
                 break;
+            }
             default:
                 throw new NotImplementedException();
+        }
+    }
+
+    private void RecursiveAdd(EntityUid uid, HashSet<EntityUid> entities)
+    {
+        // TODO: Probably need a recursive struct enumerator on engine.
+        var xform = _xformQuery.GetComponent(uid);
+        var enumerator = xform.ChildEnumerator;
+        entities.Add(uid);
+
+        while (enumerator.MoveNext(out var child))
+        {
+            RecursiveAdd(child.Value, entities);
         }
     }
 
@@ -328,10 +370,32 @@ public sealed class NPCUtilitySystem : EntitySystem
     {
         switch (filter)
         {
+            case ComponentFilter compFilter:
+            {
+                var toRemove = new ValueList<EntityUid>();
+
+                foreach (var ent in entities)
+                {
+                    foreach (var comp in compFilter.Components)
+                    {
+                        if (HasComp(ent, comp.Value.Component.GetType()))
+                            continue;
+
+                        toRemove.Add(ent);
+                        break;
+                    }
+                }
+
+                foreach (var ent in toRemove)
+                {
+                    entities.Remove(ent);
+                }
+
+                break;
+            }
             case PuddleFilter:
             {
                 var puddleQuery = GetEntityQuery<PuddleComponent>();
-
                 var toRemove = new ValueList<EntityUid>();
 
                 foreach (var ent in entities)
