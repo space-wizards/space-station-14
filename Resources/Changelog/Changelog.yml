@@ -1,9 +1,4 @@
 Entries:
-- author: MrGreen and OctoRocket
-  changes:
-  - {message: Added tons more scarfs for you to enjoy at your departments!, type: Add}
-  id: 3820
-  time: '2023-05-20T01:15:32.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Tech disks no longer contain exclusive discipline technology., type: Fix}
@@ -2975,3 +2970,8 @@ Entries:
   - {message: Added bleeding status icon, type: Add}
   id: 4319
   time: '2023-07-25T21:28:35.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: fixed spirete modular receiver and rifle stock, type: Fix}
+  id: 4320
+  time: '2023-07-25T21:29:56.0000000+00:00'
