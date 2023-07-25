@@ -46,7 +46,9 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: GroupExamine
-
+  - type: StaticPrice
+    price: 100
+    
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterSuitAtmosFire
