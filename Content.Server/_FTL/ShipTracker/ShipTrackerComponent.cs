@@ -24,15 +24,13 @@ public sealed class ShipTrackerComponent : Component
     /// <summary>
     /// How many shield layers does the ship have?
     /// </summary>
-    [DataField("shieldAmount")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("shieldAmount"), ViewVariables(VVAccess.ReadOnly), Obsolete("Use the dedicated function in ShipTrackerSystem")]
     public int ShieldAmount = 1;
 
     /// <summary>
     /// The maximum capacity of the shields
     /// </summary>
-    [DataField("shieldCapacity")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("shieldCapacity"), ViewVariables(VVAccess.ReadOnly), Obsolete("Use the dedicated function in ShipTrackerSystem")]
     public int ShieldCapacity = 1;
 
     /// <summary>
