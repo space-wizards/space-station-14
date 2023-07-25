@@ -14993,18 +14993,36 @@ entities:
       pos: -5.5,29.5
       parent: 5350
       type: Transform
+    - linkedPorts:
+        8057:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 5347
     components:
     - rot: 1.5707963267948966 rad
       pos: -8.5,29.5
       parent: 5350
       type: Transform
+    - linkedPorts:
+        8058:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 5348
     components:
     - rot: 1.5707963267948966 rad
       pos: -11.5,29.5
       parent: 5350
       type: Transform
+    - linkedPorts:
+        8059:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
 - proto: Brutepack
   entities:
   - uid: 16234
@@ -66589,12 +66607,20 @@ entities:
       pos: 13.5,-51.5
       parent: 5350
       type: Transform
+    - linkedPorts:
+        19358:
+        - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
+      type: DeviceLinkSource
   - uid: 19453
     components:
     - rot: -1.5707963267948966 rad
       pos: 22.5,-30.5
       parent: 5350
       type: Transform
+    - linkedPorts:
+        19357:
+        - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
+      type: DeviceLinkSource
 - proto: computerBodyScanner
   entities:
   - uid: 7173
@@ -125591,11 +125617,17 @@ entities:
       pos: 24.5,-30.5
       parent: 5350
       type: Transform
+    - links:
+      - 19453
+      type: DeviceLinkSink
   - uid: 19358
     components:
     - pos: 14.5,-54.5
       parent: 5350
       type: Transform
+    - links:
+      - 19352
+      type: DeviceLinkSink
 - proto: MachineFrame
   entities:
   - uid: 10387
@@ -170832,16 +170864,25 @@ entities:
     - pos: -6.5,29.5
       parent: 5350
       type: Transform
+    - links:
+      - 5344
+      type: DeviceLinkSink
   - uid: 8058
     components:
     - pos: -9.5,29.5
       parent: 5350
       type: Transform
+    - links:
+      - 5347
+      type: DeviceLinkSink
   - uid: 8059
     components:
     - pos: -12.5,29.5
       parent: 5350
       type: Transform
+    - links:
+      - 5348
+      type: DeviceLinkSink
   - uid: 9993
     components:
     - rot: 3.141592653589793 rad

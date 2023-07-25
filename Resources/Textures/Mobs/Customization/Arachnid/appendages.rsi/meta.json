@@ -38,10 +38,6 @@
     {
       "name": "short",
       "directions": 4
-    },
-    {
-      "name": "web",
-      "directions": 4
     }
   ]
 }
