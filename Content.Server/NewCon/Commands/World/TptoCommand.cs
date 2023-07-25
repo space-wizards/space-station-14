@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using Robust.Server.GameObjects;
 using Robust.Shared.RTShell;
-using Robust.Shared.RTShell.Syntax;
+using Robust.Shared.Toolshed;
+using Robust.Shared.Toolshed.Syntax;
 
 namespace Content.Server.NewCon.Commands.World;
 
 [RtShellCommand]
-public sealed class TptoCommand : RtShellCommand
+public sealed class TptoCommand : ToolshedCommand
 {
     [Dependency] private readonly IEntityManager _entity = default!;
     private TransformSystem? _xform;

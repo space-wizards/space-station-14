@@ -4,12 +4,13 @@ using Content.Shared.Bql;
 using Content.Shared.Eui;
 using Robust.Server.Player;
 using Robust.Shared.RTShell;
-using Robust.Shared.RTShell.Errors;
+using Robust.Shared.Toolshed;
+using Robust.Shared.Toolshed.Errors;
 
 namespace Content.Server.NewCon.Commands;
 
 [RtShellCommand]
-public sealed class VisualizeCommand : RtShellCommand
+public sealed class VisualizeCommand : ToolshedCommand
 {
     [Dependency] private readonly EuiManager _euiManager = default!;
     [CommandImplementation]
