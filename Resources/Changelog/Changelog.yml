@@ -1,13 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Advanced Spray is now a tier 2 tech and Advanced Entertainment is a
-      tier 1 tech., type: Tweak}
-  - {message: Added Bluespace Cargo Transport as a new tier 3 civilian services technology.,
-    type: Add}
-  - {message: Fixed cargo telepads working without being linked to a console., type: Fix}
-  id: 3830
-  time: '2023-05-21T10:09:32.0000000+00:00'
 - author: Jackal298
   changes:
   - {message: 'moved syndicate scarves from clothing vending machine to winterdrobe,
@@ -2984,3 +2975,8 @@ Entries:
     type: Tweak}
   id: 4329
   time: '2023-07-26T07:30:44.0000000+00:00'
+- author: Hebiman
+  changes:
+  - {message: Added filter for reagents, type: Add}
+  id: 4330
+  time: '2023-07-26T08:05:09.0000000+00:00'
