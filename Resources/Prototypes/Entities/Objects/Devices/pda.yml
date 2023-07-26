@@ -97,8 +97,11 @@
       type: InstrumentBoundUserInterface
     - key: enum.HealthAnalyzerUiKey.Key
       type: HealthAnalyzerBoundUserInterface
+    - key: enum.NewsReadUiKey.Key
+      type: NewsReadBoundUserInterface
   - type: CrewManifestViewer
     unsecure: true
+  - type: NewsRead
   - type: Tag
     tags:
     - DoorBumpOpener

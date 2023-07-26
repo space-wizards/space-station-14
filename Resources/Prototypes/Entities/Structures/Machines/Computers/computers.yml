@@ -940,3 +940,33 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerMassMedia
+  name: mass-media console
+  description: Write your message to the world!
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: service
+    - map: ["computerLayerKeys"]
+      state: service_keys
+  - type: Computer
+    board: ComputerMassMediaCircuitboard
+  - type: DeviceNetworkRequiresPower
+  - type: NewsWrite
+  - type: ActivatableUI
+    key: enum.NewsWriteUiKey.Key
+  - type: ActivatableUIRequiresVision
+  - type: Transform
+    anchored: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.NewsWriteUiKey.Key
+        type: NewsWriteBoundUserInterface
