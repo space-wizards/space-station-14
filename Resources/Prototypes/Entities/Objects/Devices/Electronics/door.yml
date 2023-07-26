@@ -10,7 +10,6 @@
     - type: AccessReader
     - type: Tag
       tags:
-        - DoorElectronics
         - DroneUsable
     - type: DoorElectronics
     - type: StaticPrice

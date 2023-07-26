@@ -505,7 +505,7 @@ public abstract class SharedDoorSystem : EntitySystem
             return false;
 
         // You can still find some access readers in the container below.
-        if (Resolve(uid, ref doorAccess))
+        if (Resolve(uid, ref doorAccess, false))
             access = doorAccess;
 
         if (_containerSystem.TryGetContainer(uid, "board", out var boardContainer))
