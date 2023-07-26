@@ -8,7 +8,7 @@ public sealed class PipePainterBoundUserInterface : BoundUserInterface
 {
     private PipePainterWindow? _window;
 
-    public PipePainterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public PipePainterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
