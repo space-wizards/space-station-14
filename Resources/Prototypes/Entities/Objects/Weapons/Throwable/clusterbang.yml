@@ -21,6 +21,7 @@
   parent: GrenadeBase
   id: ClusterBangFull
   name: ClusterBang
+  description: Launches three flashbangs after the timer runs out.
   suffix: Full
   components:
   - type: Sprite
@@ -30,10 +31,8 @@
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ClusterGrenade
     fillPrototype: GrenadeFlashBang
-    bombletDelayMax: 0
-    bombletDelayMin: 0
-    minimumDelay: 1000
-    distance: 10
+    distance: 7
+    velocity: 7
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
@@ -43,12 +42,15 @@
         enum.ConstructionVisuals.Layer:
           Primed: { state: primed }
           Unprimed: { state: icon }
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Machines/door_lock_off.ogg"
 
 - type: entity
   parent: GrenadeBase
   id: ClusterGrenade
   name: clustergrenade
-  description: If one grenade just isn't enough.
+  description: Why use one grenade when you can use three at once!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/clusterbomb.rsi
@@ -57,11 +59,8 @@
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ClusterGrenade
     fillPrototype: ExGrenade
-    bombletDelayMax: 0
-    bombletDelayMin: 0
-    minimumDelay: 1000
+    velocity: 3.5
     distance: 5
-    releaseSound: "/Audio/Effects/beep1.ogg"
   - type: OnUseTimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
@@ -69,32 +68,33 @@
         volume: 5
     initialBeepDelay: 0
     beepInterval: 0.5
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Machines/door_lock_off.ogg"
 
 - type: entity
   parent: BaseItem
-  id: ClusterBanana
-  name: cluster banana
-  description: Spreads 6 explosive banana peels.
+  id: ClusterBananaPeel
+  name: cluster banana peel
+  description: Spreads 6 explosive banana peels after throwing.
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: produce
   - type: Appearance
   - type: ClusterGrenade
-    maxGrenadesCount: 6
     fillPrototype: TrashBananaPeelExplosive
-    bombletDelayMax: 0
-    bombletDelayMin: 0
-    minimumDelay: 20000
-    distance: 1
-    delay: 2
-    releaseSound: "/Audio/Items/bikehorn.ogg"
+    maxGrenadesCount: 6
+    minimumDelay: 20
   - type: DamageOnLand
     damage:
       types:
         Blunt: 10
   - type: Damageable
     damageContainer: Inorganic
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Items/bikehorn.ogg"
   - type: Destructible
     thresholds:
     - trigger:
@@ -107,9 +107,9 @@
 
 - type: entity
   parent: GrenadeBase
-  id: StingerGrenade
+  id: GrenadeStinger
   name: stinger grenade
-  description: move on, nothing to see here please disperse
+  description: Nothing to see here, please disperse.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/stingergrenade.rsi
@@ -117,8 +117,8 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ClusterGrenade
-    maxGrenadesCount: 30
     fillPrototype: PelletClusterRubber
+    maxGrenadesCount: 30
     grenadeType: "shoot"
   - type: FlashOnTrigger
     range: 7
@@ -133,9 +133,9 @@
 
 - type: entity
   parent: GrenadeBase
-  id: IncendiaryGrenade
+  id: GrenadeIncendiary
   name: incendiary grenade
-  description: releases a spray of incendiary bullets
+  description: Guaranteed to light up the mood.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/pyrogrenade.rsi
@@ -143,12 +143,9 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ClusterGrenade
-    maxGrenadesCount: 30
     fillPrototype: PelletClusterIncendiary
+    maxGrenadesCount: 15
     grenadeType: "shoot"
-  - type: Appearance
-  - type: AnimationPlayer
-  - type: TimerTriggerVisuals
   - type: OnUseTimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
@@ -156,12 +153,15 @@
         volume: 5
     initialBeepDelay: 0
     beepInterval: 2
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
 
 - type: entity
   parent: GrenadeBase
-  id: ShrapnelGrenade
+  id: GrenadeShrapnel
   name: shrapnel grenade
-  description: releases a spray of shrapnel
+  description: Releases a deadly spray of shrapnel that causes severe bleeding.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/shrapnelgrenade.rsi
@@ -169,12 +169,9 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ClusterGrenade
-    maxGrenadesCount: 30
     fillPrototype: PelletClusterLethal
+    maxGrenadesCount: 30
     grenadeType: "shoot"
-  - type: Appearance
-  - type: AnimationPlayer
-  - type: TimerTriggerVisuals
   - type: OnUseTimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
@@ -182,26 +179,28 @@
         volume: 5
     initialBeepDelay: 0
     beepInterval: 2
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
 
 - type: entity
   parent: SoapSyndie
   id: SlipocalypseClusterBang
   name: slipocalypse clusterbang
-  description: spreads small pieces of syndicate soap over an area
+  description: Spreads small pieces of syndicate soap over an area upon landing on the floor.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/clusterbang.rsi
     state: base-3
   - type: Appearance
   - type: ClusterGrenade
+    fillPrototype: SoapletSyndie
+    maxGrenadesCount: 30
     bombletDelayMax: 0
     bombletDelayMin: 0
-    minimumDelay: 60000
-    maxGrenadesCount: 30
-    fillPrototype: SoapletSyndie
+    minimumDelay: 60
     randomSpread: true
-    bombletVelocity: 3
-    distance: 1
+    velocity: 3
   - type: DamageOnLand
     damage:
       types:

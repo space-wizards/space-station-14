@@ -107,6 +107,11 @@
         mask:
         - ItemMask
   - type: DeleteOnTrigger
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Effects/fluids/splat.ogg"
+      params:
+        volume: -20
 
 - type: entity
   name: soap

@@ -100,7 +100,7 @@
       blacklist:
         tags:
           - NukeOpsUplink
-          
+
 # Explosives
 
 - type: listing
@@ -201,6 +201,36 @@
   productEntity: PenExplodingBox
   cost:
     Telecrystal: 5
+  categories:
+  - UplinkExplosives
+
+- type: listing
+  id: UplinkClusterGrenade
+  name: uplink-cluster-grenade-name
+  description: uplink-cluster-grenade-desc
+  productEntity: ClusterGrenade
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkExplosives
+
+- type: listing
+  id: UplinkGrenadeShrapnel
+  name: uplink-shrapnel-grenade-name
+  description: uplink-shrapnel-grenade-desc
+  productEntity: GrenadeShrapnel
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkExplosives
+
+- type: listing
+  id: UplinkGrenadeIncendiary
+  name: uplink-incendiary-grenade-name
+  description: uplink-incendiary-grenade-desc
+  productEntity: GrenadeIncendiary
+  cost:
+    Telecrystal: 4
   categories:
   - UplinkExplosives
 
@@ -341,7 +371,7 @@
       whitelist:
         tags:
           - NukeOpsUplink
-          
+
 - type: listing
   id: UplinkReinforcementRadioSyndicateMonkey
   name: uplink-reinforcement-radio-monkey-name
@@ -839,6 +869,20 @@
     - Clown
 
 - type: listing
+  id: UplinkClusterBananaPeel
+  name: uplink-cluster-banana-peel-name
+  description: uplink-cluster-banana-peel-desc
+  productEntity: ClusterBananaPeel
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Clown
+
+- type: listing
   id: uplinkHotPotato
   name: uplink-hot-potato-name
   description: uplink-hot-potato-desc
@@ -1055,6 +1099,16 @@
   productEntity: SoapSyndie
   cost:
     Telecrystal: 1
+  categories:
+  - UplinkMisc
+
+- type: listing
+  id: UplinkSlipocalypseClusterBang
+  name: uplink-slipocalypse-clusterbang-name
+  description: uplink-slipocalypse-clusterbang-desc
+  productEntity: SlipocalypseClusterBang
+  cost:
+    Telecrystal: 3
   categories:
   - UplinkMisc
 

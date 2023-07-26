@@ -11,6 +11,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
+using Content.Shared.Physics;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Projectiles;
 
@@ -73,7 +75,15 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             component.DamagedEntity = true;
 
-            if (component.DeleteOnCollide)
+            if (component.CanPenetrate)
+            {
+                component.DamagedEntity = false;
+
+                if (!TryComp<MobStateComponent>(otherEntity, out var mobState))
+                    QueueDel(uid);
+            }
+
+            if (component.DeleteOnCollide && !component.CanPenetrate)
             {
                 QueueDel(uid);
             }

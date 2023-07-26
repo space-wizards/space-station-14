@@ -253,7 +253,7 @@
     - type: DeleteOnTrigger
     - type: AnimationPlayer
     - type: Damageable
-      damageContainer: Organic
+      damageContainer: Inorganic
     - type: Destructible
       thresholds:
       - trigger:

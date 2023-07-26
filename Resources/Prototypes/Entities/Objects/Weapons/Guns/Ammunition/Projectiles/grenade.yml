@@ -8,11 +8,15 @@
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot
   - type: Projectile
+    deleteOnCollide: false
+    canPenetrate: true
     damage:
       types:
         Blunt: 4
   - type: StaminaDamageOnCollide
     damage: 55
+  - type: TimedDespawn
+    lifetime: 0.25
 
 - type: entity
   id: PelletClusterLethal
@@ -24,9 +28,13 @@
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot
   - type: Projectile
+    deleteOnCollide: false
+    canPenetrate: true
     damage:
       types:
-        Piercing: 25
+        Piercing: 45
+  - type: TimedDespawn
+    lifetime: 0.25
 
 - type: entity
   id: PelletClusterIncendiary
@@ -38,9 +46,13 @@
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot-flare
   - type: Projectile
+    deleteOnCollide: false
+    canPenetrate: true
     damage:
       groups:
-        Burn: 5
+        Burn: 3
   - type: IgniteOnCollide
-    fireStacks: 1
+    fireStacks: 2
     count: 10
+  - type: TimedDespawn
+    lifetime: 0.25
