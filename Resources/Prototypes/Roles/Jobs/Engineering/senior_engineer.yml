@@ -16,7 +16,6 @@
   startingGear: SeniorEngineerGear
   icon: "SeniorEngineer"
   supervisors: job-supervisors-ce
-  canBeAntag: false
   access:
   - Maintenance
   - Engineering

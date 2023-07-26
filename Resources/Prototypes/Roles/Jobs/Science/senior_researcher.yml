@@ -10,7 +10,6 @@
   startingGear: SeniorResearcherGear
   icon: "SeniorResearcher"
   supervisors: job-supervisors-rd
-  canBeAntag: false
   access:
   - Research
   - Maintenance
