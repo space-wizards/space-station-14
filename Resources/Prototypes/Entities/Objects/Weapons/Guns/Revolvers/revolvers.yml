@@ -88,27 +88,50 @@
   name: Mateba
   parent: BaseWeaponRevolver
   id: WeaponRevolverMateba
-  description: The iconic sidearm of the dreaded death squads. Uses .45 magnum ammo.
+  description: The iconic sidearm of the dreaded death squads. Uses .357 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Gun
-    fireRate: 2
+    fireRate: 3
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
+      params:
+        volume: 2.5
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum357
+        - SpeedLoaderMagnum357
+    proto: CartridgeMagnum357
 
 - type: entity
   name: Python
   parent: BaseWeaponRevolver
   id: WeaponRevolverPython
-  description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
+  description: A suspicious revolver commonly used by Syndicate agents. Uses .357 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 2.25
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver_357.ogg
+      params:
+        volume: 2.25
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum357
+        - SpeedLoaderMagnum357
+    proto: CartridgeMagnum357
 
 - type: entity
   name: pirate revolver

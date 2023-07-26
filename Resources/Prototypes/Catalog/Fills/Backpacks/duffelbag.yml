@@ -81,7 +81,7 @@
   - type: StorageFill
     contents:
       - id: WeaponRevolverPython
-      - id: SpeedLoaderMagnum
+      - id: SpeedLoaderMagnum357
         amount: 2
 
 - type: entity

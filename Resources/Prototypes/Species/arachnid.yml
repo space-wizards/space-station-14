@@ -22,8 +22,8 @@
     Snout: MobHumanoidAnyMarking
     Chest: MobArachnidTorso
     HeadTop: MobHumanoidAnyMarking
-    HeadSide: MobHumanoidAnyMarking
-    Tail: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidMarkingMatchSkin
+    Tail: MobHumanoidMarkingMatchSkin
     Eyes: MobArachnidEyes
     LArm: MobArachnidLArm
     RArm: MobArachnidRArm
