@@ -61298,11 +61298,6 @@ entities:
     - pos: 30.398613,6.824299
       parent: 2
       type: Transform
-  - uid: 8696
-    components:
-    - pos: 30.500324,29.913876
-      parent: 2
-      type: Transform
 - proto: LampBanana
   entities:
   - uid: 9601
@@ -61396,6 +61391,13 @@ entities:
   - uid: 12116
     components:
     - pos: 37.37405,43.99462
+      parent: 2
+      type: Transform
+- proto: LampInterrogator
+  entities:
+  - uid: 8436
+    components:
+    - pos: 30.526884,29.884686
       parent: 2
       type: Transform
 - proto: LargeBeaker
@@ -71338,14 +71340,14 @@ entities:
       type: Transform
 - proto: SpawnPointSecurityCadet
   entities:
-  - uid: 8436
-    components:
-    - pos: 38.5,19.5
-      parent: 2
-      type: Transform
   - uid: 8437
     components:
-    - pos: 39.5,19.5
+    - pos: 34.5,27.5
+      parent: 2
+      type: Transform
+  - uid: 8696
+    components:
+    - pos: 34.5,26.5
       parent: 2
       type: Transform
 - proto: SpawnPointSecurityOfficer
@@ -71363,6 +71365,34 @@ entities:
   - uid: 8441
     components:
     - pos: 37.5,18.5
+      parent: 2
+      type: Transform
+- proto: SpawnPointSeniorEngineer
+  entities:
+  - uid: 12852
+    components:
+    - pos: 24.5,-32.5
+      parent: 2
+      type: Transform
+- proto: SpawnPointSeniorOfficer
+  entities:
+  - uid: 12849
+    components:
+    - pos: 35.5,27.5
+      parent: 2
+      type: Transform
+- proto: SpawnPointSeniorPhysician
+  entities:
+  - uid: 12851
+    components:
+    - pos: 73.5,7.5
+      parent: 2
+      type: Transform
+- proto: SpawnPointSeniorResearcher
+  entities:
+  - uid: 12850
+    components:
+    - pos: 55.5,23.5
       parent: 2
       type: Transform
 - proto: SpawnPointServiceWorker
