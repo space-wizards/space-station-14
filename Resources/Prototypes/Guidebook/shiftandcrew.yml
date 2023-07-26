@@ -23,6 +23,7 @@
   id: Chemicals
   name: guide-entry-chemicals
   text: "/ServerInfo/Guidebook/Chemicals.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: Janitorial
