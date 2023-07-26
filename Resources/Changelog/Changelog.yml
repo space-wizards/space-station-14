@@ -1,10 +1,4 @@
 Entries:
-- author: EEASAS
-  changes:
-  - {message: 'The Syndicate has supplied their traitors and nuclear operatives with
-      a rifle, the AKMS.', type: Add}
-  id: 3829
-  time: '2023-05-21T03:15:52.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Advanced Spray is now a tier 2 tech and Advanced Entertainment is a
@@ -2984,3 +2978,9 @@ Entries:
   - {message: Fixed chat bubbles not appearing in replays., type: Fix}
   id: 4328
   time: '2023-07-26T07:11:15.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Changed captain's starting loadout not to have their gloves and carapace.,
+    type: Tweak}
+  id: 4329
+  time: '2023-07-26T07:30:44.0000000+00:00'
