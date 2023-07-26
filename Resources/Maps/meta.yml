@@ -530,6 +530,8 @@ entities:
             3147: -40,23
             3148: -40,24
             3149: -40,25
+            3257: 55,-1
+            3258: 55,0
         - node:
             color: '#FFFFFFFF'
             id: BotGreyscale
@@ -7111,6 +7113,7 @@ entities:
             0: 65535
           5,-16:
             0: 61873
+            6: 64
           5,-15:
             0: 65535
           5,-14:
@@ -7119,6 +7122,7 @@ entities:
             0: 65535
           6,-16:
             0: 64764
+            6: 514
           6,-15:
             0: 65535
           6,-14:
@@ -7127,6 +7131,7 @@ entities:
             0: 65535
           7,-16:
             0: 32627
+            6: 140
           7,-15:
             0: 65527
           7,-14:
@@ -7259,16 +7264,21 @@ entities:
             0: 59953
           6,-18:
             0: 12602
+            6: 512
           6,-17:
             0: 59953
+            6: 2
           7,-19:
             0: 12900
+            6: 34952
           7,-17:
             0: 12900
+            6: 34952
           7,-20:
             0: 58466
           7,-18:
             0: 58466
+            6: 2184
           6,-23:
             0: 59953
           6,-22:
@@ -123377,21 +123387,6 @@ entities:
       type: ContainerContainer
     - canCollide: True
       type: Physics
-  - uid: 8194
-    components:
-    - pos: 17.59783,31.574615
-      parent: 5350
-      type: Transform
-    - containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-      type: ContainerContainer
   - uid: 10515
     components:
     - pos: 8.57861,46.945236
@@ -123706,6 +123701,13 @@ entities:
       type: HandheldLight
     - canCollide: True
       type: Physics
+- proto: LampInterrogator
+  entities:
+  - uid: 999
+    components:
+    - pos: 17.577362,31.802523
+      parent: 5350
+      type: Transform
 - proto: lantern
   entities:
   - uid: 22071
@@ -124425,51 +124427,41 @@ entities:
         - 0
         - 0
       type: EntityStorage
-- proto: LockerEngineerFilled
+- proto: LockerEngineerFilledHardsuit
   entities:
-  - uid: 23371
+  - uid: 1483
     components:
     - pos: 47.5,17.5
       parent: 5350
       type: Transform
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 293.1495
-        moles:
-        - 3.848459
-        - 14.477538
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
-- proto: LockerEngineerFilledHardsuit
-  entities:
-  - uid: 22146
+  - uid: 3701
     components:
     - pos: 57.5,0.5
       parent: 5350
       type: Transform
-  - uid: 22147
+  - uid: 8194
     components:
     - pos: 57.5,-0.5
       parent: 5350
       type: Transform
-  - uid: 22148
+  - uid: 10354
     components:
     - pos: 57.5,-1.5
       parent: 5350
       type: Transform
-  - uid: 22149
+  - uid: 10355
     components:
     - pos: 57.5,-2.5
+      parent: 5350
+      type: Transform
+  - uid: 22149
+    components:
+    - pos: 55.5,-0.5
+      parent: 5350
+      type: Transform
+  - uid: 23371
+    components:
+    - pos: 55.5,0.5
       parent: 5350
       type: Transform
 - proto: LockerEvidence
@@ -140173,7 +140165,7 @@ entities:
     - pos: 9.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -25678.453
+    - SecondsUntilStateChange: -26137.268
       state: Closing
       type: Door
     - links:
@@ -140184,7 +140176,7 @@ entities:
     - pos: 10.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -25678.453
+    - SecondsUntilStateChange: -26137.268
       state: Closing
       type: Door
     - links:
@@ -140195,7 +140187,7 @@ entities:
     - pos: 11.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -25678.453
+    - SecondsUntilStateChange: -26137.268
       state: Closing
       type: Door
     - links:
@@ -140206,7 +140198,7 @@ entities:
     - pos: 13.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -25678.453
+    - SecondsUntilStateChange: -26137.268
       state: Closing
       type: Door
     - links:
@@ -140217,7 +140209,7 @@ entities:
     - pos: 14.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -25678.453
+    - SecondsUntilStateChange: -26137.268
       state: Closing
       type: Door
     - links:
@@ -140228,7 +140220,7 @@ entities:
     - pos: 15.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -25678.453
+    - SecondsUntilStateChange: -26137.268
       state: Closing
       type: Door
     - links:
@@ -144630,6 +144622,11 @@ entities:
     - pos: -34.5,-34.5
       parent: 5350
       type: Transform
+  - uid: 26634
+    components:
+    - pos: -35.5,-34.5
+      parent: 5350
+      type: Transform
 - proto: SpawnPointMime
   entities:
   - uid: 3255
@@ -144675,6 +144672,11 @@ entities:
   - uid: 26545
     components:
     - pos: 24.5,-56.5
+      parent: 5350
+      type: Transform
+  - uid: 26635
+    components:
+    - pos: 25.5,-56.5
       parent: 5350
       type: Transform
 - proto: SpawnPointResearchDirector
@@ -144735,6 +144737,11 @@ entities:
     - pos: 1.5,39.5
       parent: 5350
       type: Transform
+  - uid: 26632
+    components:
+    - pos: 1.5,38.5
+      parent: 5350
+      type: Transform
 - proto: SpawnPointSecurityOfficer
   entities:
   - uid: 10520
@@ -144755,6 +144762,34 @@ entities:
   - uid: 10523
     components:
     - pos: -0.5,44.5
+      parent: 5350
+      type: Transform
+- proto: SpawnPointSeniorEngineer
+  entities:
+  - uid: 26637
+    components:
+    - pos: 51.5,3.5
+      parent: 5350
+      type: Transform
+- proto: SpawnPointSeniorOfficer
+  entities:
+  - uid: 26631
+    components:
+    - pos: 1.5,40.5
+      parent: 5350
+      type: Transform
+- proto: SpawnPointSeniorPhysician
+  entities:
+  - uid: 26633
+    components:
+    - pos: -36.5,-34.5
+      parent: 5350
+      type: Transform
+- proto: SpawnPointSeniorResearcher
+  entities:
+  - uid: 26636
+    components:
+    - pos: 26.5,-56.5
       parent: 5350
       type: Transform
 - proto: SpawnPointServiceWorker
@@ -144793,19 +144828,19 @@ entities:
       type: Transform
 - proto: SpawnPointTechnicalAssistant
   entities:
-  - uid: 999
+  - uid: 22146
     components:
-    - pos: 55.5,3.5
+    - pos: 52.5,0.5
       parent: 5350
       type: Transform
-  - uid: 3701
+  - uid: 22147
     components:
-    - pos: 55.5,4.5
+    - pos: 51.5,0.5
       parent: 5350
       type: Transform
-  - uid: 10355
+  - uid: 22148
     components:
-    - pos: 54.5,3.5
+    - pos: 52.5,3.5
       parent: 5350
       type: Transform
 - proto: SpawnPointWarden
@@ -145582,16 +145617,6 @@ entities:
   - uid: 1482
     components:
     - pos: 49.5,10.5
-      parent: 5350
-      type: Transform
-  - uid: 1483
-    components:
-    - pos: 55.5,-0.5
-      parent: 5350
-      type: Transform
-  - uid: 10354
-    components:
-    - pos: 55.5,0.5
       parent: 5350
       type: Transform
 - proto: SuitStorageEVA
@@ -151761,6 +151786,15 @@ entities:
     - flags: SessionSpecific
       type: MetaData
     - pos: 1.5,-34.5
+      parent: 5350
+      type: Transform
+- proto: VendingMachineRobotics
+  entities:
+  - uid: 26638
+    components:
+    - flags: SessionSpecific
+      type: MetaData
+    - pos: 4.5,-32.5
       parent: 5350
       type: Transform
 - proto: VendingMachineSalvage
