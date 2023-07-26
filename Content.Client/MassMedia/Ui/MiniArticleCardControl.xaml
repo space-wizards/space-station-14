@@ -1,0 +1,18 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <PanelContainer VerticalExpand="True" HorizontalExpand="True">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#202124" />
+            </PanelContainer.PanelOverride>
+            <RichTextLabel Name="Name" Margin="8 8 8 8" HorizontalAlignment="Left"/>
+            <Button Name="Delete"
+                    MinWidth="30"
+                    HorizontalAlignment="Right"
+                    Text="{Loc 'news-write-ui-delete-text'}"
+                    Access="Public"
+                    Margin="6 6 6 6">
+            </Button>
+        </PanelContainer>
+    </BoxContainer>
+</Control>
