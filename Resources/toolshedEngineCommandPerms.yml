@@ -7,7 +7,6 @@
     - named
     - nearby
     - paused
-    - prototyped
     - with
     - count
     - map
@@ -15,6 +14,9 @@
     - unique
     - types
     - physics
+    - where
+    - prototyped
+    - player
 - Commands:
     - fuck
     - ent
@@ -25,3 +27,7 @@
     - cmd
     - stopwatch
     - self
+    - search
+    - isnull
+    - help
+    - isempty

@@ -214,7 +214,7 @@ namespace Content.Server.Administration.Managers
 
                 if (flagsReq.Length != 0)
                 {
-                    _toolshedCommandPermissions.AdminCommands.Add(spec.Cmd.Name, flagsReq);
+                    _toolshedCommandPermissions.AdminCommands.TryAdd(spec.Cmd.Name, flagsReq);
                 }
                 else
                 {
@@ -399,6 +399,26 @@ namespace Content.Server.Administration.Managers
             return Equals(addr, System.Net.IPAddress.Loopback) || Equals(addr, System.Net.IPAddress.IPv6Loopback);
         }
 
+        public bool TryGetCommandFlags(CommandSpec command, out AdminFlags[]? flags)
+        {
+            var cmdName = command.Cmd.Name;
+
+            if (_toolshedCommandPermissions.AnyCommands.Contains(cmdName))
+            {
+                // Anybody can use this command.
+                flags = null;
+                return true;
+            }
+
+            if (_toolshedCommandPermissions.AdminCommands.TryGetValue(cmdName, out flags))
+            {
+                return true;
+            }
+
+            flags = null;
+            return false;
+        }
+
         public bool CanCommand(IPlayerSession session, string cmdName)
         {
             if (_commandPermissions.AnyCommands.Contains(cmdName))
@@ -440,16 +460,18 @@ namespace Content.Server.Administration.Managers
             }
 
             var name = command.Cmd.Name;
-            if (_toolshedCommandPermissions.AnyCommands.Contains(name))
+            if (!TryGetCommandFlags(command, out var flags))
             {
-                error = null;
-                return true;
+                // Command is missing permissions.
+                error = new CommandPermissionsUnassignedError(command);
+                return false;
             }
 
-            if (!_toolshedCommandPermissions.AdminCommands.TryGetValue(command.Cmd.Name, out var flagsReq))
+            if (flags is null)
             {
-                error = new NoPermissionError(command);
-                return false;
+                // Anyone can execute this.
+                error = null;
+                return true;
             }
 
             var data = GetAdminData((IPlayerSession)user);
@@ -460,9 +482,9 @@ namespace Content.Server.Administration.Managers
                 return false;
             }
 
-            foreach (var flagReq in flagsReq)
+            foreach (var flag in flags)
             {
-                if (data.HasFlag(flagReq))
+                if (data.HasFlag(flag))
                 {
                     error = null;
                     return true;
@@ -547,6 +569,19 @@ namespace Content.Server.Administration.Managers
         }
     }
 }
+
+public record struct CommandPermissionsUnassignedError(CommandSpec Command) : IConError
+{
+    public FormattedMessage DescribeInner()
+    {
+        return FormattedMessage.FromMarkup($"The command {Command.FullName()} is missing permission flags and cannot be executed.");
+    }
+
+    public string? Expression { get; set; }
+    public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
+}
+
 
 public record struct NoPermissionError(CommandSpec Command) : IConError
 {
