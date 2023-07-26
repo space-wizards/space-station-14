@@ -18,6 +18,9 @@ public sealed class FootPrintsComponent : Component
     [ViewVariables(VVAccess.ReadOnly), DataField("suitPrint")]
     public string SuitPrint = "footprint-suit";
 
+    [ViewVariables(VVAccess.ReadOnly), DataField("draggingPrint")]
+    public string DraggingPrint = "dragging-1";
+
     //Visual end
 
     [ViewVariables(VVAccess.ReadWrite), DataField("offsetCenter")]
@@ -31,6 +34,9 @@ public sealed class FootPrintsComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("stepSize")]
     public float StepSize = 0.6f; // Дистанция между следами при 1 - один тайл
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("dragSize")]
+    public float DragSize = 0.8f; // Дистанция между следами при волочении при 1 - один тайл
     public bool RightStep = true; // Переменная для переключения правого и левого следов
     public Vector2 StepPos = Vector2.Zero; //Позиция отсчёта шаг
 

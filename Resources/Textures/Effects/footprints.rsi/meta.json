@@ -48,6 +48,12 @@
         },
         {
             "name": "footprint-suit"
+        },
+        {
+            "name": "dragging-1"
+        },
+        {
+            "name": "dragging-test"
         }
     ]
 }

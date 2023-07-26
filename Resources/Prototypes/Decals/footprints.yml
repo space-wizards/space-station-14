@@ -104,4 +104,19 @@
     sprite: Effects/footprints.rsi
     state: footprint-suit
 
+#dragging
+- type: decal
+  id: dragging-1
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: dragging-1
+
+- type: decal
+  id: dragging-test
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: dragging-test
+
 
