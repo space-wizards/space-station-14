@@ -48,6 +48,7 @@ namespace Content.Shared.Access.Systems
     public sealed class AgentIDCardJobChangedMessage : BoundUserInterfaceMessage
     {
         public string Job { get; }
+
         public AgentIDCardJobChangedMessage(string job)
         {
             Job = job;

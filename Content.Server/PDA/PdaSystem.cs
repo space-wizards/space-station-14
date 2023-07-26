@@ -9,11 +9,14 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
+using Content.Shared.Access.Components;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Content.Shared.Light.Component;
+using Content.Server.MassMedia.Components;
+using Content.Server.MassMedia.Systems;
 
 namespace Content.Server.PDA
 {
@@ -24,6 +27,7 @@ namespace Content.Server.PDA
         [Dependency] private readonly RingerSystem _ringer = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly StoreSystem _store = default!;
+        [Dependency] private readonly NewsSystem _news = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
@@ -41,6 +45,7 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PdaComponent, PdaShowMusicMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaShowUplinkMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaLockUplinkMessage>(OnUiMessage);
+            SubscribeLocalEvent<PdaComponent, PdaOpenNewsMessage>(OnUiMessage);
 
             SubscribeLocalEvent<StationRenamedEvent>(OnStationRenamed);
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
@@ -111,26 +116,29 @@ namespace Content.Server.PDA
             var address = GetDeviceNetAddress(uid);
             var hasInstrument = HasComp<InstrumentComponent>(uid);
             var showUplink = HasComp<StoreComponent>(uid) && IsUnlocked(uid);
+            var showNews = HasComp<NewsReadComponent>(uid);
 
             UpdateStationName(uid, pda);
             UpdateAlertLevel(uid, pda);
             // TODO: Update the level and name of the station with each call to UpdatePdaUi is only needed for latejoin players.
             // TODO: If someone can implement changing the level and name of the station when changing the PDA grid, this can be removed.
 
+            var id = CompOrNull<IdCardComponent>(pda.ContainedId);
             var state = new PdaUpdateState(
                 pda.FlashlightOn,
                 pda.PenSlot.HasItem,
                 new PdaIdInfoText
                 {
                     ActualOwnerName = pda.OwnerName,
-                    IdOwner = pda.ContainedId?.FullName,
-                    JobTitle = pda.ContainedId?.JobTitle,
+                    IdOwner = id?.FullName,
+                    JobTitle = id?.JobTitle,
                     StationAlertLevel = pda.StationAlertLevel,
                     StationAlertColor = pda.StationAlertColor
                 },
                 pda.StationName,
                 showUplink,
                 hasInstrument,
+                showNews,
                 address);
 
             _cartridgeLoader?.UpdateUiState(uid, state);
@@ -189,6 +197,18 @@ namespace Content.Server.PDA
             if (TryComp<RingerUplinkComponent>(uid, out var uplink))
             {
                 _ringer.LockUplink(uid, uplink);
+                UpdatePdaUi(uid, pda);
+            }
+        }
+
+        private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaOpenNewsMessage msg)
+        {
+            if (!PdaUiKey.Key.Equals(msg.UiKey))
+                return;
+
+            if (TryComp<NewsReadComponent>(uid, out var news))
+            {
+                _news.ToggleUi(msg.Session.AttachedEntity!.Value, uid, news);
                 UpdatePdaUi(uid, pda);
             }
         }
