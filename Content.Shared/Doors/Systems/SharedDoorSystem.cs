@@ -486,9 +486,8 @@ public abstract class SharedDoorSystem : EntitySystem
     /// <summary>
     ///     Does the user have the permissions required to open this door?
     /// </summary>
-    public bool HasAccess(EntityUid uid, EntityUid? user = null, DoorComponent? door = null, AccessReaderComponent? doorAccess = null)
+    public bool HasAccess(EntityUid uid, EntityUid? user = null, DoorComponent? door = null, AccessReaderComponent? access = null)
     {
-        AccessReaderComponent? access = null;
         // TODO network AccessComponent for predicting doors
 
         // if there is no "user" we skip the access checks. Access is also ignored in some game-modes.
@@ -504,30 +503,17 @@ public abstract class SharedDoorSystem : EntitySystem
             TryComp<FirelockComponent>(uid, out var firelock))
             return false;
 
-        // You can still find some access readers in the container below.
-        if (Resolve(uid, ref doorAccess, false))
-            access = doorAccess;
-
-        if (_containerSystem.TryGetContainer(uid, "board", out var boardContainer))
-        {
-            foreach (var entity in boardContainer.ContainedEntities)
-            {
-                if (TryComp<AccessReaderComponent>(entity, out var newAccess) && newAccess.AccessLists.Count != 0)
-                    access = newAccess;
-            }
-        }
-
-        if (access == null)
+        if (!Resolve(uid, ref access))
             return true;
 
-        var isExternal = access.AccessLists.Any(list => list.Contains("External"));
+        var isExternal = access?.AccessLists.Any(list => list.Contains("External")) ?? false;
 
         return AccessType switch
         {
             // Some game modes modify access rules.
-            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(user.Value, access),
+            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(user.Value, uid, access),
             AccessTypes.AllowAllNoExternal => !isExternal,
-            _ => _accessReaderSystem.IsAllowed(user.Value, access)
+            _ => _accessReaderSystem.IsAllowed(user.Value, uid, access)
         };
     }
 

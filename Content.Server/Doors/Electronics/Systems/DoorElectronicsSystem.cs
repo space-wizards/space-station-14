@@ -55,8 +55,8 @@ public sealed class DoorElectronicsSystem : EntitySystem
         }
         var state = new SharedDoorElectronicsComponent.ConfigurationState(args.accessList);
         _uiSystem.TrySetUiState(component.Owner,
-        DoorElectronicsConfigurationUiKey.Key,
-        state);
+                                DoorElectronicsConfigurationUiKey.Key,
+                                state);
     }
 
     private void OnRefreshUi(EntityUid uid,

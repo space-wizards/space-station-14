@@ -27,7 +27,6 @@ public sealed class DoorSystem : SharedDoorSystem
     [Dependency] private readonly DoorBoltSystem _bolts = default!;
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -42,7 +41,6 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<DoorComponent, MapInitEvent>(OnMapInit);
     }
 
     protected override void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
@@ -276,23 +274,5 @@ public sealed class DoorSystem : SharedDoorSystem
                     break;
             }
         }
-    }
-
-    private void OnMapInit(EntityUid uid, DoorComponent door, MapInitEvent args)
-    {
-        // Copy access from the door to the door electronics at the start.
-        if (!_containerSystem.TryGetContainer(uid, "board", out var boardContainer))
-            return;
-
-        if (!TryComp<AccessReaderComponent>(uid, out var access))
-            return;
-
-        foreach (var entity in boardContainer.ContainedEntities)
-        {
-            if (TryComp<AccessReaderComponent>(entity, out var boardAccess))
-                boardAccess.AccessLists = access.AccessLists;
-        }
-
-        EntityManager.RemoveComponent<AccessReaderComponent>(uid);
     }
 }

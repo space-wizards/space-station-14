@@ -48,6 +48,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
+  - type: AccessReader
+    containerAccessProvider: board
   - type: Door
     crushDamage:
       types:
