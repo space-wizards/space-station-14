@@ -28,7 +28,7 @@ uplink-gloves-north-star-desc = A pair of gloves that reduce your punching coold
 
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade
-uplink-explosive-grenade-desc =  A simplistic grenade with a three-and-a-half-second long fuse that is geared towards injuring personnel. Causes minimal hull damage.
+uplink-explosive-grenade-desc = A simplistic grenade with a three-and-a-half-second long fuse that is geared towards injuring personnel. Causes minimal hull damage.
 
 uplink-flash-grenade-name = Flashbang
 uplink-flash-grenade-desc = A standard-issue flashbang, capable of blinding and slowing down anyone without proper protection. This, of course, includes you; make sure you're properly equipped before using it.
