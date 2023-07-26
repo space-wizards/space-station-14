@@ -399,12 +399,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> ZombieMinPlayers =
             CVarDef.Create("zombie.min_players", 20);
 
-        public static readonly CVarDef<int> ZombieMaxInitialInfected =
-            CVarDef.Create("zombie.max_initial_infected", 6);
-
-        public static readonly CVarDef<int> ZombiePlayersPerInfected =
-            CVarDef.Create("zombie.players_per_infected", 10);
-
         /*
          * Pirates
          */
@@ -1019,6 +1013,12 @@ namespace Content.Shared.CCVar
         /// False: Dead player LOOC gets redirected to dead chat
         /// </summary>
         public static readonly CVarDef<bool> DeadLoocEnabled = CVarDef.Create("looc.enabled_dead", false, CVar.NOTIFY | CVar.REPLICATED);
+
+        /// <summary>
+        /// True: Crit players can use LOOC
+        /// False: Crit player LOOC gets redirected to dead chat
+        /// </summary>
+        public static readonly CVarDef<bool> CritLoocEnabled = CVarDef.Create("looc.enabled_crit", false, CVar.NOTIFY | CVar.REPLICATED);
 
         /*
          * Entity Menu Grouping Types

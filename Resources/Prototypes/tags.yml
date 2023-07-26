@@ -137,6 +137,9 @@
   id: CartridgeMagnum
 
 - type: Tag
+  id: CartridgeMagnum357
+
+- type: Tag
   id: CartridgePistol
 
 - type: Tag
@@ -758,6 +761,9 @@
 
 - type: Tag
   id: SpeedLoaderMagnum
+
+- type: Tag
+  id: SpeedLoaderMagnum357
 
 - type: Tag
   id: SpeedLoaderPistol

@@ -10,8 +10,7 @@
 #      size: 15
     - type: Sprite
       sprite: Objects/Misc/modular_receiver.rsi
-    - type: Item
-      sprite: Objects/Misc/modular_receiver.rsi
+      state: icon
     - type: Tag
       tags:
       - ModularReceiver
@@ -27,8 +26,7 @@
 #      size: 25
     - type: Sprite
       sprite: Objects/Misc/rifle_stock.rsi
-    - type: Item
-      sprite: Objects/Misc/rifle_stock.rsi
+      state: icon
     - type: Construction
       graph: RifleStockGraph
       node: riflestock
