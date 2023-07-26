@@ -32,6 +32,8 @@
   - type: Faction
     factions:
     - NanoTrasen
+  #Imperial foot prints
+  - type: FootPrints
 
 #Syndie
 - type: entity

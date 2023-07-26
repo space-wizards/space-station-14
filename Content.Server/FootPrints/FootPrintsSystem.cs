@@ -4,6 +4,9 @@ using Content.Server.Decals;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Random;
+using Content.Shared.Inventory;
+using Content.Server.Atmos.Components;
 
 namespace Contest.Server.FootPrints
 {
@@ -11,6 +14,9 @@ namespace Contest.Server.FootPrints
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly DecalSystem _decals = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
 
         public override void Initialize()
         {
@@ -20,7 +26,9 @@ namespace Contest.Server.FootPrints
 
         public void OnStartupComponent(EntityUid uid, FootPrintsComponent comp, ComponentStartup args)
         {
-            comp.Timer = _timing.CurTime;
+            if (!TryComp<TransformComponent>(uid, out var transform))
+                return;
+            comp.StepSize += _random.NextFloat(-0.05f, 0.05f);
         }
 
         public override void Update(float frameTime)
@@ -30,44 +38,74 @@ namespace Contest.Server.FootPrints
             {
                 if (!EntityManager.TryGetComponent<TransformComponent>(comp.Owner, out var transform))
                     continue;
-                //comp.Timer += TimeSpan.FromSeconds(frameTime);
-                if (_timing.CurTime >= comp.Timer)
-                {
-                    comp.Timer = _timing.CurTime + comp.Time;
-                    if(comp.PrintsColor.A > 0f)
-                    {
-                        var coords = new EntityCoordinates(comp.Owner, transform.LocalPosition + comp.OffsetCenter);
-                        if(comp.RightStep)
-                        {
-                            coords = new EntityCoordinates(comp.Owner, transform.LocalPosition + comp.OffsetCenter + new Angle(Angle.FromDegrees(180f)+transform.LocalRotation).RotateVec(comp.OffsetPrint));
-                        }
-                        else
-                        {
-                            coords = new EntityCoordinates(comp.Owner, transform.LocalPosition + comp.OffsetCenter + new Angle(transform.LocalRotation).RotateVec(comp.OffsetPrint));
-                        }
-                        comp.RightStep = !comp.RightStep;
-                        _decals.TryAddDecal("footprint", coords, out var dID, comp.PrintsColor, Math.Round(transform.LocalRotation, 1)+Angle.FromDegrees(180f), 0, true);
-                        comp.PrintsColor = blendColor(comp.PrintsColor);
-                        //comp.PrintsColor = Color.InterpolateBetween(comp.PrintsColor, Color.FromHex("#00000000"),0.2f);
 
+                if (comp.PrintsColor.A <= 0f)
+                    continue;
+                if ((transform.LocalPosition - comp.StepPos).Length > comp.StepSize)
+                {
+                    comp.StepPos = transform.LocalPosition;
+                    var coords = new EntityCoordinates(comp.Owner, transform.LocalPosition + comp.OffsetCenter);
+                    var decalID = PickPrint(comp);
+                    if (comp.RightStep)
+                    {
+                        coords = new EntityCoordinates(comp.Owner, transform.LocalPosition + comp.OffsetCenter + new Angle(Angle.FromDegrees(180f) + transform.LocalRotation).RotateVec(comp.OffsetPrint));
                     }
+                    else
+                    {
+                        coords = new EntityCoordinates(comp.Owner, transform.LocalPosition + comp.OffsetCenter + new Angle(transform.LocalRotation).RotateVec(comp.OffsetPrint));
+                    }
+                    comp.RightStep = !comp.RightStep;
+                    _decals.TryAddDecal(decalID, coords, out var dID, comp.PrintsColor, Math.Round(transform.LocalRotation, 1) + Angle.FromDegrees(180f), 0, true);
+                    comp.PrintsColor = ReduceAlpha(comp);
                 }
+
             }
         }
 
-        private Color blendColor(Color col)
+        private Color ReduceAlpha(FootPrintsComponent comp)
         {
-            if (col.A - 0.1f > 0f)
+            if (comp.ColorQuantity > comp.ColorQuantityMax)
+                comp.ColorQuantity = comp.ColorQuantityMax;
+            var res = comp.PrintsColor;
+            if (comp.ColorQuantity - comp.ColorReduceAlpha > 0f)
             {
-                Color res = new Color(col.R, col.G, col.B, col.A - 0.1f);
-                return res;
+                if (comp.ColorQuantity > 1f)
+                    res = res.WithAlpha(1f);
+                else
+                    res = res.WithAlpha(comp.ColorQuantity);
+                comp.ColorQuantity -= comp.ColorReduceAlpha;
             }
             else
             {
-                return new Color(col.R, col.G, col.B, 0f);
+                res = res.WithAlpha(0f);
             }
+            return res;
+        }
 
-
+        private string PickPrint (FootPrintsComponent comp)
+        {
+            string res;
+            if(comp.RightStep)
+            {
+                res = comp.RightBarePrint;
+            }
+            else
+            {
+                res = comp.LeftBarePrint;
+            }
+            if(_inventorySystem.TryGetSlotEntity(comp.Owner, "shoes", out _, null, null))
+            {
+                res = comp.ShoesPrint;
+            }
+            if
+            (
+                _inventorySystem.TryGetSlotEntity(comp.Owner, "outerClothing", out var suit, null, null) &&
+                _entManager.TryGetComponent<PressureProtectionComponent>(suit, out _)
+            )
+            {
+                res = comp.SuitPrint;
+            }
+            return res;
         }
     }
 }
