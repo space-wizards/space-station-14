@@ -8,6 +8,22 @@
     - Zombie
 
 - type: npcFaction
+  id: Blob
+  hostile:
+    - NanoTrasen
+    - Syndicate
+    - RatPassive
+    - RatHostile
+    - Xeno
+    - MalfunctioningRobot
+    - PetsNT
+    - Flesh
+    - Zombie
+    - Pet
+    - FleshHuman
+    - Dragon
+
+- type: npcFaction
   id: NanoTrasen
   hostile:
   - SimpleHostile

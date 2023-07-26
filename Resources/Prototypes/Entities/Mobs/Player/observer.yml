@@ -62,3 +62,49 @@
   - type: Tag
     tags:
       - BypassInteractionRangeChecks
+
+- type: entity
+  id: MobObserverBlob
+  name: observer
+  components:
+    - type: Actions
+    - type: Alerts
+    - type: BlobObserver
+    - type: Visibility
+      layer: 5
+    - type: ContentEye
+    - type: MindContainer
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Physics
+      bodyType: KinematicController
+      fixedRotation: true
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          density: 15
+          mask:
+            - BlobGhostImpassable
+    - type: InputMover
+    - type: Appearance
+    - type: Eye
+    - type: Input
+      context: "ghost"
+    - type: Examiner
+      skipChecks: true
+    - type: Sprite
+      sprite: Mobs/Aliens/blob.rsi
+      color: "#fc8403"
+      state: marker
+      noRot: true
+      drawdepth: Ghosts
+    - type: MovementSpeedModifier
+      baseSprintSpeed: 8
+      baseWalkSpeed: 5
+    - type: MovementIgnoreGravity
+    - type: Tag
+      tags:
+        - BypassInteractionRangeChecks

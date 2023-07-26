@@ -145,3 +145,9 @@ ghost-role-information-centcom-official-description = Inspect the station, jot d
 
 ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
+
+ghost-role-information-blobbernaut-name = Blobbernaut
+ghost-role-information-blobbernaut-description = You are a Blobbernaut. You must defend blob core.
+
+ghost-role-information-blob-name = Blob
+ghost-role-information-blob-description = You are a Blob. You must consume the station.
