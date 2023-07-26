@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.StatusIcon.Components;
 
@@ -15,7 +15,7 @@ public sealed partial class StatusIconComponent : Component
     /// </summary>
     [AutoNetworkedField]
     [DataField("bounds"), ViewVariables(VVAccess.ReadWrite)]
-    public Box2? Bounds;
+    public Box2? Bounds ;
 }
 
 /// <summary>
