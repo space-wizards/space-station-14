@@ -1,15 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix fire stacks not spreading to other players., type: Fix}
-  id: 3823
-  time: '2023-05-20T03:34:41.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: the sprite of a doll with a skull bandana is now showing the skull,
-    type: Tweak}
-  id: 3824
-  time: '2023-05-20T19:46:10.0000000+00:00'
 - author: tom-leys
   changes:
   - {message: 'Spacing takes a short time to occur, rather than being totally instant.
@@ -2989,3 +2978,13 @@ Entries:
   - {message: Animals no longer eat with a full belly., type: Tweak}
   id: 4322
   time: '2023-07-25T21:32:11.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Hardsuit + Firesuit Rebalancingening., type: Tweak}
+  id: 4323
+  time: '2023-07-26T00:34:59.0000000+00:00'
+- author: kseandi
+  changes:
+  - {message: Nanotraisen found the cause of the Geiger counters malfunction!, type: Fix}
+  id: 4324
+  time: '2023-07-26T00:35:19.0000000+00:00'
