@@ -47,7 +47,7 @@
     sprintModifier: 0.8
   - type: GroupExamine
   - type: StaticPrice
-    price: 100
+    price: 0
     
 - type: entity
   parent: ClothingOuterBaseLarge
