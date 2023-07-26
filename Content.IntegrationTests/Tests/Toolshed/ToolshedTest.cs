@@ -32,7 +32,6 @@ public abstract class ToolshedTest : IInvocationContext
     {
         Assert.IsEmpty(_expectedErrors);
         ClearErrors();
-        await PairTracker.CleanReturnAsync();
     }
 
     [SetUp]
@@ -58,35 +57,16 @@ public abstract class ToolshedTest : IInvocationContext
         return Toolshed.InvokeCommand(this, command, null, out result);
     }
 
-    protected async Task<(bool, CommandRun?, IConError?)> ParseCommandNoAssert(string command, Type? inputType = null, Type? expectedType = null, bool once = false)
+    protected void ParseCommand(string command, Type? inputType = null, Type? expectedType = null, bool once = false)
     {
-        bool success = default!;
-        CommandRun? run = default!;
-        IConError? error = default!;
+        var parser = new ForwardParser(command, Toolshed);
+        var success = CommandRun.TryParse(false, parser, inputType, expectedType, once, out _, out _, out var error);
 
-        await Server.WaitAssertion(() =>
-        {
-            var parser = new ForwardParser(command, Toolshed);
-            success = CommandRun.TryParse(false, parser, inputType, expectedType, once, out run, out _, out error);
-        });
-        await Server.WaitIdleAsync();
+        if (error is not null)
+            ReportError(error);
 
-        return (success, run, error);
-    }
-
-    protected async Task ParseCommand(string command, Type? inputType = null, Type? expectedType = null, bool once = false)
-    {
-        await Server.WaitAssertion(() =>
-        {
-            var parser = new ForwardParser(command, Toolshed);
-            var success = CommandRun.TryParse(false, parser, inputType, expectedType, once, out _, out _, out var error);
-            if (error is not null && (!success || error is not OutOfInputError))
-                ReportError(error);
-
-            if (error is null)
-                Assert.That(success, $"Parse failed despite no error being reported. Parsed {command}");
-        });
-        await Server.WaitIdleAsync();
+        if (error is null)
+            Assert.That(success, $"Parse failed despite no error being reported. Parsed {command}");
     }
 
     public bool CheckInvokable(CommandSpec command, out IConError? error)
