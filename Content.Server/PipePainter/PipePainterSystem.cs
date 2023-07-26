@@ -78,9 +78,7 @@ public sealed class PipePainterSystem : EntitySystem
             return;
 
         UpdateUiState(uid, component);
-        _userInterfaceSystem.TryGetUi(uid, PipePainterUiKey.Key, out var bui);
-        if (bui != null)
-            _userInterfaceSystem.OpenUi(bui,actor.PlayerSession);
+        _userInterfaceSystem.TryOpen(uid, PipePainterUiKey.Key, actor.PlayerSession);
         args.Handled = true;
     }
 
