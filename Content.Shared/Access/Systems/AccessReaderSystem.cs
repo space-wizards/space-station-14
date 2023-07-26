@@ -6,6 +6,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking.Events;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.StationRecords;
@@ -17,6 +18,7 @@ public sealed class AccessReaderSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -61,19 +63,53 @@ public sealed class AccessReaderSystem : EntitySystem
     }
 
     /// <summary>
+    /// Finds all AccessReaderComponents in the container of the
+    /// required entity.
+    /// </summary>
+    /// <param name="target">The entity to search for a container</param>
+        private bool FindAccessReadersInContainer(EntityUid target, AccessReaderComponent accessReader, out List<AccessReaderComponent> result)
+        {
+            result = new();
+            if (accessReader.ContainerAccessProvider == null)
+                return false;
+
+            if (!_containerSystem.TryGetContainer(target, accessReader.ContainerAccessProvider, out var container))
+                return false;
+
+            foreach (var entity in container.ContainedEntities)
+            {
+                if (TryComp<AccessReaderComponent>(entity, out var entityAccessReader))
+                    result.Add(entityAccessReader);
+            }
+
+            return result.Any();
+        }
+
+    /// <summary>
     /// Searches the source for access tags
-    /// then compares it with the targets readers access list to see if it is allowed.
+    /// then compares it with the all targets accesses to see if it is allowed.
     /// </summary>
     /// <param name="source">The entity that wants access.</param>
     /// <param name="target">The entity to search for an access reader</param>
     /// <param name="reader">Optional reader from the target entity</param>
     public bool IsAllowed(EntityUid source, EntityUid target, AccessReaderComponent? reader = null)
     {
-        if (!Resolve(target, ref reader, false))
-            return true;
-        return IsAllowed(source, reader);
-    }
+            if (!Resolve(target, ref reader, false))
+                return true;
 
+            if (FindAccessReadersInContainer(target, reader, out var accessReaderList))
+            {
+                foreach (var access in accessReaderList)
+                {
+                    if (IsAllowed(source, access))
+                        return true;
+                }
+
+                return false;
+            }
+
+            return IsAllowed(source, reader);
+        }
     /// <summary>
     /// Searches the given entity for access tags
     /// then compares it with the readers access list to see if it is allowed.
