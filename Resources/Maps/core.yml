@@ -48891,9 +48891,6 @@ entities:
     - linkedPorts:
         11256:
         - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
-      registeredSinks:
-        ArtifactAnalyzerSender:
-        - 11256
       type: DeviceLinkSource
   - uid: 6152
     components:
@@ -48903,9 +48900,6 @@ entities:
     - linkedPorts:
         11255:
         - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
-      registeredSinks:
-        ArtifactAnalyzerSender:
-        - 11255
       type: DeviceLinkSource
 - proto: computerBodyScanner
   entities:
@@ -101908,9 +101902,6 @@ entities:
     - linkedPorts:
         18154:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 18154
       type: DeviceLinkSource
     - canCollide: False
       type: Physics
@@ -101926,9 +101917,6 @@ entities:
     - linkedPorts:
         18902:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 18902
       type: DeviceLinkSource
     - canCollide: False
       type: Physics
@@ -101943,9 +101931,6 @@ entities:
     - linkedPorts:
         18154:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 18154
       type: DeviceLinkSource
     - canCollide: False
       type: Physics
@@ -102687,18 +102672,6 @@ entities:
         - Pressed: Toggle
         12974:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 18049
-        - 13124
-        - 12978
-        - 12979
-        - 12980
-        - 12981
-        - 12982
-        - 12977
-        - 12976
-        - 12974
       type: DeviceLinkSource
   - uid: 12986
     components:
@@ -102713,10 +102686,6 @@ entities:
         - Pressed: Toggle
         817:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 818
-        - 817
       type: DeviceLinkSource
     - type: ItemCooldown
   - uid: 12987
@@ -102729,10 +102698,6 @@ entities:
         - Pressed: Toggle
         12958:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 12957
-        - 12958
       type: DeviceLinkSource
   - uid: 12988
     components:
@@ -102750,13 +102715,6 @@ entities:
         - Pressed: Toggle
         12965:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 12961
-        - 12962
-        - 12963
-        - 12964
-        - 12965
       type: DeviceLinkSource
   - uid: 12989
     components:
@@ -102770,11 +102728,6 @@ entities:
         - Pressed: Toggle
         12966:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 12968
-        - 12967
-        - 12966
       type: DeviceLinkSource
   - uid: 12990
     components:
@@ -102788,11 +102741,6 @@ entities:
         - Pressed: Toggle
         12971:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 12970
-        - 12969
-        - 12971
       type: DeviceLinkSource
   - uid: 12992
     components:
@@ -102804,9 +102752,6 @@ entities:
     - linkedPorts:
         825:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 825
       type: DeviceLinkSource
   - uid: 12993
     components:
@@ -102818,9 +102763,6 @@ entities:
     - linkedPorts:
         824:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 824
       type: DeviceLinkSource
   - uid: 12994
     components:
@@ -102852,20 +102794,6 @@ entities:
         - Pressed: Toggle
         831:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 829
-        - 830
-        - 834
-        - 835
-        - 836
-        - 837
-        - 828
-        - 827
-        - 826
-        - 833
-        - 832
-        - 831
       type: DeviceLinkSource
   - uid: 15866
     components:
@@ -102885,10 +102813,6 @@ entities:
         - Pressed: Toggle
         14566:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 10734
-        - 14566
       type: DeviceLinkSource
   - uid: 18254
     components:
@@ -102905,11 +102829,6 @@ entities:
         - Pressed: Toggle
         18255:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 18269
-        - 10946
-        - 18255
       type: DeviceLinkSource
   - uid: 18925
     components:
@@ -102924,10 +102843,6 @@ entities:
         - Pressed: Toggle
         18929:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 18928
-        - 18929
       type: DeviceLinkSource
   - uid: 18926
     components:
@@ -102942,10 +102857,6 @@ entities:
         - Pressed: Toggle
         18927:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 18924
-        - 18927
       type: DeviceLinkSource
 - proto: SignalButtonExt1
   entities:
@@ -110134,25 +110045,6 @@ entities:
         - Left: Forward
         - Right: Reverse
         - Middle: Off
-      registeredSinks:
-        Left:
-        - 6215
-        - 6206
-        - 6208
-        - 6207
-        - 6209
-        Right:
-        - 6215
-        - 6206
-        - 6208
-        - 6207
-        - 6209
-        Middle:
-        - 6215
-        - 6206
-        - 6208
-        - 6207
-        - 6209
       type: DeviceLinkSource
   - uid: 14059
     components:
@@ -110180,25 +110072,6 @@ entities:
         - Left: Forward
         - Right: Reverse
         - Middle: Off
-      registeredSinks:
-        Left:
-        - 6212
-        - 6210
-        - 6213
-        - 6214
-        - 6211
-        Right:
-        - 6212
-        - 6210
-        - 6213
-        - 6214
-        - 6211
-        Middle:
-        - 6212
-        - 6210
-        - 6213
-        - 6214
-        - 6211
       type: DeviceLinkSource
   - uid: 14060
     components:
@@ -110240,34 +110113,6 @@ entities:
         - Left: Forward
         - Right: Reverse
         - Middle: Off
-      registeredSinks:
-        Left:
-        - 6218
-        - 6219
-        - 6220
-        - 6216
-        - 6217
-        - 6222
-        - 6221
-        - 6223
-        Right:
-        - 6218
-        - 6219
-        - 6220
-        - 6216
-        - 6217
-        - 6222
-        - 6221
-        - 6223
-        Middle:
-        - 6218
-        - 6219
-        - 6220
-        - 6216
-        - 6217
-        - 6222
-        - 6221
-        - 6223
       type: DeviceLinkSource
 - proto: UnfinishedMachineFrame
   entities:
