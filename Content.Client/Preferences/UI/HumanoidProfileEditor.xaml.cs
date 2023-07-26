@@ -1253,7 +1253,7 @@ namespace Content.Client.Preferences.UI
                 {
                     Margin = new Thickness(5f,0,5f,0),
                     Text = job.LocalizedName,
-                    MinSize = new Vector2(180, 0),
+                    MinSize = new Vector2(200, 0),
                     MouseFilter = MouseFilterMode.Stop
                 };
 

@@ -978,7 +978,8 @@ entities:
           -11,3:
             0: 52366
           -10,3:
-            0: 65535
+            0: 32767
+            1: 32768
           14,-1:
             0: 65524
           15,-3:
@@ -13667,6 +13668,34 @@ entities:
       type: Transform
     - enabled: True
       type: AmbientSound
+  - uid: 9629
+    components:
+    - pos: -41.5,-9.5
+      parent: 31
+      type: Transform
+    - enabled: True
+      type: AmbientSound
+  - uid: 9630
+    components:
+    - pos: -42.5,-9.5
+      parent: 31
+      type: Transform
+    - enabled: True
+      type: AmbientSound
+  - uid: 9631
+    components:
+    - pos: -41.5,-11.5
+      parent: 31
+      type: Transform
+    - enabled: True
+      type: AmbientSound
+  - uid: 9632
+    components:
+    - pos: -42.5,-11.5
+      parent: 31
+      type: Transform
+    - enabled: True
+      type: AmbientSound
   - uid: 9727
     components:
     - pos: -21.5,16.5
@@ -25830,6 +25859,31 @@ entities:
     - pos: -17.5,-21.5
       parent: 31
       type: Transform
+- proto: CrateCoffin
+  entities:
+  - uid: 9634
+    components:
+    - pos: -36.5,15.5
+      parent: 31
+      type: Transform
+    - air:
+        volume: 200
+        immutable: False
+        temperature: 293.1496
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+      type: EntityStorage
 - proto: CrateEmptySpawner
   entities:
   - uid: 3135

@@ -241,9 +241,9 @@
   name: command crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/secure.rsi
+    sprite: Structures/Storage/Crates/command.rsi
   - type: Sprite
-    sprite: Structures/Storage/Crates/secure.rsi
+    sprite: Structures/Storage/Crates/command.rsi
   - type: AccessReader
     access: [["Command"]]
 
