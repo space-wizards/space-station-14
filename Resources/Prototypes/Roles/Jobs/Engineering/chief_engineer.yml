@@ -14,7 +14,7 @@
       department: Engineering
       time: 36000 #10 hrs
     - !type:OverallPlaytimeRequirement
-      time: 14400 #40 hrs      
+      time: 144000 #40 hrs      
   weight: 10
   startingGear: ChiefEngineerGear
   icon: "ChiefEngineer"
