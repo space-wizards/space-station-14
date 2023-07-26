@@ -1,10 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: 'moved syndicate scarves from clothing vending machine to winterdrobe,
-      they will appear after winterdrobe emag', type: Tweak}
-  id: 3831
-  time: '2023-05-21T23:55:00.0000000+00:00'
 - author: MrGreen and OctoRocket
   changes:
   - {message: 'Added a flannel jumpsuit, check your local ClothesMate!', type: Add}
@@ -2980,3 +2974,8 @@ Entries:
   - {message: Added filter for reagents, type: Add}
   id: 4330
   time: '2023-07-26T08:05:09.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Pun-Pun is now always a ghost role, type: Tweak}
+  id: 4331
+  time: '2023-07-26T10:02:02.0000000+00:00'
