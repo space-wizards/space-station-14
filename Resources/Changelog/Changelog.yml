@@ -1,12 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: 'Spacing takes a short time to occur, rather than being totally instant.
-      The decompression will make you cold.', type: Add}
-  - {message: 'Ripped tiles during spacing reflect the wind that passed through that
-      area, ripped tiles tend to be concentrated around the breach.', type: Tweak}
-  id: 3825
-  time: '2023-05-20T19:53:04.0000000+00:00'
 - author: MrGreen and OctoRocket
   changes:
   - {message: Added a winterdrobe to store all your scarfs!, type: Add}
@@ -2988,3 +2980,10 @@ Entries:
   - {message: Nanotraisen found the cause of the Geiger counters malfunction!, type: Fix}
   id: 4324
   time: '2023-07-26T00:35:19.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: 'Added four new senior roles meant for teaching new players their related
+      department; Senior Engineer, Senior Researcher, Senior Physician and Senior
+      Officer.', type: Add}
+  id: 4325
+  time: '2023-07-26T03:06:31.0000000+00:00'
