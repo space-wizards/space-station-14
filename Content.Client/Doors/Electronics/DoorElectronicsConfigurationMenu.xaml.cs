@@ -35,7 +35,7 @@ public sealed partial class DoorElectronicsConfigurationMenu : FancyWindow
         }
     }
 
-    public void UpdateState(SharedDoorElectronicsComponent.ConfigurationState state)
+    public void UpdateState(DoorElectronicsConfigurationState state)
     {
         _buttonsList.UpdateState(state.accessList);
     }

@@ -16,8 +16,8 @@ public sealed class DoorElectronicsSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<DoorElectronicsComponent, SharedDoorElectronicsComponent.UpdateConfigurationMessage>(OnChangeConfiguration);
-        SubscribeLocalEvent<DoorElectronicsComponent, SharedDoorElectronicsComponent.RefreshUiMessage>(OnRefreshUi);
+        SubscribeLocalEvent<DoorElectronicsComponent, DoorElectronicsUpdateConfigurationMessage>(OnChangeConfiguration);
+        SubscribeLocalEvent<DoorElectronicsComponent, DoorElectronicsRefreshUiMessage>(OnRefreshUi);
         SubscribeLocalEvent<DoorElectronicsComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
@@ -36,14 +36,14 @@ public sealed class DoorElectronicsSystem : EntitySystem
             }
         }
 
-        var state = new SharedDoorElectronicsComponent.ConfigurationState(accesses);
+        var state = new DoorElectronicsConfigurationState(accesses);
 
         _uiSystem.TrySetUiState(uid, DoorElectronicsConfigurationUiKey.Key, state);
     }
 
     private void OnChangeConfiguration(EntityUid uid,
                                        DoorElectronicsComponent component,
-                                       SharedDoorElectronicsComponent.UpdateConfigurationMessage args)
+                                       DoorElectronicsUpdateConfigurationMessage args)
     {
         if (TryComp<AccessReaderComponent>(uid, out var accessReader))
         {
@@ -53,7 +53,7 @@ public sealed class DoorElectronicsSystem : EntitySystem
                 accessReader.AccessLists.Add(new HashSet<string>(){access});
             }
         }
-        var state = new SharedDoorElectronicsComponent.ConfigurationState(args.accessList);
+        var state = new DoorElectronicsConfigurationState(args.accessList);
         _uiSystem.TrySetUiState(component.Owner,
                                 DoorElectronicsConfigurationUiKey.Key,
                                 state);
@@ -61,7 +61,7 @@ public sealed class DoorElectronicsSystem : EntitySystem
 
     private void OnRefreshUi(EntityUid uid,
                              DoorElectronicsComponent component,
-                             SharedDoorElectronicsComponent.RefreshUiMessage args)
+                             DoorElectronicsRefreshUiMessage args)
     {
         UpdateUserInterface(uid, component);
     }

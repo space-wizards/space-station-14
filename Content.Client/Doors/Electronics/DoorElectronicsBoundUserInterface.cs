@@ -35,14 +35,14 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
         _window.OnClose += Close;
         _window.OpenCentered();
 
-        SendMessage(new SharedDoorElectronicsComponent.RefreshUiMessage());
+        SendMessage(new DoorElectronicsRefreshUiMessage());
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
 
-        var castState = (SharedDoorElectronicsComponent.ConfigurationState) state;
+        var castState = (DoorElectronicsConfigurationState) state;
 
         _window?.UpdateState(castState);
     }
@@ -57,6 +57,6 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
 
     public void UpdateConfiguration(List<string> newAccessList)
     {
-        SendMessage(new SharedDoorElectronicsComponent.UpdateConfigurationMessage(newAccessList));
+        SendMessage(new DoorElectronicsUpdateConfigurationMessage(newAccessList));
     }
 }
