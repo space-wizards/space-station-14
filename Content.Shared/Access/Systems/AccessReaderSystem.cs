@@ -70,6 +70,7 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="target">The entity to search for a container</param>
         private bool FindAccessReadersInContainer(EntityUid target, AccessReaderComponent accessReader, out List<AccessReaderComponent> result)
         {
+            result = new();
             if (accessReader.ContainerAccessProvider == null)
                 return false;
 
@@ -99,17 +100,19 @@ public sealed class AccessReaderSystem : EntitySystem
             if (!Resolve(target, ref reader, false))
                 return true;
 
-            if (FindAccessReadersInContainer(target, reader.Value, out var accessReaderList))
+            if (FindAccessReadersInContainer(target, reader, out var accessReaderList))
             {
                 foreach (var access in accessReaderList)
                 {
                     if (IsAllowed(source, access))
                         return true;
                 }
+
+                return false;
             }
 
             return IsAllowed(source, reader);
-        }    
+        }
     /// <summary>
     /// Searches the given entity for access tags
     /// then compares it with the readers access list to see if it is allowed.
