@@ -133905,16 +133905,6 @@ entities:
       type: Transform
 - proto: SpawnPointResearchAssistant
   entities:
-  - uid: 4547
-    components:
-    - pos: 2.5,21.5
-      parent: 60
-      type: Transform
-  - uid: 7562
-    components:
-    - pos: -0.5,19.5
-      parent: 60
-      type: Transform
   - uid: 16084
     components:
     - pos: -54.5,9.5
@@ -133923,16 +133913,6 @@ entities:
   - uid: 16091
     components:
     - pos: -54.5,13.5
-      parent: 60
-      type: Transform
-  - uid: 17297
-    components:
-    - pos: 2.5,19.5
-      parent: 60
-      type: Transform
-  - uid: 17386
-    components:
-    - pos: 2.5,20.5
       parent: 60
       type: Transform
   - uid: 19157
@@ -134095,6 +134075,28 @@ entities:
   - uid: 17923
     components:
     - pos: -3.5,16.5
+      parent: 60
+      type: Transform
+- proto: SpawnPointTechnicalAssistant
+  entities:
+  - uid: 4547
+    components:
+    - pos: -0.5,19.5
+      parent: 60
+      type: Transform
+  - uid: 7562
+    components:
+    - pos: 2.5,21.5
+      parent: 60
+      type: Transform
+  - uid: 17297
+    components:
+    - pos: 2.5,20.5
+      parent: 60
+      type: Transform
+  - uid: 17386
+    components:
+    - pos: 2.5,19.5
       parent: 60
       type: Transform
 - proto: SpawnPointWarden
