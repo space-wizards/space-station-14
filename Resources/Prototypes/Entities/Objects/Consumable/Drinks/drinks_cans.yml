@@ -299,7 +299,7 @@
   parent: DrinkCanBaseFull
   id: DrinkNukieCan
   name: blood-red brew can
-  description: A home-brewn drink made from the crazed minds at the Syndicate. Not reccomended by doctors.
+  description: A home-brewed drink made from the crazed minds at the Syndicate. Not reccomended by doctors.
   components:
   - type: SolutionContainerManager
     solutions:
