@@ -15,7 +15,7 @@
     delay: 3.5
   - type: ContainerContainer
     containers:
-      cluster-flash: !type:Container
+      cluster-payload: !type:Container
 
 - type: entity
   parent: GrenadeBase
@@ -45,6 +45,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Machines/door_lock_off.ogg"
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
 
 - type: entity
   parent: GrenadeBase
@@ -71,6 +74,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Machines/door_lock_off.ogg"
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
 
 - type: entity
   parent: BaseItem
@@ -104,6 +110,9 @@
       - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
 
 - type: entity
   parent: GrenadeBase
@@ -130,6 +139,9 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
 
 - type: entity
   parent: GrenadeBase
@@ -156,6 +168,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
 
 - type: entity
   parent: GrenadeBase
@@ -182,6 +197,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
 
 - type: entity
   parent: SoapSyndie
@@ -219,3 +237,6 @@
       - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container

@@ -31,7 +31,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
 
     private void OnClugInit(EntityUid uid, ClusterGrenadeComponent component, ComponentInit args)
     {
-        component.GrenadesContainer = _container.EnsureContainer<Container>(uid, "cluster-flash");
+        component.GrenadesContainer = _container.EnsureContainer<Container>(uid, "cluster-payload");
     }
 
     private void OnClugStartup(EntityUid uid, ClusterGrenadeComponent component, ComponentStartup args)

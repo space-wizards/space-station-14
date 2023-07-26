@@ -618,6 +618,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
 
 - type: entity
   id: BulletGrenadeTimedShrapnel
@@ -648,6 +651,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
 
 - type: entity
   id: BulletCap
