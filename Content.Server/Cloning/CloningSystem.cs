@@ -33,11 +33,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
-using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
-using Robust.Shared.Audio;
-using System.Runtime.InteropServices;
-using Content.Server.MachineLinking.Events;
 using Content.Server.Popups;
 using Content.Server.Traits.Assorted;
 

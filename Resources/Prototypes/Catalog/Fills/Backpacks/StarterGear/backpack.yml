@@ -216,10 +216,11 @@
     - type: StorageFill
       contents:
         - id: BoxSurvival
+        - id: WeaponPulseCarbine
         - id: WeaponPulsePistol
-        - id: WeaponPistolMk58
-        - id: MagazinePistolHighCapacityRubber
-        - id: MagazinePistol
+        - id: WeaponDisabler
+        - id: MedicatedSuture
+        - id: RegenerativeMesh
         - id: Handcuffs
         - id: CrowbarRed
 
@@ -234,8 +235,9 @@
         - id: WeaponDisabler
         - id: WeaponPulsePistol
         - id: WeaponPulseCarbine
+        - id: MedicatedSuture
+        - id: RegenerativeMesh
         - id: BoxHandcuff
-        - id: Handcuffs
         - id: CrowbarRed
 
 - type: entity
@@ -245,11 +247,14 @@
   components:
     - type: StorageFill
       contents:
-        - id: BoxSurvival
+        - id: BoxSurvivalMedical
         - id: WeaponPulseCarbine
         - id: Hypospray
         - id: MedkitAdvancedFilled
         - id: CrowbarRed
+        - id: OmnizineChemistryBottle
+        - id: EpinephrineChemistryBottle
+        - id: EpinephrineChemistryBottle
 
 - type: entity
   noSpawn: true
@@ -261,10 +266,14 @@
         - id: BoxSurvival
         - id: trayScanner
         - id: WeaponPulseCarbine
+        - id: MedicatedSuture
+        - id: RegenerativeMesh
         - id: RCD
         - id: RCDAmmo
         - id: RCDAmmo
         - id: RCDAmmo
+        - id: CableMVStack
+        - id: CableHVStack
 
 - type: entity
   noSpawn: true
