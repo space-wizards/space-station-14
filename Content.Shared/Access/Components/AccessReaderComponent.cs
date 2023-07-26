@@ -66,12 +66,3 @@ public sealed class AccessReaderComponentState : ComponentState
         AccessKeys = accessKeys;
     }
 }
-
-public sealed class GetRequiredAccessEvent : HandledEntityEventArgs
-{
-    public AccessReaderComponent Access = new();
-
-    public GetRequiredAccessEvent()
-    {
-    }
-}

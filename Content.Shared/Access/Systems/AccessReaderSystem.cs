@@ -16,7 +16,6 @@ namespace Content.Shared.Access.Systems;
 
 public sealed class AccessReaderSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -77,11 +76,9 @@ public sealed class AccessReaderSystem : EntitySystem
             if (!_containerSystem.TryGetContainer(target, accessReader.ContainerAccessProvider, out var container))
                 return false;
 
-            result = new();
             foreach (var entity in container.ContainedEntities)
             {
                 if (TryComp<AccessReaderComponent>(entity, out var entityAccessReader))
-                    //Append allocates more than Add
                     result.Add(entityAccessReader);
             }
 
