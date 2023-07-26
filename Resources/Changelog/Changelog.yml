@@ -1,11 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: NanoTrasen reports that crewmembers will no longer have to rely on the
-      placebo effect when ingesting chemicals found in puddles (which is not centcom-sanctioned
-      activity!), type: Fix}
-  id: 3828
-  time: '2023-05-21T03:05:22.0000000+00:00'
 - author: EEASAS
   changes:
   - {message: 'The Syndicate has supplied their traitors and nuclear operatives with
@@ -2986,3 +2979,8 @@ Entries:
   - {message: Added an accentless trait., type: Add}
   id: 4327
   time: '2023-07-26T06:54:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed chat bubbles not appearing in replays., type: Fix}
+  id: 4328
+  time: '2023-07-26T07:11:15.0000000+00:00'
