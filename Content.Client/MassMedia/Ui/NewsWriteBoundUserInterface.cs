@@ -62,8 +62,8 @@ namespace Content.Client.MassMedia.Ui
 
         private void OnShareButtonPressed()
         {
-            if (_menu == null) return;
-            if (_menu.NameInput.Text.Length == 0) return;
+            if (_menu == null || _menu.NameInput.Text.Length == 0)
+                return;
 
             var stringContent = Rope.Collapse(_menu.ContentInput.TextRope);
 

@@ -13,7 +13,8 @@ public enum NewsReadUiKey : byte
 public sealed class NewsReadBoundUserInterfaceState : BoundUserInterfaceState
 {
     public NewsArticle Article;
-    public int TargetNum, TotalNum;
+    public int TargetNum;
+    public int TotalNum;
 
     public NewsReadBoundUserInterfaceState(NewsArticle article, int targetNum, int totalNum)
     {

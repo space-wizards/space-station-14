@@ -4,6 +4,7 @@ using Content.Shared.MassMedia.Components;
 using Content.Shared.MassMedia.Systems;
 using Content.Server.PDA.Ringer;
 using Content.Shared.GameTicking;
+using System.Linq;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -69,9 +70,9 @@ public sealed class NewsSystem : EntitySystem
         if (!_ui.TryGetUi(uid, NewsReadUiKey.Key, out _))
             return;
 
-        if (component.ArticleNum < 0) NewsReadLeafArticle(component, false);
+        if (component.ArticleNum < 0) NewsReadLeafArticle(component, -1);
 
-        if (Articles.Count != 0)
+        if (Articles.Any())
             _ui.TrySetUiState(uid, NewsReadUiKey.Key, new NewsReadBoundUserInterfaceState(Articles[component.ArticleNum], component.ArticleNum + 1, Articles.Count));
         else
             _ui.TrySetUiState(uid, NewsReadUiKey.Key, new NewsReadEmptyBoundUserInterfaceState());
@@ -81,7 +82,8 @@ public sealed class NewsSystem : EntitySystem
     {
         Articles.Add(msg.Article);
 
-        UpdateWriteUi(uid, component);
+        UpdateReadDevices();
+        UpdateWriteDevices();
         TryNotify();
     }
 
@@ -92,7 +94,8 @@ public sealed class NewsSystem : EntitySystem
             Articles.RemoveAt(msg.ArticleNum);
         }
 
-        UpdateWriteUi(uid, component);
+        UpdateReadDevices();
+        UpdateWriteDevices();
     }
 
     public void OnWriteUiMessage(EntityUid uid, NewsWriteComponent component, NewsWriteArticlesRequestMessage msg)
@@ -102,14 +105,14 @@ public sealed class NewsSystem : EntitySystem
 
     public void OnReadUiMessage(EntityUid uid, NewsReadComponent component, NewsReadNextMessage msg)
     {
-        NewsReadLeafArticle(component, true);
+        NewsReadLeafArticle(component, 1);
 
         UpdateReadUi(uid, component);
     }
 
     public void OnReadUiMessage(EntityUid uid, NewsReadComponent component, NewsReadPrevMessage msg)
     {
-        NewsReadLeafArticle(component, false);
+        NewsReadLeafArticle(component, -1);
 
         UpdateReadUi(uid, component);
     }
@@ -119,12 +122,9 @@ public sealed class NewsSystem : EntitySystem
         UpdateReadUi(uid, component);
     }
 
-    private void NewsReadLeafArticle(NewsReadComponent component, bool isNext)
+    private void NewsReadLeafArticle(NewsReadComponent component, int leafDir)
     {
-        if (isNext)
-            component.ArticleNum++;
-        else
-            component.ArticleNum--;
+        component.ArticleNum += leafDir;
 
         if (component.ArticleNum >= Articles.Count) component.ArticleNum = 0;
         if (component.ArticleNum < 0) component.ArticleNum = Articles.Count - 1;
@@ -137,7 +137,26 @@ public sealed class NewsSystem : EntitySystem
         while (query.MoveNext(out var comp, out var ringer))
         {
             _ringer.RingerPlayRingtone(comp.Owner, ringer);
+        }
+    }
+
+    private void UpdateReadDevices()
+    {
+        var query = EntityQueryEnumerator<NewsReadComponent>();
+
+        while (query.MoveNext(out var comp))
+        {
             UpdateReadUi(comp.Owner, comp);
+        }
+    }
+
+    private void UpdateWriteDevices()
+    {
+        var query = EntityQueryEnumerator<NewsWriteComponent>();
+
+        while (query.MoveNext(out var comp))
+        {
+            UpdateWriteUi(comp.Owner, comp);
         }
     }
 }
