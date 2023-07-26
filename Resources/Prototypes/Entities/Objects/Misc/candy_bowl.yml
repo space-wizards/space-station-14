@@ -53,7 +53,6 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-      - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
