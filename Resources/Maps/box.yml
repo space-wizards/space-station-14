@@ -10570,7 +10570,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 21828
       type: Docking
-    - SecondsUntilStateChange: -35579.715
+    - SecondsUntilStateChange: -35718.348
       changeAirtight: False
       state: Opening
       type: Door
@@ -10618,7 +10618,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 562
       type: Docking
-    - SecondsUntilStateChange: -35579.715
+    - SecondsUntilStateChange: -35718.348
       changeAirtight: False
       state: Opening
       type: Door
