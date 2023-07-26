@@ -76,7 +76,7 @@
   parent: BaseItem
   id: ClusterBananaPeel
   name: cluster banana peel
-  description: Spreads 6 explosive banana peels after throwing.
+  description: Splits into 6 explosive banana peels after throwing, guaranteed fun!
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi

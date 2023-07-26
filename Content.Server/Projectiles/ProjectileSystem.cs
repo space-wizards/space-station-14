@@ -11,7 +11,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
-using Content.Shared.Physics;
 using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Projectiles;

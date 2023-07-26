@@ -50,7 +50,7 @@
     canPenetrate: true
     damage:
       groups:
-        Burn: 3
+        Burn: 4
   - type: IgniteOnCollide
     fireStacks: 2
     count: 10
