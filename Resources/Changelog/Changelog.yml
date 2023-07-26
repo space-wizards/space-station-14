@@ -1,9 +1,4 @@
 Entries:
-- author: MrGreen and OctoRocket
-  changes:
-  - {message: 'Added a flannel jumpsuit, check your local ClothesMate!', type: Add}
-  id: 3832
-  time: '2023-05-22T00:05:35.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Nerf magboots of blinding speed., type: Fix}
@@ -2979,3 +2974,8 @@ Entries:
   - {message: Pun-Pun is now always a ghost role, type: Tweak}
   id: 4331
   time: '2023-07-26T10:02:02.0000000+00:00'
+- author: Hebiman
+  changes:
+  - {message: Removed Alt Click interaction with implanter syringe, type: Fix}
+  id: 4332
+  time: '2023-07-26T18:41:29.0000000+00:00'
