@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: The Head Curator has allowed bibles and necronomicons to be stored in
-      bookshelves and book bags., type: Tweak}
-  id: 3827
-  time: '2023-05-21T00:52:48.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: NanoTrasen reports that crewmembers will no longer have to rely on the
@@ -2987,3 +2981,8 @@ Entries:
   - {message: Players in critical condition can no longer use LOOC chat., type: Tweak}
   id: 4326
   time: '2023-07-26T06:02:49.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: Added an accentless trait., type: Add}
+  id: 4327
+  time: '2023-07-26T06:54:45.0000000+00:00'
