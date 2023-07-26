@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Nerf magboots of blinding speed., type: Fix}
-  id: 3833
-  time: '2023-05-22T00:06:07.0000000+00:00'
 - author: TaralGit
   changes:
   - {message: craftable shivs and three more types of spears, type: Add}
@@ -2979,3 +2974,10 @@ Entries:
   - {message: Removed Alt Click interaction with implanter syringe, type: Fix}
   id: 4332
   time: '2023-07-26T18:41:29.0000000+00:00'
+- author: Misha_Unity
+  changes:
+  - {message: Added a news tab in PDA, type: Add}
+  - {message: Added a mass-media console to reporter, type: Add}
+  - {message: 'Added a popup, when PDA ringing', type: Add}
+  id: 4333
+  time: '2023-07-26T18:49:38.0000000+00:00'
