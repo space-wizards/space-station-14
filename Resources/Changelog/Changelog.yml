@@ -1,36 +1,4 @@
 Entries:
-- author: MrGreen and OctoRocket
-  changes:
-  - message: Added a flannel jumpsuit, check your local ClothesMate!
-    type: Add
-  id: 3832
-  time: '2023-05-22T00:05:35.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Nerf magboots of blinding speed.
-    type: Fix
-  id: 3833
-  time: '2023-05-22T00:06:07.0000000+00:00'
-- author: TaralGit
-  changes:
-  - message: craftable shivs and three more types of spears
-    type: Add
-  id: 3834
-  time: '2023-05-22T00:14:43.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Handheld radios now use their own channel and will work without a telecomms
-      server.
-    type: Tweak
-  id: 3835
-  time: '2023-05-22T00:16:47.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - message: Watertanks, fueltanks and their large variants have a new look. They
-      now show their contained solutions.
-    type: Tweak
-  id: 3836
-  time: '2023-05-22T00:27:51.0000000+00:00'
 - author: AjexRose
   changes:
   - message: Added a salvage section to the guide book
@@ -3151,3 +3119,31 @@ Entries:
   - {message: Pun-Pun is now always a ghost role, type: Tweak}
   id: 4331
   time: '2023-07-26T10:02:02.0000000+00:00'
+- author: Hebiman
+  changes:
+  - {message: Removed Alt Click interaction with implanter syringe, type: Fix}
+  id: 4332
+  time: '2023-07-26T18:41:29.0000000+00:00'
+- author: Misha_Unity
+  changes:
+  - {message: Added a news tab in PDA, type: Add}
+  - {message: Added a mass-media console to reporter, type: Add}
+  - {message: 'Added a popup, when PDA ringing', type: Add}
+  id: 4333
+  time: '2023-07-26T18:49:38.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: reinforced uranium windows now prevent a large amount of radiation from
+      passing through them, type: Add}
+  id: 4334
+  time: '2023-07-26T21:28:45.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Senior roles now require less playtime in specific roles., type: Tweak}
+  id: 4335
+  time: '2023-07-26T21:29:05.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Fixed gas tank inhand spriter, type: Fix}
+  id: 4336
+  time: '2023-07-26T21:29:35.0000000+00:00'

@@ -1349,7 +1349,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .WithMany("AdminMessagesReceived")
                         .HasForeignKey("PlayerUserId")
                         .HasPrincipalKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_admin_messages_player_player_user_id");
 
                     b.HasOne("Content.Server.Database.Round", "Round")
@@ -1395,7 +1395,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .WithMany("AdminNotesReceived")
                         .HasForeignKey("PlayerUserId")
                         .HasPrincipalKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_admin_notes_player_player_user_id");
 
                     b.HasOne("Content.Server.Database.Round", "Round")
@@ -1453,7 +1453,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .WithMany("AdminWatchlistsReceived")
                         .HasForeignKey("PlayerUserId")
                         .HasPrincipalKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_admin_watchlists_player_player_user_id");
 
                     b.HasOne("Content.Server.Database.Round", "Round")

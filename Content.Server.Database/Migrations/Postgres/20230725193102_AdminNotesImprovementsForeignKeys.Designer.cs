@@ -5,6 +5,7 @@ using System.Text.Json;
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -13,9 +14,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    partial class PostgresServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230725193102_AdminNotesImprovementsForeignKeys")]
+    partial class AdminNotesImprovementsForeignKeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -585,50 +588,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         });
                 });
 
-            modelBuilder.Entity("Content.Server.Database.DiscordPlayer", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("discord_players_id");
-
-                    b.Property<string>("CKey")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("ckey");
-
-                    b.Property<string>("DiscordId")
-                        .HasColumnType("text")
-                        .HasColumnName("discord_id");
-
-                    b.Property<string>("DiscordName")
-                        .HasColumnType("text")
-                        .HasColumnName("discord_name");
-
-                    b.Property<string>("HashKey")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("hash_key");
-
-                    b.Property<Guid>("SS14Id")
-                        .IsUnicode(true)
-                        .HasColumnType("uuid")
-                        .HasColumnName("ss14_id");
-
-                    b.HasKey("Id")
-                        .HasName("PK_discord_players");
-
-                    b.HasAlternateKey("SS14Id")
-                        .HasName("ak_discord_players_ss14_id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("CKey", "DiscordId");
-
-                    b.ToTable("discord_players", (string)null);
-                });
-
             modelBuilder.Entity("Content.Server.Database.Job", b =>
                 {
                     b.Property<int>("Id")
@@ -878,11 +837,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("species");
 
-                    b.Property<string>("Voice")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("voice");
-
                     b.HasKey("Id")
                         .HasName("PK_profile");
 
@@ -962,10 +916,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("uuid")
                         .HasColumnName("banning_admin");
 
-                    b.Property<string>("BanningAdminName")
-                        .HasColumnType("text")
-                        .HasColumnName("banning_admin_name");
-
                     b.Property<int>("ExemptFlags")
                         .HasColumnType("integer")
                         .HasColumnName("exempt_flags");
@@ -1010,10 +960,6 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<int>("Severity")
                         .HasColumnType("integer")
                         .HasColumnName("severity");
-
-                    b.Property<int>("StatedRound")
-                        .HasColumnType("integer")
-                        .HasColumnName("stated_round");
 
                     b.HasKey("Id")
                         .HasName("PK_server_ban");

@@ -6,10 +6,10 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobChemist
-      time: 43200 #12 hrs
+      time: 21600 #6 hrs
     - !type:RoleTimeRequirement
       role: JobMedicalDoctor
-      time: 43200 #12 hrs
+      time: 21600 #6 hrs
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 216000 # 60 hrs

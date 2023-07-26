@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   abstract: true
   parent: BaseItem
   id: GasTankBase
@@ -6,15 +6,20 @@
   - type: Sprite
     sprite: Objects/Tanks/generic.rsi
     state: icon
+  - type: Item
+    size: 15
+    sprite: Objects/Tanks/generic.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/generic.rsi
+    slots:
+    - Back
+    - suitStorage
   - type: ActivatableUI
     key: enum.SharedGasTankUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.SharedGasTankUiKey.Key
       type: GasTankBoundUserInterface
-  - type: Item
-    size: 15
-    sprite: Objects/Tanks/generic.rsi
   - type: GasTank
     toggleAction:
       name: action-name-internals-toggle
@@ -49,17 +54,14 @@
   components:
   - type: Sprite
     sprite: Objects/Tanks/oxygen.rsi
+  - type: Item
+    sprite: Objects/Tanks/oxygen.rsi
   - type: GasTank
     outputPressure: 21.3
     air:
       volume: 15
       temperature: 293.15
     tankLowPressure: 30.0
-  - type: Clothing
-    sprite: Objects/Tanks/oxygen.rsi
-    slots:
-    - Back
-    - suitStorage
 
 - type: entity
   parent: OxygenTank
@@ -69,11 +71,10 @@
   components:
   - type: Sprite
     sprite: Objects/Tanks/yellow.rsi
+  - type: Item
+    sprite: Objects/Tanks/yellow.rsi
   - type: Clothing
     sprite: Objects/Tanks/yellow.rsi
-    slots:
-    - Back
-    - suitStorage
 
 - type: entity
   parent: OxygenTank
@@ -83,11 +84,10 @@
   components:
   - type: Sprite
     sprite: Objects/Tanks/red.rsi
+  - type: Item
+    sprite: Objects/Tanks/red.rsi
   - type: Clothing
     sprite: Objects/Tanks/red.rsi
-    slots:
-    - Back
-    - suitStorage
 
 - type: entity
   parent: OxygenTank
@@ -97,13 +97,14 @@
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency.rsi
+  - type: Item
+    size: 10
+    sprite: Objects/Tanks/emergency.rsi
   - type: GasTank
     outputPressure: 21.3
     air:
       volume: 2
       temperature: 293.15
-  - type: Item
-    size: 10
   - type: Clothing
     sprite: Objects/Tanks/emergency.rsi
     slots:
@@ -126,19 +127,15 @@
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_yellow.rsi
+  - type: Item
+    sprite: Objects/Tanks/emergency_yellow.rsi
   - type: GasTank
     outputPressure: 21.3
     air:
       volume: 6
       temperature: 293.15
-  - type: Item
-    size: 10
   - type: Clothing
     sprite: Objects/Tanks/emergency_yellow.rsi
-    slots:
-    - Pocket
-    - Belt
-    - suitStorage
 
 - type: entity
   parent: ExtendedEmergencyOxygenTank
@@ -148,19 +145,15 @@
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_double.rsi
+  - type: Item
+    sprite: Objects/Tanks/emergency_double.rsi
   - type: GasTank
     outputPressure: 21.3
     air:
       volume: 10
       temperature: 293.15
-  - type: Item
-    size: 10
   - type: Clothing
     sprite: Objects/Tanks/emergency_double.rsi
-    slots:
-    - Pocket
-    - Belt
-    - suitStorage
   - type: MeleeWeapon
     attackRate: 0.9
     damage:
@@ -173,18 +166,11 @@
   name: air tank
   description: Mixed anyone?
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/generic.rsi
-    - type: GasTank
-      outputPressure: 101.3
-      air:
-        volume: 15
-        temperature: 293.15
-    - type: Clothing
-      sprite: Objects/Tanks/generic.rsi
-      slots:
-        - Back
-        - suitStorage
+  - type: GasTank
+    outputPressure: 101.3
+    air:
+      volume: 15
+      temperature: 293.15
 
 - type: entity
   parent: GasTankBase
@@ -192,18 +178,17 @@
   name: nitrous oxide tank
   description: Contains a mixture of air and nitrous oxide. Make sure you don't refill it with pure N2O.
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/anesthetic.rsi
-    - type: GasTank
-      outputPressure: 30.4
-      air:
-        volume: 15
-        temperature: 293.15
-    - type: Clothing
-      sprite: Objects/Tanks/anesthetic.rsi
-      slots:
-        - Back
-        - suitStorage
+  - type: Sprite
+    sprite: Objects/Tanks/anesthetic.rsi
+  - type: Item
+    sprite: Objects/Tanks/anesthetic.rsi
+  - type: GasTank
+    outputPressure: 30.4
+    air:
+      volume: 15
+      temperature: 293.15
+  - type: Clothing
+    sprite: Objects/Tanks/anesthetic.rsi
 
 - type: entity
   parent: GasTankBase
@@ -211,17 +196,14 @@
   name: plasma tank
   description: Contains dangerous plasma. Do not inhale. Extremely flammable.
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/plasma.rsi
-    - type: GasTank
-      outputPressure: 101.3
-      air:
-        volume: 15
-        temperature: 293.15
-    - type: Item
-      size: 15
-    - type: Clothing
-      sprite: Objects/Tanks/plasma.rsi
-      slots:
-        - Belt
-        - suitStorage
+  - type: Sprite
+    sprite: Objects/Tanks/plasma.rsi
+  - type: Item
+    sprite: Objects/Tanks/plasma.rsi
+  - type: GasTank
+    outputPressure: 101.3
+    air:
+      volume: 15
+      temperature: 293.15
+  - type: Clothing
+    sprite: Objects/Tanks/plasma.rsi
