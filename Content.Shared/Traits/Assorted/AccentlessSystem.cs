@@ -20,7 +20,7 @@ public sealed class AccentlessSystem : EntitySystem
         foreach (var accent in component.RemovedAccents.Values)
         {
             var accentComponent = accent.Component;
-            RemComp(uid, accentComponent);
+            RemComp(uid, accentComponent.GetType());
         }
     }
 }
