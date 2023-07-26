@@ -148,3 +148,9 @@ ghost-role-information-behonker-description = You are an antagonist, bring death
 
 ghost-role-information-taxibot-name = TaxiBot
 ghost-role-information-taxibot-description = Drive the station crew to their destination.
+
+ghost-role-information-blobbernaut-name = Blobbernaut
+ghost-role-information-blobbernaut-description = You are a Blobbernaut. You must defend blob core.
+
+ghost-role-information-blob-name = Blob
+ghost-role-information-blob-description = You are a Blob. You must consume the station.
