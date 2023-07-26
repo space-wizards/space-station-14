@@ -1,9 +1,9 @@
 using Content.Server.MassMedia.Components;
-using Robust.Server.GameObjects;
-using Content.Shared.MassMedia.Components;
-using Content.Shared.MassMedia.Systems;
 using Content.Server.PDA.Ringer;
 using Content.Shared.GameTicking;
+using Content.Shared.MassMedia.Components;
+using Content.Shared.MassMedia.Systems;
+using Robust.Server.GameObjects;
 using System.Linq;
 
 namespace Content.Server.MassMedia.Systems;
@@ -70,7 +70,8 @@ public sealed class NewsSystem : EntitySystem
         if (!_ui.TryGetUi(uid, NewsReadUiKey.Key, out _))
             return;
 
-        if (component.ArticleNum < 0) NewsReadLeafArticle(component, -1);
+        if (component.ArticleNum < 0)
+            NewsReadPreviousArticle(component);
 
         if (Articles.Any())
             _ui.TrySetUiState(uid, NewsReadUiKey.Key, new NewsReadBoundUserInterfaceState(Articles[component.ArticleNum], component.ArticleNum + 1, Articles.Count));
@@ -105,14 +106,14 @@ public sealed class NewsSystem : EntitySystem
 
     public void OnReadUiMessage(EntityUid uid, NewsReadComponent component, NewsReadNextMessage msg)
     {
-        NewsReadLeafArticle(component, 1);
+        NewsReadNextArticle(component);
 
         UpdateReadUi(uid, component);
     }
 
     public void OnReadUiMessage(EntityUid uid, NewsReadComponent component, NewsReadPrevMessage msg)
     {
-        NewsReadLeafArticle(component, -1);
+        NewsReadPreviousArticle(component);
 
         UpdateReadUi(uid, component);
     }
@@ -122,12 +123,14 @@ public sealed class NewsSystem : EntitySystem
         UpdateReadUi(uid, component);
     }
 
-    private void NewsReadLeafArticle(NewsReadComponent component, int leafDir)
+    private void NewsReadNextArticle(NewsReadComponent component)
     {
-        component.ArticleNum += leafDir;
+        component.ArticleNum = (component.ArticleNum + 1) % Articles.Count;
+    }
 
-        if (component.ArticleNum >= Articles.Count) component.ArticleNum = 0;
-        if (component.ArticleNum < 0) component.ArticleNum = Articles.Count - 1;
+    private void NewsReadPreviousArticle(NewsReadComponent component)
+    {
+        component.ArticleNum = (component.ArticleNum - 1 + Articles.Count) % Articles.Count;
     }
 
     private void TryNotify()
