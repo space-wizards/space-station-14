@@ -258,7 +258,7 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 25
+          damage: 10
         behaviors:
         - !type:TriggerBehavior
         - !type:DoActsBehavior
