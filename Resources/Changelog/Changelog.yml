@@ -1,9 +1,4 @@
 Entries:
-- author: MrGreen and OctoRocket
-  changes:
-  - {message: Added a winterdrobe to store all your scarfs!, type: Add}
-  id: 3826
-  time: '2023-05-21T00:52:23.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: The Head Curator has allowed bibles and necronomicons to be stored in
@@ -2987,3 +2982,8 @@ Entries:
       Officer.', type: Add}
   id: 4325
   time: '2023-07-26T03:06:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Players in critical condition can no longer use LOOC chat., type: Tweak}
+  id: 4326
+  time: '2023-07-26T06:02:49.0000000+00:00'
