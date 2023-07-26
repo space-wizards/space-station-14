@@ -43,6 +43,10 @@ job-name-ertmedic = ERT Medic
 job-name-ertjanitor = ERT Janitor
 job-name-boxer = Boxer
 job-name-zookeeper = Zookeeper
+job-name-senior-engineer = Senior Engineer
+job-name-senior-researcher = Senior Researcher
+job-name-senior-physician = Senior Physician
+job-name-senior-officer = Senior Officer
 
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = Atmospheric Technician
@@ -85,6 +89,10 @@ JobSalvageSpecialist = Salvage Specialist
 JobScientist = Scientist
 JobSecurityCadet = Security Cadet
 JobSecurityOfficer = Security Officer
+JobSeniorEngineer = Senior Engineer
+JobSeniorOfficer = Senior Officer
+JobSeniorPhysician = Senior Physician
+JobSeniorResearcher = Senior Researcher
 JobServiceWorker = Service Worker
 JobStationEngineer = Station Engineer
 JobTechnicalAssistant = Technical Assistant

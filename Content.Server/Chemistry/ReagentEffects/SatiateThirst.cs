@@ -1,6 +1,6 @@
+using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Nutrition.Components;
-using Content.Shared.Nutrition.EntitySystems;
+using Content.Server.Nutrition.EntitySystems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects

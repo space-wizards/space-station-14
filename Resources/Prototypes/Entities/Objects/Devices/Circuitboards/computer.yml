@@ -63,6 +63,17 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: StationRecordsComputerCircuitboard
+  name: station records computer board
+  description: A computer printed circuit board for a station records computer.
+  components:
+    - type: Sprite
+      state: cpu_command
+    - type: ComputerBoard
+      prototype: ComputerStationRecords
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: CargoRequestComputerCircuitboard
   name: cargo request computer board
   description: A computer printed circuit board for a cargo request computer.
