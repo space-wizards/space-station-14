@@ -5,9 +5,11 @@ using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.PowerCell;
+using Content.Server.UserInterface;
 using Content.Shared.Alert;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Movement.Systems;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Silicons.Borgs;
@@ -29,6 +31,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly PlayTimeTrackingSystem _playTimeTracking = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -45,6 +48,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         SubscribeLocalEvent<BorgChassisComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<BorgChassisComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<BorgChassisComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
+        SubscribeLocalEvent<BorgChassisComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
 
@@ -135,7 +139,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         // if we eject the battery or run out of charge, then disable
         if (args.Ejected || !_powerCell.HasDrawCharge(uid))
         {
-            DisableAllModules(uid, component);
+            DisableBorgAbilities(uid, component);
             return;
         }
 
@@ -146,13 +150,20 @@ public sealed partial class BorgSystem : SharedBorgSystem
             if (_mind.TryGetMind(uid, out _))
                 _powerCell.SetPowerCellDrawEnabled(uid, true);
 
-            EnableAllModules(uid, component);
+            EnableBorgAbilities(uid, component);
         }
     }
 
     private void OnPowerCellSlotEmpty(EntityUid uid, BorgChassisComponent component, ref PowerCellSlotEmptyEvent args)
     {
-        DisableAllModules(uid, component);
+        DisableBorgAbilities(uid, component);
+    }
+
+    private void OnUIOpenAttempt(EntityUid uid, BorgChassisComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        // borgs can't view their own ui
+        if (args.User == uid)
+            args.Cancel();
     }
 
     private void OnBrainMindAdded(EntityUid uid, BorgBrainComponent component, MindAddedMessage args)
@@ -182,20 +193,40 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
     private void UpdateBatteryAlert(EntityUid uid, PowerCellSlotComponent? slotComponent = null)
     {
-        short chargePercent = 0;
-        if (_powerCell.TryGetBatteryFromSlot(uid, out var battery, slotComponent))
+        if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery, slotComponent))
         {
-            chargePercent = (short) MathF.Round(battery.CurrentCharge / battery.MaxCharge * 10f);
-
-            // we make sure 0 only shows if they have absolutely no battery.
-            // also account for floating point imprecision
-            if (chargePercent == 0 && battery.CurrentCharge >= 0.01)
-            {
-                chargePercent = 1;
-            }
+            _alerts.ClearAlert(uid, AlertType.BorgBattery);
+            _alerts.ShowAlert(uid, AlertType.BorgBatteryNone);
+            return;
         }
 
+        var chargePercent = (short) MathF.Round(battery.CurrentCharge / battery.MaxCharge * 10f);
+
+        // we make sure 0 only shows if they have absolutely no battery.
+        // also account for floating point imprecision
+        if (chargePercent == 0 && battery.CurrentCharge >= 0.01)
+        {
+            chargePercent = 1;
+        }
+
+        _alerts.ClearAlert(uid, AlertType.BorgBatteryNone);
         _alerts.ShowAlert(uid, AlertType.BorgBattery, chargePercent);
+    }
+
+    public void EnableBorgAbilities(EntityUid uid, BorgChassisComponent component)
+    {
+        component.Activated = true;
+        EnableAllModules(uid, component);
+        Dirty(component);
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+    }
+
+    public void DisableBorgAbilities(EntityUid uid, BorgChassisComponent component)
+    {
+        component.Activated = false;
+        DisableAllModules(uid, component);
+        Dirty(component);
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }
 
     public void BorgActivate(EntityUid uid, BorgChassisComponent component)

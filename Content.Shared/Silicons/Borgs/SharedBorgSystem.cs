@@ -1,4 +1,6 @@
 ﻿using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Silicons.Borgs.Components;
@@ -24,6 +26,7 @@ public abstract class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, ItemSlotEjectAttemptEvent>(OnItemSlotEjectAttempt);
         SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
+        SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
     }
 
     private void OnItemSlotInsertAttempt(EntityUid uid, BorgChassisComponent component, ref ItemSlotInsertAttemptEvent args)
@@ -74,5 +77,17 @@ public abstract class SharedBorgSystem : EntitySystem
     protected virtual void OnRemoved(EntityUid uid, BorgChassisComponent component, EntRemovedFromContainerMessage args)
     {
 
+    }
+
+    private void OnRefreshMovementSpeedModifiers(EntityUid uid, BorgChassisComponent component, RefreshMovementSpeedModifiersEvent args)
+    {
+        if (component.Activated)
+            return;
+
+        if (!TryComp<MovementSpeedModifierComponent>(uid, out var movement))
+            return;
+
+        var sprintDif = movement.BaseWalkSpeed / movement.BaseSprintSpeed;
+        args.ModifySpeed(1f, sprintDif);
     }
 }

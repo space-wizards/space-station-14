@@ -207,6 +207,15 @@
   maxSeverity: 10
 
 - type: alert
+  id: BorgBatteryNone
+  category: Health
+  icons:
+    - sprite: /Textures/Interface/Alerts/battery.rsi
+      state: battery-none
+  name: alerts-no-battery-name
+  description: alerts-no-battery-desc
+
+- type: alert
   id: Internals
   category: Internals
   onClick: !type:ToggleInternals {}

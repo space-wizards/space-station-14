@@ -57,6 +57,10 @@
     interfaces:
     - key: enum.SiliconLawsUiKey.Key
       type: SiliconLawBoundUserInterface
+    - key: enum.BorgUiKey.Key
+      type: BorgBoundUserInterface
+  - type: ActivatableUI
+    key: enum.BorgUiKey.Key
   - type: SiliconLawBound
   - type: Hands
     showInHands: false
@@ -64,6 +68,7 @@
     prototype: Borg
   - type: BorgChassis
   - type: WiresPanel
+  - type: ActivatableUIRequiresPanel
   - type: Wires
     LayoutId: Borg
   - type: NameIdentifier

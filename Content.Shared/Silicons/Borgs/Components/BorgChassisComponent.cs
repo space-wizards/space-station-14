@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Roles;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -11,9 +12,12 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// "brain", legs, modules, and battery. Essentially the master component
 /// for borg logic.
 /// </summary>
-[RegisterComponent]
-public sealed class BorgChassisComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class BorgChassisComponent : Component
 {
+    [DataField("activated"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool Activated;
+
     #region Brain
     [DataField("brainWhitelist")]
     public EntityWhitelist? BrainWhitelist;

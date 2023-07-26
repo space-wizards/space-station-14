@@ -25,7 +25,8 @@ public sealed partial class BorgSystem
         var chassis = args.Container.Owner;
 
         if (!TryComp<BorgChassisComponent>(chassis, out var chassisComp) ||
-            args.Container != chassisComp.ModuleContainer)
+            args.Container != chassisComp.ModuleContainer ||
+            !chassisComp.Activated)
             return;
 
         if (!_powerCell.HasDrawCharge(uid))
@@ -190,7 +191,7 @@ public sealed partial class BorgSystem
             return;
 
         var query = GetEntityQuery<BorgModuleComponent>();
-        foreach (var moduleEnt in component.ModuleContainer.ContainedEntities)
+        foreach (var moduleEnt in new List<EntityUid>(component.ModuleContainer.ContainedEntities))
         {
             if (!query.TryGetComponent(moduleEnt, out var moduleComp))
                 continue;
@@ -205,7 +206,7 @@ public sealed partial class BorgSystem
             return;
 
         var query = GetEntityQuery<BorgModuleComponent>();
-        foreach (var moduleEnt in component.ModuleContainer.ContainedEntities)
+        foreach (var moduleEnt in new List<EntityUid>(component.ModuleContainer.ContainedEntities))
         {
             if (!query.TryGetComponent(moduleEnt, out var moduleComp))
                 continue;

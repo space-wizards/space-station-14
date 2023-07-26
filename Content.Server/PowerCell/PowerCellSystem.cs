@@ -138,7 +138,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         if (!Resolve(uid, ref battery, ref cell, false))
             return true;
 
-        return HasCharge(uid, float.MinValue, cell, user);
+        return HasCharge(uid, battery.DrawRate, cell, user);
     }
 
     #endregion
