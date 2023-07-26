@@ -10570,7 +10570,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 21828
       type: Docking
-    - SecondsUntilStateChange: -35718.348
+    - SecondsUntilStateChange: -35862.582
       changeAirtight: False
       state: Opening
       type: Door
@@ -10618,7 +10618,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 562
       type: Docking
-    - SecondsUntilStateChange: -35718.348
+    - SecondsUntilStateChange: -35862.582
       changeAirtight: False
       state: Opening
       type: Door
@@ -11196,7 +11196,7 @@ entities:
     - pos: 49.5,-15.5
       parent: 8364
       type: Transform
-  - uid: 25906
+  - uid: 25908
     components:
     - pos: 16.5,-33.5
       parent: 8364
@@ -14319,7 +14319,7 @@ entities:
     - pos: 29.5,-36.5
       parent: 8364
       type: Transform
-  - uid: 18631
+  - uid: 18633
     components:
     - pos: 12.5,-36.5
       parent: 8364
@@ -69846,12 +69846,6 @@ entities:
     - pos: 67.5,19.5
       parent: 8364
       type: Transform
-  - uid: 11581
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 71.5,-30.5
-      parent: 8364
-      type: Transform
   - uid: 11614
     components:
     - rot: -1.5707963267948966 rad
@@ -70082,12 +70076,6 @@ entities:
       pos: -53.5,4.5
       parent: 8364
       type: Transform
-  - uid: 14150
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 72.5,-30.5
-      parent: 8364
-      type: Transform
   - uid: 14464
     components:
     - rot: -1.5707963267948966 rad
@@ -70145,12 +70133,24 @@ entities:
     - pos: -13.5,-69.5
       parent: 8364
       type: Transform
-  - uid: 18629
+  - uid: 18616
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 71.5,-30.5
+      parent: 8364
+      type: Transform
+  - uid: 18628
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 72.5,-30.5
+      parent: 8364
+      type: Transform
+  - uid: 18631
     components:
     - pos: 72.5,-27.5
       parent: 8364
       type: Transform
-  - uid: 18630
+  - uid: 18632
     components:
     - pos: 71.5,-27.5
       parent: 8364
@@ -76943,7 +76943,7 @@ entities:
       pos: 61.5,-3.5
       parent: 8364
       type: Transform
-  - uid: 18632
+  - uid: 18634
     components:
     - rot: 1.5707963267948966 rad
       pos: 10.5,-36.5
@@ -91706,7 +91706,7 @@ entities:
       type: Transform
 - proto: Fireplace
   entities:
-  - uid: 11554
+  - uid: 11559
     components:
     - pos: 13.5,-34.5
       parent: 8364
@@ -129902,7 +129902,7 @@ entities:
       type: HandheldLight
 - proto: LampInterrogator
   entities:
-  - uid: 9927
+  - uid: 9931
     components:
     - pos: -14.38152,31.700815
       parent: 8364
@@ -146806,12 +146806,12 @@ entities:
     - pos: -14.5,37.5
       parent: 8364
       type: Transform
-  - uid: 25908
+  - uid: 26601
     components:
     - pos: 10.5,-32.5
       parent: 8364
       type: Transform
-  - uid: 26600
+  - uid: 26602
     components:
     - pos: 9.5,-32.5
       parent: 8364
@@ -151357,6 +151357,13 @@ entities:
     - pos: 57.5,-3.5
       parent: 8364
       type: Transform
+- proto: SpawnMobSmile
+  entities:
+  - uid: 9927
+    components:
+    - pos: 73.5,-45.5
+      parent: 8364
+      type: Transform
 - proto: SpawnMobWalter
   entities:
   - uid: 3480
@@ -151636,12 +151643,12 @@ entities:
     - pos: 36.5,-42.5
       parent: 8364
       type: Transform
-  - uid: 11574
+  - uid: 11581
     components:
     - pos: 36.5,-39.5
       parent: 8364
       type: Transform
-  - uid: 11575
+  - uid: 14150
     components:
     - pos: 35.5,-39.5
       parent: 8364
@@ -151679,6 +151686,13 @@ entities:
     - pos: 31.5,-20.5
       parent: 8364
       type: Transform
+- proto: SpawnPointPsychologist
+  entities:
+  - uid: 11556
+    components:
+    - pos: 10.5,-35.5
+      parent: 8364
+      type: Transform
 - proto: SpawnPointQuartermaster
   entities:
   - uid: 14633
@@ -151688,22 +151702,22 @@ entities:
       type: Transform
 - proto: SpawnPointResearchAssistant
   entities:
-  - uid: 18616
+  - uid: 18629
     components:
     - pos: 73.5,-29.5
       parent: 8364
       type: Transform
-  - uid: 18633
+  - uid: 18636
     components:
     - pos: 70.5,-29.5
       parent: 8364
       type: Transform
-  - uid: 18634
+  - uid: 18637
     components:
     - pos: 70.5,-28.5
       parent: 8364
       type: Transform
-  - uid: 25907
+  - uid: 26600
     components:
     - pos: 73.5,-27.5
       parent: 8364
@@ -151734,22 +151748,22 @@ entities:
       type: Transform
 - proto: SpawnPointScientist
   entities:
-  - uid: 18636
+  - uid: 18684
     components:
     - pos: 71.5,-30.5
       parent: 8364
       type: Transform
-  - uid: 18637
+  - uid: 21961
     components:
     - pos: 72.5,-30.5
       parent: 8364
       type: Transform
-  - uid: 18684
+  - uid: 21962
     components:
     - pos: 71.5,-27.5
       parent: 8364
       type: Transform
-  - uid: 21961
+  - uid: 22020
     components:
     - pos: 72.5,-27.5
       parent: 8364
@@ -151766,12 +151780,12 @@ entities:
     - pos: 7.5,38.5
       parent: 8364
       type: Transform
-  - uid: 11556
+  - uid: 11568
     components:
     - pos: 7.5,37.5
       parent: 8364
       type: Transform
-  - uid: 26601
+  - uid: 26603
     components:
     - pos: 7.5,40.5
       parent: 8364
@@ -151800,28 +151814,28 @@ entities:
       type: Transform
 - proto: SpawnPointSeniorEngineer
   entities:
-  - uid: 11571
+  - uid: 11574
     components:
     - pos: -5.5,-62.5
       parent: 8364
       type: Transform
 - proto: SpawnPointSeniorOfficer
   entities:
-  - uid: 11559
+  - uid: 11570
     components:
     - pos: 6.5,40.5
       parent: 8364
       type: Transform
 - proto: SpawnPointSeniorPhysician
   entities:
-  - uid: 11573
+  - uid: 11575
     components:
     - pos: 36.5,-43.5
       parent: 8364
       type: Transform
 - proto: SpawnPointSeniorResearcher
   entities:
-  - uid: 18628
+  - uid: 18630
     components:
     - pos: 73.5,-28.5
       parent: 8364
@@ -151862,12 +151876,12 @@ entities:
       type: Transform
 - proto: SpawnPointTechnicalAssistant
   entities:
-  - uid: 11568
+  - uid: 11571
     components:
     - pos: -2.5,-62.5
       parent: 8364
       type: Transform
-  - uid: 11570
+  - uid: 11573
     components:
     - pos: -2.5,-63.5
       parent: 8364
@@ -156367,11 +156381,6 @@ entities:
     - pos: -12.5,13.5
       parent: 8364
       type: Transform
-  - uid: 9931
-    components:
-    - pos: 11.5,-34.5
-      parent: 8364
-      type: Transform
   - uid: 10424
     components:
     - pos: 19.5,-6.5
@@ -156485,6 +156494,11 @@ entities:
   - uid: 10841
     components:
     - pos: 56.5,3.5
+      parent: 8364
+      type: Transform
+  - uid: 11554
+    components:
+    - pos: 11.5,-34.5
       parent: 8364
       type: Transform
   - uid: 11639
@@ -156682,19 +156696,9 @@ entities:
     - pos: 56.5,-34.5
       parent: 8364
       type: Transform
-  - uid: 21962
-    components:
-    - pos: 10.5,-34.5
-      parent: 8364
-      type: Transform
   - uid: 22010
     components:
     - pos: -10.5,-13.5
-      parent: 8364
-      type: Transform
-  - uid: 22020
-    components:
-    - pos: 11.5,-33.5
       parent: 8364
       type: Transform
   - uid: 25679
@@ -156715,6 +156719,16 @@ entities:
   - uid: 25882
     components:
     - pos: 19.5,-9.5
+      parent: 8364
+      type: Transform
+  - uid: 25906
+    components:
+    - pos: 10.5,-34.5
+      parent: 8364
+      type: Transform
+  - uid: 25907
+    components:
+    - pos: 11.5,-33.5
       parent: 8364
       type: Transform
   - uid: 25956
