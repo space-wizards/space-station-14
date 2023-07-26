@@ -62,7 +62,7 @@ public sealed partial class DockingSystem
             var worldPos = _transform.GetWorldPosition(xform, xformQuery);
             var otherWorldPos = _transform.GetWorldPosition(otherXform, xformQuery);
 
-            if ((worldPos - otherWorldPos).Length < comp.Radius)
+            if ((worldPos - otherWorldPos).Length() < comp.Radius)
                 continue;
 
             _sawmill.Debug($"Removed RecentlyDocked from {ToPrettyString(uid)} and {ToPrettyString(comp.LastDocked)}");

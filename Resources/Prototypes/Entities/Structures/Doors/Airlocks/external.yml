@@ -17,8 +17,6 @@
       path: /Audio/Machines/airlock_deny.ogg
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/external.rsi
-  - type: Appearance
-  - type: WiresVisuals
   - type: PaintableAirlock
     group: External
 

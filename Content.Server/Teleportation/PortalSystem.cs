@@ -14,7 +14,7 @@ public sealed class PortalSystem : SharedPortalSystem
     protected override void LogTeleport(EntityUid portal, EntityUid subject, EntityCoordinates source,
         EntityCoordinates target)
     {
-        if (HasComp<MindComponent>(subject))
+        if (HasComp<MindContainerComponent>(subject))
             _adminLogger.Add(LogType.Teleport, LogImpact.Low, $"{ToPrettyString(subject):player} teleported via {ToPrettyString(portal)} from {source} to {target}");
     }
 }

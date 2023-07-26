@@ -17,6 +17,7 @@
     - alertType: Stun
     - category: Breathing # Vox gang not calling this oxygen
     - category: Pressure
+    - alertType: Bleed
     - category: Temperature
     - category: Hunger
     - category: Thirst
@@ -283,6 +284,36 @@
   onClick: !type:StopPulling  { }
   name: alerts-pulling-name
   description: alerts-pulling-desc
+
+- type: alert
+  id: Bleed
+  icons:
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed0
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed1
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed2
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed3
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed4
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed5
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed6
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed7
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed8
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed9
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed10
+  name: alerts-bleed-name
+  description: alerts-bleed-desc
+  minSeverity: 0
+  maxSeverity: 10
 
 - type: alert
   id: Debug1

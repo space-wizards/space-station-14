@@ -6,11 +6,11 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 28800
+      time: 54000 #15 hrs
       inverted: true # stop playing intern if you're good at science!
   startingGear: ResearchAssistantGear
   icon: "ResearchAssistant"
-  supervisors: job-supervisors-rd
+  supervisors: job-supervisors-science
   canBeAntag: false
   access:
   - Research

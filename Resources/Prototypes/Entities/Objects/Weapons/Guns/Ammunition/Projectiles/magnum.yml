@@ -1,3 +1,4 @@
+#.45 rounds
 - type: entity
   id: BulletMagnum
   name: bullet (.45 magnum)
@@ -43,3 +44,26 @@
         Blunt: 3
   - type: StaminaDamageOnCollide
     damage: 35 # 3 hits to stun cuz revolver
+
+- type: entity
+  id: BulletMagnumIncendiary
+  parent: BaseBulletIncendiary
+  name: bullet (.45 magnum incendiary)
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      groups:
+        Burn: 32
+
+#.357 rounds (used in the syndicate Python revolver)
+- type: entity
+  id: BulletMagnum357
+  name: bullet (.357 magnum)
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 54

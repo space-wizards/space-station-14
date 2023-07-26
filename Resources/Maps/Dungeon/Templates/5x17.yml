@@ -1,5 +1,5 @@
 meta:
-  format: 4
+  format: 5
   postmapinit: false
 tilemap:
   0: Space
@@ -27,11 +27,10 @@ entities:
       fixedRotation: False
       bodyType: Dynamic
       type: Physics
-
+    - fixtures: {}
+      type: Fixtures
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 78.7387785
-      type: GridPathfinding
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -112,4 +111,5 @@ entities:
       type: GridAtmosphere
     - type: GasTileOverlay
     - type: SpreaderGrid
+    - type: GridPathfinding
 ...

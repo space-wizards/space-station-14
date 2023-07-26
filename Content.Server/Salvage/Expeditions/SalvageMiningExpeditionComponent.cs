@@ -1,3 +1,5 @@
+using Content.Shared.Salvage;
+
 namespace Content.Server.Salvage.Expeditions;
 
 /// <summary>

@@ -45,16 +45,17 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] private   readonly RechargeBasicEntityAmmoSystem _recharge = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
-    [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
-    [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
-    [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
-    [Dependency] protected readonly TagSystem TagSystem = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
+    [Dependency] protected readonly SharedPointLightSystem Lights = default!;
+    [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
+    [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] protected readonly SharedProjectileSystem Projectiles = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
+    [Dependency] protected readonly TagSystem TagSystem = default!;
+    [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -98,7 +99,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     private void OnMapInit(EntityUid uid, GunComponent component, MapInitEvent args)
     {
         if (component.NextFire > Timing.CurTime)
-            Logger.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
+            Log.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
 
         DebugTools.Assert((component.AvailableModes & component.SelectedMode) != 0x0);
 #endif
@@ -328,7 +329,7 @@ public abstract partial class SharedGunSystem : EntitySystem
                 CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
         }
 
-        Dirty(gun);
+        Dirty(gunUid, gun);
     }
 
     public void Shoot(
@@ -365,7 +366,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     protected void SetCartridgeSpent(EntityUid uid, CartridgeAmmoComponent cartridge, bool spent)
     {
         if (cartridge.Spent != spent)
-            Dirty(cartridge);
+            Dirty(uid, cartridge);
 
         cartridge.Spent = spent;
         Appearance.SetData(uid, AmmoVisuals.Spent, spent);
@@ -379,14 +380,14 @@ public abstract partial class SharedGunSystem : EntitySystem
         bool playSound = true)
     {
         // TODO: Sound limit version.
-        var offsetPos = (Random.NextVector2(EjectOffset));
+        var offsetPos = Random.NextVector2(EjectOffset);
         var xform = Transform(entity);
 
         var coordinates = xform.Coordinates;
         coordinates = coordinates.Offset(offsetPos);
 
-        xform.LocalRotation = Random.NextAngle();
-        xform.Coordinates = coordinates;
+        TransformSystem.SetLocalRotation(xform, Random.NextAngle());
+        TransformSystem.SetCoordinates(entity, xform, coordinates);
 
         if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
         {
@@ -409,7 +410,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         var fromMap = fromCoordinates.ToMapPos(EntityManager, TransformSystem);
         var toMap = toCoordinates.ToMapPos(EntityManager, TransformSystem);
-        var shotDirection = (toMap - fromMap).Normalized;
+        var shotDirection = (toMap - fromMap).Normalized();
 
         const float impulseStrength = 25.0f;
         var impulseVector =  shotDirection * impulseStrength;

@@ -10,7 +10,7 @@ namespace Content.Client.Access.UI
     {
         private AgentIDCardWindow? _window;
 
-        public AgentIDCardBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public AgentIDCardBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -25,8 +25,8 @@ namespace Content.Client.Access.UI
             _window.OpenCentered();
 
             _window.OnClose += Close;
-            _window.OnNameEntered += OnNameChanged;
-            _window.OnJobEntered += OnJobChanged;
+            _window.OnNameChanged += OnNameChanged;
+            _window.OnJobChanged += OnJobChanged;
         }
 
         private void OnNameChanged(string newName)
@@ -56,9 +56,10 @@ namespace Content.Client.Access.UI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing) return;
+            if (!disposing)
+                return;
+
             _window?.Dispose();
         }
     }
-
 }
