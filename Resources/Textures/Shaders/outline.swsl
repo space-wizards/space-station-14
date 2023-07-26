@@ -27,11 +27,7 @@
 //
 //************************************************************************
 
-//light_mode unshaded;
-//shader_type canvas_item;
 uniform highp float outline_width; // = 2.0;
-// TODO: implement that hint_color thingy.
-//uniform vec4 outline_color: hint_color;
 uniform highp vec4 outline_color; // =vec4(1.0,0.0,0.0,0.33);
 uniform highp float light_boost; // = 4.0;
 
@@ -78,5 +74,4 @@ void fragment() {
 	float sampledLight = sqrt(mix(0.0, 1.0, (lightSample.r * 0.34) + (lightSample.g * 0.5) + (lightSample.b * 0.16)) * light_boost);
 	COLOR = mix(col, outline_color * sampledLight, maxa - col.a);
 	lightSample = vec3(1.0);
-	//COLOR = col;
 }
