@@ -23,16 +23,12 @@
   - Janitor
   - Lawyer
   - Librarian
-  - MedicalIntern
   - Mime
   - Musician
   - Passenger
   - Reporter
   - Zookeeper
-  - SecurityCadet
   - ServiceWorker
-  - TechnicalAssistant
-  - ResearchAssistant
 
 - type: department
   id: Command
@@ -55,6 +51,7 @@
   roles:
   - AtmosphericTechnician
   - ChiefEngineer
+  - SeniorEngineer
   - StationEngineer
   - TechnicalAssistant
 
@@ -69,6 +66,7 @@
   - MedicalIntern
   - Psychologist
   - Paramedic
+  - SeniorPhysician
 
 - type: department
   id: Security
@@ -78,6 +76,7 @@
   - HeadOfSecurity
   - SecurityCadet
   - SecurityOfficer
+  - SeniorOfficer
   - Detective
   - Warden
 
@@ -87,6 +86,7 @@
   color: "#D381C9"
   roles:
   - ResearchDirector
+  - SeniorResearcher
   - Scientist
   - ResearchAssistant
 

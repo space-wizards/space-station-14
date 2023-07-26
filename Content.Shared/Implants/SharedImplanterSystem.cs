@@ -59,9 +59,9 @@ public abstract class SharedImplanterSystem : EntitySystem
         implantContainer.Insert(implant.Value);
 
         if (component.CurrentMode == ImplanterToggleMode.Inject && !component.ImplantOnly)
-            DrawMode(component);
+            DrawMode(implanter, component);
         else
-            ImplantMode(component);
+            ImplantMode(implanter, component);
 
         Dirty(component);
     }
@@ -74,8 +74,8 @@ public abstract class SharedImplanterSystem : EntitySystem
         [NotNullWhen(true)] out EntityUid? implant,
         [NotNullWhen(true)] out SubdermalImplantComponent? implantComp)
     {
-        implant = component.ImplanterSlot.ContainerSlot?.ContainedEntities?.FirstOrDefault();
-        if (!TryComp<SubdermalImplantComponent>(implant, out implantComp))
+        implant = component.ImplanterSlot.ContainerSlot?.ContainedEntities.FirstOrDefault();
+        if (!TryComp(implant, out implantComp))
             return false;
 
         var ev = new AddImplantAttemptEvent(user, target, implant.Value, implanter);
@@ -101,7 +101,7 @@ public abstract class SharedImplanterSystem : EntitySystem
             foreach (var implant in implantContainer.ContainedEntities)
             {
                 if (!implantCompQuery.TryGetComponent(implant, out var implantComp))
-                    return;
+                    continue;
 
                 //Don't remove a permanent implant and look for the next that can be drawn
                 if (!implantContainer.CanRemove(implant))
@@ -124,27 +124,27 @@ public abstract class SharedImplanterSystem : EntitySystem
             }
 
             if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly && !permanentFound)
-                ImplantMode(component);
+                ImplantMode(implanter, component);
 
             Dirty(component);
         }
     }
 
-    private void ImplantMode(ImplanterComponent component)
+    private void ImplantMode(EntityUid uid, ImplanterComponent component)
     {
         component.CurrentMode = ImplanterToggleMode.Inject;
-        ChangeOnImplantVisualizer(component);
+        ChangeOnImplantVisualizer(uid, component);
     }
 
-    private void DrawMode(ImplanterComponent component)
+    private void DrawMode(EntityUid uid, ImplanterComponent component)
     {
         component.CurrentMode = ImplanterToggleMode.Draw;
-        ChangeOnImplantVisualizer(component);
+        ChangeOnImplantVisualizer(uid, component);
     }
 
-    private void ChangeOnImplantVisualizer(ImplanterComponent component)
+    private void ChangeOnImplantVisualizer(EntityUid uid, ImplanterComponent component)
     {
-        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
+        if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
         bool implantFound;
@@ -156,17 +156,17 @@ public abstract class SharedImplanterSystem : EntitySystem
             implantFound = false;
 
         if (component.CurrentMode == ImplanterToggleMode.Inject && !component.ImplantOnly)
-            _appearance.SetData(component.Owner, ImplanterVisuals.Full, implantFound, appearance);
+            _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance);
 
         else if (component.CurrentMode == ImplanterToggleMode.Inject && component.ImplantOnly)
         {
-            _appearance.SetData(component.Owner, ImplanterVisuals.Full, implantFound, appearance);
-            _appearance.SetData(component.Owner, ImplanterImplantOnlyVisuals.ImplantOnly, component.ImplantOnly,
+            _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance);
+            _appearance.SetData(uid, ImplanterImplantOnlyVisuals.ImplantOnly, component.ImplantOnly,
                 appearance);
         }
 
         else
-            _appearance.SetData(component.Owner, ImplanterVisuals.Full, implantFound, appearance);
+            _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance);
     }
 }
 

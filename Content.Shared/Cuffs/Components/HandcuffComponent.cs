@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -46,6 +47,15 @@ public sealed class HandcuffComponent : Component
     /// </summary>
     [DataField("brokenPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string? BrokenPrototype;
+
+    [DataField("damageOnResist"), ViewVariables(VVAccess.ReadWrite)]
+    public DamageSpecifier DamageOnResist = new()
+    {
+        DamageDict = new()
+             {
+                 { "Blunt", 3.0 },
+             }
+    };
 
     /// <summary>
     ///     The path of the RSI file used for the player cuffed overlay.

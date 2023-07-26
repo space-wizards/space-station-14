@@ -8,7 +8,7 @@
     - type: InteractionOutline
     - type: Sprite
       sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
-      drawdepth: WallMountedItems
+      drawdepth: Mobs
       layers:
         - state: syndie_broken
     - type: Damageable
@@ -55,7 +55,7 @@
         ballistic-ammo: !type:Container
     - type: Sprite
       sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
-      drawdepth: WallMountedItems
+      drawdepth: Mobs
       layers:
         - state: syndie_lethal
     - type: InteractionPopup
@@ -116,7 +116,7 @@
   id: WeaponTurretSyndicate
   suffix: Syndicate
   components:
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - Syndicate
 
@@ -126,7 +126,7 @@
   id: WeaponTurretSyndicateDisposable
   suffix: Syndicate, Disposable
   components:
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - Syndicate
     - type: Destructible
@@ -152,21 +152,29 @@
                   min: 1
                   max: 1
     - type: Gun
-      fireRate: 2.5
+      fireRate: 2
       selectedMode: FullAuto
       availableModes:
         - FullAuto
       soundGunshot: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
     - type: BallisticAmmoProvider
       proto: CartridgePistol
-      capacity: 125
+      capacity: 50
+      cycleable: false
+    - type: Construction
+      deconstructionTarget: null
+      graph: WeaponTurretSyndicateDisposable
+      node: disposableTurret
+    - type: Repairable
+      qualityNeeded: "Anchoring"
+      doAfterDelay: 3
 
 - type: entity
   parent: BaseWeaponTurret
   id: WeaponTurretNanoTrasen
   suffix: NanoTrasen
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - NanoTrasen
 
@@ -175,7 +183,7 @@
   id: WeaponTurretHostile
   suffix: Hostile
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
 
@@ -186,7 +194,7 @@
   id: WeaponTurretXeno
   suffix: Xeno
   components:
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - Xeno
     - type: Sprite

@@ -5,6 +5,7 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
 using Content.Server.HealthExaminable;
 using Content.Server.Popups;
+using Content.Shared.Alert;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Damage;
@@ -37,6 +38,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
+    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
     public override void Initialize()
     {
@@ -125,7 +127,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
                 // storing the drunk and stutter time so we can remove it independently from other effects additions
                 bloodstream.StatusTime += bloodstream.UpdateInterval * 2;
-            }   
+            }
             else if (!_mobStateSystem.IsDead(uid))
             {
                 // If they're healthy, we'll try and heal some bloodloss instead.
@@ -344,6 +346,14 @@ public sealed class BloodstreamSystem : EntitySystem
         component.BleedAmount += amount;
         component.BleedAmount = Math.Clamp(component.BleedAmount, 0, component.MaxBleedAmount);
 
+        if (component.BleedAmount == 0)
+            _alertsSystem.ClearAlert(uid, AlertType.Bleed);
+        else
+        {
+            var severity = (short) Math.Clamp(Math.Round(component.BleedAmount, MidpointRounding.ToZero), 0, 10);
+            _alertsSystem.ShowAlert(uid, AlertType.Bleed, severity);
+        }
+
         return true;
     }
 
@@ -377,7 +387,7 @@ public sealed class BloodstreamSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Change what someone's blood is made of, on the fly. 
+    ///     Change what someone's blood is made of, on the fly.
     /// </summary>
     public void ChangeBloodReagent(EntityUid uid, string reagent, BloodstreamComponent? component = null)
     {

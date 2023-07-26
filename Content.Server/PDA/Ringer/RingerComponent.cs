@@ -22,7 +22,7 @@ namespace Content.Server.PDA.Ringer
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("range")]
-        public float Range = 3f;
+        public float Range = 0.5f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("volume")]
