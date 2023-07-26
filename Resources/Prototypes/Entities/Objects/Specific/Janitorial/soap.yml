@@ -109,7 +109,7 @@
   - type: DeleteOnTrigger
   - type: EmitSoundOnTrigger
     sound:
-      path: "/Audio/Effects/fluids/splat.ogg"
+      path: "/Audio/Effects/Fluids/splat.ogg"
       params:
         volume: -20
 
