@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Controls;
 
-[GenerateTypedNameReferences, Virtual, PublicAPI]
+[GenerateTypedNameReferences]
 public sealed partial class RadialItem : Control
 {
     [Animatable] public Vector2 Offset { get; set; }
@@ -48,10 +48,5 @@ public sealed partial class RadialItem : Control
     {
         RobustXamlLoader.Load(this);
         Offset = Vector2.Zero;
-    }
-
-    protected override void FrameUpdate(FrameEventArgs args)
-    {
-        base.FrameUpdate(args);
     }
 }

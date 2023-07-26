@@ -16,39 +16,6 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed class RadialContainerUICommandTest : LocalizedCommands
-{
-    public override string Command => "radialtest";
-
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
-    {
-        string[] tips =
-        {
-            "Some title for button (i mean radial button/item huh)",
-            "Iz okna dulo. Shtirlic zakril okno. Dule ischezlo",
-            "XDDDD XD XD XD XD XD XD X DXD X DX DX DX DX DXD XD D "
-        };
-        var radial = new RadialContainer();
-        for (int i = 0; i < 8; i++)
-        {
-            var testButton = radial.AddButton("Action " + i, "/Textures/Interface/examine-star.png");
-            testButton.Opacity = 210;
-            testButton.Tooltip = tips[IoCManager.Resolve<IRobustRandom>().Next(0, 2)];
-            testButton.Controller.OnPressed += (_) =>
-            {
-                Logger.Debug("Press gay");
-                radial.Close();
-            };
-        }
-
-        radial.Closed += () =>
-        {
-            Logger.Debug("Close event for your own logic");
-        };
-        radial.OpenAttachedLocalPlayer();
-    }
-}
-
 [GenerateTypedNameReferences, Virtual]
 public partial class RadialContainer : Control
 {
@@ -57,48 +24,53 @@ public partial class RadialContainer : Control
 
     private bool _isOpened = false;
 
-    private Vector2 _focusSize = new Vector2(64, 64);
-    private Vector2 _normalSize = new Vector2(50, 50);
-
-    private float _moveAniTime = 0.3f;
-    private float _focusAniTime = 0.25f;
-
     private string _backgroundTexture = "/Textures/Interface/Default/SlotBackground.png";
 
     private const int MaxButtons = 8;
 
-    public const string MoveAnimationKey = "move";
-    public const string InSizeAnimationKey = "insize";
-    public const string OutSizeAnimationKey = "outsize";
+    private const string MoveAnimationKey = "move";
+    private const string InSizeAnimationKey = "insize";
+    private const string OutSizeAnimationKey = "outsize";
 
+    /// <summary>
+    /// Fired, when radial was closed
+    /// </summary>
     public Action? Closed;
 
-    public float FocusSize
-    {
-        get => _focusSize.Y;
-        set => _focusSize = new Vector2(value, value);
-    }
-    public float NormalSize
-    {
-        get => _normalSize.Y;
-        set => _normalSize = new Vector2(value, value);
-    }
+    /// <summary>
+    /// Radial item size, when cursor was focused on button
+    /// </summary>
+    public float FocusSize { get; set; } = 64f;
 
-    public float MoveAnimationTime
-    {
-        get => _moveAniTime;
-        set => _moveAniTime = value;
-    }
-    public float FocusAnimationTime
-    {
-        get => _focusAniTime;
-        set => _focusAniTime = value;
-    }
+    /// <summary>
+    /// Normal radial item size, when cursor not focused
+    /// </summary>
+    public float NormalSize { get; set; } = 50f;
 
-    public bool IsAction = true;
+    /// <summary>
+    /// Items moving animation time, when radial was opened
+    /// </summary>
+    public float MoveAnimationTime { get; set; } = 0.3f;
 
+    /// <summary>
+    /// Item focus sizing animation, when cursor focused and leaved
+    /// </summary>
+    public float FocusAnimationTime { get; set; } = 0.25f;
+
+    /// <summary>
+    /// Show or not item action text on radial menu
+    /// </summary>
+    public bool ActionVisible = true;
+
+    /// <summary>
+    /// Used for UIController! Radial menu position offset
+    /// </summary>
     public float VerticalOffset = 0.0f;
-    public float DistanceAvaible = 10.0f;
+
+    /// <summary>
+    /// Used for UIController! Radius, where is container was available
+    /// </summary>
+    public float VisionRadius = 10.0f;
 
     public RadialContainer() : base()
     {
@@ -106,6 +78,7 @@ public partial class RadialContainer : Control
         IoCManager.InjectDependencies(this);
     }
 
+    // TODO: Move into UIController | I mean - we should add controller into WindowRoot with UIController
     public void Open(Vector2 position)
     {
         AddToRoot();
@@ -113,6 +86,7 @@ public partial class RadialContainer : Control
         UpdateButtons();
     }
 
+    // TODO: Move into UIController | I mean - we should add controller into WindowRoot with UIController
     public void OpenCentered()
     {
         AddToRoot();
@@ -123,8 +97,10 @@ public partial class RadialContainer : Control
         UpdateButtons();
     }
 
+    // TODO: Move into UIController | I mean - we should add controller into WindowRoot with UIController
     public void OpenCenteredLeft() => OpenCenteredAt(new Vector2(0.25f, 0.5f));
 
+    // TODO: Move into UIController | I mean - we should add controller into WindowRoot with UIController
     public void OpenCenteredAt(Vector2 position)
     {
         AddToRoot();
@@ -134,6 +110,7 @@ public partial class RadialContainer : Control
         UpdateButtons();
     }
 
+    // TODO: Move into UIController | I mean - we should add controller into WindowRoot with UIController
     /// <summary>
     /// Open on attached entity in the world.
     /// </summary>
@@ -148,6 +125,7 @@ public partial class RadialContainer : Control
         UpdateButtons();
     }
 
+    // TODO: Move into UIController | I mean - we should add controller into WindowRoot with UIController
     /// <summary>
     /// Open on our (player) attached entity.
     /// </summary>
@@ -227,36 +205,36 @@ public partial class RadialContainer : Control
         foreach (var child in Layout.Children)
         {
             var button = (RadialItem)child;
-            button.ButtonSize = _normalSize;
+            button.ButtonSize = new Vector2(NormalSize, NormalSize);
             stepAngle += angleDegrees;
             var pos = GetPointFromPolar(stepAngle, distance);
             PlayRadialAnimation(button, pos, MoveAnimationKey);
 
             button.Controller.OnMouseEntered += (_) =>
             {
-                PlaySizeAnimation(button, _focusSize, OutSizeAnimationKey, InSizeAnimationKey);
+                PlaySizeAnimation(button, FocusSize, OutSizeAnimationKey, InSizeAnimationKey);
                 ActionLabel.SetMarkup(button.Content ?? string.Empty);
-                ActionLabel.Visible = IsAction;
+                ActionLabel.Visible = ActionVisible;
             };
             button.Controller.OnMouseExited += (_) =>
             {
-                PlaySizeAnimation(button, _normalSize, InSizeAnimationKey, OutSizeAnimationKey);
+                PlaySizeAnimation(button, NormalSize, InSizeAnimationKey, OutSizeAnimationKey);
                 ActionLabel.Visible = false;
             };
         }
 
-        CloseButton.ButtonSize = _normalSize;
+        CloseButton.ButtonSize = new Vector2(NormalSize, NormalSize);
 
         CloseButton.Controller.OnMouseEntered += (_) =>
         {
-            PlaySizeAnimation(CloseButton, _focusSize, OutSizeAnimationKey, InSizeAnimationKey);
+            PlaySizeAnimation(CloseButton, FocusSize, OutSizeAnimationKey, InSizeAnimationKey);
             ActionLabel.SetMarkup(CloseButton.Content ?? string.Empty);
             ActionLabel.Visible = true;
         };
 
         CloseButton.Controller.OnMouseExited += (_) =>
         {
-            PlaySizeAnimation(CloseButton, _normalSize, InSizeAnimationKey, OutSizeAnimationKey);
+            PlaySizeAnimation(CloseButton, NormalSize, InSizeAnimationKey, OutSizeAnimationKey);
             ActionLabel.Visible = false;
         };
         CloseButton.Controller.OnPressed += (_) =>
@@ -269,7 +247,7 @@ public partial class RadialContainer : Control
     {
         var anim = new Animation
         {
-            Length = TimeSpan.FromMilliseconds(_moveAniTime * 1000),
+            Length = TimeSpan.FromMilliseconds(MoveAnimationTime * 1000),
             AnimationTracks =
             {
                 new AnimationTrackControlProperty
@@ -279,7 +257,7 @@ public partial class RadialContainer : Control
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(new Vector2(0,0), 0f),
-                        new AnimationTrackProperty.KeyFrame(pos, _moveAniTime)
+                        new AnimationTrackProperty.KeyFrame(pos, MoveAnimationTime)
                     }
                 }
             }
@@ -288,11 +266,11 @@ public partial class RadialContainer : Control
             button.PlayAnimation(anim, playKey);
     }
 
-    private void PlaySizeAnimation(Control button, Vector2 size, string playKey, string? stopKey)
+    private void PlaySizeAnimation(Control button, float size, string playKey, string? stopKey)
     {
         var anim = new Animation
         {
-            Length = TimeSpan.FromMilliseconds(_focusAniTime * 1000),
+            Length = TimeSpan.FromMilliseconds(FocusAnimationTime * 1000),
             AnimationTracks =
             {
                 new AnimationTrackControlProperty
@@ -302,7 +280,7 @@ public partial class RadialContainer : Control
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(button.Size, 0f),
-                        new AnimationTrackProperty.KeyFrame(size, _focusAniTime)
+                        new AnimationTrackProperty.KeyFrame(new Vector2(size, size), FocusAnimationTime)
                     }
                 }
             }
@@ -323,11 +301,13 @@ public partial class RadialContainer : Control
             var button = (RadialItem)child;
             LayoutContainer.SetPosition(child, button.Offset - (button.Size/2));
         }
+
         LayoutContainer.SetPosition(CloseButton, CloseButton.Offset - (CloseButton.Size/2));
         LayoutContainer.SetPosition(ActionLabel,
-            new Vector2(0 - (GetTextWidth(ActionLabel) / 4), GetDistance(4.5f) ));
+            new Vector2(0 - (GetTextWidth(ActionLabel) / 4), 18.5f + GetDistance(4.5f) ));
     }
 
+    // TODO: Move into UIController
     protected override void FrameUpdate(FrameEventArgs args)
     {
         if (!_isAttached)
@@ -352,6 +332,7 @@ public partial class RadialContainer : Control
         var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
         if (localPlayer == null)
             return;
+
         // Check distance beetween entities
         if (entityManager.TryGetComponent<TransformComponent>(localPlayer.ControlledEntity, out var myxform))
         {
@@ -359,7 +340,7 @@ public partial class RadialContainer : Control
             var twoPoint = myxform.WorldPosition;
             var distance = (onePoint - twoPoint).Length();
 
-            if (DistanceAvaible < distance)
+            if (VisionRadius < distance)
             {
                 Timer.Spawn(0, Die);
                 return;
@@ -417,13 +398,14 @@ public partial class RadialContainer : Control
     private float GetDistance(float offset = 0.0f)
     {
         var distance = FocusSize * 1.2f;
+        var children = Layout.Children.Count();
 
-        if (Layout.Children.Count() <= MaxButtons)
+        if (children <= MaxButtons)
             return distance + offset;
 
-        for (var i = 0; i < (Layout.Children.Count() - MaxButtons); i++)
+        for (var i = 0; i < (children - MaxButtons); i++)
         {
-            distance += (NormalSize/3);
+            distance += (NormalSize / 3);
         }
 
         return distance + offset;
@@ -436,6 +418,6 @@ public partial class RadialContainer : Control
         var x = distance * Math.Cos(angleRadians);
         var y = distance * Math.Sin(angleRadians);
 
-        return new Vector2((int)Math.Round(x), (int)Math.Round(y));
+        return new Vector2((float)Math.Round(x), (float)Math.Round(y));
     }
 }
