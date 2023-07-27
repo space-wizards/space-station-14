@@ -18,7 +18,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 45
+        Piercing: 44 # 25% increase
 
 - type: entity
   id: BulletMagnumPractice
@@ -64,5 +64,5 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 32
+        Piercing: 26 # 20% decrease
     ignoreResistances: true
