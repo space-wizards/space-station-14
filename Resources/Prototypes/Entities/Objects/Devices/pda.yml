@@ -683,6 +683,8 @@
     state: pda-musician
   - type: PdaBorderColor
     borderColor: "#333333"
+  - type: Icon
+    state: pda-musician
   - type: Instrument
     allowPercussion: false
     handheld: true
