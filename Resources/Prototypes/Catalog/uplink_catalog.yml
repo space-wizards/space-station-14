@@ -15,7 +15,7 @@
   id: UplinkRevolverPython
   name: uplink-revolver-python-name
   description: uplink-revolver-python-desc
-  productEntity: WeaponRevolverPython
+  productEntity: WeaponRevolverPythonAP
   cost:
     Telecrystal: 8
   categories:
