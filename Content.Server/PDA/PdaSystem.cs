@@ -45,7 +45,6 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PdaComponent, PdaShowMusicMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaShowUplinkMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaLockUplinkMessage>(OnUiMessage);
-            SubscribeLocalEvent<PdaComponent, PdaOpenNewsMessage>(OnUiMessage);
 
             SubscribeLocalEvent<StationRenamedEvent>(OnStationRenamed);
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
@@ -197,18 +196,6 @@ namespace Content.Server.PDA
             if (TryComp<RingerUplinkComponent>(uid, out var uplink))
             {
                 _ringer.LockUplink(uid, uplink);
-                UpdatePdaUi(uid, pda);
-            }
-        }
-
-        private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaOpenNewsMessage msg)
-        {
-            if (!PdaUiKey.Key.Equals(msg.UiKey))
-                return;
-
-            if (TryComp<NewsReadComponent>(uid, out var news))
-            {
-                _news.ToggleUi(msg.Session.AttachedEntity!.Value, uid, news);
                 UpdatePdaUi(uid, pda);
             }
         }
