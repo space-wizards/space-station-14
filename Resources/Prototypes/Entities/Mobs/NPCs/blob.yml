@@ -20,11 +20,13 @@
 
 - type: entity
   id: MobBlobPod
+  name: Blob pod
   parent: SimpleSpaceMobBase
   components:
-    - type: Unremoveable
     - type: Clothing
+      quickEquip: false
       sprite: Mobs/Aliens/blob.rsi
+      equippedPrefix: blobPod
       slots:
         - HEAD
     - type: Tag
@@ -98,6 +100,7 @@
 
 - type: entity
   id: MobBlobBlobbernaut
+  name: Blobbernaut
   parent: SimpleSpaceMobBase
   components:
     - type: GhostRole

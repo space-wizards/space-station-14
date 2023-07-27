@@ -5,7 +5,10 @@ namespace Content.Server.Blob.NPC.BlobPod
     [RegisterComponent]
     public sealed class BlobPodComponent : Component
     {
-        public bool IsDraining = false;
+        public bool IsZombifying = false;
+
+        public EntityUid? ZombifiedEntityUid = default!;
+
         /// <summary>
         /// The time (in seconds) that it takes to zombify an entity.
         /// </summary>

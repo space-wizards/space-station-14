@@ -4,9 +4,9 @@ using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Blob;
 using Content.Shared.CombatMode;
-using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Pulling.Components;
@@ -19,7 +19,6 @@ namespace Content.Server.Blob.NPC.BlobPod
 {
     public sealed class BlobPodSystem : EntitySystem
     {
-        [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
         [Dependency] private readonly MobStateSystem _mobs = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -60,7 +59,7 @@ namespace Content.Server.Blob.NPC.BlobPod
 
         private void OnZombify(EntityUid uid, BlobPodComponent component, BlobPodZombifyDoAfterEvent args)
         {
-            component.IsDraining = false;
+            component.IsZombifying = false;
             if (args.Handled || args.Args.Target == null)
             {
                 component.ZombifyStingStream?.Stop();
@@ -75,8 +74,8 @@ namespace Content.Server.Blob.NPC.BlobPod
                 return;
             }
 
-            _inventory.TryUnequip(args.Args.Target.Value, "head", true);
-            var equipped = _inventory.TryEquip(args.Args.Target.Value, uid, "head", true);
+            _inventory.TryUnequip(args.Args.Target.Value, "head", true, true);
+            var equipped = _inventory.TryEquip(args.Args.Target.Value, uid, "head", true, true);
 
             if (!equipped)
                 return;
@@ -84,15 +83,16 @@ namespace Content.Server.Blob.NPC.BlobPod
             _popups.PopupEntity(Loc.GetString("blob-mob-zombify-second-end", ("pod", uid)), args.Args.Target.Value, args.Args.Target.Value, Shared.Popups.PopupType.LargeCaution);
             _popups.PopupEntity(Loc.GetString("blob-mob-zombify-third-end", ("pod", uid), ("target", args.Args.Target.Value)), args.Args.Target.Value, Filter.PvsExcept(args.Args.Target.Value), true, Shared.Popups.PopupType.LargeCaution);
 
-            var rejEv = new RejuvenateEvent();
-            RaiseLocalEvent(uid, rejEv);
-
             EntityManager.RemoveComponent<CombatModeComponent>(uid);
+
+            EntityManager.EnsureComponent<UnremoveableComponent>(uid);
 
             _audioSystem.PlayPvs(component.ZombifyFinishSoundPath, uid);
 
-            if (TryComp<DamageableComponent>(args.Args.Target.Value, out var damageableComponent))
-                _damageable.SetAllDamage(args.Args.Target.Value, damageableComponent,0);
+            var rejEv = new RejuvenateEvent();
+            RaiseLocalEvent(args.Args.Target.Value, rejEv);
+
+            component.ZombifiedEntityUid = args.Args.Target.Value;
 
             var zombieBlob = EnsureComp<ZombieBlobComponent>(args.Args.Target.Value);
             zombieBlob.BlobPodUid = uid;
@@ -105,7 +105,7 @@ namespace Content.Server.Blob.NPC.BlobPod
                 return false;
             if (!HasComp<HumanoidAppearanceComponent>(target))
                 return false;
-            if (!_mobs.IsCritical(target))
+            if (_mobs.IsAlive(target))
                 return false;
             if (!_actionBlocker.CanInteract(uid, target))
                 return false;
@@ -120,11 +120,11 @@ namespace Content.Server.Blob.NPC.BlobPod
                 return;
 
            component.ZombifyTarget = target;
-            _popups.PopupEntity(Loc.GetString("blob-mob-zombify-second-start", ("wisp", uid)), target, target, Shared.Popups.PopupType.LargeCaution);
-            _popups.PopupEntity(Loc.GetString("blob-mob-zombify-third-start", ("wisp", uid), ("target", target)), target, Filter.PvsExcept(target), true, Shared.Popups.PopupType.LargeCaution);
+            _popups.PopupEntity(Loc.GetString("blob-mob-zombify-second-start", ("pod", uid)), target, target, Shared.Popups.PopupType.LargeCaution);
+            _popups.PopupEntity(Loc.GetString("blob-mob-zombify-third-start", ("pod", uid), ("target", target)), target, Filter.PvsExcept(target), true, Shared.Popups.PopupType.LargeCaution);
 
             component.ZombifyStingStream = _audioSystem.PlayPvs(component.ZombifySoundPath, target);
-            component.IsDraining = true;
+            component.IsZombifying = true;
 
             var ev = new BlobPodZombifyDoAfterEvent();
             var args = new DoAfterArgs(uid, component.ZombifyDelay, ev, uid, target: target)
