@@ -6,6 +6,7 @@ using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Speech.Components;
 using Content.Shared.Mobs;
+using Content.Shared.Tag;
 
 namespace Content.Server.Blob
 {
@@ -14,6 +15,7 @@ namespace Content.Server.Blob
         [Dependency] private readonly NpcFactionSystem _faction = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly MindSystem _mind = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         public override void Initialize()
         {
@@ -36,7 +38,7 @@ namespace Content.Server.Blob
                 _faction.RemoveFaction(uid, factionId);
             }
             _faction.AddFaction(uid, "Blob");
-            component.OldFations = oldFactions;
+            component.OldFactions = oldFactions;
 
             var htn = EnsureComp<HTNComponent>(uid);
             htn.RootTask = "SimpleHostileCompound";
@@ -44,6 +46,8 @@ namespace Content.Server.Blob
 
             var accent = EnsureComp<ReplacementAccentComponent>(uid);
             accent.Accent = "genericAggressive";
+
+            _tagSystem.AddTag(uid, "BlobMob");
 
             var mindComp = EnsureComp<MindContainerComponent>(uid);
             if (_mind.TryGetMind(uid, out var mind, mindComp) && _mind.TryGetSession(mind, out var session))
@@ -69,10 +73,12 @@ namespace Content.Server.Blob
                 RemComp<ReplacementAccentComponent>(uid);
             }
 
+            _tagSystem.RemoveTag(uid, "BlobMob");
+
             QueueDel(component.BlobPodUid);
 
             EnsureComp<NpcFactionMemberComponent>(uid);
-            foreach (var factionId in component.OldFations)
+            foreach (var factionId in component.OldFactions)
             {
                 _faction.AddFaction(uid, factionId);
             }

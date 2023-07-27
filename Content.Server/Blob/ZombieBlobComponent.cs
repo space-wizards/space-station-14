@@ -1,9 +1,11 @@
 ﻿using Robust.Shared.Audio;
 
+namespace Content.Server.Blob;
+
 [RegisterComponent]
 public sealed class ZombieBlobComponent : Component
 {
-    public List<string> OldFations = new();
+    public List<string> OldFactions = new();
 
     public EntityUid BlobPodUid = default!;
 

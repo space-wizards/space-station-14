@@ -32,6 +32,7 @@
     - type: Tag
       tags:
         - HidesHair
+        - BlobMob
     - type: IngestionBlocker
     - type: IdentityBlocker
     - type: BlobPod
@@ -103,6 +104,9 @@
   name: Blobbernaut
   parent: SimpleSpaceMobBase
   components:
+    - type: Tag
+      tags:
+        - BlobMob
     - type: GhostRole
       name: ghost-role-information-blobbernaut-name
       description: ghost-role-information-blobbernaut-description
@@ -186,21 +190,20 @@
       damageModifierSet: Blob
     - type: Appearance
     - type: Physics
+    - type: Clickable
+    - type: Transform
+      anchored: true
     - type: Fixtures
       fixtures:
         fix1:
-          density: 7
           shape:
             !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.5"
           mask:
-            - BlobTileMask
+            - BlobWallMask
           layer:
-            - BlobTileLayer
-    - type: Clickable
-    - type: Transform
-      anchored: true
-
+            - BlobWallLayer
+          density: 1000
 
 - type: entity
   parent: BaseBlob
@@ -209,6 +212,20 @@
   components:
   - type: BlobTile
     tileType: Normal
+  - type: SlowContacts
+    walkSpeedModifier: 0.3
+    sprintSpeedModifier: 0.3
+    ignoreWhitelist:
+      tags:
+        - BlobMob
+  - type: DamageContacts
+    damage:
+      types:
+        Poison: 1.5
+        Piercing: 1.5
+    ignoreWhitelist:
+      tags:
+        - BlobMob
   - type: Destructible
     thresholds:
       - trigger:
@@ -224,6 +241,18 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: blob
         color: "#1ddb49"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - BlobTileLayer
+        mask:
+          - BlobTileMask
+
 
 
 - type: entity
@@ -394,6 +423,9 @@
   id: ReflectiveBlobTile
   name: ReflectiveBlobTile
   components:
+    - type: Damageable
+      damageContainer: Blob
+      damageModifierSet: BlobReflective
     - type: BlobTile
       tileType: Reflective
     - type: Destructible
@@ -406,7 +438,7 @@
               acts: [ "Destruction" ]
     - type: Reflect
       reflectProb: 0.9
-      spread: 15
+      spread: 10
       reflects:
         - Energy
     - type: Sprite
