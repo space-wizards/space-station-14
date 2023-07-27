@@ -151,7 +151,9 @@ public sealed class BlobCoreSystem : EntitySystem
         }
     }
 
-    public bool TransformBlobTile(EntityUid? oldTileUid, EntityUid coreTileUid, string newBlobTileProto, EntityCoordinates coordinates, BlobCoreComponent? blobCore = null, bool ReturnCost = true)
+    public bool TransformBlobTile(EntityUid? oldTileUid, EntityUid coreTileUid, string newBlobTileProto,
+        EntityCoordinates coordinates, BlobCoreComponent? blobCore = null, bool returnCost = true,
+        FixedPoint2? transformCost = null)
     {
         if (!Resolve(coreTileUid, ref blobCore))
             return false;
@@ -160,13 +162,20 @@ public sealed class BlobCoreSystem : EntitySystem
             QueueDel(oldTileUid.Value);
             blobCore.BlobTiles.Remove(oldTileUid.Value);
         }
-        var resourceBlob = EntityManager.SpawnEntity(newBlobTileProto, coordinates);
-        if (TryComp<BlobTileComponent>(resourceBlob, out var blobTileComponent))
+        var tileBlob = EntityManager.SpawnEntity(newBlobTileProto, coordinates);
+        if (TryComp<BlobTileComponent>(tileBlob, out var blobTileComponent))
         {
-            blobTileComponent.ReturnCost = ReturnCost;
+            blobTileComponent.ReturnCost = returnCost;
             blobTileComponent.Core = coreTileUid;
         }
-        blobCore.BlobTiles.Add(resourceBlob);
+        if (blobCore.Observer != null && transformCost != null)
+        {
+            _popup.PopupEntity(Loc.GetString("blob-spent-resource", ("point", transformCost)),
+                tileBlob,
+                blobCore.Observer.Value,
+                PopupType.Large);
+        }
+        blobCore.BlobTiles.Add(tileBlob);
         return true;
     }
 
