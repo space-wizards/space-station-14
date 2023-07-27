@@ -3,9 +3,11 @@ using Content.Server.NPC.Systems;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Blob;
+using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Rejuvenate;
@@ -24,6 +26,7 @@ namespace Content.Server.Blob.NPC.BlobPod
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly NPCCombatTargetSystem _combatTargetSystem = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -46,7 +49,7 @@ namespace Content.Server.Blob.NPC.BlobPod
             {
                 Act = () =>
                 {
-                    NPCStartZombify(uid, args.Target, component);
+                    NpcStartZombify(uid, args.Target, component);
                 },
                 Text = Loc.GetString("blob-pod-verb-zombify"),
                 // Icon = new SpriteSpecifier.Texture(new ("/Textures/")),
@@ -72,22 +75,31 @@ namespace Content.Server.Blob.NPC.BlobPod
                 return;
             }
 
+            _inventory.TryUnequip(args.Args.Target.Value, "head", true);
+            var equipped = _inventory.TryEquip(args.Args.Target.Value, uid, "head", true);
+
+            if (!equipped)
+                return;
+
             _popups.PopupEntity(Loc.GetString("blob-mob-zombify-second-end", ("pod", uid)), args.Args.Target.Value, args.Args.Target.Value, Shared.Popups.PopupType.LargeCaution);
             _popups.PopupEntity(Loc.GetString("blob-mob-zombify-third-end", ("pod", uid), ("target", args.Args.Target.Value)), args.Args.Target.Value, Filter.PvsExcept(args.Args.Target.Value), true, Shared.Popups.PopupType.LargeCaution);
 
             var rejEv = new RejuvenateEvent();
             RaiseLocalEvent(uid, rejEv);
 
+            EntityManager.RemoveComponent<CombatModeComponent>(uid);
+
             _audioSystem.PlayPvs(component.ZombifyFinishSoundPath, uid);
 
             if (TryComp<DamageableComponent>(args.Args.Target.Value, out var damageableComponent))
                 _damageable.SetAllDamage(args.Args.Target.Value, damageableComponent,0);
 
-            EnsureComp<ZombieBlobComponent>(args.Args.Target.Value);
+            var zombieBlob = EnsureComp<ZombieBlobComponent>(args.Args.Target.Value);
+            zombieBlob.BlobPodUid = uid;
         }
 
 
-        public bool NPCStartZombify(EntityUid uid, EntityUid target, BlobPodComponent? component = null)
+        public bool NpcStartZombify(EntityUid uid, EntityUid target, BlobPodComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return false;
@@ -115,7 +127,7 @@ namespace Content.Server.Blob.NPC.BlobPod
             component.IsDraining = true;
 
             var ev = new BlobPodZombifyDoAfterEvent();
-            var args = new DoAfterArgs(uid, component.DrainDelay, ev, uid, target: target)
+            var args = new DoAfterArgs(uid, component.ZombifyDelay, ev, uid, target: target)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = false,

@@ -9,14 +9,14 @@ namespace Content.Server.Blob.NPC.BlobPod
         /// <summary>
         /// The time (in seconds) that it takes to zombify an entity.
         /// </summary>
-        [DataField("drainDelay")]
-        public float DrainDelay = 5.00f;
+        [DataField("zombifyDelay")]
+        public float ZombifyDelay = 5.00f;
 
-        [DataField("drainSound")]
-        public SoundSpecifier ZombifySoundPath = new SoundPathSpecifier("/Audio/Effects/clang2.ogg");
+        [DataField("zombifySoundPath")]
+        public SoundSpecifier ZombifySoundPath = new SoundPathSpecifier("/Audio/Effects/Fluids/blood1.ogg");
 
-        [DataField("drainFinishSound")]
-        public SoundSpecifier ZombifyFinishSoundPath = new SoundPathSpecifier("/Audio/Effects/guardian_inject.ogg");
+        [DataField("zombifyFinishSoundPath")]
+        public SoundSpecifier ZombifyFinishSoundPath = new SoundPathSpecifier("/Audio/Effects/gib1.ogg");
 
         public IPlayingAudioStream? ZombifyStingStream;
         public EntityUid? ZombifyTarget;
