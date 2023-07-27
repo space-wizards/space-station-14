@@ -224,6 +224,10 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 25
+  - type: Clothing
+    slots:
+    - earl
+    - earr
 
 - type: entity
   name: Cybersun pen
