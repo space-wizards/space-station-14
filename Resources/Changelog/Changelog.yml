@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed an error when saving maps with device links that reference deleted
-      entities., type: Fix}
-  id: 3846
-  time: '2023-05-22T21:57:31.0000000+00:00'
 - author: themias
   changes:
   - {message: Fixed an issue with placing mime invisible walls next to walls, type: Fix}
@@ -2988,3 +2982,8 @@ Entries:
   - {message: Reduced Fake Cap Gun cost from 14 TC -> 9 TC, type: Tweak}
   id: 4345
   time: '2023-07-27T08:24:21.0000000+00:00'
+- author: KingFroozy
+  changes:
+  - {message: fixed Syndicate Chief Engineer's jumpsuit., type: Fix}
+  id: 4346
+  time: '2023-07-27T08:43:16.0000000+00:00'
