@@ -7,23 +7,21 @@ cloning-console-window-no-patient-data-text = Нет данных о пацие�
 cloning-console-window-id-blank = ID:
 cloning-console-window-scanner-details-label = Статус генетического сканера
 cloning-console-window-pod-details-label = Статус капсулы клонирования
-cloning-console-window-no-scanner-detected-label = Соедините с генетическим сканером при помощи мультитула.
-cloning-console-window-no-clone-pod-detected-label = Соедините с капсулой клонирования при помощи мультитула.
-cloning-console-window-scanner-far-label = Генетический сканер слишком далеко
-cloning-console-window-clone-pod-far-label = Капсула клонирования слишком далеко
+cloning-console-window-clone-pod-far-label = Клонирование модуля слишком далеко
 cloning-console-eject-body-button = Извлечь тело
-cloning-console-neural-interface-label = Нейроинтерфейс:
-cloning-console-no-mind-activity-text = Нейроинтерфейс: [color=red]Активность отсутствует[/color]
-cloning-console-mind-present-text = Нейроинтерфейс: [color=green]Сознание обнаружено[/color]
+cloning-console-neural-interface-label = Нейронный интерфейс:
+cloning-console-no-mind-activity-text = Нейронный интерфейс: [color=red]Нет активности[/color]
+cloning-console-mind-present-text = Нейронный интерфейс: [color=green]Обнаружено сознание[/color]
 cloning-console-component-msg-ready = Готов к клонированию
-cloning-console-component-msg-empty = Тело отсутствует
-cloning-console-component-msg-scanner-occupant-alive = Не готово: Тело в сканере живо
-cloning-console-component-msg-already-alive = Не готово: Метафизический конфликт
-cloning-console-component-msg-occupied = Не готово: В капсуле уже присутствует клон
-cloning-console-component-msg-already-cloning = Не готово: Конфликт сети капсул
-cloning-console-component-msg-incomplete = Не готово: Клонирование в процессе
-cloning-console-component-msg-no-cloner = Не готово: Клонер не обнаружен
-cloning-console-component-msg-no-mind = Не готово: Душа неактивна
+cloning-console-component-msg-empty = Тело не обнаружено
+cloning-console-component-msg-scanner-occupant-alive = Не готов: Сканер жилого помещения
+cloning-console-component-msg-already-alive = Не готов: метафизический конфликт
+cloning-console-component-msg-occupied = Не готов: модуль уже содержит клон
+cloning-console-component-msg-already-cloning = Не готов: сетевой конфликт модуля
+cloning-console-component-msg-incomplete = Не готово: идет клонирование
+cloning-console-component-msg-no-cloner = Не готов: клонер не обнаружен
+cloning-console-component-msg-no-mind = Не готов: активность души не обнаружена
 
 cloning-console-chat-error = ОШИБКА: НЕХВАТКА БИОМАССЫ. КЛОНИРОВАНИЕ ЭТОГО ТЕЛА ТРЕБУЕТ {$units} ЕДИНИЦ БИОМАССЫ.
 cloning-console-cellular-warning = ВНИМАНИЕ: ОЦЕНКА ДОСТОВЕРНОСТИ ЦЕЛОСТНОСТИ ГЕНОВ СОСТАВЛЯЕТ {$percent}%. КЛОНИРОВАНИЕ МОЖЕТ ПРИВЕСТИ К НЕОЖИДАННЫМ РЕЗУЛЬТАТАМ.
+cloning-console-uncloneable-trait-error = ОШИБКА: ДУША ОТСУТСТВУЕТ, КЛОНИРОВАНИЕ НЕВОЗМОЖНО.
