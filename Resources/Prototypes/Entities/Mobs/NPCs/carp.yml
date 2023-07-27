@@ -90,7 +90,7 @@
   - type: RandomSprite
     available:
     - enum.DamageStateVisualLayers.Base:
-        base: Rainbow
+        alive: Rainbow
       enum.DamageStateVisualLayers.BaseUnshaded:
         mouth: ""
 

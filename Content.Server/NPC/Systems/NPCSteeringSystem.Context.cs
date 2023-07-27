@@ -368,10 +368,6 @@ public sealed partial class NPCSteeringSystem
             mask = (CollisionGroup) physics.CollisionMask;
         }
 
-        // If we have to backtrack (for example, we're behind a table and the target is on the other side)
-        // Then don't consider pruning.
-        var goal = nodes.Last().Coordinates.ToMap(EntityManager, _transform);
-
         for (var i = 0; i < nodes.Count; i++)
         {
             var node = nodes[i];
@@ -521,8 +517,7 @@ public sealed partial class NPCSteeringSystem
         var objectRadius = 0.25f;
         var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
         var ourVelocity = body.LinearVelocity;
-        var factionQuery = GetEntityQuery<NpcFactionMemberComponent>();
-        factionQuery.TryGetComponent(uid, out var ourFaction);
+        _factionQuery.TryGetComponent(uid, out var ourFaction);
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Dynamic))
         {
@@ -533,7 +528,7 @@ public sealed partial class NPCSteeringSystem
                 !otherBody.CanCollide ||
                 (mask & otherBody.CollisionLayer) == 0x0 &&
                 (layer & otherBody.CollisionMask) == 0x0 ||
-                !factionQuery.TryGetComponent(ent, out var otherFaction) ||
+                !_factionQuery.TryGetComponent(ent, out var otherFaction) ||
                 !_npcFaction.IsEntityFriendly(uid, ent, ourFaction, otherFaction) ||
                 // Use <= 0 so we ignore stationary friends in case.
                 Vector2.Dot(otherBody.LinearVelocity, ourVelocity) <= 0f)

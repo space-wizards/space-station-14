@@ -17,9 +17,11 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Containers;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Systems;
 
@@ -28,6 +30,7 @@ namespace Content.Server.NPC.Systems;
 /// </summary>
 public sealed class NPCUtilitySystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DrinkSystem _drink = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -40,6 +43,9 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
+
+    private ObjectPool<HashSet<EntityUid>> _entPool =
+        new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>(), 256);
 
     public override void Initialize()
     {
@@ -59,7 +65,7 @@ public sealed class NPCUtilitySystem : EntitySystem
         // TODO: PickHostilesop or whatever needs to juse be UtilityQueryOperator
 
         var weh = _proto.Index<UtilityQueryPrototype>(proto);
-        var ents = new HashSet<EntityUid>();
+        var ents = _entPool.Get();
 
         foreach (var query in weh.Query)
         {
@@ -75,7 +81,10 @@ public sealed class NPCUtilitySystem : EntitySystem
         }
 
         if (ents.Count == 0)
+        {
+            _entPool.Return(ents);
             return UtilityResult.Empty;
+        }
 
         var results = new Dictionary<EntityUid, float>();
         var highestScore = 0f;
@@ -113,6 +122,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
         var result = new UtilityResult(results);
         blackboard.Remove<EntityUid>(NPCBlackboard.UtilityTarget);
+        _entPool.Return(ents);
         return result;
     }
 
