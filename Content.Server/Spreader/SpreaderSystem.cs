@@ -347,8 +347,8 @@ public sealed class SpreaderSystem : EntitySystem
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
             var direction = (AtmosDirection) (1 << i);
-            //if (!comp.AirBlockedDirection.IsFlagSet(direction))
-            //    continue;
+            if (!comp.AirBlockedDirection.IsFlagSet(direction))
+                continue;
 
             var directionEnumerator =
                 grid.GetAnchoredEntitiesEnumerator(SharedMapSystem.GetDirection(tile, direction.ToDirection()));
