@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: SpawnPointGhostBlob
-  name: Blob Spawner
+  name: Blob
   suffix: DONTMAP, spawner
   parent: MarkerBase
   components:
