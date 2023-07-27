@@ -61,3 +61,19 @@ blob-role-greeting =
     Позаботьтесь о получении ресурсов с блобов ресурсов.
     Вы практически неуязвимы к физическим повреждениям, но опасайтесь теплового урона.
     Учтите что особые клетки блоба работают только возле узлов или ядра.
+
+# End round
+blob-round-end-result = {$blobCount ->
+[one] Был один блоб.
+*[other] Было {$blobCount} блобов.
+}
+
+blob-user-was-a-blob = [color=gray]{$user}[/color] был блобом.
+blob-user-was-a-blob-named = [color=White]{$name}[/color] ([color=gray]{$user}[/color]) был блобом.
+blob-was-a-blob-named = [color=White]{$name}[/color] был блобом.
+
+preset-blob-objective-issuer-spiderclan = [color=#33cc00]Blob[/color]
+
+blob-user-was-a-blob-with-objectives = [color=gray]{$user}[/color] был блобом и имел следующие цели:
+blob-user-was-a-blob-with-objectives-named = [color=White]{$name}[/color] ([color=gray]{$user}[/color]) был блобом и имел следующие цели:
+blob-was-a-blob-with-objectives-named = [color=White]{$name}[/color] был блобом и имел следующие цели:
