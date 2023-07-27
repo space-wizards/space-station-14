@@ -77,3 +77,7 @@ preset-blob-objective-issuer-spiderclan = [color=#33cc00]Blob[/color]
 blob-user-was-a-blob-with-objectives = [color=gray]{$user}[/color] был блобом и имел следующие цели:
 blob-user-was-a-blob-with-objectives-named = [color=White]{$name}[/color] ([color=gray]{$user}[/color]) был блобом и имел следующие цели:
 blob-was-a-blob-with-objectives-named = [color=White]{$name}[/color] был блобом и имел следующие цели:
+
+# Objectivies
+objective-condition-blob-capture-title = Захватить станцию
+objective-condition-blob-capture-description = Ваша единственная цель - полное и безоговорочное поглощение станции. Вам необходимо владеть как минимум {$count} тайлами блоба.

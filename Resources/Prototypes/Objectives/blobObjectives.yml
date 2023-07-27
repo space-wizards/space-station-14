@@ -1,0 +1,7 @@
+- type: objective
+  id: BlobCaptureObjective
+  issuer: blob
+  requirements:
+  - !type:BlobRequirement {}
+  conditions:
+  - !type:BlobCaptureCondition {}

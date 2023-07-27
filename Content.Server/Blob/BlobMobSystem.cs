@@ -28,7 +28,7 @@ namespace Content.Server.Blob
             if (args.Cancelled || !HasComp<BlobTileComponent>(args.Target) && !HasComp<BlobMobComponent>(args.Target))
                 return;
 
-            // why is this server side code? This should be in shared
+            // TODO: Move this to shared
             _popupSystem.PopupCursor(Loc.GetString("blob-mob-attack-blob"), uid, PopupType.Large);
             args.Cancel();
         }
