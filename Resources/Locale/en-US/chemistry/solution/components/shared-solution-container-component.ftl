@@ -7,3 +7,9 @@ examinable-solution-has-recognizable-chemicals = You can recognize {$recognizedS
 examinable-solution-recognized-first = [color={$color}]{$chemical}[/color]
 examinable-solution-recognized-next = , [color={$color}]{$chemical}[/color]
 examinable-solution-recognized-last = and [color={$color}]{$chemical}[/color]
+
+examinable-solution-verb-text = Solution
+examinable-solution-verb-message = Examine the solution values.
+examinable-solution-main-text = It contains the following chemicals.
+examinable-solution-empty-container = It contains no chemicals.
+examinable-solution-chemical = - {$amount}u [color={$color}]{$type}[/color].
