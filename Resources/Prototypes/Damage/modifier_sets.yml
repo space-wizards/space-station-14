@@ -197,9 +197,8 @@
     Radiation: 0.2
     Caustic: 0.0
 
-
 - type: damageModifierSet
-  id: Blob
+  id: Blob # Base blob
   coefficients:
     Blunt: 0.25
     Slash: 0.25
@@ -207,3 +206,5 @@
     Heat: 2.00
   flatReductions:
     Blunt: 5
+    Slash: 5
+    Piercing: 5

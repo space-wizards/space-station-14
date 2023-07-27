@@ -18,7 +18,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Blob;
 
-public sealed class BlobObserverSystem : EntitySystem
+public sealed class BlobObserverSystem : SharedBlobObserverSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
@@ -54,14 +54,14 @@ public sealed class BlobObserverSystem : EntitySystem
     private void OnBlobHelp(EntityUid uid, BlobObserverComponent observerComponent,
         BlobHelpActionEvent args)
     {
-        _popup.PopupEntity(Loc.GetString("blob-help"), uid, uid);
+        _popup.PopupEntity(Loc.GetString("blob-help"), uid, uid, PopupType.Large);
         args.Handled = true;
     }
 
     private void OnBlobSwapChem(EntityUid uid, BlobObserverComponent observerComponent,
         BlobSwapChemActionEvent args)
     {
-        _popup.PopupEntity(Loc.GetString("blob-swap-chem"), uid, uid);
+        _popup.PopupEntity(Loc.GetString("blob-swap-chem"), uid, uid, PopupType.Large);
         args.Handled = true;
     }
 
@@ -73,6 +73,12 @@ public sealed class BlobObserverSystem : EntitySystem
 
         if (observerComponent.Core == null || !TryComp<BlobCoreComponent>(observerComponent.Core.Value, out var blobCoreComponent))
             return;
+
+        if (!blobCoreComponent.CanSplit)
+        {
+            _popup.PopupEntity(Loc.GetString("blob-cant-split"), uid, uid, PopupType.Large);
+            return;
+        }
 
         var gridUid = args.Target.GetGridUid(EntityManager);
 
@@ -99,7 +105,7 @@ public sealed class BlobObserverSystem : EntitySystem
 
         if (blobTile == null || !TryComp<BlobNodeComponent>(blobTile, out var blobNodeComponent))
         {
-            _popup.PopupEntity(Loc.GetString("blob-target-node-blob-invalid"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("blob-target-node-blob-invalid"), uid, uid, PopupType.Large);
             args.Handled = true;
             return;
         }
@@ -112,7 +118,10 @@ public sealed class BlobObserverSystem : EntitySystem
         }
 
         QueueDel(blobTile.Value);
-        EntityManager.SpawnEntity(blobCoreComponent.CoreBlobTile, args.Target);
+        var newCore = EntityManager.SpawnEntity(blobCoreComponent.CoreBlobTile, args.Target);
+        blobCoreComponent.CanSplit = false;
+        if (TryComp<BlobCoreComponent>(newCore, out var newBlobCoreComponent))
+            newBlobCoreComponent.CanSplit = false;
 
         args.Handled = true;
     }
@@ -152,7 +161,7 @@ public sealed class BlobObserverSystem : EntitySystem
 
         if (blobTile == null || !TryComp<BlobNodeComponent>(blobTile, out var blobNodeComponent))
         {
-            _popup.PopupEntity(Loc.GetString("blob-target-node-blob-invalid"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("blob-target-node-blob-invalid"), uid, uid, PopupType.Large);
             args.Handled = true;
             return;
         }
@@ -193,7 +202,7 @@ public sealed class BlobObserverSystem : EntitySystem
 
         if (blobNodes.Count == 0)
         {
-            _popup.PopupEntity(Loc.GetString("blob-not-have-nodes"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("blob-not-have-nodes"), uid, uid, PopupType.Large);
             args.Handled = true;
             return;
         }
@@ -237,13 +246,13 @@ public sealed class BlobObserverSystem : EntitySystem
 
         if (blobTile == null || !TryComp<BlobFactoryComponent>(blobTile, out var blobFactoryComponent))
         {
-            _popup.PopupEntity(Loc.GetString("blob-target-factory-blob-invalid"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("blob-target-factory-blob-invalid"), uid, uid, PopupType.Large);
             return;
         }
 
         if (blobFactoryComponent.Blobbernaut != null)
         {
-            _popup.PopupEntity(Loc.GetString("blob-target-already-produce-blobbernaut"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("blob-target-already-produce-blobbernaut"), uid, uid, PopupType.Large);
             return;
         }
 
@@ -307,7 +316,7 @@ public sealed class BlobObserverSystem : EntitySystem
         if (blobTileType is not BlobTileType.Normal ||
             blobTile == null)
         {
-            _popup.PopupEntity(Loc.GetString("blob-target-normal-blob-invalid"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("blob-target-normal-blob-invalid"), uid, uid, PopupType.Large);
             return;
         }
 
@@ -326,7 +335,7 @@ public sealed class BlobObserverSystem : EntitySystem
             {
                 if (!HasComp<BlobNodeComponent>(ent))
                     continue;
-                _popup.PopupEntity(Loc.GetString("blob-target-close-to-node"), uid, uid);
+                _popup.PopupEntity(Loc.GetString("blob-target-close-to-node"), uid, uid, PopupType.Large);
                 return;
             }
         }
@@ -382,7 +391,7 @@ public sealed class BlobObserverSystem : EntitySystem
         if (blobTileType is not BlobTileType.Normal ||
             blobTile == null)
         {
-            _popup.PopupEntity(Loc.GetString("blob-target-normal-blob-invalid"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("blob-target-normal-blob-invalid"), uid, uid, PopupType.Large);
             return;
         }
 
@@ -401,7 +410,7 @@ public sealed class BlobObserverSystem : EntitySystem
             {
                 if (!HasComp<BlobResourceComponent>(ent) || HasComp<BlobCoreComponent>(ent))
                     continue;
-                _popup.PopupEntity(Loc.GetString("blob-target-close-to-resource"), uid, uid);
+                _popup.PopupEntity(Loc.GetString("blob-target-close-to-resource"), uid, uid, PopupType.Large);
                 return;
             }
         }
@@ -614,7 +623,7 @@ public sealed class BlobObserverSystem : EntitySystem
         if (blobTileType is not BlobTileType.Normal ||
             blobTile == null)
         {
-            _popup.PopupEntity(Loc.GetString("blob-target-normal-blob-invalid"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("blob-target-normal-blob-invalid"), uid, uid, PopupType.Large);
             return;
         }
 
@@ -633,7 +642,7 @@ public sealed class BlobObserverSystem : EntitySystem
             {
                 if (!HasComp<BlobFactoryComponent>(ent))
                     continue;
-                _popup.PopupEntity(Loc.GetString("Слишком близко к другой фабрике"), uid, uid);
+                _popup.PopupEntity(Loc.GetString("Слишком близко к другой фабрике"), uid, uid, PopupType.Large);
                 return;
             }
         }

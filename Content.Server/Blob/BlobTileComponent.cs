@@ -10,6 +10,9 @@ public sealed class BlobTileComponent : SharedBlobTileComponent
     [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? Core = default!;
 
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool ReturnCost = true;
+
     [ViewVariables(VVAccess.ReadOnly), DataField("tileType")]
     public BlobTileType BlobTileType = BlobTileType.Normal;
 
@@ -21,12 +24,12 @@ public sealed class BlobTileComponent : SharedBlobTileComponent
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Blunt", -2 },
-            { "Slash", -2 },
-            { "Piercing", -2 },
-            { "Heat", -2 },
-            { "Cold", -2 },
-            { "Shock", -2 },
+            { "Blunt", -1 },
+            { "Slash", -1 },
+            { "Piercing", -1 },
+            { "Heat", -1 },
+            { "Cold", -1 },
+            { "Shock", -1 },
         }
     };
 }

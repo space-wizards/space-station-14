@@ -1,14 +1,26 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Content.Shared.Roles;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Blob;
 
 [RegisterComponent]
 public sealed class BlobCoreComponent : Component
 {
+    [DataField("antagBlobPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
+    public string AntagBlobPrototypeId = "Blob";
+
     [ViewVariables(VVAccess.ReadWrite), DataField("attackRate")]
-    public float ActionRate = 0.4f;
+    public float ActionRate = 0.3f;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("returnResourceOnRemove")]
+    public float ReturnResourceOnRemove = 0.3f;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("canSplit")]
+    public bool CanSplit = true;
 
     [DataField("attackSound")]
     public SoundSpecifier AttackSound = new SoundPathSpecifier("/Audio/Animals/Blob/blobattack.ogg");
@@ -18,8 +30,19 @@ public sealed class BlobCoreComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Blunt", 15 },
-            { "Structural", 100 },
+            { "Blunt", 5 },
+            { "Piercing", 5 },
+            { "Poison", 5 },
+            { "Structural", 150 },
+        }
+    };
+
+    [ViewVariables(VVAccess.ReadOnly), DataField("damageOnRemove")]
+    public DamageSpecifier DamageOnRemove = new()
+    {
+        DamageDict = new Dictionary<string, FixedPoint2>
+        {
+            { "Heat", 500 },
         }
     };
 
@@ -84,7 +107,17 @@ public sealed class BlobCoreComponent : Component
     public string NodeBlobTile = "NodeBlobTile";
 
     [ViewVariables(VVAccess.ReadWrite), DataField("coreBlobTile")]
-    public string CoreBlobTile = "CoreBlobTile";
+    public string CoreBlobTile = "CoreBlobTileGhostRole";
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("coreBlobTotalHealth")]
+    public FixedPoint2 CoreBlobTotalHealth = 400;
+
+    [ViewVariables(VVAccess.ReadWrite),
+     DataField("ghostPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ObserverBlobPrototype = "MobObserverBlob";
+
+    [DataField("greetSoundNotification")]
+    public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
     [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? Observer = default!;
@@ -95,5 +128,5 @@ public sealed class BlobCoreComponent : Component
     public TimeSpan NextAction = TimeSpan.Zero;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 Points = 50;
+    public FixedPoint2 Points = 0;
 }

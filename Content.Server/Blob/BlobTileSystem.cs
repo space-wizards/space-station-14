@@ -5,6 +5,7 @@ using Content.Server.Destructible;
 using Content.Shared.Blob;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
+using Content.Shared.FixedPoint;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -28,7 +29,86 @@ namespace Content.Server.Blob
             SubscribeLocalEvent<BlobTileComponent, DestructionEventArgs>(OnDestruction);
             SubscribeLocalEvent<BlobTileComponent, BlobTileGetPulseEvent>(OnPulsed);
             SubscribeLocalEvent<BlobTileComponent, GetVerbsEvent<AlternativeVerb>>(AddUpgradeVerb);
+            SubscribeLocalEvent<BlobTileComponent, GetVerbsEvent<Verb>>(AddRemoveVerb);
             SubscribeLocalEvent<BlobTileComponent, ComponentGetState>(OnRiftGetState);
+        }
+
+        private void AddRemoveVerb(EntityUid uid, BlobTileComponent component, GetVerbsEvent<Verb> args)
+        {
+            if (!TryComp<BlobObserverComponent>(args.User, out var ghostBlobComponent))
+                return;
+
+            if (ghostBlobComponent.Core == null ||
+                !TryComp<BlobCoreComponent>(ghostBlobComponent.Core.Value, out var blobCoreComponent))
+                return;
+
+            if (ghostBlobComponent.Core.Value != component.Core)
+                return;
+
+            if (TryComp<TransformComponent>(uid, out var transformComponent) && !transformComponent.Anchored)
+                return;
+
+            if (HasComp<BlobCoreComponent>(uid))
+                return;
+
+            Verb verb = new()
+            {
+                Act = () => TryRemove(uid, ghostBlobComponent.Core.Value, component, blobCoreComponent),
+                Text = Loc.GetString("blob-verb-remove-blob-tile"),
+            };
+            args.Verbs.Add(verb);
+        }
+
+        private void TryRemove(EntityUid target, EntityUid coreUid, BlobTileComponent tile, BlobCoreComponent core)
+        {
+            if (!_blobCoreSystem.RemoveBlobTile(target, coreUid, core))
+            {
+                return;
+            }
+
+            if (!tile.ReturnCost)
+                return;
+
+            FixedPoint2 returnCost = 0;
+
+            switch (tile.BlobTileType)
+            {
+                case BlobTileType.Normal:
+                {
+                    returnCost = core.NormalBlobCost * core.ReturnResourceOnRemove;
+                    break;
+                }
+                case BlobTileType.Strong:
+                {
+                    returnCost = core.StrongBlobCost * core.ReturnResourceOnRemove;
+                    break;
+                }
+                case BlobTileType.Factory:
+                {
+                    returnCost = core.FactoryBlobCost * core.ReturnResourceOnRemove;
+                    break;
+                }
+                case BlobTileType.Resource:
+                {
+                    returnCost = core.ResourceBlobCost * core.ReturnResourceOnRemove;
+                    break;
+                }
+                case BlobTileType.Reflective:
+                {
+                    returnCost = core.ReflectiveBlobCost * core.ReturnResourceOnRemove;
+                    break;
+                }
+                case BlobTileType.Node:
+                {
+                    returnCost = core.NodeBlobCost * core.ReturnResourceOnRemove;
+                    break;
+                }
+            }
+
+            if (returnCost > 0)
+            {
+                _blobCoreSystem.ChangeBlobPoint(coreUid, returnCost, core);
+            }
         }
 
         private void OnRiftGetState(EntityUid uid, BlobTileComponent component, ref ComponentGetState args)
@@ -108,7 +188,8 @@ namespace Content.Server.Blob
                         blobTileComponent.Core.Value,
                         blobCoreComponent.NormalBlobTile,
                         location,
-                        blobCoreComponent))
+                        blobCoreComponent,
+                        false))
                     return;
             }
         }
@@ -125,10 +206,17 @@ namespace Content.Server.Blob
             if (TryComp<TransformComponent>(uid, out var transformComponent) && !transformComponent.Anchored)
                 return;
 
+            var verbName = component.BlobTileType switch
+            {
+                BlobTileType.Normal => Loc.GetString("blob-verb-upgrade-to-strong"),
+                BlobTileType.Strong => Loc.GetString("blob-verb-upgrade-to-reflective"),
+                _ => "Upgrade"
+            };
+
             AlternativeVerb verb = new()
             {
                 Act = () => TryUpgrade(uid, args.User, ghostBlobComponent.Core.Value, component, blobCoreComponent),
-                Text = Loc.GetString("Upgrade")
+                Text = verbName
             };
             args.Verbs.Add(verb);
         }
