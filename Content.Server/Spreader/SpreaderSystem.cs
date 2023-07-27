@@ -71,7 +71,6 @@ public sealed class SpreaderSystem : EntitySystem
 
     private void OnAirtightChanged(ref AirtightChanged ev)
     {
-        _sawmill.Debug("On airtightchanged was Called");
         var neighbors = GetNeighbors(ev.Entity, ev.Airtight);
 
         foreach (var neighbor in neighbors)
@@ -88,7 +87,6 @@ public sealed class SpreaderSystem : EntitySystem
     private void OnGridInit(GridInitializeEvent ev)
     {
         var comp = EnsureComp<SpreaderGridComponent>(ev.EntityUid);
-        _bigGrid = ev.EntityUid;
     }
 
     /// <inheritdoc/>
