@@ -42,7 +42,7 @@
       animation: WeaponArcSmash
       damage:
         types:
-          Piercing: 5
+          Piercing: 4
     - type: DamageStateVisuals
       states:
         Alive:
@@ -116,7 +116,7 @@
       animation: WeaponArcSmash
       damage:
         types:
-          Blunt: 20
+          Blunt: 15
     - type: DamageStateVisuals
       states:
         Alive:
@@ -137,7 +137,7 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        250: Dead
+        200: Dead
     - type: MovementSpeedModifier
       baseWalkSpeed: 2
       baseSprintSpeed: 2.5
@@ -224,7 +224,7 @@
   - type: BlobCore
   - type: BlobNode
   - type: BlobResource
-    pointsPerPulsed: 1
+    pointsPerPulsed: 2
   - type: Sprite
     sprite: Mobs/Aliens/blob.rsi
     drawdepth: BlobTiles
@@ -237,6 +237,19 @@
         color: "#1ddb49"
         shader: unshaded
       - state: blob_core_overlay
+
+
+- type: entity
+  parent: CoreBlobTile
+  id: CoreBlobTileGhostRole
+  suffix: Ghost Role
+  components:
+    - type: GhostRole
+      name: ghost-role-information-blob-name
+      description: ghost-role-information-blob-description
+      rules: You are an antagonist, destroy the station!
+      reregister: false
+    - type: GhostTakeoverAvailable
 
 
 - type: entity
@@ -390,9 +403,10 @@
 
 
 - type: entity
-#  parent: BaseStructure
+  parent: BaseStructure
   id: BlobBorder
   name: debug wall
+  noSpawn: true
   suffix: DONTMAP
   placement:
     mode: SnapgridCenter

@@ -16,10 +16,10 @@ public enum CollisionGroup
     None                = 0,
     Opaque              = 1 << 0, // 1 Blocks light, can be hit by lasers
     Impassable          = 1 << 1, // 2 Walls, objects impassable by any means
-    BlobImpassable      = 1 << 2, // 2 Blob Tiles
-    MidImpassable       = 1 << 3, // 4 Mobs, players, crabs, etc
-    HighImpassable      = 1 << 4, // 8 Things on top of tables and things that block tall/large mobs.
-    LowImpassable       = 1 << 5, // 16 For things that can fit under a table or squeeze under an airlock
+    MidImpassable       = 1 << 2, // 4 Mobs, players, crabs, etc
+    HighImpassable      = 1 << 3, // 8 Things on top of tables and things that block tall/large mobs.
+    LowImpassable       = 1 << 4, // 16 For things that can fit under a table or squeeze under an airlock
+    BlobImpassable      = 1 << 5, // 16 Blob Tiles
     GhostImpassable     = 1 << 6, // 32 Things impassible by ghosts/observers, ie blessed tiles or forcefields
     BlobGhostImpassable = 1 << 7, // 32 blob?...
     BulletImpassable    = 1 << 8, // 64 Can be hit by bullets
@@ -76,13 +76,13 @@ public enum CollisionGroup
     ItemMask = Impassable | HighImpassable,
     ThrownItem = Impassable | HighImpassable | BulletImpassable,
     WallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
-    BlobTileLayer = Opaque | BulletImpassable,
+    BlobTileLayer = Opaque | BlobImpassable | MidImpassable | BulletImpassable | InteractImpassable,
     GlassLayer = Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
     HalfWallLayer = MidImpassable | LowImpassable,
 
     // Statue, monument, airlock, window
     FullTileMask = Impassable | HighImpassable | MidImpassable | LowImpassable | InteractImpassable,
-    BlobTileMask = BlobImpassable,
+    BlobTileMask = BlobImpassable | MidImpassable | InteractImpassable,
     // FlyingMob can go past
     FullTileLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
 

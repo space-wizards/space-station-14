@@ -65,7 +65,8 @@
 
 - type: entity
   id: MobObserverBlob
-  name: observer
+  name: Blob observer
+  noSpawn: true
   components:
     - type: Actions
     - type: Alerts
@@ -79,6 +80,11 @@
     - type: Physics
       bodyType: KinematicController
       fixedRotation: true
+    - type: GhostRole
+      name: ghost-role-information-blob-name
+      description: ghost-role-information-blob-description
+      rules: You are an antagonist, destroy the station!
+    - type: GhostTakeoverAvailable
     - type: Fixtures
       fixtures:
         fix1:

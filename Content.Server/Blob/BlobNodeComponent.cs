@@ -6,10 +6,10 @@ namespace Content.Server.Blob;
 public sealed class BlobNodeComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("pulseFrequency")]
-    public FixedPoint2 PulseFrequency = 5;
+    public FixedPoint2 PulseFrequency = 4;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("pulseRadius")]
-    public float PulseRadius = 2f;
+    public float PulseRadius = 3f;
 
     public float Accumulator = 0;
 }

@@ -6,5 +6,5 @@ namespace Content.Server.Blob;
 public sealed class BlobResourceComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("pointsPerPulsed")]
-    public FixedPoint2 PointsPerPulsed = 3;
+    public FixedPoint2 PointsPerPulsed = 1;
 }

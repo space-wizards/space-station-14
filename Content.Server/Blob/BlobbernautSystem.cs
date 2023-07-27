@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared.Blob;
 using Content.Shared.Damage;
 using Content.Shared.Mobs;
 using Robust.Shared.Map;
@@ -16,7 +15,6 @@ namespace Content.Server.Blob
             base.Initialize();
 
             SubscribeLocalEvent<BlobbernautComponent, MobStateChangedEvent>(OnMobStateChanged);
-
         }
 
         private void OnMobStateChanged(EntityUid uid, BlobbernautComponent component, MobStateChangedEvent args)
