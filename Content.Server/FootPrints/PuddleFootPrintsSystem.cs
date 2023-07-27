@@ -5,6 +5,9 @@ using Content.Shared.Fluids;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Shared.FixedPoint;
 //using Content.Server.Explosion.EntitySystems;
 
 
@@ -14,6 +17,7 @@ namespace Content.Server.FootPrints
     {
         //[Dependency] private readonly TriggerSystem _trigger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -26,6 +30,23 @@ namespace Content.Server.FootPrints
                 return;
             if (!TryComp<FootPrintsComponent>(args.OtherEntity, out var tripper))
                 return;
+            if (!TryComp<SolutionContainerManagerComponent>(uid, out var solutionManager))
+                return;
+            if (_solutionContainerSystem.TryGetSolution(uid, "puddle", out var solutions, solutionManager))
+            {
+                var listSolutions = solutions.Contents.ToArray();
+                var fullSolutionsQuantity = 0f;
+                var waterQuantity = 0f;
+                foreach (var sol in listSolutions)
+                {
+                    fullSolutionsQuantity += (float) sol.Quantity;
+                    if (sol.ReagentId == "Water")
+                        waterQuantity = (float) sol.Quantity;
+                }
+                if (waterQuantity / (fullSolutionsQuantity / 100f) > comp.OffPercent)
+                    return;
+
+            }
             if
                 (
                     _appearance.TryGetData(uid, PuddleVisuals.SolutionColor, out var color, appearance) &&

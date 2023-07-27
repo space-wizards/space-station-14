@@ -125,7 +125,7 @@ namespace Contest.Server.FootPrints
                 res = comp.SuitPrint;
             }
             if (state)
-                res = comp.DraggingPrint;
+                res = _random.Pick(comp.DraggingPrint);
             return res;
         }
 

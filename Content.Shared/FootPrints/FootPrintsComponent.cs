@@ -19,7 +19,14 @@ public sealed class FootPrintsComponent : Component
     public string SuitPrint = "footprint-suit";
 
     [ViewVariables(VVAccess.ReadOnly), DataField("draggingPrint")]
-    public string DraggingPrint = "dragging-1";
+    public string[] DraggingPrint = new string[5]
+        {
+            "dragging-1",
+            "dragging-2",
+            "dragging-3",
+            "dragging-4",
+            "dragging-5"
+        };
 
     //Visual end
 
@@ -33,17 +40,17 @@ public sealed class FootPrintsComponent : Component
     public Color PrintsColor = Color.FromHex("#00000000");// Цвет следов
 
     [ViewVariables(VVAccess.ReadWrite), DataField("stepSize")]
-    public float StepSize = 0.6f; // Дистанция между следами при 1 - один тайл
+    public float StepSize = 0.7f; // Дистанция между следами при 1 - один тайл
 
     [ViewVariables(VVAccess.ReadWrite), DataField("dragSize")]
-    public float DragSize = 0.8f; // Дистанция между следами при волочении при 1 - один тайл
+    public float DragSize = 0.5f; // Дистанция между следами при волочении при 1 - один тайл
     public bool RightStep = true; // Переменная для переключения правого и левого следов
     public Vector2 StepPos = Vector2.Zero; //Позиция отсчёта шаг
 
     [ViewVariables(VVAccess.ReadWrite), DataField("colorQuantity")]
     public float ColorQuantity = 0f; //Количество "грязи" на обуви
     [ViewVariables(VVAccess.ReadWrite), DataField("colorReduceAlpha")]
-    public float ColorReduceAlpha = 0.1f;
+    public float ColorReduceAlpha = 0.15f;
     [ViewVariables(VVAccess.ReadWrite), DataField("colorQuantityMax")]
-    public float ColorQuantityMax = 1.2f;
+    public float ColorQuantityMax = 1f;
 }
