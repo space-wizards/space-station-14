@@ -8,6 +8,15 @@
       - id: BoxSurvival
 
 - type: entity
+  parent: ClothingBackpackAtmos
+  id: ClothingBackpackAtmosFilled
+  noSpawn: true
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+
+- type: entity
   noSpawn: true
   parent: ClothingBackpackClown
   id: ClothingBackpackClownFilled
