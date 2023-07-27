@@ -28,7 +28,7 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
 
         if (IsBatteryFull(comp.BatteryUid.Value))
         {
-            _popup.PopupEntity(Loc.GetString("ninja-drain-full"), uid, uid, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("battery-drainer-full"), uid, uid, PopupType.Medium);
             return;
         }
 
@@ -65,7 +65,7 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
 
         if (MathHelper.CloseToPercent(targetBattery.CurrentCharge, 0))
         {
-            _popup.PopupEntity(Loc.GetString("ninja-drain-empty", ("battery", target)), uid, uid, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("battery-drainer-empty", ("battery", target)), uid, uid, PopupType.Medium);
             return false;
         }
 
@@ -83,11 +83,11 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
 
             if (battery.IsFullyCharged)
             {
-                _popup.PopupEntity(Loc.GetString("ninja-drain-full"), uid, uid, PopupType.Medium);
+                _popup.PopupEntity(Loc.GetString("battery-drainer-full"), uid, uid, PopupType.Medium);
                 return false;
             }
 
-            _popup.PopupEntity(Loc.GetString("ninja-drain-success", ("battery", target)), uid, uid);
+            _popup.PopupEntity(Loc.GetString("battery-drainer-success", ("battery", target)), uid, uid);
             return true;
         }
 

@@ -13,26 +13,20 @@ namespace Content.Shared.Ninja.Components;
 public sealed partial class SpaceNinjaComponent : Component
 {
     /// <summary>
-    /// Grid entity of the station the ninja was spawned around. Set if spawned naturally by the event.
-    /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public EntityUid? StationGrid;
-
-    /// <summary>
     /// Currently worn suit
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public EntityUid? Suit = null;
 
     /// <summary>
     /// Currently worn gloves
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public EntityUid? Gloves = null;
 
     /// <summary>
     /// Bound katana, set once picked up and never removed
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public EntityUid? Katana = null;
 }

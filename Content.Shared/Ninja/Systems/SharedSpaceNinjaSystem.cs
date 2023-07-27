@@ -21,19 +21,15 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     }
 
     /// <summary>
-    /// Sets the station grid entity that the ninja was spawned near.
-    /// </summary>
-    public void SetStationGrid(SpaceNinjaComponent comp, EntityUid? grid)
-    {
-        comp.StationGrid = grid;
-    }
-
-    /// <summary>
     /// Set the ninja's worn suit entity
     /// </summary>
     public void AssignSuit(SpaceNinjaComponent comp, EntityUid? suit)
     {
+        if (comp.Suit == suit)
+            return;
+
         comp.Suit = suit;
+        Dirty(comp);
     }
 
     /// <summary>
@@ -41,7 +37,11 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     /// </summary>
     public void AssignGloves(SpaceNinjaComponent comp, EntityUid? gloves)
     {
+        if (comp.Gloves == gloves)
+            return;
+
         comp.Gloves = gloves;
+        Dirty(comp);
     }
 
     /// <summary>
@@ -49,7 +49,11 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     /// </summary>
     public void BindKatana(SpaceNinjaComponent comp, EntityUid? katana)
     {
+        if (comp.Katana == katana)
+            return;
+
         comp.Katana = katana;
+        Dirty(comp);
     }
 
     /// <summary>

@@ -2,7 +2,6 @@ using Content.Shared.Actions;
 using Content.Shared.Ninja.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-//using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ninja.Components;
 
