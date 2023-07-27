@@ -9,6 +9,8 @@ using Content.Shared.Inventory;
 using Content.Server.Atmos.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 
 namespace Contest.Server.FootPrints
 {
@@ -19,6 +21,7 @@ namespace Contest.Server.FootPrints
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         public override void Initialize()
         {
@@ -35,6 +38,8 @@ namespace Contest.Server.FootPrints
 
         public override void Update(float frameTime)
         {
+            if(!_configManager.GetCVar(CCVars.FootPrintsEnabled))
+                return;
             base.Update(frameTime);
             foreach (var comp in EntityManager.EntityQuery<FootPrintsComponent>())
             {

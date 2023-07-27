@@ -8,6 +8,8 @@ using Robust.Shared.Physics.Events;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.FixedPoint;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 //using Content.Server.Explosion.EntitySystems;
 
 
@@ -18,6 +20,7 @@ namespace Content.Server.FootPrints
         //[Dependency] private readonly TriggerSystem _trigger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -26,6 +29,8 @@ namespace Content.Server.FootPrints
 
         public void OnStepTrigger(EntityUid uid, PuddleFootPrintsComponent comp, ref EndCollideEvent args)
         {
+            if(!_configManager.GetCVar(CCVars.FootPrintsEnabled))
+                return;
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
                 return;
             if (!TryComp<FootPrintsComponent>(args.OtherEntity, out var tripper))

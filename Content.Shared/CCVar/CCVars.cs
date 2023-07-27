@@ -1581,7 +1581,9 @@ namespace Content.Shared.CCVar
         // Imperial-start
         // public static readonly CVarDef<bool>
         //     EconomyWagesEnabled = CVarDef.Create("economy.wages_enabled", true, CVar.SERVERONLY);
-        // Imperial-end
+        public static readonly CVarDef<bool>
+            FootPrintsEnabled = CVarDef.Create("imperial.footprints_enabled", true, CVar.SERVERONLY);
+        //Imperial-end
 
         /*
          * CONFIG
