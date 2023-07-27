@@ -2,14 +2,13 @@
   id: LatticeSmall1
   name: tiles-lattice-small1
   sprite: /Textures/Tiles/Imperial/LatticeSmall1.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canWirecutter: true
   weather: true
   footstepSounds:
     collection: FootstepPlating
-  friction: 0.5
+  friction: 0.3
   isSpace: true
   itemDrop: PartRodMetal1
   heatCapacity: 10000
@@ -18,14 +17,13 @@
   id: LatticeSmall2
   name: tiles-lattice-small2
   sprite: /Textures/Tiles/Imperial/LatticeSmall2.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canWirecutter: true
   weather: true
   footstepSounds:
     collection: FootstepPlating
-  friction: 0.5
+  friction: 0.3
   isSpace: true
   itemDrop: PartRodMetal1
   heatCapacity: 10000
@@ -34,14 +32,13 @@
   id: LatticeSmall3
   name: tiles-lattice-small3
   sprite: /Textures/Tiles/Imperial/LatticeSmall3.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canWirecutter: true
   weather: true
   footstepSounds:
     collection: FootstepPlating
-  friction: 0.5
+  friction: 0.3
   isSpace: true
   itemDrop: PartRodMetal1
   heatCapacity: 10000
@@ -50,14 +47,13 @@
   id: LatticeSmall4
   name: tiles-lattice-small4
   sprite: /Textures/Tiles/Imperial/LatticeSmall4.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canWirecutter: true
   weather: true
   footstepSounds:
     collection: FootstepPlating
-  friction: 0.5
+  friction: 0.3
   isSpace: true
   itemDrop: PartRodMetal1
   heatCapacity: 10000
@@ -66,14 +62,13 @@
   id: LatticeCorner1
   name: tiles-lattice-corner1
   sprite: /Textures/Tiles/Imperial/LatticeCorner1.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canWirecutter: true
   weather: true
   footstepSounds:
     collection: FootstepPlating
-  friction: 0.5
+  friction: 0.3
   isSpace: true
   itemDrop: PartRodMetal1
   heatCapacity: 10000
@@ -82,14 +77,13 @@
   id: LatticeCorner2
   name: tiles-lattice-corner2
   sprite: /Textures/Tiles/Imperial/LatticeCorner2.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canWirecutter: true
   weather: true
   footstepSounds:
     collection: FootstepPlating
-  friction: 0.5
+  friction: 0.3
   isSpace: true
   itemDrop: PartRodMetal1
   heatCapacity: 10000
@@ -98,14 +92,13 @@
   id: LatticeCorner3
   name: tiles-lattice-corner3
   sprite: /Textures/Tiles/Imperial/LatticeCorner3.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canWirecutter: true
   weather: true
   footstepSounds:
     collection: FootstepPlating
-  friction: 0.5
+  friction: 0.3
   isSpace: true
   itemDrop: PartRodMetal1
   heatCapacity: 10000
@@ -114,14 +107,13 @@
   id: LatticeCorner4
   name: tiles-lattice-corner4
   sprite: /Textures/Tiles/Imperial/LatticeCorner4.png
-  baseTurfs:
-  - Space
+  baseTurf: Space
   isSubfloor: true
   canWirecutter: true
   weather: true
   footstepSounds:
     collection: FootstepPlating
-  friction: 0.5
+  friction: 0.3
   isSpace: true
   itemDrop: PartRodMetal1
   heatCapacity: 10000
