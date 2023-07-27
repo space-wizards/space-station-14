@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Fixed eggs and tomatoes not making puddles when thrown., type: Fix}
-  id: 3840
-  time: '2023-05-22T21:48:37.0000000+00:00'
 - author: Vordenburg
   changes:
   - {message: Holobarriers can be climbed like tables with the alternate activate
@@ -2982,3 +2977,8 @@ Entries:
       look like the sprite of the icon', type: Tweak}
   id: 4339
   time: '2023-07-27T02:18:11.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: tweaked role times, type: Tweak}
+  id: 4340
+  time: '2023-07-27T05:14:21.0000000+00:00'
