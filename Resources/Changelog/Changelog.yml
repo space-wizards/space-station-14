@@ -1,9 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: Adds mercenary items for secrets at the NT space station, type: Add}
-  id: 3845
-  time: '2023-05-22T21:57:15.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed an error when saving maps with device links that reference deleted
@@ -2985,3 +2980,11 @@ Entries:
   - {message: Fixed shuttles sometimes braking rotation incorrectly., type: Fix}
   id: 4344
   time: '2023-07-27T07:38:04.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Reduced Python cost from 13 -> 8 TC, type: Tweak}
+  - {message: Reduced C-20 Bundle cost from 25 -> 17 TC, type: Tweak}
+  - {message: Reduced Bulldog Bundle cost from 25 -> 20 TC, type: Tweak}
+  - {message: Reduced Fake Cap Gun cost from 14 TC -> 9 TC, type: Tweak}
+  id: 4345
+  time: '2023-07-27T08:24:21.0000000+00:00'
