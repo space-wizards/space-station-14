@@ -64,7 +64,7 @@ namespace Content.Server.Blob
                     {
                         foreach (var entOnTile in grid.GetAnchoredEntities(tileRef.GridIndices))
                         {
-                            if (HasComp<BlobTileComponent>(entOnTile))
+                            if (TryComp<BlobTileComponent>(entOnTile, out var blobTileComponent) && blobTileComponent.Core != null)
                                 return;
                         }
                     }

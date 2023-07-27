@@ -43,6 +43,8 @@ namespace Content.Server.Blob
                 RemComp<BlobMobComponent>(uid);
             }
 
+            QueueDel(component.BlobPodUid);
+
             EnsureComp<NpcFactionMemberComponent>(uid);
             foreach (var factionId in component.OldFations)
             {

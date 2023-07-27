@@ -38,6 +38,9 @@ public sealed class BlobNodeSystem : EntitySystem
             return;
         }
 
+        if (!TryComp<BlobTileComponent>(uid, out var blobTileComponent) || blobTileComponent.Core == null)
+            return;
+
         var innerTiles = grid.GetLocalTilesIntersecting(
             new Box2(localPos + new Vector2(-radius, -radius), localPos + new Vector2(radius, radius)), false).ToArray();
 
