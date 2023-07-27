@@ -34,7 +34,7 @@ public abstract class ToolshedTest : IInvocationContext
         ClearErrors();
     }
 
-    [SetUp]
+    [OneTimeSetUp]
     public virtual async Task Setup()
     {
         PairTracker = await PoolManager.GetServerClient(new PoolSettings {NoClient = NoClient});
@@ -139,6 +139,8 @@ public abstract class ToolshedTest : IInvocationContext
     {
         _errors.Clear();
     }
+
+    public Dictionary<string, object?> Variables { get; } = new();
 
     protected void ExpectError(Type err)
     {

@@ -1,22 +1,27 @@
 ﻿- Flags: QUERY
   Commands:
+    - entities
+    - nearby
+    - map
+    - physics
+    - player
+- Flags: DEBUG
+  Commands:
     - comp
     - delete
     - do
-    - entities
     - named
-    - nearby
     - paused
     - with
     - count
-    - map
     - select
-    - unique
-    - types
-    - physics
     - where
     - prototyped
-    - player
+    - types
+    - ecscomp
+- Flags: HOST
+  Commands:
+    - methods
 - Commands:
     - fuck
     - ent
@@ -31,3 +36,5 @@
     - isnull
     - help
     - isempty
+    - any
+    - unique

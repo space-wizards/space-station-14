@@ -22,12 +22,13 @@ public sealed class CommandRunTest : ToolshedTest
             ParseCommand("entities with");
 
             ExpectError<NoImplementationError>();
-            ParseCommand("player:list with Item");
+            ParseCommand("player:list with MetaData");
 
             ExpectError<ExpressionOfWrongType>();
-            ParseCommand("player:list", null, typeof(IEnumerable<EntityUid>));
+            ParseCommand("player:list", expectedType: typeof(IEnumerable<EntityUid>));
 
-            ParseCommand("entities not with Item");
+            ParseCommand("entities not with MetaData");
+            ParseCommand("with MetaData select 2 any", inputType: typeof(List<EntityUid>));
         });
     }
 
@@ -74,7 +75,7 @@ public sealed class CommandRunTest : ToolshedTest
             ParseCommand("entities with Foodiddy");
 
             ExpectError<UnknownComponentError>();
-            ParseCommand("entities with ItemComponent");
+            ParseCommand("entities with MetaDataComponent");
         });
     }
 }
