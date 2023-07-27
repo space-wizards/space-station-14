@@ -3105,13 +3105,6 @@ entities:
       type: Transform
 - proto: Airlock
   entities:
-  - uid: 4082
-    components:
-    - name: Dorms 1
-      type: MetaData
-    - pos: -26.5,0.5
-      parent: 31
-      type: Transform
   - uid: 4083
     components:
     - name: Dorms 2
@@ -4313,6 +4306,13 @@ entities:
     - pos: -14.5,10.5
       parent: 31
       type: Transform
+- proto: AirlockServiceGlassLocked
+  entities:
+  - uid: 1104
+    components:
+    - pos: -26.5,0.5
+      parent: 31
+      type: Transform
 - proto: AirlockServiceLocked
   entities:
   - uid: 4719
@@ -5056,11 +5056,6 @@ entities:
     - pos: -27.5,-1.5
       parent: 31
       type: Transform
-  - uid: 4087
-    components:
-    - pos: -27.5,1.5
-      parent: 31
-      type: Transform
   - uid: 4088
     components:
     - pos: -27.5,-4.5
@@ -5201,11 +5196,6 @@ entities:
       type: Transform
 - proto: BedsheetSpawner
   entities:
-  - uid: 553
-    components:
-    - pos: -27.5,1.5
-      parent: 31
-      type: Transform
   - uid: 3591
     components:
     - pos: -27.5,-4.5
@@ -5422,11 +5412,6 @@ entities:
   - uid: 666
     components:
     - pos: 8.5,-24.5
-      parent: 31
-      type: Transform
-  - uid: 668
-    components:
-    - pos: 6.5,-24.5
       parent: 31
       type: Transform
   - uid: 669
@@ -20977,26 +20962,6 @@ entities:
       pos: -0.5,1.5
       parent: 31
       type: Transform
-  - uid: 4099
-    components:
-    - pos: -29.5,1.5
-      parent: 31
-      type: Transform
-  - uid: 4100
-    components:
-    - pos: -29.5,0.5
-      parent: 31
-      type: Transform
-  - uid: 4101
-    components:
-    - pos: -28.5,1.5
-      parent: 31
-      type: Transform
-  - uid: 4102
-    components:
-    - pos: -28.5,0.5
-      parent: 31
-      type: Transform
   - uid: 4155
     components:
     - rot: 3.141592653589793 rad
@@ -25420,6 +25385,13 @@ entities:
     - pos: 6.5,26.5
       parent: 31
       type: Transform
+- proto: ComputerMassMedia
+  entities:
+  - uid: 1019
+    components:
+    - pos: -27.5,1.5
+      parent: 31
+      type: Transform
 - proto: ComputerMedicalRecords
   entities:
   - uid: 3235
@@ -25531,6 +25503,28 @@ entities:
   - uid: 10270
     components:
     - pos: -6.5,31.5
+      parent: 31
+      type: Transform
+- proto: ComputerTelevision
+  entities:
+  - uid: 1018
+    components:
+    - pos: -22.5,-3.5
+      parent: 31
+      type: Transform
+  - uid: 1117
+    components:
+    - pos: -28.5,-1.5
+      parent: 31
+      type: Transform
+  - uid: 1141
+    components:
+    - pos: 6.5,-24.5
+      parent: 31
+      type: Transform
+  - uid: 1189
+    components:
+    - pos: -28.5,-4.5
       parent: 31
       type: Transform
 - proto: ContainmentFieldGenerator
@@ -29216,6 +29210,13 @@ entities:
       parent: 31
       type: Transform
     - name: medical
+      type: FaxMachine
+  - uid: 1105
+    components:
+    - pos: -30.5,1.5
+      parent: 31
+      type: Transform
+    - name: reporter's room
       type: FaxMachine
   - uid: 1264
     components:
@@ -45972,6 +45973,13 @@ entities:
     - pos: 19.48357,-9.977724
       parent: 31
       type: Transform
+- proto: MicrophoneInstrument
+  entities:
+  - uid: 1112
+    components:
+    - pos: -30.178549,1.2895887
+      parent: 31
+      type: Transform
 - proto: MinimoogInstrument
   entities:
   - uid: 8736
@@ -49764,13 +49772,6 @@ entities:
   - uid: 1158
     components:
     - pos: -2.5,-1.5
-      parent: 31
-      type: Transform
-- proto: RandomInstruments
-  entities:
-  - uid: 1189
-    components:
-    - pos: -30.5,1.5
       parent: 31
       type: Transform
 - proto: RandomPosterAny
@@ -54172,6 +54173,13 @@ entities:
     - pos: 27.5,9.5
       parent: 31
       type: Transform
+- proto: SpawnPointReporter
+  entities:
+  - uid: 1068
+    components:
+    - pos: -29.5,0.5
+      parent: 31
+      type: Transform
 - proto: SpawnPointResearchAssistant
   entities:
   - uid: 777
@@ -55346,6 +55354,20 @@ entities:
       nameSet: True
       id: Salvage Magnet
       type: SurveillanceCamera
+- proto: SurveillanceCameraWirelessRouterEntertainment
+  entities:
+  - uid: 982
+    components:
+    - pos: -28.5,1.5
+      parent: 31
+      type: Transform
+- proto: SurveillanceWirelessCameraMovableEntertainment
+  entities:
+  - uid: 668
+    components:
+    - pos: -29.5,1.5
+      parent: 31
+      type: Transform
 - proto: SynthesizerInstrument
   entities:
   - uid: 7353
@@ -56536,20 +56558,6 @@ entities:
           occludes: True
           ents: []
       type: ContainerContainer
-- proto: TintedWindow
-  entities:
-  - uid: 1444
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -28.5,2.5
-      parent: 31
-      type: Transform
-  - uid: 1445
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -29.5,2.5
-      parent: 31
-      type: Transform
 - proto: ToiletEmpty
   entities:
   - uid: 793
@@ -57376,6 +57384,18 @@ entities:
   - uid: 9512
     components:
     - pos: 11.5,25.5
+      parent: 31
+      type: Transform
+- proto: WallmountTelevision
+  entities:
+  - uid: 1107
+    components:
+    - pos: -0.5,27.5
+      parent: 31
+      type: Transform
+  - uid: 1119
+    components:
+    - pos: -0.5,2.5
       parent: 31
       type: Transform
 - proto: WallReinforced
@@ -65218,6 +65238,11 @@ entities:
       pos: 8.5,-7.5
       parent: 31
       type: Transform
+  - uid: 553
+    components:
+    - pos: -29.5,2.5
+      parent: 31
+      type: Transform
   - uid: 920
     components:
     - rot: 1.5707963267948966 rad
@@ -65234,6 +65259,11 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: -3.5,2.5
+      parent: 31
+      type: Transform
+  - uid: 1020
+    components:
+    - pos: -28.5,2.5
       parent: 31
       type: Transform
   - uid: 1190
