@@ -46,7 +46,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/burger.rsi
   - type: StaticPrice
-    price: 150
+    price: 150 #Imperial price balance
 
 # Custom Burger Example
 

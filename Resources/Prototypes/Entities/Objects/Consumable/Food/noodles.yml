@@ -18,7 +18,7 @@
         - ReagentId: Nutriment
           Quantity: 20
   - type: StaticPrice
-    price: 225
+    price: 225 #Imperial price balance
 
 # Noodles
 

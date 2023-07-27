@@ -28,7 +28,7 @@
     - NoSpinOnThrow
     - Pie
   - type: StaticPrice
-    price: 200
+    price: 200 #Imperial price balance
 
 - type: entity
   parent: FoodInjectableBase # Not sliceable

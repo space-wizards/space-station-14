@@ -55,7 +55,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: StaticPrice
-    price: 200
+    price: 200 #Imperial price balance
 
 # Custom Soup Example
 

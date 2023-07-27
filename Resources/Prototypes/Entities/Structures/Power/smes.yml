@@ -79,7 +79,7 @@
       damageContainer: Inorganic
       damageModifierSet: StrongMetallic
     - type: StaticPrice
-      price: 1500
+      price: 1500 #Imperial price balance
 
 # SMES' in use
 

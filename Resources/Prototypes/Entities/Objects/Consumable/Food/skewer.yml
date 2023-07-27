@@ -139,7 +139,7 @@
         - ReagentId: Vitamin
           Quantity: 6
   - type: StaticPrice
-    price: 25
+    price: 25 #Imperial price balance
 
 - type: entity
   name: fiesta kebab

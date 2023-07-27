@@ -22,7 +22,7 @@
         - ReagentId: Nutriment
           Quantity: 20
   - type: StaticPrice
-    price: 50
+    price: 50 #Imperial price balance
 
 - type: entity
   parent: FoodBreadBase

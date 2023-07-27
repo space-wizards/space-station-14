@@ -98,7 +98,7 @@
     highVoltageNode: input
     mediumVoltageNode: output
   - type: StaticPrice
-    price: 1200
+    price: 1200 #Imperial price balance
 
 # Compact Wall Substation Base
 - type: entity

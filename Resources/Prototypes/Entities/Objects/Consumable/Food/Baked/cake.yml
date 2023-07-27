@@ -688,7 +688,7 @@
     radius: 2
     energy: 1.4
   - type: StaticPrice
-    price: 2000
+    price: 200 #Imperial price balance
 
 - type: entity
   name: suppermatter shard

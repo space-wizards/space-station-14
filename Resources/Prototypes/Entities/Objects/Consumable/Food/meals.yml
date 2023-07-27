@@ -20,7 +20,7 @@
         - ReagentId: Nutriment
           Quantity: 20
   - type: StaticPrice
-    price: 25
+    price: 25 #Imperial price balance
 
 # Meals
 
