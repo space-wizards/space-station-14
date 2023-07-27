@@ -26,7 +26,7 @@
     back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesColorWhite
     id: ParamedicPDA
-    ears: ClothingHeadsetMedical
+    earleft: ClothingHeadsetMedical
     belt: ClothingBeltParamedicFilled
   innerclothingskirt: ClothingUniformJumpskirtParamedic
   satchel: ClothingBackpackSatchelMedicalFilled

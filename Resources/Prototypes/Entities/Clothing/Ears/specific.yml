@@ -12,7 +12,7 @@
     - type: Clothing
       sprite: Clothing/Ears/Headsets/base.rsi
     - type: ChameleonClothing
-      slot: [ears]
+      slot: [earl, earr]
       default: ClothingHeadsetGrey
     - type: UserInterface
       interfaces:

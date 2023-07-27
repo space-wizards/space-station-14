@@ -19,7 +19,8 @@
     state: icon
   - type: Clothing
     slots:
-    - ears
+    - earl
+    - earr
     sprite: Clothing/Ears/Headsets/base.rsi
 
 - type: entity

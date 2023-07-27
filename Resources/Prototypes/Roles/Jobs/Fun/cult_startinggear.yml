@@ -9,7 +9,7 @@
     outerClothing: ClothingOuterArmorCult
     shoes: ClothingShoesCult
     id: PassengerPDA
-    ears: ClothingHeadsetService
+    earleft: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -23,7 +23,7 @@
     outerClothing: ClothingOuterRobesCult
     shoes: ClothingShoesColorRed
     id: PassengerPDA
-    ears: ClothingHeadsetService
+    earleft: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

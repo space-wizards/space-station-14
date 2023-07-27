@@ -30,10 +30,11 @@ public sealed class ClientClothingSystem : ClothingSystem
     {
         {"head", "HELMET"},
         {"eyes", "EYES"},
-        {"ears", "EARS"},
+        {"earleft", "EARL"},
+        {"earright", "EARR"},
         {"mask", "MASK"},
         {"outerClothing", "OUTERCLOTHING"},
-        {Jumpsuit, "INNERCLOTHING"},
+        {"jumpsuit", "INNERCLOTHING"},
         {"neck", "NECK"},
         {"back", "BACKPACK"},
         {"belt", "BELT"},

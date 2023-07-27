@@ -30,7 +30,7 @@
     pocket2: Paper
     mask: ClothingMaskMime
     id: MimePDA
-    ears: ClothingHeadsetService
+    earleft: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtMime
   satchel: ClothingBackpackSatchelMimeFilled
   duffelbag: ClothingBackpackDuffelMimeFilled

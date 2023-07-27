@@ -21,6 +21,6 @@
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterArmorBasic
     id: CentcomPDA
-    ears: ClothingHeadsetAltCentCom
+    earleft: ClothingHeadsetAltCentCom
     pocket1: BoxFolderBlack
     pocket2: PenCentcom

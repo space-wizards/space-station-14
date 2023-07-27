@@ -22,7 +22,7 @@
     shoes: ClothingShoesColorWhite
     outerClothing: ClothingOuterCoatRnd
     id: SciencePDA
-    ears: ClothingHeadsetScience
+    earleft: ClothingHeadsetScience
   innerclothingskirt: ClothingUniformJumpskirtScientist
   satchel: ClothingBackpackSatchelScienceFilled
   duffelbag: ClothingBackpackDuffelScienceFilled

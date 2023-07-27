@@ -35,7 +35,7 @@
     back: ClothingBackpackFilled
     id: JanitorPDA
     head: ClothingHeadHatCatEars
-    ears: ClothingHeadsetService
+    earleft: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
   innerclothingskirt: ClothingUniformJumpskirtJanimaid
   satchel: ClothingBackpackSatchelFilled

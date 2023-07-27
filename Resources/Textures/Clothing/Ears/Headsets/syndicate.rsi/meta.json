@@ -11,7 +11,11 @@
       "name": "icon_alt"
     },
     {
-      "name": "alt-equipped-EARS",
+      "name": "alt-equipped-EARL",
+      "directions": 4
+    },
+    {
+      "name": "alt-equipped-EARR",
       "directions": 4
     }
   ]

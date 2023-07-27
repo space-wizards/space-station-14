@@ -19,7 +19,7 @@
     back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesLeather
     id: PsychologistPDA
-    ears: ClothingHeadsetMedical
+    earleft: ClothingHeadsetMedical
   innerclothingskirt: ClothingUniformJumpsuitPsychologist
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled

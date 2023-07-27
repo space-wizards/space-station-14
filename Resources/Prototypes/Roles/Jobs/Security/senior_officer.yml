@@ -37,7 +37,7 @@
     head: ClothingHeadHatBeret
     outerClothing: ClothingOuterArmorBasic
     id: SeniorOfficerPDA
-    ears: ClothingHeadsetSecurity
+    earleft: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58Nonlethal
   innerclothingskirt: ClothingUniformJumpskirtSeniorOfficer

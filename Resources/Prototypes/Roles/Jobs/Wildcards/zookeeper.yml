@@ -18,7 +18,7 @@
     head: ClothingHeadSafari
     shoes: ClothingShoesColorWhite
     id: ZookeeperPDA
-    ears: ClothingHeadsetService
+    earleft: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpsuitSafari
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

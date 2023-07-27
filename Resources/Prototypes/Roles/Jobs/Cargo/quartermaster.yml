@@ -14,7 +14,7 @@
       department: Cargo
       time: 36000 #10 hours
     - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs            
+      time: 144000 #40 hrs
   weight: 10
   startingGear: QuartermasterGear
   icon: "QuarterMaster"
@@ -36,7 +36,7 @@
     back: ClothingBackpackQuartermasterFilled
     shoes: ClothingShoesColorBrown
     id: QuartermasterPDA
-    ears: ClothingHeadsetQM
+    earleft: ClothingHeadsetQM
     pocket1: AppraisalTool
   innerclothingskirt: ClothingUniformJumpskirtQM
   satchel: ClothingBackpackSatchelQuartermasterFilled

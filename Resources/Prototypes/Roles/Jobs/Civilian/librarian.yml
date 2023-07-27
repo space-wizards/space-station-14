@@ -17,7 +17,7 @@
     back: ClothingBackpackLibrarianFilled
     shoes: ClothingShoesBootsLaceup
     id: LibrarianPDA
-    ears: ClothingHeadsetService
+    earleft: ClothingHeadsetService
     pocket1: d10Dice
     belt: BooksBag
     pocket2: HandLabeler # for making named bestsellers

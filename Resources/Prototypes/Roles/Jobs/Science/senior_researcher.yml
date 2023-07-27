@@ -23,7 +23,7 @@
     shoes: ClothingShoesColorBlack
     outerClothing: ClothingOuterCoatLabSeniorResearcher
     id: SeniorResearcherPDA
-    ears: ClothingHeadsetScience
+    earleft: ClothingHeadsetScience
   innerclothingskirt: ClothingUniformJumpskirtSeniorResearcher
   satchel: ClothingBackpackSatchelScienceFilled
   duffelbag: ClothingBackpackDuffelScienceFilled

@@ -21,9 +21,9 @@
     back: ClothingBackpackHydroponicsFilled
     shoes: ClothingShoesColorBrown
     id: BotanistPDA
-    ears: ClothingHeadsetService
+    earl: ClothingHeadsetService
     outerClothing: ClothingOuterApronBotanist
-    belt: ClothingBeltPlantFilled
+    earleft: ClothingBeltPlantFilled
   innerclothingskirt: ClothingUniformJumpskirtHydroponics
   satchel: ClothingBackpackSatchelHydroponicsFilled
   duffelbag: ClothingBackpackDuffelHydroponicsFilled

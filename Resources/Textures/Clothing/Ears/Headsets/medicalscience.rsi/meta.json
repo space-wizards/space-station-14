@@ -11,8 +11,12 @@
       "name": "icon"
     },
     {
-       "name": "equipped-EARS",
+       "name": "equipped-EARR",
        "directions": 4
+    },
+    {
+      "name": "equipped-EARL",
+      "directions": 4
     }
   ]
 }

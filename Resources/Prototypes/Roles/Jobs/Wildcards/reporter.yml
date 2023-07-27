@@ -17,7 +17,7 @@
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorWhite
     id: ReporterPDA
-    ears: ClothingHeadsetService
+    earleft: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpsuitJournalist
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

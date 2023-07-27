@@ -48,13 +48,20 @@
       uiWindowPos: 0,0
       strippingWindowPos: 0,0
       displayName: Eyes
-    - name: ears
-      slotTexture: ears
-      slotFlags: EARS
+    - name: earleft
+      slotTexture: ear_l
+      slotFlags: EARL
       stripTime: 3
       uiWindowPos: 2,0
       strippingWindowPos: 2,0
-      displayName: Ears
+      displayName: Ear Left
+    - name: earright
+      slotTexture: ear_r
+      slotFlags: EARR
+      stripTime: 3
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,1
+      displayName: Ear Right
     - name: head
       slotTexture: head
       slotFlags: HEAD

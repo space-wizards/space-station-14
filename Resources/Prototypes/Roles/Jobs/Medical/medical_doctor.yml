@@ -24,7 +24,7 @@
     shoes: ClothingShoesColorWhite
     outerClothing: ClothingOuterCoatLab
     id: MedicalPDA
-    ears: ClothingHeadsetMedical
+    earleft: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
   innerclothingskirt: ClothingUniformJumpskirtMedicalDoctor
   satchel: ClothingBackpackSatchelMedicalFilled

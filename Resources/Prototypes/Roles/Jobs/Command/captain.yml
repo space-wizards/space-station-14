@@ -1,4 +1,4 @@
-- type: job
+﻿- type: job
   id: Captain
   name: job-name-captain
   description: job-description-captain
@@ -35,7 +35,7 @@
     head: ClothingHeadHatCaptain
     eyes: ClothingEyesGlassesSunglasses
     id: CaptainPDA
-    ears: ClothingHeadsetAltCommand
+    earleft: ClothingHeadsetAltCommand
   innerclothingskirt: ClothingUniformJumpskirtCaptain
   satchel: ClothingBackpackSatchelCaptainFilled
   duffelbag: ClothingBackpackDuffelCaptainFilled

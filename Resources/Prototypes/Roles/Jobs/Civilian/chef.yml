@@ -27,7 +27,7 @@
     mask: ClothingMaskItalianMoustache
     shoes: ClothingShoesColorBlack
     id: ChefPDA
-    ears: ClothingHeadsetService
+    earleft: ClothingHeadsetService
     outerClothing: ClothingOuterApronChef
   innerclothingskirt: ClothingUniformJumpskirtChef
   satchel: ClothingBackpackSatchelFilled

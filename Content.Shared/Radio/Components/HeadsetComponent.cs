@@ -14,5 +14,5 @@ public sealed class HeadsetComponent : Component
     public bool IsEquipped = false;
 
     [DataField("requiredSlot")]
-    public SlotFlags RequiredSlot = SlotFlags.EARS;
+    public SlotFlags RequiredSlot = SlotFlags.EARL | SlotFlags.EARR;
 }

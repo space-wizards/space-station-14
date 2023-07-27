@@ -23,7 +23,7 @@
     shoes: ClothingShoesColorWhite
     outerClothing: ClothingOuterCoatLabChem
     id: ChemistryPDA
-    ears: ClothingHeadsetMedical
+    earleft: ClothingHeadsetMedical
     belt: ChemBag
     pocket1: HandLabeler
     # the purple glasses?

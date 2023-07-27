@@ -25,7 +25,7 @@
     eyes: ClothingEyesGlassesMeson
     id: AtmosPDA
     belt: ClothingBeltUtilityEngineering
-    ears: ClothingHeadsetEngineering
+    earleft: ClothingHeadsetEngineering
   innerclothingskirt: ClothingUniformJumpskirtAtmos
   satchel: ClothingBackpackSatchelAtmosphericsFilled
   duffelbag: ClothingBackpackDuffelAtmosphericsFilled
