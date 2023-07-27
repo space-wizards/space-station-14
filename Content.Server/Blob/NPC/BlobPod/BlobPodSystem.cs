@@ -1,4 +1,7 @@
+using Content.Server.Chat.Managers;
 using Content.Server.DoAfter;
+using Content.Server.Mind;
+using Content.Server.Mind.Components;
 using Content.Server.NPC.Systems;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
@@ -26,6 +29,9 @@ namespace Content.Server.Blob.NPC.BlobPod
         [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly NPCCombatTargetSystem _combatTargetSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly IChatManager _chatMan = default!;
+        [Dependency] private readonly MindSystem _mind = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -74,6 +80,10 @@ namespace Content.Server.Blob.NPC.BlobPod
                 return;
             }
 
+            _inventory.TryGetSlotEntity(args.Args.Target.Value, "head", out var headItem);
+            if (HasComp<BlobMobComponent>(headItem))
+                return;
+
             _inventory.TryUnequip(args.Args.Target.Value, "head", true, true);
             var equipped = _inventory.TryEquip(args.Args.Target.Value, uid, "head", true, true);
 
@@ -96,6 +106,14 @@ namespace Content.Server.Blob.NPC.BlobPod
 
             var zombieBlob = EnsureComp<ZombieBlobComponent>(args.Args.Target.Value);
             zombieBlob.BlobPodUid = uid;
+
+            var mindComp = EnsureComp<MindContainerComponent>(args.Args.Target.Value);
+            if (_mind.TryGetMind(args.Args.Target.Value, out var mind, mindComp) && _mind.TryGetSession(mind, out var session))
+            {
+                _chatMan.DispatchServerMessage(session, Loc.GetString("blob-zombie-greeting"));
+
+                _audio.PlayGlobal(zombieBlob.GreetSoundNotification, session);
+            }
         }
 
 
