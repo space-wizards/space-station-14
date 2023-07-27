@@ -7,7 +7,7 @@ Using a pen, you can write on paper or in books. Nanotrasen provides everyone wi
 
 You can use the following sigils:
 
-- [color=tan]\[color=\<color\>\]\[\/color\][/color] — to change the color of the text
+- [color=tan]\[color=color\]\[\/color\][/color] — to change the color of the text
 - [color=tan]\[head=n\]\[\/head\][/color] — where [italic]n[/italic] is the heading level (1 – 3)
 - [color=tan]\[bullet\/\][/color] — to insert a bullet point (useful for lists)
 - [color=tan][bold]\[bold\]\[\/bold\][/bold][/color], [color=tan][italic]\[italic\]\[\/italic\][/italic][/color] — for emphasis

@@ -36,7 +36,6 @@ namespace Content.Client.Paper.UI
             typeof(BoldItalicTag),
             typeof(BoldTag),
             typeof(BulletTag),
-            typeof(BulletTag),
             typeof(ColorTag),
             typeof(HeadingTag),
             typeof(ItalicTag)
