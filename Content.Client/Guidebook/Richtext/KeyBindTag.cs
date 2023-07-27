@@ -11,7 +11,6 @@ public sealed class KeyBindTag : IMarkupTag
     [Dependency] private readonly IInputManager _inputManager = default!;
 
     public string Name => "keybind";
-    public bool IsUnsafe => true;
 
     public string TextBefore(MarkupNode node)
     {

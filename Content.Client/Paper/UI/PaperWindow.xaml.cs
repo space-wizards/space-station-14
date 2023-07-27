@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
+using Robust.Client.UserInterface.RichText;
 
 namespace Content.Client.Paper.UI
 {
@@ -27,7 +28,17 @@ namespace Content.Client.Paper.UI
 
         // If paper limits the size in one or both axes, it'll affect whether
         // we're able to resize this UI or not. Default to everything enabled:
-        private DragMode _allowedResizeModes  = ~DragMode.None;
+        private DragMode _allowedResizeModes = ~DragMode.None;
+
+        private readonly Type[] _allowedTags = new Type[] {
+            typeof(BoldItalicTag),
+            typeof(BoldTag),
+            typeof(BulletTag),
+            typeof(BulletTag),
+            typeof(ColorTag),
+            typeof(HeadingTag),
+            typeof(ItalicTag)
+        };
 
         public PaperWindow()
         {
@@ -203,15 +214,15 @@ namespace Content.Client.Paper.UI
             {
                 msg.AddMarkupPermissive("\r\n");
             }
-            WrittenTextLabel.SetMessage(msg, true);
+            WrittenTextLabel.SetMessage(msg, _allowedTags);
 
             WrittenTextLabel.Visible = !isEditing && state.Text.Length > 0;
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
 
             StampDisplay.RemoveAllChildren();
-            foreach(var stamper in state.StampedBy)
+            foreach (var stamper in state.StampedBy)
             {
-                StampDisplay.AddChild(new StampWidget{ Stamper = stamper });
+                StampDisplay.AddChild(new StampWidget { Stamper = stamper });
             }
         }
 
