@@ -82,6 +82,19 @@
     prototype: MobRevenant
 
 - type: entity
+  parent: BaseGameRule
+  id: BlobSpawn
+  noSpawn: true
+  components:
+    - type: StationEvent
+      weight: 15
+      duration: 1
+      earliestStart: 40
+      minimumPlayers: 20
+    - type: RandomSpawnRule
+      prototype: SpawnPointGhostBlob
+
+- type: entity
   id: FalseAlarm
   parent: BaseGameRule
   noSpawn: true
