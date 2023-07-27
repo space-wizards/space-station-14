@@ -52,7 +52,13 @@ public sealed class KudzuSystem : EntitySystem
             return;
         }
 
-        if (args.Neighbors.Count == 4)
+       // solves the problem of kudzu not spreading at some performance cost
+       // if (args.Neighbors.Count == 4)
+       // {
+       //     RemCompDeferred<EdgeSpreaderComponent>(uid);
+       //     return;
+       // }
+        if (args.NeighborFreeTiles.Count == 0)
         {
             RemCompDeferred<EdgeSpreaderComponent>(uid);
             return;
