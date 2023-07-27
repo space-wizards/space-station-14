@@ -1,11 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Added 60+ new tips, type: Add}
-  - {message: Changed the wording of some tips, type: Tweak}
-  - {message: 'Removed tip about disease spread, as diseases have been removed', type: Remove}
-  id: 3850
-  time: '2023-05-23T10:01:00.0000000+00:00'
 - author: MisterMecky
   changes:
   - {message: Fixed water coolers having water tank sprites., type: Fix}
@@ -2983,3 +2976,8 @@ Entries:
   - {message: The defibrillator's "return to body" prompt now works again., type: Fix}
   id: 4349
   time: '2023-07-27T19:13:17.0000000+00:00'
+- author: MrGreen and OctoRocket
+  changes:
+  - {message: Added HoS flask., type: Add}
+  id: 4350
+  time: '2023-07-27T19:41:33.0000000+00:00'
