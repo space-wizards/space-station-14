@@ -59,8 +59,8 @@
     - type: MachineBoard
       prototype: AmmoTechFab
       requirements:
-        MatterBin: 3
-        Manipulator: 3
+        MatterBin: 1
+        Manipulator: 1
 
 - type: entity
   id: MedicalTechFabCircuitboard
