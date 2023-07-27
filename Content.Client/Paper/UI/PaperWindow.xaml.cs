@@ -14,6 +14,8 @@ namespace Content.Client.Paper.UI
     [GenerateTypedNameReferences]
     public sealed partial class PaperWindow : BaseWindow
     {
+        private static Color DefaultTextColor = new(25, 25, 25);
+
         // <summary>
         // Size of resize handles around the paper
         private const int DRAG_MARGIN_SIZE = 16;
@@ -45,7 +47,7 @@ namespace Content.Client.Paper.UI
             RobustXamlLoader.Load(this);
 
             // We can't configure the RichTextLabel contents from xaml, so do it here:
-            BlankPaperIndicator.SetMessage(Loc.GetString("paper-ui-blank-page-message"));
+            BlankPaperIndicator.SetMessage(Loc.GetString("paper-ui-blank-page-message"), null, DefaultTextColor);
 
             // Hook up the close button:
             CloseButton.OnPressed += _ => Close();
@@ -214,7 +216,7 @@ namespace Content.Client.Paper.UI
             {
                 msg.AddMarkupPermissive("\r\n");
             }
-            WrittenTextLabel.SetMessage(msg, _allowedTags);
+            WrittenTextLabel.SetMessage(msg, _allowedTags, DefaultTextColor);
 
             WrittenTextLabel.Visible = !isEditing && state.Text.Length > 0;
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
