@@ -1,16 +1,4 @@
 Entries:
-- author: Owai-Seek
-  changes:
-  - {message: Adds a Janitorial Guidebook, type: Add}
-  id: 3843
-  time: '2023-05-22T21:50:14.0000000+00:00'
-- author: tom-leys
-  changes:
-  - {message: 'NanoTrasen has begun supplying the station with gifts. You might get
-      a pizza party, engineering gifts, a vending restock or a janitorial restock.
-      There are Guns and Environmental suits also.', type: Add}
-  id: 3844
-  time: '2023-05-22T21:55:28.0000000+00:00'
 - author: Jackal298
   changes:
   - {message: Adds mercenary items for secrets at the NT space station, type: Add}
@@ -2987,3 +2975,13 @@ Entries:
   - {message: .45 High-Velocity rounds are now significantly more lethal., type: Tweak}
   id: 4342
   time: '2023-07-27T07:32:26.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Unarmed attacks on powered lights now cause electric shock., type: Add}
+  id: 4343
+  time: '2023-07-27T07:37:10.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Fixed shuttles sometimes braking rotation incorrectly., type: Fix}
+  id: 4344
+  time: '2023-07-27T07:38:04.0000000+00:00'
