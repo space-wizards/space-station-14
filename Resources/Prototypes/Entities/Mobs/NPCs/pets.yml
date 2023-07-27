@@ -29,6 +29,10 @@
     spawned:
     - id: FoodMeatCorgi
       amount: 2
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Old Ian
@@ -91,6 +95,10 @@
   - type: Grammar
     attributes:
       gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Exception
@@ -104,6 +112,10 @@
   - type: Grammar
     attributes:
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Floppa
@@ -125,6 +137,10 @@
   - type: Grammar
     attributes:
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Bandito
@@ -135,6 +151,10 @@
   - type: Grammar
     attributes:
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: bingus
@@ -364,6 +384,10 @@
     attributes:
       proper: true
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Morticia
@@ -377,6 +401,10 @@
     attributes:
       proper: true
       gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Alexander
@@ -387,6 +415,10 @@
   - type: Grammar
     attributes:
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Renault
@@ -406,6 +438,10 @@
     attributes:
       proper: true
       gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Hamlet
@@ -436,6 +472,11 @@
     attributes:
       proper: true
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - Hamster
+    - VimPilot
 
 - type: entity
   name: Shiva
@@ -559,6 +600,7 @@
     - FootstepSound
     - DoorBumpOpener
     - CannotSuicide
+    - VimPilot
   - type: DamageStateVisuals
     states:
       Alive:

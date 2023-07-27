@@ -257,8 +257,9 @@
         - MobLayer
   - type: Tag
     tags:
-      - DoorBumpOpener
-      - Duck
+    - DoorBumpOpener
+    - Duck
+    - VimPilot
   - type: Reproductive
     breedChance: 0.05
     birthPopup: reproductive-laid-egg-popup
@@ -296,9 +297,6 @@
     accent: duck
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
-  - type: Tag
-    tags:
-    - VimPilot
   - type: NpcFactionMember
     factions:
     - Passive
@@ -968,7 +966,6 @@
   - type: Tag
     tags:
     - Trash
-    - CannotSuicide
     - VimPilot
     - Mouse
   - type: Respirator
@@ -1058,8 +1055,8 @@
   description: A harmless dragon.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2
-    baseSprintSpeed : 3
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1157,8 +1154,8 @@
   description: Hop hop hop. Lookin' moist.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 4
-    baseSprintSpeed : 6
+    baseWalkSpeed: 4
+    baseSprintSpeed: 6
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1303,8 +1300,8 @@
   description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.5
-    baseSprintSpeed : 5
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 5
   - type: InputMover
   - type: MobMover
   - type: HTN
@@ -1372,7 +1369,7 @@
   - type: Tag
     tags:
     - VimPilot
-      
+
 - type: entity
   name: monkey
   id: MobMonkeySyndicateAgent
@@ -1463,6 +1460,9 @@
   - type: Loadout
     prototype: SyndicateOperativeGearMonkey
     prototypes: [SyndicateOperativeGearMonkey]
+  - type: tag
+    tags:
+    - VimPilot
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
@@ -1694,7 +1694,6 @@
       gender: epicene
   - type: Tag
     tags:
-    - CannotSuicide
     - VimPilot
 
 - type: entity
@@ -1751,7 +1750,6 @@
       gender: epicene
   - type: Tag
     tags:
-    - CannotSuicide
     - VimPilot
 
 - type: entity
@@ -1810,7 +1808,6 @@
     bloodMaxVolume: 100
   - type: Tag
     tags:
-    - CannotSuicide
     - VimPilot
 
 - type: entity
@@ -1873,7 +1870,6 @@
     price: 200
   - type: Tag
     tags:
-    - CannotSuicide
     - VimPilot
 
 - type: entity
@@ -2019,7 +2015,6 @@
     price: 200
   - type: Tag
     tags:
-    - CannotSuicide
     - VimPilot
 
 - type: entity
@@ -2137,7 +2132,6 @@
       gender: epicene
   - type: Tag
     tags:
-    - CannotSuicide
     - VimPilot
 
 - type: entity
@@ -2195,7 +2189,6 @@
       gender: epicene
   - type: Tag
     tags:
-    - CannotSuicide
     - VimPilot
 
 - type: entity
@@ -2284,7 +2277,6 @@
     tags:
     - VimPilot
     - Trash
-    - CannotSuicide
     - Hamster
   - type: Respirator
     damage:
@@ -2391,5 +2383,4 @@
     - Passive
   - type: Tag
     tags:
-    - CannotSuicide
     - VimPilot
