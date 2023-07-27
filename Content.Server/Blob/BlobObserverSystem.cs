@@ -4,7 +4,7 @@ using Content.Server.Actions;
 using Content.Server.Destructible;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Blob;
-using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -27,11 +27,10 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
     [Dependency] private readonly BlobCoreSystem _blobCoreSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AnchorableSystem _anchorableSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -175,10 +174,18 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
 
         var nodePos = Transform(blobTile.Value).Coordinates;
         var corePos = Transform(observerComponent.Core.Value).Coordinates;
-        _xformSystem.SetCoordinates(observerComponent.Core.Value, nodePos);
-        _xformSystem.SetCoordinates(blobTile.Value, corePos);
-        _anchorableSystem.TryToggleAnchor(observerComponent.Core.Value, observerComponent.Core.Value, observerComponent.Core.Value);
-        _anchorableSystem.TryToggleAnchor(blobTile.Value, blobTile.Value, blobTile.Value);
+        _transform.SetCoordinates(observerComponent.Core.Value, nodePos.SnapToGrid());
+        _transform.SetCoordinates(blobTile.Value, corePos.SnapToGrid());
+        var xformCore = Transform(observerComponent.Core.Value);
+        if (!xformCore.Anchored)
+        {
+            _transform.AnchorEntity(uid, xformCore);
+        }
+        var xformNode = Transform(blobTile.Value);
+        if (!xformNode.Anchored)
+        {
+            _transform.AnchorEntity(uid, xformNode);
+        }
         args.Handled = true;
     }
 
@@ -207,7 +214,7 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
             return;
         }
 
-        _xformSystem.SetCoordinates(uid, Transform(_random.Pick(blobNodes)).Coordinates);
+        _transform.SetCoordinates(uid, Transform(_random.Pick(blobNodes)).Coordinates);
         args.Handled = true;
     }
 
@@ -275,7 +282,7 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
             !TryComp<BlobCoreComponent>(observerComponent.Core.Value, out var blobCoreComponent))
             return;
 
-        _xformSystem.SetCoordinates(uid, Transform(observerComponent.Core.Value).Coordinates);
+        _transform.SetCoordinates(uid, Transform(observerComponent.Core.Value).Coordinates);
     }
 
     private void OnCreateNode(EntityUid uid, BlobObserverComponent observerComponent,
