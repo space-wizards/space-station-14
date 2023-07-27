@@ -153,6 +153,18 @@
         },
 		{
             "name": "IAA"
+        },
+        {
+            "name": "SeniorEngineer"
+        },
+        {
+            "name": "SeniorResearcher"
+        },
+        {
+            "name": "SeniorPhysician"
+        },
+        {
+            "name": "SeniorOfficer"
         }
     ]
 }

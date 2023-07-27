@@ -57,7 +57,8 @@ public sealed partial class ChatSystem : SharedChatSystem
     public const string CentComAnnouncementSound = "/Audio/Corvax/Announcements/centcomm.ogg"; // Corvax-Announcements
 
     private bool _loocEnabled = true;
-    private bool _deadLoocEnabled = false;
+    private bool _deadLoocEnabled;
+    private bool _critLoocEnabled;
     private readonly bool _adminLoocEnabled = true;
 
     public override void Initialize()
@@ -66,6 +67,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         InitializeEmotes();
         _configurationManager.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
         _configurationManager.OnValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
+        _configurationManager.OnValueChanged(CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
     }
@@ -76,6 +78,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         ShutdownEmotes();
         _configurationManager.UnsubValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged);
         _configurationManager.UnsubValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged);
+        _configurationManager.UnsubValueChanged(CCVars.CritLoocEnabled, OnCritLoocEnabledChanged);
     }
 
     private void OnLoocEnabledChanged(bool val)
@@ -94,6 +97,16 @@ public sealed partial class ChatSystem : SharedChatSystem
         _deadLoocEnabled = val;
         _chatManager.DispatchServerAnnouncement(
             Loc.GetString(val ? "chat-manager-dead-looc-chat-enabled-message" : "chat-manager-dead-looc-chat-disabled-message"));
+    }
+
+    private void OnCritLoocEnabledChanged(bool val)
+    {
+        if (_critLoocEnabled == val)
+            return;
+
+        _critLoocEnabled = val;
+        _chatManager.DispatchServerAnnouncement(
+            Loc.GetString(val ? "chat-manager-crit-looc-chat-enabled-message" : "chat-manager-crit-looc-chat-disabled-message"));
     }
 
     private void OnGameChange(GameRunLevelChangedEvent ev)
@@ -222,6 +235,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!_adminManager.IsAdmin(player) && !_deadLoocEnabled &&
             (HasComp<GhostComponent>(source) || _mobStateSystem.IsDead(source)))
             sendType = InGameOOCChatType.Dead;
+
+        // If crit player LOOC is disabled, don't send the message at all.
+        if (!_critLoocEnabled && _mobStateSystem.IsCritical(source))
+            return;
 
         switch (sendType)
         {
@@ -466,6 +483,11 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (!_adminLoocEnabled) return;
         }
         else if (!_loocEnabled) return;
+
+        // If crit player LOOC is disabled, don't send the message at all.
+        if (!_critLoocEnabled && _mobStateSystem.IsCritical(source))
+            return;
+
         var wrappedMessage = Loc.GetString("chat-manager-entity-looc-wrap-message",
             ("entityName", name),
             ("message", FormattedMessage.EscapeText(message)));

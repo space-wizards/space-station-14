@@ -12,3 +12,8 @@
   license: "CC0-1.0"
   copyright: "Grappling hook by 16bitstudios. Converted to .OGG and MONO by metalgearsloth"
   source: "https://freesound.org/people/16bitstudios/sounds/541975/"
+
+- files: ["revolver_357.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station"
+  source: "https://github.com/tgstation/tgstation/pull/46689/commits/b9a455d6a07c800f14e385556b87815ef19727e9"

@@ -73,6 +73,12 @@ namespace Content.Client.PDA
                 SendMessage(new PdaLockUplinkMessage());
             };
 
+            _menu.NewsReadButton.OnPressed += _ =>
+            {
+                SendMessage(new PdaOpenNewsMessage());
+            };
+
+
             _menu.OnProgramItemPressed += ActivateCartridge;
             _menu.OnInstallButtonPressed += InstallCartridge;
             _menu.OnUninstallButtonPressed += UninstallCartridge;

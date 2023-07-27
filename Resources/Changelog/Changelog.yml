@@ -1,172 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - message: Due to safety cutbacks, electrical devices like substations are more
-      dangerous. Safety protocols demand you do not hit them. We strongly advise you
-      not to bite them either!
-    type: Tweak
-  id: 3814
-  time: '2023-05-19T08:21:15.0000000+00:00'
-- author: tom-leys
-  changes:
-  - message: You cannot stack Gas Filters, Mixers or several other Atmos devices like
-      pumps and valves. Pipes can still be stacked.
-    type: Remove
-  - message: Gas filters can now filter 5x faster (up to 1000 L/S) to compensate for
-      no more filter stacks. This is their new default rate
-    type: Tweak
-  - message: 'Gas Filters and mixers now have a flipped version visible in the construction
-      menu. Hint: You can still right click on an un-anchored filter / mixer and choose
-      rotate -> Flip'
-    type: Tweak
-  id: 3815
-  time: '2023-05-19T08:59:20.0000000+00:00'
-- author: KEEYNy
-  changes:
-  - message: Added Death Squad jumpsuit
-    type: Add
-  - message: Death Squad equipment now includes jumpsuit and Chef Engineer magboots
-    type: Tweak
-  id: 3816
-  time: '2023-05-19T10:21:36.0000000+00:00'
-- author: Jackal298
-  changes:
-  - message: updated sprites for changeling's sting drink
-    type: Tweak
-  id: 3817
-  time: '2023-05-19T20:11:25.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Bags of holding now are significantly more expensive to produce.
-    type: Tweak
-  id: 3818
-  time: '2023-05-20T00:59:07.0000000+00:00'
-- author: WlarusFromDaSpace
-  changes:
-  - message: The sad trombone implant now correctly only triggers whenever a mob dies
-    type: Fix
-  id: 3819
-  time: '2023-05-20T01:15:18.0000000+00:00'
-- author: MrGreen and OctoRocket
-  changes:
-  - message: Added tons more scarfs for you to enjoy at your departments!
-    type: Add
-  id: 3820
-  time: '2023-05-20T01:15:32.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Tech disks no longer contain exclusive discipline technology.
-    type: Fix
-  - message: Printing tech disks now costs fewer points.
-    type: Tweak
-  id: 3821
-  time: '2023-05-20T02:10:29.0000000+00:00'
-- author: Slava0135
-  changes:
-  - message: added space glue tube (can appear in maintenance lockers)
-    type: Add
-  id: 3822
-  time: '2023-05-20T02:42:38.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Fix fire stacks not spreading to other players.
-    type: Fix
-  id: 3823
-  time: '2023-05-20T03:34:41.0000000+00:00'
-- author: Jackal298
-  changes:
-  - message: the sprite of a doll with a skull bandana is now showing the skull
-    type: Tweak
-  id: 3824
-  time: '2023-05-20T19:46:10.0000000+00:00'
-- author: tom-leys
-  changes:
-  - message: Spacing takes a short time to occur, rather than being totally instant.
-      The decompression will make you cold.
-    type: Add
-  - message: Ripped tiles during spacing reflect the wind that passed through that
-      area, ripped tiles tend to be concentrated around the breach.
-    type: Tweak
-  id: 3825
-  time: '2023-05-20T19:53:04.0000000+00:00'
-- author: MrGreen and OctoRocket
-  changes:
-  - message: Added a winterdrobe to store all your scarfs!
-    type: Add
-  id: 3826
-  time: '2023-05-21T00:52:23.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: The Head Curator has allowed bibles and necronomicons to be stored in
-      bookshelves and book bags.
-    type: Tweak
-  id: 3827
-  time: '2023-05-21T00:52:48.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - message: NanoTrasen reports that crewmembers will no longer have to rely on the
-      placebo effect when ingesting chemicals found in puddles (which is not centcom-sanctioned
-      activity!)
-    type: Fix
-  id: 3828
-  time: '2023-05-21T03:05:22.0000000+00:00'
-- author: EEASAS
-  changes:
-  - message: The Syndicate has supplied their traitors and nuclear operatives with
-      a rifle, the AKMS.
-    type: Add
-  id: 3829
-  time: '2023-05-21T03:15:52.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - message: Advanced Spray is now a tier 2 tech and Advanced Entertainment is a tier
-      1 tech.
-    type: Tweak
-  - message: Added Bluespace Cargo Transport as a new tier 3 civilian services technology.
-    type: Add
-  - message: Fixed cargo telepads working without being linked to a console.
-    type: Fix
-  id: 3830
-  time: '2023-05-21T10:09:32.0000000+00:00'
-- author: Jackal298
-  changes:
-  - message: moved syndicate scarves from clothing vending machine to winterdrobe,
-      they will appear after winterdrobe emag
-    type: Tweak
-  id: 3831
-  time: '2023-05-21T23:55:00.0000000+00:00'
-- author: MrGreen and OctoRocket
-  changes:
-  - message: Added a flannel jumpsuit, check your local ClothesMate!
-    type: Add
-  id: 3832
-  time: '2023-05-22T00:05:35.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - message: Nerf magboots of blinding speed.
-    type: Fix
-  id: 3833
-  time: '2023-05-22T00:06:07.0000000+00:00'
-- author: TaralGit
-  changes:
-  - message: craftable shivs and three more types of spears
-    type: Add
-  id: 3834
-  time: '2023-05-22T00:14:43.0000000+00:00'
-- author: deltanedas
-  changes:
-  - message: Handheld radios now use their own channel and will work without a telecomms
-      server.
-    type: Tweak
-  id: 3835
-  time: '2023-05-22T00:16:47.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - message: Watertanks, fueltanks and their large variants have a new look. They
-      now show their contained solutions.
-    type: Tweak
-  id: 3836
-  time: '2023-05-22T00:27:51.0000000+00:00'
 - author: AjexRose
   changes:
   - message: Added a salvage section to the guide book
@@ -3176,3 +3008,142 @@ Entries:
   - {message: Added coffin to bury your fellow spessmen with honor., type: Add}
   id: 4313
   time: '2023-07-24T03:13:10.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'The Syndicate has supplied traitors with a much newer, much scarier
+      model of the Python chambered in classic .357.', type: Tweak}
+  - {message: The Mateba now fires faster and uses .357., type: Tweak}
+  id: 4314
+  time: '2023-07-24T23:02:15.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: Cigarettes can be injected again., type: Tweak}
+  id: 4315
+  time: '2023-07-24T23:02:30.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'The space dragon event now only spawns a dragon when a ghost takes
+      the role, and in a random location.', type: Tweak}
+  id: 4316
+  time: '2023-07-25T00:32:12.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Observers move faster now., type: Tweak}
+  id: 4317
+  time: '2023-07-25T00:33:01.0000000+00:00'
+- author: AjexRose
+  changes:
+  - {message: Central Command has given the command locked crates a new look, type: Tweak}
+  id: 4318
+  time: '2023-07-25T20:18:02.0000000+00:00'
+- author: Phill101
+  changes:
+  - {message: Added bleeding status icon, type: Add}
+  id: 4319
+  time: '2023-07-25T21:28:35.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: fixed spirete modular receiver and rifle stock, type: Fix}
+  id: 4320
+  time: '2023-07-25T21:29:56.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Non-human zombies now are the proper color and zombies can now identify
+      one another and are unable to harm one another., type: Add}
+  - {message: 'Removed zombie revival, decreased passive zombie healing, and adjusted
+      zombie weaknesses.', type: Add}
+  - {message: Fixed zombie NPCs continuing to attack other zombies., type: Fix}
+  - {message: Zombies can now pry open doors., type: Tweak}
+  - {message: Made initial infection selection more obvious., type: Tweak}
+  - {message: Fixed an issue where midround zombie outbreaks wouldn't create any zombies.,
+    type: Fix}
+  - {message: Initial infected selection is now delayed at the start of zombie rounds.,
+    type: Tweak}
+  - {message: The emergency shuttle is now automatically called when enough crew become
+      zombies., type: Add}
+  - {message: Reenabled zombie mode in secret., type: Add}
+  id: 4321
+  time: '2023-07-25T21:31:35.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Animals can now drink satiating liquids like water or beer when thirsty.,
+    type: Tweak}
+  - {message: Animals no longer eat with a full belly., type: Tweak}
+  id: 4322
+  time: '2023-07-25T21:32:11.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Hardsuit + Firesuit Rebalancingening., type: Tweak}
+  id: 4323
+  time: '2023-07-26T00:34:59.0000000+00:00'
+- author: kseandi
+  changes:
+  - {message: Nanotraisen found the cause of the Geiger counters malfunction!, type: Fix}
+  id: 4324
+  time: '2023-07-26T00:35:19.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: 'Added four new senior roles meant for teaching new players their related
+      department; Senior Engineer, Senior Researcher, Senior Physician and Senior
+      Officer.', type: Add}
+  id: 4325
+  time: '2023-07-26T03:06:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Players in critical condition can no longer use LOOC chat., type: Tweak}
+  id: 4326
+  time: '2023-07-26T06:02:49.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: Added an accentless trait., type: Add}
+  id: 4327
+  time: '2023-07-26T06:54:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed chat bubbles not appearing in replays., type: Fix}
+  id: 4328
+  time: '2023-07-26T07:11:15.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Changed captain's starting loadout not to have their gloves and carapace.,
+    type: Tweak}
+  id: 4329
+  time: '2023-07-26T07:30:44.0000000+00:00'
+- author: Hebiman
+  changes:
+  - {message: Added filter for reagents, type: Add}
+  id: 4330
+  time: '2023-07-26T08:05:09.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Pun-Pun is now always a ghost role, type: Tweak}
+  id: 4331
+  time: '2023-07-26T10:02:02.0000000+00:00'
+- author: Hebiman
+  changes:
+  - {message: Removed Alt Click interaction with implanter syringe, type: Fix}
+  id: 4332
+  time: '2023-07-26T18:41:29.0000000+00:00'
+- author: Misha_Unity
+  changes:
+  - {message: Added a news tab in PDA, type: Add}
+  - {message: Added a mass-media console to reporter, type: Add}
+  - {message: 'Added a popup, when PDA ringing', type: Add}
+  id: 4333
+  time: '2023-07-26T18:49:38.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: reinforced uranium windows now prevent a large amount of radiation from
+      passing through them, type: Add}
+  id: 4334
+  time: '2023-07-26T21:28:45.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Senior roles now require less playtime in specific roles., type: Tweak}
+  id: 4335
+  time: '2023-07-26T21:29:05.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Fixed gas tank inhand spriter, type: Fix}
+  id: 4336
+  time: '2023-07-26T21:29:35.0000000+00:00'
