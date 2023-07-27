@@ -12,6 +12,7 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -29,6 +30,11 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
         args.BonusDamage += component.Damage;
         RemCompDeferred<DamageMarkerComponent>(uid);
         _audio.PlayPredicted(component.Sound, uid, args.User);
+
+        if (TryComp<LeechOnMarkerComponent>(args.Used, out var leech))
+        {
+            _damageable.TryChangeDamage(args.User, leech.Leech, true, false, origin: args.Used);
+        }
     }
 
     public override void Update(float frameTime)

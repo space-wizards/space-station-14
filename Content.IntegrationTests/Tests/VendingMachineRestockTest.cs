@@ -1,7 +1,5 @@
 #nullable enable
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -105,7 +103,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestAllRestocksAreAvailableToBuy()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
 
@@ -159,11 +157,14 @@ namespace Content.IntegrationTests.Tests
                     }
                 }
 
-                Assert.That(restockStores.Count, Is.EqualTo(0),
-                    $"Some entities containing entities with VendingMachineRestock components are unavailable for purchase: \n - {string.Join("\n - ", restockStores.Keys)}");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(restockStores, Has.Count.EqualTo(0),
+                        $"Some entities containing entities with VendingMachineRestock components are unavailable for purchase: \n - {string.Join("\n - ", restockStores.Keys)}");
 
-                Assert.That(restocks.Count, Is.EqualTo(0),
-                    $"Some entities with VendingMachineRestock components are unavailable for purchase: \n - {string.Join("\n - ", restocks)}");
+                    Assert.That(restocks, Has.Count.EqualTo(0),
+                        $"Some entities with VendingMachineRestock components are unavailable for purchase: \n - {string.Join("\n - ", restocks)}");
+                });
             });
 
             await pairTracker.CleanReturnAsync();
@@ -172,7 +173,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestCompleteRestockProcess()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
 
@@ -184,10 +185,10 @@ namespace Content.IntegrationTests.Tests
             EntityUid packageWrong;
             EntityUid machine;
             EntityUid user;
-            VendingMachineComponent machineComponent;
-            VendingMachineRestockComponent restockRightComponent;
-            VendingMachineRestockComponent restockWrongComponent;
-            WiresPanelComponent machineWiresPanel;
+            VendingMachineComponent machineComponent = default!;
+            VendingMachineRestockComponent restockRightComponent = default!;
+            VendingMachineRestockComponent restockWrongComponent = default!;
+            WiresPanelComponent machineWiresPanel = default!;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
 
@@ -202,42 +203,51 @@ namespace Content.IntegrationTests.Tests
                 packageWrong = entityManager.SpawnEntity("TestRestockWrong", coordinates);
 
                 // Sanity test for components existing.
-                Assert.True(entityManager.TryGetComponent(machine, out machineComponent!), $"Machine has no {nameof(VendingMachineComponent)}");
-                Assert.True(entityManager.TryGetComponent(packageRight, out restockRightComponent!), $"Correct package has no {nameof(VendingMachineRestockComponent)}");
-                Assert.True(entityManager.TryGetComponent(packageWrong, out restockWrongComponent!), $"Wrong package has no {nameof(VendingMachineRestockComponent)}");
-                Assert.True(entityManager.TryGetComponent(machine, out machineWiresPanel!), $"Machine has no {nameof(WiresPanelComponent)}");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(entityManager.TryGetComponent(machine, out machineComponent!), $"Machine has no {nameof(VendingMachineComponent)}");
+                    Assert.That(entityManager.TryGetComponent(packageRight, out restockRightComponent!), $"Correct package has no {nameof(VendingMachineRestockComponent)}");
+                    Assert.That(entityManager.TryGetComponent(packageWrong, out restockWrongComponent!), $"Wrong package has no {nameof(VendingMachineRestockComponent)}");
+                    Assert.That(entityManager.TryGetComponent(machine, out machineWiresPanel!), $"Machine has no {nameof(WiresPanelComponent)}");
+                });
 
                 var systemMachine = entitySystemManager.GetEntitySystem<VendingMachineSystem>();
 
                 // Test that the panel needs to be opened first.
-                Assert.That(systemMachine.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.False, "Right package is able to restock without opened access panel");
-                Assert.That(systemMachine.TryAccessMachine(packageWrong, restockWrongComponent, machineComponent, user, machine), Is.False, "Wrong package is able to restock without opened access panel");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(systemMachine.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.False, "Right package is able to restock without opened access panel");
+                    Assert.That(systemMachine.TryAccessMachine(packageWrong, restockWrongComponent, machineComponent, user, machine), Is.False, "Wrong package is able to restock without opened access panel");
+                });
 
                 var systemWires = entitySystemManager.GetEntitySystem<WiresSystem>();
                 // Open the panel.
                 systemWires.TogglePanel(machine, machineWiresPanel, true);
 
-                // Test that the right package works for the right machine.
-                Assert.That(systemMachine.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.True, "Correct package is unable to restock with access panel opened");
+                Assert.Multiple(() =>
+                {
+                    // Test that the right package works for the right machine.
+                    Assert.That(systemMachine.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.True, "Correct package is unable to restock with access panel opened");
 
-                // Test that the wrong package does not work.
-                Assert.That(systemMachine.TryMatchPackageToMachine(packageWrong, restockWrongComponent, machineComponent, user, machine), Is.False, "Package with invalid canRestock is able to restock machine");
+                    // Test that the wrong package does not work.
+                    Assert.That(systemMachine.TryMatchPackageToMachine(packageWrong, restockWrongComponent, machineComponent, user, machine), Is.False, "Package with invalid canRestock is able to restock machine");
 
-                // Test that the right package does work.
-                Assert.That(systemMachine.TryMatchPackageToMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.True, "Package with valid canRestock is unable to restock machine");
+                    // Test that the right package does work.
+                    Assert.That(systemMachine.TryMatchPackageToMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.True, "Package with valid canRestock is unable to restock machine");
 
-                // Make sure there's something in there to begin with.
-                Assert.That(systemMachine.GetAvailableInventory(machine, machineComponent).Count, Is.GreaterThan(0),
-                    "Machine inventory is empty before emptying.");
+                    // Make sure there's something in there to begin with.
+                    Assert.That(systemMachine.GetAvailableInventory(machine, machineComponent), Has.Count.GreaterThan(0),
+                        "Machine inventory is empty before emptying.");
+                });
 
                 // Empty the inventory.
                 systemMachine.EjectRandom(machine, false, true, machineComponent);
-                Assert.That(systemMachine.GetAvailableInventory(machine, machineComponent).Count, Is.EqualTo(0),
+                Assert.That(systemMachine.GetAvailableInventory(machine, machineComponent), Has.Count.EqualTo(0),
                     "Machine inventory is not empty after ejecting.");
 
                 // Test that the inventory is actually restocked.
                 systemMachine.TryRestockInventory(machine, machineComponent);
-                Assert.That(systemMachine.GetAvailableInventory(machine, machineComponent).Count, Is.GreaterThan(0),
+                Assert.That(systemMachine.GetAvailableInventory(machine, machineComponent), Has.Count.GreaterThan(0),
                     "Machine available inventory count is not greater than zero after restock.");
 
                 mapManager.DeleteMap(testMap.MapId);
@@ -249,7 +259,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestRestockBreaksOpen()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
 
@@ -281,11 +291,13 @@ namespace Content.IntegrationTests.Tests
                 var damageSpec = new DamageSpecifier(prototypeManager.Index<DamageTypePrototype>("Blunt"), 100);
                 var damageResult = damageableSystem.TryChangeDamage(restock, damageSpec);
 
-                Assert.IsNotNull(damageResult,
+#pragma warning disable NUnit2045
+                Assert.That(damageResult, Is.Not.Null,
                     "Received null damageResult when attempting to damage restock box.");
 
                 Assert.That((int) damageResult!.Total, Is.GreaterThan(0),
                     "Box damage result was not greater than 0.");
+#pragma warning restore NUnit2045
             });
             await server.WaitRunTicks(15);
             await server.WaitAssertion(() =>
@@ -311,7 +323,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestRestockInventoryBounds()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
 
@@ -327,9 +339,9 @@ namespace Content.IntegrationTests.Tests
             {
                 var coordinates = testMap.GridCoords;
 
-                EntityUid machine = entityManager.SpawnEntity("VendingMachineTest", coordinates);
+                var machine = entityManager.SpawnEntity("VendingMachineTest", coordinates);
 
-                Assert.That(vendingMachineSystem.GetAvailableInventory(machine).Count, Is.EqualTo(1),
+                Assert.That(vendingMachineSystem.GetAvailableInventory(machine), Has.Count.EqualTo(1),
                     "Machine's available inventory did not contain one entry.");
 
                 Assert.That(vendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(1),

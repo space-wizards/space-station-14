@@ -1,0 +1,72 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Title="{Loc 'news-write-ui-default-title'}"
+    MinSize="680 512"
+    SetSize="680 512">
+    <BoxContainer Orientation="Horizontal"
+                  HorizontalExpand="True"
+                  VerticalExpand="True">
+        <BoxContainer Orientation="Vertical"
+                      VerticalExpand="True"
+                      SizeFlagsStretchRatio="2"
+                      Margin="10 0 10 10"
+                      MinWidth="350">
+            <Label Text="{Loc 'news-write-ui-articles-label'}" HorizontalAlignment="Center"/>
+            <customControls:HSeparator StyleClasses="LowDivider" Margin="0 0 0 10"/>
+            <PanelContainer VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                </PanelContainer.PanelOverride>
+                <ScrollContainer
+                    HScrollEnabled="False"
+                    HorizontalExpand="True"
+                    VerticalExpand="True">
+                    <BoxContainer
+                        Name="ArticleCardsContainer"
+                        Orientation="Vertical"
+                        VerticalExpand="True">
+
+                                 
+
+                    </BoxContainer>
+                </ScrollContainer>
+            </PanelContainer>
+        </BoxContainer>
+
+        <BoxContainer Orientation="Vertical"
+                      VerticalExpand="True"
+                      HorizontalExpand="True"
+                      Margin="15 0 0 0">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <Label Text="{Loc 'news-write-ui-article-name-label'}"/>
+                <LineEdit Name="NameInput"
+                          MinSize="60 0"
+                          VerticalAlignment="Top"
+                          Margin="4 0 0 0"
+                          Access="Public"
+                          HorizontalExpand="True"/>
+            </BoxContainer>
+            <customControls:HSeparator StyleClasses="LowDivider" Margin="0 5 0 5"/>
+            <Label Text="{Loc 'news-write-ui-article-content-label'}" Margin="0 0 0 5"/>
+            <PanelContainer Name="InputContainer"
+                            VerticalAlignment="Stretch"
+                            VerticalExpand="True"
+                            HorizontalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#333237"/>
+                </PanelContainer.PanelOverride>
+                <TextEdit Name="ContentInput" Access="Public" />
+            </PanelContainer>
+            <Button Name="Share"
+                    MinWidth="30"
+                    HorizontalAlignment="Left"
+                    Text="{Loc 'news-write-ui-share-text'}"
+                    Access="Public"
+                    Margin="0 4 4 4">
+            </Button>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

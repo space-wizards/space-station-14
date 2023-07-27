@@ -30,3 +30,91 @@
     sprite: Clothing/Eyes/Hud/sec.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/sec.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudBeer
+  name: beer goggles
+  description: A pair of sunHud outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/beergoggles.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/beergoggles.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudFriedOnion
+  name: fried onion goggles
+  description: Filler
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/friedonion.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/friedonion.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudOnionBeer
+  name: thungerst goggles
+  description: Filler
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/onionbeer.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/onionbeer.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudMedOnion
+  name: medonion hud
+  description: Filler
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/medonion.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/medonion.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudMedOnionBeer
+  name: medthungerst hud
+  description: Filler
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/medonionbeer.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/medonionbeer.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudMedSec
+  name: medsec hud
+  description: Filler
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/medsec.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/medsec.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudMultiversal
+  name: multiversal hud
+  description: Filler
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/medsecengi.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/medsecengi.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudOmni
+  name: omni hud
+  description: Filler
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/omni.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/omni.rsi

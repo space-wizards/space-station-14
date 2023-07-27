@@ -5,6 +5,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.Examine;
 
 namespace Content.Server.DeviceNetwork.Systems

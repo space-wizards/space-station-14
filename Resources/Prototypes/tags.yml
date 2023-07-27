@@ -20,6 +20,9 @@
   id: Baguette
 
 - type: Tag
+  id: BaseballBat
+
+- type: Tag
   id: Bee
 
 - type: Tag
@@ -68,6 +71,12 @@
   id: BrassInstrument
 
 - type: Tag
+  id: Bread
+
+- type: Tag
+  id: Briefcase
+
+- type: Tag
   id: Brutepack
 
 - type: Tag
@@ -84,6 +93,9 @@
 
 - type: Tag
   id: Carrot
+
+- type: Tag
+  id: CarrotFries
 
 - type: Tag
   id: Carpet
@@ -125,6 +137,9 @@
   id: CartridgeMagnum
 
 - type: Tag
+  id: CartridgeMagnum357
+
+- type: Tag
   id: CartridgePistol
 
 - type: Tag
@@ -136,6 +151,9 @@
 # Allows you to walk over tile entities such as lava without steptrigger
 - type: Tag
   id: Catwalk
+
+- type: Tag
+  id: Chicken
 
 - type: Tag
   id: Cigarette
@@ -160,6 +178,12 @@
 
 - type: Tag
   id: CluwneHorn
+
+- type: Tag #Ohioans die happy
+  id: Corn
+
+- type: Tag
+  id: Cow
 
 - type: Tag
   id: Crayon
@@ -210,6 +234,9 @@
   id: ComputerTelevisionCircuitboard
 
 - type: Tag
+  id: CubanCarp
+
+- type: Tag
   id: Debug
 
 - type: Tag
@@ -246,6 +273,9 @@
   id: DroneUsable
 
 - type: Tag
+  id: Duck
+
+- type: Tag
   id: Ectoplasm
 
 - type: Tag
@@ -259,6 +289,9 @@
 
 - type: Tag
   id: ExplosivePassable
+
+- type: Tag
+  id: Figurine
 
 - type: Tag
   id: FireAlarm
@@ -303,6 +336,9 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
+  id: Galaxythistle
+
+- type: Tag
   id: GasScrubber
 
 - type: Tag
@@ -321,6 +357,9 @@
   id: GlassShard
 
 - type: Tag
+  id: Goat
+
+- type: Tag
   id: Grenade
 
 - type: Tag
@@ -329,6 +368,9 @@
 
 - type: Tag
   id: Hamster
+
+- type: Tag
+  id: HamsterWearable
 
 - type: Tag
   id: HamtrCentralControlModule
@@ -438,6 +480,12 @@
   id: LavaBrig
 
 - type: Tag
+  id: Lemon
+
+- type: Tag
+  id: Lime
+
+- type: Tag
   id: Machete
 
 - type: Tag
@@ -530,6 +578,9 @@
   id: Mop
 
 - type: Tag
+  id: Mouse
+
+- type: Tag
   id: Multitool
 
 - type: Tag
@@ -557,6 +608,9 @@
   id: PaintableAirlock
 
 - type: Tag
+  id: Pancake
+
+- type: Tag
   id: PercussionInstrument
 
 - type: Tag
@@ -564,6 +618,12 @@
 
 - type: Tag
   id: Pickaxe
+
+- type: Tag
+  id: Pie
+
+- type: Tag
+  id: Pig
 
 - type: Tag
   id: PillCanister
@@ -590,10 +650,17 @@
   id: Plastic
 
 - type: Tag
+  id: Plunger
+  
+- type: Tag
   id: PlushieGhost
+
 
 - type: Tag
   id: Powerdrill
+
+- type: Tag
+  id: PrisonUniform
 
 - type: Tag
   id: ProximitySensor
@@ -657,6 +724,9 @@
   id: ShellShotgun
 
 - type: Tag
+  id: Shiv
+
+- type: Tag
   id: ShoesRequiredStepTriggerImmune
 
 - type: Tag
@@ -681,6 +751,9 @@
   id: SolarTrackerElectronics
 
 - type: Tag
+  id: Soup
+
+- type: Tag
   id: Spray
 
 - type: Tag
@@ -691,6 +764,9 @@
 
 - type: Tag
   id: SpeedLoaderMagnum
+
+- type: Tag
+  id: SpeedLoaderMagnum357
 
 - type: Tag
   id: SpeedLoaderPistol
@@ -732,6 +808,12 @@
   id: Taser
 
 - type: Tag
+  id: TabletopBoard
+
+- type: Tag
+  id: TabletopPiece
+
+- type: Tag
   id: TimerBrigElectronics
 
 - type: Tag
@@ -741,10 +823,16 @@
   id: TimerSignalElectronics
 
 - type: Tag
+  id: Toolbox
+
+- type: Tag
   id: Trash
 
 - type: Tag
   id: TrashBag
+  
+- type: Tag
+  id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
 
 - type: Tag
   id: UraniumGlassShard
@@ -793,3 +881,9 @@
 
 - type: Tag
   id: Write
+
+- type: Tag
+  id: RifleStock
+
+- type: Tag
+  id: ModularReceiver

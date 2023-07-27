@@ -1,37 +1,31 @@
-#(Security) Helmet
+#These are intentionally all very mediocre as locational damage does not exist yet. Without it, armor values will stack in a way that makes it really god damn hard to determine how effective something is, along with making players extremely tanky.
+#When it DOES exist, the values here should be totally reworked - probably just port them from SS13.
+
+#Basic Helmet (Security Helmet)
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHelmetHelmet
+  id: ClothingHeadHelmetBasic
   name: helmet
-  description: A usual helmet.
+  description: Standard security gear. Protects the head from impacts.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/security.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/security.rsi
-  - type: Armor
+  - type: Armor #Values seem to let the user survive one extra hit if attacked consistently.
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
+        Blunt: 0.9
+        Slash: 0.9
         Piercing: 0.9
-        Heat: 0.8
-
-#Old (Security) Helmet
-- type: entity
-  parent: ClothingHeadHelmetHelmet
-  id: ClothingHeadHelmetHelmetOld
-  name: helmet
-  description: Standard Security gear. Protects the head from impacts.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Helmets/securityold.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/securityold.rsi
+        Heat: 0.9
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 #Mercenary Helmet
 - type: entity
-  parent: ClothingHeadHelmetHelmet
+  parent: ClothingHeadHelmetBasic
   id: ClothingHeadHelmetMerc
   name: mercenary helmet
   description: The combat helmet is commonly used by mercenaries, is strong, light and smells like gunpowder and the jungle.
@@ -52,14 +46,15 @@
     sprite: Clothing/Head/Helmets/swat.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/swat.rsi
-  - type: Armor #In SS13 this has 100% acid (caustic) protection, however it would be probably be silly to give this to a helmet without locational damage existing yet.
+  - type: Armor #This is intentionally not spaceproof, when the time comes to port the values from SS13 this should be buffed from what it was.
     modifiers:
       coefficients:
-        Blunt: 0.70
-        Slash: 0.70
+        Blunt: 0.80
+        Slash: 0.80
         Piercing: 0.80
         Heat: 0.80
         Radiation: 0.80
+        Caustic: 0.95
   - type: ExplosionResistance
     damageCoefficient: 0.75
 
@@ -93,7 +88,7 @@
       coefficients:
         Blunt: 0.8
         Slash: 0.8
-        Piercing: 0.8
+        Piercing: 0.95
 
 #Bombsuit Helmet
 - type: entity
@@ -112,9 +107,9 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.5
-        Slash: 0.8
-        Piercing: 0.8
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
 
 #Cult Helmet
 - type: entity
@@ -131,10 +126,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
+        Blunt: 0.9
         Slash: 0.8
         Piercing: 0.9
-        Heat: 0.8
+        Heat: 0.9
 
 #SCAF Helmet
 - type: entity
@@ -151,8 +146,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
+        Blunt: 0.9
+        Slash: 0.9
         Piercing: 0.8
   - type: Tag
     tags:
@@ -229,15 +224,7 @@
     quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
-    coefficient: 0.01
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.90
-        Slash: 0.90
-        Piercing: 0.95
-        Heat: 0.65
-        Radiation: 1
+    coefficient: 0.005
   - type: IdentityBlocker
   - type: Tag
     tags:
@@ -259,16 +246,8 @@
   - type: IngestionBlocker
   - type: TemperatureProtection
     coefficient: 0.005
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.90
-        Slash: 0.90
-        Piercing: 0.95
-        Heat: 0.5
-        Radiation: .95
   - type: PressureProtection
-    highPressureMultiplier: 0.45
+    highPressureMultiplier: 0.25
     lowPressureMultiplier: 1000
   - type: IdentityBlocker
   - type: Tag
@@ -287,10 +266,71 @@
     sprite: Clothing/Head/Helmets/linghelmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/linghelmet.rsi
-  - type: Armor
+  - type: Armor #admeme item so it should be fine being overpowered while helmets are still intentionally kneecapped.
     modifiers:
       coefficients:
         Blunt: 0.5
         Slash: 0.5
         Piercing: 0.5
         Heat: 0.9
+
+#ERT HELMETS
+#ERT Leader Helmet
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetERTLeader
+  name: ERT leader helmet
+  description: An in-atmosphere helmet worn by the leader of a Nanotrasen Emergency Response Team. Has blue highlights.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/ert_leader.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/ert_leader.rsi
+
+#ERT Security Helmet
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetERTSecurity
+  name: ERT security helmet
+  description: An in-atmosphere helmet worn by security members of the Nanotrasen Emergency Response Team. Has red highlights.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/ert_security.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/ert_security.rsi
+
+#ERT Medic Helmet
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetERTMedic
+  name: ERT medic helmet
+  description: An in-atmosphere helmet worn by medical members of the Nanotrasen Emergency Response Team. Has white highlights.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/ert_medic.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/ert_medic.rsi
+
+#ERT Engineer Helmet
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetERTEngineer
+  name: ERT engineer helmet
+  description: An in-atmosphere helmet worn by engineering members of the Nanotrasen Emergency Response Team. Has orange highlights.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/ert_engineer.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/ert_engineer.rsi
+
+#ERT Janitor Helmet
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetERTJanitor
+  name: ERT janitor helmet
+  description: An in-atmosphere helmet worn by janitorial members of the Nanotrasen Emergency Response Team. Has dark purple highlights.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/ert_janitor.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/ert_janitor.rsi

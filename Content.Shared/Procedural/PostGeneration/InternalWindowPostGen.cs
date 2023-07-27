@@ -11,7 +11,7 @@ namespace Content.Shared.Procedural.PostGeneration;
 public sealed class InternalWindowPostGen : IPostDunGen
 {
     [DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> Entities = new()
+    public List<string?> Entities = new()
     {
         "Grille",
         "Window",

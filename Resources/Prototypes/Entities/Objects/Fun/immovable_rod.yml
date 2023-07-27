@@ -1,6 +1,4 @@
-﻿ # Immovable rod
-
-- type: entity
+﻿- type: entity
   id: ImmovableRod
   name: immovable rod
   description: You can sense that it's hungry. That's usually a bad sign.
@@ -33,12 +31,32 @@
         layer:
         - Impassable
         - Opaque
+  - type: WarpPoint
+    follow: true
+    location: immovable rod
 
 - type: entity
+  parent: ImmovableRod
   id: ImmovableRodSlow
   suffix: Slow
-  parent: ImmovableRod
   components:
   - type: ImmovableRod
     minSpeed: 1
     maxSpeed: 5
+
+- type: entity
+  parent: ImmovableRod
+  id: ImmovableRodKeepTiles
+  suffix: Keep Tiles
+  components:
+  - type: ImmovableRod
+    destroyTiles: false
+    hitSoundProbability: 1.0
+
+- type: entity
+  parent: ImmovableRodKeepTiles
+  id: ImmovableRodKeepTilesStill
+  suffix: Keep Tiles, Still
+  components:
+  - type: ImmovableRod
+    randomizeVelocity: false
