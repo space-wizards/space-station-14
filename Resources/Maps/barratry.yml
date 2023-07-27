@@ -15875,16 +15875,34 @@ entities:
     - pos: -56.5,52.5
       parent: 1
       type: Transform
+    - linkedPorts:
+        7871:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 4986
     components:
     - pos: -53.5,52.5
       parent: 1
       type: Transform
+    - linkedPorts:
+        7872:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 4987
     components:
     - pos: -50.5,52.5
       parent: 1
       type: Transform
+    - linkedPorts:
+        7873:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
 - proto: Brutepack
   entities:
   - uid: 1990
@@ -45203,6 +45221,10 @@ entities:
       pos: 0.5,-11.5
       parent: 1
       type: Transform
+    - linkedPorts:
+        347:
+        - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
+      type: DeviceLinkSource
 - proto: ComputerBroken
   entities:
   - uid: 591
@@ -80550,6 +80572,9 @@ entities:
     - pos: 1.5,-14.5
       parent: 1
       type: Transform
+    - links:
+      - 341
+      type: DeviceLinkSink
 - proto: MachineFrame
   entities:
   - uid: 253
@@ -111138,18 +111163,27 @@ entities:
       pos: -57.5,52.5
       parent: 1
       type: Transform
+    - links:
+      - 4985
+      type: DeviceLinkSink
   - uid: 7872
     components:
     - rot: 3.141592653589793 rad
       pos: -54.5,52.5
       parent: 1
       type: Transform
+    - links:
+      - 4986
+      type: DeviceLinkSink
   - uid: 7873
     components:
     - rot: 3.141592653589793 rad
       pos: -51.5,52.5
       parent: 1
       type: Transform
+    - links:
+      - 4987
+      type: DeviceLinkSink
   - uid: 13318
     components:
     - rot: 3.141592653589793 rad

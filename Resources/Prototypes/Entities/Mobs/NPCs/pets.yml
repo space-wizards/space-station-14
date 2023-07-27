@@ -645,6 +645,7 @@
   description: A prominent representative of monkeys with unlimited access to alcohol.
   components:
   - type: GhostRole
+    prob: 1
     makeSentient: true
     allowSpeech: true
     allowMovement: true

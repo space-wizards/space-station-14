@@ -15,6 +15,7 @@
       currentMode: Draw
       implanterSlot:
         name: Implant
+        locked: True
         priority: 0
         whitelist:
           tags:

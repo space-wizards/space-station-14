@@ -162,13 +162,15 @@ namespace Content.Server.Database
             modelBuilder.Entity<ConnectionLog>()
                 .HasIndex(p => p.UserId);
 
-            // SetNull is necessary here so you can safely delete admins (GDPR right to erasure) while keeping the notes intact
+            // SetNull is necessary for created by/edited by-s here,
+            // so you can safely delete admins (GDPR right to erasure) while keeping the notes intact
+
             modelBuilder.Entity<AdminNote>()
                 .HasOne(note => note.Player)
                 .WithMany(player => player.AdminNotesReceived)
                 .HasForeignKey(note => note.PlayerUserId)
                 .HasPrincipalKey(player => player.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<AdminNote>()
                 .HasOne(version => version.CreatedBy)
@@ -196,7 +198,7 @@ namespace Content.Server.Database
                 .WithMany(player => player.AdminWatchlistsReceived)
                 .HasForeignKey(note => note.PlayerUserId)
                 .HasPrincipalKey(player => player.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<AdminWatchlist>()
                 .HasOne(version => version.CreatedBy)
@@ -224,7 +226,7 @@ namespace Content.Server.Database
                 .WithMany(player => player.AdminMessagesReceived)
                 .HasForeignKey(note => note.PlayerUserId)
                 .HasPrincipalKey(player => player.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<AdminMessage>()
                 .HasOne(version => version.CreatedBy)

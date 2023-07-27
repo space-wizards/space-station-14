@@ -120,27 +120,9 @@ namespace Content.Server.GameTicking
 
             async void SpawnWaitDb()
             {
-                // Temporary debugging code to fix a random test failures
-                var initialStatus = _userDb.GetLoadTask(session).Status;
-                var prefsLoaded = _prefsManager.HavePreferencesLoaded(session);
-                DebugTools.Assert(session.Status == SessionStatus.InGame);
-
                 await _userDb.WaitLoadComplete(session);
 
-                try
-                {
-                    SpawnPlayer(session, EntityUid.Invalid);
-                }
-                catch (Exception e)
-                {
-                    Log.Error($"Caught exception while trying to spawn a player.\n" +
-                              $"Initial DB task status: {initialStatus}\n" +
-                              $"Prefs initially loaded: {prefsLoaded}\n" +
-                              $"DB task status: {_userDb.GetLoadTask(session).Status}\n" +
-                              $"Prefs loaded: {_prefsManager.HavePreferencesLoaded(session)}\n" +
-                              $"Exception: \n{e}");
-                    throw;
-                }
+                SpawnPlayer(session, EntityUid.Invalid);
             }
 
             async void SpawnObserverWaitDb()

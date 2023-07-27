@@ -414,7 +414,7 @@ namespace Content.Server.Physics.Controllers
                         }
                         else
                         {
-                            torque = MathF.Max(body.AngularVelocity / torqueMul, torque);
+                            torque = MathF.Min(-body.AngularVelocity / torqueMul, torque);
                         }
 
                         if (!torque.Equals(0f))
