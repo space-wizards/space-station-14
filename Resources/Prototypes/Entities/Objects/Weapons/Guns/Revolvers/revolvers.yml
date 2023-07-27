@@ -109,6 +109,15 @@
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 2
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+      params:
+        volume: 2.25
 
 - type: entity 
   name: Python

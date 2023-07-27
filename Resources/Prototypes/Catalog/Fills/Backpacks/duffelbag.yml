@@ -260,7 +260,7 @@
   - type: StorageFill
     contents:
       - id: SyringeRomerol
-      - id: WeaponRevolverMateba
+      - id: WeaponRevolverPython
       - id: MagazineBoxMagnumIncendiary
       - id: PillAmbuzolPlus
       - id: PillAmbuzol
