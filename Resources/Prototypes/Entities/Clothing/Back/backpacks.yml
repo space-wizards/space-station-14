@@ -28,6 +28,35 @@
     delay: 0.5
 
 - type: entity
+  parent: Clothing
+  id: ClothingBackpackAtmos
+  name: atmospheric backpack
+  description: a backpack, that is supposed to contain special gases. It contains only air though.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/atmospherics.rsi
+    state: icon
+  - type: Item
+    size: 9999
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+  - type: Storage
+    capacity: 100
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  # to prevent bag open/honk spam
+  - type: UseDelay
+    delay: 0.5
+
+- type: entity
   parent: ClothingBackpack
   id: ClothingBackpackClown
   name: giggles von honkerton
