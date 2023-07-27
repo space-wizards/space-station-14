@@ -1,5 +1,6 @@
 using Content.Server.Chat.Managers;
 using Content.Server.Mind;
+using Content.Server.Objectives;
 using Content.Server.Roles;
 using Content.Shared.Alert;
 using Content.Shared.Blob;
@@ -12,7 +13,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using TerraFX.Interop.Windows;
 
 namespace Content.Server.Blob;
 
@@ -76,6 +76,12 @@ public sealed class BlobCoreSystem : EntitySystem
         _mindSystem.AddRole(mind, traitorRole);
         SendBlobBriefing(mind);
 
+        if (_prototypeManager.TryIndex<ObjectivePrototype>("BlobCaptureObjective", out var objective)
+            && objective.CanBeAssigned(mind))
+        {
+            _mindSystem.TryAddObjective(traitorRole.Mind, objective);
+        }
+
         if (_mindSystem.TryGetSession(mind, out var session))
         {
             _audioSystem.PlayGlobal(core.GreetSoundNotification, session);
@@ -96,8 +102,6 @@ public sealed class BlobCoreSystem : EntitySystem
     {
         var maxHealth = component.CoreBlobTotalHealth;
         var currentHealth = maxHealth - args.Damageable.TotalDamage;
-
-        Logger.Info($"Current blob health {currentHealth}");
 
         if (component.Observer != null)
             _alerts.ShowAlert(component.Observer.Value, AlertType.BlobHealth, (short) Math.Clamp(Math.Round(currentHealth.Float() / 10f), 0, 20));
