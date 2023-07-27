@@ -80,8 +80,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: WeaponRevolverPython
-      - id: SpeedLoaderMagnum
+      - id: WeaponRevolverPythonAP
+      - id: SpeedLoaderMagnumAP
         amount: 2
 
 - type: entity
@@ -264,7 +264,7 @@
   - type: StorageFill
     contents:
       - id: SyringeRomerol
-      - id: WeaponRevolverMateba
+      - id: WeaponRevolverPython
       - id: MagazineBoxMagnumIncendiary
       - id: PillAmbuzolPlus
       - id: PillAmbuzol
