@@ -1,15 +1,4 @@
 Entries:
-- author: MisterMecky
-  changes:
-  - {message: Fixed water coolers having water tank sprites., type: Fix}
-  - {message: Water coolers now show their contained solutions., type: Tweak}
-  id: 3851
-  time: '2023-05-23T15:24:42.0000000+00:00'
-- author: HerCoyote23
-  changes:
-  - {message: Added Gloves of the North Star, type: Add}
-  id: 3852
-  time: '2023-05-23T18:12:31.0000000+00:00'
 - author: Debug
   changes:
   - {message: 'Central Command finally got around to repairing their station, the
@@ -2981,3 +2970,13 @@ Entries:
   - {message: Added HoS flask., type: Add}
   id: 4350
   time: '2023-07-27T19:41:33.0000000+00:00'
+- author: KingFroozy
+  changes:
+  - {message: Minor sprite changes for jaws of life and power drill, type: Tweak}
+  id: 4351
+  time: '2023-07-27T20:03:28.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Alien artifact intercom no longer has the syndicate channel., type: Tweak}
+  id: 4352
+  time: '2023-07-27T20:03:48.0000000+00:00'
