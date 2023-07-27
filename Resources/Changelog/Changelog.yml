@@ -1,9 +1,4 @@
 Entries:
-- author: AjexRose
-  changes:
-  - {message: Added a salvage section to the guide book, type: Add}
-  id: 3837
-  time: '2023-05-22T04:01:25.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Locking closets popup is now predicted., type: Fix}
@@ -2980,3 +2975,10 @@ Entries:
   - {message: Fixed gas tank inhand spriter, type: Fix}
   id: 4336
   time: '2023-07-26T21:29:35.0000000+00:00'
+- author: AjexRose
+  changes:
+  - {message: 'After numerous complaints from security and salvage, CentCom has authorized
+      the creation of the Ammo TechFab, it''s board may be able to be recovered from
+      remote places.', type: Add}
+  id: 4337
+  time: '2023-07-27T00:41:51.0000000+00:00'
