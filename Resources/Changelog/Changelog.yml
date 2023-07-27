@@ -1,15 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Locking closets popup is now predicted., type: Fix}
-  id: 3838
-  time: '2023-05-22T13:18:51.0000000+00:00'
-- author: ficcialfaint
-  changes:
-  - {message: PAI's Stop Searching button now removes the pAI from ghost roles list.,
-    type: Fix}
-  id: 3839
-  time: '2023-05-22T13:19:36.0000000+00:00'
 - author: themias
   changes:
   - {message: Fixed eggs and tomatoes not making puddles when thrown., type: Fix}
@@ -2982,3 +2971,14 @@ Entries:
       remote places.', type: Add}
   id: 4337
   time: '2023-07-27T00:41:51.0000000+00:00'
+- author: potato1234x
+  changes:
+  - {message: Changed robust nukie drink sprite., type: Tweak}
+  id: 4338
+  time: '2023-07-27T02:17:22.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: 'Changed the sprites of some shotguns, now the sprite in the hands should
+      look like the sprite of the icon', type: Tweak}
+  id: 4339
+  time: '2023-07-27T02:18:11.0000000+00:00'
