@@ -28,14 +28,10 @@
                         Name="ArticleCardsContainer"
                         Orientation="Vertical"
                         VerticalExpand="True">
-
-                                 
-
                     </BoxContainer>
                 </ScrollContainer>
             </PanelContainer>
         </BoxContainer>
-
         <BoxContainer Orientation="Vertical"
                       VerticalExpand="True"
                       HorizontalExpand="True"

@@ -1,7 +1,6 @@
 using Content.Shared.CartridgeLoader;
 using Robust.Shared.Serialization;
 
-
 namespace Content.Shared.PDA
 {
     [Serializable, NetSerializable]
@@ -16,9 +15,14 @@ namespace Content.Shared.PDA
         public bool HasNewsTab;
         public string? Address;
 
-        public PdaUpdateState(bool flashlightEnabled, bool hasPen, PdaIdInfoText pdaOwnerInfo,
-            string? stationName, bool hasUplink = false,
-            bool canPlayMusic = false, bool hasNewsTab = false, string? address = null)
+        public PdaUpdateState(bool flashlightEnabled,
+            bool hasPen,
+            PdaIdInfoText pdaOwnerInfo,
+            string? stationName,
+            bool hasUplink = false,
+            bool canPlayMusic = false,
+            bool hasNewsTab = false,
+            string? address = null)
         {
             FlashlightEnabled = flashlightEnabled;
             HasPen = hasPen;
