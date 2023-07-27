@@ -15,3 +15,8 @@ ent-WeldingFuelTank2HighCapacityFull = { ent-WeldingFuelTankHighCapacity }
     .desc = { ent-WeldingFuelTankHighCapacity.desc }
 ent-WeldingFuelTank2HighCapacityEmpty = { ent-WeldingFuelTankHighCapacity }
     .desc = { ent-WeldingFuelTankHighCapacity.desc }
+
+ent-SpaceCleanerTankEmpty = резервуар с космическим очистителем
+    .desc = Резервуар, используемый для хранения большого количества чистоты.
+ent-SpaceCleanerTankFull = { ent-SpaceCleanerTankEmpty }
+    .desc = { ent-SpaceCleanerTankEmpty.desc }
