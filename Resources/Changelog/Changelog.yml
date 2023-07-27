@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: partially full syringe contents now easier to see, type: Fix}
-  id: 3854
-  time: '2023-05-23T19:06:36.0000000+00:00'
 - author: '0x6273'
   changes:
   - {message: Artifacts now retain their monetary value after extracting points.,
@@ -2980,3 +2975,10 @@ Entries:
   - {message: News articles can only be deleted by their tracked author., type: Tweak}
   id: 4353
   time: '2023-07-27T20:25:56.0000000+00:00'
+- author: RiceMar
+  changes:
+  - {message: Nanotrasen has yielded to the pleas of the station's newly forming rock
+      bands and has permitted "guitars worn on the back rebelliously" under official
+      dress code., type: Add}
+  id: 4354
+  time: '2023-07-27T23:05:32.0000000+00:00'
