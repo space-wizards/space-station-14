@@ -21,6 +21,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   parent: FoodBreadBase

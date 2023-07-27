@@ -17,6 +17,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
+  - type: StaticPrice
+    price: 225
 
 # Noodles
 

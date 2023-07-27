@@ -97,6 +97,8 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: output
+  - type: StaticPrice
+    price: 1200
 
 # Compact Wall Substation Base
 - type: entity
@@ -189,6 +191,8 @@
     totalIntensity: 100
   - type: StationInfiniteBatteryTarget
   - type: WallMount
+  - type: StaticPrice
+    price: 1000
 
 # Substations in use
 

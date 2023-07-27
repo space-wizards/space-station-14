@@ -28,6 +28,8 @@
   - type: Tag
     tags:
     - Pizza
+  - type: StaticPrice
+    price: 150
 
 - type: entity
   parent: FoodInjectableBase # Not sliceable

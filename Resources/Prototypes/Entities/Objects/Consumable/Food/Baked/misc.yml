@@ -17,6 +17,8 @@
           Quantity: 5
   - type: Item
     size: 1
+  - type: StaticPrice
+    price: 25
 
 # Muffins/Buns
 

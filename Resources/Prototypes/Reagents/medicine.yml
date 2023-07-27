@@ -25,6 +25,7 @@
   desc: reagent-desc-dylovene
   physicalDesc: reagent-physical-desc-translucent
   flavor: medicine
+  pricePerUnit: 0.3 #imperial
   color: "#3a1d8a"
   metabolisms:
     Medicine:
@@ -137,6 +138,7 @@
   desc: reagent-desc-bicaridine
   physicalDesc: reagent-physical-desc-opaque
   flavor: medicine
+  pricePerUnit: 0.3 #imperial
   color: "#ffaa00"
   metabolisms:
     Medicine:
@@ -213,7 +215,7 @@
             max: 150.0
           damage:
             types:
-             Cellular: -2 
+             Cellular: -2
 
 - type: reagent
   id: Dermaline
@@ -222,6 +224,7 @@
   desc: reagent-desc-dermaline
   physicalDesc: reagent-physical-desc-translucent
   flavor: medicine
+  pricePerUnit: 0.3 #imperial
   color: "#215263"
   metabolisms:
     Medicine:
@@ -279,6 +282,7 @@
   desc: reagent-desc-dexalin-plus
   physicalDesc: reagent-physical-desc-cloudy
   flavor: medicine
+  pricePerUnit: 0.3 #imperial
   color: "#4da0bd"
   metabolisms:
     Medicine:
