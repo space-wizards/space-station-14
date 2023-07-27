@@ -1,4 +1,4 @@
-﻿<pda:PdaWindow  xmlns="https://spacestation14.io"
+<pda:PdaWindow  xmlns="https://spacestation14.io"
                 xmlns:pda="clr-namespace:Content.Client.PDA"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 MinSize="576 450"
@@ -65,6 +65,10 @@
                                        Text="{Loc 'crew-manifest-button-label'}"
                                        Description="{Loc 'crew-manifest-button-description'}"
                                        Visible="False" />
+                <pda:PdaSettingsButton Name="NewsReadButton"
+                                       Access="Public"
+                                       Text="{Loc 'pda-news-button-label'}"
+                                       Description="{Loc 'pda-news-button-description'}"/>
                 <pda:PdaSettingsButton Name="ActivateMusicButton"
                                        Access="Public"
                                        Text="{Loc 'pda-bound-user-interface-music-button'}"

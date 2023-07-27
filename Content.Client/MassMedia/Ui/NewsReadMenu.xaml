@@ -1,0 +1,52 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc 'news-read-ui-default-title'}"
+    MinSize="512 512"
+    SetSize="512 512">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Margin="4,4,4,4" Orientation="Horizontal">
+            <Button
+                Name="Past"
+                MinWidth="64"
+                HorizontalAlignment="Left"
+                Text="{Loc 'news-read-ui-past-text'}"
+                Access="Public"
+                HorizontalExpand="True" />
+            <Button
+                Name="Next"
+                MinWidth="64"
+                HorizontalAlignment="Right"
+                 Text="{Loc 'news-read-ui-next-text'}" />
+        </BoxContainer>
+        <controls:StripeBack Name="АrticleNameContainer">
+            <PanelContainer>
+                <Label Name="PageNum" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                <Label Name="PageName" Align="Center"/>
+            </PanelContainer>
+        </controls:StripeBack>
+        <PanelContainer VerticalExpand="True">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#80808005" />
+            </PanelContainer.PanelOverride>
+            <ScrollContainer
+                    Name="PageTextScroll"
+                    HScrollEnabled="False"
+                    HorizontalExpand="True"
+                    MinSize="100 256"
+                    SizeFlagsStretchRatio="2"
+                    VerticalExpand="True">
+                <BoxContainer
+                    Name="PageTextContainer"
+                    MinSize="100 256"
+                    Orientation="Vertical"
+                    SizeFlagsStretchRatio="2"
+                    VerticalExpand="True">
+                </BoxContainer>
+                <RichTextLabel Margin="8,8,8,8" Name="PageText" VerticalAlignment="Top"/>
+            </ScrollContainer>
+        </PanelContainer>
+        <RichTextLabel Margin="8,8,8,8" Name="ShareTime" VerticalAlignment="Top"/>
+    </BoxContainer>
+</DefaultWindow>

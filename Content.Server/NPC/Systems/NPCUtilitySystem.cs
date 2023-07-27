@@ -14,6 +14,7 @@ using Content.Shared.Fluids.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Server.Containers;
@@ -27,8 +28,8 @@ namespace Content.Server.NPC.Systems;
 /// </summary>
 public sealed class NPCUtilitySystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly DrinkSystem _drink = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FoodSystem _food = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -145,9 +146,34 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (!_food.IsDigestibleBy(owner, targetUid, food))
                     return 0f;
 
-                // no mouse don't eat the uranium-235
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
+
+                // only eat when hungry or if it will eat anything
+                if (TryComp<HungerComponent>(owner, out var hunger) && hunger.CurrentThreshold > HungerThreshold.Okay && avoidBadFood)
+                    return 0f;
+
+                // no mouse don't eat the uranium-235
                 if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
+                    return 0f;
+
+                return 1f;
+            }
+            case DrinkValueCon:
+            {
+                if (!TryComp<DrinkComponent>(targetUid, out var drink) || !drink.Opened)
+                    return 0f;
+
+                // only drink when thirsty
+                if (TryComp<ThirstComponent>(owner, out var thirst) && thirst.CurrentThirstThreshold > ThirstThreshold.Okay)
+                    return 0f;
+
+                // no janicow don't drink the blood puddle
+                if (HasComp<BadDrinkComponent>(targetUid))
+                    return 0f;
+
+                // needs to have something that will satiate thirst, mice wont try to drink 100% pure mutagen.
+                var hydration = _drink.TotalHydration(targetUid, drink);
+                if (hydration <= 1.0f)
                     return 0f;
 
                 return 1f;
