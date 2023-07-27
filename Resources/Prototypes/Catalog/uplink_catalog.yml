@@ -15,9 +15,9 @@
   id: UplinkRevolverPython
   name: uplink-revolver-python-name
   description: uplink-revolver-python-desc
-  productEntity: WeaponRevolverPython
+  productEntity: WeaponRevolverPythonAP
   cost:
-    Telecrystal: 13 #Possibly too expensive, the ammo or gun may need to be cheapened later on if it proves to not be worth it.
+    Telecrystal: 8
   categories:
   - UplinkWeapons
 
@@ -231,13 +231,13 @@
 
 # For the Python
 - type: listing
-  id: UplinkSpeedLoaderMagnum
+  id: UplinkSpeedLoaderMagnumAP
   name: uplink-speedloader-magnum-name
   description: uplink-speedloader-magnu-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: icon-357  }
-  productEntity: SpeedLoaderMagnum357
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: icon }
+  productEntity: SpeedLoaderMagnumAP
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkAmmo
 
@@ -815,7 +815,7 @@
   description: uplink-revolver-cap-gun-fake-desc
   productEntity: RevolverCapGunFake
   cost:
-    Telecrystal: 14
+    Telecrystal: 6
   categories:
   - UplinkJob
   conditions:
