@@ -923,6 +923,39 @@
     key: walls
     base: wood
 
+- type: entity
+  parent: BaseWall
+  id: WallWeb
+  name: web wall
+  description: Keeps the spiders in and the greytide out.
+  components:
+  - type: Clickable
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/slash.ogg"
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/web.rsi
+  - type: Icon
+    sprite: Structures/Walls/web.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: wall
 
 # Vault Walls
 
@@ -970,7 +1003,6 @@
   - type: Icon
     sprite: Structures/Walls/vault.rsi
     state: sandstonevault
-
 
 # Mime
 

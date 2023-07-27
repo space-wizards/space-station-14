@@ -786,3 +786,17 @@
   - type: Stack
     stackType: FloorTileGratingMaint
 
+- type: entity
+  name: web tile
+  parent: FloorTileItemBase
+  id: FloorTileItemWeb
+  components:
+  - type: Sprite
+    state: reinforced
+  - type: Item
+    heldPrefix: web
+  - type: FloorTile
+    outputs:
+      - FloorWebTile
+  - type: Stack
+    stackType: FloorTileWeb

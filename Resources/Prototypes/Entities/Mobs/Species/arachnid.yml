@@ -75,6 +75,8 @@
     spawned:
       - id: FoodMeatSpider
         amount: 5
+  - type: Puller
+    needsHands: false
 
 - type: entity
   save: false
