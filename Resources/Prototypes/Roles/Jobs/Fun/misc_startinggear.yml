@@ -76,7 +76,8 @@
     eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitSyndie
+    #outerClothing: ClothingOuterHardsuitSyndie
+    outerClothing: ClothingOuterHardsuitSyndieFactionExplosion #Imperial explosiong nukeops hardsuits
     shoes: ClothingShoesBootsCombatFilled
     id: AgentIDCard
     pocket1: ExtendedEmergencyOxygenTankFilled
@@ -97,7 +98,8 @@
     eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitSyndieCommander
+    #outerClothing: ClothingOuterHardsuitSyndieCommander
+    outerClothing: ClothingOuterHardsuitSyndieCommanderFactionExplosion #Imperial explosiong nukeops hardsuits
     shoes: ClothingShoesBootsCombatFilled
     id: SyndiPDA
     pocket1: ExtendedEmergencyOxygenTankFilled
@@ -117,7 +119,8 @@
     eyes: ClothingEyesHudMedical
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitSyndieElite
+    #outerClothing: ClothingOuterHardsuitSyndieElite
+    outerClothing: ClothingOuterHardsuitSyndieEliteFactionExplosion #Imperial explosiong nukeops hardsuits
     shoes: ClothingShoesBootsMagSyndie
     id: SyndiPDA
     pocket1: DoubleEmergencyOxygenTankFilled

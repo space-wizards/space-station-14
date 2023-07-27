@@ -32,3 +32,7 @@
     - type: Faction
       factions:
         - NanoTrasen
+    #Imperial foot prints
+    - type: FootPrints
+      leftBarePrint: "footprint-left-bare-diona"
+      rightBarePrint: "footprint-right-bare-diona"

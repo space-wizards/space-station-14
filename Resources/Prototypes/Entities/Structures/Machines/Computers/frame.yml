@@ -53,6 +53,8 @@
     - state: 0
       map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Appearance
+  - type: StaticPrice
+    price: 200 #Imperial price balance
   - type: GenericVisualizer
     visuals:
       enum.ConstructionVisuals.Key:

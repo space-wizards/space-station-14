@@ -11,7 +11,7 @@
   name: materials-gold
   icon: { sprite: Objects/Materials/ingots.rsi, state: gold }
   color: "#FFD700"
-  price: 0.2
+  price: 1.5 #Imperial price balance
 
 - type: material
   id: Silver
@@ -19,7 +19,7 @@
   name: materials-silver
   icon: { sprite: Objects/Materials/ingots.rsi, state: silver }
   color: "#C0C0C0"
-  price: 0.15
+  price: 1 #Imperial price balance
 
 - type: material
   id: Plasteel

@@ -55,4 +55,4 @@
         datadisk_base: Sixteen
   - type: TechnologyDisk
   - type: StaticPrice
-    price: 50
+    price: 500 #Imperial price balance

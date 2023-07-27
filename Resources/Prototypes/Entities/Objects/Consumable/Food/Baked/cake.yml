@@ -23,6 +23,8 @@
           Quantity: 5
   - type: Item
     size: 25
+  - type: StaticPrice
+    price: 200
 
 - type: entity
   parent: FoodCakeBase
@@ -685,6 +687,8 @@
     color: "#FFFF00"
     radius: 2
     energy: 1.4
+  - type: StaticPrice
+    price: 200 #Imperial price balance
 
 - type: entity
   name: suppermatter shard

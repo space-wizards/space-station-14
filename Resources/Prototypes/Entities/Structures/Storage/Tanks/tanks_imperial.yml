@@ -161,3 +161,51 @@
     solutions:
       tank:
         maxVol: 5000
+
+#Space Cleaner
+- type: entity
+  id: SpaceCleanerTankEmpty
+  name: space cleaner tank empty
+  desc: Tank of the space cleaner. It is used to store a large volume of purity.
+  parent: StorageTank
+  suffix: Empty
+  components:
+    - type: StaticPrice
+      price: 500
+    - type: Sprite
+      sprite: Structures/Storage/tanks_imperial.rsi
+      layers:
+        - state: tank_base
+        - state: content-1
+          map: ["enum.SolutionContainerLayers.Fill"]
+          visible: false
+        - state: tank
+          color: '#7CB680FF'
+        - state: logo-spacecleaner
+        - state: line-green
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 12
+      fillBaseName: content-
+    - type: ExaminableSolution
+      solution: tank
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          maxVol: 1500
+    - type: ReagentTank
+      transferAmount: 100
+
+- type: entity
+  id: SpaceCleanerTankFull
+  parent: SpaceCleanerTankEmpty
+  suffix: Full
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 1500
+  - type: StaticPrice
+    price: 2500
