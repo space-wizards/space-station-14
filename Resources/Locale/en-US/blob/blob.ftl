@@ -12,6 +12,12 @@ blob-help = Вам поможет только бог.
 blob-swap-chem = В разработке.
 blob-mob-attack-blob = Вы не можете атаковать блоба.
 
+blob-mob-zombify-second-start =
+blob-mob-zombify-third-start =
+
+blob-mob-zombify-second-end =
+blob-mob-zombify-third-end =
+
 # Actions
 blob-create-factory-action-name = Создать блоб фабрику (60)
 blob-create-factory-action-desc = Превращает выбраного нормального блоба в фабрику, которая способна произвести 3 споры и блоббернаута, если рядом есть узел или ядро.
@@ -34,6 +40,9 @@ blob-help-action-name = Помощь
 blob-help-action-desc = Получите базовую информацию по игра за блоба.
 blob-swap-chem-action-name = Сменить химикат блоба (40)
 blob-swap-chem-action-name = Позволяет вам сменить текущий химикат на один из 4 случайных.
+
+# Verbs
+blob-pod-verb-zombify = Зомбировать
 blob-verb-upgrade-to-strong = Улучшить до сильного блоба
 blob-verb-upgrade-to-reflective = Улучшить до отражающего блоба
 blob-verb-remove-blob-tile = Убрать блоба

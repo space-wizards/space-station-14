@@ -25,7 +25,7 @@ namespace Content.Server.Blob
 
         private void OnBlobAttackAttempt(EntityUid uid, BlobMobComponent component, AttackAttemptEvent args)
         {
-            if (args.Cancelled || HasComp<BlobTileComponent>(args.Target) || HasComp<BlobMobComponent>(args.Target))
+            if (args.Cancelled || !HasComp<BlobTileComponent>(args.Target) || !HasComp<BlobMobComponent>(args.Target))
                 return;
 
             // why is this server side code? This should be in shared
