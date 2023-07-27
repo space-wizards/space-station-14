@@ -50,7 +50,7 @@ namespace Content.Server.Blob
             _tagSystem.AddTag(uid, "BlobMob");
 
             var mindComp = EnsureComp<MindContainerComponent>(uid);
-            if (_mind.TryGetMind(uid, out var mind, mindComp) && _mind.TryGetSession(mind, out var session))
+            if (_mind.TryGetMind(uid, out var mind, mindComp) && !_mind.TryGetSession(mind, out var session))
             {
                 _npc.WakeNPC(uid, htn);
             }
