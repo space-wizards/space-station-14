@@ -1,9 +1,7 @@
 using Content.Shared.FootPrints;
 using Robust.Shared.Timing;
 using Content.Server.Decals;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Content.Shared.Inventory;
 using Content.Server.Atmos.Components;
@@ -16,7 +14,6 @@ namespace Contest.Server.FootPrints
 {
     public sealed class FootPrintsSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly DecalSystem _decals = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -31,16 +28,14 @@ namespace Contest.Server.FootPrints
 
         public void OnStartupComponent(EntityUid uid, FootPrintsComponent comp, ComponentStartup args)
         {
-            if (!TryComp<TransformComponent>(uid, out var transform))
-                return;
             comp.StepSize += _random.NextFloat(-0.05f, 0.05f);
         }
 
         public override void Update(float frameTime)
         {
-            if(!_configManager.GetCVar(CCVars.FootPrintsEnabled))
-                return;
             base.Update(frameTime);
+            if (!_configManager.GetCVar(CCVars.FootPrintsEnabled))
+                return;
             foreach (var comp in EntityManager.EntityQuery<FootPrintsComponent>())
             {
                 if (!EntityManager.TryGetComponent<TransformComponent>(comp.Owner, out var transform))
@@ -49,7 +44,6 @@ namespace Contest.Server.FootPrints
                     continue;
                 if (!TryComp<MobThresholdsComponent>(comp.Owner, out var mobThreshHolds))
                     continue;
-                //float stepSize = CheckMobState(mobThreshHolds) ? comp.DragSize : comp.StepSize;
                 if ((transform.LocalPosition - comp.StepPos).Length > (CheckMobState(mobThreshHolds) ? comp.DragSize : comp.StepSize))
                 {
                     comp.RightStep = !comp.RightStep;
