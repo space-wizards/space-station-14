@@ -1,4 +1,7 @@
+using System.Linq;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Server.Roles;
@@ -26,6 +29,7 @@ public sealed class BlobCoreSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public override void Initialize()
     {
@@ -53,6 +57,16 @@ public sealed class BlobCoreSystem : EntitySystem
         if (!Resolve(blobCoreUid, ref core))
             return false;
 
+        var blobRule = EntityQuery<BlobRuleComponent>().FirstOrDefault();
+
+        if (blobRule == null)
+        {
+            //todo fuck me this shit is awful
+            //no i wont fuck you, erp is against rules
+            _gameTicker.StartGameRule("Blob", out var ruleEntity);
+            blobRule = Comp<BlobRuleComponent>(ruleEntity);
+        }
+
         var observer = Spawn(core.ObserverBlobPrototype, xform.Coordinates);
 
         core.Observer = observer;
@@ -71,15 +85,17 @@ public sealed class BlobCoreSystem : EntitySystem
         _alerts.ShowAlert(observer, AlertType.BlobHealth, (short) Math.Clamp(Math.Round(core.CoreBlobTotalHealth.Float() / 10f), 0, 20));
 
         var antagPrototype = _prototypeManager.Index<AntagPrototype>(core.AntagBlobPrototypeId);
-        var traitorRole = new BlobRole(mind, antagPrototype);
+        var blobRole = new BlobRole(mind, antagPrototype);
 
-        _mindSystem.AddRole(mind, traitorRole);
+        _mindSystem.AddRole(mind, blobRole);
         SendBlobBriefing(mind);
+
+        blobRule.Blobs.Add(blobRole);
 
         if (_prototypeManager.TryIndex<ObjectivePrototype>("BlobCaptureObjective", out var objective)
             && objective.CanBeAssigned(mind))
         {
-            _mindSystem.TryAddObjective(traitorRole.Mind, objective);
+            _mindSystem.TryAddObjective(blobRole.Mind, objective);
         }
 
         if (_mindSystem.TryGetSession(mind, out var session))
