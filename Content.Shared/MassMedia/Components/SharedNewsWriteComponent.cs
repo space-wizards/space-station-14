@@ -1,5 +1,5 @@
-using Robust.Shared.Serialization;
 using Content.Shared.MassMedia.Systems;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.MassMedia.Components;
 

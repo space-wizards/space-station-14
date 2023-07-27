@@ -1,34 +1,4 @@
 Entries:
-- author: HighTechPuddle
-  changes:
-  - {message: Changed some plushie sounds., type: Tweak}
-  - {message: Added some plushie sounds., type: Add}
-  id: 3849
-  time: '2023-05-23T10:00:24.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Added 60+ new tips, type: Add}
-  - {message: Changed the wording of some tips, type: Tweak}
-  - {message: 'Removed tip about disease spread, as diseases have been removed', type: Remove}
-  id: 3850
-  time: '2023-05-23T10:01:00.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - {message: Fixed water coolers having water tank sprites., type: Fix}
-  - {message: Water coolers now show their contained solutions., type: Tweak}
-  id: 3851
-  time: '2023-05-23T15:24:42.0000000+00:00'
-- author: HerCoyote23
-  changes:
-  - {message: Added Gloves of the North Star, type: Add}
-  id: 3852
-  time: '2023-05-23T18:12:31.0000000+00:00'
-- author: Debug
-  changes:
-  - {message: 'Central Command finally got around to repairing their station, the
-      emergency shuttle should arrive again.', type: Fix}
-  id: 3853
-  time: '2023-05-23T18:36:43.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: partially full syringe contents now easier to see, type: Fix}
@@ -2984,3 +2954,29 @@ Entries:
       on a hit, so drag your allies to safety if they got shot with one!', type: Tweak}
   id: 4348
   time: '2023-07-27T09:49:33.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: The defibrillator's "return to body" prompt now works again., type: Fix}
+  id: 4349
+  time: '2023-07-27T19:13:17.0000000+00:00'
+- author: MrGreen and OctoRocket
+  changes:
+  - {message: Added HoS flask., type: Add}
+  id: 4350
+  time: '2023-07-27T19:41:33.0000000+00:00'
+- author: KingFroozy
+  changes:
+  - {message: Minor sprite changes for jaws of life and power drill, type: Tweak}
+  id: 4351
+  time: '2023-07-27T20:03:28.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Alien artifact intercom no longer has the syndicate channel., type: Tweak}
+  id: 4352
+  time: '2023-07-27T20:03:48.0000000+00:00'
+- author: PrPleGoo
+  changes:
+  - {message: Changed news article to track an author., type: Tweak}
+  - {message: News articles can only be deleted by their tracked author., type: Tweak}
+  id: 4353
+  time: '2023-07-27T20:25:56.0000000+00:00'

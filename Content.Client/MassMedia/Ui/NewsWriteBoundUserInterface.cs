@@ -34,7 +34,7 @@ namespace Content.Client.MassMedia.Ui
             _menu.OnClose += Close;
 
             _menu.ShareButtonPressed += OnShareButtonPressed;
-            _menu.DeleteButtonPressed += num => OnDeleteButtonPressed(num);
+            _menu.DeleteButtonPressed += OnDeleteButtonPressed;
 
             _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
 
