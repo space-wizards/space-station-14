@@ -1,10 +1,4 @@
 Entries:
-- author: HighTechPuddle
-  changes:
-  - {message: Changed some plushie sounds., type: Tweak}
-  - {message: Added some plushie sounds., type: Add}
-  id: 3849
-  time: '2023-05-23T10:00:24.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Added 60+ new tips, type: Add}
@@ -2984,3 +2978,8 @@ Entries:
       on a hit, so drag your allies to safety if they got shot with one!', type: Tweak}
   id: 4348
   time: '2023-07-27T09:49:33.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: The defibrillator's "return to body" prompt now works again., type: Fix}
+  id: 4349
+  time: '2023-07-27T19:13:17.0000000+00:00'
