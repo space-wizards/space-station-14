@@ -11,6 +11,8 @@ blob-not-enough-resources = Не хватает ресурсов для дейс
 blob-help = Вам поможет только бог.
 blob-swap-chem = В разработке.
 blob-mob-attack-blob = Вы не можете атаковать блоба.
+blob-get-resource = +{$point}
+blob-spent-resource = -{$point}
 
 blob-mob-zombify-second-start = {$pod} начинает превращать вас в зомби
 blob-mob-zombify-third-start = {$pod} начинает превращать {$target} в зомби

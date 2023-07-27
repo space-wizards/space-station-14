@@ -6,6 +6,7 @@ using Content.Shared.Blob;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -20,6 +21,7 @@ namespace Content.Server.Blob
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly BlobCoreSystem _blobCoreSystem = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -61,52 +63,60 @@ namespace Content.Server.Blob
 
         private void TryRemove(EntityUid target, EntityUid coreUid, BlobTileComponent tile, BlobCoreComponent core)
         {
+            var xform = Transform(target);
             if (!_blobCoreSystem.RemoveBlobTile(target, coreUid, core))
             {
                 return;
             }
 
-            if (!tile.ReturnCost)
-                return;
-
             FixedPoint2 returnCost = 0;
 
-            switch (tile.BlobTileType)
+            if (tile.ReturnCost)
             {
-                case BlobTileType.Normal:
+                switch (tile.BlobTileType)
                 {
-                    returnCost = core.NormalBlobCost * core.ReturnResourceOnRemove;
-                    break;
-                }
-                case BlobTileType.Strong:
-                {
-                    returnCost = core.StrongBlobCost * core.ReturnResourceOnRemove;
-                    break;
-                }
-                case BlobTileType.Factory:
-                {
-                    returnCost = core.FactoryBlobCost * core.ReturnResourceOnRemove;
-                    break;
-                }
-                case BlobTileType.Resource:
-                {
-                    returnCost = core.ResourceBlobCost * core.ReturnResourceOnRemove;
-                    break;
-                }
-                case BlobTileType.Reflective:
-                {
-                    returnCost = core.ReflectiveBlobCost * core.ReturnResourceOnRemove;
-                    break;
-                }
-                case BlobTileType.Node:
-                {
-                    returnCost = core.NodeBlobCost * core.ReturnResourceOnRemove;
-                    break;
+                    case BlobTileType.Normal:
+                    {
+                        returnCost = core.NormalBlobCost * core.ReturnResourceOnRemove;
+                        break;
+                    }
+                    case BlobTileType.Strong:
+                    {
+                        returnCost = core.StrongBlobCost * core.ReturnResourceOnRemove;
+                        break;
+                    }
+                    case BlobTileType.Factory:
+                    {
+                        returnCost = core.FactoryBlobCost * core.ReturnResourceOnRemove;
+                        break;
+                    }
+                    case BlobTileType.Resource:
+                    {
+                        returnCost = core.ResourceBlobCost * core.ReturnResourceOnRemove;
+                        break;
+                    }
+                    case BlobTileType.Reflective:
+                    {
+                        returnCost = core.ReflectiveBlobCost * core.ReturnResourceOnRemove;
+                        break;
+                    }
+                    case BlobTileType.Node:
+                    {
+                        returnCost = core.NodeBlobCost * core.ReturnResourceOnRemove;
+                        break;
+                    }
                 }
             }
 
             if (returnCost > 0)
             {
+                if (TryComp<BlobCoreComponent>(tile.Core, out var blobCoreComponent) && blobCoreComponent.Observer != null)
+                {
+                    _popup.PopupCoordinates(Loc.GetString("blob-get-resource", ("point", returnCost)),
+                        xform.Coordinates,
+                        blobCoreComponent.Observer.Value,
+                        PopupType.Large);
+                }
                 _blobCoreSystem.ChangeBlobPoint(coreUid, returnCost, core);
             }
         }
@@ -233,7 +243,8 @@ namespace Content.Server.Blob
                     coreUid,
                     core.StrongBlobTile,
                     xform.Coordinates,
-                    core);
+                    core,
+                    transformCost: core.StrongBlobCost);
             }
             else if (tile.BlobTileType == BlobTileType.Strong)
             {
@@ -244,7 +255,8 @@ namespace Content.Server.Blob
                     coreUid,
                     core.ReflectiveBlobTile,
                     xform.Coordinates,
-                    core);
+                    core,
+                    transformCost: core.ReflectiveBlobCost);
             }
         }
 

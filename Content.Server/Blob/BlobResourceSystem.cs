@@ -1,8 +1,11 @@
+using Content.Shared.Popups;
+
 namespace Content.Server.Blob;
 
 public sealed class BlobResourceSystem : EntitySystem
 {
     [Dependency] private readonly BlobCoreSystem _blobCoreSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -22,6 +25,13 @@ public sealed class BlobResourceSystem : EntitySystem
     {
         if (TryComp<BlobTileComponent>(uid, out var blobTileComponent) && blobTileComponent.Core != null)
         {
+            if (TryComp<BlobCoreComponent>(blobTileComponent.Core, out var blobCoreComponent) && blobCoreComponent.Observer != null)
+            {
+                _popup.PopupEntity(Loc.GetString("blob-get-resource", ("point", component.PointsPerPulsed)),
+                    uid,
+                    blobCoreComponent.Observer.Value,
+                    PopupType.Large);
+            }
             _blobCoreSystem.ChangeBlobPoint(blobTileComponent.Core.Value, component.PointsPerPulsed);
         }
     }

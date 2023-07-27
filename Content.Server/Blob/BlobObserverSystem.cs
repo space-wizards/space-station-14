@@ -354,7 +354,8 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
                 observerComponent.Core.Value,
                 blobCoreComponent.NodeBlobTile,
                 args.Target,
-                blobCoreComponent))
+                blobCoreComponent,
+                transformCost: blobCoreComponent.NodeBlobCost))
             return;
 
         args.Handled = true;
@@ -432,7 +433,8 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
                 observerComponent.Core.Value,
                 blobCoreComponent.ResourceBlobTile,
                 args.Target,
-                blobCoreComponent))
+                blobCoreComponent,
+                transformCost: blobCoreComponent.ResourceBlobCost))
             return;
 
         args.Handled = true;
@@ -493,6 +495,13 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
                 {
                     if (_blobCoreSystem.TryUseAbility(uid, observerComponent.Core.Value, blobCoreComponent, blobCoreComponent.AttackCost))
                     {
+                        if (blobCoreComponent.Observer != null)
+                        {
+                            _popup.PopupCoordinates(Loc.GetString("blob-spent-resource", ("point", blobCoreComponent.AttackCost)),
+                                args.ClickLocation,
+                                blobCoreComponent.Observer.Value,
+                                PopupType.Large);
+                        }
                         _damageableSystem.TryChangeDamage(target, blobCoreComponent.Damage);
                         blobCoreComponent.NextAction =
                             _gameTiming.CurTime + TimeSpan.FromSeconds(blobCoreComponent.ActionRate);
@@ -551,7 +560,8 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
                     observerComponent.Core.Value,
                     blobCoreComponent.NormalBlobTile,
                     location,
-                    blobCoreComponent))
+                    blobCoreComponent,
+                    transformCost: cost))
                 return;
 
             blobCoreComponent.NextAction =
@@ -665,7 +675,8 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
                 observerComponent.Core.Value,
                 blobCoreComponent.FactoryBlobTile,
                 args.Target,
-                blobCoreComponent))
+                blobCoreComponent,
+                transformCost: blobCoreComponent.FactoryBlobCost))
             return;
 
         args.Handled = true;
