@@ -9,7 +9,7 @@
                 <BoxContainer Orientation="Horizontal" Margin ="0 0 0 2">
                     <CheckBox Name="CEnableDevice" Text="{Loc 'air-alarm-ui-widget-enable'}" />
                 </BoxContainer>
-				<BoxContainer Orientation="Horizontal" Margin="0 0 0 2" HorizontalExpand="True">
+                <BoxContainer Orientation="Horizontal" Margin="0 0 0 2" HorizontalExpand="True">
                     <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                         <Label Text="{Loc 'air-alarm-ui-vent-pump-label'}" Margin="0 0 0 1" />
                         <OptionButton Name="CPumpDirection" />
