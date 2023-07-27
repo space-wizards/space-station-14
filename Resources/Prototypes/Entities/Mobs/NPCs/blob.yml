@@ -22,15 +22,31 @@
   id: MobBlobPod
   parent: SimpleSpaceMobBase
   components:
+    - type: Clothing
+      sprite: Mobs/Aliens/blob.rsi
+      slots:
+        - HEAD
+    - type: Tag
+      tags:
+        - HidesHair
+    - type: IngestionBlocker
+    - type: IdentityBlocker
+    - type: BlobPod
+    - type: DoAfter
     - type: Physics
+      bodyType: KinematicController
+    - type: InteractionOutline
+    - type: Actions
+    - type: Alerts
     - type: InputMover
+    - type: Examiner
     - type: MobMover
+    - type: HTN
+      rootTask: BlobPodCompound
     - type: BlobMob
     - type: ReplacementAccent
       accent: genericAggressive
     - type: CombatMode
-    - type: HTN
-      rootTask: SimpleHostileCompound
     - type: NpcFactionMember
       factions:
         - Blob
