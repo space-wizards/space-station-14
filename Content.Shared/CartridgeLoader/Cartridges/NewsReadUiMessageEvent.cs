@@ -17,5 +17,6 @@ public sealed class NewsReadUiMessageEvent : CartridgeMessageEvent
 public enum NewsReadUiAction
 {
     Next,
-    Prev
+    Prev,
+    NotificationSwith
 }

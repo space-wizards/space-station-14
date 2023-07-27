@@ -26,7 +26,7 @@ public sealed partial class NewsWriteMenu : DefaultWindow
         Share.OnPressed += _ => ShareButtonPressed?.Invoke();
     }
 
-    public void UpdateUI(NewsArticle[] articles)
+    public void UpdateUI(NewsArticle[] articles, bool shareAvalible)
     {
         ArticleCardsContainer.Children.Clear();
 
@@ -38,5 +38,7 @@ public sealed partial class NewsWriteMenu : DefaultWindow
 
             ArticleCardsContainer.AddChild(mini);
         }
+
+        Share.Disabled = !shareAvalible;
     }
 }

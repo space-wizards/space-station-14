@@ -44,5 +44,10 @@
             <RichTextLabel Margin="8,8,8,8" Name="PageText" VerticalAlignment="Top"/>
         </ScrollContainer>
     </PanelContainer>
-    <RichTextLabel Margin="8,8,8,8" Name="ShareTime" VerticalAlignment="Top"/>
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5,5,5,5">
+        <Button
+            Name="NotificationSwith"
+            MinWidth="20"/>
+        <RichTextLabel Margin="2,2,2,2" Name="ShareTime" VerticalAlignment="Top"/>
+    </BoxContainer>
 </cartridges:NewsReadUiFragment>

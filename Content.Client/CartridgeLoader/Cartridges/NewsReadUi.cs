@@ -27,14 +27,18 @@ public sealed class NewsReadUi : UIFragment
         {
             SendNewsReadMessage(NewsReadUiAction.Prev, userInterface);
         };
+        _fragment.OnNotificationSwithPressed += () =>
+        {
+            SendNewsReadMessage(NewsReadUiAction.NotificationSwith, userInterface);
+        };
     }
 
     public override void UpdateState(BoundUserInterfaceState state)
     {
         if (state is NewsReadBoundUserInterfaceState cast)
-            _fragment?.UpdateState(cast.Article, cast.TargetNum, cast.TotalNum);
-        else if (state is NewsReadEmptyBoundUserInterfaceState _)
-            _fragment?.UpdateEmptyState();
+            _fragment?.UpdateState(cast.Article, cast.TargetNum, cast.TotalNum, cast.NotificationOn);
+        else if (state is NewsReadEmptyBoundUserInterfaceState empty)
+            _fragment?.UpdateEmptyState(empty.NotificationOn);
     }
 
     private void SendNewsReadMessage(NewsReadUiAction action, BoundUserInterface userInterface)

@@ -9,12 +9,14 @@ using Content.Server.CartridgeLoader.Cartridges;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Server.CartridgeLoader;
+using Robust.Shared.Timing;
 
 
 namespace Content.Server.MassMedia.Systems;
 
 public sealed class NewsSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly RingerSystem _ringer = default!;
     [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
@@ -61,7 +63,7 @@ public sealed class NewsSystem : EntitySystem
         if (!_ui.TryGetUi(uid, NewsWriteUiKey.Key, out _))
             return;
 
-        var state = new NewsWriteBoundUserInterfaceState(Articles.ToArray());
+        var state = new NewsWriteBoundUserInterfaceState(Articles.ToArray(), component.ShareAvalible);
         _ui.TrySetUiState(uid, NewsWriteUiKey.Key, state);
     }
 
@@ -73,9 +75,9 @@ public sealed class NewsSystem : EntitySystem
         NewsReadLeafArticle(component, 0);
 
         if (Articles.Any())
-            _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, new NewsReadBoundUserInterfaceState(Articles[component.ArticleNum], component.ArticleNum + 1, Articles.Count));
+            _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, new NewsReadBoundUserInterfaceState(Articles[component.ArticleNum], component.ArticleNum + 1, Articles.Count, component.NotificationOn));
         else
-            _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, new NewsReadEmptyBoundUserInterfaceState());
+            _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, new NewsReadEmptyBoundUserInterfaceState(component.NotificationOn));
     }
 
     private void OnReadUiMessage(EntityUid uid, NewsReadCartridgeComponent component, CartridgeMessageEvent args)
@@ -85,8 +87,10 @@ public sealed class NewsSystem : EntitySystem
 
         if (message.Action == NewsReadUiAction.Next)
             NewsReadLeafArticle(component, 1);
-        else
+        if (message.Action == NewsReadUiAction.Prev)
             NewsReadLeafArticle(component, -1);
+        if (message.Action == NewsReadUiAction.NotificationSwith)
+            component.NotificationOn = !component.NotificationOn;
 
         UpdateReadUi(uid, args.LoaderUid, component);
     }
@@ -94,6 +98,8 @@ public sealed class NewsSystem : EntitySystem
     public void OnWriteUiMessage(EntityUid uid, NewsWriteComponent component, NewsWriteShareMessage msg)
     {
         Articles.Add(msg.Article);
+
+        component.ShareAvalible = false;
 
         UpdateReadDevices();
         UpdateWriteDevices();
@@ -132,7 +138,7 @@ public sealed class NewsSystem : EntitySystem
         {
             foreach (var app in comp.InstalledPrograms)
             {
-                if (EntityManager.HasComponent<NewsReadCartridgeComponent>(app))
+                if (EntityManager.TryGetComponent<NewsReadCartridgeComponent>(app, out var cartridge) && cartridge.NotificationOn)
                 {
                     _ringer.RingerPlayRingtone(comp.Owner, ringer);
                     break;
@@ -158,6 +164,23 @@ public sealed class NewsSystem : EntitySystem
 
         while (query.MoveNext(out var comp))
         {
+            UpdateWriteUi(comp.Owner, comp);
+        }
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<NewsWriteComponent>();
+        while (query.MoveNext(out var comp))
+        {
+            if (comp.ShareAvalible || _timing.CurTime < comp.NextShare)
+                continue;
+
+            comp.NextShare = _timing.CurTime + TimeSpan.FromSeconds(comp.ShareCooldown);
+            comp.ShareAvalible = true;
+
             UpdateWriteUi(comp.Owner, comp);
         }
     }

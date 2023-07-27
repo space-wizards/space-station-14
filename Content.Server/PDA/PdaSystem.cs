@@ -115,7 +115,6 @@ namespace Content.Server.PDA
             var address = GetDeviceNetAddress(uid);
             var hasInstrument = HasComp<InstrumentComponent>(uid);
             var showUplink = HasComp<StoreComponent>(uid) && IsUnlocked(uid);
-            var showNews = HasComp<NewsReadComponent>(uid);
 
             UpdateStationName(uid, pda);
             UpdateAlertLevel(uid, pda);
@@ -137,7 +136,6 @@ namespace Content.Server.PDA
                 pda.StationName,
                 showUplink,
                 hasInstrument,
-                showNews,
                 address);
 
             _cartridgeLoader?.UpdateUiState(uid, state);

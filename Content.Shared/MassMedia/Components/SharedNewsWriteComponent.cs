@@ -13,10 +13,12 @@ public enum NewsWriteUiKey : byte
 public sealed class NewsWriteBoundUserInterfaceState : BoundUserInterfaceState
 {
     public NewsArticle[] Articles;
+    public bool ShareAvalible;
 
-    public NewsWriteBoundUserInterfaceState(NewsArticle[] articles)
+    public NewsWriteBoundUserInterfaceState(NewsArticle[] articles, bool shareAvalible)
     {
         Articles = articles;
+        ShareAvalible = shareAvalible;
     }
 }
 

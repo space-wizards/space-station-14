@@ -12,6 +12,8 @@ public sealed partial class NewsReadUiFragment : BoxContainer
     public event Action? OnNextButtonPressed;
     public event Action? OnPrevButtonPressed;
 
+    public event Action? OnNotificationSwithPressed;
+
     public NewsReadUiFragment()
     {
         RobustXamlLoader.Load(this);
@@ -21,9 +23,10 @@ public sealed partial class NewsReadUiFragment : BoxContainer
 
         Next.OnPressed += _ => OnNextButtonPressed?.Invoke();
         Prev.OnPressed += _ => OnPrevButtonPressed?.Invoke();
+        NotificationSwith.OnPressed += _ => OnNotificationSwithPressed?.Invoke();
     }
 
-    public void UpdateState(NewsArticle article, int targetNum, int totalNum)
+    public void UpdateState(NewsArticle article, int targetNum, int totalNum, bool notificationOn)
     {
         PageNum.Visible = true;
         PageText.Visible = true;
@@ -34,16 +37,20 @@ public sealed partial class NewsReadUiFragment : BoxContainer
 
         PageNum.Text = $"{targetNum}/{totalNum}";
 
+        NotificationSwith.Text = Loc.GetString(notificationOn ? "news-read-ui-notification-on" : "news-read-ui-notification-off");
+
         string shareTime = article.ShareTime.ToString("hh\\:mm\\:ss");
         ShareTime.SetMarkup(Loc.GetString("news-read-ui-time-prefix-text") + " " + shareTime);
     }
 
-    public void UpdateEmptyState()
+    public void UpdateEmptyState(bool notificationOn)
     {
         PageNum.Visible = false;
         PageText.Visible = false;
         ShareTime.Visible = false;
 
         PageName.Text = Loc.GetString("news-read-ui-not-found-text");
+
+        NotificationSwith.Text = Loc.GetString(notificationOn ? "news-read-ui-notification-on" : "news-read-ui-notification-off");
     }
 }
