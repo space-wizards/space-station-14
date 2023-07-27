@@ -1,10 +1,4 @@
 Entries:
-- author: Debug
-  changes:
-  - {message: 'Central Command finally got around to repairing their station, the
-      emergency shuttle should arrive again.', type: Fix}
-  id: 3853
-  time: '2023-05-23T18:36:43.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: partially full syringe contents now easier to see, type: Fix}
@@ -2980,3 +2974,9 @@ Entries:
   - {message: Alien artifact intercom no longer has the syndicate channel., type: Tweak}
   id: 4352
   time: '2023-07-27T20:03:48.0000000+00:00'
+- author: PrPleGoo
+  changes:
+  - {message: Changed news article to track an author., type: Tweak}
+  - {message: News articles can only be deleted by their tracked author., type: Tweak}
+  id: 4353
+  time: '2023-07-27T20:25:56.0000000+00:00'
