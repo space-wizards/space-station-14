@@ -31,7 +31,7 @@
   description: Useful for carrying items in your hands.
   components:
   - type: Item
-    size: 60
+    size: 80
   - type: Storage
     capacity: 80
   - type: Tag
