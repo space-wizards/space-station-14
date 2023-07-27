@@ -1,9 +1,4 @@
 Entries:
-- author: Vordenburg
-  changes:
-  - {message: Snares can be removed by yourself again., type: Fix}
-  id: 3842
-  time: '2023-05-22T21:49:37.0000000+00:00'
 - author: Owai-Seek
   changes:
   - {message: Adds a Janitorial Guidebook, type: Add}
@@ -2981,3 +2976,14 @@ Entries:
   - {message: Added atmos bags to the atmosdrobe!, type: Add}
   id: 4341
   time: '2023-07-27T06:08:25.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: 'Added .45 AP, which does less damage but ignores armor entirely.',
+    type: Add}
+  - {message: Removed .357 ammo and returned the Python and Mateba to .45 Magnum.,
+    type: Remove}
+  - {message: 'The Syndicate now supplies .45 AP rounds for the Python, and sells
+      both the weapon and the ammo at a lower price.', type: Tweak}
+  - {message: .45 High-Velocity rounds are now significantly more lethal., type: Tweak}
+  id: 4342
+  time: '2023-07-27T07:32:26.0000000+00:00'
