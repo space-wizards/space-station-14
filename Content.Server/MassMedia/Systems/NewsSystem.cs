@@ -5,6 +5,10 @@ using Content.Shared.MassMedia.Systems;
 using Content.Server.PDA.Ringer;
 using Content.Shared.GameTicking;
 using System.Linq;
+using Content.Server.CartridgeLoader.Cartridges;
+using Content.Shared.CartridgeLoader;
+using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Server.CartridgeLoader;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -12,6 +16,7 @@ public sealed class NewsSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly RingerSystem _ringer = default!;
+    [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
 
     public List<NewsArticle> Articles = new List<NewsArticle>();
 
@@ -22,9 +27,9 @@ public sealed class NewsSystem : EntitySystem
         SubscribeLocalEvent<NewsWriteComponent, NewsWriteShareMessage>(OnWriteUiMessage);
         SubscribeLocalEvent<NewsWriteComponent, NewsWriteDeleteMessage>(OnWriteUiMessage);
         SubscribeLocalEvent<NewsWriteComponent, NewsWriteArticlesRequestMessage>(OnWriteUiMessage);
-        SubscribeLocalEvent<NewsReadComponent, NewsReadNextMessage>(OnReadUiMessage);
-        SubscribeLocalEvent<NewsReadComponent, NewsReadPrevMessage>(OnReadUiMessage);
-        SubscribeLocalEvent<NewsReadComponent, NewsReadArticleRequestMessage>(OnReadUiMessage);
+
+        SubscribeLocalEvent<NewsReadCartridgeComponent, CartridgeUiReadyEvent>(OnReadUiReady);
+        SubscribeLocalEvent<NewsReadCartridgeComponent, CartridgeMessageEvent>(OnReadUiMessage);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
@@ -32,17 +37,6 @@ public sealed class NewsSystem : EntitySystem
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
         if (Articles != null) Articles.Clear();
-    }
-
-    public void ToggleUi(EntityUid user, EntityUid deviceEnt, NewsReadComponent? component)
-    {
-        if (!Resolve(deviceEnt, ref component))
-            return;
-
-        if (!TryComp<ActorComponent>(user, out var actor))
-            return;
-
-        _ui.TryToggleUi(deviceEnt, NewsReadUiKey.Key, actor.PlayerSession);
     }
 
     public void ToggleUi(EntityUid user, EntityUid deviceEnt, NewsWriteComponent? component)
@@ -56,6 +50,11 @@ public sealed class NewsSystem : EntitySystem
         _ui.TryToggleUi(deviceEnt, NewsWriteUiKey.Key, actor.PlayerSession);
     }
 
+    public void OnReadUiReady(EntityUid uid, NewsReadCartridgeComponent component, CartridgeUiReadyEvent args)
+    {
+        UpdateReadUi(uid, args.Loader, component);
+    }
+
     public void UpdateWriteUi(EntityUid uid, NewsWriteComponent component)
     {
         if (!_ui.TryGetUi(uid, NewsWriteUiKey.Key, out _))
@@ -65,17 +64,30 @@ public sealed class NewsSystem : EntitySystem
         _ui.TrySetUiState(uid, NewsWriteUiKey.Key, state);
     }
 
-    public void UpdateReadUi(EntityUid uid, NewsReadComponent component)
+    public void UpdateReadUi(EntityUid uid, EntityUid loaderUid, NewsReadCartridgeComponent? component)
     {
-        if (!_ui.TryGetUi(uid, NewsReadUiKey.Key, out _))
+        if (!Resolve(uid, ref component))
             return;
 
-        if (component.ArticleNum < 0) NewsReadLeafArticle(component, -1);
+        NewsReadLeafArticle(component, 0);
 
         if (Articles.Any())
-            _ui.TrySetUiState(uid, NewsReadUiKey.Key, new NewsReadBoundUserInterfaceState(Articles[component.ArticleNum], component.ArticleNum + 1, Articles.Count));
+            _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, new NewsReadBoundUserInterfaceState(Articles[component.ArticleNum], component.ArticleNum + 1, Articles.Count));
         else
-            _ui.TrySetUiState(uid, NewsReadUiKey.Key, new NewsReadEmptyBoundUserInterfaceState());
+            _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, new NewsReadEmptyBoundUserInterfaceState());
+    }
+
+    private void OnReadUiMessage(EntityUid uid, NewsReadCartridgeComponent component, CartridgeMessageEvent args)
+    {
+        if (args is not NewsReadUiMessageEvent message)
+            return;
+
+        if (message.Action == NewsReadUiAction.Next)
+            NewsReadLeafArticle(component, 1);
+        else
+            NewsReadLeafArticle(component, -1);
+
+        UpdateReadUi(uid, args.LoaderUid, component);
     }
 
     public void OnWriteUiMessage(EntityUid uid, NewsWriteComponent component, NewsWriteShareMessage msg)
@@ -103,26 +115,7 @@ public sealed class NewsSystem : EntitySystem
         UpdateWriteUi(uid, component);
     }
 
-    public void OnReadUiMessage(EntityUid uid, NewsReadComponent component, NewsReadNextMessage msg)
-    {
-        NewsReadLeafArticle(component, 1);
-
-        UpdateReadUi(uid, component);
-    }
-
-    public void OnReadUiMessage(EntityUid uid, NewsReadComponent component, NewsReadPrevMessage msg)
-    {
-        NewsReadLeafArticle(component, -1);
-
-        UpdateReadUi(uid, component);
-    }
-
-    public void OnReadUiMessage(EntityUid uid, NewsReadComponent component, NewsReadArticleRequestMessage msg)
-    {
-        UpdateReadUi(uid, component);
-    }
-
-    private void NewsReadLeafArticle(NewsReadComponent component, int leafDir)
+    private void NewsReadLeafArticle(NewsReadCartridgeComponent component, int leafDir)
     {
         component.ArticleNum += leafDir;
 
@@ -132,21 +125,29 @@ public sealed class NewsSystem : EntitySystem
 
     private void TryNotify()
     {
-        var query = EntityQueryEnumerator<NewsReadComponent, RingerComponent>();
+        var query = EntityQueryEnumerator<CartridgeLoaderComponent, RingerComponent>();
 
         while (query.MoveNext(out var comp, out var ringer))
         {
-            _ringer.RingerPlayRingtone(comp.Owner, ringer);
+            foreach (var app in comp.InstalledPrograms)
+            {
+                if (EntityManager.HasComponent<NewsReadCartridgeComponent>(app))
+                {
+                    _ringer.RingerPlayRingtone(comp.Owner, ringer);
+                    break;
+                }
+            }
         }
     }
 
     private void UpdateReadDevices()
     {
-        var query = EntityQueryEnumerator<NewsReadComponent>();
+        var query = EntityQueryEnumerator<CartridgeLoaderComponent>();
 
         while (query.MoveNext(out var comp))
         {
-            UpdateReadUi(comp.Owner, comp);
+            if (EntityManager.TryGetComponent<NewsReadCartridgeComponent>(comp.ActiveProgram, out var cartridge))
+                UpdateReadUi(cartridge.Owner, comp.Owner, cartridge);
         }
     }
 

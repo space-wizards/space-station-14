@@ -1,5 +1,3 @@
-pda-news-button-label = News
-pda-news-button-description = View station news
 news-read-ui-next-text = Next
 news-read-ui-past-text = Past
 news-read-ui-default-title = Station News
