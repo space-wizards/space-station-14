@@ -40,7 +40,7 @@ public enum CollisionGroup
     FlyingMobMask = Impassable | HighImpassable | BlobImpassable,
     FlyingMobLayer = Opaque | BulletImpassable,
     // Blob Mobs
-    BlobMobMask = Impassable | HighImpassable | LowImpassable,
+    BlobMobMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
     BlobMobLayer = Opaque | BulletImpassable,
     // Blob flyers
     FlyingBlobMobMask = Impassable | HighImpassable,
@@ -76,13 +76,13 @@ public enum CollisionGroup
     ItemMask = Impassable | HighImpassable,
     ThrownItem = Impassable | HighImpassable | BulletImpassable,
     WallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
-    BlobTileLayer = Opaque | BlobImpassable | MidImpassable | BulletImpassable | InteractImpassable,
+    BlobTileLayer = Opaque | BlobImpassable | BulletImpassable | InteractImpassable,
     GlassLayer = Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
     HalfWallLayer = MidImpassable | LowImpassable,
 
     // Statue, monument, airlock, window
     FullTileMask = Impassable | HighImpassable | MidImpassable | LowImpassable | InteractImpassable,
-    BlobTileMask = BlobImpassable | MidImpassable | InteractImpassable,
+    BlobTileMask = BlobImpassable | InteractImpassable,
     // FlyingMob can go past
     FullTileLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
 

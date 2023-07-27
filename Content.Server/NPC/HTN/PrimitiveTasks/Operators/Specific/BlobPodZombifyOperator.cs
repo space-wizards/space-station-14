@@ -27,7 +27,10 @@ public sealed class BlobPodZombifyOperator : HTNOperator
         if (!_entManager.TryGetComponent<BlobPodComponent>(owner, out var pod))
             return HTNOperatorStatus.Failed;
 
-        if (pod.IsDraining)
+        if (pod.ZombifiedEntityUid != null)
+            return HTNOperatorStatus.Continuing;
+
+        if (pod.IsZombifying)
             return HTNOperatorStatus.Continuing;
 
         if (pod.ZombifyTarget == null)

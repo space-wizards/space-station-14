@@ -14,7 +14,7 @@ public sealed class BlobbernautComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Piercing", 15 },
+            { "Piercing", 20 },
         }
     };
 
