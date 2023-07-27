@@ -1,12 +1,6 @@
 Entries:
 - author: Vordenburg
   changes:
-  - {message: Holobarriers can be climbed like tables with the alternate activate
-      entity in world action., type: Fix}
-  id: 3841
-  time: '2023-05-22T21:49:25.0000000+00:00'
-- author: Vordenburg
-  changes:
   - {message: Snares can be removed by yourself again., type: Fix}
   id: 3842
   time: '2023-05-22T21:49:37.0000000+00:00'
@@ -2982,3 +2976,8 @@ Entries:
   - {message: tweaked role times, type: Tweak}
   id: 4340
   time: '2023-07-27T05:14:21.0000000+00:00'
+- author: potato1234x
+  changes:
+  - {message: Added atmos bags to the atmosdrobe!, type: Add}
+  id: 4341
+  time: '2023-07-27T06:08:25.0000000+00:00'
