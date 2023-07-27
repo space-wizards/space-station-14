@@ -1,20 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Fixed an issue with placing mime invisible walls next to walls, type: Fix}
-  id: 3847
-  time: '2023-05-22T21:58:04.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: 'Beverage producers Dr. Gibb are back in production with cans of their
-      signature drink, sold in all vending machines with drinks', type: Add}
-  - {message: 'Manufacturers of VODA Vending Machines have changed the filling of
-      their machines and now sell soda water, but there have been cases of cola being
-      found in hacked machines', type: Tweak}
-  - {message: Some hacked vending machines were found to contain strange drinks that
-      change their appearance, type: Tweak}
-  id: 3848
-  time: '2023-05-23T05:59:01.0000000+00:00'
 - author: HighTechPuddle
   changes:
   - {message: Changed some plushie sounds., type: Tweak}
@@ -2987,3 +2971,16 @@ Entries:
   - {message: fixed Syndicate Chief Engineer's jumpsuit., type: Fix}
   id: 4346
   time: '2023-07-27T08:43:16.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'The syndicate sniper bundle was added to the uplink, containing a Hristov,
+      spare ammo and a clever disguise, happy hunting, agents', type: Add}
+  id: 4347
+  time: '2023-07-27T09:49:22.0000000+00:00'
+- author: Vaaankas
+  changes:
+  - {message: 'The Hristov''s sniper rifle cartridges have been refactored. It is
+      now a way more dangerous weapon, at the cost of decreased firerate. It now stuns
+      on a hit, so drag your allies to safety if they got shot with one!', type: Tweak}
+  id: 4348
+  time: '2023-07-27T09:49:33.0000000+00:00'
