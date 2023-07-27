@@ -1,0 +1,150 @@
+#Diona
+- type: decal
+  id: footprint-left-bare-diona
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-left-bare-diona
+
+- type: decal
+  id: footprint-right-bare-diona
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-right-bare-diona
+
+#dwarf
+- type: decal
+  id: footprint-left-bare-dwarf
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-left-bare-dwarf
+
+- type: decal
+  id: footprint-right-bare-dwarf
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-right-bare-dwarf
+
+#human
+- type: decal
+  id: footprint-left-bare-human
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-left-bare-human
+
+- type: decal
+  id: footprint-right-bare-human
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-right-bare-human
+
+#lizard
+- type: decal
+  id: footprint-left-bare-lizard
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-left-bare-lizard
+
+- type: decal
+  id: footprint-right-bare-lizard
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-right-bare-lizard
+
+#slime
+- type: decal
+  id: footprint-left-bare-slime
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-left-bare-slime
+
+- type: decal
+  id: footprint-right-bare-slime
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-right-bare-slime
+
+#spider
+- type: decal
+  id: footprint-left-bare-spider
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-left-bare-spider
+
+- type: decal
+  id: footprint-right-bare-spider
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-right-bare-spider
+
+#shoes
+- type: decal
+  id: footprint-shoes
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-shoes
+
+#space suit
+- type: decal
+  id: footprint-suit
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: footprint-suit
+
+#dragging
+- type: decal
+  id: dragging-1
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: dragging-1
+
+- type: decal
+  id: dragging-2
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: dragging-2
+
+- type: decal
+  id: dragging-3
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: dragging-3
+
+- type: decal
+  id: dragging-4
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: dragging-4
+
+- type: decal
+  id: dragging-5
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: dragging-5
+
+- type: decal
+  id: dragging-test
+  tags: ["footprint"]
+  sprite:
+    sprite: Effects/footprints.rsi
+    state: dragging-test
+
+

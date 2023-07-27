@@ -31,3 +31,7 @@
       damageRecovery:
         types:
           Asphyxiation: -1.0
+    #Imperial foot prints
+    - type: FootPrints
+      leftBarePrint: "footprint-left-bare-lizard"
+      rightBarePrint: "footprint-right-bare-lizard"

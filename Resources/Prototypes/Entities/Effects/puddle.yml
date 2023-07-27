@@ -158,3 +158,4 @@
       examinable: false
     - type: ExaminableSolution
       solution: puddle
+    - type: PuddleFootPrints #Imperial foot prints
