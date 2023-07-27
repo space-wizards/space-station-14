@@ -96,8 +96,7 @@ namespace Content.Server.Database
                 .HasKey(log => new {log.Id, log.RoundId});
 
             modelBuilder.Entity<AdminLog>()
-                .Property(log => log.Id)
-                .ValueGeneratedOnAdd();
+                .Property(log => log.Id);
 
             modelBuilder.Entity<AdminLog>()
                 .HasIndex(log => log.Date);
@@ -491,7 +490,7 @@ namespace Content.Server.Database
     [Index(nameof(Type))]
     public class AdminLog
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public int Id { get; set; }
 
         [Key, ForeignKey("Round")] public int RoundId { get; set; }
