@@ -23,7 +23,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_sniper.ogg
   - type: HitscanBatteryAmmoProvider
     proto: PulseSniper
-    fireCost: 750
+    fireCost: 1500
   - type: Battery
     maxCharge: 7500
     startingCharge: 7500
