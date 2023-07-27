@@ -3,15 +3,46 @@
 - type: htnCompound
   id: MeleeCombatCompound
   branches:
-    # Armed combat
-    # TODO:
-    # Unarmed combat
+    # Pickup weapon if we don't have one.
+    - preconditions:
+       - !type:ActiveHandComponentPrecondition
+          components:
+          # Just serializer things
+          - type: MeleeWeapon
+            damage:
+              types:
+                Brute: 0
+          invert: true
+      tasks:
+        - !type:HTNCompoundTask
+          task: PickupMeleeCompound
+
+    # Melee combat (unarmed or otherwise)
     - tasks:
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyMeleeTargets
         - !type:HTNCompoundTask
           task: MeleeAttackTargetCompound
+
+- type: htnCompound
+  id: PickupMeleeCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyMeleeWeapons
+
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: InteractRange
+          operator: !type:InteractWithOperator
+            targetKey: Target
 
 # Tries to melee attack our target.
 - type: htnCompound

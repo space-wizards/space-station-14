@@ -36,9 +36,6 @@ public sealed partial class NPCCombatSystem
         {
             _combat.SetInCombatMode(uid, true, combatMode);
         }
-
-        // TODO: Cleanup later, just looking for parity for now.
-        component.Weapon = uid;
     }
 
     private void UpdateMelee(float frameTime)
@@ -65,7 +62,7 @@ public sealed partial class NPCCombatSystem
     {
         component.Status = CombatStatus.Normal;
 
-        if (!TryComp<MeleeWeaponComponent>(component.Weapon, out var weapon))
+        if (!_melee.TryGetWeapon(uid, out var weaponUid, out var weapon))
         {
             component.Status = CombatStatus.NoWeapon;
             return;
@@ -106,12 +103,6 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
-        steering = EnsureComp<NPCSteeringComponent>(uid);
-        steering.Range = MathF.Max(0.2f, weapon.Range - 0.4f);
-
-        // Gets unregistered on component shutdown.
-        _steering.TryRegister(uid, new EntityCoordinates(component.Target, Vector2.Zero), steering);
-
         if (weapon.NextAttack > curTime || !Enabled)
             return;
 
@@ -119,11 +110,11 @@ public sealed partial class NPCCombatSystem
             physicsQuery.TryGetComponent(component.Target, out var targetPhysics) &&
             targetPhysics.LinearVelocity.LengthSquared() != 0f)
         {
-            _melee.AttemptLightAttackMiss(uid, component.Weapon, weapon, targetXform.Coordinates.Offset(_random.NextVector2(0.5f)));
+            _melee.AttemptLightAttackMiss(uid, weaponUid, weapon, targetXform.Coordinates.Offset(_random.NextVector2(0.5f)));
         }
         else
         {
-            _melee.AttemptLightAttack(uid, component.Weapon, weapon, component.Target);
+            _melee.AttemptLightAttack(uid, weaponUid, weapon, component.Target);
         }
     }
 }

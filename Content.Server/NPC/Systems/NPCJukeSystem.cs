@@ -146,11 +146,11 @@ public sealed class NPCJukeSystem : EntitySystem
             // TODO: Ranged away juking
             if (_npcMeleeQuery.TryGetComponent(uid, out var melee))
             {
-                if (!TryComp<MeleeWeaponComponent>(melee.Weapon, out var weapon))
+                if (!_melee.TryGetWeapon(uid, out var weaponUid, out var weapon))
                     return;
 
                 var cdRemaining = weapon.NextAttack - _timing.CurTime;
-                var attackCooldown = TimeSpan.FromSeconds(1f / _melee.GetAttackRate(melee.Weapon, uid, weapon));
+                var attackCooldown = TimeSpan.FromSeconds(1f / _melee.GetAttackRate(weaponUid, uid, weapon));
 
                 // Might as well get in range.
                 if (cdRemaining < attackCooldown * 0.45f)
@@ -170,7 +170,7 @@ public sealed class NPCJukeSystem : EntitySystem
                     return;
                 }
 
-                if (cdRemaining < TimeSpan.FromSeconds(1f / _melee.GetAttackRate(melee.Weapon, uid, weapon)) * 0.45f)
+                if (cdRemaining < TimeSpan.FromSeconds(1f / _melee.GetAttackRate(weaponUid, uid, weapon)) * 0.45f)
                     return;
 
                 var idealDistance = weapon.Range * 4f;

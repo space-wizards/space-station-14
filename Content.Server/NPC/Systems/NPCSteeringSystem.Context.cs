@@ -440,7 +440,7 @@ public sealed partial class NPCSteeringSystem
         TransformComponent xform,
         float[] danger)
     {
-        var objectRadius = 0.05f;
+        var objectRadius = 0.15f;
         var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Static))
@@ -468,7 +468,7 @@ public sealed partial class NPCSteeringSystem
             if (distance > detectionRadius)
                 continue;
 
-            var weight = 0.25f;
+            var weight = 1f;
             var obstacleDirection = pointB - pointA;
 
             // Inside each other so just use worldPos

@@ -63,7 +63,7 @@
       exponent: 0.4
   - !type:TargetAccessibleCon
     curve: !type:BoolCurve
-  
+
 - type: utilityQuery
   id: NearbyGuns
   query:
@@ -97,6 +97,29 @@
     - !type:TargetAccessibleCon
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
+  id: NearbyMeleeWeapons
+  query:
+    - !type:ComponentQuery
+      components:
+        # Just serializer things
+        - type: MeleeWeapon
+          damage:
+            types:
+              Brute: 0
+        - type: Item
+  considerations:
+    - !type:TargetMeleeCon
+      curve: !type:QuadraticCurve
+        slope: 0.5
+        exponent: 0.5
+        yOffset: 0
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetAccessibleCon
       curve: !type:BoolCurve
 
 - type: utilityQuery

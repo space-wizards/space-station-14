@@ -15,6 +15,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Microsoft.Extensions.ObjectPool;
@@ -299,6 +300,15 @@ public sealed class NPCUtilitySystem : EntitySystem
             case TargetIsDeadCon:
             {
                 return _mobState.IsDead(targetUid) ? 1f : 0f;
+            }
+            case TargetMeleeCon:
+            {
+                if (TryComp<MeleeWeaponComponent>(targetUid, out var melee))
+                {
+                    return melee.Damage.Total.Float() * melee.AttackRate / 100f;
+                }
+
+                return 0f;
             }
             default:
                 throw new NotImplementedException();
