@@ -80,7 +80,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: WeaponRevolverPython
+      - id: WeaponRevolverPythonAP
       - id: SpeedLoaderMagnumAP
         amount: 2
 
