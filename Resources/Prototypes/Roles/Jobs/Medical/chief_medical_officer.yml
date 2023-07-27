@@ -8,13 +8,15 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobChemist
-      time: 21600 #6 hrs
+      time: 10800 #3 hrs
     - !type:RoleTimeRequirement
       role: JobMedicalDoctor
       time: 21600 #6 hrs
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 108000 # 30 hrs
+      time: 36000 #10 hrs
+    - !type:OverallPlaytimeRequirement
+      time: 144000 #40 hrs            
   weight: 10
   startingGear: CMOGear
   icon: "ChiefMedicalOfficer"
