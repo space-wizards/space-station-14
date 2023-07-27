@@ -17,7 +17,7 @@
   description: uplink-revolver-python-desc
   productEntity: WeaponRevolverPython
   cost:
-    Telecrystal: 4
+    Telecrystal: 8
   categories:
   - UplinkWeapons
 
@@ -231,13 +231,13 @@
 
 # For the Python
 - type: listing
-  id: UplinkSpeedLoaderMagnum
+  id: UplinkSpeedLoaderMagnumAP
   name: uplink-speedloader-magnum-name
   description: uplink-speedloader-magnu-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: icon }
-  productEntity: SpeedLoaderMagnum
+  productEntity: SpeedLoaderMagnumAP
   cost:
-    Telecrystal: 1
+    Telecrystal: 2
   categories:
   - UplinkAmmo
 
