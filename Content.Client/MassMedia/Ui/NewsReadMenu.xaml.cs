@@ -30,7 +30,7 @@ public sealed partial class NewsReadMenu : DefaultWindow
         PageText.Visible = true;
         ShareTime.Visible = true;
 
-        PageName.Text = $"{article.Name} by {article.Author ?? "Anonymous"}";
+        PageName.Text = $"{article.Name} by {article.Author ?? Loc.GetString("news-read-ui-no-athor")}";
         PageText.SetMarkup(article.Content);
 
         PageNum.Text = $"{targetNum}/{totalNum}";
