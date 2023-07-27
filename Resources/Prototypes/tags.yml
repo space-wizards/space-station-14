@@ -17,6 +17,9 @@
   id: ATVKeys
 
 - type: Tag
+  id: BlobMob
+
+- type: Tag
   id: Baguette
 
 - type: Tag
@@ -651,7 +654,7 @@
 
 - type: Tag
   id: Plunger
-  
+
 - type: Tag
   id: PlushieGhost
 
@@ -830,7 +833,7 @@
 
 - type: Tag
   id: TrashBag
-  
+
 - type: Tag
   id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
 
