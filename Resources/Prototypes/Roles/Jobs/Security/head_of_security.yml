@@ -13,6 +13,9 @@
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
       time: 36000 #10 hrs
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 108000 # 30 hrs
     - !type:OverallPlaytimeRequirement
       time: 144000 #40 hrs
   weight: 10
