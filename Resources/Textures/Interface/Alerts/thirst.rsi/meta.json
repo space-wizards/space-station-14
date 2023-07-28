@@ -1,0 +1,9 @@
+{
+    "version": 1,
+    "size": { "x": 32, "y": 32 },
+    "states": [
+        { "name": "thirsty", "directions": 1, "delays": [[1.0]] },
+        { "name": "parched", "directions": 1, "delays": [[0.5, 0.5]] },
+        { "name": "overhydrated", "directions": 1, "delays": [[1.0]] }
+    ]
+}
