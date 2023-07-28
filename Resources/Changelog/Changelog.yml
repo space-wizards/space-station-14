@@ -1,10 +1,4 @@
 Entries:
-- author: '0x6273'
-  changes:
-  - {message: Artifacts now retain their monetary value after extracting points.,
-    type: Tweak}
-  id: 3855
-  time: '2023-05-23T23:52:33.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix double do_after on vaulting., type: Fix}
@@ -2982,3 +2976,8 @@ Entries:
       dress code., type: Add}
   id: 4354
   time: '2023-07-27T23:05:32.0000000+00:00'
+- author: Verslebas
+  changes:
+  - {message: Added champagne!, type: Add}
+  id: 4355
+  time: '2023-07-28T15:54:36.0000000+00:00'
