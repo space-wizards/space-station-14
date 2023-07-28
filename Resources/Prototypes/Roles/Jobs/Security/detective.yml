@@ -28,7 +28,7 @@
     head: ClothingHeadHatFedoraBrown
     outerClothing: ClothingOuterVestDetective
     id: DetectivePDA
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetAltSecurityOfficer
     pocket1: ForensicPad
     pocket2: ForensicScanner
     belt: ClothingBeltHolster

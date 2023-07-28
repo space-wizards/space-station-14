@@ -105,6 +105,21 @@
 
 - type: entity
   parent: ClothingHeadsetAlt
+  id: ClothingHeadsetAltSecurityOfficer
+  name: security over-ear headset
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/security.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/security.rsi
+
+- type: entity
+  parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltScience
   name: research director's over-ear headset
   components:

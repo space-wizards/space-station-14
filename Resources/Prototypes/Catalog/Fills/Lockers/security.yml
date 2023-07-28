@@ -64,7 +64,7 @@
       - id: Flash
         prob: 0.5
       - id: ClothingEyesGlassesSecurity
-      - id: ClothingHeadsetSecurity
+      - id: ClothingHeadsetAltSecurityOfficer
       - id: ClothingHandsGlovesColorBlack
       - id: ClothingShoesBootsJack
 
@@ -119,7 +119,7 @@
       - id: WeaponRevolverInspector
       - id: DrinkDetFlask
       - id: SpeedLoaderMagnum
-      - id: ClothingHandsGlovesForensic
+      - id: ForensicGloves
 
 - type: entity
   id: ClosetBombFilled
