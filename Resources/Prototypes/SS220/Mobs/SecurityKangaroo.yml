@@ -1,0 +1,45 @@
+- type: entity
+  name: Спавнер Джо
+  id: SpawnMobKangarooJoe
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobKangarooJoe
+
+- type: entity
+  name: Joe
+  parent: MobKangaroo
+  id: MobKangarooJoe
+  description: Joe the security kangaroo.
+  suffix: Роль
+  components:
+  - type: InteractionPopup
+    successChance: 1
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - FootstepSound
+  - type: GhostRole
+    prob: 1
+    name: ghost-role-information-joe-name
+    description: ghost-role-information-joe-description
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [ JoeKangarooGear ]
+
+- type: startingGear
+  id: JoeKangarooGear
+  equipment:
+    gloves: ClothingHandsGlovesCombat
+    head: ClothingHeadHelmetBasic

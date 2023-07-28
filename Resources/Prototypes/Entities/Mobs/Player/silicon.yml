@@ -84,16 +84,16 @@
     interfaces:
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
-  #- type: GhostRole
-  #  makeSentient: true
-  #  name: Maintenance Drone
-  #  description: Maintain the station. Ignore other beings except drones.
-  #  rules: |
-  #   You are bound by these laws both in-game and out-of-character:
-  #   1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.
-  #   2. You may not harm any being, regardless of intent or circumstance.
-  #   3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
-  #- type: GhostTakeoverAvailable
+  - type: GhostRole
+    makeSentient: true
+    name: Обслуживающий дрон
+    description: Обслуживайте станцию. Игнорируйте всех кроме других дронов.
+    rules: |
+     Для вас действуют следующие правила:
+     1. Вы не должны как-ибо участвовать в делах другого существа, даже если это конфликтует со вторым и третьим правилом, за исключением тех случаев когда это существо - дрон.
+     2. Вы не должны причинять никому вреда, не зависимо от умысла и обстоятельств.
+     3. Ваши задачи - чинить, обслуживать и запитывать так хорошо, как только можете, и вы никогда не должны работать против этих задач.
+  - type: GhostTakeoverAvailable
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5

@@ -1,0 +1,28 @@
+- type: entity
+  name: Спавнер Лиза
+  id: SpawnMobCorgiLisa
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCorgiLisa
+
+# Старый Иан - слишком грустно :(
+- type: entity
+  name: Спавнер корги
+  id: SpawnMobCorgiIanLisa
+  suffix: Без_Старого
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCorgiIan
+      - MobCorgiLisa

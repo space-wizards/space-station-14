@@ -1,0 +1,25 @@
+- type: accent
+  id: ferret
+  fullReplacements:
+  - accent-words-ferret-1
+  - accent-words-ferret-2
+  - accent-words-ferret-3
+  - accent-words-ferret-4
+
+- type: accent
+  id: sloth
+  fullReplacements:
+  - accent-words-sloth-1
+  - accent-words-sloth-2
+
+- type: accent
+  id: possum
+  fullReplacements:
+  - accent-words-possum-1
+  - accent-words-possum-2
+
+- type: accent
+  id: raccoon
+  fullReplacements:
+  - accent-words-raccoon-1
+  - accent-words-raccoon-2

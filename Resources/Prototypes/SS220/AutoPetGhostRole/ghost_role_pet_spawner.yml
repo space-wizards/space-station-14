@@ -1,0 +1,195 @@
+- type: entity
+  name: Runtime Spawner
+  id: SpawnMobCatRuntimeGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCatRuntimeGhostRole
+
+- type: entity
+  name: Exception Spawner
+  id: SpawnMobCatExceptionGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCatExceptionGhostRole
+
+- type: entity
+  name: Floppa Spawner
+  id: SpawnMobCatFloppaGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCatFloppaGhostRole
+
+- type: entity
+  name: Bandito Spawner
+  id: SpawnMobBanditoGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBanditoGhostRole
+
+- type: entity
+  name: Bingus Spawner
+  id: SpawnMobBingusGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBingusGhostRole
+
+- type: entity
+  name: McGriff Spawner
+  id: SpawnMobMcGriffGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobMcGriffGhostRole
+
+- type: entity
+  name: Paperwork Spawner
+  id: SpawnMobPaperworkGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobPaperworkGhostRole
+
+- type: entity
+  name: Walter Spawner
+  id: SpawnMobWalterGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobWalterGhostRole
+
+- type: entity
+  name: Morty Spawner
+  id: SpawnMobPossumMortyGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobPossumMortyGhostRole
+
+- type: entity
+  name: Morticia Spawner
+  id: SpawnMobRaccoonMorticiaGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobRaccoonMorticiaGhostRole
+
+- type: entity
+  name: Alexander Spawner
+  id: SpawnMobAlexanderGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobAlexanderGhostRole
+
+- type: entity
+  name: Shiva Spawner
+  id: SpawnMobSpiderShivaGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSpiderShivaGhostRole
+
+- type: entity
+  name: Willow Spawner
+  id: SpawnMobKangarooWillowGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobKangarooWillowGhostRole
+
+- type: entity
+  name: Smiles Spawner
+  id: SpawnMobSlimesPetGhostRole
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSlimesPetGhostRole

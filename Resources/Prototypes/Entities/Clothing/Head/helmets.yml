@@ -22,6 +22,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - Kangaroo
 
 #Mercenary Helmet
 - type: entity

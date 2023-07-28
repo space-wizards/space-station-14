@@ -1,0 +1,182 @@
+- type: entity
+  parent: MobCatRuntime
+  id: MobCatRuntimeGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-runtime-name
+    description: ghost-role-information-runtime-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobCatException
+  id: MobCatExceptionGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-exception-name
+    description: ghost-role-information-exception-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobCatFloppa
+  id: MobCatFloppaGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-floppa-name
+    description: ghost-role-information-floppa-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobBandito
+  id: MobBanditoGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-bandito-name
+    description: ghost-role-information-bandito-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobBingus
+  id: MobBingusGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-bingus-name
+    description: ghost-role-information-bingus-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobMcGriff
+  id: MobMcGriffGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-mcgriff-name
+    description: ghost-role-information-mcgriff-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobPaperwork
+  id: MobPaperworkGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-paperwork-name
+    description: ghost-role-information-paperwork-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobWalter
+  id: MobWalterGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-walter-name
+    description: ghost-role-information-walter-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobPossumMorty
+  id: MobPossumMortyGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-morty-name
+    description: ghost-role-information-morty-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobRaccoonMorticia
+  id: MobRaccoonMorticiaGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-morticia-name
+    description: ghost-role-information-morticia-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobAlexander
+  id: MobAlexanderGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-alexander-name
+    description: ghost-role-information-alexander-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobSpiderShiva
+  id: MobSpiderShivaGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-shiva-name
+    description: ghost-role-information-shiva-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobKangarooWillow
+  id: MobKangarooWillowGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    prob: 1
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-willow-name
+    description: ghost-role-information-willow-description
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MobSlimesPet
+  id: MobSlimesPetGhostRole
+  suffix: Роль
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-pet-slime-name
+    description: ghost-role-information-pet-slime-description
+  - type: GhostTakeoverAvailable

@@ -208,6 +208,8 @@
   - type: Tag
     tags:
     - CannotSuicide
+  - type: ReplacementAccent
+    accent: cat
 
 - type: entity
   name: mcgriff

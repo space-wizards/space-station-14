@@ -1,0 +1,36 @@
+- type: entity
+  name: Spawner Kesha
+  id: SpawnMobParrotKesha
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobParrotKesha
+
+- type: entity
+  name: Kesha
+  parent: MobParrot
+  id: MobParrotKesha
+  description: Clown's pet parrot.
+  suffix: Роль
+  components:
+  - type: InteractionPopup
+    successChance: 1
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+  - type: GhostRole
+    prob: 1
+    name: ghost-role-information-kesha-name
+    description: ghost-role-information-kesha-description
+  - type: GhostTakeoverAvailable
