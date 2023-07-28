@@ -68,5 +68,17 @@ namespace Content.Server.Light.Components
         /// </summary>
         [DataField("ejectBulbDelay")]
         public float EjectBulbDelay = 2;
+
+        /// <summary>
+        /// Shock damage done to a mob that hits the light with an unarmed attack
+        /// </summary>
+        [DataField("unarmedHitShock")]
+        public int UnarmedHitShock = 20;
+
+        /// <summary>
+        /// Stun duration applied to a mob that hits the light with an unarmed attack
+        /// </summary>
+        [DataField("unarmedHitStun")]
+        public TimeSpan UnarmedHitStun = TimeSpan.FromSeconds(5);
     }
 }

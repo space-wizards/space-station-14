@@ -577,7 +577,6 @@
   components:
   - type: Sprite
 
-#TODO make the sprite look like a python with a cap
 - type: entity
   parent: ToyGunBase
   id: RevolverCapGun
@@ -594,11 +593,13 @@
     heldPrefix: capgun
   - type: Gun
     selectedMode: SemiAuto
-    fireRate: 2.25 #same as python
     availableModes:
       - SemiAuto
+    fireRate: 2
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver_357.ogg
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+      params:
+        volume: 2.25
     clumsyProof: true
   - type: RevolverAmmoProvider
     whitelist:
@@ -627,9 +628,9 @@
         tags:
           - CartridgeCap
           - SpeedLoaderCap
-          - CartridgeMagnum357
-          - SpeedLoaderMagnum357
-      proto: CartridgeMagnum357
+          - CartridgeMagnum
+          - SpeedLoaderMagnum
+      proto: CartridgeMagnumAP
 
 - type: entity
   parent: BaseItem
