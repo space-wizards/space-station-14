@@ -84,7 +84,7 @@ public sealed partial class ResearchSystem
         ModifyServerPoints(serverEnt.Value, -prototype.Cost);
         UpdateTechnologyCards(serverEnt.Value);
 
-        _adminLog.Add(LogType.Research, LogImpact.Medium,
+        _adminLog.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(user):player} unlocked technology {prototype.ID} (discipline: {prototype.Discipline}, tier: {prototype.Tier}) at research client, {ToPrettyString(client)}, for research server {ToPrettyString(serverEnt.Value)}.");
         return true;
     }
