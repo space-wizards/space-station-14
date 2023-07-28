@@ -1,5 +1,7 @@
 {
     "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "GitHub @Keikiru, space_mountain_wind_bottle.rsi originally from https://github.com/discordia-space/CEV-Eris/raw/f7aa28fd4b4d0386c3393d829681ebca526f1d2d/icons/obj/drinks.dmi, space_mountain_wind.rsi originally from https://github.com/discordia-space/CEV-Eris/raw/9c980cb9bc84d07b1c210c5447798af525185f80/icons/obj/food.dmi, toilet.rsi originally from https://github.com/discordia-space/CEV-Eris/commit/2cb66bae0e253e13d37f8939e0983bb94fee243e",
     "size": { "x": 32, "y": 32 },
     "states": [
         { "name": "thirsty", "directions": 1, "delays": [[1.0]] },
