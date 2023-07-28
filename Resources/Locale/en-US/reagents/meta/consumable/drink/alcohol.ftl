@@ -56,7 +56,7 @@ reagent-name-wine = wine
 reagent-desc-wine = An premium alchoholic beverage made from distilled grape juice.
 
 reagent-name-champagne = champagne
-reagent-desc-champagne = An premium sparkling wine
+reagent-desc-champagne = A premium sparkling wine
 
 reagent-name-acid-spit = acidspit
 reagent-desc-acid-spit = A drink for the daring, can be deadly if incorrectly prepared!
