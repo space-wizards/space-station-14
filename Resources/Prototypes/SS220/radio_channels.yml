@@ -1,0 +1,9 @@
+# SS220 USSP moment, CLA
+
+- type: radioChannel
+  id: USSPChannel
+  name: chat-radio-ussp
+  keycode: 'сссп'
+  frequency: 1984
+  color: "#dd3535"
+  longRange: true
