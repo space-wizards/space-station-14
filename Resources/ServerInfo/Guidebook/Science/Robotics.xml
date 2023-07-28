@@ -4,7 +4,7 @@
 
   ## Фабрикатор экзокостюмов
 <Box>
-<GuideEntityEmbed Entity="ExosuitFabricator" Caption="Exosuit Fabricator"/>
+<GuideEntityEmbed Entity="ExosuitFabricator" Caption="фабрикатор экзокостюмов"/>
 </Box>
   [color=#a4885c]Фабрикатор экзокостюмов[/color] это устройство, на котором вы можете распечатать большинство частей для своих творений, такие как:
   - Конечности ботов
@@ -19,12 +19,12 @@
 
   ## Боты
 <Box>
-<GuideEntityEmbed Entity="MobCleanBot" Caption="Cleanbot"/>
-<GuideEntityEmbed Entity="MobMedibot" Caption="Medibot"/>
+<GuideEntityEmbed Entity="MobCleanBot" Caption="Чистобот"/>
+<GuideEntityEmbed Entity="MobMedibot" Caption="Медибот"/>
 </Box>
 <Box>
-<GuideEntityEmbed Entity="MobHonkBot" Caption="Honkbot"/>
-<GuideEntityEmbed Entity="MobMimeBot" Caption="Mimebot"/>
+<GuideEntityEmbed Entity="MobHonkBot" Caption="Хонкбот"/>
+<GuideEntityEmbed Entity="MobMimeBot" Caption="Мимбот"/>
 </Box>
   [color=#a4885c]Боты[/color] это простые маленькие автоматы, способные выполнять простые задачи, например, уборку. Они не требуют энергетических батарей, но довольно хрупки. Для их создания потребуются детали, которые можно изготовить в фабрикаторе экзокостюмов.
 
@@ -32,18 +32,18 @@
 
   ## Мехи
 <Box>
-<GuideEntityEmbed Entity="MechRipley" Caption="Ripley APLU"/>
-<GuideEntityEmbed Entity="MechHonker" Caption="H.O.N.K."/>
-<GuideEntityEmbed Entity="MechHamtr" Caption="HAMTR"/>
+<GuideEntityEmbed Entity="MechRipley" Caption="Рипли АВП"/>
+<GuideEntityEmbed Entity="MechHonker" Caption="Х.О.Н.К."/>
+<GuideEntityEmbed Entity="MechHamtr" Caption="ХАМЯК"/>
 </Box>
   [color=#a4885c]Мехи[/color] — это металлические громадины, предназначенные для выполнения различных задач в зависимости от модели. Они управляются игроками и для нуждаются и энергетических ячейках для работы.
 
   Для создания каждого меха необходим отдельный уникальный набор конечностей и деталей. Их можно изготовить в фабрикаторе экзокостюмов, как и любые другие детали, за исключением требуемых [color=#a4885c]машинных плат[/color], которые изготавливаются в [color=#a4885c]Принтере схем[/color], обычно имеющемся в научном отделе.
 <Box>
-<GuideEntityEmbed Entity="RipleyCentralElectronics" Caption="Ripley central controls module"/>
+<GuideEntityEmbed Entity="RipleyCentralElectronics" Caption="центральный модуль управления Рипли"/>
 </Box>
 <Box>
-<GuideEntityEmbed Entity="RipleyPeripheralsElectronics" Caption="Ripley peripherals control module"/>
+<GuideEntityEmbed Entity="RipleyPeripheralsElectronics" Caption="модуль управления периферией Рипли"/>
 </Box>
 
   Так, например, для создания автономного погрузчика Рипли необходимы обе приведенные выше машинные платы, для других мехов они бесполезны.
@@ -55,7 +55,7 @@
   ## Снаряжение
     Меха без своего специального снаряжения - дорогостоящий кусок металла. Снаряжение может быть создано на фабрикаторе, как и любые другие детали.
 <Box>
-<GuideEntityEmbed Entity="MechEquipmentGrabber" Caption="The Hydraulic Clamp, as an example."/>
+<GuideEntityEmbed Entity="MechEquipmentGrabber" Caption="Гидравлическая клешня, как пример"/>
 </Box>
   - Чтобы установить снаряжение, просто кликните рукой с снаряжением по меху.
   - Чтобы воспользоваться снаряжением, используйте кнопку "Переключить снаряжение", пока нужный его элемент не будет выбран.

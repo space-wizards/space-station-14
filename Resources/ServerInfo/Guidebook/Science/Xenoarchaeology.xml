@@ -26,9 +26,9 @@
 
 Using the console, you can extract points from the artifact using the [color=#a4885c]Extract[/color] button. The amount of points you extract is based on how many new nodes have been activated, since last extracting. You can extract multiple times, there is no reason not to!!!
 
-## Assembling Artifacts
-<GuideEntityEmbed Entity="ArtifactFragment" Caption="Artifact Fragment"/>
+## Сборка артефактов
+<GuideEntityEmbed Entity="ArtifactFragment" Caption="фрагмент артефакта"/>
 
-It is possible to gather multiple artifact fragments and assemble them into a working artifact. You can ask for these from Salvage, they usually find these while mining asteroids or on Expeditions.
+Есть возможность получить несколько фрагментов артефактов и собрать их в рабочий артефакт. Их можно попросить у утилизаторов, которые обычно находят их во время добычи на астероидах или во время экспедиций.
 
 </Document>
