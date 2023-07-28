@@ -2,7 +2,7 @@
   parent: BaseItem
   id: BaseSubdermalImplant
   name: implant
-  description: a microscopic chip that's injected under the skin
+  description: A microscopic chip that's injected under the skin.
   abstract: true
   components:
     - type: SubdermalImplant
@@ -17,7 +17,7 @@
   parent: BaseSubdermalImplant
   id: SadTromboneImplant
   name: sad trombone implant
-  description: plays a sad tune when the user dies
+  description: This implant plays a sad tune when the user dies.
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -34,7 +34,7 @@
   parent: BaseSubdermalImplant
   id: LightImplant
   name: light implant
-  description: makes your skin emit a faint light
+  description: This implant emits light from the user's skin on activation.
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -62,7 +62,7 @@
   parent: BaseSubdermalImplant
   id: BikeHornImplant
   name: bike horn implant
-  description: Makes you honk
+  description: This implant lets the user honk anywhere at any time.
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -83,7 +83,7 @@
   parent: BaseSubdermalImplant
   id: TrackingImplant
   name: tracking implant
-  description: tracks whoever was implanted via the suit sensor network
+  description: This implant has a tracking device attached to the suit sensor network, as well as a condition monitor for the Security radio channel.
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -110,7 +110,7 @@
   parent: BaseSubdermalImplant
   id: StorageImplant
   name: storage implant
-  description: made with bluespace technology, allows the user to fit a few items in hidden storage
+  description: This implant grants hidden storage within a person's body using bluespace technology.
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -132,7 +132,7 @@
   parent: BaseSubdermalImplant
   id: FreedomImplant
   name: freedom implant
-  description: you can break these cuffs
+  description: This implant lets the user break out of hand restraints up to three times before ceasing to function anymore.
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -142,7 +142,7 @@
   parent: BaseSubdermalImplant
   id: UplinkImplant
   name: uplink implant
-  description: allows the user to open a hidden uplink at will
+  description: This implant lets the user access a hidden Syndicate uplink at will.
   noSpawn: true
   components:
   - type: SubdermalImplant
@@ -160,7 +160,7 @@
   parent: BaseSubdermalImplant
   id: EmpImplant
   name: EMP implant
-  description: allows the user to release a small EMP pulse
+  description: This implant creates an electromagnetic pulse when activated.
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -175,7 +175,7 @@
   parent: BaseSubdermalImplant
   id: DnaScramblerImplant
   name: DNA scrambler implant
-  description: allows the user to change their appearance and name
+  description: This implant lets the user randomly change their appearance and name once.
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -186,8 +186,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: MicroBombImplant
-  name: micro bomb implant
-  description: mission failed, user blows up on death to prevent company equipment from being stolen
+  name: micro-bomb implant
+  description: This implant detonates the user upon death.
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -216,8 +216,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: MacroBombImplant
-  name: macro bomb implant
-  description: a large explosion packed into a small implant, be warned as this could be dangerous for your teammates
+  name: macro-bomb implant
+  description: This implant creates a large explosion on death after a preprogrammed countdown.
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -250,8 +250,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: DeathRattleImplant
-  name: deathrattle implant
-  description: sends a message with your location to the syndicate radio channel when you fall into a critical state or die.
+  name: death rattle implant
+  description: This implant will inform the Syndicate radio channel should the user fall into critical condition or die.
   noSpawn: true
   components:
     - type: SubdermalImplant
