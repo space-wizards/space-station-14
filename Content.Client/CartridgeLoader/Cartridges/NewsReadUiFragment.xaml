@@ -48,6 +48,7 @@
         <Button
             Name="NotificationSwith"
             MinWidth="20"/>
-        <RichTextLabel Margin="2,2,2,2" Name="ShareTime" VerticalAlignment="Top"/>
+        <RichTextLabel Margin="5,2,2,2" Name="ShareTime" VerticalAlignment="Top"/>
+        <RichTextLabel Margin="5,2,2,2" Name="Author" VerticalAlignment="Top" HorizontalAlignment="Right"/>
     </BoxContainer>
 </cartridges:NewsReadUiFragment>

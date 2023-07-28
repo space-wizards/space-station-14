@@ -6,7 +6,7 @@ namespace Content.Server.MassMedia.Components
     public sealed class NewsWriteComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool ShareAvalible;
+        public bool ShareAvalible = false;
 
         [ViewVariables(VVAccess.ReadWrite), DataField("nextShare", customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan NextShare;

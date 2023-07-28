@@ -31,6 +31,7 @@ public sealed partial class NewsReadUiFragment : BoxContainer
         PageNum.Visible = true;
         PageText.Visible = true;
         ShareTime.Visible = true;
+        Author.Visible = true;
 
         PageName.Text = article.Name;
         PageText.SetMarkup(article.Content);
@@ -41,6 +42,8 @@ public sealed partial class NewsReadUiFragment : BoxContainer
 
         string shareTime = article.ShareTime.ToString("hh\\:mm\\:ss");
         ShareTime.SetMarkup(Loc.GetString("news-read-ui-time-prefix-text") + " " + shareTime);
+
+        Author.SetMarkup(Loc.GetString("news-read-ui-author-prefix") + " " + (article.Author != null ? article.Author : Loc.GetString("news-read-ui-no-author")));
     }
 
     public void UpdateEmptyState(bool notificationOn)
@@ -48,8 +51,9 @@ public sealed partial class NewsReadUiFragment : BoxContainer
         PageNum.Visible = false;
         PageText.Visible = false;
         ShareTime.Visible = false;
+        Author.Visible = false;
 
-        PageName.Text = Loc.GetString("news-read-ui-not-found-text");
+        PageName.Text = Loc.GetString("news-read-ui-no-found-text");
 
         NotificationSwith.Text = Loc.GetString(notificationOn ? "news-read-ui-notification-on" : "news-read-ui-notification-off");
     }
