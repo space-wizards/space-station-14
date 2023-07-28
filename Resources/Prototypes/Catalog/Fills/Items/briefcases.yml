@@ -33,5 +33,5 @@
   - type: StorageFill
     contents:
       - id: ClothingEyesGlassesSunglasses
-      - id: SpaceCash1000000
-        amount: 5
+      - id: SpaceCash10000
+        amount: 3
