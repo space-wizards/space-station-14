@@ -238,7 +238,7 @@ public sealed partial class PathfindingSystem
 
     private bool IsBodyRelevant(FixturesComponent fixtures)
     {
-        foreach (var (_, fixture) in fixtures.Fixtures)
+        foreach (var fixture in fixtures.Fixtures.Values)
         {
             if (!fixture.Hard)
                 continue;
