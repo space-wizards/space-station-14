@@ -7,8 +7,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using System.Linq;
 using System.Numerics;
 
 namespace Content.Client.Access.UI
@@ -20,13 +18,58 @@ namespace Content.Client.Access.UI
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         private readonly SpriteSystem _spriteSystem = default!;
 
-        private const string JobIconPrarentId = "JobIcon";
+        private static string[] JobIconIds = new[] { "JobIconDetective",
+            "JobIconQuarterMaster",
+            "JobIconBotanist",
+            "JobIconBoxer",
+            "JobIconAtmosphericTechnician",
+            "JobIconNanotrasen",
+            "JobIconPrisoner",
+            "JobIconJanitor",
+            "JobIconChemist",
+            "JobIconStationEngineer",
+            "JobIconSecurityOfficer",
+            "JobIconChiefMedicalOfficer",
+            "JobIconRoboticist",
+            "JobIconChaplain",
+            "JobIconLawyer",
+            "JobIconUnknown",
+            "JobIconLibrarian",
+            "JobIconCargoTechnician",
+            "JobIconScientist",
+            "JobIconResearchAssistant",
+            "JobIconGeneticist",
+            "JobIconClown",
+            "JobIconCaptain",
+            "JobIconHeadOfPersonnel",
+            "JobIconVirologist",
+            "JobIconShaftMiner",
+            "JobIconPassenger",
+            "JobIconChiefEngineer",
+            "JobIconBartender",
+            "JobIconHeadOfSecurity",
+            "JobIconBrigmedic",
+            "JobIconMedicalDoctor",
+            "JobIconParamedic",
+            "JobIconChef",
+            "JobIconWarden",
+            "JobIconResearchDirector",
+            "JobIconMime",
+            "JobIconMusician",
+            "JobIconReporter",
+            "JobIconPsychologist",
+            "JobIconMedicalIntern",
+            "JobIconTechnicalAssistant",
+            "JobIconServiceWorker",
+            "JobIconSecurityCadet",
+            "JobIconZookeeper"
+        };
         private const int JobIconColumnCount = 10;
 
         public event Action<string>? OnNameChanged;
         public event Action<string>? OnJobChanged;
         public readonly List<Button> JobIconButtons = new();
-        public readonly Dictionary<int, string> StateByIndex = new();
+        public readonly Dictionary<int, string> IconIdByIndex = new();
 
         public AgentIDCardWindow()
         {
@@ -41,17 +84,10 @@ namespace Content.Client.Access.UI
             JobLineEdit.OnFocusExit += e => OnJobChanged?.Invoke(e.Text);
 
             var jobIconGroup = new ButtonGroup();
-            var allJobIcons = _prototypeManager.EnumeratePrototypes<StatusIconPrototype>();
             var i = 0;
-            foreach (var jobIcon in allJobIcons)
+            foreach (var jobIconId in JobIconIds)
             {
-                if (!(jobIcon.Parents?.Contains(JobIconPrarentId) ?? false))
-                {
-                    continue;
-                }
-
-                var specifier = jobIcon.Icon as SpriteSpecifier.Rsi;
-                if (specifier == null)
+                if (!_prototypeManager.TryIndex<StatusIconPrototype>(jobIconId, out var jobIcon))
                 {
                     continue;
                 }
@@ -71,14 +107,12 @@ namespace Content.Client.Access.UI
                     MaxSize = new Vector2(42, 28),
                     Group = jobIconGroup,
                     Pressed = i == 0,
-                    ToolTip = specifier.RsiState,
-                    TooltipDelay = 0.2f,
                 };
 
                 // Generate buttons textures
                 TextureRect jobIconTexture = new TextureRect
                 {
-                    Texture = _spriteSystem.Frame0(specifier),
+                    Texture = _spriteSystem.Frame0(jobIcon.Icon),
                     TextureScale = new Vector2(2.5f, 2.5f),
                     Stretch = TextureRect.StretchMode.KeepCentered,
                 };
@@ -87,7 +121,7 @@ namespace Content.Client.Access.UI
 
                 JobIconButtons.Add(jobIconButton);
                 Grid.AddChild(jobIconButton);
-                StateByIndex.Add(i, specifier.RsiState);
+                IconIdByIndex.Add(i, jobIcon.ID);
 
                 i++;
             }

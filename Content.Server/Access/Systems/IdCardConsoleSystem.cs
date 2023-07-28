@@ -6,6 +6,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Roles;
 using Content.Shared.StationRecords;
+using Content.Shared.StatusIcon;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -129,13 +130,11 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         _idCard.TryChangeFullName(targetId, newFullName, player: player);
         _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
 
-        JobPrototype? job = null;
-        if (!string.IsNullOrWhiteSpace(newJobProto)
-            && _prototype.TryIndex(newJobProto, out job))
+        if (_prototype.TryIndex<JobPrototype>(newJobProto, out var job)
+            && _prototype.TryIndex<StatusIconPrototype>(job.Icon, out var jobIcon))
         {
-            _idCard.TryChangeJobIcon(targetId, job.Icon, player: player);
+            _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
         }
-
 
         if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
         {

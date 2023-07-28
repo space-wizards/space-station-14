@@ -1,7 +1,5 @@
 using Content.Shared.Access.Systems;
 using Robust.Client.GameObjects;
-using Robust.Shared.Utility;
-using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Access.UI
 {
@@ -32,7 +30,7 @@ namespace Content.Client.Access.UI
             for (var i = 0; i < _window.JobIconButtons.Count; i++)
             {
                 var key = i;
-                _window.JobIconButtons[i].OnPressed += _ => OnJobIconChanged(_window.StateByIndex[key]);
+                _window.JobIconButtons[i].OnPressed += _ => OnJobIconChanged(_window.IconIdByIndex[key]);
             }
         }
 

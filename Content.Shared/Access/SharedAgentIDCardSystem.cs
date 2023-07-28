@@ -59,6 +59,7 @@ namespace Content.Shared.Access.Systems
     public sealed class AgentIDCardJobIconChangedMessage : BoundUserInterfaceMessage
     {
         public string JobIcon { get; }
+
         public AgentIDCardJobIconChangedMessage(string jobIcon)
         {
             JobIcon = jobIcon;

@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
@@ -7,8 +6,10 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.Popups;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Access.Systems
 {
@@ -118,27 +119,20 @@ namespace Content.Server.Access.Systems
             return true;
         }
 
-
-        public bool TryChangeJobIcon(EntityUid uid, string? jobIcon, IdCardComponent? id = null, EntityUid? player = null)
+        public bool TryChangeJobIcon(EntityUid uid, StatusIconPrototype jobIcon, IdCardComponent? id = null, EntityUid? player = null)
         {
             if (!Resolve(uid, ref id))
             {
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(jobIcon))
-            {
-                return false;
-            }
-
-            if (id.JobIcon == jobIcon)
+            if (id.JobIcon == jobIcon.ID)
             {
                 return true;
             }
 
-            id.JobIcon = jobIcon;
+            id.JobIcon = jobIcon.ID;
             Dirty(id);
-            UpdateEntityName(uid, id);
 
             if (player != null)
             {

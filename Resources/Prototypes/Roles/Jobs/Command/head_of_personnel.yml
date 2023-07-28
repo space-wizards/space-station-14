@@ -18,7 +18,7 @@
       time: 72000 # 20 hrs
   weight: 20
   startingGear: HoPGear
-  icon: "HeadOfPersonnel"
+  icon: "JobIconHeadOfPersonnel"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false

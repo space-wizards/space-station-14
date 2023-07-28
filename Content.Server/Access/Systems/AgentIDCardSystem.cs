@@ -4,7 +4,9 @@ using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Interaction;
+using Content.Shared.StatusIcon;
 using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Access.Systems
 {
@@ -13,6 +15,7 @@ namespace Content.Server.Access.Systems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IdCardSystem _cardSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -85,9 +88,16 @@ namespace Content.Server.Access.Systems
         private void OnJobIconChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardJobIconChangedMessage args)
         {
             if (!TryComp<IdCardComponent>(uid, out var idCard))
+            {
                 return;
+            }
 
-            _cardSystem.TryChangeJobIcon(uid, args.JobIcon, idCard);
+            if (!_prototypeManager.TryIndex<StatusIconPrototype>(args.JobIcon, out var jobIcon))
+            {
+                return;
+            }
+
+            _cardSystem.TryChangeJobIcon(uid, jobIcon, idCard);
         }
     }
 }

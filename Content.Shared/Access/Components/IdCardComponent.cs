@@ -1,6 +1,8 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.PDA;
+using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Access.Components
 {
@@ -22,9 +24,9 @@ namespace Content.Shared.Access.Components
         /// <summary>
         /// The state of the job icon rsi.
         /// </summary>
-        [DataField("jobIcon")]
+        [DataField("jobIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
         [AutoNetworkedField]
-        public string JobIcon = "Unknown";
+        public string JobIcon = "JobIconUnknown";
 
     }
 }
