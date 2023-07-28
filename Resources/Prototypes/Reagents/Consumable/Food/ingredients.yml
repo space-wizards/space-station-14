@@ -200,10 +200,10 @@
 
 - type: reagent
   id: CocoaPowder #Candy and chocolate
-  name: reagent-name-cacaopowder
+  name: reagent-name-cocoapowder
   group: Foods
-  desc: reagent-desc-cacaopowder
-  physicalDesc: reagent-physical-desc-coffee
+  desc: reagent-desc-cocoapowder
+  physicalDesc: reagent-physical-desc-powdery
   flavor: chocolate
   color: "#800000"
   meltingPoint: 146.0

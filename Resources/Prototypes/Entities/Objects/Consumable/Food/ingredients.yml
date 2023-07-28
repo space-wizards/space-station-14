@@ -624,15 +624,15 @@
 - type: entity
   name: cocoa beans
   parent: FoodProduceBase
-  id: FoodCocoaSeeds
-  description: Test
+  id: FoodCocoaBeans
+  description: You can never have too much chocolate!
   components:
   - type: FlavorProfile
     flavors:
       - chocolate
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cocoa.rsi
-    state: produce-seeds
+    state: produce-beans
   - type: SolutionContainerManager
     solutions:
       food:

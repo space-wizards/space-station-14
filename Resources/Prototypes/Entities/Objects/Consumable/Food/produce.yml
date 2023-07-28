@@ -579,7 +579,7 @@
 - type: entity
   name: cocoa pod
   parent: FoodProduceBase
-  id: FoodCocoa
+  id: FoodCocoaPod
   description: You can never have too much chocolate!
   components:
   - type: FlavorProfile
@@ -602,7 +602,7 @@
     seedId: cocoa
   - type: SpawnItemsOnUse
     items:
-      - id: FoodCocoaSeeds
+      - id: FoodCocoaBeans
     sound:
       path: /Audio/Effects/packetrip.ogg
 

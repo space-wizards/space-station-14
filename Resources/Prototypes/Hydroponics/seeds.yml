@@ -963,7 +963,7 @@
   plantRsi: Objects/Specific/Hydroponics/cocoa.rsi
   packetPrototype: CocoaSeeds
   productPrototypes:
-    - FoodCocoa
+    - FoodCocoaPod
   harvestRepeat: Repeat
   lifespan: 50
   maturation: 6
