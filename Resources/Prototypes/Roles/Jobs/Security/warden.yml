@@ -27,10 +27,10 @@
     jumpsuit: ClothingUniformJumpsuitWarden
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsCombatFilled
-    eyes: ClothingHeadsetAltSecurityOfficer
+    eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterCoatWarden
     id: WardenPDA
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetAltSecurityOfficer
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58Nonlethal
   innerclothingskirt: ClothingUniformJumpskirtWarden
