@@ -17,7 +17,13 @@
       "name": "hv"
     },
     {
+      "name": "ap"
+    },
+    {
       "name": "hvdisplay"
+    },
+    {
+      "name": "apdisplay"
     },
     {
       "name": "incendiarydisplay"

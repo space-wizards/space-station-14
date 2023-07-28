@@ -51,6 +51,7 @@
   damage:
     types:
       Heat: 17
+  canPenetrate: true
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_laser
@@ -63,10 +64,12 @@
 
 - type: hitscan
   id: XrayLaser
+  canPenetrate: true
+  canPenetrateWall: true
   damage:
     types:
       Heat: 10
-      Radiation: 10
+      Radiation: 18
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_xray
@@ -79,6 +82,7 @@
 
 - type: hitscan
   id: RedHeavyLaser
+  canPenetrate: true
   damage:
     types:
       Heat: 28

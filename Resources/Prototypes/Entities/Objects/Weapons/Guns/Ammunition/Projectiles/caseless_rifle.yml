@@ -21,6 +21,17 @@
         Piercing: 22
 
 - type: entity
+  id: BulletCaselessRifleAP
+  name: bullet (.25 caseless armor-piercing)
+  parent: BaseBulletAP
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 12
+
+- type: entity
   id: BulletCaselessRiflePractice
   name: bullet (.25 caseless practice)
   parent: BaseBulletPractice

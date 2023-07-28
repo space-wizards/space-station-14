@@ -37,6 +37,14 @@
     proto: BulletLightRifleHighVelocity
 
 - type: entity
+  id: CartridgeLightRifleAP
+  name: cartridge (.30 rifle armor-piercing)
+  parent: BaseCartridgeLightRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLightRifleAP
+
+- type: entity
   id: CartridgeLightRiflePractice
   name: cartridge (.30 rifle practice)
   parent: BaseCartridgeLightRifle

@@ -5,6 +5,9 @@
   name: bullet (.60 anti-materiel)
   components:
   - type: Projectile
+    penetrationStrength: 2
+    canPenetrateWall: true
+    penetrationFalloffMultiplier: 1
     damage:
       types:
         Piercing: 60

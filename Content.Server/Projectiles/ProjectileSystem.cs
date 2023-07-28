@@ -11,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Projectiles;
 
@@ -73,10 +74,30 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             component.DamagedEntity = true;
 
-            if (component.DeleteOnCollide)
+            if (!component.DeleteOnCollide)
             {
-                QueueDel(uid);
+                if (component.PenetrationStrength <= 0)
+                    QueueDel(uid);
+
+                //TODO: Add a penetration value to every entity that can be penetrated instead of a static 0.5 for mobs and 1 for everything else
+                if (TryComp<MobStateComponent>(otherEntity, out var mobState))
+                {
+                    component.PenetrationStrength -= 0.5f;
+                }
+                else if (component.PenetrationStrength < 1 || component.CanPenetrateWall == false)
+                {
+                    QueueDel(uid);
+                }
+                else component.PenetrationStrength -= 1f;
+
+                component.Damage = component.Damage * component.PenetrationFalloffMultiplier;
+                component.DamagedEntity = false;
             }
+            else QueueDel(uid);
+            // if (component.DeleteOnCollide) //&& !component.CanPenetrate)
+            // {
+            //     QueueDel(uid);
+            // }
 
             if (component.ImpactEffect != null && TryComp<TransformComponent>(uid, out var xform))
             {

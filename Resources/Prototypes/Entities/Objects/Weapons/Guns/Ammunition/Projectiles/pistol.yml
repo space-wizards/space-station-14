@@ -17,8 +17,22 @@
   components:
   - type: Projectile
     damage:
+    deleteOnCollide: false
+    penetrationStrength: 0.5
+    penetrationFalloffMultiplier: 0.75
       types:
         Piercing: 19
+
+- type: entity
+  id: BulletPistolAP
+  name: bullet (.35 auto armor-piercing)
+  parent: BaseBulletAP
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 10
 
 - type: entity
   id: BulletPistolPractice

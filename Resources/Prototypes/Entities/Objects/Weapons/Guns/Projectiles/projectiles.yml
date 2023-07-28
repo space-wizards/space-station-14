@@ -96,6 +96,10 @@
   noSpawn: true
   components:
   - type: Projectile
+    deleteOnCollide: false
+    canPenetrate: true
+    penetrationStrength: 0.9
+    penetrationFalloffMultiplier: 0.75
     damage:
       types:
         Piercing: 17
@@ -151,6 +155,9 @@
   noSpawn: true
   components:
   - type: Projectile
+    deleteOnCollide: false
+    penetrationStrength: 1
+    canPenetrateWall: true
     damage:
       types:
         Piercing: 11 # 20% decrease

@@ -5,6 +5,9 @@
   noSpawn: true
   components:
   - type: Projectile
+    deleteOnCollide: false
+    penetrationStrength: 0.5
+    penetrationFalloffMultiplier: 0.5
     damage:
       types:
         Piercing: 35
@@ -65,4 +68,3 @@
     damage:
       types:
         Piercing: 26 # 20% decrease
-    ignoreResistances: true

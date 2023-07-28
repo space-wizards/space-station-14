@@ -5,6 +5,9 @@
   noSpawn: true
   components:
   - type: Projectile
+    deleteOnCollide: false
+    penetrationStrength: 0.5
+    penetrationFalloffMultiplier: 0.5
     damage:
       types:
         Piercing: 19
@@ -19,6 +22,17 @@
     damage:
       types:
         Piercing: 21
+
+- type: entity
+  id: BulletLightRifleAP
+  name: bullet (.20 rifle armor-piercing)
+  parent: BaseBulletAP
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 12
 
 - type: entity
   id: BulletLightRiflePractice

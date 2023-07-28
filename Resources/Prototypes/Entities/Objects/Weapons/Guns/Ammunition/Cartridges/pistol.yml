@@ -37,6 +37,14 @@
     proto: BulletPistolHighVelocity
 
 - type: entity
+  id: CartridgePistolAP
+  name: cartridge (.35 auto armor-piercing)
+  parent: BaseCartridgePistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletPistolAP
+
+- type: entity
   id: CartridgePistolPractice
   name: cartridge (.35 auto practice)
   parent: BaseCartridgePistol
