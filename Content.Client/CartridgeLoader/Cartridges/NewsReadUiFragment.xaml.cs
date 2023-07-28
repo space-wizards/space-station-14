@@ -53,7 +53,7 @@ public sealed partial class NewsReadUiFragment : BoxContainer
         ShareTime.Visible = false;
         Author.Visible = false;
 
-        PageName.Text = Loc.GetString("news-read-ui-not-found-text");
+        PageName.Text = Loc.GetString("news-read-ui-no-found-text");
 
         NotificationSwith.Text = Loc.GetString(notificationOn ? "news-read-ui-notification-on" : "news-read-ui-notification-off");
     }

@@ -72,7 +72,7 @@ namespace Content.Client.MassMedia.Ui
 
             NewsArticle article = new NewsArticle();
             var stringName = _menu.NameInput.Text;
-            var name = (stringName.Length <= 25 ? stringName.Trim() : $"{stringName.Trim().Substring(0, 25)}...");
+            var name = (stringName.Length <= 50 ? stringName.Trim() : $"{stringName.Trim().Substring(0, 50)}...");
             article.Name = name;
             article.Content = stringContent;
             article.ShareTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
