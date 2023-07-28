@@ -11,12 +11,12 @@ public sealed class BlobMobComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Blunt", -1 },
-            { "Slash", -1 },
-            { "Piercing", -1 },
-            { "Heat", -1 },
-            { "Cold", -1 },
-            { "Shock", -1 },
+            { "Blunt", -2 },
+            { "Slash", -2 },
+            { "Piercing", -2 },
+            { "Heat", -2 },
+            { "Cold", -2 },
+            { "Shock", -2 },
         }
     };
 }
