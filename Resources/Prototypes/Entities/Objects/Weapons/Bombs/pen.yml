@@ -20,6 +20,10 @@
   - type: DeviceLinkSink
     ports:
       - Trigger
+  - type: Clothing
+    slots:
+    - earl
+    - earr
 
 - type: entity
   parent: BaseItem

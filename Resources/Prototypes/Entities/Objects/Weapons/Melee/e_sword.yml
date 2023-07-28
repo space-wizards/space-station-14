@@ -118,6 +118,10 @@
     - Write
   - type: DisarmMalus
     malus: 0
+  - type: Clothing
+    slots:
+    - earl
+    - earr
 
 - type: entity
   parent: BaseItem
