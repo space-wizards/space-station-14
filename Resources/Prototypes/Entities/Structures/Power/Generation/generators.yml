@@ -168,6 +168,14 @@
     supplyRate: 3000
 
 - type: entity
+  parent: BaseGenerator
+  id: GeneratorBasic15kW
+  suffix: Basic, 15kW
+  components:
+    - type: PowerSupplier
+      supplyRate: 15000
+
+- type: entity
   parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorPlasma
   suffix: Plasma, 20kW
