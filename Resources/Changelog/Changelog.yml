@@ -1,11 +1,6 @@
 Entries:
 - author: themias
   changes:
-  - {message: Mice can now escape potted plants and toilets, type: Fix}
-  id: 3859
-  time: '2023-05-24T17:30:08.0000000+00:00'
-- author: themias
-  changes:
   - {message: Fixed an issue where dwarves sometimes couldn't get their words out.,
     type: Fix}
   id: 3860
@@ -2980,3 +2975,10 @@ Entries:
   - {message: Improved sprites SMG Drozd and sprite WT 550 behind, type: Tweak}
   id: 4358
   time: '2023-07-28T19:55:46.0000000+00:00'
+- author: Misha_Unity
+  changes:
+  - {message: News tab has been turned into an PDA application, type: Tweak}
+  - {message: Added cooldown to mass-media console, type: Add}
+  - {message: Added function to turn off new news notifications, type: Add}
+  id: 4359
+  time: '2023-07-28T19:59:03.0000000+00:00'
