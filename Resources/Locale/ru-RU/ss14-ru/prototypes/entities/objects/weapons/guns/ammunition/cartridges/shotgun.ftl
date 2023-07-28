@@ -14,3 +14,5 @@ ent-ShellShotgunPractice = ружейный патрон (.50 учебный)
     .desc = { ent-BaseShellShotgun.desc }
 ent-ShellTranquilizer = ружейный патрон (.50 транквилизатор)
     .desc = { ent-BaseShellShotgun.desc }
+ent-ShellShotgunImprovised = самодельный ружейный патрон (.50)
+    .desc = Самодельный дробовой патрон, выстреливающий больной металлической шрапнелью. Разброс так велик, что и по слону попасть невозможно.

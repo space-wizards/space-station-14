@@ -14,5 +14,5 @@ ent-ModularGrenade = модульная граната
     .desc = Корпус гранаты. Требуется триггер и заряд.
 ent-EmpGrenade = ЭМИ граната
     .desc = Выпускает электромагнитный импульс, который выводит из строя или повреждает различные электронные устройства и разряжает элементы питания.
-ent-HolyHandGrenade = holy hand grenade
-    .desc = O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
+ent-HolyHandGrenade = святая граната
+    .desc = Благослови, Господи, свою ручную гранату, каковою можешь Ты в своей милости разносить врагов Твоих на маленькие кусочки.
