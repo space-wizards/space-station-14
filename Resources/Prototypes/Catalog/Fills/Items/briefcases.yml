@@ -13,7 +13,7 @@
   id: BriefcaseSyndieSniperBundleFilled
   name: brown briefcase
   parent: BriefcaseSyndie
-  suffix: Filled
+  suffix: Filled, Hristov
   components:
   - type: StorageFill
     contents:
@@ -23,3 +23,15 @@
       - id: ClothingHandsGlovesLatex
       - id: ClothingUniformJumpsuitLawyerBlack
       - id: ClothingShoesBootsLaceup
+
+- type: entity
+  id: BriefcaseSyndieLobbyingBundleFilled
+  name: brown briefcase
+  parent: BriefcaseSyndie
+  suffix: Filled, Spacebucks
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingEyesGlassesSunglasses
+      - id: SpaceCash1000000
+        amount: 5
