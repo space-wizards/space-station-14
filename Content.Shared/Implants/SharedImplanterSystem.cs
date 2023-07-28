@@ -1,8 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Popups;
@@ -25,6 +26,7 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         SubscribeLocalEvent<ImplanterComponent, ComponentInit>(OnImplanterInit);
         SubscribeLocalEvent<ImplanterComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
+        SubscribeLocalEvent<ImplanterComponent, ExaminedEvent>(OnExamine);
     }
 
     private void OnImplanterInit(EntityUid uid, ImplanterComponent component, ComponentInit args)
@@ -41,6 +43,13 @@ public abstract class SharedImplanterSystem : EntitySystem
         component.ImplantData = (implantData.EntityName, implantData.EntityDescription);
     }
 
+    private void OnExamine(EntityUid uid, ImplanterComponent component, ExaminedEvent args)
+    {
+        if (!component.ImplanterSlot.HasItem || !args.IsInDetailsRange)
+            return;
+
+        args.PushMarkup(Loc.GetString("implanter-contained-implant-text", ("desc", component.ImplantData.Item2)));
+    }
 
     //Instantly implant something and add all necessary components and containers.
     //Set to draw mode if not implant only
