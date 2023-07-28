@@ -972,13 +972,15 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-- proto: GeneratorUranium
+- proto: GeneratorBasic
   entities:
   - uid: 83
     components:
     - pos: -2.5,-3.5
       parent: 173
       type: Transform
+    - supplyRate: 15000
+      type: PowerSupplier
 - proto: GravityGeneratorMini
   entities:
   - uid: 146
