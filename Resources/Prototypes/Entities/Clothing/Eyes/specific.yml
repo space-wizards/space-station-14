@@ -19,14 +19,3 @@
         - key: enum.ChameleonUiKey.Key
           type: ChameleonBoundUserInterface
 
-- type: entity
-  parent: ClothingEyesBase
-  id: ClothingEyesScience
-  name: science goggles
-  description: Useful both for security and cargonia.
-  components:
-    - type: Sprite
-      sprite: Clothing/Eyes/Glasses/science.rsi
-    - type: Clothing
-      sprite: Clothing/Eyes/Glasses/science.rsi
-    - type: SolutionScanner
