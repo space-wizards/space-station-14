@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -8,7 +7,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Implants;
