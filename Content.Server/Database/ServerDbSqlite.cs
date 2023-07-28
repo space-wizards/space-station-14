@@ -38,7 +38,7 @@ namespace Content.Server.Database
             var concurrency = inMemory ? 1 : cfg.GetCVar(CCVars.DatabaseSqliteConcurrency);
             _prefsSemaphore = new ConcurrencySemaphore(concurrency, synchronous);
 
-            if (cfg.GetCVar(CCVars.DatabaseSynchronous))
+            if (synchronous)
             {
                 prefsCtx.Database.Migrate();
                 _dbReadyTask = Task.CompletedTask;

@@ -104770,33 +104770,6 @@ entities:
         temporary: False
         event: !type:ToggleActionEvent {}
       type: HandheldLight
-  - uid: 1773
-    components:
-    - pos: -27.432951,43.824997
-      parent: 30
-      type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon:
-          sprite: Objects/Tools/flashlight.rsi
-          state: flashlight
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
   - uid: 4953
     components:
     - pos: -22.461006,36.440132
@@ -105005,6 +104978,13 @@ entities:
   - uid: 21649
     components:
     - pos: -28.479252,15.714678
+      parent: 30
+      type: Transform
+- proto: LampInterrogator
+  entities:
+  - uid: 1773
+    components:
+    - pos: -27.415504,43.902733
       parent: 30
       type: Transform
 - proto: lantern
@@ -105543,6 +105523,13 @@ entities:
         - 0
         - 0
       type: EntityStorage
+- proto: LockerEngineerFilledHardsuit
+  entities:
+  - uid: 20804
+    components:
+    - pos: -15.5,-38.5
+      parent: 30
+      type: Transform
 - proto: LockerEvidence
   entities:
   - uid: 2248
@@ -123986,6 +123973,16 @@ entities:
       type: Transform
 - proto: SpawnPointMedicalIntern
   entities:
+  - uid: 20800
+    components:
+    - pos: -22.5,-18.5
+      parent: 30
+      type: Transform
+  - uid: 20801
+    components:
+    - pos: -21.5,-18.5
+      parent: 30
+      type: Transform
   - uid: 20887
     components:
     - pos: -24.5,-18.5
@@ -124038,6 +124035,11 @@ entities:
     - pos: 21.5,11.5
       parent: 30
       type: Transform
+  - uid: 20793
+    components:
+    - pos: 22.5,8.5
+      parent: 30
+      type: Transform
   - uid: 22455
     components:
     - pos: 21.5,10.5
@@ -124079,11 +124081,6 @@ entities:
     - pos: 22.5,10.5
       parent: 30
       type: Transform
-  - uid: 20991
-    components:
-    - pos: 22.5,8.5
-      parent: 30
-      type: Transform
   - uid: 21185
     components:
     - pos: 22.5,9.5
@@ -124091,6 +124088,16 @@ entities:
       type: Transform
 - proto: SpawnPointSecurityCadet
   entities:
+  - uid: 20798
+    components:
+    - pos: -31.5,57.5
+      parent: 30
+      type: Transform
+  - uid: 20799
+    components:
+    - pos: -34.5,57.5
+      parent: 30
+      type: Transform
   - uid: 20891
     components:
     - pos: -32.5,57.5
@@ -124121,6 +124128,34 @@ entities:
   - uid: 2227
     components:
     - pos: -31.5,59.5
+      parent: 30
+      type: Transform
+- proto: SpawnPointSeniorEngineer
+  entities:
+  - uid: 20795
+    components:
+    - pos: -23.5,-40.5
+      parent: 30
+      type: Transform
+- proto: SpawnPointSeniorOfficer
+  entities:
+  - uid: 20797
+    components:
+    - pos: -28.5,59.5
+      parent: 30
+      type: Transform
+- proto: SpawnPointSeniorPhysician
+  entities:
+  - uid: 20796
+    components:
+    - pos: -25.5,-18.5
+      parent: 30
+      type: Transform
+- proto: SpawnPointSeniorResearcher
+  entities:
+  - uid: 20794
+    components:
+    - pos: 21.5,12.5
       parent: 30
       type: Transform
 - proto: SpawnPointServiceWorker
@@ -124159,6 +124194,16 @@ entities:
       type: Transform
 - proto: SpawnPointTechnicalAssistant
   entities:
+  - uid: 20802
+    components:
+    - pos: -21.5,-42.5
+      parent: 30
+      type: Transform
+  - uid: 20803
+    components:
+    - pos: -21.5,-41.5
+      parent: 30
+      type: Transform
   - uid: 20885
     components:
     - pos: -22.5,-42.5

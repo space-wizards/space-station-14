@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Server.Examine;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Climbing;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.NPC;
@@ -34,6 +35,30 @@ public sealed partial class NPCSteeringSystem
     }
 
     #region Seek
+
+    /// <summary>
+    /// Takes into account agent-specific context that may allow it to bypass a node which is not FreeSpace.
+    /// </summary>
+    private bool IsFreeSpace(
+        EntityUid uid,
+        NPCSteeringComponent steering,
+        PathPoly node)
+    {
+        if (node.Data.IsFreeSpace)
+        {
+            return true;
+        }
+        // Handle the case where the node is a climb, we can climb, and we are climbing.
+        else if ((node.Data.Flags & PathfindingBreadcrumbFlag.Climb) != 0x0 &&
+            (steering.Flags & PathFlags.Climbing) != 0x0 &&
+            TryComp<ClimbingComponent>(uid, out var climbing) &&
+            climbing.IsClimbing)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     /// <summary>
     /// Attempts to head to the target destination, either via the next pathfinding node or the final target.
@@ -90,7 +115,7 @@ public sealed partial class NPCSteeringSystem
         }
         // If next node is a free tile then get within its bounds.
         // This is to avoid popping it too early
-        else if (steering.CurrentPath.TryPeek(out var node) && node.Data.IsFreeSpace)
+        else if (steering.CurrentPath.TryPeek(out var node) && IsFreeSpace(uid, steering, node))
         {
             arrivalDistance = MathF.Min(node.Box.Width / 2f, node.Box.Height / 2f) - 0.01f;
         }
@@ -117,7 +142,7 @@ public sealed partial class NPCSteeringSystem
         if (direction.Length() <= arrivalDistance)
         {
             // Node needs some kind of special handling like access or smashing.
-            if (steering.CurrentPath.TryPeek(out var node) && !node.Data.IsFreeSpace)
+            if (steering.CurrentPath.TryPeek(out var node) && !IsFreeSpace(uid, steering, node))
             {
                 // Ignore stuck while handling obstacles.
                 ResetStuck(steering, ourCoordinates);

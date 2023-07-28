@@ -37,6 +37,14 @@ public sealed class AccessReaderComponent : Component
     /// </summary>
     [DataField("accessKeys")]
     public HashSet<StationRecordKey> AccessKeys = new();
+
+
+    /// <summary>
+    ///     The name of the container in which additional
+    ///     AccessReaderComponents may be found.
+    /// </summary>
+    [DataField("containerAccessProvider")]
+    public string? ContainerAccessProvider = null;
 }
 
 [Serializable, NetSerializable]
