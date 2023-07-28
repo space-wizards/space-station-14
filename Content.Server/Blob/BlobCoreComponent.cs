@@ -14,7 +14,7 @@ public sealed class BlobCoreComponent : Component
     public string AntagBlobPrototypeId = "Blob";
 
     [ViewVariables(VVAccess.ReadWrite), DataField("attackRate")]
-    public float ActionRate = 0.3f;
+    public float ActionRate = 0.4f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("returnResourceOnRemove")]
     public float ReturnResourceOnRemove = 0.3f;
@@ -30,7 +30,6 @@ public sealed class BlobCoreComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Blunt", 5 },
             { "Piercing", 5 },
             { "Poison", 5 },
             { "Structural", 150 },
