@@ -1,4 +1,6 @@
 ﻿using Content.Shared.Blob;
+using Content.Shared.GameTicking;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 
 namespace Content.Client.Blob;
@@ -11,16 +13,22 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BlobObserverComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<BlobObserverComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<BlobObserverComponent, PlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<BlobObserverComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeNetworkEvent<RoundRestartCleanupEvent>(RoundRestartCleanup);
     }
 
-    private void OnStartup(EntityUid uid, BlobObserverComponent observerComponent, ComponentStartup args)
+    private void OnPlayerAttached(EntityUid uid, BlobObserverComponent component, PlayerAttachedEvent args)
     {
         _lightManager.DrawLighting = false;
     }
 
-    private void OnShutdown(EntityUid uid, BlobObserverComponent observerComponent, ComponentShutdown args)
+    private void OnPlayerDetached(EntityUid uid, BlobObserverComponent component, PlayerDetachedEvent args)
+    {
+        _lightManager.DrawLighting = true;
+    }
+
+    private void RoundRestartCleanup(RoundRestartCleanupEvent ev)
     {
         _lightManager.DrawLighting = true;
     }
