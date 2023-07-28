@@ -25,10 +25,10 @@ public sealed class ACmdCommand : ToolshedCommand
     public bool CanInvoke(
         [CommandInvocationContext] IInvocationContext ctx,
         [PipedArgument] CommandSpec command,
-        [CommandArgument] Block<IPlayerSession> player
+        [CommandArgument] VarRef<IPlayerSession> player
         )
     {
         // Deliberately discard the error.
-        return ((IPermissionController) _adminManager).CheckInvokable(command, player.Invoke(null, ctx), out var err);
+        return ((IPermissionController) _adminManager).CheckInvokable(command, player.Evaluate(ctx), out var err);
     }
 }

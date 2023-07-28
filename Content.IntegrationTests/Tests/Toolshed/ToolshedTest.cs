@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Content.Server.Administration.Managers;
 using Robust.Server.Player;
-using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;

@@ -12,8 +12,8 @@ public sealed class LocTest : ToolshedTest
     {
         await Server.WaitAssertion(() =>
         {
-            Assert.That(InvokeCommand("cmd:list where { cmd:descloc loc:tryloc isnull } isempty", out var res));
-            Assert.That((bool)res!, "All commands must have localized descriptions.");
+            Assert.That(InvokeCommand("cmd:list where { cmd:descloc loc:tryloc isnull }", out var res));
+            Assert.That((IEnumerable<CommandSpec>)res, Is.Empty, "All commands must have localized descriptions.");
         });
     }
 }

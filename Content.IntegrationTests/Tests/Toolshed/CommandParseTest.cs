@@ -29,6 +29,9 @@ public sealed class CommandRunTest : ToolshedTest
 
             ParseCommand("entities not with MetaData");
             ParseCommand("with MetaData select 2 any", inputType: typeof(List<EntityUid>));
+
+            ParseCommand("entities not with MetaData => $myEntities");
+            ParseCommand("=> $fooBar with MetaData", inputType: typeof(List<EntityUid>));
         });
     }
 
