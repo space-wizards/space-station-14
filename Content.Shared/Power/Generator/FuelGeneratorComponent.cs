@@ -5,7 +5,7 @@ namespace Content.Shared.Power.Generator;
 /// <summary>
 /// This is used for generators that run off some kind of fuel.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SharedGeneratorSystem))]
 public sealed class FuelGeneratorComponent : Component
 {
     /// <summary>
@@ -13,21 +13,25 @@ public sealed class FuelGeneratorComponent : Component
     /// </summary>
     [DataField("remainingFuel"), ViewVariables(VVAccess.ReadWrite)]
     public float RemainingFuel;
+
     /// <summary>
     /// The generator's target power.
     /// </summary>
     [DataField("targetPower"), ViewVariables(VVAccess.ReadWrite)]
     public float TargetPower = 15_000.0f;
+
     /// <summary>
     /// The maximum target power.
     /// </summary>
     [DataField("maxTargetPower"), ViewVariables(VVAccess.ReadWrite)]
     public float MaxTargetPower = 30_000.0f;
+
     /// <summary>
     /// The "optimal" power at which the generator is considered to be at 100% efficiency.
     /// </summary>
     [DataField("optimalPower"), ViewVariables(VVAccess.ReadWrite)]
     public float OptimalPower = 15_000.0f;
+
     /// <summary>
     /// The rate at which one unit of fuel should be consumed.
     /// </summary>
@@ -59,7 +63,6 @@ public sealed class SolidFuelGeneratorComponentBuiState : BoundUserInterfaceStat
     public float TargetPower;
     public float MaximumPower;
     public float OptimalPower;
-    public float OptimalBurnRate; // Once every 120 seconds.
 
     public SolidFuelGeneratorComponentBuiState(FuelGeneratorComponent component)
     {
@@ -67,7 +70,6 @@ public sealed class SolidFuelGeneratorComponentBuiState : BoundUserInterfaceStat
         TargetPower = component.TargetPower;
         MaximumPower = component.MaxTargetPower;
         OptimalPower = component.OptimalPower;
-        OptimalBurnRate = component.OptimalBurnRate;
     }
 }
 

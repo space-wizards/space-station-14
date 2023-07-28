@@ -3,13 +3,12 @@
 /// <summary>
 /// This is used for stuff that can directly be shoved into a generator.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(GeneratorSystem))]
 public sealed class ChemicalFuelGeneratorDirectSourceComponent : Component
 {
     /// <summary>
     /// The solution to pull fuel material from.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("solution")]
-    public string Solution { get; set; } = "default";
+    [DataField("solution", required: true), ViewVariables(VVAccess.ReadWrite)]
+    public string Solution = default!;
 }

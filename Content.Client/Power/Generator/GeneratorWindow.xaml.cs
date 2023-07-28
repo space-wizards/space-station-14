@@ -13,7 +13,6 @@ public sealed partial class GeneratorWindow : FancyWindow
     public GeneratorWindow(SolidFuelGeneratorBoundUserInterface bui, EntityUid vis)
     {
         RobustXamlLoader.Load(this);
-        //IoCManager.InjectDependencies(this);
 
         EntityView.SetEntity(vis);
         TargetPower.IsValid += IsValid;

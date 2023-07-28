@@ -27,13 +27,14 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         if (args.Handled)
             return;
 
-        if (!TryComp(args.Used, out SolutionContainerManagerComponent? solutions) || !TryComp(uid, out FuelGeneratorComponent? generator))
+        if (!TryComp<SolutionContainerManagerComponent>(args.Used, out var solutions) ||
+            !TryComp<FuelGeneratorComponent>(uid, out var generator))
             return;
 
         if (!(component.Whitelist?.IsValid(args.Used) ?? true))
             return;
 
-        if (TryComp(args.Used, out ChemicalFuelGeneratorDirectSourceComponent? source))
+        if (TryComp<ChemicalFuelGeneratorDirectSourceComponent>(args.Used, out var source))
         {
             if (!solutions.Solutions.ContainsKey(source.Solution))
             {
@@ -72,7 +73,9 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         if (args.Handled)
             return;
 
-        if (!TryComp(args.Used, out PhysicalCompositionComponent? mat) || !TryComp(args.Used, out StackComponent? stack) || !TryComp(uid, out FuelGeneratorComponent? generator))
+        if (!TryComp(args.Used, out PhysicalCompositionComponent? mat) ||
+            !TryComp(args.Used, out StackComponent? stack) ||
+            !TryComp(uid, out FuelGeneratorComponent? generator))
             return;
 
         if (!mat.MaterialComposition.Keys.ToList().Contains(component.FuelMaterial))
