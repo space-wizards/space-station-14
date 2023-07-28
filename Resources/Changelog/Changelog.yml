@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Bumped shuttle speedcaps a lot., type: Tweak}
-  - {message: Fix rounding issues with shuttle movement causing fluctuations near
-      speedcap., type: Fix}
-  id: 3858
-  time: '2023-05-24T13:15:03.0000000+00:00'
 - author: themias
   changes:
   - {message: Mice can now escape potted plants and toilets, type: Fix}
@@ -2982,3 +2975,8 @@ Entries:
       their hi-viz vests, and now you can safely put explosives in it.', type: Add}
   id: 4357
   time: '2023-07-28T19:53:59.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Improved sprites SMG Drozd and sprite WT 550 behind, type: Tweak}
+  id: 4358
+  time: '2023-07-28T19:55:46.0000000+00:00'
