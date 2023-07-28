@@ -57,7 +57,7 @@ namespace Content.Client.MassMedia.Ui
             if (_menu == null || state is not NewsWriteBoundUserInterfaceState cast)
                 return;
 
-            _menu.UpdateUI(cast.Articles);
+            _menu.UpdateUI(cast.Articles, cast.ShareAvalible);
         }
 
         private void OnShareButtonPressed()
@@ -71,9 +71,14 @@ namespace Content.Client.MassMedia.Ui
             if (_gameTicker == null) return;
 
             NewsArticle article = new NewsArticle();
-            article.Name = _menu.NameInput.Text;
+            var stringName = _menu.NameInput.Text;
+            var name = (stringName.Length <= 25 ? stringName.Trim() : $"{stringName.Trim().Substring(0, 25)}...");
+            article.Name = name;
             article.Content = stringContent;
             article.ShareTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
+
+            _menu.ContentInput.TextRope = new Rope.Leaf(string.Empty);
+            _menu.NameInput.Text = string.Empty;
 
             SendMessage(new NewsWriteShareMessage(article));
         }
