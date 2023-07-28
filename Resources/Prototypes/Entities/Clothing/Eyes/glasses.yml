@@ -164,7 +164,7 @@
   parent: ClothingEyesBase
   id: ClothingEyesGlassesScience
   name: science goggles
-  description: 
+  description: Goggles that can scan the chemical composition of a solution.
   components:
     - type: Sprite
       sprite: Clothing/Eyes/Glasses/science.rsi
