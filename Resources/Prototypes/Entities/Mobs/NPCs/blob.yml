@@ -23,6 +23,9 @@
   name: Blob pod
   parent: SimpleSpaceMobBase
   components:
+    - type: Damageable
+      damageContainer: Blob
+      damageModifierSet: BlobMob
     - type: Clothing
       quickEquip: false
       sprite: Mobs/Aliens/blob.rsi
@@ -104,6 +107,9 @@
   name: Blobbernaut
   parent: SimpleSpaceMobBase
   components:
+    - type: Damageable
+      damageContainer: Blob
+      damageModifierSet: BlobMob
     - type: Tag
       tags:
         - BlobMob
@@ -113,9 +119,6 @@
       rules: You are an antagonist, defend your blob core!
     - type: GhostTakeoverAvailable
     - type: Blobbernaut
-    - type: Damageable
-      damageContainer: Blob
-      damageModifierSet: Blob
     - type: Physics
     - type: InputMover
     - type: MobMover
@@ -185,6 +188,8 @@
     snap:
       - Wall
   components:
+    - type: ExplosionResistance
+      damageCoefficient: 0.5
     - type: Damageable
       damageContainer: Blob
       damageModifierSet: Blob
@@ -273,7 +278,7 @@
   - type: BlobCore
   - type: BlobNode
   - type: BlobResource
-    pointsPerPulsed: 2
+    pointsPerPulsed: 5
   - type: Sprite
     sprite: Mobs/Aliens/blob.rsi
     drawdepth: BlobTiles
@@ -489,3 +494,57 @@
 #    - type: IconSmooth
 #      key: walls
 #      base: debug
+
+
+
+- type: entity
+  id: MobObserverBlob
+  name: Blob observer
+  noSpawn: true
+  components:
+    - type: Actions
+    - type: Alerts
+    - type: BlobObserver
+    - type: Visibility
+      layer: 5
+    - type: ContentEye
+    - type: MindContainer
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Physics
+      bodyType: KinematicController
+      fixedRotation: true
+    - type: GhostRole
+      name: ghost-role-information-blob-name
+      description: ghost-role-information-blob-description
+      rules: You are an antagonist, destroy the station!
+    - type: GhostTakeoverAvailable
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          density: 15
+          mask:
+            - BlobGhostImpassable
+    - type: InputMover
+    - type: Appearance
+    - type: Eye
+    - type: Input
+      context: "ghost"
+    - type: Examiner
+      skipChecks: true
+    - type: Sprite
+      sprite: Mobs/Aliens/blob.rsi
+      color: "#fc8403"
+      state: marker
+      noRot: true
+      drawdepth: Ghosts
+    - type: MovementSpeedModifier
+      baseSprintSpeed: 8
+      baseWalkSpeed: 5
+    - type: MovementIgnoreGravity
+    - type: Tag
+      tags:
+        - BypassInteractionRangeChecks

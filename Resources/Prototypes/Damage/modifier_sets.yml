@@ -219,6 +219,13 @@
     Slash: 5
     Piercing: 5
 
+- type: damageModifierSet
+  id: BlobMob # Blob mobs
+  coefficients:
+    Blunt: 0.5
+    Slash: 0.5
+    Piercing: 0.5
+    Heat: 1.5
 
 - type: damageModifierSet
   id: BlobReflective # If it reflects lasers, then it must be fragile?
