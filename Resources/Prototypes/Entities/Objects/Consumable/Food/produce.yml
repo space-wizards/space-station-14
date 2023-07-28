@@ -577,14 +577,14 @@
         Quantity: 10
 
 - type: entity
-  name: cocoa beans
+  name: cocoa pod
   parent: FoodProduceBase
   id: FoodCocoa
   description: You can never have too much chocolate!
   components:
   - type: FlavorProfile
     flavors:
-      - cocoa
+      - chocolate
   - type: SolutionContainerManager
     solutions:
       food:
@@ -595,16 +595,16 @@
         - ReagentId: Vitamin
           Quantity: 1
         - ReagentId: CocoaPowder
-          Quantity: 2
+          Quantity: 1
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cocoa.rsi
   - type: Produce
     seedId: cocoa
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: CocoaPowder
-        Quantity: 2
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodCocoaSeeds
+    sound:
+      path: /Audio/Effects/packetrip.ogg
 
 - type: entity
   name: ear of corn

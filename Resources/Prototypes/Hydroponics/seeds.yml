@@ -957,9 +957,9 @@
 
 - type: seed
   id: cocoa
-  name: seeds-coffea-name
+  name: seeds-cocoa-name
   noun: seeds-noun-seeds
-  displayName: seeds-coffea-display-name
+  displayName: seeds-cocoa-display-name
   plantRsi: Objects/Specific/Hydroponics/cocoa.rsi
   packetPrototype: CocoaSeeds
   productPrototypes:
@@ -968,8 +968,8 @@
   lifespan: 50
   maturation: 6
   production: 6
-  yield: 2
-  idealLight: 9
+  yield: 6
+  idealLight: 7
   waterConsumption: 6
   idealHeat: 298
   chemicals:

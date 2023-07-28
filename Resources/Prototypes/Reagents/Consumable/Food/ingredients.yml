@@ -204,7 +204,7 @@
   group: Foods
   desc: reagent-desc-cacaopowder
   physicalDesc: reagent-physical-desc-coffee
-  flavor: caffeinated
+  flavor: chocolate
   color: "#800000"
   meltingPoint: 146.0
   metabolisms:
