@@ -134,6 +134,7 @@ public sealed class NewsSystem : EntitySystem
         _articles.Add(article);
 
         component.ShareAvalible = false;
+        component.NextShare = _timing.CurTime + TimeSpan.FromSeconds(component.ShareCooldown);
 
         UpdateReadDevices();
         UpdateWriteDevices();
@@ -226,7 +227,6 @@ public sealed class NewsSystem : EntitySystem
             if (comp.ShareAvalible || _timing.CurTime < comp.NextShare)
                 continue;
 
-            comp.NextShare = _timing.CurTime + TimeSpan.FromSeconds(comp.ShareCooldown);
             comp.ShareAvalible = true;
 
             UpdateWriteUi(comp.Owner, comp);
