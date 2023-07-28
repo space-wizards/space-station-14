@@ -11,6 +11,10 @@
       "name": "icon"
     },
     {
+      "name": "equipped-HELMET-hamster",
+      "directions": 4
+    },
+    {
       "name": "equipped-HELMET",
       "directions": 4
     }
