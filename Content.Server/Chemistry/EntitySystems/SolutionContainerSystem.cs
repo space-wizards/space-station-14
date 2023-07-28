@@ -90,8 +90,8 @@ public sealed partial class SolutionContainerSystem : EntitySystem
                 var markup = GetSolutionExamine(solutionHolder);
                 _examine.SendExamineTooltip(args.User, uid, markup, false, false);
             },
-            Text = Loc.GetString("examinable-solution-verb-text"),
-            Message = Loc.GetString("examinable-solution-verb-message"),
+            Text = Loc.GetString("scannable-solution-verb-text"),
+            Message = Loc.GetString("scannable-solution-verb-message"),
             Category = VerbCategory.Examine,
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/drink.svg.192dpi.png")),
         };
@@ -105,11 +105,11 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         if (solution.Contents.Count == 0) //TODO: better way to see if empty?
         {
-            msg.AddMarkup(Loc.GetString("examinable-solution-empty-container"));
+            msg.AddMarkup(Loc.GetString("scannable-solution-empty-container"));
             return msg;
         }
 
-        msg.AddMarkup(Loc.GetString("examinable-solution-main-text"));
+        msg.AddMarkup(Loc.GetString("scannable-solution-main-text"));
 
         foreach (var reagent in solution)
         {
@@ -118,7 +118,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
                 continue;
             }
             msg.PushNewline();
-            msg.AddMarkup(Loc.GetString("examinable-solution-chemical"
+            msg.AddMarkup(Loc.GetString("scannable-solution-chemical"
                 , ("type", proto.LocalizedName)
                 , ("color", proto.SubstanceColor.ToHexNoAlpha())
                 , ("amount", reagent.Quantity)));
