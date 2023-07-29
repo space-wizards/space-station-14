@@ -1121,6 +1121,9 @@ namespace Content.Shared.Interaction
             if (!Exists(uidA) || !Exists(uidB))
                 return;
 
+            if (Paused(uidA) || Paused(uidB.Value))
+                return;
+
             RaiseLocalEvent(uidA, new ContactInteractionEvent(uidB.Value));
             RaiseLocalEvent(uidB.Value, new ContactInteractionEvent(uidA));
         }
