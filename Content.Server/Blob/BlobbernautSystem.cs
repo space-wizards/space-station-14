@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Mobs;
+using Content.Shared.Popups;
 using Robust.Shared.Map;
 
 namespace Content.Server.Blob
@@ -9,6 +10,7 @@ namespace Content.Server.Blob
     {
         [Dependency] private readonly IMapManager _map = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -69,6 +71,7 @@ namespace Content.Server.Blob
                         }
                     }
 
+                    _popup.PopupEntity(Loc.GetString("blobberaut-not-on-blob-tile"), ent, ent, PopupType.Large);
                     _damageableSystem.TryChangeDamage(ent, comp.Damage);
                 }
             }

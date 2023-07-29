@@ -1,10 +1,13 @@
-﻿using Content.Server.Mind;
+﻿using Content.Server.Atmos.Components;
+using Content.Server.Body.Components;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.NPC;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Speech.Components;
+using Content.Server.Temperature.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Tag;
 
@@ -49,8 +52,18 @@ namespace Content.Server.Blob
 
             _tagSystem.AddTag(uid, "BlobMob");
 
+            EnsureComp<PressureImmunityComponent>(uid);
+
+            EnsureComp<RespiratorImmunityComponent>(uid);
+
+            if (TryComp<TemperatureComponent>(uid, out var temperatureComponent))
+            {
+                component.OldColdDamageThreshold = temperatureComponent.ColdDamageThreshold;
+                temperatureComponent.ColdDamageThreshold = 0;
+            }
+
             var mindComp = EnsureComp<MindContainerComponent>(uid);
-            if (_mind.TryGetMind(uid, out var mind, mindComp) && !_mind.TryGetSession(mind, out var session))
+            if (!_mind.TryGetMind(uid, out var mind, mindComp))
             {
                 _npc.WakeNPC(uid, htn);
             }
@@ -71,6 +84,21 @@ namespace Content.Server.Blob
             if (HasComp<ReplacementAccentComponent>(uid))
             {
                 RemComp<ReplacementAccentComponent>(uid);
+            }
+
+            if (HasComp<PressureImmunityComponent>(uid))
+            {
+                RemComp<PressureImmunityComponent>(uid);
+            }
+
+            if (HasComp<RespiratorImmunityComponent>(uid))
+            {
+                RemComp<RespiratorImmunityComponent>(uid);
+            }
+
+            if (TryComp<TemperatureComponent>(uid, out var temperatureComponent) && component.OldColdDamageThreshold != null)
+            {
+                temperatureComponent.ColdDamageThreshold = component.OldColdDamageThreshold.Value;
             }
 
             _tagSystem.RemoveTag(uid, "BlobMob");
