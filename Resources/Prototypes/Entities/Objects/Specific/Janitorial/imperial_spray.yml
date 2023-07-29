@@ -11,3 +11,39 @@
         reagents:
         - ReagentId: SpaceCleaner
           Quantity: 250
+
+- type: entity
+  name: syndi space cleaner
+  desc: Syndicate Space Cleaner
+  parent: SprayBottleSpaceCleaner
+  id: SyndiSpaceCleanerSprayBottleFull
+  suffix: Full
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/imperial_janitorial.rsi
+    state: cleaner
+  - type: Item
+    sprite: Objects/Specific/Janitorial/imperial_janitorial.rsi
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 100
+
+- type: entity
+  name: syndi space cleaner
+  desc: Syndicate Space Cleaner
+  parent: SyndiSpaceCleanerSprayBottleFull
+  id: SyndiSpaceCleanerSprayBottleEmpty
+  suffix: Full
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 0
+

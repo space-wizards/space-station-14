@@ -1,0 +1,9 @@
+- type: listing
+  id: SyndiSpaceCleaner
+  name: uplink-syndispacecleaner-name
+  description: uplink-syndispacecleaner-desc
+  productEntity: SyndiSpaceCleanerSprayBottleFull
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkUtility
