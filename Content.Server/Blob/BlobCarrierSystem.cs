@@ -117,7 +117,7 @@ namespace Content.Server.Blob
                 if (_gameTiming.CurTime < comp.NextAlert)
                     continue;
 
-                var remainingTime = comp.TransformationDelay - comp.TransformationTimer;
+                var remainingTime = Math.Round(comp.TransformationDelay - comp.TransformationTimer, 0);
                 _popup.PopupEntity(Loc.GetString("carrier-blob-alert", ("second", remainingTime)), ent, ent, PopupType.LargeCaution);
 
                 comp.NextAlert = _gameTiming.CurTime + TimeSpan.FromSeconds(comp.AlertInterval);
