@@ -1,0 +1,11 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "GitHub @Keikiru, burgers.rsi (bigbite.png) modified by Swept and potato1234x originally from https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, bread.rsi (plate.png, garlic-slice.png) modified by potato1234x originally from https://github.com/tgstation/tgstation/commit/0631fe5bde73a68b4c12bdfa633c30b2cee442d5",
+    "size": { "x": 32, "y": 32 },
+    "states": [
+        { "name": "peckish", "directions": 1, "delays": [[1.0]] },
+        { "name": "starving", "directions": 1, "delays": [[0.5, 0.5]] },
+        { "name": "overfed", "directions": 1, "delays": [[1.0]] }
+    ]
+}
