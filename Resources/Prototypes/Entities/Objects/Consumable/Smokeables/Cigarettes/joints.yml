@@ -28,6 +28,8 @@
         reagents:
           - ReagentId: THC
             Quantity: 10
+  - type: StaticPrice
+    price: 50 #Imperial price
 
 - type: entity
   id: Blunt

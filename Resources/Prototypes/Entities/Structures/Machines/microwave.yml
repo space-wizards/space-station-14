@@ -69,3 +69,5 @@
   - type: GuideHelp
     guides:
     - Chef
+  - type: StaticPrice
+    price: 600 #Imperial price
