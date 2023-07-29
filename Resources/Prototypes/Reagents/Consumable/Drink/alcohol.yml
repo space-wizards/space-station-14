@@ -365,7 +365,7 @@
 
 - type: reagent
   id: Champagne
-  name: reagent-name-сhampagne
+  name: reagent-name-champagne
   parent: BaseAlcohol
   desc: reagent-desc-champagne
   physicalDesc: reagent-physical-desc-strong-smelling

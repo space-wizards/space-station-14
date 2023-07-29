@@ -589,7 +589,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
   productEntity: BriefcaseSyndieSniperBundleFilled
   cost:
-    Telecrystal: 6
+    Telecrystal: 12
   categories:
   - UplinkBundles
 

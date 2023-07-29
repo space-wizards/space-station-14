@@ -105,7 +105,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackSatchel
+  parent: ClothingBackpackSatchelCargo
   id: ClothingBackpackSatchelQuartermasterFilled
   components:
   - type: StorageFill
@@ -214,6 +214,15 @@
       - id: CigPackBlack
       - id: BoxForensicPad
       - id: HandLabeler
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelCargo
+  id: ClothingBackpackSatchelCargoFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
 
 - type: entity
   noSpawn: true
