@@ -30,6 +30,7 @@
         mask:
           - TabletopMachineMask
   - type: Bin
+    maxItems: 100
     whitelist:
       components:
         - Pill
