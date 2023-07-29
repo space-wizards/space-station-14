@@ -1,11 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Spacemen can now recognize common reagents, like water or beer, in
-      examinable solutions.', type: Add}
-  - {message: Puddle and glass drink solution contents are now examinable., type: Tweak}
-  id: 3861
-  time: '2023-05-24T23:08:06.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Made random anomaly stability fluctuation more random and scale with
@@ -2982,3 +2975,9 @@ Entries:
       and updates older clothing for the sake of consistency.', type: Tweak}
   id: 4360
   time: '2023-07-29T00:09:20.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: The local Clown on Station 14 wore a plunger on their head and became
+      a sensation overnight! Many try to replicate their style, type: Add}
+  id: 4361
+  time: '2023-07-29T00:10:45.0000000+00:00'
