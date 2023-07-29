@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Resprited network configurator., type: Tweak}
-  id: 3874
-  time: '2023-05-27T03:51:34.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Added a grappling gun, type: Add}
@@ -2972,3 +2967,9 @@ Entries:
   - {message: Improve hunger and thirst warning icons, type: Tweak}
   id: 4373
   time: '2023-07-29T19:19:09.0000000+00:00'
+- author: Dygon
+  changes:
+  - {message: 'When firing a gun, casings now eject with a bit of force instead of
+      dropping straight to the floor.', type: Tweak}
+  id: 4374
+  time: '2023-07-29T21:07:32.0000000+00:00'
