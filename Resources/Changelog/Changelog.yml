@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Fixed a bug that caused rotting bodies to continue rotting even when
-      they shouldn't be., type: Fix}
-  id: 3870
-  time: '2023-05-25T22:05:33.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Tech disks can now contain Tier 3 technology., type: Tweak}
   - {message: Tech disk terminals can now print duplicate disks., type: Tweak}
   - {message: Fixed tech disk terminal print button not updating correctly., type: Fix}
@@ -2975,3 +2969,8 @@ Entries:
       properly., type: Fix}
   id: 4369
   time: '2023-07-29T17:29:59.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: The hair flower and flower crown have new crafting recipes., type: Add}
+  id: 4370
+  time: '2023-07-29T18:46:29.0000000+00:00'
