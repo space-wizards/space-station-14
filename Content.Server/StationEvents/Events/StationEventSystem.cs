@@ -138,7 +138,7 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : Compon
         filter ??= _ => true;
 
         // augh. sorry sloth there's no better API and my goal today isn't adding 50 entitymanager methods :waa:
-        var stations = EntityManager.GetAllComponents(typeof(StationEventEligibleComponent)).Select(x => x.Owner).Where(filter).ToArray();
+        var stations = EntityManager.GetAllComponents(typeof(StationEventEligibleComponent)).Select(x => x.Uid).Where(filter).ToArray();
 
         if (stations.Length == 0)
         {
