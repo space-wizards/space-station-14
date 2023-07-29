@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
@@ -14,6 +15,7 @@ using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -214,5 +216,25 @@ public sealed class BlobCoreSystem : EntitySystem
         ChangeBlobPoint(coreUid, -abilityCost, component);
 
         return true;
+    }
+
+    public bool CheckNearNode(EntityUid observer, EntityCoordinates coords, MapGridComponent grid, BlobCoreComponent core)
+    {
+        var radius = 3f;
+
+        var innerTiles = grid.GetLocalTilesIntersecting(
+            new Box2(coords.Position + new Vector2(-radius, -radius), coords.Position + new Vector2(radius, radius)), false).ToArray();
+
+        foreach (var tileRef in innerTiles)
+        {
+            foreach (var ent in grid.GetAnchoredEntities(tileRef.GridIndices))
+            {
+                if (HasComp<BlobNodeComponent>(ent) || HasComp<BlobCoreComponent>(ent))
+                    return true;
+            }
+        }
+
+        _popup.PopupCoordinates(Loc.GetString("blob-target-nearby-not-node"), coords, observer, PopupType.Large);
+        return false;
     }
 }

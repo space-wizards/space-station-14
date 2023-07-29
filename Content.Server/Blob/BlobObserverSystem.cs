@@ -179,12 +179,12 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
         var xformCore = Transform(observerComponent.Core.Value);
         if (!xformCore.Anchored)
         {
-            _transform.AnchorEntity(uid, xformCore);
+            _transform.AnchorEntity(observerComponent.Core.Value, xformCore);
         }
         var xformNode = Transform(blobTile.Value);
         if (!xformNode.Anchored)
         {
-            _transform.AnchorEntity(uid, xformNode);
+            _transform.AnchorEntity(blobTile.Value, xformNode);
         }
         args.Handled = true;
     }
@@ -423,6 +423,9 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
             }
         }
 
+        if (!_blobCoreSystem.CheckNearNode(uid, xform.Coordinates, grid, blobCoreComponent))
+            return;
+
         if (!_blobCoreSystem.TryUseAbility(uid,
                 observerComponent.Core.Value,
                 blobCoreComponent,
@@ -447,9 +450,6 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
 
         if (observerComponent.Core == null ||
             !TryComp<BlobCoreComponent>(observerComponent.Core.Value, out var blobCoreComponent))
-            return;
-
-        if (_gameTiming.CurTime < blobCoreComponent.NextAction)
             return;
 
         var location = args.ClickLocation;
@@ -495,6 +495,8 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
                 {
                     if (_blobCoreSystem.TryUseAbility(uid, observerComponent.Core.Value, blobCoreComponent, blobCoreComponent.AttackCost))
                     {
+                        if (_gameTiming.CurTime < blobCoreComponent.NextAction)
+                            return;
                         if (blobCoreComponent.Observer != null)
                         {
                             _popup.PopupCoordinates(Loc.GetString("blob-spent-resource", ("point", blobCoreComponent.AttackCost)),
@@ -504,7 +506,7 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
                         }
                         _damageableSystem.TryChangeDamage(target, blobCoreComponent.Damage);
                         blobCoreComponent.NextAction =
-                            _gameTiming.CurTime + TimeSpan.FromSeconds(blobCoreComponent.ActionRate);
+                            _gameTiming.CurTime + TimeSpan.FromSeconds(blobCoreComponent.AttackRate);
                         _audioSystem.PlayPvs(blobCoreComponent.AttackSound, uid, AudioParams.Default);
                         return;
                     }
@@ -563,9 +565,6 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
                     blobCoreComponent,
                     transformCost: cost))
                 return;
-
-            blobCoreComponent.NextAction =
-                _gameTiming.CurTime + TimeSpan.FromSeconds(blobCoreComponent.ActionRate);
         }
     }
 
@@ -663,6 +662,9 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
                 return;
             }
         }
+
+        if (!_blobCoreSystem.CheckNearNode(uid, xform.Coordinates, grid, blobCoreComponent))
+            return;
 
         if (!_blobCoreSystem.TryUseAbility(uid, observerComponent.Core.Value, blobCoreComponent,
                 blobCoreComponent.FactoryBlobCost))

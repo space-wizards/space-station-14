@@ -3,6 +3,7 @@ blob-target-normal-blob-invalid = Неподходящий тип блоба, н
 blob-target-factory-blob-invalid = Неподходящий тип блоба, необходимо выбрать фабрику.
 blob-target-node-blob-invalid = Неподходящий тип блоба, необходимо выбрать узел.
 blob-target-close-to-resource = Слишком близко к другому ресурсному тайлу.
+blob-target-nearby-not-node = Рядом нету узла или ядра.
 blob-target-close-to-node = Слишком близко к другому узлу.
 blob-target-already-produce-blobbernaut = Данная фабрика уже произвела блоббернаута.
 blob-cant-split = Вы не можете разделить ядро.
@@ -13,6 +14,7 @@ blob-swap-chem = В разработке.
 blob-mob-attack-blob = Вы не можете атаковать блоба.
 blob-get-resource = +{$point}
 blob-spent-resource = -{$point}
+blobberaut-not-on-blob-tile = Вы умираете без тайлов блоба под ногами.
 
 blob-mob-zombify-second-start = {$pod} начинает превращать вас в зомби
 blob-mob-zombify-third-start = {$pod} начинает превращать {$target} в зомби

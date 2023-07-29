@@ -144,6 +144,7 @@
       damage:
         types:
           Blunt: 15
+          Structure: 50
     - type: DamageStateVisuals
       states:
         Alive:
@@ -166,8 +167,8 @@
         0: Alive
         200: Dead
     - type: MovementSpeedModifier
-      baseWalkSpeed: 2
-      baseSprintSpeed: 2.5
+      baseWalkSpeed: 2.5
+      baseSprintSpeed: 3
     - type: Sprite
       sprite: Mobs/Aliens/blob.rsi
       drawdepth: Mobs
@@ -188,8 +189,12 @@
     snap:
       - Wall
   components:
+    - type: Reactive
+      groups:
+        Flammable: [Touch]
+        Extinguish: [Touch]
     - type: ExplosionResistance
-      damageCoefficient: 0.5
+      damageCoefficient: 0.3
     - type: Damageable
       damageContainer: Blob
       damageModifierSet: Blob
@@ -215,6 +220,19 @@
   id: NormalBlobTile
   name: Normal Blob
   components:
+  - type: Temperature
+    heatDamage:
+      types:
+        Heat: 5
+    coldDamage: {}
+    ColdDamageThreshold: 0
+  - type: Flammable
+    fireSpread: true
+    cold:
+      types: {}
+    damage:
+      types:
+        Heat: 1
   - type: BlobTile
     tileType: Normal
   - type: SlowContacts
@@ -265,6 +283,19 @@
   id: CoreBlobTile
   name: Core Blob
   components:
+  - type: Temperature
+    heatDamage:
+      types:
+        Heat: 5
+    coldDamage: {}
+    ColdDamageThreshold: 0
+  - type: Flammable
+    fireSpread: true
+    cold:
+      types: {}
+    damage:
+      types:
+        Heat: 1
   - type: Destructible
     thresholds:
     - trigger:
@@ -278,7 +309,7 @@
   - type: BlobCore
   - type: BlobNode
   - type: BlobResource
-    pointsPerPulsed: 5
+    pointsPerPulsed: 4
   - type: Sprite
     sprite: Mobs/Aliens/blob.rsi
     drawdepth: BlobTiles
@@ -311,6 +342,19 @@
   id: FactoryBlobTile
   name: Factory Blob
   components:
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 5
+      coldDamage: {}
+      ColdDamageThreshold: 0
+    - type: Flammable
+      fireSpread: true
+      cold:
+        types: {}
+      damage:
+        types:
+          Heat: 1
     - type: BlobTile
       tileType: Factory
     - type: Destructible
@@ -340,6 +384,19 @@
   id: ResourceBlobTile
   name: Resource Blob
   components:
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 5
+      coldDamage: {}
+      ColdDamageThreshold: 0
+    - type: Flammable
+      fireSpread: true
+      cold:
+        types: {}
+      damage:
+        types:
+          Heat: 1
     - type: BlobTile
       tileType: Resource
     - type: Destructible
@@ -369,6 +426,19 @@
   id: NodeBlobTile
   name: Node Blob
   components:
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 5
+      coldDamage: {}
+      ColdDamageThreshold: 0
+    - type: Flammable
+      fireSpread: true
+      cold:
+        types: {}
+      damage:
+        types:
+          Heat: 1
     - type: BlobTile
       tileType: Node
     - type: Destructible
@@ -446,6 +516,7 @@
       spread: 10
       reflects:
         - Energy
+    - type: Airtight
     - type: Sprite
       sprite: Mobs/Aliens/blob.rsi
       drawdepth: BlobTiles
@@ -495,8 +566,6 @@
 #      key: walls
 #      base: debug
 
-
-
 - type: entity
   id: MobObserverBlob
   name: Blob observer
@@ -506,7 +575,7 @@
     - type: Alerts
     - type: BlobObserver
     - type: Visibility
-      layer: 5
+      layer: 2
     - type: ContentEye
     - type: MindContainer
     - type: Clickable

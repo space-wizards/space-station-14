@@ -9,6 +9,8 @@ public sealed class ZombieBlobComponent : Component
 
     public EntityUid BlobPodUid = default!;
 
+    public float? OldColdDamageThreshold = null;
+
     [DataField("greetSoundNotification")]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
 }
