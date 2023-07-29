@@ -31,7 +31,7 @@ public sealed class EmpSystem : SharedEmpSystem
     {
         foreach (var uid in _lookup.GetEntitiesInRange(coordinates, range))
         {
-            var ev = new EmpPulseEvent(energyConsumption, false, false);
+            var ev = new EmpPulseEvent(energyConsumption, false, false, TimeSpan.FromSeconds(duration));
             RaiseLocalEvent(uid, ref ev);
             if (ev.Affected)
             {
@@ -101,7 +101,7 @@ public sealed class EmpSystem : SharedEmpSystem
 }
 
 [ByRefEvent]
-public record struct EmpPulseEvent(float EnergyConsumption, bool Affected, bool Disabled);
+public record struct EmpPulseEvent(float EnergyConsumption, bool Affected, bool Disabled, TimeSpan Durtaion);
 
 [ByRefEvent]
 public record struct EmpDisabledRemoved();
