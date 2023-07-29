@@ -61,5 +61,6 @@ namespace Content.Server.NodeContainer.NodeGroups
         Pipe,
         WireNet,
         Spreader,
+        Teg,
     }
 }

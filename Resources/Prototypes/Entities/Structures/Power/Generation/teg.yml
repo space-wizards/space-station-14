@@ -1,0 +1,98 @@
+﻿- type: entity
+  id: TegCenter
+  name: thermo-electric generator
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 190
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
+    - type: Sprite
+      sprite: Structures/Power/Generation/teg.rsi
+      state: teg
+    - type: Anchorable
+    - type: Pullable
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        output:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+        teg:
+          !type:TegNodeGenerator
+          nodeGroupID: Teg
+    - type: Rotatable
+
+    # Note that only the TEG center is an AtmosDevice.
+    # It fires processing on behalf of its connected circulators.
+    - type: AtmosDevice
+    - type: TegGenerator
+
+- type: entity
+  id: TegCirculator
+  name: circulator
+  placement:
+    mode: SnapgridCenter
+  components:
+    # visuals
+    - type: Sprite
+      sprite: Structures/Power/Generation/teg.rsi
+      layers:
+        - state: circ-p
+    # tags
+    - type: Tag
+      tags:
+        - Pipe
+        - Unstackable
+
+    # basic interactions
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Rotatable
+    - type: Anchorable
+    - type: Pullable
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 190
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
+
+    # functionality
+    - type: NodeContainer
+      nodes:
+        inlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: North
+          volume: 100
+        outlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+          volume: 100
+        teg:
+          !type:TegNodeCirculator
+          nodeGroupID: Teg
+
+    - type: AtmosUnsafeUnanchor
+    - type: TegCirculator
