@@ -18,6 +18,8 @@
         whitelist:
           components:
           - Pill
+          tags:
+          - FoodSnack
   - type: Fixtures
     fixtures:
       fix1:
@@ -31,6 +33,8 @@
     whitelist:
       components:
         - Pill
+      tags:
+        - FoodSnack
   - type: ContainerContainer
     containers:
       bin-container: !type:Container
