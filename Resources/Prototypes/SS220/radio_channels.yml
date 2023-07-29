@@ -3,7 +3,7 @@
 - type: radioChannel
   id: USSPChannel
   name: chat-radio-ussp
-  keycode: 'сссп'
+  keycode: 'х' #Замена ради замены чтобы работало, потом замените на то что нра
   frequency: 1984
   color: "#dd3535"
   longRange: true
