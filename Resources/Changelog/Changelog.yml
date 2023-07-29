@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Added a grappling gun, type: Add}
-  id: 3875
-  time: '2023-05-27T04:15:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Role bans are now shown in the job preferences and latejoin interfaces.,
     type: Add}
   id: 3876
@@ -2973,3 +2968,8 @@ Entries:
       dropping straight to the floor.', type: Tweak}
   id: 4374
   time: '2023-07-29T21:07:32.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Added filter for bartender recipes in the guidebook, type: Add}
+  id: 4375
+  time: '2023-07-29T22:59:59.0000000+00:00'
