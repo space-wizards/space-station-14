@@ -83,8 +83,8 @@
     Steel: 250
 
 - type: latheRecipe
-  id: ClothingEyesGlassesScience
-  result: ClothingEyesGlassesScience
+  id: ClothingEyesGlassesChemical
+  result: ClothingEyesGlassesChemical
   completetime: 2
   materials:
     Steel: 100
