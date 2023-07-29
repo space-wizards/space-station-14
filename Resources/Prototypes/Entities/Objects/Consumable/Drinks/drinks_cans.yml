@@ -298,8 +298,8 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkNukieCan
-  name: robust nukie drink
-  description: An encouraging drink... very encouraging. It is filled with green liquid, after use it is recommended to consult a doctor.
+  name: blood-red brew can
+  description: A home-brewed drink made from the crazed minds at the Syndicate. Not recommended by doctors.
   components:
   - type: SolutionContainerManager
     solutions:

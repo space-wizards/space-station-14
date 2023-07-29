@@ -1,12 +1,7 @@
 - type: statusIcon
-  abstract: true
   id: JobIcon
+  abstract: true
   priority: 1
-  icon:
-    sprite: Interface/Misc/job_icons.rsi
-    state: Detective
-  locationPreference: Left
-
 
 - type: statusIcon
   parent: JobIcon
@@ -369,7 +364,7 @@
 
 - type: statusIcon
   parent: JobIcon
-  id: JobIconZombie
+  id: JobIconZombie # This is a perfectly legitimate profession to pursue
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Zombie
@@ -381,4 +376,36 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Zookeeper
+  locationPreference: Left
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconSeniorPhysician
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: SeniorPhysician
+  locationPreference: Left
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconSeniorOfficer
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: SeniorOfficer
+  locationPreference: Left
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconSeniorEngineer
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: SeniorEngineer
+  locationPreference: Left
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconSeniorResearcher
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: SeniorResearcher
   locationPreference: Left

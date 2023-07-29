@@ -1,3 +1,4 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -39,8 +40,17 @@ public class StatusIconData : IComparable<StatusIconData>
 /// <see cref="StatusIconData"/> but in new convenient prototype form!
 /// </summary>
 [Prototype("statusIcon")]
-public sealed class StatusIconPrototype : StatusIconData, IPrototype
+public sealed class StatusIconPrototype : StatusIconData, IPrototype, IInheritingPrototype
 {
+    /// <inheritdoc />
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<StatusIconPrototype>))]
+    public string[]? Parents { get; }
+
+    /// <inheritdoc />
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; }
+
     /// <inheritdoc/>
     [IdDataField]
     public string ID { get; } = default!;
