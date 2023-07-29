@@ -580,7 +580,7 @@ namespace Content.Shared.Cuffs
 
             if (isOwner)
             {
-                _damageSystem.TryChangeDamage(target, cuff.DamageOnResist, true, false);
+                _damageSystem.TryChangeDamage(target, cuff.DamageOnResist, 1f, false);
             }
 
             if (_net.IsServer)

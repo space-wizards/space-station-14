@@ -76,7 +76,7 @@ public sealed class HealingSystem : EntitySystem
         if (healing.ModifyBloodLevel != 0)
             _bloodstreamSystem.TryModifyBloodLevel(uid, healing.ModifyBloodLevel);
 
-        var healed = _damageable.TryChangeDamage(uid, healing.Damage, true, origin: args.Args.User);
+        var healed = _damageable.TryChangeDamage(uid, healing.Damage, 1f, origin: args.Args.User);
 
         if (healed == null && healing.BloodlossModifier != 0)
             return;

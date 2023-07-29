@@ -162,7 +162,7 @@ namespace Content.Server.Body.Systems
                 _alertsSystem.ShowAlert(uid, AlertType.LowOxygen);
             }
 
-            _damageableSys.TryChangeDamage(uid, respirator.Damage, true, false);
+            _damageableSys.TryChangeDamage(uid, respirator.Damage, 1f, false);
         }
 
         private void StopSuffocation(EntityUid uid, RespiratorComponent respirator)
@@ -172,7 +172,7 @@ namespace Content.Server.Body.Systems
 
             _alertsSystem.ClearAlert(uid, AlertType.LowOxygen);
 
-            _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery, true);
+            _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery, 1f);
         }
 
         public void UpdateSaturation(EntityUid uid, float amount,

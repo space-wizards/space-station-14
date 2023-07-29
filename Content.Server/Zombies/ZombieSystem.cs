@@ -86,7 +86,7 @@ namespace Content.Server.Zombies
                     ? comp.CritDamageMultiplier
                     : 1f;
 
-                _damageable.TryChangeDamage(uid, comp.Damage * multiplier, true, false, damage);
+                _damageable.TryChangeDamage(uid, comp.Damage * multiplier, 1f, false, damage);
             }
 
             // Heal the zombified
@@ -107,7 +107,7 @@ namespace Content.Server.Zombies
                     : 1f;
 
                 // Gradual healing for living zombies.
-                _damageable.TryChangeDamage(uid, comp.PassiveHealing * multiplier, true, false, damage);
+                _damageable.TryChangeDamage(uid, comp.PassiveHealing * multiplier, 1f, false, damage);
             }
         }
 
@@ -224,7 +224,7 @@ namespace Content.Server.Zombies
                 }
                 else if (mobState.CurrentState == MobState.Alive) //heals when zombies bite live entities
                 {
-                    _damageable.TryChangeDamage(uid, component.HealingOnBite, true, false);
+                    _damageable.TryChangeDamage(uid, component.HealingOnBite, 1f, false);
                 }
             }
         }

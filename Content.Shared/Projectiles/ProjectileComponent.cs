@@ -44,8 +44,8 @@ public sealed partial class ProjectileComponent : Component
     [DataField("penetrationDamageFalloffMultiplier")]
     public float PenetrationDamageFalloffMultiplier = 0.3f;
 
-    [DataField("armorReductionMultiplier")]
-    public float? ArmorReductionMultiplier;
+    [DataField("resistanceReductionValue")]
+    public float? ResistanceReductionValue;
 
     [DataField("ignoreResistances")]
     public bool IgnoreResistances = false;

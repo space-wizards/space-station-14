@@ -132,7 +132,7 @@ public sealed class KudzuSystem : EntitySystem
                     if (kudzu.DamageRecovery != null)
                     {
                         // This kudzu features healing, so Gradually heal
-                        _damageable.TryChangeDamage(uid, kudzu.DamageRecovery, true);
+                        _damageable.TryChangeDamage(uid, kudzu.DamageRecovery, 1f);
                     }
                     if (damage.TotalDamage >= kudzu.GrowthBlock)
                     {

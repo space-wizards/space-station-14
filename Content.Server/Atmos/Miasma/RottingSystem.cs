@@ -180,7 +180,7 @@ public sealed class RottingSystem : EntitySystem
             if (rotting.DealDamage)
             {
                 var damage = rotting.Damage * rotting.RotUpdateRate.TotalSeconds;
-                _damageable.TryChangeDamage(uid, damage, true, false);
+                _damageable.TryChangeDamage(uid, damage, 1f, false);
             }
 
             if (!TryComp<PhysicsComponent>(uid, out var physics))

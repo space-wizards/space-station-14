@@ -142,8 +142,8 @@ namespace Content.Shared.Damage
         ///     Returns a <see cref="DamageSpecifier"/> with information about the actual damage changes. This will be
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
-        public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, bool ignoreResistances = false,
-            float? armorReductionMultiplier = null, bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null)
+        public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, float? armorPenetrationValue = null,
+            bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null)
         {
             if (!uid.HasValue || !Resolve(uid.Value, ref damageable, false))
             {
@@ -169,7 +169,7 @@ namespace Content.Shared.Damage
                 return null;
 
             // Apply resistances
-            if (!ignoreResistances)
+            if (armorPenetrationValue != 1)
             {
                 if (damageable.DamageModifierSetId != null &&
                     _prototypeManager.TryIndex<DamageModifierSetPrototype>(damageable.DamageModifierSetId, out var modifierSet))
@@ -177,7 +177,7 @@ namespace Content.Shared.Damage
                     damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
                 }
 
-                var ev = new DamageModifyEvent(damage, armorReductionMultiplier);
+                var ev = new DamageModifyEvent(damage, armorPenetrationValue);
                 RaiseLocalEvent(uid.Value, ev);
                 damage = ev.Damage;
 

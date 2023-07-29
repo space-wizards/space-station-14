@@ -30,7 +30,7 @@ public sealed class BreakWindowArtifactSystem : EntitySystem
             if (!_random.Prob(component.DamageChance))
                 return;
 
-            _damageable.TryChangeDamage(ent, component.Damage, component.IgnoreResistances);
+            _damageable.TryChangeDamage(ent, component.Damage, component.ResistanceReductionValue);
         }
     }
 }

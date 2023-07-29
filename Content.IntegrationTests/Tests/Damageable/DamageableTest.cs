@@ -144,7 +144,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 var damageToDeal = FixedPoint2.New(types.Count * 5);
                 DamageSpecifier damage = new(group3, damageToDeal);
 
-                sDamageableSystem.TryChangeDamage(uid, damage, true);
+                sDamageableSystem.TryChangeDamage(uid, damage, 1f);
 
                 Assert.Multiple(() =>
                 {
@@ -175,7 +175,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 types = group3.DamageTypes;
                 damageToDeal = FixedPoint2.New(types.Count * 5 - 1);
                 damage = new DamageSpecifier(group3, damageToDeal);
-                sDamageableSystem.TryChangeDamage(uid, damage, true);
+                sDamageableSystem.TryChangeDamage(uid, damage, 1f);
 
                 Assert.Multiple(() =>
                 {
@@ -205,7 +205,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                     Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
                 });
                 damage = new DamageSpecifier(group1, FixedPoint2.New(10)) + new DamageSpecifier(type2b, FixedPoint2.New(10));
-                sDamageableSystem.TryChangeDamage(uid, damage, true);
+                sDamageableSystem.TryChangeDamage(uid, damage, 1f);
 
                 Assert.Multiple(() =>
                 {

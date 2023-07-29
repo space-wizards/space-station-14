@@ -218,7 +218,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         {
             _mobThreshold.SetAllowRevives(target, true, thresholds);
             if (_mobState.IsDead(target, mob))
-                _damageable.TryChangeDamage(target, component.ZapHeal, true, origin: uid);
+                _damageable.TryChangeDamage(target, component.ZapHeal, 1f, origin: uid);
             _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
             _mobThreshold.SetAllowRevives(target, false, thresholds);
 

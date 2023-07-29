@@ -10,5 +10,4 @@
       types:
         Piercing: 60
         Structural: 30
-    #ignoreResistances: true
-    armorReductionMultiplier: 0.75
+    resistanceReductionValue: 0.5

@@ -82,7 +82,7 @@ namespace Content.Server.Bed
                     if (HasComp<SleepingComponent>(healedEntity))
                         damage *= bedComponent.SleepMultiplier;
 
-                    _damageableSystem.TryChangeDamage(healedEntity, damage, true, origin: bedComponent.Owner);
+                    _damageableSystem.TryChangeDamage(healedEntity, damage, 1f, origin: bedComponent.Owner);
                 }
             }
         }

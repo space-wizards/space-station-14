@@ -194,7 +194,7 @@ public sealed partial class RevenantSystem
             return;
         DamageSpecifier dspec = new();
         dspec.DamageDict.Add("Poison", damage.Value);
-        _damage.TryChangeDamage(args.Args.Target, dspec, true, origin: uid);
+        _damage.TryChangeDamage(args.Args.Target, dspec, 1f, origin: uid);
 
         args.Handled = true;
     }

@@ -214,7 +214,7 @@ namespace Content.Server.GameTicking
                     //todo: what if they dont breathe lol
                     //cry deeply
                     DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 200);
-                    _damageable.TryChangeDamage(playerEntity, damage, true);
+                    _damageable.TryChangeDamage(playerEntity, damage, 1f);
                 }
             }
 

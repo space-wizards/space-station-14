@@ -66,7 +66,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 // Kill the entity
                 DamageSpecifier damage = new(prototypeManager.Index<DamageGroupPrototype>("Toxin"), FixedPoint2.New(10000000));
 
-                damSystem.TryChangeDamage(human, damage, true);
+                damSystem.TryChangeDamage(human, damage, 1f);
 
                 // Check that it is dead
                 Assert.Multiple(() =>

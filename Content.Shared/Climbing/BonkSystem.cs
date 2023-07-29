@@ -65,7 +65,7 @@ public sealed class BonkSystem : EntitySystem
         _stunSystem.TryParalyze(user, TimeSpan.FromSeconds(bonkableComponent.BonkTime), true);
 
         if (bonkableComponent.BonkDamage is { } bonkDmg)
-            _damageableSystem.TryChangeDamage(user, bonkDmg, true, origin: user);
+            _damageableSystem.TryChangeDamage(user, bonkDmg, 1f, origin: user);
 
         return true;
 

@@ -32,7 +32,7 @@ namespace Content.Server.Repairable
 
             if (component.Damage != null)
             {
-                var damageChanged = _damageableSystem.TryChangeDamage(uid, component.Damage, true, false, origin: args.User);
+                var damageChanged = _damageableSystem.TryChangeDamage(uid, component.Damage, 1f, false, origin: args.User);
                 _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} by {damageChanged?.Total}");
             }
 

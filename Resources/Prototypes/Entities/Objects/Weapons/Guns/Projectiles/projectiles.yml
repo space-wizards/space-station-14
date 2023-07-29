@@ -161,7 +161,7 @@
     damage:
       types:
         Piercing: 11
-    #ignoreResistances: true
+    resistanceReductionValue: 1
 
 # Energy projectiles
 - type: entity

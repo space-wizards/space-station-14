@@ -399,7 +399,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (ev.DamageCoefficient == 1)
             {
                 // no damage-dict multiplication required.
-                _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true, damageable: damageable);
+                _damageableSystem.TryChangeDamage(uid, damage, 1f, damageable: damageable);
                 if (HasComp<MindContainerComponent>(uid) || HasComp<ExplosiveComponent>(uid))
                 {
                     var damageStr = string.Join(", ", damage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));
@@ -410,7 +410,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             else
             {
                 var appliedDamage = damage * ev.DamageCoefficient;
-                _damageableSystem.TryChangeDamage(uid, appliedDamage, ignoreResistances: true, damageable: damageable);
+                _damageableSystem.TryChangeDamage(uid, appliedDamage, 1f, damageable: damageable);
                 if (HasComp<MindContainerComponent>(uid) || HasComp<ExplosiveComponent>(uid))
                 {
                     var damageStr = string.Join(", ", appliedDamage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));

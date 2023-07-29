@@ -94,7 +94,7 @@ public abstract class SharedAnomalySystem : EntitySystem
 
     public void DoAnomalyBurnDamage(EntityUid source, EntityUid target, AnomalyComponent component)
     {
-        _damageable.TryChangeDamage(target, component.AnomalyContactDamage, true);
+        _damageable.TryChangeDamage(target, component.AnomalyContactDamage, 1f);
         if (!Timing.IsFirstTimePredicted || _net.IsServer)
             return;
         Audio.PlayPvs(component.AnomalyContactDamageSound, source);

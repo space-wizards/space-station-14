@@ -106,7 +106,7 @@ namespace Content.Server.Bible
                 _popupSystem.PopupEntity(Loc.GetString("bible-sizzle"), args.User, args.User);
 
                 SoundSystem.Play(component.SizzleSoundPath.GetSound(), Filter.Pvs(args.User), args.User);
-                _damageableSystem.TryChangeDamage(args.User, component.DamageOnUntrainedUse, true, origin: uid);
+                _damageableSystem.TryChangeDamage(args.User, component.DamageOnUntrainedUse, 1f, origin: uid);
                 _delay.BeginDelay(uid, delay);
 
                 return;
@@ -124,13 +124,13 @@ namespace Content.Server.Bible
                     _popupSystem.PopupEntity(selfFailMessage, args.User, args.User, PopupType.MediumCaution);
 
                     SoundSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.Target.Value), args.User);
-                    _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true, origin: uid);
+                    _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, 1f, origin: uid);
                     _delay.BeginDelay(uid, delay);
                     return;
                 }
             }
 
-            var damage = _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true, origin: uid);
+            var damage = _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, 1f, origin: uid);
 
             if (damage == null || damage.Total == 0)
             {

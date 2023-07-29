@@ -97,7 +97,7 @@
         Burn: -900
         Airloss: -600
         Toxin: -600
-    ignoreResistances: true
+    resistanceReductionValue: 1
 
 - type: entity
   id: BulletInstakillMagic
@@ -110,7 +110,7 @@
     damage:
       types:
         Piercing: 300
-    ignoreResistances: true
+    resistanceReductionValue: 1
 
 - type: entity
   id: ProjectilePolyboltCluwne

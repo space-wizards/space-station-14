@@ -53,7 +53,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         var otherName = ToPrettyString(otherEntity);
         var direction = args.OurBody.LinearVelocity.Normalized();
-        var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances, component.ArmorReductionMultiplier, origin: component.Shooter);
+        var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.ResistanceReductionValue, origin: component.Shooter);
         var deleted = Deleted(otherEntity);
 
         if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))

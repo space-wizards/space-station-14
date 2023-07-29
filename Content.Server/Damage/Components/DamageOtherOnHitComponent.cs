@@ -7,10 +7,9 @@ namespace Content.Server.Damage.Components
     [RegisterComponent]
     public sealed class DamageOtherOnHitComponent : Component
     {
-        [DataField("ignoreResistances")]
+        [DataField("resistanceReductionValue")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool IgnoreResistances = false;
-
+        public float? ResistanceReductionValue;
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;

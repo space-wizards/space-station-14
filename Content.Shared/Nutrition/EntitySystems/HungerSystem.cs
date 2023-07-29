@@ -173,7 +173,7 @@ public sealed class HungerSystem : EntitySystem
             component.StarvationDamage is { } damage &&
             !_mobState.IsDead(uid))
         {
-            _damageable.TryChangeDamage(uid, damage, true, false);
+            _damageable.TryChangeDamage(uid, damage, 1f, false);
         }
     }
 

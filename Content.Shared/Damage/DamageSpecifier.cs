@@ -101,7 +101,7 @@ namespace Content.Shared.Damage
         /// <remarks>
         ///     Only applies resistance to a damage type if it is dealing damage, not healing.
         /// </remarks>
-        public static DamageSpecifier ApplyModifierSet(DamageSpecifier damageSpec, DamageModifierSet modifierSet, float? armorReductionMultiplier = null)
+        public static DamageSpecifier ApplyModifierSet(DamageSpecifier damageSpec, DamageModifierSet modifierSet, float? resistanceReductionValue = null)
         {
             // Make a copy of the given data. Don't modify the one passed to this function. I did this before, and weapons became
             // duller as you hit walls. Neat, but not FixedPoint2ended. And confusing, when you realize your fists don't work no
@@ -129,9 +129,13 @@ namespace Content.Shared.Damage
                 {
                     // negative coefficients **can** heal you.
 
-                    if (coefficient >= 0 && armorReductionMultiplier != null)
+                    if (coefficient >= 0 && resistanceReductionValue != null)
                         //coefficient = (1 - coefficient) * armorReductionMultiplier.Value + coefficient;
-                        coefficient =  coefficient += armorReductionMultiplier.Value;
+                        coefficient += resistanceReductionValue.Value;
+
+                    if (coefficient > 1)
+                        coefficient = 1;
+
                     newValue *= coefficient;
                 }
 
