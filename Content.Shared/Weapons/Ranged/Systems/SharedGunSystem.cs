@@ -393,7 +393,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         // decides direction the casing ejects and only when not cycling
         if (angle != 0f)
         {
-            angle += 3.7f; // 212 degrees; casings should eject slightly to the left and behind of a gun
+            angle += 3.7f; // 212 degrees; casings should eject slightly to the right and behind of a gun
             ThrowingSystem.TryThrow(entity, angle.ToVec().Normalized() / 100, 5f);
         }
         if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
