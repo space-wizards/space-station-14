@@ -114,8 +114,9 @@ namespace Content.Server.GameTicking
                 throw new Exception("invalid config; couldn't select a valid station map!");
             }
 
-            if (CurrentPreset?.SupportedMaps != null &&
-                !CurrentPreset.SupportedMaps.Contains(mainStationMap.ID))
+            if (CurrentPreset?.MapPool != null &&
+                _prototypeManager.TryIndex<GameMapPoolPrototype>(CurrentPreset.MapPool, out var pool) &&
+                pool.Maps.Contains(mainStationMap.ID))
             {
                 var msg = Loc.GetString("game-ticker-start-round-invalid-map",
                     ("map", mainStationMap.MapName),

@@ -146,10 +146,10 @@ namespace Content.Server.GameTicking
             if (Preset == null)
                 return true;
 
-            if (Preset.SupportedMaps == null)
+            if (Preset.MapPool == null || !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
                 return true;
 
-            return Preset.SupportedMaps.Contains(map.ID);
+            return pool.Maps.Contains(map.ID);
         }
 
         private void ValidateMap()
@@ -157,7 +157,11 @@ namespace Content.Server.GameTicking
             if (Preset == null || _gameMapManager.GetSelectedMap() is not { } map)
                 return;
 
-            if (Preset.SupportedMaps?.Contains(map.ID) ?? true)
+            if (Preset.MapPool == null ||
+                !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
+                return;
+
+            if (pool.Maps.Contains(map.ID))
                 return;
 
             _gameMapManager.SelectMapRandom();

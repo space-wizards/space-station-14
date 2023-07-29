@@ -82,13 +82,16 @@ public sealed class GameMapManager : IGameMapManager
 
     public IEnumerable<GameMapPrototype> AllVotableMaps()
     {
-        if (_entityManager.System<GameTicker>().Preset?.SupportedMaps is { } supportedMaps)
+        var poolPrototype = _entityManager.System<GameTicker>().Preset?.MapPool ??
+                   _configurationManager.GetCVar(CCVars.GameMapPool);
+
+        if (_prototypeManager.TryIndex<GameMapPoolPrototype>(_configurationManager.GetCVar(CCVars.GameMapPool), out var pool))
         {
-            foreach (var map in supportedMaps)
+            foreach (var map in pool.Maps)
             {
                 if (!_prototypeManager.TryIndex<GameMapPrototype>(map, out var mapProto))
                 {
-                    _log.Error($"Couldn't index map {map} in game preset map pool.");
+                    _log.Error($"Couldn't index map {map} in pool {poolPrototype}");
                     continue;
                 }
 
@@ -97,23 +100,7 @@ public sealed class GameMapManager : IGameMapManager
         }
         else
         {
-            if (_prototypeManager.TryIndex<GameMapPoolPrototype>(_configurationManager.GetCVar(CCVars.GameMapPool), out var pool))
-            {
-                foreach (var map in pool.Maps)
-                {
-                    if (!_prototypeManager.TryIndex<GameMapPrototype>(map, out var mapProto))
-                    {
-                        _log.Error("Couldn't index map " + map + " in pool " + pool.ID);
-                        continue;
-                    }
-
-                    yield return mapProto;
-                }
-            }
-            else
-            {
-                throw new Exception("Could not index map pool prototype " + _configurationManager.GetCVar(CCVars.GameMapPool) + "!");
-            }
+            throw new Exception($"Could not index map pool prototype {poolPrototype}!");
         }
     }
 
