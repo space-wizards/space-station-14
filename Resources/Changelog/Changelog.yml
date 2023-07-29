@@ -1,9 +1,4 @@
 Entries:
-- author: Geekyhobo
-  changes:
-  - {message: Light replacer now has more description., type: Add}
-  id: 3872
-  time: '2023-05-25T22:09:55.0000000+00:00'
 - author: Whisper
   changes:
   - {message: 'Fixed crit people being seen as dead by the bleed code, crit people
@@ -2973,3 +2968,8 @@ Entries:
       battery life increased by a factor of five', type: Tweak}
   id: 4371
   time: '2023-07-29T18:51:36.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Fix display of ghost role rules., type: Fix}
+  id: 4372
+  time: '2023-07-29T18:56:59.0000000+00:00'
