@@ -1,10 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Fixed an issue where dwarves sometimes couldn't get their words out.,
-    type: Fix}
-  id: 3860
-  time: '2023-05-24T19:03:44.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Spacemen can now recognize common reagents, like water or beer, in
@@ -2982,3 +2976,9 @@ Entries:
   - {message: Added function to turn off new news notifications, type: Add}
   id: 4359
   time: '2023-07-28T19:59:03.0000000+00:00'
+- author: Skarlet
+  changes:
+  - {message: 'Changed the Captain''s wardrobe with a new default outfit, a new carapace
+      and updates older clothing for the sake of consistency.', type: Tweak}
+  id: 4360
+  time: '2023-07-29T00:09:20.0000000+00:00'
