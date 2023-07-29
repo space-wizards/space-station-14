@@ -9,6 +9,9 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
 using Content.Shared.Database;
+using Content.Shared.Emag.Components;
+using Content.Shared.Emag.Systems;
+using Content.Server.Popups;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Components;
@@ -31,7 +34,7 @@ namespace Content.Server.Lathe
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
         [Dependency] private readonly StackSystem _stack = default!;
-
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -48,7 +51,7 @@ namespace Content.Server.Lathe
 
             SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUserInterfaceState(u, c));
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
-
+            SubscribeLocalEvent<LatheComponent, GotEmaggedEvent>(OnEmagged);
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
         }
 
@@ -200,6 +203,15 @@ namespace Content.Server.Lathe
                     continue;
                 args.Recipes.Add(recipe);
             }
+
+            foreach (var recipe in latheComponent.EmagRecipes)
+            {
+                if (!HasComp<EmaggedComponent>(uid))
+                    continue;
+                if (!component.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
+                    continue;
+                args.Recipes.Add(recipe);
+            }
         }
 
         private void OnMaterialAmountChanged(EntityUid uid, LatheComponent component, ref MaterialAmountChangedEvent args)
@@ -273,6 +285,16 @@ namespace Content.Server.Lathe
             return GetAvailableRecipes(uid, component).Contains(recipe.ID);
         }
 
+        private void OnEmagged(EntityUid uid, LatheComponent component, ref GotEmaggedEvent args)
+        {
+            if (!this.IsPowered(uid, EntityManager))
+                return;
+
+            EntityManager.AddComponent<EmaggedComponent>(uid);
+            _popupSystem.PopupEntity(Loc.GetString("lathe-component-got-emmaged"), uid);
+            _audio.PlayPvs(component.EmaggedSound, uid);
+            args.Handled = true;
+        }
         #region UI Messages
 
         private void OnLatheQueueRecipeMessage(EntityUid uid, LatheComponent component, LatheQueueRecipeMessage args)

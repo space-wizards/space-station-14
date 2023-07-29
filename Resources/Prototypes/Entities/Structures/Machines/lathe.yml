@@ -227,6 +227,13 @@
       - ClothingBackpackDuffelHolding
       - WelderExperimental
       - JawsOfLife
+    emagRecipes:
+      - ExplosivePayload
+      - WeaponLaserCarbine
+      - WeaponAdvancedLaser
+      - WeaponLaserCannon
+      - WeaponXrayCannon
+      - WeaponTaser
 
 - type: entity
   id: CircuitImprinter
