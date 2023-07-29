@@ -96,7 +96,7 @@ public sealed partial class PathfindingSystem
         _stopwatch.Restart();
         var options = new ParallelOptions()
         {
-            MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
+            MaxDegreeOfParallelism = 1,
         };
 
         // We defer chunk updates because rebuilding a navmesh is hella costly
@@ -460,7 +460,8 @@ public sealed partial class PathfindingSystem
                 // var isBorder = x < 0 || y < 0 || x == ChunkSize - 1 || y == ChunkSize - 1;
 
                 tileEntities.Clear();
-                var available = _lookup.GetEntitiesIntersecting(tile);
+                // TODO: Also see dungeons having this shit due to poly skins
+                var available = _lookup.GetEntitiesIntersecting(tile, flags: LookupFlags.Uncontained);
 
                 foreach (var ent in available)
                 {

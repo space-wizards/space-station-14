@@ -172,7 +172,7 @@ public sealed partial class BlockingSystem : EntitySystem
             var playerTileRef = xform.Coordinates.GetTileRef();
             if (playerTileRef != null)
             {
-                var intersecting = _lookup.GetEntitiesIntersecting(playerTileRef.Value);
+                var intersecting = _lookup.GetEntitiesIntersecting(playerTileRef.Value, 0f);
                 var mobQuery = GetEntityQuery<MobStateComponent>();
                 foreach (var uid in intersecting)
                 {
