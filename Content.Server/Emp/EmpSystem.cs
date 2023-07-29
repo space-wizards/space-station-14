@@ -101,7 +101,7 @@ public sealed class EmpSystem : SharedEmpSystem
 }
 
 [ByRefEvent]
-public record struct EmpPulseEvent(float EnergyConsumption, bool Affected, bool Disabled, TimeSpan Durtaion);
+public record struct EmpPulseEvent(float EnergyConsumption, bool Affected, bool Disabled, TimeSpan Duration);
 
 [ByRefEvent]
 public record struct EmpDisabledRemoved();
