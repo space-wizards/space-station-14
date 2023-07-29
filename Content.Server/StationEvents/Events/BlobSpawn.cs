@@ -1,14 +1,18 @@
-﻿using Content.Server.StationEvents.Components;
+﻿using System.Linq;
+using Content.Server.StationEvents.Components;
 using Content.Server.Station.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.Blob;
+using Robust.Server.Player;
 
 namespace Content.Server.StationEvents.Events;
 
 public sealed class BlobSpawnRule : StationEventSystem<BlobSpawnRuleComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IPlayerManager _playerSystem = default!;
 
     protected override void Started(EntityUid uid, BlobSpawnRuleComponent component, GameRuleComponent gameRule,
         GameRuleStartedEvent args)
@@ -36,9 +40,16 @@ public sealed class BlobSpawnRule : StationEventSystem<BlobSpawnRuleComponent>
             return;
         }
 
-        var coords = _random.Pick(validLocations);
-        Sawmill.Info($"Creating blob spawnpoint at {coords}");
-        var spawner = Spawn(component.SpawnPointProto, coords);
+        var playerPool = _playerSystem.ServerSessions.ToList();
+        var numBlobs = MathHelper.Clamp(playerPool.Count / component.PlayersPerCarrierBlob, 1, component.MaxCarrierBlob);
+
+        for (var i = 0; i < numBlobs; i++)
+        {
+            var coords = _random.Pick(validLocations);
+            Sawmill.Info($"Creating carrier blob at {coords}");
+            var carrier = Spawn(_random.Pick(component.CarrierBlobProtos), coords);
+            EnsureComp<BlobCarrierComponent>(carrier);
+        }
 
         // start blob rule incase it isn't, for the sweet greentext
         GameTicker.StartGameRule("Blob");

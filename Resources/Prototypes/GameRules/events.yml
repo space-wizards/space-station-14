@@ -79,6 +79,12 @@
       earliestStart: 40
       minimumPlayers: 20
     - type: BlobSpawnRule
+      carrierBlobProtos:
+      - MobMouse
+      - MobMouse1
+      - MobMouse2
+      playersPerCarrierBlob: 30
+      maxCarrierBlob: 3
 
 - type: entity
   parent: BaseGameRule
