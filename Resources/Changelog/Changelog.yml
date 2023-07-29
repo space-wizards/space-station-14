@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: 'Fixed crit people being seen as dead by the bleed code, crit people
-      will now correctly passively recover blood and heal bloodloss damage.', type: Fix}
-  id: 3873
-  time: '2023-05-26T07:23:30.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Resprited network configurator., type: Tweak}
@@ -2973,3 +2967,8 @@ Entries:
   - {message: Fix display of ghost role rules., type: Fix}
   id: 4372
   time: '2023-07-29T18:56:59.0000000+00:00'
+- author: Keiku
+  changes:
+  - {message: Improve hunger and thirst warning icons, type: Tweak}
+  id: 4373
+  time: '2023-07-29T19:19:09.0000000+00:00'
