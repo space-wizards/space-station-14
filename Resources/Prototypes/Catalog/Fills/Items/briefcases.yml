@@ -18,7 +18,7 @@
   - type: StorageFill
     contents:
       - id: WeaponSniperHristov
-      - id: MagazineBoxAntiMateriel
+      - id: MagazineBoxAntiMaterielBig
       - id: ClothingNeckTieRed
       - id: ClothingHandsGlovesLatex
       - id: ClothingUniformJumpsuitLawyerBlack
