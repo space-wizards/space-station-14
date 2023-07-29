@@ -144,7 +144,7 @@
       damage:
         types:
           Blunt: 15
-          Structure: 50
+          Structural: 50
     - type: DamageStateVisuals
       states:
         Alive:
