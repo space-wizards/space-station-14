@@ -17,7 +17,7 @@
       time: 144000 #40 hrs      
   weight: 10
   startingGear: ChiefEngineerGear
-  icon: "ChiefEngineer"
+  icon: "JobIconChiefEngineer"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
