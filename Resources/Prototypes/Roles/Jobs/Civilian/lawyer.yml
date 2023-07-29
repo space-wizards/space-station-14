@@ -7,7 +7,7 @@
     - !type:OverallPlaytimeRequirement
       time: 36000 # 10 hrs
   startingGear: LawyerGear
-  icon: "Lawyer"
+  icon: "JobIconLawyer"
   supervisors: job-supervisors-hop
   access:
   - Service

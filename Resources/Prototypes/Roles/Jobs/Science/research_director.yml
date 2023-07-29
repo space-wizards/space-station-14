@@ -11,7 +11,7 @@
       time: 144000 #40 hrs            
   weight: 10
   startingGear: ResearchDirectorGear
-  icon: "ResearchDirector"
+  icon: "JobIconResearchDirector"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
