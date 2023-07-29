@@ -4,17 +4,19 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.Instruments;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
+using Content.Server.MassMedia.Components;
+using Content.Server.MassMedia.Systems;
 using Content.Server.Mind;
 using Content.Server.PDA.Ringer;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Access.Components;
+using Content.Shared.Light.Component;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
-using Content.Shared.Light.Component;
 
 namespace Content.Server.PDA
 {
@@ -25,9 +27,9 @@ namespace Content.Server.PDA
         [Dependency] private readonly RingerSystem _ringer = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly StoreSystem _store = default!;
+        [Dependency] private readonly NewsSystem _news = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         public override void Initialize()
         {

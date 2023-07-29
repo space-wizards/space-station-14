@@ -120,6 +120,9 @@ public sealed class ContentReplayPlaybackManager
                 if (!_entMan.EntityExists(_player.LocalPlayer?.ControlledEntity))
                     _entMan.System<ReplaySpectatorSystem>().SetSpectatorPosition(default);
                 return true;
+            case ChatMessage chat:
+                _uiMan.GetUIController<ChatUIController>().ProcessChatMessage(chat, speechBubble: !skipEffects);
+                return true;
         }
 
         if (!skipEffects)
@@ -130,10 +133,6 @@ public sealed class ContentReplayPlaybackManager
 
         switch (message)
         {
-            case ChatMessage chat:
-                // Pass the chat message to the UI controller, skip the speech-bubble / pop-up.
-                _uiMan.GetUIController<ChatUIController>().ProcessChatMessage(chat, speechBubble: false);
-                return true;
             case RoundEndMessageEvent:
             case PopupEvent:
             case AudioMessage:

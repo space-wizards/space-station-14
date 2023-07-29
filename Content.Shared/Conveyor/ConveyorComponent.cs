@@ -1,5 +1,4 @@
 using Content.Shared.DeviceLinking;
-using Content.Shared.MachineLinking;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;

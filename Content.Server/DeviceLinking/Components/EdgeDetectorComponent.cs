@@ -1,6 +1,5 @@
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking;
-using Content.Shared.MachineLinking;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.DeviceLinking.Components;

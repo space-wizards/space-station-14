@@ -1,6 +1,5 @@
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking;
-using Content.Shared.MachineLinking;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
