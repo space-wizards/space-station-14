@@ -7,6 +7,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.Destructible;
 using Content.Server.NPC.Components;
 using Content.Shared.Administration;
+using Content.Shared.Climbing;
 using Content.Shared.Interaction;
 using Content.Shared.NPC;
 using Robust.Server.Player;
@@ -433,6 +434,11 @@ namespace Content.Server.NPC.Pathfinding
             if (blackboard.TryGetValue<bool>(NPCBlackboard.NavSmash, out var smash, EntityManager) && smash)
             {
                 flags |= PathFlags.Smashing;
+            }
+
+            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavClimb, out var climb, EntityManager) && climb)
+            {
+                flags |= PathFlags.Climbing;
             }
 
             if (blackboard.TryGetValue<bool>(NPCBlackboard.NavInteract, out var interact, EntityManager) && interact)

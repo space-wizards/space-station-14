@@ -63,6 +63,17 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: StationRecordsComputerCircuitboard
+  name: station records computer board
+  description: A computer printed circuit board for a station records computer.
+  components:
+    - type: Sprite
+      state: cpu_command
+    - type: ComputerBoard
+      prototype: ComputerStationRecords
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: CargoRequestComputerCircuitboard
   name: cargo request computer board
   description: A computer printed circuit board for a cargo request computer.
@@ -354,3 +365,16 @@
   components:
     - type: ComputerBoard
       prototype: ComputerIFFSyndicate
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerMassMediaCircuitboard
+  name: mass-media console board
+  description: Write your message to the world!
+  components:
+    - type: Sprite
+      state: cpu_service
+    - type: StaticPrice
+      price: 150
+    - type: ComputerBoard
+      prototype: ComputerMassMedia

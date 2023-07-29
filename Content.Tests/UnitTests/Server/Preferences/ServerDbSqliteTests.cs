@@ -72,7 +72,7 @@ namespace Content.Tests.UnitTests.Server.Preferences
             var conn = new SqliteConnection("Data Source=:memory:");
             conn.Open();
             builder.UseSqlite(conn);
-            return new ServerDbSqlite(() => builder.Options, true, IoCManager.Resolve<IConfigurationManager>());
+            return new ServerDbSqlite(() => builder.Options, true, IoCManager.Resolve<IConfigurationManager>(), true);
         }
 
         [Test]
