@@ -1,9 +1,4 @@
 Entries:
-- author: McFck
-  changes:
-  - {message: Fixed infinite beaker fill from mop, type: Fix}
-  id: 3867
-  time: '2023-05-25T09:12:08.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: NanoTrasen technicians have fixed armed nuclear devices not sending
@@ -2978,3 +2973,8 @@ Entries:
   - {message: Added bags for cargo techs., type: Add}
   id: 4366
   time: '2023-07-29T06:12:42.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fixed incorrect cheese wheel guidebook recipe, type: Fix}
+  id: 4367
+  time: '2023-07-29T13:14:00.0000000+00:00'
