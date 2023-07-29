@@ -166512,14 +166512,14 @@ entities:
       type: Transform
 - proto: SpawnPointSeniorPhysician
   entities:
-  - uid: 30917
+  - uid: 30926
     components:
     - pos: -13.5,-47.5
       parent: 2
       type: Transform
 - proto: SpawnPointSeniorResearcher
   entities:
-  - uid: 30916
+  - uid: 30927
     components:
     - pos: 45.5,-37.5
       parent: 2
