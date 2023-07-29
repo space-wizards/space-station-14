@@ -19,7 +19,7 @@ namespace Content.Server.GameTicking
         public const float PresetFailedCooldownIncrease = 30f;
 
         /// <summary>
-        /// The selecte preset that will be used at the start of the next round.
+        /// The selected preset that will be used at the start of the next round.
         /// </summary>
         public GamePresetPrototype? Preset { get; private set; }
 
