@@ -1,6 +1,3 @@
-# Job icons are used by AgentIDCardWindow.xaml.cs to make them selectable in the agent ID.
-# The JobPrototype also references the IDs.
-# Take care when altering this file.
 - type: statusIcon
   id: JobIcon
   abstract: true
@@ -323,7 +320,7 @@
 
 - type: statusIcon
   parent: JobIcon
-  id: JobIconZombie
+  id: JobIconZombie # This is a perfectly legitimate profession to pursue
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Zombie

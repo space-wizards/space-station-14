@@ -9,7 +9,7 @@
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'agent-id-card-job-icon-label'}"/>
             <Control HorizontalExpand="True" MinSize="50 0"/>
-            <GridContainer Name="Grid" Columns="10">
+            <GridContainer Name="IconGrid" Columns="10">
                 <!-- Job icon buttons are generated in the code -->
             </GridContainer>
         </BoxContainer>

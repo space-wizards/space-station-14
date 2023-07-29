@@ -18,7 +18,8 @@ namespace Content.Client.Access.UI
         {
             base.Open();
 
-            _window = new AgentIDCardWindow();
+            _window?.Dispose();
+            _window = new AgentIDCardWindow(this);
             if (State != null)
                 UpdateState(State);
 
@@ -27,11 +28,6 @@ namespace Content.Client.Access.UI
             _window.OnClose += Close;
             _window.OnNameChanged += OnNameChanged;
             _window.OnJobChanged += OnJobChanged;
-            for (var i = 0; i < _window.JobIconButtons.Count; i++)
-            {
-                var key = i;
-                _window.JobIconButtons[i].OnPressed += _ => OnJobIconChanged(_window.IconIdByIndex[key]);
-            }
         }
 
         private void OnNameChanged(string newName)
@@ -44,7 +40,7 @@ namespace Content.Client.Access.UI
             SendMessage(new AgentIDCardJobChangedMessage(newJob));
         }
 
-        private void OnJobIconChanged(string newJobIcon)
+        public void OnJobIconChanged(string newJobIcon)
         {
             SendMessage(new AgentIDCardJobIconChangedMessage(newJobIcon));
         }
@@ -61,6 +57,7 @@ namespace Content.Client.Access.UI
 
             _window.SetCurrentName(cast.CurrentName);
             _window.SetCurrentJob(cast.CurrentJob);
+            _window.SetAllowedIcons(cast.Icons);
         }
 
         protected override void Dispose(bool disposing)

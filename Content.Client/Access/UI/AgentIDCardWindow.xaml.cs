@@ -16,76 +16,35 @@ namespace Content.Client.Access.UI
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        private readonly SpriteSystem _spriteSystem = default!;
+        private readonly SpriteSystem _spriteSystem;
+        private readonly AgentIDCardBoundUserInterface _bui;
 
-        private static string[] JobIconIds = new[] { "JobIconDetective",
-            "JobIconQuarterMaster",
-            "JobIconBotanist",
-            "JobIconBoxer",
-            "JobIconAtmosphericTechnician",
-            "JobIconNanotrasen",
-            "JobIconPrisoner",
-            "JobIconJanitor",
-            "JobIconChemist",
-            "JobIconStationEngineer",
-            "JobIconSecurityOfficer",
-            "JobIconChiefMedicalOfficer",
-            "JobIconRoboticist",
-            "JobIconChaplain",
-            "JobIconLawyer",
-            "JobIconUnknown",
-            "JobIconLibrarian",
-            "JobIconCargoTechnician",
-            "JobIconScientist",
-            "JobIconResearchAssistant",
-            "JobIconGeneticist",
-            "JobIconClown",
-            "JobIconCaptain",
-            "JobIconHeadOfPersonnel",
-            "JobIconVirologist",
-            "JobIconShaftMiner",
-            "JobIconPassenger",
-            "JobIconChiefEngineer",
-            "JobIconBartender",
-            "JobIconHeadOfSecurity",
-            "JobIconBrigmedic",
-            "JobIconMedicalDoctor",
-            "JobIconParamedic",
-            "JobIconChef",
-            "JobIconWarden",
-            "JobIconResearchDirector",
-            "JobIconMime",
-            "JobIconMusician",
-            "JobIconReporter",
-            "JobIconPsychologist",
-            "JobIconMedicalIntern",
-            "JobIconTechnicalAssistant",
-            "JobIconServiceWorker",
-            "JobIconSecurityCadet",
-            "JobIconZookeeper"
-        };
         private const int JobIconColumnCount = 10;
 
         public event Action<string>? OnNameChanged;
         public event Action<string>? OnJobChanged;
-        public readonly List<Button> JobIconButtons = new();
-        public readonly Dictionary<int, string> IconIdByIndex = new();
 
-        public AgentIDCardWindow()
+        public AgentIDCardWindow(AgentIDCardBoundUserInterface bui)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
             _spriteSystem = _entitySystem.GetEntitySystem<SpriteSystem>();
+            _bui = bui;
 
             NameLineEdit.OnTextEntered += e => OnNameChanged?.Invoke(e.Text);
             NameLineEdit.OnFocusExit += e => OnNameChanged?.Invoke(e.Text);
 
             JobLineEdit.OnTextEntered += e => OnJobChanged?.Invoke(e.Text);
             JobLineEdit.OnFocusExit += e => OnJobChanged?.Invoke(e.Text);
+        }
+
+        public void SetAllowedIcons(HashSet<string> icons)
+        {
+            IconGrid.DisposeAllChildren();
 
             var jobIconGroup = new ButtonGroup();
             var i = 0;
-            foreach (var jobIconId in JobIconIds)
+            foreach (var jobIconId in icons)
             {
                 if (!_prototypeManager.TryIndex<StatusIconPrototype>(jobIconId, out var jobIcon))
                 {
@@ -118,11 +77,8 @@ namespace Content.Client.Access.UI
                 };
 
                 jobIconButton.AddChild(jobIconTexture);
-
-                JobIconButtons.Add(jobIconButton);
-                Grid.AddChild(jobIconButton);
-                IconIdByIndex.Add(i, jobIcon.ID);
-
+                jobIconButton.OnPressed += _ => _bui.OnJobIconChanged(jobIcon.ID);
+                IconGrid.AddChild(jobIconButton);
                 i++;
             }
         }
