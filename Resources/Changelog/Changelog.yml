@@ -1,31 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Made random anomaly stability fluctuation more random and scale with
-      severity, type: Tweak}
-  - {message: Decreased max anomaly point output., type: Tweak}
-  id: 3862
-  time: '2023-05-25T03:28:41.0000000+00:00'
-- author: tom-leys
-  changes:
-  - {message: 'NanaTrasen has selectively bred less dangerous zombies. Your standard
-      jumpsuit deflects their attacks better, they are slower and easier to kill.
-      But they still rise from the dead.', type: Tweak}
-  id: 3863
-  time: '2023-05-25T03:41:04.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed weapon attack arcs lagging behind if a player attacked while moving.,
-    type: Fix}
-  id: 3864
-  time: '2023-05-25T04:04:16.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: Changed the selling price of most autolathe products., type: Tweak}
-  - {message: Slightly adjusted the production price of most electronics in the autolathe.,
-    type: Tweak}
-  id: 3865
-  time: '2023-05-25T09:10:28.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Changed the Smartfridge sprite, type: Tweak}
@@ -2981,3 +2954,27 @@ Entries:
       a sensation overnight! Many try to replicate their style, type: Add}
   id: 4361
   time: '2023-07-29T00:10:45.0000000+00:00'
+- author: Jackal298
+  changes:
+  - {message: Raised the price of the sniper bundle from 6 to 12 TC and reduced the
+      ammo supply from 30 to 10, type: Tweak}
+  - {message: Fixed the issue of not being able to put the Anti-Material Ammo back
+      into the Anti-Material Ammo Box, type: Fix}
+  id: 4362
+  time: '2023-07-29T06:09:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Truncate gun fire rate examines so they don't show 20 digits., type: Fix}
+  id: 4363
+  time: '2023-07-29T06:09:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Initial Infected can now use the "turn undead" action while in crit.,
+    type: Fix}
+  id: 4364
+  time: '2023-07-29T06:09:54.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added hairflower to authodrobe!, type: Add}
+  id: 4365
+  time: '2023-07-29T06:10:15.0000000+00:00'
