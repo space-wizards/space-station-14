@@ -17,22 +17,23 @@ public sealed class RunVerbAsCommand : ToolshedCommand
     public IEnumerable<EntityUid> RunVerbAs(
             [CommandInvocationContext] IInvocationContext ctx,
             [PipedArgument] IEnumerable<EntityUid> input,
-            [CommandArgument] Block<EntityUid> runner,
+            [CommandArgument] ValueRef<EntityUid> runner,
             [CommandArgument] string verb
         )
     {
         _verb ??= GetSys<SharedVerbSystem>();
         verb = verb.ToLowerInvariant();
-        var runnerEid = runner.Invoke(null, ctx);
-
-        if (EntityManager.Deleted(runnerEid) && runnerEid != default)
-            ctx.ReportError(new DeadEntity(runnerEid));
-
-        if (ctx.GetErrors().Any())
-            yield break;
 
         foreach (var i in input)
         {
+            var runnerEid = runner.Evaluate(ctx);
+
+            if (EntityManager.Deleted(runnerEid) && runnerEid != default)
+                ctx.ReportError(new DeadEntity(runnerEid));
+
+            if (runner.LikelyConst && ctx.GetErrors().Any())
+                yield break;
+
             var verbs = _verb.GetLocalVerbs(i, runnerEid, Verb.VerbTypes, true);
 
             // if the "verb name" is actually a verb-type, try run any verb of that type.

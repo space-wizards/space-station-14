@@ -25,7 +25,7 @@ public sealed class ACmdCommand : ToolshedCommand
     public bool CanInvoke(
         [CommandInvocationContext] IInvocationContext ctx,
         [PipedArgument] CommandSpec command,
-        [CommandArgument] VarRef<IPlayerSession> player
+        [CommandArgument] ValueRef<IPlayerSession> player
         )
     {
         // Deliberately discard the error.
