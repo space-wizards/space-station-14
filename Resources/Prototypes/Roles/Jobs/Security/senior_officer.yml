@@ -6,13 +6,13 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 43200 #12 hrs
+      time: 21600 #6 hrs
     - !type:RoleTimeRequirement
       role: JobDetective
-      time: 14400 #4 hrs
+      time: 7200 #2 hrs
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
-      time: 72000 #20 hrs
+      time: 21600 #6 hrs
     - !type:DepartmentTimeRequirement
       department: Security
       time: 216000 # 60 hrs

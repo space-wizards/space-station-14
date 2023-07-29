@@ -1,4 +1,3 @@
-#.45 rounds
 - type: entity
   id: BulletMagnum
   name: bullet (.45 magnum)
@@ -19,7 +18,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 39
+        Piercing: 44 # 25% increase
 
 - type: entity
   id: BulletMagnumPractice
@@ -56,14 +55,14 @@
       groups:
         Burn: 32
 
-#.357 rounds (used in the syndicate Python revolver)
 - type: entity
-  id: BulletMagnum357
-  name: bullet (.357 magnum)
-  parent: BaseBullet
+  id: BulletMagnumAP
+  name: bullet (.45 magnum armor-piercing)
+  parent: BaseBulletAP
   noSpawn: true
   components:
   - type: Projectile
     damage:
       types:
-        Piercing: 54
+        Piercing: 26 # 20% decrease
+    ignoreResistances: true

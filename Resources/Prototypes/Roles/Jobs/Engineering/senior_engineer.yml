@@ -6,10 +6,10 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobAtmosphericTechnician
-      time: 43200 #12 hrs
+      time: 21600 #6 hrs
     - !type:RoleTimeRequirement
       role: JobStationEngineer
-      time: 43200 #12 hrs
+      time: 21600 #6 hrs
     - !type:DepartmentTimeRequirement
       department: Engineering
       time: 216000 # 60 hrs
