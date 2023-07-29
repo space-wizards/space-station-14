@@ -1,5 +1,5 @@
 using Content.Shared.Access.Components;
-using Content.Shared.Inventory;
+using Content.Shared.Access.Systems;
 using Content.Shared.Overlays;
 using Content.Shared.PDA;
 using Content.Shared.StatusIcon;
@@ -10,11 +10,9 @@ namespace Content.Client.Overlays;
 public sealed class ShowSecurityIconsSystem : ComponentActivatedClientSystemBase<ShowSecurityIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
-    private const string JobIconForNoId = "NoId";
-    private const string JobIconPostfixForNoIconFound = "Uknown";
-    private const string JobIconPrefix = "JobIcon";
+    private const string JobIconForNoId = "JobIconNoId";
 
     public override void Initialize()
     {
@@ -39,39 +37,33 @@ public sealed class ShowSecurityIconsSystem : ComponentActivatedClientSystemBase
     {
         var result = new List<StatusIconPrototype>();
 
-        var iconToGet = JobIconForNoId;
-        if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
+        var jobIconToGet = JobIconForNoId;
+        if (_accessReader.FindAccessItemsInventory(uid, out var items))
         {
-            // PDA
-            if (TryComp(idUid, out PdaComponent? pda))
+            foreach (var item in items)
             {
-                iconToGet = pda.ContainedId?.JobTitle ?? string.Empty;
+                // ID Card
+                if (TryComp(item, out IdCardComponent? id))
+                {
+                    jobIconToGet = id.JobIcon;
+                    break;
+                }
+                // PDA
+                else if (TryComp(item, out PdaComponent? pda)
+                    && pda.ContainedId != null
+                    && TryComp(pda.ContainedId, out id))
+                {
+                    jobIconToGet = id.JobIcon;
+                    break;
+                }
             }
-            // ID Card
-            else if (TryComp(idUid, out IdCardComponent? id))
-            {
-                iconToGet = id.JobTitle ?? string.Empty;
-            }
-
-            iconToGet = iconToGet.Replace(" ", "");
         }
 
-        var icon = GetJobIcon(iconToGet);
-        result.Add(icon);
+        var jobIcon = _prototypeMan.Index<StatusIconPrototype>(jobIconToGet);
+        result.Add(jobIcon);
 
         // Add arrest icons here, WYCI.
 
         return result;
-    }
-
-    private StatusIconPrototype GetJobIcon(string iconKey)
-    {
-        if (_prototypeMan.TryIndex<StatusIconPrototype>($"{JobIconPrefix}{iconKey}", out var securityIcon))
-        {
-            return securityIcon;
-        }
-
-        iconKey = JobIconPostfixForNoIconFound;
-        return GetJobIcon(iconKey);
     }
 }
