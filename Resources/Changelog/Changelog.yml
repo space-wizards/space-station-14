@@ -1,12 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Deep Rock NanoTrasen now offers elimination missions for daring salvagers
-      willing to kill very big game., type: Add}
-  - {message: 'Space Carp have begun attacking planets, expect to see them on some
-      expeditions.', type: Add}
-  id: 3869
-  time: '2023-05-25T12:23:21.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed a bug that caused rotting bodies to continue rotting even when
@@ -2977,3 +2969,9 @@ Entries:
   - {message: Renamed the chemical compendium to chempendium, type: Tweak}
   id: 4368
   time: '2023-07-29T15:16:31.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug causing some machine construction requirements to not work
+      properly., type: Fix}
+  id: 4369
+  time: '2023-07-29T17:29:59.0000000+00:00'
