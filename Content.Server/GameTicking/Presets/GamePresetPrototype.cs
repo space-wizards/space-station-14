@@ -1,4 +1,5 @@
 
+using Content.Server.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -33,5 +34,12 @@ namespace Content.Server.GameTicking.Presets
 
         [DataField("rules", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
         public IReadOnlyList<string> Rules { get; } = Array.Empty<string>();
+
+        /// <summary>
+        /// If specified, the gamemode will only be run with these maps.
+        /// If none are elligible, the global fallback will be used.
+        /// </summary>
+        [DataField("supportedMaps", customTypeSerializer: typeof(PrototypeIdListSerializer<GameMapPrototype>))]
+        public IReadOnlyList<string>? SupportedMaps { get; }
     }
 }

@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -11,17 +12,18 @@ namespace Content.Server.Maps;
 
 public sealed class GameMapManager : IGameMapManager
 {
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    
+
     [ViewVariables(VVAccess.ReadOnly)]
     private readonly Queue<string> _previousMaps = new();
     [ViewVariables(VVAccess.ReadOnly)]
-    private GameMapPrototype? _configSelectedMap = default;
+    private GameMapPrototype? _configSelectedMap;
     [ViewVariables(VVAccess.ReadOnly)]
-    private GameMapPrototype? _selectedMap = default; // Don't change this value during a round!
+    private GameMapPrototype? _selectedMap; // Don't change this value during a round!
     [ViewVariables(VVAccess.ReadOnly)]
     private bool _mapRotationEnabled;
     [ViewVariables(VVAccess.ReadOnly)]
@@ -163,7 +165,8 @@ public sealed class GameMapManager : IGameMapManager
     {
         return map.MaxPlayers >= _playerManager.PlayerCount &&
                map.MinPlayers <= _playerManager.PlayerCount &&
-               map.Conditions.All(x => x.Check(map));
+               map.Conditions.All(x => x.Check(map)) &&
+               _entityManager.System<GameTicker>().IsMapEligible(map);
     }
 
     private bool TryLookupMap(string gameMap, [NotNullWhen(true)] out GameMapPrototype? map)
@@ -199,9 +202,8 @@ public sealed class GameMapManager : IGameMapManager
 
         var weight = eligible[0].weight;
         return eligible.Where(x => x.Item2 == weight)
-                       .OrderBy(x => x.proto.ID)
-                       .First()
-                       .proto;
+            .MinBy(x => x.proto.ID)
+            .proto;
     }
 
     private void EnqueueMap(string mapProtoName)
