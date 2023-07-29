@@ -1,12 +1,6 @@
 Entries:
 - author: deltanedas
   changes:
-  - {message: NanoTrasen technicians have fixed armed nuclear devices not sending
-      alerts when off station., type: Fix}
-  id: 3868
-  time: '2023-05-25T09:13:22.0000000+00:00'
-- author: deltanedas
-  changes:
   - {message: Deep Rock NanoTrasen now offers elimination missions for daring salvagers
       willing to kill very big game., type: Add}
   - {message: 'Space Carp have begun attacking planets, expect to see them on some
@@ -2978,3 +2972,8 @@ Entries:
   - {message: Fixed incorrect cheese wheel guidebook recipe, type: Fix}
   id: 4367
   time: '2023-07-29T13:14:00.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: Renamed the chemical compendium to chempendium, type: Tweak}
+  id: 4368
+  time: '2023-07-29T15:16:31.0000000+00:00'
