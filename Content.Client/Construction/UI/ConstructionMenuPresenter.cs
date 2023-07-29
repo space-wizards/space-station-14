@@ -404,7 +404,7 @@ namespace Content.Client.Construction.UI
                 return;
             }
 
-            if (_selected == null || _selected.Mirror == String.Empty)
+            if (_selected == null || _selected.Mirror == null)
             {
                 return;
             }
