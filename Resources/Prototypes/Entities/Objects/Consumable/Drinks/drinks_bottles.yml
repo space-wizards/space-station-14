@@ -383,7 +383,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkСhampagneBottleFull
+  id: DrinkChampagneBottleFull
   name: champagne bottle
   description: Only people devoid of imagination can't find an excuse for champagne.
   components:
