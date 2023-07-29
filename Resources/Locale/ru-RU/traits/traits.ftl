@@ -14,3 +14,7 @@ trait-uncloneable-name = Неклонируемость
 trait-uncloneable-desc = Вас невозможно клонировать
 trait-pirate-accent-name = Пиратский акцент
 trait-pirate-accent-desc = Вы не можете перестать говорить как пират!
+trait-archaic-accent-name = Архаичный акцент
+trait-archaic-accent-desc = Вы выражаетесь с акцентом, который многим кажется архаичным.
+trait-accentless-name = Отсутствие акцента
+trait-accentless-desc = У вас нет того акцента, который характерен для представителей вашего вида.
