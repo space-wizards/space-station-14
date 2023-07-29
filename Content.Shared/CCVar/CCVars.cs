@@ -699,6 +699,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> AdminAlertExplosionMinIntensity =
             CVarDef.Create("admin.alert.explosion_min_intensity", 60, CVar.SERVERONLY);
 
+
+        /// <summary>
+        ///     Should the ban details in admin channel include PII? (IP, HWID, etc)
+        public static readonly CVarDef<bool> AdminShowPIIOnBan =
+            CVarDef.Create("admin.show_pii_onban", false, CVar.SERVERONLY);
+
         /*
          * Explosions
          */
