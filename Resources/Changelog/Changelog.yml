@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Tech disks can now contain Tier 3 technology., type: Tweak}
-  - {message: Tech disk terminals can now print duplicate disks., type: Tweak}
-  - {message: Fixed tech disk terminal print button not updating correctly., type: Fix}
-  id: 3871
-  time: '2023-05-25T22:07:40.0000000+00:00'
 - author: Geekyhobo
   changes:
   - {message: Light replacer now has more description., type: Add}
@@ -2974,3 +2967,9 @@ Entries:
   - {message: The hair flower and flower crown have new crafting recipes., type: Add}
   id: 4370
   time: '2023-07-29T18:46:29.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: 'The detection range of the anomaly locator has been doubled, and its
+      battery life increased by a factor of five', type: Tweak}
+  id: 4371
+  time: '2023-07-29T18:51:36.0000000+00:00'
