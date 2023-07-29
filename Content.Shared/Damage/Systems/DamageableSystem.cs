@@ -143,7 +143,7 @@ namespace Content.Shared.Damage
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
         public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, bool ignoreResistances = false,
-            bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null)
+            float? armorReductionMultiplier = null, bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null)
         {
             if (!uid.HasValue || !Resolve(uid.Value, ref damageable, false))
             {
@@ -177,7 +177,7 @@ namespace Content.Shared.Damage
                     damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
                 }
 
-                var ev = new DamageModifyEvent(damage);
+                var ev = new DamageModifyEvent(damage, armorReductionMultiplier);
                 RaiseLocalEvent(uid.Value, ev);
                 damage = ev.Damage;
 
@@ -315,11 +315,13 @@ namespace Content.Shared.Damage
 
         public readonly DamageSpecifier OriginalDamage;
         public DamageSpecifier Damage;
+        public float? ArmorReduction;
 
-        public DamageModifyEvent(DamageSpecifier damage)
+        public DamageModifyEvent(DamageSpecifier damage, float? armorReductionMultiplier)
         {
             OriginalDamage = damage;
             Damage = damage;
+            ArmorReduction = armorReductionMultiplier;
         }
     }
 

@@ -58,6 +58,8 @@
         hard: False
   - type: Projectile
     impactEffect: BulletImpactEffect
+    deleteOnCollide: false
+    canPenetrate: true
     damage:
       types:
         Piercing: 14
@@ -96,10 +98,7 @@
   noSpawn: true
   components:
   - type: Projectile
-    deleteOnCollide: false
-    canPenetrate: true
-    penetrationStrength: 0.9
-    penetrationFalloffMultiplier: 0.75
+    penetrationStrength: 0.5
     damage:
       types:
         Piercing: 17
@@ -155,13 +154,14 @@
   noSpawn: true
   components:
   - type: Projectile
-    deleteOnCollide: false
     penetrationStrength: 1
+    penetrationDamageFalloffMultiplier: 1
+    armorReductionMultiplier: 0.5
     canPenetrateWall: true
     damage:
       types:
-        Piercing: 11 # 20% decrease
-    ignoreResistances: true
+        Piercing: 11
+    #ignoreResistances: true
 
 # Energy projectiles
 - type: entity
@@ -620,7 +620,6 @@
     layers:
       - state: capbullet
   - type: Projectile
-    deleteOnCollide: true
     damage:
       types:
         Piercing: 0

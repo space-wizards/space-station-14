@@ -17,9 +17,6 @@
   components:
   - type: Projectile
     damage:
-    deleteOnCollide: false
-    penetrationStrength: 0.5
-    penetrationFalloffMultiplier: 0.75
       types:
         Piercing: 19
 
@@ -32,7 +29,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 10
+        Piercing: 12
 
 - type: entity
   id: BulletPistolPractice

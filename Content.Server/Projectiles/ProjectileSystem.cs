@@ -6,12 +6,13 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
-using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Projectiles;
 
@@ -43,10 +44,16 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             SetShooter(component, otherEntity);
             return;
         }
+        if (TryComp<GunComponent>(component.Weapon, out var weapon) && !component.DamageModifierAdded)
+        {
+            component.Damage *= weapon.DamageMultiplier;
+            component.DamageModifierAdded = true;
+        }
+
 
         var otherName = ToPrettyString(otherEntity);
         var direction = args.OurBody.LinearVelocity.Normalized();
-        var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances, origin: component.Shooter);
+        var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances, component.ArmorReductionMultiplier, origin: component.Shooter);
         var deleted = Deleted(otherEntity);
 
         if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
@@ -74,12 +81,21 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             component.DamagedEntity = true;
 
-            if (!component.DeleteOnCollide)
+            if (component.DeleteOnCollide)
+                QueueDel(uid);
+
+            if (component.CanPenetrate)
             {
+                if (!component.PenetrationModifierAdded)
+                {
+                    if (weapon != null)
+                        component.PenetrationStrength += weapon.PenetrationModifier;
+
+                    component.PenetrationModifierAdded = true;
+                }
                 if (component.PenetrationStrength <= 0)
                     QueueDel(uid);
-
-                //TODO: Add a penetration value to every entity that can be penetrated instead of a static 0.5 for mobs and 1 for everything else
+                //TODO: Add a penetration resistance value to every entity that can be penetrated instead of a static 0.5 for mobs and 1 for everything else
                 if (TryComp<MobStateComponent>(otherEntity, out var mobState))
                 {
                     component.PenetrationStrength -= 0.5f;
@@ -90,14 +106,9 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                 }
                 else component.PenetrationStrength -= 1f;
 
-                component.Damage = component.Damage * component.PenetrationFalloffMultiplier;
+                component.Damage *= component.PenetrationDamageFalloffMultiplier;
                 component.DamagedEntity = false;
             }
-            else QueueDel(uid);
-            // if (component.DeleteOnCollide) //&& !component.CanPenetrate)
-            // {
-            //     QueueDel(uid);
-            // }
 
             if (component.ImpactEffect != null && TryComp<TransformComponent>(uid, out var xform))
             {

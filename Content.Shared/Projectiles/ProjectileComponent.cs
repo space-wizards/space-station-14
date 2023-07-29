@@ -41,11 +41,20 @@ public sealed partial class ProjectileComponent : Component
     [DataField("penetrationStrength")]
     public float PenetrationStrength = 0f;
 
-    [DataField("penetrationFalloffMultiplier")]
-    public float PenetrationFalloffMultiplier = 1.0f;
+    [DataField("penetrationDamageFalloffMultiplier")]
+    public float PenetrationDamageFalloffMultiplier = 0.3f;
+
+    [DataField("armorReductionMultiplier")]
+    public float? ArmorReductionMultiplier;
 
     [DataField("ignoreResistances")]
     public bool IgnoreResistances = false;
+
+    [DataField("weaponModifierAdded")]
+    public bool DamageModifierAdded = false;
+
+    [DataField("penetrationModifierAdded")]
+    public bool PenetrationModifierAdded = false;
 
     // Get that juicy FPS hit sound
     [DataField("soundHit")] public SoundSpecifier? SoundHit;

@@ -149,6 +149,20 @@ public partial class GunComponent : Component
     /// </summary>
     [DataField("clumsyProof")]
     public bool ClumsyProof = false;
+
+    /// <summary>
+    /// The penetration power the weapon
+    /// adds to the bullets it shoots.
+    /// </summary>
+    [DataField("penetrationModifier")]
+    public float PenetrationModifier = 0f;
+
+    /// <summary>
+    /// The damage multiplier the weapon
+    /// adds to the bullets it shoots.
+    /// </summary>
+    [DataField("damageMultiplier")]
+    public float DamageMultiplier = 1;
 }
 
 [Flags]
