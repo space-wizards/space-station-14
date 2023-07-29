@@ -9,8 +9,8 @@ implanter-draw-failed = Вы пытаетесь удалить имплант, �
 implanter-draw-text = Извлечение
 implanter-inject-text = Установка
 implanter-empty-text = Пусто
-implanter-implant-text = { $implantName }{ $lineBreak }{ $implantDescription }
-implanter-label = [color=white]Имплант: { $currentEntities }{ $lineBreak }Режим: { $modeString }[/color]
+implanter-label = Имплант: [color=green]{ $implantName }[/color] | [color=white]{ $modeString }[/color]{ $lineBreak }{ $implantDescription }
+implanter-contained-implant-text = [color=green]{ $desc }[/color]
 
 ## Implanter Actions
 

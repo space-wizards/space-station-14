@@ -172,6 +172,7 @@ flavor-complex-coffee-liquor = как крепкий, горький кофе
 flavor-complex-whiskey = как патока
 flavor-complex-shitty-wine = как виноградная кожура
 flavor-complex-iced-tea = как холодный чай
+flavor-complex-champagne = как свежеиспечённый хлеб
 flavor-complex-coffee = как кофе
 flavor-complex-milk = как молоко
 flavor-complex-tea = как чай
