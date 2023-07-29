@@ -1,9 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Changed the Smartfridge sprite, type: Tweak}
-  id: 3866
-  time: '2023-05-25T09:11:13.0000000+00:00'
 - author: McFck
   changes:
   - {message: Fixed infinite beaker fill from mop, type: Fix}
@@ -2978,3 +2973,8 @@ Entries:
   - {message: Added hairflower to authodrobe!, type: Add}
   id: 4365
   time: '2023-07-29T06:10:15.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added bags for cargo techs., type: Add}
+  id: 4366
+  time: '2023-07-29T06:12:42.0000000+00:00'
