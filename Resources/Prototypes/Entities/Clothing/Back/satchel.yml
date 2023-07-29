@@ -47,6 +47,15 @@
 
 - type: entity
   parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelAtmospherics
+  name: atmospherics satchel
+  description: A tough satchel made of fire resistant fibers. Smells like plasma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/atmospherics.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelClown
   name: clown satchel
   description: For fast running from security.
@@ -146,6 +155,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/hydroponics.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelCargo
+  name: cargo satchel
+  description: A robust satchel for stealing cargo's loot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Satchels/cargo.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel
