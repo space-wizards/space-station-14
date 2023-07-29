@@ -22,18 +22,18 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
         var query = EntityQueryEnumerator<BlobRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var ninja, out var gameRule))
+        while (query.MoveNext(out var uid, out var blob, out var gameRule))
         {
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
 
-            if (ninja.Blobs.Count < 1)
+            if (blob.Blobs.Count < 1)
                 return;
 
-            var result = Loc.GetString("blob-round-end-result", ("blobCount", ninja.Blobs.Count));
+            var result = Loc.GetString("blob-round-end-result", ("blobCount", blob.Blobs.Count));
 
             // yeah this is duplicated from traitor rules lol, there needs to be a generic rewrite where it just goes through all minds with objectives
-            foreach (var t in ninja.Blobs)
+            foreach (var t in blob.Blobs)
             {
                 var name = t.Mind.CharacterName;
                 _mindSystem.TryGetSession(t.Mind, out var session);
@@ -76,8 +76,6 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
 
                 foreach (var objectiveGroup in objectives.GroupBy(o => o.Prototype.Issuer))
                 {
-                    result += "\n" + Loc.GetString($"preset-blob-objective-issuer-{objectiveGroup.Key}");
-
                     foreach (var objective in objectiveGroup)
                     {
                         foreach (var condition in objective.Conditions)

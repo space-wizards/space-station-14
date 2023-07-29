@@ -83,3 +83,11 @@
   description: blob-swap-chem-action-desc
   serverEvent: !type:BlobSwapChemActionEvent
   checkCanAccess: false
+
+- type: instantAction
+  id: TransformToBlob
+  icon: Interface/Actions/blobToCore.png
+  name: blob-carrier-transform-to-blob-action-name
+  description: blob-carrier-transform-to-blob-action-desc
+  serverEvent: !type:TransformToBlobActionEvent
+  checkCanAccess: false
