@@ -45,6 +45,7 @@ namespace Content.Server.NPC.Pathfinding
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DestructibleSystem _destructible = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
