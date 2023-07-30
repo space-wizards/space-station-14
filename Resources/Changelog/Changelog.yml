@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Role bans are now shown in the job preferences and latejoin interfaces.,
-    type: Add}
-  id: 3876
-  time: '2023-05-27T04:22:23.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Fix uplink typos, type: Fix}
@@ -2973,3 +2967,8 @@ Entries:
   - {message: Added filter for bartender recipes in the guidebook, type: Add}
   id: 4375
   time: '2023-07-29T22:59:59.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Changed the placeholder comms computer description, type: Tweak}
+  id: 4376
+  time: '2023-07-30T02:35:54.0000000+00:00'
