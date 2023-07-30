@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Content.Shared.Corvax.CCCVars;
 using Content.Shared.Corvax.TTS;
+using Content.Shared.Corvax.TTS.Commands;
 using Content.Shared.Physics;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
@@ -23,7 +24,7 @@ public sealed class TTSSystem : EntitySystem
     [Dependency] private readonly IEyeManager _eye = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly SharedPhysicsSystem _broadPhase = default!;
-    
+
     private ISawmill _sawmill = default!;
 
     private float _volume = 0.0f;
@@ -38,6 +39,7 @@ public sealed class TTSSystem : EntitySystem
         _cfg.OnValueChanged(CCCVars.TTSVolume, OnTtsVolumeChanged, true);
         _cfg.OnValueChanged(CCCVars.TTSRadioVolume, OnTtsRadioVolumeChanged, true);
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
+        SubscribeNetworkEvent<TtsQueueResetMessage>(OnQueueResetRequest);
     }
 
     public override void Shutdown()
@@ -97,7 +99,7 @@ public sealed class TTSSystem : EntitySystem
             ProcessEntityQueue(audioStream.Uid);
         }
     }
-    
+
     private void OnTtsVolumeChanged(float volume)
     {
         _volume = volume;
@@ -106,6 +108,12 @@ public sealed class TTSSystem : EntitySystem
     private void OnTtsRadioVolumeChanged(float volume)
     {
         _radioVolume = volume;
+    }
+
+    private void OnQueueResetRequest(TtsQueueResetMessage ev)
+    {
+        EndStreams();
+        _sawmill.Debug("TTS queue was cleared by request from the server.");
     }
 
     private void OnPlayTTS(PlayTTSEvent ev)
@@ -124,7 +132,7 @@ public sealed class TTSSystem : EntitySystem
         foreach (var stream in _currentStreams)
             stream.Source.StopPlaying();
     }
-    
+
     private bool TryCreateAudioSource(byte[] data, float volume, [NotNullWhen(true)] out IClydeAudioSource? source)
     {
         var dataStream = new MemoryStream(data) { Position = 0 };
@@ -143,7 +151,7 @@ public sealed class TTSSystem : EntitySystem
         else
         {
             _entityQueues.Add(stream.Uid, new Queue<AudioStream>(new[] { stream }));
-            
+
             if (!IsEntityCurrentlyPlayStream(stream.Uid))
                 ProcessEntityQueue(stream.Uid);
         }
@@ -184,7 +192,7 @@ public sealed class TTSSystem : EntitySystem
         _currentStreams.Add(stream);
     }
 
-    private void EndStreams()
+    public void EndStreams()
     {
         foreach (var stream in _currentStreams)
         {
