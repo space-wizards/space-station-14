@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Robust.Shared.Physics;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -22,17 +21,11 @@ public sealed class SerializationTest
         var seriMan = server.ResolveDependency<ISerializationManager>();
         var refMan = server.ResolveDependency<IReflectionManager>();
 
-        Enum value = BodyType.Static;
+        Enum value = TestEnum.Bb;
 
         var node = seriMan.WriteValue(value, notNullableOverride:true);
         var valueNode = node as ValueDataNode;
         Assert.NotNull(valueNode);
-
-        // Workaround to a stupid bug
-        refMan.TryParseEnumReference("enum.BodyType.Static", out _);
-        refMan.TryParseEnumReference("enum.BodyType.Dynamic", out _);
-        refMan.TryParseEnumReference("enum.BodyType.KinematicController", out _);
-        refMan.TryParseEnumReference("enum.BodyType.Kinematic", out _);
 
         var expected = refMan.GetEnumReference(value);
         Assert.That(valueNode!.Value, Is.EqualTo(expected));
@@ -43,8 +36,8 @@ public sealed class SerializationTest
         // Repeat test with enums in a data definitions.
         var data = new TestData
         {
-            Value = BodyType.Dynamic,
-            Sequence = new() {BodyType.KinematicController, BodyType.Kinematic}
+            Value = TestEnum.Cc,
+            Sequence = new() {TestEnum.Dd, TestEnum.Aa}
         };
 
         node = seriMan.WriteValue(data, notNullableOverride:true);
@@ -55,6 +48,8 @@ public sealed class SerializationTest
         Assert.That(deserializedData.Sequence[0], Is.EqualTo(data.Sequence[0]));
         Assert.That(deserializedData.Sequence[1], Is.EqualTo(data.Sequence[1]));
     }
+
+    private enum TestEnum : byte { Aa, Bb, Cc, Dd }
 
     [DataDefinition]
     private sealed class TestData
