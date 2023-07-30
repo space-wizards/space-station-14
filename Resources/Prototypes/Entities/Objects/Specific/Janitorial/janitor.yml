@@ -386,7 +386,7 @@
       guides:
       - Janitorial
     - type: TileFrictionModifier
-      modifier: 0.4 # makes it slide 
+      modifier: 0.4 # makes it slide
 
 - type: entity
   id: FloorDrain
@@ -458,17 +458,26 @@
     - type: Tag
       tags:
         - Plunger
+        - WhitelistChameleon
     - type: Sprite
       netsync: false
-      sprite: Objects/Specific/Janitorial/janitorial.rsi
+      sprite: Objects/Specific/Janitorial/plunger.rsi
       state: plunger
     - type: Item
-      sprite: Objects/Specific/Janitorial/janitorial.rsi
+      sprite: Objects/Specific/Janitorial/plunger.rsi
       heldPrefix: plunger
     - type: ItemCooldown
     - type: GuideHelp
       guides:
       - Janitorial
+    - type: Clothing
+      sprite: Objects/Specific/Janitorial/plunger.rsi
+      slots:
+        - HEAD
+      clothingVisuals:
+        head:
+          - state: equipped-HELMET
+            offset: "0, 0.15"
 
 - type: entity
   parent: BaseItem

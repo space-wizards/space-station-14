@@ -8,8 +8,8 @@ namespace Content.Server.Objectives.Requirements
     [DataDefinition]
     public sealed class NotRoleRequirement : IObjectiveRequirement
     {
-        [DataField("roleId", customTypeSerializer:typeof(PrototypeIdSerializer<JobPrototype>))]
-        private string roleId = "";
+        [DataField("roleId", customTypeSerializer:typeof(PrototypeIdSerializer<JobPrototype>), required:true)]
+        private string _roleId = default!;
 
         /// <summary>
         /// This requirement is met if the traitor is NOT the roleId, and fails if they are.
@@ -19,7 +19,7 @@ namespace Content.Server.Objectives.Requirements
             if (mind.CurrentJob == null) // no job no problems
                 return true;
 
-            return (mind.CurrentJob.Prototype.ID != roleId);
+            return (mind.CurrentJob.Prototype.ID != _roleId);
         }
     }
 }

@@ -10,6 +10,7 @@ using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Microsoft.CodeAnalysis;
+using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -151,9 +152,18 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             : "null";
         var expiresString = expires == null ? Loc.GetString("server-ban-string-never") : $"{expires}";
 
-        var logMessage = Loc.GetString("server-ban-string", ("admin", adminName), ("severity", severity),
-            ("expires", expiresString), ("name", targetName), ("ip", addressRangeString),
-            ("hwid", hwidString), ("reason", reason));
+        var key = _cfg.GetCVar(CCVars.AdminShowPIIOnBan) ? "server-ban-string" : "server-ban-string-no-pii";
+
+        var logMessage = Loc.GetString(
+            key,
+            ("admin", adminName),
+            ("severity", severity),
+            ("expires", expiresString),
+            ("name", targetName),
+            ("ip", addressRangeString),
+            ("hwid", hwidString),
+            ("reason", reason));
+
         _sawmill.Info(logMessage);
         _chat.SendAdminAlert(logMessage);
 
