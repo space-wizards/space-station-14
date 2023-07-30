@@ -29,6 +29,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Nuke;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Zombies;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
@@ -74,6 +75,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         SubscribeLocalEvent<NukeOperativeComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<NukeOperativeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<NukeOperativeComponent, ComponentRemove>(OnComponentRemove);
+        SubscribeLocalEvent<NukeOperativeComponent, EntityZombifiedEvent>(OnOperativeZombified);
     }
 
     private void OnComponentInit(EntityUid uid, NukeOperativeComponent component, ComponentInit args)
@@ -98,6 +100,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     private void OnComponentRemove(EntityUid uid, NukeOperativeComponent component, ComponentRemove args)
     {
         CheckRoundShouldEnd();
+    }
+
+    private void OnOperativeZombified(EntityUid uid, NukeOperativeComponent component, ref EntityZombifiedEvent args)
+    {
+        RemCompDeferred(uid, component);
     }
 
     private void OnNukeExploded(NukeExplodedEvent ev)
@@ -567,6 +574,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         // todo: this is kinda awful for multi-nukies
         foreach (var nukeops in EntityQuery<NukeopsRuleComponent>())
         {
+            if (nukeOpSpawner.OperativeName == null
+                || nukeOpSpawner.OperativeStartingGear == null
+                || nukeOpSpawner.OperativeRolePrototype == null)
+            {
+                // I have no idea what is going on with nuke ops code, but I'm pretty sure this shouldn't be possible.
+                Log.Error($"Invalid nuke op spawner: {ToPrettyString(spawner)}");
+                continue;
+            }
+
             SetupOperativeEntity(uid, nukeOpSpawner.OperativeName, nukeOpSpawner.OperativeStartingGear, profile, nukeops);
 
             nukeops.OperativeMindPendingData.Add(uid, nukeOpSpawner.OperativeRolePrototype);

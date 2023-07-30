@@ -1192,3 +1192,47 @@
       sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
     - type: Clothing
       sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorEngineer
+  name: senior engineer jumpsuit
+  description: A sign of skill and prestige within the engineering department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/senior_engineer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/senior_engineer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorResearcher
+  name: senior researcher jumpsuit
+  description: A sign of skill and prestige within the science department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/senior_researcher.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/senior_researcher.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorPhysician
+  name: senior physician jumpsuit
+  description: A sign of skill and prestige within the medical department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/senior_physician.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/senior_physician.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorOfficer
+  name: senior officer jumpsuit
+  description: A sign of skill and prestige within the security department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi

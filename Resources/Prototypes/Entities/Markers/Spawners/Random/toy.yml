@@ -90,17 +90,33 @@
       - ToyFigurinePassenger
       - ToyFigurineClown
       - ToyFigurineMime
+      - ToyFigurineMusician
+      - ToyFigurineBoxer
       - ToyFigurineCaptain
+      - ToyFigurineHeadOfSecurity
+      - ToyFigurineWarden
+      - ToyFigurineDetective
       - ToyFigurineSecurity
+      - ToyFigurineLawyer
       - ToyFigurineCargoTech
       - ToyFigurineSalvage
       - ToyFigurineQuartermaster   
+      - ToyFigurineChiefEngineer
       - ToyFigurineAtmosTech
-      - ToyFigurineEngineer 
       - ToyFigurineEngineer
+      - ToyFigurineResearchDirector
       - ToyFigurineScientist
+      - ToyFigurineChiefMedicalOfficer
+      - ToyFigurineChemist
+      - ToyFigurineParamedic
       - ToyFigurineMedicalDoctor
+      - ToyFigurineHeadOfPersonnel
       - ToyFigurineLibrarian
+      - ToyFigurineChaplain
+      - ToyFigurineChef
+      - ToyFigurineBartender
+      - ToyFigurineBotanist
+      - ToyFigurineJanitor
       - ToyFigurineNukie
       - ToyFigurineFootsoldier
       - ToyFigurineWizardFake
@@ -111,5 +127,10 @@
       - ToyOwlman
       - ToySkeleton
       - ToyFigurineQueen
+      - ToyFigurineSpaceDragon
+      - ToyFigurineRatKing
+      - ToyFigurineRatServant
+      - ToyFigurineMouse
+      - ToyFigurineHamlet
       chance: 0.90
       offset: 0.2

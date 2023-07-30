@@ -145,17 +145,6 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/santa.rsi
 
-- type: entity
-  parent: ClothingOuterBase
-  id: ClothingOuterStraightjacket
-  name: straight jacket
-  description: A straight jacket.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
-
 # Is this wizard wearing a fanny pack???
 - type: entity
   parent: ClothingOuterBase
