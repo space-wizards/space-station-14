@@ -28,5 +28,11 @@ namespace Content.Shared.Speech
         public float SoundCooldownTime { get; set; } = 0.5f;
 
         public TimeSpan LastTimeSoundPlayed = TimeSpan.Zero;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("speechCooldownTime")]
+        public TimeSpan SpeechCooldownTime { get; set; } = TimeSpan.FromSeconds(0.5f);
+
+        public TimeSpan LastTimeSpoke = TimeSpan.Zero;
     }
 }

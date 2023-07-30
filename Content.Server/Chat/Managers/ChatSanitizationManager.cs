@@ -96,21 +96,14 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
 
     public bool TrySanitizeOutSmilies(string input, EntityUid speaker, out string sanitized, [NotNullWhen(true)] out string? emote)
     {
-        if (!_doSanitize)
-        {
-            sanitized = input;
-            emote = null;
-            return false;
-        }
-
-        if (Regex.Matches(input, @"[a-zA-Z]").Any())
-        {
-            sanitized = string.Empty;
-            emote = "кашляет";
-            return true;
-        }
-
         input = input.TrimEnd();
+        sanitized = input;
+        emote = null;
+
+        if (!_doSanitize)
+            return false;
+
+        var emoteSanitized = false;
 
         foreach (var (smiley, replacement) in SmileyToEmote)
         {
@@ -118,12 +111,19 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
             {
                 sanitized = input.Remove(input.Length - smiley.Length).TrimEnd();
                 emote = Loc.GetString(replacement, ("ent", speaker));
-                return true;
+                emoteSanitized = true;
+                break;
             }
         }
 
-        sanitized = input;
-        emote = null;
-        return false;
+        // Remember, no English
+        if (Regex.Matches(sanitized, @"[a-zA-Z]").Any())
+        {
+            sanitized = string.Empty;
+            emote = "кашляет";
+            return true;
+        }
+
+        return emoteSanitized;
     }
 }

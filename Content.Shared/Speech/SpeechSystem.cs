@@ -1,10 +1,13 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Speech
 {
     public sealed class SpeechSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -43,7 +46,21 @@ namespace Content.Shared.Speech
         private void OnSpeakAttempt(SpeakAttemptEvent args)
         {
             if (!TryComp(args.Uid, out SpeechComponent? speech) || !speech.Enabled)
+            {
                 args.Cancel();
+                return;
+            }
+
+            var currentTime = _gameTiming.CurTime;
+
+            // Ensure more than the cooldown time has passed since last speaking
+            if (currentTime - speech.LastTimeSpoke < speech.SpeechCooldownTime)
+            {
+                args.Cancel();
+                return;
+            }
+
+            speech.LastTimeSpoke = currentTime;
         }
 
         [Serializable, NetSerializable]
