@@ -1,10 +1,11 @@
-<controls:RadialContainer
+<controls1:RadialContainer
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:controls1="clr-namespace:Content.Client.UserInterface.Systems.Radial.Controls"
     Visible="False"
     MaxSize="0 0">
     <BoxContainer>
-        <controls:RadialItem
+        <controls1:RadialItem
             Name="CloseButton"
             Access="Public"
             VerticalExpand="True"
@@ -14,4 +15,4 @@
         <LayoutContainer Access="Public" Name="Layout" HorizontalExpand="True" VerticalExpand="True"></LayoutContainer>
         <RichTextLabel Access="Public" Name="ActionLabel" HorizontalExpand="True" Visible="False"/>
     </BoxContainer>
-</controls:RadialContainer>
+</controls1:RadialContainer>

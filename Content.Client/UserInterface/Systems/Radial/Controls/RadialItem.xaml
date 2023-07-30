@@ -6,7 +6,7 @@
             Access="Public"
             VerticalExpand="True"
             HorizontalExpand="True">
-            <TextureRect Access="Public" Name="BackgroundTexture"
+            <TextureRect Access="Public" Name="Icon"
                          VerticalExpand="True"
                          HorizontalExpand="True"
                          VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="KeepAspect">
