@@ -5,6 +5,8 @@
     - map
     - physics
     - player
+    - splat
+
 - Flags: DEBUG
   Commands:
     - comp
@@ -19,9 +21,13 @@
     - prototyped
     - types
     - ecscomp
+    - actor
+
 - Flags: HOST
   Commands:
     - methods
+    - ioc
+
 - Commands:
     - fuck
     - ent
@@ -38,3 +44,10 @@
     - isempty
     - any
     - unique
+    - cd
+    - ls
+    - loc
+    - vars
+    - '=>'
+    - first
+    - val

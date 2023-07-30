@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -31,6 +32,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
@@ -55,6 +57,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly PrayerSystem _prayerSystem = default!;
         [Dependency] private readonly EuiManager _eui = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly ToolshedManager _toolshed = default!;
 
         private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
@@ -78,6 +81,14 @@ namespace Content.Server.Administration.Systems
 
             if (_adminManager.IsAdmin(player))
             {
+                Verb mark = new();
+                mark.Text = Loc.GetString("toolshed-verb-mark");
+                mark.Message = Loc.GetString("toolshed-verb-mark-description");
+                mark.Category = VerbCategory.Admin;
+                mark.Act = () => _toolshed.InvokeCommand(player, "=> $marked", Enumerable.Repeat(args.Target, 1), out _);
+                mark.Impact = LogImpact.Low;
+                args.Verbs.Add(mark);
+
                 if (TryComp(args.Target, out ActorComponent? targetActor))
                 {
                     // AdminHelp
@@ -188,8 +199,6 @@ namespace Content.Server.Administration.Systems
                         Category = VerbCategory.Admin,
                         Act = () =>
                         {
-                            if (!TryComp<ActorComponent>(args.Target, out var actor)) return;
-
                             _console.ExecuteCommand(player, $"respawn {actor.PlayerSession.Name}");
                         },
                         ConfirmationPopup = true,
@@ -247,11 +256,11 @@ namespace Content.Server.Administration.Systems
                     Act = () =>
                     {
                         MakeSentientCommand.MakeSentient(args.Target, EntityManager);
-                        
+
                         var mind = player.ContentData()?.Mind;
                         if (mind == null)
                             return;
-                        
+
                         _mindSystem.TransferTo(mind, args.Target, ghostCheckOverride: true);
                     },
                     Impact = LogImpact.High,
