@@ -190,7 +190,8 @@
       amount: 1
   effects:
     - !type:EmpReactionEffect
-      range: 1
+      rangePerUnit: 0.2
+      maxRange: 6
       energyConsumption: 12500
       duration: 15
 

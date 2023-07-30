@@ -9,10 +9,16 @@ namespace Content.Server.Chemistry.ReactionEffects;
 public sealed class EmpReactionEffect : ReagentEffect
 {
     /// <summary>
-    ///     EMP explosion range
+    ///     Impulse range per unit of reagent
     /// </summary>
-    [DataField("range")]
-    public float EmpRange = 1;
+    [DataField("rangePerUnit")]
+    public float EmpRangePerUnit = 0.5f;
+
+    /// <summary>
+    ///     Maximum impulse range
+    /// </summary>
+    [DataField("maxRange")]
+    public float EmpMaxRange = 10;
 
     /// <summary>
     ///     How much energy will be drain from sources
@@ -32,9 +38,11 @@ public sealed class EmpReactionEffect : ReagentEffect
     public override void Effect(ReagentEffectArgs args)
     {
         var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
+        var range = MathF.Min((float) (args.Quantity*EmpRangePerUnit), EmpMaxRange);
+
         EntitySystem.Get<EmpSystem>().EmpPulse(
             transform.MapPosition,
-            EmpRange,
+            range,
             EnergyConsumption,
             DisableDuration);
     }
