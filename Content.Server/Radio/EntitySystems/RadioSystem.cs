@@ -76,11 +76,7 @@ public sealed class RadioSystem : EntitySystem
 
         name = FormattedMessage.EscapeText(name);
 
-        var formattedName = name;
-        if (TryComp<HumanoidAppearanceComponent>(messageSource, out var humanoidComp))
-        {
-            formattedName = $"[color={humanoidComp.SpeakerColor.ToHex()}]{GetIdCardName(messageSource)}{name}[/color]";
-        }
+        var formattedName = $"[color={GetIdCardColor(messageSource)}][bold]{GetIdCardName(messageSource)}{name}[/bold][/color]";
 
         // most radios are relayed to chat, so lets parse the chat message beforehand
         var chat = new ChatMessage(
@@ -150,29 +146,40 @@ public sealed class RadioSystem : EntitySystem
         _messages.Remove(message);
     }
 
+    private IdCardComponent? GetIdCard(EntityUid senderUid)
+    {
+        if (!_inventorySystem.TryGetSlotEntity(senderUid, "id", out var idUid))
+            return null;
+
+        if (EntityManager.TryGetComponent(idUid, out PdaComponent? pda) && pda.ContainedId is not null)
+        {
+            // PDA
+            if (TryComp<IdCardComponent>(pda.ContainedId, out var idComp))
+                return idComp;
+        }
+        else if (EntityManager.TryGetComponent(idUid, out IdCardComponent? id))
+        {
+            // ID Card
+            return id;
+        }
+
+        return null;
+    }
+
     private string GetIdCardName(EntityUid senderUid)
     {
         var idCardTitle = Loc.GetString("chat-radio-no-id");
-
-        if (_inventorySystem.TryGetSlotEntity(senderUid, "id", out var idUid))
-        {
-            if (EntityManager.TryGetComponent(idUid, out PdaComponent? pda) && pda.ContainedId is not null)
-            {
-                // PDA
-                if (TryComp<IdCardComponent>(pda.ContainedId, out var idComp))
-                    idCardTitle = idComp.JobTitle ?? idCardTitle;
-            }
-            else if (EntityManager.TryGetComponent(idUid, out IdCardComponent? id))
-            {
-                // ID Card
-                idCardTitle = id.JobTitle ?? idCardTitle;
-            }
-        }
+        idCardTitle = GetIdCard(senderUid)?.JobTitle ?? idCardTitle;
 
         var textInfo = CultureInfo.CurrentCulture.TextInfo;
         idCardTitle = textInfo.ToTitleCase(idCardTitle);
 
         return $"\\[{idCardTitle}\\] ";
+    }
+
+    private string GetIdCardColor(EntityUid senderUid)
+    {
+        return GetIdCard(senderUid)?.JobColor ?? "#9FED58";
     }
 
     /// <inheritdoc cref="TelecomServerComponent"/>
