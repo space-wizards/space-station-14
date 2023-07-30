@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 
@@ -99,6 +101,13 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
             sanitized = input;
             emote = null;
             return false;
+        }
+
+        if (Regex.Matches(input, @"[a-zA-Z]").Any())
+        {
+            sanitized = string.Empty;
+            emote = "кашляет";
+            return true;
         }
 
         input = input.TrimEnd();
