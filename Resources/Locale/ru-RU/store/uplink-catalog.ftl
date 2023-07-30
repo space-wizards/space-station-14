@@ -1,8 +1,8 @@
 # Weapons
 uplink-pistol-viper-name = { ent-WeaponPistolViper }
 uplink-pistol-viper-desc = { ent-WeaponPistolViper.desc }
-uplink-revolver-python-name = { ent-WeaponRevolverPython }
-uplink-revolver-python-desc = { ent-WeaponRevolverPython.desc }
+uplink-revolver-python-name = Питон
+uplink-revolver-python-desc = Брутально простой, эффективный и громкий револьвер Синдиката. Поставляется с бронебойными патронами. Использует патроны калибра .45 магнум.
 uplink-pistol-cobra-name = { ent-WeaponPistolCobra }
 uplink-pistol-cobra-desc = { ent-WeaponPistolCobra.desc }
 uplink-rifle-mosin-name = { ent-WeaponSniperMosin }
@@ -41,8 +41,8 @@ uplink-pistol-magazine-name = Пистолетный магазин (.35 авт�
 uplink-pistol-magazine-desc = Пистолетный магазин на 10 патронов. Совместим с "Гадюкой".
 uplink-pistol-magazine-caseless-name = Пистолетный магазин (.25 безгильзовые)
 uplink-pistol-magazine-caseless-desc = Пистолетный магазин на 10 патронов. Совместим с "Коброй".
-uplink-speedloader-magnum-name = Спидлоадер (.45 магнум)
-uplink-speedloader-magnu-desc = Спидлоадер на 6 патронов для револьвера. Совместим с "Питоном".
+uplink-speedloader-magnum-name = Спидлоадер (.45 магнум ББ)
+uplink-speedloader-magnu-desc = Спидлоадер с 6 бронебойными, полностью игнорирующими броню, патронами для револьвера. Совместим с "Питоном".
 uplink-mosin-ammo-name = Коробка патронов (.30 винтовочные)
 uplink-mosin-ammo-desc = Коробка патронов для резервной винтовки.
 # Utility
@@ -96,8 +96,8 @@ uplink-meds-bundle-name = Медицинский набор
 uplink-meds-bundle-desc = Все, что нужно для возвращения в строй ваших товарищей: главным образом, боевая аптечка, дефибриллятор и три боевых медипена.
 uplink-ammo-bundle-name = Набор боеприпасов
 uplink-ammo-bundle-desc = Перезаряжаю! Содержит 4 магазина для C-20r, 4 барабана для Бульдога и 2 короба патронов для L6 SAW.
-uplink-sniper-bundle-name = Sniper Bundle
-uplink-sniper-bundle-desc = An inconspicuous briefcase that contains a hristov, 30 spare bullets and a convenient disguise
+uplink-sniper-bundle-name = Набор снайпера
+uplink-sniper-bundle-desc = Неприметный чемодан, в котором находятся Христов, 30 запасных патронов и удобная маскировка.
 # Bundles
 uplink-c20r-bundle-name = { ent-ClothingBackpackDuffelSyndicateFilledSMG }
 uplink-c20r-bundle-desc = { ent-ClothingBackpackDuffelSyndicateFilledSMG.desc }
@@ -186,6 +186,8 @@ uplink-stimkit-name = Набор стимпаков
 uplink-stimkit-desc = Аптечка, содержащая 6 микро-стимпаков, каждый из которых содержит дозу стимулятора на 15 секунд.
 uplink-syndicate-segway-crate-name = { ent-VehicleSyndicateSegway }
 uplink-syndicate-segway-crate-desc = { ent-VehicleSyndicateSegway.desc }
+uplink-syndicate-sponge-box-name = Коробка губок Синдиката
+uplink-syndicate-sponge-box-desc = Коробка с 6 губками Синдиката, замаскированными под обезьяньи кубики, которые при контакте с водой превращаются в различных злобных диких животных.
 # Pointless
 uplink-revolver-cap-gun-name = { ent-RevolverCapGun }
 uplink-revolver-cap-gun-desc = { ent-RevolverCapGun.desc }

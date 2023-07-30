@@ -1,7 +1,7 @@
-ent-AMEController = Контроллер ДАМ
+ent-AmeController = Контроллер ДАМ
     .desc = Это контроллер для двигателя антиматерии.
-ent-AMEControllerUnanchored = { ent-AMEController }
+ent-AmeControllerUnanchored = { ent-AMEController }
     .desc = { ent-AMEController.desc }
     .suffix = Не закреплено
-ent-AMEShielding = экранирование ДАМ
+ent-AmeShielding = экранирование ДАМ
     .desc = Впускает антиматерию и выпускает материю.
