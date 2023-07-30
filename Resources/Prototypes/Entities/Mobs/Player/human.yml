@@ -74,7 +74,6 @@
       randomizeName: false
     - type: NukeOperative
     - type: Loadout
-      prototype: SyndicateOperativeGearFull
       prototypes: [SyndicateOperativeGearFull]
     - type: RandomMetadata
       nameSegments:
