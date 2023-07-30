@@ -40,7 +40,7 @@ public sealed class PrototypeSaveTest
     [Test]
     public async Task UninitializedSaveTest()
     {
-        // Apparently SpawnTest fails to clean  up properly. Due to the similarities, I'll assume this also fails.
+        // Apparently SpawnTest fails to clean up properly. Due to the similarities, I'll assume this also fails.
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, Dirty = true, Destructive = true });
         var server = pairTracker.Pair.Server;
 
@@ -187,14 +187,14 @@ public sealed class PrototypeSaveTest
         await pairTracker.CleanReturnAsync();
     }
 
-    private sealed class TestEntityUidContext : ISerializationContext,
+    public sealed class TestEntityUidContext : ISerializationContext,
         ITypeSerializer<EntityUid, ValueDataNode>
     {
         public SerializationManager.SerializerProvider SerializerProvider { get; }
         public bool WritingReadingPrototypes { get; set; }
 
         public string WritingComponent = string.Empty;
-        public EntityPrototype Prototype = default!;
+        public EntityPrototype? Prototype;
 
         public TestEntityUidContext()
         {
@@ -212,7 +212,7 @@ public sealed class PrototypeSaveTest
             IDependencyCollection dependencies, bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
-            if (WritingComponent != "Transform" && !Prototype.NoSpawn)
+            if (WritingComponent != "Transform" && (Prototype?.NoSpawn == false))
             {
                 // Maybe this will be necessary in the future, but at the moment it just indicates that there is some
                 // issue, like a non-nullable entityUid data-field. If a component MUST have an entity uid to work with,
