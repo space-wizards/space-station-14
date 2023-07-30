@@ -203,7 +203,9 @@
 - type: alert
   id: Peckish
   category: Hunger
-  icons: [ /Textures/Interface/Alerts/Hunger/Peckish.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/hunger.rsi
+    state: peckish
   name: alerts-hunger-name
   description: alerts-hunger-desc
 
@@ -233,21 +235,27 @@
 - type: alert
   id: Starving
   category: Hunger
-  icons: [ /Textures/Interface/Alerts/Hunger/Starving.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/hunger.rsi
+    state: starving
   name: alerts-starving-name
   description: alerts-starving-desc
 
 - type: alert
   id: Thirsty
   category: Thirst
-  icons: [ /Textures/Interface/Alerts/Thirst/Thirsty.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/thirst.rsi
+    state: thirsty
   name: alerts-thirsty-name
   description: alerts-thirsty-desc
 
 - type: alert
   id: Parched
   category: Thirst
-  icons: [ /Textures/Interface/Alerts/Thirst/Parched.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/thirst.rsi
+    state: parched
   name: alerts-parched-name
   description: alerts-parched-desc
 

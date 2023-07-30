@@ -8,7 +8,7 @@
       department: Medical
       time: 14400 #4 hrs
   startingGear: ChemistGear
-  icon: "Chemist"
+  icon: "JobIconChemist"
   supervisors: job-supervisors-cmo
   access:
   - Medical

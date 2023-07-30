@@ -167,6 +167,7 @@ namespace Content.Shared.Stacks
             amount = Math.Min(amount, GetMaxCount(component));
             amount = Math.Max(amount, 0);
 
+            // Server-side override deletes the entity if count == 0
             component.Count = amount;
             Dirty(component);
 

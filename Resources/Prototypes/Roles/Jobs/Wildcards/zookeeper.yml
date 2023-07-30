@@ -4,7 +4,7 @@
   description: job-description-zookeeper
   playTimeTracker: JobZookeeper
   startingGear: ZookeeperGear
-  icon: "Zookeeper"
+  icon: "JobIconZookeeper"
   supervisors: job-supervisors-hop
   access:
   - Service
