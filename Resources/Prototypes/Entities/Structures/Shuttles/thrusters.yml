@@ -9,8 +9,6 @@
       volume: -4
       sound:
         path: /Audio/Effects/shuttle_thruster.ogg
-    - type: Transform
-      anchored: true
     - type: Physics
       bodyType: Static
     - type: Rotatable
@@ -65,6 +63,14 @@
       offset: 0, 1
 
 - type: entity
+  parent: Thruster
+  id: ThrusterAnchored
+  suffix: Anchored
+  components:
+    - type: Transform
+      anchored: true
+
+- type: entity
   id: DebugThruster
   parent: BaseThruster
   suffix: DEBUG
@@ -88,6 +94,14 @@
       shader: unshaded
       visible: false
       offset: 0, 1
+
+- type: entity
+  parent: DebugThruster
+  id: DebugThrusterAnchored
+  suffix: DEBUG, Anchored
+  components:
+    - type: Transform
+      anchored: true
 
 - type: entity
   id: Gyroscope
