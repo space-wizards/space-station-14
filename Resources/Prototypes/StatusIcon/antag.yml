@@ -1,6 +1,20 @@
-﻿- type: statusIcon
+- type: statusIcon
   id: ZombieFaction
   priority: 11
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Zombie
+
+- type: statusIcon
+  id: RevolutionaryFaction
+  priority: 11
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: Revolutionary
+
+- type: statusIcon
+  id: HeadRevolutionaryFaction
+  priority: 11
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: HeadRevolutionary

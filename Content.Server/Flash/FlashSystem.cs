@@ -1,8 +1,10 @@
 using System.Linq;
 using Content.Server.Flash.Components;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
+using Content.Server.Mind;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Eye.Blinding.Components;
@@ -20,7 +22,15 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
+using Content.Server.Roles;
+using Content.Shared.Roles;
+using Content.Shared.Revolutionary;
+using Content.Server.NPC.Systems;
+using Content.Shared.Stunnable;
+using Content.Server.Revolutionary;
+using Content.Server.Chat.Managers;
 
 namespace Content.Server.Flash
 {
@@ -36,6 +46,11 @@ namespace Content.Server.Flash
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly TagSystem _tag = default!;
+        [Dependency] private readonly MindSystem _mind = default!;
+        [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
+        [Dependency] private readonly SharedStunSystem _sharedStun = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
 
         public override void Initialize()
         {
@@ -108,6 +123,7 @@ namespace Content.Server.Flash
 
         public void Flash(EntityUid target, EntityUid? user, EntityUid? used, float flashDuration, float slowTo, bool displayPopup = true, FlashableComponent? flashable = null)
         {
+            var stunTime = TimeSpan.FromSeconds(3);
             if (!Resolve(target, ref flashable, false)) return;
 
             var attempt = new FlashAttemptEvent(target, user, used);
@@ -122,6 +138,30 @@ namespace Content.Server.Flash
 
             _stun.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                 slowTo, slowTo);
+
+            //For Rev conversion (This probably shouldn't go in each and every flash but I'm honestly not sure where or how to put this somewhere else.)
+            if (HasComp<HeadRevolutionaryComponent>(user) && !HasComp<RevolutionaryComponent>(target) && !HasComp<HeadRevolutionaryComponent>(target) &&
+                !HasComp<HeadComponent>(target))
+            {
+                var mind = _mind.GetMind(target);
+                if (mind != null && mind.OwnedEntity != null && used != null)
+                {
+                    _mind.AddRole(mind, new RevolutionaryRole(mind, _prototype.Index<AntagPrototype>("Rev")));
+                    _npcFaction.RemoveFaction(mind.OwnedEntity.Value, "NanoTrasen");
+                    _npcFaction.AddFaction(mind.OwnedEntity.Value, "Revolutionary");
+                    AddComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
+                    AddComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
+                    _charges.AddCharges(used.Value, 1);
+                    _sharedStun.TryParalyze(mind.OwnedEntity.Value, stunTime, true);
+
+                    if (mind.Session != null)
+                    {
+                        var message = Loc.GetString("rev-role-greeting");
+                        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+                        _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Red);
+                    }
+                }
+            }
 
             if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
             {

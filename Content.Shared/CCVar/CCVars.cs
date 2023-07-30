@@ -393,6 +393,19 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitordm.starting_balance", 20);
 
         /*
+         * Revolutionarys
+         */
+
+        public static readonly CVarDef<int> RevolutionaryMinPlayers =
+            CVarDef.Create("revolutionary.min_players", 1);
+
+        public static readonly CVarDef<int> RevolutionaryPlayersPerHeadRev =
+            CVarDef.Create("revolutionary.players_per_head_rev", 3);
+
+        public static readonly CVarDef<int> RevolutionaryMaxHeadRevs =
+            CVarDef.Create("revolutionary.max_head_revs", 3);
+
+        /*
          * Zombie
          */
 

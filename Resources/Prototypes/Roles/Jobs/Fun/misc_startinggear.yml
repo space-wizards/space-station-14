@@ -293,3 +293,9 @@
   innerclothingskirt: ClothingUniformJumpskirtBrigmedic
   satchel: ClothingBackpackSatchelBrigmedicFilled
   duffelbag: ClothingBackpackDuffelBrigmedicFilled
+
+- type: startingGear
+  id: HeadRevGear
+  equipment:
+    pocket1: Flash
+    eyes: ClothingEyesGlassesSunglasses

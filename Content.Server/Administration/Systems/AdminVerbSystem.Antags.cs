@@ -15,6 +15,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
+    [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -96,6 +97,23 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-verb-make-pirate"),
         };
         args.Verbs.Add(pirate);
+
+        Verb headRev = new()
+        {
+            Text = "Make Head Rev",
+            Category = VerbCategory.Antag,
+            Icon = null,
+            Act = () =>
+            {
+                if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
+                    return;
+
+                _revolutionaryRule.MakeHeadRev(targetMindComp.Mind);
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-head-rev"),
+        };
+        args.Verbs.Add(headRev);
 
     }
 }

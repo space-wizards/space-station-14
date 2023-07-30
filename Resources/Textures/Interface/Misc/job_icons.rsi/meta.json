@@ -159,6 +159,12 @@
         },
         {
             "name": "SeniorOfficer"
+        },
+        {
+            "name": "Revolutionary"
+        },
+        {
+            "name": "HeadRevolutionary"
         }
     ]
 }
