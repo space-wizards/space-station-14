@@ -35,7 +35,7 @@
   id: Command
   sort: 1
   description: department-Command-description
-  color: "#334E6D"
+  color: "#004CA4"
   roles:
   - Captain
   - IAA # Corvax-IAA
