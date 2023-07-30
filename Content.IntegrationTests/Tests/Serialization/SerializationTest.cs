@@ -67,6 +67,8 @@ public sealed class SerializationTest
         Assert.That(seriMan.ValidateNode<TestEnum>(genericNode).GetErrors().Any(), Is.True);
         Assert.That(seriMan.ValidateNode<Enum>(typedNode).GetErrors().Any(), Is.True);
         Assert.That(seriMan.ValidateNode<TestEnum>(typedNode).GetErrors().Any(), Is.False);
+
+        await pairTracker.CleanReturnAsync();
     }
 
     private enum TestEnum : byte { Aa, Bb, Cc, Dd }
