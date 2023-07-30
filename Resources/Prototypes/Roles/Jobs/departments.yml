@@ -2,6 +2,7 @@
   id: Cargo
   description: department-Cargo-description
   color: "#A46106"
+  sort: 0
   roles:
   - CargoTechnician
   - Quartermaster
@@ -11,6 +12,7 @@
   id: Civilian
   description: department-Civilian-description
   color: "#9FED58"
+  sort: 2
   roles:
   - Bartender
   - Botanist
@@ -31,6 +33,7 @@
 
 - type: department
   id: Command
+  sort: 1
   description: department-Command-description
   color: "#334E6D"
   roles:
@@ -47,6 +50,7 @@
 
 - type: department
   id: Engineering
+  sort: 0
   description: department-Engineering-description
   color: "#EFB341"
   roles:
@@ -58,6 +62,7 @@
 
 - type: department
   id: Medical
+  sort: 0
   description: department-Medical-description
   color: "#52B4E9"
   roles:
@@ -71,6 +76,7 @@
 
 - type: department
   id: Security
+  sort: 0
   description: department-Security-description
   color: "#DE3A3A"
   roles:
@@ -84,6 +90,7 @@
 
 - type: department
   id: Science
+  sort: 0
   description: department-Science-description
   color: "#D381C9"
   roles:
@@ -94,6 +101,7 @@
 
 - type: department
   id: Specific
+  sort: 0
   description: department-Specific-description
   color: "#9FED58"
   roles:

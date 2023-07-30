@@ -24,4 +24,9 @@ public sealed class DepartmentPrototype : IPrototype
     [ViewVariables(VVAccess.ReadWrite),
      DataField("roles", customTypeSerializer: typeof(PrototypeIdListSerializer<JobPrototype>))]
     public List<string> Roles = new();
+
+    /// <summary>
+    ///     Used in cases when job is in two or more departments and need to choose one.
+    /// </summary>
+    [DataField("sort")] public int Sort = default!;
 }

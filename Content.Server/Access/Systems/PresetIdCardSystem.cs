@@ -78,12 +78,15 @@ namespace Content.Server.Access.Systems
         {
             var jobCode = job.ID;
 
-            foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
+            var departments = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>().ToList();
+            departments.Sort((a, b) => a.Sort.CompareTo(b.Sort));
+
+            foreach (var department in from department in departments
+                     from jobId in department.Roles
+                     where jobId == jobCode
+                     select department)
             {
-                if (department.Roles.Any(jobId => jobId == jobCode))
-                {
-                    return department.Color.ToHex();
-                }
+                return department.Color.ToHex();
             }
 
             return string.Empty;
