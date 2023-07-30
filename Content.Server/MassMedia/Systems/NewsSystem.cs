@@ -226,18 +226,16 @@ public sealed class NewsSystem : EntitySystem
             return true;
         }
 
-        if (articleToDelete.AuthorStationRecordKeyIds == null || !articleToDelete.AuthorStationRecordKeyIds.Any())
+        if (articleToDelete.AuthorStationRecordKeyIds == null ||
+            !articleToDelete.AuthorStationRecordKeyIds.Any())
         {
             return true;
         }
-        else
+        if (user.HasValue
+            && _accessReader.FindStationRecordKeys(user.Value, out var recordKeys)
+            && recordKeys.Intersect(articleToDelete.AuthorStationRecordKeyIds).Any())
         {
-            if (user.HasValue
-                && _accessReader.FindStationRecordKeys(user.Value, out var recordKeys)
-                && recordKeys.Intersect(articleToDelete.AuthorStationRecordKeyIds).Any())
-            {
-                return true;
-            }
+            return true;
         }
 
         return false;
