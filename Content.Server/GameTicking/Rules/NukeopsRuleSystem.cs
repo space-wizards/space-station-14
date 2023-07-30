@@ -574,6 +574,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         // todo: this is kinda awful for multi-nukies
         foreach (var nukeops in EntityQuery<NukeopsRuleComponent>())
         {
+            if (nukeOpSpawner.OperativeName == null
+                || nukeOpSpawner.OperativeStartingGear == null
+                || nukeOpSpawner.OperativeRolePrototype == null)
+            {
+                // I have no idea what is going on with nuke ops code, but I'm pretty sure this shouldn't be possible.
+                Log.Error($"Invalid nuke op spawner: {ToPrettyString(spawner)}");
+                continue;
+            }
+
             SetupOperativeEntity(uid, nukeOpSpawner.OperativeName, nukeOpSpawner.OperativeStartingGear, profile, nukeops);
 
             nukeops.OperativeMindPendingData.Add(uid, nukeOpSpawner.OperativeRolePrototype);

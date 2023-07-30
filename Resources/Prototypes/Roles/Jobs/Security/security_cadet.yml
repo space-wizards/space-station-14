@@ -11,7 +11,7 @@
       time: 54000 #15 hrs
       inverted: true # stop playing intern if you're good at security!
   startingGear: SecurityCadetGear
-  icon: "SecurityCadet"
+  icon: "JobIconSecurityCadet"
   supervisors: job-supervisors-security
   canBeAntag: false
   access:
