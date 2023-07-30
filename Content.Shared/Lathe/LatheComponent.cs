@@ -23,6 +23,12 @@ namespace Content.Shared.Lathe
         public readonly List<string> DynamicRecipes = new();
 
         /// <summary>
+        /// All of the recipes that the lathe is capable to get using EMAG
+        /// </summary>
+        [DataField("emagRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
+        public readonly List<string> EmagRecipes = new();
+
+        /// <summary>
         /// The lathe's construction queue
         /// </summary>
         [DataField("queue")]
@@ -34,6 +40,14 @@ namespace Content.Shared.Lathe
         [DataField("producingSound")]
         public SoundSpecifier? ProducingSound;
 
+        /// <summary>
+        /// The sound that plays at the moment when the lathe is emagged
+        /// </summary>
+        [DataField("emaggedSound")]
+        public SoundSpecifier EmaggedSound = new SoundCollectionSpecifier("sparks")
+        {
+            Params = AudioParams.Default.WithVolume(8),
+        };
         #region Visualizer info
         [DataField("idleState", required: true)]
         public string IdleState = default!;
