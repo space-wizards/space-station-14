@@ -34,7 +34,7 @@ public sealed class RadialUiController : UIController
 
     public void OnScreenLoad()
     {
-        _radials.Children.Clear();
+        _radials.DisposeAllChildren();
         _attachedRadials.Clear();
 
         var viewportContainer = UIManager.ActiveScreen!.FindControl<LayoutContainer>("ViewportContainer");
@@ -43,7 +43,7 @@ public sealed class RadialUiController : UIController
 
     public void OnScreenUnload()
     {
-        _radials.Children.Clear();
+        _radials.DisposeAllChildren();
         _attachedRadials.Clear();
     }
 

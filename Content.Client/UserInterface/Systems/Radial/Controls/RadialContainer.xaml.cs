@@ -375,7 +375,7 @@ public partial class RadialContainer : Control
     private float GetDistance(float offset = 0.0f)
     {
         var distance = FocusSize * 1.2f;
-        var children = Enumerable.Count<Control>(Layout.Children);
+        var children = Layout.Children.Count();
 
         if (children <= MaxButtons)
             return distance + offset;
