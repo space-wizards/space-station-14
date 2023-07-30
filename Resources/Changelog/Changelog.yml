@@ -1,19 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Fix uplink typos, type: Fix}
-  id: 3877
-  time: '2023-05-27T05:33:19.0000000+00:00'
-- author: MrGreen and OctoRocket
-  changes:
-  - {message: Added a CentCom scarf., type: Add}
-  id: 3878
-  time: '2023-05-27T09:09:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Change grappling gun tech from Experimental to Industrial., type: Fix}
-  id: 3879
-  time: '2023-05-27T12:19:03.0000000+00:00'
 - author: malchanceux
   changes:
   - {message: NanoTrasen Counterintelligence has uncovered that threat actors have
@@ -2972,3 +2957,21 @@ Entries:
   - {message: Changed the placeholder comms computer description, type: Tweak}
   id: 4376
   time: '2023-07-30T02:35:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some cargo gifts not spawning correctly., type: Fix}
+  id: 4377
+  time: '2023-07-30T18:53:54.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: The syndicate has managed to secure a deal with lockheed-michael to
+      get the necessary stock to place 10 round .60 antimateriel rounds into the uplink
+      for 2TC, type: Add}
+  id: 4378
+  time: '2023-07-30T18:54:14.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: The syndicate has decided to add slightly more gear to their EVA and
+      hardsuit bundles, type: Add}
+  id: 4379
+  time: '2023-07-30T18:54:45.0000000+00:00'
