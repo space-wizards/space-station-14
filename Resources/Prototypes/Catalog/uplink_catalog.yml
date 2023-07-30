@@ -252,6 +252,17 @@
   categories:
   - UplinkAmmo
 
+# for the hristov
+- type: listing
+  id: UplinkHristovAmmo
+  name: uplink-sniper-ammo-name
+  description: uplink-sniper-ammo-desc
+  productEntity: MagazineBoxAntiMateriel
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkAmmo
+
 #Utility
 
 - type: listing
