@@ -31,9 +31,13 @@
     - DoorBumpOpener
     - FootstepSound
   - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
     prob: 1
     name: ghost-role-information-joe-name
     description: ghost-role-information-joe-description
+    rules: "Вы - выдрессированный кенгуру отдела СБ. Подчиняйтесь простым командам СБ. Вы можете атаковать других существ если приказ прямо того требует."
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [ JoeKangarooGear ]

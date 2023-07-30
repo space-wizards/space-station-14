@@ -1229,8 +1229,8 @@
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: NoSlip
-  #- type: TTS # Corvax-TTS
-  #  voice: TrainingRobot
+  - type: TTS # Corvax-TTS
+    voice: DrMundo
 
 - type: entity
   name: penguin
