@@ -40,6 +40,15 @@
     - type: AtmosDevice
     - type: TegGenerator
 
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-teg
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+    - type: WiredNetworkConnection
+
 - type: entity
   id: TegCirculator
   name: circulator
@@ -90,7 +99,7 @@
           nodeGroupID: Pipe
           pipeDirection: South
           volume: 100
-        teg:
+        circulator:
           !type:TegNodeCirculator
           nodeGroupID: Teg
 

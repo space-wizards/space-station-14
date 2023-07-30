@@ -24,11 +24,15 @@ device-frequency-prototype-name-surveillance-camera-entertainment = Entertainmen
 device-address-prefix-vent = VNT-
 device-address-prefix-scrubber = SCR-
 device-address-prefix-sensor = SNS-
+# Damn bet you couldn't see this one coming.
+device-address-prefix-teg = TEG-
 
 #PDAs and terminals
 device-address-prefix-console = CLS-
 device-address-prefix-fire-alarm = FIR-
 device-address-prefix-air-alarm = AIR-
+
+device-address-prefix-sensor-monitor = MON-
 
 device-address-examine-message = The device's address is {$address}.
 
@@ -39,3 +43,4 @@ device-net-id-wireless = Wireless
 device-net-id-apc = Apc
 device-net-id-atmos-devices = Atmos Devices
 device-net-id-reserved = Reserved
+
