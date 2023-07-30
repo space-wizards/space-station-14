@@ -7,7 +7,15 @@ namespace Content.Shared.CriminalRecords;
 ///     General criminal record.
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public record struct GeneralCriminalRecord(
-    SecurityStatus Status = default,
-    string Reason = ""
-);
+public sealed record GeneralCriminalRecord
+{
+    /// <summary>
+    ///     Status of the person (None, Wanted, Detained).
+    /// </summary>
+    public SecurityStatus Status = SecurityStatus.None;
+
+    /// <summary>
+    ///     Reason of the current status.
+    /// </summary>
+    public string Reason = string.Empty;
+}
