@@ -324,7 +324,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         foreach (var player in allPlayers)
         {
             var mind = player.GetMind();
-            if (mind != null && HasComp<HumanoidAppearanceComponent>(mind.OwnedEntity) && mind.CurrentJob != null)
+            if (mind != null && HasComp<HumanoidAppearanceComponent>(mind.OwnedEntity) && mind.CurrentJob != null && !HasComp<RevolutionaryComponent>(mind.OwnedEntity))
             {
                 if (mind.CurrentJob.Prototype.Weight >= 10)
                 {
