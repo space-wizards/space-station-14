@@ -31,9 +31,9 @@
   description: Useful for carrying items in your hands.
   components:
   - type: Item
-    size: 80
+    size: 85
   - type: Storage
-    capacity: 80
+    capacity: 85
   - type: Tag
     tags:
     - Briefcase
