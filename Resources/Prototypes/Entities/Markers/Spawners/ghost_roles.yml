@@ -66,7 +66,6 @@
     rules: You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
   - type: GhostRoleMobSpawner
     prototype: MobHumanNukeOp
-  - type: NukeOperativeSpawner
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -93,3 +92,22 @@
       - state: green
       - sprite: Structures/Wallmounts/signs.rsi
         state: radiation
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostDragon
+  noSpawn: true
+  name: ghost role spawn point
+  suffix: dragon
+  components:
+  - type: GhostRole
+    name: ghost-role-information-space-dragon-name
+    description: ghost-role-information-space-dragon-description
+    rules: ghost-role-component-default-rules
+  - type: GhostRoleMobSpawner
+    prototype: MobDragon
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Carps/dragon.rsi
+      state: alive

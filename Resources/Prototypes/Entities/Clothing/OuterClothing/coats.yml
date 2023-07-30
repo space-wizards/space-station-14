@@ -312,3 +312,33 @@
         Piercing: 0.65
         Heat: 0.85
         Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLabSeniorResearcher
+  name: senior researcher lab coat
+  description: A suit that protects against minor chemical spills. Has a purple collar and wrist trims.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_senior_researcher.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_senior_researcher.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLabSeniorPhysician
+  name: senior physician lab coat
+  description: A suit that protects against minor chemical spills. Has light blue sleeves and an orange waist trim.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_senior_physician.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_senior_physician.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
