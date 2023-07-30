@@ -36,14 +36,14 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             var inletAir = inlet.Air.RemoveRatio(1f);
-			var envAir = environment.RemoveRatio(1f);
+            var envAir = environment.RemoveRatio(1f);
 
-			var mergeAir = new GasMixture(inletAir.Volume + envAir.Volume);
-			_atmosphereSystem.Merge(mergeAir, inletAir);
-			_atmosphereSystem.Merge(mergeAir, envAir);
+            var mergeAir = new GasMixture(inletAir.Volume + envAir.Volume);
+            _atmosphereSystem.Merge(mergeAir, inletAir);
+            _atmosphereSystem.Merge(mergeAir, envAir);
 
-			_atmosphereSystem.Merge(inlet.Air, mergeAir.RemoveVolume(inletAir.Volume));
-			_atmosphereSystem.Merge(environment, mergeAir);
+            _atmosphereSystem.Merge(inlet.Air, mergeAir.RemoveVolume(inletAir.Volume));
+            _atmosphereSystem.Merge(environment, mergeAir);
         }
     }
 }
