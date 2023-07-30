@@ -233,7 +233,7 @@ namespace Content.Server.Administration.Managers
                 _toolshedCommandPermissions.LoadPermissionsFromStream(toolshedPerms);
             }
 
-            _toolshed.SetPermissionController(this);
+            _toolshed.ActivePermissionController = this;
         }
 
         public void PromoteHost(IPlayerSession player)
