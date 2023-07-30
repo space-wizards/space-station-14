@@ -12,17 +12,15 @@
     sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
-        Heat: 0.9
-        Radiation: 0.9
-        Caustic: 0.85
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
+        Caustic: 0.9
   - type: ClothingSpeedModifier
     walkModifier: 0.80
     sprintModifier: 0.80
@@ -42,23 +40,23 @@
     sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.02
-    lowPressureMultiplier: 10000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.65
-    sprintModifier: 0.65
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
-        Heat: 0.4
-        Radiation: 0.75
-        Caustic: 0.50
-  - type: TemperatureProtection
-    coefficient: 0.001
-  - type: ExplosionResistance
-    damageCoefficient: 0.2
+        Heat: 0.2
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitAtmos
 
@@ -76,21 +74,22 @@
   - type: PressureProtection
     highPressureMultiplier: 0.04
     lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.65
-    sprintModifier: 0.65
+  - type: TemperatureProtection
+    coefficient: 0.01
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.9
         Slash: 0.9
-        Piercing: 0.95
-        Heat: 0.7
+        Piercing: 0.9
         Shock: 0.8
-        Caustic: 0.75        
-        Radiation: 0.25
-  - type: ExplosionResistance
-    damageCoefficient: 0.2
+        Caustic: 0.5
+        Radiation: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
 
@@ -106,20 +105,19 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.72
-    lowPressureMultiplier: 10000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.8
+    highPressureMultiplier: 0.7
+    lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.9
         Slash: 0.9
-        Piercing: 0.95
-        Heat: 0.9
-        Radiation: 0.75 #salv is supposed to have radiation hazards in the future
-        Caustic: 0.85
+        Piercing: 0.9
+        Radiation: 0.3 #salv is supposed to have radiation hazards in the future
+        Caustic: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpatio
 
@@ -127,7 +125,7 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSalvage
-  name: salvage hardsuit
+  name: mining hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters.
   components:
   - type: Sprite
@@ -135,22 +133,21 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.525
-    lowPressureMultiplier: 10000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.6
-    sprintModifier: 0.65
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.75
+        Blunt: 0.7
         Slash: 0.7
-        Piercing: 0.7
-        Heat: 0.85
-        Radiation: 0.50
-        Caustic: 0.75
-  - type: ExplosionResistance
-    damageCoefficient: 0.3
+        Piercing: 0.5
+        Radiation: 0.3
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
 
@@ -166,21 +163,20 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/security.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.525
-    lowPressureMultiplier: 10000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.7   
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.6
         Slash: 0.6
         Piercing: 0.6
-        Heat: 0.8
-        Caustic: 0.75
-  - type: ExplosionResistance
-    damageCoefficient: 0.4
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
 
@@ -197,18 +193,16 @@
     sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.3
-    lowPressureMultiplier: 5500
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.85
+    lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.8
         Slash: 0.8
-        Piercing: 0.75
-        Heat: 0.9
-        Caustic: 0.2
+        Piercing: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.65
+    sprintModifier: 0.65
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
 
@@ -217,28 +211,30 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitWarden
   name: warden's hardsuit
-  description: A specialized riot suit geared to combat low pressure environments while maintaining agility.
+  description: A specialized riot suit geared to combat low pressure environments.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.525
-    lowPressureMultiplier: 10000
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.5
         Slash: 0.6
         Piercing: 0.6
-        Heat: 0.8
-        Caustic: 0.75
-  - type: ExplosionResistance
-    damageCoefficient: 0.4
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWarden
-    
+
 #Captain's Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -253,20 +249,20 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.8
         Slash: 0.8
-        Piercing: 0.75
-        Heat: 0.3
-        Radiation: 0.50
+        Piercing: 0.8
+        Heat: 0.5
+        Radiation: 0.5
         Caustic: 0.6
-  - type: ExplosionResistance
-    damageCoefficient: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCap
 
@@ -284,20 +280,20 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.85
-        Slash: 0.85
+        Blunt: 0.8
+        Slash: 0.8
         Piercing: 0.8
         Heat: 0.4
         Radiation: 0.0
-        Caustic: 0.75
-  - type: ExplosionResistance
-    damageCoefficient: 0.2
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
 
@@ -314,15 +310,14 @@
     sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.3
-    lowPressureMultiplier: 5500
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.95
+    lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
       coefficients:
-        Heat: 0.90
         Caustic: 0.1
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.95
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMedical
 
@@ -331,7 +326,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitRd
   name: experimental research hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
+  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor. Able to be compressed to small sizes.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
@@ -339,27 +334,27 @@
     sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.02
-    lowPressureMultiplier: 5500
+    lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.6
         Slash: 0.8
-        Piercing: 0.95
+        Piercing: 0.9
         Heat: 0.3
         Radiation: 0.1
-        Caustic: 0.25
+        Caustic: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: Item
-    size: 100
+    size: 50
   - type: Tag
     tags:
     - WhitelistChameleon
     - HighRiskItem
-  - type: ExplosionResistance
-    damageCoefficient: 0.1
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitRd
   - type: StaticPrice
@@ -378,21 +373,20 @@
     sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.45
-    lowPressureMultiplier: 10000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.6
         Slash: 0.5
         Piercing: 0.5
-        Heat: 0.8
-        Radiation: 0.25
+        Radiation: 0.5
         Caustic: 0.6
-  - type: ExplosionResistance
-    damageCoefficient: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
 
@@ -411,20 +405,20 @@
   - type: PressureProtection
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.65
-        Slash: 0.6
+        Blunt: 0.5
+        Slash: 0.5
         Piercing: 0.5
-        Heat: 0.4
-        Radiation: 0.50
-        Caustic: 0.75
-  - type: ExplosionResistance
-    damageCoefficient: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
 
@@ -442,20 +436,20 @@
   - type: PressureProtection
     highPressureMultiplier: 0.2
     lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.6
-    sprintModifier: 0.6 #extremely slow
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.2
         Slash: 0.2
         Piercing: 0.2
-        Heat: 0.5
-        Radiation: 0.25
-        Caustic: 0.35
-  - type: ExplosionResistance
-    damageCoefficient: 0.8
+        Heat: 0.2
+        Radiation: 0.2
+        Caustic: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.65
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
 
@@ -473,11 +467,10 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
   - type: TemperatureProtection
     coefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
   - type: Armor
     modifiers:
       coefficients:
@@ -487,8 +480,9 @@
         Heat: 0.2
         Radiation: 0.25
         Caustic: 0.5
-  - type: ExplosionResistance
-    damageCoefficient: 0.3
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
 
@@ -506,20 +500,20 @@
   - type: PressureProtection
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.4
         Slash: 0.4
         Piercing: 0.3
-        Heat: 0.3
+        Heat: 0.5
         Radiation: 0.25
         Caustic: 0.4
-  - type: ExplosionResistance
-    damageCoefficient: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
 
@@ -537,9 +531,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
   - type: Armor
     modifiers:
       coefficients:
@@ -549,8 +542,9 @@
         Heat: 0.25
         Radiation: 0.25
         Caustic: 0.75
-  - type: ExplosionResistance
-    damageCoefficient: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
 
@@ -567,10 +561,9 @@
     sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.225
-    lowPressureMultiplier: 10000
-  - type: ClothingSpeedModifier
-    walkModifier: .8
-    sprintModifier: .8
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
   - type: Armor
     modifiers:
       coefficients:
@@ -578,8 +571,9 @@
         Slash: 0.95
         Piercing: 1
         Heat: 0.5
-  - type: ExplosionResistance
-    damageCoefficient: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLing
 
@@ -596,9 +590,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
-  - type: ClothingSpeedModifier
-    walkModifier: 0.6
-    sprintModifier: 0.6
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
   - type: Armor
     modifiers:
       coefficients:
@@ -607,8 +600,9 @@
         Piercing: 0.9
         Heat: 0.4
         Caustic: 0.75
-  - type: ExplosionResistance
-    damageCoefficient: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.6
+    sprintModifier: 0.6
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateEVA
 
@@ -626,9 +620,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
   - type: Armor
     modifiers:
       coefficients:
@@ -637,8 +630,9 @@
         Piercing: 0.85
         Heat: 0.4
         Caustic: 0.75
-  - type: ExplosionResistance
-    damageCoefficient: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
 
@@ -724,20 +718,22 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.2 #best armor in the game
         Slash: 0.2
         Piercing: 0.2
-        Heat: 0.2
+        Heat: 0.1
         Radiation: 0.1
         Caustic: 0.2
-  - type: ExplosionResistance
-    damageCoefficient: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
 
@@ -755,24 +751,24 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
   - type: TemperatureProtection
     coefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.7
         Slash: 0.7
         Piercing: 0.6
-        Heat: 0.05
+        Heat: 0.1
         Cold: 0.1
         Shock: 0.1
         Radiation: 0.1
         Caustic: 0.1
-  - type: ExplosionResistance
-    damageCoefficient: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURN
 
@@ -789,22 +785,22 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/clown.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.525
-    lowPressureMultiplier: 10000
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
-        Caustic: 0.85
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
+        Caustic: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: Construction
     graph: ClownHardsuit
     node: clownHardsuit
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitClown
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9

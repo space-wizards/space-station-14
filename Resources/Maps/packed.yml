@@ -64,7 +64,7 @@ entities:
           tiles: AAAAAAAAAAAAAAAAAAAAAF8AAABfAAAAXwAAAEUAAABFAAABRQAAAl8AAABfAAAAXwAAAF8AAABcAAABXAAAAAAAAAAAAAAAAAAAAAAAAABfAAAAXwAAAF8AAABFAAADRQAAA0UAAAJfAAAAXwAAAF8AAABfAAAAXwAAAF8AAAAAAAAAAAAAAAAAAAAAAAAAXwAAAF8AAABfAAAARQAAAkUAAAJFAAACXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAAAAAAAAAAAAAAAAAAAAAAF8AAABfAAAAXwAAAEUAAANFAAABRQAAA1AAAABfAAAAXwAAAF8AAABQAAAAXwAAAAAAAAAAAAAAAAAAAAAAAABfAAAAXwAAAF8AAABfAAAARQAAAkUAAABfAAAAXwAAAF8AAABFAAAARQAAAkUAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABfAAAARQAAAkUAAANFAAABRQAAAkUAAANFAAACRQAAAUUAAAJFAAADAAAAAAAAAAAAAAAAAAAAAF8AAABfAAAAXwAAAEUAAAJFAAACRQAAAUUAAANFAAACRQAAA0UAAAJFAAADRQAAAAAAAAAAAAAAAAAAAAAAAABfAAAAXwAAAF8AAABFAAACRQAAAUUAAAFFAAABRQAAAEUAAANFAAACRQAAA0UAAAEAAAAAAAAAAAAAAAAAAAAAXwAAAF8AAABfAAAARQAAAEUAAABFAAACRQAAAkUAAAFFAAADRQAAAkUAAANFAAADAAAAAAAAAAAAAAAAAAAAAF8AAABfAAAAXwAAAEUAAANFAAACRQAAA0UAAAJFAAADRQAAA0UAAAJFAAACRQAAAwAAAAAAAAAAAAAAAAAAAABfAAAAXwAAAF8AAABFAAADRQAAAUUAAAFFAAABRQAAA0UAAANFAAADXwAAAF8AAAAAAAAAAAAAAAAAAAAAAAAAXwAAAF8AAABfAAAARQAAAkUAAABFAAACRQAAAkUAAAJFAAACRQAAAF8AAABfAAAAAAAAAAAAAAAAAAAAAAAAAF8AAABfAAAAXwAAAEUAAABFAAADRQAAAkUAAANFAAACRQAAAkUAAANQAAAAXwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXwAAAF8AAABfAAAARQAAAkUAAAFfAAAAXwAAAEUAAANfAAAAXwAAAF8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF8AAABFAAABRQAAA0UAAABFAAADXwAAAEUAAABFAAABRQAAAF8AAABfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABfAAAARQAAAEUAAAJFAAACRQAAAV8AAABFAAACRQAAAEUAAAFfAAAAXwAAAA==
         1,0:
           ind: 1,0
-          tiles: RQAAAUUAAABFAAABRQAAA0UAAAJFAAABRQAAA0UAAABFAAABRQAAAUUAAABFAAACRQAAA0UAAAFFAAABRQAAA0UAAAJFAAACRQAAAUUAAAJFAAABRQAAAUUAAAFFAAABRQAAA0UAAABFAAADRQAAAUUAAAJFAAADRQAAAUUAAABfAAAAXwAAAFAAAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABFAAADRQAAAUUAAAJfAAAAFwAAABcAAAAXAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAARQAAAkUAAAJFAAACXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABFAAABXwAAAF8AAAAXAAADFwAAAxcAAAJfAAAAMQAAAFIAAANSAAABMQAAAF8AAABfAAAAXwAAAF8AAABSAAAAUgAAA1IAAAJfAAAAFwAAAhcAAAEXAAACXwAAADEAAABSAAAAUgAAADEAAABQAAAAXwAAAF8AAABfAAAAUgAAAVIAAAJSAAAAXwAAADIAAAAyAAAAMgAAAF8AAAAxAAAAUgAAAFIAAAExAAAAXwAAAF8AAABfAAAAXwAAAFIAAAJSAAABUgAAAV8AAAAyAAAAMgAAADIAAABfAAAAMQAAAFIAAABSAAADMQAAAF8AAABfAAAAXwAAAF8AAABSAAABUgAAAVIAAANfAAAAMgAAADIAAAAyAAAARQAAAEUAAANFAAAARQAAAwwAAAJfAAAAXwAAAF8AAABfAAAAXwAAAFAAAABfAAAAXwAAAFAAAABfAAAAFwAAA0UAAAJFAAAARQAAAkUAAAMMAAABXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAEUAAABFAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAUAAAAF8AAABfAAAAXwAAAF8AAABfAAAAXAAAA18AAABFAAADRQAAAEUAAABFAAABRQAAAEUAAABfAAAARQAAAUUAAAFFAAABXwAAAF8AAABfAAAAXwAAAFwAAANcAAAARQAAAEUAAAJFAAADRQAAAUUAAAFFAAADRQAAA0UAAAJFAAABRQAAA0UAAAFFAAAARQAAAUUAAAJcAAADXwAAAEUAAAJFAAABRQAAA0UAAAFFAAADRQAAAUUAAANFAAACRQAAA0UAAAFFAAABRQAAAUUAAANFAAAAXAAAAFwAAAFFAAAARQAAAkUAAAFFAAABRQAAAkUAAANfAAAARQAAAkUAAANFAAACRQAAA0UAAABFAAADRQAAAg==
+          tiles: RQAAAUUAAABFAAABRQAAA0UAAAJFAAABRQAAA0UAAABFAAABRQAAAUUAAABFAAACRQAAA0UAAAFFAAABRQAAA0UAAAJFAAACRQAAAUUAAAJFAAABRQAAAUUAAAFFAAABRQAAA0UAAABFAAADRQAAAUUAAAJFAAADRQAAAUUAAABfAAAAXwAAAFAAAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABFAAADRQAAAUUAAAJfAAAAFwAAABcAAAAXAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAARQAAAkUAAAJFAAACXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABPAAAAXwAAAF8AAABFAAABXwAAAF8AAAAXAAADFwAAAxcAAAJfAAAAMQAAAFIAAANSAAABMQAAAF8AAABfAAAATwAAAF8AAABSAAAAUgAAA1IAAAJfAAAAFwAAAhcAAAEXAAACXwAAADEAAABSAAAAUgAAADEAAABQAAAAXwAAAE8AAABfAAAAUgAAAVIAAAJSAAAAXwAAADIAAAAyAAAAMgAAAF8AAAAxAAAAUgAAAFIAAAExAAAAXwAAAF8AAABPAAAAXwAAAFIAAAJSAAABUgAAAV8AAAAyAAAAMgAAADIAAABfAAAAMQAAAFIAAABSAAADMQAAAF8AAABfAAAATwAAAF8AAABSAAABUgAAAVIAAANfAAAAMgAAADIAAAAyAAAARQAAAEUAAANFAAAARQAAAwwAAAJfAAAAXwAAAF8AAABfAAAAXwAAAFAAAABfAAAAXwAAAFAAAABfAAAAFwAAA0UAAAJFAAAARQAAAkUAAAMMAAABXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAEUAAABFAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAUAAAAF8AAABfAAAAXwAAAF8AAABfAAAAXAAAA18AAABFAAADRQAAAEUAAABFAAABRQAAAEUAAABfAAAARQAAAUUAAAFFAAABXwAAAF8AAABfAAAAXwAAAFwAAANcAAAARQAAAEUAAAJFAAADRQAAAUUAAAFFAAADRQAAA0UAAAJFAAABRQAAA0UAAAFFAAAARQAAAUUAAAJcAAADXwAAAEUAAAJFAAABRQAAA0UAAAFFAAADRQAAAUUAAANFAAACRQAAA0UAAAFFAAABRQAAAUUAAANFAAAAXAAAAFwAAAFFAAAARQAAAkUAAAFFAAABRQAAAkUAAANfAAAARQAAAkUAAANFAAACRQAAA0UAAABFAAADRQAAAg==
         1,-1:
           ind: 1,-1
           tiles: XwAAAF8AAABQAAAAUgAAAUUAAAFFAAAARQAAAhcAAAJfAAAARQAAAEUAAAJFAAAARQAAAEUAAABFAAACRQAAAF8AAABfAAAATwAAAE8AAABPAAAATwAAAF8AAABfAAAAXwAAAEUAAAFFAAAARQAAAF8AAABFAAACRQAAA0UAAAFfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABFAAAARQAAAEUAAAFfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXAAAA1wAAAFcAAACFwAAAhcAAAJfAAAARQAAAUUAAANFAAABXwAAACYAAAAmAAAAJgAAAF8AAABfAAAAXwAAAFwAAAFcAAABXAAAAhcAAAIXAAACFwAAAUUAAAJFAAABRQAAAl8AAAAmAAAAJgAAACYAAABfAAAAXwAAAF8AAABcAAABXAAAAlwAAAMXAAAAFwAAAhcAAAJFAAACRQAAA0UAAAMXAAADJgAAACYAAAAmAAAAXwAAAF8AAABfAAAAXAAAAVwAAAFcAAACFwAAAxcAAAJfAAAARQAAAUUAAABFAAADXwAAACYAAAAmAAAAJgAAAF8AAABfAAAAXwAAAF8AAABQAAAAXwAAAF8AAABfAAAAXwAAAEUAAAJFAAACRQAAAV8AAABfAAAAXwAAAF8AAABPAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABFAAAARQAAAkUAAANfAAAAMgAAADIAAAAMAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAARQAAAEUAAANFAAACXwAAADIAAAAyAAAADAAAABcAAAAXAAABXAAAAVwAAAFcAAABXwAAAF8AAABfAAAARQAAA0UAAANFAAABRQAAAF8AAAAyAAAAMgAAAAwAAAEXAAACFwAAAlwAAAJcAAADXAAAAV8AAABfAAAAXwAAAEUAAAFFAAACRQAAA0UAAAFfAAAADAAAAAwAAAEMAAACFwAAAhcAAAFcAAADXAAAA1wAAANfAAAAXwAAAF8AAABfAAAARQAAAUUAAANFAAABXwAAAAwAAAMMAAAADAAAAkUAAANfAAAAXAAAA1wAAAJcAAAAXwAAAF8AAABfAAAAXwAAAEUAAAJFAAABRQAAAV8AAAAMAAACDAAAAQwAAAFFAAACXwAAAF8AAABfAAAAXwAAAF8AAABQAAAAXwAAAF8AAABFAAACRQAAAkUAAABfAAAAXwAAAF8AAABfAAAARQAAAUUAAABFAAACRQAAAkUAAAFFAAADRQAAA0UAAAFFAAAARQAAAEUAAAFFAAAARQAAAUUAAAJFAAADRQAAAw==
@@ -10231,11 +10231,6 @@ entities:
     - links:
       - 5685
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
   - uid: 2835
     components:
     - pos: 12.5,-27.5
@@ -10244,11 +10239,6 @@ entities:
     - links:
       - 5685
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
 - proto: BlockGameArcade
   entities:
   - uid: 1812
@@ -10261,13 +10251,6 @@ entities:
     components:
     - rot: 1.5707963267948966 rad
       pos: 29.5,-6.5
-      parent: 2
-      type: Transform
-- proto: BodyBag_Folded
-  entities:
-  - uid: 8342
-    components:
-    - pos: 38.578953,3.5775628
       parent: 2
       type: Transform
 - proto: Bonfire
@@ -10652,11 +10635,6 @@ entities:
         - Start: Close
         - Timer: AutoClose
         - Timer: Open
-      registeredSinks:
-        Start:
-        - 2258
-        Timer:
-        - 2258
       type: DeviceLinkSource
   - uid: 7718
     components:
@@ -10668,11 +10646,6 @@ entities:
         - Start: Close
         - Timer: AutoClose
         - Timer: Open
-      registeredSinks:
-        Start:
-        - 2259
-        Timer:
-        - 2259
       type: DeviceLinkSource
 - proto: Brutepack
   entities:
@@ -33206,6 +33179,21 @@ entities:
     - pos: 41.5,-18.5
       parent: 2
       type: Transform
+  - uid: 12844
+    components:
+    - pos: 22.5,5.5
+      parent: 2
+      type: Transform
+  - uid: 12845
+    components:
+    - pos: 22.5,6.5
+      parent: 2
+      type: Transform
+  - uid: 12846
+    components:
+    - pos: 22.5,7.5
+      parent: 2
+      type: Transform
 - proto: Cautery
   entities:
   - uid: 7791
@@ -34400,6 +34388,11 @@ entities:
     - pos: 72.5,-5.5
       parent: 2
       type: Transform
+  - uid: 8342
+    components:
+    - pos: 23.5,6.5
+      parent: 2
+      type: Transform
   - uid: 9309
     components:
     - pos: 72.5,23.5
@@ -35375,18 +35368,18 @@ entities:
     - pos: 103.67386,-15.495739
       parent: 2
       type: Transform
-- proto: ClothingUniformJumpskirtJanimaid
+- proto: ClothingUniformJumpskirtJanimaidmini
   entities:
-  - uid: 11438
+  - uid: 12847
     components:
-    - pos: 55.49706,36.60403
+    - pos: 56.502583,35.364388
       parent: 2
       type: Transform
-- proto: ClothingUniformJumpskirtJanimaidmini
+- proto: ClothingUniformJumpskirtTacticalMaid
   entities:
   - uid: 12653
     components:
-    - pos: 57.512684,36.60403
+    - pos: 76.476616,-13.28976
       parent: 2
       type: Transform
 - proto: ClothingUniformJumpsuitCossack
@@ -35651,9 +35644,6 @@ entities:
     - linkedPorts:
         8666:
         - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
-      registeredSinks:
-        ArtifactAnalyzerSender:
-        - 8666
       type: DeviceLinkSource
   - uid: 10667
     components:
@@ -36075,11 +36065,6 @@ entities:
     - links:
       - 7808
       type: DeviceLinkSink
-    - inputs:
-        Reverse: []
-        Forward: []
-        Off: []
-      type: SignalReceiver
   - uid: 2038
     components:
     - rot: 1.5707963267948966 rad
@@ -36089,11 +36074,6 @@ entities:
     - links:
       - 7808
       type: DeviceLinkSink
-    - inputs:
-        Reverse: []
-        Forward: []
-        Off: []
-      type: SignalReceiver
   - uid: 2039
     components:
     - rot: -1.5707963267948966 rad
@@ -36103,17 +36083,6 @@ entities:
     - links:
       - 2154
       type: DeviceLinkSink
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 2154
-        Forward:
-        - port: Left
-          uid: 2154
-        Off:
-        - port: Middle
-          uid: 2154
-      type: SignalReceiver
   - uid: 2040
     components:
     - rot: -1.5707963267948966 rad
@@ -36123,17 +36092,6 @@ entities:
     - links:
       - 2154
       type: DeviceLinkSink
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 2154
-        Forward:
-        - port: Left
-          uid: 2154
-        Off:
-        - port: Middle
-          uid: 2154
-      type: SignalReceiver
   - uid: 2041
     components:
     - rot: 1.5707963267948966 rad
@@ -36143,11 +36101,6 @@ entities:
     - links:
       - 7808
       type: DeviceLinkSink
-    - inputs:
-        Reverse: []
-        Forward: []
-        Off: []
-      type: SignalReceiver
   - uid: 2042
     components:
     - rot: 1.5707963267948966 rad
@@ -36157,11 +36110,6 @@ entities:
     - links:
       - 7808
       type: DeviceLinkSink
-    - inputs:
-        Reverse: []
-        Forward: []
-        Off: []
-      type: SignalReceiver
   - uid: 2051
     components:
     - rot: -1.5707963267948966 rad
@@ -36171,17 +36119,6 @@ entities:
     - links:
       - 2154
       type: DeviceLinkSink
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 2154
-        Forward:
-        - port: Left
-          uid: 2154
-        Off:
-        - port: Middle
-          uid: 2154
-      type: SignalReceiver
   - uid: 2064
     components:
     - rot: 1.5707963267948966 rad
@@ -36191,11 +36128,6 @@ entities:
     - links:
       - 7808
       type: DeviceLinkSink
-    - inputs:
-        Reverse: []
-        Forward: []
-        Off: []
-      type: SignalReceiver
   - uid: 2066
     components:
     - rot: -1.5707963267948966 rad
@@ -36205,17 +36137,6 @@ entities:
     - links:
       - 2154
       type: DeviceLinkSink
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 2154
-        Forward:
-        - port: Left
-          uid: 2154
-        Off:
-        - port: Middle
-          uid: 2154
-      type: SignalReceiver
   - uid: 2067
     components:
     - rot: -1.5707963267948966 rad
@@ -36225,17 +36146,6 @@ entities:
     - links:
       - 2154
       type: DeviceLinkSink
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 2154
-        Forward:
-        - port: Left
-          uid: 2154
-        Off:
-        - port: Middle
-          uid: 2154
-      type: SignalReceiver
   - uid: 5285
     components:
     - rot: 1.5707963267948966 rad
@@ -36551,6 +36461,13 @@ entities:
   - uid: 10439
     components:
     - pos: 62.5,22.5
+      parent: 2
+      type: Transform
+- proto: CrateCoffin
+  entities:
+  - uid: 2538
+    components:
+    - pos: 38.5,3.5
       parent: 2
       type: Transform
 - proto: CrateEmptySpawner
@@ -61381,11 +61298,6 @@ entities:
     - pos: 30.398613,6.824299
       parent: 2
       type: Transform
-  - uid: 8696
-    components:
-    - pos: 30.500324,29.913876
-      parent: 2
-      type: Transform
 - proto: LampBanana
   entities:
   - uid: 9601
@@ -61479,6 +61391,13 @@ entities:
   - uid: 12116
     components:
     - pos: 37.37405,43.99462
+      parent: 2
+      type: Transform
+- proto: LampInterrogator
+  entities:
+  - uid: 8436
+    components:
+    - pos: 30.526884,29.884686
       parent: 2
       type: Transform
 - proto: LargeBeaker
@@ -61977,6 +61896,11 @@ entities:
   - uid: 12286
     components:
     - pos: 80.5,-12.5
+      parent: 2
+      type: Transform
+  - uid: 12842
+    components:
+    - pos: 23.5,4.5
       parent: 2
       type: Transform
 - proto: MaintenanceToolSpawner
@@ -64839,14 +64763,6 @@ entities:
       type: Transform
     - powerLoad: 0
       type: ApcPowerReceiver
-  - uid: 2538
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 37.5,5.5
-      parent: 2
-      type: Transform
-    - powerLoad: 0
-      type: ApcPowerReceiver
   - uid: 2539
     components:
     - rot: 1.5707963267948966 rad
@@ -65103,14 +65019,6 @@ entities:
   - uid: 5676
     components:
     - pos: 67.5,29.5
-      parent: 2
-      type: Transform
-    - powerLoad: 0
-      type: ApcPowerReceiver
-  - uid: 5715
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 76.5,-12.5
       parent: 2
       type: Transform
     - powerLoad: 0
@@ -65559,6 +65467,12 @@ entities:
       type: Transform
     - powerLoad: 0
       type: ApcPowerReceiver
+  - uid: 11438
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 38.5,3.5
+      parent: 2
+      type: Transform
   - uid: 11521
     components:
     - pos: 54.5,-17.5
@@ -65634,6 +65548,12 @@ entities:
     components:
     - rot: -1.5707963267948966 rad
       pos: 16.5,-13.5
+      parent: 2
+      type: Transform
+  - uid: 12841
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 36.5,3.5
       parent: 2
       type: Transform
 - proto: Protolathe
@@ -65884,6 +65804,11 @@ entities:
   - uid: 12408
     components:
     - pos: 45.5,-19.5
+      parent: 2
+      type: Transform
+  - uid: 12843
+    components:
+    - pos: 23.5,4.5
       parent: 2
       type: Transform
 - proto: RadioHandheld
@@ -69126,11 +69051,6 @@ entities:
     - links:
       - 8288
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
   - uid: 6512
     components:
     - rot: -1.5707963267948966 rad
@@ -69148,11 +69068,6 @@ entities:
     - links:
       - 8288
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
   - uid: 12425
     components:
     - pos: 51.5,1.5
@@ -69161,11 +69076,6 @@ entities:
     - links:
       - 8288
       type: DeviceLinkSink
-    - inputs:
-        Open: []
-        Close: []
-        Toggle: []
-      type: SignalReceiver
   - uid: 12822
     components:
     - pos: 28.5,20.5
@@ -69244,9 +69154,6 @@ entities:
     - linkedPorts:
         55:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 55
       type: DeviceLinkSource
   - uid: 374
     components:
@@ -69257,9 +69164,6 @@ entities:
     - linkedPorts:
         7462:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 7462
       type: DeviceLinkSource
   - uid: 1025
     components:
@@ -69278,12 +69182,6 @@ entities:
         - Pressed: Toggle
         4503:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 779
-        - 780
-        - 4502
-        - 4503
       type: DeviceLinkSource
   - uid: 1151
     components:
@@ -69303,13 +69201,6 @@ entities:
         - Pressed: Toggle
         419:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 1154
-        - 913
-        - 6512
-        - 1658
-        - 419
       type: DeviceLinkSource
   - uid: 1471
     components:
@@ -69325,11 +69216,6 @@ entities:
         - Pressed: Toggle
         270:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 265
-        - 267
-        - 270
       type: DeviceLinkSource
   - uid: 4245
     components:
@@ -69339,9 +69225,6 @@ entities:
     - linkedPorts:
         4257:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 4257
       type: DeviceLinkSource
   - uid: 5685
     components:
@@ -69355,10 +69238,6 @@ entities:
         - Pressed: Toggle
         2835:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 2834
-        - 2835
       type: DeviceLinkSource
   - uid: 6749
     components:
@@ -69373,10 +69252,6 @@ entities:
         - Pressed: Toggle
         6514:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 6513
-        - 6514
       type: DeviceLinkSource
   - uid: 6856
     components:
@@ -69389,9 +69264,6 @@ entities:
     - linkedPorts:
         7618:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 7618
       type: DeviceLinkSource
   - uid: 7463
     components:
@@ -69402,9 +69274,6 @@ entities:
     - linkedPorts:
         384:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 384
       type: DeviceLinkSource
   - uid: 8163
     components:
@@ -69416,10 +69285,6 @@ entities:
         - Pressed: Toggle
         320:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 2831
-        - 320
       type: DeviceLinkSource
   - uid: 8288
     components:
@@ -69434,11 +69299,6 @@ entities:
         - Pressed: Toggle
         12425:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 12424
-        - 2990
-        - 12425
       type: DeviceLinkSource
   - uid: 10321
     components:
@@ -69448,9 +69308,6 @@ entities:
     - linkedPorts:
         150:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 150
       type: DeviceLinkSource
   - uid: 12825
     components:
@@ -69462,10 +69319,6 @@ entities:
         - Pressed: Toggle
         12823:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 2087
-        - 12823
       type: DeviceLinkSource
   - uid: 12826
     components:
@@ -69477,10 +69330,6 @@ entities:
         - Pressed: Toggle
         12824:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 12822
-        - 12824
       type: DeviceLinkSource
 - proto: SignAnomaly
   entities:
@@ -71491,14 +71340,14 @@ entities:
       type: Transform
 - proto: SpawnPointSecurityCadet
   entities:
-  - uid: 8436
-    components:
-    - pos: 38.5,19.5
-      parent: 2
-      type: Transform
   - uid: 8437
     components:
-    - pos: 39.5,19.5
+    - pos: 34.5,27.5
+      parent: 2
+      type: Transform
+  - uid: 8696
+    components:
+    - pos: 34.5,26.5
       parent: 2
       type: Transform
 - proto: SpawnPointSecurityOfficer
@@ -71516,6 +71365,34 @@ entities:
   - uid: 8441
     components:
     - pos: 37.5,18.5
+      parent: 2
+      type: Transform
+- proto: SpawnPointSeniorEngineer
+  entities:
+  - uid: 12852
+    components:
+    - pos: 24.5,-32.5
+      parent: 2
+      type: Transform
+- proto: SpawnPointSeniorOfficer
+  entities:
+  - uid: 12849
+    components:
+    - pos: 35.5,27.5
+      parent: 2
+      type: Transform
+- proto: SpawnPointSeniorPhysician
+  entities:
+  - uid: 12851
+    components:
+    - pos: 73.5,7.5
+      parent: 2
+      type: Transform
+- proto: SpawnPointSeniorResearcher
+  entities:
+  - uid: 12850
+    components:
+    - pos: 55.5,23.5
       parent: 2
       type: Transform
 - proto: SpawnPointServiceWorker
@@ -74741,6 +74618,13 @@ entities:
     - pos: 36.482082,-14.5012665
       parent: 2
       type: Transform
+- proto: ToyAi
+  entities:
+  - uid: 12848
+    components:
+    - pos: 56.486958,35.880013
+      parent: 2
+      type: Transform
 - proto: ToyRubberDuck
   entities:
   - uid: 2321
@@ -74905,88 +74789,6 @@ entities:
         - Left: Forward
         - Right: Reverse
         - Middle: Off
-      registeredSinks:
-        Left:
-        - 6843
-        - 7667
-        - 6844
-        - 7891
-        - 7841
-        - 7875
-        - 7949
-        - 7586
-        - 6825
-        - 7672
-        - 7585
-        - 2028
-        - 6823
-        - 7888
-        - 6820
-        - 7849
-        - 2030
-        - 7671
-        - 6846
-        - 7880
-        - 7878
-        - 7879
-        - 7876
-        - 5285
-        - 1319
-        - 6775
-        Right:
-        - 6843
-        - 7667
-        - 6844
-        - 7891
-        - 7841
-        - 7875
-        - 7949
-        - 7586
-        - 6825
-        - 7672
-        - 7585
-        - 2028
-        - 6823
-        - 7888
-        - 6820
-        - 7849
-        - 2030
-        - 7671
-        - 6846
-        - 7880
-        - 7878
-        - 7879
-        - 7876
-        - 5285
-        - 1319
-        - 6775
-        Middle:
-        - 6843
-        - 7667
-        - 6844
-        - 7891
-        - 7841
-        - 7875
-        - 7949
-        - 7586
-        - 6825
-        - 7672
-        - 7585
-        - 2028
-        - 6823
-        - 7888
-        - 6820
-        - 7849
-        - 2030
-        - 7671
-        - 6846
-        - 7880
-        - 7878
-        - 7879
-        - 7876
-        - 5285
-        - 1319
-        - 6775
       type: DeviceLinkSource
   - uid: 2154
     components:
@@ -75014,61 +74816,7 @@ entities:
         - Left: Forward
         - Right: Reverse
         - Middle: Off
-      registeredSinks:
-        Left:
-        - 2039
-        - 2040
-        - 2067
-        - 2051
-        - 2066
-        Right:
-        - 2039
-        - 2040
-        - 2067
-        - 2051
-        - 2066
-        Middle:
-        - 2039
-        - 2040
-        - 2067
-        - 2051
-        - 2066
       type: DeviceLinkSource
-    - outputs:
-        Left:
-        - port: Forward
-          uid: 2039
-        - port: Forward
-          uid: 2040
-        - port: Forward
-          uid: 2067
-        - port: Forward
-          uid: 2051
-        - port: Forward
-          uid: 2066
-        Right:
-        - port: Reverse
-          uid: 2039
-        - port: Reverse
-          uid: 2040
-        - port: Reverse
-          uid: 2067
-        - port: Reverse
-          uid: 2051
-        - port: Reverse
-          uid: 2066
-        Middle:
-        - port: Off
-          uid: 2039
-        - port: Off
-          uid: 2040
-        - port: Off
-          uid: 2067
-        - port: Off
-          uid: 2051
-        - port: Off
-          uid: 2066
-      type: SignalTransmitter
   - uid: 5856
     components:
     - pos: 2.5,-30.5
@@ -75123,46 +74871,6 @@ entities:
         - Left: Forward
         - Right: Reverse
         - Middle: Off
-      registeredSinks:
-        Left:
-        - 5842
-        - 5843
-        - 5844
-        - 5845
-        - 5846
-        - 5847
-        - 5850
-        - 5851
-        - 5852
-        - 5853
-        - 5854
-        - 5855
-        Right:
-        - 5842
-        - 5843
-        - 5844
-        - 5845
-        - 5846
-        - 5847
-        - 5850
-        - 5851
-        - 5852
-        - 5853
-        - 5854
-        - 5855
-        Middle:
-        - 5842
-        - 5843
-        - 5844
-        - 5845
-        - 5846
-        - 5847
-        - 5850
-        - 5851
-        - 5852
-        - 5853
-        - 5854
-        - 5855
       type: DeviceLinkSource
   - uid: 5857
     components:
@@ -75174,13 +74882,6 @@ entities:
         - Left: Open
         - Right: Open
         - Middle: Close
-      registeredSinks:
-        Left:
-        - 5875
-        Right:
-        - 5875
-        Middle:
-        - 5875
       type: DeviceLinkSource
   - uid: 7808
     components:
@@ -75208,25 +74909,6 @@ entities:
         - Left: Forward
         - Right: Reverse
         - Middle: Off
-      registeredSinks:
-        Left:
-        - 2038
-        - 2037
-        - 2041
-        - 2042
-        - 2064
-        Right:
-        - 2038
-        - 2037
-        - 2041
-        - 2042
-        - 2064
-        Middle:
-        - 2038
-        - 2037
-        - 2041
-        - 2042
-        - 2064
       type: DeviceLinkSource
   - uid: 8665
     components:
@@ -75242,16 +74924,6 @@ entities:
         - Left: Open
         - Right: Open
         - Middle: Close
-      registeredSinks:
-        Left:
-        - 5351
-        - 5361
-        Right:
-        - 5351
-        - 5361
-        Middle:
-        - 5351
-        - 5361
       type: DeviceLinkSource
   - uid: 10322
     components:
@@ -75263,13 +74935,6 @@ entities:
         - Left: Open
         - Right: Open
         - Middle: Close
-      registeredSinks:
-        Left:
-        - 5268
-        Right:
-        - 5268
-        Middle:
-        - 5268
       type: DeviceLinkSource
 - proto: UnfinishedMachineFrame
   entities:
@@ -85558,6 +85223,11 @@ entities:
   - uid: 5532
     components:
     - pos: 65.5,18.5
+      parent: 2
+      type: Transform
+  - uid: 5715
+    components:
+    - pos: 23.5,7.5
       parent: 2
       type: Transform
   - uid: 5730

@@ -90,6 +90,10 @@
   sprites:
   - sprite: Mobs/Customization/Arachnid/chest.rsi
     state: stripes
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
 
 - type: marking
   id: ArachnidTorsoSlashes
@@ -99,6 +103,10 @@
   sprites:
   - sprite: Mobs/Customization/Arachnid/chest.rsi
     state: slashes
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
 
 - type: marking
   id: ArachnidTorsoX
@@ -108,6 +116,10 @@
   sprites:
   - sprite: Mobs/Customization/Arachnid/chest.rsi
     state: x
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
 
 - type: marking
   id: ArachnidTorsoCross
@@ -117,6 +129,10 @@
   sprites:
   - sprite: Mobs/Customization/Arachnid/chest.rsi
     state: cross
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
 
 - type: marking
   id: ArachnidTorsoHeart
@@ -126,6 +142,10 @@
   sprites:
   - sprite: Mobs/Customization/Arachnid/chest.rsi
     state: heart
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
 
 - type: marking
   id: ArachnidTorsoHourglass
@@ -135,6 +155,10 @@
   sprites:
   - sprite: Mobs/Customization/Arachnid/chest.rsi
     state: hourglass
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
 
 - type: marking
   id: ArachnidTorsoNailAndHammer
@@ -144,6 +168,10 @@
   sprites:
   - sprite: Mobs/Customization/Arachnid/chest.rsi
     state: nail-and-hammer
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
 
 - type: marking
   id: ArachnidTorsoStar
@@ -153,3 +181,7 @@
   sprites:
   - sprite: Mobs/Customization/Arachnid/chest.rsi
     state: star
+  coloring:
+    default:
+      type:
+        !type:EyeColoring

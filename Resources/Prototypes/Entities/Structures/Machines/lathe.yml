@@ -316,6 +316,7 @@
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
+      - MassMediaCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -467,6 +468,47 @@
         - Sheet
         - RawMaterial
         - Ingot
+
+- type: entity
+  id: AmmoTechFab
+  parent: BaseLathe
+  name: ammo techfab
+  description: Prints the bare minimum of bullets that any budget military or armory could need. Nothing fancy.
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/techfab.rsi
+      layers:
+        - state: icon
+          map: ["enum.LatheVisualLayers.IsRunning"]
+        - state: ammo
+        - state: unlit
+          shader: unshaded
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+        - state: inserting
+          map: ["enum.MaterialStorageVisualLayers.Inserting"]
+        - state: panel
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: Machine
+      board: AmmoTechFabCircuitboard
+    - type: Lathe
+      idleState: icon
+      runningState: icon
+      staticRecipes:
+        - CartridgePistol
+        - CartridgeMagnum
+        - ShellShotgun
+        - ShellShotgunFlare
+        - ShellTranquilizer
+        - CartridgeLightRifle
+        - CartridgeRifle
+        - MagazineBoxPistol
+        - MagazineBoxMagnum
+        - MagazineBoxRifle
+        - MagazineBoxLightRifle
+    - type: MaterialStorage
+      whitelist:
+        tags:
+          - Sheet
 
 - type: entity
   id: MedicalTechFab
