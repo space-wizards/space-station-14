@@ -134,7 +134,7 @@ public sealed class NewsSystem : EntitySystem
             }
         }
 
-        _audio.PlayPvs(_audio.GetSound(component.ConfirmSound), uid);
+        _audio.PlayPvs(component.ConfirmSound, uid);
 
         _articles.Add(article);
 
@@ -154,12 +154,12 @@ public sealed class NewsSystem : EntitySystem
         if (CheckDeleteAccess(_articles[msg.ArticleNum], uid, msg.Session.AttachedEntity))
         {
             _articles.RemoveAt(msg.ArticleNum);
-            _audio.PlayPvs(_audio.GetSound(component.ConfirmSound), uid);
+            _audio.PlayPvs(component.ConfirmSound, uid);
         }
         else
         {
             _popup.PopupEntity(Loc.GetString("news-write-no-access-popup"), uid);
-            _audio.PlayPvs(_audio.GetSound(component.NoAccessSound), uid);
+            _audio.PlayPvs(component.NoAccessSound, uid);
         }
 
         UpdateReadDevices();
