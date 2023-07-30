@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "тут должна быть моя реклама!",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "Vulpkanin_ears",
+        "directions": 4
+      },
+      {
+        "name": "Vulpkanin_tail",
+        "directions": 4
+      }
+      
+    ]
+  }
+  

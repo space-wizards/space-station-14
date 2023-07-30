@@ -1,0 +1,49 @@
+- type: entity
+  save: false
+  name: Urist McVulp
+  parent: BaseMobOrganic
+  id: BaseMobVulpkanin
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: Vulpkanin
+  - type: Icon
+    sprite: SS220/Mobs/Species/Vulpkanin/parts.rsi
+    state: full
+  - type: Body
+    prototype: Vulpkanin
+    requiredLegs: 2
+  - type: Hunger
+  - type: Thirst
+  - type: Perishable
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatHuman
+      amount: 5
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5.5
+#если будет дальнейшее обсуждение и одобрение, займусь этой рассой для раундстартового состояния. Пока так
+
+
+- type: entity
+  save: false
+  name: Urist McVulp
+  id: MobVulpkaninDummy
+  parent: BaseMobOrganicDummy
+  noSpawn: true
+  description: A dummy vulpkanin meant to be used in character setup.
+  components:
+    - type: HumanoidAppearance
+      species: Vulpkanin
+  
+
+
+#я запутался, боже

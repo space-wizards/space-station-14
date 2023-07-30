@@ -1,0 +1,17 @@
+- type: marking
+  id: VulpkaninEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Vulpkanin]
+  sprites:
+  - sprite: SS220/Mobs/Customization/vulpkanin_parts.rsi
+    state: Vulpkanin_ears
+
+- type: marking
+  id: VulpkaninTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Vulpkanin]
+  sprites:
+  - sprite: SS220/Mobs/Customization/vulpkanin_parts.rsi
+    state: Vulpkanin_tail
