@@ -1,11 +1,4 @@
 Entries:
-- author: malchanceux
-  changes:
-  - {message: NanoTrasen Counterintelligence has uncovered that threat actors have
-      started recruiting atmospheric technicians into their ranks. Whether this is
-      genuine or a red herring remains to be seen., type: Add}
-  id: 3880
-  time: '2023-05-27T19:50:51.0000000+00:00'
 - author: brainfood1183
   changes:
   - {message: Station Map has been resprited and can now be constructed., type: Add}
@@ -2975,3 +2968,8 @@ Entries:
       hardsuit bundles, type: Add}
   id: 4379
   time: '2023-07-30T18:54:45.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fixed typo in emergency medipen description, type: Fix}
+  id: 4380
+  time: '2023-07-30T22:38:18.0000000+00:00'
