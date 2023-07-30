@@ -159,5 +159,7 @@ public sealed class SaveLoadReparentTest
                 }
             }
         });
+
+        await pairTracker.CleanReturnAsync();
     }
 }
