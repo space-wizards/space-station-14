@@ -962,7 +962,7 @@
   - type: DeviceNetworkRequiresPower
   - type: NewsWrite
   - type: AccessReader
-    access: [[ "Cargo" ]]
+    access: [[ "Command" ]]
   - type: ActivatableUI
     key: enum.NewsWriteUiKey.Key
   - type: ActivatableUIRequiresVision
