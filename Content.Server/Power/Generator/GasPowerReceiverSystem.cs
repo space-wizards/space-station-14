@@ -12,7 +12,7 @@ namespace Content.Server.Power.Generator;
 /// <summary>
 /// This handles gas power receivers, allowing devices to accept power in the form of a gas.
 /// </summary>
-public sealed class GasPowerReceivererSystem : EntitySystem
+public sealed class GasPowerReceiverSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
