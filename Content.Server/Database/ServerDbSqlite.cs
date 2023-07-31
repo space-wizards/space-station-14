@@ -20,16 +20,15 @@ namespace Content.Server.Database
     {
         private readonly Func<DbContextOptions<SqliteServerDbContext>> _options;
 
-        private readonly SemaphoreSlim _prefsSemaphore;
+        private readonly ConcurrencySemaphore _prefsSemaphore;
 
         private readonly Task _dbReadyTask;
 
         private int _msDelay;
 
-        public ServerDbSqlite(
-            Func<DbContextOptions<SqliteServerDbContext>> options,
+        public ServerDbSqlite(Func<DbContextOptions<SqliteServerDbContext>> options,
             bool inMemory,
-            IConfigurationManager cfg)
+            IConfigurationManager cfg, bool synchronous)
         {
             _options = options;
 
@@ -37,9 +36,9 @@ namespace Content.Server.Database
 
             // When inMemory we re-use the same connection, so we can't have any concurrency.
             var concurrency = inMemory ? 1 : cfg.GetCVar(CCVars.DatabaseSqliteConcurrency);
-            _prefsSemaphore = new SemaphoreSlim(concurrency, concurrency);
+            _prefsSemaphore = new ConcurrencySemaphore(concurrency, synchronous);
 
-            if (cfg.GetCVar(CCVars.DatabaseSynchronous))
+            if (synchronous)
             {
                 prefsCtx.Database.Migrate();
                 _dbReadyTask = Task.CompletedTask;
@@ -562,6 +561,69 @@ namespace Content.Server.Database
             {
                 await _ctx.DisposeAsync();
                 _db._prefsSemaphore.Release();
+            }
+        }
+
+        private sealed class ConcurrencySemaphore
+        {
+            private readonly bool _synchronous;
+            private readonly SemaphoreSlim _semaphore;
+            private Thread? _holdingThread;
+
+            public ConcurrencySemaphore(int maxCount, bool synchronous)
+            {
+                if (synchronous && maxCount != 1)
+                    throw new ArgumentException("If synchronous, max concurrency must be 1");
+
+                _synchronous = synchronous;
+                _semaphore = new SemaphoreSlim(maxCount, maxCount);
+            }
+
+            public Task WaitAsync()
+            {
+                var task = _semaphore.WaitAsync();
+
+                if (_synchronous)
+                {
+                    if (!task.IsCompleted)
+                    {
+                        if (Thread.CurrentThread == _holdingThread)
+                        {
+                            throw new InvalidOperationException(
+                                "Multiple database requests from same thread on synchronous database!");
+                        }
+
+                        throw new InvalidOperationException(
+                            $"Different threads trying to access the database at once! " +
+                            $"Holding thread: {DiagThread(_holdingThread)}, " +
+                            $"current thread: {DiagThread(Thread.CurrentThread)}");
+                    }
+
+                    _holdingThread = Thread.CurrentThread;
+                }
+
+                return task;
+            }
+
+            public void Release()
+            {
+                if (_synchronous)
+                {
+                    if (Thread.CurrentThread != _holdingThread)
+                        throw new InvalidOperationException("Released on different thread than took lock???");
+
+                    _holdingThread = null;
+                }
+
+                _semaphore.Release();
+            }
+
+            private static string DiagThread(Thread? thread)
+            {
+                if (thread != null)
+                    return $"{thread.Name} ({thread.ManagedThreadId})";
+
+                return "<null thread>";
             }
         }
     }

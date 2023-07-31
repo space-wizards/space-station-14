@@ -8517,18 +8517,36 @@ entities:
       pos: 11.5,7.5
       parent: 1
       type: Transform
+    - linkedPorts:
+        5535:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 12486
     components:
     - rot: 3.141592653589793 rad
       pos: 14.5,7.5
       parent: 1
       type: Transform
+    - linkedPorts:
+        5536:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 12487
     components:
     - rot: 3.141592653589793 rad
       pos: 17.5,7.5
       parent: 1
       type: Transform
+    - linkedPorts:
+        5537:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
 - proto: Brutepack
   entities:
   - uid: 9629
@@ -82944,16 +82962,25 @@ entities:
     - pos: 12.5,7.5
       parent: 1
       type: Transform
+    - links:
+      - 12485
+      type: DeviceLinkSink
   - uid: 5536
     components:
     - pos: 15.5,7.5
       parent: 1
       type: Transform
+    - links:
+      - 12486
+      type: DeviceLinkSink
   - uid: 5537
     components:
     - pos: 18.5,7.5
       parent: 1
       type: Transform
+    - links:
+      - 12487
+      type: DeviceLinkSink
   - uid: 12003
     components:
     - pos: 36.5,13.5
