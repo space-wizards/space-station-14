@@ -313,6 +313,7 @@
   name: gloves of the north star
   description: These gloves allow you to punch incredibly fast.
   components:
+  - type: Actions
   - type: Sprite
     sprite: Clothing/Hands/Gloves/northstar.rsi
   - type: Clothing
