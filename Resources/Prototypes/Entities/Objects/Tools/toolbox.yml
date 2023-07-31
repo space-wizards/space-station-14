@@ -93,7 +93,7 @@
     price: 1350
     
 - type: entity
-  name: electrical toolbox
+  name: mechanical toolbox
   suffix: Syndicate, Singulo Bait
   parent: ToolboxMechanical
   id: ToolboxMechanicalSinguloBait
