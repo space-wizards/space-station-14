@@ -141,7 +141,7 @@ namespace Content.Server.Damage.Commands
             }
             else
             {
-                resistancePenetration = null;
+                resistancePenetration = 0f;
             }
 
             damageFunc(target, resistancePenetration);
