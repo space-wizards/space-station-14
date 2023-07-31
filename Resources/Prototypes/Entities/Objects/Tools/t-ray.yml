@@ -2,10 +2,10 @@
   name: t-ray scanner
   parent: BaseItem
   id: trayScanner
+  description: A high-tech scanning device that uses Terahertz Radiation to detect subfloor infrastructure.
   components:
   - type: Sprite
     sprite: Objects/Tools/t-ray.rsi
-    netsync: false
     layers:
     - state: tray-off
       map: ["base"]

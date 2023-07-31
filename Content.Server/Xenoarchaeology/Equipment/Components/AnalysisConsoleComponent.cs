@@ -1,8 +1,7 @@
-﻿using Content.Shared.MachineLinking;
+﻿using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
@@ -22,14 +21,14 @@ public sealed class AnalysisConsoleComponent : Component
     /// <summary>
     /// The machine linking port for the analyzer
     /// </summary>
-    [DataField("linkingPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+    [DataField("linkingPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
     public readonly string LinkingPort = "ArtifactAnalyzerSender";
 
     /// <summary>
-    /// The sound played when an artifact is destroyed.
+    /// The sound played when an artifact has points extracted.
     /// </summary>
-    [DataField("destroySound")]
-    public SoundSpecifier DestroySound = new SoundPathSpecifier("/Audio/Effects/radpulse11.ogg");
+    [DataField("extractSound")]
+    public SoundSpecifier ExtractSound = new SoundPathSpecifier("/Audio/Effects/radpulse11.ogg");
 
     /// <summary>
     /// The entity spawned by a report.

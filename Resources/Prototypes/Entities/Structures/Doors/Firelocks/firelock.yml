@@ -28,7 +28,6 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
     - type: Sprite
-      netsync: false
       sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
       snapCardinals: true
       layers:
@@ -79,7 +78,6 @@
       openingAnimationTime: 0.6
       closingAnimationTime: 0.6
     - type: Weldable
-      fuel: 3
       time: 3
     - type: Firelock
     - type: Appearance

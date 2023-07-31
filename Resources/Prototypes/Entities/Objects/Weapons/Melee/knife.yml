@@ -18,7 +18,6 @@
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
-    netsync: false
   - type: Item
   - type: Tool
     qualities:
@@ -139,6 +138,7 @@
     tags:
     - CombatKnife
     - Knife
+    - Shiv
   - type: Construction
     graph: Shiv
     node: icon

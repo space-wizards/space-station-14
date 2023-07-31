@@ -8,7 +8,6 @@
     mayTransfer: true
     capacity: 30
   - type: Sprite
-    netsync: false
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container

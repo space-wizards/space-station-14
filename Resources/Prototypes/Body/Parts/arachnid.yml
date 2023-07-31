@@ -27,7 +27,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "torso_m"
   - type: Icon
@@ -49,7 +48,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "head_m"
   - type: Icon
@@ -82,7 +80,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "l_arm"
   - type: Icon
@@ -98,7 +95,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "r_arm"
   - type: Icon
@@ -114,7 +110,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "l_hand"
   - type: Icon
@@ -130,7 +125,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "r_hand"
   - type: Icon
@@ -146,7 +140,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "l_leg"
   - type: Icon
@@ -165,7 +158,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "r_leg"
   - type: Icon
@@ -184,7 +176,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "l_foot"
   - type: Icon
@@ -200,7 +191,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "r_foot"
   - type: Icon

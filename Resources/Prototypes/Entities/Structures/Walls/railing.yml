@@ -5,7 +5,6 @@
   description: Basic railing meant to protect idiots like you from falling.
   components:
   - type: Sprite
-    netsync: false
     drawdepth: WallTops
     sprite: Structures/Walls/railing.rsi
     state: side
@@ -64,7 +63,6 @@
   description: Basic railing meant to protect idiots like you from falling.
   components:
   - type: Sprite
-    netsync: false
     drawdepth: WallTops
     sprite: Structures/Walls/railing.rsi
     state: corner
@@ -132,7 +130,6 @@
   description: Basic railing meant to protect idiots like you from falling.
   components:
   - type: Sprite
-    netsync: false
     drawdepth: WallTops
     sprite: Structures/Walls/railing.rsi
     state: corner_small

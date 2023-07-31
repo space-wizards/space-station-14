@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Interaction;
 using Content.Shared.Whitelist;
 using Robust.Client.GameObjects;
@@ -58,7 +59,9 @@ public sealed class TargetOutlineSystem : EntitySystem
     /// <summary>
     ///     The size of the box around the mouse to use when looking for valid targets.
     /// </summary>
-    public float LookupSize = 2;
+    public float LookupSize = 1;
+
+    private Vector2 LookupVector => new(LookupSize, LookupSize);
 
     private const string ShaderTargetValid = "SelectionOutlineInrange";
     private const string ShaderTargetInvalid = "SelectionOutline";
@@ -116,7 +119,7 @@ public sealed class TargetOutlineSystem : EntitySystem
         // find possible targets on screen
         // TODO: Duplicated in SpriteSystem and DragDropSystem. Should probably be cached somewhere for a frame?
         var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
-        var bounds = new Box2(mousePos - LookupSize / 2f, mousePos + LookupSize / 2f);
+        var bounds = new Box2(mousePos - LookupVector, mousePos + LookupVector);
         var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Static);
         var spriteQuery = GetEntityQuery<SpriteComponent>();
 
@@ -159,7 +162,7 @@ public sealed class TargetOutlineSystem : EntitySystem
             {
                 var origin = Transform(player).WorldPosition;
                 var target = Transform(entity).WorldPosition;
-                valid = (origin - target).LengthSquared <= Range;
+                valid = (origin - target).LengthSquared() <= Range;
             }
 
             if (sprite.PostShader != null &&

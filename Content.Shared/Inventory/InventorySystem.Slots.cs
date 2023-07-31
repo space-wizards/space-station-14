@@ -48,7 +48,7 @@ public partial class InventorySystem : EntitySystem
         if (!containerComp.TryGetContainer(slotDefinition.Name, out var container))
         {
             if (inventory.LifeStage >= ComponentLifeStage.Initialized)
-                Logger.Error($"Missing inventory container {slot} on entity {ToPrettyString(uid)}");
+                Log.Error($"Missing inventory container {slot} on entity {ToPrettyString(uid)}");
             return false;
         }
 

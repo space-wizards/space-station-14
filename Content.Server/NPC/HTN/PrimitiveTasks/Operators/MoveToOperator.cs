@@ -146,7 +146,7 @@ public sealed class MoveToOperator : HTNOperator
                 _steering.PrunePath(uid, mapCoords, targetCoordinates.ToMapPos(_entManager, _transform) - mapCoords.Position, result.Path);
             }
 
-            comp.CurrentPath = result.Path;
+            comp.CurrentPath = new Queue<PathPoly>(result.Path);
         }
     }
 
