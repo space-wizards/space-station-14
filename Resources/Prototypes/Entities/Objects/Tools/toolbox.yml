@@ -97,7 +97,7 @@
   suffix: Syndicate, Singulo Bait
   parent: ToolboxMechanical
   id: ToolboxMechanicalSinguloBait
-  description: A blue box, stocked with mechanical tools. Oddly heavy.
+  description: A blue box, stocked with mechanical tools.
   components:
   - type: Storage
     capacity: 0

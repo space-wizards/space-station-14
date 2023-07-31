@@ -257,6 +257,9 @@ uplink-disposable-turret-desc = Looks and functions like a normal electrical too
 uplink-cluster-banana-peel-name = Cluster Banana
 uplink-cluster-banana-peel-desc = Splits into 6 explosive banana peels after being thrown, the peels detonate automatically after 20 seconds if nobody slips on them.
 
+uplink-singulo-bait-name = Singularity Attractor Toolbox
+uplink-singulo-bait-desc = Looks like a normal mechanical toolbox, but has no internal room. Will cause all singularities to change their course towards the toolbox. Effect much stronger at shorter distances. May cause singularities to grow when consumed.
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
