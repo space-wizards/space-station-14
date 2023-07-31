@@ -1,13 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: 'Most tools no longer deal 10 blunt damage, and are across-the-board
-      weaker.', type: Tweak}
-  - {message: The red crowbar is now stronger than the grey crowbar., type: Tweak}
-  - {message: Shovels and toolboxes are now much more robust., type: Tweak}
-  - {message: Power tools can now deal damage., type: Tweak}
-  id: 3891
-  time: '2023-05-28T20:09:25.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Added ambient music!, type: Add}
@@ -2973,3 +2964,9 @@ Entries:
   - {message: Updated the HAMTR mech's description to avoid trademark issues., type: Fix}
   id: 4390
   time: '2023-07-31T20:30:52.0000000+00:00'
+- author: Raitononai
+  changes:
+  - {message: 'Gave the toy sword slight stamina damage, like the boxing gloves and
+      toy hammer.', type: Tweak}
+  id: 4391
+  time: '2023-07-31T20:32:17.0000000+00:00'
