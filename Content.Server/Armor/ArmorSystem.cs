@@ -64,8 +64,13 @@ namespace Content.Server.Armor
 
         private void OnDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
         {
-            //TODO: ArmorShred
-            args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers, args.Args.ArmorReduction);
+            var resistancePenetration = args.Args.ResistancePenetration;
+            if (args.Args.ResistancePenetration != null && component.ResistancePenetrationReduction != null)
+            {
+                resistancePenetration -= component.ResistancePenetrationReduction.Value;
+            }
+
+            args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers, resistancePenetration);
         }
 
         private void OnArmorVerbExamine(EntityUid uid, ArmorComponent component, GetVerbsEvent<ExamineVerb> args)

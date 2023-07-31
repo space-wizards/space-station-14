@@ -56,14 +56,20 @@ public sealed class HitscanPrototype : IPrototype, IShootable
     public float MaxLength = 20f;
 
     /// <summary>
-    /// Decides if the hitscan will ignore walls
+    /// Decides if the hitscan will ignore walls.
     /// </summary>
     [DataField("canPenetrate")]
     public bool CanPenetrate = false;
 
     /// <summary>
-    /// Decides if the hitscan will ignore walls
+    /// Decides if the hitscan will ignore walls.
     /// </summary>
     [DataField("canPenetrateWall")]
     public bool CanPenetrateWall = false;
+
+    /// <summary>
+    /// The amount of resistance the hitscan will ignore.
+    /// </summary>
+    [DataField("resistancePenetration")]
+    public float? ResistancePenetration;
 }

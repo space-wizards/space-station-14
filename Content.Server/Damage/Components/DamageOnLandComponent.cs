@@ -5,9 +5,9 @@ namespace Content.Server.Damage.Components
     [RegisterComponent]
     public sealed class DamageOnLandComponent : Component
     {
-        [DataField("resistanceReductionValue")]
+        [DataField("resistancePenetration")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float? ResistanceReductionValue;
+        public float? ResistancePenetration;
 
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]

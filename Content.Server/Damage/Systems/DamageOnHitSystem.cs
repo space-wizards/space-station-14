@@ -19,7 +19,7 @@ public sealed class DamageOnHitSystem : EntitySystem
     private void DamageItem(EntityUid uid, DamageOnHitComponent component, MeleeHitEvent args)
     {
         if (args.HitEntities.Any()) {
-            _damageableSystem.TryChangeDamage(uid, component.Damage, component.ResistanceReductionValue);
+            _damageableSystem.TryChangeDamage(uid, component.Damage, component.ResistancePenetration);
         }
     }
 }

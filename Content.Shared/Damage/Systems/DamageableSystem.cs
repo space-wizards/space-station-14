@@ -142,7 +142,7 @@ namespace Content.Shared.Damage
         ///     Returns a <see cref="DamageSpecifier"/> with information about the actual damage changes. This will be
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
-        public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, float? armorPenetrationValue = null,
+        public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, float? resistancePenetration = null,
             bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null)
         {
             if (!uid.HasValue || !Resolve(uid.Value, ref damageable, false))
@@ -169,7 +169,7 @@ namespace Content.Shared.Damage
                 return null;
 
             // Apply resistances
-            if (armorPenetrationValue != 1)
+            if (resistancePenetration != 1)
             {
                 if (damageable.DamageModifierSetId != null &&
                     _prototypeManager.TryIndex<DamageModifierSetPrototype>(damageable.DamageModifierSetId, out var modifierSet))
@@ -177,7 +177,7 @@ namespace Content.Shared.Damage
                     damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
                 }
 
-                var ev = new DamageModifyEvent(damage, armorPenetrationValue);
+                var ev = new DamageModifyEvent(damage, resistancePenetration);
                 RaiseLocalEvent(uid.Value, ev);
                 damage = ev.Damage;
 
@@ -315,13 +315,13 @@ namespace Content.Shared.Damage
 
         public readonly DamageSpecifier OriginalDamage;
         public DamageSpecifier Damage;
-        public float? ArmorReduction;
+        public float? ResistancePenetration;
 
-        public DamageModifyEvent(DamageSpecifier damage, float? armorReductionMultiplier)
+        public DamageModifyEvent(DamageSpecifier damage, float? resistancePenetrationMultiplier)
         {
             OriginalDamage = damage;
             Damage = damage;
-            ArmorReduction = armorReductionMultiplier;
+            ResistancePenetration = resistancePenetrationMultiplier;
         }
     }
 

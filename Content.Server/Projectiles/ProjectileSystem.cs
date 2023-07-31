@@ -7,6 +7,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Weapons;
 using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -44,16 +45,20 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             SetShooter(component, otherEntity);
             return;
         }
-        if (TryComp<GunComponent>(component.Weapon, out var weapon) && !component.DamageModifierAdded)
+
+        if (TryComp<GunComponent>(component.Weapon, out var gun) && !component.DamageModifierAdded)
         {
-            component.Damage *= weapon.DamageMultiplier;
+            component.Damage *= gun.DamageMultiplier;
             component.DamageModifierAdded = true;
         }
 
+        float? resistancePenetration = null;
+        if (TryComp<ResistancePenetrationComponent>(uid, out var penComp))
+            resistancePenetration = penComp.Penetration;
 
         var otherName = ToPrettyString(otherEntity);
         var direction = args.OurBody.LinearVelocity.Normalized();
-        var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.ResistanceReductionValue, origin: component.Shooter);
+        var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, resistancePenetration, origin: component.Shooter);
         var deleted = Deleted(otherEntity);
 
         if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
@@ -88,8 +93,8 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             {
                 if (!component.PenetrationModifierAdded)
                 {
-                    if (weapon != null)
-                        component.PenetrationStrength += weapon.PenetrationModifier;
+                    if (gun != null)
+                        component.PenetrationStrength += gun.PenetrationModifier;
 
                     component.PenetrationModifierAdded = true;
                 }

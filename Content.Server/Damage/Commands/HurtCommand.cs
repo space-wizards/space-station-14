@@ -55,7 +55,7 @@ namespace Content.Server.Damage.Commands
             return CompletionResult.Empty;
         }
 
-        private delegate void Damage(EntityUid entity, float resistanceReductionValue);
+        private delegate void Damage(EntityUid entity, float resistancePenetration);
 
         private bool TryParseDamageArgs(
             IConsoleShell shell,
@@ -72,10 +72,10 @@ namespace Content.Server.Damage.Commands
 
             if (_prototypeManager.TryIndex<DamageGroupPrototype>(args[0], out var damageGroup))
             {
-                func = (entity, resistanceReductionValue) =>
+                func = (entity, resistancePenetration) =>
                 {
                     var damage = new DamageSpecifier(damageGroup, amount);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, resistanceReductionValue);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, resistancePenetration);
                 };
 
                 return true;
@@ -83,10 +83,10 @@ namespace Content.Server.Damage.Commands
             // Fall back to DamageType
             else if (_prototypeManager.TryIndex<DamageTypePrototype>(args[0], out var damageType))
             {
-                func = (entity, resistanceReductionValue) =>
+                func = (entity, resistancePenetration) =>
                 {
                     var damage = new DamageSpecifier(damageType, amount);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, resistanceReductionValue);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, resistancePenetration);
                 };
                 return true;
 
@@ -130,10 +130,10 @@ namespace Content.Server.Damage.Commands
             if (!TryParseDamageArgs(shell, target, args, out var damageFunc))
                 return;
 
-            float resistanceReductionValue;
+            float resistancePenetration;
             if (args.Length == 3)
             {
-                if (!float.TryParse(args[2], out resistanceReductionValue))
+                if (!float.TryParse(args[2], out resistancePenetration))
                 {
                     shell.WriteLine(Loc.GetString("damage-command-error-bool", ("arg", args[2])));
                     return;
@@ -141,10 +141,10 @@ namespace Content.Server.Damage.Commands
             }
             else
             {
-                resistanceReductionValue = 0f;
+                resistancePenetration = 0f;
             }
 
-            damageFunc(target, resistanceReductionValue);
+            damageFunc(target, resistancePenetration);
         }
     }
 }

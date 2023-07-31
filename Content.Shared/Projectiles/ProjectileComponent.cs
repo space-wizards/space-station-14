@@ -42,13 +42,8 @@ public sealed partial class ProjectileComponent : Component
     public float PenetrationStrength = 0f;
 
     [DataField("penetrationDamageFalloffMultiplier")]
-    public float PenetrationDamageFalloffMultiplier = 0.3f;
+    public float PenetrationDamageFalloffMultiplier = 0.5f;
 
-    [DataField("resistanceReductionValue")]
-    public float? ResistanceReductionValue;
-
-    [DataField("ignoreResistances")]
-    public bool IgnoreResistances = false;
 
     [DataField("weaponModifierAdded")]
     public bool DamageModifierAdded = false;

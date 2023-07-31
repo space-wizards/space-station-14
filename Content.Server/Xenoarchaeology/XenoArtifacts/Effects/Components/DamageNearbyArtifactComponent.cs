@@ -39,6 +39,6 @@ public sealed class DamageNearbyArtifactComponent : Component
     /// <summary>
     /// Whether or not this should ignore resistances for the damage
     /// </summary>
-    [DataField("resistanceReductionValue")]
-    public float? ResistanceReductionValue;
+    [DataField("resistancePenetration")]
+    public float? ResistancePenetration;
 }

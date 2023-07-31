@@ -7,5 +7,8 @@ namespace Content.Server.Armor
     {
         [DataField("modifiers", required: true)]
         public DamageModifierSet Modifiers = default!;
+
+        [DataField("resistancePenetrationReduction")]
+        public float? ResistancePenetrationReduction;
     }
 }

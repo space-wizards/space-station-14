@@ -10,4 +10,6 @@
       types:
         Piercing: 60
         Structural: 30
-    resistanceReductionValue: 0.5
+  - type: ResistancePenetration
+    penetration: 0.75
+

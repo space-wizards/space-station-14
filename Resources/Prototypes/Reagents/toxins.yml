@@ -117,7 +117,7 @@
       effects:
       - !type:HealthChange
         scaleByQuantity: true
-        ignoreResistances: false
+        resistancePenetration: 1
         damage:
           types:
             Caustic: 0.5
@@ -153,7 +153,7 @@
       effects:
       - !type:HealthChange
         scaleByQuantity: true
-        ignoreResistances: false
+        resistancePenetration: 1
         damage:
           types:
             Caustic: 0.3
@@ -197,7 +197,7 @@
       effects:
       - !type:HealthChange
         scaleByQuantity: true
-        ignoreResistances: false
+        resistancePenetration: 1
         damage:
           types:
             Caustic: 0.1

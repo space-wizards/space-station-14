@@ -62,7 +62,8 @@
   noSpawn: true
   components:
   - type: Projectile
-    armorReductionMultiplier: 0.6
     damage:
       types:
-        Piercing: 27.5 # 20% decrease
+        Piercing: 28 # 20% decrease
+  - type: ResistancePenetration
+    penetration: 0.6

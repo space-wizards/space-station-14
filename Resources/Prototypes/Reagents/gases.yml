@@ -63,7 +63,7 @@
       effects:
       - !type:HealthChange
         scaleByQuantity: true
-        resistanceReductionValue: 1
+        resistancePenetration: 1
         damage:
           types:
             Poison:
@@ -98,7 +98,7 @@
       effects:
       - !type:HealthChange
         scaleByQuantity: true
-        resistanceReductionValue: 1
+        resistancePenetration: 1
         damage:
           types:
             Radiation:
@@ -131,7 +131,7 @@
         - !type:ReagentThreshold
           min: 0.5
         scaleByQuantity: true
-        resistanceReductionValue: 1
+        resistancePenetration: 1
         damage:
           types:
             Poison:
@@ -196,7 +196,7 @@
         - !type:ReagentThreshold
           reagent: Miasma
           min: 1
-        resistanceReductionValue: 1
+        resistancePenetration: 1
         damage:
           types:
             Poison: 0.25
@@ -226,7 +226,7 @@
           reagent: Miasma
           min: 1
         scaleByQuantity: true
-        resistanceReductionValue: 1
+        resistancePenetration: 1
         damage:
           types:
             Blunt: -4
@@ -287,7 +287,7 @@
         - !type:OrganType
           type: Slime
           shouldHave: false
-        resistanceReductionValue: 1
+        resistancePenetration: 1
         damage:
           types:
             Poison: 0.25
@@ -310,7 +310,7 @@
           reagent: Frezon
           min: 0.5
         scaleByQuantity: true
-        resistanceReductionValue: 1
+        resistancePenetration: 1
         damage:
           types:
             Cellular: 0.01

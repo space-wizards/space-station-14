@@ -30,9 +30,9 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("scaleByQuantity")]
         public bool ScaleByQuantity = false;
 
-        [DataField("ignoreResistances")]
-        [JsonPropertyName("ignoreResistances")]
-        public bool IgnoreResistances = true;
+        [DataField("resistancePenetration")]
+        [JsonPropertyName("resistancePenetration")]
+        public float? ResistancePenetration;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
@@ -71,7 +71,7 @@ namespace Content.Server.Chemistry.ReagentEffects
             var scale = ScaleByQuantity ? args.Quantity : FixedPoint2.New(1);
             scale *= args.Scale;
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage * scale, 1f);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage * scale, ResistancePenetration);
         }
     }
 }

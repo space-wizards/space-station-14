@@ -450,6 +450,10 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     {
         var curTime = Timing.CurTime;
 
+        float? resistancePenetration = null;
+        if (TryComp<ResistancePenetrationComponent>(weaponUid, out var penComp))
+            resistancePenetration = penComp.Penetration;
+
         if (weapon.NextAttack > curTime)
             return false;
 
@@ -515,7 +519,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             switch (attack)
             {
                 case LightAttackEvent light:
-                    DoLightAttack(user, light, weaponUid, weapon, session);
+                    DoLightAttack(user, light, weaponUid, weapon, resistancePenetration, session);
                     animation = weapon.ClickAnimation;
                     break;
                 case DisarmAttackEvent disarm:
@@ -525,7 +529,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                     animation = weapon.ClickAnimation;
                     break;
                 case HeavyAttackEvent heavy:
-                    DoHeavyAttack(user, heavy, weaponUid, weapon, session);
+                    DoHeavyAttack(user, heavy, weaponUid, weapon, resistancePenetration, session);
                     animation = weapon.WideAnimation;
                     break;
                 default:
@@ -575,7 +579,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     protected abstract bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session);
 
-    protected virtual void DoLightAttack(EntityUid user, LightAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
+    protected virtual void DoLightAttack(EntityUid user, LightAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, float? resistancePenetration, ICommonSession? session)
     {
         var damage = GetDamage(meleeUid, user, component) * GetModifier(meleeUid, user, component, true);
 
@@ -622,7 +626,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         RaiseLocalEvent(ev.Target.Value, attackedEvent);
 
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
-        var damageResult = Damageable.TryChangeDamage(ev.Target, modifiedDamage, origin:user);
+        var damageResult = Damageable.TryChangeDamage(ev.Target, modifiedDamage, resistancePenetration, origin:user);
 
         if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
         {
@@ -669,7 +673,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     protected abstract void DoDamageEffect(List<EntityUid> targets, EntityUid? user,  TransformComponent targetXform);
 
-    private void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
+    private void DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, float? resistancePenetration, ICommonSession? session)
     {
         // TODO: This is copy-paste as fuck with DoPreciseAttack
         if (!TryComp<TransformComponent>(user, out var userXform))
@@ -756,7 +760,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             RaiseLocalEvent(entity, attackedEvent);
             var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
 
-            var damageResult = Damageable.TryChangeDamage(entity, modifiedDamage, origin:user);
+            var damageResult = Damageable.TryChangeDamage(entity, modifiedDamage, resistancePenetration, origin:user);
 
             if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
             {

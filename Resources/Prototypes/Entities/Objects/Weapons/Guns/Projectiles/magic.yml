@@ -97,7 +97,8 @@
         Burn: -900
         Airloss: -600
         Toxin: -600
-    resistanceReductionValue: 1
+  - type: ResistancePenetration
+    penetration: 1
 
 - type: entity
   id: BulletInstakillMagic
@@ -110,7 +111,8 @@
     damage:
       types:
         Piercing: 300
-    resistanceReductionValue: 1
+  - type: ResistancePenetration
+    penetration: 1
 
 - type: entity
   id: ProjectilePolyboltCluwne

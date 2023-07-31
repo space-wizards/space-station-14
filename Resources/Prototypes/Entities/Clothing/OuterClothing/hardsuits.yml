@@ -408,11 +408,12 @@
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: Armor
+    resistancePenetrationReduction: 0.1
     modifiers:
       coefficients:
         Blunt: 0.5
         Slash: 0.5
-        Piercing: 0.5
+        Piercing: 0.4
         Heat: 0.5
         Radiation: 0.5
         Caustic: 0.5
@@ -472,6 +473,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.3
   - type: Armor
+    resistancePenetrationReduction: 0.1
     modifiers:
       coefficients:
         Blunt: 0.5
@@ -503,6 +505,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: Armor
+    resistancePenetrationReduction: 0.1
     modifiers:
       coefficients:
         Blunt: 0.4
@@ -723,6 +726,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.2
   - type: Armor
+    resistancePenetrationReduction: 0.25
     modifiers:
       coefficients:
         Blunt: 0.2 #best armor in the game

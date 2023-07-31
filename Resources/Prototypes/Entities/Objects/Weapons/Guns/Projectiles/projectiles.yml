@@ -99,6 +99,7 @@
   components:
   - type: Projectile
     penetrationStrength: 0.5
+    penetrationDamageFalloffMultiplier: 0.75
     damage:
       types:
         Piercing: 17
@@ -156,12 +157,12 @@
   - type: Projectile
     penetrationStrength: 1
     penetrationDamageFalloffMultiplier: 1
-    armorReductionMultiplier: 0.5
     canPenetrateWall: true
     damage:
       types:
-        Piercing: 11
-    resistanceReductionValue: 1
+        Piercing: 12
+  - type: ResistancePenetration
+    penetration: 0.5
 
 # Energy projectiles
 - type: entity
