@@ -91,6 +91,22 @@
                 max: 1
   - type: StaticPrice
     price: 1350
+    
+- type: entity
+  name: electrical toolbox
+  suffix: Syndicate, Singulo Bait
+  parent: ToolboxMechanical
+  id: ToolboxMechanicalSinguloBait
+  description: A blue box, stocked with mechanical tools. Oddly heavy.
+  components:
+  - type: Storage
+    capacity: 0
+  - type: SingularityAttractor
+    baseRange: 20
+  - type: SinguloFood
+    energy: 100
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   name: artistic toolbox

@@ -1101,6 +1101,16 @@
     - ResearchDirector
     - Chef
 
+- type: listing
+  id: UplinkSinguloBait
+  name: uplink-singulo-bait-name
+  description: uplink-singulo-bait-desc
+  productEntity: ToolboxMechanicalSinguloBait
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkJob
+
 # Armor
 
 - type: listing
