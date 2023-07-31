@@ -1,16 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Added ambient music!, type: Add}
-  - {message: Footstep sounds have been bumped., type: Tweak}
-  - {message: Volume sliders are now consistent and only go to 100% (rather than 100
-      / 200 / 300). They still scale identically to before., type: Tweak}
-  - {message: Ambient sound sources (e.g. APCs) will now update whenever the audio
-      slider updates and not require you to leave range., type: Fix}
-  id: 3892
-  time: '2023-05-29T00:44:12.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Maintenance ambience should play less frequently in corridors., type: Fix}
   id: 3893
   time: '2023-05-29T04:19:00.0000000+00:00'
@@ -2970,3 +2960,9 @@ Entries:
       toy hammer.', type: Tweak}
   id: 4391
   time: '2023-07-31T20:32:17.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: 'Following a recent increase in Behonker activity, Nanotrasen has equipped
+      its security teams with a more harmful alternative to the stun baton.', type: Add}
+  id: 4392
+  time: '2023-07-31T20:37:13.0000000+00:00'
