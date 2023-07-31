@@ -80,6 +80,7 @@
     templateId: drone
   - type: InventorySlots
   - type: Strippable
+  - type: InputMover
   - type: UserInterface
     interfaces:
     - key: enum.StrippingUiKey.Key
