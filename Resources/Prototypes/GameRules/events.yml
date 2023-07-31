@@ -56,8 +56,8 @@
   - type: BureaucraticErrorRule
 
 - type: entity
-  id: Dragon
   parent: BaseGameRule
+  id: Dragon
   noSpawn: true
   components:
   - type: StationEvent
@@ -65,11 +65,12 @@
     duration: 1
     earliestStart: 45
     minimumPlayers: 20
-  - type: DragonRule
+  - type: RandomSpawnRule
+    prototype: SpawnPointGhostDragon
 
 - type: entity
-  id: RevenantSpawn
   parent: BaseGameRule
+  id: RevenantSpawn
   noSpawn: true
   components:
   - type: StationEvent
@@ -77,7 +78,8 @@
     duration: 1
     earliestStart: 45
     minimumPlayers: 20
-  - type: RevenantSpawnRule
+  - type: RandomSpawnRule
+    prototype: MobRevenant
 
 - type: entity
   id: FalseAlarm
@@ -147,7 +149,19 @@
     minimumPlayers: 35
     weight: 5
     duration: 50
-  - type: MouseMigrationRule
+  - type: VentCrittersRule
+    entries:
+    - id: MobMouse
+      prob: 0.015
+    - id: MobMouse1
+      prob: 0.015
+    - id: MobMouse2
+      prob: 0.015
+    - id: MobRatServant
+      prob: 0.015
+    specialEntries:
+    - id: SpawnPointGhostRatKing
+      prob: 0.005
 
 - type: entity
   id: PowerGridCheck
@@ -230,14 +244,11 @@
   - type: VentCrittersRule
     entries:
     - id: MobMouse
-      amount: 4
-      maxAmount: 12
+      prob: 0.02
     - id: MobMouse1
-      amount: 4
-      maxAmount: 12
+      prob: 0.02
     - id: MobMouse2
-      amount: 4
-      maxAmount: 12
+      prob: 0.02
 
 - type: entity
   id: SlimesSpawn
@@ -251,15 +262,12 @@
     duration: 60
   - type: VentCrittersRule
     entries:
-      - id: MobAdultSlimesBlueAngry
-        amount: 6
-        maxAmount: 10
-      - id: MobAdultSlimesGreenAngry
-        amount: 6
-        maxAmount: 10
-      - id: MobAdultSlimesYellowAngry
-        amount: 6
-        maxAmount: 10
+    - id: MobAdultSlimesBlueAngry
+      prob: 0.02
+    - id: MobAdultSlimesGreenAngry
+      prob: 0.02
+    - id: MobAdultSlimesYellowAngry
+      prob: 0.02
 
 - type: entity
   id: SpiderSpawn
@@ -273,9 +281,8 @@
     duration: 60
   - type: VentCrittersRule
     entries:
-      - id: MobGiantSpiderAngry
-        amount: 4
-        maxAmount: 8
+    - id: MobGiantSpiderAngry
+      prob: 0.05
 
 - type: entity
   id: SpiderClownSpawn
@@ -289,9 +296,8 @@
     duration: 60
   - type: VentCrittersRule
     entries:
-      - id: MobClownSpider
-        amount: 4
-        maxAmount: 8
+    - id: MobClownSpider
+      prob: 0.05
 
 - type: entity
   id: ZombieOutbreak
@@ -303,6 +309,11 @@
     weight: 2.5
     duration: 1
   - type: ZombieRule
+    minStartDelay: 0 #let them know immediately
+    maxStartDelay: 10
+    maxInitialInfected: 3 #fewer zombies
+    minInitialInfectedGrace: 300 #less time to prepare
+    maxInitialInfectedGrace: 450
 
 - type: entity
   id: LoneOpsSpawn
@@ -332,3 +343,18 @@
     maxSoundDistance: 7
     sounds:
       collection: Paracusia
+
+- type: entity
+  id: ImmovableRodSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-immovable-rod-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 1
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 20
+  - type: ImmovableRodRule

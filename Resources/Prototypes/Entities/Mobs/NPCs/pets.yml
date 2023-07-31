@@ -86,7 +86,7 @@
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - PetsNT
   - type: HTN
@@ -104,7 +104,7 @@
   parent: MobCatCalico
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - PetsNT
   - type: Grammar
@@ -411,6 +411,8 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - DoorBumpOpener
+    - Pig
 
 - type: entity
   name: Renault
@@ -440,6 +442,12 @@
   id: MobHamsterHamlet
   description: A grumpy, cute and fluffy hamster.
   components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Pets/hamlet.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: hamster-0
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -469,7 +477,7 @@
   id: MobSpiderShiva
   description: The first defender of the station.
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - PetsNT
   - type: Sprite
@@ -496,8 +504,6 @@
     states:
       Alive:
         Base: shiva
-      Critical:
-        Base: shiva_dead
       Dead:
         Base: shiva_dead
   - type: Butcherable
@@ -508,7 +514,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      90: Critical
       150: Dead
   - type: MeleeWeapon
     hidden: true
@@ -640,6 +645,7 @@
   description: A prominent representative of monkeys with unlimited access to alcohol.
   components:
   - type: GhostRole
+    prob: 1
     makeSentient: true
     allowSpeech: true
     allowMovement: true

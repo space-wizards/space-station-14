@@ -84,3 +84,11 @@
   materials:
     Steel: 1000
     Plastic: 500
+
+- type: latheRecipe
+  id: ModularReceiver
+  result: ModularReceiver
+  completetime: 12
+  materials:
+    Steel: 750
+    Plastic: 100

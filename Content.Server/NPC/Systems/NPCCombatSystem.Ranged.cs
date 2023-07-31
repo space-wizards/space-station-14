@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
@@ -90,7 +91,7 @@ public sealed partial class NPCCombatSystem
             var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
 
             // We'll work out the projected spot of the target and shoot there instead of where they are.
-            var distance = (targetPos - worldPos).Length;
+            var distance = (targetPos - worldPos).Length();
             var oldInLos = comp.TargetInLOS;
 
             // TODO: Should be doing these raycasts in parallel

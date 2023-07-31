@@ -53,6 +53,12 @@ FoodCondimentBottleSmallHotsauce: FoodCondimentBottleHotsauce
 FoodBakedCookieFortune: FoodSnackCookieFortune
 GunSafeSubMachineGunVector: GunSafeSubMachineGunDrozd
 
+# 2023-05-24
+AMEController: AmeController
+AMEJar: AmeJar
+AMEPart: AmePart
+AMEShielding: AmeShielding
+
 # 2023-05-29
 OrGate: null
 
@@ -88,3 +94,23 @@ WindoorScienceLocked: WindoorSecureScienceLocked
 WindoorHeadOfPersonnelLocked: WindoorSecureHeadOfPersonnelLocked
 WindoorAtmosphericsLocked: WindoorSecureAtmosphericsLocked
 WindoorParamedicLocked: WindoorSecureParamedicLocked
+
+# 2023-07-03
+ClothingHeadHelmetHelmet: ClothingHeadHelmetBasic
+ClothingHeadHelmetHelmetOld: ClothingHeadHelmetBasic
+
+# 2023-07-04
+# Bulletproof armor is almost statistically identical to kevlar, however, before this kevlar armor was the closest thing there was to "basic" armor. It makes the most sense to replace it with this.
+ClothingOuterVestKevlar: ClothingOuterArmorBasic
+
+# 2023-07-10
+Intercom: IntercomCommon
+
+# 2023-07-12
+ToyAssistant: ToyFigurinePassenger
+
+# 2023-07-20
+ForensicGloves: ClothingHandsGlovesForensic
+
+# 2023-07-24
+ClothingEyesGlassesBeer: ClothingEyesHudBeer

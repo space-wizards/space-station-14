@@ -31,8 +31,6 @@
     states:
       Alive:
         Base: bat
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -96,7 +94,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      5: Critical
       10: Dead
   - type: Stamina
     excess: 10
@@ -104,8 +101,6 @@
     states:
       Alive:
         Base: 0
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Tag
@@ -139,7 +134,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Bloodstream
@@ -169,12 +164,26 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Chicken
+  - type: Reproductive
+    breedChance: 0.05
+    birthPopup: reproductive-laid-egg-popup
+    makeOffspringInfant: false
+    partnerWhitelist:
+      tags:
+      - Chicken
+    offspring:
+    - id: FoodEggChickenFertilized
+      maxAmount: 3
+  - type: ReproductivePartner
+  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: chicken-0
-      Critical:
-        Base: dead-0
       Dead:
         Base: dead-0
   - type: Butcherable
@@ -198,9 +207,24 @@
     flavorKind: station-event-random-sentience-flavor-organic
   - type: Puller
     needsHands: true
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
+
+- type: entity
+  id: FoodEggChickenFertilized
+  parent: FoodEgg
+  suffix: Fertilized, Chicken
+  components:
+  - type: Timer
+  - type: TimedSpawner
+    prototypes:
+    - MobChicken
+    intervalSeconds: 20
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn #delete the egg after the chicken spawns
+    lifetime: 21
 
 - type: entity
   name: mallard duck #Quack
@@ -225,12 +249,26 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Tag
+    tags:
+      - DoorBumpOpener
+      - Duck
+  - type: Reproductive
+    breedChance: 0.05
+    birthPopup: reproductive-laid-egg-popup
+    makeOffspringInfant: false
+    partnerWhitelist:
+      tags:
+      - Duck
+    offspring:
+    - id: FoodEggDuckFertilized
+      maxAmount: 3
+  - type: ReproductivePartner
+  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: duck-0
-      Critical:
-        Base: dead-0
       Dead:
         Base: dead-0
   - type: Butcherable
@@ -252,7 +290,7 @@
     accent: duck
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
 
@@ -270,8 +308,6 @@
     states:
       Alive:
         Base: duck-1
-      Critical:
-        Base: dead-1
       Dead:
         Base: dead-1
 
@@ -289,10 +325,25 @@
     states:
       Alive:
         Base: duck-2
-      Critical:
-        Base: dead-2
       Dead:
         Base: dead-2
+
+- type: entity
+  id: FoodEggDuckFertilized
+  parent: FoodEgg
+  suffix: Fertilized, Duck
+  components:
+    - type: Timer
+    - type: TimedSpawner
+      prototypes:
+      - MobDuckMallard
+      - MobDuckWhite
+      - MobDuckBrown
+      intervalSeconds: 20
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 1
+    - type: TimedDespawn #delete the egg after the chicken spawns
+      lifetime: 21
 
 - type: entity
   name: butterfly
@@ -325,7 +376,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      5: Critical
       10: Dead
   - type: RandomSprite
     available:
@@ -335,8 +385,6 @@
     states:
       Alive:
         Base: butterfly
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Bloodstream
@@ -359,6 +407,17 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cow
       sprite: Mobs/Animals/cow.rsi
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Cow
+  - type: Reproductive
+    partnerWhitelist:
+      tags:
+      - Cow
+    offspring:
+    - id: MobCow
+  - type: ReproductivePartner
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -375,8 +434,6 @@
     states:
       Alive:
         Base: cow
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: SolutionContainerManager
@@ -407,7 +464,7 @@
       path: /Audio/Animals/cow_moo.ogg
   - type: Perishable
     molsPerSecondPerUnitMass: 0.0015
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
   - type: Body
@@ -446,8 +503,6 @@
     states:
       Alive:
         Base: crab
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -484,12 +539,22 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Goat
+  - type: Reproductive
+    partnerWhitelist:
+      tags:
+      - Goat
+    offspring:
+    - id: MobGoat
+  - type: ReproductivePartner
+  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: goat
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: SolutionContainerManager
@@ -517,7 +582,7 @@
     interactFailureString: petting-failure-goat
     interactSuccessSound:
       path: /Audio/Animals/goat_bah.ogg
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
   - type: Body
@@ -553,8 +618,6 @@
     states:
       Alive:
         Base: goose
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -570,7 +633,7 @@
   - type: Bloodstream
     bloodMaxVolume: 100
   - type: Puller
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
 
@@ -602,8 +665,6 @@
     states:
       Alive:
         Base: crawling
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -703,7 +764,7 @@
     prototypes: [ BoxingKangarooGear ]
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
 
@@ -783,7 +844,7 @@
   - type: MonkeyAccent
   - type: Puller
   - type: CanHostGuardian
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
   - type: GhostRole
@@ -841,7 +902,7 @@
     equippedPrefix: 0
     slots:
     - HEAD
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - Mouse
   - type: HTN
@@ -1008,8 +1069,6 @@
     states:
       Alive:
         Base: lizard
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -1062,8 +1121,6 @@
     states:
       Alive:
         Base: slug
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -1108,8 +1165,6 @@
     states:
       Alive:
         Base: frog
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -1159,8 +1214,6 @@
     states:
       Alive:
         Base: parrot
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -1205,8 +1258,6 @@
     states:
       Alive:
         Base: penguin
-      Critical:
-        Base: penguin_dead
       Dead:
         Base: penguin_dead
   - type: Butcherable
@@ -1219,7 +1270,7 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/penguin_squawk.ogg
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive
 
@@ -1236,7 +1287,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Syndicate
   - type: Sprite
@@ -1261,8 +1312,6 @@
     states:
       Alive:
         Base: penguin
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -1298,6 +1347,97 @@
         damage: 50
       behaviors:
       - !type:ExplodeBehavior
+      
+- type: entity
+  name: monkey
+  id: MobMonkeySyndicateAgent
+  parent: SimpleMobBase # doesn't parent off monkeys to be able to not have the clumsy component
+  description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
+  suffix: syndicate
+  components:
+  - type: CombatMode
+  - type: NameIdentifier
+    group: Monkey
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-primate
+  - type: Inventory
+    templateId: monkey
+    speciesId: monkey
+  - type: InventorySlots
+  - type: Cuffable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: monkey
+      sprite: Mobs/Animals/monkey.rsi
+    - map: [ "jumpsuit" ]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "id" ]
+    - map: [ "outerClothing" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
+  - type: Hands
+  - type: GenericVisualizer
+    visuals:
+      enum.CreamPiedVisuals.Creamed:
+        clownedon: # Not 'creampied' bc I can already see Skyrat complaining about conflicts.
+          True: {visible: true}
+          False: {visible: false}
+  - type: Speech
+    speechSounds: Monkey
+  - type: Body
+    prototype: Primate
+    requiredLegs: 1 # TODO: More than 1 leg
+  - type: CreamPied
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Monkey_burning
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: MonkeyAccent
+  - type: Puller
+  - type: CanHostGuardian
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    name: ghost-role-information-monkey-name
+    description: ghost-role-information-monkey-description
+  - type: GhostTakeoverAvailable
+  - type: IdExaminable
+  - type: Loadout
+    prototype: SyndicateOperativeGearMonkey
+    prototypes: [SyndicateOperativeGearMonkey]
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
@@ -1328,8 +1468,6 @@
     states:
       Alive:
         Base: snake
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -1378,8 +1516,6 @@
     states:
       Alive:
         Base: tarantula
-      Critical:
-        Base: tarantula_dead
       Dead:
         Base: tarantula_dead
   - type: Butcherable
@@ -1390,7 +1526,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      90: Critical
       150: Dead
   - type: MeleeWeapon
     hidden: true
@@ -1421,7 +1556,7 @@
   id: MobGiantSpiderAngry
   suffix: Angry
   components:
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - Xeno
     - type: InputMover
@@ -1517,8 +1652,6 @@
     states:
       Alive:
         Base: possum
-      Critical:
-        Base: possum_dead
       Dead:
         Base: possum_dead
   - type: Butcherable
@@ -1572,8 +1705,6 @@
     states:
       Alive:
         Base: raccoon
-      Critical:
-        Base: raccoon_dead
       Dead:
         Base: raccoon_dead
   - type: Butcherable
@@ -1627,8 +1758,6 @@
     states:
       Alive:
         Base: fox
-      Critical:
-        Base: fox_dead
       Dead:
         Base: fox_dead
   - type: Butcherable
@@ -1684,8 +1813,6 @@
     states:
       Alive:
         Base: corgi
-      Critical:
-        Base: corgi_dead
       Dead:
         Base: corgi_dead
   - type: Butcherable
@@ -1724,8 +1851,6 @@
     states:
       Alive:
         Base: narsian
-      Critical:
-        Base: narsian_dead
       Dead:
         Base: narsian_dead
   - type: MeleeWeapon
@@ -1742,7 +1867,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: InteractionPopup
@@ -1789,8 +1914,6 @@
     states:
       Alive:
         Base: puppy
-      Critical:
-        Base: puppy_dead
       Dead:
         Base: puppy_dead
   - type: Grammar
@@ -1834,8 +1957,6 @@
     states:
       Alive:
         Base: cat
-      Critical:
-        Base: cat_dead
       Dead:
         Base: cat_dead
   - type: Butcherable
@@ -1870,8 +1991,6 @@
     states:
       Alive:
         Base: cat2
-      Critical:
-        Base: cat2_dead
       Dead:
         Base: cat2_dead
 
@@ -1889,8 +2008,6 @@
     states:
       Alive:
         Base: spacecat
-      Critical:
-        Base: spacecat_dead
       Dead:
         Base: spacecat_dead
   - type: InteractionPopup
@@ -1915,8 +2032,6 @@
     states:
       Alive:
         Base: caracal_flop
-      Critical:
-        Base: caracal_dead
       Dead:
         Base: caracal_dead
 
@@ -1960,8 +2075,6 @@
     states:
       Alive:
         Base: sloth
-      Critical:
-        Base: sloth_dead
       Dead:
         Base: sloth_dead
   - type: Butcherable
@@ -2015,8 +2128,6 @@
     states:
       Alive:
         Base: ferret
-      Critical:
-        Base: ferret_dead
       Dead:
         Base: ferret_dead
   - type: Butcherable
@@ -2080,7 +2191,7 @@
     baseSprintSpeed : 4
   - type: Inventory
     speciesId: hamster
-    templateId: pet
+    templateId: hamster
   - type: InventorySlots
   - type: Strippable
   - type: UserInterface
@@ -2181,6 +2292,17 @@
   - type: Inventory
     speciesId: pig
     templateId: pet
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Pig
+  - type: Reproductive
+    partnerWhitelist:
+      tags:
+      - Pig
+    offspring:
+    - id: MobPig
+  - type: ReproductivePartner
   - type: InventorySlots
   - type: Strippable
   - type: UserInterface
@@ -2191,8 +2313,6 @@
     states:
       Alive:
         Base: pig
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
@@ -2212,6 +2332,6 @@
     accent: pig
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - Passive

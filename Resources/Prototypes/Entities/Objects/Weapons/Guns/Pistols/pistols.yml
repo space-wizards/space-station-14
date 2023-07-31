@@ -160,3 +160,27 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+
+- type: entity
+  id: WeaponPistolMk58Nonlethal
+  parent: WeaponPistolMk58
+  suffix: Non-lethal
+  components:
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolRubber
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistol
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistolRubber
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol

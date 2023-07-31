@@ -7,8 +7,6 @@ namespace Content.Server.Tabletop
     [UsedImplicitly]
     public sealed class TabletopParchisSetup : TabletopSetup
     {
-        [DataField("boardPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string ParchisBoardPrototype { get; } = "ParchisBoardTabletop";
 
         [DataField("redPiecePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string RedPiecePrototype { get; } = "RedTabletopPiece";
@@ -24,7 +22,7 @@ namespace Content.Server.Tabletop
 
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {
-            var board = entityManager.SpawnEntity(ParchisBoardPrototype, session.Position);
+            var board = entityManager.SpawnEntity(BoardPrototype, session.Position);
 
             const float x1 = 6.25f;
             const float x2 = 4.25f;

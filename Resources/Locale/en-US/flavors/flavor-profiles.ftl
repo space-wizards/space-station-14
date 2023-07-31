@@ -166,6 +166,7 @@ flavor-complex-rum = like fermented sugar
 flavor-complex-coffee-liquor = like strong, bitter coffee
 flavor-complex-whiskey = like molasses
 flavor-complex-shitty-wine = like grape rinds
+flavor-complex-champagne = like freshly baked bread
 flavor-complex-iced-tea = like iced tea
 flavor-complex-coffee = like coffee
 flavor-complex-milk = like milk
