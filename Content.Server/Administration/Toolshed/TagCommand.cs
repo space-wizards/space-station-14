@@ -3,6 +3,7 @@ using Content.Shared.Administration;
 using Content.Shared.Tag;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
+using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Server.Administration.Toolshed;
 
@@ -27,7 +28,7 @@ public sealed class TagCommand : ToolshedCommand
     public EntityUid Add(
             [CommandInvocationContext] IInvocationContext ctx,
             [PipedArgument] EntityUid input,
-            [CommandArgument] ValueRef<string> @ref
+            [CommandArgument] ValueRef<string, Prototype<TagPrototype>> @ref
         )
     {
         _tag ??= GetSys<TagSystem>();
@@ -39,7 +40,7 @@ public sealed class TagCommand : ToolshedCommand
     public IEnumerable<EntityUid> Add(
             [CommandInvocationContext] IInvocationContext ctx,
             [PipedArgument] IEnumerable<EntityUid> input,
-            [CommandArgument] ValueRef<string> @ref
+            [CommandArgument] ValueRef<string, Prototype<TagPrototype>> @ref
         )
         => input.Select(x => Add(ctx, x, @ref));
 
@@ -47,7 +48,7 @@ public sealed class TagCommand : ToolshedCommand
     public EntityUid Rm(
         [CommandInvocationContext] IInvocationContext ctx,
         [PipedArgument] EntityUid input,
-        [CommandArgument] ValueRef<string> @ref
+        [CommandArgument] ValueRef<string, Prototype<TagPrototype>> @ref
     )
     {
         _tag ??= GetSys<TagSystem>();
@@ -59,7 +60,7 @@ public sealed class TagCommand : ToolshedCommand
     public IEnumerable<EntityUid> Rm(
             [CommandInvocationContext] IInvocationContext ctx,
             [PipedArgument] IEnumerable<EntityUid> input,
-            [CommandArgument] ValueRef<string> @ref
+            [CommandArgument] ValueRef<string, Prototype<TagPrototype>> @ref
         )
         => input.Select(x => Rm(ctx, x, @ref));
 
@@ -67,7 +68,7 @@ public sealed class TagCommand : ToolshedCommand
     public EntityUid AddMany(
         [CommandInvocationContext] IInvocationContext ctx,
         [PipedArgument] EntityUid input,
-        [CommandArgument] ValueRef<IEnumerable<string>> @ref
+        [CommandArgument] ValueRef<IEnumerable<string>, IEnumerable<string>> @ref
     )
     {
         _tag ??= GetSys<TagSystem>();
@@ -79,7 +80,7 @@ public sealed class TagCommand : ToolshedCommand
     public IEnumerable<EntityUid> AddMany(
             [CommandInvocationContext] IInvocationContext ctx,
             [PipedArgument] IEnumerable<EntityUid> input,
-            [CommandArgument] ValueRef<IEnumerable<string>> @ref
+            [CommandArgument] ValueRef<IEnumerable<string>, IEnumerable<string>> @ref
         )
         => input.Select(x => AddMany(ctx, x, @ref));
 
@@ -87,7 +88,7 @@ public sealed class TagCommand : ToolshedCommand
     public EntityUid RmMany(
         [CommandInvocationContext] IInvocationContext ctx,
         [PipedArgument] EntityUid input,
-        [CommandArgument] ValueRef<IEnumerable<string>> @ref
+        [CommandArgument] ValueRef<IEnumerable<string>, IEnumerable<string>> @ref
     )
     {
         _tag ??= GetSys<TagSystem>();
@@ -99,7 +100,7 @@ public sealed class TagCommand : ToolshedCommand
     public IEnumerable<EntityUid> RmMany(
             [CommandInvocationContext] IInvocationContext ctx,
             [PipedArgument] IEnumerable<EntityUid> input,
-            [CommandArgument] ValueRef<IEnumerable<string>> @ref
+            [CommandArgument] ValueRef<IEnumerable<string>, IEnumerable<string>> @ref
         )
         => input.Select(x => RmMany(ctx, x, @ref));
 }
