@@ -7,7 +7,7 @@
   description: uplink-pistol-viper-desc
   productEntity: WeaponPistolViper
   cost:
-    Telecrystal: 3
+    Telecrystal: 4
   categories:
   - UplinkWeapons
 
@@ -26,9 +26,9 @@
   id: UplinkPistolCobra
   name: uplink-pistol-cobra-name
   description: uplink-pistol-cobra-desc
-  productEntity: WeaponPistolCobra
+  productEntity: WeaponPistolCobra  # It has caselessrifle ammo and double the python's revolver firerate as of writing.
   cost:
-    Telecrystal: 4
+    Telecrystal: 10
   categories:
   - UplinkWeapons
 
@@ -100,7 +100,7 @@
       blacklist:
         tags:
           - NukeOpsUplink
-          
+
 # Explosives
 
 - type: listing
@@ -352,7 +352,7 @@
       whitelist:
         tags:
           - NukeOpsUplink
-          
+
 - type: listing
   id: UplinkReinforcementRadioSyndicateMonkey
   name: uplink-reinforcement-radio-monkey-name
@@ -925,7 +925,7 @@
     whitelist:
     - Zookeeper
     - Scientist
-    - SeniorResearcher      
+    - SeniorResearcher
     - Chef
 
 - type: listing
