@@ -12,7 +12,9 @@ public sealed class BodyPartComponent : Component
     [DataField("body")]
     public EntityUid? Body;
 
-    [DataField("parent")]
+    // This inter-entity relationship makes be deeply uncomfortable because its probably going to re-encounter all of the
+    // networking issues that containers and joins have.
+    // TODO just use containers. Please.
     public BodyPartSlot? ParentSlot;
 
     [DataField("children")]

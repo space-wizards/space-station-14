@@ -5,7 +5,6 @@ using Content.Server.GameTicking;
 using Content.Server.Humanoid;
 using Content.Server.Kitchen.Components;
 using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
@@ -36,9 +35,55 @@ public sealed class BodySystem : SharedBodySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<BodyPartComponent, ComponentStartup>(OnPartStartup);
+        SubscribeLocalEvent<BodyComponent, ComponentStartup>(OnBodyStartup);
         SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
         SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
+    }
+
+    private void OnPartStartup(EntityUid uid, BodyPartComponent component, ComponentStartup args)
+    {
+        // This inter-entity relationship makes be deeply uncomfortable because its probably going to re-encounter
+        // all of the networking & startup ordering issues that containers and joints have.
+        // TODO just use containers. Please.
+
+        foreach (var slot in component.Children.Values)
+        {
+            DebugTools.Assert(slot.Parent == uid);
+            if (slot.Child == null)
+                continue;
+
+            if (TryComp(slot.Child, out BodyPartComponent? child))
+            {
+                child.ParentSlot = slot;
+                Dirty(slot.Child.Value);
+                continue;
+            }
+
+            Log.Error($"Body part encountered missing limbs: {ToPrettyString(uid)}. Slot: {slot.Id}");
+            slot.Child = null;
+        }
+    }
+
+    private void OnBodyStartup(EntityUid uid, BodyComponent component, ComponentStartup args)
+    {
+        if (component.Root is not { } slot)
+            return;
+
+        DebugTools.Assert(slot.Parent == uid);
+        if (slot.Child == null)
+            return;
+
+        if (!TryComp(slot.Child, out BodyPartComponent? child))
+        {
+            Log.Error($"Body part encountered missing limbs: {ToPrettyString(uid)}. Slot: {slot.Id}");
+            slot.Child = null;
+            return;
+        }
+
+        child.ParentSlot = slot;
+        Dirty(slot.Child.Value);
     }
 
     private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
@@ -99,8 +144,12 @@ public sealed class BodySystem : SharedBodySystem
 
     public override bool DropPart(EntityUid? partId, BodyPartComponent? part = null)
     {
-        if (partId == null || !Resolve(partId.Value, ref part))
+        if (partId == null || !Resolve(partId.Value, ref part, false))
+        {
+            if (partId != null)
+                Resolve(partId!.Value, ref part);
             return false;
+        }
 
         if (!base.DropPart(partId, part))
             return false;
