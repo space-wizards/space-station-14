@@ -25,8 +25,8 @@ namespace Content.Server.Silicons.Borgs;
 /// <inheritdoc/>
 public sealed partial class BorgSystem : SharedBorgSystem
 {
+    [Dependency] private readonly IBanManager _banManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly RoleBanManager _roleBan = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
@@ -254,7 +254,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         if (disallowedJobs.Contains(component.BorgJobId))
             return false;
 
-        if (_roleBan.GetJobBans(session.UserId)?.Contains(component.BorgJobId) == true)
+        if (_banManager.GetJobBans(session.UserId)?.Contains(component.BorgJobId) == true)
             return false;
 
         return true;
