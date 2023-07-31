@@ -187,30 +187,24 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
             listing.Add(pair.Item1, pair.Item2.Name);
         }
 
-        if (listing.Count == 0)
+        switch (listing.Count)
         {
-            GeneralCriminalRecordConsoleState state = new(null, null, null, null, console?.Filter);
-            SetStateForInterface(uid, state);
-            return;
-        }
-        else if (listing.Count == 1)
-        {
-            console!.ActiveKey = listing.Keys.First();
+            case 0:
+                GeneralCriminalRecordConsoleState state = new(null, null, null, null, console?.Filter);
+                SetStateForInterface(uid, state);
+                return;
+            case 1:
+                console!.ActiveKey = listing.Keys.First();
+                break;
         }
 
         GeneralStationRecord? stationRecord = null;
-        if (console!.ActiveKey != null)
-        {
-            _stationRecordsSystem.TryGetRecord(owningStation.Value, console.ActiveKey.Value, out stationRecord,
+        _stationRecordsSystem.TryGetRecord(owningStation.Value, console!.ActiveKey!.Value, out stationRecord,
                 stationRecordsComponent);
-        }
 
         GeneralCriminalRecord? criminalRecord = null;
-        if (console.ActiveKey != null)
-        {
-            _stationRecordsSystem.TryGetRecord(owningStation.Value, console.ActiveKey.Value, out criminalRecord,
+        _stationRecordsSystem.TryGetRecord(owningStation.Value, console.ActiveKey.Value, out criminalRecord,
                 stationRecordsComponent);
-        }
 
         GeneralCriminalRecordConsoleState newState = new(console.ActiveKey, stationRecord, criminalRecord, listing, console.Filter);
         SetStateForInterface(uid, newState);
@@ -218,9 +212,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
 
     private void SetStateForInterface(EntityUid uid, GeneralCriminalRecordConsoleState newState)
     {
-        _userInterface
-            .GetUiOrNull(uid, GeneralCriminalRecordConsoleKey.Key)
-            ?.SetState(newState);
+        _userInterface.TrySetUiState(uid, GeneralCriminalRecordConsoleKey.Key, newState);
     }
 
     private bool IsSkippedRecord(GeneralStationRecordsFilter filter,

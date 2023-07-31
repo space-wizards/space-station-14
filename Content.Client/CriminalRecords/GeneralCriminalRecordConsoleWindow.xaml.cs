@@ -105,6 +105,11 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
 
         if (state.RecordListing == null)
         {
+            ReasonLineEdit.Visible = false;
+            ArrestButton.Visible = false;
+            CriminalDivider.Visible = false;
+            StatusOptionButton.Visible = false;
+
             RecordListingStatus.Visible = true;
             RecordListing.Visible = false;
             RecordListingStatus.Text = Loc.GetString("general-criminal-record-console-empty-state");

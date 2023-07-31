@@ -8,7 +8,7 @@ public sealed class GeneralCriminalRecordConsoleBoundUserInterface : BoundUserIn
 {
     private GeneralCriminalRecordConsoleWindow? _window;
 
-    public GeneralCriminalRecordConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public GeneralCriminalRecordConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {}
 
     protected override void Open()
