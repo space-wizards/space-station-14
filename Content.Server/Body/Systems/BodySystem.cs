@@ -6,6 +6,7 @@ using Content.Server.Humanoid;
 using Content.Server.Kitchen.Components;
 using Content.Server.Mind;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
@@ -62,6 +63,23 @@ public sealed class BodySystem : SharedBodySystem
             }
 
             Log.Error($"Body part encountered missing limbs: {ToPrettyString(uid)}. Slot: {slot.Id}");
+            slot.Child = null;
+        }
+
+        foreach (var slot in component.Organs.Values)
+        {
+            DebugTools.Assert(slot.Parent == uid);
+            if (slot.Child == null)
+                continue;
+
+            if (TryComp(slot.Child, out OrganComponent? child))
+            {
+                child.ParentSlot = slot;
+                Dirty(slot.Child.Value);
+                continue;
+            }
+
+            Log.Error($"Body part encountered missing organ: {ToPrettyString(uid)}. Slot: {slot.Id}");
             slot.Child = null;
         }
     }

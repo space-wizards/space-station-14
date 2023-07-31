@@ -13,13 +13,16 @@ public sealed class BodyPartComponent : Component
     public EntityUid? Body;
 
     // This inter-entity relationship makes be deeply uncomfortable because its probably going to re-encounter all of the
-    // networking issues that containers and joins have.
+    // networking issues that containers and joints have.
     // TODO just use containers. Please.
+    // Do not use set or get data from this in client-side code.
     public BodyPartSlot? ParentSlot;
 
+    // Do not use set or get data from this in client-side code.
     [DataField("children")]
     public Dictionary<string, BodyPartSlot> Children = new();
 
+    // See all the above ccomments.
     [DataField("organs")]
     public Dictionary<string, OrganSlot> Organs = new();
 
