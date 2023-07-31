@@ -230,7 +230,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatHopcap
   name: head of personnel's cap
-  description: A grand, stylish captain cap.
+  description: A grand, stylish head of personnel's cap.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/hopcap.rsi
@@ -730,3 +730,18 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+      
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapcap
+  name: cap cap
+  description: A grand, stylish captain cap.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/capcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/capcap.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - HamsterWearable

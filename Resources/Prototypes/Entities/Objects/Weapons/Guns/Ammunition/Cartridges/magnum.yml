@@ -61,6 +61,14 @@
     proto: BulletMagnumIncendiary
 
 - type: entity
+  id: CartridgeMagnumAP
+  name: cartridge (.45 magnum armor-piercing)
+  parent: BaseCartridgeMagnum
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumAP
+
+- type: entity
   id: BaseAnomalousCartridge
   parent: BaseCartridgeMagnum
   description: Packs twice the punch of a standard A.P.E. particle.

@@ -1,11 +1,16 @@
 - type: htnCompound
   id: FoodCompound
   branches:
-    - tasks:
-        - id: PickFoodTargetPrimitive
-        - id: MoveToCombatTargetPrimitive
-        - id: EatPrimitive
-        - id: WaitIdleTimePrimitive
+  - tasks:
+    - id: PickFoodTargetPrimitive
+    - id: MoveToCombatTargetPrimitive
+    - id: EatPrimitive
+    - id: WaitIdleTimePrimitive
+  - tasks:
+    - id: PickDrinkTargetPrimitive
+    - id: MoveToCombatTargetPrimitive
+    - id: EatPrimitive
+    - id: WaitIdleTimePrimitive
 
 
 - type: htnPrimitive
@@ -14,8 +19,13 @@
     proto: NearbyFood
 
 - type: htnPrimitive
+  id: PickDrinkTargetPrimitive
+  operator: !type:UtilityOperator
+    proto: NearbyDrink
+
+- type: htnPrimitive
   id: EatPrimitive
   preconditions:
-    - !type:KeyExistsPrecondition
-      key: CombatTarget
+  - !type:KeyExistsPrecondition
+    key: CombatTarget
   operator: !type:AltInteractOperator
