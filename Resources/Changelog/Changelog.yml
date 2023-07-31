@@ -1,9 +1,4 @@
 Entries:
-- author: '0x6273'
-  changes:
-  - {message: Emitters and APEs can now be controlled with device linking., type: Add}
-  id: 3882
-  time: '2023-05-28T06:44:28.0000000+00:00'
 - author: Chief-Engineer
   changes:
   - {message: Revenants now drop ectoplasm when they die., type: Tweak}
@@ -2973,3 +2968,10 @@ Entries:
   - {message: Added reflection to the reflective vest and shuttle walls, type: Add}
   id: 4381
   time: '2023-07-31T01:07:46.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: 'The flash overlay is no longer offset towards the actual physical center
+      of your screen when playing with the separated UI layout. Additionally, ultrawide
+      monitors no longer experience an exceptionally stretched flash overlay.', type: Fix}
+  id: 4382
+  time: '2023-07-31T04:41:24.0000000+00:00'
