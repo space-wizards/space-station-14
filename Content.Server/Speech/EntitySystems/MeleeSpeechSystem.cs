@@ -5,15 +5,7 @@ using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Database;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Players;
-using Content.Server.Store.Components;
-using Content.Shared.Store;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -21,10 +13,8 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
 {
 
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly ISharedPlayerManager _playermanager = default!;
     public override void Initialize()
 	{
 		base.Initialize();
