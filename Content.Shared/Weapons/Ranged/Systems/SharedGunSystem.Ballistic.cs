@@ -133,12 +133,15 @@ public abstract partial class SharedGunSystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
         if (component.Cycleable == true)
+        {
             args.Verbs.Add(new Verb()
             {
                 Text = Loc.GetString("gun-ballistic-cycle"),
                 Disabled = GetBallisticShots(component) == 0,
                 Act = () => ManualCycle(uid, component, Transform(uid).MapPosition, args.User),
             });
+            
+        }
     }
 
     private void OnBallisticExamine(EntityUid uid, BallisticAmmoProviderComponent component, ExaminedEvent args)
@@ -201,9 +204,6 @@ public abstract partial class SharedGunSystem
     {
         for (var i = 0; i < args.Shots; i++)
         {
-            if (!component.Cycled)
-                break;
-
             EntityUid entity;
 
             if (component.Entities.Count > 0)
@@ -211,14 +211,6 @@ public abstract partial class SharedGunSystem
                 entity = component.Entities[^1];
 
                 args.Ammo.Add((entity, EnsureComp<AmmoComponent>(entity)));
-
-                // Leave the entity as is if it doesn't auto cycle
-                // TODO: Suss this out with NewAmmoComponent as I don't think it gets removed from container properly
-                if (!component.AutoCycle)
-                {
-                    return;
-                }
-
                 component.Entities.RemoveAt(component.Entities.Count - 1);
                 component.Container.Remove(entity);
             }
@@ -227,25 +219,6 @@ public abstract partial class SharedGunSystem
                 component.UnspawnedCount--;
                 entity = Spawn(component.FillProto, args.Coordinates);
                 args.Ammo.Add((entity, EnsureComp<AmmoComponent>(entity)));
-
-                // Put it back in if it doesn't auto-cycle
-                if (HasComp<CartridgeAmmoComponent>(entity) && !component.AutoCycle)
-                {
-                    if (!entity.IsClientSide())
-                    {
-                        component.Entities.Add(entity);
-                        component.Container.Insert(entity);
-                    }
-                    else
-                    {
-                        component.UnspawnedCount++;
-                    }
-                }
-            }
-
-            if (!component.AutoCycle)
-            {
-                component.Cycled = false;
             }
         }
 

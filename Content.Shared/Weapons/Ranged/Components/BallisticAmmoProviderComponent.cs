@@ -39,20 +39,7 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     public List<EntityUid> Entities = new();
 
     /// <summary>
-    /// Will the ammoprovider automatically cycle through rounds or does it need doing manually.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("autoCycle")]
-    public bool AutoCycle = true;
-
-    /// <summary>
-    /// Is the gun ready to shoot; if AutoCycle is true then this will always stay true and not need to be manually done.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("cycled")]
-    [AutoNetworkedField]
-    public bool Cycled = true;
-
-    /// <summary>
-    /// Is the magazine allowed to be cycled
+    /// Is the magazine allowed to be cycled to eject a cartridge.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("cycleable")]
     [AutoNetworkedField]

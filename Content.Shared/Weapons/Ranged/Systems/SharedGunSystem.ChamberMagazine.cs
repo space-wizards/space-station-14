@@ -18,8 +18,42 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<AlternativeVerb>>(OnMagazineVerb);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, EntInsertedIntoContainerMessage>(OnMagazineSlotChange);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, EntRemovedFromContainerMessage>(OnMagazineSlotChange);
-        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, UseInHandEvent>(OnMagazineUse);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, UseInHandEvent>(OnChamberUse);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ExaminedEvent>(OnChamberMagazineExamine);
+    }
+
+    private void OnChamberUse(EntityUid uid, ChamberMagazineAmmoProviderComponent component, UseInHandEvent args)
+    {
+        // (Chamber but no bolt is whacky).
+        if (component.BoltClosed == null)
+        {
+            OnMagazineUse(uid, component, args);
+            return;
+        }
+
+        ToggleBolt(uid, component);
+    }
+
+    public void SetBolt(EntityUid uid, ChamberMagazineAmmoProviderComponent component, bool value, AppearanceComponent? appearance = null)
+    {
+        if (component.BoltClosed == null || value == component.BoltClosed)
+            return;
+
+        Resolve(uid, ref appearance, false);
+        Appearance.SetData(uid, AmmoVisuals.BoltClosed, component.BoltClosed.Value, appearance);
+        component.BoltClosed = value;
+        Dirty(uid, component);
+
+        // Toggling bolt on a gun that autocycles doesn't do anything.
+        // However setting it on a gun that doesn't autocycle.
+    }
+
+    public void ToggleBolt(EntityUid uid, ChamberMagazineAmmoProviderComponent component)
+    {
+        if (component.BoltClosed == null)
+            return;
+
+        SetBolt(uid, component, !component.BoltClosed.Value);
     }
 
     private void OnChamberMagazineExamine(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ExaminedEvent args)
@@ -28,6 +62,12 @@ public abstract partial class SharedGunSystem
             return;
 
         var (count, _) = GetChamberMagazineCountCapacity(uid, component);
+
+        if (component.BoltClosed != null)
+        {
+            args.PushMarkup(Loc.GetString("gun-chamber-bolt", ("bolt", component.BoltClosed), ("color", component.BoltClosed.Value ? Color.FromHex("#94e1f2") : Color.FromHex("#f29d94"))));
+        }
+
         args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", count)));
     }
 
@@ -75,6 +115,11 @@ public abstract partial class SharedGunSystem
 
     private void OnChamberMagazineTakeAmmo(EntityUid uid, ChamberMagazineAmmoProviderComponent component, TakeAmmoEvent args)
     {
+        if (component.BoltClosed == false)
+        {
+            return;
+        }
+
         // So chamber logic is kinda sussier than the others
         // Essentially we want to treat the chamber as a potentially free slot and then the mag as the remaining slots
         // i.e. if we shoot 3 times, then we use the chamber once (regardless if it's empty or not) and 2 from the mag
@@ -84,6 +129,11 @@ public abstract partial class SharedGunSystem
         if (TryTakeChamberEntity(uid, out var chamberEnt))
         {
             args.Ammo.Add((chamberEnt.Value, EnsureComp<AmmoComponent>(chamberEnt.Value)));
+        }
+
+        if (component.OpenBoltOnShoot)
+        {
+            SetBolt(uid, component, false, appearance);
         }
 
         var magEnt = GetMagazineEntity(uid);

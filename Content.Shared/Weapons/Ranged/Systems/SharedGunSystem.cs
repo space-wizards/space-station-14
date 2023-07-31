@@ -468,4 +468,5 @@ public enum AmmoVisuals : byte
     AmmoMax,
     HasAmmo, // used for generic visualizers. c# stuff can just check ammocount != 0
     MagLoaded,
+    BoltClosed,
 }
