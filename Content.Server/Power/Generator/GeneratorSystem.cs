@@ -1,4 +1,5 @@
 ﻿using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Interaction;
@@ -12,10 +13,12 @@ namespace Content.Server.Power.Generator;
 /// <inheritdoc/>
 public sealed class GeneratorSystem : SharedGeneratorSystem
 {
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
-    private EntityQuery<UpgradePowerSupplierComponent> _upgradeQuery;
 
+    private EntityQuery<UpgradePowerSupplierComponent> _upgradeQuery;
 
     public override void Initialize()
     {
@@ -77,15 +80,16 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         if (args.Handled)
             return;
 
-        if (!TryComp(args.Used, out PhysicalCompositionComponent? mat) ||
-            !TryComp(args.Used, out StackComponent? stack) ||
-            !TryComp(uid, out FuelGeneratorComponent? generator))
+        if (!TryComp<PhysicalCompositionComponent>(args.Used, out var mat) ||
+            !HasComp<MaterialComponent>(args.Used)  ||
+            !TryComp<FuelGeneratorComponent>(uid, out var generator))
             return;
 
         if (!mat.MaterialComposition.ContainsKey(component.FuelMaterial))
             return;
 
-        generator.RemainingFuel += stack.Count * component.Multiplier;
+        _popup.PopupEntity(Loc.GetString("generator-insert-material", ("item", args.Used), ("generator", uid)), uid);
+        generator.RemainingFuel += _stack.GetCount(args.Used) * component.Multiplier;
         QueueDel(args.Used);
         args.Handled = true;
     }
