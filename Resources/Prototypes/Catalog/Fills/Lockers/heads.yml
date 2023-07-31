@@ -45,7 +45,7 @@
       - id: PlushieNuke
         prob: 0.1
       - id: CigarGoldCase
-        prob: 0.15
+        prob: 0.25
       - id: ClothingBeltSheathFilled
       - id: DoorRemoteCommand
       - id: ClothingNeckCloakCapFormal
