@@ -136,8 +136,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             return false;
         }
 
-        // Remove the non-water reagents.
-        // Remove water on target
+        // Remove the non-water reagents as much as possible.
+        // Remove water on target as much as possible.
         // Then do the transfer.
         var nonWater = absorberSoln.SplitSolutionWithout(component.PickupAmount, PuddleSystem.EvaporationReagent);
 
@@ -147,30 +147,31 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             return false;
         }
 
-        var transferAmount = component.PickupAmount < absorberSoln.AvailableVolume ?
-            component.PickupAmount :
-            absorberSoln.AvailableVolume;
+        var waterTransferAmount = refillableSolution.RemoveReagent(PuddleSystem.EvaporationReagent,
+            FixedPoint2.Min(absorberSoln.AvailableVolume, component.PickupAmount));
 
-        var water = refillableSolution.RemoveReagent(PuddleSystem.EvaporationReagent, transferAmount);
-
-        if (water == FixedPoint2.Zero && nonWater.Volume == FixedPoint2.Zero)
+        if (waterTransferAmount == FixedPoint2.Zero && nonWater.Volume == FixedPoint2.Zero)
         {
+            absorberSoln.AddSolution(nonWater, _prototype);
             _popups.PopupEntity(Loc.GetString("mopping-system-target-container-empty-water", ("target", target)), user, user);
             return false;
         }
 
-
-        if (water > 0 && !_solutionContainerSystem.TryAddReagent(used, absorberSoln, PuddleSystem.EvaporationReagent, water,
-                out _))
+        if (refillableSolution.AvailableVolume <= FixedPoint2.Zero)
         {
-            _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", used)), used, user);
-        }
-
-        if (nonWater.Volume > 0 && !_solutionContainerSystem.TryAddSolution(target, refillableSolution, nonWater))
-        {
-            absorberSoln.AddSolution(nonWater, _prototype);
             _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", target)), user, user);
         }
+
+        var nonWaterTransferAmount = FixedPoint2.Min(refillableSolution.AvailableVolume, nonWater.Volume);
+
+        //transfering liquids
+        _solutionContainerSystem.TryAddReagent(used, absorberSoln, PuddleSystem.EvaporationReagent, waterTransferAmount, out _);
+
+        _solutionContainerSystem.TryAddSolution(target, refillableSolution, nonWater.SplitSolution(nonWaterTransferAmount));
+
+        //return solution that can't fit
+        _solutionContainerSystem.TryAddSolution(used, absorberSoln, nonWater);
+
         _audio.PlayPvs(component.TransferSound, target);
         _useDelay.BeginDelay(used);
         return true;
