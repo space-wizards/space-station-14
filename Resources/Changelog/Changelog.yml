@@ -1,11 +1,6 @@
 Entries:
 - author: Chief-Engineer
   changes:
-  - {message: Revenants now drop ectoplasm when they die., type: Tweak}
-  id: 3883
-  time: '2023-05-28T09:21:07.0000000+00:00'
-- author: Chief-Engineer
-  changes:
   - {message: Adds the universal pinpointer. A pinpointer that can be linked to track
       anything., type: Add}
   - {message: Pinpointers can now be emagged to act as stealthy universal pinpointers.,
@@ -2975,3 +2970,9 @@ Entries:
       monitors no longer experience an exceptionally stretched flash overlay.', type: Fix}
   id: 4382
   time: '2023-07-31T04:41:24.0000000+00:00'
+- author: Misha_Unity
+  changes:
+  - {message: Command access allows to delete any articles, type: Tweak}
+  - {message: Updated mass-media console interface, type: Tweak}
+  id: 4383
+  time: '2023-07-31T05:34:22.0000000+00:00'
