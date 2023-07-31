@@ -1,9 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: The Centcom scarf has been moved to the Centdrobe, type: Tweak}
-  id: 3894
-  time: '2023-05-29T04:34:45.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fixed cleanbots., type: Fix}
@@ -2967,3 +2962,9 @@ Entries:
       after you ghosted', type: Fix}
   id: 4393
   time: '2023-07-31T22:46:06.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Spilling a liquid will no longer expose the true identity of someone,
+    type: Fix}
+  id: 4394
+  time: '2023-07-31T23:15:17.0000000+00:00'
