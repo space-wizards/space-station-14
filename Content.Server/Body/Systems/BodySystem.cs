@@ -144,12 +144,8 @@ public sealed class BodySystem : SharedBodySystem
 
     public override bool DropPart(EntityUid? partId, BodyPartComponent? part = null)
     {
-        if (partId == null || !Resolve(partId.Value, ref part, false))
-        {
-            if (partId != null)
-                Resolve(partId!.Value, ref part);
+        if (partId == null || !Resolve(partId.Value, ref part))
             return false;
-        }
 
         if (!base.DropPart(partId, part))
             return false;
