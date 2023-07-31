@@ -63,7 +63,7 @@ entities:
             color: '#DE3A3A96'
             id: Arrows
           decals:
-            120: -2,-1
+            117: -2,-1
         - node:
             angle: -1.5707963267948966 rad
             color: '#FFFFFFFF'
@@ -132,26 +132,26 @@ entities:
             29: -2,-11
             30: 0,0
             31: 0,-1
-            94: -6,-2
-            95: -6,-1
-            96: -6,0
-            97: -6,1
-            98: 2,1
-            99: 2,-1
-            100: 2,0
-            101: 2,-2
-            102: -5,-12
-            103: -4,-12
-            110: -7,16
-            111: -7,15
-            112: -7,14
-            113: -7,13
-            114: 3,13
-            115: 3,14
-            116: 3,15
-            117: 3,16
-            118: -2,-2
-            119: -2,0
+            91: -6,-2
+            92: -6,-1
+            93: -6,0
+            94: -6,1
+            95: 2,1
+            96: 2,-1
+            97: 2,0
+            98: 2,-2
+            99: -5,-12
+            100: -4,-12
+            107: -7,16
+            108: -7,15
+            109: -7,14
+            110: -7,13
+            111: 3,13
+            112: 3,14
+            113: 3,15
+            114: 3,16
+            115: -2,-2
+            116: -2,0
         - node:
             angle: 6.283185307179586 rad
             color: '#FFFFFFFF'
@@ -163,82 +163,82 @@ entities:
             color: '#334E6DC8'
             id: BrickTileWhiteCornerNe
           decals:
-            68: 2,20
-            72: 3,19
+            65: 2,20
+            69: 3,19
         - node:
             angle: 6.283185307179586 rad
             color: '#334E6DC8'
             id: BrickTileWhiteCornerNw
           decals:
-            67: -6,20
-            71: -7,19
+            64: -6,20
+            68: -7,19
         - node:
             angle: 6.283185307179586 rad
             color: '#334E6DC8'
             id: BrickTileWhiteInnerNe
           decals:
-            70: 2,19
+            67: 2,19
         - node:
             angle: 6.283185307179586 rad
             color: '#334E6DC8'
             id: BrickTileWhiteInnerNw
           decals:
-            69: -6,19
+            66: -6,19
         - node:
             angle: 6.283185307179586 rad
             color: '#334E6DC8'
             id: BrickTileWhiteLineE
           decals:
-            73: 3,18
+            70: 3,18
         - node:
             angle: 6.283185307179586 rad
             color: '#52B4E9FF'
             id: BrickTileWhiteLineE
           decals:
-            89: -3,7
+            86: -3,7
         - node:
             color: '#EFB34196'
             id: BrickTileWhiteLineE
           decals:
-            105: -3,-12
-            106: -3,-11
-            107: -3,-10
+            102: -3,-12
+            103: -3,-11
+            104: -3,-10
         - node:
             color: '#334E6DC8'
             id: BrickTileWhiteLineN
           decals:
-            108: -6,16
-            109: 2,16
+            105: -6,16
+            106: 2,16
         - node:
             angle: 6.283185307179586 rad
             color: '#334E6DC8'
             id: BrickTileWhiteLineN
           decals:
-            60: -5,20
-            61: -4,20
-            62: -3,20
-            63: -2,20
-            64: -1,20
-            65: 0,20
-            66: 1,20
+            57: -5,20
+            58: -4,20
+            59: -3,20
+            60: -2,20
+            61: -1,20
+            62: 0,20
+            63: 1,20
         - node:
             angle: 6.283185307179586 rad
             color: '#DE3A3A96'
             id: BrickTileWhiteLineN
           decals:
-            55: -4,1
-            56: -3,1
-            57: -1,1
-            58: 0,1
-            59: -2,1
+            52: -4,1
+            53: -3,1
+            54: -1,1
+            55: 0,1
+            56: -2,1
         - node:
             angle: 6.283185307179586 rad
             color: '#DE3A3A96'
             id: BrickTileWhiteLineS
           decals:
             49: -2,3
-            52: -1,-2
-            53: 0,-2
+            50: -1,-2
+            51: 0,-2
         - node:
             angle: 6.283185307179586 rad
             color: '#EFB34196'
@@ -251,46 +251,46 @@ entities:
             color: '#334E6DC8'
             id: BrickTileWhiteLineW
           decals:
-            74: -7,18
+            71: -7,18
         - node:
             angle: 6.283185307179586 rad
             color: '#52B4E996'
             id: BrickTileWhiteLineW
           decals:
-            75: -1,9
-            76: -1,8
-            77: -1,7
-            78: -1,6
+            72: -1,9
+            73: -1,8
+            74: -1,7
+            75: -1,6
         - node:
             angle: 9.42477796076938 rad
             color: '#52B4E996'
             id: BrickTileWhiteLineW
           decals:
-            79: 2,8
-            80: 2,7
-            81: 2,9
+            76: 2,8
+            77: 2,7
+            78: 2,9
         - node:
             angle: 6.283185307179586 rad
             color: '#52B4E9FF'
             id: BrickTileWhiteLineW
           decals:
-            85: -1,6
-            86: -1,7
-            87: -1,9
-            88: -1,8
+            82: -1,6
+            83: -1,7
+            84: -1,9
+            85: -1,8
         - node:
             angle: 9.42477796076938 rad
             color: '#52B4E9FF'
             id: BrickTileWhiteLineW
           decals:
-            82: 2,9
-            83: 2,8
-            84: 2,7
+            79: 2,9
+            80: 2,8
+            81: 2,7
         - node:
             color: '#EFB34196'
             id: BrickTileWhiteLineW
           decals:
-            104: -6,-12
+            101: -6,-12
         - node:
             angle: 6.283185307179586 rad
             color: '#EFB34196'
@@ -302,36 +302,36 @@ entities:
             color: '#DE3A3A96'
             id: CheckerNESW
           decals:
-            121: -3,-2
-            122: -4,-2
-            123: -4,-1
-            124: -3,-1
-            125: -3,0
-            126: -4,0
+            118: -3,-2
+            119: -4,-2
+            120: -4,-1
+            121: -3,-1
+            122: -3,0
+            123: -4,0
         - node:
             angle: 6.283185307179586 rad
             color: '#52B4E996'
             id: ThreeQuarterTileOverlayGreyscale
           decals:
-            92: 1,7
+            89: 1,7
         - node:
             angle: 6.283185307179586 rad
             color: '#52B4E996'
             id: ThreeQuarterTileOverlayGreyscale180
           decals:
-            93: 0,8
+            90: 0,8
         - node:
             angle: 6.283185307179586 rad
             color: '#52B4E996'
             id: ThreeQuarterTileOverlayGreyscale270
           decals:
-            91: 1,8
+            88: 1,8
         - node:
             angle: 6.283185307179586 rad
             color: '#52B4E996'
             id: ThreeQuarterTileOverlayGreyscale90
           decals:
-            90: 0,7
+            87: 0,7
       type: DecalGrid
     - version: 2
       data:
@@ -2548,7 +2548,7 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-- proto: GeneratorUranium
+- proto: GeneratorBasic15kW
   entities:
   - uid: 344
     components:

@@ -595,8 +595,11 @@
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
+    fireRate: 2
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+      params:
+        volume: 2.25
     clumsyProof: true
   - type: RevolverAmmoProvider
     whitelist:
@@ -617,6 +620,7 @@
   parent: RevolverCapGun
   id: RevolverCapGunFake
   name: cap gun
+  suffix: Fake
   description: Looks almost like the real thing! Ages 8 and up.
   components:
     - type: RevolverAmmoProvider
@@ -626,7 +630,7 @@
           - SpeedLoaderCap
           - CartridgeMagnum
           - SpeedLoaderMagnum
-      proto: CartridgeMagnum
+      proto: CartridgeMagnumAP
 
 - type: entity
   parent: BaseItem
@@ -813,6 +817,8 @@
             shader: unshaded
     - type: DisarmMalus
       malus: 0
+    - type: StaminaDamageOnHit
+      damage: 8
     - type: MeleeWeapon
       damage:
         types:

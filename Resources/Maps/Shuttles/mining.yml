@@ -576,6 +576,58 @@ entities:
       pos: -4.5,3.5
       parent: 181
       type: Transform
+- proto: BlastDoorExterior1
+  entities:
+  - uid: 37
+    components:
+    - pos: -5.5,-2.5
+      parent: 181
+      type: Transform
+    - links:
+      - 100
+      type: DeviceLinkSink
+  - uid: 47
+    components:
+    - pos: -5.5,-3.5
+      parent: 181
+      type: Transform
+    - links:
+      - 100
+      type: DeviceLinkSink
+  - uid: 69
+    components:
+    - pos: -5.5,-1.5
+      parent: 181
+      type: Transform
+    - links:
+      - 100
+      type: DeviceLinkSink
+- proto: BlastDoorExterior2
+  entities:
+  - uid: 46
+    components:
+    - pos: 0.5,-3.5
+      parent: 181
+      type: Transform
+    - links:
+      - 105
+      type: DeviceLinkSink
+  - uid: 94
+    components:
+    - pos: 0.5,-1.5
+      parent: 181
+      type: Transform
+    - links:
+      - 105
+      type: DeviceLinkSink
+  - uid: 95
+    components:
+    - pos: 0.5,-2.5
+      parent: 181
+      type: Transform
+    - links:
+      - 105
+      type: DeviceLinkSink
 - proto: CableApcExtension
   entities:
   - uid: 1
@@ -930,7 +982,7 @@ entities:
     - pos: -1.5,-5.5
       parent: 181
       type: Transform
-- proto: GeneratorPlasma
+- proto: GeneratorBasic15kW
   entities:
   - uid: 67
     components:
@@ -1088,6 +1140,36 @@ entities:
     - pos: -4.5,-6.5
       parent: 181
       type: Transform
+- proto: SignalButtonExt1
+  entities:
+  - uid: 100
+    components:
+    - pos: -5.5,-0.5
+      parent: 181
+      type: Transform
+    - linkedPorts:
+        69:
+        - Pressed: Toggle
+        37:
+        - Pressed: Toggle
+        47:
+        - Pressed: Toggle
+      type: DeviceLinkSource
+- proto: SignalButtonExt2
+  entities:
+  - uid: 105
+    components:
+    - pos: 0.5,-0.5
+      parent: 181
+      type: Transform
+    - linkedPorts:
+        94:
+        - Pressed: Toggle
+        95:
+        - Pressed: Toggle
+        46:
+        - Pressed: Toggle
+      type: DeviceLinkSource
 - proto: SMESBasic
   entities:
   - uid: 24
@@ -1271,26 +1353,6 @@ entities:
       type: Transform
 - proto: Window
   entities:
-  - uid: 37
-    components:
-    - pos: 0.5,-2.5
-      parent: 181
-      type: Transform
-  - uid: 46
-    components:
-    - pos: -5.5,-1.5
-      parent: 181
-      type: Transform
-  - uid: 47
-    components:
-    - pos: 0.5,-1.5
-      parent: 181
-      type: Transform
-  - uid: 69
-    components:
-    - pos: 0.5,-3.5
-      parent: 181
-      type: Transform
   - uid: 78
     components:
     - pos: -2.5,7.5
@@ -1329,16 +1391,6 @@ entities:
   - uid: 93
     components:
     - pos: -0.5,6.5
-      parent: 181
-      type: Transform
-  - uid: 94
-    components:
-    - pos: -5.5,-3.5
-      parent: 181
-      type: Transform
-  - uid: 95
-    components:
-    - pos: -5.5,-2.5
       parent: 181
       type: Transform
   - uid: 96

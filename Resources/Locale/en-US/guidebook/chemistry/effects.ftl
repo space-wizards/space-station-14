@@ -200,13 +200,13 @@ reagent-effect-guidebook-cure-disease =
 reagent-effect-guidebook-cure-eye-damage =
     { $chance ->
         [1] { $deltasign ->
-                [1] Heals
-                *[-1] Deals
+                [1] Deals
+                *[-1] Heals
             }
         *[other]
             { $deltasign ->
-                [1] heal
-                *[-1] deal
+                [1] deal
+                *[-1] heal
             }
     } eye damage
 

@@ -9,9 +9,9 @@
 /Content.*/Administration/ @moonheart08 @PaulRitter @DrSmugleaf @Chief-Engineer
 /Content.*/Station/ @moonheart08
 /Content.*/Maps/ @moonheart08
-/Content.*/GameTicking/ @moonheart08
+/Content.*/GameTicking/ @moonheart08 @EmoGarbage404
 /Resources/ServerInfo/ @moonheart08 @Chief-Engineer
-/Resources/ServerInfo/Guidebook/ @moonheart08
+/Resources/ServerInfo/Guidebook/ @moonheart08 @EmoGarbage404
 /Resources/engineCommandPerms.yml @moonheart08 @Chief-Engineer
 /Resources/clientCommandPerms.yml @moonheart08 @Chief-Engineer
 /Resources/Prototypes/species.yml @moonheart08
@@ -38,6 +38,17 @@
 /Content.*/Hands/ @ElectroJr
 /Content.*/Actions/ @ElectroJr
 /Content.*/Explosion/ @ElectroJr
+
+/Content.*/Anomaly/ @EmoGarbage404
+/Content.*/Lathe/ @EmoGarbage404
+/Content.*/Materials/ @EmoGarbage404
+/Content.*/Mech/ @EmoGarbage404
+/Content.*/Research/ @EmoGarbage404
+/Content.*/Stack/ @EmoGarbage404
+/Content.*/Xenoarchaeology/ @EmoGarbage404
+/Content.*/Zombies/ @EmoGarbage404
+/Resources/Prototypes/Entities/Structures/Specific/anomalies.yml @EmoGarbage404
+/Resources/Prototypes/Research/ @EmoGarbage404
 
 /Content.YAMLLinter @PaulRitter @DrSmugleaf
 /Content.*/Inventory @PaulRitter

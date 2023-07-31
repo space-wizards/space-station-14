@@ -31,7 +31,7 @@ namespace Content.Server.Administration.Commands
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            var entitiesWithComponents = components.Select(c => entityManager.GetAllComponents(c).Select(x => x.Owner));
+            var entitiesWithComponents = components.Select(c => entityManager.GetAllComponents(c).Select(x => x.Uid));
             var entitiesWithAllComponents = entitiesWithComponents.Skip(1).Aggregate(new HashSet<EntityUid>(entitiesWithComponents.First()), (h, e) => { h.IntersectWith(e); return h; });
 
             var count = 0;

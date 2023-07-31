@@ -15,9 +15,9 @@
   id: UplinkRevolverPython
   name: uplink-revolver-python-name
   description: uplink-revolver-python-desc
-  productEntity: WeaponRevolverPython
+  productEntity: WeaponRevolverPythonAP
   cost:
-    Telecrystal: 4
+    Telecrystal: 8 # Originally was 13 TC but was not used due to high cost
   categories:
   - UplinkWeapons
 
@@ -246,13 +246,13 @@
 
 # For the Python
 - type: listing
-  id: UplinkSpeedLoaderMagnum
+  id: UplinkSpeedLoaderMagnumAP
   name: uplink-speedloader-magnum-name
   description: uplink-speedloader-magnu-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: icon }
-  productEntity: SpeedLoaderMagnum
+  productEntity: SpeedLoaderMagnumAP
   cost:
-    Telecrystal: 1
+    Telecrystal: 2
   categories:
   - UplinkAmmo
 
@@ -264,6 +264,17 @@
   productEntity: MagazineBoxLightRifle
   cost:
     Telecrystal: 1
+  categories:
+  - UplinkAmmo
+
+# for the hristov
+- type: listing
+  id: UplinkHristovAmmo
+  name: uplink-sniper-ammo-name
+  description: uplink-sniper-ammo-desc
+  productEntity: MagazineBoxAntiMateriel
+  cost:
+    Telecrystal: 2
   categories:
   - UplinkAmmo
 
@@ -598,13 +609,24 @@
           - SurplusBundle
 
 - type: listing
+  id: UplinkSniperBundle
+  name: uplink-sniper-bundle-name
+  description: uplink-sniper-bundle-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
+  productEntity: BriefcaseSyndieSniperBundleFilled
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkBundles
+
+- type: listing
   id: UplinkC20RBundle
   name: uplink-c20r-bundle-name
   description: uplink-c20r-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledSMG
   cost:
-    Telecrystal: 25
+    Telecrystal: 17
   categories:
   - UplinkBundles
 
@@ -615,7 +637,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Shotguns/bulldog.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledShotgun
   cost:
-    Telecrystal: 25
+    Telecrystal: 20
   categories:
   - UplinkBundles
 
@@ -830,7 +852,7 @@
   description: uplink-revolver-cap-gun-fake-desc
   productEntity: RevolverCapGunFake
   cost:
-    Telecrystal: 6
+    Telecrystal: 9
   categories:
   - UplinkJob
   conditions:
@@ -883,6 +905,7 @@
     - !type:BuyerJobCondition
       whitelist:
         - Scientist
+        - SeniorResearcher
 
 - type: listing
   id: uplinkProximityMine
@@ -917,8 +940,30 @@
     whitelist:
     - Zookeeper
     - Scientist
+    - SeniorResearcher      
     - Chef
 
+<<<<<<< HEAD
+=======
+- type: listing
+  id: UplinkDisposableTurret
+  name: uplink-disposable-turret-name
+  description: uplink-disposable-turret-desc
+  productEntity: ToolboxElectricalTurretFilled
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkJob
+  conditions:
+    - !type:BuyerJobCondition
+      whitelist:
+        - StationEngineer
+        - AtmosphericTechnician
+        - Scientist
+        - SeniorEngineer
+        - SeniorResearcher
+
+>>>>>>> master
 # Armor
 
 - type: listing
@@ -1012,7 +1057,7 @@
   description: uplink-cyberpen-desc
   productEntity: CyberPen
   cost:
-    Telecrystal: 3
+    Telecrystal: 1
   categories:
   - UplinkMisc
 

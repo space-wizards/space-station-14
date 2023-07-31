@@ -168,12 +168,19 @@
     supplyRate: 3000
 
 - type: entity
+  parent: BaseGenerator
+  id: GeneratorBasic15kW
+  suffix: Basic, 15kW
+  components:
+    - type: PowerSupplier
+      supplyRate: 15000
+
+- type: entity
   parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorPlasma
-  suffix: Plasma, 5kW
+  suffix: Plasma, 20kW
   components:
   - type: PowerSupplier
-    supplyRate: 5000 # 260 sec / sheet
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen0_1
@@ -186,14 +193,24 @@
   - type: UpgradePowerSupplier
     powerSupplyMultiplier: 1.25
     scaling: Exponential
+  - type: FuelGenerator
+    targetPower: 20000
+    optimalPower: 20000
+  - type: SolidFuelGeneratorAdapter
+    fuelMaterial: Plasma
+  - type: ActivatableUI
+    key: enum.GeneratorComponentUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.GeneratorComponentUiKey.Key
+        type: SolidFuelGeneratorBoundUserInterface
 
 - type: entity
   parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorUranium
-  suffix: Uranium, 15kW
+  suffix: Uranium, 30kW
   components:
   - type: PowerSupplier
-    supplyRate: 15000 # 85 sec / sheet
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen1_1
@@ -206,6 +223,18 @@
   - type: UpgradePowerSupplier
     powerSupplyMultiplier: 1.25
     scaling: Exponential
+  - type: FuelGenerator
+    targetPower: 30000
+    optimalPower: 30000
+    optimalBurnRate: 0.00416666666
+  - type: SolidFuelGeneratorAdapter
+    fuelMaterial: Uranium
+  - type: ActivatableUI
+    key: enum.GeneratorComponentUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.GeneratorComponentUiKey.Key
+        type: SolidFuelGeneratorBoundUserInterface
 
 - type: entity
   parent: BaseGeneratorWallmount
