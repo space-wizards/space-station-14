@@ -485,11 +485,12 @@ public sealed class MindSystem : EntitySystem
     /// </summary>
     /// <param name="mind">The mind to add the role to.</param>
     /// <param name="role">The type of the role to give.</param>
+    /// <param name="greet">Do we greet the player with info about their role?</param>
     /// <returns>The instance of the role.</returns>
     /// <exception cref="ArgumentException">
     ///     Thrown if we already have a role with this type.
     /// </exception>
-    public void AddRole(Mind mind, Role role)
+    public void AddRole(Mind mind, Role role, bool greet = true)
     {
         if (mind.Roles.Contains(role))
         {
@@ -497,7 +498,8 @@ public sealed class MindSystem : EntitySystem
         }
 
         mind.Roles.Add(role);
-        role.Greet();
+        if (greet)
+            role.Greet();
 
         var message = new RoleAddedEvent(mind, role);
         if (mind.OwnedEntity != null)

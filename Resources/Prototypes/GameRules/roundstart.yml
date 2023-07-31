@@ -73,6 +73,24 @@
   components:
   - type: ZombieRule
 
+# Respawn
+- type: entity
+  id: RespawnInstantRule
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: RespawnTracker
+  - type: RespawnDeadRule
+
+- type: entity
+  id: Respawn5Rule
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: RespawnDeadRule
+  - type: RespawnTracker
+    respawnDelay: 5
+
 # event schedulers
 - type: entity
   id: BasicStationEventScheduler
