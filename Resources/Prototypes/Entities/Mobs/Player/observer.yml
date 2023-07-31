@@ -7,7 +7,7 @@
   components:
   - type: ContentEye
     maxZoom: 1.44,1.44
-  - type: Mind
+  - type: MindContainer
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -47,7 +47,6 @@
     globalReceive: true
   - type: Sprite
     overrideContainerOcclusion: true # Ghosts always show up regardless of where they're contained.
-    netsync: false
     noRot: true
     drawdepth: Ghosts
     sprite: Mobs/Ghosts/ghost_human.rsi
@@ -57,8 +56,8 @@
       - state: animated
         shader: unshaded
   - type: MovementSpeedModifier
-    baseSprintSpeed: 8
-    baseWalkSpeed: 5
+    baseSprintSpeed: 12
+    baseWalkSpeed: 8
   - type: MovementIgnoreGravity
   - type: Tag
     tags:

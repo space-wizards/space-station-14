@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: CargoPallet
+  icon:
+    sprite: Structures/catwalk.rsi
+    state: catwalk_preview
+  product: CargoPallet
+  cost: 250
+  category: Cargo
+  group: market

@@ -207,7 +207,6 @@
   components:
   - type: SpriteFade
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/Anomaly/anomaly_generator.rsi
     offset: 0,1
     drawdepth: Mobs

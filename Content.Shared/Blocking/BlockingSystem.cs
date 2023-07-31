@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Doors.Components;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -12,11 +14,14 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Toggleable;
+using Content.Shared.Verbs;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Blocking;
 
@@ -30,6 +35,8 @@ public sealed partial class BlockingSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -44,6 +51,8 @@ public sealed partial class BlockingSystem : EntitySystem
         SubscribeLocalEvent<BlockingComponent, ToggleActionEvent>(OnToggleAction);
 
         SubscribeLocalEvent<BlockingComponent, ComponentShutdown>(OnShutdown);
+
+        SubscribeLocalEvent<BlockingComponent, GetVerbsEvent<ExamineVerb>>(OnVerbExamine);
     }
 
     private void OnEquip(EntityUid uid, BlockingComponent component, GotEquippedHandEvent args)
@@ -80,7 +89,7 @@ public sealed partial class BlockingSystem : EntitySystem
 
     private void OnToggleAction(EntityUid uid, BlockingComponent component, ToggleActionEvent args)
     {
-        if(args.Handled)
+        if (args.Handled)
             return;
 
         var blockQuery = GetEntityQuery<BlockingComponent>();
@@ -147,6 +156,13 @@ public sealed partial class BlockingSystem : EntitySystem
         {
             //Don't allow someone to block if they're not parented to a grid
             if (xform.GridUid != xform.ParentUid)
+            {
+                CantBlockError(user);
+                return false;
+            }
+
+            // Don't allow someone to block if they're not holding the shield
+            if(!_handsSystem.IsHolding(user, item, out _))
             {
                 CantBlockError(user);
                 return false;
@@ -281,4 +297,45 @@ public sealed partial class BlockingSystem : EntitySystem
         component.User = null;
     }
 
+    private void OnVerbExamine(EntityUid uid, BlockingComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess || !_net.IsServer)
+            return;
+
+        var fraction = component.IsBlocking ? component.ActiveBlockFraction : component.PassiveBlockFraction;
+        var modifier = component.IsBlocking ? component.ActiveBlockDamageModifier : component.PassiveBlockDamageModifer;
+
+        var msg = new FormattedMessage();
+
+        msg.AddMarkup(Loc.GetString("blocking-fraction", ("value", MathF.Round(fraction * 100, 1))));
+
+        AppendCoefficients(modifier, msg);
+
+        _examine.AddDetailedExamineVerb(args, component, msg,
+            Loc.GetString("blocking-examinable-verb-text"),
+            "/Textures/Interface/VerbIcons/dot.svg.192dpi.png",
+            Loc.GetString("blocking-examinable-verb-message")
+        );
+    }
+
+    private void AppendCoefficients(DamageModifierSet modifiers, FormattedMessage msg)
+    {
+        foreach (var coefficient in modifiers.Coefficients)
+        {
+            msg.PushNewline();
+            msg.AddMarkup(Robust.Shared.Localization.Loc.GetString("blocking-coefficient-value",
+                ("type", coefficient.Key),
+                ("value", MathF.Round(coefficient.Value * 100, 1))
+            ));
+        }
+
+        foreach (var flat in modifiers.FlatReduction)
+        {
+            msg.PushNewline();
+            msg.AddMarkup(Robust.Shared.Localization.Loc.GetString("blocking-reduction-value",
+                ("type", flat.Key),
+                ("value", flat.Value)
+            ));
+        }
+    }
 }

@@ -13,7 +13,6 @@
   - type: Sprite
     sprite: Structures/Holo/wetfloor.rsi
     state: icon
-    netsync: false
   - type: TimedDespawn
     lifetime: 90
 
@@ -26,7 +25,6 @@
   - type: Sprite
     sprite: Structures/Holo/holofan.rsi
     state: icon
-    netsync: false
   - type: Fixtures
     fixtures:
       fix1:
@@ -50,7 +48,6 @@
     - type: Sprite
       sprite: Structures/Holo/security.rsi
       state: icon
-      netsync: false
     - type: Fixtures
       fixtures:
         fix1:

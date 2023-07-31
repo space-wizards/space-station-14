@@ -5,7 +5,6 @@
   description: This device will disrupt any nearby outgoing radio communication when activated.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Devices/jammer.rsi
     state: jammer
   - type: RadioJammer

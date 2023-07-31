@@ -12,7 +12,6 @@
   - type: Transform
     anchored: true
   - type: Sprite
-    netsync: false
     sprite: Structures/conveyor.rsi
     state: conveyor_started_cw
     drawdepth: FloorObjects
@@ -75,7 +74,6 @@
     tags:
     - ConveyorAssembly
   - type: Sprite
-    netsync: false
     sprite: Structures/conveyor.rsi
     state: conveyor_loose
   - type: Construction

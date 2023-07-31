@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
-    netsync: false
     layers:
     - state: book0
       map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -26,6 +25,244 @@
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_book.svg.96dpi.png"
     backgroundPatchMargin: 23.0, 16.0, 14.0, 15.0
     contentMargin: 20.0, 20.0, 20.0, 20.0
+
+- type: entity
+  id: BookSpaceEncyclopedia
+  parent: BaseItem
+  name: space encyclopedia
+  description: An encyclopedia containing all the knowledge. The author of this encyclopedia is unknown.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book0 # placeholder(?). if only we have a better sprite that fits this.
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - SS14
+
+- type: entity
+  id: BookTheBookOfControl
+  parent: BaseItem
+  name: the book of control
+  description: Essential to become robust.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book7
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Controls
+
+- type: entity
+  id: BookBartendersManual
+  parent: BaseItem
+  name: bartender's manual
+  description: This manual is stained with beer.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book_bar
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Bartender
+
+- type: entity
+  id: BookChefGaming
+  parent: BaseItem
+  name: chef gaming
+  description: A book about cooking written by a gamer chef. 
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book_cooking
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Chef
+
+- type: entity
+  id: BookLeafLoversSecret
+  parent: BaseItem
+  name: leaf lover's secret
+  description: It has a strong weed smell. It motivates you to feed and seed.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book_hydroponics_pod_people
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Botany
+
+- type: entity
+  id: BookEngineersHandbook
+  parent: BaseItem
+  name: engineer's handbook
+  description: A handbook about engineering written by Nanotrasen.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book_engineering
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Engineering
+
+- type: entity
+  id: BookScientistsGuidebook
+  parent: BaseItem
+  name: scientist's guidebook
+  description: A guidebook about science written by Nanotrasen.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book0 # no science book sprite so this is a placeholder
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Science
+
+- type: entity
+  id: BookSecurity
+  parent: BaseItem
+  name: security 101
+  description: A book about security written by Nanotrasen. The book is stained with blood. It seems to have been used more as a weapon than reading material. 
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book_detective # maybe a proper sprite is needed
+  - type: Tag
+    tags:
+    - Book
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Security
+
+- type: entity
+  id: BookHowToKeepStationClean
+  parent: BaseItem
+  name: how to keep station clean
+  description: This book is very clean.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book0 # no janitorial book sprite so this is a placeholder
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Janitorial
+
+- type: entity
+  id: BookHowToRockAndStone
+  parent: BaseItem
+  name: how to rock and stone
+  description: A very detailed guide about salvage written by Karl, a legendary space miner, however he's missing. It motivates you to rock and stone.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book0 # no salvage book sprite so this is a placeholder
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Salvage
+
+- type: entity
+  id: BookMedicalReferenceBook
+  parent: BaseItem
+  name: medical reference book
+  description: A reference book about medical written by an old doctor. The handwriting is barely comprehensible.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book0 # no medical book sprite so this is a placeholder
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Medical
+
+- type: entity
+  id: BookHowToSurvive
+  parent: BaseItem
+  name: how to survive
+  description: Ironically the author of this book is dead.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book_engineering
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Survival
+
+- type: entity
+  id: BookChemicalCompendium
+  parent: BaseItem
+  name: chempendium
+  description: A comprehensive guide written by some old skeleton of a professor about chemical synthesis.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book_chemistry
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - Chemicals
 
 - type: entity
   parent: BookBase

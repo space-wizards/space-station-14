@@ -7,12 +7,11 @@
   components:
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
-    netsync: false
     sprite: Mobs/Animals/bear.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -34,10 +33,10 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Critical
       150: Dead
   - type: Stamina
     excess: 150
+  - type: MovementAlwaysTouching
   - type: Bloodstream
     bloodMaxVolume: 300
     bloodReagent: Cryoxadone
@@ -75,7 +74,6 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    netsync: false
     sprite: Mobs/Animals/bear.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -134,7 +132,6 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    netsync: false
     sprite: Mobs/Animals/kangaroo.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -210,7 +207,6 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    netsync: false
     sprite: Mobs/Animals/spacespider.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -221,7 +217,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      90: Critical
       130: Dead
   - type: Stamina
     excess: 150
@@ -230,8 +225,6 @@
       Alive:
         Base: spacespider
         BaseUnshaded: glow
-      Critical:
-        Base: spacespider_dead
       Dead:
         Base: spacespider_dead
   - type: Butcherable

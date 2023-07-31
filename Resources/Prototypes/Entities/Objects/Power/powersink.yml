@@ -43,6 +43,7 @@
       voltage: High
       drawRate: 1000000
     - type: Sprite
-      netsync: false
       sprite: Objects/Power/powersink.rsi
       state: powersink
+    - type: WarpPoint
+      location: powersink

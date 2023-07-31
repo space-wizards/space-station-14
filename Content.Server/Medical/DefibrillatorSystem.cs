@@ -4,6 +4,7 @@ using Content.Server.DoAfter;
 using Content.Server.Electrocution;
 using Content.Server.EUI;
 using Content.Server.Ghost;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
@@ -29,7 +30,6 @@ namespace Content.Server.Medical;
 public sealed class DefibrillatorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly ChatSystem _chatManager = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -43,6 +43,7 @@ public sealed class DefibrillatorSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -217,23 +218,22 @@ public sealed class DefibrillatorSystem : EntitySystem
         }
         else
         {
+            _mobThreshold.SetAllowRevives(target, true, thresholds);
             if (_mobState.IsDead(target, mob))
                 _damageable.TryChangeDamage(target, component.ZapHeal, true, origin: uid);
-
-            _mobThreshold.SetAllowRevives(target, true, thresholds);
             _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
             _mobThreshold.SetAllowRevives(target, false, thresholds);
 
-            if (TryComp<MindComponent>(target, out var mindComp) &&
-                mindComp.Mind?.UserId != null &&
-                _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out session))
+            if (TryComp<MindContainerComponent>(target, out var mindComp) &&
+                mindComp.Mind?.Session is { } playerSession)
             {
+                session = playerSession;
                 // notify them they're being revived.
                 if (mindComp.Mind.CurrentEntity != target)
                 {
                     _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-ghosted"),
                         InGameICChatType.Speak, true);
-                    _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind), session);
+                    _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind, _mind), session);
                 }
             }
             else
