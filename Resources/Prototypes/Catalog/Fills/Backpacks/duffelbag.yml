@@ -143,6 +143,27 @@
         amount: 2
 
 - type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmo
+  id: ClothingBackpackDuffelSyndicateAmmoAdvancedFilled
+  name: Advanced ammo bundle
+  description: "Contains magazines filled with special ammo variants for the c20, bulldog and l6 saw"
+  components:
+  - type: StorageFill
+    contents:
+      - id: MagazinePistolSubMachineGunHighVelocity
+        amount: 2
+      - id: MagazinePistolSubMachineGunAP
+        amount: 2
+      - id: MagazineShotgunIncendiary
+        amount: 2
+      - id: MagazineShotgunSlugHighVelocity
+        amount: 2
+      - id: MagazineLightRifleBoxHighVelocity
+        amount: 1
+      - id: MagazineLightRifleBoxAP
+        amount: 1
+
+- type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicateCostumeCentcom
   name: CentCom official costume duffel bag

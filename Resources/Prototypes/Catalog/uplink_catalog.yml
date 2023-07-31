@@ -100,7 +100,7 @@
       blacklist:
         tags:
           - NukeOpsUplink
-          
+
 # Explosives
 
 - type: listing
@@ -341,7 +341,7 @@
       whitelist:
         tags:
           - NukeOpsUplink
-          
+
 - type: listing
   id: UplinkReinforcementRadioSyndicateMonkey
   name: uplink-reinforcement-radio-monkey-name
@@ -551,6 +551,25 @@
   productEntity: ClothingBackpackDuffelSyndicateAmmoFilled
   cost:
     Telecrystal: 15
+  categories:
+  - UplinkBundles
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
+
+- type: listing
+  id: UplinkAmmoBundleAdvanced
+  name: uplink-ammo-bundle-advanced-name
+  description: uplink-ammo-bundle-advanced-desc
+  productEntity: ClothingBackpackDuffelSyndicateAmooAdvancedFilled
+  cost:
+    Telecrystal: 30
   categories:
   - UplinkBundles
   conditions:

@@ -35,6 +35,7 @@ research-technology-explosive-technology = Explosive Technology
 research-technology-advanced-laser-manipulation = Advanced Laser Manipulation
 research-technology-nonlethal-ammunition = Nonlethal Ammunition
 research-technology-optimized-ballistics = Optimized Ballistics
+research-technology-plasteel-tipped-munitions = Plasteel Tipped Munitions
 research-technology-concentrated-laser-weaponry = Concentrated Laser Weaponry
 research-technology-wave-particle-harnessing = Wave Particle Harnessing
 research-technology-handheld-electrical-propulsion = Handheld Electrical Propulsion

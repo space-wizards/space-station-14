@@ -30,6 +30,7 @@
     damage:
       types:
         Piercing: 14
+        structural: 7
 
 - type: entity
   id: BulletLightRiflePractice

@@ -30,6 +30,7 @@
     damage:
       types:
         Piercing: 12
+        structural: 6
 
 - type: entity
   id: BulletPistolPractice

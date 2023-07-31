@@ -414,3 +414,63 @@
   completetime: 5
   materials:
     Plastic: 950
+
+- type: latheRecipe
+  id: CartridgePistolAP
+  result: CartridgePistolAP
+  completetime: 2
+  materials:
+    Plasteel: 15
+
+- type: latheRecipe
+  id: CartridgeMagnumAP
+  result: CartridgeMagnumAP
+  completetime: 2
+  materials:
+    Plasteel: 30
+
+- type: latheRecipe
+  id: CartridgeLightRifleAP
+  result: CartridgeLightRifleAP
+  completetime: 2
+  materials:
+    Plasteel: 30
+
+- type: latheRecipe
+  id: CartridgeRifleAP
+  result: CartridgeRifleAP
+  completetime: 2
+  materials:
+    Plasteel: 20
+
+- type: latheRecipe
+  id: MagazineBoxPistolAP
+  result: MagazineBoxPistolAP
+  completetime: 5
+  materials:
+    Plasteel: 900
+    Steel: 50
+
+- type: latheRecipe
+  id: MagazineBoxMagnumAP
+  result: MagazineBoxMagnumAP
+  completetime: 5
+  materials:
+    Plasteel: 1800
+    Steel: 50
+
+- type: latheRecipe
+  id: MagazineBoxLightRifleAP
+  result: MagazineBoxLightRifleAP
+  completetime: 5
+  materials:
+    Plasteel: 1800
+    Steel: 50
+
+- type: latheRecipe
+  id: MagazineBoxRifleAP
+  result: MagazineBoxRifleAP
+  completetime: 5
+  materials:
+    Plasteel: 1200
+    Steel: 50

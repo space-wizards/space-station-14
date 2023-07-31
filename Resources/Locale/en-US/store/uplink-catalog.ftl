@@ -140,6 +140,9 @@ uplink-meds-bundle-desc = All you need to get your comrades back in the fight: m
 uplink-ammo-bundle-name = Ammo Bundle
 uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW.
 
+uplink-ammo-bundle-advanced-name = Advanced Ammo Bundle
+uplink-ammo-bundle-advanced-desc = A more advanced ammo bundle containing AP, HV and incendiary magazines for the C-20r, Bulldog and L6 SAW.
+
 uplink-sniper-bundle-name = Sniper Bundle
 uplink-sniper-bundle-desc = An inconspicuous briefcase that contains a hristov, 30 spare bullets and a convenient disguise
 

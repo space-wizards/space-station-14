@@ -55,6 +55,56 @@
   - type: Appearance
 
 - type: entity
+  id: MagazineLightRifleBoxHighVelocity
+  name: "L6 SAW magazine box (.30 rifle high-velocity)"
+  parent: BaseMagazineLightRifle
+  components:
+  - type: Tag
+    tags:
+      - MagazineLightRifleBox
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleHighVelocity
+    capacity: 100
+  - type: Item
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_box.rsi
+    layers:
+    - state: hv
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: MagazineLightRifleBoxAP
+  name: "L6 SAW magazine box (.30 rifle armor-piercing)"
+  parent: BaseMagazineLightRifle
+  components:
+  - type: Tag
+    tags:
+      - MagazineLightRifleBox
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleAP
+    capacity: 100
+  - type: Item
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_box.rsi
+    layers:
+    - state: ap
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
   id: MagazineLightRifle
   name: "magazine (.30 rifle)"
   parent: BaseMagazineLightRifle
@@ -78,6 +128,20 @@
   - type: Sprite
     layers:
     - state: high_velocity
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineLightRifleAP
+  name: "magazine (.30 rifle armor-piercing)"
+  parent: BaseMagazineLightRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleAP
+  - type: Sprite
+    layers:
+    - state: armor_piercing
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

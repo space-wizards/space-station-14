@@ -11,6 +11,12 @@
             "name": "base"
         },
         {
+            "name": "hv"
+        },
+        {
+            "name": "ap"
+        },
+        {
             "name": "mag-1"
         },
         {

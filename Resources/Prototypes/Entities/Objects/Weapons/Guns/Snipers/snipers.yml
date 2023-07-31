@@ -24,6 +24,7 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+    penetrationModifier: 1
   - type: BallisticAmmoProvider
     autoCycle: false
     capacity: 10

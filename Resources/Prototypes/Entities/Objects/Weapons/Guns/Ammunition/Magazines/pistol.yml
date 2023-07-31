@@ -156,6 +156,21 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
+
+- type: entity
+  id: MagazinePistolAP
+  name: pistol magazine (.35 auto armor-piercing)
+  parent: BaseMagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolAP
+  - type: Sprite
+    layers:
+    - state: armor_piercing
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
 - type: entity
   id: MagazinePistolPractice
   name: pistol magazine (.35 auto practice)
@@ -208,6 +223,20 @@
   - type: Sprite
     layers:
     - state: high_velocity
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolHighCapacityAP
+  name: machine pistol magazine (.35 auto armor-piercing)
+  parent: BaseMagazinePistolHighCapacity
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolAP
+  - type: Sprite
+    layers:
+    - state: armor_piercing
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
@@ -270,6 +299,20 @@
   - type: Sprite
     layers:
     - state: high_velocity
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolSubMachineGunAP
+  name: SMG magazine (.35 auto armor-piercing)
+  parent: BaseMagazinePistolSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolAP
+  - type: Sprite
+    layers:
+    - state: armor_piercing
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

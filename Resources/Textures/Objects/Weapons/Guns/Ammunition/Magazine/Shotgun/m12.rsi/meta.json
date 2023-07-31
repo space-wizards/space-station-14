@@ -20,6 +20,9 @@
             "name": "slug"
         },
         {
+            "name": "slug_hv"
+        },
+        {
             "name": "mag-1"
         }
     ]

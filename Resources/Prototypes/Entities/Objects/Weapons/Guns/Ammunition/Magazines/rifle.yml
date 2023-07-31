@@ -62,6 +62,20 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
+  id: MagazineRifleAP
+  name: "magazine (.20 rifle armor-piercing)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleAP
+  - type: Sprite
+    layers:
+    - state: armor_piercing
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
   id: MagazineRiflePractice
   name: "magazine (.20 rifle practice)"
   parent: BaseMagazineRifle

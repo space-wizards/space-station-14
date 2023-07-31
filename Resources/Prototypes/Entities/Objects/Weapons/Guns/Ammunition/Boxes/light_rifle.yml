@@ -76,6 +76,21 @@
 
 - type: entity
   parent: BaseMagazineBoxLightRifle
+  id: MagazineBoxLightRifleAP
+  name: ammunition box (.30 rifle armor-piercing)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleAP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: ap
+
+- type: entity
+  parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRiflePractice
   name: ammunition box (.30 rifle practice)
   components:

@@ -451,6 +451,15 @@
       - MagazineBoxMagnumIncendiary
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxRifleIncendiary
+      - ShellShotgunAP
+      - CartridgePistoAP
+      - CartridgeMagnumAP
+      - CartridgeLightRifleAP
+      - CartridgeRifleAP
+      - MagazineBoxPistolAP
+      - MagazineBoxMagnumAP
+      - MagazineBoxLightRifleAP
+      - MagazineBoxRifleAP
       - Signaller
       - SignalTrigger
       - VoiceTrigger

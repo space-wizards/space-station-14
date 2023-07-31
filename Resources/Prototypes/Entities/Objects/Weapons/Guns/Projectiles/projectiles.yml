@@ -161,6 +161,7 @@
     damage:
       types:
         Piercing: 12
+        Structural: 5
   - type: ResistancePenetration
     penetration: 0.5
 

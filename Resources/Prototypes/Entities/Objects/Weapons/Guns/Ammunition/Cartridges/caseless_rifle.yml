@@ -38,7 +38,7 @@
     proto: BulletCaselessRifleHighVelocity
 
 - type: entity
-  id: CartridgeCaselessAP
+  id: CartridgeCaselessRifleAP
   name: cartridge (.25 caseless armor-piercing)
   parent: BaseCartridgeCaselessRifle
   components:

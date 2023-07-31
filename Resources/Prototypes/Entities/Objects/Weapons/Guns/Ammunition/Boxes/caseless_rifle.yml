@@ -117,6 +117,21 @@
 
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
+  id: MagazineBoxCaselessRifleAP
+  name: ammunition box (.25 caseless armor-piercing)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifleAP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: ap
+
+- type: entity
+  parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRiflePractice
   name: ammunition box (.25 caseless practice)
   components:

@@ -53,6 +53,22 @@
     state: "slug"
 
 - type: entity
+  id: ShellShotgunSlugHighVelocity
+  name: shell (.50 slug high-velocity)
+  parent: BaseShellShotgun
+  components:
+  - type: Sprite
+    layers:
+      - state: slug
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunSlugHighVelocity
+    count: 4
+    spread: 5
+  - type: SpentAmmoVisuals
+    state: "slug"
+
+- type: entity
   id: ShellShotgunFlare
   name: shell (.50 flare)
   parent: BaseShellShotgun
