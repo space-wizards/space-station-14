@@ -24,7 +24,7 @@
     - Chapel
   - type: MindContainer
     showExamineInfo: true
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - PetsNT
   - type: Alerts
@@ -54,7 +54,7 @@
         Slash: 7
   - type: InputMover
   - type: MobMover
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleNeutral
   - type: InteractionPopup

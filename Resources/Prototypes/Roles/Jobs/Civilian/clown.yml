@@ -4,7 +4,7 @@
   description: job-description-clown
   playTimeTracker: JobClown
   startingGear: ClownGear
-  icon: "Clown"
+  icon: "JobIconClown"
   supervisors: job-supervisors-hop
   access:
   - Theatre
@@ -19,6 +19,10 @@
           Piercing: 4
         groups:
           Burn: 3
+    - type: SleepEmitSound
+      snore: /Audio/Voice/Misc/silly_snore.ogg
+      interval: 10
+      chance: 1.0
   - !type:AddImplantSpecial
     implants: [ SadTromboneImplant ]
 

@@ -40,7 +40,7 @@ namespace Content.Shared.PDA
         protected virtual void OnItemInserted(EntityUid uid, PdaComponent pda, EntInsertedIntoContainerMessage args)
         {
             if (args.Container.ID == PdaComponent.PdaIdSlotId)
-                pda.ContainedId = CompOrNull<IdCardComponent>(args.Entity);
+                pda.ContainedId = args.Entity;
 
             UpdatePdaAppearance(uid, pda);
         }

@@ -74,7 +74,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         // Try a clumsy roll
         // TODO: Who put this here
-        if (TryComp<ClumsyComponent>(user, out var clumsy))
+        if (TryComp<ClumsyComponent>(user, out var clumsy) && gun.ClumsyProof == false)
         {
             for (var i = 0; i < ammo.Count; i++)
             {
@@ -171,7 +171,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                     // Something like ballistic might want to leave it in the container still
                     if (!cartridge.DeleteOnSpawn && !Containers.IsEntityInContainer(ent!.Value))
-                        EjectCartridge(ent.Value);
+                        EjectCartridge(ent.Value, angle);
 
                     Dirty(cartridge);
                     break;

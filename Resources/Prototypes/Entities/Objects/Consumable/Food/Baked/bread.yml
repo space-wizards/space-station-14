@@ -567,6 +567,9 @@
     - Baguette
   - type: Sprite
     state: baguette
+  - type: SliceableFood
+    count: 12
+    slice: FoodBreadBaguetteSlice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -581,6 +584,28 @@
         - ReagentId: Blackpepper
           Quantity: 1
 # Tastes like France.
+
+- type: entity
+  name: crostini
+  parent: FoodBreadSliceBase
+  id: FoodBreadBaguetteSlice
+  description: Bon ap-petite!
+  components:
+  - type: Sprite
+    state: crostini
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 0.5
+        - ReagentId: Vitamin
+          Quantity: 0.1
+        - ReagentId: TableSalt
+          Quantity: 0.1
+        - ReagentId: Blackpepper
+          Quantity: 0.1
 
 - type: entity
   name: buttered toast

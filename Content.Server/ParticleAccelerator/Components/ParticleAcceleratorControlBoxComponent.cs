@@ -40,6 +40,12 @@ public sealed class ParticleAcceleratorControlBoxComponent : Component
     public bool Firing = false;
 
     /// <summary>
+    /// Block re-entrant rescanning.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool CurrentlyRescanning = false;
+
+    /// <summary>
     /// Whether the PA is currently firing or charging to fire.
     /// Bounded by <see cref="ParticleAcceleratorPowerState.Standby"/> and <see cref="MaxStrength"/>.
     /// Modified by <see cref="ParticleAcceleratorStrengthWireAction"/>.

@@ -487,6 +487,32 @@
           Quantity: 15
 
 - type: entity
+  name: dermaline syringe
+  parent: BaseSyringe
+  id: SyringeDermaline
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Dermaline
+          Quantity: 15
+
+- type: entity
+  name: hyronalin syringe
+  parent: BaseSyringe
+  id: SyringeHyronalin
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Hyronalin
+          Quantity: 15
+
+- type: entity
   name: ipecac syringe
   parent: BaseSyringe
   id: SyringeIpecac
