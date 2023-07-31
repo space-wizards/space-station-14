@@ -64,6 +64,7 @@
   - type: SiliconLawBound
   - type: Hands
     showInHands: false
+  - type: ZombieImmune
   - type: Body
     prototype: Borg
   - type: BorgChassis
