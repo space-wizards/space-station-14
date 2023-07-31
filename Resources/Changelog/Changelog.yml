@@ -1,16 +1,4 @@
 Entries:
-- author: Kit0vras
-  changes:
-  - {message: Added reaction for cola creation., type: Add}
-  id: 3885
-  time: '2023-05-28T10:25:12.0000000+00:00'
-- author: BurninDreamer
-  changes:
-  - {message: 'As per request of several Operatives the experimental stimpack was
-      cut down in price by nearly half, don''t forget the antitoxin that (doesn''t)
-      come in the package.', type: Tweak}
-  id: 3886
-  time: '2023-05-28T20:05:58.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'NanoTrasen''s CBURN unit fell asleep on the job, accidentally reintroducing
@@ -2974,3 +2962,15 @@ Entries:
     type: Tweak}
   id: 4384
   time: '2023-07-31T05:40:31.0000000+00:00'
+- author: Raitononai
+  changes:
+  - {message: Added missing job specific items to Senior Researcher and Senior Engineer
+      traitors., type: Fix}
+  id: 4385
+  time: '2023-07-31T06:03:41.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: 'The chemical page of the wiki has been heavily reworded, and a few
+      chemicals had their recipes tweaked and effects changed a little', type: Tweak}
+  id: 4386
+  time: '2023-07-31T06:03:49.0000000+00:00'
