@@ -7,7 +7,7 @@ namespace Content.Server.Power.Generator;
 /// <summary>
 /// This is used for providing gas power to machinery.
 /// </summary>
-[RegisterComponent, Access(typeof(GasPowerReceivererSystem))]
+[RegisterComponent, Access(typeof(GasPowerReceiverSystem))]
 public sealed class GasPowerReceiverComponent : Component
 {
     /// <summary>
