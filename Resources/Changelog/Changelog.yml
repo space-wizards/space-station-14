@@ -1,26 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'NanoTrasen''s CBURN unit fell asleep on the job, accidentally reintroducing
-      the undead into the standard station ecosystem. Watch your back and don''t get
-      bit.', type: Add}
-  id: 3887
-  time: '2023-05-28T20:06:15.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Tweaked singularity to stay small with with a level 1 PA., type: Tweak}
-  id: 3888
-  time: '2023-05-28T20:06:36.0000000+00:00'
-- author: juliangiebel
-  changes:
-  - {message: Fixed not being able to set up mailing units, type: Fix}
-  id: 3889
-  time: '2023-05-28T20:06:54.0000000+00:00'
-- author: juliangiebel
-  changes:
-  - {message: Fixed suit sensors for crew arriving via arrivals shuttle, type: Fix}
-  id: 3890
-  time: '2023-05-28T20:07:31.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'Most tools no longer deal 10 blunt damage, and are across-the-board
@@ -2974,3 +2952,24 @@ Entries:
       chemicals had their recipes tweaked and effects changed a little', type: Tweak}
   id: 4386
   time: '2023-07-31T06:03:49.0000000+00:00'
+- author: Raitononai
+  changes:
+  - {message: Adjusted the contents of command staff's lockers to reduce bloat., type: Tweak}
+  id: 4387
+  time: '2023-07-31T20:29:01.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed the guidebook incorrectly showing oculine as damaging eyes., type: Fix}
+  id: 4388
+  time: '2023-07-31T20:29:52.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: 'Bullets, lasers, and disabler bolts now hit vehicles and their occupants.',
+    type: Fix}
+  id: 4389
+  time: '2023-07-31T20:30:24.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Updated the HAMTR mech's description to avoid trademark issues., type: Fix}
+  id: 4390
+  time: '2023-07-31T20:30:52.0000000+00:00'
