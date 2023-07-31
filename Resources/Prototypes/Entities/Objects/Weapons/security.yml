@@ -69,7 +69,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 17
+        Blunt: 18
   - type: Item
     size: 30
   - type: Clothing
