@@ -22,7 +22,7 @@ namespace Content.Client.Flash
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        public override OverlaySpace Space => OverlaySpace.WorldSpace;
+        public override OverlaySpace Space => OverlaySpace.ScreenSpace;
         private readonly ShaderInstance _shader;
         private double _startTime = -1;
         private double _lastsFor = 1;
@@ -61,16 +61,18 @@ namespace Content.Client.Flash
             if (percentComplete >= 1.0f)
                 return;
 
-            var worldHandle = args.WorldHandle;
-            worldHandle.UseShader(_shader);
+            var screenSpaceHandle = args.ScreenHandle;
+            screenSpaceHandle.UseShader(_shader);
             _shader.SetParameter("percentComplete", percentComplete);
+
+            var screenSize = UIBox2.FromDimensions(new Vector2(0, 0), _displayManager.ScreenSize);
 
             if (_screenshotTexture != null)
             {
-                worldHandle.DrawTextureRectRegion(_screenshotTexture, args.WorldBounds);
+                screenSpaceHandle.DrawTextureRect(_screenshotTexture, screenSize);
             }
 
-            worldHandle.UseShader(null);
+            screenSpaceHandle.UseShader(null);
         }
 
         protected override void DisposeBehavior()

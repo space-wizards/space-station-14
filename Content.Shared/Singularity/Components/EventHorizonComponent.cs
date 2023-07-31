@@ -1,6 +1,5 @@
 using Robust.Shared.GameStates;
 using Content.Shared.Singularity.EntitySystems;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Singularity.Components;
 
@@ -60,13 +59,19 @@ public sealed class EventHorizonComponent : Component
     /// </summary>
     [DataField("consumePeriod")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan TargetConsumePeriod = TimeSpan.FromSeconds(0.5);
+    public TimeSpan TargetConsumePeriod { get; set; } = TimeSpan.FromSeconds(0.5);
+
+    /// <summary>
+    /// The last time at which this consumed everything it overlapped with.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public TimeSpan LastConsumeWaveTime { get; set; } = default!;
 
     /// <summary>
     /// The next time at which this consumed everything it overlapped with.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), DataField("nextConsumeWaveTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public TimeSpan NextConsumeWaveTime;
+    [ViewVariables(VVAccess.ReadOnly)]
+    public TimeSpan NextConsumeWaveTime { get; set; } = default!;
 
     #endregion Update Timing
 }

@@ -55,7 +55,7 @@ namespace Content.Server.Ghost.Roles.Components
         [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string RoleRules
         {
-            get => Loc.GetString(_roleRules);
+            get => _roleRules;
             set
             {
                 _roleRules = value;

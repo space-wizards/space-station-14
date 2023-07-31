@@ -115,9 +115,4 @@ public enum PathfindingBreadcrumbFlag : ushort
     /// Is there access required
     /// </summary>
     Access = 1 << 3,
-
-    /// <summary>
-    /// Is there climbing involved
-    /// </summary>
-    Climb = 1 << 4,
 }

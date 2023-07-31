@@ -1,6 +1,9 @@
 using Content.Shared.Doors.Systems;
+using Content.Shared.MachineLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Doors.Components;
 

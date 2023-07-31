@@ -1,7 +1,8 @@
-﻿using Content.Shared.DeviceLinking;
+﻿using Content.Shared.MachineLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
@@ -21,7 +22,7 @@ public sealed class AnalysisConsoleComponent : Component
     /// <summary>
     /// The machine linking port for the analyzer
     /// </summary>
-    [DataField("linkingPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
+    [DataField("linkingPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
     public readonly string LinkingPort = "ArtifactAnalyzerSender";
 
     /// <summary>

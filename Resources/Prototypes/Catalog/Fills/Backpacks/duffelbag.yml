@@ -80,8 +80,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: WeaponRevolverPythonAP
-      - id: SpeedLoaderMagnumAP
+      - id: WeaponRevolverPython
+      - id: SpeedLoaderMagnum
         amount: 2
 
 - type: entity
@@ -240,8 +240,6 @@
     contents:
       - id: ClothingHeadHelmetSyndicate
       - id: ClothingOuterHardsuitSyndicate
-      - id: ClothingMaskGasSyndicate
-      - id: DoubleEmergencyOxygenTankFilled
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -252,8 +250,6 @@
   - type: StorageFill
     contents:
       - id: ClothingOuterHardsuitSyndie
-      - id: ClothingMaskGasSyndicate
-      - id: ClothingHandsGlovesCombat
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -264,7 +260,7 @@
   - type: StorageFill
     contents:
       - id: SyringeRomerol
-      - id: WeaponRevolverPython
+      - id: WeaponRevolverMateba
       - id: MagazineBoxMagnumIncendiary
       - id: PillAmbuzolPlus
       - id: PillAmbuzol

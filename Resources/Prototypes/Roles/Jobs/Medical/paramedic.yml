@@ -10,7 +10,7 @@
     - !type:OverallPlaytimeRequirement
       time: 54000 # 15 hrs
   startingGear: ParamedicGear
-  icon: "JobIconParamedic"
+  icon: "Paramedic"
   supervisors: job-supervisors-cmo
   access:
   - Medical

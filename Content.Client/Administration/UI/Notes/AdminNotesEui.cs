@@ -1,4 +1,4 @@
-using Content.Client.Eui;
+﻿using Content.Client.Eui;
 using Content.Shared.Administration.Notes;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
@@ -14,10 +14,15 @@ public sealed class AdminNotesEui : BaseEui
         NoteWindow = new AdminNotesWindow();
         NoteControl = NoteWindow.Notes;
 
-        NoteControl.NoteChanged += (id, type, text, severity, secret, expiryTime) => SendMessage(new EditNoteRequest(id, type, text, severity, secret, expiryTime));
-        NoteControl.NewNoteEntered += (type, text, severity, secret, expiryTime) => SendMessage(new CreateNoteRequest(type, text, severity, secret, expiryTime));
-        NoteControl.NoteDeleted += (id, type) => SendMessage(new DeleteNoteRequest(id, type));
-        NoteWindow.OnClose += () => SendMessage(new CloseEuiMessage());
+        NoteControl.OnNoteChanged += (id, text) => SendMessage(new EditNoteRequest(id, text));
+        NoteControl.OnNewNoteEntered += text => SendMessage(new CreateNoteRequest(text));
+        NoteControl.OnNoteDeleted += id => SendMessage(new DeleteNoteRequest(id));
+        NoteWindow.OnClose += OnClosed;
+    }
+
+    private void OnClosed()
+    {
+        SendMessage(new CloseEuiMessage());
     }
 
     public override void Closed()
@@ -38,7 +43,6 @@ public sealed class AdminNotesEui : BaseEui
         }
 
         NoteWindow.SetTitlePlayer(s.NotedPlayerName);
-        NoteControl.SetPlayerName(s.NotedPlayerName);
         NoteControl.SetNotes(s.Notes);
         NoteControl.SetPermissions(s.CanCreate, s.CanDelete, s.CanEdit);
     }

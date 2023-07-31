@@ -13,8 +13,7 @@ public sealed class ShowAccessReadersCommand : IConsoleCommand
     {
         var collection = IoCManager.Instance;
 
-        if (collection == null)
-            return;
+        if (collection == null) return;
 
         var overlay = collection.Resolve<IOverlayManager>();
 
@@ -26,10 +25,9 @@ public sealed class ShowAccessReadersCommand : IConsoleCommand
 
         var entManager = collection.Resolve<IEntityManager>();
         var cache = collection.Resolve<IResourceCache>();
-        var lookup = entManager.System<EntityLookupSystem>();
-        var xform = entManager.System<SharedTransformSystem>();
+        var system = entManager.EntitySysManager.GetEntitySystem<EntityLookupSystem>();
 
-        overlay.AddOverlay(new AccessOverlay(entManager, cache, lookup, xform));
+        overlay.AddOverlay(new AccessOverlay(entManager, cache, system));
         shell.WriteLine($"Set access reader debug overlay to true");
     }
 }

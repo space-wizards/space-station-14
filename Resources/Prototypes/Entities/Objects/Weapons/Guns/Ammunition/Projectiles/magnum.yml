@@ -18,7 +18,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 44 # 25% increase
+        Piercing: 39
 
 - type: entity
   id: BulletMagnumPractice
@@ -54,15 +54,3 @@
     damage:
       groups:
         Burn: 32
-
-- type: entity
-  id: BulletMagnumAP
-  name: bullet (.45 magnum armor-piercing)
-  parent: BaseBulletAP
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Piercing: 26 # 20% decrease
-    ignoreResistances: true

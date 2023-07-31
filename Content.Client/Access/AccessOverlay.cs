@@ -11,16 +11,14 @@ public sealed class AccessOverlay : Overlay
 {
     private readonly IEntityManager _entityManager;
     private readonly EntityLookupSystem _lookup;
-    private readonly SharedTransformSystem _xform;
     private readonly Font _font;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-    public AccessOverlay(IEntityManager entManager, IResourceCache cache, EntityLookupSystem lookup, SharedTransformSystem xform)
+    public AccessOverlay(IEntityManager entManager, IResourceCache cache, EntityLookupSystem lookup)
     {
         _entityManager = entManager;
         _lookup = lookup;
-        _xform = xform;
 
         _font = cache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
     }
@@ -73,7 +71,7 @@ public sealed class AccessOverlay : Overlay
                 textStr = "";
             }
 
-            var screenPos = args.ViewportControl.WorldToScreen(_xform.GetWorldPosition(xform));
+            var screenPos = args.ViewportControl.WorldToScreen(xform.WorldPosition);
 
             args.ScreenHandle.DrawString(_font, screenPos, textStr, Color.Gold);
         }

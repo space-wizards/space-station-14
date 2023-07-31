@@ -8,7 +8,7 @@
       department: Science
       time: 14400 #4 hrs
   startingGear: ScientistGear
-  icon: "JobIconScientist"
+  icon: "Scientist"
   supervisors: job-supervisors-rd
   access:
   - Research

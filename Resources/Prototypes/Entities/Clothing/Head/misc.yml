@@ -51,15 +51,12 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatHairflower
   name: hairflower
-  description: A red flower for beautiful ladies.
+  description: A red rose for beautiful ladies.
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/hairflower.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/hairflower.rsi
-  - type: Construction
-    graph: hairflower
-    node: hairflower
 
 - type: entity
   parent: ClothingHeadBase

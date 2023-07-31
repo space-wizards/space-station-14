@@ -157,11 +157,7 @@ public sealed class SaveLoadReparentTest
                         Assert.That(component.ParentSlot.Child, Is.EqualTo(id));
                     });
                 }
-
-                maps.DeleteMap(mapId);
             }
         });
-
-        await pairTracker.CleanReturnAsync();
     }
 }

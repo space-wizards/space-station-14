@@ -12,12 +12,10 @@
       time: 21600 #6 hrs
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 36000 #10 hrs
-    - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs      
+      time: 108000 # 30 hrs
   weight: 10
   startingGear: ChiefEngineerGear
-  icon: "JobIconChiefEngineer"
+  icon: "ChiefEngineer"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false

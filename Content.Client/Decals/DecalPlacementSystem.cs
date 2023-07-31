@@ -197,7 +197,7 @@ public sealed class DecalPlacementSystem : EntitySystem
 
 public sealed class PlaceDecalActionEvent : WorldTargetActionEvent
 {
-    [DataField("decalId", customTypeSerializer:typeof(PrototypeIdSerializer<DecalPrototype>), required:true)]
+    [DataField("decalId", customTypeSerializer:typeof(PrototypeIdSerializer<DecalPrototype>))]
     public string DecalId = string.Empty;
 
     [DataField("color")]

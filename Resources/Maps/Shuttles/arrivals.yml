@@ -181,7 +181,8 @@ entities:
       type: GridAtmosphere
     - type: GasTileOverlay
     - type: RadiationGridResistance
-    - type: SpreaderGrid
+    - nextUpdate: 0
+      type: SpreaderGrid
     - type: GridPathfinding
 - proto: AirCanister
   entities:
@@ -1243,7 +1244,7 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-- proto: GeneratorBasic15kW
+- proto: GeneratorUranium
   entities:
   - uid: 114
     components:
@@ -1393,7 +1394,7 @@ entities:
     - pos: 1.5,-5.5
       parent: 292
       type: Transform
-- proto: IntercomCommon
+- proto: Intercom
   entities:
   - uid: 264
     components:

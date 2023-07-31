@@ -95,7 +95,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         // TODO VERBS ICON add a climbing icon?
         args.Verbs.Add(new AlternativeVerb
         {
-            Act = () => TryClimb(args.User, args.User, args.Target, out _, component),
+            Act = () => TryClimb(args.User, args.User, args.Target, component),
             Text = Loc.GetString("comp-climbable-verb-climb")
         });
     }
@@ -106,25 +106,22 @@ public sealed class ClimbSystem : SharedClimbSystem
         // but don't have computer access and i have to do this without syntax
         if (args.Handled || args.User != args.Dragged && !HasComp<HandsComponent>(args.User))
             return;
-        TryClimb(args.User, args.Dragged, uid, out _, component);
+        TryClimb(args.User, args.Dragged, uid, component);
     }
 
-    public bool TryClimb(EntityUid user,
+    public void TryClimb(EntityUid user,
         EntityUid entityToMove,
         EntityUid climbable,
-        out DoAfterId? id,
         ClimbableComponent? comp = null,
         ClimbingComponent? climbing = null)
     {
-        id = null;
-
         if (!Resolve(climbable, ref comp) || !Resolve(entityToMove, ref climbing))
-            return false;
+            return;
 
         // Note, IsClimbing does not mean a DoAfter is active, it means the target has already finished a DoAfter and
         // is currently on top of something..
         if (climbing.IsClimbing)
-            return true;
+            return;
 
         var args = new DoAfterArgs(user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
         {
@@ -133,8 +130,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             BreakOnDamage = true
         };
 
-        _doAfterSystem.TryStartDoAfter(args, out id);
-        return true;
+        _doAfterSystem.TryStartDoAfter(args);
     }
 
     private void OnDoAfter(EntityUid uid, ClimbingComponent component, ClimbDoAfterEvent args)
@@ -283,7 +279,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     /// <param name="target">The object that is being vaulted</param>
     /// <param name="reason">The reason why it cant be dropped</param>
     /// <returns></returns>
-    public bool CanVault(ClimbableComponent component, EntityUid user, EntityUid target, out string reason)
+    private bool CanVault(ClimbableComponent component, EntityUid user, EntityUid target, out string reason)
     {
         if (!_actionBlockerSystem.CanInteract(user, target))
         {
@@ -319,7 +315,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     /// <param name="target">The object that is being vaulted onto</param>
     /// <param name="reason">The reason why it cant be dropped</param>
     /// <returns></returns>
-    public bool CanVault(ClimbableComponent component, EntityUid user, EntityUid dragged, EntityUid target,
+    private bool CanVault(ClimbableComponent component, EntityUid user, EntityUid dragged, EntityUid target,
         out string reason)
     {
         if (!_actionBlockerSystem.CanInteract(user, dragged) || !_actionBlockerSystem.CanInteract(user, target))

@@ -28,7 +28,5 @@ public sealed class LogErrorTest
         // But errors do
         await server.WaitPost(() => Assert.Throws<AssertionException>(() => logmill.Error("test")));
         await client.WaitPost(() => Assert.Throws<AssertionException>(() => logmill.Error("test")));
-
-        await pairTracker.CleanReturnAsync();
     }
 }

@@ -9,7 +9,6 @@ public sealed class ReflectSystem : SharedReflectSystem
     public override void Initialize()
     {
         base.Initialize();
-
         SubscribeLocalEvent<ReflectComponent, EnergySwordActivatedEvent>(EnableReflect);
         SubscribeLocalEvent<ReflectComponent, EnergySwordDeactivatedEvent>(DisableReflect);
         SubscribeLocalEvent<ReflectComponent, ItemToggleActivatedEvent>(ShieldEnableReflect);

@@ -4,8 +4,10 @@ using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Cloning;
 using Content.Server.Drone.Components;
+using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Chemistry.Components;
 using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Damage;
@@ -22,18 +24,20 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Zombies
 {
-    public sealed partial class ZombieSystem : SharedZombieSystem
+    public sealed class ZombieSystem : SharedZombieSystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
         [Dependency] private readonly ServerInventorySystem _inv = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
-        [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
+        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
 
@@ -51,46 +55,61 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
-
-            SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
+            SubscribeLocalEvent<PendingZombieComponent, MobStateChangedEvent>(OnPendingMobState);
         }
 
         private void OnPendingMapInit(EntityUid uid, PendingZombieComponent component, MapInitEvent args)
         {
-            component.NextTick = _timing.CurTime + TimeSpan.FromSeconds(1f);
+            component.NextTick = _timing.CurTime;
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+            var query = EntityQueryEnumerator<PendingZombieComponent, DamageableComponent, MobStateComponent>();
             var curTime = _timing.CurTime;
 
+            var zombQuery = EntityQueryEnumerator<ZombieComponent, DamageableComponent, MobStateComponent>();
+
             // Hurt the living infected
-            var query = EntityQueryEnumerator<PendingZombieComponent, DamageableComponent, MobStateComponent>();
             while (query.MoveNext(out var uid, out var comp, out var damage, out var mobState))
             {
                 // Process only once per second
-                if (comp.NextTick > curTime)
+                if (comp.NextTick + TimeSpan.FromSeconds(1) > curTime)
                     continue;
 
-                comp.NextTick = curTime + TimeSpan.FromSeconds(1f);
+                comp.NextTick = curTime;
 
-                comp.GracePeriod -= TimeSpan.FromSeconds(1f);
-                if (comp.GracePeriod > TimeSpan.Zero)
+                comp.InfectedSecs += 1;
+                // See if there should be a warning popup for the player.
+                if (comp.InfectionWarnings.TryGetValue(comp.InfectedSecs, out var popupStr))
+                {
+                    _popup.PopupEntity(Loc.GetString(popupStr), uid, uid);
+                }
+
+                if (comp.InfectedSecs < 0)
+                {
+                    // This zombie has a latent virus, probably set up by ZombieRuleSystem. No damage yet.
                     continue;
+                }
 
-                if (_random.Prob(comp.InfectionWarningChance))
-                    _popup.PopupEntity(Loc.GetString(_random.Pick(comp.InfectionWarnings)), uid, uid);
+                // Pain of becoming a zombie grows over time
+                // By scaling the number of seconds we have an accessible way to scale this exponential function.
+                //   The function was hand tuned to 120 seconds, hence the 120 constant here.
+                var scaledSeconds = (120.0f / comp.MaxInfectionLength) * comp.InfectedSecs;
 
-                var multiplier = _mobState.IsCritical(uid, mobState)
-                    ? comp.CritDamageMultiplier
-                    : 1f;
-
-                _damageable.TryChangeDamage(uid, comp.Damage * multiplier, true, false, damage);
+                // 1x at 30s, 3x at 60s, 6x at 90s, 10x at 120s. Limit at 20x so we don't gib you.
+                var painMultiple = Math.Min(20f, 0.1f + 0.02f * scaledSeconds + 0.0005f * scaledSeconds * scaledSeconds);
+                if (mobState.CurrentState == MobState.Critical)
+                {
+                    // Speed up their transformation when they are (or have been) in crit by ensuring their damage
+                    //   multiplier is at least 10x
+                    painMultiple = Math.Max(comp.MinimumCritMultiplier, painMultiple);
+                }
+                _damageable.TryChangeDamage(uid, comp.Damage * painMultiple, true, false, damage);
             }
 
             // Heal the zombified
-            var zombQuery = EntityQueryEnumerator<ZombieComponent, DamageableComponent, MobStateComponent>();
             while (zombQuery.MoveNext(out var uid, out var comp, out var damage, out var mobState))
             {
                 // Process only once per second
@@ -99,15 +118,22 @@ namespace Content.Server.Zombies
 
                 comp.NextTick = curTime;
 
-                if (_mobState.IsDead(uid, mobState))
+                if (comp.Permadeath)
+                {
+                    // No healing
                     continue;
+                }
 
-                var multiplier = _mobState.IsCritical(uid, mobState)
-                    ? comp.PassiveHealingCritMultiplier
-                    : 1f;
-
-                // Gradual healing for living zombies.
-                _damageable.TryChangeDamage(uid, comp.PassiveHealing * multiplier, true, false, damage);
+                if (mobState.CurrentState == MobState.Alive)
+                {
+                    // Gradual healing for living zombies.
+                    _damageable.TryChangeDamage(uid, comp.Damage, true, false, damage);
+                }
+                else if (_random.Prob(comp.ZombieReviveChance))
+                {
+                    // There's a small chance to reverse all the zombie's damage (damage.Damage) in one go
+                    _damageable.TryChangeDamage(uid, -damage.Damage, true, false, damage);
+                }
             }
         }
 
@@ -150,6 +176,28 @@ namespace Content.Server.Zombies
 
                 // Stop random groaning
                 _autoEmote.RemoveEmote(uid, "ZombieGroan");
+
+                if (args.NewMobState == MobState.Dead)
+                {
+                    // Roll to see if this zombie is not coming back.
+                    //   Note that due to damage reductions it takes a lot of hits to gib a zombie without this.
+                    if (_random.Prob(component.ZombiePermadeathChance))
+                    {
+                        // You're dead! No reviving for you.
+                        _mobThreshold.SetAllowRevives(uid, false);
+                        component.Permadeath = true;
+                        _popup.PopupEntity(Loc.GetString("zombie-permadeath"), uid, uid);
+                    }
+                }
+            }
+        }
+
+        private void OnPendingMobState(EntityUid uid, PendingZombieComponent pending, MobStateChangedEvent args)
+        {
+            if (args.NewMobState == MobState.Critical)
+            {
+                // Immediately jump to an active virus when you crit
+                pending.InfectedSecs = Math.Max(0, pending.InfectedSecs);
             }
         }
 
@@ -190,7 +238,7 @@ namespace Content.Server.Zombies
 
         private void OnMeleeHit(EntityUid uid, ZombieComponent component, MeleeHitEvent args)
         {
-            if (!TryComp<ZombieComponent>(args.User, out _))
+            if (!EntityManager.TryGetComponent<ZombieComponent>(args.User, out var zombieComp))
                 return;
 
             if (!args.HitEntities.Any())
@@ -206,25 +254,29 @@ namespace Content.Server.Zombies
 
                 if (HasComp<ZombieComponent>(entity))
                 {
-                    args.BonusDamage = -args.BaseDamage;
+                    args.BonusDamage = -args.BaseDamage * zombieComp.OtherZombieDamageCoefficient;
                 }
                 else
                 {
                     if (!HasComp<ZombieImmuneComponent>(entity) && _random.Prob(GetZombieInfectionChance(entity, component)))
                     {
-                        EnsureComp<PendingZombieComponent>(entity);
+                        var pending = EnsureComp<PendingZombieComponent>(entity);
+                        pending.MaxInfectionLength = _random.NextFloat(0.25f, 1.0f) * component.ZombieInfectionTurnTime;
                         EnsureComp<ZombifyOnDeathComponent>(entity);
                     }
                 }
 
-                if (_mobState.IsIncapacitated(entity, mobState) && !HasComp<ZombieComponent>(entity))
+                if ((mobState.CurrentState == MobState.Dead || mobState.CurrentState == MobState.Critical)
+                    && !HasComp<ZombieComponent>(entity))
                 {
-                    ZombifyEntity(entity);
+                    _zombify.ZombifyEntity(entity);
                     args.BonusDamage = -args.BaseDamage;
                 }
                 else if (mobState.CurrentState == MobState.Alive) //heals when zombies bite live entities
                 {
-                    _damageable.TryChangeDamage(uid, component.HealingOnBite, true, false);
+                    var healingSolution = new Solution();
+                    healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
+                    _bloodstream.TryAddToChemicals(args.User, healingSolution);
                 }
             }
         }
@@ -234,10 +286,9 @@ namespace Content.Server.Zombies
         /// </summary>
         /// <param name="source">the entity having the ZombieComponent</param>
         /// <param name="target">the entity you want to unzombify (different from source in case of cloning, for example)</param>
-        /// <param name="zombiecomp"></param>
         /// <remarks>
         ///     this currently only restore the name and skin/eye color from before zombified
-        ///     TODO: completely rethink how zombies are done to allow reversal.
+        ///     TODO: reverse everything else done in ZombifyEntity
         /// </remarks>
         public bool UnZombify(EntityUid source, EntityUid target, ZombieComponent? zombiecomp)
         {
@@ -246,13 +297,13 @@ namespace Content.Server.Zombies
 
             foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
             {
-                _humanoidAppearance.SetBaseLayerColor(target, layer, info.Color);
-                _humanoidAppearance.SetBaseLayerId(target, layer, info.ID);
+                _humanoidSystem.SetBaseLayerColor(target, layer, info.Color);
+                _humanoidSystem.SetBaseLayerId(target, layer, info.ID);
             }
-            _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
+            _humanoidSystem.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
             _bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
 
-            _metaData.SetEntityName(target, zombiecomp.BeforeZombifiedEntityName);
+            MetaData(target).EntityName = zombiecomp.BeforeZombifiedEntityName;
             return true;
         }
 

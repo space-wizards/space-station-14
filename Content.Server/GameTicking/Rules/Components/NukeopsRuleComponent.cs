@@ -6,7 +6,6 @@ using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
@@ -44,19 +43,19 @@ public sealed class NukeopsRuleComponent : Component
     [DataField("spawnOutpost")]
     public bool SpawnOutpost = true;
 
-    [DataField("spawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("spawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
     public string SpawnPointPrototype = "SpawnPointNukies";
 
-    [DataField("ghostSpawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("ghostSpawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
     public string GhostSpawnPointProto = "SpawnPointGhostNukeOperative";
 
-    [DataField("commanderRoleProto", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
+    [DataField("commanderRoleProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
     public string CommanderRolePrototype = "NukeopsCommander";
 
-    [DataField("operativeRoleProto", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
+    [DataField("operativeRoleProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
     public string OperativeRoleProto = "Nukeops";
 
-    [DataField("medicRoleProto", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
+    [DataField("medicRoleProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
     public string MedicRoleProto = "NukeopsMedic";
 
     [DataField("commanderStartingGearProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]

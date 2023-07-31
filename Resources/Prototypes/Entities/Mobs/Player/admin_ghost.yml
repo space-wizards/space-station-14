@@ -22,6 +22,9 @@
   - type: CombatMode
   - type: Actions
   - type: InputMover
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 12
+    baseWalkSpeed: 8
   - type: Physics
     ignorePaused: true
     bodyType: Kinematic

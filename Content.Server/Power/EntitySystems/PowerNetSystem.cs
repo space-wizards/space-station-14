@@ -17,7 +17,6 @@ namespace Content.Server.Power.EntitySystems
     public sealed class PowerNetSystem : EntitySystem
     {
         [Dependency] private readonly AppearanceSystem _appearance = default!;
-        [Dependency] private readonly PowerNetConnectorSystem _powerNetConnector = default!;
         [Dependency] private readonly IParallelManager _parMan = default!;
 
         private readonly PowerState _powerState = new();
@@ -102,7 +101,6 @@ namespace Content.Server.Power.EntitySystems
 
         private void PowerConsumerInit(EntityUid uid, PowerConsumerComponent component, ComponentInit args)
         {
-            _powerNetConnector.BaseNetConnectorInit(component);
             AllocLoad(component.NetworkLoad);
         }
 
@@ -123,7 +121,6 @@ namespace Content.Server.Power.EntitySystems
 
         private void PowerSupplierInit(EntityUid uid, PowerSupplierComponent component, ComponentInit args)
         {
-            _powerNetConnector.BaseNetConnectorInit(component);
             AllocSupply(component.NetworkSupply);
         }
 

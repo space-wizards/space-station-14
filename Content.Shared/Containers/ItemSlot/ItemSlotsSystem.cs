@@ -65,7 +65,7 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.HasItem || string.IsNullOrEmpty(slot.StartingItem))
                     continue;
 
-                var item = EntityManager.SpawnEntity(slot.StartingItem, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
+                var item = EntityManager.SpawnEntity(slot.StartingItem, EntityManager.GetComponent<TransformComponent>(itemSlots.Owner).Coordinates);
                 slot.ContainerSlot?.Insert(item);
             }
         }
@@ -77,7 +77,7 @@ namespace Content.Shared.Containers.ItemSlots
         {
             foreach (var (id, slot) in itemSlots.Slots)
             {
-                slot.ContainerSlot = _containers.EnsureContainer<ContainerSlot>(uid, id);
+                slot.ContainerSlot = _containers.EnsureContainer<ContainerSlot>(itemSlots.Owner, id);
             }
         }
 
@@ -93,13 +93,13 @@ namespace Content.Shared.Containers.ItemSlots
             if (itemSlots.Slots.TryGetValue(id, out var existing))
             {
                 if (existing.Local)
-                    Log.Error($"Duplicate item slot key. Entity: {EntityManager.GetComponent<MetaDataComponent>(uid).EntityName} ({uid}), key: {id}");
+                    Logger.Error($"Duplicate item slot key. Entity: {EntityManager.GetComponent<MetaDataComponent>(itemSlots.Owner).EntityName} ({uid}), key: {id}");
                 else
                     // server state takes priority
                     slot.CopyFrom(existing);
             }
 
-            slot.ContainerSlot = _containers.EnsureContainer<ContainerSlot>(uid, id);
+            slot.ContainerSlot = _containers.EnsureContainer<ContainerSlot>(itemSlots.Owner, id);
             itemSlots.Slots[id] = slot;
             Dirty(itemSlots);
         }
@@ -340,7 +340,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (ejected != null && ejected.Value && user != null)
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value)} ejected {ToPrettyString(item)} from {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
-            _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null);
+            _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null, slot.SoundOptions);
         }
 
         /// <summary>
@@ -477,11 +477,9 @@ namespace Content.Shared.Containers.ItemSlots
                     ? Loc.GetString(slot.Name)
                     : EntityManager.GetComponent<MetaDataComponent>(slot.Item.Value).EntityName ?? string.Empty;
 
-                AlternativeVerb verb = new()
-                {
-                    IconEntity = slot.Item,
-                    Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true)
-                };
+                AlternativeVerb verb = new();
+                verb.IconEntity = slot.Item;
+                verb.Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true);
 
                 if (slot.EjectVerbText == null)
                 {
@@ -540,20 +538,18 @@ namespace Content.Shared.Containers.ItemSlots
 
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : Name(args.Using.Value);
+                    : Name(args.Using.Value) ?? string.Empty;
 
-                InteractionVerb insertVerb = new()
-                {
-                    IconEntity = args.Using,
-                    Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true)
-                };
+                InteractionVerb insertVerb = new();
+                insertVerb.IconEntity = args.Using;
+                insertVerb.Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true);
 
                 if (slot.InsertVerbText != null)
                 {
                     insertVerb.Text = Loc.GetString(slot.InsertVerbText);
                     insertVerb.Icon =
                         new SpriteSpecifier.Texture(
-                            new ResPath("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
+                            new("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
                 }
                 else if(slot.EjectOnInteract)
                 {
@@ -562,7 +558,7 @@ namespace Content.Shared.Containers.ItemSlots
                     insertVerb.Text = Loc.GetString("place-item-verb-text", ("subject", verbSubject));
                     insertVerb.Icon =
                         new SpriteSpecifier.Texture(
-                            new ResPath("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
+                            new("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
                 }
                 else
                 {
@@ -639,7 +635,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return;
 
             slot.Locked = locked;
-            Dirty(uid, itemSlots);
+            itemSlots.Dirty();
         }
 
         /// <summary>

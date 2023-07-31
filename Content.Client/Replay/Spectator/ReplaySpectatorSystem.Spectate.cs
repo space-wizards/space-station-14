@@ -64,7 +64,7 @@ public sealed partial class ReplaySpectatorSystem
 
         var old = _player.LocalPlayer.ControlledEntity;
 
-        var ent = Spawn("ReplayObserver", coords);
+        var ent = Spawn("MobObserver", coords);
         _eye.SetMaxZoom(ent, Vector2.One * 5);
         EnsureComp<ReplaySpectatorComponent>(ent);
 

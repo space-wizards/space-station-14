@@ -5,13 +5,14 @@ using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
-    [Dependency] private readonly ZombieSystem _zombie = default!;
+    [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
@@ -52,10 +53,10 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Make Zombie",
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Actions/zombie-turn.png")),
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Wallmounts/signs.rsi"), "bio"),
             Act = () =>
             {
-                _zombie.ZombifyEntity(args.Target);
+                _zombify.ZombifyEntity(args.Target);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-zombie"),

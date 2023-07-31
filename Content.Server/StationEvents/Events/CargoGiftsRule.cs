@@ -30,15 +30,16 @@ public sealed class CargoGiftsRule : StationEventSystem<CargoGiftsRuleComponent>
     protected override void ActiveTick(EntityUid uid, CargoGiftsRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         if (component.Gifts.Count == 0)
+        {
             return;
+        }
 
         if (component.TimeUntilNextGifts > 0)
         {
             component.TimeUntilNextGifts -= frameTime;
             return;
         }
-
-        component.TimeUntilNextGifts += 30f;
+        component.TimeUntilNextGifts = 30f;
 
         if (!TryGetRandomStation(out var station, HasComp<StationCargoOrderDatabaseComponent>))
             return;

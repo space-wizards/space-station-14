@@ -6,7 +6,7 @@
     Nitrogen:
       amount: 1
   products:
-    Ammonia: 3
+    Ammonia: 4
 
 - type: reaction
   id: Diethylamine
@@ -21,11 +21,11 @@
 - type: reaction
   id: Phenol
   reactants:
-    Oxygen:
+    Water:
       amount: 1
-    Hydrogen:
+    Chlorine:
       amount: 1
-    Carbon:
+    Oil:
       amount: 1
   products:
     Phenol: 3
@@ -40,7 +40,7 @@
     Oxygen:
       amount: 1
   products:
-    Acetone: 3
+    Acetone: 2
 
 - type: reaction
   id: FoamingAgent
@@ -347,17 +347,21 @@
   reactants:
     Ethyloxyephedrine:
       amount: 1
-    SodiumCarbonate:
+    Charcoal:
+      amount: 1
+    Pax:
       amount: 1
     Coffee:
       amount: 1
   products:
-    Diphenylmethylamine: 3
+    Diphenylmethylamine: 2
 
 - type: reaction
   id: SodiumCarbonate
   impact: Medium
   reactants:
+    Ammonia:
+      amount: 1
     TableSalt:
       amount: 1
     Carbon:
@@ -365,4 +369,4 @@
     Oxygen:
       amount: 1
   products:
-    SodiumCarbonate: 3
+    SodiumCarbonate: 4

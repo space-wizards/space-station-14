@@ -1,4 +1,4 @@
-## Implanter Attempt Messages
+﻿## Implanter Attempt Messages
 
 implanter-component-implanting-target = {$user} is trying to implant you with something!
 implanter-draw-failed-permanent = The {$implant} in {$target} is fused with them and cannot be removed!
@@ -9,10 +9,9 @@ implanter-draw-text = Draw
 implanter-inject-text = Inject
 
 implanter-empty-text = None
+implanter-implant-text = {$implantName}{$lineBreak}{$implantDescription}
 
-implanter-label = Implant: [color=green]{$implantName}[/color] | [color=white]{$modeString}[/color]{$lineBreak}{$implantDescription}
-
-implanter-contained-implant-text = [color=green]{$desc}[/color]
+implanter-label = [color=white]Implant: {$currentEntities}{$lineBreak}Mode: {$modeString}[/color]
 
 ## Implanter Actions
 

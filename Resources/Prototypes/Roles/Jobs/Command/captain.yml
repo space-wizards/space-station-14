@@ -4,21 +4,27 @@
   description: job-description-captain
   playTimeTracker: JobCaptain
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 54000 # 15 hours
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 54000 # 15 hours
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 54000 # 15 hours
-    - !type:DepartmentTimeRequirement
-      department: Command
-      time: 54000 # 15 hours
+    - !type:RoleTimeRequirement
+      role: JobHeadOfPersonnel
+      time: 21600 #6 hrs
+    - !type:RoleTimeRequirement
+      role: JobHeadOfSecurity
+      time: 21600 #6 hrs
+    - !type:RoleTimeRequirement
+      role: JobChiefMedicalOfficer
+      time: 21600 #6 hrs
+    - !type:RoleTimeRequirement
+      role: JobChiefEngineer
+      time: 21600 #6 hrs
+    - !type:RoleTimeRequirement
+      role: JobResearchDirector
+      time: 21600 #6 hrs
+    - !type:RoleTimeRequirement
+      role: JobQuartermaster
+      time: 21600 #6 hrs
   weight: 20
   startingGear: CaptainGear
-  icon: "JobIconCaptain"
+  icon: "Captain"
   requireAdminNotify: true
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
@@ -34,6 +40,8 @@
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatCaptain
     eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    outerClothing: ClothingOuterArmorCaptainCarapace
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
   innerclothingskirt: ClothingUniformJumpskirtCaptain

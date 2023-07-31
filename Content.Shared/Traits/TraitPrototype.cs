@@ -49,6 +49,6 @@ namespace Content.Shared.Traits
         ///     Gear that is given to the player, when they pick this trait.
         /// </summary>
         [DataField("traitGear", required: false, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? TraitGear;
+        public string TraitGear = string.Empty;
     }
 }

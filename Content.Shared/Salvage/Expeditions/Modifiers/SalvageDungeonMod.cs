@@ -23,6 +23,6 @@ public sealed class SalvageDungeonMod : IPrototype, IBiomeSpecificMod
     /// <summary>
     /// The config to use for spawning the dungeon.
     /// </summary>
-    [DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<DungeonConfigPrototype>), required: true)]
+    [DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<DungeonConfigPrototype>))]
     public string Proto = string.Empty;
 }

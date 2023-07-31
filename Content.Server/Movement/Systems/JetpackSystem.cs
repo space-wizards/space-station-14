@@ -12,40 +12,38 @@ public sealed class JetpackSystem : SharedJetpackSystem
     [Dependency] private readonly GasTankSystem _gasTank = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    protected override bool CanEnable(EntityUid uid, JetpackComponent component)
+    private const float UpdateCooldown = 0.5f;
+
+    protected override bool CanEnable(JetpackComponent component)
     {
-        return base.CanEnable(uid, component) &&
-               TryComp<GasTankComponent>(uid, out var gasTank) &&
-               !(gasTank.Air.TotalMoles < component.MoleUsage);
+        return base.CanEnable(component) &&  TryComp<GasTankComponent>(component.Owner, out var gasTank) && !(gasTank.Air.TotalMoles < component.MoleUsage);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var toDisable = new ValueList<(EntityUid Uid, JetpackComponent Component)>();
-        var query = EntityQueryEnumerator<ActiveJetpackComponent, JetpackComponent, GasTankComponent>();
+        var toDisable = new ValueList<JetpackComponent>();
 
-        while (query.MoveNext(out var uid, out var active, out var comp, out var gasTank))
+        foreach (var (active, comp, gasTank) in EntityQuery<ActiveJetpackComponent, JetpackComponent, GasTankComponent>())
         {
-            if (_timing.CurTime < active.TargetTime)
-                continue;
+            if (_timing.CurTime < active.TargetTime) continue;
 
             active.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(active.EffectCooldown);
             var air = _gasTank.RemoveAir(gasTank, comp.MoleUsage);
 
             if (air == null || !MathHelper.CloseTo(air.TotalMoles, comp.MoleUsage, 0.001f))
             {
-                toDisable.Add((uid, comp));
+                toDisable.Add(comp);
                 continue;
             }
 
             _gasTank.UpdateUserInterface(gasTank);
         }
 
-        foreach (var (uid, comp) in toDisable)
+        foreach (var comp in toDisable)
         {
-            SetEnabled(uid, comp, false);
+            SetEnabled(comp, false);
         }
     }
 }

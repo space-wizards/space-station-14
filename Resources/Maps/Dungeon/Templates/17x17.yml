@@ -1,5 +1,5 @@
 meta:
-  format: 5
+  format: 4
   postmapinit: false
 tilemap:
   0: Space
@@ -33,8 +33,7 @@ entities:
       fixedRotation: False
       bodyType: Dynamic
       type: Physics
-    - fixtures: {}
-      type: Fixtures
+
     - type: OccluderTree
     - type: Shuttle
     - gravityShakeSound: !type:SoundPathSpecifier
@@ -117,5 +116,4 @@ entities:
       type: GridAtmosphere
     - type: GasTileOverlay
     - type: SpreaderGrid
-    - type: GridPathfinding
 ...

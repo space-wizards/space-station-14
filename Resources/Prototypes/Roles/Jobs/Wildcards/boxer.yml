@@ -4,7 +4,7 @@
   description: job-description-boxer
   playTimeTracker: JobBoxer
   startingGear: BoxerGear
-  icon: "JobIconBoxer"
+  icon: "Boxer"
   supervisors: job-supervisors-hop
   access:
   - Service

@@ -83,6 +83,8 @@
       amount: 1
     Acetone:
       amount: 1
+    Diethylamine:
+      amount: 1
     Oxygen:
       amount: 1
     Chlorine:
@@ -90,7 +92,7 @@
     Hydrogen:
       amount: 1
   products:
-    Epinephrine: 5
+    Epinephrine: 6
 
 - type: reaction
   id: Dermaline
@@ -108,11 +110,9 @@
   id: Dexalin
   reactants:
     Oxygen:
-      amount: 1
-    Hydrogen:
       amount: 2
     Plasma:
-      amount: 1
+      amount: 5
       catalyst: true
   products:
     Dexalin: 3
@@ -193,7 +193,7 @@
     Copper:
       amount: 1
     Plasma:
-      amount: 1
+      amount: 5
       catalyst: true
   products:
     Leporazine: 2
@@ -286,10 +286,8 @@
       amount: 1
     Plasma:
       amount: 1
-    Fluorine:
-      amount: 1
   products:
-    Lexorin: 3
+    Lexorin: 2
 
 - type: reaction
   id: Lipozine
@@ -331,12 +329,10 @@
 - type: reaction
   id: Ultravasculine
   reactants:
-    Dylovene:
-      amount: 1
-    Sodium:
-      amount: 1
+    Histamine:
+      amount: 2
     Plasma:
-      amount: 1
+      amount: 5
       catalyst: true
   products:
     Ultravasculine: 2
@@ -389,6 +385,8 @@
 
 - type: reaction
   id: Sigynate
+  impact: Medium
+  minTemp: 370
   reactants:
     SodiumCarbonate:
       amount: 1

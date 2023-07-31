@@ -4,7 +4,7 @@
   description: job-description-cargotech
   playTimeTracker: JobCargoTechnician
   startingGear: CargoTechGear
-  icon: "JobIconCargoTechnician"
+  icon: "CargoTechnician"
   supervisors: job-supervisors-qm
   access:
   - Cargo
@@ -18,11 +18,11 @@
   equipment:
     head: ClothingHeadHatCargosoft
     jumpsuit: ClothingUniformJumpsuitCargo
-    back: ClothingBackpackCargoFilled
+    back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
     id: CargoPDA
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
   innerclothingskirt: ClothingUniformJumpskirtCargo
-  satchel: ClothingBackpackSatchelCargoFilled
-  duffelbag: ClothingBackpackDuffelCargoFilled
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

@@ -27,25 +27,43 @@ public sealed partial class DragonSystem
         return finished;
     }
 
+    protected override void Started(EntityUid uid, DragonRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    {
+        base.Started(uid, component, gameRule, args);
+
+        var eligible = EntityQuery<StationEventEligibleComponent>().Select(x => x.Owner).ToList();
+
+        if (!eligible.Any())
+            return;
+
+        var station = _random.Pick(eligible);
+
+        if (_station.GetLargestGrid(EntityManager.GetComponent<StationDataComponent>(station)) is not { } grid)
+            return;
+
+        Spawn("MobDragon", Transform(grid).MapPosition);
+    }
+
     private void OnRiftRoundEnd(RoundEndTextAppendEvent args)
     {
-        if (EntityQuery<DragonComponent>().Count() == 0)
+        var dragons = EntityQuery<DragonComponent>(true).ToList();
+
+        if (dragons.Count == 0)
             return;
 
         args.AddLine(Loc.GetString("dragon-round-end-summary"));
 
-        var query = EntityQueryEnumerator<DragonComponent>();
-        while (query.MoveNext(out var uid, out var dragon))
+        foreach (var dragon in EntityQuery<DragonComponent>(true))
         {
             var met = RiftsMet(dragon);
 
-            if (TryComp<ActorComponent>(uid, out var actor))
+            if (TryComp<ActorComponent>(dragon.Owner, out var actor))
             {
-                args.AddLine(Loc.GetString("dragon-round-end-dragon-player", ("name", uid), ("count", met), ("player", actor.PlayerSession)));
+                args.AddLine(Loc.GetString("dragon-round-end-dragon-player", ("name", dragon.Owner), ("count", met), ("player", actor.PlayerSession)));
             }
             else
             {
-                args.AddLine(Loc.GetString("dragon-round-end-dragon", ("name", uid), ("count", met)));
+                args.AddLine(Loc.GetString("dragon-round-end-dragon", ("name", dragon.Owner), ("count", met)));
             }
         }
     }

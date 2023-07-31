@@ -19,32 +19,24 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
     [UsedImplicitly]
     public sealed partial class FillGasWindow : DefaultWindow
     {
-        private List<EntityUid>? _gridData;
+        private IEnumerable<MapGridComponent>? _gridData;
         private IEnumerable<GasPrototype>? _gasData;
 
         protected override void EnteredTree()
         {
             // Fill out grids
-            var entManager = IoCManager.Resolve<IEntityManager>();
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
-
-            var gridQuery = entManager.AllEntityQueryEnumerator<MapGridComponent>();
-            _gridData ??= new List<EntityUid>();
-            _gridData.Clear();
-
-            while (gridQuery.MoveNext(out var uid, out _))
+            _gridData = IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Owner != 0);
+            foreach (var grid in _gridData)
             {
-                var player = playerManager.LocalPlayer?.ControlledEntity;
-                var playerGrid = entManager.GetComponentOrNull<TransformComponent>(player)?.GridUid;
-                GridOptions.AddItem($"{uid} {(playerGrid == uid ? " (Current)" : "")}");
-                _gridData.Add(uid);
+                var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
+                var playerGrid = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<TransformComponent>(player)?.GridUid;
+                GridOptions.AddItem($"{grid.Owner} {(playerGrid == grid.Owner ? " (Current)" : "")}");
             }
 
             GridOptions.OnItemSelected += eventArgs => GridOptions.SelectId(eventArgs.Id);
 
             // Fill out gases
-            _gasData = entManager.System<AtmosphereSystem>().Gases;
-
+            _gasData = EntitySystem.Get<AtmosphereSystem>().Gases;
             foreach (var gas in _gasData)
             {
                 var gasName = Loc.GetString(gas.Name);
@@ -61,7 +53,8 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             if (_gridData == null || _gasData == null)
                 return;
 
-            var gridIndex = _gridData[GridOptions.SelectedId];
+            var gridList = _gridData.ToList();
+            var gridIndex = gridList[GridOptions.SelectedId].Owner;
 
             var gasList = _gasData.ToList();
             var gasId = gasList[GasOptions.SelectedId].ID;

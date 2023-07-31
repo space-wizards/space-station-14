@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: BaseHandheldInstrument
   id: ElectricGuitarInstrument
   name: electric guitar
@@ -16,11 +16,6 @@
     state: icon
   - type: Item
     size: 24
-    sprite: Objects/Fun/Instruments/eguitar.rsi
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - back
     sprite: Objects/Fun/Instruments/eguitar.rsi
   - type: Tag
     tags:
@@ -46,11 +41,6 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/bassguitar.rsi
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - back
-    sprite: Objects/Fun/Instruments/bassguitar.rsi
   - type: Tag
     tags:
     - StringInstrument
@@ -73,11 +63,6 @@
     state: icon
   - type: Item
     size: 24
-    sprite: Objects/Fun/Instruments/rockguitar.rsi
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - back
     sprite: Objects/Fun/Instruments/rockguitar.rsi
   - type: Tag
     tags:

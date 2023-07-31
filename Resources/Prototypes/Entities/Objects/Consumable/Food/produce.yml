@@ -864,7 +864,7 @@
     grindableSolutionName: food
   - type: Tag
     tags:
-    - Flower # TODO add "RedFlower" or "Poppy" tag, when other color flowers will be
+    - Flower
 
 - type: entity
   name: lingzhi
@@ -927,9 +927,6 @@
     sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
     slots:
     - HEAD
-  - type: Tag
-    tags:
-    - Ambrosia
 
 - type: entity
   name: galaxythistle

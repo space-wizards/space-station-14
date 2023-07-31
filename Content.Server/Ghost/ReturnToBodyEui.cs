@@ -8,14 +8,13 @@ namespace Content.Server.Ghost;
 
 public sealed class ReturnToBodyEui : BaseEui
 {
-    private readonly MindSystem _mindSystem;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     private readonly Mind.Mind _mind;
 
-    public ReturnToBodyEui(Mind.Mind mind, MindSystem mindSystem)
+    public ReturnToBodyEui(Mind.Mind mind)
     {
         _mind = mind;
-        _mindSystem = mindSystem;
     }
 
     public override void HandleMessage(EuiMessageBase msg)

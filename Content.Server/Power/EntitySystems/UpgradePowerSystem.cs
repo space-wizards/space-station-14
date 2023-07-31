@@ -43,7 +43,7 @@ public sealed class UpgradePowerSystem : EntitySystem
                 load *= MathF.Pow(component.PowerDrawMultiplier, rating - 1);
                 break;
             default:
-                Log.Error($"invalid power scaling type for {ToPrettyString(uid)}.");
+                Logger.Error($"invalid power scaling type for {ToPrettyString(uid)}.");
                 load = 0;
                 break;
         }
@@ -82,12 +82,10 @@ public sealed class UpgradePowerSystem : EntitySystem
                 supply *= MathF.Pow(component.PowerSupplyMultiplier, rating - 1);
                 break;
             default:
-                Log.Error($"invalid power scaling type for {ToPrettyString(uid)}.");
+                Logger.Error($"invalid power scaling type for {ToPrettyString(uid)}.");
                 supply = component.BaseSupplyRate;
                 break;
         }
-
-        component.ActualScalar = supply / component.BaseSupplyRate;
 
         if (TryComp<PowerSupplierComponent>(uid, out var powa))
             powa.MaxSupply = supply;
@@ -95,6 +93,8 @@ public sealed class UpgradePowerSystem : EntitySystem
 
     private void OnSupplierUpgradeExamine(EntityUid uid, UpgradePowerSupplierComponent component, UpgradeExamineEvent args)
     {
-        args.AddPercentageUpgrade("upgrade-power-supply", component.ActualScalar);
+        // UpgradePowerSupplierComponent.PowerSupplyMultiplier is not the actual multiplier, so we have to do this.
+        if (TryComp<PowerSupplierComponent>(uid, out var powa))
+            args.AddPercentageUpgrade("upgrade-power-supply", powa.MaxSupply / component.BaseSupplyRate);
     }
 }

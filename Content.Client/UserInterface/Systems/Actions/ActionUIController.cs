@@ -136,7 +136,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
                 TriggerAction(boundId);
                 return true;
-            }, false, true));
+            }, false));
         }
 
         var loadoutKeys = ContentKeyFunctions.GetLoadoutBoundKeys();

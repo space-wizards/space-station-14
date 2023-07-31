@@ -26,6 +26,7 @@
     - Security
     - Service
     - Supply
+    - Syndicate
 
 - type: artifactEffect
   id: EffectRandomInstrument

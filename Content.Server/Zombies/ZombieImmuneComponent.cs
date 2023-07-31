@@ -1,8 +1,8 @@
-namespace Content.Server.Zombies;
-
-[RegisterComponent]
-public sealed class ZombieImmuneComponent : Component
+namespace Content.Server.Zombies
 {
-    //still no
+    [RegisterComponent]
+    public sealed class ZombieImmuneComponent : Component
+    {
+        //still no
+    }
 }
-

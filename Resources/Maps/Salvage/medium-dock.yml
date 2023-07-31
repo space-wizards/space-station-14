@@ -739,33 +739,49 @@ entities:
     - pos: -0.5,-1.5
       parent: 50
       type: Transform
-    - links:
-      - 99
-      type: DeviceLinkSink
+    - inputs:
+        Open: []
+        Close: []
+        Toggle:
+        - port: Pressed
+          uid: 99
+      type: SignalReceiver
   - uid: 96
     components:
     - pos: -4.5,-5.5
       parent: 50
       type: Transform
-    - links:
-      - 99
-      type: DeviceLinkSink
+    - inputs:
+        Open: []
+        Close: []
+        Toggle:
+        - port: Pressed
+          uid: 99
+      type: SignalReceiver
   - uid: 97
     components:
     - pos: -3.5,-5.5
       parent: 50
       type: Transform
-    - links:
-      - 99
-      type: DeviceLinkSink
+    - inputs:
+        Open: []
+        Close: []
+        Toggle:
+        - port: Pressed
+          uid: 99
+      type: SignalReceiver
   - uid: 98
     components:
     - pos: -2.5,-5.5
       parent: 50
       type: Transform
-    - links:
-      - 99
-      type: DeviceLinkSink
+    - inputs:
+        Open: []
+        Close: []
+        Toggle:
+        - port: Pressed
+          uid: 99
+      type: SignalReceiver
 - proto: SignalButton
   entities:
   - uid: 99
@@ -773,16 +789,17 @@ entities:
     - pos: -2.5,-2.5
       parent: 50
       type: Transform
-    - linkedPorts:
-        96:
-        - Pressed: Toggle
-        97:
-        - Pressed: Toggle
-        98:
-        - Pressed: Toggle
-        87:
-        - Pressed: Toggle
-      type: DeviceLinkSource
+    - outputs:
+        Pressed:
+        - port: Toggle
+          uid: 96
+        - port: Toggle
+          uid: 97
+        - port: Toggle
+          uid: 98
+        - port: Toggle
+          uid: 87
+      type: SignalTransmitter
 - proto: SignMinerDock
   entities:
   - uid: 106

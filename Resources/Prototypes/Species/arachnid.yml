@@ -21,8 +21,8 @@
     Snout: MobHumanoidAnyMarking
     Chest: MobArachnidTorso
     HeadTop: MobHumanoidAnyMarking
-    HeadSide: MobHumanoidMarkingMatchSkin
-    Tail: MobHumanoidMarkingMatchSkin
+    HeadSide: MobHumanoidAnyMarking
+    Tail: MobHumanoidAnyMarking
     Eyes: MobArachnidEyes
     LArm: MobArachnidLArm
     RArm: MobArachnidRArm
@@ -58,8 +58,7 @@
       required: false
     HeadSide:
       points: 1
-      required: true
-      defaultMarkings: [ ArachnidCheliceraeBasic ]
+      required: false
     Chest:
       points: 1
       required: false

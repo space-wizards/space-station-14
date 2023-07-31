@@ -1,4 +1,4 @@
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.IO;
 using System.Net;
 using System.Text.Json;
@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
-using Content.Shared.Database;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using Prometheus;
-using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
@@ -89,14 +87,6 @@ namespace Content.Server.Database
         Task AddServerBanAsync(ServerBanDef serverBan);
         Task AddServerUnbanAsync(ServerUnbanDef serverBan);
 
-        public Task EditServerBan(
-            int id,
-            string reason,
-            NoteSeverity severity,
-            DateTime? expiration,
-            Guid editedBy,
-            DateTime editedAt);
-
         /// <summary>
         /// Update ban exemption information for a player.
         /// </summary>
@@ -142,14 +132,6 @@ namespace Content.Server.Database
 
         Task AddServerRoleBanAsync(ServerRoleBanDef serverBan);
         Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverBan);
-
-        public Task EditServerRoleBan(
-            int id,
-            string reason,
-            NoteSeverity severity,
-            DateTime? expiration,
-            Guid editedBy,
-            DateTime editedAt);
         #endregion
 
         #region Playtime
@@ -254,27 +236,11 @@ namespace Content.Server.Database
 
         #region Admin Notes
 
-        Task<int> AddAdminNote(int? roundId, Guid player, TimeSpan playtimeAtNote, string message, NoteSeverity severity, bool secret, Guid createdBy, DateTime createdAt, DateTime? expiryTime);
-        Task<int> AddAdminWatchlist(int? roundId, Guid player, TimeSpan playtimeAtNote, string message, Guid createdBy, DateTime createdAt, DateTime? expiryTime);
-        Task<int> AddAdminMessage(int? roundId, Guid player, TimeSpan playtimeAtNote, string message, Guid createdBy, DateTime createdAt, DateTime? expiryTime);
+        Task<int> AddAdminNote(int? roundId, Guid player, string message, Guid createdBy, DateTime createdAt);
         Task<AdminNote?> GetAdminNote(int id);
-        Task<AdminWatchlist?> GetAdminWatchlist(int id);
-        Task<AdminMessage?> GetAdminMessage(int id);
-        Task<ServerBanNote?> GetServerBanAsNoteAsync(int id);
-        Task<ServerRoleBanNote?> GetServerRoleBanAsNoteAsync(int id);
-        Task<List<IAdminRemarksCommon>> GetAllAdminRemarks(Guid player);
-        Task<List<IAdminRemarksCommon>> GetVisibleAdminNotes(Guid player);
-        Task<List<AdminWatchlist>> GetActiveWatchlists(Guid player);
-        Task<List<AdminMessage>> GetMessages(Guid player);
-        Task EditAdminNote(int id, string message, NoteSeverity severity, bool secret, Guid editedBy, DateTime editedAt, DateTime? expiryTime);
-        Task EditAdminWatchlist(int id, string message, Guid editedBy, DateTime editedAt, DateTime? expiryTime);
-        Task EditAdminMessage(int id, string message, Guid editedBy, DateTime editedAt, DateTime? expiryTime);
+        Task<List<AdminNote>> GetAdminNotes(Guid player);
         Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt);
-        Task DeleteAdminWatchlist(int id, Guid deletedBy, DateTime deletedAt);
-        Task DeleteAdminMessage(int id, Guid deletedBy, DateTime deletedAt);
-        Task HideServerBanFromNotes(int id, Guid deletedBy, DateTime deletedAt);
-        Task HideServerRoleBanFromNotes(int id, Guid deletedBy, DateTime deletedAt);
-        Task MarkMessageAsSeen(int id);
+        Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt);
 
         #endregion
     }
@@ -292,7 +258,6 @@ namespace Content.Server.Database
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly ILogManager _logMgr = default!;
-        [Dependency] private readonly ITaskManager _taskManager = default!;
 
         private ServerDbBase _db = default!;
         private LoggingProvider _msLogProvider = default!;
@@ -318,7 +283,7 @@ namespace Content.Server.Database
             {
                 case "sqlite":
                     SetupSqlite(out var contextFunc, out var inMemory);
-                    _db = new ServerDbSqlite(contextFunc, inMemory, _cfg, _synchronous);
+                    _db = new ServerDbSqlite(contextFunc, inMemory, _cfg);
                     break;
                 case "postgres":
                     var pgOptions = CreatePostgresOptions();
@@ -419,22 +384,16 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.AddServerUnbanAsync(serverUnban));
         }
 
-        public Task EditServerBan(int id, string reason, NoteSeverity severity, DateTime? expiration, Guid editedBy, DateTime editedAt)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.EditServerBan(id, reason, severity, expiration, editedBy, editedAt));
-        }
-
         public Task UpdateBanExemption(NetUserId userId, ServerBanExemptFlags flags)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.UpdateBanExemption(userId, flags));
+            return _db.UpdateBanExemption(userId, flags);
         }
 
         public Task<ServerBanExemptFlags> GetBanExemption(NetUserId userId)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetBanExemption(userId));
+            return _db.GetBanExemption(userId);
         }
 
         #region Role Ban
@@ -464,12 +423,6 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.AddServerRoleUnbanAsync(serverRoleUnban));
-        }
-
-        public Task EditServerRoleBan(int id, string reason, NoteSeverity severity, DateTime? expiration, Guid editedBy, DateTime editedAt)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.EditServerRoleBan(id, reason, severity, expiration, editedBy, editedAt));
         }
         #endregion
 
@@ -621,25 +574,25 @@ namespace Content.Server.Database
         public IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetAdminLogMessages(filter));
+            return _db.GetAdminLogMessages(filter);
         }
 
         public IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetAdminLogs(filter));
+            return _db.GetAdminLogs(filter);
         }
 
         public IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetAdminLogsJson(filter));
+            return _db.GetAdminLogsJson(filter);
         }
 
         public Task<int> CountAdminLogs(int round)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.CountAdminLogs(round));
+            return _db.CountAdminLogs(round);
         }
 
         public Task<bool> GetWhitelistStatusAsync(NetUserId player)
@@ -684,7 +637,7 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.SetLastReadRules(player, time));
         }
 
-        public Task<int> AddAdminNote(int? roundId, Guid player, TimeSpan playtimeAtNote, string message, NoteSeverity severity, bool secret, Guid createdBy, DateTime createdAt, DateTime? expiryTime)
+        public Task<int> AddAdminNote(int? roundId, Guid player, string message, Guid createdBy, DateTime createdAt)
         {
             DbWriteOpsMetric.Inc();
             var note = new AdminNote
@@ -693,54 +646,12 @@ namespace Content.Server.Database
                 CreatedById = createdBy,
                 LastEditedById = createdBy,
                 PlayerUserId = player,
-                PlaytimeAtNote = playtimeAtNote,
                 Message = message,
-                Severity = severity,
-                Secret = secret,
                 CreatedAt = createdAt,
-                LastEditedAt = createdAt,
-                ExpirationTime = expiryTime
+                LastEditedAt = createdAt
             };
 
             return RunDbCommand(() => _db.AddAdminNote(note));
-        }
-
-        public Task<int> AddAdminWatchlist(int? roundId, Guid player, TimeSpan playtimeAtNote, string message, Guid createdBy, DateTime createdAt, DateTime? expiryTime)
-        {
-            DbWriteOpsMetric.Inc();
-            var note = new AdminWatchlist
-            {
-                RoundId = roundId,
-                CreatedById = createdBy,
-                LastEditedById = createdBy,
-                PlayerUserId = player,
-                PlaytimeAtNote = playtimeAtNote,
-                Message = message,
-                CreatedAt = createdAt,
-                LastEditedAt = createdAt,
-                ExpirationTime = expiryTime
-            };
-
-            return RunDbCommand(() => _db.AddAdminWatchlist(note));
-        }
-
-        public Task<int> AddAdminMessage(int? roundId, Guid player, TimeSpan playtimeAtNote, string message, Guid createdBy, DateTime createdAt, DateTime? expiryTime)
-        {
-            DbWriteOpsMetric.Inc();
-            var note = new AdminMessage
-            {
-                RoundId = roundId,
-                CreatedById = createdBy,
-                LastEditedById = createdBy,
-                PlayerUserId = player,
-                PlaytimeAtNote = playtimeAtNote,
-                Message = message,
-                CreatedAt = createdAt,
-                LastEditedAt = createdAt,
-                ExpirationTime = expiryTime
-            };
-
-            return RunDbCommand(() => _db.AddAdminMessage(note));
         }
 
         public Task<AdminNote?> GetAdminNote(int id)
@@ -748,68 +659,11 @@ namespace Content.Server.Database
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.GetAdminNote(id));
         }
-        public Task<AdminWatchlist?> GetAdminWatchlist(int id)
+
+        public Task<List<AdminNote>> GetAdminNotes(Guid player)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetAdminWatchlist(id));
-        }
-        public Task<AdminMessage?> GetAdminMessage(int id)
-        {
-            DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetAdminMessage(id));
-        }
-
-        public Task<ServerBanNote?> GetServerBanAsNoteAsync(int id)
-        {
-            DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetServerBanAsNoteAsync(id));
-        }
-
-        public Task<ServerRoleBanNote?> GetServerRoleBanAsNoteAsync(int id)
-        {
-            DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetServerRoleBanAsNoteAsync(id));
-        }
-
-    public Task<List<IAdminRemarksCommon>> GetAllAdminRemarks(Guid player)
-        {
-            DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetAllAdminRemarks(player));
-        }
-
-        public Task<List<IAdminRemarksCommon>> GetVisibleAdminNotes(Guid player)
-        {
-            DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetVisibleAdminRemarks(player));
-        }
-
-        public Task<List<AdminWatchlist>> GetActiveWatchlists(Guid player)
-        {
-            DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetActiveWatchlists(player));
-        }
-
-        public Task<List<AdminMessage>> GetMessages(Guid player)
-        {
-            DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetMessages(player));
-        }
-        public Task EditAdminNote(int id, string message, NoteSeverity severity, bool secret, Guid editedBy, DateTime editedAt, DateTime? expiryTime)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.EditAdminNote(id, message, severity, secret, editedBy, editedAt, expiryTime));
-        }
-
-        public Task EditAdminWatchlist(int id, string message, Guid editedBy, DateTime editedAt, DateTime? expiryTime)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.EditAdminWatchlist(id, message, editedBy, editedAt, expiryTime));
-        }
-
-        public Task EditAdminMessage(int id, string message, Guid editedBy, DateTime editedAt, DateTime? expiryTime)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.EditAdminMessage(id, message, editedBy, editedAt, expiryTime));
+            return RunDbCommand(() => _db.GetAdminNotes(player));
         }
 
         public Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt)
@@ -818,34 +672,10 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.DeleteAdminNote(id, deletedBy, deletedAt));
         }
 
-        public Task DeleteAdminWatchlist(int id, Guid deletedBy, DateTime deletedAt)
+        public Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.DeleteAdminWatchlist(id, deletedBy, deletedAt));
-        }
-
-        public Task DeleteAdminMessage(int id, Guid deletedBy, DateTime deletedAt)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.DeleteAdminMessage(id, deletedBy, deletedAt));
-        }
-
-        public Task HideServerBanFromNotes(int id, Guid deletedBy, DateTime deletedAt)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.HideServerBanFromNotes(id, deletedBy, deletedAt));
-        }
-
-        public Task HideServerRoleBanFromNotes(int id, Guid deletedBy, DateTime deletedAt)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.HideServerRoleBanFromNotes(id, deletedBy, deletedAt));
-        }
-
-        public Task MarkMessageAsSeen(int id)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.MarkMessageAsSeen(id));
+            return RunDbCommand(() => _db.EditAdminNote(id, message, editedBy, editedAt));
         }
 
         // Wrapper functions to run DB commands from the thread pool.
@@ -859,7 +689,7 @@ namespace Content.Server.Database
         private Task<T> RunDbCommand<T>(Func<Task<T>> command)
         {
             if (_synchronous)
-                return RunDbCommandCoreSync(command);
+                return command();
 
             return Task.Run(command);
         }
@@ -867,33 +697,9 @@ namespace Content.Server.Database
         private Task RunDbCommand(Func<Task> command)
         {
             if (_synchronous)
-                return RunDbCommandCoreSync(command);
+                return command();
 
             return Task.Run(command);
-        }
-
-        private static T RunDbCommandCoreSync<T>(Func<T> command) where T : IAsyncResult
-        {
-            var task = command();
-            if (!task.IsCompleted)
-            {
-                // We can't just do BlockWaitOnTask here, because that could cause deadlocks.
-                // This flag is only intended for integration tests. If we trip this, it's a bug.
-                throw new InvalidOperationException(
-                    "Database task is running asynchronously. " +
-                    "This should be impossible when the database is set to synchronous.");
-            }
-
-            return task;
-        }
-
-        private IAsyncEnumerable<T> RunDbCommand<T>(Func<IAsyncEnumerable<T>> command)
-        {
-            var enumerable = command();
-            if (_synchronous)
-                return new SyncAsyncEnumerable<T>(enumerable);
-
-            return enumerable;
         }
 
         private DbContextOptions<PostgresServerDbContext> CreatePostgresOptions()
@@ -1025,49 +831,4 @@ namespace Content.Server.Database
     }
 
     public sealed record PlayTimeUpdate(NetUserId User, string Tracker, TimeSpan Time);
-
-    internal sealed class SyncAsyncEnumerable<T> : IAsyncEnumerable<T>
-    {
-        private readonly IAsyncEnumerable<T> _enumerable;
-
-        public SyncAsyncEnumerable(IAsyncEnumerable<T> enumerable)
-        {
-            _enumerable = enumerable;
-        }
-
-        public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
-        {
-            return new Enumerator(_enumerable.GetAsyncEnumerator(cancellationToken));
-        }
-
-        private sealed class Enumerator : IAsyncEnumerator<T>
-        {
-            private readonly IAsyncEnumerator<T> _enumerator;
-
-            public Enumerator(IAsyncEnumerator<T> enumerator)
-            {
-                _enumerator = enumerator;
-            }
-
-            public ValueTask DisposeAsync()
-            {
-                var task = _enumerator.DisposeAsync();
-                if (!task.IsCompleted)
-                    throw new InvalidOperationException("DisposeAsync did not complete synchronously.");
-
-                return task;
-            }
-
-            public ValueTask<bool> MoveNextAsync()
-            {
-                var task = _enumerator.MoveNextAsync();
-                if (!task.IsCompleted)
-                    throw new InvalidOperationException("MoveNextAsync did not complete synchronously.");
-
-                return task;
-            }
-
-            public T Current => _enumerator.Current;
-        }
-    }
 }

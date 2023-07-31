@@ -8,7 +8,7 @@
       role: JobSecurityOfficer
       time: 36000 #10 hrs
   startingGear: WardenGear
-  icon: "JobIconWarden"
+  icon: "Warden"
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:

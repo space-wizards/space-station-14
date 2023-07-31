@@ -8,7 +8,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -165,7 +164,7 @@ public partial class SharedGunSystem
             Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);
             UpdateRevolverAppearance(revolverUid, component);
             UpdateAmmoCount(uid);
-            Dirty(uid, component);
+            Dirty(component);
             return true;
         }
 
@@ -224,7 +223,6 @@ public partial class SharedGunSystem
         return count;
     }
 
-    [PublicAPI]
     private int GetRevolverUnspentCount(RevolverAmmoProviderComponent component)
     {
         var count = 0;
@@ -263,8 +261,7 @@ public partial class SharedGunSystem
 
             if (slot == null)
             {
-                if (chamber == null)
-                    continue;
+                if (chamber == null) continue;
 
                 // Too lazy to make a new method don't sue me.
                 if (!_netManager.IsClient)
@@ -297,7 +294,7 @@ public partial class SharedGunSystem
             Audio.PlayPredicted(component.SoundEject, revolverUid, user);
             UpdateAmmoCount(revolverUid);
             UpdateRevolverAppearance(revolverUid, component);
-            Dirty(revolverUid, component);
+            Dirty(component);
         }
     }
 
@@ -369,12 +366,12 @@ public partial class SharedGunSystem
                 component.AmmoContainer.Remove(ent.Value);
                 component.AmmoSlots[index] = null;
                 args.Ammo.Add((ent.Value, EnsureComp<AmmoComponent>(ent.Value)));
-                TransformSystem.SetCoordinates(ent.Value, args.Coordinates);
+                Transform(ent.Value).Coordinates = args.Coordinates;
             }
         }
 
         UpdateRevolverAppearance(uid, component);
-        Dirty(uid, component);
+        Dirty(component);
     }
 
     private void Cycle(RevolverAmmoProviderComponent component, int count = 1)

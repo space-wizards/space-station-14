@@ -14,8 +14,6 @@
   - type: SpaceGarbage
   - type: StaticPrice
     price: 5
-  - type: InjectableSolution
-    solution: smokable
 
 # Base for all cigars and cigarettes.
 - type: entity

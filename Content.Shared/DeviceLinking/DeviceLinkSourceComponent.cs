@@ -17,7 +17,7 @@ public sealed class DeviceLinkSourceComponent : Component
     /// <summary>
     /// A list of sink uids that got linked for each port
     /// </summary>
-    [ViewVariables]
+    [DataField("registeredSinks")]
     public Dictionary<string, HashSet<EntityUid>> Outputs = new();
 
     /// <summary>

@@ -4,7 +4,7 @@
   description: job-description-botanist
   playTimeTracker: JobBotanist
   startingGear: BotanistGear
-  icon: "JobIconBotanist"
+  icon: "Botanist"
   supervisors: job-supervisors-hop
   access:
   - Service

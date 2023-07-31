@@ -45,5 +45,3 @@
     - type: Sprite
       sprite: Objects/Power/powersink.rsi
       state: powersink
-    - type: WarpPoint
-      location: powersink

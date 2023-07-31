@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Guidebook.RichText;
-using Content.Client.UserInterface.ControlExtensions;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Controls.FancyTree;
 using JetBrains.Annotations;
@@ -27,11 +26,6 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         IoCManager.InjectDependencies(this);
 
         Tree.OnSelectedItemChanged += OnSelectionChanged;
-
-        SearchBar.OnTextChanged += _ =>
-        {
-            HandleFilter();
-        };
     }
 
     private void OnSelectionChanged(TreeItem? item)
@@ -46,7 +40,6 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
     {
         Placeholder.Visible = true;
         EntryContainer.Visible = false;
-        SearchContainer.Visible = false;
         EntryContainer.RemoveAllChildren();
     }
 
@@ -55,11 +48,8 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         Scroll.SetScrollValue(default);
         Placeholder.Visible = false;
         EntryContainer.Visible = true;
-        SearchBar.Text = "";
         EntryContainer.RemoveAllChildren();
         using var file = _resourceManager.ContentFileReadText(entry.Text);
-
-        SearchContainer.Visible = entry.FilterEnabled;
 
         if (!_parsingMan.TryAddMarkup(EntryContainer, file.ReadToEnd()))
         {
@@ -168,21 +158,5 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
         {
             ShowGuide(entry);
         }
-    }
-
-    private void HandleFilter()
-    {
-        var emptySearch = SearchBar.Text.Trim().Length == 0;
-
-        if (Tree.SelectedItem != null && Tree.SelectedItem.Metadata is GuideEntry entry && entry.FilterEnabled)
-        {
-            var foundElements = EntryContainer.GetSearchableControls();
-
-            foreach (var element in foundElements)
-            {
-                element.SetHiddenState(true, SearchBar.Text.Trim());
-            }
-        }
-
     }
 }

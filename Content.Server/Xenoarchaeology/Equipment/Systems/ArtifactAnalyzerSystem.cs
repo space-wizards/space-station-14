@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Construction;
+using Content.Server.MachineLinking.Components;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
 using Content.Server.Research.Systems;
@@ -8,7 +9,6 @@ using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Audio;
-using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
@@ -153,14 +153,14 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, ArtifactAnalyzerComponent component, MapInitEvent args)
     {
-        if (!TryComp<DeviceLinkSinkComponent>(uid, out var sink))
+        if (!TryComp<SignalReceiverComponent>(uid, out var receiver))
             return;
 
-        foreach (var source in sink.LinkedSources)
+        foreach (var port in receiver.Inputs.Values.SelectMany(ports => ports))
         {
-            if (!TryComp<AnalysisConsoleComponent>(source, out var analysis))
+            if (!TryComp<AnalysisConsoleComponent>(port.Uid, out var analysis))
                 continue;
-            component.Console = source;
+            component.Console = port.Uid;
             analysis.AnalyzerEntity = uid;
             return;
         }

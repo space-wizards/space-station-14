@@ -8,7 +8,7 @@
       department: Engineering
       time: 54000 # 15 hrs
   startingGear: AtmosphericTechnicianGear
-  icon: "JobIconAtmosphericTechnician"
+  icon: "AtmosphericTechnician"
   supervisors: job-supervisors-ce
   access:
   - Maintenance
@@ -20,12 +20,12 @@
   id: AtmosphericTechnicianGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitAtmos
-    back: ClothingBackpackAtmosphericsFilled
+    back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesColorWhite
     eyes: ClothingEyesGlassesMeson
     id: AtmosPDA
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
   innerclothingskirt: ClothingUniformJumpskirtAtmos
-  satchel: ClothingBackpackSatchelAtmosphericsFilled
-  duffelbag: ClothingBackpackDuffelAtmosphericsFilled
+  satchel: ClothingBackpackSatchelEngineeringFilled
+  duffelbag: ClothingBackpackDuffelEngineeringFilled

@@ -31,7 +31,7 @@ public sealed partial class ResearchSystem
             return;
         }
 
-        if (!UnlockTechnology(uid, args.Id, ent))
+        if (!UnlockTechnology(uid, args.Id))
             return;
 
         SyncClientWithServer(uid);

@@ -20,8 +20,7 @@ public readonly record struct CargoBountyData(int Id, string Bounty, TimeSpan En
     /// <summary>
     /// The prototype containing information about the bounty.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("bounty", customTypeSerializer: typeof(PrototypeIdSerializer<CargoBountyPrototype>), required:true)]
+    [DataField("bounty", customTypeSerializer: typeof(PrototypeIdSerializer<CargoBountyPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public readonly string Bounty = Bounty;
 
     /// <summary>
@@ -29,8 +28,4 @@ public readonly record struct CargoBountyData(int Id, string Bounty, TimeSpan En
     /// </summary>
     [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public readonly TimeSpan EndTime = EndTime;
-
-    public CargoBountyData() : this(default, string.Empty, default)
-    {
-    }
 }
