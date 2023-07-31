@@ -1,9 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - {message: Station Map has been resprited and can now be constructed., type: Add}
-  id: 3881
-  time: '2023-05-28T06:42:41.0000000+00:00'
 - author: '0x6273'
   changes:
   - {message: Emitters and APEs can now be controlled with device linking., type: Add}
@@ -2973,3 +2968,8 @@ Entries:
   - {message: Fixed typo in emergency medipen description, type: Fix}
   id: 4380
   time: '2023-07-30T22:38:18.0000000+00:00'
+- author: graevy
+  changes:
+  - {message: Added reflection to the reflective vest and shuttle walls, type: Add}
+  id: 4381
+  time: '2023-07-31T01:07:46.0000000+00:00'
