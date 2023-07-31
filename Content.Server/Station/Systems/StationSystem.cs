@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
+using Content.Server.Station.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Station;
 using JetBrains.Annotations;
@@ -196,7 +197,7 @@ public sealed class StationSystem : EntitySystem
         foreach (var gridUid in component.Grids)
         {
             if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
-                grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
+                grid.LocalAABB.Size.LengthSquared() < largestBounds.Size.LengthSquared())
                 continue;
 
             largestBounds = grid.LocalAABB;
@@ -303,6 +304,9 @@ public sealed class StationSystem : EntitySystem
         {
             AddGridToStation(station, grid, null, data, name);
         }
+
+        var ev = new StationPostInitEvent();
+        RaiseLocalEvent(station, ref ev);
 
         return station;
     }

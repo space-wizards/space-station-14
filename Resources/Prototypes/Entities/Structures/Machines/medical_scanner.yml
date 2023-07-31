@@ -13,7 +13,6 @@
     ports:
       - MedicalScannerReceiver
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/scanner.rsi
     snapCardinals: true
     layers:
@@ -88,3 +87,6 @@
   - type: EmptyOnMachineDeconstruct
     containers:
     - scanner-bodyContainer
+  - type: GuideHelp
+    guides:
+    - Cloning

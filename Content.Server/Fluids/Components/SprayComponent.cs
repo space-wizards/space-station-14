@@ -1,4 +1,5 @@
 using Content.Server.Fluids.EntitySystems;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -10,6 +11,9 @@ namespace Content.Server.Fluids.Components;
 public sealed class SprayComponent : Component
 {
     public const string SolutionName = "spray";
+
+    [DataField("transferAmount")]
+    public FixedPoint2 TransferAmount = 10;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("sprayDistance")]
     public float SprayDistance = 3.5f;

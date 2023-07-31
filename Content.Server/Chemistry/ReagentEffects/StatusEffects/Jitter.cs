@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Jittering;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
 {
@@ -33,5 +34,8 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
             args.EntityManager.EntitySysManager.GetEntitySystem<SharedJitteringSystem>()
                 .DoJitter(args.SolutionEntity, TimeSpan.FromSeconds(time), Refresh, Amplitude, Frequency);
         }
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+            Loc.GetString("reagent-effect-guidebook-jittering", ("chance", Probability));
     }
 }

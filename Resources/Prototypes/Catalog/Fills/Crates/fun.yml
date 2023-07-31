@@ -22,6 +22,7 @@
       - id: PlushieAtmosian
       - id: PlushieDiona
       - id: PlushieXeno
+      - id: PlushieHampter
 
 - type: entity
   id: CrateFunInstrumentsVariety
@@ -139,8 +140,13 @@
       - id: BackgammonBoard
       - id: ParchisBoard
       - id: CheckerBoard
-      - id: d6Dice
-        amount: 4
+      - id: ShipBattlemap
+      - id: SnowBattlemap
+      - id: SandBattlemap
+      - id: MoonBattlemap
+      - id: GrassBattlemap
+      - id: DiceBag
+        amount: 6
 
 - type: entity
   id: CrateFunATV
@@ -236,6 +242,37 @@
       - id: ClothingOuterCoatPirate
       - id: ClothingShoesBootsLaceup
         amount: 2
-      - id: HatBandRed
+      - id: ClothingHeadBandRed
       - id: FoamCutlass
         amount: 2
+
+- type: entity
+  id: CrateFunToyBox
+  parent: CrateToyBox
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrazyGlue
+        amount: 2
+      - id: PlasticBanana
+      - id: WhoopieCushion
+      - id: ToyHammer
+      - id: MrChips
+        orGroup: GiftPool
+      - id: MrDips
+        orGroup: Giftpool
+      - id: RevolverCapGun
+      - id: VehicleUnicycleFolded
+      - id: ClothingShoesClownLarge
+      - id: ClothingHeadHatMagician
+      - id: BeachBall
+
+- type: entity
+  id: CrateFunBikeHornImplants
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: BikeHornImplanter
+        amount: 3

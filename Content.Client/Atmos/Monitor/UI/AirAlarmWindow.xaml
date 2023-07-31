@@ -75,6 +75,7 @@
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'air-alarm-ui-window-mode-label'}" Margin="0 0 2 0" />
             <OptionButton Name="CModeButton" HorizontalExpand="True" />
+            <CheckBox Name="AutoModeCheckBox" Text="{Loc 'air-alarm-ui-window-auto-mode-label'}" />
         </BoxContainer>
     </BoxContainer>
 </ui:FancyWindow>

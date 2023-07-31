@@ -139,6 +139,7 @@
   desc: reagent-desc-oil-olive
   physicalDesc: reagent-physical-desc-oily
   flavor: oily
+  flavorMinimum: 0.05
   color: olive
   recognizable: true
   metabolisms:
@@ -155,6 +156,7 @@
   desc: reagent-desc-oil
   physicalDesc: reagent-physical-desc-oily
   flavor: oily
+  flavorMinimum: 0.05
   recognizable: true
   color: "#b67823"
   boilingPoint: 300.0
@@ -165,9 +167,11 @@
 - type: reagent
   id: CapsaicinOil
   name: reagent-name-capsaicin-oil
+  group: Foods
   desc: reagent-desc-capsaicin-oil
   physicalDesc: reagent-physical-desc-oily
   flavor: spicy
+  flavorMinimum: 0.05
   color: "#FF0000"
   recognizable: true
   meltingPoint: 146

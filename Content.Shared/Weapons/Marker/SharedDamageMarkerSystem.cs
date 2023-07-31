@@ -1,6 +1,7 @@
 using Content.Shared.Damage;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
@@ -9,7 +10,9 @@ namespace Content.Shared.Weapons.Marker;
 public abstract class SharedDamageMarkerSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -27,6 +30,11 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
         args.BonusDamage += component.Damage;
         RemCompDeferred<DamageMarkerComponent>(uid);
         _audio.PlayPredicted(component.Sound, uid, args.User);
+
+        if (TryComp<LeechOnMarkerComponent>(args.Used, out var leech))
+        {
+            _damageable.TryChangeDamage(args.User, leech.Leech, true, false, origin: args.Used);
+        }
     }
 
     public override void Update(float frameTime)
@@ -69,13 +77,16 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
         component.Amount--;
         Dirty(marker);
 
-        if (component.Amount <= 0)
+        if (_netManager.IsServer)
         {
-            QueueDel(uid);
-        }
-        else
-        {
-            Dirty(component);
+            if (component.Amount <= 0)
+            {
+                QueueDel(uid);
+            }
+            else
+            {
+                Dirty(component);
+            }
         }
     }
 }

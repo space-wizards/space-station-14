@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Map;
@@ -36,7 +37,7 @@ namespace Content.Shared.Projectiles
 
         private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
         {
-            if (component.IgnoreShooter && args.BodyB.Owner == component.Shooter)
+            if (component.IgnoreShooter && args.OtherEntity == component.Shooter)
             {
                 args.Cancelled = true;
             }

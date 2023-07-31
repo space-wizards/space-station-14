@@ -6,7 +6,6 @@
   components:
     - type: Sprite
       sprite: Clothing/Shoes/Boots/magboots.rsi
-      netsync: false
       layers:
       - state: icon
         map: [ "enum.ToggleVisuals.Layer" ]

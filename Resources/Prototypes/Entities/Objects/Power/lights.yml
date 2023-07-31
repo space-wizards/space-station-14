@@ -9,7 +9,6 @@
         path:
           "/Audio/Effects/glass_hit.ogg"
   - type: Sprite
-    netsync: false
     sprite: Objects/Power/light_bulb.rsi
     layers:
       - map: [ enum.LightBulbVisualLayers.Base ]
