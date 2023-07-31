@@ -149,6 +149,14 @@ public partial class GunComponent : Component
     /// </summary>
     [DataField("clumsyProof")]
     public bool ClumsyProof = false;
+
+    /// <summary>
+    /// Offset bullet origin this distance from the center of the firing player.
+    /// This simulates the bullet starting at the end of the barrel and also prevents
+    /// a player shooting from a vehicle from hitting the vehicle.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("barrelLength")]
+    public float BarrelLength = 0.8f;
 }
 
 [Flags]
