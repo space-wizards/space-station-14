@@ -12,7 +12,7 @@ namespace Content.Shared.Silicons.Borgs;
 /// <summary>
 /// This handles logic, interactions, and UI related to <see cref="BorgChassisComponent"/> and other related components.
 /// </summary>
-public abstract class SharedBorgSystem : EntitySystem
+public abstract partial class SharedBorgSystem : EntitySystem
 {
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] protected readonly ItemSlotsSystem ItemSlots = default!;
@@ -21,12 +21,16 @@ public abstract class SharedBorgSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<BorgChassisComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BorgChassisComponent, ItemSlotInsertAttemptEvent>(OnItemSlotInsertAttempt);
         SubscribeLocalEvent<BorgChassisComponent, ItemSlotEjectAttemptEvent>(OnItemSlotEjectAttempt);
         SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
+
+        InitializeRelay();
     }
 
     private void OnItemSlotInsertAttempt(EntityUid uid, BorgChassisComponent component, ref ItemSlotInsertAttemptEvent args)
