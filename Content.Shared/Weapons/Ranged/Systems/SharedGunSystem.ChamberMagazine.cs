@@ -24,7 +24,7 @@ public abstract partial class SharedGunSystem
 
     private void OnChamberUse(EntityUid uid, ChamberMagazineAmmoProviderComponent component, UseInHandEvent args)
     {
-        // (Chamber but no bolt is whacky).
+        // (Chamber but no bolt is whacky) so just relay it.
         if (component.BoltClosed == null)
         {
             OnMagazineUse(uid, component, args);
@@ -34,13 +34,28 @@ public abstract partial class SharedGunSystem
         ToggleBolt(uid, component);
     }
 
-    public void SetBolt(EntityUid uid, ChamberMagazineAmmoProviderComponent component, bool value, AppearanceComponent? appearance = null)
+    public void SetBoltClosed(EntityUid uid, ChamberMagazineAmmoProviderComponent component, bool value, EntityUid? user = null, AppearanceComponent? appearance = null)
     {
         if (component.BoltClosed == null || value == component.BoltClosed)
             return;
 
         Resolve(uid, ref appearance, false);
         Appearance.SetData(uid, AmmoVisuals.BoltClosed, component.BoltClosed.Value, appearance);
+
+        if (value)
+        {
+            Audio.PlayPredicted(component.BoltClosedSound, uid, user);
+        }
+        else
+        {
+            if (TryTakeChamberEntity(uid, out var chambered))
+            {
+                EjectCartridge(chambered.Value);
+            }
+
+            Audio.PlayPredicted(component.BoltOpenSound, uid, user);
+        }
+
         component.BoltClosed = value;
         Dirty(uid, component);
 
@@ -53,7 +68,7 @@ public abstract partial class SharedGunSystem
         if (component.BoltClosed == null)
             return;
 
-        SetBolt(uid, component, !component.BoltClosed.Value);
+        SetBoltClosed(uid, component, !component.BoltClosed.Value);
     }
 
     private void OnChamberMagazineExamine(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ExaminedEvent args)
@@ -126,51 +141,66 @@ public abstract partial class SharedGunSystem
         // We move the n + 1 shot into the chamber as we essentially treat it like a stack.
         TryComp<AppearanceComponent>(uid, out var appearance);
 
-        if (TryTakeChamberEntity(uid, out var chamberEnt))
+        EntityUid? chamberEnt;
+
+        // Normal behaviour for guns.
+        if (component.AutoCycle)
         {
+            if (TryTakeChamberEntity(uid, out chamberEnt))
+            {
+                args.Ammo.Add((chamberEnt.Value, EnsureComp<AmmoComponent>(chamberEnt.Value)));
+            }
+
+            var magEnt = GetMagazineEntity(uid);
+
+            // Pass an event to the magazine to get more (to refill chamber or for shooting).
+            if (magEnt != null)
+            {
+                // We pass in Shots not Shots - 1 as we'll take the last entity and move it into the chamber.
+                var relayedArgs = new TakeAmmoEvent(args.Shots, new List<(EntityUid? Entity, IShootable Shootable)>(), args.Coordinates, args.User);
+                RaiseLocalEvent(magEnt.Value, relayedArgs);
+
+                // Put in the nth slot back into the chamber
+                // Rest of the ammo gets shot
+                if (relayedArgs.Ammo.Count > 0)
+                {
+                    var newChamberEnt = relayedArgs.Ammo[^1].Entity;
+                    TryInsertChamber(uid, newChamberEnt!.Value);
+                }
+
+                // Anything above the chamber-refill amount gets fired.
+                for (var i = 0; i < relayedArgs.Ammo.Count - 1; i++)
+                {
+                    args.Ammo.Add(relayedArgs.Ammo[i]);
+                }
+
+                // TODO: If no more ammo then open bolt.
+                if (relayedArgs.Ammo.Count == 0)
+                {
+                    SetBoltClosed(uid, component, false, user: args.User, appearance: appearance);
+                }
+            }
+            else
+            {
+                Appearance.SetData(uid, AmmoVisuals.MagLoaded, false, appearance);
+                return;
+            }
+
+            var count = chamberEnt != null ? 1 : 0;
+            const int capacity = 1;
+
+            var ammoEv = new GetAmmoCountEvent();
+            RaiseLocalEvent(magEnt.Value, ref ammoEv);
+
+            FinaliseMagazineTakeAmmo(uid, component, args, count + ammoEv.Count, capacity + ammoEv.Capacity, appearance);
+        }
+        // If gun doesn't autocycle (e.g. bolt-action weapons) then we leave the chambered entity in there but still return it.
+        else if (Containers.TryGetContainer(uid, ChamberSlot, out var container) &&
+                 container is ContainerSlot { ContainedEntity: not null } slot)
+        {
+            // Shooting code won't eject it if it's still contained.
+            chamberEnt = slot.ContainedEntity;
             args.Ammo.Add((chamberEnt.Value, EnsureComp<AmmoComponent>(chamberEnt.Value)));
         }
-
-        if (component.OpenBoltOnShoot)
-        {
-            SetBolt(uid, component, false, appearance);
-        }
-
-        var magEnt = GetMagazineEntity(uid);
-
-        // Pass an event to the magazine to get more (to refill chamber or for shooting).
-        if (magEnt != null)
-        {
-            // We pass in Shots not Shots - 1 as we'll take the last entity and move it into the chamber.
-            var relayedArgs = new TakeAmmoEvent(args.Shots, new List<(EntityUid? Entity, IShootable Shootable)>(), args.Coordinates, args.User);
-            RaiseLocalEvent(magEnt.Value, relayedArgs);
-
-            // Put in the nth slot back into the chamber
-            // Rest of the ammo gets shot
-            if (relayedArgs.Ammo.Count > 0)
-            {
-                var newChamberEnt = relayedArgs.Ammo[^1].Entity;
-                TryInsertChamber(uid, newChamberEnt!.Value);
-            }
-
-            // Anything above the chamber-refill amount gets fired.
-            for (var i = 0; i < relayedArgs.Ammo.Count - 1; i++)
-            {
-                args.Ammo.Add(relayedArgs.Ammo[i]);
-            }
-        }
-        else
-        {
-            Appearance.SetData(uid, AmmoVisuals.MagLoaded, false, appearance);
-            return;
-        }
-
-        var count = chamberEnt != null ? 1 : 0;
-        const int capacity = 1;
-
-        var ammoEv = new GetAmmoCountEvent();
-        RaiseLocalEvent(magEnt.Value, ref ammoEv);
-
-        FinaliseMagazineTakeAmmo(uid, component, args, count + ammoEv.Count, capacity + ammoEv.Capacity, appearance);
     }
 }

@@ -39,8 +39,11 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     public List<EntityUid> Entities = new();
 
     /// <summary>
-    /// Is the magazine allowed to be cycled to eject a cartridge.
+    /// Is the magazine allowed to be manually cycled to eject a cartridge.
     /// </summary>
+    /// <remarks>
+    /// Set to false for entities like turrets to avoid users being able to cycle them.
+    /// </remarks>
     [ViewVariables(VVAccess.ReadWrite), DataField("cycleable")]
     [AutoNetworkedField]
     public bool Cycleable = true;

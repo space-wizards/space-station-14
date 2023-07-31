@@ -50,7 +50,7 @@ public abstract partial class SharedGunSystem
         Audio.PlayPredicted(component.SoundInsert, uid, args.User);
         args.Handled = true;
         UpdateBallisticAppearance(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnBallisticAfterInteract(EntityUid uid, BallisticAmmoProviderComponent component, AfterInteractEvent args)
@@ -132,7 +132,8 @@ public abstract partial class SharedGunSystem
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
-        if (component.Cycleable == true)
+
+        if (component.Cycleable)
         {
             args.Verbs.Add(new Verb()
             {
@@ -140,7 +141,7 @@ public abstract partial class SharedGunSystem
                 Disabled = GetBallisticShots(component) == 0,
                 Act = () => ManualCycle(uid, component, Transform(uid).MapPosition, args.User),
             });
-            
+
         }
     }
 
@@ -162,12 +163,10 @@ public abstract partial class SharedGunSystem
             gunComp.NextFire = Timing.CurTime + TimeSpan.FromSeconds(1 / gunComp.FireRate);
         }
 
-        Dirty(component);
+        Dirty(uid, component);
         Audio.PlayPredicted(component.SoundRack, uid, user);
 
         var shots = GetBallisticShots(component);
-        component.Cycled = true;
-
         Cycle(uid, component, coordinates);
 
         var text = Loc.GetString(shots == 0 ? "gun-ballistic-cycled-empty" : "gun-ballistic-cycled");
@@ -191,7 +190,7 @@ public abstract partial class SharedGunSystem
         if (component.FillProto != null)
         {
             component.UnspawnedCount = Math.Max(0, component.Capacity - component.Container.ContainedEntities.Count);
-            Dirty(component);
+            Dirty(uid, component);
         }
     }
 
@@ -223,7 +222,7 @@ public abstract partial class SharedGunSystem
         }
 
         UpdateBallisticAppearance(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnBallisticAmmoCount(EntityUid uid, BallisticAmmoProviderComponent component, ref GetAmmoCountEvent args)

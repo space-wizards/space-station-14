@@ -13,8 +13,8 @@ public sealed partial class ChamberMagazineAmmoProviderComponent : MagazineAmmoP
     public bool? BoltClosed = false;
 
     /// <summary>
-    /// Will the bolt open automatically upon taking ammo and require manual cycling? i.e. bolt-action weapons.
+    /// Does the gun automatically open and close the bolt upon shooting.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("openBoltOnShoot"), AutoNetworkedField]
-    public bool OpenBoltOnShoot;
+    [ViewVariables(VVAccess.ReadWrite), DataField("autoCycle"), AutoNetworkedField]
+    public bool AutoCycle;
 }
