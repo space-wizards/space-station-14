@@ -22,7 +22,7 @@ public sealed partial class ReflectComponent : Component
     public ReflectType Reflects = ReflectType.Energy | ReflectType.NonEnergy;
 
     /// <summary>
-    /// Probability for a projectile to be reflected
+    /// Probability for a projectile to be reflected.
     /// </summary>
     [DataField("reflectProb"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float ReflectProb = 0.25f;
