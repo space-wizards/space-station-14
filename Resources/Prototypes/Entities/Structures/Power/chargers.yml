@@ -216,6 +216,9 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { state: borgcharger0 }
           False: { state: borgcharger2 }
+        charged:
+          True: { visible: false }
+          False: { visible: true }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
