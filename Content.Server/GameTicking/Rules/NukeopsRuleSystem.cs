@@ -459,7 +459,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 }
             }
 
-            var numNukies = MathHelper.Clamp(ev.PlayerPool.Count / playersPerOperative, 1, maxOperatives);
+            var numNukies = MathHelper.Clamp(_playerSystem.PlayerCount / playersPerOperative, 1, maxOperatives);
 
             for (var i = 0; i < numNukies; i++)
             {
