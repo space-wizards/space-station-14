@@ -15,11 +15,9 @@ using Content.Server.Singularity.Components;
 namespace Content.Server.Singularity.EntitySystems;
 
 /// <summary>
-/// The server side version of <see cref="SharedGravityWellSystem"/>.
-/// Primarily responsible for managing <see cref="GravityWellComponent"/>s.
-/// Handles the gravitational pulses they can emit.
+/// Handles singularity attractors.
 /// </summary>
-public sealed class SingularityAttractorSystem : SharedGravityWellSystem
+public sealed class SingularityAttractorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IViewVariablesManager _vvManager = default!;
@@ -61,8 +59,7 @@ public sealed class SingularityAttractorSystem : SharedGravityWellSystem
     /// Makes an attractor attract all singularities and puts it on cooldown.
     /// </summary>
     /// <param name="uid">The uid of the attractor to make pulse.</param>
-    /// <param name="gravWell">The state of the attractor to make pulse.</param>
-    /// <param name="frameTime">The amount to consider as having passed since the last pulse by the attractor.</param>
+    /// <param name="attractor">The state of the attractor to make pulse.</param>
     /// <param name="xform">The transform of the attractor to make pulse.</param>
     private void Update(EntityUid uid, SingularityAttractorComponent? attractor = null, TransformComponent? xform = null)
     {
@@ -78,9 +75,6 @@ public sealed class SingularityAttractorSystem : SharedGravityWellSystem
 
         if (mapPos == MapCoordinates.Nullspace)
             return;
-
-        var bodyQuery = GetEntityQuery<PhysicsComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach(var (singulo, walk, singuloXform) in EntityManager.EntityQuery<SingularityComponent, RandomWalkComponent, TransformComponent>())
         {
