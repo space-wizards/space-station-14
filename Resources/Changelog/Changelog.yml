@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Maintenance ambience should play less frequently in corridors., type: Fix}
-  id: 3893
-  time: '2023-05-29T04:19:00.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: The Centcom scarf has been moved to the Centdrobe, type: Tweak}
@@ -2966,3 +2961,9 @@ Entries:
       its security teams with a more harmful alternative to the stun baton.', type: Add}
   id: 4392
   time: '2023-07-31T20:37:13.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'The roundend summary now shows a picture of your original body, even
+      after you ghosted', type: Fix}
+  id: 4393
+  time: '2023-07-31T22:46:06.0000000+00:00'
