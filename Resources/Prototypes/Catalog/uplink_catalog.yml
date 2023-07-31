@@ -943,27 +943,6 @@
     - SeniorResearcher      
     - Chef
 
-<<<<<<< HEAD
-=======
-- type: listing
-  id: UplinkDisposableTurret
-  name: uplink-disposable-turret-name
-  description: uplink-disposable-turret-desc
-  productEntity: ToolboxElectricalTurretFilled
-  cost:
-    Telecrystal: 8
-  categories:
-  - UplinkJob
-  conditions:
-    - !type:BuyerJobCondition
-      whitelist:
-        - StationEngineer
-        - AtmosphericTechnician
-        - Scientist
-        - SeniorEngineer
-        - SeniorResearcher
-
->>>>>>> master
 # Armor
 
 - type: listing
