@@ -20,7 +20,7 @@ reagent-name-nicotine = Nicotine
 reagent-desc-nicotine = Dangerous and highly addictive, but that's what the propaganda says.
 
 reagent-name-impedrezene = impedrezene
-reagent-desc-impedrezene = A narcotic that impedes one's ability by slowing down the higher brain cell functions - that is if someone bothered coding that.
+reagent-desc-impedrezene = A narcotic that impedes one's ability by slowing down the higher brain cell functions.
 
 reagent-name-space-drugs = space drugs
 reagent-desc-space-drugs = An illegal compound which induces a number of effects such as loss of balance and visual artefacts.

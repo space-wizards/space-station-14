@@ -20,7 +20,7 @@ reagent-name-sulfuric-acid = sulfuric acid
 reagent-desc-sulfuric-acid = A corrosive chemical. Keep away from your face.
 
 reagent-name-unstable-mutagen = unstable mutagen
-reagent-desc-unstable-mutagen = A concoction of irradiated chemicals that are prone to rapid mutation within plants - dionas being the exception. Use with caution.
+reagent-desc-unstable-mutagen = Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
 
 reagent-name-heartbreaker-toxin = heartbreaker toxin
 reagent-desc-heartbreaker-toxin = A hallucinogenic compound derived from mindbreaker toxin. it blocks neurological signals to the respiratory system, causing asphyxiation.
@@ -29,7 +29,7 @@ reagent-name-lexorin = lexorin
 reagent-desc-lexorin = A fast-acting chemical used to asphyxiate people rapidly. Dexalin, dexalin plus and epinephrine will filter it out, however.
 
 reagent-name-mindbreaker-toxin = mindbreaker toxin
-reagent-desc-mindbreaker-toxin = A potent hallucinogenic compound that is formerly known as LSD. Does nothing on its own, but a required reagent in heartbreaker toxin.
+reagent-desc-mindbreaker-toxin = A potent hallucinogenic compound that is formerly known as LSD.
 
 reagent-name-histamine = histamine
 reagent-desc-histamine = A chemical caused by allergenics reacting with antibodies. Lethal at large quantities.

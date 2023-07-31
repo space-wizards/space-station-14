@@ -1,5 +1,5 @@
 reagent-name-thermite = thermite
-reagent-desc-thermite = A mixture that becomes extremely hot when ignited, and would burn through walls if someone bothered to code it.
+reagent-desc-thermite = A mixture that becomes extremely hot when ignited.
 
 reagent-name-napalm = napalm
 reagent-desc-napalm = It's just a little flammable.
