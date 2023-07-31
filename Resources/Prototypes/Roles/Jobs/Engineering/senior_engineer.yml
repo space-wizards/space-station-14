@@ -14,7 +14,7 @@
       department: Engineering
       time: 216000 # 60 hrs
   startingGear: SeniorEngineerGear
-  icon: "SeniorEngineer"
+  icon: "JobIconSeniorEngineer"
   supervisors: job-supervisors-ce
   access:
   - Maintenance

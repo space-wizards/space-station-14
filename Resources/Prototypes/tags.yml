@@ -8,6 +8,9 @@
   id: AirSensor
 
 - type: Tag
+  id: Ambrosia
+
+- type: Tag
   id: AppraisalTool
 
 - type: Tag
@@ -135,9 +138,6 @@
 
 - type: Tag
   id: CartridgeMagnum
-
-- type: Tag
-  id: CartridgeMagnum357
 
 - type: Tag
   id: CartridgePistol
@@ -651,7 +651,7 @@
 
 - type: Tag
   id: Plunger
-  
+
 - type: Tag
   id: PlushieGhost
 
@@ -766,9 +766,6 @@
   id: SpeedLoaderMagnum
 
 - type: Tag
-  id: SpeedLoaderMagnum357
-
-- type: Tag
   id: SpeedLoaderPistol
 
 - type: Tag
@@ -830,7 +827,7 @@
 
 - type: Tag
   id: TrashBag
-  
+
 - type: Tag
   id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
 

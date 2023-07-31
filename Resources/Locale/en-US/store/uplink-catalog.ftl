@@ -1,12 +1,12 @@
 # Weapons
 uplink-pistol-viper-name = Viper
-uplink-pistol-viper-desc = A small, cheap, & easily concealable pistol. Retrofitted with a fully automatic receiver. Uses pistol magazines (.35 auto).
+uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses pistol magazines (.35 auto).
 
 uplink-revolver-python-name = Python
-uplink-revolver-python-desc = A brutally simple & effective Syndicate revolver. Very loud. Uses .357 magnum rounds.
+uplink-revolver-python-desc = A brutally simple, effective, and loud Syndicate revolver. Comes loaded with armor-piercing rounds. Uses .45 magnum.
 
 uplink-pistol-cobra-name = Cobra
-uplink-pistol-cobra-desc = A fairly underpowered pistol with a robust, inbuilt silencer, capable of making firing almost inaudible. Uses pistol magazines (.25 caseless).
+uplink-pistol-cobra-desc = A rugged, robust operator handgun with inbuilt silencer. Uses pistol magazines (.25 caseless).
 
 uplink-rifle-mosin-name = Surplus Rifle
 uplink-rifle-mosin-desc = A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
@@ -28,7 +28,7 @@ uplink-gloves-north-star-desc = A pair of gloves that reduce your punching coold
 
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade
-uplink-explosive-grenade-desc = A simplistic grenade with a three-and-a-half-second long fuse that is geared towards injuring personnel. Causes minimal hull damage.
+uplink-explosive-grenade-desc = A simplistic grenade with a ten-second fuse that is geared towards injuring personnel. Causes minimal hull damage.
 
 uplink-flash-grenade-name = Flashbang
 uplink-flash-grenade-desc = A standard-issue flashbang, capable of blinding and slowing down anyone without proper protection. This, of course, includes you; make sure you're properly equipped before using it.
@@ -61,11 +61,14 @@ uplink-pistol-magazine-desc = Pistol magazine with 10 catridges. Compatible with
 uplink-pistol-magazine-caseless-name = Pistol Magazine (.25 caseless)
 uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 catridges. Compatible with the Cobra.
 
-uplink-speedloader-magnum-name = Speedloader (.357 magnum)
-uplink-speedloader-magnu-desc = Revolver speedloader with 7 catridges. Compatible with the Python.
+uplink-speedloader-magnum-name = Speedloader (.45 magnum AP)
+uplink-speedloader-magnu-desc = Revolver speedloader with 6 armor-piercing catridges, capable of ignoring armor entirely. Compatible with the Python.
 
 uplink-mosin-ammo-name = ammunition box (.30 rifle)
 uplink-mosin-ammo-desc = A box of cartridges for the surplus rifle.
+
+uplink-sniper-ammo-name = ammunition box (.60 antimateriel)
+uplink-sniper-ammo-desc = a box of 10 cartridges for the hristov sniper rifle
 
 # Utility
 uplink-holopara-kit-name = Holoparasite Kit
@@ -140,11 +143,14 @@ uplink-meds-bundle-desc = All you need to get your comrades back in the fight: m
 uplink-ammo-bundle-name = Ammo Bundle
 uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW.
 
+uplink-sniper-bundle-name = Sniper Bundle
+uplink-sniper-bundle-desc = An inconspicuous briefcase that contains a hristov, 10 spare bullets and a convenient disguise
+
 uplink-c20r-bundle-name = C-20r Bundle
 uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundled with three magazines.
 
 uplink-buldog-bundle-name = Bulldog Bundle
-uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 2 12g buckshot drums.
+uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and three 12g buckshot drums.
 
 uplink-grenade-launcher-bundle-name = China-Lake Bundle
 uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 8 rounds of various destruction capability.
@@ -191,7 +197,7 @@ uplink-holy-hand-grenade-name = Holy Hand Grenade
 uplink-holy-hand-grenade-desc = O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
 
 uplink-revolver-cap-gun-fake-name = Fake Cap Gun
-uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and magnum bullets. Comes loaded with .357 magnum bullets.
+uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and magnum bullets. Comes loaded with magnum bullets.
 
 uplink-banana-peel-explosive-name = Explosive Banana Peel
 uplink-banana-peel-explosive-desc = They will burst into laughter when they slip on it!
