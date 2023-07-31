@@ -13,7 +13,7 @@ public sealed class RadarConsoleComponent : Component
         set => IoCManager
             .Resolve<IEntitySystemManager>()
             .GetEntitySystem<SharedRadarConsoleSystem>()
-            .SetRange(this, value);
+            .SetRange(Owner, value, this);
     }
 
     [DataField("maxRange")]

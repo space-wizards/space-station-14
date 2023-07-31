@@ -49,6 +49,20 @@
           ExamineName: Glass Beaker
 
 - type: entity
+  id: AmmoTechFabCircuitboard
+  parent: BaseMachineCircuitboard
+  name: ammo techfab circuit board
+  description: A machine printed circuit board for an ammo techfab
+  components:
+    - type: Sprite
+      state: security
+    - type: MachineBoard
+      prototype: AmmoTechFab
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+
+- type: entity
   id: MedicalTechFabCircuitboard
   parent: BaseMachineCircuitboard
   name: medical techfab machine board
@@ -707,6 +721,17 @@
         Manipulator: 3
       materialRequirements:
         Glass: 1
+
+- type: entity
+  id: SheetifierMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: sheet-meister 2000 machine board
+  components:
+  - type: MachineBoard
+    prototype: Sheetifier
+    requirements:
+      MatterBin: 1
+      Manipulator: 1
 
 - type: entity
   id: MicrowaveMachineCircuitboard

@@ -15,6 +15,35 @@
     },
     {
       "name": "tongue"
+    },
+    {
+      "name": "heart-on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.6
+        ]
+      ]
+    },
+    {
+      "name": "heart-off"
+    },
+    {
+      "name": "lung-l"
+    },
+    {
+      "name": "lung-r"
+    },
+    {
+      "name": "muscle"
+    },
+    {
+      "name": "stomach"
+    },
+    {
+      "name": "web-gland"
     }
   ]
 }

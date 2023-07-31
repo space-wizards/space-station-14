@@ -32,11 +32,10 @@
     layers:
     - state: portal-red
   - type: PointLight
-    netsync: false
     color: OrangeRed
     radius: 3
     energy: 3
-
+    netsync: false
 - type: entity
   id: PortalBlue
   parent: BasePortal
@@ -45,7 +44,7 @@
     layers:
     - state: portal-blue
   - type: PointLight
-    netsync: false
     color: SkyBlue
     radius: 3
     energy: 3
+    netsync: false

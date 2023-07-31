@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Destructible;
 using Content.Shared.Access.Components;
+using Content.Shared.Climbing;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
 using Content.Shared.Physics;
@@ -100,11 +102,12 @@ public sealed partial class PathfindingSystem
         // Still run even when paused.
         var query = AllEntityQuery<GridPathfindingComponent>();
 
-        while (query.MoveNext(out var comp))
+        while (query.MoveNext(out var uid, out var comp))
         {
+            // TODO: Dump all this shit and just do it live it's probably fast enough.
             if (comp.DirtyChunks.Count == 0 ||
                 curTime < comp.NextUpdate ||
-                !TryComp<MapGridComponent>(comp.Owner, out var mapGridComp))
+                !TryComp<MapGridComponent>(uid, out var mapGridComp))
             {
                 continue;
             }
@@ -119,7 +122,7 @@ public sealed partial class PathfindingSystem
 
             foreach (var origin in comp.DirtyChunks)
             {
-                var chunk = GetChunk(origin, comp.Owner, comp);
+                var chunk = GetChunk(origin, uid, comp);
                 dirt[idx] = chunk;
                 idx++;
             }
@@ -151,11 +154,12 @@ public sealed partial class PathfindingSystem
                 var accessQuery = GetEntityQuery<AccessReaderComponent>();
                 var destructibleQuery = GetEntityQuery<DestructibleComponent>();
                 var doorQuery = GetEntityQuery<DoorComponent>();
+                var climbableQuery = GetEntityQuery<ClimbableComponent>();
                 var fixturesQuery = GetEntityQuery<FixturesComponent>();
                 var physicsQuery = GetEntityQuery<PhysicsComponent>();
                 var xformQuery = GetEntityQuery<TransformComponent>();
-                BuildBreadcrumbs(dirt[i], mapGridComp, accessQuery, destructibleQuery, doorQuery, fixturesQuery,
-                    physicsQuery, xformQuery);
+                BuildBreadcrumbs(dirt[i], mapGridComp, accessQuery, destructibleQuery, doorQuery, climbableQuery,
+                    fixturesQuery, physicsQuery, xformQuery);
             });
 
             const int Division = 4;
@@ -352,7 +356,7 @@ public sealed partial class PathfindingSystem
 
         var currentTime = _timing.CurTime;
 
-        if (comp.NextUpdate < currentTime)
+        if (comp.NextUpdate < currentTime && !MetaData(gridUid).EntityPaused)
             comp.NextUpdate = currentTime + UpdateCooldown;
 
         var chunks = comp.DirtyChunks;
@@ -406,6 +410,7 @@ public sealed partial class PathfindingSystem
         EntityQuery<AccessReaderComponent> accessQuery,
         EntityQuery<DestructibleComponent> destructibleQuery,
         EntityQuery<DoorComponent> doorQuery,
+        EntityQuery<ClimbableComponent> climbableQuery,
         EntityQuery<FixturesComponent> fixturesQuery,
         EntityQuery<PhysicsComponent> physicsQuery,
         EntityQuery<TransformComponent> xformQuery)
@@ -521,6 +526,11 @@ public sealed partial class PathfindingSystem
                             if (doorQuery.HasComponent(ent))
                             {
                                 flags |= PathfindingBreadcrumbFlag.Door;
+                            }
+
+                            if (climbableQuery.HasComponent(ent))
+                            {
+                                flags |= PathfindingBreadcrumbFlag.Climb;
                             }
 
                             if (destructibleQuery.TryGetComponent(ent, out var damageable))

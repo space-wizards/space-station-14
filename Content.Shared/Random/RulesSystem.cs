@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Robust.Shared.Map;
@@ -35,10 +36,11 @@ public sealed class RulesSystem : EntitySystem
                     }
 
                     var worldPos = _transform.GetWorldPosition(xform);
+                    var gridRange = new Vector2(griddy.Range, griddy.Range);
 
                     foreach (var _ in _mapManager.FindGridsIntersecting(
                                  xform.MapID,
-                                 new Box2(worldPos - griddy.Range, worldPos + griddy.Range)))
+                                 new Box2(worldPos - gridRange, worldPos + gridRange)))
                     {
                         return !griddy.Inverted;
                     }

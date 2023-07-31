@@ -14,6 +14,21 @@
       entity: FoodCheese
 
 - type: reaction
+  id: ChevreCurdling
+  impact: low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    MilkGoat:
+      amount: 10 #Batches of chevre are traditionally made in far lower quantities than that of milk
+    Enzyme:
+      amount: 5
+      catalyst: true
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodChevre
+
+- type: reaction
   id: CreateDough
   impact: Low
   quantized: true
