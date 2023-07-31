@@ -1,5 +1,4 @@
-﻿using Content.Server.Atmos;
-using Content.Shared.Atmos;
+﻿using Content.Shared.Atmos;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Power.Generator;
