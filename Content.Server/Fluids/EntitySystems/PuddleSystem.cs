@@ -512,7 +512,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             }
 
             _reactive.DoEntityReaction(owner, splitSolution, ReactionMethod.Touch);
-            _popups.PopupEntity(Loc.GetString("spill-land-spilled-on-other", ("spillable", uid), ("target", Identity.Name(owner, EntityManager))), owner, PopupType.SmallCaution);
+            _popups.PopupEntity(Loc.GetString("spill-land-spilled-on-other", ("spillable", uid), ("target", Identity.Entity(owner, EntityManager))), owner, PopupType.SmallCaution);
         }
 
         return TrySpillAt(coordinates, solution, out puddleUid, sound);

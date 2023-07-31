@@ -92,12 +92,12 @@ public sealed partial class PuddleSystem
 
             _popups.PopupEntity(
                 Loc.GetString("spill-melee-hit-attacker", ("amount", totalSplit / hitCount), ("spillable", uid),
-                    ("target", Identity.Name(hit, EntityManager))),
+                    ("target", Identity.Entity(hit, EntityManager))),
                 hit, args.User);
 
             _popups.PopupEntity(
                 Loc.GetString("spill-melee-hit-others", ("attacker", args.User), ("spillable", uid),
-                    ("target", Identity.Name(hit, EntityManager))),
+                    ("target", Identity.Entity(hit, EntityManager))),
                 hit, Filter.PvsExcept(args.User), true, PopupType.SmallCaution);
         }
     }
