@@ -37,13 +37,15 @@ namespace Content.IntegrationTests;
 /// </summary>
 public static class PoolManager
 {
+    public const string TestMap = "Empty";
+
     private static readonly (string cvar, string value)[] ServerTestCvars =
     {
         // @formatter:off
         (CCVars.DatabaseSynchronous.Name,     "true"),
         (CCVars.DatabaseSqliteDelay.Name,     "0"),
         (CCVars.HolidaysEnabled.Name,         "false"),
-        (CCVars.GameMap.Name,                 "Empty"),
+        (CCVars.GameMap.Name,                 TestMap),
         (CCVars.AdminLogsQueueSendDelay.Name, "0"),
         (CVars.NetPVS.Name,                   "false"),
         (CCVars.NPCMaxUpdates.Name,           "999999"),
@@ -310,6 +312,9 @@ public static class PoolManager
                     await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Suitable pair found");
                     var canSkip = pair.Settings.CanFastRecycle(poolSettings);
 
+                    var cCfg = pair.Client.ResolveDependency<IConfigurationManager>();
+                    cCfg.SetCVar(CCVars.NetInterp, !poolSettings.DisableInterpolate);
+
                     if (canSkip)
                     {
                         await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleanup not needed, Skipping cleanup of pair");
@@ -410,10 +415,10 @@ public static class PoolManager
         var configManager = pair.Server.ResolveDependency<IConfigurationManager>();
         var entityManager = pair.Server.ResolveDependency<IEntityManager>();
         var gameTicker = entityManager.System<GameTicker>();
-        await pair.Server.WaitPost(() =>
-        {
-            configManager.SetCVar(CCVars.GameLobbyEnabled, poolSettings.InLobby);
-        });
+
+        configManager.SetCVar(CCVars.GameLobbyEnabled, poolSettings.InLobby);
+        configManager.SetCVar(CCVars.GameMap, TestMap);
+
         var cNetMgr = pair.Client.ResolveDependency<IClientNetManager>();
         if (!cNetMgr.IsConnected)
         {
@@ -475,21 +480,21 @@ public static class PoolManager
             }
         }
 
+        configManager.SetCVar(CCVars.GameMap, poolSettings.Map);
         await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Restarting server again");
-        await pair.Server.WaitPost(() =>
-        {
-            gameTicker.RestartRound();
-        });
 
+        configManager.SetCVar(CCVars.GameMap, poolSettings.Map);
+        configManager.SetCVar(CCVars.GameDummyTicker, poolSettings.DummyTicker);
+        await pair.Server.WaitPost(() => gameTicker.RestartRound());
 
         if (!poolSettings.NotConnected)
         {
             await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Connecting client");
             await ReallyBeIdle(pair);
-            pair.Client.SetConnectTarget(pair.Server);
+            pair.Client.SetConnectTarget(pair.Server);;
+            var netMgr = pair.Client.ResolveDependency<IClientNetManager>();
             await pair.Client.WaitPost(() =>
             {
-                var netMgr = IoCManager.Resolve<IClientNetManager>();
                 if (!netMgr.IsConnected)
                 {
                     netMgr.ClientConnect(null!, 0, null!);
@@ -717,12 +722,12 @@ public sealed class PoolSettings
     /// <summary>
     /// If the returned pair must not be reused
     /// </summary>
-    public bool MustNotBeReused => Destructive || NoLoadContent || DisableInterpolate || DummyTicker || NoToolsExtraPrototypes;
+    public bool MustNotBeReused => Destructive || NoLoadContent || NoToolsExtraPrototypes;
 
     /// <summary>
     /// If the given pair must be brand new
     /// </summary>
-    public bool MustBeNew => Fresh || NoLoadContent || DisableInterpolate || DummyTicker || NoToolsExtraPrototypes;
+    public bool MustBeNew => Fresh || NoLoadContent || NoToolsExtraPrototypes;
 
     /// <summary>
     /// If the given pair must not be connected
@@ -749,8 +754,10 @@ public sealed class PoolSettings
     /// </summary>
     public bool Disconnected { get; init; }
 
+    // TODO add a check to verify that clean InLobby pairs as still in the lobby when returned.
     /// <summary>
     /// Set to true if the given server/client pair should be in the lobby.
+    /// If the pair is not in the lobby at the end of the test, this test must be marked as dirty.
     /// </summary>
     public bool InLobby { get; init; }
 
@@ -778,7 +785,7 @@ public sealed class PoolSettings
     /// <summary>
     /// Set this to the path of a map to have the given server/client pair load the map.
     /// </summary>
-    public string Map { get; init; } // TODO for map painter
+    public string Map { get; init; } = PoolManager.TestMap;
 
     /// <summary>
     /// Set to true if the test won't use the client (so we can skip cleaning it up)
@@ -802,17 +809,21 @@ public sealed class PoolSettings
     /// <returns>If we can skip cleaning it up</returns>
     public bool CanFastRecycle(PoolSettings nextSettings)
     {
-        if (Dirty) return false;
-        if (Destructive || nextSettings.Destructive) return false;
-        if (NotConnected != nextSettings.NotConnected) return false;
-        if (InLobby != nextSettings.InLobby) return false;
-        if (DisableInterpolate != nextSettings.DisableInterpolate) return false;
-        if (nextSettings.DummyTicker) return false;
-        if (Map != nextSettings.Map) return false;
-        if (NoLoadContent != nextSettings.NoLoadContent) return false;
-        if (nextSettings.Fresh) return false;
-        if (ExtraPrototypes != nextSettings.ExtraPrototypes) return false;
-        return true;
+        if (MustNotBeReused)
+            throw new InvalidOperationException("Attempting to recycle a non-reusable test.");
+
+        if (nextSettings.MustBeNew)
+            throw new InvalidOperationException("Attempting to recycle a test while requesting a fresh test.");
+
+        if (Dirty)
+            return false;
+
+        // Check that certain settings match.
+        return NotConnected == nextSettings.NotConnected
+               && DummyTicker == nextSettings.DummyTicker
+               && Map == nextSettings.Map
+               && InLobby == nextSettings.InLobby
+               && ExtraPrototypes == nextSettings.ExtraPrototypes;
     }
 
     // Prototype hot reload is not available outside TOOLS builds,
