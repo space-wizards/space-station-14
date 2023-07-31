@@ -23,6 +23,14 @@
     Plastic: 50
 
 - type: latheRecipe
+  id: BorgChargerCircuitboard
+  result: BorgChargerCircuitboard
+  completetime: 2
+  materials:
+    Steel: 50
+    Plastic: 50
+
+- type: latheRecipe
   id: WeaponCapacitorRechargerCircuitboard
   result: WeaponCapacitorRechargerCircuitboard
   completetime: 2

@@ -81,7 +81,7 @@
       borg_module: !type:Container { }
   - type: PowerCellSlot
     cellSlotId: cell_slot
-    fitsInCharger: false
+    fitsInCharger: true
   - type: PowerCellDraw
     drawRate: 0.6
   - type: ItemSlots

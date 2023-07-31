@@ -144,10 +144,10 @@ public sealed partial class BorgSystem : SharedBorgSystem
         }
 
         // if we aren't drawing and suddenly get enough power to draw again, reeanble.
-        if (!draw.Drawing && _powerCell.HasDrawCharge(uid, draw))
+        if (_powerCell.HasDrawCharge(uid, draw))
         {
             // only reenable the powerdraw if a player has the role.
-            if (_mind.TryGetMind(uid, out _))
+            if (!draw.Drawing && _mind.TryGetMind(uid, out _))
                 _powerCell.SetPowerCellDrawEnabled(uid, true);
 
             EnableBorgAbilities(uid, component);
@@ -215,6 +215,9 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
     public void EnableBorgAbilities(EntityUid uid, BorgChassisComponent component)
     {
+        if (component.Activated)
+            return;
+
         component.Activated = true;
         EnableAllModules(uid, component);
         Dirty(component);
@@ -223,6 +226,9 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
     public void DisableBorgAbilities(EntityUid uid, BorgChassisComponent component)
     {
+        if (!component.Activated)
+            return;
+
         component.Activated = false;
         DisableAllModules(uid, component);
         Dirty(component);
