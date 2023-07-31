@@ -407,7 +407,6 @@
       - Handcuffs
       - Zipties
       - Stunbaton
-      - Truncheon
       - ForensicPad
       - ClothingEyesGlassesSecurity
       - RiotShield
@@ -456,6 +455,7 @@
       - SignalTrigger
       - VoiceTrigger
       - TimerTrigger
+      - Truncheon
       - FlashPayload
       - ExplosivePayload
       - WeaponLaserCarbine
