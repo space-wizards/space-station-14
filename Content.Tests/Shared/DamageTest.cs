@@ -25,7 +25,7 @@ namespace Content.Tests.Shared
             { "Radiation", 1.5f },
         };
 
-        static private Dictionary<string, float> _resistancePenetrationDict = new()
+        static private Dictionary<string, float> _resistanceReductionDict = new()
         {
             { "Blunt", - 5 },
             // "missing" piercing entry
@@ -142,7 +142,7 @@ namespace Content.Tests.Shared
             DamageModifierSetPrototype modifierSet = new()
             {
                 Coefficients = _resistanceCoefficientDict,
-                FlatReduction = _resistancePenetrationDict
+                FlatReduction = _resistanceReductionDict
             };
 
             //damage is initially   20 / 20 / 10 / 30

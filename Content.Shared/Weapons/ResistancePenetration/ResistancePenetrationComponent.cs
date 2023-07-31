@@ -4,7 +4,7 @@ namespace Content.Shared.Weapons
     public sealed class ResistancePenetrationComponent : Component
     {
         /// <summary>
-        ///     Target's resistance gets reduced by this amount,
+        ///     The amount of the target's resistance that is negated
         ///     1 means complete resistance negation.
         /// </summary>
         [DataField("penetration")]

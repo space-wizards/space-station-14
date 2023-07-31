@@ -65,12 +65,12 @@ namespace Content.IntegrationTests.Tests.Destructible
             {
                 var bluntDamage = new DamageSpecifier(sPrototypeManager.Index<DamageTypePrototype>("TestBlunt"), 10);
 
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage, null);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage, 1f);
 
                 // No thresholds reached yet, the earliest one is at 20 damage
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
 
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage, null);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage, 1f);
 
                 // Only one threshold reached, 20
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Has.Count.EqualTo(1));
