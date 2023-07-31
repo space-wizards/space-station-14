@@ -130,7 +130,7 @@ public sealed class SecondLifeRule : StationEventSystem<SecondLifeRuleComponent>
                 return;
         }
 
-        if (!GameTicker.SpawnPlayerAgain(args.Player, args.UserId))
+        if (!GameTicker.SpawnPlayerAgain(args.Player, EntityUid.Invalid, args.UserId))
             return; // Player was rejected from the role, or something went wrong.
 
         // Increment the accepted count

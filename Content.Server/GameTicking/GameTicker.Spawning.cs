@@ -267,16 +267,21 @@ namespace Content.Server.GameTicking
 
 
         // Called by a system which is currently spawning ghost-role players deliberately, like a tourist event
-        private bool SpawnPlayerAgain(IPlayerSession player, EntityUid station, Mind.Mind mind, string jobId)
+        public bool SpawnPlayerAgain(IPlayerSession player, EntityUid station, string jobId)
         {
             // Can't spawn players with a dummy ticker!
             if (DummyTicker)
                 return true;
 
+            var data = player.ContentData();
+            DebugTools.AssertNotNull(data);
+            if (data == null)
+                return false;
+
             ResolveStation(ref station);
 
             // Figure out job restrictions
-            var jobBans = _roleBanManager.GetJobBans(player.UserId);
+            var jobBans = _banManager.GetJobBans(player.UserId);
             if (jobBans == null || jobBans.Contains(jobId))
                 return false;
 
@@ -286,13 +291,7 @@ namespace Content.Server.GameTicking
             // We can't give this player the exact profile (name, etc) they had last time, but perhaps the same species.
             var character = GetPlayerProfile(player).AnonimizedRandomly();
 
-            mind.CharacterName = character.Name;
-            var data = player.ContentData();
-
-            DebugTools.AssertNotNull(data);
-            if (data == null)
-                return false;
-
+            var mind = _mind.CreateMind(player.UserId, character.Name);
             var mob = SpawnAndAttachMind(player, character, station, jobId, true, mind, data);
 
             // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
@@ -300,27 +299,6 @@ namespace Content.Server.GameTicking
             var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, true, PlayersJoinedRoundNormally, station, character);
             RaiseLocalEvent(mob, aev, true);
             return true;
-        }
-
-        public bool SpawnPlayerAgain(IPlayerSession player, string jobId, Mind.Mind? mind = null)
-        {
-
-            if (mind == null)
-            {
-                // // Find the mind attached to the player's session
-                // var playerUid = player.AttachedEntity;
-                // if (playerUid == null || !TryComp<MindComponent>(playerUid, out var mindComp) || mindComp.Mind == null)
-                //     return false; // Could not find existing mind. Could maybe make a new one here?
-                //
-                // mind = mindComp.Mind;
-
-                mind = new Mind.Mind(player.UserId)
-                {
-                };
-            }
-
-            // Will return false if failed, for instance if this role is banned for this player.
-            return SpawnPlayerAgain(player, EntityUid.Invalid, mind, jobId);
         }
 
         public void Respawn(IPlayerSession player)

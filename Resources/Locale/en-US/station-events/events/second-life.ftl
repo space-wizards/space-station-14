@@ -10,7 +10,7 @@ second-life-cargo-announce = The nation state of Supplytonia has collapsed, Carg
 
 second-life-tourist = As a tourist from a wandering vessel
 second-life-security = You're back from a great training session!
-second-life-engineer = Tired, but keen to find technical issues to distract you from your worries
-second-life-service = Frustrated from the collapse of your hotel chain
-second-life-medical = Ready for an easier life after battling the star-plague
+second-life-engineer = You're a tired engineer who is keen to find technical issues to distract you from your worries
+second-life-service = Play as a hotel worker frustrated from the collapse of your hotel chain
+second-life-medical = You are ready for an easier life after battling the star-plague
 second-life-cargo = Hoping for a new life with cargonia
