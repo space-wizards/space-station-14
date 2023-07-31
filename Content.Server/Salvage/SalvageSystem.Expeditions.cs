@@ -1,13 +1,15 @@
-using System.Linq;
-using System.Threading;
-using Robust.Shared.CPUJob.JobQueues;
-using Robust.Shared.CPUJob.JobQueues.Queues;
+using Content.Server.Cargo.Components;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
-using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.Salvage;
+using Robust.Shared.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
+using System.Linq;
+using System.Threading;
+using Content.Shared.Salvage.Expeditions;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Salvage;
 
@@ -17,7 +19,7 @@ public sealed partial class SalvageSystem
      * Handles setup / teardown of salvage expeditions.
      */
 
-    private const int MissionLimit = 5;
+    private const int MissionLimit = 3;
 
     private readonly JobQueue _salvageQueue = new();
     private readonly List<(SpawnSalvageMissionJob Job, CancellationTokenSource CancelToken)> _salvageJobs = new();
@@ -36,6 +38,7 @@ public sealed partial class SalvageSystem
 
         SubscribeLocalEvent<SalvageExpeditionComponent, ComponentShutdown>(OnExpeditionShutdown);
         SubscribeLocalEvent<SalvageExpeditionComponent, EntityUnpausedEvent>(OnExpeditionUnpaused);
+        SubscribeLocalEvent<SalvageExpeditionComponent, ComponentGetState>(OnExpeditionGetState);
 
         SubscribeLocalEvent<SalvageStructureComponent, ExaminedEvent>(OnStructureExamine);
 
@@ -43,6 +46,14 @@ public sealed partial class SalvageSystem
         _failedCooldown = _configurationManager.GetCVar(CCVars.SalvageExpeditionFailedCooldown);
         _configurationManager.OnValueChanged(CCVars.SalvageExpeditionCooldown, SetCooldownChange);
         _configurationManager.OnValueChanged(CCVars.SalvageExpeditionFailedCooldown, SetFailedCooldownChange);
+    }
+
+    private void OnExpeditionGetState(EntityUid uid, SalvageExpeditionComponent component, ref ComponentGetState args)
+    {
+        args.State = new SalvageExpeditionComponentState()
+        {
+            Stage = component.Stage
+        };
     }
 
     private void ShutdownExpeditions()
@@ -99,7 +110,7 @@ public sealed partial class SalvageSystem
         // Finish mission
         if (TryComp<SalvageExpeditionDataComponent>(component.Station, out var data))
         {
-            FinishExpedition(data, component, null);
+            FinishExpedition(data, uid, component, null);
         }
     }
 
@@ -141,7 +152,7 @@ public sealed partial class SalvageSystem
         }
     }
 
-    private void FinishExpedition(SalvageExpeditionDataComponent component, SalvageExpeditionComponent expedition, EntityUid? shuttle)
+    private void FinishExpedition(SalvageExpeditionDataComponent component, EntityUid uid, SalvageExpeditionComponent expedition, EntityUid? shuttle)
     {
         // Finish mission cleanup.
         switch (expedition.MissionParams.MissionType)
@@ -150,7 +161,7 @@ public sealed partial class SalvageSystem
             case SalvageMissionType.Mining:
                 expedition.Completed = true;
 
-                if (shuttle != null && TryComp<SalvageMiningExpeditionComponent>(expedition.Owner, out var mining))
+                if (shuttle != null && TryComp<SalvageMiningExpeditionComponent>(uid, out var mining))
                 {
                     var xformQuery = GetEntityQuery<TransformComponent>();
                     var entities = new List<EntityUid>();
@@ -169,18 +180,19 @@ public sealed partial class SalvageSystem
                 break;
         }
 
-        // Payout already handled elsewhere.
+        // Handle payout after expedition has finished
         if (expedition.Completed)
         {
-            _sawmill.Debug($"Completed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
+            Log.Debug($"Completed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + TimeSpan.FromSeconds(_cooldown);
-            Announce(expedition.Owner, Loc.GetString("salvage-expedition-mission-completed"));
+            Announce(uid, Loc.GetString("salvage-expedition-mission-completed"));
+            GiveRewards(expedition);
         }
         else
         {
-            _sawmill.Debug($"Failed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
+            Log.Debug($"Failed mission {expedition.MissionParams.MissionType} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + TimeSpan.FromSeconds(_failedCooldown);
-            Announce(expedition.Owner, Loc.GetString("salvage-expedition-mission-failed"));
+            Announce(uid, Loc.GetString("salvage-expedition-mission-failed"));
         }
 
         component.ActiveMission = 0;
@@ -212,20 +224,27 @@ public sealed partial class SalvageSystem
         component.Missions.Clear();
         var configs = Enum.GetValues<SalvageMissionType>().ToList();
 
-        if (configs.Count == 0)
-            return;
-
         // Temporarily removed coz it SUCKS
         configs.Remove(SalvageMissionType.Mining);
+
+        // this doesn't support having more missions than types of ratings
+        // but the previous system didn't do that either.
+        var allDifficulties = Enum.GetValues<DifficultyRating>();
+        _random.Shuffle(allDifficulties);
+        var difficulties = allDifficulties.Take(MissionLimit).ToList();
+        difficulties.Sort();
+
+        if (configs.Count == 0)
+            return;
 
         for (var i = 0; i < MissionLimit; i++)
         {
             _random.Shuffle(configs);
-            var rating = (DifficultyRating) i;
+            var rating = difficulties[i];
 
             foreach (var config in configs)
             {
-                var mission = new SalvageMissionParams()
+                var mission = new SalvageMissionParams
                 {
                     Index = component.NextIndex,
                     MissionType = config,
@@ -254,7 +273,7 @@ public sealed partial class SalvageSystem
             _timing,
             _mapManager,
             _prototypeManager,
-            _tileDefManager,
+            _anchorable,
             _biome,
             _dungeon,
             this,
@@ -269,5 +288,20 @@ public sealed partial class SalvageSystem
     private void OnStructureExamine(EntityUid uid, SalvageStructureComponent component, ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("salvage-expedition-structure-examine"));
+    }
+
+    private void GiveRewards(SalvageExpeditionComponent comp)
+    {
+        // send it to cargo, no rewards otherwise.
+        if (!TryComp<StationCargoOrderDatabaseComponent>(comp.Station, out var cargoDb))
+            return;
+
+        foreach (var reward in comp.Rewards)
+        {
+            var sender = Loc.GetString("cargo-gift-default-sender");
+            var desc = Loc.GetString("salvage-expedition-reward-description");
+            var dest = Loc.GetString("cargo-gift-default-dest");
+            _cargo.AddAndApproveOrder(comp.Station, reward, 0, 1, sender, desc, dest, cargoDb);
+        }
     }
 }

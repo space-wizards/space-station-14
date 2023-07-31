@@ -23,14 +23,14 @@ public abstract class SharedDoorSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private   readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private   readonly SharedStunSystem _stunSystem = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private   readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
-    [Dependency] private readonly OccluderSystem _occluder = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private   readonly OccluderSystem _occluder = default!;
+    [Dependency] private   readonly AccessReaderSystem _accessReaderSystem = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -57,7 +57,6 @@ public abstract class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<DoorComponent, ComponentHandleState>(OnHandleState);
 
-        SubscribeLocalEvent<DoorComponent, InteractedNoHandEvent>(OnInteractedNoHand);
         SubscribeLocalEvent<DoorComponent, ActivateInWorldEvent>(OnActivate);
 
         SubscribeLocalEvent<DoorComponent, StartCollideEvent>(HandleCollide);
@@ -180,22 +179,9 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Interactions
-
-    private void OnInteractedNoHand(EntityUid uid, DoorComponent component, InteractedNoHandEvent args)
+    protected virtual void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
     {
-        if (args.Handled || !component.ClickOpen || !Tags.HasTag(args.User, "DoorBumpOpener"))
-            return;
-
-        TryToggleDoor(uid, component, args.User, predicted: true);
-        args.Handled = true;
-    }
-
-    public void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
-    {
-        if (args.Handled || !door.ClickOpen)
-            return;
-
-        TryToggleDoor(uid, door, args.User, predicted: true);
+        // avoid client-mispredicts, as the server will definitely handle this event
         args.Handled = true;
     }
 
@@ -459,7 +445,9 @@ public abstract class SharedDoorSystem : EntitySystem
             if (otherPhysics == physics)
                 continue;
 
-            if (!otherPhysics.CanCollide)
+            //TODO: Make only shutters ignore these objects upon colliding instead of all airlocks
+            // Excludes Glasslayer for windows, GlassAirlockLayer for windoors, TableLayer for tables
+            if (!otherPhysics.CanCollide || otherPhysics.CollisionLayer == (int) CollisionGroup.GlassLayer || otherPhysics.CollisionLayer == (int) CollisionGroup.GlassAirlockLayer || otherPhysics.CollisionLayer == (int) CollisionGroup.TableLayer)
                 continue;
 
             //If the colliding entity is a slippable item ignore it by the airlock
@@ -667,7 +655,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
             case DoorState.Welded:
                 // A welded door? This should never have been active in the first place.
-                Logger.Error($"Welded door was in the list of active doors. Door: {ToPrettyString(door.Owner)}");
+                Log.Error($"Welded door was in the list of active doors. Door: {ToPrettyString(door.Owner)}");
                 break;
         }
     }

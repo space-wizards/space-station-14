@@ -11,12 +11,12 @@ reagent-name-arithrazine = arithrazine
 reagent-desc-arithrazine = A mildly unstable medication used for the most extreme case of radiation poisoning. Exerts minor stress on the body.
 
 reagent-name-bicaridine = bicaridine
-reagent-desc-bicaridine = An analgesic which is highly effective at treating brute damage. Your go-to cure for post-toolbox trauma, just don't overdose.
+reagent-desc-bicaridine = An analgesic which is highly effective at treating brute damage. It's useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries.
 
 reagent-name-cryoxadone = cryoxadone
 reagent-desc-cryoxadone = Required for the proper function of cryogenics. Heals all standard types of damage very swiftly, but only works in temperatures under 150K.
 
-reagent-name-doxarubixadone = doxarubixadone 
+reagent-name-doxarubixadone = doxarubixadone
 reagent-desc-doxarubixadone = A cryogenics chemical. Heals certain types of cellular damage done by Slimes and improper use of other chemicals.
 
 reagent-name-dermaline = dermaline
@@ -52,8 +52,11 @@ reagent-desc-barozine = A potent chemical that prevents pressure damage. Causes 
 reagent-name-phalanximine = phalanximine
 reagent-desc-phalanximine = An advanced chemical used in the treatment of cancer. Causes moderate radiation poisoning.
 
-reagent-name-romerol = romerol
-reagent-desc-romerol = A complex chemical used in the reversal of the zombification process - ten units are enough to negate the spread. Tastes like death.
+reagent-name-ambuzol = ambuzol
+reagent-desc-ambuzol = A highly engineered substance able to halt the progression of a zombie infection.
+
+reagent-name-ambuzol-plus = ambuzol plus
+reagent-desc-ambuzol-plus = Further engineered with the blood of the infected, inoculates the living against the infection.
 
 reagent-name-pulped-banana-peel = pulped banana peel
 reagent-desc-pulped-banana-peel = Pulped banana peels have some effectiveness against bleeding.
@@ -101,4 +104,7 @@ reagent-name-diphenylmethylamine = diphenylmethylamine
 reagent-desc-diphenylmethylamine = A more stable medicine than ethyloxyephedrine. Useful for keeping someone awake.
 
 reagent-name-sigynate = sigynate
-reagent-desc-sigynate = A thick pink syrup useful for soothing chemical burns. Has a pleasant aftertaste.
+reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soothing trauma caused by acids.  Tastes sweet!
+
+reagent-name-saline = saline
+reagent-desc-saline = "A mixture of salt and water. Commonly used to treat dehydration or low fluid presence in blood."

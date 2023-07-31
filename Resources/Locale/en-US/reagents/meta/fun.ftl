@@ -14,4 +14,4 @@ reagent-name-saxoite = Saxoite
 reagent-desc-saxoite = Smells like jazz.
 
 reagent-name-licoxide = Licoxide
-reagent-desc-licoxide = ...and the taste was electric.
+reagent-desc-licoxide = A synthetic battery acid. It looks... electrifying.

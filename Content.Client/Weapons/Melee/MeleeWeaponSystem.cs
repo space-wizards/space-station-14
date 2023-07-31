@@ -41,6 +41,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _player, _protoManager));
         SubscribeAllEvent<DamageEffectEvent>(OnDamageEffect);
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
+        UpdatesOutsidePrediction = true;
     }
 
     public override void Shutdown()
@@ -103,7 +104,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             }
 
             // If it's an unarmed attack then do a disarm
-            if (weaponUid == entity)
+            if (weapon.AltDisarm && weaponUid == entity)
             {
                 EntityUid? target = null;
 
@@ -128,7 +129,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 return;
             }
 
-            // Otherwise do heavy attack if it's a weapon.
+            // Otherwise do heavy attack.
 
             // Start a windup
             if (weapon.WindUpStart == null)
@@ -177,7 +178,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             var attackerPos = Transform(entity).MapPosition;
 
             if (mousePos.MapId != attackerPos.MapId ||
-                (attackerPos.Position - mousePos.Position).Length > weapon.Range)
+                (attackerPos.Position - mousePos.Position).Length() > weapon.Range)
             {
                 return;
             }
@@ -276,7 +277,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         var userPos = TransformSystem.GetWorldPosition(userXform);
         var direction = targetMap.Position - userPos;
-        var distance = Math.Min(component.Range, direction.Length);
+        var distance = MathF.Min(component.Range, direction.Length());
 
         // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
         // Server will validate it with InRangeUnobstructed.

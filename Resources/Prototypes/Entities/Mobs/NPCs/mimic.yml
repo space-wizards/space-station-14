@@ -6,11 +6,10 @@
   components:
   - type: Tag
     tags:
-    - DoorBumpOpener
     - FootstepSound
   - type: InputMover
   - type: MobMover
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Hands

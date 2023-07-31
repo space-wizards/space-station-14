@@ -2,8 +2,6 @@ using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
-using Content.Server.Shuttles.Systems;
-using Content.Server.Stack;
 using Content.Shared.Stacks;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
@@ -12,11 +10,10 @@ using Content.Shared.Cargo.Events;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Whitelist;
-using Robust.Shared.Configuration;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.Prototypes;
 using Content.Shared.Coordinates;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -29,15 +26,6 @@ public sealed partial class CargoSystem
      * Handles cargo shuttle mechanics.
      */
 
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly PricingSystem _pricing = default!;
-    [Dependency] private readonly ShuttleConsoleSystem _console = default!;
-    [Dependency] private readonly StackSystem _stack = default!;
     public MapId? CargoMap { get; private set; }
 
     private void InitializeShuttle()
@@ -81,7 +69,7 @@ public sealed partial class CargoSystem
 
     #region Console
 
-    private void UpdateCargoShuttleConsoles(EntityUid shuttleUid, CargoShuttleComponent component)
+    private void UpdateCargoShuttleConsoles(EntityUid shuttleUid, CargoShuttleComponent _)
     {
         // Update pilot consoles that are already open.
         _console.RefreshDroneConsoles();
@@ -89,7 +77,7 @@ public sealed partial class CargoSystem
         // Update order consoles.
         var shuttleConsoleQuery = AllEntityQuery<CargoShuttleConsoleComponent>();
 
-        while (shuttleConsoleQuery.MoveNext(out var uid, out _))
+        while (shuttleConsoleQuery.MoveNext(out var uid, out var _))
         {
             var stationUid = _station.GetOwningStation(uid);
             if (stationUid != shuttleUid)
@@ -104,12 +92,12 @@ public sealed partial class CargoSystem
         var bui = _uiSystem.GetUi(uid, CargoPalletConsoleUiKey.Sale);
         if (Transform(uid).GridUid is not EntityUid gridUid)
         {
-            _uiSystem.SetUiState(bui,
+            UserInterfaceSystem.SetUiState(bui,
             new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }
         GetPalletGoods(gridUid, out var toSell, out var amount);
-        _uiSystem.SetUiState(bui,
+        UserInterfaceSystem.SetUiState(bui,
             new CargoPalletConsoleInterfaceState((int) amount, toSell.Count, true));
     }
 
@@ -155,11 +143,12 @@ public sealed partial class CargoSystem
         var orders = GetProjectedOrders(station ?? EntityUid.Invalid, orderDatabase, shuttle);
         var shuttleName = orderDatabase?.Shuttle != null ? MetaData(orderDatabase.Shuttle.Value).EntityName : string.Empty;
 
-        _uiSystem.GetUiOrNull(uid, CargoConsoleUiKey.Shuttle)?.SetState(
-            new CargoShuttleConsoleBoundUserInterfaceState(
+        if (_uiSystem.TryGetUi(uid, CargoConsoleUiKey.Shuttle, out var bui))
+            UserInterfaceSystem.SetUiState(bui, new CargoShuttleConsoleBoundUserInterfaceState(
                 station != null ? MetaData(station.Value).EntityName : Loc.GetString("cargo-shuttle-console-station-unknown"),
                 string.IsNullOrEmpty(shuttleName) ? Loc.GetString("cargo-shuttle-console-shuttle-not-found") : shuttleName,
-                orders));
+                orders
+            ));
     }
 
     #endregion
@@ -180,10 +169,10 @@ public sealed partial class CargoSystem
             return orders;
 
         var spaceRemaining = GetCargoSpace(shuttleUid);
-        for( var i = 0; i < component.Orders.Count && spaceRemaining > 0; i++)
+        for (var i = 0; i < component.Orders.Count && spaceRemaining > 0; i++)
         {
             var order = component.Orders[i];
-            if(order.Approved)
+            if (order.Approved)
             {
                 var numToShip = order.OrderQuantity - order.NumDispatched;
                 if (numToShip > spaceRemaining)
@@ -191,7 +180,7 @@ public sealed partial class CargoSystem
                     // We won't be able to fit the whole order on, so make one
                     // which represents the space we do have left:
                     var reducedOrder = new CargoOrderData(order.OrderId,
-                            order.ProductId, spaceRemaining, order.Requester, order.Reason);
+                            order.ProductId, order.Price, spaceRemaining, order.Requester, order.Reason);
                     orders.Add(reducedOrder);
                 }
                 else
@@ -237,11 +226,18 @@ public sealed partial class CargoSystem
 
     #region Station
 
-    private void SellPallets(EntityUid gridUid, out double amount)
+    private void SellPallets(EntityUid gridUid, EntityUid? station, out double amount)
     {
+        station ??= _station.GetOwningStation(gridUid);
         GetPalletGoods(gridUid, out var toSell, out amount);
 
-        _sawmill.Debug($"Cargo sold {toSell.Count} entities for {amount}");
+        Log.Debug($"Cargo sold {toSell.Count} entities for {amount}");
+
+        if (station != null)
+        {
+            var ev = new EntitySoldEvent(station.Value, toSell);
+            RaiseLocalEvent(ref ev);
+        }
 
         foreach (var ent in toSell)
         {
@@ -252,9 +248,6 @@ public sealed partial class CargoSystem
     private void GetPalletGoods(EntityUid gridUid, out HashSet<EntityUid> toSell, out double amount)
     {
         amount = 0;
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var blacklistQuery = GetEntityQuery<CargoSellBlacklistComponent>();
-        var mobStateQuery = GetEntityQuery<MobStateComponent>();
         toSell = new HashSet<EntityUid>();
 
         foreach (var (palletUid, _) in GetCargoPallets(gridUid))
@@ -267,13 +260,13 @@ public sealed partial class CargoSystem
                 // - anything anchored (e.g. light fixtures)
                 // - anything blacklisted (e.g. players).
                 if (toSell.Contains(ent) ||
-                    xformQuery.TryGetComponent(ent, out var xform) &&
-                    (xform.Anchored || !CanSell(ent, xform, mobStateQuery, xformQuery)))
+                    _xformQuery.TryGetComponent(ent, out var xform) &&
+                    (xform.Anchored || !CanSell(ent, xform)))
                 {
                     continue;
                 }
 
-                if (blacklistQuery.HasComponent(ent))
+                if (_blacklistQuery.HasComponent(ent))
                     continue;
 
                 var price = _pricing.GetPrice(ent);
@@ -285,10 +278,9 @@ public sealed partial class CargoSystem
         }
     }
 
-    private bool CanSell(EntityUid uid, TransformComponent xform, EntityQuery<MobStateComponent> mobStateQuery, EntityQuery<TransformComponent> xformQuery)
+    private bool CanSell(EntityUid uid, TransformComponent xform)
     {
-        if (mobStateQuery.TryGetComponent(uid, out var mobState) &&
-            mobState.CurrentState != MobState.Dead)
+        if (_mobQuery.HasComponent(uid))
         {
             return false;
         }
@@ -297,7 +289,7 @@ public sealed partial class CargoSystem
         var children = xform.ChildEnumerator;
         while (children.MoveNext(out var child))
         {
-            if (!CanSell(child.Value, xformQuery.GetComponent(child.Value), mobStateQuery, xformQuery))
+            if (!CanSell(child.Value, _xformQuery.GetComponent(child.Value)))
                 return false;
         }
 
@@ -312,7 +304,7 @@ public sealed partial class CargoSystem
         while (pads.Count > 0)
         {
             var coordinates = new EntityCoordinates(shuttleUid, xformQuery.GetComponent(_random.PickAndTake(pads).Entity).LocalPosition);
-            if(!FulfillOrder(orderDatabase, coordinates, shuttle.PrinterOutput))
+            if (!FulfillOrder(orderDatabase, coordinates, shuttle.PrinterOutput))
             {
                 break;
             }
@@ -329,14 +321,14 @@ public sealed partial class CargoSystem
         var bui = _uiSystem.GetUi(uid, CargoPalletConsoleUiKey.Sale);
         if (Transform(uid).GridUid is not EntityUid gridUid)
         {
-            _uiSystem.SetUiState(bui,
+            UserInterfaceSystem.SetUiState(bui,
             new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }
 
-        SellPallets(gridUid, out var price);
-        var stackPrototype = _prototypeManager.Index<StackPrototype>(component.CashType);
-        _stack.Spawn((int)price, stackPrototype, uid.ToCoordinates());
+        SellPallets(gridUid, null, out var price);
+        var stackPrototype = _protoMan.Index<StackPrototype>(component.CashType);
+        _stack.Spawn((int) price, stackPrototype, uid.ToCoordinates());
         UpdatePalletConsoleInterface(uid);
     }
 
@@ -353,7 +345,7 @@ public sealed partial class CargoSystem
         }
 
         AddCargoContents(uid, component, orderDatabase);
-        UpdateOrders(orderDatabase);
+        UpdateOrders(stationUid!.Value, orderDatabase);
         UpdateCargoShuttleConsoles(uid, component);
     }
 
@@ -368,7 +360,7 @@ public sealed partial class CargoSystem
 
         if (TryComp<StationBankAccountComponent>(stationUid, out var bank))
         {
-            SellPallets(uid, out var amount);
+            SellPallets(uid, stationUid, out var amount);
             bank.Balance += (int) amount;
         }
     }
@@ -398,7 +390,7 @@ public sealed partial class CargoSystem
         // Shuttle may not have been in the cargo dimension (e.g. on the station map) so need to delete.
         var query = AllEntityQuery<CargoShuttleComponent>();
 
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out var uid, out var _))
         {
             if (TryComp<StationCargoOrderDatabaseComponent>(uid, out var station))
             {
@@ -428,8 +420,15 @@ public sealed partial class CargoSystem
             }
         };
 
-        MetaData(mapUid).EntityName = $"Trading post {_random.Next(1000):000}";
+        _metaSystem.SetEntityName(mapUid, $"Trading post {_random.Next(1000):000}");
 
         _console.RefreshShuttleConsoles();
     }
 }
+
+/// <summary>
+/// Event broadcast raised by-ref before it is sold and
+/// deleted but after the price has been calculated.
+/// </summary>
+[ByRefEvent]
+public readonly record struct EntitySoldEvent(EntityUid Station, HashSet<EntityUid> Sold);

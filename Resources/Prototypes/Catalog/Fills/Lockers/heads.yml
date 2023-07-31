@@ -20,6 +20,7 @@
       - id: CargoShuttleComputerCircuitboard
       - id: CargoShuttleConsoleCircuitboard
       - id: SalvageShuttleConsoleCircuitboard
+      - id: CargoBountyComputerCircuitboard
       - id: CigPackGreen
         prob: 0.50
       - id: DoorRemoteCargo
@@ -92,6 +93,7 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
+      - id: ClothingHeadHatCapcap
 
 - type: entity
   id: LockerHeadOfPersonnelFilled

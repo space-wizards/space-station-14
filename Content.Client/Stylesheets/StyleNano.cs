@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.PDA;
@@ -103,6 +104,11 @@ namespace Content.Client.Stylesheets
 
         public static readonly Color ButtonColorGoodDefault = Color.FromHex("#3E6C45");
         public static readonly Color ButtonColorGoodHovered = Color.FromHex("#31843E");
+
+        //NavMap
+        public static readonly Color PointRed = Color.FromHex("#B02E26");
+        public static readonly Color PointGreen = Color.FromHex("#38b026");
+        public static readonly Color PointMagenta = Color.FromHex("#FF00FF");
 
         // Context menu button colors
         public static readonly Color ButtonColorContext = Color.FromHex("#1119");
@@ -289,19 +295,19 @@ namespace Content.Client.Stylesheets
 
             var topButtonOpenRight = new StyleBoxTexture(topButtonBase)
             {
-             Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((0, 0), (14, 24))),
+             Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions(new Vector2(0, 0), new Vector2(14, 24))),
             };
             topButtonOpenRight.SetPatchMargin(StyleBox.Margin.Right, 0);
 
             var topButtonOpenLeft = new StyleBoxTexture(topButtonBase)
             {
-             Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((10, 0), (14, 24))),
+             Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(14, 24))),
             };
             topButtonOpenLeft.SetPatchMargin(StyleBox.Margin.Left, 0);
 
             var topButtonSquare = new StyleBoxTexture(topButtonBase)
             {
-             Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions((10, 0), (3, 24))),
+             Texture = new AtlasTexture(buttonTex, UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(3, 24))),
             };
             topButtonSquare.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
 
