@@ -12,3 +12,4 @@
     WeaponCrusher: 2
     WeaponCrusherDagger: 2
     WeaponProtoKineticAccelerator: 2
+    DoubleEmergencyOxygenTankFilled: 2 # For Arachnids. Remove if they no longer need this
