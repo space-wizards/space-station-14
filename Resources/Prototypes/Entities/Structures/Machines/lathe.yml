@@ -227,7 +227,7 @@
       - ClothingBackpackDuffelHolding
       - WelderExperimental
       - JawsOfLife
-    emagRecipes:
+    emagDynamicRecipes:
       - ExplosivePayload
       - WeaponLaserCarbine
       - WeaponAdvancedLaser
