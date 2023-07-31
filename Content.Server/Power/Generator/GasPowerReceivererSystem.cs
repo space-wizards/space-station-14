@@ -10,9 +10,9 @@ using Robust.Shared.Timing;
 namespace Content.Server.Power.Generator;
 
 /// <summary>
-/// This handles gas power providers, allowing devices to accept power in the form of plasma or high pressure gas.
+/// This handles gas power receivers, allowing devices to accept power in the form of a gas.
 /// </summary>
-public sealed class GasPowerProviderSystem : EntitySystem
+public sealed class GasPowerReceivererSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -21,17 +21,17 @@ public sealed class GasPowerProviderSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<GasPowerProviderComponent, AtmosDeviceUpdateEvent>(OnDeviceUpdated);
+        SubscribeLocalEvent<GasPowerReceiverComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<GasPowerReceiverComponent, AtmosDeviceUpdateEvent>(OnDeviceUpdated);
     }
 
-    private void OnDeviceUpdated(EntityUid uid, GasPowerProviderComponent component, AtmosDeviceUpdateEvent args)
+    private void OnMapInit(EntityUid uid, GasPowerReceiverComponent component, MapInitEvent args)
     {
-        if (component.LastProcess == TimeSpan.Zero)
-        {
-            component.LastProcess = _gameTiming.CurTime;
-            return; // Skip tick 0.
-        }
+        component.LastProcess = _gameTiming.CurTime;
+    }
 
+    private void OnDeviceUpdated(EntityUid uid, GasPowerReceiverComponent component, AtmosDeviceUpdateEvent args)
+    {
         var timeDelta =  (float)(_gameTiming.CurTime - component.LastProcess).TotalSeconds;
         component.LastProcess = _gameTiming.CurTime;
 
@@ -80,7 +80,7 @@ public sealed class GasPowerProviderSystem : EntitySystem
         }
     }
 
-    private void SetPowered(EntityUid uid, GasPowerProviderComponent comp, bool state)
+    private void SetPowered(EntityUid uid, GasPowerReceiverComponent comp, bool state)
     {
         if (state != comp.Powered)
         {

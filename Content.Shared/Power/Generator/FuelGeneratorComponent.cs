@@ -1,11 +1,12 @@
-﻿using Robust.Shared.Serialization;
+﻿using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power.Generator;
 
 /// <summary>
 /// This is used for generators that run off some kind of fuel.
 /// </summary>
-[RegisterComponent, Access(typeof(SharedGeneratorSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedGeneratorSystem))]
 public sealed class FuelGeneratorComponent : Component
 {
     /// <summary>
@@ -37,6 +38,12 @@ public sealed class FuelGeneratorComponent : Component
     /// </summary>
     [DataField("optimalBurnRate"), ViewVariables(VVAccess.ReadWrite)]
     public float OptimalBurnRate = 1 / 60.0f; // Once every 60 seconds.
+
+    /// <summary>
+    /// A constant used to calculate fuel efficiency in relation to target power output and optimal power output
+    /// </summary>
+    [DataField("fuelEfficiencyConstant")]
+    public float FuelEfficiencyConstant = 1.3f;
 }
 
 /// <summary>

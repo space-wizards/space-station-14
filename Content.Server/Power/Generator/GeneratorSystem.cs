@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Server.Chemistry.Components.SolutionManager;
+﻿using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Power.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Interaction;
@@ -15,8 +14,13 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
+    private EntityQuery<UpgradePowerSupplierComponent> _upgradeQuery;
+
+
     public override void Initialize()
     {
+        _upgradeQuery = GetEntityQuery<UpgradePowerSupplierComponent>();
+
         SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, InteractUsingEvent>(OnSolidFuelAdapterInteractUsing);
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, InteractUsingEvent>(OnChemicalFuelAdapterInteractUsing);
         SubscribeLocalEvent<FuelGeneratorComponent, SetTargetPowerMessage>(OnTargetPowerSet);
@@ -78,7 +82,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
             !TryComp(uid, out FuelGeneratorComponent? generator))
             return;
 
-        if (!mat.MaterialComposition.Keys.ToList().Contains(component.FuelMaterial))
+        if (!mat.MaterialComposition.ContainsKey(component.FuelMaterial))
             return;
 
         generator.RemainingFuel += stack.Count * component.Multiplier;
@@ -90,16 +94,15 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     {
         var query = EntityQueryEnumerator<FuelGeneratorComponent, PowerSupplierComponent, TransformComponent>();
 
-        var upgradeQuery = GetEntityQuery<UpgradePowerSupplierComponent>();
         while (query.MoveNext(out var uid, out var gen, out var supplier, out var xform))
         {
             supplier.Enabled = gen.RemainingFuel > 0.0f && xform.Anchored;
 
-            var upgradeMultiplier = upgradeQuery.CompOrNull(uid)?.ActualScalar ?? 1f;
+            var upgradeMultiplier = _upgradeQuery.CompOrNull(uid)?.ActualScalar ?? 1f;
 
             supplier.MaxSupply = gen.TargetPower * upgradeMultiplier;
 
-            var eff = 1 / CalcFuelEfficiency(gen.TargetPower, gen.OptimalPower);
+            var eff = 1 / CalcFuelEfficiency(gen.TargetPower, gen.OptimalPower, gen);
 
             gen.RemainingFuel = MathF.Max(gen.RemainingFuel - (gen.OptimalBurnRate * frameTime * eff), 0.0f);
             UpdateUi(uid, gen);
