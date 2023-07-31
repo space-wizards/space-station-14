@@ -1,0 +1,14 @@
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetUSSP
+  name: ussp headset
+  description: You can hear the spirit of communism in them.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyUSSP
+  - type: Sprite
+    sprite: SS220/Clothing/Ears/Headsets/ussp_headset.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Ears/Headsets/ussp_headset.rsi

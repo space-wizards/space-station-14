@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSSSP
+  id: ClothingHeadHelmetHardsuitUSSP
   noSpawn: true
-  name: Battle SSSP hardsuit helmet
+  name: Battle USSP hardsuit helmet
   description: Heavy, small viewing angle, but really reliable and sturdy.
   components:
   - type: Sprite
@@ -21,4 +21,3 @@
         Slash: 0.8
         Piercing: 0.8
         Heat: 0.8
-        Radiation: 0.8

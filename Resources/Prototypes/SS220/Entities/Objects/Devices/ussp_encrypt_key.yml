@@ -1,0 +1,17 @@
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyUSSP
+  name: ussp encryption key
+  description: Inserted into it...A perforated card?!
+  components:
+  - type: EncryptionKey
+    channels:
+    - USSPChannel
+    defaultChannel: USSPChannel
+  - type: Item
+    sprite: SS220/Objects/Devices/ussp_encrypt_keys.rsi
+  - type: Sprite
+    sprite: SS220/Objects/Devices/ussp_encrypt_keys.rsi
+    layers:
+    - state: crypt_ussp
+    - state: ussp_label
