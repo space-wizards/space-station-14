@@ -142,7 +142,7 @@
     capacity: 10
   - type: Sprite
     layers:
-    - state: armor_penetration
+    - state: armor_piercing
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
