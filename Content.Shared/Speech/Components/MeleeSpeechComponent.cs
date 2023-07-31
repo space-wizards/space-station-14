@@ -28,8 +28,8 @@ public sealed partial class MeleeSpeechComponent : Component
     public InstantAction ConfigureAction = new()
     {
         UseDelay = TimeSpan.FromSeconds(4),
-        Icon = new SpriteSpecifier.Texture(new("Clothing/Hands/Gloves/northstar.rsi/icon.png")),
-        //ItemIconStyle = NoItem,
+        //Icon = new SpriteSpecifier.Texture(new("Clothing/Hands/Gloves/northstar.rsi/icon.png")),
+        ItemIconStyle = ItemActionIconStyle.BigItem,
         DisplayName = "melee-speech-config",
         Description = "melee-speech-config-desc",
         Priority = -20,
