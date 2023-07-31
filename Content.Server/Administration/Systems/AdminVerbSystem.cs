@@ -58,6 +58,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly EuiManager _eui = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly ToolshedManager _toolshed = default!;
+        [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
 
         private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
@@ -238,7 +239,7 @@ namespace Content.Server.Administration.Systems
                     Text = Loc.GetString("rejuvenate-verb-get-data-text"),
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png")),
-                    Act = () => RejuvenateCommand.PerformRejuvenate(args.Target),
+                    Act = () => _rejuvenate.PerformRejuvenate(args.Target),
                     Impact = LogImpact.Medium
                 };
                 args.Verbs.Add(verb);
