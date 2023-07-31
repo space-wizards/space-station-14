@@ -14,6 +14,7 @@ using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Server.CartridgeLoader;
 using Robust.Shared.Timing;
 using TerraFX.Interop.Windows;
+using Content.Server.Popups;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -23,6 +24,8 @@ public sealed class NewsSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly RingerSystem _ringer = default!;
     [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
@@ -131,6 +134,8 @@ public sealed class NewsSystem : EntitySystem
             }
         }
 
+        _audio.PlayPvs(component.ConfirmSound, uid);
+
         _articles.Add(article);
 
         component.ShareAvalible = false;
@@ -146,20 +151,15 @@ public sealed class NewsSystem : EntitySystem
         if (msg.ArticleNum > _articles.Count)
             return;
 
-        var articleToDelete = _articles[msg.ArticleNum];
-        if (articleToDelete.AuthorStationRecordKeyIds == null || !articleToDelete.AuthorStationRecordKeyIds.Any())
+        if (CheckDeleteAccess(_articles[msg.ArticleNum], uid, msg.Session.AttachedEntity))
         {
             _articles.RemoveAt(msg.ArticleNum);
+            _audio.PlayPvs(component.ConfirmSound, uid);
         }
         else
         {
-            var author = msg.Session.AttachedEntity;
-            if (author.HasValue
-                && _accessReader.FindStationRecordKeys(author.Value, out var recordKeys)
-                && recordKeys.Intersect(articleToDelete.AuthorStationRecordKeyIds).Any())
-            {
-                _articles.RemoveAt(msg.ArticleNum);
-            }
+            _popup.PopupEntity(Loc.GetString("news-write-no-access-popup"), uid);
+            _audio.PlayPvs(component.NoAccessSound, uid);
         }
 
         UpdateReadDevices();
@@ -215,6 +215,30 @@ public sealed class NewsSystem : EntitySystem
         {
             UpdateWriteUi(owner, comp);
         }
+    }
+
+    private bool CheckDeleteAccess(NewsArticle articleToDelete, EntityUid device, EntityUid? user)
+    {
+        if (EntityManager.TryGetComponent<AccessReaderComponent>(device, out var accessReader) &&
+            user.HasValue &&
+            _accessReader.IsAllowed(user.Value, accessReader))
+        {
+            return true;
+        }
+
+        if (articleToDelete.AuthorStationRecordKeyIds == null ||
+            !articleToDelete.AuthorStationRecordKeyIds.Any())
+        {
+            return true;
+        }
+        if (user.HasValue
+            && _accessReader.FindStationRecordKeys(user.Value, out var recordKeys)
+            && recordKeys.Intersect(articleToDelete.AuthorStationRecordKeyIds).Any())
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public override void Update(float frameTime)

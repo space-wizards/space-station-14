@@ -252,6 +252,17 @@
   categories:
   - UplinkAmmo
 
+# for the hristov
+- type: listing
+  id: UplinkHristovAmmo
+  name: uplink-sniper-ammo-name
+  description: uplink-sniper-ammo-desc
+  productEntity: MagazineBoxAntiMateriel
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkAmmo
+
 #Utility
 
 - type: listing
@@ -879,6 +890,7 @@
     - !type:BuyerJobCondition
       whitelist:
         - Scientist
+        - SeniorResearcher
 
 - type: listing
   id: uplinkProximityMine
@@ -913,6 +925,7 @@
     whitelist:
     - Zookeeper
     - Scientist
+    - SeniorResearcher      
     - Chef
 
 - type: listing
@@ -930,6 +943,8 @@
         - StationEngineer
         - AtmosphericTechnician
         - Scientist
+        - SeniorEngineer
+        - SeniorResearcher
 
 # Armor
 
