@@ -127,7 +127,7 @@ namespace Content.Shared.Damage
 
                 if (modifierSet.Coefficients.TryGetValue(entry.Key, out var coefficient))
                 {
-                    // Reduce resistance
+                    // Reduce resistance by the penetration value of the damaging weapon.
                     if (coefficient > 0 && coefficient < 1 && resistancePenetration != null)
                         coefficient = (1 - coefficient) * resistancePenetration.Value + coefficient;
 

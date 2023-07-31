@@ -32,7 +32,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         [DataField("resistancePenetration")]
         [JsonPropertyName("resistancePenetration")]
-        public float? ResistancePenetration;
+        public float? ResistancePenetration = 1f;
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         {

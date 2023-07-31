@@ -317,11 +317,11 @@ namespace Content.Shared.Damage
         public DamageSpecifier Damage;
         public float? ResistancePenetration;
 
-        public DamageModifyEvent(DamageSpecifier damage, float? resistancePenetrationMultiplier)
+        public DamageModifyEvent(DamageSpecifier damage, float? resistancePenetration)
         {
             OriginalDamage = damage;
             Damage = damage;
-            ResistancePenetration = resistancePenetrationMultiplier;
+            ResistancePenetration = resistancePenetration;
         }
     }
 

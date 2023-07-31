@@ -156,7 +156,6 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
-
 - type: entity
   id: MagazinePistolAP
   name: pistol magazine (.35 auto armor-piercing)

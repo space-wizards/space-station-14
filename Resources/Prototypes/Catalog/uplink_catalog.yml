@@ -567,9 +567,9 @@
   id: UplinkAmmoBundleAdvanced
   name: uplink-ammo-bundle-advanced-name
   description: uplink-ammo-bundle-advanced-desc
-  productEntity: ClothingBackpackDuffelSyndicateAmooAdvancedFilled
+  productEntity: ClothingBackpackDuffelSyndicateAmmoAdvancedFilled
   cost:
-    Telecrystal: 30
+    Telecrystal: 25
   categories:
   - UplinkBundles
   conditions:

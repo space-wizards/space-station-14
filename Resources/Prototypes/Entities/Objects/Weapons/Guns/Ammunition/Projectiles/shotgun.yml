@@ -16,14 +16,12 @@
   id: PelletShotgunSlugHighVelocity
   name: pellet (.50 slug high-velocity)
   noSpawn: true
-  parent: BaseBullet
+  parent: BaseBulletHighVelocity
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: slug
   - type: Projectile
-    penetrationStrength: 0.5
-    penetrationDamageFalloffMultiplier: 0.75
     damage:
       types:
         Piercing: 10

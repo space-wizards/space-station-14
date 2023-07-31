@@ -5,8 +5,8 @@ namespace Content.Server.Damage.Components;
 [RegisterComponent]
 public sealed class DamageUserOnTriggerComponent : Component
 {
-    [DataField("reduceResistanceValue")]
-    public float? ReduceResistanceValue;
+    [DataField("resistancePenetration")]
+    public float? ResistancePenetration;
 
     [DataField("damage", required: true)]
     public DamageSpecifier Damage = default!;

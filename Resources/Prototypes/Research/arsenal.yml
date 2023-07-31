@@ -107,8 +107,8 @@
   - MagazineBoxRifleHighVelocity
 
 - type: technology
-  id: PlasteelTippedMunitions
-  name: research-technology-plasteel-tipped-munitions
+  id: PlasteelMunitions
+  name: research-technology-plasteel-munitions
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
     state: apdisplay
