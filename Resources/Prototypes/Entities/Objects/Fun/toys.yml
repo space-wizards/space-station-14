@@ -818,7 +818,7 @@
     - type: DisarmMalus
       malus: 0
     - type: StaminaDamageOnHit
-      damage: 5
+      damage: 8
     - type: MeleeWeapon
       damage:
         types:
