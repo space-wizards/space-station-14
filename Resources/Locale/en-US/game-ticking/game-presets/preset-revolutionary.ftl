@@ -10,6 +10,8 @@ head-rev-role-greeting =
     Beware, this won't work on Security, Command, or those wearing sunglasses.
     Viva la revolución!
 
+head-rev-admin = Make Head Rev
+
 head-rev-initial = [color=mediumblue]{$name}[/color] ([color=gray]{$username}[/color]) was one of the initial Head Revolutionaries.
 
 head-rev-initial-count = {$initialCount ->
@@ -35,10 +37,12 @@ rev-description = Revolutionaries are among us.
 rev-not-enough-ready-players = Not enough players readied up for the game. There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start a Revolution.
 rev-no-one-ready = No players readied up! Can't start a Revolution.
 
-rev-shuttle-call = All the heads are dead, we shall take the fight to Nanotrasen! Long live the revolution!
+rev-all-heads-dead = All the heads are dead, now finish up the rest of the crew!
 
 rev-won = The Head Revs survived and killed all of command.
 
 rev-lost = All of the Head Revs were killed.
 
 rev-stalemate = All of the Head Revs died and so did all of command. We'll call it a draw.
+
+

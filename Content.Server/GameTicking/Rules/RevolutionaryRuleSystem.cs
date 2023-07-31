@@ -26,30 +26,33 @@ using Content.Server.Shuttles.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
-
+/// <summary>
+/// Where all the main stuff for Revolutionaries happens (Assigning Head Revs, Command on station, and checking for game the game to end.)
+/// </summary>
 public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleComponent>
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-    [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedStunSystem _sharedStun = default!;
+    [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
+
 
     private ISawmill _sawmill = default!;
 
-    private int MinPlayers => _cfg.GetCVar(CCVars.RevolutionaryMinPlayers);
-    private int MaxRevHeads => _cfg.GetCVar(CCVars.RevolutionaryMaxHeadRevs);
-    private int HeadRevsPerPlayer => _cfg.GetCVar(CCVars.RevolutionaryPlayersPerHeadRev);
+    private List<string> _headRoles = new List<string>();
+
+    private bool _assigned = false;
 
     public override void Initialize()
     {
@@ -58,7 +61,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
-        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<RevolutionaryRuleComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 
@@ -89,16 +92,16 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     }
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        var query = EntityQueryEnumerator<RevolutionaryRuleComponent, GameRuleComponent>();
+        var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var revs, out var gameRule))
         {
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
-            if (!ev.Forced || ev.Players.Length < MinPlayers)
+            if (!ev.Forced || ev.Players.Length < revs.MinPlayers)
             {
                 _chatManager.SendAdminAnnouncement(Loc.GetString("rev-not-enough-ready-players",
                     ("readyPlayersCount", ev.Players.Length),
-                    ("minimumPlayers", MinPlayers)));
+                    ("minimumPlayers", revs.MinPlayers)));
                 ev.Cancel();
                 continue;
             }
@@ -111,7 +114,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     }
     private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)
     {
-        var query = EntityQueryEnumerator<RevolutionaryRuleComponent, GameRuleComponent>();
+        var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var comp, out var gameRule))
         {
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
@@ -121,22 +124,20 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             break;
         }
     }
-    protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
-    {
-        base.Started(uid, component, gameRule, args);
-    }
+    /// <summary>
+    /// Gets the list of players currently spawned in and checks if they are eligible to become a Head Rev.
+    /// </summary>
+    /// <param name="comp"></param>
     private void AssignHeadRevs(RevolutionaryRuleComponent comp)
     {
         var allPlayers = _playerSystem.ServerSessions.ToList();
         var playerList = new List<IPlayerSession>();
         var prefList = new List<IPlayerSession>();
-        var cantBeAntag = new List<IPlayerSession>();
         foreach (var player in allPlayers)
         {
             var mind = player.GetMind();
             if (!player.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job { CanBeAntag: false }) ?? false)
             {
-                cantBeAntag.Add(player);
                 continue;
             }
             if (player.AttachedEntity == null || HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
@@ -154,7 +155,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             return;
 
         _sawmill.Error("Math");
-        var headRevs = Math.Clamp(allPlayers.Count / HeadRevsPerPlayer, 1, MaxRevHeads);
+        var headRevs = Math.Clamp(allPlayers.Count / comp.PlayersPerHeadRev, 1, comp.MaxHeadRevs);
         for (var revs = 0; revs < headRevs; revs++)
         {
             IPlayerSession headRev;
@@ -172,15 +173,27 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 playerList.Remove(headRev);
             }
             var mind = headRev.Data.ContentData()?.Mind;
-            if (mind == null)
+            if (mind != null)
             {
-                continue;
+                GiveHeadRevRole(mind, headRev);
             }
+            AssignCommandStaff();
+        }
+    }
+    /// <summary>
+    /// Gets player chosen to become Head Rev from previous method and gives them the role and gear.
+    /// </summary>
+    /// <param name="mind"></param>
+    /// <param name="headRev"></param>
+    private void GiveHeadRevRole(Mind.Mind mind, IPlayerSession headRev)
+    {
+        var query = EntityQueryEnumerator<RevolutionaryRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var gameRule))
+        {
             _mindSystem.AddRole(mind, new RevolutionaryRole(mind, _prototypeManager.Index<AntagPrototype>(comp.HeadRevPrototypeId)));
             var inCharacterName = string.Empty;
             if (mind.OwnedEntity != null)
             {
-                AddComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
                 AddComp<HeadRevolutionaryComponent>(mind.OwnedEntity.Value);
                 AddComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
                 _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>(comp.HeadRevGearPrototypeId), null);
@@ -196,37 +209,78 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.MediumBlue);
             }
         }
-        AssignCommandStaff(cantBeAntag);
     }
 
-    //Assigns command staff based on their weight (real). I THINK all head weight is above 10 so uh let me know if not.
-    //I wanted to do sec as well but I'm not sure if they have a specific weight and they have glasses so if they get converted it's their own fault.
-    private void AssignCommandStaff(List<IPlayerSession> players)
+    /// <summary>
+    /// Assigns command staff on station with a component so they can be used later.
+    /// </summary>
+    /// <param name="players"></param>
+    private void AssignCommandStaff()
     {
-        foreach (var player in players)
+        _sawmill.Error("We made it");
+        if (!_assigned)
         {
-            var mind = player.GetMind();
-            if (mind != null && mind.CurrentJob != null)
+            _headRoles.Add("Captain");
+            _headRoles.Add("Research Director");
+            _headRoles.Add("Chief Engineer");
+            _headRoles.Add("Quartermaster");
+            _headRoles.Add("Chief Medical Officer");
+            _headRoles.Add("Head Of Security");
+            _headRoles.Add("Head Of Personnel");
+            _sawmill.Error("Assigned?");
+            var allPlayers = _playerSystem.ServerSessions.ToList();
+            var playerList = new List<IPlayerSession>();
+            foreach (var player in allPlayers)
             {
-                if (mind.OwnedEntity != null && mind.CurrentJob.Prototype.Weight >= 10)
+                if (player.AttachedEntity == null || HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
                 {
-                    AddComp<HeadComponent>(mind.OwnedEntity.Value);
+                    playerList.Add(player);
+                    _sawmill.Error("Break player?");
+                }
+            }
+            foreach (var player in playerList)
+            {
+                var mind = player.GetMind();
+                if (mind != null && mind.CurrentJob != null)
+                {
+                    var currentJob = mind.CurrentJob.Name;
+                    _sawmill.Error(currentJob);
+                    if (mind.OwnedEntity != null && _headRoles.Contains(currentJob))
+                    {
+                        EnsureComp<HeadComponent>(mind.OwnedEntity.Value);
+                        _sawmill.Error("Comp added");
+                        _assigned = true;
+                    }
                 }
             }
         }
     }
 
 
-    private void OnMobStateChanged(MobStateChangedEvent ev)
+    public void OnHeadRevAdmin(Mind.Mind mind, IPlayerSession headRev)
+    {
+        var revRule = EntityQuery<RevolutionaryRuleComponent>().FirstOrDefault();
+        if (revRule == null)
+        {
+            GameTicker.StartGameRule("Revolutionary");
+            GiveHeadRevRole(mind, headRev);
+            AssignCommandStaff();
+        }
+    }
+    private void OnMobStateChanged(EntityUid uid, RevolutionaryRuleComponent comp, MobStateChangedEvent ev)
     {
         if (ev.NewMobState == MobState.Dead)
-            CheckRevsLose(ev.Target);
+            CheckFinish(ev.Target);
     }
-
-    private void CheckRevsLose(EntityUid target)
+    /// <summary>
+    /// Checks if all Head Revs are dead and if all command is dead to either end the round or remove all revs. Or both.
+    /// </summary>
+    /// <param name="target"></param>
+    private void CheckFinish(EntityUid target)
     {
         var stunTime = TimeSpan.FromSeconds(4);
-        var query = EntityQueryEnumerator<RevolutionaryRuleComponent, GameRuleComponent>();
+
+        var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var revs, out var gameRule))
         {
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
@@ -235,7 +289,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             var headRevs = EntityQuery<HeadRevolutionaryComponent, MobStateComponent>(true);
             var aliveHeadRevs = headRevs
                 .Any(ent => ent.Item2.CurrentState != MobState.Dead && ent.Item1.Running);
-            //If no Head Revs are alive all normal Revs will lose their Rev status and rejoin Nanotrasen
+            // If no Head Revs are alive all normal Revs will lose their Rev status and rejoin Nanotrasen
             if (!aliveHeadRevs)
             {
                 revs.RevsLost = true;
@@ -253,83 +307,33 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                         }
                 }
             }
-            CheckRevsWin();
-        }
-    }
-    //I LOVE REUSING CODE DIRECTLY ABOVE
-    private void CheckRevsWin()
-    {
-        var query = EntityQueryEnumerator<RevolutionaryRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var revs, out var gameRule))
-        {
-            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-                continue;
-
+            // Checks if all heads are dead to finish the round.
             var heads = EntityQuery<HeadComponent, MobStateComponent>(true);
             var aliveHeads = heads
                 .Any(ent => ent.Item2.CurrentState != MobState.Dead && ent.Item1.Running);
             //In the rare instances that no heads are on station at start, I put a timer before this can activate. Might lower it
-            if (!aliveHeads && revs.ShuttleCalled == false && _timing.CurTime >= TimeSpan.FromMinutes(5))
+            if (!aliveHeads && revs.HeadsDied && _timing.CurTime >= TimeSpan.FromMinutes(revs.GracePeriod))
             {
                 revs.HeadsDied = true;
                 foreach (var station in _stationSystem.GetStations())
                 {
-                    _chat.DispatchStationAnnouncement(station, Loc.GetString("rev-shuttle-call"), colorOverride: Color.MediumBlue);
+                    _chat.DispatchStationAnnouncement(station, Loc.GetString("rev-all-heads-dead"), colorOverride: Color.MediumBlue);
                 }
-                _roundEndSystem.RequestRoundEnd(null, false);
-                revs.ShuttleCalled = true;
             }
 
         }
     }
+
     //Should give late join command the head component. Should.
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
     {
         var mind = ev.Player.GetMind();
         if (mind != null && HasComp<PendingClockInComponent>(mind.OwnedEntity) && mind.CurrentJob != null)
         {
-            if (mind.CurrentJob.Prototype.Weight >= 10)
+            if (_headRoles.Contains(mind.CurrentJob.Name))
             {
                 AddComp<HeadComponent>(mind.OwnedEntity.Value);
                 _sawmill.Error("Late join command added");
-            }
-        }
-    }
-
-    // Admin command
-    public void MakeHeadRev(Mind.Mind mind)
-    {
-        if (!mind.OwnedEntity.HasValue)
-            return;
-        _mindSystem.AddRole(mind, new RevolutionaryRole(mind, _prototypeManager.Index<AntagPrototype>("HeadRev")));
-        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("HeadRevGear"), null);
-        _npcFaction.RemoveFaction(mind.OwnedEntity.Value, "NanoTrasen");
-        _npcFaction.AddFaction(mind.OwnedEntity.Value, "Revolutionary");
-        GameTicker.AddGameRule("Revolutionary");
-        EnsureComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
-        EnsureComp<HeadRevolutionaryComponent>(mind.OwnedEntity.Value);
-        EnsureComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
-        if (mind.Session != null)
-        {
-            var message = Loc.GetString("head-rev-role-greeting");
-            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-            _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.MediumBlue);
-        }
-        AssignCommandStaffAdmin();
-    }
-    // Assigns command staff when forcing an admin Head Rev.
-    private void AssignCommandStaffAdmin()
-    {
-        var allPlayers = _playerSystem.ServerSessions.ToList();
-        foreach (var player in allPlayers)
-        {
-            var mind = player.GetMind();
-            if (mind != null && HasComp<HumanoidAppearanceComponent>(mind.OwnedEntity) && mind.CurrentJob != null && !HasComp<RevolutionaryComponent>(mind.OwnedEntity))
-            {
-                if (mind.CurrentJob.Prototype.Weight >= 10)
-                {
-                    AddComp<HeadComponent>(mind.OwnedEntity.Value);
-                }
             }
         }
     }

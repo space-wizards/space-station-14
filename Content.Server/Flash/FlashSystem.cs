@@ -58,6 +58,7 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
             // ran before toggling light for extra-bright lantern
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand, before: new []{ typeof(HandheldLightSystem) });
+            //SubscribeLocalEvent<FlashComponent, PostFlashActionEvent>(OnPostFlash);
 
             SubscribeLocalEvent<InventoryComponent, FlashAttemptEvent>(OnInventoryFlashAttempt);
 
@@ -170,6 +171,11 @@ namespace Content.Server.Flash
             }
         }
 
+        public void OnPostFlash(EntityUid target, EntityUid user)
+        {
+
+        }
+
         public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0.8f, bool displayPopup = false, SoundSpecifier? sound = null)
         {
             var transform = EntityManager.GetComponent<TransformComponent>(source);
@@ -240,5 +246,11 @@ namespace Content.Server.Flash
             User = user;
             Used = used;
         }
+    }
+
+    public sealed class PostFlashActionEvent
+    {
+        public readonly EntityUid Target;
+        public readonly EntityUid User;
     }
 }

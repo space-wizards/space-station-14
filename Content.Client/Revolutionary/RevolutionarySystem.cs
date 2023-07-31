@@ -28,7 +28,7 @@ public sealed class RevolutionarySystem : EntitySystem
         }
         else
         {
-            args.StatusIcons.Add(_prototype.Index<StatusIconPrototype>("HeadRevolutionaryFaction"));
+            args.StatusIcons.Add(_prototype.Index<StatusIconPrototype>(component.HeadRevStatusIcon));
         }
     }
 }

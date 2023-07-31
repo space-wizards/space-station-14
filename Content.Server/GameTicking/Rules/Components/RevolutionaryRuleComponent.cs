@@ -7,17 +7,27 @@ namespace Content.Server.GameTicking.Rules.Components;
 
 public sealed class RevolutionaryRuleComponent : Component
 {
+    /// <summary>
+    /// Stores sessions of Head Revs for end screen.
+    /// </summary>
     [DataField("headRevs")]
     public Dictionary<string, string> HeadRevs = new();
-
-    [DataField("shuttleCalled")]
-    public bool ShuttleCalled = false;
-
+    /// <summary>
+    /// If all Head Revs die this will be set for the end screen.
+    /// </summary>
     [DataField("revsLost")]
     public bool RevsLost = false;
-
+    /// <summary>
+    /// If all of command on station dies this will be set for end screen.
+    /// </summary>
     [DataField("headsDied")]
     public bool HeadsDied = false;
+    /// <summary>
+    /// Grace period for Heads to join the game before Revs win by default.
+    /// </summary>
+    [DataField("gracePeriod")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int GracePeriod = 5;
 
     [DataField("headRevPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
     public string HeadRevPrototypeId = "HeadRev";
@@ -27,6 +37,19 @@ public sealed class RevolutionaryRuleComponent : Component
 
     [DataField("revPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
     public string RevPrototypeId = "Rev";
-
-
+    /// <summary>
+    /// Min players needed for Revolutionary gamemode to start.
+    /// </summary>
+    [DataField("minPlayers")]
+    public int MinPlayers = 1;
+    /// <summary>
+    /// Max Head Revs allowed during selection.
+    /// </summary>
+    [DataField("maxHeadRevs")]
+    public int MaxHeadRevs = 3;
+    /// <summary>
+    /// The amount of Head Revs that will spawn per this amount of players.
+    /// </summary>
+    [DataField("playersPerHeadRev")]
+    public int PlayersPerHeadRev = 25;
 }

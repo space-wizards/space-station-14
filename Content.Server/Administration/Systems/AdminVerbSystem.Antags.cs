@@ -100,7 +100,7 @@ public sealed partial class AdminVerbSystem
 
         Verb headRev = new()
         {
-            Text = "Make Head Rev",
+            Text = Loc.GetString("head-rev-admin"),
             Category = VerbCategory.Antag,
             Icon = null,
             Act = () =>
@@ -108,7 +108,7 @@ public sealed partial class AdminVerbSystem
                 if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
                     return;
 
-                _revolutionaryRule.MakeHeadRev(targetMindComp.Mind);
+                _revolutionaryRule.OnHeadRevAdmin(targetMindComp.Mind, targetMindComp.Mind.Session);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-head-rev"),
