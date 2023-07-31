@@ -1,6 +1,7 @@
 using System.Linq;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Tag;
 
@@ -11,10 +12,22 @@ public sealed class TagSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TagComponent, ComponentInit>(OnTagInit);
         SubscribeLocalEvent<TagComponent, ComponentGetState>(OnTagGetState);
         SubscribeLocalEvent<TagComponent, ComponentHandleState>(OnTagHandleState);
+
+#if DEBUG
+        SubscribeLocalEvent<TagComponent, ComponentInit>(OnTagInit);
     }
+
+    private void OnTagInit(EntityUid uid, TagComponent component, ComponentInit args)
+    {
+        foreach (var tag in component.Tags)
+        {
+            AssertValidTag(tag);
+        }
+#endif
+    }
+
 
     private void OnTagHandleState(EntityUid uid, TagComponent component, ref ComponentHandleState args)
     {
@@ -25,7 +38,7 @@ public sealed class TagSystem : EntitySystem
 
         foreach (var tag in state.Tags)
         {
-            GetTagOrThrow(tag);
+            AssertValidTag(tag);
             component.Tags.Add(tag);
         }
     }
@@ -44,17 +57,9 @@ public sealed class TagSystem : EntitySystem
         args.State = new TagComponentState(tags);
     }
 
-    private void OnTagInit(EntityUid uid, TagComponent component, ComponentInit args)
+    private void AssertValidTag(string id)
     {
-        foreach (var tag in component.Tags)
-        {
-            GetTagOrThrow(tag);
-        }
-    }
-
-    private TagPrototype GetTagOrThrow(string id)
-    {
-        return _proto.Index<TagPrototype>(id);
+        DebugTools.Assert(_proto.HasIndex<TagPrototype>(id), $"Unknown tag: {id}");
     }
 
     /// <summary>
@@ -304,7 +309,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool AddTag(TagComponent component, string id)
     {
-        GetTagOrThrow(id);
+        AssertValidTag(id);
         var added = component.Tags.Add(id);
 
         if (added)
@@ -343,7 +348,7 @@ public sealed class TagSystem : EntitySystem
 
         foreach (var id in ids)
         {
-            GetTagOrThrow(id);
+            AssertValidTag(id);
             component.Tags.Add(id);
         }
 
@@ -366,7 +371,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasTag(TagComponent component, string id)
     {
-        GetTagOrThrow(id);
+        AssertValidTag(id);
         return component.Tags.Contains(id);
     }
 
@@ -395,7 +400,7 @@ public sealed class TagSystem : EntitySystem
     {
         foreach (var id in ids)
         {
-            GetTagOrThrow(id);
+            AssertValidTag(id);
 
             if (!component.Tags.Contains(id))
                 return false;
@@ -430,7 +435,7 @@ public sealed class TagSystem : EntitySystem
     {
         foreach (var id in ids)
         {
-            GetTagOrThrow(id);
+            AssertValidTag(id);
 
             if (component.Tags.Contains(id))
             {
@@ -452,7 +457,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool RemoveTag(TagComponent component, string id)
     {
-        GetTagOrThrow(id);
+        AssertValidTag(id);
 
         if (component.Tags.Remove(id))
         {
@@ -492,7 +497,7 @@ public sealed class TagSystem : EntitySystem
 
         foreach (var id in ids)
         {
-            GetTagOrThrow(id);
+            AssertValidTag(id);
             component.Tags.Remove(id);
         }
 

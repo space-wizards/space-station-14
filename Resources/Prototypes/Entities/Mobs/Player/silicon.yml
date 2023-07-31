@@ -46,7 +46,6 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-    netsync: false
   - type: Physics
     bodyType: KinematicController
   - type: Hands
@@ -126,10 +125,10 @@
         Heat : 1 #per second, scales with temperature & other constants
   - type: Sprite
     drawdepth: SmallMobs
-    netsync: false
     layers:
     - state: shell
       sprite: Mobs/Silicon/drone.rsi
+      map: ["base"]
   - type: MovementIgnoreGravity
   - type: Fixtures
     fixtures:
@@ -143,13 +142,12 @@
         layer:
         - SmallMobLayer
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: GenericEnumVisualizer
-        key: enum.DroneVisuals.Status
-        layer: 0
-        states:
-          enum.DroneStatus.Off: shell
-          enum.DroneStatus.On: drone
+      enum.DroneVisuals.Status:
+        base:
+          Off: { state: shell }
+          On: { state: drone }
   - type: ReplacementAccent
     accent: silicon
   - type: Repairable
@@ -191,9 +189,9 @@
       type: StrippableBoundUserInterface
   - type: GhostRole
     makeSentient: true
-    name: Onestar Mecha
-    description: You are an experimental mecha created by who-knows-what, all you know is that you have weapons and you detect fleshy moving targets nearby...
-    rules: Use your weapons to cause havoc. You are an antagonist.
+    name: ghost-role-information-onestar-mecha-name
+    description: ghost-role-information-onestar-mecha-description
+    rules: ghost-role-information-onestar-mecha-rules
   - type: GhostTakeoverAvailable
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
@@ -208,7 +206,6 @@
       1000: Dead
   - type: Sprite
     drawdepth: Mobs
-    netsync: false
     layers:
     - state: onestar_boss
       sprite: Mobs/Silicon/onestar.rsi
@@ -231,12 +228,6 @@
         layer:
         - MobLayer
   - type: Appearance
-    rotate: true
-    states:
-      Alive:
-        Base: onestar_boss
-      Dead:
-        Base: onestar_boss_wrecked
   - type: CombatMode
   - type: Tag
     tags:

@@ -1,7 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 xmlns:networkConfigurator="clr-namespace:Content.Client.NetworkConfigurator"
-                Title="Network Configurator" MinSize="220 400">
+                Title="{Loc 'network-configurator-title-saved-devices'}" MinSize="220 400">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
         <networkConfigurator:NetworkConfiguratorDeviceList Name="DeviceList" />
         <BoxContainer Orientation="Horizontal" Margin="8 8 8 8">

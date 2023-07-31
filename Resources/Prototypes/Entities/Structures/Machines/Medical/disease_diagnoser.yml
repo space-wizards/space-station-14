@@ -14,14 +14,7 @@
     - state: unlit
       shader: unshaded
       map: ["enum.DiseaseMachineVisualLayers.IsOn"]
-    netsync: false
-  - type: DiseaseDiagnoser
-  - type: DiseaseMachine
-    machineOutput: DiagnosisReportPaper
   - type: Appearance
-  - type: DiseaseMachineVisuals
-    idleState: icon
-    runningState: running
   - type: Machine
     board: DiagnoserMachineCircuitboard
 
@@ -33,7 +26,6 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    netsync: false
     layers:
     - state: paper_receipt
     - state: paper_receipt_words

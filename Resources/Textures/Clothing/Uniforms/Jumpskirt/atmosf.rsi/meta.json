@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/commit/beaea876ea426c0e215cee64619862dc19bd9cd8",
+  "copyright": "https://github.com/tgstation/tgstation/commit/beaea876ea426c0e215cee64619862dc19bd9cd8, monkey made by brainfood1183 (github) for ss14",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-monkey",
       "directions": 4
     },
     {

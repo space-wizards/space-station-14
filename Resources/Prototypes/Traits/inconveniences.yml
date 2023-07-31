@@ -1,16 +1,4 @@
 ﻿- type: trait
-  id: UncontrollableSneezing
-  name: trait-sneezing-name
-  description: trait-sneezing-desc
-  whitelist:
-    components:
-      - DiseaseCarrier
-  components:
-    - type: UncontrollableSnough
-      emote: Sneeze
-      timeBetweenIncidents: 0.3, 300
-
-- type: trait
   id: LightweightDrunk
   name: trait-lightweight-name
   description: trait-lightweight-desc

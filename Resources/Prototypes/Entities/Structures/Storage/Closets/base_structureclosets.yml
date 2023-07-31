@@ -9,16 +9,24 @@
     noRot: true
   - type: Sprite
     noRot: true
-    netsync: false
     sprite: Structures/Storage/closet.rsi
     layers:
     - state: generic
+      map: ["enum.StorageVisualLayers.Base"]
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
   - type: MovedByPressure
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: Attach Label
+      ejectVerbText: Remove Label
+      whitelist:
+        components:
+        - Paper
+  - type: ItemSlots
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -33,7 +41,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
-        density: 145
+        density: 75
         mask:
         - MachineMask
         layer:
@@ -42,6 +50,7 @@
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
   - type: Weldable
   - type: PlaceableSurface
     placeCentered: true
@@ -72,11 +81,10 @@
             min: 1
             max: 1
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: generic_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: generic_door
 
 #Wall Closet
 - type: entity
@@ -99,11 +107,11 @@
     noRot: false
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     noRot: false
     sprite: Structures/Storage/wall_locker.rsi
     layers:
     - state: generic
+      map: ["enum.StorageVisualLayers.Base"]
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
@@ -155,10 +163,10 @@
   - type: AccessReader
   - type: Lock
   - type: Sprite
-    netsync: false
     sprite: Structures/Storage/wall_locker.rsi
     layers:
     - state: generic
+      map: ["enum.StorageVisualLayers.Base"]
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
@@ -167,3 +175,87 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+
+#Base suit storage unit
+#I am terribly sorry for duplicating the closet almost-wholesale, but the game malds at me if I don't so here we are.
+- type: entity
+  id: SuitStorageBase
+  parent: BaseStructure
+  name: suit storage unit
+  description: A fancy hi-tech storage unit made for storing space suits.
+  components:
+  - type: Anchorable
+    delay: 2
+  - type: StaticPrice
+    price: 80
+  - type: ResistLocker
+  - type: Transform
+    noRot: true
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Storage/suit_storage.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: MovedByPressure
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/bang.ogg
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        density: 350
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: EntityStorage
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+  - type: Weldable
+  - type: PlaceableSurface
+    placeCentered: true
+    isPlaceable: false
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBase: base
+    stateDoorOpen: base
+    stateDoorClosed: closed

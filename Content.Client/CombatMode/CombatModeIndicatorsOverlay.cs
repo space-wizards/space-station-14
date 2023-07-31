@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Hands.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.GameObjects;
@@ -30,7 +31,7 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
 
     public Color MainColor = Color.White.WithAlpha(0.3f);
     public Color StrokeColor = Color.Black.WithAlpha(0.5f);
-    public float Scale = 0.8f;  // 1 is a little big
+    public float Scale = 0.6f;  // 1 is a little big
 
     public CombatModeIndicatorsOverlay(IInputManager input, IEntityManager entMan,
             IEyeManager eye, CombatModeSystem combatSys, HandsSystem hands)
@@ -77,7 +78,7 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
     private void DrawSight(Texture sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
     {
         var sightSize = sight.Size * scale;
-        var expandedSize = sightSize + 7f;
+        var expandedSize = sightSize + new Vector2(7f, 7f);
 
         screen.DrawTextureRect(sight,
             UIBox2.FromDimensions(centerPos - sightSize * 0.5f, sightSize), StrokeColor);

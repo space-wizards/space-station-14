@@ -1,20 +1,42 @@
 # Donut
 
 # There is a newer, better version of the donutbox from tgstation included in the
-# donut.rsi. The reason it isn't implemented is it requires a StackVisualizer offsetting
+# donut.rsi. The reason it isn't implemented is it requires a StackVisuals offsetting
 # the layer sprite by a couple pixels everytime a new donut is added. It also requires
 # an alpha color which -Y- said he would implement.
 
 - type: entity
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   id: FoodBoxDonut
   name: donut box
   description: Mmm, Donuts.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     state: box
+    layers:
+    - state: box
+    - state: box-open
+      map: ["openLayer"]
+      visible: false
+    - state: box1
+      map: ["box1"]
+      visible: false
+    - state: pink-box2
+      map: ["pink-box2"]
+      visible: false
+    - state: box3
+      map: ["box3"]
+      visible: false
+    - state: pink-box4
+      map: ["pink-box4"]
+      visible: false
+    - state: box5
+      map: ["box5"]
+      visible: false
+    - state: pink-box6
+      map: ["pink-box6"]
+      visible: false
   - type: Storage
     capacity: 6
     whitelist:
@@ -33,32 +55,68 @@
   - type: ItemCounter
     count:
       tags: [Donut]
+    composite: true
+    layerStates:
+    - box1
+    - pink-box2
+    - box3
+    - pink-box4
+    - box5
+    - pink-box6
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
-    - type: StackVisualizer
-      composite: true
-      stackLayers:
-      - box1
-      - pink-box2
-      - box3
-      - pink-box4
-      - box5
-      - pink-box6
 
 # Egg
 
 - type: entity
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   id: FoodContainerEgg
   name: egg carton
   description: Don't drop 'em!
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Food/egg.rsi
     state: box-closed
+    layers:
+    - state: box-closed
+    - state: box-open
+      map: ["openLayer"]
+      visible: false
+    - state: box1
+      map: ["box1"]
+      visible: false
+    - state: box2
+      map: ["box2"]
+      visible: false
+    - state: box3
+      map: ["box3"]
+      visible: false
+    - state: box4
+      map: ["box4"]
+      visible: false
+    - state: box5
+      map: ["box5"]
+      visible: false
+    - state: box6
+      map: ["box6"]
+      visible: false
+    - state: box7
+      map: ["box7"]
+      visible: false
+    - state: box8
+      map: ["box8"]
+      visible: false
+    - state: box9
+      map: ["box9"]
+      visible: false
+    - state: box10
+      map: ["box10"]
+      visible: false
+    - state: box11
+      map: ["box11"]
+      visible: false
+    - state: box12
+      map: ["box12"]
+      visible: false
   - type: Storage
     capacity: 12
     whitelist:
@@ -74,25 +132,21 @@
   - type: ItemCounter
     count:
       tags: [Egg]
+    composite: true
+    layerStates:
+    - box1
+    - box2
+    - box3
+    - box4
+    - box5
+    - box6
+    - box7
+    - box8
+    - box9
+    - box10
+    - box11
+    - box12
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
-    - type: StackVisualizer
-      composite: true
-      stackLayers:
-      - box1
-      - box2
-      - box3
-      - box4
-      - box5
-      - box6
-      - box7
-      - box8
-      - box9
-      - box10
-      - box11
-      - box12
   # Someday...
   # - type: DamageOnLand
   # - type: DamageOtherOnHit
@@ -147,9 +201,9 @@
     drawdepth: SmallObjects
     layers:
     - state: box
+      map: ["enum.StorageVisualLayers.Base"]
     - state: box-open
       map: ["enum.StorageVisualLayers.Door"]
-    netsync: false
   # TODO make these entitystorage again + placeablesurface after entity storage ECS gets merged.
   - type: Storage
     capacity: 8
@@ -160,10 +214,9 @@
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     heldPrefix: box
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: box-open
-      state_closed: box
+  - type: EntityStorageVisuals
+    stateDoorOpen: box-open
+    stateDoorClosed: box
   - type: StaticPrice
     price: 0
 
@@ -211,15 +264,37 @@
 # Nugget
 
 - type: entity
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   id: FoodBoxNugget
   name: chicken nuggets
   description: You suddenly have an urge to trade on the intergalactic stock market.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
     state: box
+    layers:
+    - state: box
+    - state: box-open
+      map: ["openLayer"]
+      visible: false
+    - state: box1
+      map: ["box1"]
+      visible: false
+    - state: box2
+      map: ["box2"]
+      visible: false
+    - state: box3
+      map: ["box3"]
+      visible: false
+    - state: box4
+      map: ["box4"]
+      visible: false
+    - state: box5
+      map: ["box5"]
+      visible: false
+    - state: box6
+      map: ["box6"]
+      visible: false
   - type: Storage
     capacity: 6
   - type: Item
@@ -233,19 +308,15 @@
   - type: ItemCounter
     count:
       tags: [Nugget]
+    composite: true
+    layerStates:
+    - box1
+    - box2
+    - box3
+    - box4
+    - box5
+    - box6
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
-    - type: StackVisualizer
-      composite: true
-      stackLayers:
-      - box1
-      - box2
-      - box3
-      - box4
-      - box5
-      - box6
 
 # Donkpocket
 
@@ -256,7 +327,6 @@
   description: 'Instructions: Heat in microwave. Product will cool if not eaten within seven minutes.'
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
     state: box
   - type: Storage
@@ -373,22 +443,21 @@
 
 - type: entity
   id: HappyHonk
-  parent: BoxCardboard
+  parent: [ BoxCardboard, BaseBagOpenClose ]
   name: happy honk meal
   suffix: Toy Safe
   description: The toy is more edible than the food.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Storage/Happyhonk/clown.rsi
     state: box
+    layers:
+    - state: box
+    - state: box-open
+      map: ["openLayer"]
   - type: Item
     sprite: Objects/Storage/Happyhonk/clown.rsi
     heldPrefix: box
-  - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
   - type: Storage
     capacity: 30
   - type: Tag
@@ -403,7 +472,7 @@
         orGroup: GiftPool
       - id: ToyNuke
         orGroup: GiftPool
-      - id: ToyAssistant
+      - id: ToyFigurinePassenger
         orGroup: GiftPool
       - id: ToyGriffin
         orGroup: GiftPool
@@ -470,7 +539,6 @@
     - HappyHonk
     - MimeHappyHonk
   - type: Sprite
-    netsync: false
     sprite: Objects/Storage/Happyhonk/mime.rsi
     state: box
   - type: Item
@@ -485,7 +553,6 @@
   suffix: Toy Unsafe
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Storage/Happyhonk/nukie.rsi
     state: box
   - type: Item
@@ -517,7 +584,6 @@
   description: Nothing good can come of this.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Storage/Happyhonk/cluwne.rsi
     state: box
   - type: Item
@@ -551,7 +617,7 @@
         orGroup: GiftPool
       - id: ToyNuke
         orGroup: GiftPool
-      - id: ToyAssistant
+      - id: ToyFigurinePassenger
         orGroup: GiftPool
       - id: ToyGriffin
         orGroup: GiftPool

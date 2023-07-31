@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.IconSmoothing;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -123,7 +124,7 @@ namespace Content.Client.IconSmoothing
         public void DirtyNeighbours(EntityUid uid, IconSmoothComponent? comp = null, TransformComponent? transform = null, EntityQuery<IconSmoothComponent>? smoothQuery = null)
         {
             smoothQuery ??= GetEntityQuery<IconSmoothComponent>();
-            if (!smoothQuery.Value.Resolve(uid, ref comp))
+            if (!smoothQuery.Value.Resolve(uid, ref comp) || !comp.Running)
                 return;
 
             _dirtyEntities.Enqueue(uid);
@@ -195,8 +196,9 @@ namespace Content.Client.IconSmoothing
             // Generation on the component is set after an update so we can cull updates that happened this generation.
             if (!smoothQuery.Resolve(uid, ref smooth, false)
                 || smooth.Mode == IconSmoothingMode.NoSprite
-                || smooth.UpdateGeneration == _generation ||
-                !smooth.Enabled)
+                || smooth.UpdateGeneration == _generation
+                || !smooth.Enabled
+                || !smooth.Running)
             {
                 if (smooth is { Enabled: true } &&
                     TryComp<SmoothEdgeComponent>(uid, out var edge) &&

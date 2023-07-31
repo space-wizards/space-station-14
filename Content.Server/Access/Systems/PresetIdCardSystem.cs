@@ -4,6 +4,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Roles;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Access.Systems
@@ -26,15 +27,16 @@ namespace Content.Server.Access.Systems
         {
             // Go over all ID cards and make sure they're correctly configured for extended access.
 
-            foreach (var card in EntityQuery<PresetIdCardComponent>())
+            var query = EntityQueryEnumerator<PresetIdCardComponent>();
+            while (query.MoveNext(out var uid, out var card))
             {
-                var station = _stationSystem.GetOwningStation(card.Owner);
+                var station = _stationSystem.GetOwningStation(uid);
 
                 // If we're not on an extended access station, the ID is already configured correctly from MapInit.
                 if (station == null || !Comp<StationJobsComponent>(station.Value).ExtendedAccess)
                     return;
 
-                SetupIdAccess(card.Owner, card, true);
+                SetupIdAccess(uid, card, true);
             }
         }
 
@@ -45,7 +47,7 @@ namespace Content.Server.Access.Systems
             // or may not yet know whether it is on extended access (players not spawned yet).
             // PlayerJobsAssigned makes sure extended access is configured correctly in that case.
 
-            var station = _stationSystem.GetOwningStation(id.Owner);
+            var station = _stationSystem.GetOwningStation(uid);
             var extended = false;
             if (station != null)
                 extended = Comp<StationJobsComponent>(station.Value).ExtendedAccess;
@@ -60,14 +62,18 @@ namespace Content.Server.Access.Systems
 
             if (!_prototypeManager.TryIndex(id.JobName, out JobPrototype? job))
             {
-                Logger.ErrorS("access", $"Invalid job id ({id.JobName}) for preset card");
+                Log.Error($"Invalid job id ({id.JobName}) for preset card");
                 return;
             }
 
             _accessSystem.SetAccessToJob(uid, job, extended);
 
-            // and also change job title on a card id
             _cardSystem.TryChangeJobTitle(uid, job.LocalizedName);
+
+            if (_prototypeManager.TryIndex<StatusIconPrototype>(job.Icon, out var jobIcon))
+            {
+                _cardSystem.TryChangeJobIcon(uid, jobIcon);
+            }
         }
     }
 }

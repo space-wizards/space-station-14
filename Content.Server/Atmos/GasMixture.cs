@@ -207,6 +207,20 @@ namespace Content.Server.Atmos
             Array.Resize(ref Moles, Atmospherics.AdjustedNumberOfGases);
         }
 
+        public GasMixtureStringRepresentation ToPrettyString()
+        {
+            var molesPerGas = new Dictionary<string, float>();
+            for (int i = 0; i < Moles.Length; i++)
+            {
+                if (Moles[i] == 0)
+                    continue;
+
+                molesPerGas.Add(((Gas) i).ToString(), Moles[i]);
+            }
+
+            return new GasMixtureStringRepresentation(TotalMoles, Temperature, Pressure, molesPerGas);
+        }
+
         public override bool Equals(object? obj)
         {
             if (obj is GasMixture mix)

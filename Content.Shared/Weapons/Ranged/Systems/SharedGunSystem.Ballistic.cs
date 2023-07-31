@@ -29,6 +29,9 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticUse(EntityUid uid, BallisticAmmoProviderComponent component, UseInHandEvent args)
     {
+        if (args.Handled)
+            return;
+
         ManualCycle(uid, component, Transform(uid).MapPosition, args.User);
         args.Handled = true;
     }
@@ -129,13 +132,13 @@ public abstract partial class SharedGunSystem
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
-
-        args.Verbs.Add(new Verb()
-        {
-            Text = Loc.GetString("gun-ballistic-cycle"),
-            Disabled = GetBallisticShots(component) == 0,
-            Act = () => ManualCycle(uid, component, Transform(uid).MapPosition, args.User),
-        });
+        if (component.Cycleable == true)
+            args.Verbs.Add(new Verb()
+            {
+                Text = Loc.GetString("gun-ballistic-cycle"),
+                Disabled = GetBallisticShots(component) == 0,
+                Act = () => ManualCycle(uid, component, Transform(uid).MapPosition, args.User),
+            });
     }
 
     private void OnBallisticExamine(EntityUid uid, BallisticAmmoProviderComponent component, ExaminedEvent args)
@@ -162,7 +165,7 @@ public abstract partial class SharedGunSystem
         var shots = GetBallisticShots(component);
         component.Cycled = true;
 
-        Cycle(component, coordinates);
+        Cycle(uid, component, coordinates);
 
         var text = Loc.GetString(shots == 0 ? "gun-ballistic-cycled-empty" : "gun-ballistic-cycled");
 
@@ -171,7 +174,7 @@ public abstract partial class SharedGunSystem
         UpdateAmmoCount(uid);
     }
 
-    protected abstract void Cycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates);
+    protected abstract void Cycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates);
 
     private void OnBallisticInit(EntityUid uid, BallisticAmmoProviderComponent component, ComponentInit args)
     {

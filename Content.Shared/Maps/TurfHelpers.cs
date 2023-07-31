@@ -42,7 +42,7 @@ namespace Content.Shared.Maps
 
             mapManager ??= IoCManager.Resolve<IMapManager>();
             var pos = coordinates.ToMap(entityManager, entityManager.System<SharedTransformSystem>());
-            if (!mapManager.TryFindGridAt(pos, out var grid))
+            if (!mapManager.TryFindGridAt(pos, out _, out var grid))
                 return null;
 
             if (!grid.TryGetTileRef(coordinates, out var tile))
@@ -138,13 +138,6 @@ namespace Content.Shared.Maps
                 : CollisionGroup.Impassable;
 
             return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<TurfSystem>().IsTileBlocked(turf, mask);
-        }
-
-        public static EntityCoordinates GridPosition(this TileRef turf, IMapManager? mapManager = null)
-        {
-            mapManager ??= IoCManager.Resolve<IMapManager>();
-
-            return turf.GridIndices.ToEntityCoordinates(turf.GridUid, mapManager);
         }
 
         /// <summary>

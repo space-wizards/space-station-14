@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Structures/Furniture/bookshelf.rsi
     snapCardinals: true
-    netsync: false
     layers:
       - state: base
       - state: book-0
@@ -37,6 +36,7 @@
         acts: ["Destruction"]
   - type: Tag
     tags:
+    - Structure
     - Wooden
   - type: Transform
     anchored: true
@@ -45,6 +45,7 @@
     bodyType: Static
   - type: Anchorable
   - type: Pullable
+  - type: Occluder
   - type: Storage
     capacity: 200
     whitelist:

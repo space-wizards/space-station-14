@@ -10,7 +10,6 @@
     sprite: Objects/Devices/encryption_keys.rsi
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
-    netsync: false
 
 - type: entity
   parent: EncryptionKey

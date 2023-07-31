@@ -41,17 +41,14 @@ public sealed class StationRecordsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialize);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
-    }
-
-    private void OnStationInitialize(StationInitializedEvent args)
-    {
-        AddComp<StationRecordsComponent>(args.Station);
     }
 
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
     {
+        if (!HasComp<StationRecordsComponent>(args.Station))
+            return;
+
         CreateGeneralRecord(args.Station, args.Mob, args.Profile, args.JobId);
     }
 
@@ -59,7 +56,7 @@ public sealed class StationRecordsSystem : EntitySystem
         string? jobId, StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records)
-            || String.IsNullOrEmpty(jobId)
+            || string.IsNullOrEmpty(jobId)
             || !_prototypeManager.HasIndex<JobPrototype>(jobId))
         {
             return;
@@ -137,7 +134,7 @@ public sealed class StationRecordsSystem : EntitySystem
         if (idUid != null)
         {
             var keyStorageEntity = idUid;
-            if (TryComp(idUid, out PDAComponent? pdaComponent) && pdaComponent.ContainedID != null)
+            if (TryComp(idUid, out PdaComponent? pdaComponent) && pdaComponent.ContainedId != null)
             {
                 keyStorageEntity = pdaComponent.IdSlot.Item;
             }
@@ -204,7 +201,7 @@ public sealed class StationRecordsSystem : EntitySystem
     {
         if (!Resolve(station, ref records))
         {
-            return new (StationRecordKey, T)[]{};
+            return Array.Empty<(StationRecordKey, T)>();
         }
 
         return records.Records.GetRecordsOfType<T>();

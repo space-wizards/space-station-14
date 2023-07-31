@@ -48,7 +48,7 @@ public sealed partial class BiomeComponent : Component
     public Dictionary<Vector2i, Dictionary<uint, Vector2i>> LoadedDecals = new();
 
     [DataField("entities")]
-    public Dictionary<Vector2i, List<EntityUid>> LoadedEntities = new();
+    public Dictionary<Vector2i, Dictionary<EntityUid, Vector2i>> LoadedEntities = new();
 
     /// <summary>
     /// Currently active chunks
@@ -57,6 +57,12 @@ public sealed partial class BiomeComponent : Component
     public readonly HashSet<Vector2i> LoadedChunks = new();
 
     #region Markers
+
+    /// <summary>
+    /// Work out entire marker tiles in advance but only load the entities when in range.
+    /// </summary>
+    [DataField("pendingMarkers")]
+    public Dictionary<Vector2i, Dictionary<string, List<Vector2i>>> PendingMarkers = new();
 
     /// <summary>
     /// Track what markers we've loaded already to avoid double-loading.

@@ -22,6 +22,8 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("capacity")]
     public int Capacity = 30;
 
+    public int Count => UnspawnedCount + Container.ContainedEntities.Count;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("unspawnedCount")]
     [AutoNetworkedField]
     public int UnspawnedCount;
@@ -48,6 +50,13 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("cycled")]
     [AutoNetworkedField]
     public bool Cycled = true;
+
+    /// <summary>
+    /// Is the magazine allowed to be cycled
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("cycleable")]
+    [AutoNetworkedField]
+    public bool Cycleable = true;
 
     /// <summary>
     /// Is it okay for this entity to directly transfer its valid ammunition into another provider?

@@ -2,15 +2,26 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Speech.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Server.Ghost.Roles.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed class MakeSentient : ReagentEffect
 {
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("reagent-effect-guidebook-make-sentient", ("chance", Probability));
+
     public override void Effect(ReagentEffectArgs args)
     {
         var entityManager = args.EntityManager;
         var uid = args.SolutionEntity;
+
+        // This makes it so it doesn't affect things that are already sentient
+        if (entityManager.HasComponent<MindContainerComponent>(uid))
+        {
+            return;
+        }
 
         // This piece of code makes things able to speak "normally". One thing of note is that monkeys have a unique accent and won't be affected by this.
         entityManager.RemoveComponent<ReplacementAccentComponent>(uid);
@@ -19,7 +30,7 @@ public sealed class MakeSentient : ReagentEffect
         entityManager.RemoveComponent<MonkeyAccentComponent>(uid);
 
         // This makes it so it doesn't add a ghost role to things that are already sentient
-        if (entityManager.HasComponent<MindComponent>(uid))
+        if (entityManager.HasComponent<MindContainerComponent>(uid))
         {
             return;
         }

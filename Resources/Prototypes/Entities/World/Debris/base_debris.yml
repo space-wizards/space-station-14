@@ -1,0 +1,6 @@
+﻿- type: entity
+  id: BaseDebris
+  abstract: true
+  components:
+    - type: OwnedDebris
+    - type: LocalityLoader

@@ -7,7 +7,15 @@
   permanentComponents:
   - type: RadioMicrophone
     powerRequired: false
+    toggleOnInteract: false
     listenRange: 3
+  - type: Speech
+  - type: RadioSpeaker
+    toggleOnInteract: false
+  - type: ActivatableUI
+    key: enum.IntercomUiKey.Key
+  - type: Intercom
+    requiresPower: false
     supportedChannels:
     - Common
     - CentCom
@@ -18,7 +26,6 @@
     - Security
     - Service
     - Supply
-    - Syndicate
 
 - type: artifactEffect
   id: EffectRandomInstrument
@@ -194,8 +201,6 @@
     - Item
   permanentComponents:
   - type: TilePrying
-  - type: SignalLinker
-    requiredQuality: Pulsing
   - type: UserInterface
     interfaces:
       - key: enum.SignalLinkerUiKey.Key
@@ -206,6 +211,9 @@
     - Screwing
     speed: 2 # Very powerful multitool to balance out the desire to sell or scrap for points
     useSound: /Audio/Items/drill_use.ogg
+  - type: Tag
+    tags:
+      - Multitool
   - type: MultipleTool
     statusShowBehavior: true
     entries:

@@ -4,6 +4,7 @@ using Content.Server.Interaction;
 using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
+using JetBrains.Annotations;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NPC;
@@ -60,6 +61,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         return dict;
     }
 
+    [Pure]
     public bool ContainsKey(string key)
     {
         return _blackboard.ContainsKey(key);
@@ -68,6 +70,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     /// <summary>
     /// Get the blackboard data for a particular key.
     /// </summary>
+    [Pure]
     public T GetValue<T>(string key)
     {
         return (T) _blackboard[key];
@@ -76,6 +79,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     /// <summary>
     /// Tries to get the blackboard data for a particular key. Returns default if not found
     /// </summary>
+    [Pure]
     public T? GetValueOrDefault<T>(string key, IEntityManager entManager)
     {
         if (_blackboard.TryGetValue(key, out var value))
@@ -220,6 +224,11 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     /// Can the NPC smash obstacles for steering.
     /// </summary>
     public const string NavSmash = "NavSmash";
+
+    /// <summary>
+    /// Can the NPC climb obstacles for steering.
+    /// </summary>
+    public const string NavClimb = "NavClimb";
 
     /// <summary>
     /// Default key storage for a movement pathfind.

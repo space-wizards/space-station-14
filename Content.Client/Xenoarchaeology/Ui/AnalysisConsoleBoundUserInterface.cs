@@ -7,11 +7,11 @@ namespace Content.Client.Xenoarchaeology.Ui;
 [UsedImplicitly]
 public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
 {
+    [ViewVariables]
     private AnalysisConsoleMenu? _consoleMenu;
 
-    public AnalysisConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-
     }
 
     protected override void Open()
@@ -35,9 +35,9 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
         {
             SendMessage(new AnalysisConsolePrintButtonPressedMessage());
         };
-        _consoleMenu.OnDestroyButtonPressed += () =>
+        _consoleMenu.OnExtractButtonPressed += () =>
         {
-            SendMessage(new AnalysisConsoleDestroyButtonPressedMessage());
+            SendMessage(new AnalysisConsoleExtractButtonPressedMessage());
         };
     }
 

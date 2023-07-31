@@ -42,16 +42,15 @@
         - MidImpassable
         - LowImpassable
         hard: False
-  - type: SignalReceiver
-    inputs:
-      Reverse: []
-      Forward: []
-      Off: []
+  - type: DeviceLinkSink
+    ports:
+      - Reverse
+      - Forward
+      - Off
   - type: Transform
     anchored: true
     noRot: false
   - type: Sprite
-    netsync: false
     drawdepth: Doors
     sprite: Structures/Machines/recycling.rsi
     layers:
@@ -95,9 +94,8 @@
     blacklist:
       components:
       - Material
-      - PDA
+      - Pda
       - IdCard
-      - HumanoidAppearance
       tags:
       - HighRiskItem
     sound:

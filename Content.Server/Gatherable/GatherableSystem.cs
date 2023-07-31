@@ -5,18 +5,20 @@ using Content.Shared.EntityList;
 using Content.Shared.Gatherable;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Gatherable;
 
-public sealed class GatherableSystem : EntitySystem
+public sealed partial class GatherableSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
@@ -25,6 +27,7 @@ public sealed class GatherableSystem : EntitySystem
 
         SubscribeLocalEvent<GatherableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<GatherableComponent, GatherableDoAfterEvent>(OnDoAfter);
+        InitializeProjectile();
     }
 
     private void OnInteractUsing(EntityUid uid, GatherableComponent component, InteractUsingEvent args)
@@ -53,36 +56,44 @@ public sealed class GatherableSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, GatherableComponent component, GatherableDoAfterEvent args)
     {
-        if(!TryComp<GatheringToolComponent>(args.Args.Used, out var tool) || args.Args.Target == null)
+        if(!TryComp<GatheringToolComponent>(args.Args.Used, out var tool))
             return;
 
-        tool.GatheringEntities.Remove(args.Args.Target.Value);
+        tool.GatheringEntities.Remove(uid);
         if (args.Handled || args.Cancelled)
             return;
 
+        Gather(uid, args.Args.Used, component, tool.GatheringSound);
+        args.Handled = true;
+    }
+
+    public void Gather(EntityUid gatheredUid, EntityUid? gatherer = null, GatherableComponent? component = null, SoundSpecifier? sound = null)
+    {
+        if (!Resolve(gatheredUid, ref component))
+            return;
+
         // Complete the gathering process
-        _destructible.DestroyEntity(args.Args.Target.Value);
-        _audio.PlayPvs(tool.GatheringSound, args.Args.Target.Value);
+        _destructible.DestroyEntity(gatheredUid);
+        _audio.PlayPvs(sound, gatheredUid);
 
         // Spawn the loot!
         if (component.MappedLoot == null)
             return;
 
-        var playerPos = Transform(args.Args.User).MapPosition;
+        var pos = Transform(gatheredUid).MapPosition;
 
         foreach (var (tag, table) in component.MappedLoot)
         {
             if (tag != "All")
             {
-                if (!_tagSystem.HasTag(tool.Owner, tag))
+                if (gatherer != null && !_tagSystem.HasTag(gatherer.Value, tag))
                     continue;
             }
             var getLoot = _prototypeManager.Index<EntityLootTablePrototype>(table);
             var spawnLoot = getLoot.GetSpawns();
-            var spawnPos = playerPos.Offset(_random.NextVector2(0.3f));
+            var spawnPos = pos.Offset(_random.NextVector2(0.3f));
             Spawn(spawnLoot[0], spawnPos);
         }
-        args.Handled = true;
     }
 }
 

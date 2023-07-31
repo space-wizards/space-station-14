@@ -1,4 +1,5 @@
 using Content.Server.PowerCell;
+using Content.Shared.PowerCell;
 using Content.Shared.UserInterface;
 
 namespace Content.Server.UserInterface;

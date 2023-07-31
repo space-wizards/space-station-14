@@ -1,11 +1,7 @@
 #nullable enable
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.Coordinates;
-using Content.Shared.Sound.Components;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -19,7 +15,6 @@ using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
-using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -28,7 +23,7 @@ namespace Content.IntegrationTests.Tests;
 ///     modified during init. I.e., when the entity is saved to the map, its data is simply the default prototype data (ignoring transform component).
 /// </summary>
 /// <remarks>
-///     If you are here becaus your test is failing, one easy way of figuring out how to fix the prototype is to just
+///     If you are here because this test is failing on your PR, then one easy way of figuring out how to fix the prototype is to just
 ///     spawn it into a new empty map and seeing what the map yml looks like.
 /// </remarks>
 [TestFixture]
@@ -38,6 +33,8 @@ public sealed class PrototypeSaveTest
     {
         "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this because this features un-named bits.
         "constructionghost",
+        // Don't add to this list unless you have a good reason
+        // Or it is just temporary because tests stopped working and now master has too many broken entities.
     };
 
     [Test]
@@ -82,6 +79,10 @@ public sealed class PrototypeSaveTest
         foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
         {
             if (prototype.Abstract)
+                continue;
+
+            // Yea this test just doesn't work with this, it parents a grid to another grid and causes game logic to explode.
+            if (prototype.Components.ContainsKey("MapGrid"))
                 continue;
 
             // Currently mobs and such can't be serialized, but they aren't flagged as serializable anyways.
@@ -175,7 +176,7 @@ public sealed class PrototypeSaveTest
                     // An entity may also remove components on init -> check no components are missing.
                     foreach (var (compType, comp) in prototype.Components)
                     {
-                        Assert.That(compNames.Contains(compType), $"Prototype {prototype.ID} removes component {compType} on spawn.");
+                        Assert.That(compNames, Does.Contain(compType), $"Prototype {prototype.ID} removes component {compType} on spawn.");
                     }
 
                     if (!entityMan.Deleted(uid))

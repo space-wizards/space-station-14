@@ -68,7 +68,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
     private void OnPowerChanged(EntityUid uid, MaterialReclaimerComponent component, ref PowerChangedEvent args)
     {
-        AmbientSound.SetAmbience(uid, args.Powered);
+        AmbientSound.SetAmbience(uid, component.Enabled && args.Powered);
         component.Powered = args.Powered;
         Dirty(component);
     }

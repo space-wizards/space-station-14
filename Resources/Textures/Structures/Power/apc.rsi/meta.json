@@ -8,10 +8,116 @@
   },
   "states": [
     {
+      "name": "base"
+    },
+    {
       "name": "broken"
     },
     {
-      "name": "apcframe"
+      "name": "frame"
+    },
+    {
+      "name": "panel"
+    },
+    {
+      "name": "lock0-unlocked"
+    },
+    {
+      "name": "lock0-locked"
+    },
+    {
+      "name": "lock1-unlocked"
+    },
+    {
+      "name": "lock1-locked"
+    },
+    {
+      "name": "channel0-auto_off"
+    },
+    {
+      "name": "channel0-manual_off"
+    },
+    {
+      "name": "channel0-auto_on"
+    },
+    {
+      "name": "channel0-manual_on"
+    },
+    {
+      "name": "channel1-auto_off"
+    },
+    {
+      "name": "channel1-manual_off"
+    },
+    {
+      "name": "channel1-auto_on"
+    },
+    {
+      "name": "channel1-manual_on"
+    },
+    {
+      "name": "channel2-auto_off"
+    },
+    {
+      "name": "channel2-manual_off"
+    },
+    {
+      "name": "channel2-auto_on"
+    },
+    {
+      "name": "channel2-manual_on"
+    },
+    {
+      "name": "display-lack",
+      "delays": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "display-charging",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "display-full",
+      "delays": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "display-remote",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "emag-unlit",
+      "delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ]
     },
     {
       "name": "sparks-unlit",
@@ -25,106 +131,6 @@
           0.1
         ]
       ]
-    },
-    {
-      "name": "base"
-    },
-    {
-      "name": "emag-unlit",
-      "delays": [
-        [
-          0.5,
-          0.5
-        ]
-      ]
-    },
-    {
-      "name": "panel"
-    },
-    {
-      "name": "apco0-0"
-    },
-    {
-      "name": "apco0-1"
-    },
-    {
-      "name": "apco0-2"
-    },
-    {
-      "name": "apco0-3"
-    },
-    {
-      "name": "apco1-0"
-    },
-    {
-      "name": "apco1-1"
-    },
-    {
-      "name": "apco1-2"
-    },
-    {
-      "name": "apco1-3"
-    },
-    {
-      "name": "apco2-0"
-    },
-    {
-      "name": "apco2-1"
-    },
-    {
-      "name": "apco2-2"
-    },
-    {
-      "name": "apco2-3"
-    },
-    {
-      "name": "powered-1",
-      "delays": [
-        [
-          1,
-          2
-        ]
-      ]
-    },
-    {
-      "name": "powered-2",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.2
-        ]
-      ]
-    },
-    {
-      "name": "powered-3",
-      "delays": [
-        [
-          1,
-          1
-        ]
-      ]
-    },
-    {
-      "name": "apco3-3",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "apcox-0"
-    },
-    {
-      "name": "apcox-1"
     }
   ]
 }

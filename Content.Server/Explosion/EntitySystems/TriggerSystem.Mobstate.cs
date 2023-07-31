@@ -1,7 +1,7 @@
 ﻿using Content.Server.Explosion.Components;
+using Content.Shared.Implants;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
-using Robust.Shared.Player;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -11,11 +11,14 @@ public sealed partial class TriggerSystem
     {
         SubscribeLocalEvent<TriggerOnMobstateChangeComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<TriggerOnMobstateChangeComponent, SuicideEvent>(OnSuicide);
+
+        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<SuicideEvent>>(OnSuicideRelay);
+        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<MobStateChangedEvent>>(OnMobStateRelay);
     }
 
     private void OnMobStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, MobStateChangedEvent args)
     {
-        if (component.MobState < args.NewMobState)
+        if (!component.MobState.Contains(args.NewMobState))
             return;
 
         //This chains Mobstate Changed triggers with OnUseTimerTrigger if they have it
@@ -30,7 +33,6 @@ public sealed partial class TriggerSystem
                 timerTrigger.InitialBeepDelay,
                 timerTrigger.BeepSound);
         }
-
         else
             Trigger(uid);
     }
@@ -45,5 +47,15 @@ public sealed partial class TriggerSystem
             _popupSystem.PopupEntity(Loc.GetString("suicide-prevented"), args.Victim, args.Victim);
             args.BlockSuicideAttempt(component.PreventSuicide);
         }
+    }
+
+    private void OnSuicideRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<SuicideEvent> args)
+    {
+        OnSuicide(uid, component, args.Event);
+    }
+
+    private void OnMobStateRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<MobStateChangedEvent> args)
+    {
+        OnMobStateChanged(uid, component, args.Event);
     }
 }

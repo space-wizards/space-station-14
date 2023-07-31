@@ -10,7 +10,7 @@
     sprite: Clothing/Shoes/Boots/workboots.rsi
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesStorageBase
   id: ClothingShoesBootsJack
   name: jackboots
   description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
@@ -19,7 +19,11 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
-
+  - type: Storage
+    whitelist:
+      tags:
+        - Knife
+  
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsSalvage
@@ -52,6 +56,21 @@
     sprite: Clothing/Shoes/Boots/combatboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/combatboots.rsi
+  - type: Storage
+    whitelist:
+      tags:
+        - Knife
+
+- type: entity
+  parent: ClothingShoesStorageBase
+  id: ClothingShoesBootsMerc
+  name: mercenary boots
+  description: Boots that have gone through many conflicts and that have proven their combat reliability.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/mercboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/mercboots.rsi
   - type: Storage
     whitelist:
       tags:

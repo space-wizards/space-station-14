@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from paradisestation at commit https://github.com/ParadiseSS13/Paradise/commit/4daf5d1a1b45fc3fcc4fd9703222159e6c1f38c8, inhands and icon by peptide, edited further by Ian M. Burton",
+  "copyright": "Taken from paradisestation at commit https://github.com/ParadiseSS13/Paradise/commit/4daf5d1a1b45fc3fcc4fd9703222159e6c1f38c8, inhands and icon by peptide, edited further by Ian M. Burton, monkey made by brainfood1183 (github) for ss14",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-monkey",
       "directions": 4
     },
     {

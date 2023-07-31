@@ -8,7 +8,7 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite
@@ -44,7 +44,6 @@
   - type: Stamina
     excess: 15
   - type: MovementAlwaysTouching
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -78,9 +77,8 @@
   - type: GhostRole
     prob: 0.33
     makeSentient: true
-    name: space tick
-    description: |
-      Wreak havoc on the station!
+    name: ghost-role-information-space-tick-name
+    description: ghost-role-information-space-tick-description
   - type: GhostTakeoverAvailable
   - type: ReplacementAccent
     accent: genericAggressive
@@ -91,9 +89,8 @@
   suffix: "Salvage Ruleset"
   components:
   - type: GhostRole
-    name: space tick on salvage wreck
-    description: |
-      Defend the loot inside the salvage wreck!
+    name: ghost-role-information-salvage-tick-name
+    description: ghost-role-information-salvage-tick-description
   - type: GhostTakeoverAvailable
   - type: SalvageMobRestrictions
 

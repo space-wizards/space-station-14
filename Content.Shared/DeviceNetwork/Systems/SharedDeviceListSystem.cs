@@ -1,7 +1,8 @@
 using System.Linq;
+using Content.Shared.DeviceNetwork.Components;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.DeviceNetwork;
+namespace Content.Shared.DeviceNetwork.Systems;
 
 public abstract class SharedDeviceListSystem : EntitySystem
 {
@@ -35,6 +36,8 @@ public abstract class SharedDeviceListSystem : EntitySystem
 
         deviceList.Devices = newDevices;
 
+        UpdateShutdownSubscription(uid, devicesList, oldDevices);
+
         RaiseLocalEvent(uid, new DeviceListUpdateEvent(oldDevices, devicesList));
 
         Dirty(deviceList);
@@ -49,6 +52,10 @@ public abstract class SharedDeviceListSystem : EntitySystem
             return new EntityUid[] { };
         }
         return component.Devices;
+    }
+
+    protected virtual void UpdateShutdownSubscription(EntityUid uid, List<EntityUid> devicesList, List<EntityUid> oldDevices)
+    {
     }
 
     private void GetDeviceListState(EntityUid uid, DeviceListComponent comp, ref ComponentGetState args)
