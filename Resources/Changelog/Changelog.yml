@@ -1,12 +1,4 @@
 Entries:
-- author: Chief-Engineer
-  changes:
-  - {message: Adds the universal pinpointer. A pinpointer that can be linked to track
-      anything., type: Add}
-  - {message: Pinpointers can now be emagged to act as stealthy universal pinpointers.,
-    type: Tweak}
-  id: 3884
-  time: '2023-05-28T10:24:09.0000000+00:00'
 - author: Kit0vras
   changes:
   - {message: Added reaction for cola creation., type: Add}
@@ -2976,3 +2968,9 @@ Entries:
   - {message: Updated mass-media console interface, type: Tweak}
   id: 4383
   time: '2023-07-31T05:34:22.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Passive vents now equalize pressure both ways between the pipe and environment.,
+    type: Tweak}
+  id: 4384
+  time: '2023-07-31T05:40:31.0000000+00:00'
