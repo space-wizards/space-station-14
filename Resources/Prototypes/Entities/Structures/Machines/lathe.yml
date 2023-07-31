@@ -451,8 +451,7 @@
       - MagazineBoxMagnumIncendiary
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxRifleIncendiary
-      - ShellShotgunAP
-      - CartridgePistoAP
+      - CartridgePistolAP
       - CartridgeMagnumAP
       - CartridgeLightRifleAP
       - CartridgeRifleAP
