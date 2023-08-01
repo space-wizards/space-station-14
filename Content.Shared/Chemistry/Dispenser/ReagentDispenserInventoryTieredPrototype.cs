@@ -6,10 +6,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Chemistry.Dispenser
 {
     /// <summary>
-    /// Is simply a list of reagents defined in yaml. This can then be set as a
-    /// <see cref="SharedReagentDispenserComponent"/>s <c>pack</c> value (also in yaml),
-    /// to define which reagents it's able to dispense. Based off of how vending
-    /// machines define their inventory.
+    /// This is used to define a list of reagents that a machine can dispense
+    /// when its machine parts have all be upgraded to the specified tier.
     /// </summary>
     [Serializable, NetSerializable, Prototype("reagentDispenserInventoryTiered")]
     public sealed class ReagentDispenserInventoryTieredPrototype : IPrototype
