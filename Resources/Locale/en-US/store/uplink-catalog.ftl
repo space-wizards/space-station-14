@@ -3,7 +3,7 @@ uplink-pistol-viper-name = Viper
 uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses pistol magazines (.35 auto).
 
 uplink-revolver-python-name = Python
-uplink-revolver-python-desc = A loud and deadly revolver. Uses .45 Magnum.
+uplink-revolver-python-desc = A brutally simple, effective, and loud Syndicate revolver. Comes loaded with armor-piercing rounds. Uses .45 magnum.
 
 uplink-pistol-cobra-name = Cobra
 uplink-pistol-cobra-desc = A rugged, robust operator handgun with inbuilt silencer. Uses pistol magazines (.25 caseless).
@@ -21,7 +21,7 @@ uplink-edagger-name = Energy Dagger
 uplink-edagger-desc = A small energy blade conveniently disguised in the form of a pen.
 
 uplink-fire-axe-flaming-name = Fire Axe
-uplink-fire-axe-flaming-desc = A classic-style weapon infused with advanced atmos technology to allow it to set targets on fire.
+uplink-fire-axe-flaming-desc = A classic-style weapon infused with advanced atmos technology to allow it to set targets on fire. Now with rugged rubberized handle!
 
 uplink-gloves-north-star-name = Gloves of the North Star
 uplink-gloves-north-star-desc = A pair of gloves that reduce your punching cooldown drastically, allowing you to beat people to death in a flurry of punches.
@@ -45,6 +45,9 @@ uplink-c4-desc = Use it to breach walls, airlocks or sabotage equipment. It can 
 uplink-c4-bundle-name = C-4 bundle
 uplink-c4-bundle-desc = Because sometimes quantity is quality. Contains 8 C-4 plastic explosives.
 
+uplink-grenadier-rig-name = grenadier chest rig
+uplink-grenadier-rig-desc = All you need for a loud party: 4 explosive grenades, 2 EMP grenades and 2 minibombs in a chest rig.
+
 uplink-emp-grenade-name = EMP Grenade
 uplink-emp-grenade-desc = A grenade designed to disrupt electronic systems. Useful for disrupting communications, security's energy weapons, and APCs when you're in a tight spot."
 
@@ -53,16 +56,19 @@ uplink-exploding-pen-desc = A class IV explosive device contained within a stand
 
 # Ammo
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
-uplink-pistol-magazine-desc = Pistol magazine with 10 catridges. Compatible with Viper.
+uplink-pistol-magazine-desc = Pistol magazine with 10 catridges. Compatible with the Viper.
 
 uplink-pistol-magazine-caseless-name = Pistol Magazine (.25 caseless)
-uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 catridges. Compatible with Cobra.
+uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 catridges. Compatible with the Cobra.
 
-uplink-speedloader-magnum-name = Speedloader (.45 magnum)
-uplink-speedloader-magnu-desc = Revolver speedloader with 6 catridges. Compatible with Python.
+uplink-speedloader-magnum-name = Speedloader (.45 magnum AP)
+uplink-speedloader-magnu-desc = Revolver speedloader with 6 armor-piercing catridges, capable of ignoring armor entirely. Compatible with the Python.
 
-uplink-mosin-ammo-name = Box of .30 rifle magazines
+uplink-mosin-ammo-name = ammunition box (.30 rifle)
 uplink-mosin-ammo-desc = A box of cartridges for the surplus rifle.
+
+uplink-sniper-ammo-name = ammunition box (.60 antimateriel)
+uplink-sniper-ammo-desc = a box of 10 cartridges for the hristov sniper rifle
 
 # Utility
 uplink-holopara-kit-name = Holoparasite Kit
@@ -80,6 +86,9 @@ uplink-agent-id-card-desc = A modified ID card that can copy accesses from other
 
 uplink-black-jetpack-name = Black Jetpack
 uplink-black-jetpack-desc = A black jetpack. It allows you to fly around in space. Additional fuel now included!
+
+uplink-reinforcement-radio-monkey-name = Monkey Reinforcement Teleporter
+uplink-reinforcement-radio-monkey-desc =  Call in trained monkey to assist you. Comes with a single syndicate cigarette.
 
 uplink-reinforcement-radio-name = Reinforcement Teleporter
 uplink-reinforcement-radio-desc =  Radio in a reinforcement agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
@@ -109,18 +118,39 @@ uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespa
 uplink-freedom-implanter-name = Freedom Implanter
 uplink-freedom-implanter-desc = Get away from those nasty sec officers with this three use implant!
 
+uplink-dna-scrambler-implanter-name = DNA Scrambler Implanter
+uplink-dna-scrambler-implanter-desc = A single use implant that can be activated to modify your DNA and give you a completely new look, also has the function of undoing the change. Unable to scramble already scrambled DNA.
+
+uplink-emp-implanter-name = EMP Implanter
+uplink-emp-implanter-desc = Detonates a small EMP pulse on activation that drains nearby electronics of their power, can be used three times before the internal battery runs out.
+
+uplink-micro-bomb-implanter-name = Micro Bomb Implanter
+uplink-micro-bomb-implanter-desc = Explode on death or manual activation with this implant. Destroys the body with all equipment.
+
 uplink-macro-bomb-implanter-name = Macro Bomb Implanter
 uplink-macro-bomb-implanter-desc = Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
 
 uplink-uplink-implanter-name = Uplink Implanter
 uplink-uplink-implanter-desc = Stealthily order equipment without the need for a PDA. Swallow telecrystals to top up the uplink.
 
+uplink-deathrattle-implant-name = Box Of Deathrattle Implants
+uplink-deathrattle-implant-desc = A box containing enough deathrattle implants for the whole squad. Relays a message containing your position to the syndicate channel when you go into a critical state or die.
+
 # Bundles
+uplink-meds-bundle-name = Medical Bundle
+uplink-meds-bundle-desc = All you need to get your comrades back in the fight: mainly a combat medkit, a defibrillator and three combat medipens.
+
+uplink-ammo-bundle-name = Ammo Bundle
+uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW.
+
+uplink-sniper-bundle-name = Sniper Bundle
+uplink-sniper-bundle-desc = An inconspicuous briefcase that contains a hristov, 10 spare bullets and a convenient disguise
+
 uplink-c20r-bundle-name = C-20r Bundle
 uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundled with three magazines.
 
 uplink-buldog-bundle-name = Bulldog Bundle
-uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 2 12g buckshot drums.
+uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and three 12g buckshot drums.
 
 uplink-grenade-launcher-bundle-name = China-Lake Bundle
 uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 8 rounds of various destruction capability.
@@ -163,6 +193,9 @@ uplink-rigged-boxing-gloves-desc = Float like a butterfly, sting like a bee.
 uplink-necronomicon-name = Necronomicon
 uplink-necronomicon-desc = An unholy book capable of summoning a demonic familiar.
 
+uplink-holy-hand-grenade-name = Holy Hand Grenade
+uplink-holy-hand-grenade-desc = O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
+
 uplink-revolver-cap-gun-fake-name = Fake Cap Gun
 uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and magnum bullets. Comes loaded with magnum bullets.
 
@@ -177,6 +210,9 @@ uplink-chimp-ammo-desc = A box of 10 omega particle cartridges for the CHIMP. Om
 
 uplink-proximity-mine-name = Proximity Mine
 uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
+
+uplink-disposable-turret-name = Disposable Ballistic Turret
+uplink-disposable-turret-desc = Looks and functions like a normal electrical toolbox. Upon hitting the toolbox it will transform into a ballistic turret, theoretically shooting at anyone except members of the syndicate.
 
 # Armor
 uplink-chameleon-name = Chameleon Kit
@@ -224,6 +260,12 @@ uplink-ultrabright-lantern-desc = Blinding.
 
 uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
 uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for your target to stand up.
+
+uplink-combat-medkit-name = Combat Medical Kit
+uplink-combat-medkit-desc = A medkit made for fixing combat injuries.
+
+uplink-combat-medipen-name = Combat Medipen
+uplink-combat-medipen-desc = A single-use medipen containing chemicals that regenerate most types of damage.
 
 uplink-stimpack-name = Stimpack
 uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 30 seconds.

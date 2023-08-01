@@ -26,7 +26,6 @@
       types:
         Cold: 0.5
         Bloodloss: 0.5
-    baseDecayRate: 0.05 # Probably faster than humans?
   - type: Thirst
   # Damage and speed
   - type: Bloodstream

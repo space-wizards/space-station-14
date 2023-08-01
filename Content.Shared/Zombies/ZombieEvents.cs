@@ -6,6 +6,7 @@ namespace Content.Shared.Zombies;
 ///     Event that is broadcast whenever an entity is zombified.
 ///     Used by the zombie gamemode to track total infections.
 /// </summary>
+[ByRefEvent]
 public readonly struct EntityZombifiedEvent
 {
     /// <summary>

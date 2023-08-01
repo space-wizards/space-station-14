@@ -75,7 +75,7 @@ namespace Content.Client.Singularity
             if (ScreenTexture == null || args.Viewport.Eye == null)
                 return;
 
-            _shader?.SetParameter("renderScale", args.Viewport.RenderScale);
+            _shader?.SetParameter("renderScale", args.Viewport.RenderScale * args.Viewport.Eye.Scale);
             _shader?.SetParameter("count", _count);
             _shader?.SetParameter("position", _positions);
             _shader?.SetParameter("intensity", _intensities);

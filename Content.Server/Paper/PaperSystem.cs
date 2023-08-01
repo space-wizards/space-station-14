@@ -11,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using Robust.Shared.Audio;
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Paper
