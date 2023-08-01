@@ -16,6 +16,10 @@ pierce.ogg taken from: https://github.com/tgstation/tgstation/commit/106cd26fc00
 
 rubberhammer.ogg taken from https://freesound.org/people/ScreamStudio/sounds/392617/ under CC0 1.0
 
+chainsaw_hit.ogg taken from https://github.com/ParadiseSS13/Paradise/commit/421c27b4e4ebc374235c90e0bf2072593643ae99
+
+chainsaw_start.ogg taken from https://github.com/ParadiseSS13/Paradise/commit/421c27b4e4ebc374235c90e0bf2072593643ae99
+
 - files: ["weoweo.ogg"]
   license: "SONNISS #GAMEAUDIOGDC BUNDLE LICENSING"
   copyright: "Taken from Sonniss.com - GDC 2023 - Systematic Sound - TonalElements Obscurum - Dark Drones"

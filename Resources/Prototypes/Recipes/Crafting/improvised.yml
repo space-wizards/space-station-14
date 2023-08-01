@@ -151,3 +151,16 @@
   icon:
     sprite: Objects/Misc/rifle_stock.rsi
     state: icon
+
+- type: construction
+  name: makeshift chainsaw
+  id: makeshiftchainsaw
+  graph: MakeshiftChainsaw
+  startNode: start
+  targetNode: chainsaw
+  category: construction-category-weapons
+  objectType: Item
+  description: Will be a lot of blood.
+  icon:
+    sprite: Objects/Weapons/Melee/gchainsaw.rsi
+    state: chainsaw_off

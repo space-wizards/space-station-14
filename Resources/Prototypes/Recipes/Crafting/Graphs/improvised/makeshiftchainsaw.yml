@@ -1,0 +1,24 @@
+- type: constructionGraph
+  id: MakeshiftChainsaw
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: chainsaw
+      steps:
+      
+      - tag: SawElectric
+        icon:
+          sprite: Objects/Specific/Medical/Surgery/saw.rsi
+          state: electric
+        name: circular saw
+        
+      - material: Cable
+        amount: 5
+        
+      - material: Plasteel
+        amount: 3
+        doAfter: 10
+        
+  - node: chainsaw
+    entity: GreenChainsaw

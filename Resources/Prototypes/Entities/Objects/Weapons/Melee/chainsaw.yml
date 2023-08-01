@@ -1,0 +1,81 @@
+- type: entity
+  id: BaseChainsaw
+  parent: BaseItem
+  noSpawn: true
+  components:
+  - type: Chainsaw
+    onDamage:
+        types:
+            Blunt: 8
+            Slash: 8
+            Piercing: 8
+            Structural: 20
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/chainsaw.rsi
+    layers:
+    - state: chainsaw_off
+    - state: chainsaw_on
+      map: [ "enum.ToggleVisuals.Layer" ]
+      visible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Item
+    size: 90
+  - type: ItemCooldown
+  - type: MultiHandedItem
+  - type: Appearance
+  - type: DoAfter
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 2
+    soundHit:
+      path: /Audio/Weapons/chainsaw_hit.ogg
+  - type: Tool
+    qualities:
+      - Sawing
+    speed: 0.5
+  - type: Sharp
+  - type: Utensil
+    types:
+      - Knife
+
+- type: entity
+  id: Chainsaw
+  parent: BaseChainsaw
+  name: chainsaw
+  description: A chainsaw is an extremely deadly and loud weapon
+  components:
+  - type: Chainsaw
+    onDamage:
+        types:
+            Blunt: 11
+            Slash: 11
+            Piercing: 11
+            Structural: 75
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/chainsaw.rsi
+
+- type: entity
+  id: GreenChainsaw
+  parent: BaseChainsaw
+  name: makeshift chainsaw
+  description: Will be a lot of blood.
+  components:
+  - type: Chainsaw
+    onDamage:
+        types:
+            Blunt: 8
+            Slash: 8
+            Piercing: 8
+            Structural: 16
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/gchainsaw.rsi
+  - type: Construction
+    graph: MakeshiftChainsaw
+    node: chainsaw
