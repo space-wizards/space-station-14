@@ -9,11 +9,12 @@ using Content.IntegrationTests.Tests;
 using Content.IntegrationTests.Tests.Destructible;
 using Content.IntegrationTests.Tests.DeviceNetwork;
 using Content.IntegrationTests.Tests.Interaction.Click;
-using Content.IntegrationTests.Tests.Networking;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Robust.Client;
 using Robust.Server;
+using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
@@ -37,13 +38,15 @@ namespace Content.IntegrationTests;
 /// </summary>
 public static class PoolManager
 {
+    public const string TestMap = "Empty";
+
     private static readonly (string cvar, string value)[] ServerTestCvars =
     {
         // @formatter:off
         (CCVars.DatabaseSynchronous.Name,     "true"),
         (CCVars.DatabaseSqliteDelay.Name,     "0"),
         (CCVars.HolidaysEnabled.Name,         "false"),
-        (CCVars.GameMap.Name,                 "Empty"),
+        (CCVars.GameMap.Name,                 TestMap),
         (CCVars.AdminLogsQueueSendDelay.Name, "0"),
         (CVars.NetPVS.Name,                   "false"),
         (CCVars.NPCMaxUpdates.Name,           "999999"),
@@ -106,15 +109,6 @@ public static class PoolManager
         {
             var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
             var compFactory = IoCManager.Resolve<IComponentFactory>();
-            entSysMan.LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
-            compFactory.RegisterClass<AutoPredictionTestComponent>();
-            entSysMan.LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
-            compFactory.RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
-            entSysMan.LoadExtraSystemType<SystemPredictReconcileTest.SystemPredictionTestEntitySystem>();
-            compFactory.RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
-            IoCManager.Register<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
-            IoCManager.Register<InteractionSystemTests.TestInteractionSystem>();
-            IoCManager.Register<DeviceNetworkTestSystem>();
             entSysMan.LoadExtraSystemType<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
             entSysMan.LoadExtraSystemType<InteractionSystemTests.TestInteractionSystem>();
             entSysMan.LoadExtraSystemType<DeviceNetworkTestSystem>();
@@ -210,14 +204,8 @@ public static class PoolManager
             {
                 ClientBeforeIoC = () =>
                 {
-                    var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
-                    var compFactory = IoCManager.Resolve<IComponentFactory>();
-                    entSysMan.LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
-                    compFactory.RegisterClass<AutoPredictionTestComponent>();
-                    entSysMan.LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
-                    compFactory.RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
-                    entSysMan.LoadExtraSystemType<SystemPredictReconcileTest.SystemPredictionTestEntitySystem>();
-                    compFactory.RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
+                    // do not register extra systems or components here -- they will get cleared when the client is
+                    // disconnected. just use reflection.
                     IoCManager.Register<IParallaxManager, DummyParallaxManager>(true);
                     IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
                     IoCManager.Resolve<IConfigurationManager>()
@@ -310,8 +298,12 @@ public static class PoolManager
                     await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Suitable pair found");
                     var canSkip = pair.Settings.CanFastRecycle(poolSettings);
 
+                    var cCfg = pair.Client.ResolveDependency<IConfigurationManager>();
+                    cCfg.SetCVar(CCVars.NetInterp, !poolSettings.DisableInterpolate);
+
                     if (canSkip)
                     {
+                        ValidateFastRecycle(pair);
                         await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleanup not needed, Skipping cleanup of pair");
                     }
                     else
@@ -319,6 +311,11 @@ public static class PoolManager
                         await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleaning existing pair");
                         await CleanPooledPair(poolSettings, pair, testOut);
                     }
+
+                    // Ensure client is 1 tick ahead of server? I don't think theres a real reason for why it should be
+                    // 1 tick specifically, I am just ensuring consistency with CreateServerClientPair()
+                    if (!pair.Settings.NotConnected)
+                        await SyncTicks(pair, targetDelta: 1);
                 }
                 else
                 {
@@ -355,6 +352,36 @@ public static class PoolManager
             Pair = pair,
             UsageWatch = usageWatch
         };
+    }
+
+    private static void ValidateFastRecycle(Pair pair)
+    {
+        if (pair.Settings.NoClient || pair.Settings.NoServer)
+            return;
+
+        var baseClient = pair.Client.ResolveDependency<IBaseClient>();
+        var netMan = pair.Client.ResolveDependency<INetManager>();
+        Assert.That(netMan.IsConnected, Is.Not.EqualTo(pair.Settings.NotConnected));
+
+        if (pair.Settings.NotConnected)
+            return;
+
+        Assert.That(baseClient.RunLevel, Is.EqualTo(ClientRunLevel.InGame));
+
+        var cPlayer = pair.Client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
+        var sPlayer = pair.Server.ResolveDependency<IPlayerManager>();
+        Assert.That(sPlayer.Sessions.Count(), Is.EqualTo(1));
+        Assert.That(cPlayer.LocalPlayer?.Session?.UserId, Is.EqualTo(sPlayer.Sessions.Single().UserId));
+
+        var ticker = pair.Server.ResolveDependency<EntityManager>().System<GameTicker>();
+        Assert.That(ticker.DummyTicker, Is.EqualTo(pair.Settings.DummyTicker));
+
+        var status = ticker.PlayerGameStatuses[sPlayer.Sessions.Single().UserId];
+        var expected = pair.Settings.InLobby
+            ? PlayerGameStatus.NotReadyToPlay
+            : PlayerGameStatus.JoinedGame;
+
+        Assert.That(status, Is.EqualTo(expected));
     }
 
     private static Pair GrabOptimalPair(PoolSettings poolSettings)
@@ -410,10 +437,10 @@ public static class PoolManager
         var configManager = pair.Server.ResolveDependency<IConfigurationManager>();
         var entityManager = pair.Server.ResolveDependency<IEntityManager>();
         var gameTicker = entityManager.System<GameTicker>();
-        await pair.Server.WaitPost(() =>
-        {
-            configManager.SetCVar(CCVars.GameLobbyEnabled, poolSettings.InLobby);
-        });
+
+        configManager.SetCVar(CCVars.GameLobbyEnabled, poolSettings.InLobby);
+        configManager.SetCVar(CCVars.GameMap, TestMap);
+
         var cNetMgr = pair.Client.ResolveDependency<IClientNetManager>();
         if (!cNetMgr.IsConnected)
         {
@@ -475,21 +502,21 @@ public static class PoolManager
             }
         }
 
+        configManager.SetCVar(CCVars.GameMap, poolSettings.Map);
         await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Restarting server again");
-        await pair.Server.WaitPost(() =>
-        {
-            gameTicker.RestartRound();
-        });
 
+        configManager.SetCVar(CCVars.GameMap, poolSettings.Map);
+        configManager.SetCVar(CCVars.GameDummyTicker, poolSettings.DummyTicker);
+        await pair.Server.WaitPost(() => gameTicker.RestartRound());
 
         if (!poolSettings.NotConnected)
         {
             await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Connecting client");
             await ReallyBeIdle(pair);
             pair.Client.SetConnectTarget(pair.Server);
+            var netMgr = pair.Client.ResolveDependency<IClientNetManager>();
             await pair.Client.WaitPost(() =>
             {
-                var netMgr = IoCManager.Resolve<IClientNetManager>();
                 if (!netMgr.IsConnected)
                 {
                     netMgr.ClientConnect(null!, 0, null!);
@@ -632,6 +659,31 @@ we are just going to end this here to save a lot of time. This is the exception 
     }
 
     /// <summary>
+    /// Run the server/clients until the ticks are synchronized.
+    /// By default the client will be one tick ahead of the server.
+    /// </summary>
+    public static async Task SyncTicks(Pair pair, int targetDelta = 1)
+    {
+        var sTiming = pair.Server.ResolveDependency<IGameTiming>();
+        var cTiming = pair.Client.ResolveDependency<IGameTiming>();
+        var sTick = (int)sTiming.CurTick.Value;
+        var cTick = (int)cTiming.CurTick.Value;
+        var delta = cTick - sTick;
+
+        if (delta == targetDelta)
+            return;
+        if (delta > targetDelta)
+            await pair.Server.WaitRunTicks(delta - targetDelta);
+        else
+            await pair.Client.WaitRunTicks(targetDelta - delta);
+
+        sTick = (int)sTiming.CurTick.Value;
+        cTick = (int)cTiming.CurTick.Value;
+        delta = cTick - sTick;
+        Assert.That(delta, Is.EqualTo(targetDelta));
+    }
+
+    /// <summary>
     /// Runs a server, or a client until a condition is true
     /// </summary>
     /// <param name="instance">The server or client</param>
@@ -717,12 +769,12 @@ public sealed class PoolSettings
     /// <summary>
     /// If the returned pair must not be reused
     /// </summary>
-    public bool MustNotBeReused => Destructive || NoLoadContent || DisableInterpolate || DummyTicker || NoToolsExtraPrototypes;
+    public bool MustNotBeReused => Destructive || NoLoadContent || NoToolsExtraPrototypes;
 
     /// <summary>
     /// If the given pair must be brand new
     /// </summary>
-    public bool MustBeNew => Fresh || NoLoadContent || DisableInterpolate || DummyTicker || NoToolsExtraPrototypes;
+    public bool MustBeNew => Fresh || NoLoadContent || NoToolsExtraPrototypes;
 
     /// <summary>
     /// If the given pair must not be connected
@@ -751,6 +803,7 @@ public sealed class PoolSettings
 
     /// <summary>
     /// Set to true if the given server/client pair should be in the lobby.
+    /// If the pair is not in the lobby at the end of the test, this test must be marked as dirty.
     /// </summary>
     public bool InLobby { get; init; }
 
@@ -778,7 +831,7 @@ public sealed class PoolSettings
     /// <summary>
     /// Set this to the path of a map to have the given server/client pair load the map.
     /// </summary>
-    public string Map { get; init; } // TODO for map painter
+    public string Map { get; init; } = PoolManager.TestMap;
 
     /// <summary>
     /// Set to true if the test won't use the client (so we can skip cleaning it up)
@@ -802,17 +855,21 @@ public sealed class PoolSettings
     /// <returns>If we can skip cleaning it up</returns>
     public bool CanFastRecycle(PoolSettings nextSettings)
     {
-        if (Dirty) return false;
-        if (Destructive || nextSettings.Destructive) return false;
-        if (NotConnected != nextSettings.NotConnected) return false;
-        if (InLobby != nextSettings.InLobby) return false;
-        if (DisableInterpolate != nextSettings.DisableInterpolate) return false;
-        if (nextSettings.DummyTicker) return false;
-        if (Map != nextSettings.Map) return false;
-        if (NoLoadContent != nextSettings.NoLoadContent) return false;
-        if (nextSettings.Fresh) return false;
-        if (ExtraPrototypes != nextSettings.ExtraPrototypes) return false;
-        return true;
+        if (MustNotBeReused)
+            throw new InvalidOperationException("Attempting to recycle a non-reusable test.");
+
+        if (nextSettings.MustBeNew)
+            throw new InvalidOperationException("Attempting to recycle a test while requesting a fresh test.");
+
+        if (Dirty)
+            return false;
+
+        // Check that certain settings match.
+        return NotConnected == nextSettings.NotConnected
+               && DummyTicker == nextSettings.DummyTicker
+               && Map == nextSettings.Map
+               && InLobby == nextSettings.InLobby
+               && ExtraPrototypes == nextSettings.ExtraPrototypes;
     }
 
     // Prototype hot reload is not available outside TOOLS builds,
