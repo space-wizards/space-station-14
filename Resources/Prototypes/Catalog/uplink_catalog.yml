@@ -100,7 +100,17 @@
       blacklist:
         tags:
           - NukeOpsUplink
-          
+
+- type: listing
+  id: UplinkChainsaw
+  name: uplink-chainsaw
+  description: uplink-chainsaw-desc
+  productEntity: Chainsaw
+  cost:
+    Telecrystal: 14
+  categories:
+  - UplinkWeapons
+
 # Explosives
 
 - type: listing
