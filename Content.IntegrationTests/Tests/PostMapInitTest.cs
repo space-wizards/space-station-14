@@ -150,7 +150,7 @@ namespace Content.IntegrationTests.Tests
                     var mapNames = new List<string>();
                     var naughty = new HashSet<string>()
                     {
-                        "Empty",
+                        PoolManager.TestMap,
                         "Infiltrator",
                         "Pirate",
                     };
