@@ -7,6 +7,10 @@ using Content.Server.Mind;
 using Robust.Shared.Log;
 using Content.Server.Mindshield.Components;
 using Content.Shared.Implants;
+using Content.Shared.Revolutionary;
+using Content.Server.Popups;
+using Robust.Shared.Containers;
+using System.Xml.Linq;
 
 namespace Content.Server.Mindshield;
 /// <summary>
@@ -16,6 +20,8 @@ public sealed class MindShieldSystem : EntitySystem
 {
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -23,12 +29,23 @@ public sealed class MindShieldSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnJobAssigned);
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerJoin);
         //SubscribeLocalEvent<ImplantEvent>(Implanted);
         //SubscribeLocalEvent<MindShieldComponent, ComponentInit>(OnMindShieldActivated);
     }
     private void OnJobAssigned(RulePlayerJobsAssignedEvent ev)
     {
-        var players = ev.Players;
+        ApplyMindShield();
+    }
+    private void OnPlayerJoin(PlayerSpawnCompleteEvent ev)
+    {
+        ApplyMindShield();
+    }
+    /// <summary>
+    /// On round start and when players join, they will be given the Mindshield component to prevent conversion.
+    /// </summary>
+    private void ApplyMindShield()
+    {
         var shield = AllEntityQuery<ImplantedComponent>();
         while (shield.MoveNext(out var uid, out var comp))
         {
@@ -40,11 +57,25 @@ public sealed class MindShieldSystem : EntitySystem
                 {
                     if (Name(implant) == "mind-shield implant" && mind.OwnedEntity != null)
                     {
-                        AddComp<MindShieldComponent>(mind.OwnedEntity.Value);
+                        EnsureComp<MindShieldComponent>(mind.OwnedEntity.Value);
+                        var name = mind.CharacterName;
+                        if (HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity.Value))
+                        {
+                            _popup.PopupEntity(Loc.GetString("head-rev-break-mindshield"), mind.OwnedEntity.Value);
+                            _sharedContainer.TryRemoveFromContainer(implant, true);
+                            break;
+                        }
+                        if (HasComp<RevolutionaryComponent>(mind.OwnedEntity.Value) && !HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity.Value))
+                        {
+                            RemComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
+                            if (name != null)
+                            {
+                                _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), mind.OwnedEntity.Value);
+                            }
+                        }
                     }
                 }
             }
         }
     }
-   
 }

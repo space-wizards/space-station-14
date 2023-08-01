@@ -124,7 +124,6 @@ namespace Content.Server.Flash
 
         public void Flash(EntityUid target, EntityUid? user, EntityUid? used, float flashDuration, float slowTo, bool displayPopup = true, FlashableComponent? flashable = null)
         {
-            var stunTime = TimeSpan.FromSeconds(3);
             if (!Resolve(target, ref flashable, false)) return;
 
             var attempt = new FlashAttemptEvent(target, user, used);
@@ -140,9 +139,23 @@ namespace Content.Server.Flash
             _stun.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                 slowTo, slowTo);
 
-            //For Rev conversion (This probably shouldn't go in each and every flash but I'm honestly not sure where or how to put this somewhere else.)
-            if (HasComp<HeadRevolutionaryComponent>(user) && !HasComp<RevolutionaryComponent>(target) && !HasComp<HeadRevolutionaryComponent>(target) &&
-                !HasComp<MindShieldComponent>(target))
+            if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
+            {
+                user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
+                    ("user", Identity.Entity(user.Value, EntityManager))));
+            }
+            if (HasComp<HeadRevolutionaryComponent>(user))
+            {
+                OnPostFlash(target, user, used);
+            }
+        }
+        /// <summary>
+        /// Called when a Head Rev uses a flash in melee to convert somebody else.
+        /// </summary>
+        public void OnPostFlash(EntityUid target, EntityUid? user, EntityUid? used)
+        {
+            var stunTime = TimeSpan.FromSeconds(3);
+            if (!HasComp<RevolutionaryComponent>(target) && !HasComp<HeadRevolutionaryComponent>(target) && !HasComp<MindShieldComponent>(target))
             {
                 var mind = _mind.GetMind(target);
                 if (mind != null && mind.OwnedEntity != null && used != null)
@@ -162,17 +175,6 @@ namespace Content.Server.Flash
                     }
                 }
             }
-
-            if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
-            {
-                user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
-                    ("user", Identity.Entity(user.Value, EntityManager))));
-            }
-        }
-
-        public void OnPostFlash(EntityUid target, EntityUid user)
-        {
-
         }
 
         public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0.8f, bool displayPopup = false, SoundSpecifier? sound = null)

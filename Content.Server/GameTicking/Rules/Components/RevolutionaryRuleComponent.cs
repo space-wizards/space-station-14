@@ -2,9 +2,10 @@ using Content.Shared.Roles;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
-
+/// <summary>
+/// Stores mostly info for starting the gamerule and for passing info at the end of the round.
+/// </summary>
 [RegisterComponent, Access(typeof(RevolutionaryRuleSystem))]
-
 public sealed class RevolutionaryRuleComponent : Component
 {
     /// <summary>
