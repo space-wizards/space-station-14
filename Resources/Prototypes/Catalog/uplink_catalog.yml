@@ -1109,7 +1109,7 @@
   cost:
     Telecrystal: 12
   categories:
-  - UplinkJob
+    - UplinkUtility
 
 # Armor
 
