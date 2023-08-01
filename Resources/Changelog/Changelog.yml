@@ -1,9 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Device network addresses now look prettier., type: Tweak}
-  id: 3898
-  time: '2023-05-29T14:56:31.0000000+00:00'
 - author: malchanceux
   changes:
   - {message: Switches and remote signallers can now toggle bolts on linked doors,
@@ -2973,3 +2968,8 @@ Entries:
     type: Fix}
   id: 4397
   time: '2023-08-01T06:10:05.0000000+00:00'
+- author: VasilisThePikachu
+  changes:
+  - {message: HoP no longer receives QM access., type: Remove}
+  id: 4398
+  time: '2023-08-01T14:02:02.0000000+00:00'
