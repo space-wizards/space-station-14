@@ -787,7 +787,6 @@ public sealed class PoolSettings
     /// </summary>
     public bool Disconnected { get; init; }
 
-    // TODO add a check to verify that clean InLobby pairs as still in the lobby when returned.
     /// <summary>
     /// Set to true if the given server/client pair should be in the lobby.
     /// If the pair is not in the lobby at the end of the test, this test must be marked as dirty.
