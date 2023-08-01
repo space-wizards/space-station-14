@@ -9,7 +9,6 @@ using Content.IntegrationTests.Tests;
 using Content.IntegrationTests.Tests.Destructible;
 using Content.IntegrationTests.Tests.DeviceNetwork;
 using Content.IntegrationTests.Tests.Interaction.Click;
-using Content.IntegrationTests.Tests.Networking;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
@@ -110,15 +109,6 @@ public static class PoolManager
         {
             var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
             var compFactory = IoCManager.Resolve<IComponentFactory>();
-            entSysMan.LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
-            compFactory.RegisterClass<AutoPredictionTestComponent>();
-            entSysMan.LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
-            compFactory.RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
-            entSysMan.LoadExtraSystemType<SystemPredictReconcileTest.SystemPredictionTestEntitySystem>();
-            compFactory.RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
-            IoCManager.Register<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
-            IoCManager.Register<InteractionSystemTests.TestInteractionSystem>();
-            IoCManager.Register<DeviceNetworkTestSystem>();
             entSysMan.LoadExtraSystemType<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
             entSysMan.LoadExtraSystemType<InteractionSystemTests.TestInteractionSystem>();
             entSysMan.LoadExtraSystemType<DeviceNetworkTestSystem>();
@@ -214,14 +204,8 @@ public static class PoolManager
             {
                 ClientBeforeIoC = () =>
                 {
-                    var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
-                    var compFactory = IoCManager.Resolve<IComponentFactory>();
-                    entSysMan.LoadExtraSystemType<AutoPredictReconcileTest.AutoPredictionTestEntitySystem>();
-                    compFactory.RegisterClass<AutoPredictionTestComponent>();
-                    entSysMan.LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
-                    compFactory.RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
-                    entSysMan.LoadExtraSystemType<SystemPredictReconcileTest.SystemPredictionTestEntitySystem>();
-                    compFactory.RegisterClass<SystemPredictReconcileTest.SystemPredictionTestComponent>();
+                    // do not register extra systems or components here -- they will get cleared when the client is
+                    // disconnected. just use reflection.
                     IoCManager.Register<IParallaxManager, DummyParallaxManager>(true);
                     IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
                     IoCManager.Resolve<IConfigurationManager>()
