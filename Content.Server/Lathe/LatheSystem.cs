@@ -49,6 +49,7 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUserInterfaceState(u, c));
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
+            SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
         }
 
         public override void Update(float frameTime)
@@ -199,16 +200,21 @@ namespace Content.Server.Lathe
                     continue;
                 args.Recipes.Add(recipe);
             }
+        }
 
-            if (HasComp<EmaggedComponent>(uid))
+        private void GetEmagLatheRecipes(EntityUid uid, EmagLatheRecipesComponent component, LatheGetRecipesEvent args)
+        {
+            if (uid != args.Lathe || !TryComp<TechnologyDatabaseComponent>(uid, out var technologyDatabase))
+                return;
+            if (HasComp<EmaggedComponent>(uid)) 
             {
-                foreach (var recipe in latheComponent.EmagDynamicRecipes)
+                foreach (var recipe in component.EmagDynamicRecipes)
                 {
-                    if (!component.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
+                    if (!technologyDatabase.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
                         continue;
                     args.Recipes.Add(recipe);
                 }
-                foreach (var recipe in latheComponent.EmagStaticRecipes)
+                foreach (var recipe in component.EmagStaticRecipes)
                 {
                     args.Recipes.Add(recipe);
                 }
