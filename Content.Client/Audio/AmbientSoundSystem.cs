@@ -292,7 +292,7 @@ namespace Content.Client.Audio
                     var audioParams = _params
                         .AddVolume(comp.Volume + _ambienceVolume)
                         // Randomise start so 2 sources don't increase their volume.
-                        .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
+                        // .WithPlayOffset(_random.NextFloat(0.0f, 100.0f)) // This is causing errors on Mac OS: "SetPlaybackPosition: InvalidValue".
                         .WithMaxDistance(comp.Range);
 
                     var stream = _audio.PlayPvs(comp.Sound, uid, audioParams);
