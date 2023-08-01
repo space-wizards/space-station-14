@@ -31,19 +31,24 @@ public sealed class EmpSystem : SharedEmpSystem
     {
         foreach (var uid in _lookup.GetEntitiesInRange(coordinates, range))
         {
-            var ev = new EmpPulseEvent(energyConsumption, false, false, TimeSpan.FromSeconds(duration));
-            RaiseLocalEvent(uid, ref ev);
-            if (ev.Affected)
-            {
-                Spawn(EmpDisabledEffectPrototype, Transform(uid).Coordinates);
-            }
-            if (ev.Disabled)
-            {
-                var disabled = EnsureComp<EmpDisabledComponent>(uid);
-                disabled.DisabledUntil = Timing.CurTime + TimeSpan.FromSeconds(duration);
-            }
+            DoEmp(uid, energyConsumption, duration);
         }
         Spawn(EmpPulseEffectPrototype, coordinates);
+    }
+
+    public void DoEmp(EntityUid uid, float energyConsumption, float duration)
+    {
+        var ev = new EmpPulseEvent(energyConsumption, false, false, TimeSpan.FromSeconds(duration));
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.Affected)
+        {
+            Spawn(EmpDisabledEffectPrototype, Transform(uid).Coordinates);
+        }
+        if (ev.Disabled)
+        {
+            var disabled = EnsureComp<EmpDisabledComponent>(uid);
+            disabled.DisabledUntil = Timing.CurTime + TimeSpan.FromSeconds(duration);
+        }
     }
 
     public override void Update(float frameTime)
