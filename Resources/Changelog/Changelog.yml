@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'All ore veins are guaranteed on expeditions, tripled the vein count,
-      but made it so veins only drop 1 ore each.', type: Tweak}
-  id: 3905
-  time: '2023-05-31T03:40:37.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'Shivs have been rebalanced. The regular glass shiv now does 5.5 damage,
@@ -2980,3 +2974,8 @@ Entries:
   - {message: Admin banning panel has IP bans enabled by default., type: Fix}
   id: 4404
   time: '2023-08-01T21:05:14.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Captains will now start with their gloves and carapace again, type: Tweak}
+  id: 4405
+  time: '2023-08-01T21:10:36.0000000+00:00'
