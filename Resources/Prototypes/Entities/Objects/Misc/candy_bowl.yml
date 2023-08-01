@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseStructureDynamic
+  parent: BaseItem
   id: CandyBowl
   name: "candy bowl"
   description: Grab as much as you can fit in your pockets!
@@ -53,7 +53,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.10,-0.10,0.10,0.10"
-        density: 500
+        density: 3
         mask:
           - TabletopMachineMask
   - type: InteractionOutline
