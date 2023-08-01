@@ -823,3 +823,13 @@
   id: rocksandstones
   flavorType: Complex
   description: flavor-complex-rocksandstones
+
+- type: flavor
+  id: spaceshroom
+  flavorType: Base
+  description: flavor-base-spaceshroom
+
+- type: flavor
+  id: spaceshroomcooked
+  flavorType: Complex
+  description: flavor-complex-spaceshroom-cooked
