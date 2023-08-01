@@ -4,6 +4,7 @@ using Content.Server.DoAfter;
 using Content.Server.Electrocution;
 using Content.Server.EUI;
 using Content.Server.Ghost;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
@@ -42,6 +43,7 @@ public sealed class DefibrillatorSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -222,7 +224,7 @@ public sealed class DefibrillatorSystem : EntitySystem
             _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
             _mobThreshold.SetAllowRevives(target, false, thresholds);
 
-            if (TryComp<MindComponent>(target, out var mindComp) &&
+            if (TryComp<MindContainerComponent>(target, out var mindComp) &&
                 mindComp.Mind?.Session is { } playerSession)
             {
                 session = playerSession;
@@ -231,7 +233,7 @@ public sealed class DefibrillatorSystem : EntitySystem
                 {
                     _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-ghosted"),
                         InGameICChatType.Speak, true);
-                    _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind), session);
+                    _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind, _mind), session);
                 }
             }
             else

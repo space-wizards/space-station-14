@@ -13,6 +13,7 @@ guide-entry-controls = Controls
 guide-entry-radio = Radio
 guide-entry-jobs = Jobs
 guide-entry-cargo = Cargo
+guide-entry-cargo-bounties = Cargo Bounties
 guide-entry-salvage = Salvage
 guide-entry-survival = Survival
 guide-entry-chemicals = Chemicals
@@ -40,3 +41,6 @@ guide-entry-robotics = Robotics
 
 guide-entry-security = Security
 guide-entry-dna = DNA
+
+guide-entry-antagonists = Antagonists
+guide-entry-nuclear-operatives = Nuclear Operatives

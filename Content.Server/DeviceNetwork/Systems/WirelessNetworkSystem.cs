@@ -21,8 +21,8 @@ namespace Content.Server.DeviceNetwork.Systems
             var xform = Transform(uid);
 
             if (xform.MapID != args.SenderTransform.MapID
-                || !TryComp<WirelessNetworkComponent?>(args.Sender, out var sendingComponent)
-                || (ownPosition - xform.WorldPosition).Length > sendingComponent.Range)
+                || !TryComp<WirelessNetworkComponent>(args.Sender, out var sendingComponent)
+                || (ownPosition - xform.WorldPosition).Length() > sendingComponent.Range)
             {
                 args.Cancel();
             }

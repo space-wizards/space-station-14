@@ -7,6 +7,8 @@ chat-manager-looc-chat-enabled-message = LOOC chat has been enabled.
 chat-manager-looc-chat-disabled-message = LOOC chat has been disabled.
 chat-manager-dead-looc-chat-enabled-message = Dead players can now use LOOC.
 chat-manager-dead-looc-chat-disabled-message = Dead players can no longer use LOOC.
+chat-manager-crit-looc-chat-enabled-message = Crit players can now use LOOC.
+chat-manager-crit-looc-chat-disabled-message = Crit players can no longer use LOOC.
 chat-manager-admin-ooc-chat-enabled-message = Admin OOC chat has been enabled.
 chat-manager-admin-ooc-chat-disabled-message = Admin OOC chat has been disabled.
 chat-manager-max-message-length-exceeded-message = Your message exceeded {$limit} character limit
@@ -19,6 +21,7 @@ chat-manager-sender-announcement-wrap-message = {$sender} Announcement:
                                                 {$message}
 chat-manager-entity-say-wrap-message = {$entityName} says, "{$message}"
 chat-manager-entity-whisper-wrap-message = {$entityName} whispers, "{$message}"
+chat-manager-entity-whisper-unknown-wrap-message = Someone whispers, "{$message}"
 chat-manager-entity-me-wrap-message = {$entityName} {$message}
 chat-manager-entity-looc-wrap-message = LOOC: {$entityName}: {$message}
 chat-manager-send-ooc-wrap-message = OOC: {$playerName}: {$message}

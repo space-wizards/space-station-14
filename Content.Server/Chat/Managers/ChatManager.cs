@@ -116,20 +116,19 @@ namespace Content.Server.Chat.Managers
             ChatMessageToMany(ChatChannel.AdminAlert, message, wrappedMessage, default, false, true, clients);
         }
 
-        public void SendAdminAlert(EntityUid player, string message, MindComponent? mindComponent = null)
+        public void SendAdminAlert(EntityUid player, string message, MindContainerComponent? mindContainerComponent = null)
         {
-            if((mindComponent == null && !_entityManager.TryGetComponent(player, out mindComponent))
-               || mindComponent.Mind == null)
+            if ((mindContainerComponent == null && !_entityManager.TryGetComponent(player, out mindContainerComponent)) || !mindContainerComponent.HasMind)
             {
                 SendAdminAlert(message);
                 return;
             }
 
             var adminSystem = _entityManager.System<AdminSystem>();
-            var antag = mindComponent.Mind!.UserId != null
-                        && (adminSystem.GetCachedPlayerInfo(mindComponent.Mind!.UserId.Value)?.Antag ?? false);
+            var antag = mindContainerComponent.Mind!.UserId != null
+                        && (adminSystem.GetCachedPlayerInfo(mindContainerComponent.Mind!.UserId.Value)?.Antag ?? false);
 
-            SendAdminAlert($"{mindComponent.Mind!.Session?.Name}{(antag ? " (ANTAG)" : "")} {message}");
+            SendAdminAlert($"{mindContainerComponent.Mind!.Session?.Name}{(antag ? " (ANTAG)" : "")} {message}");
         }
 
         public void SendHookOOC(string sender, string message)
