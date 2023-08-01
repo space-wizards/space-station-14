@@ -7,15 +7,9 @@
     contents:
       - id: ClothingNeckCloakQm
       - id: ClothingHeadsetCargo
-      - id: PlushieLizard
-        prob: 0.1
       - id: ClothingHandsGlovesColorBrown
-      - id: ClothingOuterSuitFire
-        prob: 0.5
       - id: ClothingShoesColorBrown
-        prob: 0.7
       - id: ClothingHeadHatQMsoft
-        prob: 0.8
       - id: CargoRequestComputerCircuitboard
       - id: CargoShuttleComputerCircuitboard
       - id: CargoShuttleConsoleCircuitboard
@@ -112,12 +106,10 @@
       - id: IDComputerCircuitboard
       - id: WeaponDisabler
       - id: ClothingShoesColorBlack
-        prob: 0.7
-      - id: PlushieLizard
-        prob: 0.1
       - id: CigarGoldCase
-        prob: 0.10
+        prob: 0.25
         # Fuck the HoP they don't deserve fucking cigars.
+        # Yes they do fuck you.
       - id: DoorRemoteService
       - id: ClothingNeckGoldmedal
       - id: RubberStampHop
@@ -189,7 +181,6 @@
       - id: ClothingOuterHardsuitMedical
       - id: DiagnoserMachineCircuitboard
       - id: VaccinatorMachineCircuitboard
-        prob: 0.25
       - id: Hypospray
       - id: HandheldCrewMonitor
       - id: DoorRemoteMedical
@@ -217,7 +208,6 @@
       - id: ClothingHeadHatBeretCmo
       - id: DiagnoserMachineCircuitboard
       - id: VaccinatorMachineCircuitboard
-        prob: 0.25
       - id: Hypospray
       - id: HandheldCrewMonitor
       - id: DoorRemoteMedical
@@ -241,8 +231,6 @@
       - id: ClothingHeadsetMedicalScience
       - id: ClothingOuterHardsuitRd
       - id: HandTeleporter
-      - id: PlushieSlime
-        prob: 0.1
       - id: DoorRemoteResearch
       - id: ClothingHeadHatBeretRND
       - id: RubberStampRd
@@ -263,8 +251,6 @@
       - id: ClothingNeckCloakRd
       - id: ClothingHeadsetMedicalScience
       - id: HandTeleporter
-      - id: PlushieSlime
-        prob: 0.1
       - id: DoorRemoteResearch
       - id: ClothingHeadHatBeretRND
       - id: RubberStampRd
@@ -286,28 +272,14 @@
       - id: ClothingOuterCoatHoSTrench
       - id: ClothingUniformJumpskirtHoSAlt
       - id: ClothingUniformJumpsuitHoSAlt
-      - id: ClothingUniformJumpsuitHoSBlue
-        prob: 0.5
-      - id: ClothingUniformJumpsuitHoSGrey
-        prob: 0.5
-      - id: ClothingUniformJumpsuitHoSParadeMale
-        prob: 0.1
-      - id: ClothingUniformJumpskirtHoSParadeMale
-        prob: 0.1
       - id: ClothingOuterHardsuitSecurityRed
       - id: ClothingMaskGasSwat
-      - id: ClothingShoeSlippersDuck
-        prob: 0.2
-      - id: DrinkVacuumFlask
-        prob: 0.8
       - id: ClothingBeltSecurityFilled
       - id: ClothingHeadsetAltSecurity
       - id: ClothingEyesGlassesSecurity
       - id: ClothingShoesBootsJack
       - id: CigarGoldCase
         prob: 0.50
-      - id: PlushieSharkPink
-        prob: 0.1
       - id: DoorRemoteSecurity
       - id: ClothingUniformJumpskirtHosFormal
       - id: ClothingUniformJumpsuitHosFormal
@@ -331,26 +303,12 @@
       - id: ClothingOuterCoatHoSTrench
       - id: ClothingUniformJumpskirtHoSAlt
       - id: ClothingUniformJumpsuitHoSAlt
-      - id: ClothingUniformJumpsuitHoSBlue
-        prob: 0.5
-      - id: ClothingUniformJumpsuitHoSGrey
-        prob: 0.5
-      - id: ClothingUniformJumpsuitHoSParadeMale
-        prob: 0.1
-      - id: ClothingUniformJumpskirtHoSParadeMale
-        prob: 0.1
-      - id: ClothingShoeSlippersDuck
-        prob: 0.2
-      - id: DrinkVacuumFlask
-        prob: 0.8
       - id: ClothingBeltSecurityFilled
       - id: ClothingHeadsetAltSecurity
       - id: ClothingEyesGlassesSecurity
       - id: ClothingShoesBootsJack
       - id: CigarGoldCase
         prob: 0.50
-      - id: PlushieSharkPink
-        prob: 0.1
       - id: DoorRemoteSecurity
       - id: ClothingUniformJumpskirtHosFormal
       - id: ClothingUniformJumpsuitHosFormal

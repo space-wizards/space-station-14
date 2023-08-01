@@ -439,7 +439,10 @@ public sealed class MindSystem : EntitySystem
         }
 
         if (mind.OwnedComponent != null)
+        {
             InternalAssignMind(mind.OwnedEntity!.Value, mind, mind.OwnedComponent);
+            mind.OriginalOwnedEntity ??= mind.OwnedEntity;
+        }
     }
 
     /// <summary>

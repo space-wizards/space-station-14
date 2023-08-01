@@ -6031,7 +6031,7 @@ entities:
     - pos: -5.7255287,20.539352
       parent: 104
       type: Transform
-- proto: GeneratorPlasma
+- proto: GeneratorBasic15kW
   entities:
   - uid: 2326
     components:

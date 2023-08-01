@@ -705,6 +705,13 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AdminShowPIIOnBan =
             CVarDef.Create("admin.show_pii_onban", false, CVar.SERVERONLY);
 
+        /// <summary>
+        /// If an admin joins a round by reading up or using the late join button, automatically
+        /// de-admin them.
+        /// </summary>
+        public static readonly CVarDef<bool> AdminDeadminOnJoin =
+            CVarDef.Create("admin.deadmin_on_join", false, CVar.SERVERONLY);
+
         /*
          * Explosions
          */

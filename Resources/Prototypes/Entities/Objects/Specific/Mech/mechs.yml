@@ -151,7 +151,7 @@
   id: MechHamtr
   parent: BaseMech
   name: HAMTR
-  description: "An experimental mech which uses a neuralink to interface directly to a hamsters brain."
+  description: "An experimental mech which uses a brain–computer interface to connect directly to a hamsters brain."
   components:
   - type: Sprite
     drawdepth: Mobs
