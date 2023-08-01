@@ -29,6 +29,9 @@
   - Maintenance
   - Chemistry
   - ChiefMedicalOfficer
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: CMOGear

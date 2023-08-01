@@ -20,6 +20,9 @@
   - Command
   - Maintenance
   - ResearchDirector
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: ResearchDirectorGear

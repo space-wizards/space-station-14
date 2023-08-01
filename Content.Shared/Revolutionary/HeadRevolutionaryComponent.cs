@@ -8,5 +8,4 @@ namespace Content.Shared.Revolutionary;
 /// </summary>
 public sealed class HeadRevolutionaryComponent : Component
 {
-
 }

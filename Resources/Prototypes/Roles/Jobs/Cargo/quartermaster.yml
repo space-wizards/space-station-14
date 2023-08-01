@@ -27,6 +27,9 @@
   - Maintenance
   - External
   - Command
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: QuartermasterGear

@@ -31,6 +31,7 @@ using Content.Server.NPC.Systems;
 using Content.Shared.Stunnable;
 using Content.Server.Revolutionary;
 using Content.Server.Chat.Managers;
+using Content.Server.Mindshield.Components;
 
 namespace Content.Server.Flash
 {
@@ -58,7 +59,6 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
             // ran before toggling light for extra-bright lantern
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand, before: new []{ typeof(HandheldLightSystem) });
-            //SubscribeLocalEvent<FlashComponent, PostFlashActionEvent>(OnPostFlash);
 
             SubscribeLocalEvent<InventoryComponent, FlashAttemptEvent>(OnInventoryFlashAttempt);
 
@@ -142,7 +142,7 @@ namespace Content.Server.Flash
 
             //For Rev conversion (This probably shouldn't go in each and every flash but I'm honestly not sure where or how to put this somewhere else.)
             if (HasComp<HeadRevolutionaryComponent>(user) && !HasComp<RevolutionaryComponent>(target) && !HasComp<HeadRevolutionaryComponent>(target) &&
-                !HasComp<HeadComponent>(target))
+                !HasComp<MindShieldComponent>(target))
             {
                 var mind = _mind.GetMind(target);
                 if (mind != null && mind.OwnedEntity != null && used != null)
@@ -154,7 +154,6 @@ namespace Content.Server.Flash
                     AddComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
                     _charges.AddCharges(used.Value, 1);
                     _sharedStun.TryParalyze(mind.OwnedEntity.Value, stunTime, true);
-
                     if (mind.Session != null)
                     {
                         var message = Loc.GetString("rev-role-greeting");
@@ -248,9 +247,4 @@ namespace Content.Server.Flash
         }
     }
 
-    public sealed class PostFlashActionEvent
-    {
-        public readonly EntityUid Target;
-        public readonly EntityUid User;
-    }
 }

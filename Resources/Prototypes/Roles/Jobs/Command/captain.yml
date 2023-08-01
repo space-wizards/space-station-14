@@ -25,6 +25,9 @@
   canBeAntag: false
   accessGroups:
   - AllAccess
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: CaptainGear

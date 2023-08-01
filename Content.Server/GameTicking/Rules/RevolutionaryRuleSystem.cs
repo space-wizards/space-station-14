@@ -8,7 +8,6 @@ using Content.Server.Revolutionary;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Station.Systems;
-using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -16,7 +15,6 @@ using Content.Shared.Preferences;
 using Content.Shared.Revolutionary;
 using Content.Shared.Roles;
 using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
@@ -31,7 +29,6 @@ namespace Content.Server.GameTicking.Rules;
 /// </summary>
 public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleComponent>
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
@@ -57,7 +54,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     public override void Initialize()
     {
         base.Initialize();
-        _sawmill = Logger.GetSawmill("preset");
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
@@ -154,7 +150,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (playerList.Count == 0)
             return;
 
-        _sawmill.Error("Math");
+        AssignCommandStaff();
         var headRevs = Math.Clamp(allPlayers.Count / comp.PlayersPerHeadRev, 1, comp.MaxHeadRevs);
         for (var revs = 0; revs < headRevs; revs++)
         {
@@ -173,11 +169,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 playerList.Remove(headRev);
             }
             var mind = headRev.Data.ContentData()?.Mind;
-            if (mind != null)
+            if (mind != null && mind.OwnedEntity != null)
             {
+                EnsureComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
                 GiveHeadRevRole(mind, headRev);
             }
-            AssignCommandStaff();
         }
     }
     /// <summary>
@@ -194,6 +190,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             var inCharacterName = string.Empty;
             if (mind.OwnedEntity != null)
             {
+                if (HasComp<HeadComponent>(mind.OwnedEntity.Value))
+                {
+                    RemComp<HeadComponent>(mind.OwnedEntity.Value);
+                }
                 AddComp<HeadRevolutionaryComponent>(mind.OwnedEntity.Value);
                 AddComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
                 _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>(comp.HeadRevGearPrototypeId), null);
@@ -214,10 +214,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Assigns command staff on station with a component so they can be used later.
     /// </summary>
-    /// <param name="players"></param>
     private void AssignCommandStaff()
     {
-        _sawmill.Error("We made it");
         if (!_assigned)
         {
             _headRoles.Add("Captain");
@@ -235,7 +233,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 if (player.AttachedEntity == null || HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
                 {
                     playerList.Add(player);
-                    _sawmill.Error("Break player?");
                 }
             }
             foreach (var player in playerList)
@@ -247,9 +244,12 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     _sawmill.Error(currentJob);
                     if (mind.OwnedEntity != null && _headRoles.Contains(currentJob))
                     {
-                        EnsureComp<HeadComponent>(mind.OwnedEntity.Value);
-                        _sawmill.Error("Comp added");
-                        _assigned = true;
+                        if (!HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity))
+                        {
+                            EnsureComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
+                            EnsureComp<HeadComponent>(mind.OwnedEntity.Value);
+                            _assigned = true;
+                        }
                     }
                 }
             }
@@ -263,6 +263,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (revRule == null)
         {
             GameTicker.StartGameRule("Revolutionary");
+        }
+        if (mind.OwnedEntity != null)
+        {
+            EnsureComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
             GiveHeadRevRole(mind, headRev);
             AssignCommandStaff();
         }
@@ -287,10 +291,19 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 continue;
 
             var headRevs = EntityQuery<HeadRevolutionaryComponent, MobStateComponent>(true);
-            var aliveHeadRevs = headRevs
-                .Any(ent => ent.Item2.CurrentState != MobState.Dead && ent.Item1.Running);
+            var inRound = 0;
+            var dead = 0;
+            foreach (var rev in headRevs)
+            {
+                if (rev.Item2.CurrentState == MobState.Dead || rev.Item2.CurrentState == MobState.Invalid)
+                {
+                    dead++;
+                }
+                inRound++;
+            }
+
             // If no Head Revs are alive all normal Revs will lose their Rev status and rejoin Nanotrasen
-            if (!aliveHeadRevs)
+            if (dead == inRound)
             {
                 revs.RevsLost = true;
                 var allPlayers = _playerSystem.ServerSessions.ToList();
@@ -304,15 +317,25 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                             _npcFaction.RemoveFaction(mind.OwnedEntity.Value, "Revolutionary");
                             _sharedStun.TryParalyze(mind.OwnedEntity.Value, stunTime, true);
                             RemComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
+                            RemComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
                         }
                 }
             }
             // Checks if all heads are dead to finish the round.
             var heads = EntityQuery<HeadComponent, MobStateComponent>(true);
-            var aliveHeads = heads
-                .Any(ent => ent.Item2.CurrentState != MobState.Dead && ent.Item1.Running);
+            inRound = 0;
+            dead = 0;
+            foreach (var head in heads)
+            {
+                if (head.Item2.CurrentState == MobState.Dead || head.Item2.CurrentState == MobState.Invalid)
+                {
+                    dead++;
+                }
+                inRound++;
+            }
+
             //In the rare instances that no heads are on station at start, I put a timer before this can activate. Might lower it
-            if (!aliveHeads && revs.HeadsDied && _timing.CurTime >= TimeSpan.FromMinutes(revs.GracePeriod))
+            if (dead == inRound && revs.HeadsDied && _timing.CurTime >= TimeSpan.FromMinutes(revs.GracePeriod))
             {
                 revs.HeadsDied = true;
                 foreach (var station in _stationSystem.GetStations())

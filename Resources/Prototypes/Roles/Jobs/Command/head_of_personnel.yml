@@ -48,6 +48,9 @@
   - Cargo
   - Atmospherics
   - Medical
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: HoPGear
