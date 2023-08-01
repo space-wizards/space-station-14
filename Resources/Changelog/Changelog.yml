@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Added brown bandana to cargodrobe, type: Add}
-  id: 3907
-  time: '2023-05-31T04:32:15.0000000+00:00'
 - author: Cripes
   changes:
   - {message: Forensic scanner prints receipts now, type: Add}
@@ -2977,3 +2972,12 @@ Entries:
       round restarting, etc.)', type: Fix}
   id: 4406
   time: '2023-08-01T21:11:50.0000000+00:00'
+- author: PrPleGoo
+  changes:
+  - {message: added an overlay for the security hud that displays job icons, type: Add}
+  - {message: Added some buttons to the Agent ID interface to set the icon on the
+      ID card., type: Add}
+  - {message: Changed the id card computer to also set the icon on the ID when picking
+      a job prototype from the presets., type: Tweak}
+  id: 4407
+  time: '2023-08-01T21:17:03.0000000+00:00'
