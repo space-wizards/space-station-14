@@ -65422,11 +65422,18 @@ entities:
       - EntityStorageComponent
       - entity_storage
       type: Construction
+- proto: CrateNPCChicken
+  entities:
+  - uid: 5597
+    components:
+    - pos: 29.5,-37.5
+      parent: 60
+      type: Transform
 - proto: CrateNPCCow
   entities:
-  - uid: 11281
+  - uid: 2420
     components:
-    - pos: 30.5,-35.5
+    - pos: 30.5,-37.5
       parent: 60
       type: Transform
 - proto: CrateNPCHamlet
@@ -76033,6 +76040,12 @@ entities:
     - pos: -51.5,47.5
       parent: 60
       type: Transform
+  - uid: 8161
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 25.5,-27.5
+      parent: 60
+      type: Transform
   - uid: 8916
     components:
     - rot: 1.5707963267948966 rad
@@ -76913,6 +76926,12 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
+  - uid: 11281
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 26.5,-27.5
+      parent: 60
+      type: Transform
   - uid: 11466
     components:
     - rot: 3.141592653589793 rad
@@ -104339,11 +104358,6 @@ entities:
       pos: -45.5,2.5
       parent: 60
       type: Transform
-  - uid: 5582
-    components:
-    - pos: -39.5,-9.5
-      parent: 60
-      type: Transform
   - uid: 5586
     components:
     - pos: -40.5,-6.5
@@ -104763,11 +104777,6 @@ entities:
   - uid: 6983
     components:
     - pos: -35.5,-12.5
-      parent: 60
-      type: Transform
-  - uid: 7056
-    components:
-    - pos: -39.5,-10.5
       parent: 60
       type: Transform
   - uid: 7067
@@ -119987,6 +119996,12 @@ entities:
       type: Transform
     - powerLoad: 0
       type: ApcPowerReceiver
+  - uid: 5803
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -32.5,19.5
+      parent: 60
+      type: Transform
   - uid: 5863
     components:
     - rot: 3.141592653589793 rad
@@ -120356,13 +120371,6 @@ entities:
   - uid: 17466
     components:
     - pos: -34.5,21.5
-      parent: 60
-      type: Transform
-    - powerLoad: 0
-      type: ApcPowerReceiver
-  - uid: 17467
-    components:
-    - pos: -30.5,21.5
       parent: 60
       type: Transform
     - powerLoad: 0
@@ -124504,11 +124512,6 @@ entities:
     - pos: -23.5,-17.5
       parent: 60
       type: Transform
-  - uid: 5803
-    components:
-    - pos: -39.5,-10.5
-      parent: 60
-      type: Transform
   - uid: 5804
     components:
     - pos: 66.5,-39.5
@@ -124787,11 +124790,6 @@ entities:
   - uid: 7096
     components:
     - pos: -40.5,-7.5
-      parent: 60
-      type: Transform
-  - uid: 7098
-    components:
-    - pos: -39.5,-9.5
       parent: 60
       type: Transform
   - uid: 7106
@@ -127572,15 +127570,6 @@ entities:
     - links:
       - 7088
       type: DeviceLinkSink
-  - uid: 5597
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -39.5,-9.5
-      parent: 60
-      type: Transform
-    - links:
-      - 7088
-      type: DeviceLinkSink
   - uid: 6203
     components:
     - pos: -35.5,-7.5
@@ -127758,15 +127747,6 @@ entities:
       type: Transform
     - links:
       - 11555
-      type: DeviceLinkSink
-  - uid: 8161
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -39.5,-10.5
-      parent: 60
-      type: Transform
-    - links:
-      - 7088
       type: DeviceLinkSink
   - uid: 8381
     components:
@@ -128466,17 +128446,13 @@ entities:
       parent: 60
       type: Transform
     - linkedPorts:
-        7086:
-        - Pressed: Toggle
-        7132:
+        7131:
         - Pressed: Toggle
         5560:
         - Pressed: Toggle
-        7131:
+        7132:
         - Pressed: Toggle
-        5597:
-        - Pressed: Toggle
-        8161:
+        7086:
         - Pressed: Toggle
       type: DeviceLinkSource
   - uid: 7746
@@ -136356,6 +136332,12 @@ entities:
     - pos: -45.5,-3.5
       parent: 60
       type: Transform
+  - uid: 7098
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 27.5,-33.5
+      parent: 60
+      type: Transform
   - uid: 7239
     components:
     - pos: 24.5,-13.5
@@ -139779,13 +139761,6 @@ entities:
     - flags: SessionSpecific
       type: MetaData
     - pos: 42.5,-30.5
-      parent: 60
-      type: Transform
-  - uid: 2420
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: 27.5,-33.5
       parent: 60
       type: Transform
   - uid: 8396
@@ -143855,6 +143830,11 @@ entities:
     - pos: -42.5,1.5
       parent: 60
       type: Transform
+  - uid: 5582
+    components:
+    - pos: -39.5,-10.5
+      parent: 60
+      type: Transform
   - uid: 5599
     components:
     - pos: -44.5,1.5
@@ -144583,6 +144563,11 @@ entities:
   - uid: 7055
     components:
     - pos: -43.5,-11.5
+      parent: 60
+      type: Transform
+  - uid: 7056
+    components:
+    - pos: -39.5,-9.5
       parent: 60
       type: Transform
   - uid: 7058

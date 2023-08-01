@@ -982,7 +982,7 @@ entities:
     - pos: -1.5,-5.5
       parent: 181
       type: Transform
-- proto: GeneratorPlasma
+- proto: GeneratorBasic15kW
   entities:
   - uid: 67
     components:
