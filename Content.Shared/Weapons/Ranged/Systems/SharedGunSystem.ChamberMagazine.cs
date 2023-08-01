@@ -80,6 +80,12 @@ public abstract partial class SharedGunSystem
                     RaiseLocalEvent(magEnt.Value, ref ammoEv);
                     FinaliseMagazineTakeAmmo(uid, component, ammoEv.Count, ammoEv.Capacity, user, appearance);
                     UpdateAmmoCount(uid);
+
+                    // Clientside reconciliation things
+                    foreach (var (ent, _) in relayedArgs.Ammo)
+                    {
+                        Del(ent!.Value);
+                    }
                 }
             }
 
