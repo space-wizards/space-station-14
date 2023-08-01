@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fixed cleanbots., type: Fix}
-  id: 3895
-  time: '2023-05-29T06:53:28.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Cap throwing scaling so bad mass values don't yeet you too far., type: Fix}
   id: 3896
   time: '2023-05-29T07:11:54.0000000+00:00'
@@ -2968,3 +2963,10 @@ Entries:
     type: Fix}
   id: 4394
   time: '2023-07-31T23:15:17.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Anomaly generators now always generate anomalies on the station., type: Fix}
+  - {message: Anomalies should now generate further away from the edges of the station.,
+    type: Fix}
+  id: 4395
+  time: '2023-08-01T04:12:56.0000000+00:00'
