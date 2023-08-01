@@ -9,15 +9,12 @@ public sealed class SolutionScannerSystem : EntitySystem
     {
         SubscribeLocalEvent<SolutionScannerComponent, SolutionScanEvent>(OnSolutionScanAttempt);
         SubscribeLocalEvent<SolutionScannerComponent, InventoryRelayedEvent<SolutionScanEvent>>((e, c, ev) => OnSolutionScanAttempt(e, c, ev.Args));
-
     }
 
-    private static void OnSolutionScanAttempt(EntityUid eid, SolutionScannerComponent component, SolutionScanEvent args)
+    private void OnSolutionScanAttempt(EntityUid eid, SolutionScannerComponent component, SolutionScanEvent args)
     {
         args.CanScan = true;
     }
-
-
 }
 
 public sealed class SolutionScanEvent : EntityEventArgs, IInventoryRelayEvent
