@@ -73,11 +73,10 @@ namespace Content.Shared.Throwing
             if (args.OtherFixture.Hard == false)
                 return;
 
-            var thrower = component.Thrower;
-            if (args.OtherEntity == thrower)
+            if (args.OtherEntity == component.Thrower)
                 return;
 
-            ThrowCollideInteraction(thrower, args.OurEntity, args.OtherEntity);
+            ThrowCollideInteraction(component, args.OurEntity, args.OtherEntity);
         }
 
         private void PreventCollision(EntityUid uid, ThrownItemComponent component, ref PreventCollideEvent args)
@@ -145,14 +144,14 @@ namespace Content.Shared.Throwing
         /// <summary>
         ///     Raises collision events on the thrown and target entities.
         /// </summary>
-        public void ThrowCollideInteraction(EntityUid? user, EntityUid thrown, EntityUid target)
+        public void ThrowCollideInteraction(ThrownItemComponent component, EntityUid thrown, EntityUid target)
         {
-            if (user is not null)
+            if (component.Thrower is not null)
                 _adminLogger.Add(LogType.ThrowHit, LogImpact.Low,
-                    $"{ToPrettyString(thrown):thrown} thrown by {ToPrettyString(user.Value):thrower} hit {ToPrettyString(target):target}.");
+                    $"{ToPrettyString(thrown):thrown} thrown by {ToPrettyString(component.Thrower.Value):thrower} hit {ToPrettyString(target):target}.");
 
-            RaiseLocalEvent(target, new ThrowHitByEvent(user, thrown, target), true);
-            RaiseLocalEvent(thrown, new ThrowDoHitEvent(user, thrown, target), true);
+            RaiseLocalEvent(target, new ThrowHitByEvent(thrown, target, component), true);
+            RaiseLocalEvent(thrown, new ThrowDoHitEvent(thrown, target, component), true);
         }
     }
 }
