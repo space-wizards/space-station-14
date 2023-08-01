@@ -1,7 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.DoAfter;
-using Content.Shared.Interaction.Events;
+using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
@@ -16,15 +16,25 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    /// <inheritdoc/>
-    protected override void OnInteract(EntityUid uid, BatteryDrainerComponent comp, InteractionAttemptEvent args)
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<BatteryDrainerComponent, BeforeRangedInteractEvent>(OnInteract);
+    }
+
+    /// <summary>
+    /// Start do after for draining a power source.
+    /// Can't predict PNBC existing so only done on server.
+    /// </summary>
+    private void OnInteract(EntityUid uid, BatteryDrainerComponent comp, BeforeRangedInteractEvent args)
     {
         var target = args.Target;
         if (comp.BatteryUid == null || !HasComp<PowerNetworkBatteryComponent>(target))
             return;
 
         // nicer for spam-clicking to not open apc ui, and when draining starts, so cancel the ui action
-        args.Cancel();
+        //args.Cancel();
 
         if (IsBatteryFull(comp.BatteryUid.Value))
         {
@@ -37,9 +47,7 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
             BreakOnUserMove = true,
             MovementThreshold = 0.5f,
             CancelDuplicate = false,
-            AttemptFrequency = AttemptFrequency.StartAndEnd,
-            // prevent stack overflow /!\
-            RequireCanInteract = false
+            AttemptFrequency = AttemptFrequency.StartAndEnd
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);

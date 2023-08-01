@@ -25,6 +25,13 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         base.Initialize();
 
         SubscribeLocalEvent<NinjaGlovesComponent, ToggleActionEvent>(OnToggleAction);
+
+        // TODO: maybe move into r&d server???
+        SubscribeLocalEvent<NinjaDownloadComponent, DownloadDoAfterEvent>(OnDownloadDoAfter);
+
+        // TODO: move into comms
+        SubscribeLocalEvent<NinjaTerrorComponent, InteractionAttemptEvent>(OnTerror);
+        SubscribeLocalEvent<NinjaTerrorComponent, TerrorDoAfterEvent>(OnTerrorDoAfter);
     }
 
     /// <summary>
@@ -80,7 +87,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
     }
 
     /// <inheritdoc/>
-    protected override void OnDownloadDoAfter(EntityUid uid, NinjaDownloadComponent comp, DownloadDoAfterEvent args)
+    private void OnDownloadDoAfter(EntityUid uid, NinjaDownloadComponent comp, DownloadDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled)
             return;
@@ -101,7 +108,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
     }
 
     /// <inheritdoc/>
-    protected override void OnTerror(EntityUid uid, NinjaTerrorComponent comp, InteractionAttemptEvent args)
+    private void OnTerror(EntityUid uid, NinjaTerrorComponent comp, InteractionAttemptEvent args)
     {
         if (!GloveCheck(uid, args, out var gloves, out var user, out var target)
             || !_ninja.GetNinjaRole(user, out var role)
@@ -128,7 +135,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
     }
 
     /// <inheritdoc/>
-    protected override void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, TerrorDoAfterEvent args)
+    private void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, TerrorDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled)
             return;

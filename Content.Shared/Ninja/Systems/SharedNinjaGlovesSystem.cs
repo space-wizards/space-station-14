@@ -40,11 +40,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
         // TODO: maybe move into r&d server???
         SubscribeLocalEvent<NinjaDownloadComponent, InteractionAttemptEvent>(OnDownload);
-        SubscribeLocalEvent<NinjaDownloadComponent, DownloadDoAfterEvent>(OnDownloadDoAfter);
-
-        // TODO: move into comms
-        SubscribeLocalEvent<NinjaTerrorComponent, InteractionAttemptEvent>(OnTerror);
-        SubscribeLocalEvent<NinjaTerrorComponent, TerrorDoAfterEvent>(OnTerrorDoAfter);
     }
 
     /// <summary>
@@ -183,22 +178,4 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         _doAfter.TryStartDoAfter(doAfterArgs);
         args.Cancel();
     }
-
-    /// <summary>
-    /// Update greentext research nodes information from a server.
-    /// Can't predict roles so only done on server.
-    /// </summary>
-    protected virtual void OnDownloadDoAfter(EntityUid uid, NinjaDownloadComponent comp, DownloadDoAfterEvent args) { }
-
-    /// <summary>
-    /// Start do after for calling in a threat.
-    /// Can't predict roles for checking if already called.
-    /// </summary>
-    protected virtual void OnTerror(EntityUid uid, NinjaTerrorComponent comp, InteractionAttemptEvent args) { }
-
-    /// <summary>
-    /// Start a gamerule and update greentext information.
-    /// Can't predict roles or anything announcements related so only done on server.
-    /// </summary>
-    protected virtual void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, TerrorDoAfterEvent args) { }
 }

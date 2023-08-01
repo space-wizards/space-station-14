@@ -1,6 +1,5 @@
 using Content.Shared.Ninja.Components;
 using Content.Shared.DoAfter;
-using Content.Shared.Interaction.Events;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -10,17 +9,8 @@ public abstract class SharedBatteryDrainerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BatteryDrainerComponent, InteractionAttemptEvent>(OnInteract);
         SubscribeLocalEvent<BatteryDrainerComponent, DoAfterAttemptEvent<DrainDoAfterEvent>>(OnDoAfterAttempt);
         SubscribeLocalEvent<BatteryDrainerComponent, DrainDoAfterEvent>(OnDoAfter);
-    }
-
-    /// <summary>
-    /// Start do after for draining a power source.
-    /// Can't predict PNBC existing so only done on server.
-    /// </summary>
-    protected virtual void OnInteract(EntityUid uid, BatteryDrainerComponent comp, InteractionAttemptEvent args)
-    {
     }
 
     /// <summary>
