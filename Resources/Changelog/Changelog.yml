@@ -1,14 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Cap throwing scaling so bad mass values don't yeet you too far., type: Fix}
-  id: 3896
-  time: '2023-05-29T07:11:54.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix landing pad clipping dungeons in some instances., type: Fix}
-  id: 3897
-  time: '2023-05-29T11:48:15.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Device network addresses now look prettier., type: Tweak}
@@ -2970,3 +2960,16 @@ Entries:
     type: Fix}
   id: 4395
   time: '2023-08-01T04:12:56.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Resprited steel floor tiles. Looks like the janitor hasn't been doing
+      their job..., type: Tweak}
+  id: 4396
+  time: '2023-08-01T06:09:46.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The chemistry guidebook now specifies specific types for damage and
+      only uses groups when damage is evenly distributed across each type of a group.,
+    type: Fix}
+  id: 4397
+  time: '2023-08-01T06:10:05.0000000+00:00'
