@@ -12,8 +12,10 @@ using Content.IntegrationTests.Tests.Interaction.Click;
 using Content.IntegrationTests.Tests.Networking;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Robust.Client;
 using Robust.Server;
+using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
@@ -317,6 +319,7 @@ public static class PoolManager
 
                     if (canSkip)
                     {
+                        ValidateFastRecycle(pair);
                         await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleanup not needed, Skipping cleanup of pair");
                     }
                     else
@@ -360,6 +363,36 @@ public static class PoolManager
             Pair = pair,
             UsageWatch = usageWatch
         };
+    }
+
+    private static void ValidateFastRecycle(Pair pair)
+    {
+        if (pair.Settings.NoClient || pair.Settings.NoServer)
+            return;
+
+        var baseClient = pair.Client.ResolveDependency<IBaseClient>();
+        var netMan = pair.Client.ResolveDependency<INetManager>();
+        Assert.That(netMan.IsConnected, Is.Not.EqualTo(pair.Settings.NotConnected));
+
+        if (pair.Settings.NotConnected)
+            return;
+
+        Assert.That(baseClient.RunLevel, Is.EqualTo(ClientRunLevel.InGame));
+
+        var cPlayer = pair.Client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
+        var sPlayer = pair.Server.ResolveDependency<IPlayerManager>();
+        Assert.That(sPlayer.Sessions.Count(), Is.EqualTo(1));
+        Assert.That(cPlayer.LocalPlayer?.Session?.UserId, Is.EqualTo(sPlayer.Sessions.Single().UserId));
+
+        var ticker = pair.Server.ResolveDependency<EntityManager>().System<GameTicker>();
+        Assert.That(ticker.DummyTicker, Is.EqualTo(pair.Settings.DummyTicker));
+
+        var status = ticker.PlayerGameStatuses[sPlayer.Sessions.Single().UserId];
+        var expected = pair.Settings.InLobby
+            ? PlayerGameStatus.NotReadyToPlay
+            : PlayerGameStatus.JoinedGame;
+
+        Assert.That(status, Is.EqualTo(expected));
     }
 
     private static Pair GrabOptimalPair(PoolSettings poolSettings)
@@ -491,7 +524,7 @@ public static class PoolManager
         {
             await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Connecting client");
             await ReallyBeIdle(pair);
-            pair.Client.SetConnectTarget(pair.Server);;
+            pair.Client.SetConnectTarget(pair.Server);
             var netMgr = pair.Client.ResolveDependency<IClientNetManager>();
             await pair.Client.WaitPost(() =>
             {
