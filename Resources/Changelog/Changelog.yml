@@ -1,14 +1,4 @@
 Entries:
-- author: HerCoyote23
-  changes:
-  - {message: Fix northstar gloves sending radio messages., type: Fix}
-  id: 3903
-  time: '2023-05-31T01:11:36.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Mining shuttle will spawn roundstart., type: Add}
-  id: 3904
-  time: '2023-05-31T01:13:03.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'All ore veins are guaranteed on expeditions, tripled the vein count,
@@ -2980,3 +2970,13 @@ Entries:
       of a solution, type: Add}
   id: 4402
   time: '2023-08-01T19:57:23.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Hristov no longer insta stuns and does slightly less damage., type: Tweak}
+  id: 4403
+  time: '2023-08-01T21:04:44.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Admin banning panel has IP bans enabled by default., type: Fix}
+  id: 4404
+  time: '2023-08-01T21:05:14.0000000+00:00'
