@@ -42,8 +42,8 @@
     tags:
     - Raw
   - type: Perishable
-    # raw meat rots in just a minute, get it into the freezer fast
-    rotAfter: 60
+    # raw meat rots in 5 minutes, get it into the freezer fast
+    rotAfter: 300
     # don't want meat giving off miasma only bodies
     molsPerSecondPerUnitMass: 0
   - type: RotInto
