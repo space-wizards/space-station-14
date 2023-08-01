@@ -28,4 +28,28 @@
   - Napalm
   - Toxin
   - Epinephrine
-  - Ultravasculine
+  - Uranium
+  
+- type: reagentDispenserInventoryTiered
+  id: ChemDispenserTier2Inventory
+  tier: 2
+  inventory:
+  - Ammonia
+  - Oil
+  - SulfuricAcid
+  
+- type: reagentDispenserInventoryTiered
+  id: ChemDispenserTier3Inventory
+  tier: 3
+  inventory:
+  - Acetone
+  - Diethylamine
+  - Phenol
+  
+- type: reagentDispenserInventoryTiered
+  id: ChemDispenserTier4Inventory
+  tier: 4
+  inventory:
+  - Plasma
+  - UnstableMutagen
+  

@@ -3,6 +3,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -21,6 +22,10 @@ namespace Content.Server.Chemistry.Components
         [DataField("emagPack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))]
         [ViewVariables(VVAccess.ReadWrite)]
         public string? EmagPackPrototypeId = default!;
+
+        [DataField("upgradePacks", customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentDispenserInventoryTieredPrototype>))]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public List<string>? UpgradePacksPrototypeId = default!;
 
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
