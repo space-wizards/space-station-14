@@ -1105,7 +1105,7 @@
   id: UplinkSinguloBait
   name: uplink-singulo-bait-name
   description: uplink-singulo-bait-desc
-  productEntity: ToolboxMechanicalSinguloBait
+  productEntity: ToolboxSinguloBait
   cost:
     Telecrystal: 12
   categories:

@@ -142,6 +142,9 @@ uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever y
 uplink-radio-jammer-name = Radio Jammer
 uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication when activated.
 
+uplink-singulo-bait-name = Singularity Attractor Toolbox
+uplink-singulo-bait-desc = A toolbox that attracts singularities. Effect weaker with distance. Causes singularities to grow when consumed. No storage.
+
 # Implants
 uplink-storage-implanter-name = Storage Implanter
 uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespace technology!
@@ -256,9 +259,6 @@ uplink-disposable-turret-desc = Looks and functions like a normal electrical too
 
 uplink-cluster-banana-peel-name = Cluster Banana
 uplink-cluster-banana-peel-desc = Splits into 6 explosive banana peels after being thrown, the peels detonate automatically after 20 seconds if nobody slips on them.
-
-uplink-singulo-bait-name = Singularity Attractor Toolbox
-uplink-singulo-bait-desc = Looks like a normal mechanical toolbox, but has no internal room. Will cause all singularities to change their course towards the toolbox. Effect much stronger at shorter distances. May cause singularities to grow when consumed.
 
 # Armor
 uplink-chameleon-name = Chameleon Kit

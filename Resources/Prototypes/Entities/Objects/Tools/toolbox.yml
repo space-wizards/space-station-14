@@ -91,22 +91,6 @@
                 max: 1
   - type: StaticPrice
     price: 1350
-    
-- type: entity
-  name: mechanical toolbox
-  suffix: Syndicate, Singulo Bait
-  parent: ToolboxMechanical
-  id: ToolboxMechanicalSinguloBait
-  description: A blue box, stocked with mechanical tools.
-  components:
-  - type: Storage
-    capacity: 0
-  - type: SingularityAttractor
-    baseRange: 20
-  - type: SinguloFood
-    energy: 100
-  - type: StaticPrice
-    price: 1500
 
 - type: entity
   name: artistic toolbox
@@ -139,6 +123,39 @@
     damage:
       types:
         Blunt: 20
+
+- type: entity
+  name: singularity bait toolbox
+  parent: BaseItem
+  id: ToolboxSinguloBait
+  description: A toolbox that the singularity really wants to consume.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_singbait.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/Toolboxes/toolbox_singbait.rsi
+    size: 9999
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/toolbox_drop.ogg
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 40 # heavy
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: SingularityAttractor
+    baseRange: 20
+  - type: SinguloFood
+    energy: 120
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   name: golden toolbox
