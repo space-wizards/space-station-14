@@ -118,6 +118,9 @@ public sealed class WieldableSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
+        args.Handled = true;
+
         if(!component.Wielded)
             AttemptWield(uid, component, args.User);
         else

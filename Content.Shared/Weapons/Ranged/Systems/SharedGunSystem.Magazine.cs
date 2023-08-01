@@ -65,7 +65,13 @@ public abstract partial class SharedGunSystem
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
-        Appearance.SetData(uid, AmmoVisuals.MagLoaded, GetMagazineEntity(uid) != null, appearance);
+        var magEnt = GetMagazineEntity(uid);
+        Appearance.SetData(uid, AmmoVisuals.MagLoaded, magEnt != null, appearance);
+
+        if (magEnt != null)
+        {
+            UpdateMagazineAppearance(uid, component, magEnt.Value);
+        }
     }
 
     protected (int, int) GetMagazineCountCapacity(EntityUid uid, MagazineAmmoProviderComponent component)
@@ -113,13 +119,13 @@ public abstract partial class SharedGunSystem
 
         var ammoEv = new GetAmmoCountEvent();
         RaiseLocalEvent(magEntity.Value, ref ammoEv);
-        FinaliseMagazineTakeAmmo(uid, component, args.Ammo.Count, ammoEv.Count, ammoEv.Capacity, args.User, appearance);
+        FinaliseMagazineTakeAmmo(uid, component, ammoEv.Count, ammoEv.Capacity, args.User, appearance);
     }
 
-    private void FinaliseMagazineTakeAmmo(EntityUid uid, MagazineAmmoProviderComponent component, int takenAmmo, int count, int capacity, EntityUid? user, AppearanceComponent? appearance)
+    private void FinaliseMagazineTakeAmmo(EntityUid uid, MagazineAmmoProviderComponent component, int count, int capacity, EntityUid? user, AppearanceComponent? appearance)
     {
         // If no ammo then check for autoeject
-        if (component.AutoEject && takenAmmo == 0)
+        if (component.AutoEject && count == 0)
         {
             EjectMagazine(uid, component);
             Audio.PlayPredicted(component.SoundAutoEject, uid, user);
@@ -134,12 +140,6 @@ public abstract partial class SharedGunSystem
 
         var count = 0;
         var capacity = 0;
-
-        if (component is ChamberMagazineAmmoProviderComponent chamber)
-        {
-            count = GetChamberEntity(uid) != null ? 1 : 0;
-            capacity = 1;
-        }
 
         if (TryComp<AppearanceComponent>(magEnt, out var magAppearance))
         {

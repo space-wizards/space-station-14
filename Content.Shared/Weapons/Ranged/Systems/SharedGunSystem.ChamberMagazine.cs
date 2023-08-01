@@ -78,7 +78,7 @@ public abstract partial class SharedGunSystem
                     TryInsertChamber(uid, newChamberEnt!.Value);
                     var ammoEv = new GetAmmoCountEvent();
                     RaiseLocalEvent(magEnt.Value, ref ammoEv);
-                    FinaliseMagazineTakeAmmo(uid, component, 1, 1 + ammoEv.Count, 1 + ammoEv.Capacity, user, appearance);
+                    FinaliseMagazineTakeAmmo(uid, component, ammoEv.Count, ammoEv.Capacity, user, appearance);
                     UpdateAmmoCount(uid);
                 }
             }
@@ -110,7 +110,7 @@ public abstract partial class SharedGunSystem
 
             if (user != null)
                 PopupSystem.PopupClient(Loc.GetString("gun-chamber-bolt-opened"), uid, user.Value);
-            
+
             Audio.PlayPredicted(component.BoltOpenedSound, uid, user);
         }
 
@@ -241,13 +241,10 @@ public abstract partial class SharedGunSystem
                 return;
             }
 
-            var count = chamberEnt != null ? 1 : 0;
-            const int capacity = 1;
-
             var ammoEv = new GetAmmoCountEvent();
             RaiseLocalEvent(magEnt.Value, ref ammoEv);
 
-            FinaliseMagazineTakeAmmo(uid, component, args.Ammo.Count, count + ammoEv.Count, capacity + ammoEv.Capacity, args.User, appearance);
+            FinaliseMagazineTakeAmmo(uid, component, ammoEv.Count, ammoEv.Capacity, args.User, appearance);
         }
         // If gun doesn't autocycle (e.g. bolt-action weapons) then we leave the chambered entity in there but still return it.
         else if (Containers.TryGetContainer(uid, ChamberSlot, out var container) &&

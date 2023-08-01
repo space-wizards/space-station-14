@@ -181,6 +181,9 @@ public abstract partial class SharedGunSystem
     private void OnBallisticInit(EntityUid uid, BallisticAmmoProviderComponent component, ComponentInit args)
     {
         component.Container = Containers.EnsureContainer<Container>(uid, "ballistic-ammo");
+        // TODO: This is called twice though we need to support loading appearance data (and we need to call it on MapInit
+        // to ensure it's correct).
+        UpdateBallisticAppearance(uid, component);
     }
 
     private void OnBallisticMapInit(EntityUid uid, BallisticAmmoProviderComponent component, MapInitEvent args)
@@ -190,6 +193,7 @@ public abstract partial class SharedGunSystem
         if (component.FillProto != null)
         {
             component.UnspawnedCount = Math.Max(0, component.Capacity - component.Container.ContainedEntities.Count);
+            UpdateBallisticAppearance(uid, component);
             Dirty(uid, component);
         }
     }
