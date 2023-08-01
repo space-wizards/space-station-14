@@ -41,7 +41,7 @@ public sealed class PrototypeSaveTest
     public async Task UninitializedSaveTest()
     {
         // Apparently SpawnTest fails to clean  up properly. Due to the similarities, I'll assume this also fails.
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, Dirty = true, Destructive = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var mapManager = server.ResolveDependency<IMapManager>();
