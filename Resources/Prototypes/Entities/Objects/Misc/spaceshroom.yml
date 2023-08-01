@@ -1,4 +1,44 @@
-# Object
+- type: entity
+  name: spaceshroom
+  parent: BaseStructure
+  id: Spaceshroom
+  suffix: Structure
+  description: A cluster of wild mushrooms that likes to grow in dark, moist environments.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/spaceshroom.rsi
+      state: structure
+    - type: Transform
+      anchored: true
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.2
+    - type: InteractionOutline
+    # TODO: Nuke this shit
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: SpaceShrooms
+    - type: Gatherable
+      whitelist:
+        components:
+          - Hands
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Wood
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 150
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+
 - type: entity
   name: spaceshroom
   parent: FoodProduceBase
@@ -8,7 +48,7 @@
   - type: Produce
   - type: Sprite
     sprite: Objects/Misc/spaceshroom.rsi
-    state: spaceshroom
+    state: object
   - type: FlavorProfile
     flavors:
       - spaceshroom
