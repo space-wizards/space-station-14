@@ -311,6 +311,11 @@ public static class PoolManager
                         await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleaning existing pair");
                         await CleanPooledPair(poolSettings, pair, testOut);
                     }
+
+                    // Ensure client is 1 tick ahead of server? I don't think theres a real reason for why it should be
+                    // 1 tick specifically, I am just ensuring consistency with CreateServerClientPair()
+                    if (!pair.Settings.NotConnected)
+                        await SyncTicks(pair, targetDelta: 1);
                 }
                 else
                 {
@@ -651,6 +656,31 @@ we are just going to end this here to save a lot of time. This is the exception 
                 await pair.Server.WaitIdleAsync();
             }
         }
+    }
+
+    /// <summary>
+    /// Run the server/clients until the ticks are synchronized.
+    /// By default the client will be one tick ahead of the server.
+    /// </summary>
+    public static async Task SyncTicks(Pair pair, int targetDelta = 1)
+    {
+        var sTiming = pair.Server.ResolveDependency<IGameTiming>();
+        var cTiming = pair.Client.ResolveDependency<IGameTiming>();
+        var sTick = (int)sTiming.CurTick.Value;
+        var cTick = (int)cTiming.CurTick.Value;
+        var delta = cTick - sTick;
+
+        if (delta == targetDelta)
+            return;
+        if (delta > targetDelta)
+            await pair.Server.WaitRunTicks(delta - targetDelta);
+        else
+            await pair.Client.WaitRunTicks(targetDelta - delta);
+
+        sTick = (int)sTiming.CurTick.Value;
+        cTick = (int)cTiming.CurTick.Value;
+        delta = cTick - sTick;
+        Assert.That(delta, Is.EqualTo(targetDelta));
     }
 
     /// <summary>
