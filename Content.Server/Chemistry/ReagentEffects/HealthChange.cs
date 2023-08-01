@@ -55,9 +55,9 @@ namespace Content.Server.Chemistry.ReagentEffects
                     continue;
 
                 var sum = FixedPoint2.Zero;
-                foreach (var (_, typeAmount) in relevantTypes)
+                foreach (var type in group.DamageTypes)
                 {
-                    sum += typeAmount;
+                    sum += damageSpec.DamageDict.GetValueOrDefault(type);
                 }
 
                 // if the total sum of all the types equal the damage amount,
@@ -65,7 +65,7 @@ namespace Content.Server.Chemistry.ReagentEffects
                 if (sum != amount)
                     continue;
 
-                var sign = MathF.Sign(amount.Float());
+                var sign = FixedPoint2.Sign(amount);
 
                 if (sign < 0)
                     heals = true;
@@ -87,7 +87,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
             foreach (var (kind, amount) in damageSpec.DamageDict)
             {
-                var sign = MathF.Sign(amount.Float());
+                var sign = FixedPoint2.Sign(amount);
 
                 if (sign < 0)
                     heals = true;
