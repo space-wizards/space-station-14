@@ -28,10 +28,11 @@ public sealed class RunVerbAsCommand : ToolshedCommand
         {
             var runnerEid = runner.Evaluate(ctx);
 
+
             if (EntityManager.Deleted(runnerEid) && runnerEid != default)
                 ctx.ReportError(new DeadEntity(runnerEid));
 
-            if (runner.LikelyConst && ctx.GetErrors().Any())
+            if (ctx.GetErrors().Any())
                 yield break;
 
             var verbs = _verb.GetLocalVerbs(i, runnerEid, Verb.VerbTypes, true);
