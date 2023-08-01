@@ -2,12 +2,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Examine;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -41,6 +43,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
     [Dependency]
     private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ExamineSystem _examine = default!;
 
     public override void Initialize()
     {
@@ -48,6 +51,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentInit>(InitSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
+        SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
     }
 
     private void InitSolution(EntityUid uid, SolutionContainerManagerComponent component, ComponentInit args)
@@ -58,6 +62,69 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             solutionHolder.ValidateSolution();
             UpdateAppearance(uid, solutionHolder);
         }
+    }
+
+    private void OnSolutionExaminableVerb(EntityUid uid, ExaminableSolutionComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        var scanEvent = new SolutionScanEvent();
+        RaiseLocalEvent(args.User, scanEvent);
+        if (!scanEvent.CanScan)
+        {
+            return;
+        }
+
+        SolutionContainerManagerComponent? solutionsManager = null;
+        if (!Resolve(args.Target, ref solutionsManager)
+            || !solutionsManager.Solutions.TryGetValue(component.Solution, out var solutionHolder))
+        {
+            return;
+        }
+
+        var verb = new ExamineVerb()
+        {
+            Act = () =>
+            {
+                var markup = GetSolutionExamine(solutionHolder);
+                _examine.SendExamineTooltip(args.User, uid, markup, false, false);
+            },
+            Text = Loc.GetString("scannable-solution-verb-text"),
+            Message = Loc.GetString("scannable-solution-verb-message"),
+            Category = VerbCategory.Examine,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/drink.svg.192dpi.png")),
+        };
+
+        args.Verbs.Add(verb);
+    }
+
+    private FormattedMessage GetSolutionExamine(Solution solution)
+    {
+        var msg = new FormattedMessage();
+
+        if (solution.Contents.Count == 0) //TODO: better way to see if empty?
+        {
+            msg.AddMarkup(Loc.GetString("scannable-solution-empty-container"));
+            return msg;
+        }
+
+        msg.AddMarkup(Loc.GetString("scannable-solution-main-text"));
+
+        foreach (var reagent in solution)
+        {
+            if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var proto))
+            {
+                continue;
+            }
+            msg.PushNewline();
+            msg.AddMarkup(Loc.GetString("scannable-solution-chemical"
+                , ("type", proto.LocalizedName)
+                , ("color", proto.SubstanceColor.ToHexNoAlpha())
+                , ("amount", reagent.Quantity)));
+        }
+
+        return msg;
     }
 
     private void OnExamineSolution(EntityUid uid, ExaminableSolutionComponent examinableComponent,

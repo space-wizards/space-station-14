@@ -12,7 +12,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -35,6 +34,8 @@ namespace Content.IntegrationTests.Tests.Networking
         [Test]
         public async Task Test()
         {
+            // TODO remove fresh=true.
+            // Instead, offset the all the explicit tick checks by some initial tick number.
             await using var pairTracker = await PoolManager.GetServerClient(new() { Fresh = true, DummyTicker = true });
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
@@ -392,12 +393,12 @@ namespace Content.IntegrationTests.Tests.Networking
 
         [NetworkedComponent()]
         [Access(typeof(SystemPredictionTestEntitySystem))]
+        [RegisterComponent]
         public sealed class SystemPredictionTestComponent : Component
         {
             public bool Foo;
         }
 
-        [Reflect(false)]
         public sealed class SystemPredictionTestEntitySystem : EntitySystem
         {
             public bool Allow { get; set; } = true;
