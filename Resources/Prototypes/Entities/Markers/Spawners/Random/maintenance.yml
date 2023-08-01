@@ -77,7 +77,7 @@
           state: high
     - type: RandomSpawner
       rarePrototypes:
-        - lanternextrabright
+        - LanternFlash
         - PowerCellHigh
         - NetProbeCartridge
       rareChance: 0.08
