@@ -9,26 +9,7 @@
     noRot: true
     drawdepth: SmallObjects
     state: candy_bowl0
-  - type: InteractionOutline
   - type: Appearance
-  - type: ItemMapper
-    sprite: Objects/Misc/candy_bowl.rsi
-    mapLayers:
-      candy_bowl1:
-        whitelist:
-          components:
-          - Pill
-          tags:
-          - FoodSnack
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.10,-0.10,0.10,0.10"
-        density: 500
-        mask:
-          - TabletopMachineMask
   - type: Bin
     maxItems: 100
     whitelist:
@@ -39,6 +20,8 @@
   - type: ContainerContainer
     containers:
       bin-container: !type:Container
+  - type: Damageable
+    damageContainer: Inorganic
   - type: DamageOnLand
     damage:
       types:
@@ -47,8 +30,6 @@
     damage:
       types:
         Blunt: 4
-  - type: Damageable
-    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -66,3 +47,22 @@
       - !type:EmptyAllContainersBehaviour
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.10,0.10,0.10"
+        density: 500
+        mask:
+          - TabletopMachineMask
+  - type: InteractionOutline
+  - type: ItemMapper
+    sprite: Objects/Misc/candy_bowl.rsi
+    mapLayers:
+      candy_bowl1:
+        whitelist:
+          components:
+          - Pill
+          tags:
+          - FoodSnack
