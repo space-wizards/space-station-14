@@ -1,0 +1,30 @@
+- type: entity
+  parent: BaseItem
+  id: AccessOverrider
+  name: access overrider
+  description: Used to update the access level requirements for lockable devices.
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/airlock_painter.rsi
+      state: airlock_painter
+    - type: Item
+      sprite: Objects/Tools/airlock_painter.rsi
+    - type: AccessOverrider
+      privilegedIdSlot:
+        name: id-card-console-privileged-id
+        ejectSound: /Audio/Machines/id_swipe.ogg
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectOnBreak: true
+        swap: false
+        whitelist:
+          components:
+          - IdCard
+    - type: UserInterface
+      interfaces:
+        - key: enum.AccessOverriderUiKey.Key
+          type: AccessOverriderBoundUserInterface
+    - type: ContainerContainer
+      containers:
+        IdCardConsole-privilegedId: !type:ContainerSlot
+    - type: StaticPrice
+      price: 40
