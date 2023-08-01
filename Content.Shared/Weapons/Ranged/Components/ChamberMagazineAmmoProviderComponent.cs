@@ -1,3 +1,5 @@
+using Robust.Shared.Audio;
+
 namespace Content.Shared.Weapons.Ranged.Components;
 
 /// <summary>
@@ -16,5 +18,11 @@ public sealed partial class ChamberMagazineAmmoProviderComponent : MagazineAmmoP
     /// Does the gun automatically open and close the bolt upon shooting.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("autoCycle"), AutoNetworkedField]
-    public bool AutoCycle;
+    public bool AutoCycle = true;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundBoltClosed"), AutoNetworkedField]
+    public SoundSpecifier? BoltClosedSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg");
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundBoltOpened"), AutoNetworkedField]
+    public SoundSpecifier? BoltOpenedSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg");
 }

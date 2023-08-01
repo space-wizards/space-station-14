@@ -113,16 +113,16 @@ public abstract partial class SharedGunSystem
 
         var ammoEv = new GetAmmoCountEvent();
         RaiseLocalEvent(magEntity.Value, ref ammoEv);
-        FinaliseMagazineTakeAmmo(uid, component, args, ammoEv.Count, ammoEv.Capacity, appearance);
+        FinaliseMagazineTakeAmmo(uid, component, args.Ammo.Count, ammoEv.Count, ammoEv.Capacity, args.User, appearance);
     }
 
-    private void FinaliseMagazineTakeAmmo(EntityUid uid, MagazineAmmoProviderComponent component, TakeAmmoEvent args, int count, int capacity, AppearanceComponent? appearance)
+    private void FinaliseMagazineTakeAmmo(EntityUid uid, MagazineAmmoProviderComponent component, int takenAmmo, int count, int capacity, EntityUid? user, AppearanceComponent? appearance)
     {
         // If no ammo then check for autoeject
-        if (component.AutoEject && args.Ammo.Count == 0)
+        if (component.AutoEject && takenAmmo == 0)
         {
             EjectMagazine(uid, component);
-            Audio.PlayPredicted(component.SoundAutoEject, uid, args.User);
+            Audio.PlayPredicted(component.SoundAutoEject, uid, user);
         }
 
         UpdateMagazineAppearance(uid, appearance, true, count, capacity);

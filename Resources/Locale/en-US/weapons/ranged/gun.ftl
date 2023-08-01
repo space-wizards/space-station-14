@@ -28,6 +28,8 @@ gun-battery-examine = It has enough charge for [color={$color}]{$count}[/color] 
 
 # CartridgeAmmoProvider
 gun-chamber-bolt = The bolt is [color={$color}]{$bolt}[/color].
+gun-chamber-bolt-closed = Closed bolt
+gun-chamber-bolt-opened = Opened bolt
 
 # MagazineAmmoProvider
 gun-magazine-examine = It has [color={$color}]{$count}[/color] shots remaining.

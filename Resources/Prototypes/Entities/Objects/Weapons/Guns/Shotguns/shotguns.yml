@@ -29,7 +29,6 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
-    autoCycle: false
     whitelist:
       tags:
       - ShellShotgun
