@@ -115,8 +115,13 @@ namespace Content.Shared.Throwing
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
-        public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent physics, bool playSound)
+        public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent? physics = null, bool playSound = true)
         {
+            if (!Resolve(uid, ref physics))
+            {
+                return;
+            }
+
             _physics.SetBodyStatus(physics, BodyStatus.OnGround);
 
             if (thrownItem.Deleted || Deleted(uid) || _containerSystem.IsEntityInContainer(uid))

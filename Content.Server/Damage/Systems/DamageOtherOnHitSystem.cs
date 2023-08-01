@@ -18,6 +18,7 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly GunSystem _guns = default!;
         [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
+        [Dependency] private readonly ThrownItemSystem _thrownItem = default!;
 
         public override void Initialize()
         {
@@ -39,6 +40,8 @@ namespace Content.Server.Damage.Systems
                 var direction = body.LinearVelocity.Normalized();
                 _sharedCameraRecoil.KickCamera(args.Target, direction);
             }
+
+            _thrownItem.LandComponent(args.Thrown, args.Component, playSound: false);
         }
     }
 }
