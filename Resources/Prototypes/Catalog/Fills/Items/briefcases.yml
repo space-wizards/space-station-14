@@ -13,7 +13,7 @@
   id: BriefcaseSyndieSniperBundleFilled
   name: brown briefcase
   parent: BriefcaseSyndie
-  suffix: Filled
+  suffix: SniperBundle
   components:
   - type: StorageFill
     contents:

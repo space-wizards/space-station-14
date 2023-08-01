@@ -1,18 +1,26 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
-    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-        <PanelContainer VerticalExpand="True" HorizontalExpand="True">
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BackgroundColor="#202124" />
-            </PanelContainer.PanelOverride>
-            <RichTextLabel Name="Name" Margin="8 8 8 8" HorizontalAlignment="Left"/>
-            <Button Name="Delete"
-                    MinWidth="30"
-                    HorizontalAlignment="Right"
-                    Text="{Loc 'news-write-ui-delete-text'}"
-                    Access="Public"
-                    Margin="6 6 6 6">
-            </Button>
-        </PanelContainer>
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 0 0 12">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+            <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#4c6530"/>
+                </PanelContainer.PanelOverride>
+                <Label Name="Name" Margin="6 6 6 6" HorizontalAlignment="Center"/>
+            </PanelContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#33333f"/>
+                </PanelContainer.PanelOverride>
+                <RichTextLabel Name="Author" HorizontalExpand="True" VerticalAlignment="Bottom" Margin="6 6 6 6"/>
+                <Button Name="Delete"
+                        Text="{Loc 'news-write-ui-delete-text'}"
+                        HorizontalAlignment="Right"
+                        Margin="8 6 6 6"
+                        Access="Public"/>
+            </PanelContainer>
+        </BoxContainer>
     </BoxContainer>
 </Control>

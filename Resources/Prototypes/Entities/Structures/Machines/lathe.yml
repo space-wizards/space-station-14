@@ -463,6 +463,7 @@
       - SignalTrigger
       - VoiceTrigger
       - TimerTrigger
+      - Truncheon
       - FlashPayload
       - ExplosivePayload
       - WeaponLaserCarbine

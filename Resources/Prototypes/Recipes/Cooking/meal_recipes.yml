@@ -1632,3 +1632,11 @@
   solids:
     FoodChevreSlice: 1
     FoodBreadBaguetteSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCookedSpaceshroom
+  name: cooked spaceshroom recipe
+  result: FoodSpaceshroomCooked
+  time: 5
+  solids:
+    FoodSpaceshroom: 1

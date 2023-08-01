@@ -11,9 +11,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Networking
@@ -35,6 +33,8 @@ namespace Content.IntegrationTests.Tests.Networking
         [Test]
         public async Task Test()
         {
+            // TODO remove fresh=true.
+            // Instead, offset the all the explicit tick checks by some initial tick number.
             await using var pairTracker = await PoolManager.GetServerClient(new() { Fresh = true, DummyTicker = true });
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
@@ -390,7 +390,6 @@ namespace Content.IntegrationTests.Tests.Networking
             await pairTracker.CleanReturnAsync();
         }
 
-        [Reflect(false)]
         public sealed class AutoPredictionTestEntitySystem : EntitySystem
         {
             public bool Allow { get; set; } = true;
@@ -446,6 +445,7 @@ namespace Content.IntegrationTests.Tests.Networking
     [NetworkedComponent()]
     [AutoGenerateComponentState]
     [Access(typeof(AutoPredictReconcileTest.AutoPredictionTestEntitySystem))]
+    [RegisterComponent]
     public sealed partial class AutoPredictionTestComponent : Component
     {
         [AutoNetworkedField]
