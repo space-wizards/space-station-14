@@ -7,7 +7,7 @@ using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
-public sealed class ShowSecurityIconsSystem : ComponentActivatedClientSystemBase<ShowSecurityIconsComponent>
+public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
@@ -48,8 +48,9 @@ public sealed class ShowSecurityIconsSystem : ComponentActivatedClientSystemBase
                     jobIconToGet = id.JobIcon;
                     break;
                 }
+
                 // PDA
-                else if (TryComp(item, out PdaComponent? pda)
+                if (TryComp(item, out PdaComponent? pda)
                     && pda.ContainedId != null
                     && TryComp(pda.ContainedId, out id))
                 {
@@ -59,8 +60,10 @@ public sealed class ShowSecurityIconsSystem : ComponentActivatedClientSystemBase
             }
         }
 
-        var jobIcon = _prototypeMan.Index<StatusIconPrototype>(jobIconToGet);
-        result.Add(jobIcon);
+        if (_prototypeMan.TryIndex<StatusIconPrototype>(jobIconToGet, out var jobIcon))
+            result.Add(jobIcon);
+        else
+            Log.Error($"Invalid job icon prototype: {jobIcon}");
 
         // Add arrest icons here, WYCI.
 

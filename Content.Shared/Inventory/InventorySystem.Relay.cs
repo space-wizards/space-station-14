@@ -35,7 +35,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, GetBlurEvent>(RelayInventoryEvent);
 
         // ComponentActivatedClientSystems
-        SubscribeLocalEvent<InventoryComponent, GetActivatingComponentsEvent<ShowSecurityIconsComponent>>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowSecurityIconsComponent>>(RelayInventoryEvent);
 
         SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<EquipmentVerb>>(OnGetStrippingVerbs);
     }

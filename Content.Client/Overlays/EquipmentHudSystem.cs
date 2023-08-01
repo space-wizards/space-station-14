@@ -3,15 +3,19 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using System.Linq;
 
 namespace Content.Client.Overlays;
 
-public abstract class ComponentActivatedClientSystemBase<T> : EntitySystem where T : IComponent
+/// <summary>
+/// This is a base system to make it easier to enable or disabling UI elements based on whether or not the player has
+/// some component, either on their controlled entity on some worn piece of equipment.
+/// </summary>
+public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
 {
     [Dependency] private readonly IPlayerManager _player = default!;
 
-    protected bool IsActive = false;
+    protected bool IsActive;
+    protected virtual SlotFlags TargetSlots => ~SlotFlags.POCKET;
 
     public override void Initialize()
     {
@@ -26,27 +30,30 @@ public abstract class ComponentActivatedClientSystemBase<T> : EntitySystem where
         SubscribeLocalEvent<T, GotEquippedEvent>(OnCompEquip);
         SubscribeLocalEvent<T, GotUnequippedEvent>(OnCompUnequip);
 
-        SubscribeLocalEvent<T, GetActivatingComponentsEvent<T>>(OnGetActivatingComponentsEvent);
-        SubscribeLocalEvent<T, InventoryRelayedEvent<GetActivatingComponentsEvent<T>>>(UnpackageRelayAndRelay);
+        SubscribeLocalEvent<T, RefreshEquipmentHudEvent<T>>(OnRefreshComponentHud);
+        SubscribeLocalEvent<T, InventoryRelayedEvent<RefreshEquipmentHudEvent<T>>>(OnRefreshEquipmentHud);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
 
-    public void Activate(IReadOnlyList<T> components)
+    private void Update(RefreshEquipmentHudEvent<T> ev)
     {
         IsActive = true;
-        OnActivate(components);
+        UpdateInternal(ev);
     }
 
     public void Deactivate()
     {
+        if (!IsActive)
+            return;
+
         IsActive = false;
-        OnDeactivate();
+        DeactivateInternal();
     }
 
-    protected virtual void OnActivate(IReadOnlyList<T> component) { }
+    protected virtual void UpdateInternal(RefreshEquipmentHudEvent<T> args) { }
 
-    protected virtual void OnDeactivate() { }
+    protected virtual void DeactivateInternal() { }
 
     private void OnStartup(EntityUid uid, T component, ComponentStartup args)
     {
@@ -65,7 +72,8 @@ public abstract class ComponentActivatedClientSystemBase<T> : EntitySystem where
 
     private void OnPlayerDetached(PlayerDetachedEvent args)
     {
-        RefreshOverlay(args.Entity);
+        if (_player.LocalPlayer?.ControlledEntity == null)
+            Deactivate();
     }
 
     private void OnCompEquip(EntityUid uid, T component, GotEquippedEvent args)
@@ -83,31 +91,27 @@ public abstract class ComponentActivatedClientSystemBase<T> : EntitySystem where
         Deactivate();
     }
 
-    private void UnpackageRelayAndRelay(EntityUid uid, T component, InventoryRelayedEvent<GetActivatingComponentsEvent<T>> args)
+    protected virtual void OnRefreshEquipmentHud(EntityUid uid, T component, InventoryRelayedEvent<RefreshEquipmentHudEvent<T>> args)
     {
-        OnGetActivatingComponentsEvent(uid, component, args.Args);
+        args.Args.Active = true;
     }
 
-    private void OnGetActivatingComponentsEvent(EntityUid uid, T component, GetActivatingComponentsEvent<T> args)
+    protected virtual void OnRefreshComponentHud(EntityUid uid, T component, RefreshEquipmentHudEvent<T> args)
     {
-        args.Components.Add(component);
+        args.Active = true;
     }
 
     private void RefreshOverlay(EntityUid uid)
     {
-        Deactivate();
-
         if (uid != _player.LocalPlayer?.ControlledEntity)
-        {
             return;
-        }
 
-        var ev = new GetActivatingComponentsEvent<T>();
+        var ev = new RefreshEquipmentHudEvent<T>(TargetSlots);
         RaiseLocalEvent(uid, ev);
 
-        if (ev.Components.Any())
-        {
-            Activate(ev.Components);
-        }
+        if (ev.Active)
+            Update(ev);
+        else
+            Deactivate();
     }
 }
