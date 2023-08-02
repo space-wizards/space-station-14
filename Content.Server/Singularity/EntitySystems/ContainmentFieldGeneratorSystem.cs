@@ -295,10 +295,10 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         var gen2Coords = Transform(secondGenComp.Owner).Coordinates;
 
         var delta = (gen2Coords - gen1Coords).Position;
-        var dirVec = delta.Normalized;
-        var stopDist = delta.Length;
+        var dirVec = delta.Normalized();
+        var stopDist = delta.Length();
         var currentOffset = dirVec;
-        while (currentOffset.Length < stopDist)
+        while (currentOffset.Length() < stopDist)
         {
             var currentCoords = gen1Coords.Offset(currentOffset);
             var newField = Spawn(firstGenComp.CreatedField, currentCoords);
@@ -390,11 +390,11 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// <param name="uid">The entity the singularity is trying to eat.</param>
     /// <param name="comp">The containment field generator the singularity is trying to eat.</param>
     /// <param name="args">The event arguments.</param>
-    private void PreventBreach(EntityUid uid, ContainmentFieldGeneratorComponent comp, EventHorizonAttemptConsumeEntityEvent args)
+    private void PreventBreach(EntityUid uid, ContainmentFieldGeneratorComponent comp, ref EventHorizonAttemptConsumeEntityEvent args)
     {
         if (args.Cancelled)
             return;
         if (comp.IsConnected && !args.EventHorizon.CanBreachContainment)
-            args.Cancel();
+            args.Cancelled = true;
     }
 }

@@ -1,14 +1,14 @@
 using Content.Shared.Wires;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Wires.UI
 {
     public sealed class WiresBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private WiresMenu? _menu;
 
-        public WiresBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public WiresBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

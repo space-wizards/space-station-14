@@ -128,7 +128,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         if (!args.OurFixture.Hard ||
             !args.OtherFixture.Hard ||
             !TryComp<PhysicsComponent>(uid, out var physics) ||
-            physics.LinearVelocity.Length < component.MinimumVelocity ||
+            physics.LinearVelocity.Length() < component.MinimumVelocity ||
             _timing.CurTime < component.NextSound ||
             MetaData(uid).EntityPaused)
         {
@@ -139,7 +139,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         const float MinVolume = -10f;
         const float MaxVolume = 2f;
 
-        var fraction = MathF.Min(1f, (physics.LinearVelocity.Length - component.MinimumVelocity) / MaxVolumeVelocity);
+        var fraction = MathF.Min(1f, (physics.LinearVelocity.Length() - component.MinimumVelocity) / MaxVolumeVelocity);
         var volume = MinVolume + (MaxVolume - MinVolume) * fraction;
         component.NextSound = _timing.CurTime + EmitSoundOnCollideComponent.CollideCooldown;
 

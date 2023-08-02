@@ -134,14 +134,19 @@
   id: CrateFunBoardGames
   parent: CrateGenericSteel
   components:
-    - type: StorageFill
-      contents:
-        - id: ChessBoard
-        - id: BackgammonBoard
-        - id: ParchisBoard
-        - id: CheckerBoard
-        - id: d6Dice
-          amount: 4
+  - type: StorageFill
+    contents:
+      - id: ChessBoard
+      - id: BackgammonBoard
+      - id: ParchisBoard
+      - id: CheckerBoard
+      - id: ShipBattlemap
+      - id: SnowBattlemap
+      - id: SandBattlemap
+      - id: MoonBattlemap
+      - id: GrassBattlemap
+      - id: DiceBag
+        amount: 6
 
 - type: entity
   id: CrateFunATV
@@ -262,3 +267,12 @@
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
       - id: BeachBall
+
+- type: entity
+  id: CrateFunBikeHornImplants
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: BikeHornImplanter
+        amount: 3

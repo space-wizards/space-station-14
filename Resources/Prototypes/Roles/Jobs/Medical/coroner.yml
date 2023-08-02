@@ -8,7 +8,7 @@
       department: Medical
       time: 14400 #Imperial role timers
   startingGear: CoronerGear
-  icon: "Coroner"
+  icon: "JobIconCoroner"
   supervisors: job-supervisors-medicine
   canBeAntag: true
   access:

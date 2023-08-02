@@ -28,12 +28,14 @@ namespace Content.Server.Damage.Systems
 
         private void HandleCollide(EntityUid uid, DamageOnHighSpeedImpactComponent component, ref StartCollideEvent args)
         {
-            if (!EntityManager.HasComponent<DamageableComponent>(uid)) return;
+            if (!EntityManager.HasComponent<DamageableComponent>(uid))
+                return;
 
             var otherBody = args.OtherEntity;
-            var speed = args.OurBody.LinearVelocity.Length;
+            var speed = args.OurBody.LinearVelocity.Length();
 
-            if (speed < component.MinimumSpeed) return;
+            if (speed < component.MinimumSpeed)
+                return;
 
             SoundSystem.Play(component.SoundHit.GetSound(), Filter.Pvs(otherBody), otherBody, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
 

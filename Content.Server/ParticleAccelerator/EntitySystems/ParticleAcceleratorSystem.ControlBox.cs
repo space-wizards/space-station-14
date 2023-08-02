@@ -1,9 +1,9 @@
-using Content.Server.Mind.Components;
 using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Singularity.Components;
 using Robust.Server.Player;
+using Robust.Server.GameObjects;
 using Robust.Shared.Utility;
 using System.Diagnostics;
 
@@ -69,7 +69,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (comp.Enabled || !comp.CanBeEnabled)
             return;
 
-        if (user?.AttachedEntity is {} player)
+        if (user?.AttachedEntity is { } player)
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} on");
 
         comp.Enabled = true;
@@ -89,7 +89,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (!comp.Enabled)
             return;
 
-        if (user?.AttachedEntity is {} player)
+        if (user?.AttachedEntity is { } player)
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} off");
 
         comp.Enabled = false;
@@ -146,7 +146,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (strength == comp.SelectedStrength)
             return;
 
-        if (user?.AttachedEntity is {} player)
+        if (user?.AttachedEntity is { } player)
         {
             var impact = strength switch
             {
@@ -221,7 +221,7 @@ public sealed partial class ParticleAcceleratorSystem
             receive = powerConsumer.ReceivedPower;
         }
 
-        _uiSystem.SetUiState(bui, new ParticleAcceleratorUIState(
+        UserInterfaceSystem.SetUiState(bui, new ParticleAcceleratorUIState(
             comp.Assembled,
             comp.Enabled,
             comp.SelectedStrength,

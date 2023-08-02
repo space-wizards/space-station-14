@@ -1,4 +1,4 @@
-﻿## Implanter Attempt Messages
+## Implanter Attempt Messages
 
 implanter-component-implanting-target = {$user} is trying to implant you with something!
 implanter-draw-failed-permanent = The {$implant} in {$target} is fused with them and cannot be removed!
@@ -9,9 +9,10 @@ implanter-draw-text = Draw
 implanter-inject-text = Inject
 
 implanter-empty-text = None
-implanter-implant-text = {$implantName}{$lineBreak}{$implantDescription}
 
-implanter-label = [color=white]Implant: {$currentEntities}{$lineBreak}Mode: {$modeString}[/color]
+implanter-label = Implant: [color=green]{$implantName}[/color] | [color=white]{$modeString}[/color]{$lineBreak}{$implantDescription}
+
+implanter-contained-implant-text = [color=green]{$desc}[/color]
 
 ## Implanter Actions
 
@@ -26,3 +27,22 @@ use-freedom-implant-action-description = Activating your freedom implant will fr
 
 open-uplink-implant-action-name = Open Uplink
 open-uplink-implant-action-description = Opens the syndicate uplink embedded under your skin
+
+action-name-honk = Honk!
+action-desc-honk = Activates your honking implant, which will produce the signature sound of the clown.
+
+use-emp-implant-action-name = Activate EMP
+use-emp-implant-action-description = Triggers a small EMP pulse around you
+
+use-dna-scrambler-implant-action-name = Scramble DNA
+use-dna-scrambler-implant-action-description = LING IN MAINTS!
+
+## Implant Popups
+
+scramble-attempt-while-scrambled-popup = Scrambled DNA detected, please extract implant before undoing the current scramble.
+scramble-implant-activated-popup = You transformed into {$identity}
+
+## Implant Messages
+
+deathrattle-implant-dead-message = {$user} has died at {$position}.
+deathrattle-implant-critical-message = {$user} life signs critical, immediate assistance required at {$position}.

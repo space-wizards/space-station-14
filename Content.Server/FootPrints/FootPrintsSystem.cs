@@ -9,6 +9,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
+using System.Numerics;
 
 namespace Contest.Server.FootPrints
 {
@@ -44,7 +45,7 @@ namespace Contest.Server.FootPrints
                     continue;
                 if (!TryComp<MobThresholdsComponent>(comp.Owner, out var mobThreshHolds))
                     continue;
-                if ((transform.LocalPosition - comp.StepPos).Length > (CheckMobState(mobThreshHolds) ? comp.DragSize : comp.StepSize))
+                if ((transform.LocalPosition - comp.StepPos).Length() > (CheckMobState(mobThreshHolds) ? comp.DragSize : comp.StepSize))
                 {
                     comp.RightStep = !comp.RightStep;
                     _decals.TryAddDecal(

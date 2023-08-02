@@ -8,7 +8,7 @@
       role: JobMedicalDoctor
       time: 7200 #Imperial role timers
   startingGear: ChemistGear
-  icon: "Chemist"
+  icon: "JobIconChemist"
   supervisors: job-supervisors-cmo
   access:
   - Medical

@@ -56,3 +56,13 @@
   - type: TechnologyDisk
   - type: StaticPrice
     price: 500 #Imperial price balance
+
+- type: entity
+  parent: TechnologyDisk
+  id: TechnologyDiskRare
+  suffix: rare.
+  components:
+  - type: TechnologyDisk
+    tierWeightPrototype: RareTechDiskTierWeights
+  - type: StaticPrice
+    price: 1000 #Imperial price balance

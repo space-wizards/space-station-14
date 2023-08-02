@@ -8,7 +8,7 @@
       department: Security
       time: 21600 #Imperial role timers
   startingGear: WardenGear
-  icon: "Warden"
+  icon: "JobIconWarden"
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:
@@ -32,6 +32,7 @@
     id: WardenPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
+    pocket1: WeaponPistolMk58Nonlethal
   innerclothingskirt: ClothingUniformJumpskirtWarden
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

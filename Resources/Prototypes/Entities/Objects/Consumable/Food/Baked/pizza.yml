@@ -22,7 +22,7 @@
         - ReagentId: Vitamin
           Quantity: 5
   - type: SliceableFood
-    count: 6
+    count: 8
   - type: Item
     size: 8
   - type: Tag

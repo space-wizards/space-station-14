@@ -7,7 +7,7 @@ namespace Content.Tools
     {
         public TypeTagPreserver(IEmitter emitter)
         {
-           Emitter = emitter;
+            Emitter = emitter;
         }
 
         private IEmitter Emitter { get; }

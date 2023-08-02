@@ -154,7 +154,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IGameMapManager>().Initialize();
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
                 IoCManager.Resolve<IBqlQueryManager>().DoAutoRegistrations();
-                IoCManager.Resolve<RoleBanManager>().Initialize();
+                IoCManager.Resolve<IBanManager>().Initialize();
             }
         }
 

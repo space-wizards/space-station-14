@@ -8,7 +8,7 @@
       department: Medical
       time: 14400 #Imperial role timers
   startingGear: DoctorGear
-  icon: "MedicalDoctor"
+  icon: "JobIconMedicalDoctor"
   supervisors: job-supervisors-cmo
   access:
   - Medical

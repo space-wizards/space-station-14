@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Destructible;
 using Content.Shared.Access.Components;
+using Content.Shared.Climbing;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
 using Content.Shared.Physics;
@@ -152,11 +154,12 @@ public sealed partial class PathfindingSystem
                 var accessQuery = GetEntityQuery<AccessReaderComponent>();
                 var destructibleQuery = GetEntityQuery<DestructibleComponent>();
                 var doorQuery = GetEntityQuery<DoorComponent>();
+                var climbableQuery = GetEntityQuery<ClimbableComponent>();
                 var fixturesQuery = GetEntityQuery<FixturesComponent>();
                 var physicsQuery = GetEntityQuery<PhysicsComponent>();
                 var xformQuery = GetEntityQuery<TransformComponent>();
-                BuildBreadcrumbs(dirt[i], mapGridComp, accessQuery, destructibleQuery, doorQuery, fixturesQuery,
-                    physicsQuery, xformQuery);
+                BuildBreadcrumbs(dirt[i], mapGridComp, accessQuery, destructibleQuery, doorQuery, climbableQuery,
+                    fixturesQuery, physicsQuery, xformQuery);
             });
 
             const int Division = 4;
@@ -407,6 +410,7 @@ public sealed partial class PathfindingSystem
         EntityQuery<AccessReaderComponent> accessQuery,
         EntityQuery<DestructibleComponent> destructibleQuery,
         EntityQuery<DoorComponent> doorQuery,
+        EntityQuery<ClimbableComponent> climbableQuery,
         EntityQuery<FixturesComponent> fixturesQuery,
         EntityQuery<PhysicsComponent> physicsQuery,
         EntityQuery<TransformComponent> xformQuery)
@@ -522,6 +526,11 @@ public sealed partial class PathfindingSystem
                             if (doorQuery.HasComponent(ent))
                             {
                                 flags |= PathfindingBreadcrumbFlag.Door;
+                            }
+
+                            if (climbableQuery.HasComponent(ent))
+                            {
+                                flags |= PathfindingBreadcrumbFlag.Climb;
                             }
 
                             if (destructibleQuery.TryGetComponent(ent, out var damageable))
