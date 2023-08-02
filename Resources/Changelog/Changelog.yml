@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: PKA requires wielding now., type: Tweak}
-  id: 3916
-  time: '2023-06-01T02:27:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: L6 firerate is 6 again. It requires wielding to have decent accuracy.,
     type: Tweak}
   - {message: SMG accuracy reduced to 3-tiles width at full screen away., type: Tweak}
@@ -2990,3 +2985,8 @@ Entries:
   - {message: The P-Block crate will now have oxygen and nitrogen jugs., type: Fix}
   id: 4415
   time: '2023-08-02T14:32:08.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Containers used in recipes now drop their contents when crafted., type: Fix}
+  id: 4416
+  time: '2023-08-02T18:32:51.0000000+00:00'
