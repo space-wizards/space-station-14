@@ -1,10 +1,4 @@
 Entries:
-- author: lzk
-  changes:
-  - {message: added some tools to belts whitelist, type: Tweak}
-  - {message: swab is trash now, type: Tweak}
-  id: 3910
-  time: '2023-05-31T13:51:52.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix some docking configs not being considered valid., type: Fix}
@@ -2986,3 +2980,9 @@ Entries:
   - {message: Thrown items that damage other entities now land after first hit., type: Tweak}
   id: 4409
   time: '2023-08-02T09:30:04.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: added visual effect on collision for damage on high speed entities,
+    type: Add}
+  id: 4410
+  time: '2023-08-02T09:32:44.0000000+00:00'
