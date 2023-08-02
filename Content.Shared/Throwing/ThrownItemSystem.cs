@@ -45,7 +45,7 @@ namespace Content.Shared.Throwing
 
         private void OnHandleState(EntityUid uid, ThrownItemComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not ThrownItemComponentState {Thrower: not null } state ||
+            if (args.Current is not ThrownItemComponentState { Thrower: not null } state ||
                 !state.Thrower.Value.IsValid())
             {
                 return;
@@ -73,11 +73,10 @@ namespace Content.Shared.Throwing
             if (args.OtherFixture.Hard == false)
                 return;
 
-            var thrower = component.Thrower;
-            if (args.OtherEntity == thrower)
+            if (args.OtherEntity == component.Thrower)
                 return;
 
-            ThrowCollideInteraction(thrower, args.OurBody, args.OtherBody);
+            ThrowCollideInteraction(component, args.OurEntity, args.OtherEntity);
         }
 
         private void PreventCollision(EntityUid uid, ThrownItemComponent component, ref PreventCollideEvent args)
@@ -116,8 +115,13 @@ namespace Content.Shared.Throwing
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
-        public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent physics, bool playSound)
+        public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent? physics = null, bool playSound = true)
         {
+            if (!Resolve(uid, ref physics))
+            {
+                return;
+            }
+
             _physics.SetBodyStatus(physics, BodyStatus.OnGround);
 
             if (thrownItem.Deleted || Deleted(uid) || _containerSystem.IsEntityInContainer(uid))
@@ -145,14 +149,14 @@ namespace Content.Shared.Throwing
         /// <summary>
         ///     Raises collision events on the thrown and target entities.
         /// </summary>
-        public void ThrowCollideInteraction(EntityUid? user, PhysicsComponent thrown, PhysicsComponent target)
+        public void ThrowCollideInteraction(ThrownItemComponent component, EntityUid thrown, EntityUid target)
         {
-            if (user is not null)
+            if (component.Thrower is not null)
                 _adminLogger.Add(LogType.ThrowHit, LogImpact.Low,
-                    $"{ToPrettyString(thrown.Owner):thrown} thrown by {ToPrettyString(user.Value):thrower} hit {ToPrettyString(target.Owner):target}.");
-            // TODO: Just pass in the bodies directly
-            RaiseLocalEvent(target.Owner, new ThrowHitByEvent(user, thrown.Owner, target.Owner), true);
-            RaiseLocalEvent(thrown.Owner, new ThrowDoHitEvent(user, thrown.Owner, target.Owner), true);
+                    $"{ToPrettyString(thrown):thrown} thrown by {ToPrettyString(component.Thrower.Value):thrower} hit {ToPrettyString(target):target}.");
+
+            RaiseLocalEvent(target, new ThrowHitByEvent(thrown, target, component), true);
+            RaiseLocalEvent(thrown, new ThrowDoHitEvent(thrown, target, component), true);
         }
     }
 }
