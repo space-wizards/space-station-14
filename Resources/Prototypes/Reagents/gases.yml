@@ -257,6 +257,22 @@
         visualType: Medium
         messages: [ "effect-sleepy" ]
         probability: 0.1
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          reagent: NitrousOxide
+          min: 0.3
+        emote: Laugh
+        showInChat: true
+        probability: 0.1
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          reagent: NitrousOxide
+          min: 0.3
+        emote: Scream
+        showInChat: true
+        probability: 0.01
       - !type:MovespeedModifier
         conditions:
         - !type:ReagentThreshold
