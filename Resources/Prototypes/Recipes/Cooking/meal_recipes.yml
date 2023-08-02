@@ -1640,3 +1640,10 @@
   time: 5
   solids:
     ClothingShoesBootsFisher: 1
+    
+  id: RecipeCookedSpaceshroom
+  name: cooked spaceshroom recipe
+  result: FoodSpaceshroomCooked
+  time: 5
+  solids:
+    FoodSpaceshroom: 1

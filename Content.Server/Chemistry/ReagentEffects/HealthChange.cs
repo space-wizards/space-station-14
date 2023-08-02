@@ -2,6 +2,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Localizations;
 using JetBrains.Annotations;
@@ -28,22 +29,65 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// </summary>
         [JsonPropertyName("scaleByQuantity")]
         [DataField("scaleByQuantity")]
-        public bool ScaleByQuantity = false;
+        public bool ScaleByQuantity;
 
         [DataField("ignoreResistances")]
         [JsonPropertyName("ignoreResistances")]
         public bool IgnoreResistances = true;
 
-        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
             var damages = new List<string>();
             var heals = false;
             var deals = false;
 
-            // TODO: This should be smarter. Namely, not showing a damage type as being in a group unless every damage type in the group is present and equal in value.
-            foreach (var (kind, amount) in Damage.GetDamagePerGroup())
+            var damageSpec = new DamageSpecifier(Damage);
+
+            foreach (var group in prototype.EnumeratePrototypes<DamageGroupPrototype>())
             {
-                var sign = MathF.Sign(amount.Float());
+                if (!damageSpec.TryGetDamageInGroup(group, out var amount))
+                    continue;
+
+                var relevantTypes = damageSpec.DamageDict
+                    .Where(x => x.Value != FixedPoint2.Zero && group.DamageTypes.Contains(x.Key)).ToList();
+
+                if (relevantTypes.Count != group.DamageTypes.Count)
+                    continue;
+
+                var sum = FixedPoint2.Zero;
+                foreach (var type in group.DamageTypes)
+                {
+                    sum += damageSpec.DamageDict.GetValueOrDefault(type);
+                }
+
+                // if the total sum of all the types equal the damage amount,
+                // assume that they're evenly distributed.
+                if (sum != amount)
+                    continue;
+
+                var sign = FixedPoint2.Sign(amount);
+
+                if (sign < 0)
+                    heals = true;
+                if (sign > 0)
+                    deals = true;
+
+                damages.Add(
+                    Loc.GetString("health-change-display",
+                        ("kind", group.ID),
+                        ("amount", MathF.Abs(amount.Float())),
+                        ("deltasign", sign)
+                    ));
+
+                foreach (var type in group.DamageTypes)
+                {
+                    damageSpec.DamageDict.Remove(type);
+                }
+            }
+
+            foreach (var (kind, amount) in damageSpec.DamageDict)
+            {
+                var sign = FixedPoint2.Sign(amount);
 
                 if (sign < 0)
                     heals = true;
@@ -71,7 +115,7 @@ namespace Content.Server.Chemistry.ReagentEffects
             var scale = ScaleByQuantity ? args.Quantity : FixedPoint2.New(1);
             scale *= args.Scale;
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage * scale, IgnoreResistances);
+            args.EntityManager.System<DamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage * scale, IgnoreResistances);
         }
     }
 }
