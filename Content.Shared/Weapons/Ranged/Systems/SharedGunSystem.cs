@@ -7,7 +7,6 @@ using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
@@ -304,6 +303,10 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (ev.Ammo.Count <= 0)
         {
+            // triggers effects on the gun if it's empty
+            var emptyGunShotEvent = new OnEmptyGunShotEvent();
+            RaiseLocalEvent(gunUid, ref emptyGunShotEvent);
+
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
             if (shots > 0)

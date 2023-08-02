@@ -67,6 +67,9 @@ uplink-speedloader-magnu-desc = Revolver speedloader with 6 armor-piercing catri
 uplink-mosin-ammo-name = ammunition box (.30 rifle)
 uplink-mosin-ammo-desc = A box of cartridges for the surplus rifle.
 
+uplink-sniper-ammo-name = ammunition box (.60 antimateriel)
+uplink-sniper-ammo-desc = a box of 10 cartridges for the hristov sniper rifle
+
 # Utility
 uplink-holopara-kit-name = Holoparasite Kit
 uplink-holopara-kit-desc = The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active.
@@ -209,7 +212,7 @@ uplink-proximity-mine-name = Proximity Mine
 uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
 
 uplink-disposable-turret-name = Disposable Ballistic Turret
-uplink-disposable-turret-desc = Looks and functions like a normal electrical toolbox. Upon hitting the toolbox it will transform into a ballistic turret, theoretically shooting at anyone except members of the syndicate.
+uplink-disposable-turret-desc = Looks and functions like a normal electrical toolbox. Upon hitting the toolbox it will transform into a ballistic turret, theoretically shooting at anyone except members of the syndicate. Can be turned back into a toolbox using a screwdriver and repaired using a wrench.
 
 # Armor
 uplink-chameleon-name = Chameleon Kit
