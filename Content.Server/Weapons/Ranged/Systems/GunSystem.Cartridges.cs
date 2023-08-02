@@ -28,20 +28,12 @@ public sealed partial class GunSystem
         if (damageSpec == null)
             return;
 
-        var verb = new ExamineVerb()
-        {
-            Act = () =>
-            {
-                var markup = Damageable.GetDamageExamine(damageSpec, Loc.GetString("damage-projectile"));
-                _examine.SendExamineTooltip(args.User, uid, markup, false, false);
-            },
-            Text = Loc.GetString("damage-examinable-verb-text"),
-            Message = Loc.GetString("damage-examinable-verb-message"),
-            Category = VerbCategory.Examine,
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
-        };
-
-        args.Verbs.Add(verb);
+        var markup = Damageable.GetDamageExamine(damageSpec, Loc.GetString("damage-projectile"));
+        _examine.AddDetailedExamineVerb(args, component, markup,
+            Loc.GetString("damage-examinable-verb-text"),
+            "/Textures/Interface/VerbIcons/smite.svg.192dpi.png",
+            Loc.GetString("damage-examinable-verb-message")
+        );
     }
 
     private DamageSpecifier? GetProjectileDamage(string proto)

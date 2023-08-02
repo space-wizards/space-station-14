@@ -70,34 +70,19 @@ public sealed partial class GunSystem
         if (damageSpec == null)
             return;
 
-        string damageType;
-
-        switch (component)
+        var damageType = component switch
         {
-            case HitscanBatteryAmmoProviderComponent:
-                damageType = Loc.GetString("damage-hitscan");
-                break;
-            case ProjectileBatteryAmmoProviderComponent:
-                damageType = Loc.GetString("damage-projectile");
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-
-        var verb = new ExamineVerb()
-        {
-            Act = () =>
-            {
-                var markup = Damageable.GetDamageExamine(damageSpec, damageType);
-                Examine.SendExamineTooltip(args.User, uid, markup, false, false);
-            },
-            Text = Loc.GetString("damage-examinable-verb-text"),
-            Message = Loc.GetString("damage-examinable-verb-message"),
-            Category = VerbCategory.Examine,
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
+            HitscanBatteryAmmoProviderComponent => Loc.GetString("damage-hitscan"),
+            ProjectileBatteryAmmoProviderComponent => Loc.GetString("damage-projectile"),
+            _ => throw new ArgumentOutOfRangeException(),
         };
 
-        args.Verbs.Add(verb);
+        var markup = Damageable.GetDamageExamine(damageSpec, damageType);
+        _examine.AddDetailedExamineVerb(args, component, markup,
+            Loc.GetString("damage-examinable-verb-text"),
+            "/Textures/Interface/VerbIcons/smite.svg.192dpi.png",
+            Loc.GetString("damage-examinable-verb-message")
+        );
     }
 
     private DamageSpecifier? GetDamage(BatteryAmmoProviderComponent component)

@@ -65,20 +65,12 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (damageSpec.Total == FixedPoint2.Zero)
             return;
 
-        var verb = new ExamineVerb()
-        {
-            Act = () =>
-            {
-                var markup = Damageable.GetDamageExamine(damageSpec, Loc.GetString("damage-melee"));
-                _examine.SendExamineTooltip(args.User, uid, markup, false, false);
-            },
-            Text = Loc.GetString("damage-examinable-verb-text"),
-            Message = Loc.GetString("damage-examinable-verb-message"),
-            Category = VerbCategory.Examine,
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
-        };
-
-        args.Verbs.Add(verb);
+        var markup = Damageable.GetDamageExamine(damageSpec, Loc.GetString("damage-melee"));
+        _examine.AddDetailedExamineVerb(args, component, markup,
+            Loc.GetString("damage-examinable-verb-text"),
+            "/Textures/Interface/VerbIcons/smite.svg.192dpi.png",
+            Loc.GetString("damage-examinable-verb-message")
+        );
     }
 
     protected override bool ArcRaySuccessful(EntityUid targetUid, Vector2 position, Angle angle, Angle arcWidth, float range, MapId mapId,
