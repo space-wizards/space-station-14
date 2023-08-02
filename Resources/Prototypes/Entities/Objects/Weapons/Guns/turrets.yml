@@ -106,7 +106,8 @@
       proto: CartridgeCaselessRifle
       capacity: 500
     - type: HTN
-      rootTask: TurretCompound
+      rootTask:
+        task: TurretCompound
       blackboard:
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Effects/double_beep.ogg
@@ -211,7 +212,8 @@
       selectedMode: FullAuto
       soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
     - type: HTN
-      rootTask: TurretCompound
+      rootTask:
+        task: TurretCompound
       blackboard:
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Animals/snake_hiss.ogg
