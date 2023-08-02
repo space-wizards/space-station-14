@@ -40,6 +40,12 @@ public sealed class NPCSteeringComponent : Component
     #endregion
 
     /// <summary>
+    /// Set to true from other systems if you wish to force the NPC to move closer.
+    /// </summary>
+    [DataField("forceMove")]
+    public bool ForceMove = false;
+
+    /// <summary>
     /// Next time we can change our steering direction.
     /// </summary>
     [DataField("nextSteer", customTypeSerializer:typeof(TimeOffsetSerializer))]

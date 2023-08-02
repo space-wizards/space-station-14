@@ -126,8 +126,11 @@ public abstract partial class SharedGunSystem : EntitySystem
         var user = args.SenderSession.AttachedEntity;
 
         if (user == null ||
+            !_combatMode.IsInCombatMode(user) ||
             !TryGetGun(user.Value, out var ent, out var gun))
+        {
             return;
+        }
 
         if (ent != msg.Gun)
             return;
@@ -164,9 +167,6 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         gunEntity = default;
         gunComp = null;
-
-        if (!_combatMode.IsInCombatMode(entity))
-            return false;
 
         if (EntityManager.TryGetComponent(entity, out HandsComponent? hands) &&
             hands.ActiveHandEntity is { } held &&
