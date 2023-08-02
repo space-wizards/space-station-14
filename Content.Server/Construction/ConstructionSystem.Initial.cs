@@ -217,10 +217,6 @@ namespace Content.Server.Construction
                                 foreach (var storedEntity in storage.StoredEntities.ToList())
                                 {
                                     _storageSystem.RemoveAndDrop(entity, storedEntity, storage);
-
-                                    var transform = Transform(storedEntity);
-                                    _container.AttachParentToContainerOrGrid(transform);
-                                    _transformSystem.SetLocalPositionRotation(transform, transform.LocalPosition + _random.NextVector2Box() / 4, _random.NextAngle());
                                 }
                             }
 
@@ -229,13 +225,11 @@ namespace Content.Server.Construction
                                 if (!container.Insert(entity))
                                     continue;
                             }
-
                             else if (!GetContainer(arbitraryStep.Store).Insert(entity))
                                 continue;
 
                             handled = true;
                             used.Add(entity);
-
                             break;
                         }
 
