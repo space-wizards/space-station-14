@@ -1,9 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Autolathe board economy crashed, type: Tweak}
-  id: 3918
-  time: '2023-06-01T06:49:50.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix NPCs getting stuck on corners., type: Fix}
@@ -2988,3 +2983,8 @@ Entries:
   - {message: Nitrous oxide now causes laughing, type: Add}
   id: 4417
   time: '2023-08-02T21:33:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix xenos not spittin'., type: Fix}
+  id: 4418
+  time: '2023-08-02T21:34:54.0000000+00:00'
