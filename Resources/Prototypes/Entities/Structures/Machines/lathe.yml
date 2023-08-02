@@ -425,6 +425,7 @@
       - TargetHuman
       - TargetSyndicate
       - TargetClown
+      - WeaponLaserCarbine
     dynamicRecipes:
       - CartridgePistolRubber
       - CartridgeMagnumRubber
@@ -459,7 +460,6 @@
       - Truncheon
       - FlashPayload
       - ExplosivePayload
-      - WeaponLaserCarbine
       - WeaponAdvancedLaser
       - WeaponLaserCannon
       - WeaponXrayCannon
