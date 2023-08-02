@@ -7115,7 +7115,8 @@ entities:
           -16,-15:
             0: 65535
           -16,-14:
-            0: 65535
+            0: 65527
+            7: 8
           -16,-13:
             0: 65535
           -15,-16:
@@ -7679,6 +7680,21 @@ entities:
           moles:
           - 0
           - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14996
+          moles:
+          - 20.078888
+          - 75.53487
           - 0
           - 0
           - 0
@@ -12272,21 +12288,6 @@ entities:
       type: Transform
 - proto: AsteroidRock
   entities:
-  - uid: 11623
-    components:
-    - pos: 38.5,-76.5
-      parent: 30
-      type: Transform
-  - uid: 11624
-    components:
-    - pos: 40.5,-76.5
-      parent: 30
-      type: Transform
-  - uid: 11648
-    components:
-    - pos: 43.5,-76.5
-      parent: 30
-      type: Transform
   - uid: 13747
     components:
     - pos: -76.5,-49.5
@@ -12927,1531 +12928,6 @@ entities:
     - pos: -73.5,-38.5
       parent: 30
       type: Transform
-  - uid: 20527
-    components:
-    - pos: 39.5,-76.5
-      parent: 30
-      type: Transform
-  - uid: 20529
-    components:
-    - pos: 42.5,-76.5
-      parent: 30
-      type: Transform
-  - uid: 20530
-    components:
-    - pos: 41.5,-76.5
-      parent: 30
-      type: Transform
-  - uid: 20531
-    components:
-    - pos: 37.5,-76.5
-      parent: 30
-      type: Transform
-  - uid: 20532
-    components:
-    - pos: 35.5,-75.5
-      parent: 30
-      type: Transform
-  - uid: 20533
-    components:
-    - pos: 36.5,-75.5
-      parent: 30
-      type: Transform
-  - uid: 20534
-    components:
-    - pos: 37.5,-75.5
-      parent: 30
-      type: Transform
-  - uid: 20535
-    components:
-    - pos: 38.5,-75.5
-      parent: 30
-      type: Transform
-  - uid: 20536
-    components:
-    - pos: 39.5,-75.5
-      parent: 30
-      type: Transform
-  - uid: 20537
-    components:
-    - pos: 40.5,-75.5
-      parent: 30
-      type: Transform
-  - uid: 20538
-    components:
-    - pos: 41.5,-75.5
-      parent: 30
-      type: Transform
-  - uid: 20539
-    components:
-    - pos: 42.5,-75.5
-      parent: 30
-      type: Transform
-  - uid: 20540
-    components:
-    - pos: 43.5,-75.5
-      parent: 30
-      type: Transform
-  - uid: 20541
-    components:
-    - pos: 44.5,-75.5
-      parent: 30
-      type: Transform
-  - uid: 20542
-    components:
-    - pos: 45.5,-74.5
-      parent: 30
-      type: Transform
-  - uid: 20543
-    components:
-    - pos: 44.5,-74.5
-      parent: 30
-      type: Transform
-  - uid: 20544
-    components:
-    - pos: 43.5,-74.5
-      parent: 30
-      type: Transform
-  - uid: 20546
-    components:
-    - pos: 41.5,-74.5
-      parent: 30
-      type: Transform
-  - uid: 20547
-    components:
-    - pos: 40.5,-74.5
-      parent: 30
-      type: Transform
-  - uid: 20548
-    components:
-    - pos: 39.5,-74.5
-      parent: 30
-      type: Transform
-  - uid: 20549
-    components:
-    - pos: 38.5,-74.5
-      parent: 30
-      type: Transform
-  - uid: 20550
-    components:
-    - pos: 37.5,-74.5
-      parent: 30
-      type: Transform
-  - uid: 20551
-    components:
-    - pos: 36.5,-74.5
-      parent: 30
-      type: Transform
-  - uid: 20552
-    components:
-    - pos: 35.5,-74.5
-      parent: 30
-      type: Transform
-  - uid: 20553
-    components:
-    - pos: 34.5,-74.5
-      parent: 30
-      type: Transform
-  - uid: 20554
-    components:
-    - pos: 34.5,-73.5
-      parent: 30
-      type: Transform
-  - uid: 20555
-    components:
-    - pos: 35.5,-73.5
-      parent: 30
-      type: Transform
-  - uid: 20556
-    components:
-    - pos: 36.5,-73.5
-      parent: 30
-      type: Transform
-  - uid: 20557
-    components:
-    - pos: 37.5,-73.5
-      parent: 30
-      type: Transform
-  - uid: 20559
-    components:
-    - pos: 39.5,-73.5
-      parent: 30
-      type: Transform
-  - uid: 20562
-    components:
-    - pos: 42.5,-73.5
-      parent: 30
-      type: Transform
-  - uid: 20563
-    components:
-    - pos: 43.5,-73.5
-      parent: 30
-      type: Transform
-  - uid: 20564
-    components:
-    - pos: 44.5,-73.5
-      parent: 30
-      type: Transform
-  - uid: 20565
-    components:
-    - pos: 45.5,-73.5
-      parent: 30
-      type: Transform
-  - uid: 20566
-    components:
-    - pos: 46.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20567
-    components:
-    - pos: 45.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20568
-    components:
-    - pos: 44.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20569
-    components:
-    - pos: 43.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20570
-    components:
-    - pos: 42.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20571
-    components:
-    - pos: 41.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20572
-    components:
-    - pos: 40.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20573
-    components:
-    - pos: 39.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20574
-    components:
-    - pos: 38.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20575
-    components:
-    - pos: 37.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20576
-    components:
-    - pos: 36.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20577
-    components:
-    - pos: 35.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20578
-    components:
-    - pos: 34.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20579
-    components:
-    - pos: 33.5,-72.5
-      parent: 30
-      type: Transform
-  - uid: 20580
-    components:
-    - pos: 33.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20581
-    components:
-    - pos: 34.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20582
-    components:
-    - pos: 35.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20583
-    components:
-    - pos: 36.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20584
-    components:
-    - pos: 37.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20585
-    components:
-    - pos: 38.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20587
-    components:
-    - pos: 40.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20588
-    components:
-    - pos: 41.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20589
-    components:
-    - pos: 42.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20590
-    components:
-    - pos: 43.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20591
-    components:
-    - pos: 44.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20592
-    components:
-    - pos: 45.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20593
-    components:
-    - pos: 46.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20594
-    components:
-    - pos: 47.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20595
-    components:
-    - pos: 32.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20596
-    components:
-    - pos: 32.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20597
-    components:
-    - pos: 32.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20598
-    components:
-    - pos: 32.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20599
-    components:
-    - pos: 32.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20600
-    components:
-    - pos: 32.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20601
-    components:
-    - pos: 32.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20602
-    components:
-    - pos: 32.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20603
-    components:
-    - pos: 32.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20604
-    components:
-    - pos: 32.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20605
-    components:
-    - pos: 32.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20606
-    components:
-    - pos: 32.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20607
-    components:
-    - pos: 32.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20608
-    components:
-    - pos: 32.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20609
-    components:
-    - pos: 32.5,-56.5
-      parent: 30
-      type: Transform
-  - uid: 20610
-    components:
-    - pos: 32.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20611
-    components:
-    - pos: 31.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20612
-    components:
-    - pos: 31.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20613
-    components:
-    - pos: 31.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20614
-    components:
-    - pos: 31.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20615
-    components:
-    - pos: 31.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20616
-    components:
-    - pos: 35.5,-53.5
-      parent: 30
-      type: Transform
-  - uid: 20617
-    components:
-    - pos: 35.5,-54.5
-      parent: 30
-      type: Transform
-  - uid: 20618
-    components:
-    - pos: 34.5,-53.5
-      parent: 30
-      type: Transform
-  - uid: 20619
-    components:
-    - pos: 34.5,-54.5
-      parent: 30
-      type: Transform
-  - uid: 20620
-    components:
-    - pos: 33.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20621
-    components:
-    - pos: 34.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20622
-    components:
-    - pos: 35.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20623
-    components:
-    - pos: 36.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20624
-    components:
-    - pos: 37.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20625
-    components:
-    - pos: 38.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20626
-    components:
-    - pos: 39.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20627
-    components:
-    - pos: 40.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20628
-    components:
-    - pos: 41.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20629
-    components:
-    - pos: 42.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20630
-    components:
-    - pos: 43.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20631
-    components:
-    - pos: 44.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20632
-    components:
-    - pos: 45.5,-55.5
-      parent: 30
-      type: Transform
-  - uid: 20633
-    components:
-    - pos: 44.5,-53.5
-      parent: 30
-      type: Transform
-  - uid: 20634
-    components:
-    - pos: 44.5,-54.5
-      parent: 30
-      type: Transform
-  - uid: 20635
-    components:
-    - pos: 43.5,-53.5
-      parent: 30
-      type: Transform
-  - uid: 20636
-    components:
-    - pos: 43.5,-54.5
-      parent: 30
-      type: Transform
-  - uid: 20637
-    components:
-    - pos: 42.5,-54.5
-      parent: 30
-      type: Transform
-  - uid: 20638
-    components:
-    - pos: 41.5,-54.5
-      parent: 30
-      type: Transform
-  - uid: 20639
-    components:
-    - pos: 40.5,-54.5
-      parent: 30
-      type: Transform
-  - uid: 20640
-    components:
-    - pos: 39.5,-54.5
-      parent: 30
-      type: Transform
-  - uid: 20641
-    components:
-    - pos: 38.5,-54.5
-      parent: 30
-      type: Transform
-  - uid: 20642
-    components:
-    - pos: 37.5,-54.5
-      parent: 30
-      type: Transform
-  - uid: 20643
-    components:
-    - pos: 36.5,-54.5
-      parent: 30
-      type: Transform
-  - uid: 20644
-    components:
-    - pos: 37.5,-53.5
-      parent: 30
-      type: Transform
-  - uid: 20645
-    components:
-    - pos: 41.5,-53.5
-      parent: 30
-      type: Transform
-  - uid: 20646
-    components:
-    - pos: 40.5,-53.5
-      parent: 30
-      type: Transform
-  - uid: 20647
-    components:
-    - pos: 45.5,-56.5
-      parent: 30
-      type: Transform
-  - uid: 20648
-    components:
-    - pos: 45.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20649
-    components:
-    - pos: 45.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20650
-    components:
-    - pos: 45.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20651
-    components:
-    - pos: 45.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20652
-    components:
-    - pos: 45.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20653
-    components:
-    - pos: 46.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20654
-    components:
-    - pos: 46.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20655
-    components:
-    - pos: 46.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20656
-    components:
-    - pos: 46.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20657
-    components:
-    - pos: 46.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20658
-    components:
-    - pos: 46.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20659
-    components:
-    - pos: 46.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20660
-    components:
-    - pos: 46.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20661
-    components:
-    - pos: 46.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20662
-    components:
-    - pos: 46.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20663
-    components:
-    - pos: 46.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20664
-    components:
-    - pos: 46.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20665
-    components:
-    - pos: 46.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20666
-    components:
-    - pos: 47.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20667
-    components:
-    - pos: 47.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20668
-    components:
-    - pos: 47.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20669
-    components:
-    - pos: 47.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20670
-    components:
-    - pos: 47.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20671
-    components:
-    - pos: 47.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20672
-    components:
-    - pos: 47.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20673
-    components:
-    - pos: 47.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20674
-    components:
-    - pos: 47.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20675
-    components:
-    - pos: 45.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20676
-    components:
-    - pos: 45.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20678
-    components:
-    - pos: 45.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20679
-    components:
-    - pos: 45.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20680
-    components:
-    - pos: 45.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20681
-    components:
-    - pos: 45.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20683
-    components:
-    - pos: 45.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20688
-    components:
-    - pos: 44.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20689
-    components:
-    - pos: 44.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20690
-    components:
-    - pos: 44.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20691
-    components:
-    - pos: 44.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20692
-    components:
-    - pos: 44.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20693
-    components:
-    - pos: 44.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20694
-    components:
-    - pos: 44.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20695
-    components:
-    - pos: 44.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20696
-    components:
-    - pos: 44.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20697
-    components:
-    - pos: 44.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20698
-    components:
-    - pos: 44.5,-56.5
-      parent: 30
-      type: Transform
-  - uid: 20699
-    components:
-    - pos: 43.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20702
-    components:
-    - pos: 43.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20703
-    components:
-    - pos: 43.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20704
-    components:
-    - pos: 43.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20705
-    components:
-    - pos: 43.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20706
-    components:
-    - pos: 43.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20707
-    components:
-    - pos: 43.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20708
-    components:
-    - pos: 43.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20710
-    components:
-    - pos: 43.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20711
-    components:
-    - pos: 43.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20712
-    components:
-    - pos: 43.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20713
-    components:
-    - pos: 43.5,-56.5
-      parent: 30
-      type: Transform
-  - uid: 20714
-    components:
-    - pos: 42.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20716
-    components:
-    - pos: 42.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20717
-    components:
-    - pos: 42.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20718
-    components:
-    - pos: 42.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20719
-    components:
-    - pos: 42.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20720
-    components:
-    - pos: 42.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20721
-    components:
-    - pos: 42.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20722
-    components:
-    - pos: 42.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20723
-    components:
-    - pos: 42.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20724
-    components:
-    - pos: 42.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20725
-    components:
-    - pos: 42.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20726
-    components:
-    - pos: 42.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20727
-    components:
-    - pos: 42.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20728
-    components:
-    - pos: 42.5,-56.5
-      parent: 30
-      type: Transform
-  - uid: 20729
-    components:
-    - pos: 41.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20730
-    components:
-    - pos: 41.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20731
-    components:
-    - pos: 41.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20732
-    components:
-    - pos: 41.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20733
-    components:
-    - pos: 41.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20734
-    components:
-    - pos: 41.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20735
-    components:
-    - pos: 41.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20736
-    components:
-    - pos: 41.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20737
-    components:
-    - pos: 41.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20738
-    components:
-    - pos: 41.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20739
-    components:
-    - pos: 41.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20740
-    components:
-    - pos: 41.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20741
-    components:
-    - pos: 41.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20742
-    components:
-    - pos: 41.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20743
-    components:
-    - pos: 41.5,-56.5
-      parent: 30
-      type: Transform
-  - uid: 20744
-    components:
-    - pos: 40.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20745
-    components:
-    - pos: 40.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20746
-    components:
-    - pos: 40.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20747
-    components:
-    - pos: 40.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20748
-    components:
-    - pos: 40.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20749
-    components:
-    - pos: 40.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20750
-    components:
-    - pos: 40.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20752
-    components:
-    - pos: 40.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20753
-    components:
-    - pos: 40.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20754
-    components:
-    - pos: 40.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20755
-    components:
-    - pos: 40.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20756
-    components:
-    - pos: 40.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20757
-    components:
-    - pos: 40.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20758
-    components:
-    - pos: 40.5,-56.5
-      parent: 30
-      type: Transform
-  - uid: 20759
-    components:
-    - pos: 39.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20760
-    components:
-    - pos: 39.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20761
-    components:
-    - pos: 39.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20762
-    components:
-    - pos: 39.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20763
-    components:
-    - pos: 39.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20764
-    components:
-    - pos: 39.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20765
-    components:
-    - pos: 39.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20766
-    components:
-    - pos: 39.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20770
-    components:
-    - pos: 39.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20771
-    components:
-    - pos: 39.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20772
-    components:
-    - pos: 39.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20773
-    components:
-    - pos: 39.5,-56.5
-      parent: 30
-      type: Transform
-  - uid: 20774
-    components:
-    - pos: 38.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20775
-    components:
-    - pos: 38.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20778
-    components:
-    - pos: 38.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20779
-    components:
-    - pos: 38.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20780
-    components:
-    - pos: 38.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20781
-    components:
-    - pos: 38.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20782
-    components:
-    - pos: 38.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20783
-    components:
-    - pos: 38.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20784
-    components:
-    - pos: 38.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20785
-    components:
-    - pos: 38.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20786
-    components:
-    - pos: 38.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20787
-    components:
-    - pos: 38.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20788
-    components:
-    - pos: 38.5,-56.5
-      parent: 30
-      type: Transform
-  - uid: 20789
-    components:
-    - pos: 37.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20790
-    components:
-    - pos: 37.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20791
-    components:
-    - pos: 37.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20794
-    components:
-    - pos: 37.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20795
-    components:
-    - pos: 37.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20796
-    components:
-    - pos: 37.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20797
-    components:
-    - pos: 37.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20798
-    components:
-    - pos: 37.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20801
-    components:
-    - pos: 37.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20802
-    components:
-    - pos: 37.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20803
-    components:
-    - pos: 37.5,-56.5
-      parent: 30
-      type: Transform
-  - uid: 20804
-    components:
-    - pos: 36.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20805
-    components:
-    - pos: 36.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20806
-    components:
-    - pos: 36.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20810
-    components:
-    - pos: 36.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20811
-    components:
-    - pos: 36.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20812
-    components:
-    - pos: 36.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20813
-    components:
-    - pos: 36.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20814
-    components:
-    - pos: 36.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20815
-    components:
-    - pos: 36.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20816
-    components:
-    - pos: 36.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20818
-    components:
-    - pos: 36.5,-56.5
-      parent: 30
-      type: Transform
-  - uid: 20819
-    components:
-    - pos: 35.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20820
-    components:
-    - pos: 35.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20821
-    components:
-    - pos: 35.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20822
-    components:
-    - pos: 35.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20825
-    components:
-    - pos: 35.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20826
-    components:
-    - pos: 35.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20827
-    components:
-    - pos: 35.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20828
-    components:
-    - pos: 35.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20829
-    components:
-    - pos: 35.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20830
-    components:
-    - pos: 35.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20831
-    components:
-    - pos: 35.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20832
-    components:
-    - pos: 35.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20833
-    components:
-    - pos: 35.5,-56.5
-      parent: 30
-      type: Transform
-  - uid: 20834
-    components:
-    - pos: 34.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20835
-    components:
-    - pos: 34.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20836
-    components:
-    - pos: 34.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20837
-    components:
-    - pos: 34.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20838
-    components:
-    - pos: 34.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20839
-    components:
-    - pos: 34.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20840
-    components:
-    - pos: 34.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20841
-    components:
-    - pos: 34.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20842
-    components:
-    - pos: 34.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20843
-    components:
-    - pos: 34.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20844
-    components:
-    - pos: 34.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20845
-    components:
-    - pos: 34.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20846
-    components:
-    - pos: 34.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20847
-    components:
-    - pos: 34.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20848
-    components:
-    - pos: 34.5,-56.5
-      parent: 30
-      type: Transform
-  - uid: 20849
-    components:
-    - pos: 33.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20850
-    components:
-    - pos: 33.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20851
-    components:
-    - pos: 33.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20852
-    components:
-    - pos: 33.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20853
-    components:
-    - pos: 33.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20854
-    components:
-    - pos: 33.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20855
-    components:
-    - pos: 33.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20856
-    components:
-    - pos: 33.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20857
-    components:
-    - pos: 33.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20858
-    components:
-    - pos: 33.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20859
-    components:
-    - pos: 33.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20860
-    components:
-    - pos: 33.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20861
-    components:
-    - pos: 33.5,-58.5
-      parent: 30
-      type: Transform
-  - uid: 20862
-    components:
-    - pos: 33.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20863
-    components:
-    - pos: 33.5,-56.5
-      parent: 30
-      type: Transform
 - proto: AtmosDeviceFanTiny
   entities:
   - uid: 877
@@ -14588,161 +13064,6 @@ entities:
   - uid: 17011
     components:
     - pos: 27.5,-34.5
-      parent: 30
-      type: Transform
-  - uid: 20545
-    components:
-    - pos: 37.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20558
-    components:
-    - pos: 41.5,-73.5
-      parent: 30
-      type: Transform
-  - uid: 20560
-    components:
-    - pos: 38.5,-73.5
-      parent: 30
-      type: Transform
-  - uid: 20561
-    components:
-    - pos: 39.5,-71.5
-      parent: 30
-      type: Transform
-  - uid: 20586
-    components:
-    - pos: 40.5,-73.5
-      parent: 30
-      type: Transform
-  - uid: 20677
-    components:
-    - pos: 45.5,-64.5
-      parent: 30
-      type: Transform
-  - uid: 20685
-    components:
-    - pos: 36.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20687
-    components:
-    - pos: 38.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20700
-    components:
-    - pos: 38.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20701
-    components:
-    - pos: 37.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20709
-    components:
-    - pos: 44.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20715
-    components:
-    - pos: 36.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20751
-    components:
-    - pos: 39.5,-62.5
-      parent: 30
-      type: Transform
-  - uid: 20767
-    components:
-    - pos: 39.5,-61.5
-      parent: 30
-      type: Transform
-  - uid: 20768
-    components:
-    - pos: 39.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20769
-    components:
-    - pos: 37.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20776
-    components:
-    - pos: 36.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20777
-    components:
-    - pos: 35.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20792
-    components:
-    - pos: 35.5,-65.5
-      parent: 30
-      type: Transform
-  - uid: 20793
-    components:
-    - pos: 44.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20799
-    components:
-    - pos: 37.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20800
-    components:
-    - pos: 40.5,-63.5
-      parent: 30
-      type: Transform
-  - uid: 20807
-    components:
-    - pos: 43.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20808
-    components:
-    - pos: 45.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20809
-    components:
-    - pos: 44.5,-70.5
-      parent: 30
-      type: Transform
-  - uid: 20817
-    components:
-    - pos: 44.5,-67.5
-      parent: 30
-      type: Transform
-  - uid: 20823
-    components:
-    - pos: 42.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20824
-    components:
-    - pos: 43.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20864
-    components:
-    - pos: 43.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20865
-    components:
-    - pos: 36.5,-57.5
-      parent: 30
-      type: Transform
-  - uid: 20866
-    components:
-    - pos: 42.5,-74.5
       parent: 30
       type: Transform
 - proto: AtmosFixFreezerMarker
@@ -15573,211 +13894,140 @@ entities:
     - pos: 12.5,40.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20398
-      type: SignalReceiver
+    - links:
+      - 20398
+      type: DeviceLinkSink
   - uid: 9068
     components:
     - pos: 12.5,-38.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 8570
-        - port: Pressed
-          uid: 9038
-      type: SignalReceiver
+    - links:
+      - 8570
+      - 9038
+      type: DeviceLinkSink
   - uid: 9404
     components:
     - pos: -24.5,-45.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10141
-        - port: Pressed
-          uid: 2122
-      type: SignalReceiver
+    - links:
+      - 2122
+      - 10141
+      type: DeviceLinkSink
   - uid: 9405
     components:
     - pos: -23.5,-45.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10141
-        - port: Pressed
-          uid: 2122
-      type: SignalReceiver
+    - links:
+      - 2122
+      - 10141
+      type: DeviceLinkSink
   - uid: 11659
     components:
     - pos: 35.5,-12.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 11761
-      type: SignalReceiver
+    - links:
+      - 11761
+      type: DeviceLinkSink
   - uid: 11682
     components:
     - pos: 35.5,-15.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 11933
-      type: SignalReceiver
+    - links:
+      - 11933
+      type: DeviceLinkSink
   - uid: 11923
     components:
     - pos: 38.5,-2.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 11994
-      type: SignalReceiver
+    - links:
+      - 11994
+      type: DeviceLinkSink
   - uid: 11995
     components:
     - pos: 38.5,-6.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 11994
-      type: SignalReceiver
+    - links:
+      - 11994
+      type: DeviceLinkSink
   - uid: 12059
     components:
     - pos: 36.5,-6.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12063
-      type: SignalReceiver
+    - links:
+      - 12063
+      type: DeviceLinkSink
   - uid: 12099
     components:
     - pos: 36.5,-2.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12063
-      type: SignalReceiver
+    - links:
+      - 12063
+      type: DeviceLinkSink
   - uid: 13347
     components:
     - pos: 36.5,14.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12915
-      type: SignalReceiver
+    - links:
+      - 12915
+      type: DeviceLinkSink
   - uid: 13751
     components:
     - pos: 48.5,25.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 15985
-      type: SignalReceiver
+    - links:
+      - 15985
+      type: DeviceLinkSink
   - uid: 14512
     components:
     - pos: 48.5,23.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 15986
-      type: SignalReceiver
+    - links:
+      - 15986
+      type: DeviceLinkSink
   - uid: 16228
     components:
     - pos: 23.5,24.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 16231
-      type: SignalReceiver
+    - links:
+      - 16231
+      type: DeviceLinkSink
   - uid: 16229
     components:
     - pos: 22.5,24.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 16231
-      type: SignalReceiver
+    - links:
+      - 16231
+      type: DeviceLinkSink
   - uid: 16230
     components:
     - pos: 21.5,24.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 16231
-      type: SignalReceiver
+    - links:
+      - 16231
+      type: DeviceLinkSink
   - uid: 16773
     components:
     - pos: 37.5,14.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12915
-      type: SignalReceiver
+    - links:
+      - 12915
+      type: DeviceLinkSink
 - proto: BlastDoorOpen
   entities:
   - uid: 9188
@@ -15785,49 +14035,25 @@ entities:
     - pos: 5.5,-21.5
       parent: 30
       type: Transform
-    - inputs:
-        Open:
-        - port: Left
-          uid: 11701
-        - port: Right
-          uid: 11701
-        Close:
-        - port: Middle
-          uid: 11701
-        Toggle: []
-      type: SignalReceiver
+    - links:
+      - 11701
+      type: DeviceLinkSink
   - uid: 9189
     components:
     - pos: 6.5,-21.5
       parent: 30
       type: Transform
-    - inputs:
-        Open:
-        - port: Left
-          uid: 11701
-        - port: Right
-          uid: 11701
-        Close:
-        - port: Middle
-          uid: 11701
-        Toggle: []
-      type: SignalReceiver
+    - links:
+      - 11701
+      type: DeviceLinkSink
   - uid: 9190
     components:
     - pos: 7.5,-21.5
       parent: 30
       type: Transform
-    - inputs:
-        Open:
-        - port: Left
-          uid: 11701
-        - port: Right
-          uid: 11701
-        Close:
-        - port: Middle
-          uid: 11701
-        Toggle: []
-      type: SignalReceiver
+    - links:
+      - 11701
+      type: DeviceLinkSink
 - proto: BlockGameArcade
   entities:
   - uid: 1281
@@ -16448,48 +14674,36 @@ entities:
       pos: -45.5,41.5
       parent: 30
       type: Transform
-    - outputs:
-        Start:
-        - port: Close
-          uid: 1761
-        Timer:
-        - port: AutoClose
-          uid: 1761
-        - port: Open
-          uid: 1761
-      type: SignalTransmitter
+    - linkedPorts:
+        1761:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 1982
     components:
     - rot: -1.5707963267948966 rad
       pos: -41.5,41.5
       parent: 30
       type: Transform
-    - outputs:
-        Start:
-        - port: Close
-          uid: 1759
-        Timer:
-        - port: AutoClose
-          uid: 1759
-        - port: Open
-          uid: 1759
-      type: SignalTransmitter
+    - linkedPorts:
+        1759:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
   - uid: 1993
     components:
     - rot: -1.5707963267948966 rad
       pos: -37.5,41.5
       parent: 30
       type: Transform
-    - outputs:
-        Start:
-        - port: Close
-          uid: 1760
-        Timer:
-        - port: AutoClose
-          uid: 1760
-        - port: Open
-          uid: 1760
-      type: SignalTransmitter
+    - linkedPorts:
+        1760:
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
+      type: DeviceLinkSource
 - proto: Bucket
   entities:
   - uid: 318
@@ -58898,18 +57112,25 @@ entities:
     - pos: 7.503625,43.354942
       parent: 30
       type: Transform
+- proto: ClothingNeckCloakGoliathCloak
+  entities:
+  - uid: 20745
+    components:
+    - pos: 38.42502,-72.48088
+      parent: 30
+      type: Transform
 - proto: ClothingNeckCloakHerald
   entities:
-  - uid: 19758
+  - uid: 20628
     components:
-    - pos: 39.49874,-51.471012
+    - pos: 36.51877,-62.48151
       parent: 30
       type: Transform
 - proto: ClothingNeckCloakMiner
   entities:
-  - uid: 20686
+  - uid: 20696
     components:
-    - pos: 37.475792,-67.48313
+    - pos: 43.51021,-69.55285
       parent: 30
       type: Transform
 - proto: ClothingNeckCloakTrans
@@ -59253,13 +57474,6 @@ entities:
   - uid: 16034
     components:
     - pos: 16.536156,36.4687
-      parent: 30
-      type: Transform
-- proto: ClothingOuterWinterMiner
-  entities:
-  - uid: 19807
-    components:
-    - pos: 35.4909,-65.57688
       parent: 30
       type: Transform
 - proto: ClothingOuterWinterSec
@@ -59918,6 +58132,10 @@ entities:
     - pos: 37.5,10.5
       parent: 30
       type: Transform
+    - linkedPorts:
+        22233:
+        - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
+      type: DeviceLinkSource
 - proto: computerBodyScanner
   entities:
   - uid: 7092
@@ -59946,9 +58164,6 @@ entities:
     - pos: 24.5,2.5
       parent: 30
       type: Transform
-    - outputs:
-        OrderSender: []
-      type: SignalTransmitter
   - uid: 11704
     components:
     - pos: 16.5,2.5
@@ -60370,466 +58585,242 @@ entities:
     - pos: 35.5,-13.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11677
-        Forward:
-        - port: Left
-          uid: 11677
-        Off:
-        - port: Middle
-          uid: 11677
-      type: SignalReceiver
+    - links:
+      - 11677
+      type: DeviceLinkSink
   - uid: 8466
     components:
     - rot: -1.5707963267948966 rad
       pos: 18.5,-3.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11717
-        Forward:
-        - port: Left
-          uid: 11717
-        Off:
-        - port: Middle
-          uid: 11717
-      type: SignalReceiver
+    - links:
+      - 11717
+      type: DeviceLinkSink
   - uid: 8500
     components:
     - rot: -1.5707963267948966 rad
       pos: 17.5,-3.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11717
-        Forward:
-        - port: Left
-          uid: 11717
-        Off:
-        - port: Middle
-          uid: 11717
-      type: SignalReceiver
+    - links:
+      - 11717
+      type: DeviceLinkSink
   - uid: 8503
     components:
     - rot: -1.5707963267948966 rad
       pos: 19.5,-3.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11717
-        Forward:
-        - port: Left
-          uid: 11717
-        Off:
-        - port: Middle
-          uid: 11717
-      type: SignalReceiver
+    - links:
+      - 11717
+      type: DeviceLinkSink
   - uid: 11639
     components:
     - pos: 35.5,-11.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11677
-        Forward:
-        - port: Left
-          uid: 11677
-        Off:
-        - port: Middle
-          uid: 11677
-      type: SignalReceiver
+    - links:
+      - 11677
+      type: DeviceLinkSink
   - uid: 11691
     components:
     - rot: -1.5707963267948966 rad
       pos: 20.5,-3.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11717
-        Forward:
-        - port: Left
-          uid: 11717
-        Off:
-        - port: Middle
-          uid: 11717
-      type: SignalReceiver
+    - links:
+      - 11717
+      type: DeviceLinkSink
   - uid: 11702
     components:
     - rot: -1.5707963267948966 rad
       pos: 38.5,-2.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11866
-        Forward:
-        - port: Left
-          uid: 11866
-        Off:
-        - port: Middle
-          uid: 11866
-      type: SignalReceiver
+    - links:
+      - 11866
+      type: DeviceLinkSink
   - uid: 11755
     components:
     - rot: -1.5707963267948966 rad
       pos: 36.5,-2.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11866
-        Forward:
-        - port: Left
-          uid: 11866
-        Off:
-        - port: Middle
-          uid: 11866
-      type: SignalReceiver
+    - links:
+      - 11866
+      type: DeviceLinkSink
   - uid: 11780
     components:
     - rot: 1.5707963267948966 rad
       pos: 35.5,-6.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 12013
-        Forward:
-        - port: Left
-          uid: 12013
-        Off:
-        - port: Middle
-          uid: 12013
-      type: SignalReceiver
+    - links:
+      - 12013
+      type: DeviceLinkSink
   - uid: 11865
     components:
     - rot: -1.5707963267948966 rad
       pos: 35.5,-2.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11866
-        Forward:
-        - port: Left
-          uid: 11866
-        Off:
-        - port: Middle
-          uid: 11866
-      type: SignalReceiver
+    - links:
+      - 11866
+      type: DeviceLinkSink
   - uid: 11926
     components:
     - rot: 1.5707963267948966 rad
       pos: 37.5,-6.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 12013
-        Forward:
-        - port: Left
-          uid: 12013
-        Off:
-        - port: Middle
-          uid: 12013
-      type: SignalReceiver
+    - links:
+      - 12013
+      type: DeviceLinkSink
   - uid: 11932
     components:
     - pos: 35.5,-16.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11677
-        Forward:
-        - port: Left
-          uid: 11677
-        Off:
-        - port: Middle
-          uid: 11677
-      type: SignalReceiver
+    - links:
+      - 11677
+      type: DeviceLinkSink
   - uid: 11978
     components:
     - rot: 1.5707963267948966 rad
       pos: 38.5,-6.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 12013
-        Forward:
-        - port: Left
-          uid: 12013
-        Off:
-        - port: Middle
-          uid: 12013
-      type: SignalReceiver
+    - links:
+      - 12013
+      type: DeviceLinkSink
   - uid: 11979
     components:
     - rot: -1.5707963267948966 rad
       pos: 37.5,-2.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11866
-        Forward:
-        - port: Left
-          uid: 11866
-        Off:
-        - port: Middle
-          uid: 11866
-      type: SignalReceiver
+    - links:
+      - 11866
+      type: DeviceLinkSink
   - uid: 12014
     components:
     - rot: -1.5707963267948966 rad
       pos: 34.5,-2.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11866
-        Forward:
-        - port: Left
-          uid: 11866
-        Off:
-        - port: Middle
-          uid: 11866
-      type: SignalReceiver
+    - links:
+      - 11866
+      type: DeviceLinkSink
   - uid: 12031
     components:
     - pos: 35.5,-14.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11677
-        Forward:
-        - port: Left
-          uid: 11677
-        Off:
-        - port: Middle
-          uid: 11677
-      type: SignalReceiver
+    - links:
+      - 11677
+      type: DeviceLinkSink
   - uid: 12047
     components:
     - rot: 1.5707963267948966 rad
       pos: 36.5,-6.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 12013
-        Forward:
-        - port: Left
-          uid: 12013
-        Off:
-        - port: Middle
-          uid: 12013
-      type: SignalReceiver
+    - links:
+      - 12013
+      type: DeviceLinkSink
   - uid: 12096
     components:
     - pos: 35.5,-12.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11677
-        Forward:
-        - port: Left
-          uid: 11677
-        Off:
-        - port: Middle
-          uid: 11677
-      type: SignalReceiver
+    - links:
+      - 11677
+      type: DeviceLinkSink
   - uid: 12231
     components:
     - pos: 35.5,-17.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11677
-        Forward:
-        - port: Left
-          uid: 11677
-        Off:
-        - port: Middle
-          uid: 11677
-      type: SignalReceiver
+    - links:
+      - 11677
+      type: DeviceLinkSink
   - uid: 14522
     components:
     - pos: 48.5,25.5
       parent: 30
       type: Transform
-    - inputs:
-        Off:
-        - port: Middle
-          uid: 15987
-        Forward:
-        - port: Left
-          uid: 15987
-        Reverse:
-        - port: Right
-          uid: 15987
-      type: SignalReceiver
+    - links:
+      - 15987
+      type: DeviceLinkSink
   - uid: 14523
     components:
     - pos: 48.5,24.5
       parent: 30
       type: Transform
-    - inputs:
-        Off:
-        - port: Middle
-          uid: 15987
-        Forward:
-        - port: Left
-          uid: 15987
-        Reverse:
-        - port: Right
-          uid: 15987
-      type: SignalReceiver
+    - links:
+      - 15987
+      type: DeviceLinkSink
   - uid: 14524
     components:
     - pos: 48.5,23.5
       parent: 30
       type: Transform
-    - inputs:
-        Off:
-        - port: Middle
-          uid: 15987
-        Forward:
-        - port: Left
-          uid: 15987
-        Reverse:
-        - port: Right
-          uid: 15987
-      type: SignalReceiver
+    - links:
+      - 15987
+      type: DeviceLinkSink
   - uid: 14525
     components:
     - pos: 48.5,22.5
       parent: 30
       type: Transform
-    - inputs:
-        Off:
-        - port: Middle
-          uid: 15987
-        Forward:
-        - port: Left
-          uid: 15987
-        Reverse:
-        - port: Right
-          uid: 15987
-      type: SignalReceiver
+    - links:
+      - 15987
+      type: DeviceLinkSink
   - uid: 14526
     components:
     - rot: -1.5707963267948966 rad
       pos: 49.5,22.5
       parent: 30
       type: Transform
-    - inputs:
-        Off:
-        - port: Middle
-          uid: 15988
-        Forward:
-        - port: Left
-          uid: 15988
-        Reverse:
-        - port: Right
-          uid: 15988
-      type: SignalReceiver
+    - links:
+      - 15988
+      type: DeviceLinkSink
   - uid: 14527
     components:
     - rot: -1.5707963267948966 rad
       pos: 50.5,22.5
       parent: 30
       type: Transform
-    - inputs:
-        Off:
-        - port: Middle
-          uid: 15988
-        Forward:
-        - port: Left
-          uid: 15988
-        Reverse:
-        - port: Right
-          uid: 15988
-      type: SignalReceiver
+    - links:
+      - 15988
+      type: DeviceLinkSink
   - uid: 14528
     components:
     - rot: -1.5707963267948966 rad
       pos: 51.5,22.5
       parent: 30
       type: Transform
-    - inputs:
-        Off:
-        - port: Middle
-          uid: 15988
-        Forward:
-        - port: Left
-          uid: 15988
-        Reverse:
-        - port: Right
-          uid: 15988
-      type: SignalReceiver
+    - links:
+      - 15988
+      type: DeviceLinkSink
   - uid: 14529
     components:
     - rot: -1.5707963267948966 rad
       pos: 52.5,22.5
       parent: 30
       type: Transform
-    - inputs:
-        Off:
-        - port: Middle
-          uid: 15988
-        Forward:
-        - port: Left
-          uid: 15988
-        Reverse:
-        - port: Right
-          uid: 15988
-      type: SignalReceiver
+    - links:
+      - 15988
+      type: DeviceLinkSink
   - uid: 16126
     components:
     - pos: 35.5,-15.5
       parent: 30
       type: Transform
-    - inputs:
-        Reverse:
-        - port: Right
-          uid: 11677
-        Forward:
-        - port: Left
-          uid: 11677
-        Off:
-        - port: Middle
-          uid: 11677
-      type: SignalReceiver
+    - links:
+      - 11677
+      type: DeviceLinkSink
 - proto: CornSeeds
   entities:
   - uid: 2348
@@ -60869,6 +58860,18 @@ entities:
         - 0
         - 0
       type: EntityStorage
+- proto: CrateCoffin
+  entities:
+  - uid: 20530
+    components:
+    - pos: -79.5,-42.5
+      parent: 30
+      type: Transform
+  - uid: 20546
+    components:
+    - pos: -80.5,-42.5
+      parent: 30
+      type: Transform
 - proto: CrateEmptySpawner
   entities:
   - uid: 757
@@ -61166,19 +59169,9 @@ entities:
     - pos: 29.5,-3.5
       parent: 30
       type: Transform
-  - uid: 20867
+  - uid: 20592
     components:
-    - pos: 41.5,-73.5
-      parent: 30
-      type: Transform
-  - uid: 20868
-    components:
-    - pos: 37.5,-60.5
-      parent: 30
-      type: Transform
-  - uid: 20869
-    components:
-    - pos: 43.5,-60.5
+    - pos: 35.5,-63.5
       parent: 30
       type: Transform
   - uid: 21087
@@ -61201,35 +59194,6 @@ entities:
     - pos: 23.5,-5.5
       parent: 30
       type: Transform
-- proto: CrateFoodMRE
-  entities:
-  - uid: 20879
-    components:
-    - pos: 45.5,-64.5
-      parent: 30
-      type: Transform
-    - containers:
-      - EntityStorageComponent
-      - entity_storage
-      type: Construction
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 220.53748
-        moles:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
 - proto: CrateHydroponicsTools
   entities:
   - uid: 442
@@ -61383,6 +59347,13 @@ entities:
         - 0
         - 0
       type: EntityStorage
+- proto: CrateStoneGrave
+  entities:
+  - uid: 20625
+    components:
+    - pos: -60.5,-55.5
+      parent: 30
+      type: Transform
 - proto: CrateSurgery
   entities:
   - uid: 7087
@@ -61412,6 +59383,18 @@ entities:
       - EntityStorageComponent
       - entity_storage
       type: Construction
+- proto: CrateWoodenGrave
+  entities:
+  - uid: 20626
+    components:
+    - pos: -59.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 20711
+    components:
+    - pos: -62.5,-53.5
+      parent: 30
+      type: Transform
 - proto: CrayonBox
   entities:
   - uid: 666
@@ -61626,11 +59609,6 @@ entities:
   - uid: 6716
     components:
     - pos: -27.5,34.5
-      parent: 30
-      type: Transform
-  - uid: 6717
-    components:
-    - pos: -64.5,-37.5
       parent: 30
       type: Transform
   - uid: 6866
@@ -67213,11 +65191,6 @@ entities:
     - pos: -0.5,-28.5
       parent: 30
       type: Transform
-  - uid: 20877
-    components:
-    - pos: 36.5,-57.5
-      parent: 30
-      type: Transform
 - proto: DoorElectronics
   entities:
   - uid: 1640
@@ -68493,6 +66466,13 @@ entities:
       type: Transform
     - name: Captain
       type: FaxMachine
+- proto: FigureSpawner
+  entities:
+  - uid: 20789
+    components:
+    - pos: -75.5,-63.5
+      parent: 30
+      type: Transform
 - proto: filingCabinet
   entities:
   - uid: 6899
@@ -98979,6 +96959,13 @@ entities:
     - pos: -9.465214,-17.411165
       parent: 30
       type: Transform
+- proto: GeneratorBasic15kW
+  entities:
+  - uid: 9164
+    components:
+    - pos: -25.5,-63.5
+      parent: 30
+      type: Transform
 - proto: GeneratorPlasma
   entities:
   - uid: 9408
@@ -98995,11 +96982,6 @@ entities:
       type: Transform
 - proto: GeneratorUranium
   entities:
-  - uid: 9164
-    components:
-    - pos: -25.5,-63.5
-      parent: 30
-      type: Transform
   - uid: 9389
     components:
     - pos: -25.5,-47.5
@@ -105899,6 +103881,13 @@ entities:
     - pos: -41.5,53.5
       parent: 30
       type: Transform
+- proto: GunSafeSubMachineGunDrozd
+  entities:
+  - uid: 20778
+    components:
+    - pos: -37.5,53.5
+      parent: 30
+      type: Transform
 - proto: Handcuffs
   entities:
   - uid: 5839
@@ -106427,7 +104416,28 @@ entities:
     - pos: 3.5333395,44.656982
       parent: 30
       type: Transform
-- proto: Intercom
+- proto: IntercomAll
+  entities:
+  - uid: 22231
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -21.5,33.5
+      parent: 30
+      type: Transform
+  - uid: 22232
+    components:
+    - pos: -0.5,36.5
+      parent: 30
+      type: Transform
+- proto: IntercomCommand
+  entities:
+  - uid: 22513
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 0.5,82.5
+      parent: 30
+      type: Transform
+- proto: IntercomCommon
   entities:
   - uid: 3637
     components:
@@ -106464,27 +104474,6 @@ entities:
     components:
     - rot: 1.5707963267948966 rad
       pos: -66.5,-43.5
-      parent: 30
-      type: Transform
-- proto: IntercomAll
-  entities:
-  - uid: 22231
-    components:
-    - rot: 3.141592653589793 rad
-      pos: -21.5,33.5
-      parent: 30
-      type: Transform
-  - uid: 22232
-    components:
-    - pos: -0.5,36.5
-      parent: 30
-      type: Transform
-- proto: IntercomCommand
-  entities:
-  - uid: 22513
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 0.5,82.5
       parent: 30
       type: Transform
 - proto: IntercomEngineering
@@ -106783,33 +104772,6 @@ entities:
         temporary: False
         event: !type:ToggleActionEvent {}
       type: HandheldLight
-  - uid: 1773
-    components:
-    - pos: -27.432951,43.824997
-      parent: 30
-      type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon:
-          sprite: Objects/Tools/flashlight.rsi
-          state: flashlight
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
   - uid: 4953
     components:
     - pos: -22.461006,36.440132
@@ -107018,6 +104980,13 @@ entities:
   - uid: 21649
     components:
     - pos: -28.479252,15.714678
+      parent: 30
+      type: Transform
+- proto: LampInterrogator
+  entities:
+  - uid: 1773
+    components:
+    - pos: -27.415504,43.902733
       parent: 30
       type: Transform
 - proto: lantern
@@ -107556,6 +105525,13 @@ entities:
         - 0
         - 0
       type: EntityStorage
+- proto: LockerEngineerFilledHardsuit
+  entities:
+  - uid: 20804
+    components:
+    - pos: -15.5,-38.5
+      parent: 30
+      type: Transform
 - proto: LockerEvidence
   entities:
   - uid: 2248
@@ -108626,6 +106602,9 @@ entities:
     - pos: 36.5,12.5
       parent: 30
       type: Transform
+    - links:
+      - 15282
+      type: DeviceLinkSink
 - proto: MachineFrame
   entities:
   - uid: 6865
@@ -108633,29 +106612,6 @@ entities:
     - pos: -37.5,-4.5
       parent: 30
       type: Transform
-- proto: MagazinePistol
-  entities:
-  - uid: 1954
-    components:
-    - pos: -37.514587,53.632214
-      parent: 30
-      type: Transform
-    - unspawnedCount: 10
-      type: BallisticAmmoProvider
-  - uid: 1955
-    components:
-    - pos: -37.295837,53.61659
-      parent: 30
-      type: Transform
-    - unspawnedCount: 10
-      type: BallisticAmmoProvider
-  - uid: 1958
-    components:
-    - pos: -37.702087,53.632214
-      parent: 30
-      type: Transform
-    - unspawnedCount: 10
-      type: BallisticAmmoProvider
 - proto: MagazinePistolSubMachineGunTopMounted
   entities:
   - uid: 1999
@@ -108846,16 +106802,6 @@ entities:
   - uid: 18195
     components:
     - pos: -49.5,-59.5
-      parent: 30
-      type: Transform
-  - uid: 20875
-    components:
-    - pos: 38.5,-68.5
-      parent: 30
-      type: Transform
-  - uid: 20876
-    components:
-    - pos: 44.5,-70.5
       parent: 30
       type: Transform
   - uid: 21581
@@ -109114,6 +107060,13 @@ entities:
     components:
     - rot: -1.5707963267948966 rad
       pos: -61.5,42.5
+      parent: 30
+      type: Transform
+- proto: MiningDrill
+  entities:
+  - uid: 20773
+    components:
+    - pos: 42.59768,-70.465256
       parent: 30
       type: Transform
 - proto: Mirror
@@ -109530,6 +107483,13 @@ entities:
   - uid: 22843
     components:
     - pos: -31.465784,-57.403034
+      parent: 30
+      type: Transform
+- proto: MysteryFigureBox
+  entities:
+  - uid: 20788
+    components:
+    - pos: -75.24839,-66.594925
       parent: 30
       type: Transform
 - proto: NanoManipulatorStockPart
@@ -110690,6 +108650,11 @@ entities:
   - uid: 16975
     components:
     - pos: -62.503014,39.372643
+      parent: 30
+      type: Transform
+  - uid: 20792
+    components:
+    - pos: 40.559143,-53.538166
       parent: 30
       type: Transform
 - proto: PonderingOrb
@@ -116233,13 +114198,6 @@ entities:
       - Wood
       - Gold
       type: MaterialStorage
-- proto: ProtolatheMachineCircuitboard
-  entities:
-  - uid: 20878
-    components:
-    - pos: 40.41517,-63.5501
-      parent: 30
-      type: Transform
 - proto: Rack
   entities:
   - uid: 487
@@ -116280,11 +114238,6 @@ entities:
   - uid: 1943
     components:
     - pos: -37.5,55.5
-      parent: 30
-      type: Transform
-  - uid: 1945
-    components:
-    - pos: -37.5,53.5
       parent: 30
       type: Transform
   - uid: 6276
@@ -116722,11 +114675,6 @@ entities:
       type: Transform
 - proto: RandomArtifactSpawner
   entities:
-  - uid: 20874
-    components:
-    - pos: 38.5,-73.5
-      parent: 30
-      type: Transform
   - uid: 22234
     components:
     - pos: 37.5,12.5
@@ -116745,13 +114693,6 @@ entities:
   - uid: 22547
     components:
     - pos: 41.5,13.5
-      parent: 30
-      type: Transform
-- proto: RandomArtifactSpawner20
-  entities:
-  - uid: 22236
-    components:
-    - pos: 42.5,-74.5
       parent: 30
       type: Transform
 - proto: RandomFoodMeal
@@ -117449,17 +115390,9 @@ entities:
       pos: 53.5,22.5
       parent: 30
       type: Transform
-    - inputs:
-        Off:
-        - port: Middle
-          uid: 15989
-        Forward:
-        - port: Left
-          uid: 15989
-        Reverse:
-        - port: Right
-          uid: 15989
-      type: SignalReceiver
+    - links:
+      - 15989
+      type: DeviceLinkSink
 - proto: ReinforcedGirder
   entities:
   - uid: 21934
@@ -121168,13 +119101,6 @@ entities:
     - pos: 2.683168,32.813263
       parent: 30
       type: Transform
-- proto: SalvageCanisterSpawner
-  entities:
-  - uid: 20873
-    components:
-    - pos: 44.5,-67.5
-      parent: 30
-      type: Transform
 - proto: SalvageMagnet
   entities:
   - uid: 2040
@@ -121185,9 +119111,9 @@ entities:
       type: Transform
 - proto: SalvageMaterialCrateSpawner
   entities:
-  - uid: 20872
+  - uid: 20556
     components:
-    - pos: 37.5,-59.5
+    - pos: 37.5,-67.5
       parent: 30
       type: Transform
 - proto: Saw
@@ -121338,11 +119264,6 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-  - uid: 20882
-    components:
-    - pos: 39.511093,-61.499256
-      parent: 30
-      type: Transform
   - uid: 21729
     components:
     - pos: 30.50643,22.626024
@@ -121507,25 +119428,17 @@ entities:
     - pos: -33.5,8.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 544
-      type: SignalReceiver
+    - links:
+      - 544
+      type: DeviceLinkSink
   - uid: 543
     components:
     - pos: -33.5,7.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 544
-      type: SignalReceiver
+    - links:
+      - 544
+      type: DeviceLinkSink
   - uid: 1340
     components:
     - pos: -42.5,16.5
@@ -121546,141 +119459,91 @@ entities:
     - pos: 23.5,52.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 13741
-        - port: Pressed
-          uid: 13742
-      type: SignalReceiver
+    - links:
+      - 13741
+      - 13742
+      type: DeviceLinkSink
   - uid: 13729
     components:
     - pos: 24.5,52.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 13741
-        - port: Pressed
-          uid: 13742
-      type: SignalReceiver
+    - links:
+      - 13741
+      - 13742
+      type: DeviceLinkSink
   - uid: 13730
     components:
     - pos: 25.5,52.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 13742
-        - port: Pressed
-          uid: 13741
-      type: SignalReceiver
+    - links:
+      - 13741
+      - 13742
+      type: DeviceLinkSink
   - uid: 13731
     components:
     - pos: 26.5,52.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 13742
-        - port: Pressed
-          uid: 13741
-      type: SignalReceiver
+    - links:
+      - 13741
+      - 13742
+      type: DeviceLinkSink
   - uid: 13732
     components:
     - pos: 27.5,52.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 13742
-        - port: Pressed
-          uid: 13741
-      type: SignalReceiver
+    - links:
+      - 13741
+      - 13742
+      type: DeviceLinkSink
   - uid: 13733
     components:
     - pos: 27.5,54.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 13741
-        - port: Pressed
-          uid: 13742
-      type: SignalReceiver
+    - links:
+      - 13741
+      - 13742
+      type: DeviceLinkSink
   - uid: 13734
     components:
     - pos: 26.5,54.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 13741
-        - port: Pressed
-          uid: 13742
-      type: SignalReceiver
+    - links:
+      - 13741
+      - 13742
+      type: DeviceLinkSink
   - uid: 13735
     components:
     - pos: 25.5,54.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 13741
-        - port: Pressed
-          uid: 13742
-      type: SignalReceiver
+    - links:
+      - 13741
+      - 13742
+      type: DeviceLinkSink
   - uid: 13736
     components:
     - pos: 24.5,54.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 13741
-        - port: Pressed
-          uid: 13742
-      type: SignalReceiver
+    - links:
+      - 13741
+      - 13742
+      type: DeviceLinkSink
   - uid: 13737
     components:
     - pos: 23.5,54.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 13741
-        - port: Pressed
-          uid: 13742
-      type: SignalReceiver
+    - links:
+      - 13741
+      - 13742
+      type: DeviceLinkSink
 - proto: ShuttersNormalOpen
   entities:
   - uid: 390
@@ -121689,126 +119552,86 @@ entities:
       pos: -10.5,11.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 384
-      type: SignalReceiver
+    - links:
+      - 384
+      type: DeviceLinkSink
   - uid: 391
     components:
     - rot: 1.5707963267948966 rad
       pos: -10.5,9.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 384
-      type: SignalReceiver
+    - links:
+      - 384
+      type: DeviceLinkSink
   - uid: 392
     components:
     - rot: 1.5707963267948966 rad
       pos: -10.5,10.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 384
-      type: SignalReceiver
+    - links:
+      - 384
+      type: DeviceLinkSink
   - uid: 393
     components:
     - rot: 1.5707963267948966 rad
       pos: -10.5,7.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 384
-      type: SignalReceiver
+    - links:
+      - 384
+      type: DeviceLinkSink
   - uid: 394
     components:
     - rot: 1.5707963267948966 rad
       pos: -10.5,8.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 384
-      type: SignalReceiver
+    - links:
+      - 384
+      type: DeviceLinkSink
   - uid: 395
     components:
     - rot: 1.5707963267948966 rad
       pos: -10.5,6.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 384
-      type: SignalReceiver
+    - links:
+      - 384
+      type: DeviceLinkSink
   - uid: 580
     components:
     - pos: -3.5,5.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 581
     components:
     - pos: -2.5,5.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 582
     components:
     - pos: -1.5,5.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 1076
     components:
     - pos: -40.5,8.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 385
-      type: SignalReceiver
+    - links:
+      - 385
+      type: DeviceLinkSink
   - uid: 1077
     components:
     - pos: -40.5,12.5
@@ -121819,679 +119642,443 @@ entities:
     - pos: -39.5,12.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 385
-      type: SignalReceiver
+    - links:
+      - 385
+      type: DeviceLinkSink
   - uid: 1079
     components:
     - pos: -41.5,12.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 385
-      type: SignalReceiver
+    - links:
+      - 385
+      type: DeviceLinkSink
   - uid: 1080
     components:
     - pos: -41.5,8.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 385
-      type: SignalReceiver
+    - links:
+      - 385
+      type: DeviceLinkSink
   - uid: 1081
     components:
     - pos: -39.5,8.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 385
-      type: SignalReceiver
+    - links:
+      - 385
+      type: DeviceLinkSink
   - uid: 1082
     components:
     - pos: -37.5,9.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 385
-      type: SignalReceiver
+    - links:
+      - 385
+      type: DeviceLinkSink
   - uid: 1083
     components:
     - pos: -37.5,11.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 385
-      type: SignalReceiver
+    - links:
+      - 385
+      type: DeviceLinkSink
   - uid: 3405
     components:
     - rot: 1.5707963267948966 rad
       pos: 7.5,8.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 4361
     components:
     - pos: 5.5,5.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 4376
     components:
     - rot: 1.5707963267948966 rad
       pos: 7.5,7.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 4378
     components:
     - pos: 0.5,5.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 4915
     components:
     - pos: 1.5,5.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 4955
     components:
     - pos: -22.5,40.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20391
-      type: SignalReceiver
+    - links:
+      - 20391
+      type: DeviceLinkSink
   - uid: 5733
     components:
     - pos: -5.5,5.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 5738
     components:
     - pos: -14.5,36.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20392
-      type: SignalReceiver
+    - links:
+      - 20392
+      type: DeviceLinkSink
   - uid: 5741
     components:
     - pos: -15.5,36.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20392
-      type: SignalReceiver
+    - links:
+      - 20392
+      type: DeviceLinkSink
   - uid: 6678
     components:
     - pos: -8.5,-5.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20401
-      type: SignalReceiver
+    - links:
+      - 20401
+      type: DeviceLinkSink
   - uid: 6679
     components:
     - pos: -6.5,-5.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20401
-      type: SignalReceiver
+    - links:
+      - 20401
+      type: DeviceLinkSink
   - uid: 6881
     components:
     - pos: -29.5,0.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 6894
-      type: SignalReceiver
+    - links:
+      - 6894
+      type: DeviceLinkSink
   - uid: 6882
     components:
     - pos: -28.5,0.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 6894
-      type: SignalReceiver
+    - links:
+      - 6894
+      type: DeviceLinkSink
   - uid: 6929
     components:
     - pos: 4.5,5.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 6945
     components:
     - pos: -9.5,5.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 9238
     components:
     - pos: -4.5,12.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20446
-      type: SignalReceiver
+    - links:
+      - 20446
+      type: DeviceLinkSink
   - uid: 9239
     components:
     - pos: -3.5,12.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20446
-      type: SignalReceiver
+    - links:
+      - 20446
+      type: DeviceLinkSink
   - uid: 9422
     components:
     - pos: -15.5,-11.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 22282
-      type: SignalReceiver
+    - links:
+      - 22282
+      type: DeviceLinkSink
   - uid: 11002
     components:
     - rot: 1.5707963267948966 rad
       pos: -40.5,32.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 11008
-      type: SignalReceiver
+    - links:
+      - 11008
+      type: DeviceLinkSink
   - uid: 11006
     components:
     - pos: -42.5,34.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 11008
-      type: SignalReceiver
+    - links:
+      - 11008
+      type: DeviceLinkSink
   - uid: 11010
     components:
     - rot: 1.5707963267948966 rad
       pos: -40.5,31.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 11008
-      type: SignalReceiver
+    - links:
+      - 11008
+      type: DeviceLinkSink
   - uid: 11680
     components:
     - rot: -1.5707963267948966 rad
       pos: 4.5,-28.5
       parent: 30
       type: Transform
-    - inputs:
-        Open:
-        - port: Left
-          uid: 11701
-        - port: Right
-          uid: 11701
-        Close:
-        - port: Middle
-          uid: 11701
-        Toggle: []
-      type: SignalReceiver
+    - links:
+      - 11701
+      type: DeviceLinkSink
   - uid: 11716
     components:
     - pos: 26.5,-0.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12029
-      type: SignalReceiver
+    - links:
+      - 12029
+      type: DeviceLinkSink
   - uid: 11760
     components:
     - rot: -1.5707963267948966 rad
       pos: 4.5,-27.5
       parent: 30
       type: Transform
-    - inputs:
-        Open:
-        - port: Left
-          uid: 11701
-        - port: Right
-          uid: 11701
-        Close:
-        - port: Middle
-          uid: 11701
-        Toggle: []
-      type: SignalReceiver
+    - links:
+      - 11701
+      type: DeviceLinkSink
   - uid: 11822
     components:
     - pos: 24.5,-0.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12029
-      type: SignalReceiver
+    - links:
+      - 12029
+      type: DeviceLinkSink
   - uid: 11823
     components:
     - pos: 25.5,-0.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12029
-      type: SignalReceiver
+    - links:
+      - 12029
+      type: DeviceLinkSink
   - uid: 12625
     components:
     - pos: -5.5,12.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20446
-      type: SignalReceiver
+    - links:
+      - 20446
+      type: DeviceLinkSink
   - uid: 12656
     components:
     - pos: 14.5,13.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20399
-      type: SignalReceiver
+    - links:
+      - 20399
+      type: DeviceLinkSink
   - uid: 12657
     components:
     - pos: 13.5,13.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20399
-      type: SignalReceiver
+    - links:
+      - 20399
+      type: DeviceLinkSink
   - uid: 12810
     components:
     - pos: 24.5,15.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12859
-      type: SignalReceiver
+    - links:
+      - 12859
+      type: DeviceLinkSink
   - uid: 13075
     components:
     - pos: 15.5,13.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20399
-      type: SignalReceiver
+    - links:
+      - 20399
+      type: DeviceLinkSink
   - uid: 14340
     components:
     - pos: 27.5,12.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12859
-      type: SignalReceiver
+    - links:
+      - 12859
+      type: DeviceLinkSink
   - uid: 14352
     components:
     - pos: 28.5,12.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12859
-      type: SignalReceiver
+    - links:
+      - 12859
+      type: DeviceLinkSink
   - uid: 14355
     components:
     - pos: 26.5,12.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 12859
-      type: SignalReceiver
+    - links:
+      - 12859
+      type: DeviceLinkSink
   - uid: 20394
     components:
     - pos: -3.5,36.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20393
-      type: SignalReceiver
+    - links:
+      - 20393
+      type: DeviceLinkSink
   - uid: 20395
     components:
     - pos: -4.5,36.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20393
-      type: SignalReceiver
+    - links:
+      - 20393
+      type: DeviceLinkSink
   - uid: 20445
     components:
     - pos: -2.5,12.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20446
-      type: SignalReceiver
+    - links:
+      - 20446
+      type: DeviceLinkSink
   - uid: 20447
     components:
     - pos: 0.5,12.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20446
-      type: SignalReceiver
+    - links:
+      - 20446
+      type: DeviceLinkSink
   - uid: 20448
     components:
     - pos: -0.5,12.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20446
-      type: SignalReceiver
+    - links:
+      - 20446
+      type: DeviceLinkSink
   - uid: 20449
     components:
     - pos: -1.5,12.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20446
-      type: SignalReceiver
+    - links:
+      - 20446
+      type: DeviceLinkSink
   - uid: 21333
     components:
     - rot: 1.5707963267948966 rad
       pos: -40.5,30.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 11008
-      type: SignalReceiver
+    - links:
+      - 11008
+      type: DeviceLinkSink
   - uid: 21722
     components:
     - pos: -0.5,28.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 21721
-      type: SignalReceiver
+    - links:
+      - 21721
+      type: DeviceLinkSink
   - uid: 21765
     components:
     - rot: -1.5707963267948966 rad
       pos: 4.5,-29.5
       parent: 30
       type: Transform
-    - inputs:
-        Open:
-        - port: Left
-          uid: 11701
-        - port: Right
-          uid: 11701
-        Close:
-        - port: Middle
-          uid: 11701
-        Toggle: []
-      type: SignalReceiver
+    - links:
+      - 11701
+      type: DeviceLinkSink
   - uid: 21766
     components:
     - rot: -1.5707963267948966 rad
       pos: 4.5,-25.5
       parent: 30
       type: Transform
-    - inputs:
-        Open:
-        - port: Left
-          uid: 11701
-        - port: Right
-          uid: 11701
-        Close:
-        - port: Middle
-          uid: 11701
-        Toggle: []
-      type: SignalReceiver
+    - links:
+      - 11701
+      type: DeviceLinkSink
   - uid: 21767
     components:
     - rot: -1.5707963267948966 rad
       pos: 4.5,-23.5
       parent: 30
       type: Transform
-    - inputs:
-        Open:
-        - port: Left
-          uid: 11701
-        - port: Right
-          uid: 11701
-        Close:
-        - port: Middle
-          uid: 11701
-        Toggle: []
-      type: SignalReceiver
+    - links:
+      - 11701
+      type: DeviceLinkSink
   - uid: 22280
     components:
     - pos: -13.5,-11.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 22282
-      type: SignalReceiver
+    - links:
+      - 22282
+      type: DeviceLinkSink
   - uid: 22281
     components:
     - pos: -11.5,-11.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 22282
-      type: SignalReceiver
+    - links:
+      - 22282
+      type: DeviceLinkSink
   - uid: 22424
     components:
     - pos: 4.5,28.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 21721
-      type: SignalReceiver
+    - links:
+      - 21721
+      type: DeviceLinkSink
 - proto: ShuttersRadiation
   entities:
   - uid: 9940
@@ -122499,73 +120086,49 @@ entities:
     - pos: -11.5,-52.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10006
-      type: SignalReceiver
+    - links:
+      - 10006
+      type: DeviceLinkSink
   - uid: 9941
     components:
     - pos: -11.5,-51.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10006
-      type: SignalReceiver
+    - links:
+      - 10006
+      type: DeviceLinkSink
   - uid: 9942
     components:
     - pos: -11.5,-50.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10006
-      type: SignalReceiver
+    - links:
+      - 10006
+      type: DeviceLinkSink
   - uid: 9943
     components:
     - pos: -3.5,-52.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10007
-      type: SignalReceiver
+    - links:
+      - 10007
+      type: DeviceLinkSink
   - uid: 9944
     components:
     - pos: -3.5,-51.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10007
-      type: SignalReceiver
+    - links:
+      - 10007
+      type: DeviceLinkSink
   - uid: 9945
     components:
     - pos: -3.5,-50.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 10007
-      type: SignalReceiver
+    - links:
+      - 10007
+      type: DeviceLinkSink
 - proto: ShuttersRadiationOpen
   entities:
   - uid: 767
@@ -122574,197 +120137,133 @@ entities:
       pos: 2.5,-50.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 9182
     components:
     - pos: -10.5,-42.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 9339
     components:
     - pos: -14.5,-43.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 9342
     components:
     - pos: -7.5,-61.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 9343
     components:
     - pos: -8.5,-61.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 10741
     components:
     - pos: -4.5,-42.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 10742
     components:
     - pos: -6.5,-42.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 11152
     components:
     - pos: -8.5,-42.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 17961
     components:
     - rot: 1.5707963267948966 rad
       pos: 2.5,-52.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 18692
     components:
     - pos: -0.5,-43.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 18693
     components:
     - pos: -3.5,-56.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 18694
     components:
     - pos: -11.5,-56.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 18695
     components:
     - rot: 1.5707963267948966 rad
       pos: 2.5,-54.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 18696
     components:
     - rot: 1.5707963267948966 rad
       pos: 2.5,-53.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 20327
     components:
     - rot: 1.5707963267948966 rad
       pos: 2.5,-49.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
   - uid: 21742
     components:
     - pos: -6.5,-61.5
       parent: 30
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 20328
-      type: SignalReceiver
+    - links:
+      - 20328
+      type: DeviceLinkSink
 - proto: SignAi
   entities:
   - uid: 20306
@@ -122784,85 +120283,81 @@ entities:
     - pos: -12.5,12.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 390
-        - port: Toggle
-          uid: 392
-        - port: Toggle
-          uid: 391
-        - port: Toggle
-          uid: 394
-        - port: Toggle
-          uid: 393
-        - port: Toggle
-          uid: 395
-      type: SignalTransmitter
+    - linkedPorts:
+        390:
+        - Pressed: Toggle
+        392:
+        - Pressed: Toggle
+        391:
+        - Pressed: Toggle
+        394:
+        - Pressed: Toggle
+        393:
+        - Pressed: Toggle
+        395:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 385
     components:
     - pos: -43.5,10.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 1079
-        - port: Toggle
-          uid: 1078
-        - port: Toggle
-          uid: 1083
-        - port: Toggle
-          uid: 1082
-        - port: Toggle
-          uid: 1080
-        - port: Toggle
-          uid: 1076
-        - port: Toggle
-          uid: 1081
-      type: SignalTransmitter
+    - linkedPorts:
+        1079:
+        - Pressed: Toggle
+        1078:
+        - Pressed: Toggle
+        1083:
+        - Pressed: Toggle
+        1082:
+        - Pressed: Toggle
+        1080:
+        - Pressed: Toggle
+        1076:
+        - Pressed: Toggle
+        1081:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 544
     components:
     - pos: -32.5,11.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 542
-        - port: Toggle
-          uid: 543
-      type: SignalTransmitter
+    - linkedPorts:
+        542:
+        - Pressed: Toggle
+        543:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 583
     components:
     - pos: -4.5,5.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 580
-        - port: Toggle
-          uid: 581
-        - port: Toggle
-          uid: 582
-        - port: Toggle
-          uid: 5733
-        - port: Toggle
-          uid: 6945
-        - port: Toggle
-          uid: 4378
-        - port: Toggle
-          uid: 4915
-        - port: Toggle
-          uid: 6929
-        - port: Toggle
-          uid: 4361
-        - port: Toggle
-          uid: 4376
-        - port: Toggle
-          uid: 3405
-      type: SignalTransmitter
+    - linkedPorts:
+        580:
+        - Pressed: Toggle
+        581:
+        - Pressed: Toggle
+        582:
+        - Pressed: Toggle
+        5733:
+        - Pressed: Toggle
+        6945:
+        - Pressed: Toggle
+        4378:
+        - Pressed: Toggle
+        4915:
+        - Pressed: Toggle
+        6929:
+        - Pressed: Toggle
+        4361:
+        - Pressed: Toggle
+        4376:
+        - Pressed: Toggle
+        3405:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 723
     components:
     - pos: -39.5,9.5
@@ -122873,263 +120368,244 @@ entities:
     - pos: -21.5,-45.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 9405
-        - port: Toggle
-          uid: 9404
-      type: SignalTransmitter
+    - linkedPorts:
+        9405:
+        - Pressed: Toggle
+        9404:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 6894
     components:
     - pos: -30.5,-3.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 6881
-        - port: Toggle
-          uid: 6882
-      type: SignalTransmitter
+    - linkedPorts:
+        6881:
+        - Pressed: Toggle
+        6882:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 8570
     components:
     - pos: 13.5,-38.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 9068
-      type: SignalTransmitter
+    - linkedPorts:
+        9068:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 9038
     components:
     - pos: 16.5,-33.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 9068
-      type: SignalTransmitter
+    - linkedPorts:
+        9068:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 10006
     components:
     - pos: -11.5,-49.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 9942
-        - port: Toggle
-          uid: 9941
-        - port: Toggle
-          uid: 9940
-      type: SignalTransmitter
+    - linkedPorts:
+        9942:
+        - Pressed: Toggle
+        9941:
+        - Pressed: Toggle
+        9940:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 10007
     components:
     - pos: -3.5,-49.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 9945
-        - port: Toggle
-          uid: 9944
-        - port: Toggle
-          uid: 9943
-      type: SignalTransmitter
+    - linkedPorts:
+        9945:
+        - Pressed: Toggle
+        9944:
+        - Pressed: Toggle
+        9943:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 10141
     components:
     - pos: -17.5,-33.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 9405
-        - port: Toggle
-          uid: 9404
-      type: SignalTransmitter
+    - linkedPorts:
+        9405:
+        - Pressed: Toggle
+        9404:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 11008
     components:
     - pos: -44.5,33.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 11006
-        - port: Toggle
-          uid: 11002
-        - port: Toggle
-          uid: 11010
-        - port: Toggle
-          uid: 21333
-      type: SignalTransmitter
+    - linkedPorts:
+        11006:
+        - Pressed: Toggle
+        11002:
+        - Pressed: Toggle
+        11010:
+        - Pressed: Toggle
+        21333:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 11761
     components:
     - pos: 36.5,-11.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 11659
-      type: SignalTransmitter
+    - linkedPorts:
+        11659:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 11933
     components:
     - pos: 36.5,-14.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 11682
-      type: SignalTransmitter
+    - linkedPorts:
+        11682:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 11994
     components:
     - pos: 37.5,-4.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 11923
-        - port: Toggle
-          uid: 11995
-      type: SignalTransmitter
+    - linkedPorts:
+        11923:
+        - Pressed: Toggle
+        11995:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 12029
     components:
     - pos: 25.5,1.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 11822
-        - port: Toggle
-          uid: 11823
-        - port: Toggle
-          uid: 11716
-      type: SignalTransmitter
+    - linkedPorts:
+        11822:
+        - Pressed: Toggle
+        11823:
+        - Pressed: Toggle
+        11716:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 12063
     components:
     - pos: 36.5,-1.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 12099
-        - port: Toggle
-          uid: 12059
-      type: SignalTransmitter
+    - linkedPorts:
+        12099:
+        - Pressed: Toggle
+        12059:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 12859
     components:
     - pos: 30.5,13.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 14352
-        - port: Toggle
-          uid: 14340
-        - port: Toggle
-          uid: 14355
-        - port: Toggle
-          uid: 12810
-      type: SignalTransmitter
+    - linkedPorts:
+        14352:
+        - Pressed: Toggle
+        14340:
+        - Pressed: Toggle
+        14355:
+        - Pressed: Toggle
+        12810:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 12915
     components:
     - pos: 39.5,11.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 16773
-        - port: Toggle
-          uid: 13347
-      type: SignalTransmitter
+    - linkedPorts:
+        16773:
+        - Pressed: Toggle
+        13347:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 13741
     components:
     - pos: 21.5,54.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 13737
-        - port: Toggle
-          uid: 13736
-        - port: Toggle
-          uid: 13735
-        - port: Toggle
-          uid: 13734
-        - port: Toggle
-          uid: 13733
-        - port: Toggle
-          uid: 13729
-        - port: Toggle
-          uid: 13728
-        - port: Toggle
-          uid: 13730
-        - port: Toggle
-          uid: 13731
-        - port: Toggle
-          uid: 13732
-      type: SignalTransmitter
+    - linkedPorts:
+        13737:
+        - Pressed: Toggle
+        13736:
+        - Pressed: Toggle
+        13735:
+        - Pressed: Toggle
+        13734:
+        - Pressed: Toggle
+        13733:
+        - Pressed: Toggle
+        13729:
+        - Pressed: Toggle
+        13728:
+        - Pressed: Toggle
+        13730:
+        - Pressed: Toggle
+        13731:
+        - Pressed: Toggle
+        13732:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 13742
     components:
     - pos: 29.5,54.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 13733
-        - port: Toggle
-          uid: 13732
-        - port: Toggle
-          uid: 13731
-        - port: Toggle
-          uid: 13730
-        - port: Toggle
-          uid: 13734
-        - port: Toggle
-          uid: 13735
-        - port: Toggle
-          uid: 13736
-        - port: Toggle
-          uid: 13737
-        - port: Toggle
-          uid: 13728
-        - port: Toggle
-          uid: 13729
-      type: SignalTransmitter
+    - linkedPorts:
+        13733:
+        - Pressed: Toggle
+        13732:
+        - Pressed: Toggle
+        13731:
+        - Pressed: Toggle
+        13730:
+        - Pressed: Toggle
+        13734:
+        - Pressed: Toggle
+        13735:
+        - Pressed: Toggle
+        13736:
+        - Pressed: Toggle
+        13737:
+        - Pressed: Toggle
+        13728:
+        - Pressed: Toggle
+        13729:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 15985
     components:
     - pos: 50.5,25.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 13751
-      type: SignalTransmitter
+    - linkedPorts:
+        13751:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 15986
     components:
     - pos: 53.5,25.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 14512
-      type: SignalTransmitter
+    - linkedPorts:
+        14512:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 16231
     components:
     - name: Robotics Bay Blast Doors
@@ -123137,15 +120613,14 @@ entities:
     - pos: 26.5,22.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 16228
-        - port: Toggle
-          uid: 16229
-        - port: Toggle
-          uid: 16230
-      type: SignalTransmitter
+    - linkedPorts:
+        16228:
+        - Pressed: Toggle
+        16229:
+        - Pressed: Toggle
+        16230:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 20328
     components:
     - name: Rad Shutters
@@ -123153,159 +120628,149 @@ entities:
     - pos: -9.5,-47.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 9339
-        - port: Toggle
-          uid: 9182
-        - port: Toggle
-          uid: 11152
-        - port: Toggle
-          uid: 10742
-        - port: Toggle
-          uid: 10741
-        - port: Toggle
-          uid: 18692
-        - port: Toggle
-          uid: 20327
-        - port: Toggle
-          uid: 767
-        - port: Toggle
-          uid: 17961
-        - port: Toggle
-          uid: 18696
-        - port: Toggle
-          uid: 18695
-        - port: Toggle
-          uid: 18693
-        - port: Toggle
-          uid: 18694
-        - port: Toggle
-          uid: 9343
-        - port: Toggle
-          uid: 9342
-        - port: Toggle
-          uid: 21742
-      type: SignalTransmitter
+    - linkedPorts:
+        9339:
+        - Pressed: Toggle
+        9182:
+        - Pressed: Toggle
+        11152:
+        - Pressed: Toggle
+        10742:
+        - Pressed: Toggle
+        10741:
+        - Pressed: Toggle
+        18692:
+        - Pressed: Toggle
+        20327:
+        - Pressed: Toggle
+        767:
+        - Pressed: Toggle
+        17961:
+        - Pressed: Toggle
+        18696:
+        - Pressed: Toggle
+        18695:
+        - Pressed: Toggle
+        18693:
+        - Pressed: Toggle
+        18694:
+        - Pressed: Toggle
+        9343:
+        - Pressed: Toggle
+        9342:
+        - Pressed: Toggle
+        21742:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 20391
     components:
     - pos: -21.5,38.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 4955
-      type: SignalTransmitter
+    - linkedPorts:
+        4955:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 20392
     components:
     - pos: -13.5,37.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 5738
-        - port: Toggle
-          uid: 5741
-      type: SignalTransmitter
+    - linkedPorts:
+        5738:
+        - Pressed: Toggle
+        5741:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 20393
     components:
     - pos: -5.5,37.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 20395
-        - port: Toggle
-          uid: 20394
-      type: SignalTransmitter
+    - linkedPorts:
+        20395:
+        - Pressed: Toggle
+        20394:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 20398
     components:
     - pos: 8.5,41.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 5556
-      type: SignalTransmitter
+    - linkedPorts:
+        5556:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 20399
     components:
     - pos: 16.5,13.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 12656
-        - port: Toggle
-          uid: 12657
-        - port: Toggle
-          uid: 13075
-      type: SignalTransmitter
+    - linkedPorts:
+        12656:
+        - Pressed: Toggle
+        12657:
+        - Pressed: Toggle
+        13075:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 20401
     components:
     - pos: -4.5,-7.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 6679
-        - port: Toggle
-          uid: 6678
-      type: SignalTransmitter
+    - linkedPorts:
+        6679:
+        - Pressed: Toggle
+        6678:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 20446
     components:
     - pos: -6.5,15.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 12625
-        - port: Toggle
-          uid: 9238
-        - port: Toggle
-          uid: 9239
-        - port: Toggle
-          uid: 20445
-        - port: Toggle
-          uid: 20449
-        - port: Toggle
-          uid: 20448
-        - port: Toggle
-          uid: 20447
-      type: SignalTransmitter
+    - linkedPorts:
+        12625:
+        - Pressed: Toggle
+        9238:
+        - Pressed: Toggle
+        9239:
+        - Pressed: Toggle
+        20445:
+        - Pressed: Toggle
+        20449:
+        - Pressed: Toggle
+        20448:
+        - Pressed: Toggle
+        20447:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 21721
     components:
     - pos: -1.5,34.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 22424
-        - port: Toggle
-          uid: 21722
-      type: SignalTransmitter
+    - linkedPorts:
+        22424:
+        - Pressed: Toggle
+        21722:
+        - Pressed: Toggle
+      type: DeviceLinkSource
   - uid: 22282
     components:
     - pos: -10.5,-13.5
       parent: 30
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 22281
-        - port: Toggle
-          uid: 22280
-        - port: Toggle
-          uid: 9422
-      type: SignalTransmitter
+    - linkedPorts:
+        22281:
+        - Pressed: Toggle
+        22280:
+        - Pressed: Toggle
+        9422:
+        - Pressed: Toggle
+      type: DeviceLinkSource
 - proto: SignArmory
   entities:
   - uid: 1927
@@ -126098,6 +123563,18 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
+- proto: SpacemenFigureSpawner
+  entities:
+  - uid: 20790
+    components:
+    - pos: -75.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 20791
+    components:
+    - pos: -74.5,-64.5
+      parent: 30
+      type: Transform
 - proto: SpaceVillainArcadeFilled
   entities:
   - uid: 6451
@@ -126115,23 +123592,6 @@ entities:
   - uid: 12828
     components:
     - pos: 26.5,13.5
-      parent: 30
-      type: Transform
-- proto: SpawnMobBear
-  entities:
-  - uid: 20682
-    components:
-    - pos: 44.5,-69.5
-      parent: 30
-      type: Transform
-  - uid: 20684
-    components:
-    - pos: 36.5,-66.5
-      parent: 30
-      type: Transform
-  - uid: 20883
-    components:
-    - pos: 38.5,-67.5
       parent: 30
       type: Transform
 - proto: SpawnMobCatException
@@ -126515,6 +123975,16 @@ entities:
       type: Transform
 - proto: SpawnPointMedicalIntern
   entities:
+  - uid: 20800
+    components:
+    - pos: -22.5,-18.5
+      parent: 30
+      type: Transform
+  - uid: 20801
+    components:
+    - pos: -21.5,-18.5
+      parent: 30
+      type: Transform
   - uid: 20887
     components:
     - pos: -24.5,-18.5
@@ -126567,6 +124037,11 @@ entities:
     - pos: 21.5,11.5
       parent: 30
       type: Transform
+  - uid: 20793
+    components:
+    - pos: 22.5,8.5
+      parent: 30
+      type: Transform
   - uid: 22455
     components:
     - pos: 21.5,10.5
@@ -126608,11 +124083,6 @@ entities:
     - pos: 22.5,10.5
       parent: 30
       type: Transform
-  - uid: 20991
-    components:
-    - pos: 22.5,8.5
-      parent: 30
-      type: Transform
   - uid: 21185
     components:
     - pos: 22.5,9.5
@@ -126620,6 +124090,16 @@ entities:
       type: Transform
 - proto: SpawnPointSecurityCadet
   entities:
+  - uid: 20798
+    components:
+    - pos: -31.5,57.5
+      parent: 30
+      type: Transform
+  - uid: 20799
+    components:
+    - pos: -34.5,57.5
+      parent: 30
+      type: Transform
   - uid: 20891
     components:
     - pos: -32.5,57.5
@@ -126650,6 +124130,34 @@ entities:
   - uid: 2227
     components:
     - pos: -31.5,59.5
+      parent: 30
+      type: Transform
+- proto: SpawnPointSeniorEngineer
+  entities:
+  - uid: 20795
+    components:
+    - pos: -23.5,-40.5
+      parent: 30
+      type: Transform
+- proto: SpawnPointSeniorOfficer
+  entities:
+  - uid: 20797
+    components:
+    - pos: -28.5,59.5
+      parent: 30
+      type: Transform
+- proto: SpawnPointSeniorPhysician
+  entities:
+  - uid: 20796
+    components:
+    - pos: -25.5,-18.5
+      parent: 30
+      type: Transform
+- proto: SpawnPointSeniorResearcher
+  entities:
+  - uid: 20794
+    components:
+    - pos: 21.5,12.5
       parent: 30
       type: Transform
 - proto: SpawnPointServiceWorker
@@ -126688,6 +124196,16 @@ entities:
       type: Transform
 - proto: SpawnPointTechnicalAssistant
   entities:
+  - uid: 20802
+    components:
+    - pos: -21.5,-42.5
+      parent: 30
+      type: Transform
+  - uid: 20803
+    components:
+    - pos: -21.5,-41.5
+      parent: 30
+      type: Transform
   - uid: 20885
     components:
     - pos: -22.5,-42.5
@@ -126703,13 +124221,6 @@ entities:
   - uid: 2009
     components:
     - pos: -43.5,47.5
-      parent: 30
-      type: Transform
-- proto: SpawnVehicleATV
-  entities:
-  - uid: 20870
-    components:
-    - pos: 39.5,-71.5
       parent: 30
       type: Transform
 - proto: SpawnVehicleJanicart
@@ -127966,6 +125477,17 @@ entities:
       nameSet: True
       id: Disposals
       type: SurveillanceCamera
+  - uid: 20787
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -72.5,-64.5
+      parent: 30
+      type: Transform
+    - setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Game Room
+      type: SurveillanceCamera
   - uid: 21229
     components:
     - rot: 1.5707963267948966 rad
@@ -127976,17 +125498,6 @@ entities:
       - SurveillanceCameraGeneral
       nameSet: True
       id: Library
-      type: SurveillanceCamera
-  - uid: 21230
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -72.5,-61.5
-      parent: 30
-      type: Transform
-    - setupAvailableNetworks:
-      - SurveillanceCameraGeneral
-      nameSet: True
-      id: Game Room
       type: SurveillanceCamera
   - uid: 21231
     components:
@@ -131732,18 +129243,11 @@ entities:
     - pos: -0.49299335,82.64046
       parent: 30
       type: Transform
-- proto: ToyAssistant
+- proto: ToyFigurineSpaceDragon
   entities:
-  - uid: 19494
+  - uid: 20547
     components:
-    - pos: -75.59422,-64.3747
-      parent: 30
-      type: Transform
-- proto: ToyFireRipley
-  entities:
-  - uid: 19491
-    components:
-    - pos: -75.06297,-63.28095
+    - pos: -74.90774,-63.969463
       parent: 30
       type: Transform
 - proto: ToyIan
@@ -131751,13 +129255,6 @@ entities:
   - uid: 5724
     components:
     - pos: 4.1322694,34.214336
-      parent: 30
-      type: Transform
-- proto: ToyRipley
-  entities:
-  - uid: 19492
-    components:
-    - pos: -74.5161,-64.17158
       parent: 30
       type: Transform
 - proto: ToyRubberDuck
@@ -131780,13 +129277,6 @@ entities:
   - uid: 17903
     components:
     - pos: -49.44362,-57.388798
-      parent: 30
-      type: Transform
-- proto: ToySkeleton
-  entities:
-  - uid: 19493
-    components:
-    - pos: -74.75047,-63.702824
       parent: 30
       type: Transform
 - proto: ToySpawner
@@ -131870,303 +129360,205 @@ entities:
     - pos: 35.5,-9.5
       parent: 30
       type: Transform
-    - outputs:
-        Left:
-        - port: Forward
-          uid: 11639
-        - port: Forward
-          uid: 12096
-        - port: Forward
-          uid: 6726
-        - port: Forward
-          uid: 12031
-        - port: Forward
-          uid: 16126
-        - port: Forward
-          uid: 11932
-        - port: Forward
-          uid: 12231
-        Right:
-        - port: Reverse
-          uid: 11639
-        - port: Reverse
-          uid: 12096
-        - port: Reverse
-          uid: 6726
-        - port: Reverse
-          uid: 12031
-        - port: Reverse
-          uid: 16126
-        - port: Reverse
-          uid: 11932
-        - port: Reverse
-          uid: 12231
-        Middle:
-        - port: Off
-          uid: 11639
-        - port: Off
-          uid: 12096
-        - port: Off
-          uid: 6726
-        - port: Off
-          uid: 12031
-        - port: Off
-          uid: 16126
-        - port: Off
-          uid: 11932
-        - port: Off
-          uid: 12231
-      type: SignalTransmitter
+    - linkedPorts:
+        11639:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        12096:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        6726:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        12031:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        16126:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        11932:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        12231:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+      type: DeviceLinkSource
   - uid: 11701
     components:
     - pos: 7.5,-26.5
       parent: 30
       type: Transform
-    - outputs:
-        Left:
-        - port: Open
-          uid: 9190
-        - port: Open
-          uid: 9189
-        - port: Open
-          uid: 9188
-        - port: Open
-          uid: 11760
-        - port: Open
-          uid: 11680
-        - port: Open
-          uid: 21765
-        - port: Open
-          uid: 21766
-        - port: Open
-          uid: 21767
-        Right:
-        - port: Open
-          uid: 9190
-        - port: Open
-          uid: 9189
-        - port: Open
-          uid: 9188
-        - port: Open
-          uid: 11760
-        - port: Open
-          uid: 11680
-        - port: Open
-          uid: 21765
-        - port: Open
-          uid: 21766
-        - port: Open
-          uid: 21767
-        Middle:
-        - port: Close
-          uid: 9190
-        - port: Close
-          uid: 9189
-        - port: Close
-          uid: 9188
-        - port: Close
-          uid: 11760
-        - port: Close
-          uid: 11680
-        - port: Close
-          uid: 21765
-        - port: Close
-          uid: 21766
-        - port: Close
-          uid: 21767
-      type: SignalTransmitter
+    - linkedPorts:
+        9190:
+        - Left: Open
+        - Right: Open
+        - Middle: Close
+        9189:
+        - Left: Open
+        - Right: Open
+        - Middle: Close
+        9188:
+        - Left: Open
+        - Right: Open
+        - Middle: Close
+        11760:
+        - Left: Open
+        - Right: Open
+        - Middle: Close
+        11680:
+        - Left: Open
+        - Right: Open
+        - Middle: Close
+        21765:
+        - Left: Open
+        - Right: Open
+        - Middle: Close
+        21766:
+        - Left: Open
+        - Right: Open
+        - Middle: Close
+        21767:
+        - Left: Open
+        - Right: Open
+        - Middle: Close
+      type: DeviceLinkSource
   - uid: 11717
     components:
     - pos: 20.5,-2.5
       parent: 30
       type: Transform
-    - outputs:
-        Middle:
-        - port: Off
-          uid: 8500
-        - port: Off
-          uid: 8466
-        - port: Off
-          uid: 8503
-        - port: Off
-          uid: 11691
-        Right:
-        - port: Reverse
-          uid: 8500
-        - port: Reverse
-          uid: 8466
-        - port: Reverse
-          uid: 8503
-        - port: Reverse
-          uid: 11691
-        Left:
-        - port: Forward
-          uid: 8500
-        - port: Forward
-          uid: 8466
-        - port: Forward
-          uid: 8503
-        - port: Forward
-          uid: 11691
-      type: SignalTransmitter
+    - linkedPorts:
+        8500:
+        - Middle: Off
+        - Right: Reverse
+        - Left: Forward
+        8466:
+        - Middle: Off
+        - Right: Reverse
+        - Left: Forward
+        8503:
+        - Middle: Off
+        - Right: Reverse
+        - Left: Forward
+        11691:
+        - Middle: Off
+        - Right: Reverse
+        - Left: Forward
+      type: DeviceLinkSource
   - uid: 11866
     components:
     - pos: 34.5,-3.5
       parent: 30
       type: Transform
-    - outputs:
-        Left:
-        - port: Forward
-          uid: 11702
-        - port: Forward
-          uid: 11979
-        - port: Forward
-          uid: 11755
-        - port: Forward
-          uid: 11865
-        - port: Forward
-          uid: 12014
-        Right:
-        - port: Reverse
-          uid: 11702
-        - port: Reverse
-          uid: 11979
-        - port: Reverse
-          uid: 11755
-        - port: Reverse
-          uid: 11865
-        - port: Reverse
-          uid: 12014
-        Middle:
-        - port: Off
-          uid: 11702
-        - port: Off
-          uid: 11979
-        - port: Off
-          uid: 11755
-        - port: Off
-          uid: 11865
-        - port: Off
-          uid: 12014
-      type: SignalTransmitter
+    - linkedPorts:
+        11702:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        11979:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        11755:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        11865:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        12014:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+      type: DeviceLinkSource
   - uid: 12013
     components:
     - pos: 34.5,-7.5
       parent: 30
       type: Transform
-    - outputs:
-        Left:
-        - port: Forward
-          uid: 11780
-        - port: Forward
-          uid: 12047
-        - port: Forward
-          uid: 11926
-        - port: Forward
-          uid: 11978
-        Right:
-        - port: Reverse
-          uid: 11780
-        - port: Reverse
-          uid: 12047
-        - port: Reverse
-          uid: 11926
-        - port: Reverse
-          uid: 11978
-        Middle:
-        - port: Off
-          uid: 11780
-        - port: Off
-          uid: 12047
-        - port: Off
-          uid: 11926
-        - port: Off
-          uid: 11978
-      type: SignalTransmitter
+    - linkedPorts:
+        11780:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        12047:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        11926:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        11978:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+      type: DeviceLinkSource
   - uid: 15987
     components:
     - pos: 50.5,23.5
       parent: 30
       type: Transform
-    - outputs:
-        Middle:
-        - port: Off
-          uid: 14525
-        - port: Off
-          uid: 14524
-        - port: Off
-          uid: 14523
-        - port: Off
-          uid: 14522
-        Right:
-        - port: Reverse
-          uid: 14525
-        - port: Reverse
-          uid: 14524
-        - port: Reverse
-          uid: 14523
-        - port: Reverse
-          uid: 14522
-        Left:
-        - port: Forward
-          uid: 14525
-        - port: Forward
-          uid: 14524
-        - port: Forward
-          uid: 14523
-        - port: Forward
-          uid: 14522
-      type: SignalTransmitter
+    - linkedPorts:
+        14525:
+        - Middle: Off
+        - Right: Reverse
+        - Left: Forward
+        14524:
+        - Middle: Off
+        - Right: Reverse
+        - Left: Forward
+        14523:
+        - Middle: Off
+        - Right: Reverse
+        - Left: Forward
+        14522:
+        - Middle: Off
+        - Right: Reverse
+        - Left: Forward
+      type: DeviceLinkSource
   - uid: 15988
     components:
     - pos: 51.5,23.5
       parent: 30
       type: Transform
-    - outputs:
-        Middle:
-        - port: Off
-          uid: 14526
-        - port: Off
-          uid: 14527
-        - port: Off
-          uid: 14528
-        - port: Off
-          uid: 14529
-        Right:
-        - port: Reverse
-          uid: 14526
-        - port: Reverse
-          uid: 14527
-        - port: Reverse
-          uid: 14528
-        - port: Reverse
-          uid: 14529
-        Left:
-        - port: Forward
-          uid: 14526
-        - port: Forward
-          uid: 14527
-        - port: Forward
-          uid: 14528
-        - port: Forward
-          uid: 14529
-      type: SignalTransmitter
+    - linkedPorts:
+        14526:
+        - Middle: Off
+        - Right: Reverse
+        - Left: Forward
+        14527:
+        - Middle: Off
+        - Right: Reverse
+        - Left: Forward
+        14528:
+        - Middle: Off
+        - Right: Reverse
+        - Left: Forward
+        14529:
+        - Middle: Off
+        - Right: Reverse
+        - Left: Forward
+      type: DeviceLinkSource
   - uid: 15989
     components:
     - pos: 53.5,23.5
       parent: 30
       type: Transform
-    - outputs:
-        Middle:
-        - port: Off
-          uid: 14530
-        Right:
-        - port: Reverse
-          uid: 14530
-        Left:
-        - port: Forward
-          uid: 14530
-      type: SignalTransmitter
+    - linkedPorts:
+        14530:
+        - Middle: Off
+        - Right: Reverse
+        - Left: Forward
+      type: DeviceLinkSource
 - proto: UnfinishedMachineFrame
   entities:
   - uid: 1998
@@ -132233,13 +129625,6 @@ entities:
   - uid: 8286
     components:
     - pos: -26.5,-21.5
-      parent: 30
-      type: Transform
-- proto: VehicleKeyATV
-  entities:
-  - uid: 20871
-    components:
-    - pos: 39.377373,-71.526276
       parent: 30
       type: Transform
 - proto: VehicleKeyJanicart
@@ -141949,6 +139334,1652 @@ entities:
     - pos: -33.5,-57.5
       parent: 30
       type: Transform
+- proto: WallRock
+  entities:
+  - uid: 1945
+    components:
+    - pos: 40.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 1950
+    components:
+    - pos: 46.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 1951
+    components:
+    - pos: 46.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 1952
+    components:
+    - pos: 35.5,-72.5
+      parent: 30
+      type: Transform
+  - uid: 1954
+    components:
+    - pos: 46.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 1955
+    components:
+    - pos: 47.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 1958
+    components:
+    - pos: 33.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 6717
+    components:
+    - pos: 42.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 11623
+    components:
+    - pos: 44.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 11624
+    components:
+    - pos: 41.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 11648
+    components:
+    - pos: 43.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 16397
+    components:
+    - pos: 34.5,-72.5
+      parent: 30
+      type: Transform
+  - uid: 16398
+    components:
+    - pos: 46.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 16399
+    components:
+    - pos: 47.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 16400
+    components:
+    - pos: 46.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 16401
+    components:
+    - pos: 46.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 16402
+    components:
+    - pos: 46.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 16403
+    components:
+    - pos: 47.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 16404
+    components:
+    - pos: 47.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 16405
+    components:
+    - pos: 47.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 16406
+    components:
+    - pos: 47.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 16407
+    components:
+    - pos: 47.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 16408
+    components:
+    - pos: 34.5,-74.5
+      parent: 30
+      type: Transform
+  - uid: 16409
+    components:
+    - pos: 33.5,-72.5
+      parent: 30
+      type: Transform
+  - uid: 16418
+    components:
+    - pos: 33.5,-69.5
+      parent: 30
+      type: Transform
+  - uid: 16649
+    components:
+    - pos: 39.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 16652
+    components:
+    - pos: 34.5,-73.5
+      parent: 30
+      type: Transform
+  - uid: 16653
+    components:
+    - pos: 39.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 16654
+    components:
+    - pos: 43.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 16658
+    components:
+    - pos: 39.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 16659
+    components:
+    - pos: 39.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 16984
+    components:
+    - pos: 33.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 16985
+    components:
+    - pos: 46.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 16986
+    components:
+    - pos: 47.5,-69.5
+      parent: 30
+      type: Transform
+  - uid: 16988
+    components:
+    - pos: 46.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 16989
+    components:
+    - pos: 47.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 18058
+    components:
+    - pos: 32.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 18820
+    components:
+    - pos: 47.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 18827
+    components:
+    - pos: 32.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 18831
+    components:
+    - pos: 32.5,-69.5
+      parent: 30
+      type: Transform
+  - uid: 18833
+    components:
+    - pos: 32.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 18835
+    components:
+    - pos: 32.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 18838
+    components:
+    - pos: 32.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 18840
+    components:
+    - pos: 32.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 18842
+    components:
+    - pos: 38.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 18844
+    components:
+    - pos: 39.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 18846
+    components:
+    - pos: 45.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 19394
+    components:
+    - pos: 37.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 19395
+    components:
+    - pos: 44.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 19396
+    components:
+    - pos: 43.5,-54.5
+      parent: 30
+      type: Transform
+  - uid: 19397
+    components:
+    - pos: 42.5,-54.5
+      parent: 30
+      type: Transform
+  - uid: 19398
+    components:
+    - pos: 44.5,-54.5
+      parent: 30
+      type: Transform
+  - uid: 19399
+    components:
+    - pos: 43.5,-53.5
+      parent: 30
+      type: Transform
+  - uid: 19400
+    components:
+    - pos: 45.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 19433
+    components:
+    - pos: 37.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 19434
+    components:
+    - pos: 32.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 19435
+    components:
+    - pos: 32.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 19436
+    components:
+    - pos: 32.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 19437
+    components:
+    - pos: 32.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 19438
+    components:
+    - pos: 31.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 19439
+    components:
+    - pos: 32.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 19440
+    components:
+    - pos: 31.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 19441
+    components:
+    - pos: 31.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 19442
+    components:
+    - pos: 44.5,-53.5
+      parent: 30
+      type: Transform
+  - uid: 19474
+    components:
+    - pos: 38.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 19475
+    components:
+    - pos: 45.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 19476
+    components:
+    - pos: 40.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 19477
+    components:
+    - pos: 39.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 19491
+    components:
+    - pos: 38.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 19492
+    components:
+    - pos: 41.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 19493
+    components:
+    - pos: 40.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 19494
+    components:
+    - pos: 41.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 19574
+    components:
+    - pos: 37.5,-74.5
+      parent: 30
+      type: Transform
+  - uid: 19575
+    components:
+    - pos: 43.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 19577
+    components:
+    - pos: 37.5,-75.5
+      parent: 30
+      type: Transform
+  - uid: 19758
+    components:
+    - pos: 42.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 19807
+    components:
+    - pos: 39.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 20389
+    components:
+    - pos: 43.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 20432
+    components:
+    - pos: 42.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 20527
+    components:
+    - pos: 41.5,-54.5
+      parent: 30
+      type: Transform
+  - uid: 20529
+    components:
+    - pos: 44.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 20531
+    components:
+    - pos: 33.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 20532
+    components:
+    - pos: 33.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20533
+    components:
+    - pos: 33.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 20534
+    components:
+    - pos: 33.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 20535
+    components:
+    - pos: 33.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20536
+    components:
+    - pos: 34.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 20538
+    components:
+    - pos: 38.5,-75.5
+      parent: 30
+      type: Transform
+  - uid: 20539
+    components:
+    - pos: 33.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 20540
+    components:
+    - pos: 38.5,-76.5
+      parent: 30
+      type: Transform
+  - uid: 20541
+    components:
+    - pos: 33.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 20542
+    components:
+    - pos: 33.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 20543
+    components:
+    - pos: 33.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 20544
+    components:
+    - pos: 33.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 20545
+    components:
+    - pos: 33.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 20548
+    components:
+    - pos: 40.5,-54.5
+      parent: 30
+      type: Transform
+  - uid: 20549
+    components:
+    - pos: 37.5,-76.5
+      parent: 30
+      type: Transform
+  - uid: 20550
+    components:
+    - pos: 37.5,-73.5
+      parent: 30
+      type: Transform
+  - uid: 20551
+    components:
+    - pos: 37.5,-72.5
+      parent: 30
+      type: Transform
+  - uid: 20552
+    components:
+    - pos: 34.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 20554
+    components:
+    - pos: 34.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 20557
+    components:
+    - pos: 37.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 20558
+    components:
+    - pos: 37.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 20559
+    components:
+    - pos: 37.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20562
+    components:
+    - pos: 37.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 20563
+    components:
+    - pos: 37.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 20565
+    components:
+    - pos: 36.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 20566
+    components:
+    - pos: 36.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 20571
+    components:
+    - pos: 32.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 20572
+    components:
+    - pos: 32.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 20573
+    components:
+    - pos: 34.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 20574
+    components:
+    - pos: 32.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 20575
+    components:
+    - pos: 34.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 20576
+    components:
+    - pos: 34.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 20577
+    components:
+    - pos: 35.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 20579
+    components:
+    - pos: 37.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 20580
+    components:
+    - pos: 37.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 20581
+    components:
+    - pos: 37.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 20582
+    components:
+    - pos: 36.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 20583
+    components:
+    - pos: 35.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 20585
+    components:
+    - pos: 35.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 20586
+    components:
+    - pos: 31.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 20587
+    components:
+    - pos: 34.5,-54.5
+      parent: 30
+      type: Transform
+  - uid: 20588
+    components:
+    - pos: 36.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 20589
+    components:
+    - pos: 35.5,-53.5
+      parent: 30
+      type: Transform
+  - uid: 20590
+    components:
+    - pos: 34.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 20591
+    components:
+    - pos: 35.5,-69.5
+      parent: 30
+      type: Transform
+  - uid: 20593
+    components:
+    - pos: 35.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 20594
+    components:
+    - pos: 35.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20595
+    components:
+    - pos: 34.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 20596
+    components:
+    - pos: 34.5,-69.5
+      parent: 30
+      type: Transform
+  - uid: 20597
+    components:
+    - pos: 34.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 20598
+    components:
+    - pos: 32.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 20599
+    components:
+    - pos: 33.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 20600
+    components:
+    - pos: 34.5,-53.5
+      parent: 30
+      type: Transform
+  - uid: 20601
+    components:
+    - pos: 36.5,-54.5
+      parent: 30
+      type: Transform
+  - uid: 20602
+    components:
+    - pos: 37.5,-54.5
+      parent: 30
+      type: Transform
+  - uid: 20603
+    components:
+    - pos: 35.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 20604
+    components:
+    - pos: 35.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 20606
+    components:
+    - pos: 35.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 20607
+    components:
+    - pos: 34.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 20608
+    components:
+    - pos: 34.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 20609
+    components:
+    - pos: 34.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 20610
+    components:
+    - pos: 31.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20611
+    components:
+    - pos: 33.5,-56.5
+      parent: 30
+      type: Transform
+  - uid: 20612
+    components:
+    - pos: 33.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 20613
+    components:
+    - pos: 35.5,-54.5
+      parent: 30
+      type: Transform
+  - uid: 20614
+    components:
+    - pos: 37.5,-53.5
+      parent: 30
+      type: Transform
+  - uid: 20615
+    components:
+    - pos: 37.5,-55.5
+      parent: 30
+      type: Transform
+  - uid: 20616
+    components:
+    - pos: 35.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 20619
+    components:
+    - pos: 35.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20620
+    components:
+    - pos: 35.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 20621
+    components:
+    - pos: 34.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20622
+    components:
+    - pos: 34.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20623
+    components:
+    - pos: 34.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 20624
+    components:
+    - pos: 36.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 20627
+    components:
+    - pos: 36.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 20632
+    components:
+    - pos: 38.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 20633
+    components:
+    - pos: 38.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 20634
+    components:
+    - pos: 38.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 20635
+    components:
+    - pos: 39.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 20636
+    components:
+    - pos: 39.5,-69.5
+      parent: 30
+      type: Transform
+  - uid: 20638
+    components:
+    - pos: 39.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 20639
+    components:
+    - pos: 40.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 20640
+    components:
+    - pos: 40.5,-69.5
+      parent: 30
+      type: Transform
+  - uid: 20641
+    components:
+    - pos: 38.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 20642
+    components:
+    - pos: 38.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20643
+    components:
+    - pos: 40.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 20644
+    components:
+    - pos: 38.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20645
+    components:
+    - pos: 38.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 20646
+    components:
+    - pos: 38.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 20647
+    components:
+    - pos: 39.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 20648
+    components:
+    - pos: 38.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 20649
+    components:
+    - pos: 39.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 20650
+    components:
+    - pos: 39.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20651
+    components:
+    - pos: 39.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 20652
+    components:
+    - pos: 39.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 20653
+    components:
+    - pos: 40.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 20655
+    components:
+    - pos: 38.5,-69.5
+      parent: 30
+      type: Transform
+  - uid: 20657
+    components:
+    - pos: 40.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20658
+    components:
+    - pos: 38.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 20659
+    components:
+    - pos: 38.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 20661
+    components:
+    - pos: 40.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 20662
+    components:
+    - pos: 40.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 20664
+    components:
+    - pos: 40.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 20665
+    components:
+    - pos: 39.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 20666
+    components:
+    - pos: 40.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 20667
+    components:
+    - pos: 40.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 20668
+    components:
+    - pos: 40.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 20671
+    components:
+    - pos: 41.5,-69.5
+      parent: 30
+      type: Transform
+  - uid: 20672
+    components:
+    - pos: 41.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 20673
+    components:
+    - pos: 41.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 20674
+    components:
+    - pos: 41.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20675
+    components:
+    - pos: 41.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 20676
+    components:
+    - pos: 41.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20677
+    components:
+    - pos: 41.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 20678
+    components:
+    - pos: 41.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 20680
+    components:
+    - pos: 41.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 20681
+    components:
+    - pos: 41.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 20682
+    components:
+    - pos: 41.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 20686
+    components:
+    - pos: 42.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20689
+    components:
+    - pos: 42.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20692
+    components:
+    - pos: 42.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 20693
+    components:
+    - pos: 43.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 20695
+    components:
+    - pos: 43.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 20698
+    components:
+    - pos: 41.5,-53.5
+      parent: 30
+      type: Transform
+  - uid: 20699
+    components:
+    - pos: 44.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 20701
+    components:
+    - pos: 43.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 20702
+    components:
+    - pos: 42.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 20705
+    components:
+    - pos: 42.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 20706
+    components:
+    - pos: 43.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20708
+    components:
+    - pos: 42.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 20709
+    components:
+    - pos: 43.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 20712
+    components:
+    - pos: 43.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 20713
+    components:
+    - pos: 44.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 20714
+    components:
+    - pos: 43.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 20715
+    components:
+    - pos: 44.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 20716
+    components:
+    - pos: 46.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 20717
+    components:
+    - pos: 44.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 20718
+    components:
+    - pos: 44.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20719
+    components:
+    - pos: 45.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20720
+    components:
+    - pos: 44.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 20721
+    components:
+    - pos: 45.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 20722
+    components:
+    - pos: 45.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 20723
+    components:
+    - pos: 45.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 20724
+    components:
+    - pos: 45.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 20725
+    components:
+    - pos: 46.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20726
+    components:
+    - pos: 45.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20727
+    components:
+    - pos: 44.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 20729
+    components:
+    - pos: 44.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 20730
+    components:
+    - pos: 44.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 20731
+    components:
+    - pos: 45.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 20732
+    components:
+    - pos: 46.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 20733
+    components:
+    - pos: 45.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 20734
+    components:
+    - pos: 46.5,-69.5
+      parent: 30
+      type: Transform
+  - uid: 20735
+    components:
+    - pos: 45.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 20736
+    components:
+    - pos: 45.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 20737
+    components:
+    - pos: 45.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 20738
+    components:
+    - pos: 45.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 20739
+    components:
+    - pos: 45.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 20740
+    components:
+    - pos: 46.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 20741
+    components:
+    - pos: 45.5,-69.5
+      parent: 30
+      type: Transform
+  - uid: 20742
+    components:
+    - pos: 39.5,-75.5
+      parent: 30
+      type: Transform
+  - uid: 20743
+    components:
+    - pos: 40.5,-73.5
+      parent: 30
+      type: Transform
+  - uid: 20744
+    components:
+    - pos: 38.5,-74.5
+      parent: 30
+      type: Transform
+  - uid: 20746
+    components:
+    - pos: 40.5,-74.5
+      parent: 30
+      type: Transform
+  - uid: 20748
+    components:
+    - pos: 41.5,-76.5
+      parent: 30
+      type: Transform
+  - uid: 20749
+    components:
+    - pos: 39.5,-73.5
+      parent: 30
+      type: Transform
+  - uid: 20750
+    components:
+    - pos: 39.5,-74.5
+      parent: 30
+      type: Transform
+  - uid: 20751
+    components:
+    - pos: 39.5,-72.5
+      parent: 30
+      type: Transform
+  - uid: 20752
+    components:
+    - pos: 41.5,-73.5
+      parent: 30
+      type: Transform
+  - uid: 20753
+    components:
+    - pos: 41.5,-75.5
+      parent: 30
+      type: Transform
+  - uid: 20754
+    components:
+    - pos: 44.5,-72.5
+      parent: 30
+      type: Transform
+  - uid: 20755
+    components:
+    - pos: 36.5,-75.5
+      parent: 30
+      type: Transform
+  - uid: 20756
+    components:
+    - pos: 36.5,-74.5
+      parent: 30
+      type: Transform
+  - uid: 20757
+    components:
+    - pos: 45.5,-72.5
+      parent: 30
+      type: Transform
+  - uid: 20758
+    components:
+    - pos: 44.5,-75.5
+      parent: 30
+      type: Transform
+  - uid: 20759
+    components:
+    - pos: 44.5,-74.5
+      parent: 30
+      type: Transform
+  - uid: 20760
+    components:
+    - pos: 44.5,-73.5
+      parent: 30
+      type: Transform
+  - uid: 20761
+    components:
+    - pos: 43.5,-74.5
+      parent: 30
+      type: Transform
+  - uid: 20762
+    components:
+    - pos: 46.5,-72.5
+      parent: 30
+      type: Transform
+  - uid: 20763
+    components:
+    - pos: 45.5,-74.5
+      parent: 30
+      type: Transform
+  - uid: 20764
+    components:
+    - pos: 41.5,-72.5
+      parent: 30
+      type: Transform
+  - uid: 20765
+    components:
+    - pos: 42.5,-72.5
+      parent: 30
+      type: Transform
+  - uid: 20767
+    components:
+    - pos: 43.5,-76.5
+      parent: 30
+      type: Transform
+  - uid: 20768
+    components:
+    - pos: 42.5,-76.5
+      parent: 30
+      type: Transform
+  - uid: 20769
+    components:
+    - pos: 42.5,-75.5
+      parent: 30
+      type: Transform
+  - uid: 20770
+    components:
+    - pos: 45.5,-73.5
+      parent: 30
+      type: Transform
+  - uid: 20771
+    components:
+    - pos: 36.5,-73.5
+      parent: 30
+      type: Transform
+  - uid: 20772
+    components:
+    - pos: 40.5,-76.5
+      parent: 30
+      type: Transform
+  - uid: 20775
+    components:
+    - pos: 36.5,-72.5
+      parent: 30
+      type: Transform
+  - uid: 20776
+    components:
+    - pos: 35.5,-74.5
+      parent: 30
+      type: Transform
+  - uid: 20777
+    components:
+    - pos: 35.5,-73.5
+      parent: 30
+      type: Transform
+  - uid: 20779
+    components:
+    - pos: 41.5,-74.5
+      parent: 30
+      type: Transform
+  - uid: 20781
+    components:
+    - pos: 38.5,-73.5
+      parent: 30
+      type: Transform
+  - uid: 20782
+    components:
+    - pos: 40.5,-75.5
+      parent: 30
+      type: Transform
+  - uid: 20783
+    components:
+    - pos: 43.5,-75.5
+      parent: 30
+      type: Transform
+  - uid: 20784
+    components:
+    - pos: 35.5,-75.5
+      parent: 30
+      type: Transform
+  - uid: 20786
+    components:
+    - pos: 39.5,-76.5
+      parent: 30
+      type: Transform
+- proto: WallRockArtifactFragment
+  entities:
+  - uid: 20567
+    components:
+    - pos: 41.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 20570
+    components:
+    - pos: 36.5,-67.5
+      parent: 30
+      type: Transform
+- proto: WallRockGold
+  entities:
+  - uid: 20560
+    components:
+    - pos: 43.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20637
+    components:
+    - pos: 44.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 20684
+    components:
+    - pos: 42.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 20687
+    components:
+    - pos: 42.5,-61.5
+      parent: 30
+      type: Transform
+  - uid: 20688
+    components:
+    - pos: 43.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 20694
+    components:
+    - pos: 41.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 20710
+    components:
+    - pos: 42.5,-64.5
+      parent: 30
+      type: Transform
+- proto: WallRockPlasma
+  entities:
+  - uid: 16651
+    components:
+    - pos: 36.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 20555
+    components:
+    - pos: 36.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20561
+    components:
+    - pos: 37.5,-65.5
+      parent: 30
+      type: Transform
+  - uid: 20656
+    components:
+    - pos: 43.5,-72.5
+      parent: 30
+      type: Transform
+  - uid: 20663
+    components:
+    - pos: 37.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 20679
+    components:
+    - pos: 40.5,-72.5
+      parent: 30
+      type: Transform
+  - uid: 20690
+    components:
+    - pos: 36.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 20691
+    components:
+    - pos: 42.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 20700
+    components:
+    - pos: 38.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 20703
+    components:
+    - pos: 35.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 20704
+    components:
+    - pos: 36.5,-60.5
+      parent: 30
+      type: Transform
+- proto: WallRockQuartz
+  entities:
+  - uid: 20747
+    components:
+    - pos: 42.5,-73.5
+      parent: 30
+      type: Transform
+  - uid: 20766
+    components:
+    - pos: 43.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 20780
+    components:
+    - pos: 39.5,-66.5
+      parent: 30
+      type: Transform
+  - uid: 20785
+    components:
+    - pos: 42.5,-74.5
+      parent: 30
+      type: Transform
+- proto: WallRockSilver
+  entities:
+  - uid: 20537
+    components:
+    - pos: 43.5,-63.5
+      parent: 30
+      type: Transform
+  - uid: 20553
+    components:
+    - pos: 40.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 20568
+    components:
+    - pos: 42.5,-67.5
+      parent: 30
+      type: Transform
+  - uid: 20569
+    components:
+    - pos: 42.5,-62.5
+      parent: 30
+      type: Transform
+  - uid: 20774
+    components:
+    - pos: 42.5,-69.5
+      parent: 30
+      type: Transform
+- proto: WallRockTin
+  entities:
+  - uid: 20564
+    components:
+    - pos: 37.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20578
+    components:
+    - pos: 38.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 20584
+    components:
+    - pos: 44.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 20605
+    components:
+    - pos: 34.5,-64.5
+      parent: 30
+      type: Transform
+  - uid: 20617
+    components:
+    - pos: 36.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20618
+    components:
+    - pos: 37.5,-71.5
+      parent: 30
+      type: Transform
+  - uid: 20629
+    components:
+    - pos: 37.5,-69.5
+      parent: 30
+      type: Transform
+  - uid: 20630
+    components:
+    - pos: 36.5,-69.5
+      parent: 30
+      type: Transform
+  - uid: 20631
+    components:
+    - pos: 43.5,-73.5
+      parent: 30
+      type: Transform
+  - uid: 20660
+    components:
+    - pos: 35.5,-60.5
+      parent: 30
+      type: Transform
+  - uid: 20669
+    components:
+    - pos: 41.5,-59.5
+      parent: 30
+      type: Transform
+  - uid: 20683
+    components:
+    - pos: 40.5,-58.5
+      parent: 30
+      type: Transform
+  - uid: 20685
+    components:
+    - pos: 44.5,-70.5
+      parent: 30
+      type: Transform
+  - uid: 20697
+    components:
+    - pos: 44.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20707
+    components:
+    - pos: 36.5,-57.5
+      parent: 30
+      type: Transform
+  - uid: 20728
+    components:
+    - pos: 35.5,-59.5
+      parent: 30
+      type: Transform
+- proto: WallRockUranium
+  entities:
+  - uid: 20654
+    components:
+    - pos: 40.5,-68.5
+      parent: 30
+      type: Transform
+  - uid: 20670
+    components:
+    - pos: 35.5,-61.5
+      parent: 30
+      type: Transform
 - proto: WallSolid
   entities:
   - uid: 3
@@ -148445,23 +147476,6 @@ entities:
     - pos: -38.316597,60.345554
       parent: 30
       type: Transform
-- proto: WeaponPistolMk58
-  entities:
-  - uid: 1950
-    components:
-    - pos: -37.608337,53.444714
-      parent: 30
-      type: Transform
-  - uid: 1951
-    components:
-    - pos: -37.467712,53.382214
-      parent: 30
-      type: Transform
-  - uid: 1952
-    components:
-    - pos: -37.295837,53.319714
-      parent: 30
-      type: Transform
 - proto: WeaponRevolverDeckard
   entities:
   - uid: 6975
@@ -148979,52 +147993,25 @@ entities:
     - pos: -43.5,41.5
       parent: 30
       type: Transform
-    - inputs:
-        Open:
-        - port: Timer
-          uid: 1982
-        Close:
-        - port: Start
-          uid: 1982
-        Toggle: []
-        AutoClose:
-        - port: Timer
-          uid: 1982
-      type: SignalReceiver
+    - links:
+      - 1982
+      type: DeviceLinkSink
   - uid: 1760
     components:
     - pos: -39.5,41.5
       parent: 30
       type: Transform
-    - inputs:
-        Open:
-        - port: Timer
-          uid: 1993
-        Close:
-        - port: Start
-          uid: 1993
-        Toggle: []
-        AutoClose:
-        - port: Timer
-          uid: 1993
-      type: SignalReceiver
+    - links:
+      - 1993
+      type: DeviceLinkSink
   - uid: 1761
     components:
     - pos: -47.5,41.5
       parent: 30
       type: Transform
-    - inputs:
-        Open:
-        - port: Timer
-          uid: 1981
-        Close:
-        - port: Start
-          uid: 1981
-        Toggle: []
-        AutoClose:
-        - port: Timer
-          uid: 1981
-      type: SignalReceiver
+    - links:
+      - 1981
+      type: DeviceLinkSink
   - uid: 2230
     components:
     - rot: 1.5707963267948966 rad

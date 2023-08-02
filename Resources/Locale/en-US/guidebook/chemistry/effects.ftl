@@ -200,13 +200,13 @@ reagent-effect-guidebook-cure-disease =
 reagent-effect-guidebook-cure-eye-damage =
     { $chance ->
         [1] { $deltasign ->
-                [1] Heals
-                *[-1] Deals
+                [1] Deals
+                *[-1] Heals
             }
         *[other]
             { $deltasign ->
-                [1] heal
-                *[-1] deal
+                [1] deal
+                *[-1] heal
             }
     } eye damage
 
@@ -320,6 +320,12 @@ reagent-effect-guidebook-cause-zombie-infection =
         [1] Gives
         *[other] give
     } an individual the zombie infection
+
+reagent-effect-guidebook-innoculate-zombie-infection =
+    { $chance ->
+        [1] Cures
+        *[other] cure
+    } an ongoing zombie infection, and provides immunity to future infections
 
 reagent-effect-guidebook-missing =
     { $chance ->

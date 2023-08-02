@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Robust.Client.GameStates;
 using Robust.Client.Timing;
 using Robust.Server.Player;
@@ -10,9 +11,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Networking
@@ -34,6 +33,8 @@ namespace Content.IntegrationTests.Tests.Networking
         [Test]
         public async Task Test()
         {
+            // TODO remove fresh=true.
+            // Instead, offset the all the explicit tick checks by some initial tick number.
             await using var pairTracker = await PoolManager.GetServerClient(new() { Fresh = true, DummyTicker = true });
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
@@ -65,7 +66,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Spawn dummy component entity.
                 var map = sMapManager.CreateMap();
                 var player = sPlayerManager.ServerSessions.Single();
-                serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates((0, 0), map));
+                serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates(new Vector2(0, 0), map));
                 serverComponent = sEntityManager.AddComponent<AutoPredictionTestComponent>(serverEnt);
 
                 // Make client "join game" so they receive game state updates.
@@ -389,7 +390,6 @@ namespace Content.IntegrationTests.Tests.Networking
             await pairTracker.CleanReturnAsync();
         }
 
-        [Reflect(false)]
         public sealed class AutoPredictionTestEntitySystem : EntitySystem
         {
             public bool Allow { get; set; } = true;
@@ -445,6 +445,7 @@ namespace Content.IntegrationTests.Tests.Networking
     [NetworkedComponent()]
     [AutoGenerateComponentState]
     [Access(typeof(AutoPredictReconcileTest.AutoPredictionTestEntitySystem))]
+    [RegisterComponent]
     public sealed partial class AutoPredictionTestComponent : Component
     {
         [AutoNetworkedField]

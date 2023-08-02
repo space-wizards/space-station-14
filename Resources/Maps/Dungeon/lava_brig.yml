@@ -7545,6 +7545,13 @@ entities:
     - pos: 10.432637,44.476112
       parent: 588
       type: Transform
+- proto: ClothingHeadBandRed
+  entities:
+  - uid: 1295
+    components:
+    - pos: 12.571781,39.694115
+      parent: 588
+      type: Transform
 - proto: ClothingHeadHatFedoraBrown
   entities:
   - uid: 577
@@ -7635,6 +7642,13 @@ entities:
     - pos: 12.714905,13.486683
       parent: 588
       type: Transform
+- proto: ClothingOuterArmorBasic
+  entities:
+  - uid: 1032
+    components:
+    - pos: 18.616657,24.64315
+      parent: 588
+      type: Transform
 - proto: ClothingOuterArmorReflective
   entities:
   - uid: 1031
@@ -7666,13 +7680,6 @@ entities:
   - uid: 370
     components:
     - pos: 27.40101,3.677678
-      parent: 588
-      type: Transform
-- proto: ClothingOuterVestKevlar
-  entities:
-  - uid: 1032
-    components:
-    - pos: 18.616657,24.64315
       parent: 588
       type: Transform
 - proto: ClothingShoesBootsCombatFilled
@@ -9165,13 +9172,6 @@ entities:
   - uid: 1614
     components:
     - pos: 22.608034,10.659381
-      parent: 588
-      type: Transform
-- proto: ClothingHeadBandRed
-  entities:
-  - uid: 1295
-    components:
-    - pos: 12.571781,39.694115
       parent: 588
       type: Transform
 - proto: Hemostat
@@ -11194,11 +11194,6 @@ entities:
         - Pressed: Toggle
         1237:
         - Pressed: Toggle
-      registeredSinks:
-        Pressed:
-        - 1238
-        - 1239
-        - 1237
       type: DeviceLinkSource
   - uid: 1104
     components:
@@ -12871,35 +12866,6 @@ entities:
       pos: 25.5,25.5
       parent: 588
       type: Transform
-- proto: WindoorBrigLocked
-  entities:
-  - uid: 339
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 29.5,2.5
-      parent: 588
-      type: Transform
-- proto: WindoorEngineeringLocked
-  entities:
-  - uid: 1569
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 18.5,45.5
-      parent: 588
-      type: Transform
-  - uid: 1570
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 20.5,45.5
-      parent: 588
-      type: Transform
-- proto: WindoorMedicalLocked
-  entities:
-  - uid: 1408
-    components:
-    - pos: 11.5,44.5
-      parent: 588
-      type: Transform
 - proto: WindoorSecure
   entities:
   - uid: 1761
@@ -12914,7 +12880,36 @@ entities:
       pos: 26.5,47.5
       parent: 588
       type: Transform
-- proto: WindoorSecurityLocked
+- proto: WindoorSecureBrigLocked
+  entities:
+  - uid: 339
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 29.5,2.5
+      parent: 588
+      type: Transform
+- proto: WindoorSecureEngineeringLocked
+  entities:
+  - uid: 1569
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 18.5,45.5
+      parent: 588
+      type: Transform
+  - uid: 1570
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 20.5,45.5
+      parent: 588
+      type: Transform
+- proto: WindoorSecureMedicalLocked
+  entities:
+  - uid: 1408
+    components:
+    - pos: 11.5,44.5
+      parent: 588
+      type: Transform
+- proto: WindoorSecureSecurityLocked
   entities:
   - uid: 252
     components:

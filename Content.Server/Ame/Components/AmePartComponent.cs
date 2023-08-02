@@ -1,5 +1,5 @@
+using Content.Shared.Tools;
 using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Ame.Components;
@@ -19,6 +19,6 @@ public sealed class AmePartComponent : Component
     /// <summary>
     /// The tool quality required to deploy the packaged AME shielding.
     /// </summary>
-    [DataField("qualityNeeded", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("qualityNeeded", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
     public string QualityNeeded = "Pulsing";
 }

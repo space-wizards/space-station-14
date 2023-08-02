@@ -12,8 +12,9 @@
       description: ghost-role-information-behonker-description
     - type: GhostTakeoverAvailable
     - type: HTN
-      rootTask: SimpleHostileCompound
-    - type: Faction
+      rootTask:
+        task: SimpleHostileCompound
+    - type: NpcFactionMember
       factions:
         - SimpleHostile
     - type: Speech
@@ -60,7 +61,6 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        450: Critical
         500: Dead
     - type: Metabolizer
       solutionOnBody: false

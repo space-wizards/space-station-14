@@ -224,14 +224,7 @@
     quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
-    coefficient: 0.01
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Heat: 0.80
+    coefficient: 0.005
   - type: IdentityBlocker
   - type: Tag
     tags:
@@ -253,13 +246,9 @@
   - type: IngestionBlocker
   - type: TemperatureProtection
     coefficient: 0.005
-  - type: Armor
-    modifiers:
-      coefficients:
-        Heat: 0.4
   - type: PressureProtection
     highPressureMultiplier: 0.25
-    lowPressureMultiplier: 1
+    lowPressureMultiplier: 1000
   - type: IdentityBlocker
   - type: Tag
     tags:

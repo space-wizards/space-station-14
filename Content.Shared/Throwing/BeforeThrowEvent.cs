@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Content.Shared.Throwing
 {
     public sealed class BeforeThrowEvent : HandledEntityEventArgs

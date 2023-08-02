@@ -158,7 +158,7 @@ namespace Content.Shared.Examine
                 other.MapId == MapId.Nullspace) return false;
 
             var dir = other.Position - origin.Position;
-            var length = dir.Length;
+            var length = dir.Length();
 
             // If range specified also check it
             // TODO: This rounding check is here because the API is kinda eh
@@ -175,7 +175,7 @@ namespace Content.Shared.Examine
             var occluderSystem = Get<OccluderSystem>();
             IoCManager.Resolve(ref entMan);
 
-            var ray = new Ray(origin.Position, dir.Normalized);
+            var ray = new Ray(origin.Position, dir.Normalized());
             var rayResults = occluderSystem
                 .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false).ToList();
 

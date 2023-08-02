@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Clickable;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -70,7 +71,7 @@ namespace Content.IntegrationTests.Tests
             await client.WaitPost(() =>
             {
                 var sprite = spriteQuery.GetComponent(entity);
-                sprite.Scale = (scale, scale);
+                sprite.Scale = new Vector2(scale, scale);
 
                 // these tests currently all assume player eye is 0
                 eyeManager.CurrentEye.Rotation = 0;
@@ -78,7 +79,7 @@ namespace Content.IntegrationTests.Tests
                 var pos = clientEntManager.System<SharedTransformSystem>().GetWorldPosition(entity);
                 var clickable = clientEntManager.GetComponent<ClickableComponent>(entity);
 
-                hit = clickable.CheckClick(sprite, xformQuery.GetComponent(entity), xformQuery, (clickPosX, clickPosY) + pos, eye, out _, out _, out _);
+                hit = clickable.CheckClick(sprite, xformQuery.GetComponent(entity), xformQuery, new Vector2(clickPosX, clickPosY) + pos, eye, out _, out _, out _);
             });
 
             await server.WaitPost(() =>

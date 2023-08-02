@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Robust.Client.GameStates;
 using Robust.Client.Timing;
 using Robust.Server.Player;
@@ -11,7 +12,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -35,6 +35,8 @@ namespace Content.IntegrationTests.Tests.Networking
         [Test]
         public async Task Test()
         {
+            // TODO remove fresh=true.
+            // Instead, offset the all the explicit tick checks by some initial tick number.
             await using var pairTracker = await PoolManager.GetServerClient(new() { Fresh = true, DummyTicker = true });
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
@@ -66,7 +68,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Spawn dummy component entity.
                 var map = sMapManager.CreateMap();
                 var player = sPlayerManager.ServerSessions.Single();
-                serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates((0, 0), map));
+                serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates(new Vector2(0, 0), map));
                 serverComponent = sEntityManager.AddComponent<PredictionTestComponent>(serverEnt);
 
                 // Make client "join game" so they receive game state updates.
@@ -392,24 +394,14 @@ namespace Content.IntegrationTests.Tests.Networking
 
         [NetworkedComponent()]
         [Access(typeof(PredictionTestEntitySystem))]
+        [RegisterComponent]
         public sealed class PredictionTestComponent : Component
         {
             public bool Foo;
+        }
 
-            public override ComponentState GetComponentState()
-            {
-                return new PredictionComponentState(Foo);
-            }
-
-            public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-            {
-                if (curState is not PredictionComponentState state)
-                    return;
-
-                Foo = state.Foo;
-                Dirty();
-            }
-
+        public sealed class PredictionTestEntitySystem : EntitySystem
+        {
             [Serializable, NetSerializable]
             private sealed class PredictionComponentState : ComponentState
             {
@@ -420,11 +412,7 @@ namespace Content.IntegrationTests.Tests.Networking
                     Foo = foo;
                 }
             }
-        }
 
-        [Reflect(false)]
-        public sealed class PredictionTestEntitySystem : EntitySystem
-        {
             public bool Allow { get; set; } = true;
 
             // Queue of all the events that come in so we can test that they come in perfectly as expected.
@@ -439,6 +427,23 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 SubscribeNetworkEvent<SetFooMessage>(HandleMessage);
                 SubscribeLocalEvent<SetFooMessage>(HandleMessage);
+
+                SubscribeLocalEvent<PredictionTestComponent, ComponentGetState>(OnGetState);
+                SubscribeLocalEvent<PredictionTestComponent, ComponentHandleState>(OnHandleState);
+            }
+
+            private void OnHandleState(EntityUid uid, PredictionTestComponent component, ref ComponentHandleState args)
+            {
+                if (args.Current is not PredictionComponentState state)
+                    return;
+
+                component.Foo = state.Foo;
+                Dirty(component);
+            }
+
+            private void OnGetState(EntityUid uid, PredictionTestComponent component, ref ComponentGetState args)
+            {
+                args.State = new PredictionComponentState(component.Foo);
             }
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)

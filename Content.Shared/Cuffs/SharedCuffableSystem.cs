@@ -8,6 +8,7 @@ using Content.Shared.Cuffs.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Effects;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -265,7 +266,7 @@ namespace Content.Shared.Cuffs
 
         private void OnCuffAfterInteract(EntityUid uid, HandcuffComponent component, AfterInteractEvent args)
         {
-            if (args.Target is not {Valid: true} target)
+            if (args.Target is not { Valid: true } target)
                 return;
 
             if (!args.CanReach)
@@ -579,7 +580,7 @@ namespace Content.Shared.Cuffs
 
             if (isOwner)
             {
-                _damageSystem.TryChangeDamage(target, cuffable.DamageOnResist, true, false);
+                _damageSystem.TryChangeDamage(target, cuff.DamageOnResist, true, false);
             }
 
             if (_net.IsServer)
@@ -591,6 +592,7 @@ namespace Content.Shared.Cuffs
 
                 if (target == user)
                 {
+                    RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid>() { user }));
                     _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-self"), user, user);
                 }
                 else
