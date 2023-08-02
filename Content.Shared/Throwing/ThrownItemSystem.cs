@@ -69,7 +69,7 @@ namespace Content.Shared.Throwing
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, ref StartCollideEvent args)
         {
-            if (args.OtherFixture.Hard == false)
+            if (!args.OtherFixture.Hard)
                 return;
 
             if (args.OtherEntity == component.Thrower)
@@ -98,7 +98,7 @@ namespace Content.Shared.Throwing
                 StopThrow(message.Pulled.Owner, thrownItemComponent);
         }
 
-        private void StopThrow(EntityUid uid, ThrownItemComponent thrownItemComponent)
+        public void StopThrow(EntityUid uid, ThrownItemComponent thrownItemComponent)
         {
             if (TryComp<PhysicsComponent>(uid, out var physics))
             {
