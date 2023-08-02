@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix some docking configs not being considered valid., type: Fix}
-  id: 3911
-  time: '2023-05-31T14:09:14.0000000+00:00'
 - author: OctoRocket
   changes:
   - {message: Added the uncloneable trait!, type: Add}
@@ -2986,3 +2981,9 @@ Entries:
     type: Add}
   id: 4410
   time: '2023-08-02T09:32:44.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Added the gateway, currently for admins to teleport you to funny places.',
+    type: Add}
+  id: 4411
+  time: '2023-08-02T09:47:18.0000000+00:00'
