@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
 
 namespace Content.Server.Administration.Toolshed;
 
-[ToolshedCommand]
+[ToolshedCommand, AdminCommand(AdminFlags.Debug)]
 public sealed class SolutionCommand : ToolshedCommand
 {
     private SolutionContainerSystem? _solutionContainer;
