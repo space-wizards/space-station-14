@@ -7,7 +7,6 @@ using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
@@ -304,6 +303,10 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (ev.Ammo.Count <= 0)
         {
+            // triggers effects on the gun if it's empty
+            var emptyGunShotEvent = new OnEmptyGunShotEvent();
+            RaiseLocalEvent(gunUid, ref emptyGunShotEvent);
+
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
             if (shots > 0)
@@ -377,6 +380,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// </summary>
     protected void EjectCartridge(
         EntityUid entity,
+        Angle? angle = null,
         bool playSound = true)
     {
         // TODO: Sound limit version.
@@ -389,6 +393,13 @@ public abstract partial class SharedGunSystem : EntitySystem
         TransformSystem.SetLocalRotation(xform, Random.NextAngle());
         TransformSystem.SetCoordinates(entity, xform, coordinates);
 
+        // decides direction the casing ejects and only when not cycling
+        if (angle != null)
+        {
+            Angle ejectAngle = angle.Value;
+            ejectAngle += 3.7f; // 212 degrees; casings should eject slightly to the right and behind of a gun
+            ThrowingSystem.TryThrow(entity, ejectAngle.ToVec().Normalized() / 100, 5f);
+        }
         if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
         {
             Audio.PlayPvs(cartridge.EjectSound, entity, AudioParams.Default.WithVariation(0.05f).WithVolume(-1f));

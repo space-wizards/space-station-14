@@ -817,6 +817,8 @@
             shader: unshaded
     - type: DisarmMalus
       malus: 0
+    - type: StaminaDamageOnHit
+      damage: 8
     - type: MeleeWeapon
       damage:
         types:

@@ -96959,6 +96959,13 @@ entities:
     - pos: -9.465214,-17.411165
       parent: 30
       type: Transform
+- proto: GeneratorBasic15kW
+  entities:
+  - uid: 9164
+    components:
+    - pos: -25.5,-63.5
+      parent: 30
+      type: Transform
 - proto: GeneratorPlasma
   entities:
   - uid: 9408
@@ -96975,11 +96982,6 @@ entities:
       type: Transform
 - proto: GeneratorUranium
   entities:
-  - uid: 9164
-    components:
-    - pos: -25.5,-63.5
-      parent: 30
-      type: Transform
   - uid: 9389
     components:
     - pos: -25.5,-47.5
