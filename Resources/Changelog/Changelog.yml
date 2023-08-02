@@ -1,10 +1,4 @@
 Entries:
-- author: Segonist
-  changes:
-  - {message: Now you can print cell recharger and recharger circuits on autolathe
-      and construct them like other machines., type: Add}
-  id: 3909
-  time: '2023-05-31T13:48:55.0000000+00:00'
 - author: lzk
   changes:
   - {message: added some tools to belts whitelist, type: Tweak}
@@ -2985,3 +2979,10 @@ Entries:
   - {message: Fix NPCs not shutting down properly upon player takeover., type: Fix}
   id: 4408
   time: '2023-08-02T00:48:57.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Hitting entities with thrown items that deal damage now provide more
+      feedback (sound and visual effect)., type: Add}
+  - {message: Thrown items that damage other entities now land after first hit., type: Tweak}
+  id: 4409
+  time: '2023-08-02T09:30:04.0000000+00:00'
