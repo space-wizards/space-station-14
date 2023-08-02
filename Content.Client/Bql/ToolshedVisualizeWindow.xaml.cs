@@ -8,12 +8,12 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Bql;
 
 [GenerateTypedNameReferences]
-internal sealed partial class BqlResultsWindow : DefaultWindow
+internal sealed partial class ToolshedVisualizeWindow : DefaultWindow
 {
     private readonly IClientConsoleHost _console;
     private readonly ILocalizationManager _loc;
 
-    public BqlResultsWindow(IClientConsoleHost console, ILocalizationManager loc)
+    public ToolshedVisualizeWindow(IClientConsoleHost console, ILocalizationManager loc)
     {
         _console = console;
         _loc = loc;

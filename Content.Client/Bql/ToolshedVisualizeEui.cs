@@ -7,13 +7,13 @@ using Robust.Client.Console;
 namespace Content.Client.Bql;
 
 [UsedImplicitly]
-public sealed class BqlResultsEui : BaseEui
+public sealed class ToolshedVisualizeEui : BaseEui
 {
-    private readonly BqlResultsWindow _window;
+    private readonly ToolshedVisualizeWindow _window;
 
-    public BqlResultsEui()
+    public ToolshedVisualizeEui()
     {
-        _window = new BqlResultsWindow(
+        _window = new ToolshedVisualizeWindow(
             IoCManager.Resolve<IClientConsoleHost>(),
             IoCManager.Resolve<ILocalizationManager>()
         );
@@ -23,7 +23,7 @@ public sealed class BqlResultsEui : BaseEui
 
     public override void HandleState(EuiStateBase state)
     {
-        if (state is not BqlResultsEuiState castState)
+        if (state is not ToolshedVisualizeEuiState castState)
             return;
 
         _window.Update(castState.Entities);
