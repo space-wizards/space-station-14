@@ -11,7 +11,6 @@ using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Damage.Systems;
 
@@ -55,19 +54,11 @@ public sealed class DamageOtherOnHitSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        var verb = new ExamineVerb()
-        {
-            Act = () =>
-            {
-                var markup = _damageable.GetDamageExamine(component.Damage, Loc.GetString("damage-throw"));
-                _examine.SendExamineTooltip(args.User, uid, markup, false, false);
-            },
-            Text = Loc.GetString("damage-examinable-verb-text"),
-            Message = Loc.GetString("damage-examinable-verb-message"),
-            Category = VerbCategory.Examine,
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png")),
-        };
-
-        args.Verbs.Add(verb);
+        var markup = _damageable.GetDamageExamine(component.Damage, Loc.GetString("damage-throw"));
+        _examine.AddDetailedExamineVerb(args, component, markup,
+            Loc.GetString("damage-examinable-verb-text"),
+            "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png",
+            Loc.GetString("damage-examinable-verb-message")
+        );
     }
 }
