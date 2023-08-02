@@ -37,7 +37,6 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
-#          bounds: "-1.5,-1.0,1.5,1.0"
         mask:
         - FullTileMask
         layer:

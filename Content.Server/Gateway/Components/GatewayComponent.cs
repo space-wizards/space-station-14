@@ -1,5 +1,6 @@
 using Content.Server.Gateway.Systems;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Gateway.Components;
 
@@ -18,13 +19,16 @@ public sealed class GatewayComponent : Component
     /// <summary>
     /// Every other gateway destination on the server.
     /// </summary>
+    /// <remarks>
+    /// Added on
+    /// </remarks>
     [ViewVariables]
     public HashSet<EntityUid> Destinations = new();
 
     /// <summary>
     /// The time at which the portal will be closed.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), DataField("nextClose", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextClose;
 
     /// <summary>

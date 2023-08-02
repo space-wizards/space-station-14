@@ -50,7 +50,7 @@ public sealed class GatewaySystem : EntitySystem
     {
         // add existing destinations
         var query = EntityQueryEnumerator<GatewayDestinationComponent>();
-        while (query.MoveNext(out var dest, out var _))
+        while (query.MoveNext(out var dest, out _))
         {
             comp.Destinations.Add(dest);
         }

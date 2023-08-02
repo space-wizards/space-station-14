@@ -1,4 +1,5 @@
 using Content.Server.Gateway.Systems;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Gateway.Components;
 
@@ -24,7 +25,7 @@ public sealed class GatewayDestinationComponent : Component
     /// <summary>
     /// Time at which this destination is ready to be linked to.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), DataField("nextReady", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextReady;
 
     /// <summary>
