@@ -157,8 +157,9 @@ public sealed class ArrivalsSystem : EntitySystem
         if (!TryGetArrivals(out EntityUid arrivals) || !TryComp<TransformComponent>(arrivals, out var arrivalsXform))
             return;
 
+        var arrivalsMapUid = Transform(arrivals).MapUid;
         // Don't do anything here when leaving arrivals.
-        if (args.FromMapUid == arrivalsXform.MapUid)
+        if (args.FromMapUid == arrivalsMapUid)
             return;
 
         // Any mob then yeet them off the shuttle.
@@ -171,24 +172,26 @@ public sealed class ArrivalsSystem : EntitySystem
             DumpChildren(shuttleUid, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
         }
 
-        // if (!TryComp<StationDataComponent>(component.Station, out var data))
-        //     return;
-        //
-        // var targetGrid = _station.GetLargestGrid(data);
         var pendingQuery = AllEntityQuery<PendingClockInComponent, TransformComponent>();
 
-        // Clock them in when they FTL
+        // We're heading from the station back to arrivals (if leaving arrivals, would have returned above).
+        // Process everyone who holds a PendingClockInComponent
+        // Note, due to way DumpChildren works, anyone who doesn't have a PendingClockInComponent gets left in space
+        // and will not warp. This is intended behavior.
         while (pendingQuery.MoveNext(out var pUid, out _, out var xform))
         {
-            // Cheaper to iterate pending arrivals than all children
             if (xform.GridUid == shuttleUid)
             {
-                // Teleport them on to the station.
-                TeleportToMapSpawn(pUid, component.Station, xform);
+                // Warp all players who are still on this shuttle to a spawn point. This doesn't let them return to
+                // arrivals. It also ensures noobs, slow players or AFK players safely leave the shuttle.
+                TryTeleportToMapSpawn(pUid, component.Station, xform);
             }
-            if (xform.MapUid == arrivalsXform.MapUid)
+
+            // Players who have remained at arrives keep their warp coupon (PendingClockInComponent) for now.
+            if (xform.MapUid == arrivalsMapUid)
                 continue;
 
+            // The player has successfully left arrivals and is also not on the shuttle. Remove their warp coupon.
             RemCompDeferred<PendingClockInComponent>(pUid);
             RemCompDeferred<AutoOrientComponent>(pUid);
         }
@@ -257,7 +260,7 @@ public sealed class ArrivalsSystem : EntitySystem
         }
     }
 
-    private bool TeleportToMapSpawn(EntityUid player, EntityUid stationId, TransformComponent? transform = null)
+    private bool TryTeleportToMapSpawn(EntityUid player, EntityUid stationId, TransformComponent? transform = null)
     {
         if (!Resolve(player, ref transform))
             return false;
