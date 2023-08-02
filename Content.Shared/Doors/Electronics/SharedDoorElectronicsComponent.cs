@@ -4,7 +4,6 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Doors.Electronics;
 
 [NetworkedComponent()]
-[Virtual]
 public class SharedDoorElectronicsComponent : Component
 {
 }
@@ -35,4 +34,10 @@ public sealed class DoorElectronicsConfigurationState : BoundUserInterfaceState
     {
         accessList = _accessList;
     }
+}
+
+[Serializable, NetSerializable]
+public enum DoorElectronicsConfigurationUiKey : byte
+{
+    Key
 }

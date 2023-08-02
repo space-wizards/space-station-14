@@ -28,7 +28,7 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
         else
         {
             accessLevels = new List<string>();
-            Logger.ErrorS(SharedDoorElectronicsSystem.Sawmill, $"No DoorElectronicsComponent component found for {_entityManager.ToPrettyString(Owner)}!");
+            Logger.Error($"No DoorElectronicsComponent component found for {_entityManager.ToPrettyString(Owner)}!");
         }
 
         _window = new DoorElectronicsConfigurationMenu(this, accessLevels, _prototypeManager);

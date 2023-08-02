@@ -10,7 +10,6 @@ using Content.Shared.Physics;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -32,7 +31,6 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] private   readonly OccluderSystem _occluder = default!;
     [Dependency] private   readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private   readonly SharedContainerSystem _containerSystem = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a

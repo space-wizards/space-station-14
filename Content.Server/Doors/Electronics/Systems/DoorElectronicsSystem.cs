@@ -23,7 +23,7 @@ public sealed class DoorElectronicsSystem : EntitySystem
 
     public void UpdateUserInterface(EntityUid uid, DoorElectronicsComponent component)
     {
-        List<string> accesses = new List<string>();
+        var accesses = new List<string>();
 
         if (TryComp<AccessReaderComponent>(component.Owner, out var accessReader))
         {
