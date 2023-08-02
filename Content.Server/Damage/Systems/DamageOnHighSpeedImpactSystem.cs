@@ -26,7 +26,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
 
     private void HandleCollide(EntityUid uid, DamageOnHighSpeedImpactComponent component, ref StartCollideEvent args)
     {
-        if (!args.OtherFixture.Hard)
+        if (!args.OurFixture.Hard || !args.OtherFixture.Hard)
             return;
 
         if (!EntityManager.HasComponent<DamageableComponent>(uid))
