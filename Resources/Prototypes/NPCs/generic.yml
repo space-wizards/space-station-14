@@ -1,0 +1,25 @@
+- type: htnCompound
+  id: ClearActiveHandCompound
+  branches:
+    # Do nothing
+    - preconditions:
+        - !type:ActiveHandFreePrecondition
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:NoOperator
+
+    # Swap to another free hand
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:SwapToFreeHandOperator
+
+    # TODO: Need to make sure this works with blackboard and handles storage + pockets + inventory slots
+    # Put active hand into storage
+    #- tasks:
+    #    - !type:HTNPrimitiveTask
+    #      operator: !type:StashActiveHandOperator
+
+    # Drop active hand
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:DropOperator

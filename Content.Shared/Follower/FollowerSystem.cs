@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Database;
 using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;

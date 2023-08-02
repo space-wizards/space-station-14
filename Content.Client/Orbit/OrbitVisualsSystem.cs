@@ -1,4 +1,5 @@
-﻿using Content.Shared.Follower;
+﻿using System.Numerics;
+using Content.Shared.Follower;
 using Content.Shared.Follower.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;

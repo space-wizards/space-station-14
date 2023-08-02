@@ -48,7 +48,7 @@ public partial class SharedBodySystem
         if (args.Current is not BodyComponentState state)
             return;
 
-        body.Root = state.Root;
+        body.Root = state.Root; // TODO use containers. This is broken and does not work.
         body.GibSound = state.GibSound;
     }
 

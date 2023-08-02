@@ -413,8 +413,10 @@ public sealed class MindSystem : EntitySystem
             InternalEjectMind(oldEntity.Value, oldComp);
 
         SetOwnedEntity(mind, entity, component);
-        if (mind.OwnedComponent != null)
+        if (mind.OwnedComponent != null){
             InternalAssignMind(mind.OwnedEntity!.Value, mind, mind.OwnedComponent);
+            mind.OriginalOwnedEntity ??= mind.OwnedEntity;
+        }
 
         // Don't do the full deletion cleanup if we're transferring to our VisitingEntity
         if (alreadyAttached)
@@ -467,7 +469,7 @@ public sealed class MindSystem : EntitySystem
     /// <returns>Returns true if the removal succeeded.</returns>
     public bool TryRemoveObjective(Mind mind, int index)
     {
-        if (mind.Objectives.Count >= index) return false;
+        if (index < 0 || index >= mind.Objectives.Count) return false;
 
         var objective = mind.Objectives[index];
 
