@@ -336,13 +336,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("discord.ahelp_avatar", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
-        /// URL of the Discord webhook which will relay all custom votes.
+        /// URL of the Discord webhook which will relay all custom votes. If left empty, disables the webhook. 
         /// </summary>
         public static readonly CVarDef<string> DiscordVoteWebhook =
             CVarDef.Create("discord.vote_webhook", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
-        /// The avatar to use for the vote webhook. Should be an URL.
+        /// The avatar to use for the vote webhook. Should be an URL. If left empty, disables the webhook. 
         /// </summary>
         public static readonly CVarDef<string> DiscordVoteAvatar =
             CVarDef.Create("discord.vote_avatar", string.Empty, CVar.SERVERONLY);

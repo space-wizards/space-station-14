@@ -70,7 +70,8 @@ namespace Content.Server.Voting
     public sealed class CreateCustomCommand : IConsoleCommand
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
         private const int MaxArgCount = 10;
 
         public string Command => "customvote";
@@ -78,10 +79,11 @@ namespace Content.Server.Voting
         public string Help => Loc.GetString("cmd-customvote-help");
 
         // Webhook stuff 
-        private string _webhookUrl = "https://discord.com/api/webhooks/1136085592439017585/E_zF94nne9ul_5VuF_SLvmOAHblKdzA69R6Kok5JTNPC9kNP10DXtHk2yHvC0uiBRxtm";
-        private string _serverName = string.Empty;
-        private string _avatarUrl = String.Empty;
+        private string _webhookUrl = _cfg.GetCVar(CCVars.DiscordVoteWebhook);;
+        private string _serverName = _cfg.GetCVar(CVars.GameHostName);
+        private string _avatarUrl = _cfg.GetCVar(CCVars.DiscordVoteAvatar);
         private readonly HttpClient _httpClient = new();
+        private string webhookId = string.Empty;
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -106,7 +108,9 @@ namespace Content.Server.Voting
                 options.Options.Add((args[i], i));
             }
 
-            // Webhook stuff 
+            // Set up the webhook payload
+            var _gameTicker = _entitySystem.GetEntitySystem<GameTicker>();
+
             var payload = new WebhookPayload()
             {
                 AvatarUrl = _avatarUrl,
@@ -116,7 +120,7 @@ namespace Content.Server.Voting
                     new()
                     {
                         Title = $"{shell.Player}",
-                        Color = 2353993,
+                        Color = 13438992, // 2353993
                         Description = options.Title,
                         Footer = new EmbedFooter
                         {
@@ -134,7 +138,9 @@ namespace Content.Server.Voting
                 payload.Embeds[0].Fields.Add(NewVote);
             }
 
-            WebhookMessage(payload);
+            Console.Write(JsonSerializer.Serialize(payload));
+
+            WebhookMessage(payload, webhookId);
 
             options.SetInitiatorOrServer((IPlayerSession?) shell.Player);
 
@@ -159,7 +165,6 @@ namespace Content.Server.Voting
                     _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished: {args[(int) eventArgs.Winner]}");
                     chatMgr.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win",("winner", args[(int) eventArgs.Winner])));
                 }
-                WebhookMessage(payload);
             };
         }
 
@@ -175,16 +180,20 @@ namespace Content.Server.Voting
             return CompletionResult.FromHint(Loc.GetString("cmd-customvote-arg-option-n", ("n", n)));
         }
 
-        // More webhook things, allows for the custom message to be sent and all that
-        private async void WebhookMessage(WebhookPayload payload)
+        // Sends the payload's message. 
+        private async void WebhookMessage(WebhookPayload payload, string id)
         {
-            var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
-                new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
-        }
+            if (id == string.Empty)
+            {
+                var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
+                    new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
 
-        public Field MakeField(string name, string value) 
-        {
-            return new Field() {Name = name, Value = value};
+                var content = await request.Content.ReadAsStringAsync();
+                webhookId = (string) JsonNode.Parse(content)?["id"]!;
+            } 
+
+            await _httpClient.PatchAsync($"{_webhookUrl}/messages/{id}",
+                new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
         }
 
         public struct WebhookPayload
