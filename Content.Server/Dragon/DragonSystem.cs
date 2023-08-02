@@ -22,6 +22,8 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using System.Numerics;
+using Content.Shared.Sprite;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Dragon;
 
@@ -29,6 +31,7 @@ public sealed partial class DragonSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
@@ -149,8 +152,18 @@ public sealed partial class DragonSystem : EntitySystem
             if (comp.SpawnAccumulator > comp.SpawnCooldown)
             {
                 comp.SpawnAccumulator -= comp.SpawnCooldown;
-                var ent = Spawn(comp.SpawnPrototype, Transform(comp.Owner).MapPosition);
-                _npc.SetBlackboard(ent, NPCBlackboard.FollowTarget, new EntityCoordinates(comp.Owner, Vector2.Zero));
+                var ent = Spawn(comp.SpawnPrototype, Transform(comp.Owner).Coordinates);
+
+                // Update their look to match the leader.
+                if (TryComp<RandomSpriteComponent>(comp.Dragon, out var randomSprite))
+                {
+                    var spawnedSprite = EnsureComp<RandomSpriteComponent>(ent);
+                    _serManager.CopyTo(randomSprite, ref spawnedSprite, notNullableOverride: true);
+                    Dirty(ent, spawnedSprite);
+                }
+
+                if (comp.Dragon != null)
+                    _npc.SetBlackboard(ent, NPCBlackboard.FollowTarget, new EntityCoordinates(comp.Dragon.Value, Vector2.Zero));
             }
         }
     }

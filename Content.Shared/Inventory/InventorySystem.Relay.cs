@@ -1,9 +1,12 @@
+using Content.Shared.Chemistry;
 using Content.Shared.Damage;
 using Content.Shared.Electrocution;
 using Content.Shared.Explosion;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.IdentityManagement.Components;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Overlays;
 using Content.Shared.Radio;
 using Content.Shared.Slippery;
 using Content.Shared.Strip.Components;
@@ -31,6 +34,10 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, CanSeeAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetEyeProtectionEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetBlurEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, SolutionScanEvent>(RelayInventoryEvent);
+
+        // ComponentActivatedClientSystems
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowSecurityIconsComponent>>(RelayInventoryEvent);
 
         SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<EquipmentVerb>>(OnGetStrippingVerbs);
     }
@@ -45,7 +52,7 @@ public partial class InventorySystem
         while (containerEnumerator.MoveNext(out var container))
         {
             if (!container.ContainedEntity.HasValue) continue;
-            RaiseLocalEvent(container.ContainedEntity.Value, ev, false);
+            RaiseLocalEvent(container.ContainedEntity.Value, ev, broadcast: false);
         }
     }
 
