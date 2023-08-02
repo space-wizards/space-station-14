@@ -154,7 +154,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
     private void OnArrivalsFTL(EntityUid shuttleUid, ArrivalsShuttleComponent component, ref FTLStartedEvent args)
     {
-        if (!TryGetArrivals(out EntityUid arrivals) || !TryComp<TransformComponent>(arrivals, out var arrivalsXform))
+        if (!TryGetArrivals(out EntityUid arrivals))
             return;
 
         var arrivalsMapUid = Transform(arrivals).MapUid;
@@ -265,34 +265,26 @@ public sealed class ArrivalsSystem : EntitySystem
         if (!Resolve(player, ref transform))
             return false;
 
-        var points = EntityQuery<SpawnPointComponent, TransformComponent>().ToList();
-        _random.Shuffle(points);
+        var points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
+        var possiblePositions = new List<EntityCoordinates>();
 
         // Find a spawnpoint on the same map as the player is already on now.
-        foreach (var (spawnPoint, xform) in points)
+        while ( points.MoveNext(out var uid, out var spawnPoint, out var xform))
         {
-            if (spawnPoint.SpawnType != SpawnPointType.LateJoin || _station.GetOwningStation(spawnPoint.Owner, xform) != stationId)
+            if (spawnPoint.SpawnType != SpawnPointType.LateJoin || _station.GetOwningStation(uid, xform) != stationId)
                 continue;
 
-            // Move the player to the spawnpoint.
-            transform.Coordinates = xform.Coordinates;
-
-            return true;
+            // Add to list of possible spawn locations
+            possiblePositions.Add(xform.Coordinates);
         }
 
-        // Spawn them at a passenger location
-        foreach (var (spawnPoint, xform) in points)
-        {
-            if (spawnPoint?.Job?.ID != "Passenger" || _station.GetOwningStation(spawnPoint.Owner, xform) != stationId)
-                continue;
+        if (possiblePositions.Count == 0)
+            return false;
 
-            // Move the player to the spawnpoint.
-            transform.Coordinates = xform.Coordinates;
+        // Move the player to a random spawnpoint.
+        _transform.SetCoordinates(player, _random.Pick(possiblePositions));
 
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     private void OnShuttleStartup(EntityUid uid, ArrivalsShuttleComponent component, ComponentStartup args)
