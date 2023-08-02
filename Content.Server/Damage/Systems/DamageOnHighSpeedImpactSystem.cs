@@ -34,8 +34,6 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         if (speed < component.MinimumSpeed)
             return;
 
-        _audio.PlayPvs(component.SoundHit, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
-
         if ((_gameTiming.CurTime - component.LastHit).TotalSeconds < component.DamageCooldown)
             return;
 
@@ -48,6 +46,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
 
         _damageable.TryChangeDamage(uid, component.Damage * damageScale);
 
+        _audio.PlayPvs(component.SoundHit, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
         RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid> { uid }), Filter.Pvs(uid, entityManager: EntityManager));
     }
 }
