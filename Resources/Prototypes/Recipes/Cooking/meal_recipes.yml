@@ -1641,6 +1641,7 @@
   solids:
     ClothingShoesBootsFisher: 1
     
+- type: microwaveMealRecipe
   id: RecipeCookedSpaceshroom
   name: cooked spaceshroom recipe
   result: FoodSpaceshroomCooked
