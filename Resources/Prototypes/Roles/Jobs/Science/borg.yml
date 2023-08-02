@@ -7,5 +7,5 @@
     - !type:OverallPlaytimeRequirement
       time: 216000 #60 hrs
   canBeAntag: false
-  icon: "Borg"
+  icon: JobIconBorg
   supervisors: job-supervisors-rd

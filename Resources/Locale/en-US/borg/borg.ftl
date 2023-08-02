@@ -7,3 +7,4 @@ borg-mind-removed = {CAPITALIZE($name)} shut off!
 borg-ui-menu-title = Cyborg Interface
 borg-ui-charge-label = Charge:
 borg-ui-no-brain = No brain present
+borg-ui-remove-battery = Remove

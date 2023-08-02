@@ -1,4 +1,5 @@
 ﻿using Content.Server.Actions;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Hands.Systems;
 using Content.Server.Mind;
@@ -16,6 +17,7 @@ using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Wires;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
@@ -25,17 +27,20 @@ namespace Content.Server.Silicons.Borgs;
 /// <inheritdoc/>
 public sealed partial class BorgSystem : SharedBorgSystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IBanManager _banManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly PlayTimeTrackingSystem _playTimeTracking = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -54,6 +59,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         InitializeModules();
         InitializeMMI();
+        InitializeUI();
     }
 
     private void OnMapInit(EntityUid uid, BorgChassisComponent component, MapInitEvent args)
@@ -152,11 +158,14 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
             EnableBorgAbilities(uid, component);
         }
+
+        UpdateUI(uid, component);
     }
 
     private void OnPowerCellSlotEmpty(EntityUid uid, BorgChassisComponent component, ref PowerCellSlotEmptyEvent args)
     {
         DisableBorgAbilities(uid, component);
+        UpdateUI(uid, component);
     }
 
     private void OnUIOpenAttempt(EntityUid uid, BorgChassisComponent component, ActivatableUIOpenAttemptEvent args)
@@ -204,7 +213,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         // we make sure 0 only shows if they have absolutely no battery.
         // also account for floating point imprecision
-        if (chargePercent == 0 && battery.CurrentCharge >= 0.01)
+        if (chargePercent == 0 && _powerCell.HasDrawCharge(uid, cell: slotComponent))
         {
             chargePercent = 1;
         }

@@ -12,9 +12,11 @@
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'borg-ui-charge-label'}"/>
                 <Control MinWidth="10"/>
-                <ProgressBar Name="ChargeBar" Access="Public" HorizontalExpand="True">
+                <ProgressBar Name="ChargeBar" Access="Public" HorizontalExpand="True" MinValue="0" MaxValue="1">
                     <Label Name="ChargeLabel" Text="100%" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5 0 0 0"/>
                 </ProgressBar>
+                <Control MinWidth="5"/>
+                <Button Name="EjectBatteryButton" Text="{Loc 'borg-ui-remove-battery'}" StyleClasses="OpenLeft"/>
             </BoxContainer>
             <Control MinHeight="10"/>
             <PanelContainer VerticalExpand="True">
@@ -31,7 +33,7 @@
                 <Label Name="NameIdentifierLabel" Margin="10 0 0 0"/>
             </BoxContainer>
             <Control MinHeight="10"/>
-            <Button HorizontalExpand="True" Name="BrainButton" ToggleMode="False">
+            <Button HorizontalExpand="True" Name="BrainButton" ToggleMode="False" Margin="0" MinHeight="40">
                 <SpriteView Name="BrainView" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </Button>
         </BoxContainer>

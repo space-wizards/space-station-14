@@ -1,4 +1,4 @@
-using Content.Shared.Research.Components;
+using Content.Shared.Silicons.Borgs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -8,7 +8,7 @@ namespace Content.Client.Silicons.Borgs;
 public sealed class BorgBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
-    private BorgMenu? _consoleMenu;
+    private BorgMenu? _menu;
 
     public BorgBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -20,18 +20,35 @@ public sealed class BorgBoundUserInterface : BoundUserInterface
 
         var owner = Owner;
 
-        _consoleMenu = new BorgMenu(owner);
+        _menu = new BorgMenu(owner);
 
+        _menu.BrainButtonPressed += () =>
+        {
+            SendMessage(new BorgEjectBrainBuiMessage());
+        };
 
+        _menu.EjectBatteryButtonPressed += () =>
+        {
+            SendMessage(new BorgEjectBatteryBuiMessage());
+        };
 
-        _consoleMenu.OnClose += Close;
+        _menu.NameChanged += name =>
+        {
+            SendMessage(new BorgSetNameBuiMessage(name));
+        };
 
-        _consoleMenu.OpenCentered();
+        _menu.OnClose += Close;
+
+        _menu.OpenCentered();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
+
+        if (state is not BorgBuiState msg)
+            return;
+        _menu?.UpdateState(msg);
     }
 
     protected override void Dispose(bool disposing)
@@ -39,6 +56,6 @@ public sealed class BorgBoundUserInterface : BoundUserInterface
         base.Dispose(disposing);
         if (!disposing)
             return;
-        _consoleMenu?.Dispose();
+        _menu?.Dispose();
     }
 }

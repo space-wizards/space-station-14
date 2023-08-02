@@ -198,7 +198,7 @@
         map: ["enum.WiresVisualLayers.MaintenancePanel"]
         visible: false
   - type: Charger
-    baseChargeRate: 40
+    baseChargeRate: 30
     slotId: entity_storage
   - type: Wires
     LayoutId: borgcharger
