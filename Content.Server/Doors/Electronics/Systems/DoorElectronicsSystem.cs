@@ -25,7 +25,7 @@ public sealed class DoorElectronicsSystem : EntitySystem
     {
         var accesses = new List<string>();
 
-        if (TryComp<AccessReaderComponent>(component.Owner, out var accessReader))
+        if (TryComp<AccessReaderComponent>(uid, out var accessReader))
         {
             foreach (var accessList in accessReader.AccessLists)
             {
@@ -41,9 +41,10 @@ public sealed class DoorElectronicsSystem : EntitySystem
         _uiSystem.TrySetUiState(uid, DoorElectronicsConfigurationUiKey.Key, state);
     }
 
-    private void OnChangeConfiguration(EntityUid uid,
-                                       DoorElectronicsComponent component,
-                                       DoorElectronicsUpdateConfigurationMessage args)
+    private void OnChangeConfiguration(
+        EntityUid uid,
+        DoorElectronicsComponent component,
+        DoorElectronicsUpdateConfigurationMessage args)
     {
         if (TryComp<AccessReaderComponent>(uid, out var accessReader))
         {
@@ -59,9 +60,10 @@ public sealed class DoorElectronicsSystem : EntitySystem
                                 state);
     }
 
-    private void OnRefreshUi(EntityUid uid,
-                             DoorElectronicsComponent component,
-                             DoorElectronicsRefreshUiMessage args)
+    private void OnRefreshUi(
+        EntityUid uid,
+        DoorElectronicsComponent component,
+        DoorElectronicsRefreshUiMessage args)
     {
         UpdateUserInterface(uid, component);
     }
