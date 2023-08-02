@@ -19,7 +19,10 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnAndDeleteAllEntitiesOnDifferentMaps()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, Destructive = true });
+            // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
+            // is minimal relative to the rest of the test.
+            var settings = new PoolSettings {NoClient = true, Dirty = true};
+            await using var pairTracker = await PoolManager.GetServerClient(settings);
             var server = pairTracker.Pair.Server;
 
             var entityMan = server.ResolveDependency<IEntityManager>();
@@ -71,7 +74,10 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnAndDeleteAllEntitiesInTheSameSpot()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, Destructive = true });
+            // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
+            // is minimal relative to the rest of the test.
+            var settings = new PoolSettings {NoClient = true, Dirty = true};
+            await using var pairTracker = await PoolManager.GetServerClient(settings);
             var server = pairTracker.Pair.Server;
             var map = await PoolManager.CreateTestMap(pairTracker);
 
@@ -123,7 +129,10 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnAndDirtyAllEntities()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = false, Destructive = true });
+            // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
+            // is minimal relative to the rest of the test.
+            var settings = new PoolSettings {NoClient = false, Dirty = true};
+            await using var pairTracker = await PoolManager.GetServerClient(settings);
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
@@ -211,11 +220,7 @@ namespace Content.IntegrationTests.Tests
                 "BiomeSelection", // Whaddya know, requires config.
             };
 
-            var testEntity = @"
-- type: entity
-  id: AllComponentsOneToOneDeleteTestEntity";
-
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = testEntity });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -263,7 +268,7 @@ namespace Content.IntegrationTests.Tests
                             continue;
                         }
 
-                        var entity = entityManager.SpawnEntity("AllComponentsOneToOneDeleteTestEntity", testLocation);
+                        var entity = entityManager.SpawnEntity(null, testLocation);
 
                         Assert.That(entityManager.GetComponent<MetaDataComponent>(entity).EntityInitialized);
 
@@ -271,6 +276,7 @@ namespace Content.IntegrationTests.Tests
                         // such as MetaData or Transform
                         if (entityManager.HasComponent(entity, type))
                         {
+                            entityManager.DeleteEntity(entity);
                             continue;
                         }
 
@@ -311,11 +317,7 @@ namespace Content.IntegrationTests.Tests
                 "BiomeSelection", // Whaddya know, requires config.
             };
 
-            var testEntity = @"
-- type: entity
-  id: AllComponentsOneEntityDeleteTestEntity";
-
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = testEntity });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -384,7 +386,7 @@ namespace Content.IntegrationTests.Tests
                     foreach (var (components, _) in distinctComponents)
                     {
                         var testLocation = grid.ToCoordinates();
-                        var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
+                        var entity = entityManager.SpawnEntity(null, testLocation);
 
                         Assert.That(entityManager.GetComponent<MetaDataComponent>(entity).EntityInitialized);
 

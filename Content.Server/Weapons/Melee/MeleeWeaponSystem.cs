@@ -9,11 +9,9 @@ using Content.Server.CombatMode.Disarm;
 using Content.Server.Contests;
 using Content.Server.Examine;
 using Content.Server.Movement.Systems;
-using Content.Server.Popups;
 using Content.Shared.Administration.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.CombatMode;
-using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
@@ -33,6 +31,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Shared.Effects;
 
 namespace Content.Server.Weapons.Melee;
 
@@ -193,7 +192,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var eventArgs = new DisarmedEvent { Target = target, Source = user, PushProbability = 1 - chance };
         RaiseLocalEvent(target, eventArgs);
 
-        RaiseNetworkEvent(new DamageEffectEvent(Color.Aqua, new List<EntityUid>() { target }));
+        RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Aqua, new List<EntityUid>() { target }));
         return true;
     }
 
@@ -219,7 +218,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
     {
         var filter = Filter.Pvs(targetXform.Coordinates, entityMan: EntityManager).RemoveWhereAttachedEntity(o => o == user);
-        RaiseNetworkEvent(new DamageEffectEvent(Color.Red, targets), filter);
+        RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, targets), filter);
     }
 
     private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, CombatModeComponent disarmerComp)

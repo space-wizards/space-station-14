@@ -17,7 +17,7 @@
       time: 144000 #40 hrs            
   weight: 10
   startingGear: HoSGear
-  icon: "HeadOfSecurity"
+  icon: "JobIconHeadOfSecurity"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
