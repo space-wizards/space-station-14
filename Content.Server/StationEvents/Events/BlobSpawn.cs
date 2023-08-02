@@ -4,6 +4,7 @@ using Content.Server.Station.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Shuttles.Components;
 using Content.Shared.Blob;
 using Robust.Server.Player;
 
@@ -28,6 +29,9 @@ public sealed class BlobSpawnRule : StationEventSystem<BlobSpawnRuleComponent>
         var validLocations = new List<EntityCoordinates>();
         while (locations.MoveNext(out _, out _, out var transform))
         {
+            if (!HasComp<BecomesStationComponent>(transform.GridUid))
+                continue;
+
             if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station)
             {
                 validLocations.Add(transform.Coordinates);

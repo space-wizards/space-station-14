@@ -1,30 +1,30 @@
-- type: htnCompound
-  id: BlobPodCompound
-  branches:
-    - tasks:
-      - id: MeleeCombatCompound
-    - tasks:
-      - id: ZombifyCompound
-    - tasks:
-      - id: IdleCompound
-
-- type: htnCompound
-  id: ZombifyCompound
-  branches:
-    - tasks:
-      - id: PickBlobPodZombifyTargetPrimitive
-      - id: MoveToAccessiblePrimitive
-      - id: ZombifyPrimitive
-
-- type: htnPrimitive
-  id: PickBlobPodZombifyTargetPrimitive
-  operator: !type:PickBlobPodZombifyTargetOperator
-    pathfindInPlanning: true
-    targetKey: MovementTarget
-    zombifyKey: ZombifyTarget
-    rangeKey: IdleRange
-
-- type: htnPrimitive
-  id: ZombifyPrimitive
-  operator: !type:BlobPodZombifyOperator
-    zombifyKey: ZombifyTarget
+#- type: htnCompound
+#  id: BlobPodCompound
+#  branches:
+#    - tasks:
+#      - id: MeleeCombatCompound
+#    - tasks:
+#      - id: ZombifyCompound
+#    - tasks:
+#      - id: IdleCompound
+#
+#- type: htnCompound
+#  id: ZombifyCompound
+#  branches:
+#    - tasks:
+#      - id: PickBlobPodZombifyTargetPrimitive
+#      - id: MoveToAccessiblePrimitive
+#      - id: ZombifyPrimitive
+#
+#- type: htnPrimitivea
+#  id: PickBlobPodZombifyTargetPrimitive
+#  operator: !type:PickBlobPodZombifyTargetOperator
+#    pathfindInPlanning: true
+#    targetKey: MovementTarget
+#    zombifyKey: ZombifyTarget
+#    rangeKey: IdleRange
+#
+#- type: htnPrimitive
+#  id: ZombifyPrimitive
+#  operator: !type:BlobPodZombifyOperator
+#    zombifyKey: ZombifyTarget
