@@ -1,9 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Replaced some lethal mines in Barratry maintenance., type: Tweak}
-  id: 3914
-  time: '2023-05-31T22:25:13.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix some docking configs (e.g. saltern)., type: Fix}
@@ -2986,3 +2981,12 @@ Entries:
       from the HoS.', type: Add}
   id: 4413
   time: '2023-08-02T10:05:12.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: 'Interaction outlines now directly react to lighting. You can no longer
+      merely wave your mouse around in the dark to see objects in the distance in
+      maint. Interaction outlines that''re in-range are far brighter even in dim conditions,
+      though out-of-range interaction outlines are hard to see in poor light conditions.',
+    type: Add}
+  id: 4414
+  time: '2023-08-02T10:07:12.0000000+00:00'
