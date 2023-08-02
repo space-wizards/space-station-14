@@ -83,8 +83,6 @@
       amount: 1
     Acetone:
       amount: 1
-    Diethylamine:
-      amount: 1
     Oxygen:
       amount: 1
     Chlorine:
@@ -92,7 +90,7 @@
     Hydrogen:
       amount: 1
   products:
-    Epinephrine: 6
+    Epinephrine: 5
 
 - type: reaction
   id: Dermaline
