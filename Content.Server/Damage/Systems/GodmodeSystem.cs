@@ -22,6 +22,9 @@ public sealed class GodmodeSystem : SharedGodmodeSystem
 
     public override void DisableGodmode(EntityUid uid, GodmodeComponent? godmode = null)
     {
+    	if (!Resolve(uid, ref godmode, false)
+    	    return;
+    	    
         base.DisableGodmode(uid, godmode);
 
         if (godmode == null || godmode.Deleted)
