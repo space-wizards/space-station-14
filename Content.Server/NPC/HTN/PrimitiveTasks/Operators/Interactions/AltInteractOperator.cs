@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 
-namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
+namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 
 public sealed class AltInteractOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     [DataField("targetKey")]
-    public string Key = "CombatTarget";
+    public string Key = "Target";
 
     /// <summary>
     /// If this alt-interaction started a do_after where does the key get stored.
