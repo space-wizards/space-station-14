@@ -175,10 +175,8 @@ namespace Content.Server.Voting
                     payload.Embeds[0] = newEmbed;
                     payload.Embeds[0].Fields[i] = new Field() { Name = oldName, Value = newValue, Inline =  true};
                 }
-                if (!String.IsNullOrEmpty(_webhookUrl))
-                {
-                    WebhookMessage(payload, webhookId);
-                }
+            
+                WebhookMessage(payload, webhookId);
             };
         }
 
@@ -197,6 +195,9 @@ namespace Content.Server.Voting
         // Sends the payload's message. 
         private async void WebhookMessage(WebhookPayload payload, string id)
         {
+            if(String.IsEmptyOrNull(_webhookUrl))
+                return;
+
             if(id == string.Empty)
             {
                 var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
