@@ -2,7 +2,7 @@
   id: SS220Delta
   mapName: 'SS220 Delta Station'
   mapPath: /Maps/220_delta.yml
-  minPlayers: 40
+  minPlayers: 0 # для ротации
   stations:
     Delta:
       stationProto: DeltaNanotrasenStation

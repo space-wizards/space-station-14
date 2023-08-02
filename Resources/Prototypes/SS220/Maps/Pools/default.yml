@@ -1,0 +1,5 @@
+- type: gameMapPool
+  id: SS220MapPool
+  maps:
+  - Box
+  - SS220Delta
