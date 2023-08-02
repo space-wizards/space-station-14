@@ -1,9 +1,10 @@
 ﻿using Content.Server.Administration.Systems;
+using Content.Shared.Administration;
 using Robust.Shared.Toolshed;
 
 namespace Content.Server.Administration.Toolshed;
 
-[ToolshedCommand]
+[ToolshedCommand, AdminCommand(AdminFlags.Admin)]
 public sealed class RejuvenateCommand : ToolshedCommand
 {
     private RejuvenateSystem? _rejuvenate;

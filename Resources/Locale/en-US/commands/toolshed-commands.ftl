@@ -36,3 +36,21 @@ command-description-stations-rename =
     Renames the given station.
 command-description-stations-largestgrid =
     Returns the largest grid the given station has, if any.
+command-description-admins-active =
+    Returns a list of active admins.
+command-description-admins-all =
+    Returns a list of ALL admins, including deadmined ones.
+command-description-marked =
+    Returns the value of $marked as a List<EntityUid>.
+command-description-rejuvenate =
+    Rejuvenates the given entities, restoring them to full health, clearing status effects, etc.
+command-description-tag-list =
+    Lists tags on the given entities.
+command-description-tag-add =
+    Adds a tag to the given entities.
+command-description-tag-rm =
+    Removes a tag from the given entities.
+command-description-tag-addmany =
+    Adds a list of tags to the given entities.
+command-description-tag-rmmany =
+    Removes a list of tags from the given entities.
