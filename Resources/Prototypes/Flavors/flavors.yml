@@ -828,7 +828,8 @@
   id: friedfisherboots
   flavorType: Complex
   description: flavor-complex-friedfisherboots
-  
+
+- type: flavor
   id: spaceshroom
   flavorType: Base
   description: flavor-base-spaceshroom
