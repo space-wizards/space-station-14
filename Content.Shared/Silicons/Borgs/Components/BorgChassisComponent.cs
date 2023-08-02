@@ -43,6 +43,8 @@ public sealed partial class BorgChassisComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     public Container ModuleContainer = default!;
+
+    public int ModuleCount => ModuleContainer.ContainedEntities.Count;
     #endregion
 
     [DataField("borgJobId", customTypeSerializer: typeof(PrototypeIdSerializer<JobPrototype>))]

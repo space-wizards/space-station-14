@@ -46,6 +46,7 @@
     - CableApcStackLingering10
     - CableMVStackLingering10
     - CableHVStackLingering10
+    - trayScanner
 
 # science modules
 - type: entity

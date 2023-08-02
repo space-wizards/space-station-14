@@ -18,6 +18,7 @@ public sealed partial class BorgSystem
         SubscribeLocalEvent<BorgChassisComponent, BorgEjectBrainBuiMessage>(OnEjectBrainBuiMessage);
         SubscribeLocalEvent<BorgChassisComponent, BorgEjectBatteryBuiMessage>(OnEjectBatteryBuiMessage);
         SubscribeLocalEvent<BorgChassisComponent, BorgSetNameBuiMessage>(OnSetNameBuiMessage);
+        SubscribeLocalEvent<BorgChassisComponent, BorgRemoveModuleBuiMessage>(OnRemoveModuleBuiMessage);
     }
 
     private void OnBeforeBorgUiOpen(EntityUid uid, BorgChassisComponent component, BeforeActivatableUIOpenEvent args)
@@ -68,6 +69,20 @@ public sealed partial class BorgSystem
 
         _metaData.SetEntityName(uid, name);
         _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(attachedEntity):player} set borg \"{ToPrettyString(uid)}\"'s name to {name}");
+    }
+
+    private void OnRemoveModuleBuiMessage(EntityUid uid, BorgChassisComponent component, BorgRemoveModuleBuiMessage args)
+    {
+        if (args.Session.AttachedEntity is not { } attachedEntity)
+            return;
+
+        if (!component.ModuleContainer.Contains(args.Module))
+            return;
+
+        component.ModuleContainer.Remove(args.Module);
+        _hands.TryPickupAnyHand(attachedEntity, args.Module);
+
+        UpdateUI(uid, component);
     }
 
     public void UpdateUI(EntityUid uid, BorgChassisComponent? component = null)

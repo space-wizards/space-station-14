@@ -72,17 +72,21 @@ public sealed partial class BorgSystem : SharedBorgSystem
         if (args.Handled || uid == args.User)
             return;
 
+        var used = args.Used;
+        TryComp<BorgBrainComponent>(used, out var brain);
+        TryComp<BorgModuleComponent>(used, out var module);
+
         if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
         {
-            //todo: if you're using a module, brain, or leg: show a popup to open the panel
+            if (brain != null || module != null)
+            {
+                Popup.PopupEntity(Loc.GetString("borg-panel-not-open"), uid, args.User);
+            }
             return;
         }
 
-        args.Handled = true;
-        var used = args.Used;
-
         if (component.BrainEntity == null &&
-            HasComp<BorgBrainComponent>(used) &&
+            brain != null &&
             component.BrainWhitelist?.IsValid(used) != false)
         {
             if (_mind.TryGetMind(used, out var mind) && mind.Session != null)
@@ -95,12 +99,15 @@ public sealed partial class BorgSystem : SharedBorgSystem
             }
 
             component.BrainContainer.Insert(used);
+            args.Handled = true;
+            UpdateUI(uid, component);
         }
 
-        if (TryComp<BorgModuleComponent>(used, out var module) &&
-            CanInsertModule(uid, used, component, module))
+        if (module != null && CanInsertModule(uid, used, component, module))
         {
             component.ModuleContainer.Insert(used);
+            args.Handled = true;
+            UpdateUI(uid, component);
         }
     }
 

@@ -37,6 +37,11 @@ public sealed class BorgBoundUserInterface : BoundUserInterface
             SendMessage(new BorgSetNameBuiMessage(name));
         };
 
+        _menu.RemoveModuleButtonPressed += module =>
+        {
+            SendMessage(new BorgRemoveModuleBuiMessage(module));
+        };
+
         _menu.OnClose += Close;
 
         _menu.OpenCentered();

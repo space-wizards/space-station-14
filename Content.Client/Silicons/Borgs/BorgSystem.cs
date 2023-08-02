@@ -51,11 +51,10 @@ public sealed class BorgSystem : SharedBorgSystem
         if (!Resolve(uid, ref component, ref appearance, ref sprite))
             return;
 
-        sprite.LayerSetVisible(BorgVisualLayers.Light, component.BrainEntity != null);
-
         if (!_appearance.TryGetData<bool>(uid, BorgVisuals.HasPlayer, out var hasPlayer, appearance))
             hasPlayer = false;
 
+        sprite.LayerSetVisible(BorgVisualLayers.Light, component.BrainEntity != null || hasPlayer);
         sprite.LayerSetState(BorgVisualLayers.Light, hasPlayer ? component.HasMindState : component.NoMindState);
     }
 
