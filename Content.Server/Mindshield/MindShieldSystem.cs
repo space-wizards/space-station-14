@@ -11,6 +11,8 @@ using Content.Shared.Revolutionary;
 using Content.Server.Popups;
 using Robust.Shared.Containers;
 using System.Xml.Linq;
+using Linguini.Bundle.Errors;
+using Content.Server.GameTicking.Rules.Components;
 
 namespace Content.Server.Mindshield;
 /// <summary>
@@ -22,8 +24,6 @@ public sealed class MindShieldSystem : EntitySystem
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
-
-    private ISawmill _sawmill = default!;
 
     public override void Initialize()
     {

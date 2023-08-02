@@ -16,7 +16,9 @@ public sealed class RevolutionarySystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<RevolutionaryComponent, GetStatusIconsEvent>(OnGetStatusIcon);
     }
-
+    /// <summary>
+    /// Checks if you have the revolutionary or head rev component and gets status icons from other revs. 
+    /// </summary>
     private void OnGetStatusIcon(EntityUid uid, RevolutionaryComponent component, ref GetStatusIconsEvent args)
     {
         if (!HasComp<RevolutionaryComponent>(_player.LocalPlayer?.ControlledEntity) && !HasComp<HeadRevolutionaryComponent>(_player.LocalPlayer?.ControlledEntity))

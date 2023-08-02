@@ -2,11 +2,11 @@ using Content.Server.Flash;
 using Content.Server.GameTicking.Rules;
 using Robust.Shared.GameStates;
 
-namespace Content.Server.Revolutionary;
+namespace Content.Server.Revolutionary.Components;
 /// <summary>
-/// Given to heads at round start for Revs. Used for tracking heads died or not.
+/// Given to heads that decide to run away from station during Revs.
 /// </summary>
 [RegisterComponent, Access(typeof(RevolutionaryRuleSystem))]
-public sealed class HeadComponent : Component
+public sealed class ExiledComponent : Component
 {
 }
