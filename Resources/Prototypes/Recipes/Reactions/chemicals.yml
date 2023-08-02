@@ -21,11 +21,11 @@
 - type: reaction
   id: Phenol
   reactants:
-    Water:
+    Oxygen:
       amount: 1
-    Chlorine:
+    Hydrogen:
       amount: 1
-    Oil:
+    Carbon:
       amount: 1
   products:
     Phenol: 3
