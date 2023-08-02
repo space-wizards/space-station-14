@@ -34,7 +34,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         if (speed < component.MinimumSpeed)
             return;
 
-        _audio.PlayPvs(component.SoundHit, args.OtherEntity, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
+        _audio.PlayPvs(component.SoundHit, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
 
         if ((_gameTiming.CurTime - component.LastHit).TotalSeconds < component.DamageCooldown)
             return;
