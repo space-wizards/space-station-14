@@ -28,7 +28,8 @@ namespace Content.Shared.Projectiles
         {
             base.Initialize();
             SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
-            SubscribeLocalEvent<EmbeddableProjectileComponent, StartCollideEvent>(OnEmbedCollide);
+            SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileCollideEvent>(OnEmbedProjectileCollide);
+            SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
             SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
             SubscribeLocalEvent<EmbeddableProjectileComponent, RemoveEmbeddedProjectileEvent>(OnEmbedRemove);
         }
@@ -69,26 +70,34 @@ namespace Content.Shared.Projectiles
             _physics.WakeBody(uid, body: physics);
         }
 
-        private void OnEmbedCollide(EntityUid uid, EmbeddableProjectileComponent component, ref StartCollideEvent args)
+        private void OnEmbedThrowDoHit(EntityUid uid, EmbeddableProjectileComponent component, ThrowDoHitEvent args)
         {
-            if (args.OurBody.LinearVelocity.Length() < component.MinimumSpeed)
-                return;
+            Embed(uid, args.Target, component);
+        }
 
-            _physics.SetLinearVelocity(uid, Vector2.Zero, body: args.OurBody);
-            _physics.SetBodyType(uid, BodyType.Static, body: args.OurBody);
-            var xform = Transform(uid);
-            _transform.SetParent(uid, xform, args.OtherEntity);
-
-            if (component.Offset != Vector2.Zero)
-            {
-                _transform.SetLocalPosition(xform, xform.LocalPosition + xform.LocalRotation.RotateVec(component.Offset));
-            }
+        private void OnEmbedProjectileCollide(EntityUid uid, EmbeddableProjectileComponent component, ref ProjectileCollideEvent args)
+        {
+            Embed(uid, args.OtherEntity, component);
 
             // Raise a specific event for projectiles.
             if (TryComp<ProjectileComponent>(uid, out var projectile))
             {
                 var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon, args.OtherEntity);
                 RaiseLocalEvent(uid, ref ev);
+            }
+        }
+
+        private void Embed(EntityUid uid, EntityUid target, EmbeddableProjectileComponent component)
+        {
+            TryComp<PhysicsComponent>(uid, out var physics);
+            _physics.SetLinearVelocity(uid, Vector2.Zero, body: physics);
+            _physics.SetBodyType(uid, BodyType.Static, body: physics);
+            var xform = Transform(uid);
+            _transform.SetParent(uid, xform, target);
+
+            if (component.Offset != Vector2.Zero)
+            {
+                _transform.SetLocalPosition(xform, xform.LocalPosition + xform.LocalRotation.RotateVec(component.Offset));
             }
         }
 
