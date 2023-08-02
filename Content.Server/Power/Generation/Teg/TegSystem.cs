@@ -6,6 +6,8 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Power.Generation.Teg;
@@ -21,6 +23,7 @@ public sealed class TegSystem : EntitySystem
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private readonly BatterySystem _battery = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
     private EntityQuery<NodeContainerComponent> _nodeContainerQuery;
@@ -42,16 +45,49 @@ public sealed class TegSystem : EntitySystem
         if (!circulators.HasValue)
             return;
 
+        var battery = Comp<BatteryComponent>(uid);
+
         var (circA, circB) = circulators.Value;
 
         var (inletA, outletA) = GetPipes(circA);
         var (inletB, outletB) = GetPipes(circB);
 
-        var transferredA = GetCirculatorAirTransfer(inletA.Air, outletA.Air);
-        var transferredB = GetCirculatorAirTransfer(inletB.Air, outletB.Air);
+        var airA = GetCirculatorAirTransfer(inletA.Air, outletA.Air);
+        var airB = GetCirculatorAirTransfer(inletB.Air, outletB.Air);
 
-        _atmosphere.Merge(outletA.Air, transferredA);
-        _atmosphere.Merge(outletB.Air, transferredB);
+        var cA = _atmosphere.GetHeatCapacity(airA);
+        var cB = _atmosphere.GetHeatCapacity(airB);
+
+        if (airA.Pressure > 0 && airB.Pressure > 0)
+        {
+            // Clamp energy transfer to battery capacity.
+            var batteryAvailable = battery.MaxCharge - battery.CurrentCharge;
+            var transferMax = batteryAvailable / (component.ThermalEfficiency * component.PowerFactor);
+
+            var deltaT = MathF.Abs(airA.Temperature - airB.Temperature);
+            var transfer = Math.Min(deltaT * cA * cB / (cA + cB), transferMax);
+            var electricalEnergy = transfer * component.ThermalEfficiency * component.PowerFactor;
+            var realTransfer = transfer * (1 - component.ThermalEfficiency);
+
+            if (airA.Temperature > airB.Temperature)
+            {
+                // A -> B
+                airA.Temperature -= transfer / cA;
+                airB.Temperature += realTransfer / cB;
+            }
+            else
+            {
+                // B -> A
+                airA.Temperature += realTransfer / cA;
+                airB.Temperature -= transfer / cB;
+            }
+
+            _battery.SetCharge(uid, battery.Charge + electricalEnergy, battery);
+            component.LastGeneration = electricalEnergy;
+        }
+
+        _atmosphere.Merge(outletA.Air, airA);
+        _atmosphere.Merge(outletB.Air, airB);
     }
 
     private (EntityUid a, EntityUid b)? GetBothCirculators(EntityUid uidGenerator)
@@ -128,7 +164,8 @@ public sealed class TegSystem : EntitySystem
                     [DeviceNetworkCommandSyncData] = new TegSensorData
                     {
                         CirculatorA = GetCirculatorSensorData(circA),
-                        CirculatorB = GetCirculatorSensorData(circB)
+                        CirculatorB = GetCirculatorSensorData(circB),
+                        LastGeneration = component.LastGeneration
                     }
                 };
 

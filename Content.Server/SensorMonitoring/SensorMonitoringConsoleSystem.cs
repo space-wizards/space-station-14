@@ -127,15 +127,17 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
                     return;
 
                 // @formatter:off
-                WriteSample(component, sensorData, "teg_circa_in_pressure",     SensorUnit.Pressure,    tegData.CirculatorA.InletPressure);
-                WriteSample(component, sensorData, "teg_circa_in_temperature",  SensorUnit.Temperature, tegData.CirculatorA.InletTemperature);
-                WriteSample(component, sensorData, "teg_circa_out_pressure",    SensorUnit.Pressure,    tegData.CirculatorA.OutletPressure);
-                WriteSample(component, sensorData, "teg_circa_out_temperature", SensorUnit.Temperature, tegData.CirculatorA.OutletTemperature);
+                WriteSample(component, sensorData, "teg_last_generated",         SensorUnit.Power,       tegData.LastGeneration);
 
-                WriteSample(component, sensorData, "teg_circb_in_pressure",     SensorUnit.Pressure,    tegData.CirculatorB.InletPressure);
-                WriteSample(component, sensorData, "teg_circb_in_temperature",  SensorUnit.Temperature, tegData.CirculatorB.InletTemperature);
-                WriteSample(component, sensorData, "teg_circb_out_pressure",    SensorUnit.Pressure,    tegData.CirculatorB.OutletPressure);
-                WriteSample(component, sensorData, "teg_circb_out_temperature", SensorUnit.Temperature, tegData.CirculatorB.OutletTemperature);
+                WriteSample(component, sensorData, "teg_circ_a_in_pressure",     SensorUnit.Pressure,    tegData.CirculatorA.InletPressure);
+                WriteSample(component, sensorData, "teg_circ_a_in_temperature",  SensorUnit.Temperature, tegData.CirculatorA.InletTemperature);
+                WriteSample(component, sensorData, "teg_circ_a_out_pressure",    SensorUnit.Pressure,    tegData.CirculatorA.OutletPressure);
+                WriteSample(component, sensorData, "teg_circ_a_out_temperature", SensorUnit.Temperature, tegData.CirculatorA.OutletTemperature);
+
+                WriteSample(component, sensorData, "teg_circ_b_in_pressure",     SensorUnit.Pressure,    tegData.CirculatorB.InletPressure);
+                WriteSample(component, sensorData, "teg_circ_b_in_temperature",  SensorUnit.Temperature, tegData.CirculatorB.InletTemperature);
+                WriteSample(component, sensorData, "teg_circ_b_out_pressure",    SensorUnit.Pressure,    tegData.CirculatorB.OutletPressure);
+                WriteSample(component, sensorData, "teg_circ_b_out_temperature", SensorUnit.Temperature, tegData.CirculatorB.OutletTemperature);
                 // @formatter:on
                 break;
 
