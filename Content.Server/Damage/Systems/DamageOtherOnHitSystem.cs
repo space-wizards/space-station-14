@@ -46,7 +46,6 @@ namespace Content.Server.Damage.Systems
             if (TryComp<PhysicsComponent>(uid, out var physics))
             {
                 _thrownItem.LandComponent(args.Thrown, args.Component, physics, false);
-                _physics.ResetDynamics(physics);
             }
         }
     }
