@@ -33,6 +33,3 @@ reagent-desc-oil = Used by chefs to cook.
 
 reagent-name-capsaicin-oil = Capsaicin Oil
 reagent-desc-capsaicin-oil = Capsaicin Oil is the ingredient found in different types of hot peppers.
-
-reagent-name-squeakon = Squeakon
-reagent-desc-squeakon = When ingested, makes people squeak.

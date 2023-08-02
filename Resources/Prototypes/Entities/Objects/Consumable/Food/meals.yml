@@ -568,14 +568,5 @@
   components:
   - type: FlavorProfile
     flavors:
-      - squeakon
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxvol: 65
-        reagents:
-        - ReagentId: Squeakon
-          Quantity: 10
-  - type: Sprite
-    state: friedfisherboots
-#This joke has probably gone way too far by this point.
+      - friedfisherboots
+#THEY'RE HERE! UNDER THE FLOORBOARDS!

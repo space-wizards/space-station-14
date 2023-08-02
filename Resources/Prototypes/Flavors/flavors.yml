@@ -825,6 +825,6 @@
   description: flavor-complex-rocksandstones
 
 - type: flavor
-  id: squeakon
+  id: friedfisherboots
   flavorType: Complex
-  description: flavor-complex-squeakon
+  description: flavor-complex-friedfisherboots
