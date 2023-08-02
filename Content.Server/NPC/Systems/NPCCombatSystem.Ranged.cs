@@ -196,9 +196,10 @@ public sealed partial class NPCCombatSystem
                 targetCordinates = new EntityCoordinates(xform.MapUid!.Value, targetSpot);
             }
 
+            comp.Status = CombatStatus.Normal;
+
             if (gun.NextFire > _timing.CurTime)
             {
-                comp.Status = CombatStatus.Normal;
                 return;
             }
 
