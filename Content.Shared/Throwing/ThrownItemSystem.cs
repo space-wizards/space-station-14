@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
-using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
@@ -115,35 +114,22 @@ namespace Content.Shared.Throwing
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
-        public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent? physics = null, bool playSound = true)
+        public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent physics, bool playSound)
         {
-            if (!Resolve(uid, ref physics))
-            {
-                return;
-            }
-
             _physics.SetBodyStatus(physics, BodyStatus.OnGround);
 
-            if (thrownItem.Deleted || Deleted(uid) || _containerSystem.IsEntityInContainer(uid))
+            if (thrownItem.Deleted || Deleted(uid))
                 return;
-
-            var landing = uid;
-
-            // Unfortunately we can't check for hands containers as they have specific names.
-            if (uid.TryGetContainerMan(out var containerManager) &&
-                EntityManager.HasComponent<HandsComponent>(containerManager.Owner))
-            {
-                EntityManager.RemoveComponent(landing, thrownItem);
-                return;
-            }
 
             // Assume it's uninteresting if it has no thrower. For now anyway.
             if (thrownItem.Thrower is not null)
-                _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(landing):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
+                _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(uid):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
 
             _broadphase.RegenerateContacts(uid, physics);
             var landEvent = new LandEvent(thrownItem.Thrower, playSound);
-            RaiseLocalEvent(landing, ref landEvent);
+            RaiseLocalEvent(uid, ref landEvent);
+
+            StopThrow(uid, thrownItem);
         }
 
         /// <summary>

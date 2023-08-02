@@ -8,6 +8,7 @@ using Content.Shared.Effects;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Damage.Systems
@@ -19,6 +20,7 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly GunSystem _guns = default!;
         [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
         [Dependency] private readonly ThrownItemSystem _thrownItem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         public override void Initialize()
         {
@@ -41,7 +43,11 @@ namespace Content.Server.Damage.Systems
                 _sharedCameraRecoil.KickCamera(args.Target, direction);
             }
 
-            _thrownItem.LandComponent(args.Thrown, args.Component, playSound: false);
+            if (TryComp<PhysicsComponent>(uid, out var physics))
+            {
+                _thrownItem.LandComponent(args.Thrown, args.Component, physics, false);
+                _physics.ResetDynamics(physics);
+            }
         }
     }
 }
