@@ -8,6 +8,14 @@ using Content.Shared.Database;
 using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Events;
+using System.Net.Http;
+using System.Linq;
 
 namespace Content.Server.Voting
 {
@@ -69,6 +77,12 @@ namespace Content.Server.Voting
         public string Description => Loc.GetString("cmd-customvote-desc");
         public string Help => Loc.GetString("cmd-customvote-help");
 
+        // Webhook stuff 
+        private string _webhookUrl = string.Empty;
+        private string _serverName = string.Empty;
+        private string _avatarUrl = String.Empty;
+        private readonly HttpClient _httpClient = new();
+
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 3 || args.Length > MaxArgCount)
@@ -92,6 +106,13 @@ namespace Content.Server.Voting
                 options.Options.Add((args[i], i));
             }
 
+            // Webhook stuff 
+            var _gameTicker = EntitySystem.Get<GameTicker>();
+            var voteOptions = string.Join(", ", options.Options.Select(x => x.text));
+            var message = $"{shell.Player} started a custom vote, {options.Title}, with the following options: {voteOptions}";
+            var username = $"{_serverName}, {_gameTicker.RunLevel} (round {_gameTicker.RoundId})";
+            WebhookMessage(username, message);
+
             options.SetInitiatorOrServer((IPlayerSession?) shell.Player);
 
             if (shell.Player != null)
@@ -109,12 +130,17 @@ namespace Content.Server.Voting
                     var ties = string.Join(", ", eventArgs.Winners.Select(c => args[(int) c]));
                     _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished as tie: {ties}");
                     chatMgr.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-tie",("ties", ties)));
+
+                    message = $"\nCustom vote {options.Title} finished as tie: {ties}";
                 }
                 else
                 {
                     _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished: {args[(int) eventArgs.Winner]}");
                     chatMgr.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win",("winner", args[(int) eventArgs.Winner])));
+
+                    message = $"\nCustom vote {options.Title} finished: {args[(int) eventArgs.Winner]}";
                 }
+                WebhookMessage(username, message);
             };
         }
 
@@ -129,6 +155,35 @@ namespace Content.Server.Voting
             var n = args.Length - 1;
             return CompletionResult.FromHint(Loc.GetString("cmd-customvote-arg-option-n", ("n", n)));
         }
+
+        // More webhook things, allows for the custom message to be sent and all that
+        private async void WebhookMessage(string username, string message)
+        {
+            var payload = new WebhookPayload()
+            {
+                Username = username,
+                AvatarUrl = _avatarUrl,
+                Content = message
+            };
+
+            var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
+                new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+        }
+
+        private struct WebhookPayload
+        {
+            [JsonPropertyName("username")]
+            public string Username { get; set; } = "";
+
+            [JsonPropertyName("avatar_url")]
+            public string AvatarUrl { get; set; } = "";
+
+            [JsonPropertyName("content")]
+            public string Content { get; set; } = "";
+
+            public WebhookPayload() { }
+        }
+
     }
 
 
