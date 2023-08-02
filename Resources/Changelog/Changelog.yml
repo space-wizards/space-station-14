@@ -1,11 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: 'Added the NTSRA voidsuit, you may be able to find it in derelicts.',
-    type: Add}
-  - {message: Removed the IHS voidsuit and gloves., type: Remove}
-  id: 3913
-  time: '2023-05-31T22:03:15.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Replaced some lethal mines in Barratry maintenance., type: Tweak}
@@ -2987,3 +2980,9 @@ Entries:
   - {message: Adds a magazine for the C20R to the uplink for 3 TC., type: Add}
   id: 4412
   time: '2023-08-02T10:03:39.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: 'Adds a new theft target for the Syndicate, Emergency Security Orders
+      from the HoS.', type: Add}
+  id: 4413
+  time: '2023-08-02T10:05:12.0000000+00:00'
