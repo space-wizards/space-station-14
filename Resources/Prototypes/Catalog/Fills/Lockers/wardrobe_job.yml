@@ -152,15 +152,15 @@
   parent: WardrobeSecurity
   description: "Cross the thin red line."
   components:
-    - type: StorageFill
-      contents:
-        - id: ClothingUniformJumpsuitSec
-        - id: ClothingBackpackSecurity
-        - id: ClothingShoesBootsJack
-        - id: ClothingEyesGlassesSecurity
-        - id: ClothingHeadHelmetHelmetOld
-        - id: ClothingOuterVestKevlar
-        - id: ClothingUniformJumpskirtSec
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitSec
+      - id: ClothingBackpackSecurity
+      - id: ClothingShoesBootsJack
+      - id: ClothingEyesGlassesSecurity
+      - id: ClothingHeadHelmetBasic
+      - id: ClothingOuterArmorBasic
+      - id: ClothingUniformJumpskirtSec
 
 - type: entity
   id: WardrobeCargoFilled

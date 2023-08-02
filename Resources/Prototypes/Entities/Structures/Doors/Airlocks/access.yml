@@ -251,6 +251,14 @@
       access: [["HeadOfPersonnel"]]
 
 - type: entity
+  parent: AirlockCommand
+  id: AirlockQuartermasterLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
+
+- type: entity
   parent: AirlockSecurity
   id: AirlockSecurityLocked
   suffix: Security, Locked
@@ -506,6 +514,14 @@
   components:
     - type: AccessReader
       access: [["HeadOfPersonnel"]]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockQuartermasterGlassLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
 
 - type: entity
   parent: AirlockSecurityGlass

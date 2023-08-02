@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Light.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
@@ -76,6 +77,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         SubscribeLocalEvent<ElectrifiedComponent, InteractHandEvent>(OnElectrifiedHandInteract);
         SubscribeLocalEvent<ElectrifiedComponent, InteractUsingEvent>(OnElectrifiedInteractUsing);
         SubscribeLocalEvent<RandomInsulationComponent, MapInitEvent>(OnRandomInsulationMapInit);
+        SubscribeLocalEvent<PoweredLightComponent, AttackedEvent>(OnLightAttacked);
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
     }
@@ -164,8 +166,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!electrified.OnAttacked)
             return;
 
-            if (_meleeWeapon.GetDamage(args.Used, args.User).Total == 0)
-                return;
+        if (_meleeWeapon.GetDamage(args.Used, args.User).Total == 0)
+            return;
 
         TryDoElectrifiedAct(uid, args.User, 1, electrified);
     }
@@ -174,6 +176,22 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     {
         if (electrified.OnHandInteract)
             TryDoElectrifiedAct(uid, args.User, 1, electrified);
+    }
+
+    private void OnLightAttacked(EntityUid uid, PoweredLightComponent component, AttackedEvent args)
+    {
+
+        if (_meleeWeapon.GetDamage(args.Used, args.User).Total == 0)
+            return;
+
+        if (args.Used != args.User)
+            return;
+
+        if (component.CurrentLit == false)
+            return;
+
+        DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false, 1);
+
     }
 
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)

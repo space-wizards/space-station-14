@@ -55,21 +55,21 @@
   suffix: Filled
   parent: LockerSecurity
   components:
-    - type: StorageFill
-      contents:
-        - id: FlashlightSeclite
-          prob: 0.8
-        - id: ClothingUniformJumpsuitSecGrey
-          prob: 0.3
-        - id: ClothingHeadHelmetHelmet
-        - id: ClothingOuterArmorBulletproof
-        - id: ClothingBeltSecurityFilled
-        - id: Flash
-          prob: 0.5
-        - id: ClothingEyesGlassesSecurity
-        - id: ClothingHeadsetSecurity
-        - id: ClothingHandsGlovesColorBlack
-        - id: ClothingShoesBootsJack
+  - type: StorageFill
+    contents:
+      - id: FlashlightSeclite
+        prob: 0.8
+      - id: ClothingUniformJumpsuitSecGrey
+        prob: 0.3
+      - id: ClothingHeadHelmetBasic
+      - id: ClothingOuterArmorBasic
+      - id: ClothingBeltSecurityFilled
+      - id: Flash
+        prob: 0.5
+      - id: ClothingEyesGlassesSecurity
+      - id: ClothingHeadsetSecurity
+      - id: ClothingHandsGlovesColorBlack
+      - id: ClothingShoesBootsJack
 
 - type: entity
   id: LockerBrigmedicFilled
@@ -110,19 +110,19 @@
   suffix: Filled
   parent: LockerDetective
   components:
-    - type: StorageFill
-      contents:
-        - id: ClothingHeadHatFedoraBrown
-        - id: ClothingNeckTieDet
-        - id: ClothingOuterVestDetective
-        - id: ClothingOuterCoatDetective
-        - id: FlashlightSeclite
-        - id: ForensicScanner
-        - id: BoxForensicPad
-        - id: WeaponRevolverInspector
-        - id: DrinkDetFlask
-        - id: SpeedLoaderMagnum
-        - id: ForensicGloves
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatFedoraBrown
+      - id: ClothingNeckTieDet
+      - id: ClothingOuterVestDetective
+      - id: ClothingOuterCoatDetective
+      - id: FlashlightSeclite
+      - id: ForensicScanner
+      - id: BoxForensicPad
+      - id: WeaponRevolverInspector
+      - id: DrinkDetFlask
+      - id: SpeedLoaderMagnum
+      - id: ClothingHandsGlovesForensic
 
 - type: entity
   id: ClosetBombFilled

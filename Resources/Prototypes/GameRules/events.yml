@@ -65,28 +65,30 @@
 #     - type: BureaucraticErrorRule
 
 - type: entity
-  id: Dragon
   parent: BaseGameRule
+  id: Dragon
   noSpawn: true
   components:
-    - type: StationEvent
-      weight: 1
-      duration: 1
-      earliestStart: 45
-      minimumPlayers: 20
-    - type: DragonRule
+  - type: StationEvent
+    weight: 1
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 20
+  - type: RandomSpawnRule
+    prototype: SpawnPointGhostDragon
 
 - type: entity
-  id: RevenantSpawn
   parent: BaseGameRule
+  id: RevenantSpawn
   noSpawn: true
   components:
-    - type: StationEvent
-      weight: 2
-      duration: 1
-      earliestStart: 45
-      minimumPlayers: 20
-    - type: RevenantSpawnRule
+  - type: StationEvent
+    weight: 5
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 20
+  - type: RandomSpawnRule
+    prototype: MobRevenant
 
 - type: entity
   id: FalseAlarm
@@ -161,12 +163,24 @@
   parent: BaseGameRule
   noSpawn: true
   components:
-    - type: StationEvent
-      earliestStart: 30
-      minimumPlayers: 35
-      weight: 5
-      duration: 50
-    - type: MouseMigrationRule
+  - type: StationEvent
+    earliestStart: 30
+    minimumPlayers: 35
+    weight: 5
+    duration: 50
+  - type: VentCrittersRule
+    entries:
+    - id: MobMouse
+      prob: 0.015
+    - id: MobMouse1
+      prob: 0.015
+    - id: MobMouse2
+      prob: 0.015
+    - id: MobRatServant
+      prob: 0.015
+    specialEntries:
+    - id: SpawnPointGhostRatKing
+      prob: 0.005
 
 - type: entity
   id: PowerGridCheck
@@ -242,61 +256,54 @@
   parent: BaseGameRule
   noSpawn: true
   components:
-    - type: StationEvent
-      id: VentCritters
-      earliestStart: 15
-      minimumPlayers: 15
-      weight: 5
-      duration: 60
-    - type: VentCrittersRule
-      entries:
-        - id: MobMouse
-          amount: 4
-          maxAmount: 12
-        - id: MobMouse1
-          amount: 4
-          maxAmount: 12
-        - id: MobMouse2
-          amount: 4
-          maxAmount: 12
+  - type: StationEvent
+    id: VentCritters
+    earliestStart: 15
+    minimumPlayers: 15
+    weight: 5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobMouse
+      prob: 0.02
+    - id: MobMouse1
+      prob: 0.02
+    - id: MobMouse2
+      prob: 0.02
 
 - type: entity
   id: SlimesSpawn
   parent: BaseGameRule
   noSpawn: true
   components:
-    - type: StationEvent
-      earliestStart: 20
-      minimumPlayers: 15
-      weight: 5
-      duration: 60
-    - type: VentCrittersRule
-      entries:
-        - id: MobAdultSlimesBlueAngry
-          amount: 6
-          maxAmount: 10
-        - id: MobAdultSlimesGreenAngry
-          amount: 6
-          maxAmount: 10
-        - id: MobAdultSlimesYellowAngry
-          amount: 6
-          maxAmount: 10
+  - type: StationEvent
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobAdultSlimesBlueAngry
+      prob: 0.02
+    - id: MobAdultSlimesGreenAngry
+      prob: 0.02
+    - id: MobAdultSlimesYellowAngry
+      prob: 0.02
 
 - type: entity
   id: SpiderSpawn
   parent: BaseGameRule
   noSpawn: true
   components:
-    - type: StationEvent
-      earliestStart: 20
-      minimumPlayers: 15
-      weight: 5
-      duration: 60
-    - type: VentCrittersRule
-      entries:
-        - id: MobGiantSpiderAngry
-          amount: 4
-          maxAmount: 8
+  - type: StationEvent
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobGiantSpiderAngry
+      prob: 0.05
 
 - type: entity
   id: SpiderClownSpawn
@@ -310,20 +317,24 @@
     duration: 60
   - type: VentCrittersRule
     entries:
-      - id: MobClownSpider
-        amount: 4
-        maxAmount: 8
+    - id: MobClownSpider
+      prob: 0.05
 
 - type: entity
   id: ZombieOutbreak
   parent: BaseGameRule
   noSpawn: true
   components:
-    - type: StationEvent
-      earliestStart: 50
-      weight: 0.1
-      duration: 1
-    - type: ZombieRule
+  - type: StationEvent
+    earliestStart: 50
+    weight: 1
+    duration: 1
+  - type: ZombieRule
+    minStartDelay: 0 #let them know immediately
+    maxStartDelay: 10
+    maxInitialInfected: 3 #fewer zombies
+    minInitialInfectedGrace: 300 #less time to prepare
+    maxInitialInfectedGrace: 450
 
 - type: entity
   id: LoneOpsSpawn
@@ -353,3 +364,18 @@
     maxSoundDistance: 7
     sounds:
       collection: Paracusia
+
+- type: entity
+  id: ImmovableRodSpawn
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-immovable-rod-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 1
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 20
+  - type: ImmovableRodRule

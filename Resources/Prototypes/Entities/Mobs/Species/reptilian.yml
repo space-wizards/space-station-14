@@ -8,6 +8,9 @@
   - type: HumanoidAppearance
     species: Reptilian
   - type: Hunger
+    starvationDamage:
+      types:
+        Cold: 1
   - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi

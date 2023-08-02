@@ -15,7 +15,11 @@
       "directions": 4
     },
     {
-      "name": "equipped-HELMET-hamster",
+      "name": "light-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "lighton-equipped-HELMET",
       "directions": 4
     },
     {

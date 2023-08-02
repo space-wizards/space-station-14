@@ -8,7 +8,7 @@
       department: Engineering
       time: 7200 #Imperial role timers
   startingGear: StationEngineerGear
-  icon: "StationEngineer"
+  icon: "JobIconStationEngineer"
   supervisors: job-supervisors-ce
   access:
   - Maintenance

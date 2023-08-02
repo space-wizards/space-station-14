@@ -9,7 +9,10 @@
     - type: MobMover
     - type: HTN
       rootTask: SimpleHostileCompound
-    - type: Faction
+      blackboard:
+        NavSmash: !type:Bool
+          true
+    - type: NpcFactionMember
       factions:
         - SimpleHostile
     - type: Sprite
@@ -35,7 +38,6 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        50: Critical
         100: Dead
     - type: Stamina
       excess: 100
@@ -53,6 +55,7 @@
         - id: FoodMeatFish
           amount: 2
     - type: MeleeWeapon
+      altDisarm: false
       hidden: true
       angle: 0
       animation: WeaponArcBite

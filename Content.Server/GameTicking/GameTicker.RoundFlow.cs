@@ -175,6 +175,8 @@ namespace Content.Server.GameTicking
 
             _startingRound = true;
 
+            ReplayStartRound();
+
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
             _sawmill.Info("Starting round!");
 
@@ -203,7 +205,7 @@ namespace Content.Server.GameTicking
 #if DEBUG
                 DebugTools.Assert(_userDb.IsLoadComplete(session), $"Player was readied up but didn't have user DB data loaded yet??");
 #endif
-                if (_roleBanManager.GetRoleBans(userId) == null)
+                if (_banManager.GetRoleBans(userId) == null)
                 {
                     Logger.ErrorS("RoleBans", $"Role bans for player {session} {userId} have not been loaded yet.");
                     continue;
@@ -347,7 +349,7 @@ namespace Content.Server.GameTicking
                     PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                     // Character name takes precedence over current entity name
                     PlayerICName = playerIcName,
-                    PlayerEntityUid = mind.OwnedEntity,
+                    PlayerEntityUid = mind.OriginalOwnedEntity,
                     Role = antag
                         ? mind.AllRoles.First(role => role.Antagonist).Name
                         : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
@@ -370,6 +372,8 @@ namespace Content.Server.GameTicking
             // If this game ticker is a dummy, do nothing!
             if (DummyTicker)
                 return;
+
+            ReplayEndRound();
 
             // Handle restart for server update
             if (_serverUpdates.RoundEnded())
@@ -450,7 +454,7 @@ namespace Content.Server.GameTicking
 
             _mapManager.Restart();
 
-            _roleBanManager.Restart();
+            _banManager.Restart();
 
             _gameMapManager.ClearSelectedMap();
 

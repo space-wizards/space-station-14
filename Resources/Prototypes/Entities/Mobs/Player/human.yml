@@ -29,7 +29,7 @@
   - type: CameraRecoil
   - type: Examiner
   - type: CanHostGuardian
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - NanoTrasen
   #Imperial foot prints
@@ -46,9 +46,16 @@
       prototypes: [SyndicateOperativeGearExtremelyBasic]
     - type: RandomMetadata
       nameSegments: [names_death_commando]
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - Syndicate
+
+- type: entity
+  parent: MobHumanSyndicateAgent
+  id: MobHumanSyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
+  suffix: NukeOps
+  components:
+    - type: NukeOperative
 
 # Nuclear Operative
 - type: entity
@@ -74,8 +81,16 @@
       prototypes: [SyndicateOperativeGearFull]
     - type: RandomMetadata
       nameSegments:
-        - SyndicateNamesPrefix
-        - SyndicateNamesNormal
-    - type: Faction
+      - SyndicateNamesPrefix
+      - SyndicateNamesNormal
+    - type: NpcFactionMember
       factions:
-        - Syndicate
+      - Syndicate
+
+# DNA Scrambler
+- type: entity
+  parent: MobHuman
+  id: MobHumanScrambled
+  name: Scrambled Human
+  components:
+    - type: RandomHumanoidAppearance

@@ -21,32 +21,32 @@ namespace Content.Shared.Storage.EntitySystems
         private void CounterEntityInserted(EntityUid uid, ItemCounterComponent itemCounter,
             EntInsertedIntoContainerMessage args)
         {
-            if (!EntityManager.TryGetComponent(itemCounter.Owner, out AppearanceComponent? appearanceComponent))
+            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
                 return;
 
             var count = GetCount(args, itemCounter);
             if (count == null)
                 return;
 
-            _appearance.SetData(itemCounter.Owner, StackVisuals.Actual, count, appearanceComponent);
+            _appearance.SetData(uid, StackVisuals.Actual, count, appearanceComponent);
 
             if (itemCounter.MaxAmount != null)
-                _appearance.SetData(itemCounter.Owner, StackVisuals.MaxCount, itemCounter.MaxAmount, appearanceComponent);
+                _appearance.SetData(uid, StackVisuals.MaxCount, itemCounter.MaxAmount, appearanceComponent);
         }
 
         private void CounterEntityRemoved(EntityUid uid, ItemCounterComponent itemCounter,
             EntRemovedFromContainerMessage args)
         {
-            if (!EntityManager.TryGetComponent(itemCounter.Owner, out AppearanceComponent? appearanceComponent))
+            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
                 return;
 
             var count = GetCount(args, itemCounter);
             if (count == null)
                 return;
 
-            _appearance.SetData(itemCounter.Owner, StackVisuals.Actual, count, appearanceComponent);
+            _appearance.SetData(uid, StackVisuals.Actual, count, appearanceComponent);
             if (itemCounter.MaxAmount != null)
-                _appearance.SetData(itemCounter.Owner, StackVisuals.MaxCount, itemCounter.MaxAmount, appearanceComponent);
+                _appearance.SetData(uid, StackVisuals.MaxCount, itemCounter.MaxAmount, appearanceComponent);
         }
 
         protected abstract int? GetCount(ContainerModifiedMessage msg, ItemCounterComponent itemCounter);

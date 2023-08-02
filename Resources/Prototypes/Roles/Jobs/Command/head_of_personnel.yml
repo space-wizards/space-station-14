@@ -21,7 +21,7 @@
       time: 3600 #Imperial role timers
   weight: 20
   startingGear: HoPGear
-  icon: "HeadOfPersonnel"
+  icon: "JobIconHeadOfPersonnel"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
@@ -50,7 +50,6 @@
   - Brig
   - Cargo
   - Atmospherics
-  - Cargo
   - Medical
 
 - type: startingGear
