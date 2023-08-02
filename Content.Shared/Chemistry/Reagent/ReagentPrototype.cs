@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Nutrition;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -60,8 +61,8 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("recognizable")]
         public bool Recognizable = false;
 
-        [DataField("flavor")]
-        public string Flavor { get; } = default!;
+        [DataField("flavor", customTypeSerializer:typeof(PrototypeIdSerializer<FlavorPrototype>))]
+        public string? Flavor;
 
         /// <summary>
         /// There must be at least this much quantity in a solution to be tasted.

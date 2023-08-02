@@ -73,7 +73,8 @@
   group: Foods
   desc: reagent-desc-ketchunaise
   physicalDesc: reagent-physical-desc-saucey
-  flavor: piquant
+  #I love it when people just make up fake prototypes.
+  #flavor: piquant
   color: "#fba399"
   recognizable: true
 

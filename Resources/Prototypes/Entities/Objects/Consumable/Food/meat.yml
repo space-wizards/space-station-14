@@ -489,7 +489,7 @@
   - type: FlavorProfile
     flavors:
       - meaty
-      - acidic
+      - acid
   - type: Tag
     tags:
     - Raw
@@ -1080,7 +1080,7 @@
   - type: FlavorProfile
     flavors:
       - meaty
-      - acidic
+      - acid
   - type: Tag
     tags:
     - Raw

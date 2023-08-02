@@ -100,7 +100,7 @@
   group: Toxins
   desc: reagent-desc-polytrinic-acid
   physicalDesc: reagent-physical-desc-strong-smelling
-  flavor: acidic
+  flavor: acid
   color: "#a1000b"
   boilingPoint: 78.2 # This isn't a real chemical...
   meltingPoint: -19.4
@@ -143,7 +143,7 @@
   group: Toxins
   desc: reagent-desc-fluorosulfuric-acid
   physicalDesc: reagent-physical-desc-strong-smelling
-  flavor: acidic
+  flavor: acid
   color: "#5050ff"
   boilingPoint: 165
   meltingPoint: -87
@@ -179,7 +179,7 @@
   group: Toxins
   desc: reagent-desc-sulfuric-acid
   physicalDesc: reagent-physical-desc-oily
-  flavor: acidic
+  flavor: acid
   color: "#BF8C00"
   recognizable: true
   boilingPoint: 337.0

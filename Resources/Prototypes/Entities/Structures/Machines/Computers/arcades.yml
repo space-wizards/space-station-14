@@ -35,6 +35,54 @@
   components:
   - type: SpaceVillainArcade
     rewardAmount: 0
+    possibleRewards:
+    - ToyMouse
+    - ToyAi
+    - ToyNuke
+    - ToyGriffin
+    - ToyHonk
+    - ToyIan
+    - ToyMarauder
+    - ToyMauler
+    - ToyGygax
+    - ToyOdysseus
+    - ToyOwlman
+    - ToyDeathRipley
+    - ToyPhazon
+    - ToyFireRipley
+    - ToyReticence
+    - ToyRipley
+    - ToySeraph
+    - ToyDurand
+    - ToySkeleton
+    - FoamCrossbow
+    - RevolverCapGun
+    - PlushieHampter
+    - PlushieLizard
+    - PlushieAtmosian
+    - PlushieSpaceLizard
+    - PlushieNuke
+    - PlushieCarp
+    - PlushieRatvar
+    - PlushieNar
+    - PlushieSnake
+    - Basketball
+    - Football
+    - PlushieRouny
+    - PlushieBee
+    - PlushieSlime
+    - BalloonCorgi
+    - ToySword
+    - CrayonBox
+    - BoxDonkSoftBox
+    - BoxCartridgeCap
+    - HarmonicaInstrument
+    - OcarinaInstrument
+    - RecorderInstrument
+    - GunpetInstrument
+    - BirdToyInstrument
+    - PlushieXeno
+    - BeachBall
   - type: WiresPanel
   - type: Wires
     LayoutId: Arcade

@@ -1,4 +1,3 @@
-using Content.Server.Holiday.Celebrate;
 using Content.Server.Holiday.Greet;
 using Content.Server.Holiday.Interfaces;
 using Content.Server.Holiday.ShouldCelebrate;
@@ -40,7 +39,7 @@ namespace Content.Server.Holiday
         private readonly IHolidayGreet _greet = new DefaultHolidayGreet();
 
         [DataField("celebrate")]
-        private readonly IHolidayCelebrate _celebrate = new DefaultHolidayCelebrate();
+        private readonly IHolidayCelebrate? _celebrate = null;
 
         public bool ShouldCelebrate(DateTime date)
         {
@@ -57,7 +56,7 @@ namespace Content.Server.Holiday
         /// </summary>
         public void Celebrate()
         {
-            _celebrate.Celebrate(this);
+            _celebrate?.Celebrate(this);
         }
     }
 }

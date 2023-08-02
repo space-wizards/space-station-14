@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Nutrition;
+namespace Content.Shared.Nutrition;
 
 [Prototype("flavor")]
 public sealed class FlavorPrototype : IPrototype

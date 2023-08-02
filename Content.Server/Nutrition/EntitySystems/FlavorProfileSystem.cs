@@ -4,6 +4,7 @@ using Content.Server.Nutrition.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Nutrition;
 using Microsoft.VisualBasic;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -102,9 +103,8 @@ public sealed class FlavorProfileSystem : EntitySystem
                 continue;
             }
 
-            var flavor = proto.Flavor;
-
-            flavors.Add(flavor);
+            if (proto.Flavor != null)
+                flavors.Add(proto.Flavor);
         }
 
         return flavors;
