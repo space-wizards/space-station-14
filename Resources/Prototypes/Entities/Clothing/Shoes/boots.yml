@@ -86,3 +86,18 @@
     sprite: Clothing/Shoes/Boots/laceups.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/laceups.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsFisher
+  name: fisher boots
+  description: The only official chef boots. Only the finest chefs are permitted to wear them!
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/fisherboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/fisherboots.rsi
+  - type: FootstepModifier 
+    footstepSoundCollection:
+      collection: FootstepFisherBoots
+      #add cookability

@@ -823,3 +823,8 @@
   id: rocksandstones
   flavorType: Complex
   description: flavor-complex-rocksandstones
+
+- type: flavor
+  id: squeakon
+  flavorType: Complex
+  description: flavor-complex-squeakon

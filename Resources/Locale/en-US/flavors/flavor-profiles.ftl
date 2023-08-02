@@ -145,6 +145,7 @@ flavor-complex-electrons = like electrons
 flavor-complex-parents = like someone's parents
 flavor-complex-plastic = like plastic
 flavor-complex-glue = like glue
+flavor-complex-squeakon = like incessant squeaking
 
 # Drink-specific flavors.
 

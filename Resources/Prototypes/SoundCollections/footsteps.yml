@@ -153,3 +153,19 @@
   files:
   - /Audio/Effects/Footsteps/clownspiderstep1.ogg
   - /Audio/Effects/Footsteps/clownspiderstep2.ogg
+
+- type: soundCollection
+  id: FootstepFisherBoots
+  files:
+  - /Audio/Effects/Footsteps/fisherboots1.ogg
+  - /Audio/Effects/Footsteps/fisherboots2.ogg
+  - /Audio/Effects/Footsteps/fisherboots3.ogg
+  - /Audio/Effects/Footsteps/fisherboots4.ogg
+  - /Audio/Effects/Footsteps/fisherboots5.ogg
+  - /Audio/Effects/Footsteps/fisherboots6.ogg
+  - /Audio/Effects/Footsteps/fisherboots7.ogg
+  - /Audio/Effects/Footsteps/fisherboots8.ogg
+  - /Audio/Effects/Footsteps/fisherboots9.ogg
+  - /Audio/Effects/Footsteps/fisherboots10.ogg
+  - /Audio/Effects/Footsteps/fisherboots11.ogg
+  - /Audio/Effects/Footsteps/fisherboots12.ogg

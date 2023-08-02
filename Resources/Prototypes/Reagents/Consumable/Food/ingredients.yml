@@ -197,3 +197,23 @@
           type: Local
           messages: [ "capsaicin-effect-light-burn" ]
           probability: 0.2
+
+- type: reagent
+  id: Squeakon #Mainly present in fried fisher boots.
+  name: reagent-name-squeakon
+  group: Foods
+  desc: reagent-desc-squeakon
+  physicalDesc: reagent-physical-desc-chewy
+  flavor: squeakon
+  color: "#342C26"
+  metabolisms:
+  Food:
+    effects:
+      - !type:PopupMessage
+        type: Local
+        messages: [ "squeakon-effect" ]
+        probability: 0.3
+      - !type:GenericStatusEffect
+        key: SqueakSpeak
+        component: SqueakSpeak
+      - !type:SatiateHunger
