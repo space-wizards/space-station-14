@@ -1,9 +1,4 @@
 Entries:
-- author: OctoRocket
-  changes:
-  - {message: Added the uncloneable trait!, type: Add}
-  id: 3912
-  time: '2023-05-31T17:34:30.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'Added the NTSRA voidsuit, you may be able to find it in derelicts.',
@@ -2987,3 +2982,8 @@ Entries:
     type: Add}
   id: 4411
   time: '2023-08-02T09:47:18.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds a magazine for the C20R to the uplink for 3 TC., type: Add}
+  id: 4412
+  time: '2023-08-02T10:03:39.0000000+00:00'
