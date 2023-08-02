@@ -1,3 +1,4 @@
+# TODO: Why does this shit not have a common parent, wat?
 - type: entity
   name: spear
   parent: BaseItem
@@ -101,9 +102,27 @@
   id: SpearReinforced
   description: A spear with a reinforced glass shard as a tip.
   components:
+  - type: EmbeddableProjectile
+    offset: 0.15,0.15
+  - type: ThrowingAngle
+    angle: 225
   - type: Tag
     tags:
-    - Spear
+      - Spear
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.40,-0.30
+            - -0.30,-0.40
+            - 0.40,0.30
+            - 0.30,0.40
+        density: 20
+        mask:
+          - ItemMask
+        restitution: 0.3
+        friction: 0.2
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/reinforced_spear.rsi
@@ -180,9 +199,27 @@
   id: SpearPlasma
   description: A spear with a plasma shard as a tip.
   components:
+  - type: EmbeddableProjectile
+    offset: 0.15,0.15
+  - type: ThrowingAngle
+    angle: 225
   - type: Tag
     tags:
-    - Spear
+      - Spear
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.40,-0.30
+            - -0.30,-0.40
+            - 0.40,0.30
+            - 0.30,0.40
+        density: 20
+        mask:
+          - ItemMask
+        restitution: 0.3
+        friction: 0.2
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/plasma_spear.rsi
@@ -259,9 +296,27 @@
   id: SpearUranium
   description: A spear with a uranium shard as a tip.
   components:
+  - type: EmbeddableProjectile
+    offset: 0.15,0.15
+  - type: ThrowingAngle
+    angle: 225
   - type: Tag
     tags:
-    - Spear
+      - Spear
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.40,-0.30
+            - -0.30,-0.40
+            - 0.40,0.30
+            - 0.30,0.40
+        density: 20
+        mask:
+          - ItemMask
+        restitution: 0.3
+        friction: 0.2
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/uranium_spear.rsi
