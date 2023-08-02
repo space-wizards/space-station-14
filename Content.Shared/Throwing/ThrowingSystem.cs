@@ -75,7 +75,6 @@ public sealed class ThrowingSystem : EntitySystem
             physics,
             Transform(uid),
             projectileQuery,
-            tagQuery,
             strength,
             user,
             pushbackRatio,
@@ -94,7 +93,6 @@ public sealed class ThrowingSystem : EntitySystem
         PhysicsComponent physics,
         TransformComponent transform,
         EntityQuery<ProjectileComponent> projectileQuery,
-        EntityQuery<TagComponent> tagQuery,
         float strength = 1.0f,
         EntityUid? user = null,
         float pushbackRatio = PushbackDefault,
@@ -105,7 +103,7 @@ public sealed class ThrowingSystem : EntitySystem
 
         if ((physics.BodyType & (BodyType.Dynamic | BodyType.KinematicController)) == 0x0)
         {
-            Logger.Warning($"Tried to throw entity {ToPrettyString(uid)} but can't throw {physics.BodyType} bodies!");
+            Log.Warning($"Tried to throw entity {ToPrettyString(uid)} but can't throw {physics.BodyType} bodies!");
             return;
         }
 
@@ -114,12 +112,21 @@ public sealed class ThrowingSystem : EntitySystem
 
         var comp = EnsureComp<ThrownItemComponent>(uid);
         comp.Thrower = user;
+        ThrowingAngleComponent? throwingAngle = null;
 
         // Give it a l'il spin.
-        if (physics.InvI > 0f && (!tagQuery.TryGetComponent(uid, out var tag) || !_tagSystem.HasTag(tag, "NoSpinOnThrow")))
+        if (physics.InvI > 0f && (!TryComp(uid, out throwingAngle) || throwingAngle.AngularVelocity))
+        {
             _physics.ApplyAngularImpulse(uid, ThrowAngularImpulse / physics.InvI, body: physics);
+        }
         else
-            transform.LocalRotation = direction.ToWorldAngle() - Math.PI;
+        {
+            Resolve(uid, ref throwingAngle, false);
+            var gridRot = _transform.GetWorldRotation(transform.ParentUid);
+            var angle = direction.ToWorldAngle() - gridRot;
+            var offset = throwingAngle?.Angle ?? Angle.Zero;
+            _transform.SetLocalRotation(uid, angle + offset);
+        }
 
         if (user != null)
             _interactionSystem.ThrownInteraction(user.Value, uid);
