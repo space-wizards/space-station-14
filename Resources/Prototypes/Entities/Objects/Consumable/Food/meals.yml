@@ -569,4 +569,6 @@
   - type: FlavorProfile
     flavors:
       - friedfisherboots
+  - type: Sprite
+    state: friedfisherboots
 #THEY'RE HERE! UNDER THE FLOORBOARDS!
