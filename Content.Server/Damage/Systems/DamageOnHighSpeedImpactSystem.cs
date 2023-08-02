@@ -1,8 +1,10 @@
 using Content.Server.Damage.Components;
 using Content.Server.Stunnable;
 using Content.Shared.Damage;
+using Content.Shared.Effects;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -45,5 +47,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         var damageScale = component.SpeedDamageFactor * speed / component.MinimumSpeed;
 
         _damageable.TryChangeDamage(uid, component.Damage * damageScale);
+
+        RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid> { uid }), Filter.Pvs(uid, entityManager: EntityManager));
     }
 }
