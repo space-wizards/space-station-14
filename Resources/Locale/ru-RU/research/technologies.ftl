@@ -34,6 +34,7 @@ research-technology-nonlethal-ammunition = Нелетальные боеприп
 research-technology-optimized-ballistics = Оптимизированная баллистика
 research-technology-concentrated-laser-weaponry = Концентрированное лазерное оружие
 research-technology-wave-particle-harnessing = Применение волновых частиц
+research-technology-advanced-riot-control = Продвинутое противодействие беспорядкам
 research-technology-handheld-electrical-propulsion = Ручные электродвигатели
 research-technology-basic-robotics = Основы робототехники
 research-technology-signalling-tech = Технология сигналирования
