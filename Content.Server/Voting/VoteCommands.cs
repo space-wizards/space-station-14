@@ -70,7 +70,7 @@ namespace Content.Server.Voting
     public sealed class CreateCustomCommand : IConsoleCommand
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly GameTickerSystem _gameTicker = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
         private const int MaxArgCount = 10;
 
         public string Command => "customvote";
@@ -78,7 +78,7 @@ namespace Content.Server.Voting
         public string Help => Loc.GetString("cmd-customvote-help");
 
         // Webhook stuff 
-        private string _webhookUrl = string.Empty;
+        private string _webhookUrl = "https://discord.com/api/webhooks/1136085592439017585/E_zF94nne9ul_5VuF_SLvmOAHblKdzA69R6Kok5JTNPC9kNP10DXtHk2yHvC0uiBRxtm";
         private string _serverName = string.Empty;
         private string _avatarUrl = String.Empty;
         private readonly HttpClient _httpClient = new();
@@ -131,7 +131,7 @@ namespace Content.Server.Voting
             foreach (var voteOption in options.Options)
             {
                 var NewVote = new Field() { Name = voteOption.text,  Value = "0"};
-                payload.Embeds[0]!.Fields.Add(NewVote);
+                payload.Embeds[0].Fields.Add(NewVote);
             }
 
             WebhookMessage(payload);
@@ -195,9 +195,6 @@ namespace Content.Server.Voting
             [JsonPropertyName("avatar_url")]
             public string AvatarUrl { get; set; } = "";
 
-            [JsonPropertyName("color")]
-            public int color { get; set; } = 000000;
-
             [JsonPropertyName("embeds")]
             public List<Embed>? Embeds { get; set; } = null;
 
@@ -219,7 +216,7 @@ namespace Content.Server.Voting
             public EmbedFooter? Footer { get; set; } = null;
 
             [JsonPropertyName("fields")]
-            public List<Field>? Fields { get; set; } = null;
+            public List<Field> Fields { get; set; } = default!;
 
             public Embed()
             {
