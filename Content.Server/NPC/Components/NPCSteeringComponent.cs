@@ -69,6 +69,22 @@ public sealed class NPCSteeringComponent : Component
     /// </summary>
     [ViewVariables]
     public bool Pathfind => PathfindToken != null;
+
+    /// <summary>
+    /// Are we considered arrived if we have line of sight of the target.
+    /// </summary>
+    [DataField("arriveOnLineOfSight")]
+    public bool ArriveOnLineOfSight = false;
+
+    /// <summary>
+    /// How long the target has been in line of sight if applicable.
+    /// </summary>
+    [DataField("lineOfSightTimer")]
+    public float LineOfSightTimer = 0f;
+
+    [DataField("lineOfSightTimeRequired")]
+    public float LineOfSightTimeRequired = 0.5f;
+
     [ViewVariables] public CancellationTokenSource? PathfindToken = null;
 
     /// <summary>

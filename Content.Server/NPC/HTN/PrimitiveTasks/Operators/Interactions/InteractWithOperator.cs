@@ -1,7 +1,8 @@
 using Content.Server.Interaction;
+using Content.Shared.CombatMode;
 using Content.Shared.Timing;
 
-namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
+namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 
 public sealed class InteractWithOperator : HTNOperator
 {
@@ -24,6 +25,7 @@ public sealed class InteractWithOperator : HTNOperator
             return HTNOperatorStatus.Continuing;
         }
 
+        _entManager.System<SharedCombatModeSystem>().SetInCombatMode(owner, false);
         _entManager.System<InteractionSystem>().UserInteraction(owner, targetXform.Coordinates, moveTarget);
 
         return HTNOperatorStatus.Finished;

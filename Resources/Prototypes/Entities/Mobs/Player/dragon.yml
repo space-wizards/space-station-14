@@ -14,7 +14,8 @@
     description: ghost-role-information-space-dragon-description
   - type: GhostTakeoverAvailable
   - type: HTN
-    rootTask: XenoCompound
+    rootTask:
+      task: XenoCompound
     blackboard:
       NavInteract: !type:Bool
         true
