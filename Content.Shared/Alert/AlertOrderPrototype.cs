@@ -22,7 +22,7 @@ namespace Content.Shared.Alert
             get
             {
                 var res = new (string, string)[_typeToIdx.Count + _categoryToIdx.Count];
-                
+
                 foreach (var (type, id) in _typeToIdx)
                 {
                     res[id] = ("alertType", type.ToString());
