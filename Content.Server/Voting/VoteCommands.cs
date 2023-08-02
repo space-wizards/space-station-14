@@ -195,7 +195,7 @@ namespace Content.Server.Voting
         // Sends the payload's message. 
         private async void WebhookMessage(WebhookPayload payload, string id)
         {
-            if(String.IsEmptyOrNull(_webhookUrl))
+            if(String.IsNullOrEmpty(_webhookUrl))
                 return;
 
             if(id == string.Empty)
