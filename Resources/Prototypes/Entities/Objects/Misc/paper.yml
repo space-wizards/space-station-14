@@ -523,29 +523,29 @@
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-cmo
 
-- type: entity
-  name: DENIED rubber stamp
-  parent: RubberStampMime
-  id: RubberStampDenied
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-denied
-    stampState: "paper_stamp-deny"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-deny
+# - type: entity
+#   name: DENIED rubber stamp
+#   parent: RubberStampMime
+#   id: RubberStampDenied
+#   components:
+#   - type: Stamp
+#     stampedName: stamp-component-stamped-name-denied
+#     stampState: "paper_stamp-deny"
+#   - type: Sprite
+#     sprite: Objects/Misc/bureaucracy.rsi
+#     state: stamp-deny
 
-- type: entity
-  name: APPROVED rubber stamp
-  parent: RubberStampMime
-  id: RubberStampApproved
-  components:
-  - type: Stamp
-    stampedName: stamp-component-stamped-name-approved
-    stampState: "paper_stamp-approve"
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-approve
+# - type: entity
+#   name: APPROVED rubber stamp
+#   parent: RubberStampMime
+#   id: RubberStampApproved
+#   components:
+#   - type: Stamp
+#     stampedName: stamp-component-stamped-name-approved
+#     stampState: "paper_stamp-approve"
+#   - type: Sprite
+#     sprite: Objects/Misc/bureaucracy.rsi
+#     state: stamp-approve
 
 - type: entity
   name: head of personnel's rubber stamp

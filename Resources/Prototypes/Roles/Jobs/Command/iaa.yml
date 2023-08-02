@@ -10,7 +10,7 @@
       role: JobWarden
       time: 7200 #Imperial role timers
   startingGear: IAAGear
-  icon: "IAA"
+  icon: "JobIconIAA"
   supervisors: job-supervisors-centcom
   canBeAntag: false
   access:

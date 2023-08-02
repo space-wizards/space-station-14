@@ -23,10 +23,10 @@ public sealed class TTSSystem : EntitySystem
     [Dependency] private readonly IEyeManager _eye = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly SharedPhysicsSystem _broadPhase = default!;
-    
+
     private ISawmill _sawmill = default!;
     private float _volume = 0.0f;
-    
+
     private readonly HashSet<AudioStream> _currentStreams = new();
     private readonly Dictionary<EntityUid, Queue<AudioStream>> _entityQueues = new();
 
@@ -77,11 +77,11 @@ public sealed class TTSSystem : EntitySystem
                 var collisionMask = (int) CollisionGroup.Impassable;
                 var sourceRelative = ourPos - mapPos.Position;
                 var occlusion = 0f;
-                if (sourceRelative.Length > 0)
+                if (sourceRelative.Length() > 0)
                 {
                     occlusion = _broadPhase.IntersectRayPenetration(mapPos.MapId,
-                        new CollisionRay(mapPos.Position, sourceRelative.Normalized, collisionMask),
-                        sourceRelative.Length, stream.Uid);
+                        new CollisionRay(mapPos.Position, sourceRelative.Normalized(), collisionMask),
+                        sourceRelative.Length(), stream.Uid);
                 }
                 stream.Source.SetOcclusion(occlusion);
             }
@@ -93,7 +93,7 @@ public sealed class TTSSystem : EntitySystem
             ProcessEntityQueue(audioStream.Uid);
         }
     }
-    
+
     private void OnTtsVolumeChanged(float volume)
     {
         _volume = volume;
@@ -117,7 +117,7 @@ public sealed class TTSSystem : EntitySystem
         foreach (var stream in _currentStreams)
             stream.Source.StopPlaying();
     }
-    
+
     private bool TryCreateAudioSource(byte[] data, float volume, [NotNullWhen(true)] out IClydeAudioSource? source)
     {
         var dataStream = new MemoryStream(data) { Position = 0 };
@@ -136,7 +136,7 @@ public sealed class TTSSystem : EntitySystem
         else
         {
             _entityQueues.Add(stream.Uid, new Queue<AudioStream>(new[] { stream }));
-            
+
             if (!IsEntityCurrentlyPlayStream(stream.Uid))
                 ProcessEntityQueue(stream.Uid);
         }

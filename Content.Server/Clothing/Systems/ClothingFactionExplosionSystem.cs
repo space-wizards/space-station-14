@@ -39,7 +39,7 @@ public sealed class ClothingFactionExplosionSystem : EntitySystem
     {
         var sysMan = IoCManager.Resolve<IEntityManager>();
         var res = false;
-        if (!sysMan.TryGetComponent<FactionComponent>(uid, out var factionComponent))
+        if (!sysMan.TryGetComponent<NpcFactionMemberComponent>(uid, out var factionComponent))
             res = false;
         if (factionComponent != null)
         {

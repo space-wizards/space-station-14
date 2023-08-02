@@ -11,7 +11,7 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 7200 #Imperial role timers
-  icon: "Clown"
+  icon: "JobIconClown"
   supervisors: job-supervisors-hop
   access:
   - Theatre

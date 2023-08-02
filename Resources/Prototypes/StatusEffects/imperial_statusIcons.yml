@@ -1,0 +1,13 @@
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconCoroner
+  icon:
+    sprite: Interface/Misc/imperial_job_icons.rsi
+    state: Coroner
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconIAA
+  icon:
+    sprite: Interface/Misc/imperial_job_icons.rsi
+    state: IAA

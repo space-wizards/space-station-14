@@ -23,9 +23,9 @@
     whitelist:
       tags:
         - Knife
-  - type: FootstepModifier #save when merge 01.08.2023
-  footstepSoundCollection:
-    collection: FootstepHeavy
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
 
 - type: entity
   parent: ClothingShoesBaseButcherable
