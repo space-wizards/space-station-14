@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: L6 firerate is 6 again. It requires wielding to have decent accuracy.,
-    type: Tweak}
-  - {message: SMG accuracy reduced to 3-tiles width at full screen away., type: Tweak}
-  id: 3917
-  time: '2023-06-01T02:40:11.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Autolathe board economy crashed, type: Tweak}
@@ -2990,3 +2983,8 @@ Entries:
   - {message: Containers used in recipes now drop their contents when crafted., type: Fix}
   id: 4416
   time: '2023-08-02T18:32:51.0000000+00:00'
+- author: PuceTint
+  changes:
+  - {message: Nitrous oxide now causes laughing, type: Add}
+  id: 4417
+  time: '2023-08-02T21:33:00.0000000+00:00'
