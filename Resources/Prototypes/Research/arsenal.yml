@@ -62,7 +62,6 @@
   tier: 1
   cost: 10000
   recipeUnlocks:
-  - WeaponLaserCarbine
   - WeaponAdvancedLaser
 
 - type: technology
