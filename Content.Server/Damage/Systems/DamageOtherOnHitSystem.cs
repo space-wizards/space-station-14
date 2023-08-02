@@ -35,7 +35,7 @@ namespace Content.Server.Damage.Systems
 
             RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid> { args.Target }), Filter.Pvs(args.Target, entityManager: EntityManager));
             _guns.PlayImpactSound(args.Target, dmg, null, false);
-            if (TryComp<PhysicsComponent>(uid, out var body))
+            if (TryComp<PhysicsComponent>(uid, out var body) && body.LinearVelocity.LengthSquared() > 0f)
             {
                 var direction = body.LinearVelocity.Normalized();
                 _sharedCameraRecoil.KickCamera(args.Target, direction);
