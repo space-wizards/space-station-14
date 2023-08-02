@@ -13,9 +13,10 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Events;
 using System.Net.Http;
-using System.Linq;
+using Robust.Shared;
+using Robust.Shared.Configuration;
+using Content.Shared.CCVar;
 
 namespace Content.Server.Voting
 {
@@ -79,9 +80,7 @@ namespace Content.Server.Voting
         public string Help => Loc.GetString("cmd-customvote-help");
 
         // Webhook stuff 
-        private string _webhookUrl = _cfg.GetCVar(CCVars.DiscordVoteWebhook);;
-        private string _serverName = _cfg.GetCVar(CVars.GameHostName);
-        private string _avatarUrl = _cfg.GetCVar(CCVars.DiscordVoteAvatar);
+        private string _webhookUrl = string.Empty;
         private readonly HttpClient _httpClient = new();
         private string webhookId = string.Empty;
 
@@ -109,18 +108,21 @@ namespace Content.Server.Voting
             }
 
             // Set up the webhook payload
+            string _serverName = _cfg.GetCVar(CVars.GameHostName);
+            string _avatarUrl = _cfg.GetCVar(CCVars.DiscordVoteAvatar);
+            _webhookUrl = _cfg.GetCVar(CCVars.DiscordVoteWebhook);
             var _gameTicker = _entitySystem.GetEntitySystem<GameTicker>();
 
             var payload = new WebhookPayload()
             {
                 AvatarUrl = _avatarUrl,
-                Username = _serverName,
+                Username = Loc.GetString("custom-vote-webhook-name"),
                 Embeds = new List<Embed>
                 {
                     new()
                     {
                         Title = $"{shell.Player}",
-                        Color = 13438992, // 2353993
+                        Color = 13438992, 
                         Description = options.Title,
                         Footer = new EmbedFooter
                         {
@@ -131,14 +133,12 @@ namespace Content.Server.Voting
                     },
                 },
             };
-            
+
             foreach (var voteOption in options.Options)
             {
                 var NewVote = new Field() { Name = voteOption.text,  Value = "0"};
                 payload.Embeds[0].Fields.Add(NewVote);
             }
-
-            Console.Write(JsonSerializer.Serialize(payload));
 
             WebhookMessage(payload, webhookId);
 
@@ -165,6 +165,20 @@ namespace Content.Server.Voting
                     _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished: {args[(int) eventArgs.Winner]}");
                     chatMgr.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win",("winner", args[(int) eventArgs.Winner])));
                 }
+
+                for (int i = 0; i < eventArgs.Votes.Count - 1; i++)
+                {
+                    var oldName = payload.Embeds[0].Fields[i].Name;
+                    var newValue = eventArgs.Votes[i].ToString();
+                    var newEmbed = payload.Embeds[0];
+                    newEmbed.Color = 2353993;
+                    payload.Embeds[0] = newEmbed;
+                    payload.Embeds[0].Fields[i] = new Field() { Name = oldName, Value = newValue, Inline =  true};
+                }
+                if (!String.IsNullOrEmpty(_webhookUrl))
+                {
+                    WebhookMessage(payload, webhookId);
+                }
             };
         }
 
@@ -183,17 +197,17 @@ namespace Content.Server.Voting
         // Sends the payload's message. 
         private async void WebhookMessage(WebhookPayload payload, string id)
         {
-            if (id == string.Empty)
+            if(id == string.Empty)
             {
                 var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
                     new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
 
                 var content = await request.Content.ReadAsStringAsync();
                 webhookId = (string) JsonNode.Parse(content)?["id"]!;
-            } 
-
-            await _httpClient.PatchAsync($"{_webhookUrl}/messages/{id}",
-                new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+            } else {
+                await _httpClient.PatchAsync($"{_webhookUrl}/messages/{id}",
+                    new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+            }
         }
 
         public struct WebhookPayload
