@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
@@ -15,6 +16,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Storage;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
@@ -32,6 +34,8 @@ namespace Content.Server.Construction
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly StorageSystem _storageSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -208,15 +212,15 @@ namespace Content.Server.Construction
                                 continue;
 
                             // Dump out any stored entities in used entity
-                            if (TryComp<SharedStorageComponent>(entity, out var storage) && storage.StoredEntities != null)
+                            if (TryComp<ServerStorageComponent>(entity, out var storage) && storage.StoredEntities != null)
                             {
                                 foreach (var storedEntity in storage.StoredEntities.ToList())
                                 {
+                                    _storageSystem.RemoveAndDrop(entity, storedEntity, storage);
+
                                     var transform = Transform(storedEntity);
                                     _container.AttachParentToContainerOrGrid(transform);
-                                    _transformSystem.SetLocalPositionRotation(transform, transform.LocalPosition + _random.NextVector2Box() / 2, _random.NextAngle());
-
-                                    storage.Remove(storedEntity);
+                                    _transformSystem.SetLocalPositionRotation(transform, transform.LocalPosition + _random.NextVector2Box() / 4, _random.NextAngle());
                                 }
                             }
 
