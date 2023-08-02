@@ -54,9 +54,10 @@ public sealed class DamageOtherOnHitSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        var markup = _damageable.GetDamageExamine(component.Damage, Loc.GetString("damage-throw"));
+        var type = Loc.GetString("damage-throw");
+        var markup = _damageable.GetDamageExamine(component.Damage, type);
         _examine.AddDetailedExamineVerb(args, component, markup,
-            Loc.GetString("damage-examinable-verb-text"),
+            Loc.GetString("damage-examinable-verb-text", ("type", type)),
             "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png",
             Loc.GetString("damage-examinable-verb-message")
         );

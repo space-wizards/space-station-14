@@ -65,9 +65,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (damageSpec.Total == FixedPoint2.Zero)
             return;
 
-        var markup = Damageable.GetDamageExamine(damageSpec, Loc.GetString("damage-melee"));
+        var type = Loc.GetString("damage-melee");
+        var markup = Damageable.GetDamageExamine(damageSpec, type);
         _examine.AddDetailedExamineVerb(args, component, markup,
-            Loc.GetString("damage-examinable-verb-text"),
+            Loc.GetString("damage-examinable-verb-text", ("type", type)),
             "/Textures/Interface/VerbIcons/smite.svg.192dpi.png",
             Loc.GetString("damage-examinable-verb-message")
         );

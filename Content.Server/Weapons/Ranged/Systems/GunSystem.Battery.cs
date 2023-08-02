@@ -79,7 +79,7 @@ public sealed partial class GunSystem
 
         var markup = Damageable.GetDamageExamine(damageSpec, damageType);
         _examine.AddDetailedExamineVerb(args, component, markup,
-            Loc.GetString("damage-examinable-verb-text"),
+            Loc.GetString("damage-examinable-verb-text", ("type", damageType)),
             "/Textures/Interface/VerbIcons/smite.svg.192dpi.png",
             Loc.GetString("damage-examinable-verb-message")
         );
