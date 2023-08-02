@@ -109,7 +109,7 @@ namespace Content.Client.Hands.Systems
 
             _stripSys.UpdateUi(uid);
 
-            if (component.ActiveHand == null || state.ActiveHand == null)
+            if (component.ActiveHand == null && state.ActiveHand == null)
                 return; //edge case
 
             if (component.ActiveHand != null && state.ActiveHand != component.ActiveHand.Name)
