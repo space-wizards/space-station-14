@@ -25,4 +25,7 @@ public sealed partial class ChamberMagazineAmmoProviderComponent : MagazineAmmoP
 
     [ViewVariables(VVAccess.ReadWrite), DataField("soundBoltOpened"), AutoNetworkedField]
     public SoundSpecifier? BoltOpenedSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg");
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundRack"), AutoNetworkedField]
+    public SoundSpecifier? RackSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/ltrifle_cock.ogg");
 }

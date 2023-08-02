@@ -108,6 +108,8 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
+  - type: ChamberMagazineAmmoProvider
+    boltClosed: null
   - type: Gun
     fireRate: 4
     soundGunshot:

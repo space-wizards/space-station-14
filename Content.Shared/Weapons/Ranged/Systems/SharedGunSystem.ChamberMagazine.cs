@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
@@ -16,10 +18,22 @@ public abstract partial class SharedGunSystem
     {
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ComponentStartup>(OnChamberStartup);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, TakeAmmoEvent>(OnChamberMagazineTakeAmmo);
+
+        /*
+         * Open and close bolts are separate verbs.
+         * Racking does both in one hit and has a different sound (to avoid RSI + sounds cooler).
+         */
+
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<Verb>>(OnChamberVerb);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<ActivationVerb>>(OnChamberActivationVerb);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<InteractionVerb>>(OnChamberInteractionVerb);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<AlternativeVerb>>(OnMagazineVerb);
+
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ActivateInWorldEvent>(OnChamberActivate);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, UseInHandEvent>(OnChamberUse);
+
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, EntInsertedIntoContainerMessage>(OnMagazineSlotChange);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, EntRemovedFromContainerMessage>(OnMagazineSlotChange);
-        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, UseInHandEvent>(OnChamberUse);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ExaminedEvent>(OnChamberMagazineExamine);
     }
 
@@ -28,69 +42,116 @@ public abstract partial class SharedGunSystem
         // Appearance data doesn't get serialized and want to make sure this is correct on spawn (regardless of MapInit) so.
         if (component.BoltClosed != null)
         {
-            Appearance.SetData(uid, AmmoVisuals.BoltClosed, component.BoltClosed.Value);
+           Appearance.SetData(uid, AmmoVisuals.BoltClosed, component.BoltClosed.Value);
         }
+    }
+
+    private void OnChamberVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<Verb> args)
+    {
+        if (component.BoltClosed != null)
+        {
+            args.Verbs.Add(new Verb()
+            {
+                Text = component.BoltClosed.Value ? Loc.GetString("gun-chamber-bolt-open") : Loc.GetString("gun-chamber-bolt-close"),
+                Act = () => ToggleBolt(uid, component, args.User),
+            });
+        }
+    }
+
+    private void OnChamberActivate(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ActivateInWorldEvent args)
+    {
+        if (args.Handled || component.BoltClosed == null)
+            return;
+
+        args.Handled = true;
+        ToggleBolt(uid, component, args.User);
     }
 
     private void OnChamberUse(EntityUid uid, ChamberMagazineAmmoProviderComponent component, UseInHandEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || component.BoltClosed == null)
             return;
 
         args.Handled = true;
-
-        // (Chamber but no bolt is whacky) so just relay it.
-        if (component.BoltClosed == null)
-        {
-            OnMagazineUse(uid, component, args);
-            return;
-        }
-
-        ToggleBolt(uid, component, args.User);
+        UseChambered(uid, component, args.User);
     }
 
-    public void SetBoltClosed(EntityUid uid, ChamberMagazineAmmoProviderComponent component, bool value, EntityUid? user = null, AppearanceComponent? appearance = null)
+    private void OnChamberActivationVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<ActivationVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null)
+            return;
+
+        args.Verbs.Add(new ActivationVerb()
+        {
+            Text = Loc.GetString("gun-chamber-rack"),
+            Act = () =>
+            {
+                UseChambered(uid, component, args.User);
+            }
+        });
+    }
+
+    private void UseChambered(EntityUid uid, ChamberMagazineAmmoProviderComponent component, EntityUid? user = null)
+    {
+        if (component.BoltClosed == null || !component.BoltClosed.Value)
+            return;
+
+        if (TryTakeChamberEntity(uid, out var chamberEnt))
+        {
+            if (_netManager.IsServer)
+            {
+                EjectCartridge(chamberEnt.Value);
+            }
+            else
+            {
+                // Similar to below just due to prediction.
+                TransformSystem.DetachParentToNull(chamberEnt.Value, Transform(chamberEnt.Value));
+            }
+        }
+
+        CycleCartridge(uid, component, user);
+
+        if (component.BoltClosed.Value)
+        {
+            Audio.PlayPredicted(component.RackSound, uid, user);
+        }
+    }
+
+    private void OnChamberInteractionVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<InteractionVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null)
+            return;
+
+        args.Verbs.Add(new InteractionVerb()
+        {
+            Text = component.BoltClosed.Value ? Loc.GetString("gun-chamber-bolt-open") : Loc.GetString("gun-chamber-bolt-close"),
+            Act = () =>
+            {
+                // Just toggling might be more user friendly instead of trying to set to whatever they think?
+                ToggleBolt(uid, component, args.User);
+            }
+        });
+    }
+
+    public void SetBoltClosed(EntityUid uid, ChamberMagazineAmmoProviderComponent component, bool value, EntityUid? user = null, AppearanceComponent? appearance = null, ItemSlotsComponent? slots = null)
     {
         if (component.BoltClosed == null || value == component.BoltClosed)
             return;
 
-        Resolve(uid, ref appearance, false);
+        Resolve(uid, ref appearance, ref slots, false);
         Appearance.SetData(uid, AmmoVisuals.BoltClosed, value, appearance);
 
         if (value)
         {
-            // Try to put a new round in if possible.
-            var magEnt = GetMagazineEntity(uid);
-
-            // Similar to what takeammo does though that uses an optimised version where
-            // multiple bullets may be fired in a single tick.
-            if (magEnt != null)
-            {
-                var relayedArgs = new TakeAmmoEvent(1,
-                    new List<(EntityUid? Entity, IShootable Shootable)>(),
-                    Transform(uid).Coordinates,
-                    user);
-                RaiseLocalEvent(magEnt.Value, relayedArgs);
-
-                if (relayedArgs.Ammo.Count > 0)
-                {
-                    var newChamberEnt = relayedArgs.Ammo[0].Entity;
-                    TryInsertChamber(uid, newChamberEnt!.Value);
-                    var ammoEv = new GetAmmoCountEvent();
-                    RaiseLocalEvent(magEnt.Value, ref ammoEv);
-                    FinaliseMagazineTakeAmmo(uid, component, ammoEv.Count, ammoEv.Capacity, user, appearance);
-                    UpdateAmmoCount(uid);
-
-                    // Clientside reconciliation things
-                    foreach (var (ent, _) in relayedArgs.Ammo)
-                    {
-                        Del(ent!.Value);
-                    }
-                }
-            }
+            CycleCartridge(uid, component, user, appearance);
 
             if (user != null)
                 PopupSystem.PopupClient(Loc.GetString("gun-chamber-bolt-closed"), uid, user.Value);
+
+            if (slots != null)
+            {
+                _slots.SetLock(uid, ChamberSlot, true, slots);
+            }
 
             Audio.PlayPredicted(component.BoltClosedSound, uid, user);
         }
@@ -117,11 +178,59 @@ public abstract partial class SharedGunSystem
             if (user != null)
                 PopupSystem.PopupClient(Loc.GetString("gun-chamber-bolt-opened"), uid, user.Value);
 
+            if (slots != null)
+            {
+                _slots.SetLock(uid, ChamberSlot, false, slots);
+            }
+
             Audio.PlayPredicted(component.BoltOpenedSound, uid, user);
         }
 
         component.BoltClosed = value;
         Dirty(uid, component);
+    }
+
+    /// <summary>
+    /// Tries to take ammo from the magazine and insert into the chamber.
+    /// </summary>
+    private void CycleCartridge(EntityUid uid, ChamberMagazineAmmoProviderComponent component, EntityUid? user = null, AppearanceComponent? appearance = null)
+    {
+        // Try to put a new round in if possible.
+        var magEnt = GetMagazineEntity(uid);
+
+        // Similar to what takeammo does though that uses an optimised version where
+        // multiple bullets may be fired in a single tick.
+        if (magEnt != null)
+        {
+            var relayedArgs = new TakeAmmoEvent(1,
+                new List<(EntityUid? Entity, IShootable Shootable)>(),
+                Transform(uid).Coordinates,
+                user);
+            RaiseLocalEvent(magEnt.Value, relayedArgs);
+
+            if (relayedArgs.Ammo.Count > 0)
+            {
+                var newChamberEnt = relayedArgs.Ammo[0].Entity;
+                TryInsertChamber(uid, newChamberEnt!.Value);
+                var ammoEv = new GetAmmoCountEvent();
+                RaiseLocalEvent(magEnt.Value, ref ammoEv);
+                FinaliseMagazineTakeAmmo(uid, component, ammoEv.Count, ammoEv.Capacity, user, appearance);
+                UpdateAmmoCount(uid);
+
+                // Clientside reconciliation things
+                if (_netManager.IsClient)
+                {
+                    foreach (var (ent, _) in relayedArgs.Ammo)
+                    {
+                        Del(ent!.Value);
+                    }
+                }
+            }
+            else
+            {
+                UpdateAmmoCount(uid);
+            }
+        }
     }
 
     public void ToggleBolt(EntityUid uid, ChamberMagazineAmmoProviderComponent component, EntityUid? user = null)
@@ -211,6 +320,11 @@ public abstract partial class SharedGunSystem
             {
                 args.Ammo.Add((chamberEnt.Value, EnsureComp<AmmoComponent>(chamberEnt.Value)));
             }
+            // No ammo returned.
+            else
+            {
+                return;
+            }
 
             var magEnt = GetMagazineEntity(uid);
 
@@ -235,7 +349,7 @@ public abstract partial class SharedGunSystem
                     args.Ammo.Add(relayedArgs.Ammo[i]);
                 }
 
-                // TODO: If no more ammo then open bolt.
+                // If no more ammo then open bolt.
                 if (relayedArgs.Ammo.Count == 0)
                 {
                     SetBoltClosed(uid, component, false, user: args.User, appearance: appearance);
