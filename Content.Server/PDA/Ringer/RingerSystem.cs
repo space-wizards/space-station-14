@@ -205,7 +205,7 @@ namespace Content.Server.PDA.Ringer
 
                 ringer.NoteCount++;
 
-                if (ringer.NoteCount > RingtoneLength-1)
+                if (ringer.NoteCount > RingtoneLength - 1)
                 {
                     remove.Add(uid);
                     UpdateRingerUserInterface(uid, ringer);
