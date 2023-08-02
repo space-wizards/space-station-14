@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix NPCs getting stuck on corners., type: Fix}
-  id: 3919
-  time: '2023-06-01T13:11:41.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Less severe anomalies now have higher baseline point output., type: Tweak}
@@ -2988,3 +2983,8 @@ Entries:
   - {message: Fix xenos not spittin'., type: Fix}
   id: 4418
   time: '2023-08-02T21:34:54.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: The game now boots in GLES2 again. oops., type: Fix}
+  id: 4419
+  time: '2023-08-02T23:13:07.0000000+00:00'
