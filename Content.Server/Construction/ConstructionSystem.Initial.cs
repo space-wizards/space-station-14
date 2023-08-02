@@ -1,6 +1,8 @@
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Chemistry.ReagentEffects;
 using Content.Server.Construction.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
@@ -14,8 +16,10 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.Players;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Construction
@@ -28,6 +32,8 @@ namespace Content.Server.Construction
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -203,16 +209,31 @@ namespace Content.Server.Construction
                             if (used.Contains(entity))
                                 continue;
 
+                            // Dump out any stored entities in used entity
+                            if (TryComp<SharedStorageComponent>(entity, out var storage) && storage.StoredEntities != null)
+                            {
+                                foreach (var storedEntity in storage.StoredEntities.ToList())
+                                {
+                                    var transform = Transform(storedEntity);
+                                    _container.AttachParentToContainerOrGrid(transform);
+                                    _transformSystem.SetLocalPositionRotation(transform, transform.LocalPosition + _random.NextVector2Box() / 2, _random.NextAngle());
+
+                                    storage.Remove(storedEntity);
+                                }
+                            }
+
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
                                 if (!container.Insert(entity))
                                     continue;
                             }
+
                             else if (!GetContainer(arbitraryStep.Store).Insert(entity))
                                 continue;
 
                             handled = true;
                             used.Add(entity);
+
                             break;
                         }
 
