@@ -70,7 +70,7 @@ namespace Content.Server.Voting
     public sealed class CreateCustomCommand : IConsoleCommand
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-
+        [Dependency] private readonly GameTickerSystem _gameTicker = default!;
         private const int MaxArgCount = 10;
 
         public string Command => "customvote";
@@ -107,11 +107,34 @@ namespace Content.Server.Voting
             }
 
             // Webhook stuff 
-            var _gameTicker = EntitySystem.Get<GameTicker>();
-            var voteOptions = string.Join(", ", options.Options.Select(x => x.text));
-            var message = $"{shell.Player} started a custom vote, {options.Title}, with the following options: {voteOptions}";
-            var username = $"{_serverName}, {_gameTicker.RunLevel} (round {_gameTicker.RoundId})";
-            WebhookMessage(username, message);
+            var payload = new WebhookPayload()
+            {
+                AvatarUrl = _avatarUrl,
+                Username = _serverName,
+                Embeds = new List<Embed>
+                {
+                    new()
+                    {
+                        Title = $"{shell.Player}",
+                        Color = 2353993,
+                        Description = options.Title,
+                        Footer = new EmbedFooter
+                        {
+                            Text = $"{_serverName} {_gameTicker.RoundId} {_gameTicker.RunLevel}",
+                        },
+
+                        Fields = new List<Field> {},
+                    },
+                },
+            };
+            
+            foreach (var voteOption in options.Options)
+            {
+                var NewVote = new Field() { Name = voteOption.text,  Value = "0"};
+                payload.Embeds[0]!.Fields.Add(NewVote);
+            }
+
+            WebhookMessage(payload);
 
             options.SetInitiatorOrServer((IPlayerSession?) shell.Player);
 
@@ -130,17 +153,13 @@ namespace Content.Server.Voting
                     var ties = string.Join(", ", eventArgs.Winners.Select(c => args[(int) c]));
                     _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished as tie: {ties}");
                     chatMgr.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-tie",("ties", ties)));
-
-                    message = $"\nCustom vote {options.Title} finished as tie: {ties}";
                 }
                 else
                 {
                     _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished: {args[(int) eventArgs.Winner]}");
                     chatMgr.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win",("winner", args[(int) eventArgs.Winner])));
-
-                    message = $"\nCustom vote {options.Title} finished: {args[(int) eventArgs.Winner]}";
                 }
-                WebhookMessage(username, message);
+                WebhookMessage(payload);
             };
         }
 
@@ -157,20 +176,18 @@ namespace Content.Server.Voting
         }
 
         // More webhook things, allows for the custom message to be sent and all that
-        private async void WebhookMessage(string username, string message)
+        private async void WebhookMessage(WebhookPayload payload)
         {
-            var payload = new WebhookPayload()
-            {
-                Username = username,
-                AvatarUrl = _avatarUrl,
-                Content = message
-            };
-
             var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
                 new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
         }
 
-        private struct WebhookPayload
+        public Field MakeField(string name, string value) 
+        {
+            return new Field() {Name = name, Value = value};
+        }
+
+        public struct WebhookPayload
         {
             [JsonPropertyName("username")]
             public string Username { get; set; } = "";
@@ -178,10 +195,61 @@ namespace Content.Server.Voting
             [JsonPropertyName("avatar_url")]
             public string AvatarUrl { get; set; } = "";
 
-            [JsonPropertyName("content")]
-            public string Content { get; set; } = "";
+            [JsonPropertyName("color")]
+            public int color { get; set; } = 000000;
+
+            [JsonPropertyName("embeds")]
+            public List<Embed>? Embeds { get; set; } = null;
 
             public WebhookPayload() { }
+        }
+
+        public struct Embed
+        {
+            [JsonPropertyName("title")]
+            public string Title { get; set; } = "";
+
+            [JsonPropertyName("description")]
+            public string Description { get; set; } = "";
+
+            [JsonPropertyName("color")]
+            public int Color { get; set; } = 0;
+
+            [JsonPropertyName("footer")]
+            public EmbedFooter? Footer { get; set; } = null;
+
+            [JsonPropertyName("fields")]
+            public List<Field>? Fields { get; set; } = null;
+
+            public Embed()
+            {
+            }
+        }
+
+        public struct EmbedFooter
+        {
+            [JsonPropertyName("text")]
+            public string Text { get; set; } = "";
+
+            public EmbedFooter()
+            {
+            }
+        }
+
+        public struct Field
+        {
+            [JsonPropertyName("name")]
+            public string Name { get; set; } = "";
+
+            [JsonPropertyName("value")]
+            public string Value { get; set; } = "";
+
+            [JsonPropertyName("inline")]
+            public bool Inline { get; set; } = true;
+
+            public Field()
+            {
+            }
         }
 
     }
