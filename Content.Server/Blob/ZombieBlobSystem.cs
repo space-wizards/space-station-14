@@ -1,5 +1,6 @@
 ﻿using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
+using Content.Server.Chat.Managers;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.NPC;
@@ -19,6 +20,8 @@ namespace Content.Server.Blob
         [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly MindSystem _mind = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly IChatManager _chatMan = default!;
 
         public override void Initialize()
         {
@@ -43,10 +46,6 @@ namespace Content.Server.Blob
             _faction.AddFaction(uid, "Blob");
             component.OldFactions = oldFactions;
 
-            var htn = EnsureComp<HTNComponent>(uid);
-            htn.RootTask = "SimpleHostileCompound";
-            htn.Blackboard.SetValue(NPCBlackboard.Owner, uid);
-
             var accent = EnsureComp<ReplacementAccentComponent>(uid);
             accent.Accent = "genericAggressive";
 
@@ -63,8 +62,17 @@ namespace Content.Server.Blob
             }
 
             var mindComp = EnsureComp<MindContainerComponent>(uid);
-            if (!_mind.TryGetMind(uid, out var mind, mindComp))
+            if (_mind.TryGetMind(uid, out var mind, mindComp) && _mind.TryGetSession(mind, out var session))
             {
+                _chatMan.DispatchServerMessage(session, Loc.GetString("blob-zombie-greeting"));
+
+                _audio.PlayGlobal(component.GreetSoundNotification, session);
+            }
+            else
+            {
+                var htn = EnsureComp<HTNComponent>(uid);
+                htn.RootTask = new HTNCompoundTask() {Task = "SimpleHostileCompound"};
+                htn.Blackboard.SetValue(NPCBlackboard.Owner, uid);
                 _npc.WakeNPC(uid, htn);
             }
         }
