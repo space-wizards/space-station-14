@@ -31,31 +31,18 @@
       Male: UnisexMoth
       Female: UnisexMoth
       Unsexed: UnisexMoth
-  - type: Flammable
-    damage:
-      types:
-        Heat: 1.5 # moths burn more easily
-  - type: Temperature # Moths hate the heat and thrive in the cold.
-    heatDamageThreshold: 335
-    coldDamageThreshold: 230
-    currentTemperature: 310.15
-    specificHeat: 46
-    coldDamage:
-      types:
-        Cold : 0.05 #per second, scales with temperature & other constants
-    heatDamage:
-      types:
-        Heat : 0.2 #per second, scales with temperature & other constants
-  - type: MovementAlwaysTouching
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4.5
-    weightlessAcceleration: 0.5
-    weightlessFriction: 0.75
-    weightlessModifier: 0.6
+    weightlessAcceleration: 1.5
+    weightlessFriction: 1
+    weightlessModifier: 1
   - type: Tag
     tags: 
       - ClothEater 
+      - CanPilot
+      - FootstepSound
+      - DoorBumpOpener
 
 - type: entity
   save: false

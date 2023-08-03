@@ -264,6 +264,8 @@
       path: /Audio/Voice/Moth/moth_scream.ogg
     Laugh:
       path: /Audio/Voice/Moth/moth_laugh.ogg
+    Chitter:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
 
 # body emotes
 - type: emoteSounds
