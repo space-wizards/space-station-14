@@ -3,8 +3,9 @@
   id: HitscanEffect
   noSpawn: true
   components:
+  - type: TimedDespawn
+    lifetime: 2.0
   - type: Sprite
-    netsync: false
     drawdepth: Effects
     layers:
     - shader: unshaded

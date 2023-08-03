@@ -10,6 +10,8 @@ using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Configuration;
+using Content.Shared.CCVar;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
@@ -17,6 +19,8 @@ public sealed partial class ArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -173,6 +177,7 @@ public sealed partial class ArtifactSystem : EntitySystem
         if (component.CurrentNodeId == null)
             return;
 
+        _audio.PlayPvs(component.ActivationSound, uid);
         component.LastActivationTime = _gameTiming.CurTime;
 
         var ev = new ArtifactActivatedEvent
@@ -299,12 +304,16 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </summary>
     private void OnRoundEnd(RoundEndTextAppendEvent ev)
     {
-        var query = EntityQueryEnumerator<ArtifactComponent>();
-        while (query.MoveNext(out var ent, out var artifactComp))
+        var RoundEndTimer = _configurationManager.GetCVar(CCVars.ArtifactRoundEndTimer);
+        if (RoundEndTimer > 0)
         {
-            artifactComp.CooldownTime = TimeSpan.Zero;
-            var timerTrigger = EnsureComp<ArtifactTimerTriggerComponent>(ent);
-            timerTrigger.ActivationRate = TimeSpan.FromSeconds(0.5); //HAHAHAHAHAHAHAHAHAH -emo
+            var query = EntityQueryEnumerator<ArtifactComponent>();
+            while (query.MoveNext(out var ent, out var artifactComp))
+            {
+                artifactComp.CooldownTime = TimeSpan.Zero;
+                var timerTrigger = EnsureComp<ArtifactTimerTriggerComponent>(ent);
+                timerTrigger.ActivationRate = TimeSpan.FromSeconds(RoundEndTimer); //HAHAHAHAHAHAHAHAHAH -emo
+            }
         }
     }
 }

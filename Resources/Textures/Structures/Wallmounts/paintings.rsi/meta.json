@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Created by EmoGarbage, Painting 17 and the Among Us IP is used in respect with the policy at https://www.innersloth.com/fan-creation-policy/",
+    "copyright": "Created by EmoGarbage, Painting 17 and the Among Us IP is used in respect with the policy at https://www.innersloth.com/fan-creation-policy/, painting 19 was taken from vg station at commit https://github.com/vgstation-coders/vgstation13/commit/af32149e4e9e4ccb1edcbc36d9a1f72b05a6c66c",
     "size": {
         "x": 32,
         "y": 32
@@ -25,6 +25,7 @@
         { "name": "painting15" },
         { "name": "painting16" },
         { "name": "painting17" },
-        { "name": "painting18" }
+        { "name": "painting18" },
+        { "name": "painting19" }
     ]
 }

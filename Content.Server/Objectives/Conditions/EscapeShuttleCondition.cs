@@ -1,9 +1,8 @@
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
-using Content.Server.Shuttles.Components;
-using Content.Server.Station.Components;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Cuffs.Components;
 using JetBrains.Annotations;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
@@ -27,50 +26,32 @@ namespace Content.Server.Objectives.Conditions
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ("Structures/Furniture/chairs.rsi"), "shuttle");
 
-        private bool IsAgentOnShuttle(TransformComponent agentXform, EntityUid? shuttle)
-        {
-            if (shuttle == null)
-                return false;
-
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            if (!entMan.TryGetComponent<MapGridComponent>(shuttle, out var shuttleGrid) ||
-                !entMan.TryGetComponent<TransformComponent>(shuttle, out var shuttleXform))
-            {
-                return false;
-            }
-
-            return shuttleXform.WorldMatrix.TransformBox(shuttleGrid.LocalAABB).Contains(agentXform.WorldPosition);
-        }
-
         public float Progress
         {
             get {
                 var entMan = IoCManager.Resolve<IEntityManager>();
+                var mindSystem = entMan.System<MindSystem>();
 
                 if (_mind?.OwnedEntity == null
                     || !entMan.TryGetComponent<TransformComponent>(_mind.OwnedEntity, out var xform))
                     return 0f;
 
-                var shuttleContainsAgent = false;
-                var agentIsAlive = !_mind.CharacterDeadIC;
-                var agentIsEscaping = true;
+                if (mindSystem.IsCharacterDeadIc(_mind))
+                    return 0f;
 
                 if (entMan.TryGetComponent<CuffableComponent>(_mind.OwnedEntity, out var cuffed)
                     && cuffed.CuffedHandCount > 0)
-                    // You're not escaping if you're restrained!
-                    agentIsEscaping = false;
-
-                // Any emergency shuttle counts for this objective.
-                foreach (var stationData in entMan.EntityQuery<StationEmergencyShuttleComponent>())
                 {
-                    if (IsAgentOnShuttle(xform, stationData.EmergencyShuttle)) {
-                        shuttleContainsAgent = true;
-                        break;
-                    }
+                    // You're not escaping if you're restrained!
+                    return 0f;
                 }
 
-                return (shuttleContainsAgent && agentIsAlive && agentIsEscaping) ? 1f : 0f;
+                // Any emergency shuttle counts for this objective, but not pods.
+                var emergencyShuttle = entMan.System<EmergencyShuttleSystem>();
+                if (!emergencyShuttle.IsTargetEscaping(_mind.OwnedEntity.Value))
+                    return 0f;
+
+                return 1f;
             }
         }
 

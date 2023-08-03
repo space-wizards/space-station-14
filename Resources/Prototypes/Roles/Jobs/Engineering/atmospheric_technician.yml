@@ -6,11 +6,10 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 3600
+      time: 54000 # 15 hrs
   startingGear: AtmosphericTechnicianGear
-  icon: "AtmosphericTechnician"
+  icon: "JobIconAtmosphericTechnician"
   supervisors: job-supervisors-ce
-  antagAdvantage: 10
   access:
   - Maintenance
   - Engineering
@@ -21,12 +20,12 @@
   id: AtmosphericTechnicianGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitAtmos
-    back: ClothingBackpackEngineeringFilled
+    back: ClothingBackpackAtmosphericsFilled
     shoes: ClothingShoesColorWhite
     eyes: ClothingEyesGlassesMeson
     id: AtmosPDA
-    belt: ClothingBeltUtilityFilled
+    belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
   innerclothingskirt: ClothingUniformJumpskirtAtmos
-  satchel: ClothingBackpackSatchelEngineeringFilled
-  duffelbag: ClothingBackpackDuffelEngineeringFilled
+  satchel: ClothingBackpackSatchelAtmosphericsFilled
+  duffelbag: ClothingBackpackDuffelAtmosphericsFilled

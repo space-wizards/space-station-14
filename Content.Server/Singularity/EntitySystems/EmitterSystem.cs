@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction;
@@ -292,7 +293,7 @@ namespace Content.Server.Singularity.EntitySystems
             var proj = EnsureComp<ProjectileComponent>(ent);
             _projectile.SetShooter(proj, uid);
 
-            var targetPos = new EntityCoordinates(uid, (0, -1));
+            var targetPos = new EntityCoordinates(uid, new Vector2(0, -1));
 
             _gun.Shoot(uid, gunComponent, ent, xform.Coordinates, targetPos, out _);
         }
@@ -317,6 +318,10 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnSignalReceived(EntityUid uid, EmitterComponent component, ref SignalReceivedEvent args)
         {
+            // must anchor the emitter for signals to work
+            if (TryComp<PhysicsComponent>(uid, out var phys) && phys.BodyType != BodyType.Static)
+                return;
+
             if (args.Port == component.OffPort)
             {
                 SwitchOff(uid, component);

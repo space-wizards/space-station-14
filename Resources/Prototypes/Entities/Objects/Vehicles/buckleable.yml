@@ -38,6 +38,7 @@
         mask:
         - MobMask
         layer:
+        - MobLayer # can be hit by bullets and lasers
         - TableLayer
   - type: Appearance
   - type: Repairable
@@ -97,7 +98,6 @@
     layers:
     - state: vehicle
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
-    netsync: false
     noRot: true
   - type: UnpoweredFlashlight
     toggleAction:
@@ -170,7 +170,6 @@
   - type: Sprite
     sprite: Objects/Vehicles/janicart.rsi
     state: destroyed
-    netsync: false
 
 - type: entity
   id: VehicleSecway
@@ -191,7 +190,6 @@
     layers:
     - state: vehicle
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
-    netsync: false
     noRot: true
   - type: Strap
     buckleOffset: "0.15, -0.05"
@@ -237,7 +235,6 @@
     layers:
     - state: vehicle
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
-    netsync: false
     noRot: true
   - type: RandomMetadata
     descriptionSegments: [ATVDescriptions]
@@ -295,7 +292,6 @@
       layers:
         - state: vehicle
           map: ["enum.VehicleVisualLayers.AutoAnimate"]
-      netsync: false
       noRot: true
     - type: Strap
       buckleOffset: "0.15, -0.05"
@@ -336,7 +332,6 @@
       layers:
         - state: vehicle
           map: ["enum.VehicleVisualLayers.AutoAnimate"]
-      netsync: false
       noRot: true
     - type: Strap
       buckleOffset: "0.1, -0.05"
@@ -396,7 +391,6 @@
     - state: vehicle_folded
       map: ["foldedLayer"]
       visible: false
-    netsync: false
     noRot: true
   - type: Strap
     buckleOffset: "0.1, -0.05"

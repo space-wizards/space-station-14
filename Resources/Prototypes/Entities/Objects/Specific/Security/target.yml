@@ -7,7 +7,6 @@
     sprite: Objects/Specific/Security/target.rsi
     state: target_stake
     noRot: true
-    netsync: false
   - type: Repairable
   - type: DamagePopup
     damagePopupType: Combined

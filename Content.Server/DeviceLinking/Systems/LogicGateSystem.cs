@@ -1,13 +1,10 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceNetwork;
-using Content.Server.MachineLinking.Events;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tools;
 using Content.Shared.Popups;
-using Robust.Shared.Audio;
-using Robust.Shared.Utility;
 using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEvent;
 
 namespace Content.Server.DeviceLinking.Systems;
@@ -30,6 +27,26 @@ public sealed class LogicGateSystem : EntitySystem
         SubscribeLocalEvent<LogicGateComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<LogicGateComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<LogicGateComponent, SignalReceivedEvent>(OnSignalReceived);
+    }
+
+    public override void Update(float deltaTime)
+    {
+        var query = EntityQueryEnumerator<LogicGateComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            // handle momentary pulses - high when received then low the next tick
+            if (comp.StateA == SignalState.Momentary)
+            {
+                comp.StateA = SignalState.Low;
+            }
+            if (comp.StateB == SignalState.Momentary)
+            {
+                comp.StateB = SignalState.High;
+            }
+
+            // output most likely changed so update it
+            UpdateOutput(uid, comp);
+        }
     }
 
     private void OnInit(EntityUid uid, LogicGateComponent comp, ComponentInit args)
@@ -92,8 +109,9 @@ public sealed class LogicGateSystem : EntitySystem
     private void UpdateOutput(EntityUid uid, LogicGateComponent comp)
     {
         // get the new output value now that it's changed
-        var a = comp.StateA == SignalState.High;
-        var b = comp.StateB == SignalState.High;
+        // momentary is treated as high for the current tick, after updating it will be reset to low
+        var a = comp.StateA != SignalState.Low;
+        var b = comp.StateB != SignalState.Low;
         var output = false;
         switch (comp.Gate)
         {

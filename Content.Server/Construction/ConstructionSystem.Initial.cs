@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
@@ -14,6 +15,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
@@ -28,6 +30,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+        [Dependency] private readonly StorageSystem _storageSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -107,8 +110,8 @@ namespace Content.Server.Construction
             // But I'd rather do this shit than risk having collisions with other containers.
             Container GetContainer(string name)
             {
-                if (containers.ContainsKey(name))
-                    return containers[name];
+                if (containers.TryGetValue(name, out var container1))
+                    return container1;
 
                 while (true)
                 {
@@ -154,6 +157,7 @@ namespace Content.Server.Construction
             var failed = false;
 
             var steps = new List<ConstructionGraphStep>();
+            var used = new HashSet<EntityUid>();
 
             foreach (var step in edge.Steps)
             {
@@ -169,6 +173,9 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
+                            if (used.Contains(entity))
+                                continue;
+
                             // TODO allow taking from several stacks.
                             // Also update crafting steps to check if it works.
                             var splitStack = _stackSystem.Split(entity, materialStep.Amount, user.ToCoordinates(0, 0), stack);
@@ -182,7 +189,7 @@ namespace Content.Server.Construction
                                     continue;
                             }
                             else if (!GetContainer(materialStep.Store).Insert(splitStack.Value))
-                                    continue;
+                                continue;
 
                             handled = true;
                             break;
@@ -191,10 +198,22 @@ namespace Content.Server.Construction
                         break;
 
                     case ArbitraryInsertConstructionGraphStep arbitraryStep:
-                        foreach (var entity in EnumerateNearby(user))
+                        foreach (var entity in new HashSet<EntityUid>(EnumerateNearby(user)))
                         {
                             if (!arbitraryStep.EntityValid(entity, EntityManager, _factory))
                                 continue;
+
+                            if (used.Contains(entity))
+                                continue;
+
+                            // Dump out any stored entities in used entity
+                            if (TryComp<ServerStorageComponent>(entity, out var storage) && storage.StoredEntities != null)
+                            {
+                                foreach (var storedEntity in storage.StoredEntities.ToList())
+                                {
+                                    _storageSystem.RemoveAndDrop(entity, storedEntity, storage);
+                                }
+                            }
 
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
                             {
@@ -205,6 +224,7 @@ namespace Content.Server.Construction
                                 continue;
 
                             handled = true;
+                            used.Add(entity);
                             break;
                         }
 
@@ -244,7 +264,7 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var newEntityProto = graph.Nodes[edge.Target].Entity;
+            var newEntityProto = graph.Nodes[edge.Target].Entity.GetId(null, user, new(EntityManager));
             var newEntity = EntityManager.SpawnEntity(newEntityProto, EntityManager.GetComponent<TransformComponent>(user).Coordinates);
 
             if (!TryComp(newEntity, out ConstructionComponent? construction))

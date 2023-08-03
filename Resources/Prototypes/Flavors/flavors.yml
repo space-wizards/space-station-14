@@ -575,6 +575,11 @@
   description: flavor-complex-shitty-wine
 
 - type: flavor
+  id: champagne
+  flavorType: Complex
+  description: flavor-complex-champagne
+
+- type: flavor
   id: icedtea
   flavorType: Complex
   description: flavor-complex-iced-tea
@@ -800,6 +805,11 @@
   description: flavor-complex-themartinez
 
 - type: flavor
+  id: white-gilgamesh
+  flavorType: Complex
+  description: flavor-complex-white-gilgamesh
+
+- type: flavor
   id: plastic
   flavorType: Complex
   description: flavor-complex-plastic
@@ -808,8 +818,18 @@
   id: glue
   flavorType: Complex
   description: flavor-complex-glue
-  
+
 - type: flavor
   id: rocksandstones
   flavorType: Complex
   description: flavor-complex-rocksandstones
+
+- type: flavor
+  id: spaceshroom
+  flavorType: Base
+  description: flavor-base-spaceshroom
+
+- type: flavor
+  id: spaceshroomcooked
+  flavorType: Complex
+  description: flavor-complex-spaceshroom-cooked
