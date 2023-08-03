@@ -9,9 +9,6 @@ namespace Content.Server.Blob.NPC.BlobPod
 
         public EntityUid? ZombifiedEntityUid = default!;
 
-        /// <summary>
-        /// The time (in seconds) that it takes to zombify an entity.
-        /// </summary>
         [DataField("zombifyDelay")]
         public float ZombifyDelay = 5.00f;
 

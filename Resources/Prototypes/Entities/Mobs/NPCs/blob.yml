@@ -50,10 +50,7 @@
     - type: MobMover
     - type: HTN
       rootTask:
-        task: SimpleHostileCompound
-      blackboard:
-        NavSmash: !type:Bool
-          true
+        task: BlobPodCompound
     - type: BlobMob
     - type: ReplacementAccent
       accent: genericAggressive
