@@ -267,22 +267,39 @@ public sealed class ArrivalsSystem : EntitySystem
 
         var points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
         var possiblePositions = new List<EntityCoordinates>();
+        var passengerPositions = new List<EntityCoordinates>();
 
-        // Find a spawnpoint on the same map as the player is already on now.
+        // Find a spawnpoint on the same map as the player is already docked with now.
         while ( points.MoveNext(out var uid, out var spawnPoint, out var xform))
         {
-            if (spawnPoint.SpawnType != SpawnPointType.LateJoin || _station.GetOwningStation(uid, xform) != stationId)
-                continue;
-
-            // Add to list of possible spawn locations
-            possiblePositions.Add(xform.Coordinates);
+            if (spawnPoint.SpawnType == SpawnPointType.LateJoin &&
+                _station.GetOwningStation(uid, xform) == stationId)
+            {
+                // Add to list of possible spawn locations
+                possiblePositions.Add(xform.Coordinates);
+            } else if (possiblePositions.Count == 0 && spawnPoint?.Job?.ID == "Passenger" &&
+                       _station.GetOwningStation(uid, xform) == stationId)
+            {
+                // Add to passenger positions as fallback if there are no possiblePositions
+                passengerPositions.Add(xform.Coordinates);
+            }
         }
 
-        if (possiblePositions.Count == 0)
-            return false;
+        if (possiblePositions.Count > 0)
+        {
+            // Move the player to a random late-join spawnpoint.
+            _transform.SetCoordinates(player, transform, _random.Pick(possiblePositions));
+        }
+        else
+        {
+            if (passengerPositions.Count == 0)
+            {
+                return false;
+            }
 
-        // Move the player to a random spawnpoint.
-        _transform.SetCoordinates(player, _random.Pick(possiblePositions));
+            // Move the player to a random passenger spawnpoint.
+            _transform.SetCoordinates(player, transform, _random.Pick(passengerPositions));
+        }
 
         return true;
     }
