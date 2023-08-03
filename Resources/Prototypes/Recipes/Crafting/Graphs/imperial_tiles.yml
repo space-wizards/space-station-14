@@ -1,0 +1,370 @@
+- type: constructionGraph
+  id: TileGold
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: goldltile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Gold
+              amount: 1
+    - node: goldltile
+      entity: FloorTileItemGold
+
+- type: constructionGraph
+  id: TileSilver
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: silvertile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Silver
+              amount: 1
+    - node: silvertile
+      entity: FloorTileItemSilver
+
+- type: constructionGraph
+  id: TileReinforced
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: reinforcedtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Plasteel
+              amount: 1
+    - node: reinforcedtile
+      entity: FloorTileItemReinforced
+
+- type: constructionGraph
+  id: TileWoodPattern
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: woodpatterntile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: WoodPlank
+              amount: 1
+    - node: woodpatterntile
+      entity: FloorTileItemWoodPattern
+
+- type: constructionGraph
+  id: TileLino
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: linotile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Plastic
+              amount: 1
+    - node: linotile
+      entity: FloorTileItemLino
+
+- type: constructionGraph
+  id: TileMono
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: monotile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: monotile
+      entity: FloorTileItemMono
+
+- type: constructionGraph
+  id: TileBoxing
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: boxingtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Plastic
+              amount: 1
+    - node: boxingtile
+      entity: FloorTileItemBoxing
+
+- type: constructionGraph
+  id: TileGym
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: gymtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Plastic
+              amount: 1
+    - node: gymtile
+      entity: FloorTileItemGym
+
+- type: constructionGraph
+  id: TileGratingMaint
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: gratingmainttile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: gratingmainttile
+      entity: FloorTileItemGratingMaint
+
+- type: constructionGraph
+  id: TileArcadeBlue
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: arcadebluetile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Cloth
+              amount: 1
+    - node: arcadebluetile
+      entity: FloorTileItemArcadeBlue
+
+- type: constructionGraph
+  id: TileArcadeBlue2
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: arcadeblue2tile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Cloth
+              amount: 1
+    - node: arcadeblue2tile
+      entity: FloorTileItemArcadeBlue2
+
+- type: constructionGraph
+  id: TileDiamond
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: diamondtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: diamondtile
+      entity: FloorTileItemMetalDiamond
+
+- type: constructionGraph
+  id: TileSteelMaint
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: steelmainttile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: steelmainttile
+      entity: FloorTileItemSteelMaint
+
+- type: constructionGraph
+  id: TileTechmaint
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: techmainttile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: techmainttile
+      entity: FloorTileItemTechmaint
+
+- type: constructionGraph
+  id: TileArcadeRed
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: arcaderedtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Cloth
+              amount: 1
+    - node: arcaderedtile
+      entity: FloorTileItemArcadeRed
+
+- type: constructionGraph
+  id: TileKitchen
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: kitchentile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: kitchentile
+      entity: FloorTileItemKitchen
+
+- type: constructionGraph
+  id: TileCarpetOffice
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: carpetofficetile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Cloth
+              amount: 1
+    - node: carpetofficetile
+      entity: FloorTileItemCarpetOffice
+
+- type: constructionGraph
+  id: TileBar
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bartile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: bartile
+      entity: FloorTileItemBar
+
+- type: constructionGraph
+  id: TileShuttleWhite
+  start: start
+  graph:
+    - node: start
+      edges:
+      - to: shuttlewhitetile
+        completed:
+          - !type:SetStackCount
+            amount: 4
+        steps:
+          - material: Steel
+            amount: 1
+    - node: shuttlewhitetile
+      entity: FloorTileItemShuttleWhite
+
+- type: constructionGraph
+  id: TileShuttleOrange
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shuttleorangetile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: shuttleorangetile
+      entity: FloorTileItemShuttleOrange
+
+- type: constructionGraph
+  id: TileShuttleBlue
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shuttlebluetile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: shuttlebluetile
+      entity: FloorTileItemShuttleBlue
+
+- type: constructionGraph
+  id: TileShuttlePurple
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shuttlepurpletile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: shuttlepurpletile
+      entity: FloorTileItemShuttlePurple
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

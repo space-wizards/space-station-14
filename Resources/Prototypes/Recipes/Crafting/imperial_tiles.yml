@@ -1,0 +1,259 @@
+- type: construction
+  name: золотая плитка
+  id: TileGold
+  graph: TileGold
+  startNode: start
+  targetNode: goldltile
+  category: construction-category-tiles
+  description: "Четыре золотых напольных плитки."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: gold }
+  objectType: Item
+
+- type: construction
+  name: серебряная плитка
+  id: TileSilver
+  graph: TileSilver
+  startNode: start
+  targetNode: silvertile
+  category: construction-category-tiles
+  description: "Четыре серебряных напольных плитки."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: silver }
+  objectType: Item
+
+- type: construction
+  name: укреплённая плитка
+  id: TileReinforced
+  graph: TileReinforced
+  startNode: start
+  targetNode: reinforcedtile
+  category: construction-category-tiles
+  description: "Четыре укреплённых напольных плитки."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: reinforced }
+  objectType: Item
+
+- type: construction
+  name: красивый паркет
+  id: TileWoodPattern
+  graph: TileWoodPattern
+  startNode: start
+  targetNode: woodpatterntile
+  category: construction-category-tiles
+  description: "Четыре листа красивого паркета"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: woodpatternfloor }
+  objectType: Item
+
+- type: construction
+  name: линолеум
+  id: TileLino
+  graph: TileLino
+  startNode: start
+  targetNode: linotile
+  category: construction-category-tiles
+  description: "Четыре листа линолеума"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: lino }
+  objectType: Item
+
+- type: construction
+  name: моно плитка
+  id: TileMono
+  graph: TileMono
+  startNode: start
+  targetNode: monotile
+  category: construction-category-tiles
+  description: "Четыре моно плитки."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: monofloor }
+  objectType: Item
+
+- type: construction
+  name: покрытие ринга
+  id: TileBoxing
+  graph: TileBoxing
+  startNode: start
+  targetNode: boxingtile
+  category: construction-category-tiles
+  description: "Четыре листа покрытия ринга"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: boxing }
+  objectType: Item
+
+- type: construction
+  name: покрытие спортивного зала
+  id: TileGym
+  graph: TileGym
+  startNode: start
+  targetNode: gymtile
+  category: construction-category-tiles
+  description: "Четыре листа покрытия спортивного зала"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: gym }
+  objectType: Item
+
+- type: construction
+  name: напольная сетка
+  id: TileGratingMaint
+  graph: TileGratingMaint
+  startNode: start
+  targetNode: gratingmainttile
+  category: construction-category-tiles
+  description: "Четыре напольных сетки"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: gratingmaintfloor }
+  objectType: Item
+
+- type: construction
+  name: голубой аркадный ковёр
+  id: TileArcadeBlue
+  graph: TileArcadeBlue
+  startNode: start
+  targetNode: arcadebluetile
+  category: construction-category-tiles
+  description: "Четыре листа аркадного ковра"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: arcadeblue }
+  objectType: Item
+
+- type: construction
+  name: голубой аркадный ковёр
+  id: TileArcadeBlue2
+  graph: TileArcadeBlue2
+  startNode: start
+  targetNode: arcadeblue2tile
+  category: construction-category-tiles
+  description: "Четыре листа аркадного ковра"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: arcadeblue2 }
+  objectType: Item
+
+- type: construction
+  name: металический технический пол
+  id: TileDiamond
+  graph: TileDiamond
+  startNode: start
+  targetNode: diamondtile
+  category: construction-category-tiles
+  description: "Четыре листа металического технического пола"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: metaldiamond }
+  objectType: Item
+
+- type: construction
+  name: технический пол
+  id: TileSteelMaint
+  graph: TileSteelMaint
+  startNode: start
+  targetNode: steelmainttile
+  category: construction-category-tiles
+  description: "Четыре листа технического пола"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: steelmaintfloor }
+  objectType: Item
+
+- type: construction
+  name: "технический пол"
+  id: TileTechmaint
+  graph: TileTechmaint
+  startNode: start
+  targetNode: techmainttile
+  category: construction-category-tiles
+  description: "Четыре листа технического пола"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: techfloor }
+  objectType: Item
+
+- type: construction
+  name: красный ковёр аркады
+  id: TileArcadeRed
+  graph: TileArcadeRed
+  startNode: start
+  targetNode: arcaderedtile
+  category: construction-category-tiles
+  description: "Четыре листа красного аркадного пола"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: arcadered }
+  objectType: Item
+
+- type: construction
+  name: кухонная плитка
+  id: TileKitchen
+  graph: TileKitchen
+  startNode: start
+  targetNode: kitchentile
+  category: construction-category-tiles
+  description: "Четыре кухонных плитки"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: kitchen }
+  objectType: Item
+
+- type: construction
+  name: офисный ковёр
+  id: TileCarpetOffice
+  graph: TileCarpetOffice
+  startNode: start
+  targetNode: carpetofficetile
+  category: construction-category-tiles
+  description: "Четыре листа офисного ковра"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: carpetoffice }
+  objectType: Item
+
+- type: construction
+  name: плитка бара
+  id: TileBar
+  graph: TileBar
+  startNode: start
+  targetNode: bartile
+  category: construction-category-tiles
+  description: "Четыре плитки бара"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: bar }
+  objectType: Item
+
+- type: construction
+  name: белое покрытие шаттла
+  id: TileShuttleWhite
+  graph: TileShuttleWhite
+  startNode: start
+  targetNode: shuttlewhitetile
+  category: construction-category-tiles
+  description: "Четыре белых плитки шаттла"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: shuttlewhite }
+  objectType: Item
+
+- type: construction
+  name: оранжевое покрытие шаттла
+  id: TileShuttleOrange
+  graph: TileShuttleOrange
+  startNode: start
+  targetNode: shuttleorangetile
+  category: construction-category-tiles
+  description: "Четыре оранжевых плитки шаттла"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: shuttleorange }
+  objectType: Item
+
+- type: construction
+  name: голубая плитка шаттла
+  id: TileShuttleBlue
+  graph: TileShuttleBlue
+  startNode: start
+  targetNode: shuttlebluetile
+  category: construction-category-tiles
+  description: "Четыре голубых плитки шаттла"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: shuttleblue }
+  objectType: Item
+
+- type: construction
+  name: фиолетовая плитка шаттла
+  id: TileShuttlePurple
+  graph: TileShuttlePurple
+  startNode: start
+  targetNode: shuttlepurpletile
+  category: construction-category-tiles
+  description: "Четыре фиолетовых плитки шаттла"
+  icon: { sprite: Objects/Tiles/tile.rsi, state: shuttlepurple }
+  objectType: Item
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

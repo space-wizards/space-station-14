@@ -204,6 +204,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: FloorTile
+    outputs:
+    - FloorGlassPlasma
 
 - type: entity
   parent: SheetPGlass
@@ -260,6 +263,9 @@
     count: 1
   - type: Item
     size: 1
+  - type: FloorTile
+    outputs:
+    - FloorRGlassPlasma
 
 - type: entity
   parent: SheetGlassBase
@@ -310,6 +316,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: FloorTile
+    outputs:
+    - FloorGlassUran
 
 - type: entity
   parent: SheetUGlass
@@ -351,6 +360,9 @@
   - type: Construction
     graph: Glass
     node: SheetRUGlass
+  - type: FloorTile
+    outputs:
+    - FloorRGlassUran
 
 - type: entity
   parent: SheetRUGlass

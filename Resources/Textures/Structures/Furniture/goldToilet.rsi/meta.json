@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/2cb66bae0e253e13d37f8939e0983bb94fee243e",
+    "states": [
+        {
+            "name": "closed_toilet_seat_down",
+            "directions": 4
+        },
+        {
+            "name": "closed_toilet_seat_up",
+            "directions": 4
+        },
+        {
+            "name": "open_toilet_seat_down",
+            "directions": 4
+        },
+        {
+            "name": "open_toilet_seat_up",
+            "directions": 4
+        }
+    ]
+}

@@ -1,64 +1,64 @@
 - type: construction
-  name: cleanbot
+  name: чистобот
   id: cleanbot
   graph: CleanBot
   startNode: start
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  description: This bot wanders around the station, mopping up any puddles it sees.
+  description: Поможет вам навести порядок.
   icon:
     sprite: Mobs/Silicon/Bots/cleanbot.rsi
     state: cleanbot
 
 - type: construction
-  name: honkbot
+  name: хонкбот
   id: honkbot
   graph: HonkBot
   startNode: start
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  description: This bot honks and slips people.
+  description: Этот бот хонкает и развлекает людей
   icon:
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
 
 - type: construction
-  name: jonkbot
+  name: джонкбот
   id: jonkbot
   graph: JonkBot
   startNode: start
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  description: This cursed bot honks, laughs and slips people.
+  description: Этот чёртов робот хонкает, смеётся и развлекает людей
   icon:
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: jonkbot
 
 - type: construction
-  name: medibot
+  name: медибот
   id: medibot
   graph: MediBot
   startNode: start
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  description: This bot can help supply basic healing.
+  description: Этот бот может помочь с лечением
   icon:
     sprite: Mobs/Silicon/Bots/medibot.rsi
     state: medibot
 
 - type: construction
-  name: mimebot
+  name: мимбот
   id: mimebot
   graph: MimeBot
   startNode: start
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  description: This bot knows how to wave.
+  description: Этот бот знает пантомиму
   icon:
     sprite: Mobs/Silicon/Bots/mimebot.rsi
     state: mimebot
