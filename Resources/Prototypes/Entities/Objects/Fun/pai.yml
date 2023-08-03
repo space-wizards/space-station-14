@@ -89,7 +89,7 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.PAIVisuals.Status:
+      enum.ToggleableGhostRoleVisuals.Status:
         screen:
           Off: { state: syndicate-pai-off-overlay }
           Searching: { state: syndicate-pai-searching-overlay }
