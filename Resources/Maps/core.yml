@@ -88645,7 +88645,7 @@ entities:
     - pos: 44.5,7.5
       parent: 2
       type: Transform
-    - SecondsUntilStateChange: -15437.727
+    - SecondsUntilStateChange: -15489.894
       state: Opening
       type: Door
   - uid: 11091
@@ -88653,7 +88653,7 @@ entities:
     - pos: 62.5,21.5
       parent: 2
       type: Transform
-    - SecondsUntilStateChange: -155188.3
+    - SecondsUntilStateChange: -155240.47
       state: Opening
       type: Door
   - uid: 11092
@@ -90285,6 +90285,23 @@ entities:
   - uid: 17447
     components:
     - pos: 2.5,33.5
+      parent: 2
+      type: Transform
+- proto: MaintenancePlantSpawner
+  entities:
+  - uid: 18991
+    components:
+    - pos: -35.5,13.5
+      parent: 2
+      type: Transform
+  - uid: 18992
+    components:
+    - pos: 50.5,-31.5
+      parent: 2
+      type: Transform
+  - uid: 18993
+    components:
+    - pos: 59.5,27.5
       parent: 2
       type: Transform
 - proto: MaintenanceToolSpawner
