@@ -21,7 +21,6 @@
     requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Moth 
   - type: Butcherable
     butcheringType: Spike
     spawned:
