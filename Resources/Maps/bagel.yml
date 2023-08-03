@@ -15205,6 +15205,13 @@ entities:
     - pos: -30.487093,19.620901
       parent: 60
       type: Transform
+- proto: BookChefGaming
+  entities:
+  - uid: 18647
+    components:
+    - pos: 24.502895,-35.332874
+      parent: 60
+      type: Transform
 - proto: BookEscalation
   entities:
   - uid: 23696
@@ -112728,7 +112735,7 @@ entities:
     - pos: -34.433372,-3.1512034
       parent: 60
       type: Transform
-- proto: lantern
+- proto: Lantern
   entities:
   - uid: 24223
     components:
@@ -116245,6 +116252,18 @@ entities:
     - pos: 22.5,-14.5
       parent: 60
       type: Transform
+- proto: PosterContrabandDonk
+  entities:
+  - uid: 18473
+    components:
+    - pos: -46.5,-28.5
+      parent: 60
+      type: Transform
+  - uid: 18641
+    components:
+    - pos: 24.5,-38.5
+      parent: 60
+      type: Transform
 - proto: PosterContrabandDonutCorp
   entities:
   - uid: 9152
@@ -116257,6 +116276,11 @@ entities:
   - uid: 3977
     components:
     - pos: -8.5,-39.5
+      parent: 60
+      type: Transform
+  - uid: 18642
+    components:
+    - pos: 27.5,-30.5
       parent: 60
       type: Transform
 - proto: PosterContrabandEnergySwords
@@ -116316,6 +116340,13 @@ entities:
   - uid: 21092
     components:
     - pos: 0.5,16.5
+      parent: 60
+      type: Transform
+- proto: PosterContrabandInterdyne
+  entities:
+  - uid: 17253
+    components:
+    - pos: 41.5,-33.5
       parent: 60
       type: Transform
 - proto: PosterContrabandKosmicheskayaStantsiya
@@ -116411,6 +116442,13 @@ entities:
     - pos: 25.5,-10.5
       parent: 60
       type: Transform
+- proto: PosterContrabandSmoke
+  entities:
+  - uid: 18640
+    components:
+    - pos: 27.5,-28.5
+      parent: 60
+      type: Transform
 - proto: PosterContrabandSpaceCola
   entities:
   - uid: 16098
@@ -116463,6 +116501,13 @@ entities:
   - uid: 9082
     components:
     - pos: 56.5,-9.5
+      parent: 60
+      type: Transform
+- proto: PosterContrabandWaffleCorp
+  entities:
+  - uid: 17467
+    components:
+    - pos: -23.5,2.5
       parent: 60
       type: Transform
 - proto: PosterContrabandWehWatches
@@ -116719,11 +116764,32 @@ entities:
     - pos: 21.5,11.5
       parent: 60
       type: Transform
+- proto: PosterLegitNTTGC
+  entities:
+  - uid: 17250
+    components:
+    - pos: -11.5,13.5
+      parent: 60
+      type: Transform
 - proto: PosterLegitPDAAd
   entities:
   - uid: 6776
     components:
     - pos: 2.5,-28.5
+      parent: 60
+      type: Transform
+- proto: PosterLegitPeriodicTable
+  entities:
+  - uid: 17002
+    components:
+    - pos: 36.5,-26.5
+      parent: 60
+      type: Transform
+- proto: PosterLegitRenault
+  entities:
+  - uid: 17249
+    components:
+    - pos: -6.5,-7.5
       parent: 60
       type: Transform
 - proto: PosterLegitReportCrimes
@@ -116787,6 +116853,41 @@ entities:
     - pos: -42.5,-2.5
       parent: 60
       type: Transform
+- proto: PosterLegitSafetyMothDelam
+  entities:
+  - uid: 17245
+    components:
+    - pos: -8.5,30.5
+      parent: 60
+      type: Transform
+- proto: PosterLegitSafetyMothEpi
+  entities:
+  - uid: 17003
+    components:
+    - pos: 36.5,-27.5
+      parent: 60
+      type: Transform
+- proto: PosterLegitSafetyMothHardhat
+  entities:
+  - uid: 17005
+    components:
+    - pos: 9.5,16.5
+      parent: 60
+      type: Transform
+- proto: PosterLegitSafetyMothMeth
+  entities:
+  - uid: 17004
+    components:
+    - pos: 37.5,-33.5
+      parent: 60
+      type: Transform
+- proto: PosterLegitSafetyMothPiping
+  entities:
+  - uid: 17244
+    components:
+    - pos: -14.5,31.5
+      parent: 60
+      type: Transform
 - proto: PosterLegitSafetyReport
   entities:
   - uid: 1698
@@ -116840,6 +116941,23 @@ entities:
   - uid: 19454
     components:
     - pos: 47.5,23.5
+      parent: 60
+      type: Transform
+- proto: PosterLegitVacation
+  entities:
+  - uid: 17251
+    components:
+    - pos: -22.5,6.5
+      parent: 60
+      type: Transform
+  - uid: 17252
+    components:
+    - pos: -2.5,-48.5
+      parent: 60
+      type: Transform
+  - uid: 18639
+    components:
+    - pos: 31.5,-34.5
       parent: 60
       type: Transform
 - proto: PosterLegitWorkForAFuture
@@ -132978,6 +133096,13 @@ entities:
       pos: 9.5,-71.5
       parent: 60
       type: Transform
+- proto: SpawnMobAlexander
+  entities:
+  - uid: 18691
+    components:
+    - pos: 25.5,-31.5
+      parent: 60
+      type: Transform
 - proto: SpawnMobBandito
   entities:
   - uid: 10857
@@ -133035,6 +133160,13 @@ entities:
   - uid: 18541
     components:
     - pos: -8.5,-3.5
+      parent: 60
+      type: Transform
+- proto: SpawnMobGoat
+  entities:
+  - uid: 18710
+    components:
+    - pos: 25.5,-28.5
       parent: 60
       type: Transform
 - proto: SpawnMobMcGriff
