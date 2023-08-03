@@ -8,6 +8,15 @@
     - FEET
   - type: Sprite
     state: icon
+  - type: Food
+    requiredTag: ClothEater
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 30
 
 - type: entity
   abstract: true
