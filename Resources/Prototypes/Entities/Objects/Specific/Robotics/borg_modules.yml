@@ -2,7 +2,7 @@
   id: BaseBorgModule
   parent: BaseItem
   name: borg module
-  description: A module that can be inserted into cyborgs in order to grant them new abilities.
+  description: A piece of tech that gives cyborgs new abilities.
   abstract: true
   components:
   - type: Sprite
@@ -43,6 +43,7 @@
   - type: ProvideItemBorgModule
     items:
     - HandheldGPSBasic
+    - HandheldStationMapUnpowered
 
 - type: entity
   id: BorgModuleTool
@@ -55,10 +56,24 @@
     - state: icon-tools
   - type: ProvideItemBorgModule
     items:
-    - Omnitool
-    - WelderExperimental
+    - Crowbar
+    - Wrench
+    - Screwdriver
 
 # cargo modules
+- type: entity
+  id: BorgModuleAppraisal
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: appraisal cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: cargo
+    - state: icon-appraisal
+  - type: ProvideItemBorgModule
+    items:
+    - AppraisalTool
+
 - type: entity
   id: BorgModuleMining
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
@@ -72,6 +87,19 @@
     items:
     - MiningDrill
     - OreBag
+
+- type: entity
+  id: BorgModuleGrapplingGun
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: grappling gun cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: cargo
+    - state: icon-grappling-gun
+  - type: ProvideItemBorgModule
+    items:
+    - WeaponGrapplingGun
 
 # engineering modules
 - type: entity
@@ -88,7 +116,81 @@
     - CableApcStackLingering10
     - CableMVStackLingering10
     - CableHVStackLingering10
+    - Wirecutter
     - trayScanner
+
+- type: entity
+  id: BorgModuleAdvancedTool
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: advanced tool cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: engineering
+    - state: icon-tools-adv
+  - type: ProvideItemBorgModule
+    items:
+    - Omnitool
+    - WelderExperimental
+    - NetworkConfigurator
+
+- type: entity
+  id: BorgModuleRCD
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: RCD cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: engineering
+    - state: icon-rcd
+  - type: ProvideItemBorgModule
+    items:
+    - RCDRecharging
+
+# medical modules
+- type: entity
+  id: BorgModuleDiagnosis
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: diagnosis cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-diagnosis
+  - type: ProvideItemBorgModule
+    items:
+    - HandheldHealthAnalyzerUnpowered
+    - ClothingNeckStethoscope
+
+- type: entity
+  id: BorgModuleTreatment
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: treatment cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-treatment
+  - type: ProvideItemBorgModule
+    items:
+    - Brutepack10Lingering
+    - Ointment10Lingering
+    - Gauze10Lingering
+    - Bloodpack10Lingering
+    - Syringe
+
+- type: entity
+  id: BorgModuleDefibrillator
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: defibrillator cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-defib
+  - type: ProvideItemBorgModule
+    items:
+    - DefibrillatorOneHandedUnpowered
 
 # science modules
 - type: entity
@@ -116,34 +218,4 @@
   - type: ProvideItemBorgModule
     items:
     - AnomalyScanner
-
-# medical modules
-- type: entity
-  id: BorgModuleDiagnosis
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: diagnosis cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: medical
-    - state: icon-diagnosis
-  - type: ProvideItemBorgModule
-    items:
-    - HandheldHealthAnalyzerUnpowered
-    - ClothingNeckStethoscope
-
-- type: entity
-  id: BorgModuleTreatment
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: treament cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: medical
-    - state: icon-treatment
-  - type: ProvideItemBorgModule
-    items:
-    - Brutepack10Lingering
-    - Ointment10Lingering
-    - Gauze10Lingering
-    - Bloodpack10Lingering
+    - AnomalyLocatorUnpowered

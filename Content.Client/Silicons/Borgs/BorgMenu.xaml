@@ -43,7 +43,7 @@
                     <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
                 </PanelContainer.PanelOverride>
                 <BoxContainer VerticalExpand="True" Orientation="Vertical">
-                    <ScrollContainer HScrollEnabled="True" HorizontalExpand="True" VerticalExpand="True">
+                    <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
                         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Name="ModuleContainer" RectClipContent="True"/>
                     </ScrollContainer>
                     <Label Name="ModuleCounter"

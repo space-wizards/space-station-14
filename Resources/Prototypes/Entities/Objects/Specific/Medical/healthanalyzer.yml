@@ -1,9 +1,8 @@
 - type: entity
-  id: BaseHandheldHealthAnalyzer
+  id: HandheldHealthAnalyzerUnpowered
   parent: BaseItem
   name: health analyzer
   description: A hand-held body scanner capable of distinguishing vital signs of the subject.
-  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/healthanalyzer.rsi
@@ -40,7 +39,8 @@
 
 - type: entity
   id: HandheldHealthAnalyzer
-  parent: [ BaseHandheldHealthAnalyzer, PowerCellSlotSmallItem]
+  parent: [ HandheldHealthAnalyzerUnpowered, PowerCellSlotSmallItem]
+  suffix: Powered
   components:
   - type: PowerCellDraw
     drawRate: 0
@@ -56,8 +56,3 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-
-- type: entity
-  id: HandheldHealthAnalyzerUnpowered
-  parent: BaseHandheldHealthAnalyzer
-  suffix: Unpowered

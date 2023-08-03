@@ -18,6 +18,7 @@
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
   - type: Clickable
+  - type: CombatMode
   - type: Damageable
     damageContainer: Inorganic
   - type: InteractionOutline
@@ -60,6 +61,14 @@
   - type: SiliconLawBound
   - type: Hands
     showInHands: false
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
   - type: ZombieImmune
   - type: Body
     prototype: Borg
@@ -125,6 +134,8 @@
     radius: 4
     netsync: false
   - type: Pullable
+  - type: Puller
+    needsHands: false
   - type: Examiner
   - type: Appearance
   - type: StandingState

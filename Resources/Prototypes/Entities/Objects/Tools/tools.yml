@@ -363,6 +363,19 @@
     charges: 0
 
 - type: entity
+  id: RCDRecharging
+  parent: RCD
+  name: experimental rcd
+  description: A bluespace-enhanced RCD that regenerates charges passively.
+  suffix: AutoRecharge
+  components:
+  - type: LimitedCharges
+    maxCharges: 3
+    charges: 3
+  - type: AutoRecharge
+    rechargeDuration: 30
+
+- type: entity
   id: RCDExperimental
   parent: RCD
   suffix: Admeme

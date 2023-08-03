@@ -20,10 +20,16 @@
       "name": "icon-anomalies"
     },
     {
+      "name": "icon-appraisal"
+    },
+    {
       "name": "icon-artifacts"
     },
     {
       "name": "icon-cables"
+    },
+    {
+      "name": "icon-defib"
     },
     {
       "name": "icon-diagnosis"
@@ -35,10 +41,19 @@
       "name": "icon-gps"
     },
     {
+      "name": "icon-grappling-gun"
+    },
+    {
       "name": "icon-mining"
     },
     {
+      "name": "icon-rcd"
+    },
+    {
       "name": "icon-template"
+    },
+    {
+      "name": "icon-tools-adv"
     },
     {
       "name": "icon-tools"
