@@ -26,6 +26,7 @@
     contents:
       - id: BoxSurvivalSecurity
       - id: Flash
+      - id: MagazinePistol
 
 - type: entity
   noSpawn: true
@@ -103,7 +104,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackSatchel
+  parent: ClothingBackpackSatchelCargo
   id: ClothingBackpackSatchelQuartermasterFilled
   components:
   - type: StorageFill
@@ -121,11 +122,21 @@
     contents:
       - id: BoxSurvivalSecurity
       - id: Flash
+      - id: MagazinePistol
 
 - type: entity
   noSpawn: true
   parent: ClothingBackpackSatchelEngineering
   id: ClothingBackpackSatchelEngineeringFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalEngineering
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelAtmospherics
+  id: ClothingBackpackSatchelAtmosphericsFilled
   components:
   - type: StorageFill
     contents:
@@ -205,6 +216,15 @@
 
 - type: entity
   noSpawn: true
+  parent: ClothingBackpackSatchelCargo
+  id: ClothingBackpackSatchelCargoFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
   parent: ClothingBackpackSatchelSalvage
   id: ClothingBackpackSatchelSalvageFilled
   components:
@@ -223,7 +243,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackSatchel # need to sprite mime's satchel
+  parent: ClothingBackpackSatchelMime
   id: ClothingBackpackSatchelMimeFilled
   components:
   - type: StorageFill

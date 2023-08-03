@@ -1,0 +1,36 @@
+- type: job
+  id: SeniorPhysician
+  name: job-name-senior-physician
+  description: job-description-senior-physician
+  playTimeTracker: JobSeniorPhysician
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 21600 #6 hrs
+    - !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 21600 #6 hrs
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 216000 # 60 hrs
+  startingGear: SeniorPhysicianGear
+  icon: "JobIconSeniorPhysician"
+  supervisors: job-supervisors-cmo
+  access:
+  - Medical
+  - Maintenance
+  - Chemistry
+
+- type: startingGear
+  id: SeniorPhysicianGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSeniorPhysician
+    back: ClothingBackpackMedicalFilled
+    shoes: ClothingShoesColorBlack
+    outerClothing: ClothingOuterCoatLabSeniorPhysician
+    id: SeniorPhysicianPDA
+    ears: ClothingHeadsetMedical
+    belt: ClothingBeltMedicalFilled
+  innerclothingskirt: ClothingUniformJumpskirtSeniorPhysician
+  satchel: ClothingBackpackSatchelMedicalFilled
+  duffelbag: ClothingBackpackDuffelMedicalFilled

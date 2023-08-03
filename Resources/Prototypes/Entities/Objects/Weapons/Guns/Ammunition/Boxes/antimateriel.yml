@@ -1,25 +1,60 @@
 - type: entity
+  abstract: true
   parent: BaseItem
-  id: MagazineBoxAntiMateriel
+  id: BaseMagazineBoxAntiMateriel
   name: ammunition box (.60 anti-materiel)
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
-    capacity: 30
+    whitelist:
+      tags:
+        - CartridgeAntiMateriel
     proto: CartridgeAntiMateriel
+    capacity: 10
+  - type: Item
+    size: 5
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/anti_materiel.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
     magState: mag
     steps: 2
     zeroVisible: false
   - type: Appearance
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
+
+# Boxes
+- type: entity
+  parent: BaseMagazineBoxAntiMateriel
+  id: MagazineBoxAntiMaterielBig
+  name: ammunition box (.60 anti-materiel)
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 30
+    proto: CartridgeAntiMateriel
+  - type: Sprite
+    layers:
+    - state: base-b
+      map: ["enum.GunVisualLayers.Base"]
+    - state: magb-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: magb
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  parent: BaseMagazineBoxAntiMateriel
+  id: MagazineBoxAntiMateriel
+  name: ammunition box (.60 anti-materiel)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeAntiMateriel
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]

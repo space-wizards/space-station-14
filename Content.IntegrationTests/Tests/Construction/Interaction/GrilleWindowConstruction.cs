@@ -1,7 +1,5 @@
-using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Construction.Prototypes;
-using NUnit.Framework;
 using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;

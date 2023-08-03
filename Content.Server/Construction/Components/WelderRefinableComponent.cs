@@ -16,9 +16,6 @@ namespace Content.Server.Construction.Components
         [DataField("refineTime")]
         public float RefineTime = 2f;
 
-        [DataField("refineFuel")]
-        public float RefineFuel = 0f;
-
         [DataField("qualityNeeded", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string QualityNeeded = "Welding";
     }
