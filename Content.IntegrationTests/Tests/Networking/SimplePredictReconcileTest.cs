@@ -12,7 +12,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Networking
@@ -28,7 +27,6 @@ namespace Content.IntegrationTests.Tests.Networking
     // This means the client is forced to reset it once it gets to the server tick where the server didn't do anything.
     // the tick where the server *should* have, but did not, acknowledge the state change.
     // Finally, we run two events inside the prediction area to ensure reconciling does for incremental stuff.
-    // TODO: This test relies on the EC version of component state handling. Remove in favor of the other two tests for the ECS and auto versions.
     [TestFixture]
     public sealed class SimplePredictReconcileTest
     {
@@ -392,27 +390,8 @@ namespace Content.IntegrationTests.Tests.Networking
             await pairTracker.CleanReturnAsync();
         }
 
-        [NetworkedComponent()]
-        [Access(typeof(PredictionTestEntitySystem))]
-        [RegisterComponent]
-        public sealed class PredictionTestComponent : Component
-        {
-            public bool Foo;
-        }
-
         public sealed class PredictionTestEntitySystem : EntitySystem
         {
-            [Serializable, NetSerializable]
-            private sealed class PredictionComponentState : ComponentState
-            {
-                public bool Foo { get; }
-
-                public PredictionComponentState(bool foo)
-                {
-                    Foo = foo;
-                }
-            }
-
             public bool Allow { get; set; } = true;
 
             // Queue of all the events that come in so we can test that they come in perfectly as expected.
@@ -427,23 +406,6 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 SubscribeNetworkEvent<SetFooMessage>(HandleMessage);
                 SubscribeLocalEvent<SetFooMessage>(HandleMessage);
-
-                SubscribeLocalEvent<PredictionTestComponent, ComponentGetState>(OnGetState);
-                SubscribeLocalEvent<PredictionTestComponent, ComponentHandleState>(OnHandleState);
-            }
-
-            private void OnHandleState(EntityUid uid, PredictionTestComponent component, ref ComponentHandleState args)
-            {
-                if (args.Current is not PredictionComponentState state)
-                    return;
-
-                component.Foo = state.Foo;
-                Dirty(component);
-            }
-
-            private void OnGetState(EntityUid uid, PredictionTestComponent component, ref ComponentGetState args)
-            {
-                args.State = new PredictionComponentState(component.Foo);
             }
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
@@ -460,7 +422,7 @@ namespace Content.IntegrationTests.Tests.Networking
             }
         }
 
-        private sealed class SetFooMessage : EntityEventArgs
+        public sealed class SetFooMessage : EntityEventArgs
         {
             public SetFooMessage(EntityUid uid, bool newFoo)
             {
@@ -471,5 +433,15 @@ namespace Content.IntegrationTests.Tests.Networking
             public EntityUid Uid { get; }
             public bool NewFoo { get; }
         }
+    }
+
+    // Must be directly located in the namespace or the sourcegen can't find it.
+    [NetworkedComponent]
+    [AutoGenerateComponentState]
+    [RegisterComponent]
+    public sealed partial class PredictionTestComponent : Component
+    {
+        [AutoNetworkedField]
+        public bool Foo;
     }
 }
