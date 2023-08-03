@@ -58,6 +58,9 @@ uplink-exploding-pen-desc = A class IV explosive device contained within a stand
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
 uplink-pistol-magazine-desc = Pistol magazine with 10 catridges. Compatible with the Viper.
 
+uplink-pistol-magazine-c20r-name = SMG magazine (.35 auto)
+uplink-pistol-magazine-c20r-desc = Rifle magazine with 30 catridges. Compatible with C-20r.
+
 uplink-pistol-magazine-caseless-name = Pistol Magazine (.25 caseless)
 uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 catridges. Compatible with the Cobra.
 
@@ -256,7 +259,7 @@ uplink-soap-name = Soap
 uplink-soap-desc = An untrustworthy bar of soap. Smells of fear.
 
 uplink-ultrabright-lantern-name = Extra-Bright Lantern
-uplink-ultrabright-lantern-desc = Blinding.
+uplink-ultrabright-lantern-desc = It can be used to blind people like a flash.
 
 uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
 uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for your target to stand up.
