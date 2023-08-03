@@ -433,7 +433,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                     break;
                 case HeavyAttackEvent heavy:
                     if (!DoHeavyAttack(user, heavy, weaponUid, weapon, session))
-                        return;
+                        return false;
 
                     animation = weapon.WideAnimation;
                     break;
