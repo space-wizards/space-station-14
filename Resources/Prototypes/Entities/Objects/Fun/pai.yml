@@ -61,25 +61,24 @@
 - type: entity
   parent: PersonalAI
   id: SyndicatePersonalAI
-  name: syndicate ai device
-  description: Your electronic pal made by syndicate!
+  name: Syndicate ai device
+  description: Your electronic pal made by the Syndicate!
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Fun/Spai.rsi
+    sprite: Objects/Fun/pai.rsi
     layers:
-    - state: Spai-base
-    - state: Spai-off-overlay
+    - state: pai-base
+    - state: syndicate-pai-off-overlay
       shader: unshaded
   - type: ActiveRadio
     channels:
     - Syndicate
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: GenericEnumVisualizer
-        key: enum.PAIVisuals.Status
-        layer: 1
-        states:
-          enum.PAIStatus.Off: Spai-off-overlay
-          enum.PAIStatus.Searching: Spai-searching-overlay
-          enum.PAIStatus.On: Spai-on-overlay
+      enum.PAIVisuals.Status:
+        screen:
+          Off: { state: syndicate-pai-off-overlay }
+          Searching: { state: syndicate-pai-searching-overlay }
+          On: { state: syndicate-pai-on-overlay }
