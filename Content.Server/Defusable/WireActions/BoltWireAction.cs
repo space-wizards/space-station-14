@@ -23,7 +23,7 @@ public sealed class BoltWireAction : ComponentWireAction<DefusableComponent>
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.BombLive)
+        if (comp.Activated)
         {
             comp.Bolted = false;
             EntityManager.System<AudioSystem>().PlayPvs(comp.BoltSound, wire.Owner);

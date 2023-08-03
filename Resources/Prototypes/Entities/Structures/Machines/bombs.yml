@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   parent: BaseStructure
-  id: BaseHardbomb
+  id: BaseHardBomb
   description: Just keep talking and nobody will explode.
   name: hardbomb
   components:
@@ -24,7 +24,7 @@
     - type: ExplodeOnTrigger
     - type: OnUseTimerTrigger
       delay: 90
-      delayOptions: [90, 120, 150, 180, 210, 240, 270, 300] #10 for debug purposes
+      delayOptions: [90, 120, 150, 180, 210, 240, 270, 300]
       initialBeepDelay: 0
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
     - type: Anchorable
@@ -35,7 +35,8 @@
       noRot: true
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.45,-0.45,0.45,0.45"
           density: 190
@@ -60,7 +61,7 @@
                 path: /Audio/Effects/metalbreak.ogg
 
 - type: entity
-  parent: BaseHardbomb
+  parent: BaseHardBomb
   id: TrainingBomb
   name: training bomb
   description: A bomb for dummies, manual not included.
@@ -92,7 +93,7 @@
       maxIntensity: 4
 
 - type: entity
-  parent: BaseHardbomb
+  parent: BaseHardBomb
   id: SyndicateBomb
   name: syndicate bomb
   description: A bomb for Syndicate operatives and agents alike. The real deal, no more training, get to it!
@@ -122,3 +123,39 @@
       totalIntensity: 3000.0
       intensitySlope: 7
       maxIntensity: 200
+
+- type: entity
+  parent: BaseHardBomb
+  id: DebugHardBomb
+  name: debug bomb
+  suffix: DEBUG
+  description: Holy shit this is gonna explode
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/bomb.rsi
+      layers:
+        - state: syndicate-bomb
+        - state: syndicate-bomb-active
+          visible: false
+          map: [ "primed" ]
+        - state: syndicate-bomb-wires
+          visible: false
+          map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.DefusableVisuals.Active:
+          primed:
+            True: { visible: true }
+            False: { visible: false }
+        enum.WiresVisualLayers.MaintenancePanel:
+          enum.WiresVisualLayers.MaintenancePanel:
+            True: { visible: true }
+            False: { visible: false }
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 3000.0
+      intensitySlope: 7
+      maxIntensity:
+    - type: OnUseTimerTrigger
+      delay: 10
+      delayOptions: [10, 20, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300]

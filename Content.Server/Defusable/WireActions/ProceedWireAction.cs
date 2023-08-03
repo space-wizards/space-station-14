@@ -1,6 +1,7 @@
 using Content.Server.Defusable.Components;
 using Content.Server.Defusable.Systems;
 using Content.Server.Doors.Systems;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Wires;
 using Content.Shared.Defusable;
@@ -17,17 +18,17 @@ public sealed class ProceedWireAction : ComponentWireAction<DefusableComponent>
 
     public override StatusLightState? GetLightState(Wire wire, DefusableComponent comp)
     {
-        return comp.BombLive ? StatusLightState.Off : StatusLightState.BlinkingFast;
+        return comp.Activated ? StatusLightState.Off : StatusLightState.BlinkingFast;
     }
 
     public override object StatusKey { get; } = DefusableWireStatus.LiveIndicator;
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.BombLive && !comp.ProceedWireCut)
+        if (comp.Activated && !comp.ProceedWireCut)
         {
             EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", wire.Owner)), wire.Owner);
-            comp.BombDisplayTime = false;
+            comp.DisplayTime = false;
             comp.ProceedWireCut = true;
         }
         return true;
@@ -40,11 +41,11 @@ public sealed class ProceedWireAction : ComponentWireAction<DefusableComponent>
 
     public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.BombLive && !comp.ProceedWireUsed)
+        if (comp.Activated && !comp.ProceedWireUsed)
         {
             Logger.Debug("Time proceeded");
             comp.ProceedWireUsed = true;
-            EntityManager.System<DefusableSystem>().TryDelay(wire.Owner, -15f);
+            EntityManager.System<TriggerSystem>().TryDelay(wire.Owner, -15f);
         }
         EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", wire.Owner)), wire.Owner);
     }

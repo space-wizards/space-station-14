@@ -1,6 +1,7 @@
 using Content.Server.Defusable.Components;
 using Content.Server.Defusable.Systems;
 using Content.Server.Doors.Systems;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Wires;
 using Content.Shared.Defusable;
@@ -33,9 +34,9 @@ public sealed class DelayWireAction : ComponentWireAction<DefusableComponent>
 
     public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.BombLive && !comp.DelayWireUsed)
+        if (comp.Activated && !comp.DelayWireUsed)
         {
-            EntityManager.System<DefusableSystem>().TryDelay(wire.Owner, 30f);
+            EntityManager.System<TriggerSystem>().TryDelay(wire.Owner, 30f);
             comp.DelayWireUsed = true;
         }
         EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-chirp", ("name", wire.Owner)), wire.Owner);

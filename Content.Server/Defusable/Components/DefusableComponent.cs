@@ -1,15 +1,14 @@
+using Content.Server.Explosion.Components;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Defusable.Components;
 
 /// <summary>
-/// This is used for bombs that should be defused.
+/// This is used for bombs that should be defused. The explosion configuration should be handled by <see cref="ExplosiveComponent"/>.
 /// </summary>
 [RegisterComponent]
 public sealed class DefusableComponent : Component
 {
-    // most of the actual explosion stuff is handled by ExplosiveComponent
-
     /// <summary>
     ///     The bomb will play this sound on bolt.
     /// </summary>
@@ -21,34 +20,41 @@ public sealed class DefusableComponent : Component
     [DataField("boltSound")] public SoundSpecifier BoltSound = new SoundPathSpecifier("/Audio/Machines/boltsdown.ogg");
 
     /// <summary>
+    ///     Is this bomb one use?
+    /// </summary>
+    [DataField("disposable")] public bool Disposable = true;
+
+    /// <summary>
     /// Is the bomb live? This is different from BombUsable because this tracks whether the bomb is ticking down or not.
     /// </summary>
-    [ViewVariables, DataField("live")] public bool BombLive = false;
+    [ViewVariables(VVAccess.ReadWrite), DataField("activated")]
+    public bool Activated;
 
     /// <summary>
-    /// Is the bomb actually usable? This is different from BombLive because this tracks whether the bomb can even start in the first place.
+    /// Is the bomb actually usable? This is different from Activated because this tracks whether the bomb can even start in the first place.
     /// </summary>
-    [ViewVariables] public bool BombUsable = true;
+    [ViewVariables(VVAccess.ReadWrite)] public bool Usable = true;
 
     /// <summary>
-    /// Does the bomb show how much remains?
+    /// Does the bomb show how much time remains?
     /// </summary>
-    [ViewVariables] public bool BombDisplayTime = true;
+    [ViewVariables(VVAccess.ReadWrite)] public bool DisplayTime = true;
 
     /// <summary>
     /// Is this bomb supposed to be stuck to the ground?
     /// </summary>
-    public bool Bolted = false;
+    [ViewVariables(VVAccess.ReadWrite)] public bool Bolted;
 
     /// <summary>
     /// How much time is added when the Activate wire is pulsed?
     /// </summary>
-    [DataField("delayTime")]
-    public int DelayTime = 30;
+    [DataField("delayTime")] public int DelayTime = 30;
 
+    #region Wires
     // wires, this is so that they're one use
-    public bool DelayWireUsed = false;
-    public bool ProceedWireCut = false;
-    public bool ProceedWireUsed = false;
-    public bool ActivatedWireUsed = false;
+    public bool DelayWireUsed;
+    public bool ProceedWireCut;
+    public bool ProceedWireUsed;
+    public bool ActivatedWireUsed;
+    #endregion
 }

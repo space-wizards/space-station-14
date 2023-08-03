@@ -1,17 +1,15 @@
-using Content.Server.Construction;
 using Content.Server.Defusable.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
-using Content.Server.Salvage;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Construction.Components;
+using Content.Shared.Database;
 using Content.Shared.Defusable;
 using Content.Shared.Examine;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Defusable.Systems;
 
@@ -23,11 +21,14 @@ public sealed class DefusableSystem : SharedDefusableSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly TriggerSystem _trigger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<DefusableComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<DefusableComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
         SubscribeLocalEvent<DefusableComponent, AnchorAttemptEvent>(OnAnchorAttempt);
@@ -44,10 +45,10 @@ public sealed class DefusableSystem : SharedDefusableSystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        args.Verbs.Add(new AlternativeVerb()
+        args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString("defusable-verb-begin"),
-            Disabled = comp.BombLive && comp.BombUsable,
+            Disabled = comp is { Activated: true, Usable: true },
             Priority = 10,
             Act = () =>
             {
@@ -61,13 +62,13 @@ public sealed class DefusableSystem : SharedDefusableSystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (!comp.BombUsable)
+        if (!comp.Usable)
         {
             args.PushMarkup(Loc.GetString("defusable-examine-defused", ("name", uid)));
         }
-        else if (comp.BombLive && TryComp<ActiveTimerTriggerComponent>(uid, out var activeComp))
+        else if (comp.Activated && TryComp<ActiveTimerTriggerComponent>(uid, out var activeComp))
         {
-            if (comp.BombDisplayTime)
+            if (comp.DisplayTime)
             {
                 args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid),
                     ("time", MathF.Floor(activeComp.TimeRemaining))));
@@ -85,51 +86,45 @@ public sealed class DefusableSystem : SharedDefusableSystem
 
     private void OnAnchorAttempt(EntityUid uid, DefusableComponent component, AnchorAttemptEvent args)
     {
-        CheckAnchorAttempt(uid, component, args);
+        if (CheckAnchorAttempt(uid, component, args))
+            args.Cancel();
     }
 
     private void OnUnanchorAttempt(EntityUid uid, DefusableComponent component, UnanchorAttemptEvent args)
     {
-        CheckAnchorAttempt(uid, component, args);
+        if (CheckAnchorAttempt(uid, component, args))
+            args.Cancel();
     }
 
-    private void CheckAnchorAttempt(EntityUid uid, DefusableComponent component, BaseAnchoredAttemptEvent args)
+    private bool CheckAnchorAttempt(EntityUid uid, DefusableComponent component, BaseAnchoredAttemptEvent args)
     {
-        // Don't allow the thing to be anchored if bolted
+        // Don't allow the thing to be anchored if bolted to the ground
         if (component.Bolted)
-        {
-            var msg = Loc.GetString("defusable-popup-cant-anchor", ("name", uid));
-            _popup.PopupEntity(msg, uid, args.User);
+            return true;
 
-            args.Cancel();
-        }
+        var msg = Loc.GetString("defusable-popup-cant-anchor", ("name", uid));
+        _popup.PopupEntity(msg, uid, args.User);
+
+        return false;
     }
 
     #endregion
 
     #region Public
 
-    public void TryDelay(EntityUid uid, float amount, ActiveTimerTriggerComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp, false))
-            return;
-
-        comp.TimeRemaining += amount;
-    }
-
     public void TryStartCountdown(EntityUid uid, DefusableComponent comp)
     {
-        if (!comp.BombUsable)
+        if (!comp.Usable)
         {
             _popup.PopupEntity(Loc.GetString("defusable-popup-fried", ("name", uid)), uid);
             return;
         }
 
         var xform = Transform(uid);
-        xform.Anchored = true;
+        _transform.AnchorEntity(uid, xform);
         comp.Bolted = true;
 
-        comp.BombLive = true;
+        comp.Activated = true;
         _popup.PopupEntity(Loc.GetString("defusable-popup-begun", ("name", uid)), uid);
         if (TryComp<OnUseTimerTriggerComponent>(uid, out var timerTrigger))
         {
@@ -143,56 +138,57 @@ public sealed class DefusableSystem : SharedDefusableSystem
             );
         }
 
-        RaiseLocalEvent(uid, new BombArmedEvent(uid), false);
+        RaiseLocalEvent(uid, new BombArmedEvent(uid));
 
-        UpdateAppearance(uid, comp);
+        _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);
+        _adminLogger.Add(LogType.Explosion, LogImpact.High,
+            $"{ToPrettyString(uid):entity} has begun countdown.");
     }
 
     public void TryDetonateBomb(EntityUid uid, DefusableComponent comp)
     {
-        // also might want to have admin logs
-        if (!comp.BombLive)
+        if (!comp.Activated)
             return;
 
         _popup.PopupEntity(Loc.GetString("defusable-popup-boom", ("name", uid)), uid, PopupType.LargeCaution);
 
-        RaiseLocalEvent(uid, new BombDetonatedEvent(uid), false);
+        RaiseLocalEvent(uid, new BombDetonatedEvent(uid));
 
         _explosion.TriggerExplosive(uid);
         QueueDel(uid);
 
-        UpdateAppearance(uid, comp);
+        _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);
+
+        _adminLogger.Add(LogType.Explosion, LogImpact.High,
+            $"{ToPrettyString(uid):entity} has been detonated.");
     }
 
     public void TryDefuseBomb(EntityUid uid, DefusableComponent comp)
     {
-        if (!comp.BombLive)
+        if (!comp.Activated)
             return;
 
         _popup.PopupEntity(Loc.GetString("defusable-popup-defuse", ("name", uid)), uid);
-        comp.BombLive = false;
-        comp.BombUsable = false; // fry the circuitry
+        comp.Activated = false;
 
-        RemComp<ExplodeOnTriggerComponent>(uid);
+        if (comp.Disposable)
+        {
+            comp.Usable = false; // fry the circuitry
+            RemComp<ExplodeOnTriggerComponent>(uid);
+            RemComp<OnUseTimerTriggerComponent>(uid);
+        }
         RemComp<ActiveTimerTriggerComponent>(uid);
-        RemComp<OnUseTimerTriggerComponent>(uid);
 
         _audio.PlayPvs(comp.DefusalSound, uid);
 
-        RaiseLocalEvent(uid, new BombDefusedEvent(uid), false);
+        RaiseLocalEvent(uid, new BombDefusedEvent(uid));
 
-        UpdateAppearance(uid, comp);
+        _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);
+        _adminLogger.Add(LogType.Explosion, LogImpact.High,
+            $"{ToPrettyString(uid):entity} has been defused.");
     }
 
     #endregion
-
-    private void UpdateAppearance(EntityUid uid, DefusableComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp, false))
-            return;
-
-        _appearance.SetData(uid, DefusableVisuals.Active, comp.BombLive);
-    }
 }
 
 public sealed class BombDefusedEvent : EntityEventArgs

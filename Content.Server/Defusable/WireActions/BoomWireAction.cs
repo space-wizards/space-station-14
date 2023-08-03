@@ -21,28 +21,28 @@ public sealed class BoomWireAction : ComponentWireAction<DefusableComponent>
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.BombLive)
+        if (comp.Activated)
         {
             EntityManager.System<DefusableSystem>().TryDetonateBomb(wire.Owner, comp);
         }
         else
         {
-            comp.BombUsable = false;
+            comp.Usable = false;
         }
         return true;
     }
 
     public override bool Mend(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (!comp.BombLive && !comp.BombUsable)
-            comp.BombUsable = true;
+        if (comp is { Activated: false, Usable: false })
+            comp.Usable = true;
         // you're already dead lol
         return true;
     }
 
     public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.BombLive)
+        if (comp.Activated)
         {
             EntityManager.System<DefusableSystem>().TryDetonateBomb(wire.Owner, comp);
         }

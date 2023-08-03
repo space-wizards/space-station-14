@@ -1,6 +1,7 @@
 using Content.Server.Defusable.Components;
 using Content.Server.Defusable.Systems;
 using Content.Server.Doors.Systems;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Wires;
 using Content.Shared.Defusable;
@@ -17,14 +18,14 @@ public sealed class ActivateWireAction : ComponentWireAction<DefusableComponent>
 
     public override StatusLightState? GetLightState(Wire wire, DefusableComponent comp)
     {
-        return comp.BombLive ? StatusLightState.Off : StatusLightState.BlinkingFast;
+        return comp.Activated ? StatusLightState.Off : StatusLightState.BlinkingFast;
     }
 
     public override object StatusKey { get; } = DefusableWireStatus.LiveIndicator;
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.BombLive)
+        if (comp.Activated)
         {
             EntityManager.System<DefusableSystem>().TryDefuseBomb(wire.Owner, comp);
         }
@@ -39,11 +40,11 @@ public sealed class ActivateWireAction : ComponentWireAction<DefusableComponent>
 
     public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.BombLive)
+        if (comp.Activated)
         {
             if (!comp.ActivatedWireUsed)
             {
-                EntityManager.System<DefusableSystem>().TryDelay(wire.Owner, 30f);
+                EntityManager.System<TriggerSystem>().TryDelay(wire.Owner, 30f);
                 comp.ActivatedWireUsed = true;
             }
             EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-chirp", ("name", wire.Owner)), wire.Owner);
