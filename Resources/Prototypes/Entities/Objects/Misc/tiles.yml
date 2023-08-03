@@ -792,11 +792,13 @@
   id: FloorTileItemWeb
   components:
   - type: Sprite
-    state: reinforced
-  - type: Item
-    heldPrefix: web
+    sprite: Objects/Tiles/web.rsi
+    state: icon
   - type: FloorTile
     outputs:
       - FloorWebTile
   - type: Stack
     stackType: FloorTileWeb
+  - type: Construction
+    graph: TileWeb
+    node: webtile

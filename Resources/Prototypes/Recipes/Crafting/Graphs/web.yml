@@ -1,0 +1,15 @@
+- type: constructionGraph
+  id: TileWeb
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: webtile
+          completed:
+            - !type:SetStackCount
+              amount: 2
+          steps:
+            - material: WebSilk
+              amount: 1
+    - node: webtile
+      entity: FloorTileItemWeb

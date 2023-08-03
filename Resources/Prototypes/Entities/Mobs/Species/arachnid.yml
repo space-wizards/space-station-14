@@ -22,34 +22,41 @@
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: full
   - type: Hunger
+    baseDecayRate: 0.0125
     starvationDamage:
       types:
         Cold: 0.5
         Bloodloss: 0.5
   - type: Thirst
+    baseDecayRate: 0.0125
   # Damage and speed
   - type: Bloodstream
     bloodReagent: SpiderBlood
   - type: Temperature
-    heatDamageThreshold: 400
-    coldDamageThreshold: 285
+    heatDamageThreshold: 340
+    coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 46
     coldDamage:
       types:
-        Cold : 0.2 #per second, scales with temperature & other constants
+        Cold : 0.1 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 0.1 #per second, scales with temperature & other constants
+        Heat : 0.2 #per second, scales with temperature & other constants
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.20 #per second, scales with pressure and other constants.
+        Blunt: 0.2 #per second, scales with pressure and other constants.
   - type: SlowOnDamage
     speedModifierThresholds: # This is an ouch, but it does make up for their extra speed
-      65: 0.7
+      60: 0.6
       80: 0.4
-  # Misc
+  # Visual & Audio
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#162581"
   - type: Speech
     speechSounds: Arachnid
   - type: Vocal
@@ -57,6 +64,18 @@
       Male: UnisexArachnid
       Female: UnisexArachnid
       Unsexed: UnisexArachnid
+  # Misc
+  - type: Sericulture
+    actionProto: SericultureAction
+    productionLength: 3
+    entityProduced: MaterialWebSilk1
+    hungerCost: 5
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - Arachnid
   - type: Inventory
     templateId: arachnid
   - type: MeleeWeapon
@@ -69,7 +88,6 @@
     damage:
       types:
         Slash: 3
-        Poison: 1
   - type: Butcherable
     butcheringType: Spike
     spawned:

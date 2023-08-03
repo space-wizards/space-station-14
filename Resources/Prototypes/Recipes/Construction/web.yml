@@ -1,0 +1,21 @@
+- type: construction
+  name: web wall
+  id: WallWeb
+  graph: WallWeb
+  startNode: start
+  targetNode: wall
+  category: construction-category-structures
+  description: A fairly weak yet silky smooth wall.
+  icon:
+    sprite: /Textures/Structures/Walls/web.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    - !type:CrafterWhitelist
+      whitelist:
+        tags:
+        - Arachnid

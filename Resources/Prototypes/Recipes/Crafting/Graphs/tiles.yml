@@ -9,7 +9,7 @@
             - !type:SetStackCount
               amount: 4
           steps:
-            - material: Steel
+            - material: WebSilk
               amount: 1
     - node: steeltile
       entity: FloorTileItemSteel

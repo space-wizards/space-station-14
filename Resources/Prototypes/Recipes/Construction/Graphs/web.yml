@@ -1,0 +1,17 @@
+- type: constructionGraph
+  id: WallWeb
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: wall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: WebSilk
+              amount: 4
+              doAfter: 3
+
+    - node: wall
+      entity: WallWeb

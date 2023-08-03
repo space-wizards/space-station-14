@@ -936,7 +936,7 @@
         path:
           "/Audio/Weapons/slash.ogg"
   - type: Damageable
-    damageModifierSet: Wood
+    damageModifierSet: Web
   - type: Tag
     tags:
       - Wall
@@ -956,6 +956,10 @@
   - type: IconSmooth
     key: walls
     base: wall
+  - type: Construction
+    graph: WallWeb
+    node: wall
+
 
 # Vault Walls
 
