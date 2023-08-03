@@ -11,7 +11,7 @@ using Robust.UnitTesting;
 namespace Content.IntegrationTests.Tests.Toolshed;
 
 [TestFixture]
-[FixtureLifeCycle(LifeCycle.SingleInstance)]
+[FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public abstract class ToolshedTest : IInvocationContext
 {
     protected PairTracker PairTracker = default!;
