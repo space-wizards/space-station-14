@@ -241,9 +241,9 @@
   name: command crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/secure.rsi
+    sprite: Structures/Storage/Crates/command.rsi
   - type: Sprite
-    sprite: Structures/Storage/Crates/secure.rsi
+    sprite: Structures/Storage/Crates/command.rsi
   - type: AccessReader
     access: [["Command"]]
 
@@ -393,3 +393,102 @@
   - type: Icon
     sprite: Structures/Storage/Crates/toybox.rsi
     state: crate_icon
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateCoffin
+  name: coffin
+  description: A comfy coffin, excelent place for the vampires and corpses.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/coffin.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/coffin.rsi
+    state: base
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: CrateCoffin
+    node: cratecoffin
+    containers:
+    - entity_storage
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateWoodenGrave
+  name: grave
+  suffix: wooden
+  description: Someone died here...
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/wooden_grave.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/wooden_grave.rsi
+    state: base
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Physics
+    bodyType: Static
+
+- type: entity
+  parent: CrateWoodenGrave
+  id: CrateStoneGrave
+  name: grave
+  suffix: stone
+  description: Someone died here...
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/stone_grave.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/stone_grave.rsi
+    state: base
+    
+- type: entity
+  parent: CrateBaseWeldable
+  id: CrateSyndicate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/syndicate.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/syndicate.rsi
+    

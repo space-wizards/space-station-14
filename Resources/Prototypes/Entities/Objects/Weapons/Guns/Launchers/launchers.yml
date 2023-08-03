@@ -33,6 +33,7 @@
         map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+  - type: AmmoCounter
   - type: Gun
     fireRate: 1
     selectedMode: SemiAuto

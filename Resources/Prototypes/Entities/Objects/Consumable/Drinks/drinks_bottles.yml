@@ -383,6 +383,21 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
+  id: DrinkChampagneBottleFull
+  name: champagne bottle
+  description: Only people devoid of imagination can't find an excuse for champagne.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Champagne
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/champagnebottle.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
   id: DrinkWaterBottleFull
   name: water bottle
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.

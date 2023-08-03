@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.Gameplay;
 using Content.Shared.CombatMode;
+using Content.Shared.Effects;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.StatusEffect;
@@ -37,10 +38,9 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     public override void Initialize()
     {
         base.Initialize();
-        InitializeEffect();
         _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _player, _protoManager));
-        SubscribeAllEvent<DamageEffectEvent>(OnDamageEffect);
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
+        UpdatesOutsidePrediction = true;
     }
 
     public override void Shutdown()
@@ -226,7 +226,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     {
         // Server never sends the event to us for predictiveeevent.
         if (_timing.IsFirstTimePredicted)
-            RaiseLocalEvent(new DamageEffectEvent(Color.Red, targets));
+            RaiseLocalEvent(new ColorFlashEffectEvent(Color.Red, targets));
     }
 
     protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
