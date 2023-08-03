@@ -144731,7 +144731,7 @@ entities:
       type: Transform
 - proto: MaintenancePlantSpawner
   entities:
-  - uid: 30926
+  - uid: 30931
     components:
     - pos: -26.5,31.5
       parent: 2
@@ -166546,7 +166546,7 @@ entities:
       type: Transform
 - proto: SpawnPointSeniorResearcher
   entities:
-  - uid: 30927
+  - uid: 30932
     components:
     - pos: 45.5,-37.5
       parent: 2
