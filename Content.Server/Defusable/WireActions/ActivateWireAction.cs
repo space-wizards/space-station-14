@@ -18,7 +18,7 @@ public sealed class ActivateWireAction : ComponentWireAction<DefusableComponent>
 
     public override StatusLightState? GetLightState(Wire wire, DefusableComponent comp)
     {
-        return comp.Activated ? StatusLightState.Off : StatusLightState.BlinkingFast;
+        return comp.Activated ? StatusLightState.BlinkingFast : StatusLightState.Off;
     }
 
     public override object StatusKey { get; } = DefusableWireStatus.LiveIndicator;

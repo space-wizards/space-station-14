@@ -60,13 +60,17 @@ public sealed class DefusableComponent : Component
 
     #region Wires
     // wires, this is so that they're one use
-    [Access(Other=AccessPermissions.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), Access(Other=AccessPermissions.ReadWrite)]
     public bool DelayWireUsed;
-    [Access(Other=AccessPermissions.ReadWrite)]
+
+    [ViewVariables(VVAccess.ReadWrite), Access(Other=AccessPermissions.ReadWrite)]
     public bool ProceedWireCut;
-    [Access(Other=AccessPermissions.ReadWrite)]
+
+    [ViewVariables(VVAccess.ReadWrite), Access(Other=AccessPermissions.ReadWrite)]
     public bool ProceedWireUsed;
-    [Access(Other=AccessPermissions.ReadWrite)]
+
+    [ViewVariables(VVAccess.ReadWrite), Access(Other=AccessPermissions.ReadWrite)]
     public bool ActivatedWireUsed;
+
     #endregion
 }

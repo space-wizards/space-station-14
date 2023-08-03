@@ -17,7 +17,7 @@ public sealed class BoomWireAction : ComponentWireAction<DefusableComponent>
 
     public override StatusLightState? GetLightState(Wire wire, DefusableComponent comp)
     {
-        return StatusLightState.On;
+        return comp.Activated ? StatusLightState.On : StatusLightState.Off;
     }
 
     public override object StatusKey { get; } = DefusableWireStatus.BoomIndicator;

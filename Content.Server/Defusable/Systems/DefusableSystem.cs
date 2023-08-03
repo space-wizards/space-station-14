@@ -10,6 +10,7 @@ using Content.Shared.Defusable;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Defusable.Systems;
@@ -24,6 +25,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly WiresSystem _wiresSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -122,7 +124,8 @@ public sealed class DefusableSystem : SharedDefusableSystem
         }
 
         var xform = Transform(uid);
-        _transform.AnchorEntity(uid, xform);
+        if (!xform.Anchored)
+            _transform.AnchorEntity(uid, xform);
 
         SetBolt(comp, true);
         SetActivated(comp, true);
@@ -145,6 +148,9 @@ public sealed class DefusableSystem : SharedDefusableSystem
         _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);
         _adminLogger.Add(LogType.Explosion, LogImpact.High,
             $"{ToPrettyString(uid):entity} has begun countdown.");
+
+        if (TryComp<WiresPanelComponent>(uid, out var wiresPanelComponent))
+            _wiresSystem.TogglePanel(uid, wiresPanelComponent, false);
     }
 
     public void TryDetonateBomb(EntityUid uid, DefusableComponent comp)

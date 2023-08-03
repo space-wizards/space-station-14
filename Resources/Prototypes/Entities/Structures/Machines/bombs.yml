@@ -91,6 +91,8 @@
       totalIntensity: 5.0
       intensitySlope: 5
       maxIntensity: 4
+    - type: Defusable
+      disposable: true
 
 - type: entity
   parent: BaseHardBomb
@@ -119,43 +121,20 @@
             True: { visible: true }
             False: { visible: false }
     - type: Explosive
-      explosionType: Default
-      totalIntensity: 3000.0
-      intensitySlope: 7
-      maxIntensity: 200
+      explosionType: HardBomb
+      totalIntensity: 4000.0
+      intensitySlope: 3
+      maxIntensity: 400
 
 - type: entity
-  parent: BaseHardBomb
+  parent: SyndicateBomb
   id: DebugHardBomb
   name: debug bomb
   suffix: DEBUG
   description: Holy shit this is gonna explode
   components:
-    - type: Sprite
-      sprite: Structures/Machines/bomb.rsi
-      layers:
-        - state: syndicate-bomb
-        - state: syndicate-bomb-active
-          visible: false
-          map: [ "primed" ]
-        - state: syndicate-bomb-wires
-          visible: false
-          map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-    - type: GenericVisualizer
-      visuals:
-        enum.DefusableVisuals.Active:
-          primed:
-            True: { visible: true }
-            False: { visible: false }
-        enum.WiresVisualLayers.MaintenancePanel:
-          enum.WiresVisualLayers.MaintenancePanel:
-            True: { visible: true }
-            False: { visible: false }
-    - type: Explosive
-      explosionType: Default
-      totalIntensity: 3000.0
-      intensitySlope: 7
-      maxIntensity:
+    - type: Defusable
+      disposable: true
     - type: OnUseTimerTrigger
       delay: 10
       delayOptions: [10, 20, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300]

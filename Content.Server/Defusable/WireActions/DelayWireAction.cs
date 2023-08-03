@@ -23,7 +23,7 @@ public sealed class DelayWireAction : ComponentWireAction<DefusableComponent>
         return comp.DelayWireUsed ? StatusLightState.On : StatusLightState.Off;
     }
 
-    public override object StatusKey { get; } = DefusableWireStatus.BoomIndicator;
+    public override object StatusKey { get; } = DefusableWireStatus.DelayIndicator;
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
@@ -41,7 +41,7 @@ public sealed class DelayWireAction : ComponentWireAction<DefusableComponent>
         {
             EntityManager.System<TriggerSystem>().TryDelay(wire.Owner, 30f);
             comp.DelayWireUsed = true;
+            EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-chirp", ("name", wire.Owner)), wire.Owner);
         }
-        EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-chirp", ("name", wire.Owner)), wire.Owner);
     }
 }

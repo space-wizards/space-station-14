@@ -19,7 +19,7 @@ public sealed class BoltWireAction : ComponentWireAction<DefusableComponent>
         return comp.Bolted ? StatusLightState.On : StatusLightState.Off;
     }
 
-    public override object StatusKey { get; } = DefusableWireStatus.BoomIndicator;
+    public override object StatusKey { get; } = DefusableWireStatus.BoltIndicator;
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
@@ -27,8 +27,8 @@ public sealed class BoltWireAction : ComponentWireAction<DefusableComponent>
         {
             EntityManager.System<DefusableSystem>().SetBolt(comp, false);
             EntityManager.System<AudioSystem>().PlayPvs(comp.BoltSound, wire.Owner);
+            EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner);
         }
-        EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner);
         return true;
     }
 

@@ -22,7 +22,7 @@ public sealed class ProceedWireAction : ComponentWireAction<DefusableComponent>
         return comp.Activated ? StatusLightState.Off : StatusLightState.BlinkingFast;
     }
 
-    public override object StatusKey { get; } = DefusableWireStatus.LiveIndicator;
+    public override object StatusKey { get; } = DefusableWireStatus.ProceedIndicator;
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
