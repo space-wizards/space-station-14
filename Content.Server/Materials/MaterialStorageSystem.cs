@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Logs;
+using Content.Server.Administration.Logs;
 using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -9,6 +9,10 @@ using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using TerraFX.Interop.DirectX;
+using System.Runtime.Intrinsics.Arm;
+using Content.Shared.Mining;
+using System.Linq;
 
 namespace Content.Server.Materials;
 
@@ -34,9 +38,16 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         if (!component.DropOnDeconstruct)
             return;
 
+
         foreach (var (material, amount) in component.Storage)
         {
-            SpawnMultipleFromMaterial(amount, material, Transform(uid).Coordinates);
+            if (component.DropMatsToOre) { // Руда обратно в руду
+                // спавн руды эквивалентом к материалам
+                //EntityManager.SpawnEntity("PlasmaOre", Transform(uid).Coordinates);
+                SpawnMultipleFromOre(amount, material, Transform(uid).Coordinates);
+            }
+            else // Руда в пластины
+                SpawnMultipleFromMaterial(amount, material, Transform(uid).Coordinates); 
         }
     }
 
@@ -64,6 +75,26 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         _adminLogger.Add(LogType.Action, LogImpact.Low,
             $"{ToPrettyString(user):player} inserted {count} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
         return true;
+    }
+
+    /// <summary>
+    // Тоже что и SpawnMultipleFromMaterial, только для спавна непереплавленной руды в печке (OreProcessor)
+    /// </summary>
+    public List<EntityUid> SpawnMultipleFromOre(int amount, string material, EntityCoordinates coordinates)
+    {
+        foreach (var proto in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
+        {
+            if (proto.ID.Contains(material) && proto.Parents != null && proto.Parents.Contains<string>("OreBase"))
+            {
+                if (!proto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
+                    return new List<EntityUid>();
+
+                var materialPerStack = composition.MaterialComposition[material];
+                return _stackSystem.SpawnMultiple(proto.ID, amount / materialPerStack, coordinates);
+            }
+        }
+
+        return new List<EntityUid>();
     }
 
     /// <summary>

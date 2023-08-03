@@ -40,6 +40,12 @@ public sealed class MaterialStorageComponent : Component
     public bool DropOnDeconstruct = true;
 
     /// <summary>
+    /// Переводим материалы в эквивалент руды и дропаем ее
+    /// </summary>
+    [DataField("dropMatsToOre")]
+    public bool DropMatsToOre = false;
+
+    /// <summary>
     /// Whitelist generated on runtime for what specific materials can be inserted into this entity.
     /// </summary>
     [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
