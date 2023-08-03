@@ -1105,7 +1105,7 @@
   id: UplinkUltrabrightLantern
   name: uplink-ultrabright-lantern-name
   description: uplink-ultrabright-lantern-desc
-  productEntity: lanternextrabright #why is this item id not capitalized???
+  productEntity: LanternFlash
   cost:
     Telecrystal: 2
   categories:
