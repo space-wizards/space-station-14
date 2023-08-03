@@ -41,6 +41,7 @@ guide-entry-robotics = Robotics
 
 guide-entry-security = Security
 guide-entry-dna = DNA
+guide-entry-defusal = Hardbomb Defusal
 
 guide-entry-antagonists = Antagonists
 guide-entry-nuclear-operatives = Nuclear Operatives

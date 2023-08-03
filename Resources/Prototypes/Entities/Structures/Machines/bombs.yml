@@ -60,6 +60,10 @@
             - !type:PlaySoundBehavior
               sound:
                 path: /Audio/Effects/metalbreak.ogg
+    - type: GuideHelp
+      openOnActivation: true
+      guides:
+        - Defusal
 
 - type: entity
   parent: BaseHardBomb
@@ -67,6 +71,9 @@
   name: training bomb
   description: A bomb for dummies, manual not included.
   components:
+    - type: Wires
+      LayoutId: DefusableTraining
+      alwaysRandomize: true
     - type: Sprite
       sprite: Structures/Machines/bomb.rsi
       layers:

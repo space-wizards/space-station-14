@@ -4,8 +4,14 @@
   text: "/ServerInfo/Guidebook/Security/Security.xml"
   children:
     - DNA
+    - Defusal
 
 - type: guideEntry
   id: DNA
   name: guide-entry-dna
   text: "/ServerInfo/Guidebook/Security/DNA.xml"
+
+- type: guideEntry
+  id: Defusal
+  name: guide-entry-defusal
+  text: "/ServerInfo/Guidebook/Security/Defusal.xml"
