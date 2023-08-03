@@ -25,11 +25,7 @@ public sealed class ActivateWireAction : ComponentWireAction<DefusableComponent>
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.Activated)
-        {
-            EntityManager.System<DefusableSystem>().TryDefuseBomb(wire.Owner, comp);
-        }
-        return true;
+        return EntityManager.System<DefusableSystem>().ActivateWireCut(user, wire, comp);
     }
 
     public override bool Mend(EntityUid user, Wire wire, DefusableComponent comp)
@@ -41,18 +37,6 @@ public sealed class ActivateWireAction : ComponentWireAction<DefusableComponent>
 
     public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.Activated)
-        {
-            if (!comp.ActivatedWireUsed)
-            {
-                EntityManager.System<TriggerSystem>().TryDelay(wire.Owner, 30f);
-                comp.ActivatedWireUsed = true;
-            }
-            EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-chirp", ("name", wire.Owner)), wire.Owner);
-        }
-        else
-        {
-            EntityManager.System<DefusableSystem>().TryStartCountdown(wire.Owner, comp);
-        }
+        EntityManager.System<DefusableSystem>().ActivateWirePulse(user, wire, comp);
     }
 }

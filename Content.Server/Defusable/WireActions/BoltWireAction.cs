@@ -23,22 +23,16 @@ public sealed class BoltWireAction : ComponentWireAction<DefusableComponent>
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.Activated)
-        {
-            EntityManager.System<DefusableSystem>().SetBolt(comp, false);
-            EntityManager.System<AudioSystem>().PlayPvs(comp.BoltSound, wire.Owner);
-            EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner);
-        }
-        return true;
+        return EntityManager.System<DefusableSystem>().BoltWireCut(user, wire, comp);
     }
 
     public override bool Mend(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        return true;
+        return EntityManager.System<DefusableSystem>().BoltWireMend(user, wire, comp);
     }
 
     public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner);
+        EntityManager.System<DefusableSystem>().BoltWirePulse(user, wire, comp);
     }
 }

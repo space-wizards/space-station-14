@@ -26,14 +26,7 @@ public sealed class ProceedWireAction : ComponentWireAction<DefusableComponent>
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp is not { Activated: true, ProceedWireCut: false })
-            return true;
-
-        EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", wire.Owner)), wire.Owner);
-        EntityManager.System<DefusableSystem>().SetDisplayTime(comp, false);
-
-        comp.ProceedWireCut = true;
-        return true;
+        return EntityManager.System<DefusableSystem>().ProceedWireCut(user, wire, comp);
     }
 
     public override bool Mend(EntityUid user, Wire wire, DefusableComponent comp)
@@ -43,12 +36,6 @@ public sealed class ProceedWireAction : ComponentWireAction<DefusableComponent>
 
     public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.Activated && !comp.ProceedWireUsed)
-        {
-            Logger.Debug("Time proceeded");
-            comp.ProceedWireUsed = true;
-            EntityManager.System<TriggerSystem>().TryDelay(wire.Owner, -15f);
-        }
-        EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", wire.Owner)), wire.Owner);
+        EntityManager.System<DefusableSystem>().ProceedWirePulse(user, wire, comp);
     }
 }
