@@ -516,7 +516,7 @@
   parent: BaseComputer
   id: ComputerComms
   name: communications computer
-  description: This can be used for various important functions. Still under development.
+  description: A computer used to make station wide announcements, set the appropriate alert level, and call the emergency shuttle.
   components:
   - type: Sprite
     layers:
@@ -965,6 +965,8 @@
     board: ComputerMassMediaCircuitboard
   - type: DeviceNetworkRequiresPower
   - type: NewsWrite
+  - type: AccessReader
+    access: [[ "Command" ]]
   - type: ActivatableUI
     key: enum.NewsWriteUiKey.Key
   - type: ActivatableUIRequiresVision

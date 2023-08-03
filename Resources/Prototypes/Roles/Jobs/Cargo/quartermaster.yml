@@ -9,7 +9,7 @@
       time: 54000 # SS220-RoleTime
   weight: 10
   startingGear: QuartermasterGear
-  icon: "QuarterMaster"
+  icon: "JobIconQuarterMaster"
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:

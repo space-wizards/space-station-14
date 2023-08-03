@@ -7,7 +7,7 @@
     - !type:OverallPlaytimeRequirement
       time: 3600 # SS220-RoleTime
   startingGear: ChefGear
-  icon: "Chef"
+  icon: "JobIconChef"
   supervisors: job-supervisors-hop
   access:
   - Service

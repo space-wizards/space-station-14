@@ -6,7 +6,7 @@
     - !type:OverallPlaytimeRequirement
       time: 18000 # SS220-RoleTime
   startingGear: IAAGear
-  icon: "IAA"
+  icon: "JobIconIAA"
   supervisors: job-supervisors-centcom
   canBeAntag: false
   access:

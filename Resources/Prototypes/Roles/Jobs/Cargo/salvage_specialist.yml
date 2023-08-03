@@ -7,7 +7,7 @@
     - !type:DepartmentTimeRequirement
       department: Cargo
       time: 10800 # SS220-RoleTime
-  icon: "ShaftMiner"
+  icon: "JobIconShaftMiner"
   startingGear: SalvageSpecialistGear
   supervisors: job-supervisors-qm
   access:

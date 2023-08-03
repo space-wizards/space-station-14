@@ -162,6 +162,18 @@
 
 - type: entity
   parent: ClothingEyesBase
+  id: ClothingEyesGlassesChemical
+  name: chemical analysis goggles
+  description: Goggles that can scan the chemical composition of a solution.
+  components:
+    - type: Sprite
+      sprite: Clothing/Eyes/Glasses/science.rsi
+    - type: Clothing
+      sprite: Clothing/Eyes/Glasses/science.rsi
+    - type: SolutionScanner
+
+- type: entity
+  parent: ClothingEyesBase
   id: ClothingEyesGlassesBlueShield
   name: blue shield sunglasses
   description: Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes.

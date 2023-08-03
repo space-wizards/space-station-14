@@ -8,7 +8,7 @@
       department: Medical
       time: 18000 # SS220-RoleTime
   startingGear: DoctorGear
-  icon: "MedicalDoctor"
+  icon: "JobIconMedicalDoctor"
   supervisors: job-supervisors-cmo
   access:
   - Medical

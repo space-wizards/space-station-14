@@ -1,9 +1,0 @@
-- type: entity
-  parent: CrateBaseWeldable
-  id: CrateSyndicate
-  name: syndicate crate
-  components:
-    - type: Icon
-      sprite: Corvax/Structures/Storage/Crates/syndicate.rsi
-    - type: Sprite
-      sprite: Corvax/Structures/Storage/Crates/syndicate.rsi

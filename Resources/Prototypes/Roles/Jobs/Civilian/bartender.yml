@@ -7,7 +7,7 @@
     - !type:OverallPlaytimeRequirement
       time: 3600 # SS220-RoleTime
   startingGear: BartenderGear
-  icon: "Bartender"
+  icon: "JobIconBartender"
   supervisors: job-supervisors-hop
   access:
   - Service

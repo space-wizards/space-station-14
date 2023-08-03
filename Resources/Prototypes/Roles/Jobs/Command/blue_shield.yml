@@ -8,7 +8,7 @@
     department: Security
     time: 72000 # Corvax-RoleTime
   startingGear: BlueShieldGear
-  icon: "BlueShield"
+  icon: "JobIconBlueShield"
   supervisors: job-supervisors-centcom
   canBeAntag: false
   access:

@@ -11,7 +11,6 @@ namespace Content.Server.Power.EntitySystems
     [UsedImplicitly]
     public sealed class BatterySystem : EntitySystem
     {
-        [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
         public override void Initialize()
         {
             base.Initialize();

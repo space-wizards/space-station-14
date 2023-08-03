@@ -1,6 +1,7 @@
 using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
 using Robust.Server.Player;
+using Robust.Shared.Toolshed;
 
 
 namespace Content.Server.Administration.Managers
@@ -87,5 +88,7 @@ namespace Content.Server.Administration.Managers
         void Initialize();
 
         void PromoteHost(IPlayerSession player);
+
+        bool TryGetCommandFlags(CommandSpec command, out AdminFlags[]? flags);
     }
 }

@@ -8,7 +8,7 @@
       time: 36000 # 10 hrs
   startingGear: LawyerGear
   setPreference: false
-  icon: "Lawyer"
+  icon: "JobIconLawyer"
   supervisors: job-supervisors-hop
   access:
   - Service

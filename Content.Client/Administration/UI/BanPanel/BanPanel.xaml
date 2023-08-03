@@ -12,7 +12,7 @@
                     <LineEdit Name="PlayerNameLine" MinWidth="100" HorizontalExpand="True" PlaceHolder="{Loc ban-panel-player}" />
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal" Margin="2">
-                    <CheckBox Name="IpCheckbox" MinWidth="100" Text="{Loc ban-panel-ip}" Pressed="False" />
+                    <CheckBox Name="IpCheckbox" MinWidth="100" Text="{Loc ban-panel-ip}" Pressed="True" />
                     <Control MinWidth="50" />
                     <LineEdit Name="IpLine" MinWidth="100" HorizontalExpand="True" PlaceHolder="{Loc ban-panel-ip}" ToolTip="{Loc ban-panel-ip-hwid-tooltip}" Editable="False" />
                 </BoxContainer>

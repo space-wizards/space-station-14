@@ -10522,7 +10522,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 21828
       type: Docking
-    - SecondsUntilStateChange: -36284.66
+    - SecondsUntilStateChange: -50920.91
       changeAirtight: False
       state: Opening
       type: Door
@@ -10570,7 +10570,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 562
       type: Docking
-    - SecondsUntilStateChange: -36284.66
+    - SecondsUntilStateChange: -50920.91
       changeAirtight: False
       state: Opening
       type: Door
@@ -131840,6 +131840,33 @@ entities:
   - uid: 26554
     components:
     - pos: -8.5,53.5
+      parent: 8364
+      type: Transform
+  - uid: 26633
+    components:
+    - pos: -4.5,-48.5
+      parent: 8364
+      type: Transform
+- proto: MaintenancePlantSpawner
+  entities:
+  - uid: 27525
+    components:
+    - pos: -53.5,9.5
+      parent: 8364
+      type: Transform
+  - uid: 27526
+    components:
+    - pos: -35.5,-15.5
+      parent: 8364
+      type: Transform
+  - uid: 27527
+    components:
+    - pos: 41.5,-66.5
+      parent: 8364
+      type: Transform
+  - uid: 27528
+    components:
+    - pos: 82.5,-37.5
       parent: 8364
       type: Transform
 - proto: MaintenanceToolSpawner

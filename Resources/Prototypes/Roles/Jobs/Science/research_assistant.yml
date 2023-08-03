@@ -7,7 +7,7 @@
     - !type:OverallPlaytimeRequirement
       time: 3600 # SS220-RoleTime
   startingGear: ResearchAssistantGear
-  icon: "ResearchAssistant"
+  icon: "JobIconResearchAssistant"
   supervisors: job-supervisors-science
   canBeAntag: false
   access:

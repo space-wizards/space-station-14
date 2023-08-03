@@ -117,7 +117,7 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/rejuvenate.png")),
                     Act = () =>
                     {
-                        RejuvenateCommand.PerformRejuvenate(args.Target);
+                        _rejuvenate.PerformRejuvenate(args.Target);
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-rejuvenate-description"),

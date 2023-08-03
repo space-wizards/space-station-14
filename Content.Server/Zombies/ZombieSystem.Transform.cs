@@ -239,7 +239,7 @@ namespace Content.Server.Zombies
             else
             {
                 var htn = EnsureComp<HTNComponent>(target);
-                htn.RootTask = "SimpleHostileCompound";
+                htn.RootTask = new HTNCompoundTask() {Task = "SimpleHostileCompound"};
                 htn.Blackboard.SetValue(NPCBlackboard.Owner, target);
                 _npc.WakeNPC(target, htn);
             }

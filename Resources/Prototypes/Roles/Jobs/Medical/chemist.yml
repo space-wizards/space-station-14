@@ -8,7 +8,7 @@
       department: Medical
       time: 10800 # SS220-RoleTime
   startingGear: ChemistGear
-  icon: "Chemist"
+  icon: "JobIconChemist"
   supervisors: job-supervisors-cmo
   access:
   - Medical

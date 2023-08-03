@@ -8,7 +8,7 @@
       department: Medical
       time: 9000 # SS220-RoleTime
   startingGear: ParamedicGear
-  icon: "Paramedic"
+  icon: "JobIconParamedic"
   supervisors: job-supervisors-cmo
   access:
   - Medical
