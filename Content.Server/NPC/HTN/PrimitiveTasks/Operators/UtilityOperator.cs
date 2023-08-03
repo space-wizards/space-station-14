@@ -15,13 +15,13 @@ public sealed class UtilityOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    [DataField("key")] public string Key = "CombatTarget";
+    [DataField("key")] public string Key = "Target";
 
     /// <summary>
     /// The EntityCoordinates of the specified target.
     /// </summary>
     [DataField("keyCoordinates")]
-    public string KeyCoordinates = "CombatTargetCoordinates";
+    public string KeyCoordinates = "TargetCoordinates";
 
     [DataField("proto", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<UtilityQueryPrototype>))]
     public string Prototype = string.Empty;

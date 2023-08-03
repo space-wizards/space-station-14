@@ -33,6 +33,9 @@
     <Compile Update="UserInterface\Systems\Inventory\Windows\StrippingWindow.xaml.cs">
       <DependentUpon>StrippingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Bql\ToolshedVisualizeWindow.xaml.cs">
+      <DependentUpon>ToolshedVisualizeWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />

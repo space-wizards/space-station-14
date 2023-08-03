@@ -228,6 +228,7 @@
       - ClothingBackpackDuffelHolding
       - WelderExperimental
       - JawsOfLife
+      - ClothingEyesGlassesChemical
 
 - type: entity
   id: CircuitImprinter

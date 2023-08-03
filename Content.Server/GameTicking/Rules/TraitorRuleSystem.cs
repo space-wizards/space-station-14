@@ -249,7 +249,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         traitorRole.Mind.Briefing = string.Format(
             "{0}\n{1}",
             Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", traitorRule.Codewords))),
-            Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("", code))));
+            Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp","#"))));
 
         // Assign traitor roles
         _mindSystem.AddRole(mind, traitorRole);
@@ -295,7 +295,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         {
            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
-           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("", code))));
+           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
         }
     }
 
