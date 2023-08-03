@@ -356,6 +356,9 @@ namespace Content.Server.Construction
                 {
                     if (!_container.TryGetContainer(uid, container, out var ourContainer, containerManager))
                         continue;
+                    // затычка для клонерки, clonepod-bodyContainer это ContainerSlot, перенос контента осуществляется в OnComponentInit клонерки
+                    if (container == "clonepod-bodyContainer")
+                        continue;
 
                     // NOTE: Only Container is supported by Construction!
                     var otherContainer = _container.EnsureContainer<Container>(newUid, container, newContainerManager);
