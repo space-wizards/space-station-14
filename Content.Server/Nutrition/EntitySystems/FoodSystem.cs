@@ -27,6 +27,7 @@ using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using Content.Shared.Tag;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -50,6 +51,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly ReactiveSystem _reaction = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StackSystem _stack = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
         public const float MaxFeedDistance = 1.0f;
 
@@ -94,6 +96,20 @@ namespace Content.Server.Nutrition.EntitySystems
             //Suppresses self-eating
             if (food == user || TryComp<MobStateComponent>(food, out var mobState) && _mobStateSystem.IsAlive(food, mobState)) // Suppresses eating alive mobs
                 return (false, false);
+
+            // Check if there's a required tag and if it 
+            if (foodComp.RequiredTag != String.Empty && !_tags.HasTag(target, foodComp.RequiredTag))
+                return (false, false);
+
+            Console.Write(foodComp.RequiredTag != String.Empty && !_tags.HasTag(target, foodComp.RequiredTag));
+            Console.Write(_tags.HasTag(target, "ClothEater") && (foodComp.RequiredTag == String.Empty || foodComp.RequiredTag != "ClothEater"));
+
+            // Make sure moths can't eat anything else
+            if (_tags.HasTag(target, "ClothEater") && (foodComp.RequiredTag == String.Empty || foodComp.RequiredTag != "ClothEater"))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("food-repulsing"), target);
+                return (false, false);
+            }
 
             // Target can't be fed or they're already eating
             if (!TryComp<BodyComponent>(target, out var body))

@@ -1,0 +1,11 @@
+﻿- type: entity
+  id: OrganMothStomach
+  parent: [OrganAnimalStomach, OrganHumanStomach]
+  noSpawn: true
+  components:
+  - type: Stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+  metabolizerTypes: [ Moth ]

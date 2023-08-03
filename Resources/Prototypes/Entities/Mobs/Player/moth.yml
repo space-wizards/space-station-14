@@ -2,4 +2,4 @@
   save: false
   name: Urist McFluff
   parent: [BaseMobMoth, MobHuman]
-  id: MobMoth
+  id: MobMoth 

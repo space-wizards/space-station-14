@@ -53,6 +53,9 @@
     weightlessAcceleration: 0.5
     weightlessFriction: 0.75
     weightlessModifier: 0.6
+  - type: Tag
+    tags: 
+      - ClothEater 
 
 - type: entity
   save: false

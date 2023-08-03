@@ -73,6 +73,13 @@ namespace Content.Server.Nutrition.Components
         [DataField("forceFeedDelay")]
         public float ForceFeedDelay = 3;
 
+        /// <summary>
+        ///     This is how many seconds it takes to force feed someone this food.
+        ///     Should probably be smaller for small items like pills.
+        /// </summary>
+        [DataField("requiredTag")]
+        public string RequiredTag = string.Empty;
+
         [ViewVariables]
         public int UsesRemaining
         {
