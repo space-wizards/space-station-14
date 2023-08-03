@@ -44,6 +44,7 @@
             - MachineMask
           layer:
             - MachineLayer
+    - type: WiresPanel
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
