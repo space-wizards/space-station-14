@@ -83,10 +83,6 @@ public sealed class DefusableSystem : SharedDefusableSystem
         }
     }
 
-    #endregion
-
-    #region Anchorable
-
     private void OnAnchorAttempt(EntityUid uid, DefusableComponent component, AnchorAttemptEvent args)
     {
         CheckAnchorAttempt(uid, component, args);
@@ -108,8 +104,8 @@ public sealed class DefusableSystem : SharedDefusableSystem
             args.Cancel();
         }
     }
-    #endregion
 
+    #endregion
 
     #region Public
 
