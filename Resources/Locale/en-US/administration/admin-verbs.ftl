@@ -7,3 +7,5 @@ admin-verbs-teleport-to = Teleport To
 admin-verbs-teleport-here = Teleport Here
 admin-verbs-freeze = Freeze
 admin-verbs-unfreeze = Unfreeze
+toolshed-verb-mark = Mark
+toolshed-verb-mark-description = Places this entity into the $marked variable, a list of entities, replacing it's prior value.

@@ -27,4 +27,10 @@ public sealed class UpgradePowerSupplierComponent : Component
     /// </summary>
     [DataField("scaling", required: true), ViewVariables(VVAccess.ReadWrite)]
     public MachineUpgradeScalingType Scaling;
+
+    /// <summary>
+    /// The current value that the power supply is being scaled by,
+    /// </summary>
+    [DataField("actualScalar"), ViewVariables(VVAccess.ReadWrite)]
+    public float ActualScalar = 1f;
 }

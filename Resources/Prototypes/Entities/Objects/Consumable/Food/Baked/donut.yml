@@ -444,6 +444,7 @@
 - type: entity
   parent: FoodDonutPink
   id: FoodDonutPoison
+  suffix: Poison
   components:
   - type: SolutionContainerManager
     solutions:

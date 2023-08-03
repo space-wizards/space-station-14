@@ -9,7 +9,8 @@
     factions:
     - SimpleNeutral
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/slimes.rsi

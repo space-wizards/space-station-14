@@ -4,6 +4,7 @@ using Content.Server.Audio;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Materials;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Station.Systems;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.DoAfter;
@@ -28,6 +29,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly MaterialStorageSystem _material = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+    [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 

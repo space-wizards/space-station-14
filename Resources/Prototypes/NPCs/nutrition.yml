@@ -1,31 +1,56 @@
 - type: htnCompound
   id: FoodCompound
   branches:
-  - tasks:
-    - id: PickFoodTargetPrimitive
-    - id: MoveToCombatTargetPrimitive
-    - id: EatPrimitive
-    - id: WaitIdleTimePrimitive
-  - tasks:
-    - id: PickDrinkTargetPrimitive
-    - id: MoveToCombatTargetPrimitive
-    - id: EatPrimitive
-    - id: WaitIdleTimePrimitive
+    # Picks a nearby food, moves into range, then eats it and waits the idle time.
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyFood
 
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MeleeRange
 
-- type: htnPrimitive
-  id: PickFoodTargetPrimitive
-  operator: !type:UtilityOperator
-    proto: NearbyFood
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+          operator: !type:AltInteractOperator
 
-- type: htnPrimitive
-  id: PickDrinkTargetPrimitive
-  operator: !type:UtilityOperator
-    proto: NearbyDrink
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: IdleTime
+          operator: !type:WaitOperator
+            key: IdleTime
 
-- type: htnPrimitive
-  id: EatPrimitive
-  preconditions:
-  - !type:KeyExistsPrecondition
-    key: CombatTarget
-  operator: !type:AltInteractOperator
+    # Picks nearby drink then consumes it and waits idle time
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyDrink
+
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MeleeRange
+
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+          operator: !type:AltInteractOperator
+
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: IdleTime
+          operator: !type:WaitOperator
+            key: IdleTime
