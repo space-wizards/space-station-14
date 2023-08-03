@@ -1,5 +1,4 @@
 using Content.Server.DoAfter;
-using Content.Server.NPC.Systems;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Blob;
@@ -9,7 +8,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Pulling.Components;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -24,7 +22,6 @@ namespace Content.Server.Blob.NPC.BlobPod
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
-        [Dependency] private readonly NPCCombatTargetSystem _combatTargetSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         public override void Initialize()
         {
@@ -68,9 +65,6 @@ namespace Content.Server.Blob.NPC.BlobPod
 
             if (args.Cancelled)
             {
-                if (TryComp<SharedPullableComponent>(args.Args.Target.Value, out var pullable) && pullable.Puller != null)
-                    _combatTargetSystem.StartHostility(uid, pullable.Puller.Value);
-
                 return;
             }
 
