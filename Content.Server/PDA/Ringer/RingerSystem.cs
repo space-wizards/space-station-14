@@ -122,7 +122,30 @@ namespace Content.Server.PDA.Ringer
 
         public void RandomizeUplinkCode(EntityUid uid, RingerUplinkComponent uplink, ComponentInit args)
         {
-            uplink.Code = GenerateRingtone();
+            var notes = new[]
+            {
+                Note.A,
+                Note.Asharp,
+                Note.B,
+                Note.C,
+                Note.Csharp,
+                Note.D,
+                Note.Dsharp,
+                Note.E,
+                Note.F,
+                Note.Fsharp,
+                Note.G,
+                Note.Gsharp,
+            };
+
+            var ringtone = new Note[RingtoneLength];
+
+            for (var i = 0; i < RingtoneLength; i++)
+            {
+                ringtone[i] = _random.Pick(notes);
+            }
+
+            uplink.Code = ringtone;
         }
 
         //Non Event Functions
@@ -141,7 +164,7 @@ namespace Content.Server.PDA.Ringer
 
             var ringtone = new Note[RingtoneLength];
 
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i < RingtoneLength; i++)
             {
                 ringtone[i] = _random.Pick(notes);
             }
@@ -196,7 +219,7 @@ namespace Content.Server.PDA.Ringer
 
                 ringer.NoteCount++;
 
-                if (ringer.NoteCount > 3)
+                if (ringer.NoteCount > RingtoneLength - 1)
                 {
                     remove.Add(uid);
                     UpdateRingerUserInterface(uid, ringer);
