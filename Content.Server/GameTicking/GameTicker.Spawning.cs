@@ -2,9 +2,11 @@ using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Ghost;
+using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
+using Content.Server.SS220.TraitorComponentTarget;
 using Content.Server.Station.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
@@ -186,6 +188,8 @@ namespace Content.Server.GameTicking
             var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, job, character);
             DebugTools.AssertNotNull(mobMaybe);
             var mob = mobMaybe!.Value;
+
+            EntityManager.AddComponent<TraitorTargetComponent>(mob);
 
             _mind.TransferTo(newMind, mob);
 

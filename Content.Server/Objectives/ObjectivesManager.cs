@@ -31,7 +31,7 @@ namespace Content.Server.Objectives
                     return null;
                 }
 
-                if (_prototypeManager.TryIndex<ObjectivePrototype>(group.Pick(_random), out var objective)
+                if (_prototypeManager.TryIndex<ObjectivePrototype>(group.Pick(_random), out var objective) 
                     && objective.CanBeAssigned(mind))
                     return objective;
                 else

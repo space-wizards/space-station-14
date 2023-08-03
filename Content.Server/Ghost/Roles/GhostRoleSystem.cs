@@ -22,6 +22,8 @@ using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Server.SS220.TraitorComponentTarget;
+using Content.Server.Administration.Commands;
 
 namespace Content.Server.Ghost.Roles
 {
@@ -256,6 +258,12 @@ namespace Content.Server.Ghost.Roles
         {
             if (!TryComp(uid, out GhostRoleComponent? ghostRole))
                 return;
+
+
+
+            if (EntityManager.TryGetComponent(uid, out TraitorTargetComponent? tc))
+                EntityManager.RemoveComponent<TraitorTargetComponent>(uid);
+            
 
             ghostRole.Taken = true;
             UnregisterGhostRole(ghostRole);

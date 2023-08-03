@@ -775,7 +775,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 var newMind = _mindSystem.CreateMind(session.UserId, spawnDetails.Name);
                 _mindSystem.SetUserId(newMind, session.UserId);
                 _mindSystem.AddRole(newMind, new NukeopsRole(newMind, nukeOpsAntag));
-
+                
                 _mindSystem.TransferTo(newMind, mob);
             }
             else if (addSpawnPoints)
