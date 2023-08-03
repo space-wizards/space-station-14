@@ -911,11 +911,23 @@
   name: salvage magnet machine board
   description: A machine printed circuit board for a salvage magnet.
   components:
-  - type: MachineBoard
-    prototype: SalvageMagnet
-    requirements:
-      Capacitor: 4
-    materialRequirements:
-      Steel: 5
-      CableHV: 5
-      Cable: 2
+    - type: MachineBoard
+      prototype: SalvageMagnet
+      requirements:
+        Capacitor: 4
+      materialRequirements:
+        Steel: 5
+        CableHV: 5
+        Cable: 2
+
+- type: entity
+  id: PDANanotrasenMessengerServerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Nanotrasen crew pda messenger server machine board
+  description: A machine printed circuit board for a messenger server.
+  components:
+    - type: MachineBoard
+      prototype: PDANanotrasenMessengerServer
+      materialRequirements:
+        Steel: 1
+        Cable: 2

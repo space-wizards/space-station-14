@@ -63,6 +63,7 @@
     softness: 5
     autoRot: true
   - type: Ringer
+  - type: StationLimitedNetwork
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: Pda
@@ -74,6 +75,7 @@
     preinstalled:
       - NotekeeperCartridge
       - NewsReadCartridge
+      - MessengerCartridgeClient
     cartridgeSlot:
       priority: -1
       name: Cartridge

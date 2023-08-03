@@ -91,3 +91,13 @@
   id: BasicDevice
   name: device-frequency-prototype-name-basic-device
   frequency: 1280
+
+- type: deviceFrequency
+  id: MessengerClient
+  name: device-frequency-prototype-name-msg-client
+  frequency: 2203
+
+- type: deviceFrequency
+  id: MessengerServer
+  name: device-frequency-prototype-name-msg-server
+  frequency: 2204

@@ -1,0 +1,11 @@
+<messenger:MessengerUiMessageItem xmlns:messenger="clr-namespace:Content.Client.CartridgeLoader.Cartridges.Messenger"
+                                  xmlns="https://spacestation14.io" Margin="1 0 2 0">
+    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
+    <PanelContainer Name="MessageContainer" Access="Public" Margin="2 5 2 5" StyleClasses="Inset" VerticalAlignment="Center" VerticalExpand="True" HorizontalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="5 2 5 2">
+            <RichTextLabel Name="MessageLabel" Access="Public" HorizontalExpand="True" MaxWidth="350"/>
+            <Label Name="TimeLabel" Access="Public" Text="" HorizontalExpand="True"/>
+        </BoxContainer>
+    </PanelContainer>
+</messenger:MessengerUiMessageItem>
+

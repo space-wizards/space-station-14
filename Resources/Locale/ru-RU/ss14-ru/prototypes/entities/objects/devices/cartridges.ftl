@@ -4,3 +4,5 @@ ent-NewsReadCartridge = картридж Новости
     .desc = Программа для чтения новостей
 ent-NetProbeCartridge = картридж NetProbe
     .desc = Программа для получения адресов и частот сетевых устройств
+ent-MessengerCartridge = картридж месенджер
+    .desc = Месенджер

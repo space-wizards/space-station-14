@@ -1,0 +1,93 @@
+﻿- type: entity
+  id: BaseMessengerServer
+  parent: BaseMachinePowered
+  name: messenger server
+  description: Receives and store messages.
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/server.rsi
+      layers:
+        - state: server
+        - state: server-on
+    - type: Construction
+      graph: Machine
+      node: machine
+      containers:
+        - machine_board
+        - machine_parts
+    - type: ContainerContainer
+      containers:
+        machine_board: !type:Container
+        machine_parts: !type:Container
+    - type: StationLimitedNetwork
+    - type: ApcPowerReceiver
+      powerLoad: 200
+      priority: Low
+    - type: ExtensionCableReceiver
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 600
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 300
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 1
+                  max: 2
+    - type: AmbientSound
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/server_fans.ogg
+
+- type: entity
+  id: PDANanotrasenMessengerServer
+  parent: BaseMessengerServer
+  name: Nanotrasen crew pda messenger server
+  description: Receives and store messages.
+  components:
+    - type: Machine
+      board: PDANanotrasenMessengerServerCircuitboard
+    - type: StationLimitedNetwork
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: MessengerServer
+      transmitFrequencyId: MessengerClient
+      prefix: device-address-prefix-msg-server
+    - type: WirelessNetworkConnection
+      range: 500
+    - type: MessengerServer
+      serverName: "Nanotrasen Messenger Server"
+    - type: AccessReader
+      denyTags: [ "NuclearOperative" ]
+
+- type: entity
+  id: PDASyndicateMessengerServer
+  parent: BaseMessengerServer
+  name: Syndicate crew pda messenger server
+  description: Receives and store messages.
+  components:
+    - type: StationLimitedNetwork
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: MessengerServer
+      transmitFrequencyId: MessengerClient
+      prefix: device-address-prefix-msg-server
+    - type: WirelessNetworkConnection
+      range: 500
+    - type: MessengerServer
+      serverName: "Syndicate Messenger Server"
+    - type: AccessReader
+      access: [[ "NuclearOperative" ]]

@@ -39,3 +39,9 @@ device-net-id-wireless = Wireless
 device-net-id-apc = Apc
 device-net-id-atmos-devices = Atmos Devices
 device-net-id-reserved = Reserved
+
+#Messenger
+device-frequency-prototype-name-msg-client = MessengerC
+device-frequency-prototype-name-msg-server = MessengerS
+device-address-prefix-msg-client = msgc-
+device-address-prefix-msg-server = msgs-

@@ -1,0 +1,15 @@
+<messenger:MessengerUiFragment xmlns:messenger="clr-namespace:Content.Client.CartridgeLoader.Cartridges.Messenger"
+                               xmlns="https://spacestation14.io" Margin="1 0 2 0">
+    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <LineEdit Name="ChatsSearch" Access="Public" HorizontalExpand="true" PlaceHolder="{Loc 'messenger-ui-search-line'}"/>
+        <Button Visible="False" Name="BackButton" Text="{Loc 'messenger-ui-back-button'}"/>
+        <Label Visible="False" Name="ChatNameLabel" Align="Center"></Label>
+        <ScrollContainer HorizontalExpand="False" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" Name="ChatsContainer" HorizontalExpand="False" VerticalExpand="True"></BoxContainer>
+        </ScrollContainer>
+        <LineEdit Name="MessageInput" Visible="False" HorizontalExpand="True" SetHeight="32"/>
+        <Button Name="SendButton" Visible="False" Text="{Loc 'messenger-ui-send-message-button'}"/>
+        <Label Visible="False" Name="ErrorLabel"></Label>
+    </BoxContainer>
+</messenger:MessengerUiFragment>
