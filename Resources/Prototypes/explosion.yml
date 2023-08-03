@@ -110,8 +110,8 @@
       Blunt: 15
       Piercing: 6
       Structural: 15
-  tileBreakChance: [ 0.5, 0.75, 1 ]
-  tileBreakIntensity: [ 1, 10, 15 ]
+  tileBreakChance: [ 0.5, 0.75, 0.75, 0.75, 1, 1, 1 ]
+  tileBreakIntensity: [ 5, 10, 15 ]
   tileBreakRerollReduction: 30
   intensityPerState: 20
   lightColor: Orange
