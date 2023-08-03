@@ -55,7 +55,7 @@ public sealed class AdminFaxEui : BaseEui
             case AdminFaxEuiMsg.Send sendData:
             {
                 var printout = new FaxPrintout(sendData.Content, sendData.Title, null, sendData.StampState,
-                        new() { new StampDisplayInfo { StampedName = sendData.From, StampedColor = Color.FromHex("#BB3232") } });
+                        new() { new StampDisplayInfo { StampedName = sendData.From, StampedColor = sendData.StampColor } });
                 _faxSystem.Receive(sendData.Target, printout);
                 break;
             }
