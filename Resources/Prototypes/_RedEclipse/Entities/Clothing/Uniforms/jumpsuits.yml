@@ -1,0 +1,10 @@
+- type: entity
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformJumpsuitSyndicateAgentInitiate
+  name: initiate agent jumpsuit
+  description: Uniform for initiate syndicate operatives performing generic operations.
+  components:
+    - type: Sprite
+      sprite: _RedEclipse/Clothing/Uniforms/Jumpsuit/syndicate-agent-initiate.rsi
+    - type: Clothing
+      sprite: _RedEclipse/Clothing/Uniforms/Jumpsuit/syndicate-agent-initiate.rsi
