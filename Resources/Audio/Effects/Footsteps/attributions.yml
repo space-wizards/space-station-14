@@ -32,3 +32,19 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken and modified from tgstation (clownstep 1 and 2) by brainfood1183 (github)"
   source: "https://github.com/tgstation/tgstation/tree/f8ee37afc00bce1ad421615eaa0e4cbddd5eea90/sound/effects"
+
+- files:
+  - fisherboots1.ogg
+  - fisherboots2.ogg
+  - fisherboots3.ogg
+  - fisherboots4.ogg
+  - fisherboots5.ogg
+  - fisherboots6.ogg
+  - fisherboots7.ogg
+  - fisherboots8.ogg
+  - fisherboots9.ogg
+  - fisherboots10.ogg
+  - fisherboots11.ogg
+  - fisherboots12.ogg
+  license: "fisherboots1.ogg through fisherboots12.ogg by Pixabay from Pixabay. Modified for use by The Best Nerd."
+  source: "https://pixabay.com/sound-effects/rubber-squeak-type-07-192-mono-27378/"
