@@ -25,11 +25,24 @@ namespace Content.Shared.CombatMode
         [ViewVariables(VVAccess.ReadWrite), DataField("canDisarm")]
         public bool? CanDisarm;
 
-        [DataField("disarmSuccessSound")]
-        public readonly SoundSpecifier DisarmSuccessSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
+        [DataField("disarmSuccessSound")] public readonly SoundSpecifier DisarmSuccessSound =
+            new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg")
+            {
+                Params = new AudioParams
+                {
+                    Variation = 0.025f,
+                    Volume = 5f,
+                }
+            };
 
-        [DataField("disarmFailChance")]
-        public readonly float BaseDisarmFailChance = 0.75f;
+        /// <summary>
+        /// Chance to outright disarm a target.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("disarmFailChance")]
+        public readonly float DisarmChance = 0.25f;
+
+        [ViewVariables(VVAccess.ReadWrite), DataField("disarmStaminaDamage")]
+        public float DisarmStaminaDamage = 15f;
 
         #endregion
 

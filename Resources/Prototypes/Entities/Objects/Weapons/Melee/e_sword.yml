@@ -11,7 +11,6 @@
             Heat: 15
             Structural: 4
             Blunt: -4.5
-    litDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:
@@ -49,8 +48,6 @@
       right:
       - state: inhand-right-blade
         shader: unshaded
-  - type: DisarmMalus
-    malus: 0
   - type: Reflect
     enabled: false
 
@@ -68,7 +65,6 @@
             Slash: 9
             Heat: 9
             Blunt: -1
-    litDisarmMalus: 0.4
     activateSound: !type:SoundPathSpecifier
       path: /Audio/Weapons/ebladeon.ogg
       params:
@@ -116,8 +112,6 @@
   - type: Tag
     tags:
     - Write
-  - type: DisarmMalus
-    malus: 0
 
 - type: entity
   parent: BaseItem
@@ -148,7 +142,6 @@
             Slash: 7.5
             Heat: 7.5
             Blunt: -1
-    litDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
     layers:
@@ -177,7 +170,6 @@
             Heat: 9
             Structural: 20
             Blunt: -4.5
-    litDisarmMalus: 0.7
   - type: MeleeWeapon
     attackRate: 1.6
     angle: 100

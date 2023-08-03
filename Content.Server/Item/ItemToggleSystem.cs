@@ -1,4 +1,3 @@
-using Content.Server.CombatMode.Disarm;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -50,9 +49,6 @@ public sealed class ItemToggleSystem : EntitySystem
         if (TryComp(uid, out ItemComponent? item))
             _item.SetSize(uid, comp.OffSize, item);
 
-        if (TryComp<DisarmMalusComponent>(uid, out var malus))
-            malus.Malus -= comp.ActivatedDisarmMalus;
-
         _audio.Play(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
 
         comp.Activated = false;
@@ -62,9 +58,6 @@ public sealed class ItemToggleSystem : EntitySystem
     {
         if (TryComp(uid, out ItemComponent? item))
             _item.SetSize(uid, comp.OnSize, item);
-
-        if (TryComp<DisarmMalusComponent>(uid, out var malus))
-            malus.Malus += comp.ActivatedDisarmMalus;
 
         _audio.Play(comp.ActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.ActivateSound.Params);
 

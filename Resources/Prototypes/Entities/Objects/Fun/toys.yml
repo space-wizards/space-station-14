@@ -815,8 +815,6 @@
         right:
           - state: inhand-right-blade
             shader: unshaded
-    - type: DisarmMalus
-      malus: 0
     - type: StaminaDamageOnHit
       damage: 8
     - type: MeleeWeapon
@@ -904,8 +902,6 @@
       size: 5
       sprite: Objects/Fun/rubber_hammer.rsi
     - type: Appearance
-    - type: DisarmMalus
-      malus: 0
     - type: MeleeWeapon
       soundHit:
         collection: RubberHammer

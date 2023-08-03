@@ -32,8 +32,6 @@
     quickEquip: false
     slots:
     - Belt
-  - type: DisarmMalus
-    malus: 0.225
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -78,8 +76,6 @@
     quickEquip: false
     slots:
     - Belt
-  - type: DisarmMalus
-    malus: 0.225
   - type: Appearance
   - type: StaticPrice
     price: 100

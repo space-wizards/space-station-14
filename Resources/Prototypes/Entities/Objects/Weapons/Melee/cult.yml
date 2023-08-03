@@ -19,7 +19,6 @@
     sprite: Objects/Weapons/Melee/cult_dagger.rsi
     slots:
     - back
-  - type: DisarmMalus
 
 - type: entity
   name: eldritch blade
@@ -42,7 +41,6 @@
     sprite: Objects/Weapons/Melee/cult_blade.rsi
     slots:
     - back
-  - type: DisarmMalus
 
 - type: entity
   name: unholy halberd

@@ -1,20 +1,28 @@
-using Content.Shared.Speech.EntitySystems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Speech.Components;
 
-[RegisterComponent]
+/// <summary>
+/// Sends IC chat messages whenever doing melee combat.
+/// </summary>
+[RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
 public sealed partial class MeleeSpeechComponent : Component
 {
-
+    /// <summary>
+    /// The text to send.
+    /// </summary>
 	[ViewVariables(VVAccess.ReadWrite)]
 	[DataField("Battlecry")]
 	[AutoNetworkedField]
 	public string? Battlecry;
 
+    /// <summary>
+    /// Max text length.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("MaxBattlecryLength")]
+    [DataField("MaxBattlecryLength"), AutoNetworkedField]
     public int MaxBattlecryLength = 12;
 }
 
@@ -34,7 +42,7 @@ public enum MeleeSpeechUiKey : byte
 [Serializable, NetSerializable]
 public sealed class MeleeSpeechBoundUserInterfaceState : BoundUserInterfaceState
 {
-    public string CurrentBattlecry { get; }
+    public string CurrentBattlecry;
 
     public MeleeSpeechBoundUserInterfaceState(string currentBattlecry)
     {
@@ -45,7 +53,8 @@ public sealed class MeleeSpeechBoundUserInterfaceState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class MeleeSpeechBattlecryChangedMessage : BoundUserInterfaceMessage
 {
-    public string Battlecry { get; }
+    public string Battlecry;
+
     public MeleeSpeechBattlecryChangedMessage(string battlecry)
     {
         Battlecry = battlecry;

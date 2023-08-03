@@ -18,14 +18,13 @@
   - type: Reflect
     enabled: true
     reflectProb: .5
-    spread: 90        
+    spread: 90
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
   - type: Tag
     tags:
     - CaptainSabre
-  - type: DisarmMalus
 
 - type: entity
   name: katana
@@ -49,7 +48,6 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/katana.rsi
-  - type: DisarmMalus
 
 - type: entity
   name: machete
@@ -73,7 +71,6 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/machete.rsi
-  - type: DisarmMalus
 
 - type: entity
   name: claymore
@@ -98,7 +95,6 @@
     sprite: Objects/Weapons/Melee/claymore.rsi
     slots:
     - back
-  - type: DisarmMalus
 
 - type: entity
   name: cutlass
@@ -122,4 +118,3 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/cutlass.rsi
-  - type: DisarmMalus

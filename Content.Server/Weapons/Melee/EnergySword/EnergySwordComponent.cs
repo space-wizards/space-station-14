@@ -51,9 +51,6 @@ internal sealed class EnergySwordComponent : Component
 
     [DataField("litDamageBonus")]
     public DamageSpecifier LitDamageBonus = new();
-
-    [DataField("litDisarmMalus")]
-    public float LitDisarmMalus = 0.6f;
 }
 
 [ByRefEvent]

@@ -29,7 +29,6 @@ public sealed class MeleeSpeechBoundUserInterface : BoundUserInterface
         _window.OnBattlecryEntered += OnBattlecryChanged;
     }
 
-
     private void OnBattlecryChanged(string newBattlecry)
     {
         SendMessage(new MeleeSpeechBattlecryChangedMessage(newBattlecry));

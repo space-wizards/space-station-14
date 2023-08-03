@@ -57,7 +57,6 @@
   - type: GunRequiresWield
   - type: Item
     size: 150
-  - type: DisarmMalus
   - type: Tool
     qualities:
       - Prying

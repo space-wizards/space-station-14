@@ -1,4 +1,3 @@
-using Content.Server.CombatMode.Disarm;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -101,11 +100,6 @@ public sealed class EnergySwordSystem : EntitySystem
             _item.SetSize(uid, 5, item);
         }
 
-        if (TryComp<DisarmMalusComponent>(uid, out var malus))
-        {
-            malus.Malus -= comp.LitDisarmMalus;
-        }
-
         if (TryComp<MeleeWeaponComponent>(uid, out var weaponComp))
         {
             weaponComp.HitSound = comp.OnHitOff;
@@ -136,11 +130,6 @@ public sealed class EnergySwordSystem : EntitySystem
             weaponComp.HitSound = comp.OnHitOn;
             if (comp.Secret)
                 weaponComp.HideFromExamine = false;
-        }
-
-        if (TryComp<DisarmMalusComponent>(uid, out var malus))
-        {
-            malus.Malus += comp.LitDisarmMalus;
         }
 
         _audio.Play(comp.ActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.ActivateSound.Params);

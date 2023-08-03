@@ -46,7 +46,6 @@ public sealed class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StaminaComponent, ComponentGetState>(OnStamGetState);
         SubscribeLocalEvent<StaminaComponent, ComponentHandleState>(OnStamHandleState);
-        SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnHit);
@@ -128,33 +127,7 @@ public sealed class StaminaSystem : EntitySystem
 
         component.StaminaDamage = 0;
         RemComp<ActiveStaminaComponent>(uid);
-        Dirty(component);
-    }
-
-    private void OnDisarmed(EntityUid uid, StaminaComponent component, DisarmedEvent args)
-    {
-        if (args.Handled || !_random.Prob(args.PushProbability))
-            return;
-
-        if (component.Critical)
-            return;
-
-        var damage = args.PushProbability * component.CritThreshold;
-        TakeStaminaDamage(uid, damage, component, source:args.Source);
-
-        // We need a better method of getting if the entity is going to resist stam damage, both this and the lines in the foreach at the end of OnHit() are awful
-        if (!component.Critical)
-            return;
-
-        var targetEnt = Identity.Entity(args.Target, EntityManager);
-        var sourceEnt = Identity.Entity(args.Source, EntityManager);
-
-        _popup.PopupEntity(Loc.GetString("stunned-component-disarm-success-others", ("source", sourceEnt), ("target", targetEnt)), targetEnt, Filter.PvsExcept(args.Source), true, PopupType.LargeCaution);
-        _popup.PopupCursor(Loc.GetString("stunned-component-disarm-success", ("target", targetEnt)), args.Source, PopupType.Large);
-
-        _adminLogger.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
-
-        args.Handled = true;
+        Dirty(uid, component);
     }
 
     private void OnHit(EntityUid uid, StaminaDamageOnHitComponent component, MeleeHitEvent args)
@@ -280,7 +253,7 @@ public sealed class StaminaSystem : EntitySystem
         }
 
         EnsureComp<ActiveStaminaComponent>(uid);
-        Dirty(component);
+        Dirty(uid, component);
 
         if (value <= 0)
             return;
@@ -330,7 +303,7 @@ public sealed class StaminaSystem : EntitySystem
 
             comp.NextUpdate += TimeSpan.FromSeconds(1f);
             TakeStaminaDamage(uid, -comp.Decay, comp);
-            Dirty(comp);
+            Dirty(uid, comp);
         }
     }
 
@@ -354,7 +327,7 @@ public sealed class StaminaSystem : EntitySystem
         // Give them buffer before being able to be re-stunned
         component.NextUpdate = _timing.CurTime + stunTime + StamCritBufferTime;
         EnsureComp<ActiveStaminaComponent>(uid);
-        Dirty(component);
+        Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} entered stamina crit");
     }
 
@@ -371,7 +344,7 @@ public sealed class StaminaSystem : EntitySystem
         component.NextUpdate = _timing.CurTime;
         SetStaminaAlert(uid, component);
         RemComp<ActiveStaminaComponent>(uid);
-        Dirty(component);
+        Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{ToPrettyString(uid):user} recovered from stamina crit");
     }
 

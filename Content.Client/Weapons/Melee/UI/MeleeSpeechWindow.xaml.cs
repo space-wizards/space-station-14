@@ -7,7 +7,6 @@ namespace Content.Client.Weapons.Melee.UI;
 [GenerateTypedNameReferences]
 public sealed partial class MeleeSpeechWindow : DefaultWindow
 {
-
     public event Action<string>? OnBattlecryEntered;
 
 	public MeleeSpeechWindow()
@@ -17,8 +16,7 @@ public sealed partial class MeleeSpeechWindow : DefaultWindow
 		BattlecryLineEdit.OnTextEntered += e => OnBattlecryEntered?.Invoke(e.Text);
 	}
 
-
-	public void SetCurrentBattlecry(string battlecry)
+    public void SetCurrentBattlecry(string battlecry)
 	{
 		BattlecryLineEdit.Text = battlecry;
 	}

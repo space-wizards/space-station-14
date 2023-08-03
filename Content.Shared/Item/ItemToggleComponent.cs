@@ -15,10 +15,6 @@ public sealed class ItemToggleComponent : Component
     public SoundSpecifier DeActivateSound { get; set; } = default!;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("activatedDisarmMalus")]
-    public float ActivatedDisarmMalus = 0.6f;
-
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("offSize")]
     public int OffSize = 1;
 

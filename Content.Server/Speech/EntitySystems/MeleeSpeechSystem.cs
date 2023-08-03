@@ -8,9 +8,7 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
 {
-
-	[Dependency] private readonly IAdminLogManager _adminLogger = default!;
-
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
 	public override void Initialize()
 	{
@@ -18,14 +16,12 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
 		SubscribeLocalEvent<MeleeSpeechComponent, MeleeSpeechBattlecryChangedMessage>(OnBattlecryChanged);
 	}
 
-
 	private void OnBattlecryChanged(EntityUid uid, MeleeSpeechComponent comp, MeleeSpeechBattlecryChangedMessage args)
 	{
-
         if (!TryComp<MeleeSpeechComponent>(uid, out var meleeSpeechUser))
 			return;
 
-        string battlecry = args.Battlecry;
+        var battlecry = args.Battlecry;
 
         if (battlecry.Length > comp.MaxBattlecryLength)
             battlecry = battlecry[..comp.MaxBattlecryLength];
@@ -33,10 +29,7 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
         TryChangeBattlecry(uid, battlecry, meleeSpeechUser);
 	}
 
-
-
-
-	/// <summary>
+    /// <summary>
 	/// Attempts to change the battlecry of an entity.
 	/// Returns true/false.
 	/// </summary>
@@ -45,29 +38,23 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
 	/// </remarks>
 	public bool TryChangeBattlecry(EntityUid uid, string? battlecry, MeleeSpeechComponent? meleeSpeechComp = null)
 	{
-
         if (!Resolve(uid, ref meleeSpeechComp))
 			return false;
 
 		if (!string.IsNullOrWhiteSpace(battlecry))
 		{
 			battlecry = battlecry.Trim();
-
-
-		}
+        }
 		else
 		{
 			battlecry = null;
 		}
 
-		if (meleeSpeechComp.Battlecry == battlecry)
+		if (meleeSpeechComp.Battlecry?.Equals(battlecry) == true)
+            return true;
 
-			return true;
-
-
-
-		meleeSpeechComp.Battlecry = battlecry;
-		Dirty(meleeSpeechComp);
+        meleeSpeechComp.Battlecry = battlecry;
+		Dirty(uid, meleeSpeechComp);
 
 		_adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $" {ToPrettyString(uid):entity}'s battlecry has been changed to {battlecry}");
 		return true;
