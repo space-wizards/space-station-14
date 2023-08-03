@@ -161,6 +161,12 @@
   beginMonth: May
 
 - type: holiday
+  id: TowelDay
+  name: holiday-name-towel-day
+  beginDay: 25
+  beginMonth: May
+
+- type: holiday
   id: MoMMIDay
   name: holiday-name-mommi-day
   beginDay: 30

@@ -5,17 +5,18 @@
   description: A piece of unrefined ore.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/ore.rsi
   - type: Item
     sprite: Objects/Materials/ore.rsi
+    size: 60
   - type: ItemStatus
   - type: Tag
     tags:
     - Ore
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeCircle
           radius: 0.2
         density: 20
@@ -57,6 +58,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2
 
 - type: entity
   parent: OreBase
@@ -80,6 +83,8 @@
   components:
     - type: Stack
       count: 1
+    - type: Item
+      size: 2
 
 - type: entity
   parent: OreBase
@@ -103,6 +108,8 @@
   components:
     - type: Stack
       count: 1
+    - type: Item
+      size: 2
 
 - type: entity
   parent: OreBase
@@ -126,6 +133,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2
 
 - type: entity
   parent: OreBase
@@ -149,6 +158,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2
 
 - type: entity
   parent: OreBase
@@ -172,6 +183,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2
 
 
 - type: entity
@@ -196,3 +209,5 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2

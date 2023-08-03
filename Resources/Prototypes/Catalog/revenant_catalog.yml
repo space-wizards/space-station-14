@@ -3,7 +3,7 @@
   name: Defile
   description: Defiles the surrounding area, ripping up floors, damaging windows, opening containers, and throwing items. Using it leaves you vulnerable to attacks for a short period of time.
   productAction: RevenantDefile
-  cost: 
+  cost:
     StolenEssence: 10
   categories:
   - RevenantAbilities
@@ -16,7 +16,7 @@
   name: Overload Lights
   description: Overloads all nearby lights, causing lights to pulse and sending out dangerous lightning. Using it leaves you vulnerable to attacks for a long period of time.
   productAction: RevenantOverloadLights
-  cost: 
+  cost:
     StolenEssence: 25
   categories:
   - RevenantAbilities
@@ -24,25 +24,25 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
-- type: listing
-  id: RevenantBlight
-  name: Blight
-  description: Infects all nearby organisms with an infectious disease that causes toxic buildup and tiredness. Using it leaves you vulnerable to attacks for a medium period of time.
-  productAction: RevenantBlight
-  cost: 
-    StolenEssence: 75
-  categories:
-  - RevenantAbilities
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
+#- type: listing
+#  id: RevenantBlight
+#  name: Blight
+#  description: Infects all nearby organisms with an infectious disease that causes toxic buildup and tiredness. Using it leaves you vulnerable to attacks for a medium period of time.
+#  productAction: RevenantBlight
+#  cost:
+#    StolenEssence: 75
+#  categories:
+#  - RevenantAbilities
+#  conditions:
+#  - !type:ListingLimitedStockCondition
+#    stock: 1
 
 - type: listing
   id: RevenantMalfunction
   name: Malfunction
   description: Makes nearby electronics stop working properly. Using it leaves you vulnerable to attacks for a long period of time.
   productAction: RevenantMalfunction
-  cost: 
+  cost:
     StolenEssence: 125
   categories:
   - RevenantAbilities

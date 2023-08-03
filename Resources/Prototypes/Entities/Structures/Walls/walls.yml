@@ -22,7 +22,6 @@
     tags:
     - Wall
   - type: Sprite
-    netsync: false
     drawdepth: Walls
   - type: Icon
     state: full
@@ -35,14 +34,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
-      density: 1000
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 1000
   - type: Occluder
   - type: Airtight
   - type: StaticPrice
@@ -144,6 +144,40 @@
     key: walls
     base: clown
 
+- type: entity
+  parent: BaseWall
+  id: WallMeat
+  name: meat wall
+  description: Sticky.
+  components:
+  - type: Tag
+    tags:
+      - RCDDeconstructWhitelist
+      - Wall
+      - Structure
+  - type: Sprite
+    sprite: Structures/Walls/meat.rsi
+  - type: Icon
+    sprite: Structures/Walls/meat.rsi
+  - type: Construction
+    graph: Girder
+    node: bananiumWall
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100 # weak
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: meat
 
 - type: entity
   parent: BaseWall
@@ -432,6 +466,28 @@
               acts: [ "Destruction" ]
 
 - type: entity
+  parent: WallShuttleDiagonal
+  id: WallPlastitaniumDiagonal
+  name: plastitanium wall
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: walls
+    base: state
+  - type: Icon
+    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    state: state0
+
+- type: entity
   parent: BaseWall
   id: WallReinforced
   name: reinforced wall
@@ -601,7 +657,6 @@
     tags:
     - Wall
   - type: Sprite
-    netsync: false
     drawdepth: Walls
     sprite: Structures/Walls/shuttle_diagonal.rsi
     state: state0
@@ -617,6 +672,8 @@
     damageModifierSet: Metallic
   - type: Physics
     bodyType: Static
+  - type: Reflect
+    reflectProb: 1
   - type: Pullable
   - type: Airtight
     noAirWhenFullyAirBlocked: false
@@ -625,16 +682,17 @@
     - East
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PolygonShape
-          vertices:
-          - "-0.5,-0.5"
-          - "0.5,0.5"
-          - "0.5,-0.5"
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PolygonShape
+            vertices:
+            - "-0.5,-0.5"
+            - "0.5,0.5"
+            - "0.5,-0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
   - type: Destructible
     thresholds:
     - trigger:
@@ -687,6 +745,8 @@
         acts: ["Destruction"]
     destroySound:
       path: /Audio/Effects/metalbreak.ogg
+  - type: Reflect
+    reflectProb: 1
   - type: IconSmooth
     key: walls
     base: state
@@ -731,6 +791,28 @@
   - type: IconSmooth
     key: walls
     base: solid
+
+- type: entity
+  parent: WallShuttleDiagonal
+  id: WallSolidDiagonal
+  name: solid wall
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Structures/Walls/solid_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: walls
+    base: state
+  - type: Icon
+    sprite: Structures/Walls/solid_diagonal.rsi
+    state: state0
 
 - type: entity
   parent: BaseWall
@@ -909,13 +991,14 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-      mask:
-      - FullTileMask
-      layer:
-      - GlassLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
   - type: Airtight
 
 - type: entity
@@ -931,7 +1014,8 @@
       bodyType: Static
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.5"
           mask:

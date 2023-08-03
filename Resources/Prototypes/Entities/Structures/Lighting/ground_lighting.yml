@@ -6,15 +6,16 @@
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "0.17,0.25,-0.17,-0.30"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MidImpassable
-      - LowImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "0.17,0.25,-0.17,-0.30"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -90,9 +91,15 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
-    deviceNetId: Apc
+    deviceNetId: Wireless
     receiveFrequencyId: SmartLight
-  - type: ApcNetworkConnection
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - On
+      - Off
+      - Toggle
   - type: Construction
     graph: LightFixture
     node: groundLight
@@ -100,11 +107,6 @@
   - type: PoweredLightVisuals
     blinkingSound:
       path: "/Audio/Machines/light_tube_on.ogg"
-  - type: SignalReceiver
-    inputs:
-      On: []
-      Off: []
-      Toggle: []
 
 - type: entity
   id: PoweredLightPostSmall

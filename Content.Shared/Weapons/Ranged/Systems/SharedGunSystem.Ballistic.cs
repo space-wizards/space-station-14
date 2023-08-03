@@ -29,6 +29,9 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticUse(EntityUid uid, BallisticAmmoProviderComponent component, UseInHandEvent args)
     {
+        if (args.Handled)
+            return;
+
         ManualCycle(uid, component, Transform(uid).MapPosition, args.User);
         args.Handled = true;
     }
@@ -127,9 +130,8 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticVerb(EntityUid uid, BallisticAmmoProviderComponent component, GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || !component.Cycleable)
             return;
-
         args.Verbs.Add(new Verb()
         {
             Text = Loc.GetString("gun-ballistic-cycle"),
@@ -148,6 +150,9 @@ public abstract partial class SharedGunSystem
 
     private void ManualCycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates, EntityUid? user = null, GunComponent? gunComp = null)
     {
+        if (!component.Cycleable)
+            return;
+
         // Reset shotting for cycling
         if (Resolve(uid, ref gunComp, false) &&
             gunComp is { FireRate: > 0f } &&
@@ -162,7 +167,7 @@ public abstract partial class SharedGunSystem
         var shots = GetBallisticShots(component);
         component.Cycled = true;
 
-        Cycle(component, coordinates);
+        Cycle(uid, component, coordinates);
 
         var text = Loc.GetString(shots == 0 ? "gun-ballistic-cycled-empty" : "gun-ballistic-cycled");
 
@@ -171,7 +176,7 @@ public abstract partial class SharedGunSystem
         UpdateAmmoCount(uid);
     }
 
-    protected abstract void Cycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates);
+    protected abstract void Cycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates);
 
     private void OnBallisticInit(EntityUid uid, BallisticAmmoProviderComponent component, ComponentInit args)
     {

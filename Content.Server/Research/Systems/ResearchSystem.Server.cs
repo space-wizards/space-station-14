@@ -49,7 +49,7 @@ public sealed partial class ResearchSystem
 
         if (!CanRun(uid))
             return;
-        AddPointsToServer(uid, PointsPerSecond(uid, component) * time, component);
+        ModifyServerPoints(uid, GetPointsPerSecond(uid, component) * time, component);
     }
 
     /// <summary>
@@ -60,25 +60,24 @@ public sealed partial class ResearchSystem
     /// <param name="clientComponent"></param>
     /// <param name="serverComponent"></param>
     /// <param name="dirtyServer">Whether or not to dirty the server component after registration</param>
-    /// <returns>Whether or not the client was successfully registered to the server</returns>
-    public bool RegisterClient(EntityUid client, EntityUid server, ResearchClientComponent? clientComponent = null,
+    public void RegisterClient(EntityUid client, EntityUid server, ResearchClientComponent? clientComponent = null,
         ResearchServerComponent? serverComponent = null,  bool dirtyServer = true)
     {
         if (!Resolve(client, ref clientComponent) || !Resolve(server, ref serverComponent))
-            return false;
+            return;
 
         if (serverComponent.Clients.Contains(client))
-            return false;
+            return;
 
         serverComponent.Clients.Add(client);
         clientComponent.Server = server;
+        SyncClientWithServer(client, clientComponent: clientComponent);
 
         if (dirtyServer)
             Dirty(serverComponent);
 
         var ev = new ResearchRegistrationChangedEvent(server);
         RaiseLocalEvent(client, ref ev);
-        return true;
     }
 
     /// <summary>
@@ -114,6 +113,7 @@ public sealed partial class ResearchSystem
 
         serverComponent.Clients.Remove(client);
         clientComponent.Server = null;
+        SyncClientWithServer(client, clientComponent: clientComponent);
 
         if (dirtyServer)
         {
@@ -130,7 +130,7 @@ public sealed partial class ResearchSystem
     /// <param name="uid"></param>
     /// <param name="component"></param>
     /// <returns></returns>
-    public int PointsPerSecond(EntityUid uid, ResearchServerComponent? component = null)
+    public int GetPointsPerSecond(EntityUid uid, ResearchServerComponent? component = null)
     {
         var points = 0;
 
@@ -154,7 +154,7 @@ public sealed partial class ResearchSystem
     /// <param name="uid">The server</param>
     /// <param name="points">The amount of points being added</param>
     /// <param name="component"></param>
-    public void AddPointsToServer(EntityUid uid, int points, ResearchServerComponent? component = null)
+    public void ModifyServerPoints(EntityUid uid, int points, ResearchServerComponent? component = null)
     {
         if (points == 0)
             return;

@@ -2,6 +2,7 @@
   id: Blindness
   name: trait-blindness-name
   description: trait-blindness-desc
+  traitGear: WhiteCane
   whitelist:
     components:
       - Blindable
@@ -41,3 +42,10 @@
   description: trait-muted-desc
   components:
     - type: Muted
+
+- type: trait
+  id: Uncloneable
+  name: trait-uncloneable-name
+  description: trait-uncloneable-desc
+  components:
+    - type: Uncloneable

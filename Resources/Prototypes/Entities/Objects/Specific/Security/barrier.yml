@@ -8,7 +8,6 @@
     noRot: true
   - type: Sprite
     sprite: Objects/Specific/Security/barrier.rsi
-    netsync: false
     layers:
     - state: "idle"
       map: ["deployableBarrierBase"]
@@ -25,14 +24,15 @@
     canCollide: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.45
-      density: 75
-      mask:
-      - MachineMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 75
+        mask:
+        - MachineMask
+        layer:
+        - WallLayer
   - type: AccessReader
     access: [["Security"]]
   - type: Lock

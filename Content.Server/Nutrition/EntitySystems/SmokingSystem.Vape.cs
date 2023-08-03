@@ -50,6 +50,14 @@ namespace Content.Server.Nutrition.EntitySystems
             || _foodSystem.IsMouthBlocked(args.Target.Value, args.User))
                 return;
 
+            if (solution.Contents.Count == 0)
+            {
+                _popupSystem.PopupEntity(
+                    Loc.GetString("vape-component-vape-empty"), args.Target.Value,
+                    args.User);
+                return;
+            }
+
             if (args.Target == args.User)
             {
                 delay = comp.UserDelay;

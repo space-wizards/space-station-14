@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using Content.Shared.Lathe;
 using Content.Shared.Research.Prototypes;
-using NUnit.Framework;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
@@ -11,9 +10,45 @@ namespace Content.IntegrationTests.Tests;
 public sealed class ResearchTest
 {
     [Test]
+    public async Task DisciplineValidTierPrerequesitesTest()
+    {
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        var server = pairTracker.Pair.Server;
+
+        var protoManager = server.ResolveDependency<IPrototypeManager>();
+
+        await server.WaitAssertion(() =>
+        {
+            var allTechs = protoManager.EnumeratePrototypes<TechnologyPrototype>().ToList();
+
+            Assert.Multiple(() =>
+            {
+                foreach (var discipline in protoManager.EnumeratePrototypes<TechDisciplinePrototype>())
+                {
+                    foreach (var tech in allTechs)
+                    {
+                        if (tech.Discipline != discipline.ID)
+                            continue;
+
+                        // we ignore these, anyways
+                        if (tech.Tier == 1)
+                            continue;
+
+                        Assert.That(tech.Tier, Is.GreaterThan(0), $"Technology {tech} has invalid tier {tech.Tier}.");
+                        Assert.That(discipline.TierPrerequisites.ContainsKey(tech.Tier),
+                            $"Discipline {discipline.ID} does not have a TierPrerequisites definition for tier {tech.Tier}");
+                    }
+                }
+            });
+        });
+
+        await pairTracker.CleanReturnAsync();
+    }
+
+    [Test]
     public async Task AllTechPrintableTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings {NoClient = true});
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();
@@ -40,18 +75,20 @@ public sealed class ResearchTest
 
                 foreach (var recipe in lathe.DynamicRecipes)
                 {
-                    if (!latheTechs.Contains(recipe))
-                        latheTechs.Add(recipe);
+                    latheTechs.Add(recipe);
                 }
             }
 
-            foreach (var tech in protoManager.EnumeratePrototypes<TechnologyPrototype>())
+            Assert.Multiple(() =>
             {
-                foreach (var recipe in tech.UnlockedRecipes)
+                foreach (var tech in protoManager.EnumeratePrototypes<TechnologyPrototype>())
                 {
-                    Assert.That(latheTechs, Does.Contain(recipe), $"Recipe \"{recipe}\" cannot be unlocked on any lathes.");
+                    foreach (var recipe in tech.RecipeUnlocks)
+                    {
+                        Assert.That(latheTechs, Does.Contain(recipe), $"Recipe \"{recipe}\" cannot be unlocked on any lathes.");
+                    }
                 }
-            }
+            });
         });
 
         await pairTracker.CleanReturnAsync();

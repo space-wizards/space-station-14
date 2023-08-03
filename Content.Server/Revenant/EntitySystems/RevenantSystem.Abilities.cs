@@ -11,11 +11,10 @@ using Robust.Shared.Physics;
 using Content.Shared.Throwing;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Server.Disease;
-using Content.Server.Disease.Components;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
 using System.Linq;
+using System.Numerics;
 using Content.Server.Maps;
 using Content.Server.Revenant.Components;
 using Content.Shared.DoAfter;
@@ -26,7 +25,6 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Revenant.Components;
-using Content.Shared.Revenant.EntitySystems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
 
@@ -37,7 +35,6 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly DiseaseSystem _disease = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
@@ -218,7 +215,7 @@ public sealed partial class RevenantSystem
         if (!_mapManager.TryGetGrid(xform.GridUid, out var map))
             return;
         var tiles = map.GetTilesIntersecting(Box2.CenteredAround(xform.WorldPosition,
-            (component.DefileRadius*2, component.DefileRadius))).ToArray();
+            new Vector2(component.DefileRadius * 2, component.DefileRadius))).ToArray();
 
         _random.Shuffle(tiles);
 
@@ -308,13 +305,7 @@ public sealed partial class RevenantSystem
             return;
 
         args.Handled = true;
-
-        var emo = GetEntityQuery<DiseaseCarrierComponent>();
-        foreach (var ent in _lookup.GetEntitiesInRange(uid, component.BlightRadius))
-        {
-            if (emo.TryGetComponent(ent, out var comp))
-                _disease.TryAddDisease(ent, component.BlightDiseasePrototypeId, comp);
-        }
+        // TODO: When disease refactor is in.
     }
 
     private void OnMalfunctionAction(EntityUid uid, RevenantComponent component, RevenantMalfunctionActionEvent args)

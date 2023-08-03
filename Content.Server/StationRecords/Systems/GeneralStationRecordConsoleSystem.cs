@@ -67,8 +67,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         foreach (var pair in consoleRecords)
         {
-            if (console != null && console.Filter != null
-                && IsSkippedRecord(console.Filter, pair.Item2))
+            if (console.Filter != null && IsSkippedRecord(console.Filter, pair.Item2))
             {
                 continue;
             }
@@ -100,9 +99,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
     private void SetStateForInterface(EntityUid uid, GeneralStationRecordConsoleState newState)
     {
-        _userInterface
-            .GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)
-            ?.SetState(newState);
+        _userInterface.TrySetUiState(uid, GeneralStationRecordConsoleKey.Key, newState);
     }
 
     private bool IsSkippedRecord(GeneralStationRecordsFilter filter,

@@ -39,6 +39,11 @@
     damage:
       types:
         Blunt: 0
+  - type: Tool
+    qualities:
+    - Honking
+    useSound:
+      collection: BikeHorn
 
 - type: entity
   parent: BaseItem

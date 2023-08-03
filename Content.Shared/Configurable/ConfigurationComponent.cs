@@ -10,7 +10,7 @@ namespace Content.Shared.Configurable
     public sealed class ConfigurationComponent : Component
     {
         [DataField("config")]
-        public readonly Dictionary<string, string> Config = new();
+        public readonly Dictionary<string, string?> Config = new();
 
         [DataField("qualityNeeded", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string QualityNeeded = "Pulsing";
@@ -21,9 +21,9 @@ namespace Content.Shared.Configurable
         [Serializable, NetSerializable]
         public sealed class ConfigurationBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public Dictionary<string, string> Config { get; }
+            public Dictionary<string, string?> Config { get; }
 
-            public ConfigurationBoundUserInterfaceState(Dictionary<string, string> config)
+            public ConfigurationBoundUserInterfaceState(Dictionary<string, string?> config)
             {
                 Config = config;
             }

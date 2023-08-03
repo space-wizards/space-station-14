@@ -1,7 +1,5 @@
 meta:
-  format: 4
-  name: DemoStation
-  author: Space-Wizards
+  format: 5
   postmapinit: false
 tilemap:
   0: Space
@@ -35,12 +33,10 @@ entities:
       fixedRotation: False
       bodyType: Dynamic
       type: Physics
-    - fixtures: []
+    - fixtures: {}
       type: Fixtures
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 56.3512981
-      type: GridPathfinding
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -121,4 +117,5 @@ entities:
       type: GridAtmosphere
     - type: GasTileOverlay
     - type: SpreaderGrid
+    - type: GridPathfinding
 ...

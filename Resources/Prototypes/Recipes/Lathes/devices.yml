@@ -33,12 +33,23 @@
 - type: latheRecipe
   id: FlashPayload
   result: FlashPayload
-  completetime: 1
+  completetime: 2
   materials:
     Steel: 50
     Plastic: 100
     Glass: 50
     #one fourth of what making a flash would cost
+
+- type: latheRecipe
+  id: ExplosivePayload
+  result: ExplosivePayload
+  completetime: 4
+  materials:
+    Steel: 100
+    Plastic: 100
+    Glass: 50
+    Plasma: 50
+    Silver: 50
 
 - type: latheRecipe
   id: Signaller
@@ -72,3 +83,87 @@
   materials:
     Steel: 500
     Glass: 400
+
+- type: latheRecipe
+  id: ClothingBackpackHolding
+  result: ClothingBackpackHolding
+  completetime: 5
+  materials:
+    Steel: 2000
+    Silver: 750
+    Plasma: 1500
+    Uranium: 150
+
+- type: latheRecipe
+  id: ClothingBackpackSatchelHolding
+  result: ClothingBackpackSatchelHolding
+  completetime: 5
+  materials:
+    Steel: 2000
+    Silver: 750
+    Plasma: 1500
+    Uranium: 150
+
+- type: latheRecipe
+  id: ClothingBackpackDuffelHolding
+  result: ClothingBackpackDuffelHolding
+  completetime: 5
+  materials:
+    Steel: 2000
+    Silver: 750
+    Plasma: 1500
+    Uranium: 150
+
+- type: latheRecipe
+  id: WeaponCrusher
+  result: WeaponCrusher
+  completetime: 5
+  materials:
+    Steel: 1000
+    Glass: 250
+    Plastic: 100
+
+- type: latheRecipe
+  id: WeaponCrusherDagger
+  result: WeaponCrusherDagger
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 250
+    Plastic: 50
+
+- type: latheRecipe
+  id: WeaponForceGun
+  result: WeaponForceGun
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 400
+    Silver: 200
+
+- type: latheRecipe
+  id: WeaponProtoKineticAccelerator
+  result: WeaponProtoKineticAccelerator
+  completetime: 5
+  materials:
+    Steel: 1000
+    Glass: 500
+    Silver: 100
+
+- type: latheRecipe
+  id: WeaponTetherGun
+  result: WeaponTetherGun
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 400
+    Silver: 100
+
+- type: latheRecipe
+  id: WeaponGrapplingGun
+  result: WeaponGrapplingGun
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 400
+    Gold: 100

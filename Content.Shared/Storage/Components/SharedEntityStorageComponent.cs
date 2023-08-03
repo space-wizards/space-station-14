@@ -1,4 +1,5 @@
-﻿using Content.Shared.Physics;
+﻿using System.Numerics;
+using Content.Shared.Physics;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -159,7 +160,7 @@ public record struct InsertIntoEntityStorageAttemptEvent(bool Cancelled = false)
 public record struct StoreMobInItemContainerAttemptEvent(bool Handled, bool Cancelled = false);
 
 [ByRefEvent]
-public record struct StorageOpenAttemptEvent(bool Silent, bool Cancelled = false);
+public record struct StorageOpenAttemptEvent(EntityUid User, bool Silent, bool Cancelled = false);
 
 [ByRefEvent]
 public readonly record struct StorageBeforeOpenEvent;

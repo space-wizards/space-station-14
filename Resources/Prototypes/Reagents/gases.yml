@@ -43,6 +43,7 @@
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
   color: "#7e009e"
+  recognizable: true
   boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
   meltingPoint: -186.4
   tileReactions:
@@ -187,14 +188,6 @@
   metabolisms:
     Gas:
       effects:
-      - !type:ChemMiasmaPoolSource
-        conditions:
-        - !type:OrganType
-          type: Rat
-          shouldHave: false
-        - !type:ReagentThreshold
-          reagent: Miasma
-          min: 1
       - !type:HealthChange
         conditions:
         - !type:OrganType

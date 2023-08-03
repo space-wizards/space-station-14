@@ -11,9 +11,6 @@ public sealed class GrowingKudzuComponent : Component
     [DataField("growthLevel")]
     public int GrowthLevel = 1;
 
-    [DataField("growthTickChance")]
-    public float GrowthTickChance = 1f;
-
     /// <summary>
     /// The next time kudzu will try to tick its growth level.
     /// </summary>

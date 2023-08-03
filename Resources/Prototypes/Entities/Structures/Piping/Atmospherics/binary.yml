@@ -6,6 +6,9 @@
     mode: SnapgridCenter
   components:
   - type: AtmosDevice
+  - type: Tag
+    tags:
+      - Unstackable
   - type: SubFloorHide
     blockInteractions: false
     blockAmbience: false
@@ -29,7 +32,6 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -70,7 +72,6 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      netsync: false
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -111,7 +112,6 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      netsync: false
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -142,7 +142,6 @@
   components:
     # TODO ATMOS: Give unique sprite.
     - type: Sprite
-      netsync: false
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -175,7 +174,7 @@
       graph: GasBinary
       node: valve
     - type: AmbientSound
-      enabled: false
+      enabled: true
       volume: -9
       range: 5
       sound:
@@ -190,7 +189,6 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -208,11 +206,16 @@
   - type: PipeColorVisuals
   - type: GasValve
   - type: SignalControlledValve
-  - type: SignalReceiver
-    inputs:
-      Open: []
-      Close: []
-      Toggle: []
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - Open
+      - Close
+      - Toggle
   - type: NodeContainer
     nodes:
       inlet:
@@ -229,7 +232,7 @@
     graph: GasBinary
     node: signalvalve
   - type: AmbientSound
-    enabled: false
+    enabled: true
     volume: -9
     range: 5
     sound:
@@ -244,7 +247,6 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      netsync: false
       sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -275,7 +277,6 @@
   components:
     - type: Sprite
       drawdepth: FloorObjects
-      netsync: false
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -296,10 +297,15 @@
       inlet: inlet
       outlet: outlet
       canLink: true
-    - type: SignalReceiver
-      inputs:
-        Pressurize: []
-        Depressurize: []
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: BasicDevice
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: DeviceLinkSink
+      ports:
+        - Pressurize
+        - Depressurize
     - type: Construction
       graph: GasBinary
       node: dualportventpump
@@ -313,6 +319,8 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
+    - type: AmbientSound
+      enabled: true
 
 - type: entity
   parent: [ BaseMachine, ConstructibleMachine ]
@@ -324,7 +332,6 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/gasrecycler.rsi
-    netsync: false
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
       state: pipeStraight
@@ -355,7 +362,7 @@
   - type: AtmosDevice
   - type: AtmosPipeColor
   - type: AmbientSound
-    enabled: false
+    enabled: true
     volume: -9
     range: 5
     sound:

@@ -1,9 +1,9 @@
 - type: vendingMachineInventory
   id: AtmosDrobeInventory
   startingInventory:
-    ClothingBackpackDuffelEngineering: 2
-    ClothingBackpackSatchelEngineering: 2
-    ClothingBackpackEngineering: 2
+    ClothingBackpackDuffelAtmospherics: 2
+    ClothingBackpackSatchelAtmospherics: 2
+    ClothingBackpackAtmospherics: 2
     ClothingUniformJumpsuitAtmos: 3
     ClothingUniformJumpskirtAtmos: 3
     ClothingUniformJumpsuitAtmosCasual: 3
@@ -12,3 +12,4 @@
     ClothingHeadHelmetFire: 2
     ClothingOuterSuitFire: 2
     ClothingOuterWinterAtmos: 2
+    ClothingNeckScarfStripedLightBlue: 3

@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.HotPotato;
 
 /// <summary>
-/// Similar to <see cref="Content.Shared.Interaction.Components.UnremoveableComponent"/>
+/// Similar to <see cref="Interaction.Components.UnremoveableComponent"/>
 /// except entities with this component can be removed in specific case: <see cref="CanTransfer"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent]

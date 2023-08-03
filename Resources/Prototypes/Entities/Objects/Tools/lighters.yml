@@ -31,7 +31,6 @@
           basic_icon_base-11: ""
   - type: Sprite
     sprite: Objects/Tools/lighters.rsi
-    netsync: false
     layers:
     - state: icon_map
       map: ["enum.WelderLayers.Base"]
@@ -61,6 +60,7 @@
         Blunt: 0 #this feels hacky, but is needed for burn damage while active (i think)
   - type: Welder
     fuelConsumption: 0.01
+    fuelLitCost: 0.1
     litMeleeDamageBonus:
       types:
         Heat: 1

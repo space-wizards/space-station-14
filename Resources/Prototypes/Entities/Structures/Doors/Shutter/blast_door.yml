@@ -5,7 +5,6 @@
   description: This one says 'BLAST DONGER'.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Shutters/blastdoor.rsi
     layers:
     - state: closed
@@ -17,7 +16,7 @@
     openTimeTwo: 0.4
     openingAnimationTime: 1.0
     closingAnimationTime: 1.0
-    pryTime: -1
+    canPry: false
     crushDamage:
       types:
         Blunt: 25 # yowch

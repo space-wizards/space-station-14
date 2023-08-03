@@ -9,6 +9,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Movement.Events;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Resist;
+using Content.Server.Storage.Components;
 
 namespace Content.Server.Resist;
 
@@ -59,7 +60,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         }
 
         // Uncontested
-        if (HasComp<SharedStorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner))
+        if (HasComp<SharedStorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner) || HasComp<SecretStashComponent>(container.Owner))
             AttemptEscape(uid, container.Owner, component);
     }
 

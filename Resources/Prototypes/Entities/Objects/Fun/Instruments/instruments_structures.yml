@@ -110,19 +110,20 @@
     state: contrabass
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.30
-      density: 180
-      mask:
-      - Impassable
-      - HighImpassable
-      - MidImpassable
-      layer:
-      - Opaque
-      - HighImpassable
-      - MidImpassable
-      - BulletImpassable
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 180
+        mask:
+        - Impassable
+        - HighImpassable
+        - MidImpassable
+        layer:
+        - Opaque
+        - HighImpassable
+        - MidImpassable
+        - BulletImpassable
 
 - type: entity
   name: minimoog
@@ -161,6 +162,7 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
   - type: WiresVisuals
+  - type: WiresPanel
   - type: Wires
     BoardName: "DawInstrument"
     LayoutId: DawInstrument

@@ -209,6 +209,24 @@
 
 - type: entity
   parent: DrinkBaseCup
+  id: DrinkCafeLatte
+  name: Cafe latte
+  description: A nice, strong and tasty beverage while you are reading.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: CafeLatte
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/cafe_latte.rsi
+  - type: Appearance
+  - type: TrashOnEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
   id: DrinkTeacup
   name: Teacup
   description: A plain white porcelain teacup.

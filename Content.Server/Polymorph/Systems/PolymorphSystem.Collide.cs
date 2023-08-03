@@ -36,7 +36,7 @@ public partial class PolymorphSystem
         if (args.OurFixture.ID != SharedProjectileSystem.ProjectileFixture)
             return;
 
-        var other = args.OtherFixture.Body.Owner;
+        var other = args.OtherEntity;
         if (!component.Whitelist.IsValid(other)
             || component.Blacklist != null && component.Blacklist.IsValid(other))
             return;

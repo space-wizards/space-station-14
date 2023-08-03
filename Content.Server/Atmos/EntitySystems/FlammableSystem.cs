@@ -131,7 +131,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnCollide(EntityUid uid, FlammableComponent flammable, ref StartCollideEvent args)
         {
-            var otherUid = args.OtherFixture.Body.Owner;
+            var otherUid = args.OtherEntity;
 
             // Normal hard collisions, though this isn't generally possible since most flammable things are mobs
             // which don't collide with one another, shouldn't work here.

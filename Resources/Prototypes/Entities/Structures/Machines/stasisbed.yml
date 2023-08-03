@@ -8,7 +8,6 @@
     baseMultiplier: 10
   - type: Sprite
     sprite: Structures/Machines/stasis_bed.rsi
-    netsync: false
     noRot: true
     layers:
     - state: icon
@@ -45,10 +44,13 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.05"
-      density: 190
-      mask:
-      - LowImpassable
-
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.05"
+        density: 190
+        mask:
+        - LowImpassable
+  - type: GuideHelp
+    guides:
+    - Medical Doctor

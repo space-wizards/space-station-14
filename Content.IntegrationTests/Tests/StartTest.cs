@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using NUnit.Framework;
 using Robust.Shared.Exceptions;
 
 namespace Content.IntegrationTests.Tests
@@ -13,7 +11,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestClientStart()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{Disconnected = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Disconnected = true });
             var client = pairTracker.Pair.Client;
             Assert.That(client.IsAlive);
             await client.WaitRunTicks(5);
