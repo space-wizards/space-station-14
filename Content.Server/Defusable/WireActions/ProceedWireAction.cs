@@ -15,6 +15,7 @@ public sealed class ProceedWireAction : ComponentWireAction<DefusableComponent>
 {
     public override Color Color { get; set; } = Color.Blue;
     public override string Name { get; set; } = "wire-name-bomb-proceed";
+    public override bool LightRequiresPower { get; set; } = false;
 
     public override StatusLightState? GetLightState(Wire wire, DefusableComponent comp)
     {
@@ -25,12 +26,13 @@ public sealed class ProceedWireAction : ComponentWireAction<DefusableComponent>
 
     public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.Activated && !comp.ProceedWireCut)
-        {
-            EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", wire.Owner)), wire.Owner);
-            comp.DisplayTime = false;
-            comp.ProceedWireCut = true;
-        }
+        if (comp is not { Activated: true, ProceedWireCut: false })
+            return true;
+
+        EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-proceed-pulse", ("name", wire.Owner)), wire.Owner);
+        EntityManager.System<DefusableSystem>().SetDisplayTime(comp, false);
+
+        comp.ProceedWireCut = true;
         return true;
     }
 

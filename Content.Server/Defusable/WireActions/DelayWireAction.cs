@@ -16,9 +16,12 @@ public sealed class DelayWireAction : ComponentWireAction<DefusableComponent>
 {
     public override Color Color { get; set; } = Color.Yellow;
     public override string Name { get; set; } = "wire-name-bomb-delay";
+    public override bool LightRequiresPower { get; set; } = false;
 
     public override StatusLightState? GetLightState(Wire wire, DefusableComponent comp)
-        => comp.DelayWireUsed ? StatusLightState.On : StatusLightState.Off;
+    {
+        return comp.DelayWireUsed ? StatusLightState.On : StatusLightState.Off;
+    }
 
     public override object StatusKey { get; } = DefusableWireStatus.BoomIndicator;
 

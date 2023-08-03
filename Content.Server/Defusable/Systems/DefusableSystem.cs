@@ -2,6 +2,7 @@ using Content.Server.Defusable.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
+using Content.Server.Wires;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
@@ -99,13 +100,13 @@ public sealed class DefusableSystem : SharedDefusableSystem
     private bool CheckAnchorAttempt(EntityUid uid, DefusableComponent component, BaseAnchoredAttemptEvent args)
     {
         // Don't allow the thing to be anchored if bolted to the ground
-        if (component.Bolted)
-            return true;
+        if (!component.Bolted)
+            return false;
 
         var msg = Loc.GetString("defusable-popup-cant-anchor", ("name", uid));
         _popup.PopupEntity(msg, uid, args.User);
 
-        return false;
+        return true;
     }
 
     #endregion
@@ -122,9 +123,10 @@ public sealed class DefusableSystem : SharedDefusableSystem
 
         var xform = Transform(uid);
         _transform.AnchorEntity(uid, xform);
-        comp.Bolted = true;
 
-        comp.Activated = true;
+        SetBolt(comp, true);
+        SetActivated(comp, true);
+
         _popup.PopupEntity(Loc.GetString("defusable-popup-begun", ("name", uid)), uid);
         if (TryComp<OnUseTimerTriggerComponent>(uid, out var timerTrigger))
         {
@@ -169,11 +171,11 @@ public sealed class DefusableSystem : SharedDefusableSystem
             return;
 
         _popup.PopupEntity(Loc.GetString("defusable-popup-defuse", ("name", uid)), uid);
-        comp.Activated = false;
+        SetActivated(comp, false);
 
         if (comp.Disposable)
         {
-            comp.Usable = false; // fry the circuitry
+            SetUsable(comp, false);
             RemComp<ExplodeOnTriggerComponent>(uid);
             RemComp<OnUseTimerTriggerComponent>(uid);
         }
@@ -186,6 +188,35 @@ public sealed class DefusableSystem : SharedDefusableSystem
         _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);
         _adminLogger.Add(LogType.Explosion, LogImpact.High,
             $"{ToPrettyString(uid):entity} has been defused.");
+    }
+
+    // jesus christ
+    public void SetUsable(DefusableComponent component, bool value)
+    {
+        component.Usable = value;
+    }
+
+    public void SetDisplayTime(DefusableComponent component, bool value)
+    {
+        component.DisplayTime = value;
+    }
+
+    /// <summary>
+    /// Sets the Activated value of a component to a value.
+    /// </summary>
+    /// <param name="component"></param>
+    /// <param name="value"></param>
+    /// <remarks>
+    /// Use <see cref="TryDefuseBomb"/> to defuse bomb. This is a setter.
+    /// </remarks>
+    public void SetActivated(DefusableComponent component, bool value)
+    {
+        component.Activated = value;
+    }
+
+    public void SetBolt(DefusableComponent component, bool value)
+    {
+        component.Bolted = value;
     }
 
     #endregion

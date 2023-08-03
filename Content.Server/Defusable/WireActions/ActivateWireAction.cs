@@ -34,7 +34,8 @@ public sealed class ActivateWireAction : ComponentWireAction<DefusableComponent>
 
     public override bool Mend(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        // bomb is defused why do you want it back on again
+        // if its not disposable defusable system already handles* this
+        // *probably
         return true;
     }
 

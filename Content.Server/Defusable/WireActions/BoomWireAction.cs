@@ -13,9 +13,12 @@ public sealed class BoomWireAction : ComponentWireAction<DefusableComponent>
 {
     public override Color Color { get; set; } = Color.Red;
     public override string Name { get; set; } = "wire-name-bomb-boom";
+    public override bool LightRequiresPower { get; set; } = false;
 
     public override StatusLightState? GetLightState(Wire wire, DefusableComponent comp)
-        => StatusLightState.On;
+    {
+        return StatusLightState.On;
+    }
 
     public override object StatusKey { get; } = DefusableWireStatus.BoomIndicator;
 
@@ -27,7 +30,7 @@ public sealed class BoomWireAction : ComponentWireAction<DefusableComponent>
         }
         else
         {
-            comp.Usable = false;
+            EntityManager.System<DefusableSystem>().SetUsable(comp, false);
         }
         return true;
     }
@@ -35,7 +38,7 @@ public sealed class BoomWireAction : ComponentWireAction<DefusableComponent>
     public override bool Mend(EntityUid user, Wire wire, DefusableComponent comp)
     {
         if (comp is { Activated: false, Usable: false })
-            comp.Usable = true;
+            EntityManager.System<DefusableSystem>().SetUsable(comp, true);
         // you're already dead lol
         return true;
     }

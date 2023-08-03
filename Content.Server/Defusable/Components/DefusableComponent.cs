@@ -1,3 +1,4 @@
+using Content.Server.Defusable.Systems;
 using Content.Server.Explosion.Components;
 using Robust.Shared.Audio;
 
@@ -6,7 +7,7 @@ namespace Content.Server.Defusable.Components;
 /// <summary>
 /// This is used for bombs that should be defused. The explosion configuration should be handled by <see cref="ExplosiveComponent"/>.
 /// </summary>
-[RegisterComponent, Access(typeof(DefusableComponent))]
+[RegisterComponent, Access(typeof(DefusableSystem), Friend = AccessPermissions.ReadWriteExecute, Other = AccessPermissions.Read)]
 public sealed class DefusableComponent : Component
 {
     /// <summary>
@@ -59,9 +60,13 @@ public sealed class DefusableComponent : Component
 
     #region Wires
     // wires, this is so that they're one use
+    [Access(Other=AccessPermissions.ReadWrite)]
     public bool DelayWireUsed;
+    [Access(Other=AccessPermissions.ReadWrite)]
     public bool ProceedWireCut;
+    [Access(Other=AccessPermissions.ReadWrite)]
     public bool ProceedWireUsed;
+    [Access(Other=AccessPermissions.ReadWrite)]
     public bool ActivatedWireUsed;
     #endregion
 }
