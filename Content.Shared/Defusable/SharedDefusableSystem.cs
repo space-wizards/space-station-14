@@ -5,8 +5,13 @@ namespace Content.Shared.Defusable;
 /// <summary>
 /// This handles defusable explosives, such as Syndicate Bombs.
 /// </summary>
-public abstract class SharedDefusableSystem : EntitySystem { }
-// most of the logic is in the server
+/// <remarks>
+/// Most of the logic is in the server
+/// </remarks>
+public abstract class SharedDefusableSystem : EntitySystem
+{
+
+}
 
 [NetSerializable, Serializable]
 public enum DefusableVisuals
