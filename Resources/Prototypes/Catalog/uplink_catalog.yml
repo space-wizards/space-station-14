@@ -620,6 +620,31 @@
     Telecrystal: 12
   categories:
   - UplinkBundles
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkHristovBundle
+  name: uplink-hristov-bundle-name
+  description: uplink-hristov-bundle-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
+  productEntity: ClothingBackpackDuffelSyndicateFilledSniperRifle
+  cost:
+    Telecrystal: 24
+  categories:
+  - UplinkBundles
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
 
 - type: listing
   id: UplinkC20RBundle
