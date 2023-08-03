@@ -6,12 +6,13 @@ namespace Content.Client.AirlockPainter.UI
 {
     public sealed class AirlockPainterBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private AirlockPainterWindow? _window;
+
+        [ViewVariables]
         private AirlockPainterSystem? _painter;
 
-        [Dependency] private readonly IEntitySystemManager _entitySystems = default!;
-
-        public AirlockPainterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public AirlockPainterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -21,7 +22,7 @@ namespace Content.Client.AirlockPainter.UI
 
             _window = new AirlockPainterWindow();
 
-            _painter = _entitySystems.GetEntitySystem<AirlockPainterSystem>();
+            _painter = EntMan.System<AirlockPainterSystem>();
 
             _window.OpenCentered();
             _window.OnClose += Close;

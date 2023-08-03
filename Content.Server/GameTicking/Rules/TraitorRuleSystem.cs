@@ -31,7 +31,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly FactionSystem _faction = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -249,7 +249,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         traitorRole.Mind.Briefing = string.Format(
             "{0}\n{1}",
             Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", traitorRule.Codewords))),
-            Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("", code))));
+            Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp","#"))));
 
         // Assign traitor roles
         _mindSystem.AddRole(mind, traitorRole);
@@ -263,8 +263,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
 
         // Change the faction
-        _faction.RemoveFaction(entity, "NanoTrasen", false);
-        _faction.AddFaction(entity, "Syndicate");
+        _npcFaction.RemoveFaction(entity, "NanoTrasen", false);
+        _npcFaction.AddFaction(entity, "Syndicate");
 
         // Give traitors their objectives
         var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
@@ -295,7 +295,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         {
            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
-           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("", code))));
+           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
         }
     }
 

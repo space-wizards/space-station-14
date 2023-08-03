@@ -16,10 +16,11 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: IdleCompound
+    rootTask:
+      task: IdleCompound
   - type: Input
     context: "human"
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleNeutral
   - type: MovementSpeedModifier

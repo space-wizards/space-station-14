@@ -115,7 +115,7 @@ public abstract partial class SharedToolSystem : EntitySystem
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             NeedHand = tool != user,
-            AttemptFrequency = IsWelder(tool) ? AttemptFrequency.Never : AttemptFrequency.EveryTick
+            AttemptFrequency = IsWelder(tool) ? AttemptFrequency.EveryTick : AttemptFrequency.Never
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);

@@ -8,6 +8,9 @@
   id: AirSensor
 
 - type: Tag
+  id: Ambrosia
+
+- type: Tag
   id: AppraisalTool
 
 - type: Tag
@@ -153,6 +156,9 @@
   id: Catwalk
 
 - type: Tag
+  id: Chicken
+
+- type: Tag
   id: Cigarette
 
 - type: Tag
@@ -178,6 +184,9 @@
 
 - type: Tag #Ohioans die happy
   id: Corn
+
+- type: Tag
+  id: Cow
 
 - type: Tag
   id: Crayon
@@ -270,6 +279,9 @@
   id: DroneUsable
 
 - type: Tag
+  id: Duck
+
+- type: Tag
   id: Ectoplasm
 
 - type: Tag
@@ -351,6 +363,9 @@
   id: GlassShard
 
 - type: Tag
+  id: Goat
+
+- type: Tag
   id: Grenade
 
 - type: Tag
@@ -359,6 +374,9 @@
 
 - type: Tag
   id: Hamster
+
+- type: Tag
+  id: HamsterWearable
 
 - type: Tag
   id: HamtrCentralControlModule
@@ -611,6 +629,9 @@
   id: Pie
 
 - type: Tag
+  id: Pig
+
+- type: Tag
   id: PillCanister
 
 - type: Tag
@@ -635,7 +656,11 @@
   id: Plastic
 
 - type: Tag
+  id: Plunger
+
+- type: Tag
   id: PlushieGhost
+
 
 - type: Tag
   id: PowerCellSmall
@@ -789,6 +814,12 @@
   id: Taser
 
 - type: Tag
+  id: TabletopBoard
+
+- type: Tag
+  id: TabletopPiece
+
+- type: Tag
   id: TimerBrigElectronics
 
 - type: Tag
@@ -805,7 +836,7 @@
 
 - type: Tag
   id: TrashBag
-  
+
 - type: Tag
   id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
 
@@ -856,3 +887,9 @@
 
 - type: Tag
   id: Write
+
+- type: Tag
+  id: RifleStock
+
+- type: Tag
+  id: ModularReceiver
