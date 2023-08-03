@@ -500,7 +500,9 @@ public sealed partial class PathfindingSystem
                                 if (!fixture.Hard ||
                                     (collisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
                                     (collisionLayer & fixture.CollisionLayer) == fixture.CollisionLayer)
+                                {
                                     continue;
+                                }
 
                                 // Do an AABB check first as it's probably faster, then do an actual point check.
                                 var intersects = false;
