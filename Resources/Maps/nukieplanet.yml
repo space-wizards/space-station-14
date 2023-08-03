@@ -11228,7 +11228,7 @@ entities:
     - pos: 24.5,-16.5
       parent: 104
       type: Transform
-- proto: PersonalAI
+- proto: SyndicatePersonalAI
   entities:
   - uid: 160
     components:
