@@ -8,6 +8,9 @@
   - type: SolutionContainerManager
   - type: Sprite
     state: produce
+  # let cows eat raw produce like wheat and oats
+  - type: Food
+    stomachs: 2
   - type: Produce
   - type: PotencyVisuals
   - type: Appearance
