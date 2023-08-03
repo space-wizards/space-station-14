@@ -141,8 +141,8 @@ namespace Content.Server.Toilet
                     if (TryComp<StrapComponent>(uid, out var strap) && strap.BuckledEntities.Count != 0)
                         return;
                     ToggleToiletSeat(uid, component);
-                }
-                Text = alterToiletSeatText;
+                },
+                Text = alterToiletSeatText
             };
 
             args.Verbs.Add(verb);
