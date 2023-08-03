@@ -152,7 +152,6 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             }
 
             RaisePredictiveEvent(new LightAttackEvent(target, weaponUid, coordinates));
-            return;
         }
     }
 
@@ -206,7 +205,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     private void ClientHeavyAttack(EntityUid user, EntityCoordinates coordinates, EntityUid meleeUid, MeleeWeaponComponent component)
     {
         // Only run on first prediction to avoid the potential raycast entities changing.
-        if (!TryComp<TransformComponent>(user, out var userXform) ||
+        if (!_xformQuery.TryGetComponent(user, out var userXform) ||
             !Timing.IsFirstTimePredicted)
         {
             return;
