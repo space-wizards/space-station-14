@@ -30,6 +30,8 @@ namespace Content.IntegrationTests.Tests.Networking
 
             Assert.That(clEntityManager.GetComponent<TransformComponent>(lastSvEntity).Coordinates,
                 Is.EqualTo(svEntityManager.GetComponent<TransformComponent>(lastSvEntity).Coordinates));
+
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

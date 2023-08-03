@@ -7,7 +7,7 @@
     - !type:OverallPlaytimeRequirement
       time: 15000 # SS220-RoleTime
   startingGear: SecurityCadetGear
-  icon: "SecurityCadet"
+  icon: "JobIconSecurityCadet"
   supervisors: job-supervisors-security
   canBeAntag: false
   access:

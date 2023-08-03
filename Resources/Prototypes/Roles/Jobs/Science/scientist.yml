@@ -8,7 +8,7 @@
       department: Science
       time: 18000 # SS220-RoleTime
   startingGear: ScientistGear
-  icon: "Scientist"
+  icon: "JobIconScientist"
   supervisors: job-supervisors-rd
   access:
   - Research

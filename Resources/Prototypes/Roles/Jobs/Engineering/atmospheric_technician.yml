@@ -8,7 +8,7 @@
       department: Engineering
       time: 18000 # SS220-RoleTime
   startingGear: AtmosphericTechnicianGear
-  icon: "AtmosphericTechnician"
+  icon: "JobIconAtmosphericTechnician"
   supervisors: job-supervisors-ce
   access:
   - Maintenance

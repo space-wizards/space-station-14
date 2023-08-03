@@ -9,7 +9,7 @@
       time: 54000 # SS220-RoleTime
   weight: 10
   startingGear: ResearchDirectorGear
-  icon: "ResearchDirector"
+  icon: "JobIconResearchDirector"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false

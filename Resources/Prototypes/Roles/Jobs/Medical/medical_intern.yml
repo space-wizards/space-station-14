@@ -7,7 +7,7 @@
     - !type:OverallPlaytimeRequirement
       time: 3600 # SS220-RoleTime
   startingGear: MedicalInternGear
-  icon: "MedicalIntern"
+  icon: "JobIconMedicalIntern"
   supervisors: job-supervisors-medicine
   canBeAntag: false
   access:

@@ -19,6 +19,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
+using Content.Shared.StatusIcon;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -219,6 +220,11 @@ public sealed class StationSpawningSystem : EntitySystem
         var cardId = pdaComponent.ContainedId.Value;
         _cardSystem.TryChangeFullName(cardId, characterName, card);
         _cardSystem.TryChangeJobTitle(cardId, jobPrototype.LocalizedName, card);
+
+        if (_prototypeManager.TryIndex<StatusIconPrototype>(jobPrototype.Icon, out var jobIcon))
+        {
+            _cardSystem.TryChangeJobIcon(cardId, jobIcon, card);
+        }
 
         var extendedAccess = false;
         if (station != null)

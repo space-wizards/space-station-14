@@ -8,7 +8,7 @@
     department: Security
     time: 30000 # Corvax-RoleTime
   startingGear: DetectiveGear
-  icon: "Detective"
+  icon: "JobIconDetective"
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:

@@ -8,7 +8,7 @@
       department: Security
       time: 24000 # SS220-RoleTime
   startingGear: SecurityOfficerGear
-  icon: "SecurityOfficer"
+  icon: "JobIconSecurityOfficer"
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:

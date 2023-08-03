@@ -7,7 +7,7 @@
     - !type:OverallPlaytimeRequirement
       time: 10800 # SS220-RoleTime
   startingGear: BotanistGear
-  icon: "Botanist"
+  icon: "JobIconBotanist"
   supervisors: job-supervisors-hop
   access:
   - Service

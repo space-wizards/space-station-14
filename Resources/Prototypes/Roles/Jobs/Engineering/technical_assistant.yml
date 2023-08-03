@@ -7,7 +7,7 @@
     - !type:OverallPlaytimeRequirement
       time: 3600 # SS220-RoleTime
   startingGear: TechnicalAssistantGear
-  icon: "TechnicalAssistant"
+  icon: "JobIconTechnicalAssistant"
   supervisors: job-supervisors-engineering
   canBeAntag: false
   access:

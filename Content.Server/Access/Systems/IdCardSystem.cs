@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
@@ -7,8 +6,10 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.Popups;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Access.Systems
 {
@@ -115,6 +116,30 @@ namespace Content.Server.Access.Systems
                 _adminLogger.Add(LogType.Identity, LogImpact.Low,
                     $"{ToPrettyString(player.Value):player} has changed the job title of {ToPrettyString(uid):entity} to {jobTitle} ");
             }
+            return true;
+        }
+
+        public bool TryChangeJobIcon(EntityUid uid, StatusIconPrototype jobIcon, IdCardComponent? id = null, EntityUid? player = null)
+        {
+            if (!Resolve(uid, ref id))
+            {
+                return false;
+            }
+
+            if (id.JobIcon == jobIcon.ID)
+            {
+                return true;
+            }
+
+            id.JobIcon = jobIcon.ID;
+            Dirty(id);
+
+            if (player != null)
+            {
+                _adminLogger.Add(LogType.Identity, LogImpact.Low,
+                    $"{ToPrettyString(player.Value):player} has changed the job icon of {ToPrettyString(id.Owner):entity} to {jobIcon} ");
+            }
+
             return true;
         }
 

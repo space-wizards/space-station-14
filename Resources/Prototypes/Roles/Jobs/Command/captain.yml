@@ -9,7 +9,7 @@
       time: 54000 # SS220-RoleTime
   weight: 20
   startingGear: CaptainGear
-  icon: "Captain"
+  icon: "JobIconCaptain"
   requireAdminNotify: true
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
@@ -25,6 +25,8 @@
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatCaptain
     eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    outerClothing: ClothingOuterArmorCaptainCarapace
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
   innerclothingskirt: ClothingUniformJumpskirtCaptain

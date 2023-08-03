@@ -9,7 +9,7 @@
       time: 84000 # SS220-RoleTime
   weight: 10
   startingGear: HoSGear
-  icon: "HeadOfSecurity"
+  icon: "JobIconHeadOfSecurity"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
