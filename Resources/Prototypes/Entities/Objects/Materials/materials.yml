@@ -110,6 +110,15 @@
   - type: Appearance
   - type: Item
     size: 30
+  - type: Food
+    requiredTag: ClothEater
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
 
 - type: entity
   parent: MaterialCloth
@@ -149,6 +158,15 @@
   - type: Construction
     graph: Durathread
     node: MaterialDurathread
+  - type: Food
+    requiredTag: ClothEater
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
 
 - type: entity
   parent: MaterialDurathread
@@ -304,6 +322,15 @@
   - type: Appearance
   - type: Item
     size: 30
+  - type: Food
+    requiredTag: ClothEater
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
 
 
 - type: entity

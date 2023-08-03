@@ -21,6 +21,7 @@
     requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
+    damageModifierSet: Moth
   - type: Butcherable
     butcheringType: Spike
     spawned:
@@ -34,9 +35,24 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4.5
-    weightlessAcceleration: 1.5
+    weightlessAcceleration: 1.5 # Move around more easily in space.
     weightlessFriction: 1
     weightlessModifier: 1
+  - type: Flammable
+    damage:
+      types:
+        Heat: 1.5 # moths burn more easily
+  - type: Temperature # Moths hate the heat and thrive in the cold.
+    heatDamageThreshold: 335
+    coldDamageThreshold: 230
+    currentTemperature: 310.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 0.05 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 0.2 #per second, scales with temperature & other constants
   - type: Tag
     tags: 
       - ClothEater 
