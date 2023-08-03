@@ -52,6 +52,7 @@ public sealed partial class BorgChassisComponent : Component
 
     [DataField("currentProviderModule")]
     public EntityUid? CurrentProviderModule;
+
     #region Visuals
     [DataField("hasMindState")]
     public string HasMindState = string.Empty;

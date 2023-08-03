@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Numerics;
 using Content.Client.Animations;
 using Content.Client.Examine;
@@ -99,12 +100,13 @@ namespace Content.Client.Hands.Systems
                     }
                 }
 
-                foreach (var hand in addedHands)
+                component.SortedHands = new(state.HandNames);
+                var sorted = addedHands.OrderBy(hand => component.SortedHands.IndexOf(hand.Name));
+
+                foreach (var hand in sorted)
                 {
                     AddHand(uid, hand, component);
                 }
-
-                component.SortedHands = new(state.HandNames);
             }
 
             _stripSys.UpdateUi(uid);
@@ -339,7 +341,7 @@ namespace Content.Client.Hands.Systems
             }
 
             var ev = new GetInhandVisualsEvent(uid, hand.Location);
-            RaiseLocalEvent(held, ev, false);
+            RaiseLocalEvent(held, ev);
 
             if (ev.Layers.Count == 0)
             {
@@ -352,7 +354,7 @@ namespace Content.Client.Hands.Systems
             {
                 if (!revealedLayers.Add(key))
                 {
-                    Logger.Warning($"Duplicate key for in-hand visuals: {key}. Are multiple components attempting to modify the same layer? Entity: {ToPrettyString(held)}");
+                    Log.Warning($"Duplicate key for in-hand visuals: {key}. Are multiple components attempting to modify the same layer? Entity: {ToPrettyString(held)}");
                     continue;
                 }
 

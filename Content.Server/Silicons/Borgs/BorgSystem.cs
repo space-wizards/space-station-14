@@ -65,6 +65,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
     private void OnMapInit(EntityUid uid, BorgChassisComponent component, MapInitEvent args)
     {
         UpdateBatteryAlert(uid);
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }
 
     private void OnChassisInteractUsing(EntityUid uid, BorgChassisComponent component, AfterInteractUsingEvent args)

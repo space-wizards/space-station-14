@@ -26,10 +26,25 @@
       "name": "icon-cables"
     },
     {
+      "name": "icon-diagnosis"
+    },
+    {
+      "name": "icon-fire-extinguisher"
+    },
+    {
+      "name": "icon-gps"
+    },
+    {
+      "name": "icon-mining"
+    },
+    {
       "name": "icon-template"
     },
     {
       "name": "icon-tools"
+    },
+    {
+      "name": "icon-treatment"
     },
     {
       "name": "medical"

@@ -47,10 +47,6 @@
     thresholds:
       0: Alive
       100: Dead
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      60: 0.7
-      80: 0.5
   - type: Physics
     bodyType: KinematicController
   - type: UserInterface

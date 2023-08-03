@@ -19,9 +19,35 @@
 
 # generic modules
 - type: entity
+  id: BorgModuleFireExtinguisher
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: fire extinguisher cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-fire-extinguisher
+  - type: ProvideItemBorgModule
+    items:
+    - FireExtinguisher
+
+- type: entity
+  id: BorgModuleGPS
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: GPS cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-gps
+  - type: ProvideItemBorgModule
+    items:
+    - HandheldGPSBasic
+
+- type: entity
   id: BorgModuleTool
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: tool module
+  name: tool cyborg module
   components:
   - type: Sprite
     layers:
@@ -32,15 +58,31 @@
     - Omnitool
     - WelderExperimental
 
+# cargo modules
 - type: entity
-  id: BorgModuleCable
+  id: BorgModuleMining
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: cable module
+  name: mining cyborg module
   components:
   - type: Sprite
     layers:
-      - state: generic
-      - state: icon-cables
+    - state: cargo
+    - state: icon-mining
+  - type: ProvideItemBorgModule
+    items:
+    - MiningDrill
+    - OreBag
+
+# engineering modules
+- type: entity
+  id: BorgModuleCable
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: cable cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: engineering
+    - state: icon-cables
   - type: ProvideItemBorgModule
     items:
     - CableApcStackLingering10
@@ -52,7 +94,7 @@
 - type: entity
   id: BorgModuleArtifact
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: artifact module
+  name: artifact cyborg module
   components:
   - type: Sprite
     layers:
@@ -65,7 +107,7 @@
 - type: entity
   id: BorgModuleAnomaly
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: anomaly module
+  name: anomaly cyborg module
   components:
   - type: Sprite
     layers:
@@ -75,28 +117,33 @@
     items:
     - AnomalyScanner
 
+# medical modules
 - type: entity
-  id: BorgModuleTest1
+  id: BorgModuleDiagnosis
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: borg module (test1)
+  name: diagnosis cyborg module
   components:
-    - type: Sprite
-      layers:
-        - state: syndicate
-        - state: icon-tools
-    - type: ProvideItemBorgModule
-      items:
-      - BikeHorn
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-diagnosis
+  - type: ProvideItemBorgModule
+    items:
+    - HandheldHealthAnalyzerUnpowered
+    - ClothingNeckStethoscope
 
 - type: entity
-  id: BorgModuleTest2
+  id: BorgModuleTreatment
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: borg module (test2)
+  name: treament cyborg module
   components:
-    - type: Sprite
-      layers:
-        - state: syndicate
-        - state: icon-tools
-    - type: ProvideItemBorgModule
-      items:
-      - EnergyDagger
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-treatment
+  - type: ProvideItemBorgModule
+    items:
+    - Brutepack10Lingering
+    - Ointment10Lingering
+    - Gauze10Lingering
+    - Bloodpack10Lingering
