@@ -633,7 +633,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
   productEntity: ClothingBackpackDuffelSyndicateFilledSniperRifle
   cost:
-    Telecrystal: 24
+    Telecrystal: 20
   categories:
   - UplinkBundles
   conditions:
