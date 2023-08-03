@@ -14,10 +14,13 @@ public sealed partial class BorgSystem
         SubscribeLocalEvent<BorgModuleComponent, EntGotInsertedIntoContainerMessage>(OnModuleGotInserted);
         SubscribeLocalEvent<BorgModuleComponent, EntGotRemovedFromContainerMessage>(OnModuleGotRemoved);
 
-        SubscribeLocalEvent<ProvideItemBorgModuleComponent, ComponentStartup>(OnProvideItemStartup);
-        SubscribeLocalEvent<ProvideItemBorgModuleComponent, BorgModuleInstalledEvent>(OnProvideItemInstalled);
-        SubscribeLocalEvent<ProvideItemBorgModuleComponent, BorgModuleUninstalledEvent>(OnProvideItemUninstalled);
-        SubscribeLocalEvent<ProvideItemBorgModuleComponent, SwapItemBorgModuleEvent>(OnSwapItemBorgModule);
+        SubscribeLocalEvent<SelectableBorgModuleComponent, BorgModuleInstalledEvent>(OnSelectableInstalled);
+        SubscribeLocalEvent<SelectableBorgModuleComponent, BorgModuleUninstalledEvent>(OnSelectableUninstalled);
+        SubscribeLocalEvent<SelectableBorgModuleComponent, BorgModuleActionSelectedEvent>(OnSelectableAction);
+
+        SubscribeLocalEvent<ItemBorgModuleComponent, ComponentStartup>(OnProvideItemStartup);
+        SubscribeLocalEvent<ItemBorgModuleComponent, BorgModuleSelectedEvent>(OnItemModuleSelected);
+        SubscribeLocalEvent<ItemBorgModuleComponent, BorgModuleUnselectedEvent>(OnItemModuleUnselected);
     }
 
     private void OnModuleGotInserted(EntityUid uid, BorgModuleComponent component, EntGotInsertedIntoContainerMessage args)
@@ -32,7 +35,7 @@ public sealed partial class BorgSystem
         if (!_powerCell.HasDrawCharge(uid))
             return;
 
-        EnableModule(chassis, uid, chassisComp, component);
+        InstallModule(chassis, uid, chassisComp, component);
     }
 
     private void OnModuleGotRemoved(EntityUid uid, BorgModuleComponent component, EntGotRemovedFromContainerMessage args)
@@ -46,54 +49,98 @@ public sealed partial class BorgSystem
             args.Container != chassisComp.ModuleContainer)
             return;
 
-        DisableModule(chassis, uid, chassisComp, component);
+        UninstallModule(chassis, uid, chassisComp, component);
     }
 
-    private void OnProvideItemStartup(EntityUid uid, ProvideItemBorgModuleComponent component, ComponentStartup args)
+    private void OnProvideItemStartup(EntityUid uid, ItemBorgModuleComponent component, ComponentStartup args)
     {
         component.ProvidedContainer = Container.EnsureContainer<Container>(uid, component.ProvidedContainerId);
     }
 
-    private void OnProvideItemInstalled(EntityUid uid, ProvideItemBorgModuleComponent component, ref BorgModuleInstalledEvent args)
+    private void OnSelectableInstalled(EntityUid uid, SelectableBorgModuleComponent component, ref BorgModuleInstalledEvent args)
     {
         var chassis = args.ChassisEnt;
         component.ModuleSwapAction.EntityIcon = uid;
         _actions.AddAction(chassis, component.ModuleSwapAction, uid);
-
-        if (TryComp<BorgChassisComponent>(chassis, out var chassisComp) && chassisComp.CurrentProviderModule == null)
-        {
-            ProvideItems(chassis, uid, chassisComp, component);
-        }
+        SelectModule(chassis, uid, moduleComp: component);
     }
 
-    private void OnProvideItemUninstalled(EntityUid uid, ProvideItemBorgModuleComponent component, ref BorgModuleUninstalledEvent args)
+    private void OnSelectableUninstalled(EntityUid uid, SelectableBorgModuleComponent component, ref BorgModuleUninstalledEvent args)
     {
         var chassis = args.ChassisEnt;
         _actions.RemoveProvidedActions(chassis, uid);
-
-        if (TryComp<BorgChassisComponent>(chassis, out var chassisComp) && chassisComp.CurrentProviderModule == uid)
-        {
-            RemoveProvidedItems(chassis, uid, chassisComp, component);
-        }
+        UnselectModule(chassis, uid, moduleComp: component);
     }
 
-    private void OnSwapItemBorgModule(EntityUid uid, ProvideItemBorgModuleComponent component, SwapItemBorgModuleEvent args)
+    private void OnSelectableAction(EntityUid uid, SelectableBorgModuleComponent component, BorgModuleActionSelectedEvent args)
     {
         var chassis = args.Performer;
         if (!TryComp<BorgChassisComponent>(chassis, out var chassisComp))
             return;
 
-        if (chassisComp.CurrentProviderModule == uid)
+        if (chassisComp.SelectedModule == uid)
             return;
 
-        if (chassisComp.CurrentProviderModule != null)
-            RemoveProvidedItems(chassis, chassisComp.CurrentProviderModule.Value, chassisComp);
-
-        ProvideItems(chassis, uid, chassisComp, component);
+        UnselectModule(chassis, chassisComp.SelectedModule, chassisComp);
+        SelectModule(chassis, uid, chassisComp, component);
         args.Handled = true;
     }
 
-    private void ProvideItems(EntityUid chassis, EntityUid uid, BorgChassisComponent? chassisComponent = null, ProvideItemBorgModuleComponent? component = null)
+    public void SelectModule(EntityUid chassis,
+        EntityUid moduleUid,
+        BorgChassisComponent? chassisComp = null,
+        SelectableBorgModuleComponent? moduleComp = null)
+    {
+        if (!Resolve(chassis, ref chassisComp))
+            return;
+
+        if (chassisComp.SelectedModule != null)
+            return;
+
+        if (chassisComp.SelectedModule == moduleUid)
+            return;
+
+        if (!Resolve(moduleUid, ref moduleComp, false))
+            return;
+
+        var ev = new BorgModuleSelectedEvent(chassis);
+        RaiseLocalEvent(moduleUid, ref ev);
+        chassisComp.SelectedModule = moduleUid;
+    }
+
+    public void UnselectModule(EntityUid chassis,
+        EntityUid? moduleUid,
+        BorgChassisComponent? chassisComp = null,
+        SelectableBorgModuleComponent? moduleComp = null)
+    {
+        if (!Resolve(chassis, ref chassisComp))
+            return;
+
+        if (moduleUid == null)
+            return;
+
+        if (chassisComp.SelectedModule != moduleUid)
+            return;
+
+        if (!Resolve(moduleUid.Value, ref moduleComp, false))
+            return;
+
+        var ev = new BorgModuleUnselectedEvent(chassis);
+        RaiseLocalEvent(moduleUid.Value, ref ev);
+        chassisComp.SelectedModule = null;
+    }
+
+    private void OnItemModuleSelected(EntityUid uid, ItemBorgModuleComponent component, ref BorgModuleSelectedEvent args)
+    {
+        ProvideItems(args.Chassis, uid, component: component);
+    }
+
+    private void OnItemModuleUnselected(EntityUid uid, ItemBorgModuleComponent component, ref BorgModuleUnselectedEvent args)
+    {
+        RemoveProvidedItems(args.Chassis, uid, component: component);
+    }
+
+    private void ProvideItems(EntityUid chassis, EntityUid uid, BorgChassisComponent? chassisComponent = null, ItemBorgModuleComponent? component = null)
     {
         if (Terminating(chassis))
             return;
@@ -101,14 +148,10 @@ public sealed partial class BorgSystem
         if (!Resolve(chassis, ref chassisComponent) || !Resolve(uid, ref component))
             return;
 
-        if (chassisComponent.CurrentProviderModule != null)
-            return;
-
         if (!TryComp<HandsComponent>(chassis, out var hands))
             return;
 
         var xform = Transform(chassis);
-        chassisComponent.CurrentProviderModule = uid;
         foreach (var itemProto in component.Items)
         {
             EntityUid item;
@@ -136,7 +179,7 @@ public sealed partial class BorgSystem
                 continue;
             }
 
-            var handId = $"{uid}-{component.HandCounter}";
+            var handId = $"{uid}-item{component.HandCounter}";
             component.HandCounter++;
             _hands.AddHand(chassis, handId, HandLocation.Middle, hands);
             _hands.DoPickup(chassis, hands.Hands[handId], item, hands);
@@ -147,7 +190,7 @@ public sealed partial class BorgSystem
         component.ItemsCreated = true;
     }
 
-    private void RemoveProvidedItems(EntityUid chassis, EntityUid uid, BorgChassisComponent? chassisComponent = null, ProvideItemBorgModuleComponent? component = null)
+    private void RemoveProvidedItems(EntityUid chassis, EntityUid uid, BorgChassisComponent? chassisComponent = null, ItemBorgModuleComponent? component = null)
     {
         if (Terminating(chassis))
             return;
@@ -155,13 +198,9 @@ public sealed partial class BorgSystem
         if (!Resolve(chassis, ref chassisComponent) || !Resolve(uid, ref component))
             return;
 
-        if (chassisComponent.CurrentProviderModule != uid)
-            return;
-
         if (!TryComp<HandsComponent>(chassis, out var hands))
             return;
 
-        chassisComponent.CurrentProviderModule = null;
         foreach (var (handId, item) in component.ProvidedItems)
         {
             RemComp<UnremoveableComponent>(item);
@@ -185,7 +224,7 @@ public sealed partial class BorgSystem
         return true;
     }
 
-    public void EnableAllModules(EntityUid uid, BorgChassisComponent? component = null)
+    public void InstallAllModules(EntityUid uid, BorgChassisComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -196,7 +235,7 @@ public sealed partial class BorgSystem
             if (!query.TryGetComponent(moduleEnt, out var moduleComp))
                 continue;
 
-            EnableModule(uid, moduleEnt, component, moduleComp);
+            InstallModule(uid, moduleEnt, component, moduleComp);
         }
     }
 
@@ -211,11 +250,11 @@ public sealed partial class BorgSystem
             if (!query.TryGetComponent(moduleEnt, out var moduleComp))
                 continue;
 
-            DisableModule(uid, moduleEnt, component, moduleComp);
+            UninstallModule(uid, moduleEnt, component, moduleComp);
         }
     }
 
-    public void EnableModule(EntityUid uid, EntityUid module, BorgChassisComponent? component, BorgModuleComponent? moduleComponent = null)
+    public void InstallModule(EntityUid uid, EntityUid module, BorgChassisComponent? component, BorgModuleComponent? moduleComponent = null)
     {
         if (!Resolve(uid, ref component) || !Resolve(module, ref moduleComponent))
             return;
@@ -228,7 +267,7 @@ public sealed partial class BorgSystem
         RaiseLocalEvent(module, ref ev);
     }
 
-    public void DisableModule(EntityUid uid, EntityUid module, BorgChassisComponent? component, BorgModuleComponent? moduleComponent = null)
+    public void UninstallModule(EntityUid uid, EntityUid module, BorgChassisComponent? component, BorgModuleComponent? moduleComponent = null)
     {
         if (!Resolve(uid, ref component) || !Resolve(module, ref moduleComponent))
             return;

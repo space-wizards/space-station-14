@@ -1,6 +1,4 @@
-﻿using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
-using Robust.Shared.Containers;
+﻿using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -10,21 +8,8 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// This is used for a <see cref="BorgModuleComponent"/> that provides items to the entity it's installed into.
 /// </summary>
 [RegisterComponent]
-public sealed class ProvideItemBorgModuleComponent : Component
+public sealed class ItemBorgModuleComponent : Component
 {
-    /// <summary>
-    /// The sidebar action for swapping to this module.
-    /// </summary>
-    [DataField("moduleSwapAction")]
-    public InstantAction ModuleSwapAction = new()
-    {
-        DisplayName = "action-name-swap-module",
-        Description = "action-desc-swap-module",
-        ItemIconStyle = ItemActionIconStyle.BigItem,
-        Event = new SwapItemBorgModuleEvent(),
-        UseDelay = TimeSpan.FromSeconds(0.5f)
-    };
-
     /// <summary>
     /// The items that are provided.
     /// </summary>
@@ -63,6 +48,3 @@ public sealed class ProvideItemBorgModuleComponent : Component
     public string ProvidedContainerId = "provided_container";
 }
 
-public sealed class SwapItemBorgModuleEvent : InstantActionEvent
-{
-}

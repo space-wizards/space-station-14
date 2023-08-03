@@ -50,8 +50,8 @@ public sealed partial class BorgChassisComponent : Component
     [DataField("borgJobId", customTypeSerializer: typeof(PrototypeIdSerializer<JobPrototype>))]
     public string BorgJobId = "Borg";
 
-    [DataField("currentProviderModule")]
-    public EntityUid? CurrentProviderModule;
+    [DataField("selectedModule")]
+    public EntityUid? SelectedModule;
 
     #region Visuals
     [DataField("hasMindState")]
