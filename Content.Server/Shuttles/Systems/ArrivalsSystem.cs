@@ -215,28 +215,33 @@ public sealed class ArrivalsSystem : EntitySystem
         if (!HasComp<StationArrivalsComponent>(ev.Station))
             return;
 
-        var points = EntityQuery<SpawnPointComponent, TransformComponent>().ToList();
-        _random.Shuffle(points);
         TryGetArrivals(out var arrivals);
 
         if (TryComp<TransformComponent>(arrivals, out var arrivalsXform))
         {
             var mapId = arrivalsXform.MapID;
 
-            foreach (var (spawnPoint, xform) in points)
+            var points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
+            var possiblePositions = new List<EntityCoordinates>();
+            while ( points.MoveNext(out var uid, out var spawnPoint, out var xform))
             {
                 if (spawnPoint.SpawnType != SpawnPointType.LateJoin || xform.MapID != mapId)
                     continue;
 
+                possiblePositions.Add(xform.Coordinates);
+            }
+
+            if (possiblePositions.Count > 0)
+            {
+                var spawnLoc = _random.Pick(possiblePositions);
                 ev.SpawnResult = _stationSpawning.SpawnPlayerMob(
-                    xform.Coordinates,
+                    spawnLoc,
                     ev.Job,
                     ev.HumanoidCharacterProfile,
                     ev.Station);
 
                 EnsureComp<PendingClockInComponent>(ev.SpawnResult.Value);
                 EnsureComp<AutoOrientComponent>(ev.SpawnResult.Value);
-                return;
             }
         }
     }
