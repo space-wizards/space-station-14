@@ -32,6 +32,9 @@ using Content.Shared.Stunnable;
 using Content.Server.Revolutionary;
 using Content.Server.Chat.Managers;
 using Content.Server.Mindshield.Components;
+using Content.Shared.Sound.Components;
+using Content.Shared.Hands;
+using Content.Shared.Item;
 
 namespace Content.Server.Flash
 {
@@ -59,12 +62,12 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
             // ran before toggling light for extra-bright lantern
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand, before: new []{ typeof(HandheldLightSystem) });
-
             SubscribeLocalEvent<InventoryComponent, FlashAttemptEvent>(OnInventoryFlashAttempt);
 
             SubscribeLocalEvent<FlashImmunityComponent, FlashAttemptEvent>(OnFlashImmunityFlashAttempt);
             SubscribeLocalEvent<PermanentBlindnessComponent, FlashAttemptEvent>(OnPermanentBlindnessFlashAttempt);
             SubscribeLocalEvent<TemporaryBlindnessComponent, FlashAttemptEvent>(OnTemporaryBlindnessFlashAttempt);
+            //SubscribeLocalEvent<AfterFlashedEvent>(OnPostFlash);
         }
 
         private void OnFlashMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
@@ -144,14 +147,19 @@ namespace Content.Server.Flash
                 user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
                     ("user", Identity.Entity(user.Value, EntityManager))));
             }
-            if (HasComp<HeadRevolutionaryComponent>(user))
-            {
-                OnPostFlash(target, user, used);
-            }
+
+            var ev = new AfterFlashedEvent(target, user, used);
+            if (used != null)
+                RaiseLocalEvent(used.Value, ev);
+            if (user != null)
+                RaiseLocalEvent(user.Value, ev);
+
+
         }
         /// <summary>
         /// Called when a Head Rev uses a flash in melee to convert somebody else.
         /// </summary>
+
         public void OnPostFlash(EntityUid target, EntityUid? user, EntityUid? used)
         {
             var stunTime = TimeSpan.FromSeconds(3);
@@ -176,6 +184,7 @@ namespace Content.Server.Flash
                 }
             }
         }
+
 
         public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0.8f, bool displayPopup = false, SoundSpecifier? sound = null)
         {
@@ -248,5 +257,20 @@ namespace Content.Server.Flash
             Used = used;
         }
     }
+
+    public sealed class AfterFlashedEvent
+    {
+        public readonly EntityUid Target;
+        public readonly EntityUid? User;
+        public readonly EntityUid? Used;
+
+        public AfterFlashedEvent(EntityUid target, EntityUid? used, EntityUid? user)
+        {
+            Target = target;
+            Used = used;
+            User = user;
+        }
+    }
+
 
 }

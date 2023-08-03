@@ -1,76 +1,89 @@
 using Robust.Server.Player;
-using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.Players;
 using Content.Shared.Implants.Components;
 using Content.Server.Mind;
-using Robust.Shared.Log;
 using Content.Server.Mindshield.Components;
-using Content.Shared.Implants;
 using Content.Shared.Revolutionary;
 using Content.Server.Popups;
 using Robust.Shared.Containers;
-using System.Xml.Linq;
-using Linguini.Bundle.Errors;
-using Content.Server.GameTicking.Rules.Components;
+using Robust.Shared.Timing;
+using Content.Shared.IdentityManagement;
+using Content.Server.Chemistry.ReagentEffectConditions;
+using YamlDotNet.Core.Tokens;
 
 namespace Content.Server.Mindshield;
 /// <summary>
 /// For checking for Mindshield implant at start and giving them the component
 /// </summary>
+
 public sealed class MindShieldSystem : EntitySystem
 {
-    [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
 
+    private ISawmill _sawmill = default!;
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnJobAssigned);
-        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerJoin);
-        //SubscribeLocalEvent<ImplantEvent>(Implanted);
-        //SubscribeLocalEvent<MindShieldComponent, ComponentInit>(OnMindShieldActivated);
+        _sawmill = Logger.GetSawmill("preset");
+        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
+        SubscribeLocalEvent<MindShieldComponent, ComponentInit>(OnMindShield);
     }
-    private void OnJobAssigned(RulePlayerJobsAssignedEvent ev)
+
+    //Ghetto solution until I find a way to add a component when implanting.
+    //I actually hate this so much
+
+    private void OnMindShield(EntityUid uid, MindShieldComponent comp, ComponentInit componentInit)
     {
-        ApplyMindShield();
+        OnImplanted();
     }
-    private void OnPlayerJoin(PlayerSpawnCompleteEvent ev)
+    private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)
     {
-        ApplyMindShield();
+        OnImplanted();
     }
+    private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
+    {
+        OnImplanted();
+    }
+
     /// <summary>
-    /// On round start and when players join, they will be given the Mindshield component to prevent conversion.
+    /// Checks for Mindshields at the start to give component and removes component from head revs for identification.
     /// </summary>
-    private void ApplyMindShield()
+
+    public void OnImplanted()
     {
-        var shield = AllEntityQuery<ImplantedComponent>();
-        while (shield.MoveNext(out var uid, out var comp))
+        var query = AllEntityQuery<ImplantedComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
             var mind = _mind.GetMind(uid);
             var implants = comp.ImplantContainer.ContainedEntities;
+            if (HasComp<MindShieldComponent>(uid) && !HasComp<RevolutionaryComponent>(uid))
+                return;
             foreach (var implant in implants)
             {
+                _sawmill.Error("Implants?");
                 if (mind != null)
                 {
-                    if (Name(implant) == "mind-shield implant" && mind.OwnedEntity != null)
+                    if (HasComp<MindShieldComponent>(implant) && mind.OwnedEntity != null)
                     {
                         EnsureComp<MindShieldComponent>(mind.OwnedEntity.Value);
-                        var name = mind.CharacterName;
-                        if (HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity.Value))
+                        var name = Identity.Entity(uid, EntityManager);
+                        if (mind.OwnedEntity != null)
                         {
-                            _popup.PopupEntity(Loc.GetString("head-rev-break-mindshield"), mind.OwnedEntity.Value);
-                            _sharedContainer.TryRemoveFromContainer(implant, true);
-                            break;
-                        }
-                        if (HasComp<RevolutionaryComponent>(mind.OwnedEntity.Value) && !HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity.Value))
-                        {
-                            RemComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
-                            if (name != null)
+                            if (HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity.Value))
                             {
+                                _popup.PopupEntity(Loc.GetString("head-rev-break-mindshield"), mind.OwnedEntity.Value);
+                                RemComp<MindShieldComponent>(mind.OwnedEntity.Value);
+                                _sharedContainer.TryRemoveFromContainer(implant, true);
+                                break;
+                            }
+                            if (HasComp<RevolutionaryComponent>(mind.OwnedEntity.Value) && !HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity.Value))
+                            {
+                                RemComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
                                 _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), mind.OwnedEntity.Value);
+
                             }
                         }
                     }
@@ -79,3 +92,4 @@ public sealed class MindShieldSystem : EntitySystem
         }
     }
 }
+

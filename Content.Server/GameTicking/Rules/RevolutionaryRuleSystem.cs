@@ -46,9 +46,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
-    private List<string> _headRoles = new List<string>();
-
-    private bool _assigned = false;
+    private List<string> _headRoles = new() { "Captain", "Research Director", "Chief Engineer", "Quartermaster", "Chief Medical Officer", "Head Of Security", "Head Of Personnel" };
 
     public override void Initialize()
     {
@@ -59,24 +57,24 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<RevolutionaryRuleComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
-    //We'll see how this goes (Gets people off
-    protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
-    {
-        base.ActiveTick(uid, component, gameRule, frameTime);
+    //Commented out to get feedback on this as this might not be a good idea to put into active tick.
+    //protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    //{
+    //    base.ActiveTick(uid, component, gameRule, frameTime);
 
-        var headsOffStation = AllEntityQuery<CommandComponent>();
-        while (headsOffStation.MoveNext(out var id, out var comp))
-        {
-            if (_stationSystem.GetOwningStation(id) == null)
-            {
-                EnsureComp<ExiledComponent>(id);
-            }
-            else if (HasComp<ExiledComponent>(id))
-            {
-                RemComp<ExiledComponent>(id);
-            }
-        }
-    }
+    //    var headsOffStation = AllEntityQuery<CommandComponent>();
+    //    while (headsOffStation.MoveNext(out var id, out var comp))
+    //    {
+    //        if (_stationSystem.GetOwningStation(id) == null)
+    //        {
+    //            EnsureComp<ExiledComponent>(id);
+    //        }
+    //        else if (HasComp<ExiledComponent>(id))
+    //        {
+    //            RemComp<ExiledComponent>(id);
+    //        }
+    //    }
+    //}
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
@@ -141,6 +139,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// Gets the list of players currently spawned in and checks if they are eligible to become a Head Rev.
     /// </summary>
     /// <param name="comp"></param>
+
     private void AssignHeadRevs(RevolutionaryRuleComponent comp)
     {
         var allPlayers = _playerSystem.ServerSessions.ToList();
@@ -196,6 +195,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Gets player chosen to become Head Rev from previous method and gives them the role and gear.
     /// </summary>
+
     private void GiveHeadRevRole(Mind.Mind mind, IPlayerSession headRev)
     {
         var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
@@ -229,40 +229,31 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Assigns command staff on station with a component so they can be used later.
     /// </summary>
+
     private void AssignCommandStaff()
     {
-        if (!_assigned)
+        var jobs = _prototypeManager.Index<DepartmentPrototype>("Command");
+        var allPlayers = _playerSystem.ServerSessions.ToList();
+        var playerList = new List<IPlayerSession>();
+        foreach (var player in allPlayers)
         {
-            _headRoles.Add("Captain");
-            _headRoles.Add("Research Director");
-            _headRoles.Add("Chief Engineer");
-            _headRoles.Add("Quartermaster");
-            _headRoles.Add("Chief Medical Officer");
-            _headRoles.Add("Head Of Security");
-            _headRoles.Add("Head Of Personnel");
-            var allPlayers = _playerSystem.ServerSessions.ToList();
-            var playerList = new List<IPlayerSession>();
-            foreach (var player in allPlayers)
+            if (player.AttachedEntity == null || HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
             {
-                if (player.AttachedEntity == null || HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
-                {
-                    playerList.Add(player);
-                }
+                playerList.Add(player);
             }
-            foreach (var player in playerList)
+        }
+        foreach (var player in playerList)
+        {
+            var mind = player.GetMind();
+            if (mind != null && mind.CurrentJob != null)
             {
-                var mind = player.GetMind();
-                if (mind != null && mind.CurrentJob != null)
+                var currentJob = mind.CurrentJob.Name;
+                if (mind.OwnedEntity != null && jobs.Roles.Contains(currentJob))
                 {
-                    var currentJob = mind.CurrentJob.Name;
-                    if (mind.OwnedEntity != null && _headRoles.Contains(currentJob))
+                    if (!HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity))
                     {
-                        if (!HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity))
-                        {
-                            EnsureComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
-                            EnsureComp<CommandComponent>(mind.OwnedEntity.Value);
-                            _assigned = true;
-                        }
+                        EnsureComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
+                        EnsureComp<CommandComponent>(mind.OwnedEntity.Value);
                     }
                 }
             }
@@ -292,7 +283,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Checks if all Head Revs are dead and if all command is dead to either end the round or remove all revs. Or both.
     /// </summary>
-    /// <param name="target"></param>
+
     private void CheckFinish()
     {
         var stunTime = TimeSpan.FromSeconds(4);
@@ -340,6 +331,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 }
             }
             // Checks if all heads are dead to finish the round.
+
             var heads = EntityQuery<CommandComponent, MobStateComponent>(true);
             var headsOffStation = EntityQuery<CommandComponent, ExiledComponent, MobStateComponent>();
             inRound = 0;
@@ -361,6 +353,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
 
             //In the rare instances that no heads are on station at start, I put a timer before this can activate. Might lower it
+
             if (dead == inRound && revs.HeadsDied && _timing.CurTime >= TimeSpan.FromMinutes(revs.GracePeriod))
             {
                 revs.HeadsDied = true;
@@ -375,6 +368,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Gives late join heads the head component so they also need to be killed.
     /// </summary>
+
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
     {
         var mind = ev.Player.GetMind();

@@ -273,3 +273,4 @@
   components:
    - type: SubdermalImplant
      permanent: true
+   - type: MindShield
