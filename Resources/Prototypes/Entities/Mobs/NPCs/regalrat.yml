@@ -120,6 +120,9 @@
     nameSegments:
     - RegalRatNameKingdom
     - RegalRatNameTitle
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
 
 - type: entity
   id: MobRatKingBuff
@@ -163,6 +166,9 @@
     speedModifierThresholds:
       200: 0.7
       250: 0.5
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
 
 - type: entity
   name: Rat Servant
@@ -276,3 +282,6 @@
     price: 500 # rat wealth
   - type: MobsterAccent
     isBoss: false
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists

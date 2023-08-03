@@ -144,3 +144,6 @@
               Quantity: 5
             - ReagentId: SpaceLube
               Quantity: 5
+    - type: GuideHelp
+      guides:
+      - MinorAntagonists
