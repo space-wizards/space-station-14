@@ -140,6 +140,16 @@
     Poison: 0.8
 
 - type: damageModifierSet
+  id: Moff # Slightly worse at everything but cold
+  coefficients:
+    Blunt: 1
+    Piercing: 1.15
+    Slash: 1.15
+    Cold: 0.7
+    Heat: 1.5
+    Poison: 1.1
+
+- type: damageModifierSet
   id: Zombie #Blunt resistant and immune to biological threats, but can be hacked apart and burned
   coefficients:
     Blunt: 0.7
