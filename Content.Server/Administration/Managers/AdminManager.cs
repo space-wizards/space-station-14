@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -12,7 +13,11 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Players;
+using Robust.Shared.Toolshed;
+using Robust.Shared.Toolshed.Errors;
 using Robust.Shared.Utility;
 
 
@@ -28,6 +33,7 @@ namespace Content.Server.Administration.Managers
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly IServerConsoleHost _consoleHost = default!;
         [Dependency] private readonly IChatManager _chat = default!;
+        [Dependency] private readonly ToolshedManager _toolshed = default!;
 
         private readonly Dictionary<IPlayerSession, AdminReg> _admins = new();
         private readonly HashSet<NetUserId> _promotedPlayers = new();
@@ -41,6 +47,7 @@ namespace Content.Server.Administration.Managers
         public IEnumerable<IPlayerSession> AllAdmins => _admins.Select(p => p.Key);
 
         private readonly AdminCommandPermissions _commandPermissions = new();
+        private readonly AdminCommandPermissions _toolshedCommandPermissions = new();
 
         public bool IsAdmin(IPlayerSession session, bool includeDeAdmin = false)
         {
@@ -196,11 +203,37 @@ namespace Content.Server.Administration.Managers
                 }
             }
 
+            foreach (var spec in _toolshed.AllCommands())
+            {
+                var (isAvail, flagsReq) = GetRequiredFlag(spec.Cmd);
+
+                if (!isAvail)
+                {
+                    continue;
+                }
+
+                if (flagsReq.Length != 0)
+                {
+                    _toolshedCommandPermissions.AdminCommands.TryAdd(spec.Cmd.Name, flagsReq);
+                }
+                else
+                {
+                    _toolshedCommandPermissions.AnyCommands.Add(spec.Cmd.Name);
+                }
+            }
+
             // Load flags for engine commands, since those don't have the attributes.
             if (_res.TryContentFileRead(new ResPath("/engineCommandPerms.yml"), out var efs))
             {
                 _commandPermissions.LoadPermissionsFromStream(efs);
             }
+
+            if (_res.TryContentFileRead(new ResPath("/toolshedEngineCommandPerms.yml"), out var toolshedPerms))
+            {
+                _toolshedCommandPermissions.LoadPermissionsFromStream(toolshedPerms);
+            }
+
+            _toolshed.ActivePermissionController = this;
         }
 
         public void PromoteHost(IPlayerSession player)
@@ -366,6 +399,26 @@ namespace Content.Server.Administration.Managers
             return Equals(addr, System.Net.IPAddress.Loopback) || Equals(addr, System.Net.IPAddress.IPv6Loopback);
         }
 
+        public bool TryGetCommandFlags(CommandSpec command, out AdminFlags[]? flags)
+        {
+            var cmdName = command.Cmd.Name;
+
+            if (_toolshedCommandPermissions.AnyCommands.Contains(cmdName))
+            {
+                // Anybody can use this command.
+                flags = null;
+                return true;
+            }
+
+            if (_toolshedCommandPermissions.AdminCommands.TryGetValue(cmdName, out flags))
+            {
+                return true;
+            }
+
+            flags = null;
+            return false;
+        }
+
         public bool CanCommand(IPlayerSession session, string cmdName)
         {
             if (_commandPermissions.AnyCommands.Contains(cmdName))
@@ -398,7 +451,51 @@ namespace Content.Server.Administration.Managers
             return false;
         }
 
-        private static (bool isAvail, AdminFlags[] flagsReq) GetRequiredFlag(IConsoleCommand cmd)
+        public bool CheckInvokable(CommandSpec command, ICommonSession? user, out IConError? error)
+        {
+            if (user is null)
+            {
+                error = null;
+                return true; // Server console.
+            }
+
+            var name = command.Cmd.Name;
+            if (!TryGetCommandFlags(command, out var flags))
+            {
+                // Command is missing permissions.
+                error = new CommandPermissionsUnassignedError(command);
+                return false;
+            }
+
+            if (flags is null)
+            {
+                // Anyone can execute this.
+                error = null;
+                return true;
+            }
+
+            var data = GetAdminData((IPlayerSession)user);
+            if (data == null)
+            {
+                // Player isn't an admin.
+                error = new NoPermissionError(command);
+                return false;
+            }
+
+            foreach (var flag in flags)
+            {
+                if (data.HasFlag(flag))
+                {
+                    error = null;
+                    return true;
+                }
+            }
+
+            error = new NoPermissionError(command);
+            return false;
+        }
+
+        private static (bool isAvail, AdminFlags[] flagsReq) GetRequiredFlag(object cmd)
         {
             MemberInfo type = cmd.GetType();
 
@@ -471,4 +568,29 @@ namespace Content.Server.Administration.Managers
             }
         }
     }
+}
+
+public record struct CommandPermissionsUnassignedError(CommandSpec Command) : IConError
+{
+    public FormattedMessage DescribeInner()
+    {
+        return FormattedMessage.FromMarkup($"The command {Command.FullName()} is missing permission flags and cannot be executed.");
+    }
+
+    public string? Expression { get; set; }
+    public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
+}
+
+
+public record struct NoPermissionError(CommandSpec Command) : IConError
+{
+    public FormattedMessage DescribeInner()
+    {
+        return FormattedMessage.FromMarkup($"You do not have permission to execute {Command.FullName()}");
+    }
+
+    public string? Expression { get; set; }
+    public Vector2i? IssueSpan { get; set; }
+    public StackTrace? Trace { get; set; }
 }

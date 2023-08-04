@@ -2,17 +2,10 @@
 # TODO BODY: Part damage
 - type: entity
   id: PartArachnid
-  parent: BaseItem
+  parent: [BaseItem, BasePart]
   name: "arachnid body part"
   abstract: true
   components:
-  - type: Damageable
-    damageContainer: Biological
-  - type: BodyPart
-  - type: ContainerContainer
-    containers:
-      bodypart: !type:Container
-        ents: []
   - type: Extractable
     juiceSolution:
       reagents:
@@ -24,16 +17,11 @@
 - type: entity
   id: TorsoArachnid
   name: "arachnid torso"
-  parent: PartArachnid
+  parent: [PartArachnid, BaseTorso]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "torso_m"
-  - type: Icon
-    sprite: Mobs/Species/Arachnid/parts.rsi
-    state: "torso_m"
-  - type: BodyPart
-    partType: Torso
   - type: Extractable
     juiceSolution:
       reagents:
@@ -45,27 +33,11 @@
 - type: entity
   id: HeadArachnid
   name: "arachnid head"
-  parent: PartArachnid
+  parent: [PartArachnid, BaseHead]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "head_m"
-  - type: Icon
-    sprite: Mobs/Species/Arachnid/parts.rsi
-    state: "head_m"
-  - type: BodyPart
-    partType: Head
-    vital: true
-  - type: Input
-    context: "ghost"
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 0
-    baseSprintSpeed: 0
-  - type: InputMover
-  - type: GhostOnMove
-  - type: Tag
-    tags:
-      - Head
   - type: Extractable
     juiceSolution:
       reagents:
@@ -77,77 +49,47 @@
 - type: entity
   id: LeftArmArachnid
   name: "left arachnid arm"
-  parent: PartArachnid
+  parent: [PartArachnid, BaseLeftArm]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "l_arm"
-  - type: Icon
-    sprite: Mobs/Species/Arachnid/parts.rsi
-    state: "l_arm"
-  - type: BodyPart
-    partType: Arm
-    symmetry: Left
 
 - type: entity
   id: RightArmArachnid
   name: "right arachnid arm"
-  parent: PartArachnid
+  parent: [PartArachnid, BaseRightArm]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "r_arm"
-  - type: Icon
-    sprite: Mobs/Species/Arachnid/parts.rsi
-    state: "r_arm"
-  - type: BodyPart
-    partType: Arm
-    symmetry: Right
 
 - type: entity
   id: LeftHandArachnid
   name: "left arachnid hand"
-  parent: PartArachnid
+  parent: [PartArachnid, BaseLeftHand]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "l_hand"
-  - type: Icon
-    sprite: Mobs/Species/Arachnid/parts.rsi
-    state: "l_hand"
-  - type: BodyPart
-    partType: Hand
-    symmetry: Left
 
 - type: entity
   id: RightHandArachnid
   name: "right arachnid hand"
-  parent: PartArachnid
+  parent: [PartArachnid, BaseRightHand]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "r_hand"
-  - type: Icon
-    sprite: Mobs/Species/Arachnid/parts.rsi
-    state: "r_hand"
-  - type: BodyPart
-    partType: Hand
-    symmetry: Right
 
 - type: entity
   id: LeftLegArachnid
   name: "left arachnid leg"
-  parent: PartArachnid
+  parent: [PartArachnid, BaseLeftLeg]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "l_leg"
-  - type: Icon
-    sprite: Mobs/Species/Arachnid/parts.rsi
-    state: "l_leg"
-  - type: BodyPart
-    partType: Leg
-    symmetry: Left
   - type: MovementBodyPart
     walkSpeed: 3.0
     sprintSpeed: 5.0
@@ -155,17 +97,11 @@
 - type: entity
   id: RightLegArachnid
   name: "right arachnid leg"
-  parent: PartArachnid
+  parent: [PartArachnid, BaseRightLeg]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "r_leg"
-  - type: Icon
-    sprite: Mobs/Species/Arachnid/parts.rsi
-    state: "r_leg"
-  - type: BodyPart
-    partType: Leg
-    symmetry: Right
   - type: MovementBodyPart
     walkSpeed: 3.0
     sprintSpeed: 5.0
@@ -173,29 +109,17 @@
 - type: entity
   id: LeftFootArachnid
   name: "left arachnid foot"
-  parent: PartArachnid
+  parent: [PartArachnid, BaseLeftFoot]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "l_foot"
-  - type: Icon
-    sprite: Mobs/Species/Arachnid/parts.rsi
-    state: "l_foot"
-  - type: BodyPart
-    partType: Foot
-    symmetry: Left
 
 - type: entity
   id: RightFootArachnid
   name: "right arachnid foot"
-  parent: PartArachnid
+  parent: [PartArachnid, BaseRightFoot]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "r_foot"
-  - type: Icon
-    sprite: Mobs/Species/Arachnid/parts.rsi
-    state: "r_foot"
-  - type: BodyPart
-    partType: Foot
-    symmetry: Right

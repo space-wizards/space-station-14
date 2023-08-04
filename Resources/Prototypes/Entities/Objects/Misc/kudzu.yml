@@ -83,7 +83,6 @@
           nodeGroupID: Spreader
     - type: Food
       requiredStomachs: 2 # ruminants have 4 stomachs but i dont care to give them literally 4 stomachs. 2 is good
-      # TODO make botany plants edible to ruminants as well ...
       delay: 0.5
     - type: FlavorProfile
       flavors:

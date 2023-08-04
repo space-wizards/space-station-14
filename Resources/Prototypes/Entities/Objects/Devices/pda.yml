@@ -73,6 +73,7 @@
     uiKey: enum.PdaUiKey.Key
     preinstalled:
       - NotekeeperCartridge
+      - NewsReadCartridge
     cartridgeSlot:
       priority: -1
       name: Cartridge
@@ -97,11 +98,8 @@
       type: InstrumentBoundUserInterface
     - key: enum.HealthAnalyzerUiKey.Key
       type: HealthAnalyzerBoundUserInterface
-    - key: enum.NewsReadUiKey.Key
-      type: NewsReadBoundUserInterface
   - type: CrewManifestViewer
     unsecure: true
-  - type: NewsRead
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -733,6 +731,18 @@
     borderColor: "#891417"
   - type: Icon
     state: pda-syndi
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+    cartridgeSlot:
+      priority: -1
+      name: Cartridge
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+          - Cartridge
 
 - type: entity
   parent: BasePDA

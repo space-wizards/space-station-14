@@ -184,7 +184,8 @@ entities:
           tiles: XwAAAF8AAAAAAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF8AAABfAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABfAAAAXwAAAAAAAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXwAAAAAAAAAAAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       type: MapGrid
     - type: Broadphase
-    - angularDamping: 0.05
+    - bodyStatus: InAir
+      angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
       bodyType: Dynamic
@@ -52964,14 +52965,7 @@ entities:
       type: AmbientSound
     - color: '#990000FF'
       type: AtmosPipeColor
-- proto: GeneratorPlasma
-  entities:
-  - uid: 2857
-    components:
-    - pos: -11.5,-53.5
-      parent: 1
-      type: Transform
-- proto: GeneratorUranium
+- proto: GeneratorBasic15kW
   entities:
   - uid: 3673
     components:
@@ -52981,6 +52975,13 @@ entities:
   - uid: 3674
     components:
     - pos: -0.5,47.5
+      parent: 1
+      type: Transform
+- proto: GeneratorPlasma
+  entities:
+  - uid: 2857
+    components:
+    - pos: -11.5,-53.5
       parent: 1
       type: Transform
 - proto: GeneratorUraniumMachineCircuitboard
@@ -57359,11 +57360,6 @@ entities:
     - pos: -4.5167303,19.595882
       parent: 1
       type: Transform
-  - uid: 5923
-    components:
-    - pos: -10.552676,13.574921
-      parent: 1
-      type: Transform
   - uid: 12544
     components:
     - pos: 11.496555,-20.355099
@@ -59026,6 +59022,23 @@ entities:
   - uid: 9727
     components:
     - pos: -31.5,21.5
+      parent: 1
+      type: Transform
+- proto: MaintenancePlantSpawner
+  entities:
+  - uid: 10641
+    components:
+    - pos: -28.5,24.5
+      parent: 1
+      type: Transform
+  - uid: 10642
+    components:
+    - pos: 28.5,-18.5
+      parent: 1
+      type: Transform
+  - uid: 10643
+    components:
+    - pos: 20.5,35.5
       parent: 1
       type: Transform
 - proto: MaintenanceToolSpawner
@@ -67169,33 +67182,6 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
-- proto: SheetPlasma1
-  entities:
-  - uid: 5913
-    components:
-    - pos: -10.533056,13.590546
-      parent: 1
-      type: Transform
-  - uid: 5914
-    components:
-    - pos: -10.533056,13.590546
-      parent: 1
-      type: Transform
-  - uid: 5915
-    components:
-    - pos: -10.533056,13.590546
-      parent: 1
-      type: Transform
-  - uid: 5916
-    components:
-    - pos: -10.533056,13.590546
-      parent: 1
-      type: Transform
-  - uid: 5917
-    components:
-    - pos: -10.533056,13.590546
-      parent: 1
-      type: Transform
 - proto: SheetPlasteel
   entities:
   - uid: 1134
@@ -71956,12 +71942,6 @@ entities:
       pos: -11.5,13.5
       parent: 1
       type: Transform
-  - uid: 5617
-    components:
-    - rot: 3.141592653589793 rad
-      pos: -10.5,13.5
-      parent: 1
-      type: Transform
   - uid: 9615
     components:
     - rot: 3.141592653589793 rad
@@ -73214,6 +73194,15 @@ entities:
     - flags: SessionSpecific
       type: MetaData
     - pos: -13.5,16.5
+      parent: 1
+      type: Transform
+- proto: VendingMachineChemicals
+  entities:
+  - uid: 5617
+    components:
+    - flags: SessionSpecific
+      type: MetaData
+    - pos: -10.5,13.5
       parent: 1
       type: Transform
 - proto: VendingMachineCigs
