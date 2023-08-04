@@ -485,7 +485,8 @@ public abstract partial class SharedBuckleSystem
         }
 
         AppearanceSystem.SetData(strapUid, StrapVisuals.State, strapComp.BuckledEntities.Count != 0);
-        _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, strapUid);
+        var audioSourceUid = userUid != buckleUid ? userUid : strapUid;
+        _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, audioSourceUid);
 
         var ev = new BuckleChangeEvent(strapUid, buckleUid, false);
         RaiseLocalEvent(buckleUid, ref ev);
