@@ -55,8 +55,7 @@ namespace Content.IntegrationTests.Tests.Doors
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
 
@@ -118,8 +117,7 @@ namespace Content.IntegrationTests.Tests.Doors
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
 

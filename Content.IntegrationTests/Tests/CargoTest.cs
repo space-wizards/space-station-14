@@ -168,7 +168,7 @@ public sealed class CargoTest
     public async Task StackPrice()
     {
 
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = StackProto });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true } );
         var server = pairTracker.Pair.Server;
 
         var entManager = server.ResolveDependency<IEntityManager>();

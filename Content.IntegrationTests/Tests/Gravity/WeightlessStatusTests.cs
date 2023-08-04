@@ -20,8 +20,8 @@ namespace Content.IntegrationTests.Tests.Gravity
     bodyType: Dynamic
 
 - type: entity
-  name: GravityGeneratorDummy
-  id: GravityGeneratorDummy
+  name: WeightlessGravityGeneratorDummy
+  id: WeightlessGravityGeneratorDummy
   components:
   - type: GravityGenerator
     chargeRate: 1000000000 # Set this really high so it discharges in a single tick.
@@ -61,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Gravity
                 // No gravity without a gravity generator
                 Assert.That(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
 
-                generatorUid = entityManager.SpawnEntity("GravityGeneratorDummy", entityManager.GetComponent<TransformComponent>(human).Coordinates);
+                generatorUid = entityManager.SpawnEntity("WeightlessGravityGeneratorDummy", entityManager.GetComponent<TransformComponent>(human).Coordinates);
             });
 
             // Let WeightlessSystem and GravitySystem tick

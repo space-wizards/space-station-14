@@ -61,8 +61,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
@@ -95,8 +94,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var entityManager = server.ResolveDependency<IEntityManager>();

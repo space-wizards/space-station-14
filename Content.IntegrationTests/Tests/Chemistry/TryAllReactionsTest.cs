@@ -23,14 +23,13 @@ namespace Content.IntegrationTests.Tests.Chemistry
       beaker:
         maxVol: 50
         canMix: true";
-        
+
         [Test]
         public async Task TryAllTest()
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
 

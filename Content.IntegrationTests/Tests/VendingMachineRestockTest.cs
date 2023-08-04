@@ -174,7 +174,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestCompleteRestockProcess()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
 
@@ -260,7 +260,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestRestockBreaksOpen()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
 
@@ -324,7 +324,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestRestockInventoryBounds()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
 

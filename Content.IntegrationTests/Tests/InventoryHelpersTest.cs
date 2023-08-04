@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnItemInSlotTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();

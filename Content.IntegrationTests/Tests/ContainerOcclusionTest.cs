@@ -34,7 +34,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestA()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var s = pairTracker.Pair.Server;
             var c = pairTracker.Pair.Client;
 
@@ -74,7 +74,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestB()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var s = pairTracker.Pair.Server;
             var c = pairTracker.Pair.Client;
 
@@ -114,7 +114,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestAb()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var s = pairTracker.Pair.Server;
             var c = pairTracker.Pair.Client;
 

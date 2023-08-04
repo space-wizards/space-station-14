@@ -766,11 +766,6 @@ public sealed class PoolSettings
     public bool NoLoadContent { get; init; }
 
     /// <summary>
-    /// Set this to raw yaml text to load prototypes onto the given server/client pair.
-    /// </summary>
-    public string ExtraPrototypes { get; init; }
-
-    /// <summary>
     /// Set this to true to disable the NetInterp CVar on the given server/client pair
     /// </summary>
     public bool DisableInterpolate { get; init; }

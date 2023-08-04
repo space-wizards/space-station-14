@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         [TestPrototypes]
         private const string Prototypes = @"
 - type: alarmThreshold
-  id: testThreshold
+  id: AlarmThresholdTestDummy
   upperBound: !type:AlarmThresholdSetting
     threshold: 5
   lowerBound: !type:AlarmThresholdSetting
@@ -24,7 +24,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         [Test]
         public async Task TestAlarmThreshold()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -32,7 +32,7 @@ namespace Content.IntegrationTests.Tests.Atmos
 
             await server.WaitPost(() =>
             {
-                threshold = prototypeManager.Index<AtmosAlarmThreshold>("testThreshold");
+                threshold = prototypeManager.Index<AtmosAlarmThreshold>("AlarmThresholdTestDummy");
             });
 
             await server.WaitAssertion(() =>

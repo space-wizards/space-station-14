@@ -48,8 +48,7 @@ public sealed class SolutionSystemTests
     {
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
         {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
+            NoClient = true
         });
         var server = pairTracker.Pair.Server;
 
@@ -96,8 +95,7 @@ public sealed class SolutionSystemTests
     {
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
         {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
+            NoClient = true
         });
         var server = pairTracker.Pair.Server;
 
@@ -144,8 +142,7 @@ public sealed class SolutionSystemTests
     {
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
         {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
+            NoClient = true
         });
         var server = pairTracker.Pair.Server;
 
@@ -203,8 +200,7 @@ public sealed class SolutionSystemTests
     {
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
         {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
+            NoClient = true
         });
         var server = pairTracker.Pair.Server;
 
@@ -242,7 +238,7 @@ public sealed class SolutionSystemTests
     [Test]
     public async Task TestTemperatureCalculations()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         const float temp = 100.0f;
