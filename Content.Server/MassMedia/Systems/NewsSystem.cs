@@ -8,6 +8,7 @@ using Content.Shared.MassMedia.Systems;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.CartridgeLoader.Cartridges;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
@@ -15,6 +16,7 @@ using Content.Server.CartridgeLoader;
 using Robust.Shared.Timing;
 using TerraFX.Interop.Windows;
 using Content.Server.Popups;
+using Content.Shared.Database;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -26,6 +28,7 @@ public sealed class NewsSystem : EntitySystem
     [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
@@ -136,6 +139,10 @@ public sealed class NewsSystem : EntitySystem
 
         _audio.PlayPvs(component.ConfirmSound, uid);
 
+        if (author != null)
+            _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{ToPrettyString(author.Value):actor} created news article {article.Name} by {article.Author}: {article.Content}");
+        else
+            _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{msg.Session.Name:actor} created news article {article.Name}: {article.Content}");
         _articles.Add(article);
 
         component.ShareAvalible = false;
@@ -151,8 +158,13 @@ public sealed class NewsSystem : EntitySystem
         if (msg.ArticleNum > _articles.Count)
             return;
 
-        if (CheckDeleteAccess(_articles[msg.ArticleNum], uid, msg.Session.AttachedEntity))
+        var articleDeleter = msg.Session.AttachedEntity;
+        if (CheckDeleteAccess(_articles[msg.ArticleNum], uid, articleDeleter))
         {
+            if (articleDeleter != null)
+                _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{ToPrettyString(articleDeleter.Value):actor} deleted news article {_articles[msg.ArticleNum].Name} by {_articles[msg.ArticleNum].Author}: {_articles[msg.ArticleNum].Content}");
+            else
+                _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{msg.Session.Name:actor} created news article {_articles[msg.ArticleNum].Name}: {_articles[msg.ArticleNum].Content}");
             _articles.RemoveAt(msg.ArticleNum);
             _audio.PlayPvs(component.ConfirmSound, uid);
         }
