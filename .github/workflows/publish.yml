@@ -42,9 +42,9 @@ jobs:
         mkdir "release/${{ github.sha }}"
         mv release/*.zip "release/${{ github.sha }}"
 
-    - name: SS14 Client
+    - name: Upload Artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: SS14.Client.zip
-        path: /home/wizards-build-push/builds_dir/builds/SS14.Client.zip
+        name: Release
+        path: /home/wizards-build-push/builds_dir/builds/
 
