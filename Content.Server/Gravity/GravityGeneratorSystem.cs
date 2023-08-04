@@ -259,8 +259,8 @@ namespace Content.Server.Gravity
 
         private void OnRefreshParts(EntityUid uid, GravityGeneratorComponent component, RefreshPartsEvent args)
         {
-            //var maxChargeMultipler = args.PartRatings[component.MachinePartMaxChargeMultiplier];
-            //component.MaxCharge = maxChargeMultipler * 1;
+            var maxChargeMultipler = args.PartRatings[component.MachinePartMaxChargeMultiplier];
+            component.MaxCharge = maxChargeMultipler * 1;
         }
 
         private void MakeBroken(EntityUid uid, GravityGeneratorComponent component, AppearanceComponent? appearance)
