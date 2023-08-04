@@ -1,12 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed being able to override the amount of the amount of liquid shot
-      out of a spray bottle., type: Fix}
-  - {message: Fixed vapor sprites being rotated in the wrong direction., type: Fix}
-  - {message: Slightly buffed mega spray bottle., type: Tweak}
-  id: 3934
-  time: '2023-06-03T19:31:50.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'DoAfters (green bar above your head) now work when moving without gravity
@@ -2989,3 +2981,8 @@ Entries:
   - {message: The Syndicate gas mask now protects your eyes from welders., type: Tweak}
   id: 4433
   time: '2023-08-04T18:43:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Allow pulling while buckled, type: Add}
+  id: 4434
+  time: '2023-08-04T18:47:52.0000000+00:00'
