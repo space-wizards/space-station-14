@@ -11,7 +11,7 @@ namespace Content.Shared.Access.Components;
 [Access(typeof(SharedAccessOverriderSystem))]
 public sealed class AccessOverriderComponent : Component
 {
-    public static string PrivilegedIdCardSlotId = "IdCardConsole-privilegedId";
+    public static string PrivilegedIdCardSlotId = "AccessOverrider-privilegedId";
 
     [DataField("privilegedIdSlot")]
     public ItemSlot PrivilegedIdSlot = new();

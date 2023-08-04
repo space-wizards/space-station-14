@@ -35,4 +35,4 @@
           type: AccessOverriderBoundUserInterface
     - type: ContainerContainer
       containers:
-        IdCardConsole-privilegedId: !type:ContainerSlot
+        AccessOverrider-privilegedId: !type:ContainerSlot
