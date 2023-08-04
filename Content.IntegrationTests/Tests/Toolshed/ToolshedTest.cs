@@ -11,7 +11,7 @@ using Robust.UnitTesting;
 namespace Content.IntegrationTests.Tests.Toolshed;
 
 [TestFixture]
-[FixtureLifeCycle(LifeCycle.SingleInstance)]
+[FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public abstract class ToolshedTest : IInvocationContext
 {
     protected PairTracker PairTracker = default!;
@@ -27,13 +27,19 @@ public abstract class ToolshedTest : IInvocationContext
     protected IInvocationContext? Context = null;
 
     [TearDown]
-    public virtual async Task TearDown()
+    public async Task TearDownInternal()
+    {
+        await PairTracker.CleanReturnAsync();
+        await TearDown();
+    }
+    
+    protected virtual async Task TearDown()
     {
         Assert.IsEmpty(_expectedErrors);
         ClearErrors();
     }
 
-    [OneTimeSetUp]
+    [SetUp]
     public virtual async Task Setup()
     {
         PairTracker = await PoolManager.GetServerClient(new PoolSettings {NoClient = NoClient});
