@@ -125,14 +125,14 @@
     LayoutId: MiniGravityGenerator        
   - type: Machine
     board: MiniGravityGeneratorCircuitboard
-  - type: ApcPowerReceiver
-    powerLoad: 500
   - type: GravityGenerator
     idlePower: 15
     activePower: 500
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
-    #switchedOn: false   
+    switchedOn: false   
     charge: 0
+  - type: ApcPowerReceiver
+    powerLoad: 500
   - type: StaticPrice
     price: 2000
