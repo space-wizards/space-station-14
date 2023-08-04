@@ -116,11 +116,10 @@
       - id: WeaponDisabler
       - id: ClothingShoesColorBlack
         prob: 0.7
-      - id: PlushieLizard
-        prob: 0.1
       - id: CigarGoldCase
-        prob: 0.10
+        prob: 0.30
         # Fuck the HoP they don't deserve fucking cigars.
+        # Yes they do, fuck you.
       - id: DoorRemoteService
       - id: ClothingNeckGoldmedal
       - id: RubberStampHop
