@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -11,24 +12,29 @@ namespace Content.Server.Maps;
 
 public sealed class GameMapManager : IGameMapManager
 {
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    
+
     [ViewVariables(VVAccess.ReadOnly)]
     private readonly Queue<string> _previousMaps = new();
     [ViewVariables(VVAccess.ReadOnly)]
-    private GameMapPrototype? _configSelectedMap = default;
+    private GameMapPrototype? _configSelectedMap;
     [ViewVariables(VVAccess.ReadOnly)]
-    private GameMapPrototype? _selectedMap = default; // Don't change this value during a round!
+    private GameMapPrototype? _selectedMap; // Don't change this value during a round!
     [ViewVariables(VVAccess.ReadOnly)]
     private bool _mapRotationEnabled;
     [ViewVariables(VVAccess.ReadOnly)]
     private int _mapQueueDepth = 1;
 
+    private ISawmill _log = default!;
+
     public void Initialize()
     {
+        _log = Logger.GetSawmill("mapsel");
+
         _configurationManager.OnValueChanged(CCVars.GameMap, value =>
         {
             if (TryLookupMap(value, out GameMapPrototype? map))
@@ -43,7 +49,7 @@ public sealed class GameMapManager : IGameMapManager
                 }
                 else
                 {
-                    Logger.ErrorS("mapsel", $"Unknown map prototype {value} was selected!");
+                    _log.Error($"Unknown map prototype {value} was selected!");
                 }
             }
         }, true);
@@ -76,21 +82,25 @@ public sealed class GameMapManager : IGameMapManager
 
     public IEnumerable<GameMapPrototype> AllVotableMaps()
     {
+        var poolPrototype = _entityManager.System<GameTicker>().Preset?.MapPool ??
+                   _configurationManager.GetCVar(CCVars.GameMapPool);
+
         if (_prototypeManager.TryIndex<GameMapPoolPrototype>(_configurationManager.GetCVar(CCVars.GameMapPool), out var pool))
         {
             foreach (var map in pool.Maps)
             {
                 if (!_prototypeManager.TryIndex<GameMapPrototype>(map, out var mapProto))
                 {
-                    Logger.Error("Couldn't index map " + map + " in pool " + pool.ID);
+                    _log.Error($"Couldn't index map {map} in pool {poolPrototype}");
                     continue;
                 }
 
                 yield return mapProto;
             }
-        } else
+        }
+        else
         {
-            throw new Exception("Could not index map pool prototype " + _configurationManager.GetCVar(CCVars.GameMapPool) + "!");
+            throw new Exception($"Could not index map pool prototype {poolPrototype}!");
         }
     }
 
@@ -144,12 +154,12 @@ public sealed class GameMapManager : IGameMapManager
     {
         if (_mapRotationEnabled)
         {
-            Logger.InfoS("mapsel", "selecting the next map from the rotation queue");
+            _log.Info("selecting the next map from the rotation queue");
             SelectMapFromRotationQueue(true);
         }
         else
         {
-            Logger.InfoS("mapsel", "selecting a random map");
+            _log.Info("selecting a random map");
             SelectMapRandom();
         }
     }
@@ -163,7 +173,8 @@ public sealed class GameMapManager : IGameMapManager
     {
         return map.MaxPlayers >= _playerManager.PlayerCount &&
                map.MinPlayers <= _playerManager.PlayerCount &&
-               map.Conditions.All(x => x.Check(map));
+               map.Conditions.All(x => x.Check(map)) &&
+               _entityManager.System<GameTicker>().IsMapEligible(map);
     }
 
     private bool TryLookupMap(string gameMap, [NotNullWhen(true)] out GameMapPrototype? map)
@@ -185,23 +196,22 @@ public sealed class GameMapManager : IGameMapManager
 
     private GameMapPrototype GetFirstInRotationQueue()
     {
-        Logger.InfoS("mapsel", $"map queue: {string.Join(", ", _previousMaps)}");
+        _log.Info($"map queue: {string.Join(", ", _previousMaps)}");
 
         var eligible = CurrentlyEligibleMaps()
             .Select(x => (proto: x, weight: GetMapRotationQueuePriority(x.ID)))
             .OrderByDescending(x => x.weight)
             .ToArray();
 
-        Logger.InfoS("mapsel", $"eligible queue: {string.Join(", ", eligible.Select(x => (x.proto.ID, x.weight)))}");
+        _log.Info($"eligible queue: {string.Join(", ", eligible.Select(x => (x.proto.ID, x.weight)))}");
 
         // YML "should" be configured with at least one fallback map
         Debug.Assert(eligible.Length != 0, $"couldn't select a map with {nameof(GetFirstInRotationQueue)}()! No eligible maps and no fallback maps!");
 
         var weight = eligible[0].weight;
         return eligible.Where(x => x.Item2 == weight)
-                       .OrderBy(x => x.proto.ID)
-                       .First()
-                       .proto;
+            .MinBy(x => x.proto.ID)
+            .proto;
     }
 
     private void EnqueueMap(string mapProtoName)
