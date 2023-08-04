@@ -23,7 +23,7 @@ public abstract class SharedLatheSystem : EntitySystem
 
         SubscribeLocalEvent<LatheComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<LatheComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<LatheComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<EmagLatheRecipesComponent, GotEmaggedEvent>(OnEmagged);
     }
 
     private void OnGetState(EntityUid uid, LatheComponent component, ref ComponentGetState args)
@@ -61,7 +61,7 @@ public abstract class SharedLatheSystem : EntitySystem
         return true;
     }
 
-    private void OnEmagged(EntityUid uid, LatheComponent component, ref GotEmaggedEvent args)
+    private void OnEmagged(EntityUid uid, EmagLatheRecipesComponent component, ref GotEmaggedEvent args)
     {
         args.Handled = true;
     }
