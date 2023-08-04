@@ -19,15 +19,12 @@
 
 - type: entity
   id: OrganDionaBrain
-  parent: BaseDionaOrgan
+  parent: [BaseDionaOrgan, OrganHumanBrain]
   name: brain
   description: "The source of incredible, unending intelligence. Honk."
   components:
   - type: Sprite
     state: brain
-  - type: Organ
-  - type: Input
-    context: "ghost"
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -60,7 +57,6 @@
     layers:
       - state: eyeball-l
       - state: eyeball-r
-  - type: Organ
 
 - type: entity
   id: OrganDionaStomach
@@ -70,7 +66,6 @@
   components:
   - type: Sprite
     state: stomach
-  - type: Organ
   - type: SolutionContainerManager
     solutions:
       stomach:

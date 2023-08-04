@@ -99,7 +99,7 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   name: China-Lake bundle
-  description: "An old China-Lake grenade launcher bundled with 8 rounds of various destruction capability."
+  description: "An old China-Lake grenade launcher bundled with 11 rounds of various destruction capability."
   components:
   - type: StorageFill
     contents:

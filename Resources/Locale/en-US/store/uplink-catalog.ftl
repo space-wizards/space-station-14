@@ -156,7 +156,7 @@ uplink-buldog-bundle-name = Bulldog Bundle
 uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and three 12g buckshot drums.
 
 uplink-grenade-launcher-bundle-name = China-Lake Bundle
-uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 8 rounds of various destruction capability.
+uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 11 rounds of various destruction capability.
 
 uplink-l6-saw-bundle-name = L6 Saw Bundle
 uplink-l6-saw-bundle-desc = More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines.

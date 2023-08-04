@@ -21,15 +21,16 @@ namespace Content.Server.Nutrition.EntitySystems;
 /// </summary>
 public sealed class AnimalHusbandrySystem : EntitySystem
 {
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private readonly HashSet<EntityUid> _failedAttempts = new();
 
@@ -197,6 +198,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         foreach (var spawn in spawns)
         {
             var offspring = Spawn(spawn, xform.Coordinates.Offset(_random.NextVector2(0.3f)));
+            _transform.AttachToGridOrMap(offspring);
             if (component.MakeOffspringInfant)
             {
                 var infant = AddComp<InfantComponent>(offspring);
