@@ -1,16 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Less severe anomalies now have higher baseline point output., type: Tweak}
-  - {message: Random anomaly stability fluctuation is less extreme., type: Tweak}
-  id: 3920
-  time: '2023-06-01T23:07:20.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: 'Handcuffs don''t eat all interaction events anymore, so you can put
-      them in disposal bins, backpacks, etc.', type: Fix}
-  id: 3921
-  time: '2023-06-02T00:48:43.0000000+00:00'
 - author: Chief-Engineer
   changes:
   - {message: 'Ghosts can perform interactions, like fully examining things, at any
@@ -2988,3 +2976,16 @@ Entries:
   - {message: The game now boots in GLES2 again. oops., type: Fix}
   id: 4419
   time: '2023-08-02T23:13:07.0000000+00:00'
+- author: router
+  changes:
+  - {message: Ringtones now have 2 more notes you can play around with., type: Tweak}
+  - {message: 'The Syndicate has taken advantage of this hardware expansion, making
+      brute-force attacks on their uplinks unfeasible.', type: Fix}
+  id: 4420
+  time: '2023-08-03T11:13:17.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Added Syndicate pAI., type: Add}
+  - {message: Syndicate pAI's can be found on the Nukie planet., type: Tweak}
+  id: 4421
+  time: '2023-08-03T20:48:40.0000000+00:00'
