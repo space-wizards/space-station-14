@@ -55,10 +55,10 @@
         Heat : 0.2 #per second, scales with temperature & other constants
   - type: Tag
     tags: 
-      - ClothEater 
       - CanPilot
-      - FootstepSound
+      - ClothEater 
       - DoorBumpOpener
+      - FootstepSound
 
 - type: entity
   save: false

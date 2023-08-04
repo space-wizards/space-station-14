@@ -29,16 +29,6 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: durathread }
   color: "#8291a1"
   price: 0.15 # 1-1 mix of plastic and cloth.
-  components:
-  - type: Food
-    requiredTag: ClothEater
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 5
 
 - type: material
   id: Plasma

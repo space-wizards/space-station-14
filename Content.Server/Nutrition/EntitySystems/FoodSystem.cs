@@ -101,9 +101,6 @@ namespace Content.Server.Nutrition.EntitySystems
             if (foodComp.RequiredTag != String.Empty && !_tags.HasTag(target, foodComp.RequiredTag))
                 return (false, false);
 
-            Console.Write(foodComp.RequiredTag != String.Empty && !_tags.HasTag(target, foodComp.RequiredTag));
-            Console.Write(_tags.HasTag(target, "ClothEater") && (foodComp.RequiredTag == String.Empty || foodComp.RequiredTag != "ClothEater"));
-
             // Make sure moths can't eat anything else
             if (_tags.HasTag(target, "ClothEater") && (foodComp.RequiredTag == String.Empty || foodComp.RequiredTag != "ClothEater"))
             {

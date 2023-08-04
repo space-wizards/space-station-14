@@ -8,4 +8,10 @@
     solutions:
       stomach:
         maxVol: 50
-  metabolizerTypes: [ Moth ]
+  - type: Metabolizer
+    maxReagents: 6
+    metabolizerTypes: [ Plant ]
+    removeEmpty: true
+    groups:
+      - id: Food
+      - id: Drink

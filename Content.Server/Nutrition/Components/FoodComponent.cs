@@ -74,8 +74,7 @@ namespace Content.Server.Nutrition.Components
         public float ForceFeedDelay = 3;
 
         /// <summary>
-        ///     This is how many seconds it takes to force feed someone this food.
-        ///     Should probably be smaller for small items like pills.
+        ///     A whitelist for what the mob can eat. 
         /// </summary>
         [DataField("requiredTag")]
         public string RequiredTag = string.Empty;
