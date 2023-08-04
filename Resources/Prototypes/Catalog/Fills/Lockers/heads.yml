@@ -206,7 +206,6 @@
       - id: OxygenTankFilled
       - id: DiagnoserMachineCircuitboard
       - id: VaccinatorMachineCircuitboard
-        prob: 0.25
       - id: Hypospray
       - id: HandheldCrewMonitor
       - id: DoorRemoteMedical
@@ -238,7 +237,6 @@
       - id: ClothingHeadHatBeretCmo
       - id: DiagnoserMachineCircuitboard
       - id: VaccinatorMachineCircuitboard
-        prob: 0.25
       - id: Hypospray
       - id: HandheldCrewMonitor
       - id: DoorRemoteMedical
@@ -266,8 +264,6 @@
       - id: HandTeleporter
       - id: ToyFigurineScientist
         prob: 0.15
-      - id: PlushieSlime
-        prob: 0.1
       - id: DoorRemoteResearch
       - id: ClothingHeadHatBeretRND
       - id: RubberStampRd
@@ -290,8 +286,6 @@
       - id: HandTeleporter
       - id: ToyFigurineScientist
         prob: 0.15
-      - id: PlushieSlime
-        prob: 0.1
       - id: DoorRemoteResearch
       - id: ClothingHeadHatBeretRND
       - id: RubberStampRd
