@@ -111,7 +111,7 @@ public sealed class MailingUnitSystem : EntitySystem
             [NetTarget] = component.Target
         };
 
-        _deviceNetworkSystem.QueuePacket(uid, null, payload, null, device);
+        _deviceNetworkSystem.QueuePacket(uid, null, payload, null, null, device);
     }
 
     /// <summary>
@@ -129,7 +129,7 @@ public sealed class MailingUnitSystem : EntitySystem
         };
 
         component.TargetList.Clear();
-        _deviceNetworkSystem.QueuePacket(uid, null, payload, null, device);
+        _deviceNetworkSystem.QueuePacket(uid, null, payload, null, null, device);
     }
 
     /// <summary>

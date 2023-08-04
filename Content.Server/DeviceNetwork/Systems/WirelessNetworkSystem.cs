@@ -20,8 +20,11 @@ namespace Content.Server.DeviceNetwork.Systems
             var ownPosition = args.SenderPosition;
             var xform = Transform(uid);
 
+            // not a wireless to wireless connection, just let it happen
+            if (!TryComp<WirelessNetworkComponent>(args.Sender, out var sendingComponent))
+                return;
+
             if (xform.MapID != args.SenderTransform.MapID
-                || !TryComp<WirelessNetworkComponent>(args.Sender, out var sendingComponent)
                 || (ownPosition - xform.WorldPosition).Length() > sendingComponent.Range)
             {
                 args.Cancel();

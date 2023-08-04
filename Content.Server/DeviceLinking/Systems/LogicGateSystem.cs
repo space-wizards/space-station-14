@@ -140,12 +140,7 @@ public sealed class LogicGateSystem : EntitySystem
         {
             comp.LastOutput = output;
 
-            var data = new NetworkPayload
-            {
-                [DeviceNetworkConstants.LogicState] = output ? SignalState.High : SignalState.Low
-            };
-
-            _deviceLink.InvokePort(uid, comp.OutputPort, data);
+            _deviceLink.SendSignal(uid, comp.OutputPort, output);
         }
     }
 }
