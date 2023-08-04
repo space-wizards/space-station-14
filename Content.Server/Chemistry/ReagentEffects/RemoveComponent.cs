@@ -11,10 +11,8 @@ namespace Content.Server.Chemistry.ReagentEffects;
 public sealed class RemoveComponent : ReagentEffect
 {
     /// <summary>
-    /// Name of component to remove, as a string
-    /// Note: component name shouldn't have the "component" postfix
-    /// WRONG: [- ReplacementAccentComponent]
-    /// RIGHT: [- ReplacementAccent]
+    /// ID of component to remove, as a string
+    /// Note: component ID shouldn't have the "component" postfix
     /// </summary>
     [DataField("components")]
     public HashSet<string> Components = new();
