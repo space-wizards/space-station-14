@@ -11,6 +11,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.VendingMachines;
 using Content.Shared.Wires;
 using Content.Server.Wires;
+using Content.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -118,8 +119,9 @@ namespace Content.IntegrationTests.Tests
                 // Collect all the prototypes with restock components.
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (proto.Abstract ||
-                        !proto.TryGetComponent<VendingMachineRestockComponent>(out var restock))
+                    if (proto.Abstract
+                        || pairTracker.Pair.IsTestPrototype(proto)
+                        || !proto.HasComponent<VendingMachineRestockComponent>())
                     {
                         continue;
                     }

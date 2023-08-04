@@ -62,6 +62,9 @@ public sealed class ResearchTest
                 if (proto.Abstract)
                     continue;
 
+                if (pairTracker.Pair.IsTestPrototype(proto))
+                    continue;
+
                 if (!proto.TryGetComponent<LatheComponent>(out var lathe))
                     continue;
                 allLathes.Add(lathe);

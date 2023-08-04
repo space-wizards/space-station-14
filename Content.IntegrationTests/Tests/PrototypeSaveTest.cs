@@ -81,6 +81,9 @@ public sealed class PrototypeSaveTest
             if (prototype.Abstract)
                 continue;
 
+            if (pairTracker.Pair.IsTestPrototype(prototype))
+                continue;
+
             // Yea this test just doesn't work with this, it parents a grid to another grid and causes game logic to explode.
             if (prototype.Components.ContainsKey("MapGrid"))
                 continue;

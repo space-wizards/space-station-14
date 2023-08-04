@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Reflection;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Utility;
+using Robust.UnitTesting;
 
 namespace Content.IntegrationTests;
 
-// Partial class for handling the discovering and validating of test prototypes.
+// Partial class for handling the discovering and storing test prototypes.
 public static partial class PoolManager
 {
     private static List<string>? _testPrototypes;
@@ -16,7 +18,6 @@ public static partial class PoolManager
             throw new Exception("Prototypes already discovered.");
 
         _testPrototypes = new();
-        var fullName = new HashSet<string>();
 
         foreach (var type in typeof(PoolManager).Assembly.GetTypes())
         {
