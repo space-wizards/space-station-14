@@ -9,8 +9,6 @@ using Robust.Shared.Containers;
 using System.Linq;
 using static Content.Shared.Access.Components.AccessOverriderComponent;
 using Content.Server.Popups;
-using Robust.Shared.Localization;
-using System;
 
 namespace Content.Server.Access.Systems;
 
@@ -47,8 +45,6 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             return;
 
         component.TargetAccessReaderId = args.Target.Value;
-
-        // User must have access to all of the access reader's access levels to change them
 
         _userInterface.TryOpen(uid, AccessOverriderUiKey.Key, actor.PlayerSession);
         UpdateUserInterface(uid, component, args);
