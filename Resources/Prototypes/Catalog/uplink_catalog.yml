@@ -1045,6 +1045,7 @@
   id: UplinkSyndicatePersonalAI
   name: uplink-syndicate-pai-name
   description: uplink-syndicate-pai-desc
+  icon: { sprite: /Textures/Objects/Fun/pai.rsi/, state: syndicate-icon-pai-off }
   productEntity: SyndicatePersonalAI
   cost:
     Telecrystal: 1
