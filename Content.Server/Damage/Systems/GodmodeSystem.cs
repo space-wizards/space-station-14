@@ -8,10 +8,9 @@ public sealed class GodmodeSystem : SharedGodmodeSystem
 {
     public override void EnableGodmode(EntityUid uid, GodmodeComponent? godmode = null)
     {
-        base.EnableGodmode(uid, godmode);
+        godmode ??= EnsureComp<GodmodeComponent>(uid);
 
-        if (godmode == null)
-            return;
+        base.EnableGodmode(uid, godmode);
 
         if (TryComp<MovedByPressureComponent>(uid, out var moved))
         {
@@ -22,12 +21,12 @@ public sealed class GodmodeSystem : SharedGodmodeSystem
 
     public override void DisableGodmode(EntityUid uid, GodmodeComponent? godmode = null)
     {
-    	if (!Resolve(uid, ref godmode, false)
+    	if (!Resolve(uid, ref godmode, false))
     	    return;
-    	    
+
         base.DisableGodmode(uid, godmode);
 
-        if (godmode == null || godmode.Deleted)
+        if (godmode.Deleted)
             return;
 
         if (TryComp<MovedByPressureComponent>(uid, out var moved))
