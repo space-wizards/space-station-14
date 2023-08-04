@@ -1,11 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: 'Latest scientific research shows small boxes around Flesh Anomalies
-      are no longer best practice. Asked to comment on this, our scientific advisor
-      had this to say: "The Tendons! Tendons everywhere! Arrrghhh!"', type: Tweak}
-  id: 3933
-  time: '2023-06-03T19:31:11.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed being able to override the amount of the amount of liquid shot
@@ -2991,3 +2984,8 @@ Entries:
   - {message: Added laser raptors., type: Add}
   id: 4432
   time: '2023-08-04T18:38:11.0000000+00:00'
+- author: Unbelievable-Salmon
+  changes:
+  - {message: The Syndicate gas mask now protects your eyes from welders., type: Tweak}
+  id: 4433
+  time: '2023-08-04T18:43:25.0000000+00:00'
