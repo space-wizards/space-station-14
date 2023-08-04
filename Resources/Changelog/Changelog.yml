@@ -1,9 +1,4 @@
 Entries:
-- author: icesickleone
-  changes:
-  - {message: Cowelding tool no longer heals blunt damage when lit, type: Fix}
-  id: 3923
-  time: '2023-06-02T00:53:25.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Avoid doing actions like placing wires if you fail to insert something
@@ -2989,3 +2984,11 @@ Entries:
       it to destroy syndicate balloons and crush their morale!, type: Add}
   id: 4422
   time: '2023-08-04T01:53:06.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: 'A few changes to some chemical recipes, namely Dexalin, Lexorin, Ultravasculine,
+      Ammonia, Acetone, Sodium Carbonate, and Sigynate, have been reverted. They are
+      now like what they used to be.', type: Tweak}
+  - {message: Sigynate heals 3 Caustic per unit again., type: Tweak}
+  id: 4423
+  time: '2023-08-04T02:30:37.0000000+00:00'
