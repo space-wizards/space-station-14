@@ -33,6 +33,7 @@
       interfaces:
         - key: enum.AccessOverriderUiKey.Key
           type: AccessOverriderBoundUserInterface
+    - type: ItemSlots
     - type: ContainerContainer
       containers:
         AccessOverrider-privilegedId: !type:ContainerSlot
