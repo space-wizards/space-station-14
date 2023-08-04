@@ -174,7 +174,7 @@
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitMedical
-        - id: ClothingMaskBreathMedical
+        - id: ClothingMaskBreathMedicalSecurity
 
 #RD's hardsuit
 - type: entity
