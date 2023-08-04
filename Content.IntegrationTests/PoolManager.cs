@@ -63,6 +63,7 @@ public static partial class PoolManager
 
     private static int _pairId;
     private static readonly object PairLock = new();
+    private static bool _initialized;
 
     // Pair, IsBorrowed
     private static readonly Dictionary<Pair, bool> Pairs = new();
@@ -256,6 +257,9 @@ public static partial class PoolManager
 
     private static async Task<PairTracker> GetServerClientPair(PoolSettings poolSettings)
     {
+        if (!_initialized)
+            throw new InvalidOperationException($"Pool manager has not been initialized");
+
         // Trust issues with the AsyncLocal that backs this.
         var testContext = TestContext.CurrentContext;
         var testOut = TestContext.Out;
@@ -514,7 +518,8 @@ we are just going to end this here to save a lot of time. This is the exception 
                 PairId = Interlocked.Increment(ref _pairId)
             };
 
-            pair.LoadPrototypes(_testPrototypes!);
+            if (!poolSettings.NoLoadTestPrototypes)
+                await pair.LoadPrototypes(_testPrototypes!);
         }
         catch (Exception ex)
         {
@@ -709,6 +714,15 @@ we are just going to end this here to save a lot of time. This is the exception 
 
         return list;
     }
+
+    public static void Startup()
+    {
+        if (_initialized)
+            return;
+
+        _initialized = true;
+        DiscoverTestPrototypes();
+    }
 }
 
 /// <summary>
@@ -723,12 +737,12 @@ public sealed class PoolSettings
     /// <summary>
     /// If the returned pair must not be reused
     /// </summary>
-    public bool MustNotBeReused => Destructive || NoLoadContent;
+    public bool MustNotBeReused => Destructive || NoLoadContent || NoLoadTestPrototypes;
 
     /// <summary>
     /// If the given pair must be brand new
     /// </summary>
-    public bool MustBeNew => Fresh || NoLoadContent;
+    public bool MustBeNew => Fresh || NoLoadContent || NoLoadTestPrototypes;
 
     /// <summary>
     /// If the given pair must not be connected
@@ -766,6 +780,13 @@ public sealed class PoolSettings
     /// Note: This setting won't work with a client.
     /// </summary>
     public bool NoLoadContent { get; init; }
+
+    /// <summary>
+    /// This will return a server-client pair that has not loaded test prototypes.
+    /// Try avoiding this whenever possible, as this will always  create & destroy a new pair.
+    /// Use <see cref="Pair.IsTestPrototype(EntityPrototype)"/> if you need to exclude test prototypees.
+    /// </summary>
+    public bool NoLoadTestPrototypes { get; init; }
 
     /// <summary>
     /// Set this to true to disable the NetInterp CVar on the given server/client pair
@@ -872,24 +893,26 @@ public sealed class Pair
         ClientLogHandler.ActivateContext(testOut);
     }
 
-    public void LoadPrototypes(List<string> prototypes)
+    public async Task LoadPrototypes(List<string> prototypes)
     {
-        LoadPrototypes(Server, prototypes);
-        LoadPrototypes(Client, prototypes);
+        await LoadPrototypes(Server, prototypes);
+        await LoadPrototypes(Client, prototypes);
     }
 
-    private void LoadPrototypes(RobustIntegrationTest.IntegrationInstance instance, List<string> prototypes)
+    private async Task LoadPrototypes(RobustIntegrationTest.IntegrationInstance instance, List<string> prototypes)
     {
         var changed = new Dictionary<Type, HashSet<string>>();
         var protoMan = instance.ResolveDependency<IPrototypeManager>();
         foreach (var file in prototypes)
         {
             protoMan.LoadString(file, changed: changed);
+        }
 
-            foreach (var (kind, ids) in changed)
-            {
-                _loadedPrototypes.GetOrNew(kind).UnionWith(ids);
-            }
+        await instance.WaitPost(() => protoMan.ReloadPrototypes(changed));
+
+        foreach (var (kind, ids) in changed)
+        {
+            _loadedPrototypes.GetOrNew(kind).UnionWith(ids);
         }
 
         if (_loadedPrototypes.TryGetValue(typeof(EntityPrototype), out var entIds))
@@ -909,6 +932,11 @@ public sealed class Pair
     public bool IsTestPrototype<TPrototype>(string id) where TPrototype : IPrototype
     {
         return IsTestPrototype(typeof(TPrototype), id);
+    }
+
+    public bool IsTestPrototype<TPrototype>(TPrototype proto) where TPrototype : IPrototype
+    {
+        return IsTestPrototype(typeof(TPrototype), proto.ID);
     }
 
     public bool IsTestPrototype(Type kind, string id)

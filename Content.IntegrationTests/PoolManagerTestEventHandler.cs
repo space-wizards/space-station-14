@@ -11,9 +11,9 @@ public sealed class PoolManagerTestEventHandler
     private static TimeSpan HardStopTimeLimit => MaximumTotalTestingTimeLimit.Add(TimeSpan.FromMinutes(1));
 
     [OneTimeSetUp]
-    public async Task Setup()
+    public void Setup()
     {
-        PoolManager.DiscoverTestPrototypes();
+        PoolManager.Startup();
         // If the tests seem to be stuck, we try to end it semi-nicely
         _ = Task.Delay(MaximumTotalTestingTimeLimit).ContinueWith(_ =>
         {
