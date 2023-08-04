@@ -1,13 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Avoid doing actions like placing wires if you fail to insert something
-      into a backpack., type: Tweak}
-  - {message: Improved error messages for storage items., type: Tweak}
-  - {message: Stacks don't get dropped on the ground anymore if they can't fit in
-      a storage item., type: Fix}
-  id: 3924
-  time: '2023-06-02T01:13:56.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added bruise packs and ointment to medical techfab., type: Add}
@@ -2992,3 +2983,9 @@ Entries:
   - {message: Sigynate heals 3 Caustic per unit again., type: Tweak}
   id: 4423
   time: '2023-08-04T02:30:37.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fixed the incorrect ammo count in the China Lake bundle's description.,
+    type: Fix}
+  id: 4424
+  time: '2023-08-04T02:57:02.0000000+00:00'
