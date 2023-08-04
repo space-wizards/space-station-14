@@ -89,6 +89,8 @@
         /// </summary>
         EditNotes = 1 << 14,
 
+        AdminChat = 1 << 15,
+
         /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>
