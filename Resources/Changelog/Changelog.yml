@@ -1,9 +1,4 @@
 Entries:
-- author: Renlou
-  changes:
-  - {message: Added hampter plushie based on discord emoji/sticker, type: Add}
-  id: 3928
-  time: '2023-06-03T18:50:53.0000000+00:00'
 - author: Owai-Seek
   changes:
   - {message: Added GuideHelp tags to some Janitorial items., type: Add}
@@ -2992,3 +2987,8 @@ Entries:
   - {message: Updated dirty steel & plastic floor tiles to match the new style., type: Tweak}
   id: 4427
   time: '2023-08-04T08:55:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Spears can now embed into things and require removing., type: Add}
+  id: 4428
+  time: '2023-08-04T08:56:39.0000000+00:00'
