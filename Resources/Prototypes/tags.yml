@@ -23,6 +23,9 @@
   id: Baguette
 
 - type: Tag
+  id: Balloon
+
+- type: Tag
   id: BaseballBat
 
 - type: Tag

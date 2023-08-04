@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration.Commands;
+using Content.Server.Administration.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -11,7 +12,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
-    [TestOf(typeof(RejuvenateCommand))]
+    [TestOf(typeof(RejuvenateSystem))]
     public sealed class RejuvenateTest
     {
         private const string Prototypes = @"
@@ -42,6 +43,7 @@ namespace Content.IntegrationTests.Tests.Commands
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var mobStateSystem = entManager.EntitySysManager.GetEntitySystem<MobStateSystem>();
             var damSystem = entManager.EntitySysManager.GetEntitySystem<DamageableSystem>();
+            var rejuvenateSystem = entManager.EntitySysManager.GetEntitySystem<RejuvenateSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -78,7 +80,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 });
 
                 // Rejuvenate them
-                RejuvenateCommand.PerformRejuvenate(human);
+                rejuvenateSystem.PerformRejuvenate(human);
 
                 // Check that it is alive and with no damage
                 Assert.Multiple(() =>
