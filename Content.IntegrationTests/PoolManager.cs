@@ -36,7 +36,7 @@ namespace Content.IntegrationTests;
 /// <summary>
 /// Making clients, and servers is slow, this manages a pool of them so tests can reuse them.
 /// </summary>
-public static class PoolManager
+public static partial class PoolManager
 {
     public const string TestMap = "Empty";
 
@@ -68,25 +68,13 @@ public static class PoolManager
     private static bool _dead;
     private static Exception _poolFailureReason;
 
-    private static async Task ConfigurePrototypes(RobustIntegrationTest.IntegrationInstance instance,
-        PoolSettings settings)
-    {
-        await instance.WaitPost(() =>
-        {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var changes = new Dictionary<Type, HashSet<string>>();
-            prototypeManager.LoadString(settings.ExtraPrototypes.Trim(), true, changes);
-            prototypeManager.ReloadPrototypes(changes);
-        });
-    }
-
     private static async Task<(RobustIntegrationTest.ServerIntegrationInstance, PoolTestLogHandler)> GenerateServer(
         PoolSettings poolSettings,
         TextWriter testOut)
     {
         var options = new RobustIntegrationTest.ServerIntegrationOptions
         {
-            ExtraPrototypes = poolSettings.ExtraPrototypes,
+            ExtraPrototypeList = _testPrototypes,
             ContentStart = true,
             Options = new ServerOptions()
             {
@@ -174,7 +162,7 @@ public static class PoolManager
         {
             FailureLogLevel = LogLevel.Warning,
             ContentStart = true,
-            ExtraPrototypes = poolSettings.ExtraPrototypes,
+            ExtraPrototypeList = _testPrototypes,
             ContentAssemblies = new[]
             {
                 typeof(Shared.Entry.EntryPoint).Assembly,
@@ -455,7 +443,7 @@ public static class PoolManager
                 cNetMgr.ClientConnect(null!, 0, null!);
             });
         }
-        await ReallyBeIdle(pair, 11);
+        await ReallyBeIdle(pair, 5);
 
         await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Disconnecting client, and restarting server");
 
@@ -464,43 +452,7 @@ public static class PoolManager
             cNetMgr.ClientDisconnect("Test pooling cleanup disconnect");
         });
 
-        await ReallyBeIdle(pair, 10);
-
-        if (!string.IsNullOrWhiteSpace(pair.Settings.ExtraPrototypes))
-        {
-            await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Removing prototypes");
-            if (!pair.Settings.NoServer)
-            {
-                var serverProtoManager = pair.Server.ResolveDependency<IPrototypeManager>();
-                await pair.Server.WaitPost(() =>
-                {
-                    serverProtoManager.RemoveString(pair.Settings.ExtraPrototypes.Trim());
-                });
-            }
-            if (!pair.Settings.NoClient)
-            {
-                var clientProtoManager = pair.Client.ResolveDependency<IPrototypeManager>();
-                await pair.Client.WaitPost(() =>
-                {
-                    clientProtoManager.RemoveString(pair.Settings.ExtraPrototypes.Trim());
-                });
-            }
-
-            await ReallyBeIdle(pair, 1);
-        }
-
-        if (poolSettings.ExtraPrototypes != null)
-        {
-            await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Adding prototypes");
-            if (!poolSettings.NoServer)
-            {
-                await ConfigurePrototypes(pair.Server, poolSettings);
-            }
-            if (!poolSettings.NoClient)
-            {
-                await ConfigurePrototypes(pair.Client, poolSettings);
-            }
-        }
+        await ReallyBeIdle(pair, 5);
 
         configManager.SetCVar(CCVars.GameMap, poolSettings.Map);
         await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Restarting server again");
@@ -769,12 +721,12 @@ public sealed class PoolSettings
     /// <summary>
     /// If the returned pair must not be reused
     /// </summary>
-    public bool MustNotBeReused => Destructive || NoLoadContent || NoToolsExtraPrototypes;
+    public bool MustNotBeReused => Destructive || NoLoadContent;
 
     /// <summary>
     /// If the given pair must be brand new
     /// </summary>
-    public bool MustBeNew => Fresh || NoLoadContent || NoToolsExtraPrototypes;
+    public bool MustBeNew => Fresh || NoLoadContent;
 
     /// <summary>
     /// If the given pair must not be connected
@@ -868,19 +820,8 @@ public sealed class PoolSettings
         return NotConnected == nextSettings.NotConnected
                && DummyTicker == nextSettings.DummyTicker
                && Map == nextSettings.Map
-               && InLobby == nextSettings.InLobby
-               && ExtraPrototypes == nextSettings.ExtraPrototypes;
+               && InLobby == nextSettings.InLobby;
     }
-
-    // Prototype hot reload is not available outside TOOLS builds,
-    // so we can't pool test instances that use ExtraPrototypes without TOOLS.
-#if TOOLS
-#pragma warning disable CA1822 // Can't be marked as static b/c the other branch exists but Omnisharp can't see both.
-    private bool NoToolsExtraPrototypes => false;
-#pragma warning restore CA1822
-#else
-    private bool NoToolsExtraPrototypes => !string.IsNullOrEmpty(ExtraPrototypes);
-#endif
 }
 
 /// <summary>
