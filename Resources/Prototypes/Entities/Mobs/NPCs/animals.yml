@@ -57,7 +57,12 @@
     animation: WeaponArcBite
     damage:
       types:
-        Piercing: 5
+        Piercing: 0.5
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      15: Critical
+      30: Dead
   - type: NoSlip
   - type: Puller
     needsHands: true
@@ -2184,8 +2189,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      40: Critical
-      60: Dead
+      15: Critical
+      30: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 4
@@ -2252,7 +2257,7 @@
     animation: WeaponArcBite
     damage:
       types:
-        Piercing: 2
+        Piercing: 0.4
   - type: InteractionPopup
     successChance: 0.4
     interactSuccessString: petting-success-hamster
