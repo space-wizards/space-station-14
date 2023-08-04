@@ -181,6 +181,8 @@
     open: true
   - type: Apc
     enabled: false
+  - type: PowerNetworkBattery
+    canDischarge: false
 
 # APCs in use
 - type: entity
