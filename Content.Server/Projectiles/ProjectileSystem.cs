@@ -5,12 +5,10 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
-using Content.Shared.Weapons.Melee;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
+using Content.Shared.Effects;
 
 namespace Content.Server.Projectiles;
 
@@ -52,7 +50,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             if (modifiedDamage.Total > FixedPoint2.Zero && !deleted)
             {
-                RaiseNetworkEvent(new DamageEffectEvent(Color.Red, new List<EntityUid> {otherEntity}), Filter.Pvs(otherEntity, entityManager: EntityManager));
+                RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid> { otherEntity }), Filter.Pvs(otherEntity, entityManager: EntityManager));
             }
 
             _adminLogger.Add(LogType.BulletHit,
