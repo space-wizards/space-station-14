@@ -18,7 +18,7 @@ public sealed class ApcComponent : BaseApcNetComponent
     public ApcExternalPowerState LastExternalState;
     public TimeSpan LastUiUpdate;
 
-    [ViewVariables]
+    [DataField("enabled")]
     public bool MainBreakerEnabled = true;
     public bool HasAccess = false;
 
