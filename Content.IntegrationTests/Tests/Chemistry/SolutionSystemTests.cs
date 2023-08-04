@@ -14,6 +14,7 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 [TestOf(typeof(SolutionContainerSystem))]
 public sealed class SolutionSystemTests
 {
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
   id: SolutionTarget

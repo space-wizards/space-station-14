@@ -9,10 +9,11 @@ namespace Content.IntegrationTests.Tests.Gravity
     [TestOf(typeof(GravityGeneratorComponent))]
     public sealed class WeightlessStatusTests
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
-  name: HumanDummy
-  id: HumanDummy
+  name: HumanWeightlessDummy
+  id: HumanWeightlessDummy
   components:
   - type: Alerts
   - type: Physics
@@ -34,8 +35,7 @@ namespace Content.IntegrationTests.Tests.Gravity
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
 
@@ -48,7 +48,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                human = entityManager.SpawnEntity("HumanDummy", testMap.GridCoords);
+                human = entityManager.SpawnEntity("HumanWeightlessDummy", testMap.GridCoords);
 
                 Assert.That(entityManager.TryGetComponent(human, out AlertsComponent alerts));
             });

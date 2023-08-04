@@ -16,6 +16,7 @@ namespace Content.IntegrationTests.Tests.Power
     [TestFixture]
     public sealed class PowerTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   id: GeneratorDummy

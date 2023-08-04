@@ -14,7 +14,8 @@ namespace Content.IntegrationTests.Tests.Damageable
     [TestOf(typeof(DamageableSystem))]
     public sealed class DamageableTest
     {
-        public const string Prototypes = @"
+        [TestPrototypes]
+        private const string Prototypes = @"
 # Define some damage groups
 - type: damageType
   id: TestDamage1

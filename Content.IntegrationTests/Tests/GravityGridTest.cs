@@ -15,6 +15,7 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(GravityGeneratorComponent))]
     public sealed class GravityGridTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: GravityGeneratorDummy

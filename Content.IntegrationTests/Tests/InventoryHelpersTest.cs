@@ -9,6 +9,7 @@ namespace Content.IntegrationTests.Tests
     [TestFixture]
     public sealed class InventoryHelpersTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: InventoryStunnableDummy

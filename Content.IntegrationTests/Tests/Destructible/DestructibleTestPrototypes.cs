@@ -8,7 +8,8 @@ namespace Content.IntegrationTests.Tests.Destructible
         public const string DestructibleDamageTypeEntityId = "DestructibleTestsDestructibleDamageTypeEntity";
         public const string DestructibleDamageGroupEntityId = "DestructibleTestsDestructibleDamageGroupEntity";
 
-        public static readonly string Prototypes = $@"
+        [TestPrototypes]
+        public const string DamagePrototypes = $@"
 - type: damageType
   id: TestBlunt
 

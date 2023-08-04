@@ -11,6 +11,7 @@ namespace Content.IntegrationTests.Tests.Body;
 [TestFixture]
 public sealed class SaveLoadReparentTest
 {
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
   name: HumanBodyDummy

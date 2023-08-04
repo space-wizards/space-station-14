@@ -21,7 +21,8 @@ namespace Content.IntegrationTests.Tests.Buckle
         private const string StrapDummyId = "StrapDummy";
         private const string ItemDummyId = "ItemDummy";
 
-        private static readonly string Prototypes = $@"
+        [TestPrototypes]
+        private const string Prototypes = $@"
 - type: entity
   name: {BuckleDummyId}
   id: {BuckleDummyId}

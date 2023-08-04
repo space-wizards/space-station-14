@@ -13,6 +13,7 @@ namespace Content.IntegrationTests.Tests.Minds;
 [TestFixture]
 public sealed class GhostRoleTests
 {
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
   id: GhostRoleTestEntity

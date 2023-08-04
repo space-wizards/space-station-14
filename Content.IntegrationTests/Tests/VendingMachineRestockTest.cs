@@ -19,10 +19,11 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(VendingMachineSystem))]
     public sealed class VendingMachineRestockTest : EntitySystem
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
-  name: HumanDummy
-  id: HumanDummy
+  name: HumanVendingDummy
+  id: HumanVendingDummy
   components:
   - type: Hands
   - type: Body
@@ -197,7 +198,7 @@ namespace Content.IntegrationTests.Tests
                 var coordinates = testMap.GridCoords;
 
                 // Spawn the entities.
-                user = entityManager.SpawnEntity("HumanDummy", coordinates);
+                user = entityManager.SpawnEntity("HumanVendingDummy", coordinates);
                 machine = entityManager.SpawnEntity("VendingMachineTest", coordinates);
                 packageRight = entityManager.SpawnEntity("TestRestockCorrect", coordinates);
                 packageWrong = entityManager.SpawnEntity("TestRestockWrong", coordinates);

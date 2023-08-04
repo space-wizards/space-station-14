@@ -24,6 +24,7 @@ namespace Content.IntegrationTests.Tests.Minds;
 [TestFixture]
 public sealed partial class MindTests
 {
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
   id: MindTestEntityDamageable

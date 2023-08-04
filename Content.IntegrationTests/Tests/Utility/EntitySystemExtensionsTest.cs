@@ -12,7 +12,8 @@ namespace Content.IntegrationTests.Tests.Utility
     {
         private const string BlockerDummyId = "BlockerDummy";
 
-        private static readonly string Prototypes = $@"
+        [TestPrototypes]
+        private const string Prototypes = $@"
 - type: entity
   id: {BlockerDummyId}
   name: {BlockerDummyId}

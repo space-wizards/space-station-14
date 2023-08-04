@@ -72,10 +72,11 @@ namespace Content.IntegrationTests.Tests.Disposal
             });
         }
 
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
-  name: HumanDummy
-  id: HumanDummy
+  name: HumanDisposalDummy
+  id: HumanDisposalDummy
   components:
   - type: Body
     prototype: Human
@@ -171,7 +172,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             {
                 // Spawn the entities
                 var coordinates = testMap.GridCoords;
-                human = entityManager.SpawnEntity("HumanDummy", coordinates);
+                human = entityManager.SpawnEntity("HumanDisposalDummy", coordinates);
                 wrench = entityManager.SpawnEntity("WrenchDummy", coordinates);
                 disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", coordinates);
                 disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy",

@@ -14,6 +14,7 @@ namespace Content.IntegrationTests.Tests.Body
     [TestOf(typeof(BodyComponent))]
     public sealed class LegTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: HumanBodyAndAppearanceDummy

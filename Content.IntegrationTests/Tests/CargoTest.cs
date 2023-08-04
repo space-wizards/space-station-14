@@ -144,10 +144,9 @@ public sealed class CargoTest
         await pairTracker.CleanReturnAsync();
     }
 
-    [Test]
-    public async Task StackPrice()
-    {
-        const string stackProto = @"
+
+    [TestPrototypes]
+    private const string StackProto = @"
 - type: entity
   id: A
 
@@ -165,7 +164,11 @@ public sealed class CargoTest
     count: 5
 ";
 
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = stackProto });
+    [Test]
+    public async Task StackPrice()
+    {
+
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = StackProto });
         var server = pairTracker.Pair.Server;
 
         var entManager = server.ResolveDependency<IEntityManager>();

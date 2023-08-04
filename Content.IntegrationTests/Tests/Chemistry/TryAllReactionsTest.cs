@@ -13,6 +13,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
     [TestOf(typeof(ReactionPrototype))]
     public sealed class TryAllReactionsTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   id: TestSolutionContainer
@@ -22,6 +23,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
       beaker:
         maxVol: 50
         canMix: true";
+        
         [Test]
         public async Task TryAllTest()
         {

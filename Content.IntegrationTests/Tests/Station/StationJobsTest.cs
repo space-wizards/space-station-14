@@ -18,9 +18,10 @@ namespace Content.IntegrationTests.Tests.Station;
 [TestOf(typeof(StationJobsSystem))]
 public sealed class StationJobsTest
 {
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: playTimeTracker
-  id: Dummy
+  id: PlayTimeDummy
 
 - type: gameMap
   id: FooStation
@@ -43,26 +44,26 @@ public sealed class StationJobsTest
 
 - type: job
   id: TAssistant
-  playTimeTracker: Dummy
+  playTimeTracker: PlayTimeDummy
 
 - type: job
   id: TMime
   weight: 20
-  playTimeTracker: Dummy
+  playTimeTracker: PlayTimeDummy
 
 - type: job
   id: TClown
   weight: -10
-  playTimeTracker: Dummy
+  playTimeTracker: PlayTimeDummy
 
 - type: job
   id: TCaptain
   weight: 10
-  playTimeTracker: Dummy
+  playTimeTracker: PlayTimeDummy
 
 - type: job
   id: TChaplain
-  playTimeTracker: Dummy
+  playTimeTracker: PlayTimeDummy
 ";
 
     private const int StationCount = 100;

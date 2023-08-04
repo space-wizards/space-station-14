@@ -15,6 +15,7 @@ namespace Content.IntegrationTests.Tests.Commands
     [TestOf(typeof(RejuvenateSystem))]
     public sealed class RejuvenateTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: DamageableDummy

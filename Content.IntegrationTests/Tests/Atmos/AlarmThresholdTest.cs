@@ -7,6 +7,7 @@ namespace Content.IntegrationTests.Tests.Atmos
     [TestOf(typeof(AtmosAlarmThreshold))]
     public sealed class AlarmThresholdTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: alarmThreshold
   id: testThreshold

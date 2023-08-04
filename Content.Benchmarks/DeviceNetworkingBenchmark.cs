@@ -26,10 +26,12 @@ public class DeviceNetworkingBenchmark
 
 
     private NetworkPayload _payload = default!;
+
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
-  name: DummyNetworkDevice
-  id: DummyNetworkDevice
+  name: DummyNetworkDevicePrivate
+  id: DummyNetworkDevicePrivate
   components:
     - type: DeviceNetwork
       transmitFrequency: 100
@@ -73,12 +75,12 @@ public class DeviceNetworkingBenchmark
                 ["testbool"] = true
             };
 
-            _sourceEntity = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
+            _sourceEntity = entityManager.SpawnEntity("DummyNetworkDevicePrivate", MapCoordinates.Nullspace);
             _sourceWirelessEntity = entityManager.SpawnEntity("DummyWirelessNetworkDevice", MapCoordinates.Nullspace);
 
             for (var i = 0; i < EntityCount; i++)
             {
-                _targetEntities.Add(entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace));
+                _targetEntities.Add(entityManager.SpawnEntity("DummyNetworkDevicePrivate", MapCoordinates.Nullspace));
                 _targetWirelessEntities.Add(entityManager.SpawnEntity("DummyWirelessNetworkDevice", MapCoordinates.Nullspace));
             }
         });

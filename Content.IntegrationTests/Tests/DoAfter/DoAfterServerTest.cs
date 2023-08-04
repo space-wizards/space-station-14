@@ -12,10 +12,11 @@ namespace Content.IntegrationTests.Tests.DoAfter
     [TestOf(typeof(DoAfterComponent))]
     public sealed class DoAfterServerTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
-  name: Dummy
-  id: Dummy
+  name: DoAfterDummy
+  id: DoAfterDummy
   components:
   - type: DoAfter
 ";
@@ -75,7 +76,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
             await server.WaitPost(() =>
             {
                 var tickTime = 1.0f / timing.TickRate;
-                var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
+                var mob = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
                 var args = new DoAfterArgs(mob, tickTime / 2, ev, null) { Broadcast = true };
 #pragma warning disable NUnit2045 // Interdependent assertions.
                 Assert.That(doAfterSystem.TryStartDoAfter(args));
@@ -107,7 +108,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
             {
                 var tickTime = 1.0f / timing.TickRate;
 
-                var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
+                var mob = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
                 var args = new DoAfterArgs(mob, tickTime * 2, ev, null) { Broadcast = true };
 
                 if (!doAfterSystem.TryStartDoAfter(args, out var id))

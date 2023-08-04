@@ -9,10 +9,11 @@ namespace Content.IntegrationTests.Tests
     [TestFixture]
     public sealed class HumanInventoryUniformSlotsTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
-  name: HumanDummy
-  id: HumanDummy
+  name: HumanUniformDummy
+  id: HumanUniformDummy
   components:
   - type: Inventory
   - type: ContainerContainer
@@ -71,7 +72,7 @@ namespace Content.IntegrationTests.Tests
             {
                 invSystem = entityMan.System<InventorySystem>();
 
-                human = entityMan.SpawnEntity("HumanDummy", coordinates);
+                human = entityMan.SpawnEntity("HumanUniformDummy", coordinates);
                 uniform = entityMan.SpawnEntity("UniformDummy", coordinates);
                 idCard = entityMan.SpawnEntity("IDCardDummy", coordinates);
                 pocketItem = entityMan.SpawnEntity("FlashlightDummy", coordinates);

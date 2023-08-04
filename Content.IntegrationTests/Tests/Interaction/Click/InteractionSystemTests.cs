@@ -17,6 +17,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
     [TestOf(typeof(InteractionSystem))]
     public sealed class InteractionSystemTests
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   id: DummyDebugWall

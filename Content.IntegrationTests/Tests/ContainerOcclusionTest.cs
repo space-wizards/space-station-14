@@ -9,6 +9,7 @@ namespace Content.IntegrationTests.Tests
 {
     public sealed class ContainerOcclusionTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   id: ContainerOcclusionA

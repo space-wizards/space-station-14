@@ -15,6 +15,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
     [TestOf(typeof(WirelessNetworkComponent))]
     public sealed class DeviceNetworkTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: DummyNetworkDevice
@@ -34,17 +35,6 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
       receiveFrequency: 0
     - type: WiredNetworkConnection
     - type: ApcPowerReceiver
-
-- type: entity
-  name: DummyWirelessNetworkDevice
-  id: DummyWirelessNetworkDevice
-  components:
-    - type: DeviceNetwork
-      transmitFrequency: 100
-      receiveFrequency: 100
-      deviceNetId: Wireless
-    - type: WirelessNetworkConnection
-      range: 100
         ";
 
         [Test]
