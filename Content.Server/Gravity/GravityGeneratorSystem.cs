@@ -27,7 +27,7 @@ namespace Content.Server.Gravity
             SubscribeLocalEvent<GravityGeneratorComponent, ComponentShutdown>(OnComponentShutdown);
             SubscribeLocalEvent<GravityGeneratorComponent, EntParentChangedMessage>(OnParentChanged); // Or just anchor changed?
             SubscribeLocalEvent<GravityGeneratorComponent, InteractHandEvent>(OnInteractHand);
-            //SubscribeLocalEvent<GravityGeneratorComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<GravityGeneratorComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<GravityGeneratorComponent, SharedGravityGeneratorComponent.SwitchGeneratorMessage>(
                 OnSwitchGenerator);
         }
@@ -257,11 +257,11 @@ namespace Content.Server.Gravity
             }
         }
 
-        /*private void OnRefreshParts(EntityUid uid, GravityGeneratorComponent component, RefreshPartsEvent args)
+        private void OnRefreshParts(EntityUid uid, GravityGeneratorComponent component, RefreshPartsEvent args)
         {
             var maxChargeMultipler = args.PartRatings[component.MachinePartMaxChargeMultiplier];
             component.MaxCharge = maxChargeMultipler * 1;
-        }*/
+        }
 
         private void MakeBroken(EntityUid uid, GravityGeneratorComponent component, AppearanceComponent? appearance)
         {
