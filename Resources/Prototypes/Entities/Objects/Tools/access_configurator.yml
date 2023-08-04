@@ -1,0 +1,38 @@
+- type: entity
+  parent: BaseItem
+  id: AccessConfigurator
+  name: access configurator
+  description: Used to modify the access level requirements for airlocks and other lockable devices.
+  components:
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Items/multitool_drop.ogg
+    - type: Sprite
+      sprite: Objects/Tools/access_configurator.rsi
+      state: icon
+    - type: Item
+      size: 5
+    - type: Clothing
+      sprite: Objects/Tools/access_configurator.rsi
+      quickEquip: false
+      slots:
+        - Belt
+    - type: AccessOverrider
+      denialSound:
+        path: /Audio/Machines/custom_deny.ogg
+      privilegedIdSlot:
+        name: id-card-console-privileged-id
+        ejectSound: /Audio/Machines/id_swipe.ogg
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectOnBreak: true
+        swap: false
+        whitelist:
+          components:
+          - IdCard
+    - type: UserInterface
+      interfaces:
+        - key: enum.AccessOverriderUiKey.Key
+          type: AccessOverriderBoundUserInterface
+    - type: ContainerContainer
+      containers:
+        IdCardConsole-privilegedId: !type:ContainerSlot

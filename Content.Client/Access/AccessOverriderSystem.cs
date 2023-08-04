@@ -6,8 +6,6 @@ namespace Content.Client.Access
     [UsedImplicitly]
     public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
     {
-        // one day, maybe bound user interfaces can be shared too.
-        // then this doesn't have to be like this.
-        // I hate this.
+
     }
 }

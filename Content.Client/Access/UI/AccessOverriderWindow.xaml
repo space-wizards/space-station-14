@@ -8,11 +8,7 @@
                 <Label Name="PrivilegedIdLabel" />
             </GridContainer>
         </GridContainer>
-        <Control MinSize="0 8" />
-        <GridContainer Columns="2">
-            <Label Text="{Loc 'id-card-console-window-job-selection-label'}" />
-            <OptionButton Name="JobPresetOptionButton" />
-        </GridContainer>
+        <Control MinSize="0 8"/>
         <GridContainer Name="AccessLevelGrid" Columns="5" HorizontalAlignment="Center">
 
             <!-- Access level buttons are added here by the C# code -->

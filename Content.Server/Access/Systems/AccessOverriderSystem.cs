@@ -1,38 +1,28 @@
-using Content.Server.AirlockPainter;
-using Content.Server.Station.Systems;
-using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
-using Content.Shared.Roles;
-using Content.Shared.StationRecords;
-using Content.Shared.StatusIcon;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using System.Linq;
-using TerraFX.Interop.Windows;
 using static Content.Shared.Access.Components.AccessOverriderComponent;
 using Content.Server.Popups;
-using static Content.Shared.Administration.Logs.AdminLogsEuiMsg;
+using Robust.Shared.Localization;
+using System;
 
 namespace Content.Server.Access.Systems;
 
 [UsedImplicitly]
 public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly StationRecordsSystem _record = default!;
-    [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly AccessSystem _access = default!;
-    [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -53,8 +43,15 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         if (!TryComp(args?.Target, out AccessReaderComponent? accessReader))
             return;
 
+        if (!_interactionSystem.InRangeUnobstructed(uid, args.Target.Value))
+            return;
+
         component.TargetAccessReaderId = args.Target.Value;
+
+        // User must have access to all of the access reader's access levels to change them
+
         _userInterface.TryOpen(uid, AccessOverriderUiKey.Key, actor.PlayerSession);
+        UpdateUserInterface(uid, component, args);
     }
 
     private void OnWriteToTargetAccessReaderIdMessage(EntityUid uid, AccessOverriderComponent component, WriteToTargetAccessReaderIdMessage args)
@@ -62,7 +59,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         if (args.Session.AttachedEntity is not { Valid: true } player)
             return;
 
-        TryWriteToTargetAccessReaderId(uid, args.AccessList, component);
+        TryWriteToTargetAccessReaderId(uid, args.AccessList, player, component);
 
         UpdateUserInterface(uid, component, args);
     }
@@ -76,19 +73,16 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         string[]? possibleAccess = null;
         string[]? currentAccess = null;
 
-        if (component.PrivilegedIdSlot.Item is { Valid: true } item)
+        if (component.PrivilegedIdSlot.Item is { Valid: true } idCard)
         {
-            privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(item).EntityName;
-            possibleAccess = _accessReader.FindAccessTags(item).ToArray();
+            privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(idCard).EntityName;
+            possibleAccess = _accessReader.FindAccessTags(idCard).ToArray();
         }
 
-        _popupSystem.PopupEntity("test4", uid, uid);
-
-        if (component.TargetAccessReaderId is { Valid: true })
+        if (component.TargetAccessReaderId is { Valid: true } accessReader)
         {
-            currentAccess = _accessReader.FindAccessTags(component.TargetAccessReaderId).ToArray();
-            _popupSystem.PopupEntity("test5", uid, uid);
-
+            List<HashSet<string>> currentAccessHashsets = EntityManager.GetComponent<AccessReaderComponent>(accessReader).AccessLists;
+            currentAccess = ConvertAccessHashSetsToList(currentAccessHashsets)?.ToArray();
         }
 
         AccessOverriderBoundUserInterfaceState newState;
@@ -103,31 +97,72 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         _userInterface.TrySetUiState(uid, AccessOverriderUiKey.Key, newState);
     }
 
+    private List<string> ConvertAccessHashSetsToList(List<HashSet<string>> accessHashsets)
+    {
+        List<string> accessList = new List<string>();
+
+        if (accessHashsets != null && accessHashsets.Any())
+        {
+            foreach (HashSet<string> hashSet in accessHashsets)
+            {
+                foreach (string hash in hashSet.ToArray())
+                {
+                    accessList.Add(hash);
+                }
+            }
+        }
+
+        return accessList;
+    }
+
+    private List<HashSet<string>> ConvertAccessListToHashSet(List<string> accessList)
+    {
+        List<HashSet<string>> accessHashsets = new List<HashSet<string>>();
+
+        if (accessList != null && accessList.Any())
+        {
+            foreach (string access in accessList)
+            {
+                accessHashsets.Add(new HashSet<string>() { access });
+            }
+        }
+
+        return accessHashsets;
+    }
+
     /// <summary>
-    /// Called whenever an access button is pressed, adding or removing that access from the target ID card.
-    /// Writes data passed from the UI into the ID stored in <see cref="AccessOverriderComponent.TargetIdSlot"/>, if present.
+    /// Called whenever an access button is pressed, adding or removing that access requirement from the target access reader.
     /// </summary>
     private void TryWriteToTargetAccessReaderId(EntityUid uid,
         List<string> newAccessList,
+        EntityUid player,
         AccessOverriderComponent? component = null)
     {
-        _popupSystem.PopupEntity("test9", uid, uid);
-
         if (!Resolve(uid, ref component) || component.TargetAccessReaderId is not { Valid: true })
             return;
 
         if (!PrivilegedIdIsAuthorized(uid, component))
             return;
 
-        if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
+        if (!_interactionSystem.InRangeUnobstructed(uid, component.TargetAccessReaderId))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("access-overrider-out-of-range"), player, player);
+
+            return;
+        }
+
+        if (newAccessList.Count > 0 && !newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
             return;
         }
 
-        var oldTags = new List<string>();
-        oldTags = oldTags.ToList();
+        TryComp(component.TargetAccessReaderId, out AccessReaderComponent? accessReader);
 
+        if (accessReader == null)
+            return;
+
+        var oldTags = ConvertAccessHashSetsToList(accessReader.AccessLists);
         var privilegedId = component.PrivilegedIdSlot.Item;
 
         if (oldTags.SequenceEqual(newAccessList))
@@ -139,23 +174,27 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         if (!difference.IsSubsetOf(privilegedPerms))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");
+
+            return;
+        }
+
+        if (!oldTags.ToHashSet().IsSubsetOf(privilegedPerms))
+        {
+            _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions when they do not have sufficient access!");
+            _popupSystem.PopupEntity(Loc.GetString("access-overrider-cannot-modify-access"), player, player);
+            _audioSystem.PlayPvs(component.DenialSound, uid);
+
             return;
         }
 
         var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
         var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
 
-        TryComp(component.TargetAccessReaderId, out AccessReaderComponent? accessReader);
+        _adminLogger.Add(LogType.Action, LogImpact.Medium,
+            $"{ToPrettyString(player):player} has modified {ToPrettyString(component.TargetAccessReaderId):entity} with the following allowed access level holders: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
 
-        _popupSystem.PopupEntity("test6", uid, uid);
-
-        if (accessReader == null)
-            return;
-
-        accessReader.AccessLists = new List<HashSet<string>>() { newAccessList.ToHashSet() };
+        accessReader.AccessLists = ConvertAccessListToHashSet(newAccessList);
         Dirty(accessReader);
-
-        _popupSystem.PopupEntity("test 7", uid, uid);
     }
 
     /// <summary>

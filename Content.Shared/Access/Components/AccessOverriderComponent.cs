@@ -1,5 +1,6 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
@@ -15,6 +16,10 @@ public sealed class AccessOverriderComponent : Component
     [DataField("privilegedIdSlot")]
     public ItemSlot PrivilegedIdSlot = new();
 
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("denialSound")]
+    public SoundSpecifier? DenialSound;
+
     public EntityUid TargetAccessReaderId = new();
 
     [Serializable, NetSerializable]
@@ -27,8 +32,6 @@ public sealed class AccessOverriderComponent : Component
             AccessList = accessList;
         }
     }
-
-    // Put this on shared so we just send the state once in PVS range rather than every time the UI updates.
 
     [DataField("accessLevels", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
     public List<string> AccessLevels = new()

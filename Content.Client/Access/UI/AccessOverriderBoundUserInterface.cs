@@ -24,9 +24,9 @@ namespace Content.Client.Access.UI
             base.Open();
             List<string> accessLevels;
 
-            if (EntMan.TryGetComponent<AccessOverriderComponent>(Owner, out var idCard))
+            if (EntMan.TryGetComponent<AccessOverriderComponent>(Owner, out var accessOverrider))
             {
-                accessLevels = idCard.AccessLevels;
+                accessLevels = accessOverrider.AccessLevels;
                 accessLevels.Sort();
             }
 
