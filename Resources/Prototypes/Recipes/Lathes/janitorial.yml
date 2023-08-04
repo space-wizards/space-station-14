@@ -18,7 +18,7 @@
   result: Bucket
   completetime: 2
   materials:
-    Steel: 100
+    Plastic: 100
 
 - type: latheRecipe
   id: WetFloorSign
@@ -80,14 +80,6 @@
     Plastic: 400
     Steel: 100
     Glass: 100
-
-- type: latheRecipe
-  id: Plunger
-  result: Plunger
-  completetime: 2
-  materials:
-    Plastic: 50
-    Wood: 200
 
 - type: latheRecipe
   id: WeaponSprayNozzle

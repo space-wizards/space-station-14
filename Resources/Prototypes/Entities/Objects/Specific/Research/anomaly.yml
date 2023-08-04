@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalyscanner.rsi
+    netsync: false
     state: icon
   - type: ActivatableUI
     key: enum.AnomalyScannerUiKey.Key
@@ -28,6 +29,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalylocator.rsi
+    netsync: false
     layers:
     - state: icon
     - state: screen
@@ -42,13 +44,10 @@
           True: { visible: true }
           False: { visible: false }
   - type: PowerCellDraw
-    drawRate: 1
+    drawRate: 5
     useRate: 0
   - type: ProximityBeeper
     component: Anomaly
-    maximumDistance: 20
-    minBeepInterval: 0.15
-    maxBeepInterval: 1.00
     beepSound:
       path: "/Audio/Items/locator_beep.ogg"
       params:

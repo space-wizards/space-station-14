@@ -1,8 +1,8 @@
-# Implanters
+﻿# Implanters
 
 - type: entity
   name: implanter
-  description: A syringe exclusively designed for the injection and extraction of subdermal implants.
+  description: a syringe fitted to be used exclusively with implants
   id: BaseImplanter
   parent: BaseItem
   abstract: true
@@ -15,13 +15,13 @@
       currentMode: Draw
       implanterSlot:
         name: Implant
-        locked: True
         priority: 0
         whitelist:
           tags:
             - SubdermalImplant
     - type: Sprite
       sprite: Objects/Specific/Chemistry/syringe.rsi
+      netsync: false
       state: syringe_base0
       layers:
         - state: syringe2
@@ -48,7 +48,6 @@
 - type: entity
   id: Implanter
   parent: BaseImplanter
-  description: A disposable syringe exclusively designed for the injection and extraction of subdermal implants.
   components:
     - type: Tag
       tags:
@@ -57,11 +56,12 @@
 - type: entity
   id: BaseImplantOnlyImplanter
   parent: Implanter
-  description: A disposable syringe exclusively designed for the injection of subdermal implants.
+  description: a single use implanter
   abstract: true
   components:
     - type: Sprite
       sprite: Objects/Specific/Chemistry/syringe.rsi
+      netsync: false
       state: syringe_base0
       layers:
         - state: syringe2
@@ -79,6 +79,7 @@
 - type: entity
   id: SadTromboneImplanter
   name: sad trombone implanter
+  description: a single use implanter, the implant plays a sad tune on death
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
@@ -87,24 +88,18 @@
 - type: entity
   id: LightImplanter
   name: light implanter
+  description: a single use implanter, the implant emits light on activation
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
       implant: LightImplant
-
-- type: entity
-  id: BikeHornImplanter
-  name: bike horn implanter
-  parent: BaseImplantOnlyImplanter
-  components:
-    - type: Implanter
-      implant: BikeHornImplant
 
 #Security implanters
 
 - type: entity
   id: TrackingImplanter
   name: tracking implanter
+  description: a single use implanter, the implant tracks
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
@@ -115,6 +110,7 @@
 - type: entity
   id: StorageImplanter
   name: storage implanter
+  description: a single use implanter, the implant grants hidden storage
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
@@ -123,6 +119,7 @@
 - type: entity
   id: FreedomImplanter
   name: freedom implanter
+  description: a single use implanter, the implant lets the user break out of hand restraints three times
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
@@ -131,34 +128,18 @@
 - type: entity
   id: UplinkImplanter
   name: uplink implanter
+  description: a single use implanter, the implant lets the user access a syndicate uplink at will
   parent: BaseImplantOnlyImplanter
   components:
   - type: Implanter
     implant: UplinkImplant
 
-- type: entity
-  id: EmpImplanter
-  name: EMP implanter
-  parent: BaseImplantOnlyImplanter
-  components:
-    - type: Implanter
-      implant: EmpImplant
-
-- type: entity
-  id: DnaScramblerImplanter
-  name: DNA scrambler implanter
-  parent: BaseImplantOnlyImplanter
-  components:
-    - type: Implanter
-      implant: DnaScramblerImplant
-      currentMode: Inject
-      implantOnly: false
-
 #Nuclear Operative/Special implanters
 
 - type: entity
   id: MicroBombImplanter
-  name: micro-bomb implanter
+  name: micro bomb implanter
+  description: a single use implanter, the implant is permanent and blows the user up on death
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
@@ -166,16 +147,9 @@
 
 - type: entity
   id: MacroBombImplanter
-  name: macro-bomb implanter
+  name: macro bomb implanter
+  description: a single use implanter, the implant creates a large explosion on death after the alloted time
   parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
       implant: MacroBombImplant
-
-- type: entity
-  id: DeathRattleImplanter
-  name: death rattle implanter
-  parent: BaseImplantOnlyImplanter
-  components:
-    - type: Implanter
-      implant: DeathRattleImplant

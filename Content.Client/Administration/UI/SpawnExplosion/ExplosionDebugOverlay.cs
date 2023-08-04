@@ -4,7 +4,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using System.Linq;
-using System.Numerics;
 
 namespace Content.Client.Administration.UI.SpawnExplosion;
 
@@ -95,7 +94,7 @@ public sealed class ExplosionDebugOverlay : Overlay
 
             foreach (var tile in tiles)
             {
-                var centre = (tile + Vector2Helpers.Half) * tileSize;
+                var centre = ((Vector2) tile + 0.5f) * tileSize;
 
                 // is the center of this tile visible to the user?
                 if (!gridBounds.Contains(centre))
@@ -106,9 +105,9 @@ public sealed class ExplosionDebugOverlay : Overlay
                 var screenCenter = _eyeManager.WorldToScreen(worldCenter);
 
                 if (Intensity[i] > 9)
-                    screenCenter += new Vector2(-12, -8);
+                    screenCenter += (-12, -8);
                 else
-                    screenCenter += new Vector2(-8, -8);
+                    screenCenter += (-8, -8);
 
                 handle.DrawString(_font, screenCenter, Intensity[i].ToString("F2"));
             }
@@ -117,8 +116,8 @@ public sealed class ExplosionDebugOverlay : Overlay
         if (tileSets.ContainsKey(0))
         {
             var epicenter = tileSets[0].First();
-            var worldCenter = transform.Transform((epicenter + Vector2Helpers.Half) * tileSize);
-            var screenCenter = _eyeManager.WorldToScreen(worldCenter) + new Vector2(-24, -24);
+            var worldCenter = transform.Transform(((Vector2) epicenter + 0.5f) * tileSize);
+            var screenCenter = _eyeManager.WorldToScreen(worldCenter) + (-24, -24);
             var text = $"{Intensity[0]:F2}\nΣ={TotalIntensity:F1}\nΔ={Slope:F1}";
             handle.DrawString(_font, screenCenter, text);
         }
@@ -169,7 +168,7 @@ public sealed class ExplosionDebugOverlay : Overlay
 
             foreach (var tile in tiles)
             {
-                var centre = (tile + Vector2Helpers.Half) * tileSize;
+                var centre = ((Vector2) tile + 0.5f) * tileSize;
 
                 // is the center of this tile visible to the user?
                 if (!gridBounds.Contains(centre))

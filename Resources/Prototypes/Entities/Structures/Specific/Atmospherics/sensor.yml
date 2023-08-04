@@ -68,6 +68,7 @@
       node: sensor
     - type: Appearance
     - type: Sprite
+      netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Specific/Atmospherics/sensor.rsi
       layers:
@@ -93,6 +94,7 @@
       graph: AirSensor
       node: assembly
     - type: Sprite
+      netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Specific/Atmospherics/sensor.rsi
       layers:

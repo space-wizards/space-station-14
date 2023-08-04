@@ -1,4 +1,3 @@
-using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Queries;
@@ -15,13 +14,13 @@ public sealed class UtilityOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    [DataField("key")] public string Key = "Target";
+    [DataField("key")] public string Key = "CombatTarget";
 
     /// <summary>
     /// The EntityCoordinates of the specified target.
     /// </summary>
     [DataField("keyCoordinates")]
-    public string KeyCoordinates = "TargetCoordinates";
+    public string KeyCoordinates = "CombatTargetCoordinates";
 
     [DataField("proto", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<UtilityQueryPrototype>))]
     public string Prototype = string.Empty;

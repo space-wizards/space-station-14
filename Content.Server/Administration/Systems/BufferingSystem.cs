@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Content.Server.Administration.Components;
+﻿using Content.Server.Administration.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Map;
 using Robust.Shared.Random;

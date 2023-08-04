@@ -21,13 +21,13 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ChameleonClothingComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ChameleonClothingComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ChameleonClothingComponent, ComponentGetState>(GetState);
         SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         SubscribeLocalEvent<ChameleonClothingComponent, ChameleonPrototypeSelectedMessage>(OnSelected);
     }
 
-    private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
+    private void OnInit(EntityUid uid, ChameleonClothingComponent component, ComponentInit args)
     {
         SetSelectedPrototype(uid, component.SelectedId, true, component);
     }

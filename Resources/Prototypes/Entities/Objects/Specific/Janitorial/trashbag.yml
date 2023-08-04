@@ -4,6 +4,7 @@
   parent: BaseStorageItem
   components:
   - type: Sprite
+    netSync: false
     sprite: Objects/Specific/Janitorial/trashbag.rsi
     layers:
       - state: icon-0

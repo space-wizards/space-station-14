@@ -31,8 +31,9 @@ namespace Content.Client.Atmos.EntitySystems
         public override void Shutdown()
         {
             base.Shutdown();
-            _overlayMan.RemoveOverlay<GasTileOverlay>();
+            _overlayMan.RemoveOverlay(_overlay);
         }
+
 
         private void OnHandleState(EntityUid gridUid, GasTileOverlayComponent comp, ref ComponentHandleState args)
         {

@@ -51,6 +51,7 @@
     anchored: true
     noRot: false
   - type: Sprite
+    netsync: false
     drawdepth: Doors
     sprite: Structures/Machines/recycling.rsi
     layers:
@@ -94,8 +95,9 @@
     blacklist:
       components:
       - Material
-      - Pda
+      - PDA
       - IdCard
+      - HumanoidAppearance
       tags:
       - HighRiskItem
     sound:

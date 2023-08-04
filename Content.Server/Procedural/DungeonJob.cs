@@ -3,16 +3,13 @@ using System.Threading.Tasks;
 using Content.Server.Construction;
 using Robust.Shared.CPUJob.JobQueues;
 using Content.Server.Decals;
-using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Content.Shared.Procedural.PostGeneration;
-using Content.Shared.Tag;
 using Robust.Server.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
 
@@ -28,7 +25,6 @@ public sealed partial class DungeonJob : Job<Dungeon>
     private readonly DungeonSystem _dungeon;
     private readonly EntityLookupSystem _lookup;
     private readonly SharedTransformSystem _transform;
-    private EntityQuery<TagComponent> _tagQuery;
 
     private readonly DungeonConfigPrototype _gen;
     private readonly int _seed;
@@ -69,7 +65,6 @@ public sealed partial class DungeonJob : Job<Dungeon>
         _dungeon = dungeon;
         _lookup = lookup;
         _transform = transform;
-        _tagQuery = _entManager.GetEntityQuery<TagComponent>();
 
         _gen = gen;
         _grid = grid;
@@ -93,8 +88,10 @@ public sealed partial class DungeonJob : Job<Dungeon>
                 throw new NotImplementedException();
         }
 
-        DebugTools.Assert(dungeon.RoomTiles.Count > 0);
-        DebugTools.Assert(dungeon.RoomExteriorTiles.Count > 0);
+        foreach (var room in dungeon.Rooms)
+        {
+            dungeon.RoomTiles.UnionWith(room.Tiles);
+        }
 
         // To make it slightly more deterministic treat this RNG as separate ig.
         var random = new Random(_seed);
@@ -105,31 +102,10 @@ public sealed partial class DungeonJob : Job<Dungeon>
 
             switch (post)
             {
-                case AutoCablingPostGen cabling:
-                    await PostGen(cabling, dungeon, _gridUid, _grid, random);
-                    break;
-                case BoundaryWallPostGen boundary:
-                    await PostGen(boundary, dungeon, _gridUid, _grid, random);
-                    break;
-                case CornerClutterPostGen clutter:
-                    await PostGen(clutter, dungeon, _gridUid, _grid, random);
-                    break;
-                case CorridorPostGen cordor:
-                    await PostGen(cordor, dungeon, _gridUid, _grid, random);
-                    break;
-                case CorridorDecalSkirtingPostGen decks:
-                    await PostGen(decks, dungeon, _gridUid, _grid, random);
-                    break;
-                case EntranceFlankPostGen flank:
-                    await PostGen(flank, dungeon, _gridUid, _grid, random);
-                    break;
-                case JunctionPostGen junc:
-                    await PostGen(junc, dungeon, _gridUid, _grid, random);
-                    break;
                 case MiddleConnectionPostGen dordor:
                     await PostGen(dordor, dungeon, _gridUid, _grid, random);
                     break;
-                case DungeonEntrancePostGen entrance:
+                case EntrancePostGen entrance:
                     await PostGen(entrance, dungeon, _gridUid, _grid, random);
                     break;
                 case ExternalWindowPostGen externalWindow:
@@ -138,8 +114,8 @@ public sealed partial class DungeonJob : Job<Dungeon>
                 case InternalWindowPostGen internalWindow:
                     await PostGen(internalWindow, dungeon, _gridUid, _grid, random);
                     break;
-                case RoomEntrancePostGen rEntrance:
-                    await PostGen(rEntrance, dungeon, _gridUid, _grid, random);
+                case BoundaryWallPostGen boundary:
+                    await PostGen(boundary, dungeon, _gridUid, _grid, random);
                     break;
                 case WallMountPostGen wall:
                     await PostGen(wall, dungeon, _gridUid, _grid, random);
@@ -149,9 +125,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
             }
 
             await SuspendIfOutOfTime();
-
-            if (!ValidateResume())
-                break;
+            ValidateResume();
         }
 
         _grid.CanSplit = true;

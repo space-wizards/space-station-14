@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Popups;
 using Content.Server.Pulling;
 using Content.Server.Stack;
@@ -94,7 +93,7 @@ namespace Content.Server.Hands.Systems
             args.Handled = true; // no shove/stun.
         }
 
-        public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle,
+        public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
             EntityUid? exclude)
         {
             if (finalPosition.EqualsApprox(initialPosition.Position, tolerance: 0.1f))
@@ -105,7 +104,7 @@ namespace Content.Server.Hands.Systems
             if (exclude != null)
                 filter = filter.RemoveWhereAttachedEntity(entity => entity == exclude);
 
-            RaiseNetworkEvent(new PickupAnimationEvent(item, initialPosition, finalPosition, initialAngle), filter);
+            RaiseNetworkEvent(new PickupAnimationEvent(item, initialPosition, finalPosition), filter);
         }
 
         protected override void HandleEntityRemoved(EntityUid uid, HandsComponent hands, EntRemovedFromContainerMessage args)
@@ -205,7 +204,7 @@ namespace Content.Server.Hands.Systems
             if (direction == Vector2.Zero)
                 return true;
 
-            direction = direction.Normalized() * Math.Min(direction.Length(), hands.ThrowRange);
+            direction = direction.Normalized * Math.Min(direction.Length, hands.ThrowRange);
 
             var throwStrength = hands.ThrowForceMultiplier;
 

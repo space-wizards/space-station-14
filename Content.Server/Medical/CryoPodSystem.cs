@@ -10,7 +10,6 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Climbing;
 using Content.Server.Medical.Components;
 using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
@@ -31,7 +30,6 @@ using Content.Shared.Tools;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
-using Content.Server.Temperature.Components;
 
 namespace Content.Server.Medical;
 
@@ -51,7 +49,6 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
     public override void Initialize()
     {
@@ -178,14 +175,10 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
 
     private void OnActivateUI(EntityUid uid, CryoPodComponent cryoPodComponent, AfterActivatableUIOpenEvent args)
     {
-        TryComp<TemperatureComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var temp);
-        TryComp<BloodstreamComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var bloodstream);
-
         _userInterfaceSystem.TrySendUiMessage(
             uid,
             HealthAnalyzerUiKey.Key,
-            new HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity,
-            temp != null ? temp.CurrentTemperature : 0, bloodstream != null ? bloodstream.BloodSolution.FillFraction : 0));
+            new HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity));
     }
 
     private void OnInteractUsing(EntityUid uid, CryoPodComponent cryoPodComponent, InteractUsingEvent args)
@@ -238,7 +231,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
             return;
 
-        if (!_nodeContainer.TryGetNode(nodeContainer, cryoPod.PortName, out PortablePipeNode? portNode))
+        if (!nodeContainer.TryGetNode(cryoPod.PortName, out PortablePipeNode? portNode))
             return;
 
         if (!TryComp(uid, out CryoPodAirComponent? cryoPodAir))
@@ -261,7 +254,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         // If it's connected to a port, include the port side
         if (TryComp(uid, out NodeContainerComponent? nodeContainer))
         {
-            if (_nodeContainer.TryGetNode(nodeContainer, component.PortName, out PipeNode? port))
+            if(nodeContainer.TryGetNode(component.PortName, out PipeNode? port))
                 gasMixDict.Add(component.PortName, port.Air);
         }
         args.GasMixtures = gasMixDict;

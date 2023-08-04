@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Content.Shared.FixedPoint;
+﻿using Content.Shared.FixedPoint;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
@@ -62,7 +61,7 @@ public sealed class PuddleOverlay : Overlay
 
             foreach (var debugOverlayData in _debugOverlaySystem.GetData(mapGrid.Owner))
             {
-                var centre = (debugOverlayData.Pos + Vector2Helpers.Half) * mapGrid.TileSize;
+                var centre = ((Vector2) debugOverlayData.Pos + 0.5f) * mapGrid.TileSize;
 
                 // is the center of this tile visible
                 if (!gridBounds.Contains(centre))
@@ -94,7 +93,7 @@ public sealed class PuddleOverlay : Overlay
 
             foreach (var debugOverlayData in _debugOverlaySystem.GetData(mapGrid.Owner))
             {
-                var centre = (debugOverlayData.Pos + Vector2Helpers.Half) * mapGrid.TileSize;
+                var centre = ((Vector2) debugOverlayData.Pos + 0.5f) * mapGrid.TileSize;
 
                 // // is the center of this tile visible
                 if (!gridBounds.Contains(centre))

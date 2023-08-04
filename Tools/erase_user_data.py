@@ -12,7 +12,7 @@ import os
 import psycopg2
 from uuid import UUID
 
-LATEST_DB_MIGRATION = "20230725193102_AdminNotesImprovementsForeignKeys"
+LATEST_DB_MIGRATION = "20220816163319_Traits"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -39,7 +39,6 @@ def main():
     clear_player(cur, user_id)
     clear_preference(cur, user_id)
     clear_server_ban(cur, user_id)
-    clear_server_ban_exemption(cur, user_id)
     clear_server_role_ban(cur, user_id)
     clear_uploaded_resource_log(cur, user_id)
     clear_whitelist(cur, user_id)
@@ -150,17 +149,6 @@ def clear_server_ban(cur: "psycopg2.cursor", user_id: str):
 DELETE FROM
     server_ban
 WHERE
-    player_user_id = %s
-""", (user_id,))
-
-
-def clear_server_ban_exemption(cur: "psycopg2.cursor", user_id: str):
-    print("Clearing server_ban_exemption...")
-
-    cur.execute("""
-DELETE FROM
-    server_ban_exemption
-WHERE
     user_id = %s
 """, (user_id,))
 
@@ -172,7 +160,7 @@ def clear_server_role_ban(cur: "psycopg2.cursor", user_id: str):
 DELETE FROM
     server_role_ban
 WHERE
-    player_user_id = %s
+    user_id = %s
 """, (user_id,))
 
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
@@ -8,6 +9,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Benchmarks;
@@ -21,8 +23,8 @@ public class DeviceNetworkingBenchmark
     private DeviceNetworkSystem _deviceNetworkSystem = default!;
     private EntityUid _sourceEntity;
     private EntityUid _sourceWirelessEntity;
-    private readonly List<EntityUid> _targetEntities = new();
-    private readonly List<EntityUid> _targetWirelessEntities = new();
+    private List<EntityUid> _targetEntities = new();
+    private List<EntityUid> _targetWirelessEntities = new();
 
 
     private NetworkPayload _payload = default!;
@@ -56,7 +58,7 @@ public class DeviceNetworkingBenchmark
     public async Task SetupAsync()
     {
         ProgramShared.PathOffset = "../../../../";
-        _pair = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+        _pair = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
         var server = _pair.Pair.Server;
 
         await server.WaitPost(() =>

@@ -1,5 +1,9 @@
+using System;
+using System.Threading.Tasks;
 using Content.Shared.DoAfter;
+using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
@@ -31,7 +35,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         [Test]
         public async Task TestSerializable()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
             var refMan = server.ResolveDependency<IReflectionManager>();
@@ -58,11 +62,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         [Test]
         public async Task TestFinished()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
 
@@ -77,10 +77,8 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 var tickTime = 1.0f / timing.TickRate;
                 var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
                 var args = new DoAfterArgs(mob, tickTime / 2, ev, null) { Broadcast = true };
-#pragma warning disable NUnit2045 // Interdependent assertions.
                 Assert.That(doAfterSystem.TryStartDoAfter(args));
                 Assert.That(ev.Cancelled, Is.False);
-#pragma warning restore NUnit2045
             });
 
             await server.WaitRunTicks(1);
@@ -92,15 +90,12 @@ namespace Content.IntegrationTests.Tests.DoAfter
         [Test]
         public async Task TestCancelled()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
             var entityManager = server.ResolveDependency<IEntityManager>();
             var timing = server.ResolveDependency<IGameTiming>();
             var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<SharedDoAfterSystem>();
+            DoAfterId? id;
             var ev = new TestDoAfterEvent();
 
             await server.WaitPost(() =>
@@ -110,7 +105,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
                 var args = new DoAfterArgs(mob, tickTime * 2, ev, null) { Broadcast = true };
 
-                if (!doAfterSystem.TryStartDoAfter(args, out var id))
+                if (!doAfterSystem.TryStartDoAfter(args, out id))
                 {
                     Assert.Fail();
                     return;

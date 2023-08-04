@@ -13,6 +13,7 @@
         - Folder
         - Write
   - type: Sprite
+    netsync: false
     sprite: Structures/Storage/cabinets.rsi
     state: filingcabinet
     noRot: true
@@ -72,6 +73,7 @@
         - Folder
         - Write
   - type: Sprite
+    netsync: false
     sprite: Structures/Storage/cabinets.rsi
     state: chestdrawer
     noRot: true

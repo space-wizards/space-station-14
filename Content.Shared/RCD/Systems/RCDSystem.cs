@@ -237,25 +237,14 @@ public sealed class RCDSystem : EntitySystem
                 if (tile.Tile.IsEmpty)
                     return false;
 
-                //They tried to decon a turf but...
-                if (target == null)
+                //They tried to decon a turf but the turf is blocked
+                if (target == null && IsTileBlocked(tile))
                 {
-                    // the turf is blocked
-                    if (IsTileBlocked(tile))
-                    {
-                        _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
-                        return false;
-                    }
-                    // the turf can't be destroyed (planet probably)
-                    var tileDef = (ContentTileDefinition) _tileDefMan[tile.Tile.TypeId];
-                    if (tileDef.Indestructible)
-                    {
-                        _popup.PopupClient(Loc.GetString("rcd-component-tile-indestructible-message"), uid, user);
-                        return false;
-                    }
+                    _popup.PopupClient(Loc.GetString("rcd-component-tile-obstructed-message"), uid, user);
+                    return false;
                 }
                 //They tried to decon a non-turf but it's not in the whitelist
-                else if (!_tag.HasTag(target.Value, "RCDDeconstructWhitelist"))
+                if (target != null && !_tag.HasTag(target.Value, "RCDDeconstructWhitelist"))
                 {
                     _popup.PopupClient(Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"), uid, user);
                     return false;

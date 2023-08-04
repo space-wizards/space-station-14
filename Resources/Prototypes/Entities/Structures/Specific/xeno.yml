@@ -15,8 +15,6 @@
       Heat:
         collection:
           MeatLaserImpact
-  - type: Transform
-    anchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

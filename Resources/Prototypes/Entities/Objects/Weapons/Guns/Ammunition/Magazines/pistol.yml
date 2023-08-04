@@ -19,6 +19,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
+    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi
     layers:
     - state: base
@@ -52,6 +53,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
+    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_high_capacity_mag.rsi
     layers:
     - state: base
@@ -85,6 +87,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
+    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi
     layers:
     - state: base
@@ -93,7 +96,7 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
     magState: mag
-    steps: 6
+    steps: 2
     zeroVisible: false
   - type: Appearance
 
@@ -113,6 +116,7 @@
       - CartridgePistol
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_top_mounted.rsi
+    netsync: false
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]

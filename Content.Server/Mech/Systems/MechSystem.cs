@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Mech.Components;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -34,7 +33,6 @@ public sealed class MechSystem : SharedMechSystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly BatterySystem _batterySystem = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -71,7 +69,7 @@ public sealed class MechSystem : SharedMechSystem
         #endregion
     }
 
-    private void OnMechCanMoveEvent(EntityUid uid, MechComponent component, UpdateCanMoveEvent args)
+    private void OnMechCanMoveEvent(EntityUid uid, MechComponent component , UpdateCanMoveEvent args)
     {
         if (component.Broken || component.Integrity <= 0 || component.Energy <= 0)
             args.Cancel();
@@ -302,7 +300,7 @@ public sealed class MechSystem : SharedMechSystem
             EquipmentStates = ev.States
         };
         var ui = _ui.GetUi(uid, MechUiKey.Key);
-        UserInterfaceSystem.SetUiState(ui, state);
+        _ui.SetUiState(ui, state);
     }
 
     public override bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent? component = null)
@@ -320,7 +318,7 @@ public sealed class MechSystem : SharedMechSystem
             {
                 var tile = grid.GetTileRef(coordinates);
 
-                if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is { } environment)
+                if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is {} environment)
                 {
                     _atmosphere.Merge(mechAir.Air, environment.RemoveVolume(MechAirComponent.GasMixVolume));
                 }
@@ -344,7 +342,7 @@ public sealed class MechSystem : SharedMechSystem
             {
                 var tile = grid.GetTileRef(coordinates);
 
-                if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is { } environment)
+                if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is {} environment)
                 {
                     _atmosphere.Merge(environment, mechAir.Air);
                     mechAir.Air.Clear();
@@ -378,7 +376,7 @@ public sealed class MechSystem : SharedMechSystem
         if (!TryComp<BatteryComponent>(battery, out var batteryComp))
             return false;
 
-        _batterySystem.SetCharge(battery!.Value, batteryComp.CurrentCharge + delta.Float(), batteryComp);
+        batteryComp.CurrentCharge = batteryComp.CurrentCharge + delta.Float();
         if (batteryComp.CurrentCharge != component.Energy) //if there's a discrepency, we have to resync them
         {
             _sawmill.Debug($"Battery charge was not equal to mech charge. Battery {batteryComp.CurrentCharge}. Mech {component.Energy}");

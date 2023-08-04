@@ -40,6 +40,7 @@
         layer:
         - TabletopMachineLayer
   - type: Sprite
+    netsync: false
     sprite: Structures/Machines/microwave.rsi
     drawdepth: SmallObjects
     snapCardinals: true

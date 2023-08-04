@@ -11,6 +11,7 @@
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
+    netsync: false
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
     snapCardinals: true
     layers:
@@ -62,6 +63,7 @@
     containers:
       board: !type:Container
   - type: Weldable
+    fuel: 3
     time: 3
   - type: Airlock
   - type: DoorBolt

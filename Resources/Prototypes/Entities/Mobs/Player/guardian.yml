@@ -44,6 +44,7 @@
     - type: Sprite
       drawdepth: Mobs
       sprite: Mobs/Aliens/Guardians/guardians.rsi
+      netsync: false
       layers:
         - state: tech_base
           map: [ "enum.DamageStateVisualLayers.Base" ]

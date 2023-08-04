@@ -12,6 +12,7 @@
     - Donut
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donut.rsi
+    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -444,7 +445,6 @@
 - type: entity
   parent: FoodDonutPink
   id: FoodDonutPoison
-  suffix: Poison
   components:
   - type: SolutionContainerManager
     solutions:

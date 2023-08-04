@@ -22,6 +22,7 @@
         - TableLayer
   - type: SpriteFade
   - type: Sprite
+    netsync: false
   - type: Icon
     state: full
   - type: IconSmooth

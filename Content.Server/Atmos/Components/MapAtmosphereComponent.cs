@@ -1,13 +1,11 @@
-using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.EntitySystems;
-
 namespace Content.Server.Atmos.Components;
 
 /// <summary>
 ///     Component that defines the default GasMixture for a map.
 /// </summary>
-[RegisterComponent, Access(typeof(SharedAtmosphereSystem))]
-public sealed class MapAtmosphereComponent : SharedMapAtmosphereComponent
+/// <remarks>Honestly, no need to [Friend] this. It's just two simple data fields... Change them to your heart's content.</remarks>
+[RegisterComponent]
+public sealed class MapAtmosphereComponent : Component
 {
     /// <summary>
     ///     The default GasMixture a map will have. Space mixture by default.

@@ -9,6 +9,7 @@
     solution: bucket
   - type: Clickable
   - type: Sprite
+    netsync: false
     sprite: Objects/Tools/bucket.rsi
     layers:
     - state: icon

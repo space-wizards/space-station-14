@@ -8,6 +8,7 @@
   components:
   - type: InteractionOutline
   - type: Sprite
+    netsync: false
     sprite: Structures/Doors/Airlocks/highsec/highsec.rsi
     layers:
     - state: closed
@@ -55,6 +56,7 @@
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
   - type: Weldable
+    fuel: 10
     time: 10
   - type: Airlock
   - type: DoorBolt

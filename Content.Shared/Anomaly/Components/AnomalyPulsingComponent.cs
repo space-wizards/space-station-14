@@ -12,7 +12,7 @@ public sealed class AnomalyPulsingComponent : Component
     /// The time at which the pulse will be over.
     /// </summary>
     [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan EndTime;
+    public TimeSpan EndTime = TimeSpan.MaxValue;
 
     /// <summary>
     /// How long the pulse visual lasts

@@ -8,6 +8,7 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
+    netsync: false
     sprite: Structures/plastic_flaps.rsi
     state: plasticflaps
     drawdepth: Mobs
@@ -44,7 +45,7 @@
     graph: PlasticFlapsGraph
     node: plasticFlaps
   - type: StaticPrice
-    price: 83
+    price: 150
 
 - type: entity
   id: PlasticFlapsOpaque

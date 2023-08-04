@@ -6,6 +6,7 @@
   components:
   - type: Occluder
   - type: Sprite
+    netsync: false
     snapCardinals: true
     sprite: Structures/Decoration/curtains.rsi
     layers:

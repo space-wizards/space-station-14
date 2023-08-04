@@ -8,14 +8,13 @@ namespace Content.Client.Store.Ui;
 [UsedImplicitly]
 public sealed class StoreBoundUserInterface : BoundUserInterface
 {
-    [ViewVariables]
     private StoreMenu? _menu;
 
-    [ViewVariables]
     private string _windowName = Loc.GetString("store-ui-default-title");
 
-    public StoreBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public StoreBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
+
     }
 
     protected override void Open()

@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using NUnit.Framework;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
 using Serilog.Events;

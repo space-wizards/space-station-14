@@ -117,7 +117,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     {
         overflowMaterial = 0;
 
-        if (amount <= 0 || materialProto.StackEntity == null)
+        if (amount <= 0)
             return new List<EntityUid>();
 
         var entProto = _prototypeManager.Index<EntityPrototype>(materialProto.StackEntity);

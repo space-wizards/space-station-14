@@ -1,5 +1,6 @@
 using Content.Shared.Labels;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Labels.UI
 {
@@ -8,10 +9,9 @@ namespace Content.Client.Labels.UI
     /// </summary>
     public sealed class HandLabelerBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
         private HandLabelerWindow? _window;
 
-        public HandLabelerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public HandLabelerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -26,12 +26,14 @@ namespace Content.Client.Labels.UI
             _window.OpenCentered();
 
             _window.OnClose += Close;
-            _window.OnLabelChanged += OnLabelChanged;
+            _window.OnLabelEntered += OnLabelChanged;
+
         }
 
         private void OnLabelChanged(string newLabel)
         {
             SendMessage(new HandLabelerLabelChangedMessage(newLabel));
+            Close();
         }
 
         /// <summary>

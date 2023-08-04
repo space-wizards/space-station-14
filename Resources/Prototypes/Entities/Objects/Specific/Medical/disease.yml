@@ -7,6 +7,7 @@
   - type: Item
     size: 1
   - type: Sprite
+    netsync: false
     sprite: Objects/Specific/Medical/mouth_swab.rsi
     state: icon
   - type: Tag
@@ -25,4 +26,5 @@
     size: 3
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
+    netsync: false
     state: salpen

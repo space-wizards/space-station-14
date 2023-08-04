@@ -197,24 +197,6 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: meat wall
-  id: MeatWall
-  graph: Girder
-  startNode: start
-  targetNode: meatWall
-  category: construction-category-structures
-  description: Sticky.
-  icon:
-    sprite: Structures/Walls/meat.rsi
-    state: full
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  conditions:
-  - !type:TileNotBlocked
-
-- type: construction
   name: grille
   id: Grille
   graph: Grille
@@ -224,7 +206,6 @@
   description: A flimsy framework of iron rods.
   conditions:
     - !type:TileNotBlocked
-      failIfSpace: false
   icon:
     sprite: Structures/Walls/grille.rsi
     state: grille

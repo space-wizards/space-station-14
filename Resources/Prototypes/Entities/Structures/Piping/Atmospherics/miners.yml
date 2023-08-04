@@ -25,6 +25,7 @@
             - !type:DoActsBehavior
               acts: ["Destruction"]
     - type: Sprite
+      netsync: false
       sprite: Structures/Piping/Atmospherics/miners.rsi
       state: miner
     - type: AtmosDevice

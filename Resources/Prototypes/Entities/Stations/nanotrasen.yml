@@ -2,7 +2,7 @@
   abstract: true
   id: BaseStationNanotrasen
   components:
-    - type: NpcFactionMember
+    - type: Faction
       factions:
         - NanoTrasen
 

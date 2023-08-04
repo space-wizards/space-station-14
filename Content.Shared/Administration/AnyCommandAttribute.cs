@@ -1,6 +1,5 @@
 ﻿using JetBrains.Annotations;
 using Robust.Shared.Console;
-using Robust.Shared.Toolshed;
 
 namespace Content.Shared.Administration
 {
@@ -8,6 +7,7 @@ namespace Content.Shared.Administration
     ///     Specifies that a command can be executed by any player.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    [BaseTypeRequired(typeof(IConsoleCommand))]
     [MeansImplicitUse]
     public sealed class AnyCommandAttribute : Attribute
     {

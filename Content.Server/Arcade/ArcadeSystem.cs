@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Arcade.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Arcade;
 using Robust.Shared.Utility;
@@ -16,6 +17,25 @@ namespace Content.Server.Arcade
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<BlockGameArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpen);
+            SubscribeLocalEvent<SpaceVillainArcadeComponent, AfterActivatableUIOpenEvent>(OnAfterUIOpenSV);
+            SubscribeLocalEvent<BlockGameArcadeComponent, BoundUIClosedEvent>((_,c,args) => c.UnRegisterPlayerSession((IPlayerSession)args.Session));
+            InitializeBlockGame();
+            InitializeSpaceVillain();
+        }
+
+        private void OnAfterUIOpen(EntityUid uid, BlockGameArcadeComponent component, AfterActivatableUIOpenEvent args)
+        {
+            var actor = Comp<ActorComponent>(args.User);
+            if (component.UserInterface?.SessionHasOpen(actor.PlayerSession) == true)
+            {
+                 component.RegisterPlayerSession(actor.PlayerSession);
+            }
+        }
+
+        private void OnAfterUIOpenSV(EntityUid uid, SpaceVillainArcadeComponent component, AfterActivatableUIOpenEvent args)
+        {
+            component.Game ??= new SpaceVillainArcadeComponent.SpaceVillainGame(component);
         }
 
         public HighScorePlacement RegisterHighScore(string name, int score)
@@ -65,6 +85,14 @@ namespace Content.Server.Arcade
             }
 
             return placement;
+        }
+
+        public override void Update(float frameTime)
+        {
+            foreach (var comp in EntityManager.EntityQuery<BlockGameArcadeComponent>())
+            {
+                comp.DoGameTick(frameTime);
+            }
         }
 
         public readonly struct HighScorePlacement

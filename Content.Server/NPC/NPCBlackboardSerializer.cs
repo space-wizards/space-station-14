@@ -16,31 +16,31 @@ public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, Mapping
     {
         var validated = new List<ValidationNode>();
 
-        if (node.Count <= 0)
-            return new ValidatedSequenceNode(validated);
-
-        var reflection = dependencies.Resolve<IReflectionManager>();
-
-        foreach (var data in node)
+        if (node.Count > 0)
         {
-            var key = data.Key.ToYamlNode().AsString();
+            var reflection = dependencies.Resolve<IReflectionManager>();
 
-            if (data.Value.Tag == null)
+            foreach (var data in node)
             {
-                validated.Add(new ErrorNode(data.Key, $"Unable to validate {key}'s type"));
-                continue;
+                var key = data.Key.ToYamlNode().AsString();
+
+                if (data.Value.Tag == null)
+                {
+                    validated.Add(new ErrorNode(data.Key, $"Unable to validate {key}'s type"));
+                    continue;
+                }
+
+                var typeString = data.Value.Tag[6..];
+
+                if (!reflection.TryLooseGetType(typeString, out var type))
+                {
+                    validated.Add(new ErrorNode(data.Key, $"Unable to find type for {typeString}"));
+                    continue;
+                }
+
+                var validatedNode = serializationManager.ValidateNode(type, data.Value, context);
+                validated.Add(validatedNode);
             }
-
-            var typeString = data.Value.Tag[6..];
-
-            if (!reflection.TryLooseGetType(typeString, out var type))
-            {
-                validated.Add(new ErrorNode(data.Key, $"Unable to find type for {typeString}"));
-                continue;
-            }
-
-            var validatedNode = serializationManager.ValidateNode(type, data.Value, context);
-            validated.Add(validatedNode);
         }
 
         return new ValidatedSequenceNode(validated);
@@ -53,29 +53,29 @@ public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, Mapping
     {
         var value = instanceProvider != null ? instanceProvider() : new NPCBlackboard();
 
-        if (node.Count <= 0)
-            return value;
-
-        var reflection = dependencies.Resolve<IReflectionManager>();
-
-        foreach (var data in node)
+        if (node.Count > 0)
         {
-            var key = data.Key.ToYamlNode().AsString();
+            var reflection = dependencies.Resolve<IReflectionManager>();
 
-            if (data.Value.Tag == null)
-                throw new NullReferenceException($"Found null tag for {key}");
+            foreach (var data in node)
+            {
+                var key = data.Key.ToYamlNode().AsString();
 
-            var typeString = data.Value.Tag[6..];
+                if (data.Value.Tag == null)
+                    throw new NullReferenceException($"Found null tag for {key}");
 
-            if (!reflection.TryLooseGetType(typeString, out var type))
-                throw new NullReferenceException($"Found null type for {key}");
+                var typeString = data.Value.Tag[6..];
 
-            var bbData = serializationManager.Read(type, data.Value, hookCtx, context);
+                if (!reflection.TryLooseGetType(typeString, out var type))
+                    throw new NullReferenceException($"Found null type for {key}");
 
-            if (bbData == null)
-                throw new NullReferenceException($"Found null data for {key}, expected {type}");
+                var bbData = serializationManager.Read(type, data.Value, hookCtx, context);
 
-            value.SetValue(key, bbData);
+                if (bbData == null)
+                    throw new NullReferenceException($"Found null data for {key}, expected {type}");
+
+                value.SetValue(key, bbData);
+            }
         }
 
         return value;

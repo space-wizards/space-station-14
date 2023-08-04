@@ -9,6 +9,7 @@
   - type: ForensicPad
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
+    netsync: false
     layers:
     - state: paper
       color: yellow

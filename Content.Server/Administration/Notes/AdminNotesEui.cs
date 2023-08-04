@@ -1,12 +1,8 @@
+﻿using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Shared.Administration.Notes;
-using Content.Shared.Database;
 using Content.Shared.Eui;
-using System.Linq;
-using System.Threading.Tasks;
-using Content.Server.Database;
-using Robust.Shared.Network;
 using static Content.Shared.Administration.Notes.AdminNoteEuiMsg;
 
 namespace Content.Server.Administration.Notes;
@@ -15,8 +11,6 @@ public sealed class AdminNotesEui : BaseEui
 {
     [Dependency] private readonly IAdminManager _admins = default!;
     [Dependency] private readonly IAdminNotesManager _notesMan = default!;
-    [Dependency] private readonly IPlayerLocator _locator = default!;
-    [Dependency] private readonly IServerDbManager _db = default!;
 
     public AdminNotesEui()
     {
@@ -25,8 +19,7 @@ public sealed class AdminNotesEui : BaseEui
 
     private Guid NotedPlayer { get; set; }
     private string NotedPlayerName { get; set; } = string.Empty;
-    private bool HasConnectedBefore { get; set; }
-    private Dictionary<(int, NoteType), SharedAdminNote> Notes { get; set; } = new();
+    private Dictionary<int, SharedAdminNote> Notes { get; set; } = new();
 
     public override async void Opened()
     {
@@ -53,7 +46,7 @@ public sealed class AdminNotesEui : BaseEui
         return new AdminNotesEuiState(
             NotedPlayerName,
             Notes,
-            _notesMan.CanCreate(Player) && HasConnectedBefore,
+            _notesMan.CanCreate(Player),
             _notesMan.CanDelete(Player),
             _notesMan.CanEdit(Player)
         );
@@ -65,51 +58,49 @@ public sealed class AdminNotesEui : BaseEui
 
         switch (msg)
         {
-            case CreateNoteRequest request:
+            case CreateNoteRequest {Message: var message}:
+            {
+                if (!_notesMan.CanCreate(Player))
                 {
-                    if (!_notesMan.CanCreate(Player))
-                    {
-                        break;
-                    }
-
-                    if (string.IsNullOrWhiteSpace(request.Message))
-                    {
-                        break;
-                    }
-
-                    if (request.ExpiryTime is not null && request.ExpiryTime <= DateTime.UtcNow)
-                    {
-                        break;
-                    }
-
-                    await _notesMan.AddAdminRemark(Player, NotedPlayer, request.NoteType, request.Message, request.NoteSeverity, request.Secret, request.ExpiryTime);
+                    Close();
                     break;
                 }
+
+                if (string.IsNullOrWhiteSpace(message))
+                {
+                    break;
+                }
+
+                await _notesMan.AddNote(Player, NotedPlayer, message);
+                break;
+            }
             case DeleteNoteRequest request:
+            {
+                if (!_notesMan.CanDelete(Player))
                 {
-                    if (!_notesMan.CanDelete(Player))
-                    {
-                        break;
-                    }
-
-                    await _notesMan.DeleteAdminRemark(request.Id, request.Type, Player);
+                    Close();
                     break;
                 }
+
+                await _notesMan.DeleteNote(request.Id, Player);
+                break;
+            }
             case EditNoteRequest request:
+            {
+                if (!_notesMan.CanEdit(Player))
                 {
-                    if (!_notesMan.CanEdit(Player))
-                    {
-                        break;
-                    }
-
-                    if (string.IsNullOrWhiteSpace(request.Message))
-                    {
-                        break;
-                    }
-
-                    await _notesMan.ModifyAdminRemark(request.Id, request.Type, Player, request.Message, request.NoteSeverity, request.Secret, request.ExpiryTime);
+                    Close();
                     break;
                 }
+
+                if (string.IsNullOrWhiteSpace(request.Message))
+                {
+                    break;
+                }
+
+                await _notesMan.ModifyNote(request.Id, Player, request.Message);
+                break;
+            }
         }
     }
 
@@ -124,7 +115,7 @@ public sealed class AdminNotesEui : BaseEui
         if (note.Player != NotedPlayer)
             return;
 
-        Notes[(note.Id, note.NoteType)] = note;
+        Notes[note.Id] = note;
         StateDirty();
     }
 
@@ -133,29 +124,28 @@ public sealed class AdminNotesEui : BaseEui
         if (note.Player != NotedPlayer)
             return;
 
-        Notes.Remove((note.Id, note.NoteType));
+        Notes.Remove(note.Id);
         StateDirty();
     }
 
     private async Task LoadFromDb()
     {
-        var locatedPlayer = await _locator.LookupIdAsync((NetUserId) NotedPlayer);
-        NotedPlayerName = locatedPlayer?.Username ?? string.Empty;
-        HasConnectedBefore = locatedPlayer?.LastAddress is not null;
-        Notes = (from note in await _notesMan.GetAllAdminRemarks(NotedPlayer)
-                 select note.ToShared())
-            .ToDictionary(sharedNote => (sharedNote.Id, sharedNote.NoteType));
+        NotedPlayerName = await _notesMan.GetPlayerName(NotedPlayer);
+
+        var notes = new Dictionary<int, SharedAdminNote>();
+        foreach (var note in await _notesMan.GetNotes(NotedPlayer))
+        {
+            notes.Add(note.Id, note.ToShared());
+        }
+
+        Notes = notes;
+
         StateDirty();
     }
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
     {
-        if (args.Player != Player)
-        {
-            return;
-        }
-
-        if (!_notesMan.CanView(Player))
+        if (args.Player == Player && !_notesMan.CanView(Player))
         {
             Close();
         }

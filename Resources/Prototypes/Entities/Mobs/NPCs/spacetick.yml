@@ -7,9 +7,8 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
-  - type: NpcFactionMember
+    rootTask: SimpleHostileCompound
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -45,6 +44,7 @@
   - type: Stamina
     excess: 15
   - type: MovementAlwaysTouching
+  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:

@@ -33,8 +33,7 @@ public abstract class SharedDiceSystem : EntitySystem
 
     private void OnUseInHand(EntityUid uid, DiceComponent component, UseInHandEvent args)
     {
-        if (args.Handled)
-            return;
+        if (args.Handled) return;
 
         args.Handled = true;
         Roll(uid, component);
@@ -59,7 +58,7 @@ public abstract class SharedDiceSystem : EntitySystem
 
         if (side < 1 || side > die.Sides)
         {
-            Log.Error($"Attempted to set die {ToPrettyString(uid)} to an invalid side ({side}).");
+            Logger.Error($"Attempted to set die {ToPrettyString(uid)} to an invalid side ({side}).");
             return;
         }
 
@@ -75,7 +74,7 @@ public abstract class SharedDiceSystem : EntitySystem
 
         if (value % die.Multiplier != 0 || value/ die.Multiplier + die.Offset < 1)
         {
-            Log.Error($"Attempted to set die {ToPrettyString(uid)} to an invalid value ({value}).");
+            Logger.Error($"Attempted to set die {ToPrettyString(uid)} to an invalid value ({value}).");
             return;
         }
 

@@ -6,6 +6,7 @@
   abstract: true
   components:
   - type: Sprite
+    netsync: false
     noRot: true
   - type: InteractionOutline
   - type: Physics

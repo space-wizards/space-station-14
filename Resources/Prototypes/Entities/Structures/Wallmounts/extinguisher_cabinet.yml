@@ -11,6 +11,7 @@
     - type: InteractionOutline
     - type: Sprite
       sprite: Structures/Wallmounts/extinguisher_cabinet.rsi
+      netsync: false
       snapCardinals: true
       layers:
       - state: frame

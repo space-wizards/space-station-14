@@ -8,6 +8,7 @@
     anchored: true
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
+    netsync: false
     noRot: true
     state: nuclearbomb_base
   - type: Physics
@@ -61,10 +62,8 @@
   id: NuclearBombUnanchored
   suffix: unanchored
   components:
-  - type: Transform
-    anchored: false
-  - type: Physics
-    bodyType: Dynamic
+    - type: Transform
+      anchored: false
 
 - type: entity
   parent: StorageTank
@@ -76,6 +75,7 @@
   - type: NukeLabel
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
+    netsync: false
     state: nuclearbomb_base
   - type: Physics
     bodyType: Dynamic

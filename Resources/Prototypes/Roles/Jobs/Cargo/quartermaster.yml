@@ -5,20 +5,17 @@
   playTimeTracker: JobQuartermaster
   requirements:
     - !type:RoleTimeRequirement
-      role: JobCargoTechnician
-      time: 21600 #6 hrs
-    - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 10800 #3 hrs
+      time: 3600
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 36000 #10 hours
+      time: 18000
     - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs            
+      time: 108000
   weight: 10
   startingGear: QuartermasterGear
-  icon: "JobIconQuarterMaster"
-  supervisors: job-supervisors-captain
+  icon: "QuarterMaster"
+  supervisors: job-supervisors-hop
   canBeAntag: false
   access:
   - Cargo

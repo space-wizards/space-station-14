@@ -1,5 +1,3 @@
-using Robust.Shared.Audio;
-
 namespace Content.Shared.Paper
 {
     [RegisterComponent]
@@ -15,11 +13,5 @@ namespace Content.Shared.Paper
         /// </summary>
         [DataField("stampState")]
         public string StampState { get; set; } = "paper_stamp-generic";
-
-        [DataField("sound")]
-        public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Items/Stamp/thick_stamp_sub.ogg")
-        {
-            Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(5f)
-        };
     }
 }

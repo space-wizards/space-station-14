@@ -4,7 +4,6 @@
   path: "/Textures/Shaders/outline.swsl"
   params:
     outline_color: "#FF000055"
-    light_boost: 2
 
 - type: shader
   id: SelectionOutlineInrange
@@ -12,4 +11,3 @@
   path: "/Textures/Shaders/outline.swsl"
   params:
     outline_color: "#00FF0055"
-    light_boost: 4

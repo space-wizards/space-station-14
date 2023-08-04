@@ -1,22 +1,21 @@
 ﻿using Robust.Client.GameObjects;
-using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
+using static Content.Shared.Atmos.Components.SharedGasAnalyzerComponent;
 
 namespace Content.Client.Atmos.UI
 {
     public sealed class GasAnalyzerBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
-        private GasAnalyzerWindow? _window;
-
-        public GasAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public GasAnalyzerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
+
+        private GasAnalyzerWindow? _window;
 
         protected override void Open()
         {
             base.Open();
 
-            _window = new GasAnalyzerWindow();
+            _window = new GasAnalyzerWindow(this);
             _window.OnClose += OnClose;
             _window.OpenCentered();
         }

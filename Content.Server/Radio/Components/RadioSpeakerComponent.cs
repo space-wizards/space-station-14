@@ -12,13 +12,6 @@ namespace Content.Server.Radio.Components;
 [Access(typeof(RadioDeviceSystem))]
 public sealed class RadioSpeakerComponent : Component
 {
-    /// <summary>
-    /// Whether or not interacting with this entity
-    /// toggles it on or off.
-    /// </summary>
-    [DataField("toggleOnInteract")]
-    public bool ToggleOnInteract = true;
-
     [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     public HashSet<string> Channels = new () { SharedChatSystem.CommonChannel };
 

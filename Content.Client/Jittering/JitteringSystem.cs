@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Immutable;
-using System.Numerics;
 using Content.Shared.Jittering;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;

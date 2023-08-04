@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.UserInterface;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
@@ -20,36 +19,36 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
 
     private void OnRadarStartup(EntityUid uid, RadarConsoleComponent component, ComponentStartup args)
     {
-        UpdateState(uid, component);
+        UpdateState(component);
     }
 
-    protected override void UpdateState(EntityUid uid, RadarConsoleComponent component)
+    protected override void UpdateState(RadarConsoleComponent component)
     {
-        var xform = Transform(uid);
+        var xform = Transform(component.Owner);
         var onGrid = xform.ParentUid == xform.GridUid;
         EntityCoordinates? coordinates = onGrid ? xform.Coordinates : null;
         Angle? angle = onGrid ? xform.LocalRotation : null;
 
         // Use ourself I guess.
-        if (TryComp<IntrinsicUIComponent>(uid, out var intrinsic))
+        if (TryComp<IntrinsicUIComponent>(component.Owner, out var intrinsic))
         {
             foreach (var uiKey in intrinsic.UIs)
             {
                 if (uiKey.Key?.Equals(RadarConsoleUiKey.Key) == true)
                 {
-                    coordinates = new EntityCoordinates(uid, Vector2.Zero);
+                    coordinates = new EntityCoordinates(component.Owner, Vector2.Zero);
                     angle = Angle.Zero;
                     break;
                 }
             }
         }
 
-        if (_uiSystem.TryGetUi(uid, RadarConsoleUiKey.Key, out var bui))
-            UserInterfaceSystem.SetUiState(bui, new RadarConsoleBoundInterfaceState(
-                component.MaxRange,
-                coordinates,
-                angle,
-                new List<DockingInterfaceState>()
-            ));
+        var radarState = new RadarConsoleBoundInterfaceState(
+            component.MaxRange,
+            coordinates,
+            angle,
+            new List<DockingInterfaceState>());
+
+        _uiSystem.GetUiOrNull(component.Owner, RadarConsoleUiKey.Key)?.SetState(radarState);
     }
 }

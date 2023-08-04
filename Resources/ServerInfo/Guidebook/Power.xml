@@ -1,0 +1,37 @@
+<Document>
+# Power
+
+SS14 has a fairly in-depth power system through which all devices on the station receive electricity. It's divided into three main powernets; HV, LV, and MV.
+<Box>
+<GuideEntityEmbed Entity="CableHVStack"/>
+<GuideEntityEmbed Entity="CableMVStack"/>
+<GuideEntityEmbed Entity="CableApcStack"/>
+</Box>
+
+## Cabling
+The three major cable types (HV, MV, and LV) can be used to form independent powernets. Examine them for a description of their uses.
+<Box>
+<GuideEntityEmbed Entity="CableHV"/>
+<GuideEntityEmbed Entity="CableMV"/>
+<GuideEntityEmbed Entity="CableApcExtension"/>
+</Box>
+
+## Power storage
+Each power storage device presented functions as the transformer for its respective power level (HV, MV, and LV) and also provides a fairly sizable backup battery to help flatten out spikes and dips in power usage.
+<Box>
+<GuideEntityEmbed Entity="SMESBasic"/>
+<GuideEntityEmbed Entity="SubstationBasic"/>
+<GuideEntityEmbed Entity="APCBasic"/>
+</Box>
+
+## Ramping
+Contrary to what one might expect from a video game electrical simulation, power is not instantly provided upon request. Generators and batteries take time to ramp up to match the draw imposed on them, which leads to brownouts when there are large changes in current draw all at once, for example when batteries run out.
+
+## Installing power storage
+Substations are the most self-explanatory. Simply install the machine on top of an MV and HV cable, it will draw power from the HV cable to provide to MV.
+
+Installing APCs is similarly simple, except APCs are exclusively wallmounted machinery and cannot be installed on the floor. Make sure it has both MV and LV connections.
+
+Installing a SMES requires you construct a cable terminal to use as the input. The SMES will draw power from the terminal and send power out from underneath. The terminal will ensure that the HV input and HV output do not connect. Avoid connecting a SMES to itself, this will result in a short circuit which can result in power flickering or outages depending on severity.
+
+</Document>

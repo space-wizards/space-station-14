@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Camera;
 using Robust.Shared.Player;
 

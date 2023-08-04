@@ -10,7 +10,7 @@ namespace Content.Client.Access.UI
     {
         private AgentIDCardWindow? _window;
 
-        public AgentIDCardBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public AgentIDCardBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -18,16 +18,15 @@ namespace Content.Client.Access.UI
         {
             base.Open();
 
-            _window?.Dispose();
-            _window = new AgentIDCardWindow(this);
+            _window = new AgentIDCardWindow();
             if (State != null)
                 UpdateState(State);
 
             _window.OpenCentered();
 
             _window.OnClose += Close;
-            _window.OnNameChanged += OnNameChanged;
-            _window.OnJobChanged += OnJobChanged;
+            _window.OnNameEntered += OnNameChanged;
+            _window.OnJobEntered += OnJobChanged;
         }
 
         private void OnNameChanged(string newName)
@@ -38,11 +37,6 @@ namespace Content.Client.Access.UI
         private void OnJobChanged(string newJob)
         {
             SendMessage(new AgentIDCardJobChangedMessage(newJob));
-        }
-
-        public void OnJobIconChanged(string newJobIcon)
-        {
-            SendMessage(new AgentIDCardJobIconChangedMessage(newJobIcon));
         }
 
         /// <summary>
@@ -57,16 +51,14 @@ namespace Content.Client.Access.UI
 
             _window.SetCurrentName(cast.CurrentName);
             _window.SetCurrentJob(cast.CurrentJob);
-            _window.SetAllowedIcons(cast.Icons);
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing)
-                return;
-
+            if (!disposing) return;
             _window?.Dispose();
         }
     }
+
 }

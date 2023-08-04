@@ -1,15 +1,16 @@
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN;
 
 /// <summary>
 /// Represents a network of multiple tasks. This gets expanded out to its relevant nodes.
 /// </summary>
-/// <remarks>
-/// This just points to a specific htnCompound prototype
-/// </remarks>
-public sealed class HTNCompoundTask : HTNTask, IHTNCompound
+[Prototype("htnCompound")]
+public sealed class HTNCompoundTask : HTNTask
 {
-    [DataField("task", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<HTNCompoundPrototype>))]
-    public string Task = string.Empty;
+    /// <summary>
+    /// The available branches for this compound task.
+    /// </summary>
+    [DataField("branches", required: true)]
+    public List<HTNBranch> Branches = default!;
 }

@@ -80,7 +80,7 @@ public sealed class ChunkingSystem : EntitySystem
         {
             if (!xformQuery.TryGetComponent(viewerUid, out var xform))
             {
-                Log.Error($"Player has deleted viewer entities? Viewers: {string.Join(", ", viewers.Select(x => ToPrettyString(x)))}");
+                Logger.Error($"Player has deleted viewer entities? Viewers: {string.Join(", ", viewers.Select(x => ToPrettyString(x)))}");
                 continue;
             }
 

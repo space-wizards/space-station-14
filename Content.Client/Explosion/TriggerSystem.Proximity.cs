@@ -1,3 +1,4 @@
+using Content.Client.Trigger;
 using Content.Shared.Trigger;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -19,7 +20,7 @@ public sealed partial class TriggerSystem
 
     private static readonly Animation _flasherAnimation = new Animation
     {
-        Length = TimeSpan.FromSeconds(0.6f),
+        Length = TimeSpan.FromSeconds(0.3f),
         AnimationTracks = {
             new AnimationTrackSpriteFlick
             {
@@ -50,8 +51,7 @@ public sealed partial class TriggerSystem
 
     private void OnProxAnimation(EntityUid uid, TriggerOnProximityComponent component, AnimationCompletedEvent args)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
+        if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
 
         // So animation doesn't get spammed if no server state comes in.
         _appearance.SetData(uid, ProximityTriggerVisualState.State, ProximityTriggerVisuals.Inactive, appearance);
@@ -73,15 +73,8 @@ public sealed partial class TriggerSystem
         if (!Resolve(uid, ref spriteComponent))
             return;
 
-        if (!TryComp<AnimationPlayerComponent>(uid, out var player))
-            return;
-
-        if (!_appearance.TryGetData<ProximityTriggerVisuals>(uid, ProximityTriggerVisualState.State, out var state, appearance))
-            return;
-
-        if (!spriteComponent.LayerMapTryGet(ProximityTriggerVisualLayers.Base, out var layer))
-            // Don't do anything if the sprite doesn't have the layer.
-            return;
+        TryComp<AnimationPlayerComponent>(component.Owner, out var player);
+        _appearance.TryGetData<ProximityTriggerVisuals>(appearance.Owner, ProximityTriggerVisualState.State, out var state, appearance);
 
         switch (state)
         {
@@ -89,7 +82,7 @@ public sealed partial class TriggerSystem
                 // Don't interrupt the flash animation
                 if (_player.HasRunningAnimation(uid, player, AnimKey)) return;
                 _player.Stop(uid, player, AnimKey);
-                spriteComponent.LayerSetState(layer, "on");
+                spriteComponent.LayerSetState(ProximityTriggerVisualLayers.Base, "on");
                 break;
             case ProximityTriggerVisuals.Active:
                 if (_player.HasRunningAnimation(uid, player, AnimKey)) return;
@@ -98,7 +91,7 @@ public sealed partial class TriggerSystem
             case ProximityTriggerVisuals.Off:
             default:
                 _player.Stop(uid, player, AnimKey);
-                spriteComponent.LayerSetState(layer, "off");
+                spriteComponent.LayerSetState(ProximityTriggerVisualLayers.Base, "off");
                 break;
         }
     }

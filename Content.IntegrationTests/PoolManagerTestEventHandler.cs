@@ -1,4 +1,7 @@
-﻿
+﻿using System;
+using System.Threading.Tasks;
+using NUnit.Framework;
+
 [assembly: Parallelizable(ParallelScope.Children)]
 
 namespace Content.IntegrationTests;

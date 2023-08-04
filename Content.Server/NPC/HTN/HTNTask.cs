@@ -1,6 +1,8 @@
+using Robust.Shared.Prototypes;
+
 namespace Content.Server.NPC.HTN;
 
-[ImplicitDataDefinitionForInheritors]
-public abstract class HTNTask
+public abstract class HTNTask : IPrototype
 {
+    [IdDataField] public string ID { get; } = default!;
 }

@@ -58,7 +58,10 @@ public sealed partial class BlockingSystem
 
     private void OnDamageModified(EntityUid uid, BlockingComponent component, DamageModifyEvent args)
     {
-        var modifier = component.IsBlocking ? component.ActiveBlockDamageModifier : component.PassiveBlockDamageModifer;
+        _proto.TryIndex<DamageModifierSetPrototype>(component.PassiveBlockDamageModifer, out var passiveblockModifier);
+        _proto.TryIndex<DamageModifierSetPrototype>(component.ActiveBlockDamageModifier, out var activeBlockModifier);
+
+        var modifier = component.IsBlocking ? activeBlockModifier : passiveblockModifier;
         if (modifier == null)
         {
             return;

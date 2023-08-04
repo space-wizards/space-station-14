@@ -10,6 +10,7 @@
     - Spray
     - Trash
   - type: Sprite
+    netsync: false
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: cleaner
   - type: Item
@@ -41,6 +42,7 @@
   description: A huge spray bottle, capable of unrivaled janitorial power.
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: cleaner_large
   - type: SolutionContainerManager
@@ -105,6 +107,7 @@
   - type: Vapor
   - type: AnimationPlayer
   - type: Sprite
+    netsync: false
     sprite: Effects/chempuff.rsi
     rotation: 180
     layers:
@@ -131,6 +134,7 @@
   noSpawn: true
   components:
   - type: Sprite
+    netsync: false
     sprite: Effects/chempuff.rsi
     rotation: 180
     layers:

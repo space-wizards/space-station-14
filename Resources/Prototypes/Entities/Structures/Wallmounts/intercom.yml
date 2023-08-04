@@ -2,7 +2,6 @@
   id: Intercom
   name: intercom
   description: An intercom. For when the station just needs to know something.
-  abstract: true
   components:
   - type: WallMount
   - type: ApcPowerReceiver
@@ -13,11 +12,6 @@
     powerRequired: true
     unobstructedRequired: true
     listenRange: 2
-    toggleOnInteract: false
-  - type: RadioSpeaker
-    toggleOnInteract: false
-  - type: Intercom
-  - type: Speech
   - type: ExtensionCableReceiver
   - type: Clickable
   - type: InteractionOutline
@@ -29,13 +23,8 @@
     - state: base
     - state: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-      shader: unshaded
     - state: broadcasting
       map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
-      shader: unshaded
-      visible: false
-    - state: speaker
-      map: ["enum.RadioDeviceVisualLayers.Speaker"]
       shader: unshaded
       visible: false
   - type: Transform
@@ -45,13 +34,6 @@
   - type: Wires
     BoardName: "Intercom"
     LayoutId: Intercom
-  - type: ActivatableUIRequiresPower
-  - type: ActivatableUI
-    key: enum.IntercomUiKey.Key
-  - type: UserInterface
-    interfaces:
-      - key: enum.IntercomUiKey.Key
-        type: IntercomBoundUserInterface
   - type: Construction
     graph: Intercom
     node: intercom
@@ -85,10 +67,6 @@
         enum.RadioDeviceVisualLayers.Broadcasting:
           True: { visible: true }
           False: { visible: false }
-      enum.RadioDeviceVisuals.Speaker:
-        enum.RadioDeviceVisualLayers.Speaker:
-          True: { visible: true }
-          False: { visible: false }
   placement:
     mode: SnapgridCenter
     snap:
@@ -116,20 +94,14 @@
     - Wallmount
 
 - type: entity
-  id: IntercomCommon
-  parent: Intercom
-  suffix: Common
-  components:
-  - type: Intercom
-    supportedChannels:
-    - Common
-
-- type: entity
   id: IntercomCommand
   parent: Intercom
   suffix: Command
   components:
-  - type: Intercom
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
     supportedChannels:
     - Common
     - Command
@@ -139,7 +111,10 @@
   parent: Intercom
   suffix: Engineering
   components:
-  - type: Intercom
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
     supportedChannels:
     - Common
     - Engineering
@@ -149,7 +124,10 @@
   parent: Intercom
   suffix: Medical
   components:
-  - type: Intercom
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
     supportedChannels:
     - Common
     - Medical
@@ -159,7 +137,10 @@
   parent: Intercom
   suffix: Science
   components:
-  - type: Intercom
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
     supportedChannels:
     - Common
     - Science
@@ -169,7 +150,10 @@
   parent: Intercom
   suffix: Security
   components:
-  - type: Intercom
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
     supportedChannels:
     - Common
     - Security
@@ -179,7 +163,10 @@
   parent: Intercom
   suffix: Service
   components:
-  - type: Intercom
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
     supportedChannels:
     - Common
     - Service
@@ -189,7 +176,10 @@
   parent: Intercom
   suffix: Supply
   components:
-  - type: Intercom
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
     supportedChannels:
     - Common
     - Supply
@@ -199,7 +189,10 @@
   parent: Intercom
   suffix: All
   components:
-  - type: Intercom
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
     supportedChannels:
     - Common
     - Command

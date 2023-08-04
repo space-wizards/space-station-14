@@ -3,9 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Interaction;
 using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
 
@@ -29,10 +27,9 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         {MeleeMissChance, 0.3f},
         {"MeleeRange", 1f},
         {"MinimumIdleTime", 2f},
-        {"MovementRangeClose", 0.2f},
         {"MovementRange", 1.5f},
         {"RangedRange", 10f},
-        {"RotateSpeed", float.MaxValue},
+        {"RotateSpeed", MathF.PI},
         {"VisionRadius", 10f},
     };
 
@@ -154,7 +151,6 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         switch (key)
         {
             case Access:
-            {
                 if (!TryGetValue(Owner, out owner, entManager))
                 {
                     return false;
@@ -163,33 +159,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                 var access = entManager.EntitySysManager.GetEntitySystem<AccessReaderSystem>();
                 value = access.FindAccessTags(owner);
                 return true;
-            }
-            case ActiveHand:
-            {
-                if (!TryGetValue(Owner, out owner, entManager) ||
-                    !entManager.TryGetComponent<HandsComponent>(owner, out var hands) ||
-                    hands.ActiveHand == null)
-                {
-                    return false;
-                }
-
-                value = hands.ActiveHand;
-                return true;
-            }
-            case ActiveHandFree:
-            {
-                if (!TryGetValue(Owner, out owner, entManager) ||
-                    !entManager.TryGetComponent<HandsComponent>(owner, out var hands) ||
-                    hands.ActiveHand == null)
-                {
-                    return false;
-                }
-
-                value = hands.ActiveHand.IsEmpty;
-                return true;
-            }
             case CanMove:
-            {
                 if (!TryGetValue(Owner, out owner, entManager))
                 {
                     return false;
@@ -198,53 +168,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                 var blocker = entManager.EntitySysManager.GetEntitySystem<ActionBlockerSystem>();
                 value = blocker.CanMove(owner);
                 return true;
-            }
-            case FreeHands:
-            {
-                if (!TryGetValue(Owner, out owner, entManager) ||
-                    !entManager.TryGetComponent<HandsComponent>(owner, out var hands) ||
-                    hands.ActiveHand == null)
-                {
-                    return false;
-                }
-
-                var handos = new List<string>();
-
-                foreach (var (id, hand) in hands.Hands)
-                {
-                    if (!hand.IsEmpty)
-                        continue;
-
-                    handos.Add(id);
-                }
-
-                value = handos;
-                return true;
-            }
-            case Inventory:
-            {
-                if (!TryGetValue(Owner, out owner, entManager) ||
-                    !entManager.TryGetComponent<HandsComponent>(owner, out var hands) ||
-                    hands.ActiveHand == null)
-                {
-                    return false;
-                }
-
-                var handos = new List<string>();
-
-                foreach (var (id, hand) in hands.Hands)
-                {
-                    if (!hand.IsEmpty)
-                        continue;
-
-                    handos.Add(id);
-                }
-
-                value = handos;
-                return true;
-            }
             case OwnerCoordinates:
-            {
                 if (!TryGetValue(Owner, out owner, entManager))
                 {
                     return false;
@@ -257,7 +181,6 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                 }
 
                 return false;
-            }
             default:
                 return false;
         }
@@ -277,12 +200,8 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     */
 
     public const string Access = "Access";
-    public const string ActiveHand = "ActiveHand";
-    public const string ActiveHandFree = "ActiveHandFree";
     public const string CanMove = "CanMove";
-    public const string FreeHands = "FreeHands";
     public const string FollowTarget = "FollowTarget";
-    public const string Inventory = "Inventory";
     public const string MedibotInjectRange = "MedibotInjectRange";
 
     public const string MeleeMissChance = "MeleeMissChance";
@@ -307,18 +226,13 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     public const string NavSmash = "NavSmash";
 
     /// <summary>
-    /// Can the NPC climb obstacles for steering.
-    /// </summary>
-    public const string NavClimb = "NavClimb";
-
-    /// <summary>
     /// Default key storage for a movement pathfind.
     /// </summary>
     public const string PathfindKey = "MovementPathfind";
 
     public const string RotateSpeed = "RotateSpeed";
     public const string VisionRadius = "VisionRadius";
-    public const string UtilityTarget = "UtilityTarget";
+    public const string UtilityTarget = "Target";
 
     public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
     {

@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.Actions;
 using Content.Client.Decals.Overlays;
 using Content.Shared.Actions;
@@ -158,7 +157,6 @@ public sealed class DecalPlacementSystem : EntitySystem
             DisplayName = $"{_decalId} ({_decalColor.ToHex()}, {(int) _decalAngle.Degrees})", // non-unique actions may be considered duplicates when saving/loading.
             Icon = decalProto.Sprite,
             Repeat = true,
-            ClientExclusive = true,
             CheckCanAccess = false,
             CheckCanInteract = false,
             Range = -1,
@@ -197,7 +195,7 @@ public sealed class DecalPlacementSystem : EntitySystem
 
 public sealed class PlaceDecalActionEvent : WorldTargetActionEvent
 {
-    [DataField("decalId", customTypeSerializer:typeof(PrototypeIdSerializer<DecalPrototype>), required:true)]
+    [DataField("decalId", customTypeSerializer:typeof(PrototypeIdSerializer<DecalPrototype>))]
     public string DecalId = string.Empty;
 
     [DataField("color")]

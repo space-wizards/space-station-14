@@ -6,11 +6,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/firstaidkits.rsi
+    netsync: false
     state: firstaid
   - type: Storage
-    capacity: 60
+    capacity: 35
   - type: Item
-    size: 60
+    size: 35
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     heldPrefix: firstaid
   - type: Tag
@@ -92,8 +93,8 @@
   - type: Sprite
     state: blackkit
   - type: Item
-    heldPrefix: blackkit
+    heldPrefix: blackkit  
     size: 50
   - type: Storage
     capacity: 50
-
+    

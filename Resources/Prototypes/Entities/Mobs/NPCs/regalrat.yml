@@ -11,13 +11,12 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
+    rootTask: SimpleHostileCompound
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: NpcFactionMember
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -43,6 +42,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
+      150: Critical
       200: Dead
   - type: MeleeWeapon
     hidden: true
@@ -73,11 +73,14 @@
       Parched: 150
       Dead: 0
     baseDecayRate: 0.1
+  - type: Appearance
   - type: DamageStateVisuals
     rotate: true
     states:
       Alive:
         Base: regalrat
+      Critical:
+        Base: dead
       Dead:
         Base: dead
   - type: GhostRole
@@ -137,6 +140,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
+      300: Critical
       350: Dead
   - type: MeleeWeapon
     hidden: true
@@ -177,13 +181,12 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
+    rootTask: SimpleHostileCompound
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: NpcFactionMember
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Sprite
@@ -242,6 +245,7 @@
       Parched: 150
       Dead: 0
     baseDecayRate: 0.1
+  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:

@@ -1,9 +1,9 @@
+using Content.Server.Mind.Components;
 using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Singularity.Components;
 using Robust.Server.Player;
-using Robust.Server.GameObjects;
 using Robust.Shared.Utility;
 using System.Diagnostics;
 
@@ -69,8 +69,8 @@ public sealed partial class ParticleAcceleratorSystem
         if (comp.Enabled || !comp.CanBeEnabled)
             return;
 
-        if (user?.AttachedEntity is { } player)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} on");
+        if (HasComp<MindComponent>(user?.AttachedEntity))
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{EntityManager.ToPrettyString((EntityUid) user!.AttachedEntity):player} has turned {EntityManager.ToPrettyString(uid)} on");
 
         comp.Enabled = true;
         UpdatePowerDraw(uid, comp);
@@ -89,8 +89,8 @@ public sealed partial class ParticleAcceleratorSystem
         if (!comp.Enabled)
             return;
 
-        if (user?.AttachedEntity is { } player)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} has turned {ToPrettyString(uid)} off");
+        if (HasComp<MindComponent>(user?.AttachedEntity))
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{EntityManager.ToPrettyString((EntityUid) user!.AttachedEntity):player} has turned {EntityManager.ToPrettyString(uid)} off");
 
         comp.Enabled = false;
         UpdatePowerDraw(uid, comp);
@@ -146,7 +146,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (strength == comp.SelectedStrength)
             return;
 
-        if (user?.AttachedEntity is { } player)
+        if (HasComp<MindComponent>(user?.AttachedEntity))
         {
             var impact = strength switch
             {
@@ -158,7 +158,7 @@ public sealed partial class ParticleAcceleratorSystem
                 or _ => LogImpact.Extreme,
             };
 
-            _adminLogger.Add(LogType.Action, impact, $"{ToPrettyString(player):player} has set the strength of {ToPrettyString(uid)} to {strength}");
+            _adminLogger.Add(LogType.Action, impact, $"{EntityManager.ToPrettyString(user!.AttachedEntity!.Value):player} has set the strength of {EntityManager.ToPrettyString(uid)} to {strength}");
         }
 
         comp.SelectedStrength = strength;
@@ -221,7 +221,7 @@ public sealed partial class ParticleAcceleratorSystem
             receive = powerConsumer.ReceivedPower;
         }
 
-        UserInterfaceSystem.SetUiState(bui, new ParticleAcceleratorUIState(
+        _uiSystem.SetUiState(bui, new ParticleAcceleratorUIState(
             comp.Assembled,
             comp.Enabled,
             comp.SelectedStrength,

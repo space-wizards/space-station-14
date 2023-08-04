@@ -39,10 +39,7 @@ namespace Content.Server.NPC.Commands
             }
 
             var comp = _entities.AddComponent<HTNComponent>(entId);
-            comp.RootTask = new HTNCompoundTask()
-            {
-                Task = args[1]
-            };
+            comp.RootTask = args[1];
             shell.WriteLine("AI component added.");
         }
     }

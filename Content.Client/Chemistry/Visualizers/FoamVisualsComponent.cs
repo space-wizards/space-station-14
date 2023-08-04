@@ -1,5 +1,4 @@
 using Robust.Client.Animations;
-using Robust.Client.Graphics;
 
 namespace Content.Client.Chemistry.Visualizers;
 
@@ -23,7 +22,7 @@ public sealed class FoamVisualsComponent : Component
 
     /// <summary>
     /// The state of the entities base sprite RSI that is displayed when the foam dissolves.
-    /// Cannot use <see cref="RSI.StateKey"/> because it does not have <see cref="DataDefinitionAttribute"/> and I am not making an engine PR at this time.
+    /// Cannot use <see cref="Robust.Graphics.RSI.StateKey"/> because it does not have <see cref="DataDefinitionAttribute"/> and I am not making an engine PR at this time.
     /// </summary>
     [DataField("animationState")]
     public string State = "foam-dissolve";

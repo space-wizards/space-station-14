@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Atmos.Piping.Binary.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Atmos.UI
 {
@@ -10,10 +11,10 @@ namespace Content.Client.Atmos.UI
     [UsedImplicitly]
     public sealed class GasCanisterBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
+
         private GasCanisterWindow? _window;
 
-        public GasCanisterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public GasCanisterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -23,7 +24,7 @@ namespace Content.Client.Atmos.UI
 
             _window = new GasCanisterWindow();
 
-            if (State != null)
+            if(State != null)
                 UpdateState(State);
 
             _window.OpenCentered();

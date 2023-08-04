@@ -8,6 +8,7 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
+    netsync: false
     sprite: Structures/Doors/Shutters/shutters.rsi
     drawdepth: Overdoors
     layers:
@@ -49,6 +50,7 @@
     closeSound:
       path: /Audio/Machines/blastdoor.ogg
   - type: Weldable
+    fuel: 3
     time: 3
   - type: Appearance
   - type: UserInterface
@@ -127,6 +129,7 @@
   description: Why did they make these shutters radioactive?
   components:
   - type: Sprite
+    netsync: false
     sprite: Structures/Doors/Shutters/shutters_radiation.rsi
     layers:
     - state: closed
@@ -161,6 +164,7 @@
   description: The Best (TM) place to see your friends explode!
   components:
   - type: Sprite
+    netsync: false
     sprite: Structures/Doors/Shutters/shutters_window.rsi
     layers:
     - state: closed
@@ -195,6 +199,7 @@
   - type: Sprite
     sprite: Structures/Doors/Shutters/shutters.rsi
     state: frame
+    netsync: false
   - type: Construction
     graph: Shutters
     node: frame1

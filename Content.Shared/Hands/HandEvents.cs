@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -120,15 +119,13 @@ namespace Content.Shared.Hands
         public EntityUid ItemUid { get; }
         public EntityCoordinates InitialPosition { get; }
         public Vector2 FinalPosition { get; }
-        public Angle InitialAngle { get; }
 
         public PickupAnimationEvent(EntityUid itemUid, EntityCoordinates initialPosition,
-            Vector2 finalPosition, Angle initialAngle)
+            Vector2 finalPosition)
         {
             ItemUid = itemUid;
             FinalPosition = finalPosition;
             InitialPosition = initialPosition;
-            InitialAngle = initialAngle;
         }
     }
 

@@ -14,12 +14,12 @@ namespace Content.Client.Gravity.UI
 
         private readonly GravityGeneratorBoundUserInterface _owner;
 
-        public GravityGeneratorWindow(GravityGeneratorBoundUserInterface owner)
+        public GravityGeneratorWindow(GravityGeneratorBoundUserInterface ui, ClientUserInterfaceComponent component)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            _owner = owner;
+            _owner = ui;
 
             OnButton.Group = _buttonGroup;
             OffButton.Group = _buttonGroup;
@@ -27,7 +27,7 @@ namespace Content.Client.Gravity.UI
             OnButton.OnPressed += _ => _owner.SetPowerSwitch(true);
             OffButton.OnPressed += _ => _owner.SetPowerSwitch(false);
 
-            EntityView.SetEntity(owner.Owner);
+            EntityView.Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
         }
 
         public void UpdateState(SharedGravityGeneratorComponent.GeneratorState state)

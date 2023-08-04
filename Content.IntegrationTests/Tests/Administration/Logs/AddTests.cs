@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -7,6 +9,7 @@ using Content.Server.GameTicking.Commands;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -21,7 +24,7 @@ public sealed class AddTests
     [Test]
     public async Task AddAndGetSingleLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
         var server = pairTracker.Pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
@@ -68,7 +71,7 @@ public sealed class AddTests
     [Test]
     public async Task AddAndGetUnformattedLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
         var server = pairTracker.Pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
@@ -112,18 +115,15 @@ public sealed class AddTests
         {
             Round = sGamerTicker.RoundId,
             Search = log.Message,
-            Types = new HashSet<LogType> { log.Type },
+            Types = new HashSet<LogType> {log.Type},
         };
 
         await foreach (var json in sDatabase.GetAdminLogsJson(filter))
         {
             var root = json.RootElement;
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(root.TryGetProperty("entity", out _), Is.True);
-                Assert.That(root.TryGetProperty("guid", out _), Is.True);
-            });
+            Assert.That(root.TryGetProperty("entity", out _), Is.True);
+            Assert.That(root.TryGetProperty("guid", out _), Is.True);
 
             json.Dispose();
         }
@@ -135,7 +135,7 @@ public sealed class AddTests
     [TestCase(500)]
     public async Task BulkAddLogs(int amount)
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
         var server = pairTracker.Pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
@@ -204,7 +204,7 @@ public sealed class AddTests
     [Test]
     public async Task PreRoundAddAndGetSingle()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{Dirty = true});
         var server = pairTracker.Pair.Server;
 
         var configManager = server.ResolveDependency<IConfigurationManager>();
@@ -255,7 +255,7 @@ public sealed class AddTests
         {
             Round = sGamerTicker.RoundId,
             Search = log.Message,
-            Types = new HashSet<LogType> { log.Type },
+            Types = new HashSet<LogType> {log.Type},
         };
 
         await foreach (var json in sDatabase.GetAdminLogsJson(filter))

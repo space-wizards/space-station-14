@@ -2,7 +2,7 @@
     <BoxContainer Orientation="Horizontal">
         <PanelContainer Name="Background"
                         Access="Public"
-                        StyleClasses="PdaBackground"
+                        StyleClasses="PDABackground"
                         VerticalExpand="False"
                         HorizontalExpand="False"
                         MaxWidth="10"

@@ -6,6 +6,7 @@
   components:
   - type: Smokable
   - type: Sprite
+    netsync: false
   - type: Appearance
   - type: BurnStateVisuals
   - type: Tag
@@ -14,8 +15,6 @@
   - type: SpaceGarbage
   - type: StaticPrice
     price: 5
-  - type: InjectableSolution
-    solution: smokable
 
 # Base for all cigars and cigarettes.
 - type: entity

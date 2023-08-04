@@ -140,13 +140,8 @@
       - id: BackgammonBoard
       - id: ParchisBoard
       - id: CheckerBoard
-      - id: ShipBattlemap
-      - id: SnowBattlemap
-      - id: SandBattlemap
-      - id: MoonBattlemap
-      - id: GrassBattlemap
-      - id: DiceBag
-        amount: 6
+      - id: d6Dice
+        amount: 4
 
 - type: entity
   id: CrateFunATV
@@ -242,7 +237,7 @@
       - id: ClothingOuterCoatPirate
       - id: ClothingShoesBootsLaceup
         amount: 2
-      - id: ClothingHeadBandRed
+      - id: HatBandRed
       - id: FoamCutlass
         amount: 2
 
@@ -266,13 +261,3 @@
       - id: VehicleUnicycleFolded
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
-      - id: BeachBall
-
-- type: entity
-  id: CrateFunBikeHornImplants
-  parent: CrateGenericSteel
-  components:
-  - type: StorageFill
-    contents:
-      - id: BikeHornImplanter
-        amount: 3

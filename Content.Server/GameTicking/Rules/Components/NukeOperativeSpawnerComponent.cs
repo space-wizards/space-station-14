@@ -1,6 +1,3 @@
-using Content.Shared.Roles;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-
 namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
@@ -11,12 +8,12 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent]
 public sealed class NukeOperativeSpawnerComponent : Component
 {
-    [DataField("name", required:true)]
-    public string OperativeName = default!;
+    [DataField("name")]
+    public string OperativeName = "";
 
-    [DataField("rolePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<AntagPrototype>), required:true)]
-    public string OperativeRolePrototype = default!;
+    [DataField("rolePrototype")]
+    public string OperativeRolePrototype = "";
 
-    [DataField("startingGearPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<StartingGearPrototype>), required:true)]
-    public string OperativeStartingGear = default!;
+    [DataField("startingGearPrototype")]
+    public string OperativeStartingGear = "";
 }

@@ -12,6 +12,7 @@
   description: Mmm, Donuts.
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     state: box
     layers:
@@ -74,6 +75,7 @@
   description: Don't drop 'em!
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Consumable/Food/egg.rsi
     state: box-closed
     layers:
@@ -204,6 +206,7 @@
       map: ["enum.StorageVisualLayers.Base"]
     - state: box-open
       map: ["enum.StorageVisualLayers.Door"]
+    netsync: false
   # TODO make these entitystorage again + placeablesurface after entity storage ECS gets merged.
   - type: Storage
     capacity: 8
@@ -270,6 +273,7 @@
   description: You suddenly have an urge to trade on the intergalactic stock market.
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
     state: box
     layers:
@@ -327,6 +331,7 @@
   description: 'Instructions: Heat in microwave. Product will cool if not eaten within seven minutes.'
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
     state: box
   - type: Storage
@@ -449,6 +454,7 @@
   description: The toy is more edible than the food.
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Storage/Happyhonk/clown.rsi
     state: box
     layers:
@@ -472,7 +478,7 @@
         orGroup: GiftPool
       - id: ToyNuke
         orGroup: GiftPool
-      - id: ToyFigurinePassenger
+      - id: ToyAssistant
         orGroup: GiftPool
       - id: ToyGriffin
         orGroup: GiftPool
@@ -539,6 +545,7 @@
     - HappyHonk
     - MimeHappyHonk
   - type: Sprite
+    netsync: false
     sprite: Objects/Storage/Happyhonk/mime.rsi
     state: box
   - type: Item
@@ -553,6 +560,7 @@
   suffix: Toy Unsafe
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Storage/Happyhonk/nukie.rsi
     state: box
   - type: Item
@@ -584,6 +592,7 @@
   description: Nothing good can come of this.
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Storage/Happyhonk/cluwne.rsi
     state: box
   - type: Item
@@ -617,7 +626,7 @@
         orGroup: GiftPool
       - id: ToyNuke
         orGroup: GiftPool
-      - id: ToyFigurinePassenger
+      - id: ToyAssistant
         orGroup: GiftPool
       - id: ToyGriffin
         orGroup: GiftPool

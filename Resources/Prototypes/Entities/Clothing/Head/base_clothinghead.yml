@@ -49,6 +49,7 @@
   noSpawn: true
   components:
   - type: Sprite
+    netsync: false
     layers:
     - state: icon
     - state: icon-flash
@@ -60,12 +61,12 @@
     heldPrefix: off
   - type: ToggleableLightVisuals
   - type: PointLight
+    netsync: false
     enabled: false
     radius: 3
     energy: 2
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-    netsync: false
   - type: Appearance
   - type: HandheldLight
     addPrefix: true
@@ -121,7 +122,6 @@
     tags:
     - HidesHair
     - WhitelistChameleon
-    - HelmetEVA
   - type: IdentityBlocker
 
 - type: entity
@@ -170,6 +170,7 @@
   noSpawn: true
   components:
   - type: Sprite
+    netsync: false
     layers:
     - state: icon
     - state: icon-flash
@@ -179,12 +180,12 @@
     equippedPrefix: off
   - type: ToggleableLightVisuals
   - type: PointLight
+    netsync: false
     enabled: false
     radius: 3
     energy: 2
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-    netsync: false
   - type: Appearance
   - type: HandheldLight
     addPrefix: true

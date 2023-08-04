@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
@@ -84,13 +83,6 @@ namespace Content.Shared.Tabletop
             {
                 DraggingPlayer = draggingPlayer;
             }
-        }
-
-        [Serializable, NetSerializable]
-        public sealed class TabletopRequestTakeOut : EntityEventArgs
-        {
-            public EntityUid Entity;
-            public EntityUid TableUid;
         }
 
         #region Utility

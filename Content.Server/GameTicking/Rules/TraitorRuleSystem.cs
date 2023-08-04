@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.NPC.Systems;
-using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.PDA.Ringer;
 using Content.Server.Players;
@@ -31,11 +30,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private readonly FactionSystem _faction = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -249,22 +247,22 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         traitorRole.Mind.Briefing = string.Format(
             "{0}\n{1}",
             Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", traitorRule.Codewords))),
-            Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp","#"))));
+            Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("", code))));
 
         // Assign traitor roles
-        _mindSystem.AddRole(mind, traitorRole);
+        mind.AddRole(traitorRole);
         SendTraitorBriefing(mind, traitorRule.Codewords, code);
         traitorRule.Traitors.Add(traitorRole);
 
-        if (_mindSystem.TryGetSession(mind, out var session))
+        if (mind.TryGetSession(out var session))
         {
             // Notificate player about new role assignment
             _audioSystem.PlayGlobal(traitorRule.GreetSoundNotification, session);
         }
 
         // Change the faction
-        _npcFaction.RemoveFaction(entity, "NanoTrasen", false);
-        _npcFaction.AddFaction(entity, "Syndicate");
+        _faction.RemoveFaction(entity, "NanoTrasen", false);
+        _faction.AddFaction(entity, "Syndicate");
 
         // Give traitors their objectives
         var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
@@ -273,10 +271,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
         {
             var objective = _objectivesManager.GetRandomObjective(traitorRole.Mind, "TraitorObjectiveGroups");
-
             if (objective == null)
                 continue;
-            if (_mindSystem.TryAddObjective(traitorRole.Mind, objective))
+            if (traitorRole.Mind.TryAddObjective(objective))
                 difficulty += objective.Difficulty;
         }
 
@@ -291,11 +288,11 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     /// <param name="code">Uplink codes</param>
     private void SendTraitorBriefing(Mind.Mind mind, string[] codewords, Note[] code)
     {
-        if (_mindSystem.TryGetSession(mind, out var session))
+        if (mind.TryGetSession(out var session))
         {
            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
-           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
+           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("", code))));
         }
     }
 
@@ -370,7 +367,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             foreach (var t in traitor.Traitors)
             {
                 var name = t.Mind.CharacterName;
-                _mindSystem.TryGetSession(t.Mind, out var session);
+                t.Mind.TryGetSession(out var session);
                 var username = session?.Name;
 
                 var objectives = t.Mind.AllObjectives.ToArray();

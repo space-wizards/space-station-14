@@ -9,6 +9,7 @@
     layers:
       - state: icon
         map: ["analyzer"]
+    netsync: false
   - type: GasAnalyzer
   - type: ActivatableUI
     inHandsOnly: true

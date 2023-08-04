@@ -1,5 +1,4 @@
 using Content.Shared.Salvage;
-using Content.Shared.Salvage.Expeditions;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Salvage;

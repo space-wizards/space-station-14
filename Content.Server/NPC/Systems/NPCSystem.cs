@@ -19,6 +19,8 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly HTNSystem _htn = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
 
+        private ISawmill _sawmill = default!;
+
         /// <summary>
         /// Whether any NPCs are allowed to run at all.
         /// </summary>
@@ -33,6 +35,8 @@ namespace Content.Server.NPC.Systems
         {
             base.Initialize();
 
+            _sawmill = Logger.GetSawmill("npc");
+            _sawmill.Level = LogLevel.Info;
             SubscribeLocalEvent<NPCComponent, MobStateChangedEvent>(OnMobStateChange);
             SubscribeLocalEvent<NPCComponent, MapInitEvent>(OnNPCMapInit);
             SubscribeLocalEvent<NPCComponent, ComponentShutdown>(OnNPCShutdown);
@@ -94,7 +98,7 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
-            Log.Debug($"Waking {ToPrettyString(uid)}");
+            _sawmill.Debug($"Waking {ToPrettyString(uid)}");
             EnsureComp<ActiveNPCComponent>(uid);
         }
 
@@ -105,19 +109,7 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
-            // Don't bother with an event
-            if (TryComp<HTNComponent>(uid, out var htn))
-            {
-                if (htn.Plan != null)
-                {
-                    var currentOperator = htn.Plan.CurrentOperator;
-                    _htn.ShutdownTask(currentOperator, htn.Blackboard, HTNOperatorStatus.Failed);
-                    _htn.ShutdownPlan(htn);
-                    htn.Plan = null;
-                }
-            }
-
-            Log.Debug($"Sleeping {ToPrettyString(uid)}");
+            _sawmill.Debug($"Sleeping {ToPrettyString(uid)}");
             RemComp<ActiveNPCComponent>(uid);
         }
 

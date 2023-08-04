@@ -9,6 +9,7 @@
     - Disposal
   components:
   - type: Sprite
+    netsync: false
     visible: false
   - type: Appearance
   - type: SubFloorHide
@@ -54,7 +55,7 @@
     containers:
       DisposalTube: !type:Container
   - type: StaticPrice
-    price: 22
+    price: 100
 
 - type: entity
   id: DisposalHolder

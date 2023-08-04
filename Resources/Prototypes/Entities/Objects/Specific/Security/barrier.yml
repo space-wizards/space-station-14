@@ -8,6 +8,7 @@
     noRot: true
   - type: Sprite
     sprite: Objects/Specific/Security/barrier.rsi
+    netsync: false
     layers:
     - state: "idle"
       map: ["deployableBarrierBase"]

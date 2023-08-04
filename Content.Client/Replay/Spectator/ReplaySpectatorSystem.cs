@@ -6,8 +6,6 @@ using Robust.Client.Player;
 using Robust.Client.Replays.Playback;
 using Robust.Client.State;
 using Robust.Shared.Console;
-using Robust.Shared.Network;
-using Robust.Shared.Serialization.Markdown.Mapping;
 
 namespace Content.Client.Replay.Spectator;
 
@@ -31,7 +29,7 @@ public sealed partial class ReplaySpectatorSystem : EntitySystem
     [Dependency] private readonly SharedContentEyeSystem _eye = default!;
     [Dependency] private readonly IReplayPlaybackManager _replayPlayback = default!;
 
-    private SpectatorData? _spectatorData;
+    private SpectatorPosition? _oldPosition;
     public const string SpectateCmd = "replay_spectate";
 
     public override void Initialize()
@@ -60,19 +58,15 @@ public sealed partial class ReplaySpectatorSystem : EntitySystem
         _replayPlayback.ReplayPlaybackStopped -= OnPlaybackStopped;
     }
 
-    private void OnPlaybackStarted(MappingDataNode yamlMappingNode, List<object> objects)
+    private void OnPlaybackStarted()
     {
         InitializeMovement();
+        SetSpectatorPosition(default);
         _conHost.RegisterCommand(SpectateCmd,
             Loc.GetString("cmd-replay-spectate-desc"),
             Loc.GetString("cmd-replay-spectate-help"),
             SpectateCommand,
             SpectateCompletions);
-
-        if (_replayPlayback.TryGetRecorderEntity(out var recorder))
-            SpectateEntity(recorder.Value);
-        else
-            SetSpectatorPosition(default);
     }
 
     private void OnPlaybackStopped()

@@ -1,5 +1,4 @@
-﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
-using Content.Shared.Chemistry.Reagent;
+﻿using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
@@ -7,7 +6,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 /// <summary>
 /// Generates foam from the artifact when activated
 /// </summary>
-[RegisterComponent, Access(typeof(FoamArtifactSystem))]
+[RegisterComponent]
 public sealed class FoamArtifactComponent : Component
 {
     /// <summary>
@@ -20,30 +19,36 @@ public sealed class FoamArtifactComponent : Component
     /// <summary>
     /// The foam reagent
     /// </summary>
-    [DataField("selectedReagent"), ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)]
     public string? SelectedReagent;
 
     /// <summary>
     /// How long does the foam last?
     /// </summary>
-    [DataField("duration"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("duration")]
     public float Duration = 10;
 
     /// <summary>
     /// How much reagent is in the foam?
     /// </summary>
-    [DataField("reagentAmount"), ViewVariables(VVAccess.ReadWrite)]
-    public float ReagentAmount = 200;
+    [DataField("reagentAmount")]
+    public float ReagentAmount = 100;
 
     /// <summary>
     /// Minimum radius of foam spawned
     /// </summary>
-    [DataField("minFoamAmount"), ViewVariables(VVAccess.ReadWrite)]
-    public int MinFoamAmount = 15;
+    [DataField("minFoamAmount")]
+    public int MinFoamAmount = 2;
 
     /// <summary>
     /// Maximum radius of foam spawned
     /// </summary>
-    [DataField("maxFoamAmount"), ViewVariables(VVAccess.ReadWrite)]
-    public int MaxFoamAmount = 20;
+    [DataField("maxFoamAmount")]
+    public int MaxFoamAmount = 6;
+
+    /// <summary>
+    /// How long it takes for each tile of foam to spawn
+    /// </summary>
+    [DataField("spreadDuration")]
+    public float SpreadDuration = 1;
 }

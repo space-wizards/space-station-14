@@ -12,6 +12,7 @@
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -22,7 +23,7 @@
         - ReagentId: Vitamin
           Quantity: 5
   - type: SliceableFood
-    count: 8
+    count: 6
   - type: Item
     size: 8
   - type: Tag
@@ -41,6 +42,7 @@
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:

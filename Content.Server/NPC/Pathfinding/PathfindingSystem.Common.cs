@@ -24,7 +24,7 @@ public sealed partial class PathfindingSystem
 
     private static readonly PathComparer PathPolyComparer = new();
 
-    private List<PathPoly> ReconstructPath(Dictionary<PathPoly, PathPoly> path, PathPoly currentNodeRef)
+    private Queue<PathPoly> ReconstructPath(Dictionary<PathPoly, PathPoly> path, PathPoly currentNodeRef)
     {
         var running = new List<PathPoly> { currentNodeRef };
         while (path.ContainsKey(currentNodeRef))
@@ -35,8 +35,10 @@ public sealed partial class PathfindingSystem
             running.Add(currentNodeRef);
         }
 
+        running = Simplify(running);
         running.Reverse();
-        return running;
+        var result = new Queue<PathPoly>(running);
+        return result;
     }
 
     private float GetTileCost(PathRequest request, PathPoly start, PathPoly end)
@@ -55,7 +57,6 @@ public sealed partial class PathfindingSystem
         {
             var isDoor = (end.Data.Flags & PathfindingBreadcrumbFlag.Door) != 0x0;
             var isAccess = (end.Data.Flags & PathfindingBreadcrumbFlag.Access) != 0x0;
-            var isClimb = (end.Data.Flags & PathfindingBreadcrumbFlag.Climb) != 0x0;
 
             // TODO: Handling power + door prying
             // Door we should be able to open
@@ -71,10 +72,6 @@ public sealed partial class PathfindingSystem
             else if ((request.Flags & PathFlags.Smashing) != 0x0 && end.Data.Damage > 0f)
             {
                 modifier += 10f + end.Data.Damage / 100f;
-            }
-            else if (isClimb && (request.Flags & PathFlags.Climbing) != 0x0)
-            {
-                modifier += 0.5f;
             }
             else
             {

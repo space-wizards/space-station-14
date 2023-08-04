@@ -9,7 +9,6 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
-using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
@@ -136,32 +135,20 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : Compon
 
     protected bool TryGetRandomStation([NotNullWhen(true)] out EntityUid? station, Func<EntityUid, bool>? filter = null)
     {
-        var stations = new ValueList<EntityUid>();
-
-        if (filter == null)
-        {
-            stations.EnsureCapacity(Count<StationEventEligibleComponent>());
-        }
-
         filter ??= _ => true;
-        var query = AllEntityQuery<StationEventEligibleComponent>();
 
-        while (query.MoveNext(out var uid, out _))
-        {
-            if (!filter(uid))
-                continue;
+        // augh. sorry sloth there's no better API and my goal today isn't adding 50 entitymanager methods :waa:
+        var stations = EntityManager.GetAllComponents(typeof(StationEventEligibleComponent)).Select(x => x.Owner).Where(filter).ToArray();
 
-            stations.Add(uid);
-        }
-
-        if (stations.Count == 0)
+        if (stations.Length == 0)
         {
             station = null;
             return false;
         }
 
-        // TODO: Engine PR.
-        station = stations[RobustRandom.Next(stations.Count)];
+
+        station = RobustRandom.Pick(stations);
+
         return true;
     }
 

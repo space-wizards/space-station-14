@@ -1,3 +1,4 @@
+using Content.Shared.Access.Systems;
 using Content.Shared.StationRecords;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -37,14 +38,6 @@ public sealed class AccessReaderComponent : Component
     /// </summary>
     [DataField("accessKeys")]
     public HashSet<StationRecordKey> AccessKeys = new();
-
-
-    /// <summary>
-    ///     The name of the container in which additional
-    ///     AccessReaderComponents may be found.
-    /// </summary>
-    [DataField("containerAccessProvider")]
-    public string? ContainerAccessProvider = null;
 }
 
 [Serializable, NetSerializable]
@@ -66,3 +59,4 @@ public sealed class AccessReaderComponentState : ComponentState
         AccessKeys = accessKeys;
     }
 }
+

@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi
+    netsync: false
     state: unlit-icon
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi

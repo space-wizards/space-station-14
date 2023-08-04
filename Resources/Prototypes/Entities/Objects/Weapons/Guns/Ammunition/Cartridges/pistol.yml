@@ -11,6 +11,7 @@
   - type: CartridgeAmmo
     proto: BulletPistol
   - type: Sprite
+    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
     - state: base
@@ -51,11 +52,3 @@
   components:
   - type: CartridgeAmmo
     proto: BulletPistolRubber
-
-- type: entity
-  id: CartridgePistolIncendiary
-  name: cartridge (.35 auto incendiary)
-  parent: BaseCartridgePistol
-  components:
-  - type: CartridgeAmmo
-    proto: BulletPistolIncendiary

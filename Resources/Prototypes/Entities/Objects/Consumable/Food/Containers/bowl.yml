@@ -13,6 +13,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     state: bowl
+    netsync: false
   - type: DamageOnLand
     damage:
       types:
@@ -64,6 +65,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     state: bowl-trash
+    netsync: false
   - type: Tag
     tags:
     - Trash

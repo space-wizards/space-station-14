@@ -1,6 +1,7 @@
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
+using Content.Server.MachineLinking.System;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 

@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Server.NPC.HTN;
+using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -24,9 +27,9 @@ public sealed class NPCTest
         {
             var counts = new Dictionary<string, int>();
 
-            foreach (var compound in protoManager.EnumeratePrototypes<HTNCompoundPrototype>())
+            foreach (var compound in protoManager.EnumeratePrototypes<HTNCompoundTask>())
             {
-                Count(compound, counts, htnSystem, protoManager);
+                Count(compound, counts, htnSystem);
                 counts.Clear();
             }
         });
@@ -34,11 +37,13 @@ public sealed class NPCTest
         await pool.CleanReturnAsync();
     }
 
-    private static void Count(HTNCompoundPrototype compound, Dictionary<string, int> counts, HTNSystem htnSystem, IPrototypeManager protoManager)
+    private static void Count(HTNCompoundTask compound, Dictionary<string, int> counts, HTNSystem htnSystem)
     {
-        foreach (var branch in compound.Branches)
+        var compoundBranches = htnSystem.CompoundBranches[compound];
+
+        for (var i = 0; i < compound.Branches.Count; i++)
         {
-            foreach (var task in branch.Tasks)
+            foreach (var task in compoundBranches[i])
             {
                 if (task is HTNCompoundTask compoundTask)
                 {
@@ -47,7 +52,7 @@ public sealed class NPCTest
 
                     Assert.That(count, Is.LessThan(50));
                     counts[compound.ID] = count;
-                    Count(protoManager.Index<HTNCompoundPrototype>(compoundTask.Task), counts, htnSystem, protoManager);
+                    Count(compoundTask, counts, htnSystem);
                 }
             }
         }

@@ -1,55 +1,53 @@
 using Content.Server.Damage.Components;
 using Content.Server.Stunnable;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
-using Content.Shared.Effects;
+using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Damage.Systems;
-
-public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
+namespace Content.Server.Damage.Systems
 {
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly StunSystem _stun = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-
-    public override void Initialize()
+    [UsedImplicitly]
+    internal sealed class DamageOnHighSpeedImpactSystem: EntitySystem
     {
-        base.Initialize();
-        SubscribeLocalEvent<DamageOnHighSpeedImpactComponent, StartCollideEvent>(HandleCollide);
-    }
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly StunSystem _stunSystem = default!;
 
-    private void HandleCollide(EntityUid uid, DamageOnHighSpeedImpactComponent component, ref StartCollideEvent args)
-    {
-        if (!args.OurFixture.Hard || !args.OtherFixture.Hard)
-            return;
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<DamageOnHighSpeedImpactComponent, StartCollideEvent>(HandleCollide);
+        }
 
-        if (!EntityManager.HasComponent<DamageableComponent>(uid))
-            return;
+        private void HandleCollide(EntityUid uid, DamageOnHighSpeedImpactComponent component, ref StartCollideEvent args)
+        {
+            if (!EntityManager.HasComponent<DamageableComponent>(uid)) return;
 
-        var speed = args.OurBody.LinearVelocity.Length();
+            var otherBody = args.OtherEntity;
+            var speed = args.OurBody.LinearVelocity.Length;
 
-        if (speed < component.MinimumSpeed)
-            return;
+            if (speed < component.MinimumSpeed) return;
 
-        if ((_gameTiming.CurTime - component.LastHit).TotalSeconds < component.DamageCooldown)
-            return;
+            SoundSystem.Play(component.SoundHit.GetSound(), Filter.Pvs(otherBody), otherBody, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
 
-        component.LastHit = _gameTiming.CurTime;
+            if ((_gameTiming.CurTime - component.LastHit).TotalSeconds < component.DamageCooldown)
+                return;
 
-        if (_robustRandom.Prob(component.StunChance))
-            _stun.TryStun(uid, TimeSpan.FromSeconds(component.StunSeconds), true);
+            component.LastHit = _gameTiming.CurTime;
 
-        var damageScale = component.SpeedDamageFactor * speed / component.MinimumSpeed;
+            if (_robustRandom.Prob(component.StunChance))
+                _stunSystem.TryStun(uid, TimeSpan.FromSeconds(component.StunSeconds), true);
 
-        _damageable.TryChangeDamage(uid, component.Damage * damageScale);
+            var damageScale = (speed / component.MinimumSpeed) * component.Factor;
 
-        _audio.PlayPvs(component.SoundHit, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
-        RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid> { uid }), Filter.Pvs(uid, entityManager: EntityManager));
+            _damageableSystem.TryChangeDamage(uid, component.Damage * damageScale);
+        }
     }
 }

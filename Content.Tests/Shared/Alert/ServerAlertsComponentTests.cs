@@ -3,7 +3,6 @@ using Content.Server.Alert;
 using Content.Shared.Alert;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
@@ -34,7 +33,6 @@ namespace Content.Tests.Shared.Alert
             // but wanted to keep it anyway to see what's possible w.r.t. testing components
             // in a unit test
 
-            var entManager = IoCManager.Resolve<IEntityManager>();
             IoCManager.Resolve<ISerializationManager>().Initialize();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.Initialize();
@@ -43,7 +41,7 @@ namespace Content.Tests.Shared.Alert
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
             prototypeManager.ResolveResults();
 
-            var entSys = entManager.EntitySysManager;
+            var entSys = IoCManager.Resolve<IEntitySystemManager>();
             entSys.LoadExtraSystemType<ServerAlertsSystem>();
 
             var alertsComponent = new AlertsComponent();
@@ -53,27 +51,18 @@ namespace Content.Tests.Shared.Alert
             Assert.That(EntitySystem.Get<AlertsSystem>().TryGet(AlertType.HighPressure, out var highpressure));
 
             EntitySystem.Get<AlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.LowPressure, null, null);
-
-            var getty = new ComponentGetState();
-            entManager.EventBus.RaiseComponentEvent(alertsComponent, getty);
-
-            var alertState = (AlertsComponentState) getty.State!;
+            var alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.NotNull(alertState);
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(lowpressure.AlertKey));
 
             EntitySystem.Get<AlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.HighPressure, null, null);
-
-            // Lazy
-            entManager.EventBus.RaiseComponentEvent(alertsComponent, getty);
-            alertState = (AlertsComponentState) getty.State!;
+            alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(highpressure.AlertKey));
 
             EntitySystem.Get<AlertsSystem>().ClearAlertCategory(alertsComponent.Owner, AlertCategory.Pressure);
-
-            entManager.EventBus.RaiseComponentEvent(alertsComponent, getty);
-            alertState = (AlertsComponentState) getty.State!;
+            alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.That(alertState.Alerts.Count, Is.EqualTo(0));
         }
     }

@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Actions;
 using Content.Shared.Popups;
 using Content.Shared.Alert;

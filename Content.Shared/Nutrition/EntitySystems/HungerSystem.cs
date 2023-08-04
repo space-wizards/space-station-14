@@ -156,25 +156,17 @@ public sealed class HungerSystem : EntitySystem
             _alerts.ClearAlertCategory(uid, AlertCategory.Hunger);
         }
 
+        if (component.StarvationDamage is { } damage && !_mobState.IsDead(uid))
+        {
+            _damageable.TryChangeDamage(uid, damage, true, false);
+        }
+
         if (component.HungerThresholdDecayModifiers.TryGetValue(component.CurrentThreshold, out var modifier))
         {
             component.ActualDecayRate = component.BaseDecayRate * modifier;
         }
 
         component.LastThreshold = component.CurrentThreshold;
-    }
-
-    private void DoContinuousHungerEffects(EntityUid uid, HungerComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        if (component.CurrentThreshold <= HungerThreshold.Starving &&
-            component.StarvationDamage is { } damage &&
-            !_mobState.IsDead(uid))
-        {
-            _damageable.TryChangeDamage(uid, damage, true, false);
-        }
     }
 
     /// <summary>
@@ -228,7 +220,6 @@ public sealed class HungerSystem : EntitySystem
             hunger.NextUpdateTime = _timing.CurTime + hunger.UpdateRate;
 
             ModifyHunger(uid, -hunger.ActualDecayRate, hunger);
-            DoContinuousHungerEffects(uid, hunger);
         }
     }
 }

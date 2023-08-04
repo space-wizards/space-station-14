@@ -93,7 +93,7 @@ namespace Content.Server.Sandbox
             if (e.NewStatus != SessionStatus.Connected || e.OldStatus != SessionStatus.Connecting)
                 return;
 
-            RaiseNetworkEvent(new MsgSandboxStatus { SandboxAllowed = IsSandboxEnabled }, e.Session.ConnectedClient);
+            RaiseNetworkEvent(new MsgSandboxStatus {SandboxAllowed = IsSandboxEnabled}, e.Session.ConnectedClient);
         }
 
         private void SandboxRespawnReceived(MsgSandboxRespawn message, EntitySessionEventArgs args)
@@ -113,7 +113,7 @@ namespace Content.Server.Sandbox
                 return;
 
             var player = _playerManager.GetSessionByChannel(args.SenderSession.ConnectedClient);
-            if (player.AttachedEntity is not { } attached)
+            if (player.AttachedEntity is not {} attached)
             {
                 return;
             }
@@ -128,19 +128,19 @@ namespace Content.Server.Sandbox
                 {
                     UpgradeId(slotEntity.Value);
                 }
-                else if (TryComp<PdaComponent>(slotEntity, out var pda))
+                else if (TryComp<PDAComponent>(slotEntity, out var pda))
                 {
-                    if (pda.ContainedId is null)
+                    if (pda.ContainedID == null)
                     {
                         var newID = CreateFreshId();
-                        if (TryComp<ItemSlotsComponent>(slotEntity, out var itemSlots))
+                        if (TryComp<ItemSlotsComponent>(pda.Owner, out var itemSlots))
                         {
                             _slots.TryInsert(slotEntity.Value, pda.IdSlot, newID, null);
                         }
                     }
                     else
                     {
-                        UpgradeId(pda.ContainedId!.Value);
+                        UpgradeId(pda.ContainedID.Owner);
                     }
                 }
             }
@@ -189,7 +189,7 @@ namespace Content.Server.Sandbox
 
         private void UpdateSandboxStatusForAll()
         {
-            RaiseNetworkEvent(new MsgSandboxStatus { SandboxAllowed = IsSandboxEnabled });
+            RaiseNetworkEvent(new MsgSandboxStatus {SandboxAllowed = IsSandboxEnabled});
         }
     }
 }

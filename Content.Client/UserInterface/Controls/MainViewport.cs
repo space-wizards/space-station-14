@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Content.Client.Viewport;
+﻿using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

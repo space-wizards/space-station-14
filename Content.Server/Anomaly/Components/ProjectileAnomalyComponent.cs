@@ -6,33 +6,33 @@ namespace Content.Server.Anomaly.Components;
 [RegisterComponent]
 public sealed class ProjectileAnomalyComponent : Component
 {
-    /// <summary>
+    /// <sumarry>
     /// The prototype of the projectile that will be shot when the anomaly pulses
     /// </summary>
-    [DataField("projectilePrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("projectilePrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string ProjectilePrototype = default!;
 
     /// <summary>
-    /// The speed <see cref="ProjectilePrototype"/> can travel
+    /// The MAXIMUM speed <see cref="ProjectilePrototype"/> can travel
     /// </summary>
-    [DataField("projectileSpeed"), ViewVariables(VVAccess.ReadWrite)]
-    public float ProjectileSpeed = 30f;
-
-    /// <summary>
-    /// The minimum number of projectiles shot per pulse
-    /// </summary>
-    [DataField("minProjectiles"), ViewVariables(VVAccess.ReadWrite)]
-    public int MinProjectiles = 2;
+    [DataField("maxProjectileSpeed")]
+    public float MaxProjectileSpeed = 30f;
 
     /// <summary>
     /// The MAXIMUM number of projectiles shot per pulse
     /// </summary>
-    [DataField("maxProjectiles"), ViewVariables(VVAccess.ReadWrite)]
-    public int MaxProjectiles = 9;
+    [DataField("maxProjectiles")]
+    public int MaxProjectiles = 5;
 
     /// <summary>
     /// The MAXIMUM range for targeting entities
     /// </summary>
-    [DataField("projectileRange"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("projectileRange")]
     public float ProjectileRange = 50f;
+
+    /// <summary>
+    /// Chance that a non sentient entity will be targeted, value must be between 0.0-1.0
+    /// </summary>
+    [DataField("targetNonSentientChance")]
+    public float TargetNonSentientChance = 0.5f;
 }

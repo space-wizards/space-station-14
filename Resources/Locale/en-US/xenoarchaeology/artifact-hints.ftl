@@ -32,6 +32,5 @@ artifact-trigger-hint-magnet = Magnetic waves
 artifact-trigger-hint-death = Life essence
 artifact-trigger-hint-radiation = Radiation
 artifact-trigger-hint-pressure = Extreme pressure
-artifact-trigger-hint-regular-gases = Standard atmospheric gases
-artifact-trigger-hint-plasma = Gaseous plasma
+artifact-trigger-hint-gas = Gas
 artifact-trigger-hint-land = Active deceleration

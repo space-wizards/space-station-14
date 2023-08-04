@@ -24,6 +24,3 @@ restart_required_ratio = 0.7
 
 [netres]
 limit = 10.0
-
-[admin]
-see_own_notes = true

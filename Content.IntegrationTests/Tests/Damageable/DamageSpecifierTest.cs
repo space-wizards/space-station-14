@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using NUnit.Framework;
 
 namespace Content.IntegrationTests.Tests.Damageable;
 
@@ -22,12 +23,9 @@ public sealed class DamageSpecifierTest
         DamageSpecifier output4 = new() { DamageDict = _output4 };
         DamageSpecifier output5 = new() { DamageDict = _output5 };
 
-        Assert.Multiple(() =>
-        {
-            Assert.That((-input1).Equals(output1));
-            Assert.That((input1 / 2).Equals(output2));
-            Assert.That((input1 * 2).Equals(output3));
-        });
+        Assert.That((-input1).Equals(output1));
+        Assert.That((input1 / 2).Equals(output2));
+        Assert.That((input1 * 2).Equals(output3));
 
         var difference = (input1 - input2);
         Assert.That(difference.Equals(output4));

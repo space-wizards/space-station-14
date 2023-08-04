@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using Content.Client.Examine;
 using Content.Client.Strip;
 using Content.Client.Stylesheets;
@@ -29,34 +28,31 @@ namespace Content.Client.Inventory
     [UsedImplicitly]
     public sealed class StrippableBoundUserInterface : BoundUserInterface
     {
+        private const int ButtonSeparation = 4;
+
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
-        private readonly ExamineSystem _examine = default!;
-        private readonly InventorySystem _inv = default!;
+        private ExamineSystem _examine = default!;
+        private InventorySystem _inv = default!;
         private readonly SharedCuffableSystem _cuffable;
 
         [ViewVariables]
-        private const int ButtonSeparation = 4;
+        private StrippingMenu? _strippingMenu;
 
-        [ViewVariables]
         public const string HiddenPocketEntityId = "StrippingHiddenEntity";
+        private EntityUid _virtualHiddenEntity;
 
-        [ViewVariables]
-        private readonly StrippingMenu? _strippingMenu;
-
-        [ViewVariables]
-        private readonly EntityUid _virtualHiddenEntity;
-
-        public StrippableBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
-            _examine = EntMan.System<ExamineSystem>();
-            _inv = EntMan.System<InventorySystem>();
-            _cuffable = EntMan.System<SharedCuffableSystem>();
-
-            var title = Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner, EntMan)));
+            IoCManager.InjectDependencies(this);
+            _examine = _entMan.EntitySysManager.GetEntitySystem<ExamineSystem>();
+            _inv = _entMan.EntitySysManager.GetEntitySystem<InventorySystem>();
+            _cuffable = _entMan.System<SharedCuffableSystem>();
+            var title = Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner.Owner, _entMan)));
             _strippingMenu = new StrippingMenu(title, this);
             _strippingMenu.OnClose += Close;
-            _virtualHiddenEntity = EntMan.SpawnEntity(HiddenPocketEntityId, MapCoordinates.Nullspace);
+            _virtualHiddenEntity = _entMan.SpawnEntity(HiddenPocketEntityId, MapCoordinates.Nullspace);
         }
 
         protected override void Open()
@@ -69,7 +65,7 @@ namespace Content.Client.Inventory
         {
             base.Dispose(disposing);
 
-            EntMan.DeleteEntity(_virtualHiddenEntity);
+            _entMan.DeleteEntity(_virtualHiddenEntity);
 
             if (!disposing)
                 return;
@@ -90,15 +86,15 @@ namespace Content.Client.Inventory
 
             _strippingMenu.ClearButtons();
 
-            if (EntMan.TryGetComponent<InventoryComponent>(Owner, out var inv) && _protoMan.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var template))
+            if (_entMan.TryGetComponent(Owner.Owner, out InventoryComponent? inv) && _protoMan.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var template))
             {
                 foreach (var slot in template.Slots)
                 {
-                    AddInventoryButton(Owner, slot.Name, template, inv);
+                    AddInventoryButton(slot.Name, template, inv);
                 }
             }
 
-            if (EntMan.TryGetComponent<HandsComponent>(Owner, out var handsComp))
+            if (_entMan.TryGetComponent(Owner.Owner, out HandsComponent? handsComp))
             {
                 // good ol hands shit code. there is a GuiHands comparer that does the same thing... but these are hands
                 // and not gui hands... which are different...
@@ -128,7 +124,7 @@ namespace Content.Client.Inventory
             }
 
             // snare-removal button. This is just the old button before the change to item slots. It is pretty out of place.
-            if (EntMan.TryGetComponent<EnsnareableComponent>(Owner, out var snare) && snare.IsEnsnared)
+            if (_entMan.TryGetComponent(Owner.Owner, out EnsnareableComponent? snare) && snare.IsEnsnared)
             {
                 var button = new Button()
                 {
@@ -143,14 +139,14 @@ namespace Content.Client.Inventory
 
             // TODO fix layout container measuring (its broken atm).
             // _strippingMenu.InvalidateMeasure();
-            // _strippingMenu.Contents.Measure(Vector2Helpers.Infinity);
+            // _strippingMenu.Contents.Measure(Vector2.Infinity);
 
             // TODO allow windows to resize based on content's desired size
 
             // for now: shit-code
             // this breaks for drones (too many hands, lots of empty vertical space), and looks shit for monkeys and the like.
             // but the window is realizable, so eh.
-            _strippingMenu.SetSize = new Vector2(220, snare?.IsEnsnared == true ? 550 : 530);
+            _strippingMenu.SetSize = (220, snare?.IsEnsnared == true ? 550 : 530);
         }
 
         private void AddHandButton(Hand hand)
@@ -159,10 +155,10 @@ namespace Content.Client.Inventory
 
             button.Pressed += SlotPressed;
 
-            if (EntMan.TryGetComponent<HandVirtualItemComponent>(hand.HeldEntity, out var virt))
+            if (_entMan.TryGetComponent(hand.HeldEntity, out HandVirtualItemComponent? virt))
             {
                 button.Blocked = true;
-                if (EntMan.TryGetComponent<CuffableComponent>(Owner, out var cuff) && _cuffable.GetAllCuffs(cuff).Contains(virt.BlockingEntity))
+                if (_entMan.TryGetComponent(Owner.Owner, out CuffableComponent? cuff) && _cuffable.GetAllCuffs(cuff).Contains(virt.BlockingEntity))
                     button.BlockedRect.MouseFilter = MouseFilterMode.Ignore;
             }
 
@@ -190,9 +186,9 @@ namespace Content.Client.Inventory
                 _ui.GetUIController<VerbMenuUIController>().OpenVerbMenu(slot.Entity.Value);
         }
 
-        private void AddInventoryButton(EntityUid invUid, string slotId, InventoryTemplatePrototype _, InventoryComponent inv)
+        private void AddInventoryButton(string slotId, InventoryTemplatePrototype template, InventoryComponent inv)
         {
-            if (!_inv.TryGetSlotContainer(invUid, slotId, out var container, out var slotDef, inv))
+            if (!_inv.TryGetSlotContainer(inv.Owner, slotId, out var container, out var slotDef, inv))
                 return;
 
             var entity = container.ContainedEntity;
@@ -219,19 +215,17 @@ namespace Content.Client.Inventory
 
             if (entity == null)
             {
-                button.SpriteView.SetEntity(null);
+                button.SpriteView.Sprite = null;
                 return;
             }
 
-            EntityUid? viewEnt;
-            if (EntMan.TryGetComponent<HandVirtualItemComponent>(entity, out var virt))
-                viewEnt = EntMan.HasComponent<SpriteComponent>(virt.BlockingEntity) ? virt.BlockingEntity : null;
-            else if (EntMan.HasComponent<SpriteComponent>(entity))
-                viewEnt = entity;
-            else
+            SpriteComponent? sprite;
+            if (_entMan.TryGetComponent(entity, out HandVirtualItemComponent? virt))
+                _entMan.TryGetComponent(virt.BlockingEntity, out sprite);
+            else if (!_entMan.TryGetComponent(entity, out sprite))
                 return;
 
-            button.SpriteView.SetEntity(viewEnt);
+            button.SpriteView.Sprite = sprite;
         }
     }
 }

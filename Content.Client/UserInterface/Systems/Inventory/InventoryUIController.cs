@@ -28,7 +28,6 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
     [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
 
-    private EntityUid? _playerUid;
     private InventorySlotsComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
 
@@ -223,26 +222,26 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
             return;
         }
 
-        if (_playerInventory == null || _playerUid == null)
+        if (_playerInventory == null)
         {
             return;
         }
 
         if (args.Function == ContentKeyFunctions.ExamineEntity)
         {
-            _inventorySystem.UIInventoryExamine(slot, _playerUid.Value);
+            _inventorySystem.UIInventoryExamine(slot, _playerInventory.Owner);
         }
         else if (args.Function == EngineKeyFunctions.UseSecondary)
         {
-            _inventorySystem.UIInventoryOpenContextMenu(slot, _playerUid.Value);
+            _inventorySystem.UIInventoryOpenContextMenu(slot, _playerInventory.Owner);
         }
         else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
         {
-            _inventorySystem.UIInventoryActivateItem(slot, _playerUid.Value);
+            _inventorySystem.UIInventoryActivateItem(slot, _playerInventory.Owner);
         }
         else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
         {
-            _inventorySystem.UIInventoryAltActivateItem(slot, _playerUid.Value);
+            _inventorySystem.UIInventoryAltActivateItem(slot, _playerInventory.Owner);
         }
     }
 
@@ -259,7 +258,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     public void UpdateHover(SlotControl control)
     {
-        var player = _playerUid;
+        var player = _playerInventory?.Owner;
 
         if (!control.MouseIsHovering ||
             _playerInventory == null ||
@@ -306,10 +305,9 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         _inventorySystem.ReloadInventory();
     }
 
-    private void LoadSlots(EntityUid clientUid, InventorySlotsComponent clientInv)
+    private void LoadSlots(InventorySlotsComponent clientInv)
     {
         UnloadSlots();
-        _playerUid = clientUid;
         _playerInventory = clientInv;
         foreach (var slotData in clientInv.SlotData.Values)
         {
@@ -321,7 +319,6 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private void UnloadSlots()
     {
-        _playerUid = null;
         _playerInventory = null;
         foreach (var slotGroup in _slotGroups.Values)
         {

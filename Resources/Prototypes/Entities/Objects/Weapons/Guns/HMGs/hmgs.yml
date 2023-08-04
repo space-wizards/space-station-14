@@ -6,6 +6,7 @@
   abstract: true
   components:
   - type: Sprite
+    netsync: false
   - type: Item
   - type: Gun
     fireRate: 20

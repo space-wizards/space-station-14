@@ -8,17 +8,13 @@ namespace Content.Client.Shuttles.BUI;
 [UsedImplicitly]
 public sealed class RadarConsoleBoundUserInterface : BoundUserInterface
 {
-    [ViewVariables]
     private RadarConsoleWindow? _window;
 
-    public RadarConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
+    public RadarConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
 
     protected override void Open()
     {
         base.Open();
-
         _window = new RadarConsoleWindow();
         _window.OnClose += Close;
         _window.OpenCentered();

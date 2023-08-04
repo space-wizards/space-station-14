@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Robust.Server.Player;
+﻿using Robust.Server.Player;
 using Robust.Shared.Map;
 
 namespace Content.Server.Tabletop

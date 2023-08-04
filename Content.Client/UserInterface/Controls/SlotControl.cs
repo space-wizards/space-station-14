@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.Cooldown;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Robust.Client.ResourceManagement;
@@ -108,16 +107,16 @@ namespace Content.Client.UserInterface.Controls
         {
             IoCManager.InjectDependencies(this);
             Name = "SlotButton_null";
-            MinSize = new Vector2(DefaultButtonSize, DefaultButtonSize);
+            MinSize = (DefaultButtonSize, DefaultButtonSize);
             AddChild(ButtonRect = new TextureRect
             {
-                TextureScale = new Vector2(2, 2),
+                TextureScale = (2, 2),
                 MouseFilter = MouseFilterMode.Stop
             });
             AddChild(HighlightRect = new TextureRect
             {
                 Visible = false,
-                TextureScale = new Vector2(2, 2),
+                TextureScale = (2, 2),
                 MouseFilter = MouseFilterMode.Ignore
             });
 
@@ -126,21 +125,21 @@ namespace Content.Client.UserInterface.Controls
 
             AddChild(SpriteView = new SpriteView
             {
-                Scale = new Vector2(2, 2),
-                SetSize = new Vector2(DefaultButtonSize, DefaultButtonSize),
+                Scale = (2, 2),
+                SetSize = (DefaultButtonSize, DefaultButtonSize),
                 OverrideDirection = Direction.South
             });
 
             AddChild(HoverSpriteView = new SpriteView
             {
-                Scale = new Vector2(2, 2),
-                SetSize = new Vector2(DefaultButtonSize, DefaultButtonSize),
+                Scale = (2, 2),
+                SetSize = (DefaultButtonSize, DefaultButtonSize),
                 OverrideDirection = Direction.South
             });
 
             AddChild(StorageButton = new TextureButton
             {
-                Scale = new Vector2(0.75f, 0.75f),
+                Scale = (0.75f, 0.75f),
                 HorizontalAlignment = HAlignment.Right,
                 VerticalAlignment = VAlignment.Bottom,
                 Visible = false,
@@ -175,7 +174,7 @@ namespace Content.Client.UserInterface.Controls
 
             AddChild(BlockedRect = new TextureRect
             {
-                TextureScale = new Vector2(2, 2),
+                TextureScale = (2, 2),
                 MouseFilter = MouseFilterMode.Stop,
                 Visible = false
             });

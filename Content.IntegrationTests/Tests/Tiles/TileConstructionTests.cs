@@ -1,5 +1,9 @@
+using System.Threading.Tasks;
 using Content.IntegrationTests.Tests.Interaction;
+using NUnit.Framework;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.IntegrationTests.Tests.Tiles;
 
@@ -17,7 +21,7 @@ public sealed class TileConstructionTests : InteractionTest
         await SetTile(null);
         await Interact(Rod);
         await AssertTile(Lattice);
-        Assert.That(Hands.ActiveHandEntity, Is.Null);
+        Assert.IsNull(Hands.ActiveHandEntity);
         await Interact(Cut);
         await AssertTile(null);
         await AssertEntityLookup((Rod, 1));
@@ -49,7 +53,7 @@ public sealed class TileConstructionTests : InteractionTest
         AssertGridCount(1);
 
         // Cut lattice
-        Assert.That(Hands.ActiveHandEntity, Is.Null);
+        Assert.IsNull(Hands.ActiveHandEntity);
         await Interact(Cut);
         await AssertTile(null);
         AssertGridCount(0);
@@ -83,13 +87,13 @@ public sealed class TileConstructionTests : InteractionTest
 
         // Lattice -> Plating
         await Interact(Steel);
-        Assert.That(Hands.ActiveHandEntity, Is.Null);
+        Assert.IsNull(Hands.ActiveHandEntity);
         await AssertTile(Plating);
         AssertGridCount(1);
 
         // Plating -> Tile
         await Interact(FloorItem);
-        Assert.That(Hands.ActiveHandEntity, Is.Null);
+        Assert.IsNull(Hands.ActiveHandEntity);
         await AssertTile(Floor);
         AssertGridCount(1);
 
@@ -101,3 +105,4 @@ public sealed class TileConstructionTests : InteractionTest
         await AssertEntityLookup((FloorItem, 1));
     }
 }
+

@@ -267,6 +267,7 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
+    netsync: false
     state: box
   - type: Storage
     capacity: 7

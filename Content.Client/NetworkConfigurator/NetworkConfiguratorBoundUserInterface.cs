@@ -7,20 +7,19 @@ namespace Content.Client.NetworkConfigurator;
 
 public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 {
-    private readonly NetworkConfiguratorSystem _netConfig;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    [ViewVariables]
+    private NetworkConfiguratorListMenu? _listMenu;
     private NetworkConfiguratorConfigurationMenu? _configurationMenu;
-
-    [ViewVariables]
     private NetworkConfiguratorLinkMenu? _linkMenu;
 
-    [ViewVariables]
-    private NetworkConfiguratorListMenu? _listMenu;
+    private NetworkConfiguratorSystem _netConfig;
 
-    public NetworkConfiguratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public NetworkConfiguratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
-        _netConfig = EntMan.System<NetworkConfiguratorSystem>();
+        IoCManager.InjectDependencies(this);
+
+        _netConfig = _entityManager.System<NetworkConfiguratorSystem>();
     }
 
     public void OnRemoveButtonPressed(string address)
@@ -49,7 +48,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 _configurationMenu.Clear.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Clear);
                 _configurationMenu.Copy.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Copy);
                 _configurationMenu.Show.OnPressed += OnShowPressed;
-                _configurationMenu.Show.Pressed = _netConfig.ConfiguredListIsTracked(Owner);
+                _configurationMenu.Show.Pressed = _netConfig.ConfiguredListIsTracked(Owner.Owner);
                 _configurationMenu.OpenCentered();
                 break;
             case NetworkConfiguratorUiKey.Link:
@@ -62,7 +61,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 
     private void OnShowPressed(BaseButton.ButtonEventArgs args)
     {
-        _netConfig.ToggleVisualization(Owner, args.Button.Pressed);
+        _netConfig.ToggleVisualization(Owner.Owner, args.Button.Pressed);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

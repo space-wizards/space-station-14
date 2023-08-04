@@ -6,8 +6,6 @@ using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
 using Robust.Server.GameObjects;
-using Content.Server.Temperature.Components;
-using Content.Server.Body.Components;
 
 namespace Content.Server.Medical
 {
@@ -70,13 +68,8 @@ namespace Content.Server.Medical
             if (!HasComp<DamageableComponent>(target))
                 return;
 
-            TryComp<TemperatureComponent>(target, out var temp);
-            TryComp<BloodstreamComponent>(target, out var bloodstream);
-
             OpenUserInterface(user, healthAnalyzer);
-
-            _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(target, temp != null ? temp.CurrentTemperature : float.NaN,
-                bloodstream != null ? bloodstream.BloodSolution.FillFraction : float.NaN));
+            _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(target));
         }
     }
 }

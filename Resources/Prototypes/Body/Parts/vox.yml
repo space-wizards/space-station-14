@@ -32,6 +32,7 @@
   parent: PartVox
   components:
     - type: Sprite
+      netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
       state: "torso_m"
     - type: Icon
@@ -53,6 +54,7 @@
   parent: PartVox
   components:
     - type: Sprite
+      netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
       state: "head_m"
     - type: Icon
@@ -80,6 +82,7 @@
   parent: PartVox
   components:
     - type: Sprite
+      netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
       state: "l_arm"
     - type: Icon
@@ -95,6 +98,7 @@
   parent: PartVox
   components:
     - type: Sprite
+      netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
       state: "r_arm"
     - type: Icon
@@ -110,6 +114,7 @@
   parent: PartVox
   components:
     - type: Sprite
+      netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
       state: "l_hand"
     - type: Icon
@@ -125,6 +130,7 @@
   parent: PartVox
   components:
     - type: Sprite
+      netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
       state: "r_hand"
     - type: Icon
@@ -140,6 +146,7 @@
   parent: PartVox
   components:
     - type: Sprite
+      netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
       state: "l_leg"
     - type: Icon
@@ -156,6 +163,7 @@
   parent: PartVox
   components:
     - type: Sprite
+      netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
       state: "r_leg"
     - type: Icon
@@ -172,6 +180,7 @@
   parent: PartVox
   components:
     - type: Sprite
+      netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
       state: "l_foot"
     - type: Icon
@@ -187,6 +196,7 @@
   parent: PartVox
   components:
     - type: Sprite
+      netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
       state: "r_foot"
     - type: Icon

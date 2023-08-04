@@ -4,6 +4,7 @@
   id: PartBase
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Materials/parts.rsi
     state: rods
   - type: Item
@@ -44,8 +45,7 @@
     layers:
     - state: rods_5
       map: ["base"]
-  - type: Item
-    size: 30
+#  - type: Item
 #    heldPrefix: rods
   - type: Construction
     graph: MetalRod
@@ -74,5 +74,3 @@
     state: rods
   - type: Stack
     count: 1
-  - type: Item
-    size: 1

@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Afk;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
@@ -57,15 +58,13 @@ namespace Content.Server.Voting.Managers
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
             _adminMgr.OnPermsChanged += AdminPermsChanged;
 
-            _cfg.OnValueChanged(CCVars.VoteEnabled, _ =>
-            {
+            _cfg.OnValueChanged(CCVars.VoteEnabled, value => {
                 DirtyCanCallVoteAll();
             });
 
             foreach (var kvp in _voteTypesToEnableCVars)
             {
-                _cfg.OnValueChanged(kvp.Value, _ =>
-                {
+                _cfg.OnValueChanged(kvp.Value, value => {
                     DirtyCanCallVoteAll();
                 });
             }
@@ -295,7 +294,7 @@ namespace Content.Server.Voting.Managers
                 var votesUnavailable = new List<(StandardVoteType, TimeSpan)>();
                 foreach (var v in _standardVoteTypeValues)
                 {
-                    if (CanCallVote(player, v, out _, out var typeTimeSpan))
+                    if (CanCallVote(player, v, out var _isAdmin, out var typeTimeSpan))
                         continue;
                     votesUnavailable.Add((v, typeTimeSpan));
                 }
@@ -325,7 +324,7 @@ namespace Content.Server.Voting.Managers
             if (!_cfg.GetCVar(CCVars.VoteEnabled))
                 return false;
             // Specific standard vote types can be disabled with cvars.
-            if (voteType != null && _voteTypesToEnableCVars.TryGetValue(voteType.Value, out var cvar) && !_cfg.GetCVar(cvar))
+            if ((voteType != null) && _voteTypesToEnableCVars.TryGetValue(voteType.Value, out var cvar) && !_cfg.GetCVar(cvar))
                 return false;
 
             // Cannot start vote if vote is already active (as non-admin).
@@ -346,7 +345,7 @@ namespace Content.Server.Voting.Managers
             if (voteType == StandardVoteType.Preset)
             {
                 var presets = GetGamePresets();
-                if (presets.Count == 1 && presets.Select(x => x.Key).Single() == _entityManager.System<GameTicker>().Preset?.ID)
+                if (presets.Count() == 1 && presets.Select(x => x.Key).Single() == EntitySystem.Get<GameTicker>().Preset?.ID)
                     return false;
             }
 

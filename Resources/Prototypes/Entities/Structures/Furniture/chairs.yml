@@ -22,6 +22,7 @@
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
     noRot: true
+    netsync: false
   - type: Strap
     position: Stand
     buckleOffset: "0,0.15"
@@ -47,7 +48,7 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
   - type: StaticPrice
-    price: 10
+    price: 50
 
 - type: entity
   name: chair
@@ -207,20 +208,6 @@
     node: chairRitual
 
 - type: entity
-  id: ChairMeat
-  parent: SeatBase
-  name: meat chair
-  description: Uncomfortably sweaty.
-  components:
-  - type: Anchorable
-  - type: Rotatable
-  - type: Sprite
-    state: meat
-  - type: Construction
-    graph: Seat
-    node: chairMeat
-
-- type: entity
   name: cursed chair
   id: ChairCursed
   parent: SeatBase
@@ -268,7 +255,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 8
+        Blunt: 15
   - type: Construction
     graph: Seat
     node: chairFolding

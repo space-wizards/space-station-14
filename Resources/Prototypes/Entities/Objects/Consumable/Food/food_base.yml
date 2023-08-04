@@ -12,6 +12,7 @@
   - type: Food
   - type: SpaceGarbage
   - type: Sprite
+    netsync: false
   - type: StaticPrice
     price: 0
 

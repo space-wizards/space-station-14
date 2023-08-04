@@ -1,8 +1,7 @@
-using System.Numerics;
 using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
-using Content.Shared.CombatMode;
+using Content.Shared.Input;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -127,7 +126,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         var entityNull = _player.LocalPlayer?.ControlledEntity;
 
-        if (entityNull == null || !TryComp<CombatModeComponent>(entityNull, out var combat) || !combat.IsInCombatMode)
+        if (entityNull == null)
         {
             return;
         }
@@ -240,7 +239,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (!Timing.IsFirstTimePredicted || user == null || recoil == Vector2.Zero || recoilScalar == 0)
             return;
 
-        _recoil.KickCamera(user.Value, recoil.Normalized() * 0.5f * recoilScalar);
+        _recoil.KickCamera(user.Value, recoil.Normalized * 0.5f * recoilScalar);
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)
@@ -271,9 +270,8 @@ public sealed partial class GunSystem : SharedGunSystem
         var ent = Spawn(message.Prototype, coordinates);
 
         var effectXform = Transform(ent);
-        TransformSystem.SetLocalPositionRotation(effectXform,
-            effectXform.LocalPosition + new Vector2(0f, -0.5f),
-            effectXform.LocalRotation - MathF.PI / 2);
+        effectXform.LocalRotation -= MathF.PI / 2;
+        effectXform.LocalPosition += new Vector2(0f, -0.5f);
 
         var lifetime = 0.4f;
 
@@ -303,10 +301,14 @@ public sealed partial class GunSystem : SharedGunSystem
 
         _animPlayer.Play(ent, anim, "muzzle-flash");
         var light = EnsureComp<PointLightComponent>(uid);
+
+        if (light.Enabled)
+            return;
+
         light.NetSyncEnabled = false;
-        Lights.SetEnabled(uid, true, light);
-        Lights.SetRadius(uid, 2f, light);
+        light.Enabled = true;
         light.Color = Color.FromHex("#cc8e2b");
+        light.Radius = 2f;
         light.Energy = 5f;
 
         var animTwo = new Animation()

@@ -9,6 +9,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
+    netsync: false
     state: unlit-icon
   - type: Tag
     tags:
@@ -43,6 +44,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
+    netsync: false
     state: unlit-icon
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi

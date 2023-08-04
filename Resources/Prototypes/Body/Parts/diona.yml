@@ -12,6 +12,7 @@
       bodypart: !type:Container
         ents: []
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Diona/parts.rsi
   - type: Icon
     sprite: Mobs/Species/Diona/parts.rsi

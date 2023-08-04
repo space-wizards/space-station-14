@@ -31,7 +31,6 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/chickenhead.rsi
   - type: IngestionBlocker
-  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -51,15 +50,12 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatHairflower
   name: hairflower
-  description: A red flower for beautiful ladies.
+  description: A red rose for beautiful ladies.
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/hairflower.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/hairflower.rsi
-  - type: Construction
-    graph: hairflower
-    node: hairflower
 
 - type: entity
   parent: ClothingHeadBase
@@ -67,12 +63,11 @@
   name: pumpkin hat
   description: A jack o' lantern! Believed to ward off evil spirits.
   components:
-  - type: Sprite
-    sprite: Clothing/Head/Misc/pumpkin.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Misc/pumpkin.rsi
-  - type: IngestionBlocker
-  - type: IdentityBlocker
+    - type: Sprite
+      sprite: Clothing/Head/Misc/pumpkin.rsi
+    - type: Clothing
+      sprite: Clothing/Head/Misc/pumpkin.rsi
+    - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -96,7 +91,6 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/richard.rsi
   - type: IngestionBlocker
-  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -109,7 +103,6 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/skubhead.rsi
   - type: IngestionBlocker
-  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -121,10 +114,6 @@
     sprite: Clothing/Head/Misc/shrine-maidens-wig.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/shrine-maidens-wig.rsi
-  - type: Tag
-    tags:
-    - HamsterWearable
-    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -160,7 +149,6 @@
   id: ClothingHeadHatCatEars
   name: cat ears
   description: "NYAH!"
-  suffix: DO NOT MAP
   components:
   - type: Tag
     tags: # ignore "WhitelistChameleon" tag
@@ -183,4 +171,3 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/squiddy.rsi
   - type: IngestionBlocker
-  - type: IdentityBlocker

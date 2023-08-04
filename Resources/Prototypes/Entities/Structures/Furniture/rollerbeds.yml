@@ -10,6 +10,7 @@
       size: 25
     - type: Sprite
       sprite: Structures/Furniture/rollerbeds.rsi
+      netsync: false
       noRot: true
       layers:
       - state: rollerbed

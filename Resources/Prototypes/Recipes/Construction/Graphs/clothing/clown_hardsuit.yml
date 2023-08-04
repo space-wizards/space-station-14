@@ -9,14 +9,14 @@
             - material: Cloth
               amount: 5
               doAfter: 1
-            - tag: SuitEVA
-              name: An EVA suit
+            - tag: HardsuitEVA
+              name: EVA suit
               icon:
-                sprite: Clothing/OuterClothing/Suits/eva.rsi
+                sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
                 state: icon
               doAfter: 1
             - tag: HelmetEVA
-              name: An EVA helmet
+              name: EVA helmet
               icon:
                 sprite: Clothing/Head/Helmets/eva.rsi
                 state: icon

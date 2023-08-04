@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
@@ -27,7 +26,7 @@ namespace Content.MapRenderer.Painters
             _cResourceCache = client.ResolveDependency<IResourceCache>();
         }
 
-        public void Run(Image gridCanvas, EntityUid gridUid, MapGridComponent grid)
+        public void Run(Image gridCanvas, MapGridComponent grid)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -56,7 +55,7 @@ namespace Content.MapRenderer.Painters
                 i++;
             });
 
-            Console.WriteLine($"{nameof(TilePainter)} painted {i} tiles on grid {gridUid} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+            Console.WriteLine($"{nameof(TilePainter)} painted {i} tiles on grid {grid.Owner} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
 
         private Dictionary<string, List<Image>> GetTileImages(
@@ -88,8 +87,7 @@ namespace Content.MapRenderer.Painters
 
                 for (var i = 0; i < definition.Variants; i++)
                 {
-                    var index = i;
-                    var tileImage = tileSheet.Clone(o => o.Crop(new Rectangle(tileSize * index, 0, 32, 32)));
+                    var tileImage = tileSheet.Clone(o => o.Crop(new Rectangle(tileSize * i, 0, 32, 32)));
                     images[path].Add(tileImage);
                 }
             }

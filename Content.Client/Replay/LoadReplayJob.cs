@@ -12,10 +12,11 @@ public sealed class ContentLoadReplayJob : LoadReplayJob
 
     public ContentLoadReplayJob(
         float maxTime,
-        IReplayFileReader fileReader,
+        IWritableDirProvider dir,
+        ResPath path,
         IReplayLoadManager loadMan,
         LoadingScreen<bool> screen)
-        : base(maxTime, fileReader, loadMan)
+        : base(maxTime, dir, path, loadMan)
     {
         _screen = screen;
     }

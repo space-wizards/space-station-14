@@ -7,12 +7,9 @@ namespace Content.Client.Cargo.BUI;
 
 public sealed class CargoPalletConsoleBoundUserInterface : BoundUserInterface
 {
-    [ViewVariables]
     private CargoPalletMenu? _menu;
 
-    public CargoPalletConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
+    public CargoPalletConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
 
     protected override void Open()
     {

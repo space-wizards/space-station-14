@@ -1,4 +1,6 @@
 using Content.Shared.Research.Components;
+using Content.Shared.Research.Prototypes;
+using Content.Shared.Research.Systems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -7,18 +9,20 @@ namespace Content.Client.Research.UI;
 [UsedImplicitly]
 public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
 {
-    [ViewVariables]
+
     private ResearchConsoleMenu? _consoleMenu;
 
-    public ResearchConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+
+    public ResearchConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
+        SendMessage(new ConsoleServerSyncMessage());
     }
 
     protected override void Open()
     {
         base.Open();
 
-        var owner = Owner;
+        var owner = Owner.Owner;
 
         _consoleMenu = new ResearchConsoleMenu(owner);
 
@@ -30,6 +34,11 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
         _consoleMenu.OnServerButtonPressed += () =>
         {
             SendMessage(new ConsoleServerSelectionMessage());
+        };
+
+        _consoleMenu.OnSyncButtonPressed += () =>
+        {
+            SendMessage(new ConsoleServerSyncMessage());
         };
 
         _consoleMenu.OnClose += Close;

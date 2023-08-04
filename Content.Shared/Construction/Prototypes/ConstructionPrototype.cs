@@ -31,7 +31,7 @@ public sealed class ConstructionPrototype : IPrototype
     /// <summary>
     ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
     /// </summary>
-    [DataField("graph", customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>), required: true)]
+    [DataField("graph", customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]
     public string Graph = string.Empty;
 
     /// <summary>
@@ -85,7 +85,7 @@ public sealed class ConstructionPrototype : IPrototype
     ///     Construction to replace this construction with when the current one is 'flipped'
     /// </summary>
     [DataField("mirror", customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionPrototype>))]
-    public string? Mirror;
+    public string Mirror = string.Empty;
 
     public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
     public IReadOnlyList<SpriteSpecifier> Layers => _layers ?? new List<SpriteSpecifier>{Icon};

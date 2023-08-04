@@ -26,6 +26,7 @@
     layers:
       - state: icon
         map: ["drinkCanIcon"]
+    netsync: false
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
@@ -298,8 +299,8 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkNukieCan
-  name: blood-red brew can
-  description: A home-brewed drink made from the crazed minds at the Syndicate. Not recommended by doctors.
+  name: robust nukie drink
+  description: An encouraging drink... very encouraging. It is filled with green liquid, after use it is recommended to consult a doctor.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -307,9 +308,9 @@
         maxVol: 30
         reagents:
         - ReagentId: Stimulants
-          Quantity: 5
+          Quantity: 10
         - ReagentId: NuclearCola
-          Quantity: 20
+          Quantity: 15
         - ReagentId: Ice
           Quantity: 5
   - type: Tag
@@ -345,6 +346,7 @@
   name: 6pack
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Misc/6pack.rsi
     layers:
       - state: plastic-thingy

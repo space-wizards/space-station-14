@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Weather;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -102,7 +101,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                         {
                             if (Math.Abs(x) == 1 && Math.Abs(y) == 1 ||
                                 x == 0 && y == 0 ||
-                                (new Vector2(x, y) + node.GridIndices - seed.GridIndices).Length() > 3)
+                                (new Vector2(x, y) + node.GridIndices - seed.GridIndices).Length > 3)
                             {
                                 continue;
                             }
@@ -115,7 +114,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 }
 
                 nearestNode = new EntityCoordinates(entXform.GridUid.Value,
-                    (Vector2) node.GridIndices + (grid.TileSizeHalfVector));
+                    (Vector2) node.GridIndices + (grid.TileSize / 2f));
                 break;
             }
 
@@ -126,11 +125,11 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 var entPos = _transform.GetWorldPosition(entXform);
                 var sourceRelative = nearestNode.Value.ToMap(EntityManager).Position - entPos;
 
-                if (sourceRelative.LengthSquared() > 1f)
+                if (sourceRelative.LengthSquared > 1f)
                 {
                     occlusion = _physics.IntersectRayPenetration(entXform.MapID,
-                        new CollisionRay(entPos, sourceRelative.Normalized(), _audio.OcclusionCollisionMask),
-                        sourceRelative.Length(), stream.TrackingEntity);
+                        new CollisionRay(entPos, sourceRelative.Normalized, _audio.OcclusionCollisionMask),
+                        sourceRelative.Length, stream.TrackingEntity);
                 }
             }
         }

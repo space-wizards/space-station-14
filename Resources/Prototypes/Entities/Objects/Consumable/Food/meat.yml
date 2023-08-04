@@ -11,6 +11,7 @@
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
+    netsync: false
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -28,10 +29,6 @@
     size: 5
   - type: Temperature
     currentTemperature: 290
-  - type: Material
-  - type: PhysicalComposition
-    materialComposition:
-      Meaterial: 300
 
 - type: Tag
   id: Raw
@@ -129,6 +126,7 @@
     tags:
     - Raw
   - type: Sprite
+    netsync: false
     state: bacon
   - type: SolutionContainerManager
     solutions:
@@ -647,6 +645,7 @@
     - Cooked
   - type: Food
   - type: Sprite
+    netsync: true
     layers:
     - state: plate-meat
     - state: bacon-cooked
@@ -753,6 +752,7 @@
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
+    netsync: false
     layers:
     - state: chicken-fried
       map: [ "enum.DamageStateVisualLayers.Base" ]

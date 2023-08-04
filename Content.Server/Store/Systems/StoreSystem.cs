@@ -1,3 +1,5 @@
+using Content.Server.Mind.Components;
+using Content.Server.PDA.Ringer;
 using Content.Server.Store.Components;
 using Content.Server.UserInterface;
 using Content.Shared.FixedPoint;
@@ -183,7 +185,7 @@ public sealed partial class StoreSystem : EntitySystem
         var ui = _ui.GetUiOrNull(uid, StoreUiKey.Key);
         if (ui != null)
         {
-            UserInterfaceSystem.SetUiState(ui, new StoreInitializeState(preset.StoreName));
+            _ui.SetUiState(ui, new StoreInitializeState(preset.StoreName));
         }
     }
 }

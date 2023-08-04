@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Content.Shared.Actions;
+﻿using Content.Shared.Actions;
 using Content.Shared.Storage;
 
 namespace Content.Server.Magic.Events;

@@ -2,7 +2,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Interaction;
@@ -18,7 +17,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -59,7 +57,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!TryComp(uid, out AtmosDeviceComponent? device))
                 return;
 
-            if (!_nodeContainer.TryGetNode(nodeContainer, injector.InletName, out PipeNode? inlet))
+            if (!nodeContainer.TryGetNode(injector.InletName, out PipeNode? inlet))
                 return;
 
             var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);

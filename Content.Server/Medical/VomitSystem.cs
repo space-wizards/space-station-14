@@ -70,21 +70,11 @@ namespace Content.Server.Medical
                     _solutionContainer.UpdateChemicals(stomach.Comp.Owner, sol);
                 }
             }
-            // Adds a tiny amount of the chem stream from earlier along with vomit
+            // And the small bit of the chem stream from earlier
             if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
             {
-                var chemMultiplier = 0.1;
-                var vomitMultiplier = 0.9;
-
-                // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream
-                var vomitAmount = new Solution("Vomit", solutionSize * vomitMultiplier);
-
-                // Takes 10% of the chemicals removed from the chem stream
-                var vomitChemstreamAmount = _solutionContainer.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize * chemMultiplier);
-
-                _solutionContainer.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize * vomitMultiplier);
-                solution.AddSolution(vomitAmount, _proto);
-                solution.AddSolution(vomitChemstreamAmount, _proto);
+                var temp = _solutionContainer.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize);
+                solution.AddSolution(temp, _proto);
             }
 
             if (_puddle.TrySpillAt(uid, solution, out var puddle, false))

@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.Tabletop.UI;
 using Content.Client.Viewport;
 using Content.Shared.Tabletop;
@@ -44,9 +43,8 @@ namespace Content.Client.Tabletop
             UpdatesOutsidePrediction = true;
 
             CommandBinds.Builder
-                .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false, true))
-                .Bind(EngineKeyFunctions.UseSecondary, new PointerInputCmdHandler(OnUseSecondary, true, true))
-                .Register<TabletopSystem>();
+                        .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false, true))
+                        .Register<TabletopSystem>();
 
             SubscribeNetworkEvent<TabletopPlayEvent>(OnTabletopPlay);
             SubscribeLocalEvent<TabletopDraggableComponent, ComponentHandleState>(HandleComponentState);
@@ -177,17 +175,6 @@ namespace Content.Client.Tabletop
                 BoundKeyState.Up => OnMouseUp(args),
                 _ => false
             };
-        }
-        private bool OnUseSecondary(in PointerInputCmdArgs args)
-        {
-            if (_draggedEntity != null && _table != null)
-            {
-                var ev = new TabletopRequestTakeOut();
-                ev.Entity = _draggedEntity.Value;
-                ev.TableUid = _table.Value;
-                RaiseNetworkEvent(ev);
-            }
-            return false;
         }
 
         private bool OnMouseDown(in PointerInputCmdArgs args)

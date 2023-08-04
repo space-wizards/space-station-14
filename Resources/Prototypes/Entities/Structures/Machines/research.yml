@@ -15,7 +15,6 @@
     supportedDisciplines:
     - Industrial
     - Biochemical
-    - Arsenal
     - Experimental
     - CivilianServices
   - type: ApcPowerReceiver
@@ -65,6 +64,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/rndpointsource.rsi
+    netsync: false
     layers:
     - state: rndpointsource-off
     - state: rndpointsource

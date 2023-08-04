@@ -7,8 +7,5 @@ public interface ISalvageMod
     /// </summary>
     string Description { get; }
 
-    /// <summary>
-    /// Cost for difficulty modifiers.
-    /// </summary>
     float Cost { get; }
 }

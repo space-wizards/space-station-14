@@ -17,6 +17,9 @@ public sealed class RadioMicrophoneComponent : Component
     [DataField("broadcastChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
     public string BroadcastChannel = SharedChatSystem.CommonChannel;
 
+    [ViewVariables, DataField("supportedChannels", customTypeSerializer: typeof(PrototypeIdListSerializer<RadioChannelPrototype>))]
+    public List<string>? SupportedChannels;
+
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("listenRange")]
     public int ListenRange  = 4;
@@ -26,13 +29,6 @@ public sealed class RadioMicrophoneComponent : Component
 
     [DataField("powerRequired")]
     public bool PowerRequired = false;
-
-    /// <summary>
-    /// Whether or not interacting with this entity
-    /// toggles it on or off.
-    /// </summary>
-    [DataField("toggleOnInteract")]
-    public bool ToggleOnInteract = true;
 
     /// <summary>
     /// Whether or not the speaker must have an

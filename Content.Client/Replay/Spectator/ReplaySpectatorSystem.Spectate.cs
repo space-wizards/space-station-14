@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.Replay.UI;
 using Content.Shared.Verbs;
 using Robust.Shared.Console;
@@ -64,7 +63,7 @@ public sealed partial class ReplaySpectatorSystem
 
         var old = _player.LocalPlayer.ControlledEntity;
 
-        var ent = Spawn("ReplayObserver", coords);
+        var ent = Spawn("MobObserver", coords);
         _eye.SetMaxZoom(ent, Vector2.One * 5);
         EnsureComp<ReplaySpectatorComponent>(ent);
 
@@ -85,7 +84,6 @@ public sealed partial class ReplaySpectatorSystem
 
         _stateMan.RequestStateChange<ReplayGhostState>();
 
-        _spectatorData = GetSpectatorData();
         return xform;
     }
 

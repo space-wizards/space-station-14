@@ -2,7 +2,6 @@ using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
-using Content.Shared.Popups;
 using Content.Shared.Store;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -16,11 +15,10 @@ namespace Content.Server.PDA.Ringer
 {
     public sealed class RingerSystem : SharedRingerSystem
     {
-        [Dependency] private readonly PdaSystem _pda = default!;
+        [Dependency] private readonly PDASystem _pda = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -50,18 +48,6 @@ namespace Content.Server.PDA.Ringer
         private void RingerPlayRingtone(EntityUid uid, RingerComponent ringer, RingerPlayRingtoneMessage args)
         {
             EnsureComp<ActiveRingerComponent>(uid);
-
-            _popupSystem.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), uid, Filter.Pvs(uid, 0.05f), false, PopupType.Small);
-
-            UpdateRingerUserInterface(uid, ringer);
-        }
-
-        public void RingerPlayRingtone(EntityUid uid, RingerComponent ringer)
-        {
-            EnsureComp<ActiveRingerComponent>(uid);
-
-            _popupSystem.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), uid, Filter.Pvs(uid, 0.05f), false, PopupType.Small);
-
             UpdateRingerUserInterface(uid, ringer);
         }
 
@@ -88,7 +74,7 @@ namespace Content.Server.PDA.Ringer
             if (uplink.Code.SequenceEqual(args.Ringtone) && HasComp<StoreComponent>(uid))
             {
                 uplink.Unlocked = !uplink.Unlocked;
-                if (TryComp<PdaComponent>(uid, out var pda))
+                if (TryComp<PDAComponent>(uid, out var pda))
                     _pda.UpdatePdaUi(uid, pda);
 
                 // can't keep store open after locking it
@@ -122,30 +108,7 @@ namespace Content.Server.PDA.Ringer
 
         public void RandomizeUplinkCode(EntityUid uid, RingerUplinkComponent uplink, ComponentInit args)
         {
-            var notes = new[]
-            {
-                Note.A,
-                Note.Asharp,
-                Note.B,
-                Note.C,
-                Note.Csharp,
-                Note.D,
-                Note.Dsharp,
-                Note.E,
-                Note.F,
-                Note.Fsharp,
-                Note.G,
-                Note.Gsharp,
-            };
-
-            var ringtone = new Note[RingtoneLength];
-
-            for (var i = 0; i < RingtoneLength; i++)
-            {
-                ringtone[i] = _random.Pick(notes);
-            }
-
-            uplink.Code = ringtone;
+            uplink.Code = GenerateRingtone();
         }
 
         //Non Event Functions
@@ -164,7 +127,7 @@ namespace Content.Server.PDA.Ringer
 
             var ringtone = new Note[RingtoneLength];
 
-            for (var i = 0; i < RingtoneLength; i++)
+            for (var i = 0; i < 4; i++)
             {
                 ringtone[i] = _random.Pick(notes);
             }
@@ -184,7 +147,7 @@ namespace Content.Server.PDA.Ringer
         private void UpdateRingerUserInterface(EntityUid uid, RingerComponent ringer)
         {
             if (_ui.TryGetUi(uid, RingerUiKey.Key, out var bui))
-                UserInterfaceSystem.SetUiState(bui, new RingerUpdateState(HasComp<ActiveRingerComponent>(uid), ringer.Ringtone));
+                _ui.SetUiState(bui, new RingerUpdateState(HasComp<ActiveRingerComponent>(uid), ringer.Ringtone));
         }
 
         public bool ToggleRingerUI(EntityUid uid, IPlayerSession session)
@@ -219,7 +182,7 @@ namespace Content.Server.PDA.Ringer
 
                 ringer.NoteCount++;
 
-                if (ringer.NoteCount > RingtoneLength - 1)
+                if (ringer.NoteCount > 3)
                 {
                     remove.Add(uid);
                     UpdateRingerUserInterface(uid, ringer);

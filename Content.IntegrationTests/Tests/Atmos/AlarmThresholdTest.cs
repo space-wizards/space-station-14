@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using Content.Shared.Atmos.Monitor;
+using NUnit.Framework;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Atmos
@@ -23,7 +25,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         [Test]
         public async Task TestAlarmThreshold()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -37,11 +39,8 @@ namespace Content.IntegrationTests.Tests.Atmos
             await server.WaitAssertion(() =>
             {
                 // ensure upper/lower bounds are calculated
-                Assert.Multiple(() =>
-                {
-                    Assert.That(threshold.UpperWarningBound.Value, Is.EqualTo(5f * 0.5f));
-                    Assert.That(threshold.LowerWarningBound.Value, Is.EqualTo(1f * 1.5f));
-                });
+                Assert.That(threshold.UpperWarningBound.Value, Is.EqualTo(5f * 0.5f));
+                Assert.That(threshold.LowerWarningBound.Value, Is.EqualTo(1f * 1.5f));
 
                 // ensure that setting bounds to zero/
                 // negative numbers is an invalid set
@@ -103,7 +102,7 @@ namespace Content.IntegrationTests.Tests.Atmos
                     threshold.SetEnabled(AtmosMonitorLimitType.LowerWarning, true);
 
                     // Check a value that's in between each upper/lower warning/panic:
-                    threshold.CheckThreshold(3f, out var alarmType);
+                    threshold.CheckThreshold(3f, out AtmosAlarmType alarmType);
                     Assert.That(alarmType, Is.EqualTo(AtmosAlarmType.Normal));
                     threshold.CheckThreshold(1.5f, out alarmType);
                     Assert.That(alarmType, Is.EqualTo(AtmosAlarmType.Warning));

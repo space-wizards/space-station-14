@@ -1,9 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
+using NUnit.Framework;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -19,10 +24,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnAndDeleteAllEntitiesOnDifferentMaps()
         {
-            // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
-            // is minimal relative to the rest of the test.
-            var settings = new PoolSettings {NoClient = true, Dirty = true};
-            await using var pairTracker = await PoolManager.GetServerClient(settings);
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Destructive = true});
             var server = pairTracker.Pair.Server;
 
             var entityMan = server.ResolveDependency<IEntityManager>();
@@ -33,7 +35,7 @@ namespace Content.IntegrationTests.Tests
             {
                 var protoIds = prototypeMan
                     .EnumeratePrototypes<EntityPrototype>()
-                    .Where(p => !p.Abstract)
+                    .Where(p=>!p.Abstract)
                     .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                     .Select(p => p.ID)
                     .ToList();
@@ -50,19 +52,11 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitPost(() =>
             {
-                static IEnumerable<(EntityUid, TComp)> Query<TComp>(IEntityManager entityMan)
-                    where TComp : Component
+                var entityMetas = entityMan.EntityQuery<MetaDataComponent>(true).ToList();
+                foreach (var meta in entityMetas)
                 {
-                    var query = entityMan.AllEntityQueryEnumerator<TComp>();
-                    while (query.MoveNext(out var uid, out var meta))
-                        yield return (uid, meta);
-                };
-
-                var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
-                foreach (var (uid, meta) in entityMetas)
-                {
-                    if (!meta.EntityDeleted)
-                        entityMan.DeleteEntity(uid);
+                    if(!meta.EntityDeleted)
+                        entityMan.DeleteEntity(meta.Owner);
                 }
 
                 Assert.That(entityMan.EntityCount, Is.Zero);
@@ -74,10 +68,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnAndDeleteAllEntitiesInTheSameSpot()
         {
-            // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
-            // is minimal relative to the rest of the test.
-            var settings = new PoolSettings {NoClient = true, Dirty = true};
-            await using var pairTracker = await PoolManager.GetServerClient(settings);
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Destructive = true});
             var server = pairTracker.Pair.Server;
             var map = await PoolManager.CreateTestMap(pairTracker);
 
@@ -89,7 +80,7 @@ namespace Content.IntegrationTests.Tests
 
                 var protoIds = prototypeMan
                     .EnumeratePrototypes<EntityPrototype>()
-                    .Where(p => !p.Abstract)
+                    .Where(p=>!p.Abstract)
                     .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                     .Select(p => p.ID)
                     .ToList();
@@ -101,19 +92,11 @@ namespace Content.IntegrationTests.Tests
             await server.WaitRunTicks(15);
             await server.WaitPost(() =>
             {
-                static IEnumerable<(EntityUid, TComp)> Query<TComp>(IEntityManager entityMan)
-                    where TComp : Component
+                var entityMetas = entityMan.EntityQuery<MetaDataComponent>(true).ToList();
+                foreach (var meta in entityMetas)
                 {
-                    var query = entityMan.AllEntityQueryEnumerator<TComp>();
-                    while (query.MoveNext(out var uid, out var meta))
-                        yield return (uid, meta);
-                };
-
-                var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
-                foreach (var (uid, meta) in entityMetas)
-                {
-                    if (!meta.EntityDeleted)
-                        entityMan.DeleteEntity(uid);
+                    if(!meta.EntityDeleted)
+                        entityMan.DeleteEntity(meta.Owner);
                 }
 
                 Assert.That(entityMan.EntityCount, Is.Zero);
@@ -129,10 +112,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnAndDirtyAllEntities()
         {
-            // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
-            // is minimal relative to the rest of the test.
-            var settings = new PoolSettings {NoClient = false, Dirty = true};
-            await using var pairTracker = await PoolManager.GetServerClient(settings);
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = false, Destructive = true });
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
@@ -152,7 +132,7 @@ namespace Content.IntegrationTests.Tests
 
             // for whatever reason, stealth boxes are breaking this test. Surplus crates have a chance of spawning them.
             // TODO fix whatever is going wrong here.
-            HashSet<string> ignored = new() { "GhostBox", "StealthBox", "CrateSyndicateSurplusBundle", "CrateSyndicateSuperSurplusBundle" };
+            HashSet<string> ignored = new() {"GhostBox", "StealthBox", "CrateSyndicateSurplusBundle", "CrateSyndicateSuperSurplusBundle"};
 
             await server.WaitPost(() =>
             {
@@ -179,19 +159,11 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitPost(() =>
             {
-                static IEnumerable<(EntityUid, TComp)> Query<TComp>(IEntityManager entityMan)
-                    where TComp : Component
-                {
-                    var query = entityMan.AllEntityQueryEnumerator<TComp>();
-                    while (query.MoveNext(out var uid, out var meta))
-                        yield return (uid, meta);
-                };
-
-                var entityMetas = Query<MetaDataComponent>(sEntMan).ToList();
-                foreach (var (uid, meta) in entityMetas)
+                var entityMetas = sEntMan.EntityQuery<MetaDataComponent>(true).ToList();
+                foreach (var meta in entityMetas)
                 {
                     if (!meta.EntityDeleted)
-                        sEntMan.DeleteEntity(uid);
+                        sEntMan.DeleteEntity(meta.Owner);
                 }
 
                 Assert.That(sEntMan.EntityCount, Is.Zero);
@@ -220,14 +192,17 @@ namespace Content.IntegrationTests.Tests
                 "BiomeSelection", // Whaddya know, requires config.
             };
 
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            var testEntity = @"
+- type: entity
+  id: AllComponentsOneToOneDeleteTestEntity";
+
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = testEntity});
             var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
-            var logmill = server.ResolveDependency<ILogManager>().GetSawmill("EntityTest");
 
             MapGridComponent grid = default;
 
@@ -268,7 +243,7 @@ namespace Content.IntegrationTests.Tests
                             continue;
                         }
 
-                        var entity = entityManager.SpawnEntity(null, testLocation);
+                        var entity = entityManager.SpawnEntity("AllComponentsOneToOneDeleteTestEntity", testLocation);
 
                         Assert.That(entityManager.GetComponent<MetaDataComponent>(entity).EntityInitialized);
 
@@ -276,12 +251,12 @@ namespace Content.IntegrationTests.Tests
                         // such as MetaData or Transform
                         if (entityManager.HasComponent(entity, type))
                         {
-                            entityManager.DeleteEntity(entity);
                             continue;
                         }
 
                         component.Owner = entity;
-                        logmill.Debug($"Adding component: {name}");
+
+                        Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {name}");
 
                         Assert.DoesNotThrow(() =>
                             {
@@ -317,14 +292,17 @@ namespace Content.IntegrationTests.Tests
                 "BiomeSelection", // Whaddya know, requires config.
             };
 
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            var testEntity = @"
+- type: entity
+  id: AllComponentsOneEntityDeleteTestEntity";
+
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = testEntity});
             var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
-            var logmill = server.ResolveDependency<ILogManager>().GetSawmill("EntityTest");
 
             MapGridComponent grid = default;
 
@@ -357,9 +335,9 @@ namespace Content.IntegrationTests.Tests
 
                 for (var i = 0; i < distinctComponents.Count; i++)
                 {
-                    var (components, references) = distinctComponents[i];
+                    var distinct = distinctComponents[i];
 
-                    if (references.Intersect(registration.References).Any())
+                    if (distinct.references.Intersect(registration.References).Any())
                     {
                         // Ensure the next list if this one has conflicting references
                         if (i + 1 >= distinctComponents.Count)
@@ -371,8 +349,8 @@ namespace Content.IntegrationTests.Tests
                     }
 
                     // Add the component and its references if no conflicting references were found
-                    components.Add(registration.Idx);
-                    references.AddRange(registration.References);
+                    distinct.components.Add(registration.Idx);
+                    distinct.references.AddRange(registration.References);
                 }
             }
 
@@ -383,14 +361,14 @@ namespace Content.IntegrationTests.Tests
             {
                 Assert.Multiple(() =>
                 {
-                    foreach (var (components, _) in distinctComponents)
+                    foreach (var distinct in distinctComponents)
                     {
                         var testLocation = grid.ToCoordinates();
-                        var entity = entityManager.SpawnEntity(null, testLocation);
+                        var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
 
                         Assert.That(entityManager.GetComponent<MetaDataComponent>(entity).EntityInitialized);
 
-                        foreach (var type in components)
+                        foreach (var type in distinct.components)
                         {
                             var component = (Component) componentFactory.GetComponent(type);
 
@@ -407,7 +385,7 @@ namespace Content.IntegrationTests.Tests
                                 continue;
 
                             component.Owner = entity;
-                            logmill.Debug($"Adding component: {name}");
+                            Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {name}");
 
                             // Note for the future coder: if an exception occurs where a component reference
                             // was already occupied it might be because some component is ensuring another // initialize.

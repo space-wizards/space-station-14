@@ -10,5 +10,6 @@
     - type: WorldChunk
     - type: Sprite
       sprite: Markers/cross.rsi
+      netsync: false
       layers:
         - state: blue

@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.DoAfter;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;

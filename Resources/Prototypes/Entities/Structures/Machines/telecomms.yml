@@ -7,6 +7,7 @@
   - type: Sprite
     sprite: Structures/Machines/telecomms.rsi
     snapCardinals: true
+    netsync: false
     layers:
     - state: icon
     - state: unlit

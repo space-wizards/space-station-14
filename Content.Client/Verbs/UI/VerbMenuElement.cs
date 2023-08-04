@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.ContextMenu.UI;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
@@ -49,7 +48,7 @@ namespace Content.Client.Verbs.UI
                 var spriteView = new SpriteView()
                 {
                     OverrideDirection = Direction.South,
-                    SetSize = new Vector2(ElementHeight, ElementHeight),
+                    SetSize = (ElementHeight, ElementHeight),
                     Sprite = entManager.GetComponentOrNull<SpriteComponent>(verb.IconEntity.Value)
                 };
 

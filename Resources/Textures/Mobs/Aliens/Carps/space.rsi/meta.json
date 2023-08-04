@@ -40,10 +40,10 @@
       "name": "dead_mouth"
     },
     {
-      "name": "dead"
+      "name": "base_dead"
     },
     {
-      "name": "alive",
+      "name": "base",
       "directions": 4,
       "delays": [
         [

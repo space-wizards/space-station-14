@@ -6,9 +6,6 @@
   components:
   - type: InteractionOutline
   - type: Anchorable
-  - type: CollideOnAnchor
-  - type: Physics
-    canCollide: false
   - type: Fixtures
     fixtures:
       fix1:

@@ -14,6 +14,7 @@
       path: /Audio/Ambience/Objects/vending_machine_hum.ogg
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/empty.rsi
+    netsync: false
     snapCardinals: true
   - type: Physics
     bodyType: Static
@@ -1310,6 +1311,7 @@
   components:
   - type: Sprite
     drawdepth: WallMountedItems
+    netsync: false
     snapCardinals: false
   - type: WallMount
     arc: 180
@@ -1708,32 +1710,6 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Research"]]
-
-- type: entity
-  parent: VendingMachine
-  id: VendingMachineSyndieDrobe
-  name: SyndieDrobe
-  description: Wardrobe machine encoded by the syndicate, contains elite outfits for various operations.
-  components:
-  - type: VendingMachine
-    pack: SyndieDrobeInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-  - type: Advertise
-    pack: SyndieDrobeAds
-  - type: Sprite
-    sprite: Structures/Machines/VendingMachines/syndiedrobe.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: AccessReader
-    access: [["NuclearOperative"]]
 
 - type: entity
   parent: VendingMachine

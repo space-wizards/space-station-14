@@ -7,8 +7,4 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 45
-        Structural: 30
-    ignoreResistances: true
-  - type: StaminaDamageOnCollide
-    damage: 75
+        Piercing: 49

@@ -36,6 +36,7 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
+    netsync: false
     sprite: Objects/Specific/Mech/ripley_construction.rsi
 
 - type: entity
@@ -164,6 +165,7 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
+    netsync: false
     sprite: Objects/Specific/Mech/honker_construction.rsi
 
 - type: entity
@@ -292,6 +294,7 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
+    netsync: false
     sprite: Objects/Specific/Mech/hamtr_construction.rsi
 
 - type: entity

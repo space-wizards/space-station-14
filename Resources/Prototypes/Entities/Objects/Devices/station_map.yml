@@ -9,6 +9,7 @@
   components:
     - type: StationMap
     - type: Sprite
+      netsync: false
       sprite: Objects/Devices/tablets.rsi
       layers:
         - state: tablet

@@ -1,5 +1,6 @@
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking;
+using Content.Shared.MachineLinking;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -35,19 +36,19 @@ public sealed class LogicGateComponent : Component
     /// <summary>
     /// Name of the first input port.
     /// </summary>
-    [DataField("inputPortA", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+    [DataField("inputPortA", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
     public string InputPortA = "InputA";
 
     /// <summary>
     /// Name of the second input port.
     /// </summary>
-    [DataField("inputPortB", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+    [DataField("inputPortB", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
     public string InputPortB = "InputB";
 
     /// <summary>
     /// Name of the output port.
     /// </summary>
-    [DataField("outputPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
+    [DataField("outputPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
     public string OutputPort = "Output";
 
     // Initial state

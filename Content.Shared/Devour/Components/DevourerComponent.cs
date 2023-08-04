@@ -14,6 +14,9 @@ namespace Content.Server.Devour.Components;
 [Access(typeof(SharedDevourSystem))]
 public sealed class DevourerComponent : Component
 {
+    [DataField("devourActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityTargetActionPrototype>))]
+    public string DevourActionId = "Devour";
+
     [DataField("devourAction")]
     public EntityTargetAction? DevourAction;
 

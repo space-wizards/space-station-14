@@ -1,6 +1,5 @@
 using System.Globalization;
 using System.Linq;
-using System.Numerics;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;

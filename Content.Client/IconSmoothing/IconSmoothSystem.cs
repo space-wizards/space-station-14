@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.IconSmoothing;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;

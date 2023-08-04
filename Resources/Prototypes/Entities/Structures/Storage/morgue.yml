@@ -6,6 +6,7 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
+    netsync: false
     sprite: Structures/Storage/morgue.rsi
     layers:
     - state: morgue_closed
@@ -80,6 +81,7 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
+    netsync: false
     sprite: Structures/Storage/morgue.rsi
     layers:
     - state: crema_closed

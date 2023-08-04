@@ -4,7 +4,7 @@
   description: job-description-psychologist
   playTimeTracker: JobPsychologist
   startingGear: PsychologistGear
-  icon: "JobIconPsychologist"
+  icon: "Psychologist"
   supervisors: job-supervisors-cmo
   access:
   - Medical

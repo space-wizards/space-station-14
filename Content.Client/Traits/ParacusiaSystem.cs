@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Traits.Assorted;
 using Content.Client.Camera;
 using Robust.Shared.Random;

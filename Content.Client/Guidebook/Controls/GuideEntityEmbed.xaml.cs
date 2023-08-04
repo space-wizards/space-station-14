@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.Guidebook.Richtext;
@@ -160,7 +159,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         }
         else
         {
-            Scale = new Vector2(2, 2);
+            Scale = (2, 2);
         }
 
         if (args.TryGetValue("Interactive", out var interactive))

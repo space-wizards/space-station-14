@@ -10,7 +10,7 @@
     interactSuccessString: hugging-success-generic
     interactSuccessSound: /Audio/Effects/thudswoosh.ogg
     messagePerceivedByOthers: hugging-success-generic-others
-  - type: MindContainer
+  - type: Mind
     showExamineInfo: true
   - type: Input
     context: "human"
@@ -29,7 +29,7 @@
   - type: CameraRecoil
   - type: Examiner
   - type: CanHostGuardian
-  - type: NpcFactionMember
+  - type: Faction
     factions:
     - NanoTrasen
 
@@ -44,16 +44,9 @@
       prototypes: [SyndicateOperativeGearExtremelyBasic]
     - type: RandomMetadata
       nameSegments: [names_death_commando]
-    - type: NpcFactionMember
+    - type: Faction
       factions:
       - Syndicate
-
-- type: entity
-  parent: MobHumanSyndicateAgent
-  id: MobHumanSyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
-  suffix: NukeOps
-  components:
-    - type: NukeOperative
 
 # Nuclear Operative
 - type: entity
@@ -81,14 +74,6 @@
       nameSegments:
       - SyndicateNamesPrefix
       - SyndicateNamesNormal
-    - type: NpcFactionMember
+    - type: Faction
       factions:
       - Syndicate
-
-# DNA Scrambler
-- type: entity
-  parent: MobHuman
-  id: MobHumanScrambled
-  name: Scrambled Human
-  components:
-    - type: RandomHumanoidAppearance

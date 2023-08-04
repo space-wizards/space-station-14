@@ -30,7 +30,7 @@ namespace Content.Shared.Materials
         ///     include which stack we should spawn by default.
         /// </summary>
         [DataField("stackEntity", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? StackEntity;
+        public string StackEntity { get; } = "";
 
         [DataField("name")]
         public string Name = "";

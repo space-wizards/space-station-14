@@ -1,4 +1,3 @@
-using Content.Server.Mind;
 using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -22,9 +21,7 @@ namespace Content.Server.GameTicking.Commands
             }
 
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
-            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
-            var ticker = sysMan.GetEntitySystem<GameTicker>();
-            var mind = sysMan.GetEntitySystem<MindSystem>();
+            var ticker = EntitySystem.Get<GameTicker>();
 
             NetUserId userId;
             if (args.Length == 0)
@@ -51,7 +48,7 @@ namespace Content.Server.GameTicking.Commands
                     return;
                 }
 
-                mind.WipeMind(data.ContentData()?.Mind);
+                data.ContentData()?.WipeMind();
                 shell.WriteLine("Player is not currently online, but they will respawn if they come back online");
                 return;
             }

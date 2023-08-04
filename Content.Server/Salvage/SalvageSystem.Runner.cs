@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Shuttles.Components;
@@ -9,7 +8,9 @@ using Content.Shared.Chat;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Salvage.Expeditions;
+using Content.Shared.Salvage;
+using Content.Shared.Shuttles.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -109,7 +110,6 @@ public sealed partial class SalvageSystem
             Announce(args.MapUid, Loc.GetString("salvage-expedition-announcement-dungeon", ("direction", component.DungeonLocation.GetDir())));
 
         component.Stage = ExpeditionStage.Running;
-        Dirty(component);
     }
 
     private void OnFTLStarted(ref FTLStartedEvent ev)
@@ -158,21 +158,19 @@ public sealed partial class SalvageSystem
             if (comp.Stage < ExpeditionStage.FinalCountdown && remaining < TimeSpan.FromSeconds(30))
             {
                 comp.Stage = ExpeditionStage.FinalCountdown;
-                Dirty(comp);
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-seconds", ("duration", TimeSpan.FromSeconds(30).Seconds)));
             }
             else if (comp.Stage < ExpeditionStage.MusicCountdown && remaining < TimeSpan.FromMinutes(2))
             {
                 // TODO: Some way to play audio attached to a map for players.
-                comp.Stream = _audio.PlayGlobal(comp.Sound, Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true);
+               comp.Stream = _audio.PlayGlobal(comp.Sound,
+                    Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true);
                 comp.Stage = ExpeditionStage.MusicCountdown;
-                Dirty(comp);
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(2).Minutes)));
             }
             else if (comp.Stage < ExpeditionStage.Countdown && remaining < TimeSpan.FromMinutes(5))
             {
                 comp.Stage = ExpeditionStage.Countdown;
-                Dirty(comp);
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(5).Minutes)));
             }
             // Auto-FTL out any shuttles
@@ -211,7 +209,7 @@ public sealed partial class SalvageSystem
             }
         }
 
-        // Mining missions: NOOP since it's handled after ftling
+        // Mining missions: NOOP
 
         // Structure missions
         var structureQuery = EntityQueryEnumerator<SalvageStructureExpeditionComponent, SalvageExpeditionComponent>();

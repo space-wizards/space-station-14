@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi
+    netsync: false
     state: unlit-icon
   - type: Tag
     tags:
@@ -37,6 +38,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi
+    netsync: false
     state: unlit-icon
   - type: Tag
     tags:

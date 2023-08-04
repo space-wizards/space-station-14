@@ -8,10 +8,9 @@ namespace Content.Client.Nuke
     [UsedImplicitly]
     public sealed class NukeBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
         private NukeMenu? _menu;
 
-        public NukeBoundUserInterface([NotNull] EntityUid owner, [NotNull] Enum uiKey) : base(owner, uiKey)
+        public NukeBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -58,8 +57,10 @@ namespace Content.Client.Nuke
             switch (state)
             {
                 case NukeUiState msg:
+                {
                     _menu.UpdateState(msg);
                     break;
+                }
             }
         }
 

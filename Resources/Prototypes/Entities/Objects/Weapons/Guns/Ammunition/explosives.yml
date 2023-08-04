@@ -15,6 +15,7 @@
     proto: BulletRocket
     deleteOnSpawn: true
   - type: Sprite
+    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     state: rpg
   - type: StaticPrice
@@ -54,6 +55,7 @@
   - type: Item
     size: 5
   - type: Sprite
+    netsync: false
 
 - type: entity
   id: GrenadeBaton
@@ -133,5 +135,6 @@
     proto: BulletCannonBall
     deleteOnSpawn: true
   - type: Sprite
+    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     state: ball

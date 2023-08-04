@@ -65,7 +65,7 @@ namespace Content.Server.Nuke
                     paperContent,
                     Loc.GetString("nuke-codes-fax-paper-name"),
                     null,
-                    "paper_stamp-centcom",
+                    "paper_stamp-cent",
                     new() { Loc.GetString("stamp-component-stamped-name-centcom") });
                 _faxSystem.Receive(faxEnt, printout, null, fax);
 

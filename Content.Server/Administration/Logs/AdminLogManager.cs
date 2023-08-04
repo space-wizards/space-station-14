@@ -12,7 +12,6 @@ using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Logs;
 
@@ -197,7 +196,10 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         PreRoundQueue.Set(0);
 
         // ship the logs to Azkaban
-        var task = _db.AddAdminLogs(copy);
+        var task = Task.Run(async () =>
+        {
+            await _db.AddAdminLogs(copy);
+        });
 
         _sawmill.Debug($"Saving {copy.Count} admin logs.");
 

@@ -13,10 +13,6 @@
     {
       "name": "equipped-MASK",
       "directions": 4
-    },
-    {
-      "name": "equipped-MASK-hamster",
-      "directions": 4
     }
   ]
 }

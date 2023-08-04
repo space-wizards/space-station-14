@@ -6,19 +6,18 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 36000 # 10 hours
+      time: 3600
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 3600
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hrs
-    - !type:DepartmentTimeRequirement
-      department: Command
-      time: 36000 # 10 hours
+      time: 3600
+    - !type:OverallPlaytimeRequirement
+      time: 108000
   weight: 20
   startingGear: HoPGear
-  icon: "JobIconHeadOfPersonnel"
+  icon: "HeadOfPersonnel"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
@@ -39,6 +38,7 @@
   # Head level access that isn't their own was deliberately left out, get AA from the captain instead.
   - Chemistry
   - Engineering
+  - Quartermaster
   - Research
   - Detective
   - Salvage
@@ -46,6 +46,7 @@
   - Brig
   - Cargo
   - Atmospherics
+  - Cargo
   - Medical
 
 - type: startingGear

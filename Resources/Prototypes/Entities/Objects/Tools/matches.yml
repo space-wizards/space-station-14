@@ -20,6 +20,7 @@
     - Trash
   - type: SpaceGarbage
   - type: Sprite
+    netsync: false
     sprite: Objects/Tools/matches.rsi
     layers:
       - state: match_unlit
@@ -63,6 +64,7 @@
       path: /Audio/Items/matchbox_drop.ogg
   - type: Matchbox
   - type: Sprite
+    netsync: false
     sprite: Objects/Tools/matches.rsi
     layers:
     - state: matchbox

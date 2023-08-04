@@ -7,6 +7,7 @@
   components:
   - type: SolutionContainerManager
   - type: Sprite
+    netsync: false
     state: produce
   - type: Produce
   - type: PotencyVisuals
@@ -23,6 +24,7 @@
   components:
   - type: SolutionContainerManager
   - type: Sprite
+    netsync: false
     state: produce
   - type: Produce
   - type: PotencyVisuals
@@ -238,10 +240,7 @@
   components:
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/banana.rsi
-      layers:
-      - state: peel
-      - state: primed
-        shader: unshaded
+      state: primed
     - type: TriggerOnSlip
     - type: ExplodeOnTrigger
     - type: Explosive
@@ -358,9 +357,6 @@
       reagents:
       - ReagentId: JuiceLemon
         Quantity: 10
-  - type: Tag
-    tags:
-    - Lemon
 
 - type: entity
   name: lime
@@ -380,9 +376,6 @@
       reagents:
       - ReagentId: JuiceLime
         Quantity: 10
-  - type: Tag
-    tags:
-    - Lime
 
 - type: entity
   name: orange
@@ -596,9 +589,6 @@
           Quantity: 15
         - ReagentId: Nutriment
           Quantity: 5
-  - type: Tag
-    tags:
-    - Corn
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
@@ -620,6 +610,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
     state: cob
+    netsync: false
   - type: Item
     size: 1
   - type: Tag
@@ -721,6 +712,7 @@
         - ReagentId: Nutriment
           Quantity: 2
   - type: Sprite
+    netsync: false
     state: slice
   - type: Extractable
     grindableSolutionName: food
@@ -864,7 +856,7 @@
     grindableSolutionName: food
   - type: Tag
     tags:
-    - Flower # TODO add "RedFlower" or "Poppy" tag, when other color flowers will be
+    - Flower
 
 - type: entity
   name: lingzhi
@@ -927,9 +919,6 @@
     sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
     slots:
     - HEAD
-  - type: Tag
-    tags:
-    - Ambrosia
 
 - type: entity
   name: galaxythistle
@@ -953,9 +942,6 @@
     seedId: galaxythistle
   - type: Extractable
     grindableSolutionName: food
-  - type: Tag
-    tags:
-    - Galaxythistle
 
 - type: entity
   name: fly amanita

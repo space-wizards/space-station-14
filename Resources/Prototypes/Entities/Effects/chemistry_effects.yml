@@ -36,6 +36,7 @@
   noSpawn: true
   components:
   - type: Sprite
+    netsync: false
     drawdepth: Effects
     color: "#ffffffcc" #Add some transparency
     sprite: Effects/foam.rsi
@@ -44,6 +45,7 @@
       - state: foam
         map: ["enum.FoamVisualLayers.Base"]
   - type: AnimationPlayer
+    netsync: false
   - type: Appearance
   - type: SmokeVisuals
   - type: FoamVisuals
@@ -133,6 +135,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
+    netsync: false
     drawdepth: Walls
   - type: Physics
   - type: Fixtures

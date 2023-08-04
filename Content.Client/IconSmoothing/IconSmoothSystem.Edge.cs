@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.IconSmoothing;
 using Robust.Client.GameObjects;
 

@@ -78,6 +78,13 @@ namespace Content.Shared.Containers.ItemSlots
         public SoundSpecifier EjectSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
 
         /// <summary>
+        ///     Options used for playing the insert/eject sounds.
+        /// </summary>
+        [DataField("soundOptions")]
+        [Obsolete("Use the sound specifer parameters instead")]
+        public AudioParams SoundOptions = AudioParams.Default;
+
+        /// <summary>
         ///     The name of this item slot. This will be shown to the user in the verb menu.
         /// </summary>
         /// <remarks>
@@ -221,6 +228,7 @@ namespace Content.Shared.Containers.ItemSlots
             InsertSound = other.InsertSound;
             EjectSound = other.EjectSound;
 
+            SoundOptions = other.SoundOptions;
             Name = other.Name;
             Locked = other.Locked;
             InsertOnInteract = other.InsertOnInteract;

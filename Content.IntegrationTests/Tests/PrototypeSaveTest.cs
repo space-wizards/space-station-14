@@ -1,7 +1,11 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Shared.Coordinates;
+using Content.Shared.Sound.Components;
+using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -15,6 +19,7 @@ using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -41,7 +46,7 @@ public sealed class PrototypeSaveTest
     public async Task UninitializedSaveTest()
     {
         // Apparently SpawnTest fails to clean  up properly. Due to the similarities, I'll assume this also fails.
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, Dirty = true, Destructive = true });
         var server = pairTracker.Pair.Server;
 
         var mapManager = server.ResolveDependency<IMapManager>();
@@ -176,7 +181,7 @@ public sealed class PrototypeSaveTest
                     // An entity may also remove components on init -> check no components are missing.
                     foreach (var (compType, comp) in prototype.Components)
                     {
-                        Assert.That(compNames, Does.Contain(compType), $"Prototype {prototype.ID} removes component {compType} on spawn.");
+                        Assert.That(compNames.Contains(compType), $"Prototype {prototype.ID} removes component {compType} on spawn.");
                     }
 
                     if (!entityMan.Deleted(uid))

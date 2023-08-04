@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.EscapeMenu;
@@ -109,7 +108,7 @@ namespace Content.Client.Changelog
                                 {
                                     Texture = upArrow,
                                     ModulateSelfOverride = Color.FromHex("#888"),
-                                    TextureScale = new Vector2(0.5f, 0.5f),
+                                    TextureScale = (0.5f, 0.5f),
                                     Margin = new Thickness(4, 3),
                                     VerticalAlignment = VAlignment.Bottom
                                 },
@@ -123,7 +122,7 @@ namespace Content.Client.Changelog
                                 {
                                     Texture = upArrow,
                                     ModulateSelfOverride = Color.FromHex("#888"),
-                                    TextureScale = new Vector2(0.5f, 0.5f),
+                                    TextureScale = (0.5f, 0.5f),
                                     Margin = new Thickness(4, 3),
                                     VerticalAlignment = VAlignment.Bottom
                                 }
@@ -185,7 +184,7 @@ namespace Content.Client.Changelog
             {
                 Texture = _resourceCache.GetTexture(new ResPath($"/Textures/Interface/Changelog/{file}")),
                 VerticalAlignment = VAlignment.Top,
-                TextureScale = new Vector2(0.5f, 0.5f),
+                TextureScale = (0.5f, 0.5f),
                 Margin = new Thickness(2, 4, 6, 2),
                 ModulateSelfOverride = Color.FromHex(color)
             };

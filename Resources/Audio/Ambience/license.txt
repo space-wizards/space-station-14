@@ -1,0 +1,4 @@
+﻿shipambience.ogg from /tg/station (commit https://github.com/tgstation/tgstation/blob/66a625e6df15eaa97e599248a2281c74238ce26e/sound/ambience/shipambience.ogg), which took it from CEV Eris (commit https://github.com/discordia-space/CEV-Eris/blob/e4e40d38424afe88c8a81cf0e3857d8af4ef077f/sound/ambience/shipambience.ogg). Licensed under CC-BY-SA.
+starlight.ogg by qwertyquerty from https://www.youtube.com/watch?v=XTfPEFfmhrA. Licensed under CC-BY-SA-3.0.
+constellations.ogg by qwertyquerty from https://www.youtube.com/watch?v=ufwRj1LI3aw. Licensed under CC-BY-SA-3.0.
+drifting.ogg by qwertyquerty from https://github.com/BeeStation/BeeStation-Hornet/pull/7304. Licensed under CC-BY-SA-3.0.

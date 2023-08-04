@@ -8,8 +8,8 @@
     fixtures:
       fix1:
         shape:
-          !type:PhysShapeCircle
-          radius: 0.4
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
         density: 190
         mask:
         - FullTileMask
@@ -20,6 +20,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/containment.rsi
     state: icon
+    netsync: false
     noRot: true
     layers:
       - state: icon
@@ -92,6 +93,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi
     state: field
+    netsync: false
     noRot: true
   - type: Icon
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi

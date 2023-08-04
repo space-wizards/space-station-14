@@ -38,10 +38,9 @@ namespace Content.Client.Cargo.BUI
         /// <summary>
         /// Currently selected product
         /// </summary>
-        [ViewVariables]
         private CargoProductPrototype? _product;
 
-        public CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public CargoOrderConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -49,15 +48,17 @@ namespace Content.Client.Cargo.BUI
         {
             base.Open();
 
-            var spriteSystem = EntMan.System<SpriteSystem>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var sysManager = entityManager.EntitySysManager;
+            var spriteSystem = sysManager.GetEntitySystem<SpriteSystem>();
             _menu = new CargoConsoleMenu(IoCManager.Resolve<IPrototypeManager>(), spriteSystem);
             var localPlayer = IoCManager.Resolve<IPlayerManager>()?.LocalPlayer?.ControlledEntity;
             var description = new FormattedMessage();
 
             string orderRequester;
 
-            if (EntMan.TryGetComponent<MetaDataComponent>(localPlayer, out var metadata))
-                orderRequester = Identity.Name(localPlayer.Value, EntMan);
+            if (entityManager.TryGetComponent<MetaDataComponent>(localPlayer, out var metadata))
+                orderRequester = Identity.Name(localPlayer.Value, entityManager);
             else
                 orderRequester = string.Empty;
 
@@ -137,7 +138,7 @@ namespace Content.Client.Cargo.BUI
 
         private bool AddOrder()
         {
-            var orderAmt = _orderMenu?.Amount.Value ?? 0;
+            int orderAmt = _orderMenu?.Amount.Value ?? 0;
             if (orderAmt < 1 || orderAmt > OrderCapacity)
             {
                 return false;

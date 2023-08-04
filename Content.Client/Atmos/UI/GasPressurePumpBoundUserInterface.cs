@@ -1,7 +1,11 @@
-﻿using Content.Shared.Atmos;
+﻿using System;
+using Content.Client.Atmos.EntitySystems;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Atmos.Piping.Trinary.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Atmos.UI
 {
@@ -11,13 +15,11 @@ namespace Content.Client.Atmos.UI
     [UsedImplicitly]
     public sealed class GasPressurePumpBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
+
+        private GasPressurePumpWindow? _window;
         private const float MaxPressure = Atmospherics.MaxOutputPressure;
 
-        [ViewVariables]
-        private GasPressurePumpWindow? _window;
-
-        public GasPressurePumpBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public GasPressurePumpBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -27,7 +29,7 @@ namespace Content.Client.Atmos.UI
 
             _window = new GasPressurePumpWindow();
 
-            if (State != null)
+            if(State != null)
                 UpdateState(State);
 
             _window.OpenCentered();

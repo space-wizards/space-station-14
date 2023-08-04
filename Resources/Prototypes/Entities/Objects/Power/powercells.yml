@@ -12,25 +12,25 @@
     intensitySlope: 1.5
   - type: Sprite
     sprite: Objects/Power/power_cells.rsi
+    netsync: false
   - type: SolutionContainerManager
     solutions:
-      battery:
+      powerCell:
         maxVol: 5
   - type: InjectableSolution
-    solution: battery
+    solution: powerCell
   - type: DrawableSolution
-    solution: battery
+    solution: powerCell
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Zinc
+        - ReagentId: Licoxide
           Quantity: 5
   - type: Tag
     tags:
       - DroneUsable
   - type: Appearance
   - type: PowerCellVisuals
-  - type: Riggable
 
 - type: entity
   name: potato battery

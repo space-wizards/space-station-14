@@ -13,6 +13,7 @@
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/tinyfan.rsi
     state: icon
+    netsync: false
   - type: Fixtures
     fixtures:
       fix1:

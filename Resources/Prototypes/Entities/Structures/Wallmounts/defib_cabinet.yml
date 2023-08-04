@@ -11,6 +11,7 @@
     - type: InteractionOutline
     - type: Sprite
       sprite: Structures/Wallmounts/defib_cabinet.rsi
+      netsync: false
       noRot: false
       layers:
       - state: frame

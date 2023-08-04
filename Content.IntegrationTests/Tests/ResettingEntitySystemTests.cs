@@ -1,6 +1,9 @@
-﻿using Content.Server.GameTicking;
+﻿using System.Threading.Tasks;
+using Content.Server.GameTicking;
 using Content.Shared.GameTicking;
+using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Reflection;
 
 namespace Content.IntegrationTests.Tests
@@ -30,7 +33,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task ResettingEntitySystemResetTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
@@ -44,11 +47,11 @@ namespace Content.IntegrationTests.Tests
 
                 system.HasBeenReset = false;
 
-                Assert.That(system.HasBeenReset, Is.False);
+                Assert.False(system.HasBeenReset);
 
                 gameTicker.RestartRound();
 
-                Assert.That(system.HasBeenReset);
+                Assert.True(system.HasBeenReset);
             });
             await pairTracker.CleanReturnAsync();
         }

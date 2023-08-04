@@ -7,17 +7,12 @@ namespace Content.Shared.Cargo
     public sealed class CargoOrderData
     {
         /// <summary>
-        /// Price when the order was added.
-        /// </summary>
-        public int Price;
-
-        /// <summary>
         /// A unique (arbitrary) ID which identifies this order.
         /// </summary>
         public readonly int OrderId;
 
         /// <summary>
-        /// Prototype Id for the item to be created
+        /// Prototype id for the item to create
         /// </summary>
         public readonly string ProductId;
 
@@ -29,7 +24,7 @@ namespace Content.Shared.Cargo
 
         /// <summary>
         /// How many instances of this order that we've already dispatched
-        /// </summary>
+        /// <summary>
         public int NumDispatched = 0;
 
         public readonly string Requester;
@@ -39,26 +34,25 @@ namespace Content.Shared.Cargo
         public  bool Approved => Approver is not null;
         public string? Approver;
 
-        public CargoOrderData(int orderId, string productId, int price, int amount, string requester, string reason)
+        public CargoOrderData(int orderId, string productId, int amount, string requester, string reason)
         {
             OrderId = orderId;
             ProductId = productId;
-            Price = price;
             OrderQuantity = amount;
             Requester = requester;
             Reason = reason;
         }
 
-        public void SetApproverData(string? fullName, string? jobTitle)
+        public void SetApproverData(IdCardComponent? idCard)
         {
             var sb = new StringBuilder();
-            if (!string.IsNullOrWhiteSpace(fullName))
+            if (!string.IsNullOrWhiteSpace(idCard?.FullName))
             {
-                sb.Append($"{fullName} ");
+                sb.Append($"{idCard.FullName} ");
             }
-            if (!string.IsNullOrWhiteSpace(jobTitle))
+            if (!string.IsNullOrWhiteSpace(idCard?.JobTitle))
             {
-                sb.Append($"({jobTitle})");
+                sb.Append($"({idCard.JobTitle})");
             }
             Approver = sb.ToString();
         }

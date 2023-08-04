@@ -2,18 +2,19 @@
 using Content.Shared.Crayon;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Crayon.UI
 {
     public sealed class CrayonBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
-        private CrayonWindow? _menu;
-
-        public CrayonBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public CrayonBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
+
+        private CrayonWindow? _menu;
 
         protected override void Open()
         {

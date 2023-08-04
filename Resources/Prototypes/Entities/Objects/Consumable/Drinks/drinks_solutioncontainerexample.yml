@@ -16,6 +16,7 @@
         - ReagentId: JuiceWatermelon
           Quantity: 30
   - type: Sprite
+    netsync: false
     sprite: Objects/Consumable/Drinks/pitcher.rsi
     layers:
       - state: icon
@@ -44,6 +45,7 @@
         - ReagentId: JuiceWatermelon
           Quantity: 30
   - type: Sprite
+    netsync: false
     sprite: Objects/Consumable/Drinks/pitcher.rsi
     layers:
       - state: icon-6

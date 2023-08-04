@@ -1,4 +1,3 @@
-using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
@@ -31,7 +30,7 @@ namespace Content.Client.Storage.UI
         public StorageWindow(IEntityManager entityManager)
         {
             _entityManager = entityManager;
-            SetSize = new Vector2(240, 320);
+            SetSize = (240, 320);
             Title = Loc.GetString("comp-storage-window-title");
             RectClipContent = true;
 

@@ -8,13 +8,11 @@ namespace Content.Client.Forensics
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        [ViewVariables]
         private ForensicScannerMenu? _window;
 
-        [ViewVariables]
         private TimeSpan _printCooldown;
 
-        public ForensicScannerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public ForensicScannerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

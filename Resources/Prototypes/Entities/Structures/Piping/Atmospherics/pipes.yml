@@ -30,6 +30,7 @@
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     drawdepth: ThinPipe
+    netsync: false
     visible: false
   - type: Appearance
   - type: PipeColorVisuals
@@ -49,7 +50,7 @@
     sound:
       path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: StaticPrice
-    price: 22
+    price: 100
 
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 

@@ -1,7 +1,9 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Client.UserInterface.Systems.Alerts.Controls;
 using Content.Client.UserInterface.Systems.Alerts.Widgets;
 using Content.Shared.Alert;
+using NUnit.Framework;
 using Robust.Client.UserInterface;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -32,14 +34,12 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await server.WaitAssertion(() =>
             {
                 playerUid = serverPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
-#pragma warning disable NUnit2045 // Interdependent assertions.
-                Assert.That(playerUid, Is.Not.EqualTo(default));
+                Assert.That(playerUid != default);
                 // Making sure it exists
                 Assert.That(entManager.HasComponent<AlertsComponent>(playerUid));
-#pragma warning restore NUnit2045
 
                 var alerts = alertsSystem.GetActiveAlerts(playerUid);
-                Assert.That(alerts, Is.Not.Null);
+                Assert.IsNotNull(alerts);
                 var alertCount = alerts.Count;
 
                 alertsSystem.ShowAlert(playerUid, AlertType.Debug1);
@@ -54,20 +54,18 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await client.WaitAssertion(() =>
             {
                 var local = clientPlayerMgr.LocalPlayer;
-                Assert.That(local, Is.Not.Null);
+                Assert.NotNull(local);
                 var controlled = local.ControlledEntity;
-#pragma warning disable NUnit2045 // Interdependent assertions.
-                Assert.That(controlled, Is.Not.Null);
+                Assert.NotNull(controlled);
                 // Making sure it exists
                 Assert.That(clientEntManager.HasComponent<AlertsComponent>(controlled.Value));
-#pragma warning restore Nunit2045
 
                 // find the alertsui
 
                 clientAlertsUI = FindAlertsUI(clientUIMgr.ActiveScreen);
-                Assert.That(clientAlertsUI, Is.Not.Null);
+                Assert.NotNull(clientAlertsUI);
 
-                static AlertsUI FindAlertsUI(Control control)
+                AlertsUI FindAlertsUI(Control control)
                 {
                     if (control is AlertsUI alertUI)
                         return alertUI;
@@ -85,7 +83,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(clientAlertsUI.AlertContainer.ChildCount, Is.GreaterThanOrEqualTo(3));
                 var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl) c);
                 var alertIDs = alertControls.Select(ac => ac.Alert.AlertType).ToArray();
-                var expectedIDs = new[] { AlertType.HumanHealth, AlertType.Debug1, AlertType.Debug2 };
+                var expectedIDs = new [] {AlertType.HumanHealth, AlertType.Debug1, AlertType.Debug2};
                 Assert.That(alertIDs, Is.SupersetOf(expectedIDs));
             });
 
@@ -102,7 +100,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(clientAlertsUI.AlertContainer.ChildCount, Is.GreaterThanOrEqualTo(2));
                 var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl) c);
                 var alertIDs = alertControls.Select(ac => ac.Alert.AlertType).ToArray();
-                var expectedIDs = new[] { AlertType.HumanHealth, AlertType.Debug2 };
+                var expectedIDs = new [] {AlertType.HumanHealth, AlertType.Debug2};
                 Assert.That(alertIDs, Is.SupersetOf(expectedIDs));
             });
 

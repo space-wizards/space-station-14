@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Forensics;
 using Content.Server.Stack;
 using Content.Shared.Prototypes;

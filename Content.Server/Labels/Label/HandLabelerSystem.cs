@@ -28,6 +28,7 @@ namespace Content.Server.Labels
             base.Initialize();
 
             SubscribeLocalEvent<HandLabelerComponent, AfterInteractEvent>(AfterInteractOn);
+            SubscribeLocalEvent<HandLabelerComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<HandLabelerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
             // Bound UI subscriptions
             SubscribeLocalEvent<HandLabelerComponent, HandLabelerLabelChangedMessage>(OnHandLabelerLabelChanged);
@@ -53,7 +54,6 @@ namespace Content.Server.Labels
 
             args.Verbs.Add(verb);
         }
-
         private void AfterInteractOn(EntityUid uid, HandLabelerComponent handLabeler, AfterInteractEvent args)
         {
             if (args.Target is not {Valid: true} target || !handLabeler.Whitelist.IsValid(target) || !args.CanReach)
@@ -86,6 +86,15 @@ namespace Content.Server.Labels
 
             _labelSystem.Label(target, handLabeler.AssignedLabel);
             result = Loc.GetString("hand-labeler-successfully-applied");
+        }
+
+        private void OnActivate(EntityUid uid, HandLabelerComponent handLabeler, ActivateInWorldEvent args)
+        {
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+                return;
+
+            handLabeler.Owner.GetUIOrNull(HandLabelerUiKey.Key)?.Open(actor.PlayerSession);
+            args.Handled = true;
         }
 
         private void OnHandLabelerLabelChanged(EntityUid uid, HandLabelerComponent handLabeler, HandLabelerLabelChangedMessage args)

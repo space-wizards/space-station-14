@@ -6,6 +6,7 @@
   abstract: true
   components:
   - type: Sprite
+    netsync: false
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -18,7 +19,7 @@
     - Back
   - type: AmmoCounter
   - type: Gun
-    fireRate: 0.3 # ~5 second cooldown between shots
+    fireRate: 1
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto

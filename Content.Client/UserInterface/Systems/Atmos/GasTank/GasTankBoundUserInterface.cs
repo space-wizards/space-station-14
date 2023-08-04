@@ -5,21 +5,19 @@ using Robust.Client.GameObjects;
 namespace Content.Client.UserInterface.Systems.Atmos.GasTank
 {
     [UsedImplicitly]
-    public sealed class GasTankBoundUserInterface : BoundUserInterface
+    public sealed class GasTankBoundUserInterface
+        : BoundUserInterface
     {
-        [ViewVariables]
-        private GasTankWindow? _window;
-
-        public GasTankBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public GasTankBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) :
+            base(owner, uiKey)
         {
         }
 
+        private GasTankWindow? _window;
+
         public void SetOutputPressure(in float value)
         {
-            SendMessage(new GasTankSetPressureMessage
-            {
-                Pressure = value
-            });
+            SendMessage(new GasTankSetPressureMessage {Pressure = value});
         }
 
         public void ToggleInternals()

@@ -9,6 +9,7 @@
       tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+      netsync: false
     - type: Clothing
       sprite: Clothing/Eyes/Glasses/sunglasses.rsi
     - type: ChameleonClothing
@@ -18,4 +19,3 @@
       interfaces:
         - key: enum.ChameleonUiKey.Key
           type: ChameleonBoundUserInterface
-

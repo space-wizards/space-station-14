@@ -31,13 +31,6 @@ public sealed class BanListEui : BaseEui
         _admins.OnPermsChanged += OnPermsChanged;
     }
 
-    public override void Closed()
-    {
-        base.Closed();
-
-        _admins.OnPermsChanged -= OnPermsChanged;
-    }
-
     public override EuiStateBase GetNewState()
     {
         return new BanListEuiState(BanListPlayerName, Bans);
@@ -48,6 +41,10 @@ public sealed class BanListEui : BaseEui
         if (args.Player == Player && !_admins.HasAdminFlag(Player, AdminFlags.Ban))
         {
             Close();
+        }
+        else
+        {
+            StateDirty();
         }
     }
 

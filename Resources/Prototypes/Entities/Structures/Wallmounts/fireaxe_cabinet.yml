@@ -13,6 +13,7 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Wallmounts/fireaxe_cabinet.rsi
+    netsync: false
     layers:
     - state: cabinet
     - state: fireaxe

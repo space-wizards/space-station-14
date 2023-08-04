@@ -12,6 +12,7 @@
     - state: seedextractor-unlit
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+    netsync: false
   - type: Physics
     bodyType: Static
   - type: Fixtures

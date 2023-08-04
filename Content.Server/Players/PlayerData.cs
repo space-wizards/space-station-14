@@ -1,5 +1,3 @@
-using Content.Server.GameTicking;
-using Content.Server.Mind;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 
@@ -28,14 +26,29 @@ namespace Content.Server.Players
         ///     The currently occupied mind of the player owning this data.
         ///     DO NOT DIRECTLY SET THIS UNLESS YOU KNOW WHAT YOU'RE DOING.
         /// </summary>
-        [ViewVariables, Access(typeof(MindSystem), typeof(GameTicker))]
-        public Mind.Mind? Mind { get; set; }
+        [ViewVariables]
+        public Mind.Mind? Mind { get; private set; }
 
         /// <summary>
         ///     If true, the player is an admin and they explicitly de-adminned mid-game,
         ///     so they should not regain admin if they reconnect.
         /// </summary>
         public bool ExplicitlyDeadminned { get; set; }
+
+        public void WipeMind()
+        {
+            Mind?.TransferTo(null);
+            // This will ensure Mind == null
+            Mind?.ChangeOwningPlayer(null);
+        }
+
+        /// <summary>
+        /// Called from Mind.ChangeOwningPlayer *and nowhere else.*
+        /// </summary>
+        public void UpdateMindFromMindChangeOwningPlayer(Mind.Mind? mind)
+        {
+            Mind = mind;
+        }
 
         public PlayerData(NetUserId userId, string name)
         {
@@ -60,14 +73,6 @@ namespace Content.Server.Players
         public static PlayerData? ContentData(this IPlayerSession session)
         {
             return session.Data.ContentData();
-        }
-
-        /// <summary>
-        ///     Gets the mind that is associated with this player.
-        /// </summary>
-        public static Mind.Mind? GetMind(this IPlayerSession session)
-        {
-            return session.Data.ContentData()?.Mind;
         }
     }
 }

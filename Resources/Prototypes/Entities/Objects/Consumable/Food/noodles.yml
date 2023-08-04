@@ -10,6 +10,7 @@
     trash: FoodPlate
   - type: Sprite
     sprite: Objects/Consumable/Food/noodles.rsi
+    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:

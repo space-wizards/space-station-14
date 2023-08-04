@@ -11,12 +11,11 @@ namespace Content.Client.Humanoid;
 
 public sealed class HumanoidMarkingModifierBoundUserInterface : BoundUserInterface
 {
-    [ViewVariables]
-    private HumanoidMarkingModifierWindow? _window;
-
-    public HumanoidMarkingModifierBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public HumanoidMarkingModifierBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
     }
+
+    private HumanoidMarkingModifierWindow? _window;
 
     protected override void Open()
     {

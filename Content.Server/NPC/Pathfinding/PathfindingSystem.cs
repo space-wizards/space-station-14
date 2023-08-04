@@ -1,13 +1,11 @@
 using System.Buffers;
 using System.Linq;
-using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Destructible;
 using Content.Server.NPC.Components;
 using Content.Shared.Administration;
-using Content.Shared.Climbing;
 using Content.Shared.Interaction;
 using Content.Shared.NPC;
 using Robust.Server.Player;
@@ -239,7 +237,7 @@ namespace Content.Server.NPC.Pathfinding
             PathFlags flags = PathFlags.None)
         {
             if (!TryComp<TransformComponent>(entity, out var start))
-                return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
+                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
 
             var layer = 0;
             var mask = 0;
@@ -253,7 +251,7 @@ namespace Content.Server.NPC.Pathfinding
             var path = await GetPath(request);
 
             if (path.Result != PathResult.Path)
-                return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
+                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
 
             return new PathResultEvent(PathResult.Path, path.Path);
         }
@@ -281,13 +279,14 @@ namespace Content.Server.NPC.Pathfinding
                 return 0f;
 
             var distance = 0f;
-            var lastNode = path.Path[0];
+            var node = path.Path.Dequeue();
+            var lastNode = node;
 
-            for (var i = 1; i < path.Path.Count; i++)
+            do
             {
-                var node = path.Path[i];
                 distance += GetTileCost(request, lastNode, node);
-            }
+                lastNode = node;
+            } while (path.Path.TryDequeue(out node));
 
             return distance;
         }
@@ -301,7 +300,7 @@ namespace Content.Server.NPC.Pathfinding
         {
             if (!TryComp<TransformComponent>(entity, out var xform) ||
                 !TryComp<TransformComponent>(target, out var targetXform))
-                return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
+                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
 
             var request = GetRequest(entity, xform.Coordinates, targetXform.Coordinates, range, cancelToken, flags);
             return await GetPath(request);
@@ -436,11 +435,6 @@ namespace Content.Server.NPC.Pathfinding
                 flags |= PathFlags.Smashing;
             }
 
-            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavClimb, out var climb, EntityManager) && climb)
-            {
-                flags |= PathFlags.Climbing;
-            }
-
             if (blackboard.TryGetValue<bool>(NPCBlackboard.NavInteract, out var interact, EntityManager) && interact)
             {
                 flags |= PathFlags.Interact;
@@ -476,7 +470,7 @@ namespace Content.Server.NPC.Pathfinding
 
             if (!request.Task.IsCompletedSuccessfully)
             {
-                return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
+                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
             }
 
             // Same context as do_after and not synchronously blocking soooo

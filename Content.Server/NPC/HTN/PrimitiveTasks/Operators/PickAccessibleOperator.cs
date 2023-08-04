@@ -16,8 +16,8 @@ public sealed class PickAccessibleOperator : HTNOperator
     [DataField("rangeKey", required: true)]
     public string RangeKey = string.Empty;
 
-    [DataField("targetCoordinates")]
-    public string TargetCoordinates = "TargetCoordinates";
+    [DataField("targetKey", required: true)]
+    public string TargetKey = string.Empty;
 
     /// <summary>
     /// Where the pathfinding result will be stored (if applicable). This gets removed after execution.
@@ -58,7 +58,7 @@ public sealed class PickAccessibleOperator : HTNOperator
 
         return (true, new Dictionary<string, object>()
         {
-            { TargetCoordinates, target },
+            { TargetKey, target },
             { PathfindKey, path}
         });
     }

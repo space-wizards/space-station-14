@@ -127,7 +127,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
                 if (ev.EntityTarget is not { Valid: true } entityTarget)
                 {
-                    Log.Error($"Attempted to perform an entity-targeted action without a target! Action: {entityAction.DisplayName}");
+                    Logger.Error($"Attempted to perform an entity-targeted action without a target! Action: {entityAction.DisplayName}");
                     return;
                 }
 
@@ -138,15 +138,11 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
 
                 if (act.Provider == null)
-                {
                     _adminLogger.Add(LogType.Action,
-                        $"{ToPrettyString(user):user} is performing the {name:action} action targeted at {ToPrettyString(entityTarget):target}.");
-                }
+                    $"{ToPrettyString(user):user} is performing the {name:action} action targeted at {ToPrettyString(entityTarget):target}.");
                 else
-                {
                     _adminLogger.Add(LogType.Action,
-                        $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(act.Provider.Value):provider}) targeted at {ToPrettyString(entityTarget):target}.");
-                }
+                    $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(act.Provider.Value):provider}) targeted at {ToPrettyString(entityTarget):target}.");
 
                 if (entityAction.Event != null)
                 {
@@ -160,7 +156,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
                 if (ev.EntityCoordinatesTarget is not { } entityCoordinatesTarget)
                 {
-                    Log.Error($"Attempted to perform a world-targeted action without a target! Action: {worldAction.DisplayName}");
+                    Logger.Error($"Attempted to perform a world-targeted action without a target! Action: {worldAction.DisplayName}");
                     return;
                 }
 
@@ -170,15 +166,11 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
 
                 if (act.Provider == null)
-                {
                     _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action targeted at {entityCoordinatesTarget:target}.");
-                }
                 else
-                {
                     _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(act.Provider.Value):provider}) targeted at {entityCoordinatesTarget:target}.");
-                }
 
                 if (worldAction.Event != null)
                 {
@@ -194,15 +186,11 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
 
                 if (act.Provider == null)
-                {
                     _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action.");
-                }
                 else
-                {
                     _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action provided by {ToPrettyString(act.Provider.Value):provider}.");
-                }
 
                 performEvent = instantAction.Event;
                 break;
@@ -241,7 +229,7 @@ public abstract class SharedActionsSystem : EntitySystem
             if (action.Range <= 0)
                 return true;
 
-            var distance = (_transformSystem.GetWorldPosition(xform) - _transformSystem.GetWorldPosition(targetXform)).Length();
+            var distance = (_transformSystem.GetWorldPosition(xform) - _transformSystem.GetWorldPosition(targetXform)).Length;
             return distance <= action.Range;
         }
 
@@ -337,7 +325,7 @@ public abstract class SharedActionsSystem : EntitySystem
         // Because action classes have state data, e.g. cooldowns and uses-remaining, people should not be adding prototypes directly
         if (action is IPrototype)
         {
-            Log.Error("Attempted to directly add a prototype action. You need to clone a prototype in order to use it.");
+            Logger.Error("Attempted to directly add a prototype action. You need to clone a prototype in order to use it.");
             return;
         }
 

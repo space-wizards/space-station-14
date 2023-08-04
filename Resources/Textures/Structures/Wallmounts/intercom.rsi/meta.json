@@ -20,10 +20,6 @@
             "directions": 4
         },
         {
-            "name": "speaker",
-            "directions": 4
-        },
-        {
             "name": "unshaded",
             "directions": 4
         }

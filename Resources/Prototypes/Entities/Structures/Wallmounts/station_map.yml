@@ -11,6 +11,7 @@
     - type: Transform
       anchored: true
     - type: Sprite
+      netsync: false
       sprite: Structures/Machines/station_map.rsi
       drawdepth: WallMountedItems
       layers:

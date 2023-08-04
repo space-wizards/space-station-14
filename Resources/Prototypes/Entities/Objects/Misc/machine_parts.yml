@@ -6,6 +6,7 @@
   abstract: true
   components:
     - type: Sprite
+      netsync: false
       sprite: Objects/Misc/stock_parts.rsi
     - type: Item
       size: 1

@@ -36,9 +36,6 @@ public sealed class ResaveCommand : LocalizedCommands
                 LoadMap = true,
             });
 
-            // Process deferred component removals.
-            _entManager.CullRemovedComponents();
-
             var mapUid = _mapManager.GetMapEntityId(mapId);
             var mapXform = _entManager.GetComponent<TransformComponent>(mapUid);
 

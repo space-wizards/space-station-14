@@ -14,7 +14,6 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Audio;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Database;
 
 namespace Content.Server.Atmos.Portable
@@ -30,7 +29,6 @@ namespace Content.Server.Atmos.Portable
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -62,7 +60,7 @@ namespace Content.Server.Atmos.Portable
 
             // If we are on top of a connector port, empty into it.
             if (TryComp<NodeContainerComponent>(uid, out var nodeContainer)
-                && _nodeContainer.TryGetNode(nodeContainer, component.PortName, out PortablePipeNode? portableNode)
+                && nodeContainer.TryGetNode(component.PortName, out PortablePipeNode? portableNode)
                 && portableNode.ConnectionsEnabled)
             {
                 _atmosphereSystem.React(component.Air, portableNode);
@@ -106,7 +104,7 @@ namespace Content.Server.Atmos.Portable
             if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!_nodeContainer.TryGetNode(nodeContainer, component.PortName, out PipeNode? portableNode))
+            if (!nodeContainer.TryGetNode(component.PortName, out PipeNode? portableNode))
                 return;
 
             portableNode.ConnectionsEnabled = (args.Anchored && _gasPortableSystem.FindGasPortIn(Transform(uid).GridUid, Transform(uid).Coordinates, out _));
@@ -168,7 +166,7 @@ namespace Content.Server.Atmos.Portable
             // If it's connected to a port, include the port side
             if (TryComp(uid, out NodeContainerComponent? nodeContainer))
             {
-                if (_nodeContainer.TryGetNode(nodeContainer, component.PortName, out PipeNode? port))
+                if(nodeContainer.TryGetNode(component.PortName, out PipeNode? port))
                     gasMixDict.Add(component.PortName, port.Air);
             }
             args.GasMixtures = gasMixDict;

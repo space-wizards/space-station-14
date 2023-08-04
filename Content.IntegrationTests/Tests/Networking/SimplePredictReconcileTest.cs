@@ -1,17 +1,21 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
+using System.Threading.Tasks;
+using NUnit.Framework;
+using Robust.Client.GameObjects;
 using Robust.Client.GameStates;
 using Robust.Client.Timing;
+using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -28,16 +32,13 @@ namespace Content.IntegrationTests.Tests.Networking
     // This means the client is forced to reset it once it gets to the server tick where the server didn't do anything.
     // the tick where the server *should* have, but did not, acknowledge the state change.
     // Finally, we run two events inside the prediction area to ensure reconciling does for incremental stuff.
-    // TODO: This test relies on the EC version of component state handling. Remove in favor of the other two tests for the ECS and auto versions.
     [TestFixture]
     public sealed class SimplePredictReconcileTest
     {
         [Test]
         public async Task Test()
         {
-            // TODO remove fresh=true.
-            // Instead, offset the all the explicit tick checks by some initial tick number.
-            await using var pairTracker = await PoolManager.GetServerClient(new() { Fresh = true, DummyTicker = true });
+            await using var pairTracker = await PoolManager.GetServerClient(new (){Fresh = true, DummyTicker = true});
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
@@ -68,7 +69,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Spawn dummy component entity.
                 var map = sMapManager.CreateMap();
                 var player = sPlayerManager.ServerSessions.Single();
-                serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates(new Vector2(0, 0), map));
+                serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates((0, 0), map));
                 serverComponent = sEntityManager.AddComponent<PredictionTestComponent>(serverEnt);
 
                 // Make client "join game" so they receive game state updates.
@@ -90,21 +91,18 @@ namespace Content.IntegrationTests.Tests.Networking
                 clientComponent = cEntityManager.GetComponent<PredictionTestComponent>(serverEnt);
             });
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(clientComponent.Foo, Is.False);
+            Assert.That(clientComponent.Foo, Is.False);
 
-                // KEEP IN MIND WHEN READING THIS.
-                // The game loop increments CurTick AFTER running the tick.
-                // So when reading CurTick inside an Assert or Post or whatever, the tick reported is the NEXT one to run.
+            // KEEP IN MIND WHEN READING THIS.
+            // The game loop increments CurTick AFTER running the tick.
+            // So when reading CurTick inside an Assert or Post or whatever, the tick reported is the NEXT one to run.
 
-                Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(14)));
-                Assert.That(serverComponent.Foo, Is.False);
+            Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(14)));
+            Assert.That(serverComponent.Foo, Is.False);
 
-                // Client last ran tick 15 meaning it's ahead of the last server tick it processed (12)
-                Assert.That(cGameTiming.CurTick, Is.EqualTo(new GameTick(16)));
-                Assert.That(cGameTiming.LastProcessedTick, Is.EqualTo(new GameTick(12)));
-            });
+            // Client last ran tick 15 meaning it's ahead of the last server tick it processed (12)
+            Assert.That(cGameTiming.CurTick, Is.EqualTo(new GameTick(16)));
+            Assert.That(cGameTiming.LastProcessedTick, Is.EqualTo(new GameTick(12)));
 
             // *** I am using block scopes to visually distinguish these sections of the test to make it more readable.
 
@@ -121,7 +119,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 // Event correctly arrived on client system.
                 Assert.That(clientSystem.EventTriggerList,
-                    Is.EquivalentTo(new[] { (new GameTick(16), true, false, true, true) }));
+                    Is.EquivalentTo(new[] {(new GameTick(16), true, false, true, true)}));
                 clientSystem.EventTriggerList.Clear();
 
                 // Two ticks happen on both sides with nothing really "changing".
@@ -138,27 +136,24 @@ namespace Content.IntegrationTests.Tests.Networking
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList,
-                        Is.EquivalentTo(new[] { (new GameTick(16), false, false, true, true) }));
+                        Is.EquivalentTo(new[] {(new GameTick(16), false, false, true, true)}));
                     clientSystem.EventTriggerList.Clear();
                 }
 
                 {
                     await server.WaitRunTicks(1);
 
-                    Assert.Multiple(() =>
-                    {
-                        // Event arrived on server at tick 16.
-                        Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(17)));
-                        Assert.That(serverSystem.EventTriggerList,
-                            Is.EquivalentTo(new[] { (new GameTick(16), true, false, true, true) }));
-                    });
+                    // Event arrived on server at tick 16.
+                    Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(17)));
+                    Assert.That(serverSystem.EventTriggerList,
+                        Is.EquivalentTo(new[] {(new GameTick(16), true, false, true, true)}));
                     serverSystem.EventTriggerList.Clear();
 
                     await client.WaitRunTicks(1);
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList,
-                        Is.EquivalentTo(new[] { (new GameTick(16), false, false, true, true) }));
+                        Is.EquivalentTo(new[] {(new GameTick(16), false, false, true, true)}));
                     clientSystem.EventTriggerList.Clear();
                 }
 
@@ -170,12 +165,9 @@ namespace Content.IntegrationTests.Tests.Networking
 
                     await client.WaitRunTicks(1);
 
-                    Assert.Multiple(() =>
-                    {
-                        // Event got repeated on client as a past prediction.
-                        Assert.That(clientSystem.EventTriggerList, Is.Empty);
-                        Assert.That(clientComponent.Foo, Is.True);
-                    });
+                    // Event got repeated on client as a past prediction.
+                    Assert.That(clientSystem.EventTriggerList, Is.Empty);
+                    Assert.That(clientComponent.Foo, Is.True);
                     clientSystem.EventTriggerList.Clear();
                 }
             }
@@ -183,13 +175,10 @@ namespace Content.IntegrationTests.Tests.Networking
             // Disallow changes to simulate a misprediction.
             serverSystem.Allow = false;
 
-            Assert.Multiple(() =>
-            {
-                // Assert timing is still correct, should be but it's a good reference for the rest of the test.
-                Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(18)));
-                Assert.That(cGameTiming.CurTick, Is.EqualTo(new GameTick(20)));
-                Assert.That(cGameTiming.LastProcessedTick, Is.EqualTo(new GameTick(16)));
-            });
+            // Assert timing is still correct, should be but it's a good reference for the rest of the test.
+            Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(18)));
+            Assert.That(cGameTiming.CurTick, Is.EqualTo(new GameTick(20)));
+            Assert.That(cGameTiming.LastProcessedTick, Is.EqualTo(new GameTick(16)));
 
             {
                 // Send event to server to change flag again, this time to disable it..
@@ -202,7 +191,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 // Event correctly arrived on client system.
                 Assert.That(clientSystem.EventTriggerList,
-                    Is.EquivalentTo(new[] { (new GameTick(20), true, true, false, false) }));
+                    Is.EquivalentTo(new[] {(new GameTick(20), true, true, false, false)}));
                 clientSystem.EventTriggerList.Clear();
 
                 for (var i = 0; i < 2; i++)
@@ -216,28 +205,25 @@ namespace Content.IntegrationTests.Tests.Networking
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList,
-                        Is.EquivalentTo(new[] { (new GameTick(20), false, true, false, false) }));
+                        Is.EquivalentTo(new[] {(new GameTick(20), false, true, false, false)}));
                     clientSystem.EventTriggerList.Clear();
                 }
 
                 {
                     await server.WaitRunTicks(1);
 
-                    Assert.Multiple(() =>
-                    {
-                        // Event arrived on server at tick 20.
-                        Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(21)));
-                        // But the server didn't listen!
-                        Assert.That(serverSystem.EventTriggerList,
-                            Is.EquivalentTo(new[] { (new GameTick(20), true, true, true, false) }));
-                    });
+                    // Event arrived on server at tick 20.
+                    Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(21)));
+                    // But the server didn't listen!
+                    Assert.That(serverSystem.EventTriggerList,
+                        Is.EquivalentTo(new[] {(new GameTick(20), true, true, true, false)}));
                     serverSystem.EventTriggerList.Clear();
 
                     await client.WaitRunTicks(1);
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList,
-                        Is.EquivalentTo(new[] { (new GameTick(20), false, true, false, false) }));
+                        Is.EquivalentTo(new[] {(new GameTick(20), false, true, false, false)}));
                     clientSystem.EventTriggerList.Clear();
                 }
 
@@ -249,13 +235,10 @@ namespace Content.IntegrationTests.Tests.Networking
 
                     await client.WaitRunTicks(1);
 
-                    Assert.Multiple(() =>
-                    {
-                        // Event no longer got repeated and flag was *not* set by server state.
-                        // Mispredict gracefully handled!
-                        Assert.That(clientSystem.EventTriggerList, Is.Empty);
-                        Assert.That(clientComponent.Foo, Is.True);
-                    });
+                    // Event no longer got repeated and flag was *not* set by server state.
+                    // Mispredict gracefully handled!
+                    Assert.That(clientSystem.EventTriggerList, Is.Empty);
+                    Assert.That(clientComponent.Foo, Is.True);
                     clientSystem.EventTriggerList.Clear();
                 }
             }
@@ -263,13 +246,10 @@ namespace Content.IntegrationTests.Tests.Networking
             // Re-allow changes to make everything work correctly again.
             serverSystem.Allow = true;
 
-            Assert.Multiple(() =>
-            {
-                // Assert timing is still correct.
-                Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(22)));
-                Assert.That(cGameTiming.CurTick, Is.EqualTo(new GameTick(24)));
-                Assert.That(cGameTiming.LastProcessedTick, Is.EqualTo(new GameTick(20)));
-            });
+            // Assert timing is still correct.
+            Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(22)));
+            Assert.That(cGameTiming.CurTick, Is.EqualTo(new GameTick(24)));
+            Assert.That(cGameTiming.LastProcessedTick, Is.EqualTo(new GameTick(20)));
 
             {
                 // Send first event to disable the flag (reminder: it never got accepted by the server).
@@ -282,7 +262,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 // Event correctly arrived on client system.
                 Assert.That(clientSystem.EventTriggerList,
-                    Is.EquivalentTo(new[] { (new GameTick(24), true, true, false, false) }));
+                    Is.EquivalentTo(new[] {(new GameTick(24), true, true, false, false)}));
                 clientSystem.EventTriggerList.Clear();
 
                 // Run one tick, everything checks out.
@@ -296,7 +276,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
                     // Event got repeated on client as a past prediction.
                     Assert.That(clientSystem.EventTriggerList,
-                        Is.EquivalentTo(new[] { (new GameTick(24), false, true, false, false) }));
+                        Is.EquivalentTo(new[] {(new GameTick(24), false, true, false, false)}));
                     clientSystem.EventTriggerList.Clear();
                 }
 
@@ -310,7 +290,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 // Event correctly arrived on client system.
                 Assert.That(clientSystem.EventTriggerList,
-                    Is.EquivalentTo(new[] { (new GameTick(25), true, false, true, true) }));
+                    Is.EquivalentTo(new[] {(new GameTick(25), true, false, true, true)}));
                 clientSystem.EventTriggerList.Clear();
 
                 // Next tick we run, both events come in, but at different times.
@@ -336,7 +316,7 @@ namespace Content.IntegrationTests.Tests.Networking
                     await server.WaitRunTicks(1);
 
                     Assert.That(serverSystem.EventTriggerList,
-                        Is.EquivalentTo(new[] { (new GameTick(24), true, true, false, false) }));
+                        Is.EquivalentTo(new[] {(new GameTick(24), true, true, false, false)}));
                     serverSystem.EventTriggerList.Clear();
 
                     await client.WaitRunTicks(1);
@@ -356,7 +336,7 @@ namespace Content.IntegrationTests.Tests.Networking
                     await server.WaitRunTicks(1);
 
                     Assert.That(serverSystem.EventTriggerList,
-                        Is.EquivalentTo(new[] { (new GameTick(25), true, false, true, true) }));
+                        Is.EquivalentTo(new[] {(new GameTick(25), true, false, true, true)}));
                     serverSystem.EventTriggerList.Clear();
 
                     await client.WaitRunTicks(1);
@@ -378,13 +358,10 @@ namespace Content.IntegrationTests.Tests.Networking
 
                     await client.WaitRunTicks(1);
 
-                    Assert.Multiple(() =>
-                    {
-                        // Event got repeated on client as a past prediction.
-                        Assert.That(clientSystem.EventTriggerList, Is.Empty);
+                    // Event got repeated on client as a past prediction.
+                    Assert.That(clientSystem.EventTriggerList, Is.Empty);
 
-                        Assert.That(clientComponent.Foo, Is.True);
-                    });
+                    Assert.That(clientComponent.Foo, Is.True);
                 }
             }
 
@@ -393,15 +370,35 @@ namespace Content.IntegrationTests.Tests.Networking
         }
 
         [NetworkedComponent()]
-        [Access(typeof(PredictionTestEntitySystem))]
-        [RegisterComponent]
         public sealed class PredictionTestComponent : Component
         {
-            public bool Foo;
-        }
+            private bool _foo;
 
-        public sealed class PredictionTestEntitySystem : EntitySystem
-        {
+            public bool Foo
+            {
+                get => _foo;
+                set
+                {
+                    _foo = value;
+                    Dirty();
+                }
+            }
+
+            public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+            {
+                if (curState is not PredictionComponentState pred)
+                {
+                    return;
+                }
+
+                Foo = pred.Foo;
+            }
+
+            public override ComponentState GetComponentState()
+            {
+                return new PredictionComponentState(Foo);
+            }
+
             [Serializable, NetSerializable]
             private sealed class PredictionComponentState : ComponentState
             {
@@ -412,7 +409,11 @@ namespace Content.IntegrationTests.Tests.Networking
                     Foo = foo;
                 }
             }
+        }
 
+        [Reflect(false)]
+        public sealed class PredictionTestEntitySystem : EntitySystem
+        {
             public bool Allow { get; set; } = true;
 
             // Queue of all the events that come in so we can test that they come in perfectly as expected.
@@ -427,23 +428,6 @@ namespace Content.IntegrationTests.Tests.Networking
 
                 SubscribeNetworkEvent<SetFooMessage>(HandleMessage);
                 SubscribeLocalEvent<SetFooMessage>(HandleMessage);
-
-                SubscribeLocalEvent<PredictionTestComponent, ComponentGetState>(OnGetState);
-                SubscribeLocalEvent<PredictionTestComponent, ComponentHandleState>(OnHandleState);
-            }
-
-            private void OnHandleState(EntityUid uid, PredictionTestComponent component, ref ComponentHandleState args)
-            {
-                if (args.Current is not PredictionComponentState state)
-                    return;
-
-                component.Foo = state.Foo;
-                Dirty(component);
-            }
-
-            private void OnGetState(EntityUid uid, PredictionTestComponent component, ref ComponentGetState args)
-            {
-                args.State = new PredictionComponentState(component.Foo);
             }
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
@@ -453,10 +437,10 @@ namespace Content.IntegrationTests.Tests.Networking
                 if (Allow)
                 {
                     component.Foo = message.NewFoo;
-                    Dirty(message.Uid, component);
                 }
 
-                EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo, message.NewFoo));
+                EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo,
+                    message.NewFoo));
             }
         }
 

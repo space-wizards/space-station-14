@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
-using Robust.Shared.Random;
+﻿using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Worldgen.Tools;
@@ -91,7 +90,7 @@ public sealed class PoissonDiskSampler
 
             var p = new Vector2((float) xr, (float) yr);
             if (settings.RejectionSqDistance != null &&
-                (settings.Center - p).LengthSquared() > settings.RejectionSqDistance)
+                (settings.Center - p).LengthSquared > settings.RejectionSqDistance)
                 continue;
 
             var index = Denormalize(p, settings.TopLeft, settings.CellSize);
@@ -110,7 +109,7 @@ public sealed class PoissonDiskSampler
         if (q.X >= settings.TopLeft.X && q.X < settings.LowerRight.X &&
             q.Y > settings.TopLeft.Y && q.Y < settings.LowerRight.Y &&
             (settings.RejectionSqDistance == null ||
-             (settings.Center - q).LengthSquared() <= settings.RejectionSqDistance))
+             (settings.Center - q).LengthSquared <= settings.RejectionSqDistance))
         {
             var qIndex = Denormalize(q, settings.TopLeft, settings.CellSize);
             var tooClose = false;
@@ -122,7 +121,7 @@ public sealed class PoissonDiskSampler
                  j < Math.Min(settings.GridHeight, qIndex.Y + 3) && !tooClose;
                  j++)
             {
-                if (state.Grid[i, j].HasValue && (state.Grid[i, j]!.Value - q).Length() < settings.MinimumDistance)
+                if (state.Grid[i, j].HasValue && (state.Grid[i, j]!.Value - q).Length < settings.MinimumDistance)
                     tooClose = true;
             }
 

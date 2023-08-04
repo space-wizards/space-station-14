@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.Message;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
@@ -76,7 +75,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
                     {
                         Orientation = LayoutOrientation.Vertical
                     }),
-                    new Control {MinSize = new Vector2(0, 110)}
+                    new Control {MinSize = (0, 110)}
                 }
             };
 
@@ -126,13 +125,13 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
             _topContainer.AddChild(topRow);
             _topContainer.AddChild(new PanelContainer
             {
-                MinSize = new Vector2(0, 2),
+                MinSize = (0, 2),
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
             });
             _topContainer.AddChild(middle);
             _topContainer.AddChild(new PanelContainer
             {
-                MinSize = new Vector2(0, 2),
+                MinSize = (0, 2),
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
             });
 
@@ -142,7 +141,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
 
             //internals
             _lblInternals = new RichTextLabel
-                {MinSize = new Vector2(200, 0), VerticalAlignment = VAlignment.Center};
+                {MinSize = (200, 0), VerticalAlignment = VAlignment.Center};
             _btnInternals = new Button {Text = Loc.GetString("gas-tank-window-internals-toggle-button") };
 
             _contentContainer.AddChild(

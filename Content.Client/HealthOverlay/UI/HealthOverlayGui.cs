@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.IoC;
 using Content.Client.Resources;
 using Content.Shared.Damage;

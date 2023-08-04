@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -36,7 +35,7 @@ namespace Content.Client.Info
 
             Contents.AddChild(rootContainer);
 
-            SetSize = new Vector2(650, 650);
+            SetSize = (650, 650);
         }
 
         private void PopulateTutorial(Info tutorialList)

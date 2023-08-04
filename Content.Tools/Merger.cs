@@ -111,7 +111,7 @@ namespace Content.Tools
                         var cI = MapTileId(cR.ReadUInt32(), TileMapFromOtherToOurs);
                         // cI needs translation.
 
-                        var result = aI;
+                        uint result = aI;
                         if (aI == bI)
                         {
                             // If aI == bI then aI did not change anything, so cI always wins
@@ -138,12 +138,12 @@ namespace Content.Tools
             }
         }
 
-        public static uint MapTileId(uint src, Dictionary<uint, uint> mapping)
+        public uint MapTileId(uint src, Dictionary<uint, uint> mapping)
         {
             return (src & 0xFFFF0000) | mapping[src & 0xFFFF];
         }
 
-        public static Dictionary<string, YamlMappingNode> ConvertTileChunks(YamlSequenceNode chunks)
+        public Dictionary<string, YamlMappingNode> ConvertTileChunks(YamlSequenceNode chunks)
         {
             var map = new Dictionary<string, YamlMappingNode>();
             foreach (var chunk in chunks)
@@ -151,7 +151,7 @@ namespace Content.Tools
             return map;
         }
 
-        public static byte[] GetChunkBytes(Dictionary<string, YamlMappingNode> chunks, string ind)
+        public byte[] GetChunkBytes(Dictionary<string, YamlMappingNode> chunks, string ind)
         {
             if (!chunks.ContainsKey(ind))
                 return new byte[ExpectedChunkSize];
@@ -197,7 +197,7 @@ namespace Content.Tools
 
         public bool MergeEntities()
         {
-            var success = true;
+            bool success = true;
             foreach (var kvp in EntityMapFromOtherToOurs)
             {
                 // For debug use.
@@ -220,13 +220,10 @@ namespace Content.Tools
                 else
                 {
                     oursEnt = (YamlMappingNode) YamlTools.CopyYamlNodes(MapOther.Entities[kvp.Key]);
-                    if (!MapEntity(oursEnt))
-                    {
+                    if (!MapEntity(oursEnt)) {
                         Console.WriteLine("Unable to successfully import entity C/" + kvp.Key);
                         success = false;
-                    }
-                    else
-                    {
+                    } else {
                         MapOurs.Entities[kvp.Value] = oursEnt;
                     }
                 }
@@ -243,7 +240,7 @@ namespace Content.Tools
                 return false;
             // Merge stuff that isn't components
             var path = "Entity" + other["uid"];
-            YamlTools.MergeYamlMappings(ours, based, otherMapped, path, new[] { "components" });
+            YamlTools.MergeYamlMappings(ours, based, otherMapped, path, new[] {"components"});
             // Components are special
             var ourComponents = new Dictionary<string, YamlMappingNode>();
             var basedComponents = new Dictionary<string, YamlMappingNode>();
@@ -304,11 +301,10 @@ namespace Content.Tools
 
         public bool MapEntityProperty(YamlMappingNode node, string property, string path)
         {
-            if (node.Children.ContainsKey(property))
-            {
+            if (node.Children.ContainsKey(property)) {
                 var prop = node[property];
-                if (prop is YamlScalarNode yamlProp)
-                    return MapEntityProperty(yamlProp, path + "/" + property);
+                if (prop is YamlScalarNode)
+                    return MapEntityProperty((YamlScalarNode) prop, path + "/" + property);
             }
             return true;
         }
@@ -337,7 +333,7 @@ namespace Content.Tools
                 case YamlSequenceNode subSequence:
                     var idx = 0;
                     foreach (var val in subSequence)
-                        if (!MapEntityRecursiveAndBadly(val, path + "/" + idx++))
+                        if (!MapEntityRecursiveAndBadly(val, path + "/" + (idx++)))
                             return false;
                     return true;
                 case YamlMappingNode subMapping:

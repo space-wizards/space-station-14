@@ -384,7 +384,7 @@ namespace Content.Client.Light.Components
         public readonly List<LightBehaviourAnimationTrack> Behaviours = new();
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public readonly List<AnimationContainer> Animations = new();
+        private readonly List<AnimationContainer> _animations = new();
 
         [ViewVariables(VVAccess.ReadOnly)]
         private Dictionary<string, object> _originalPropertyValues = new();
@@ -400,8 +400,57 @@ namespace Content.Client.Light.Components
                     AnimationTracks = {behaviour}
                 };
 
-                Animations.Add(new AnimationContainer(key, animation, behaviour));
+                _animations.Add(new AnimationContainer(key, animation, behaviour));
                 key++;
+            }
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            // TODO: Do NOT ensure component here. And use eventbus events instead...
+            Owner.EnsureComponent<AnimationPlayerComponent>();
+
+            if (_entMan.TryGetComponent(Owner, out AnimationPlayerComponent? animation))
+            {
+#pragma warning disable 618
+                animation.AnimationCompleted += OnAnimationCompleted;
+#pragma warning restore 618
+            }
+
+            foreach (var container in _animations)
+            {
+                container.LightBehaviour.Initialize(Owner, _random, _entMan);
+            }
+
+            // we need to initialize all behaviours before starting any
+            foreach (var container in _animations)
+            {
+                if (container.LightBehaviour.Enabled)
+                {
+                    StartLightBehaviour(container.LightBehaviour.ID);
+                }
+            }
+        }
+
+        private void OnAnimationCompleted(string key)
+        {
+            var container = _animations.FirstOrDefault(x => x.FullKey == key);
+
+            if (container == null)
+            {
+                return;
+            }
+
+            if (container.LightBehaviour.IsLooped)
+            {
+                container.LightBehaviour.UpdatePlaybackValues(container.Animation);
+
+                if (_entMan.TryGetComponent(Owner, out AnimationPlayerComponent? animation))
+                {
+                    animation.Play(container.Animation, container.FullKey);
+                }
             }
         }
 
@@ -436,7 +485,7 @@ namespace Content.Client.Light.Components
                 return;
             }
 
-            foreach (var container in Animations)
+            foreach (var container in _animations)
             {
                 if (container.LightBehaviour.ID == id || id == string.Empty)
                 {
@@ -467,7 +516,7 @@ namespace Content.Client.Light.Components
 
             var toRemove = new List<AnimationContainer>();
 
-            foreach (var container in Animations)
+            foreach (var container in _animations)
             {
                 if (container.LightBehaviour.ID == id || id == string.Empty)
                 {
@@ -485,7 +534,7 @@ namespace Content.Client.Light.Components
 
             foreach (var container in toRemove)
             {
-                Animations.Remove(container);
+                _animations.Remove(container);
             }
 
             if (resetToOriginalSettings && _entMan.TryGetComponent(Owner, out PointLightComponent? light))
@@ -510,7 +559,7 @@ namespace Content.Client.Light.Components
                 return false;
             }
 
-            return Animations.Any(container => animation.HasRunningAnimation(KeyPrefix + container.Key));
+            return _animations.Any(container => animation.HasRunningAnimation(KeyPrefix + container.Key));
         }
 
         /// <summary>
@@ -520,7 +569,7 @@ namespace Content.Client.Light.Components
         {
             var key = 0;
 
-            while (Animations.Any(x => x.Key == key))
+            while (_animations.Any(x => x.Key == key))
             {
                 key++;
             }
@@ -533,7 +582,7 @@ namespace Content.Client.Light.Components
             behaviour.Initialize(Owner, _random, _entMan);
 
             var container = new AnimationContainer(key, animation, behaviour);
-            Animations.Add(container);
+            _animations.Add(container);
 
             if (playImmediately)
             {

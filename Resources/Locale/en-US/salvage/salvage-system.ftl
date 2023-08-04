@@ -19,5 +19,3 @@ salvage-system-magnet-examined-active = The salvage magnet is holding salvage in
 }
 salvage-system-magnet-examined-releasing = The salvage magnet is releasing the salvage.
 salvage-system-magnet-examined-cooling-down = The salvage magnet is cooling down. It will be ready in: {$timeLeft} seconds.
-salvage-system-magnet-delay-upgrade = Attaching/cooldown delay
-

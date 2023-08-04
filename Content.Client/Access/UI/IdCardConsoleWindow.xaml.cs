@@ -15,8 +15,6 @@ namespace Content.Client.Access.UI
     public sealed partial class IdCardConsoleWindow : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ILogManager _logManager = default!;
-        private readonly ISawmill _logMill = default!;
 
         private readonly IdCardConsoleBoundUserInterface _owner;
 
@@ -32,7 +30,6 @@ namespace Content.Client.Access.UI
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
-            _logMill = _logManager.GetSawmill(SharedIdCardConsoleSystem.Sawmill);
 
             _owner = owner;
 
@@ -70,7 +67,7 @@ namespace Content.Client.Access.UI
             {
                 if (!prototypeManager.TryIndex<AccessLevelPrototype>(access, out var accessLevel))
                 {
-                    _logMill.Error($"Unable to find accesslevel for {access}");
+                    Logger.ErrorS(SharedIdCardConsoleSystem.Sawmill, $"Unable to find accesslevel for {access}");
                     continue;
                 }
 

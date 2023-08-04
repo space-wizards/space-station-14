@@ -41,9 +41,9 @@ public sealed class ContainmentFieldSystem : EntitySystem
         }
     }
 
-    private void HandleEventHorizon(EntityUid uid, ContainmentFieldComponent component, ref EventHorizonAttemptConsumeEntityEvent args)
+    private void HandleEventHorizon(EntityUid uid, ContainmentFieldComponent component, EventHorizonAttemptConsumeEntityEvent args)
     {
         if(!args.Cancelled && !args.EventHorizon.CanBreachContainment)
-            args.Cancelled = true;
+            args.Cancel();
     }
 }

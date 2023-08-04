@@ -5,13 +5,11 @@ namespace Content.Shared.Radio;
 [Serializable, NetSerializable]
 public enum RadioDeviceVisuals : byte
 {
-    Broadcasting,
-    Speaker
+    Broadcasting
 }
 
 [Serializable, NetSerializable]
 public enum RadioDeviceVisualLayers : byte
 {
-    Broadcasting,
-    Speaker
+    Broadcasting
 }

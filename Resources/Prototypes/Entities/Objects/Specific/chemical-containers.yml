@@ -11,6 +11,7 @@
           canMix: true
     - type: Sprite
       sprite: Objects/Specific/Chemistry/jug.rsi
+      netsync: false
       layers:
         - state: jug
         - state: jug1

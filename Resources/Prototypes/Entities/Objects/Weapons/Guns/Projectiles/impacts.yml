@@ -5,6 +5,7 @@
   - type: TimedDespawn
     lifetime: 0.25
   - type: Sprite
+    netsync: false
     drawdepth: Effects
     layers:
     - shader: unshaded
@@ -23,6 +24,7 @@
     - type: TimedDespawn
       lifetime: 0.2
     - type: Sprite
+      netsync: false
       drawdepth: Effects
       layers:
         - shader: unshaded
@@ -41,6 +43,7 @@
   - type: TimedDespawn
     lifetime: 0.2
   - type: Sprite
+    netsync: false
     drawdepth: Effects
     layers:
     - shader: unshaded
