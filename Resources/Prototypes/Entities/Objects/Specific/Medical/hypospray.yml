@@ -140,7 +140,7 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
-    - state: salpen
+    - state: bicpen
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerManager
     solutions:
@@ -163,7 +163,7 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
-    - state: oxapen
+    - state: dermpen
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerManager
     solutions:
