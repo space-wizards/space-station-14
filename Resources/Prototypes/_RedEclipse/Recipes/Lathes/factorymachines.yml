@@ -1,0 +1,6 @@
+- type: latheRecipe
+  id: Minibomb
+  result: Minibomb
+  completetime: 2
+  materials:
+    Steel: 200

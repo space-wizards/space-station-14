@@ -1,7 +1,7 @@
 - type: entity
-  id: FactoryMachinePlaceholder
+  id: BaseFactoryMachine
   parent: BaseLathe
-  name: factlory machine placeholder
+  name: base factory machine
   description: this isnt going to last long
   components:
   - type: Sprite
@@ -18,7 +18,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
-    board: FactoryPlaceholderMachineCircuitboard
+    board: BaseFactoryMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -28,5 +28,30 @@
   - type: Lathe
     idleState: icon
     runningState: building
+
+- type: entity
+  id: MinibombFactoryMachine
+  parent: BaseFactoryMachine
+  name: minibomb assembler
+  description: CyberSun official minibomb assembler, has sharp edges.
+  components:
+  - type: Sprite
+  sprite: Structures/Machines/autolathe.rsi
+  snapCardinals: true
+  layers:
+  - state: icon
+    map: ["enum.LatheVisualLayers.IsRunning"]
+  - state: unlit
+    shader: unshaded
+    map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - state: inserting
+    map: ["enum.MaterialStorageVisualLayers.Inserting"]
+  - state: panel
+    map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: MinibombAssemblerCircuitboard
+  - type: Lathe
+    idleState: icon
+    runningState: building
     staticRecipes:
-      - Wrench
+      - Minibomb
