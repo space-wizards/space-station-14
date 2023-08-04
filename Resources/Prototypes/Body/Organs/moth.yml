@@ -4,6 +4,9 @@
   noSpawn: true
   components:
   - type: Stomach
+    specialDigestible:
+      tags:
+      - ClothMade
   - type: SolutionContainerManager
     solutions:
       stomach:

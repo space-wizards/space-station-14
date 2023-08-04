@@ -165,6 +165,9 @@
   id: CigPack
 
 - type: Tag
+  id: ClothMade
+
+- type: Tag
   id: ClownMask
 
 - type: Tag
@@ -884,6 +887,3 @@
 
 - type: Tag
   id: ModularReceiver
-
-- type: Tag
-  id: ClothEater

@@ -97,17 +97,6 @@ namespace Content.Server.Nutrition.EntitySystems
             if (food == user || TryComp<MobStateComponent>(food, out var mobState) && _mobStateSystem.IsAlive(food, mobState)) // Suppresses eating alive mobs
                 return (false, false);
 
-            // Check if there's a required tag and if it 
-            if (foodComp.RequiredTag != String.Empty && !_tags.HasTag(target, foodComp.RequiredTag))
-                return (false, false);
-
-            // Make sure moths can't eat anything else
-            if (_tags.HasTag(target, "ClothEater") && (foodComp.RequiredTag == String.Empty || foodComp.RequiredTag != "ClothEater"))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("food-repulsing"), target);
-                return (false, false);
-            }
-
             // Target can't be fed or they're already eating
             if (!TryComp<BodyComponent>(target, out var body))
                 return (false, false);
@@ -120,6 +109,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var forceFeed = user != target;
 
+            // Check for special digestibles
             if (!IsDigestibleBy(food, foodComp, stomachs))
             {
                 _popupSystem.PopupEntity(
@@ -380,27 +370,32 @@ namespace Content.Server.Nutrition.EntitySystems
         }
 
         /// <summary>
-        ///     Returns true if <paramref name="stomachs"/> has a <see cref="StomachComponent"/> that is capable of
-        ///     digesting this <paramref name="food"/> (or if they even have enough stomachs in the first place).
+        ///     Returns true if <paramref name="stomachs"/> has a <see cref="StomachComponent.SpecialDigestible"/> that whitelists
+        ///     this <paramref name="food"/> (or if they even have enough stomachs in the first place).
         /// </summary>
         private bool IsDigestibleBy(EntityUid food, FoodComponent component, List<(StomachComponent, OrganComponent)> stomachs)
         {
             var digestible = true;
 
+            // Does the mob have enough stomachs?
             if (stomachs.Count < component.RequiredStomachs)
                 return false;
 
-            if (!component.RequiresSpecialDigestion)
-                return true;
-
+            // Run through the mobs' stomachs
             foreach (var (comp, _) in stomachs)
             {
+                // Find a stomach with a SpecialDigestible
                 if (comp.SpecialDigestible == null)
                     continue;
-
-                if (!comp.SpecialDigestible.IsValid(food, EntityManager))
-                    return false;
+                // Check if the food is in the whitelist
+                if (comp.SpecialDigestible.IsValid(food, EntityManager))
+                    return true;
+                // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
+                return false;
             }
+
+            if (component.RequiresSpecialDigestion)
+                    return false;
 
             return digestible;
         }

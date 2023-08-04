@@ -12,15 +12,6 @@
     tags:
       - DroneUsable
       - WhitelistChameleon
-  - type: Food
-    requiredTag: ClothEater
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 10
 
 - type: entity
   abstract: true

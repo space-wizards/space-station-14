@@ -53,12 +53,6 @@
     heatDamage:
       types:
         Heat : 0.2 #per second, scales with temperature & other constants
-  - type: Tag
-    tags: 
-      - CanPilot
-      - ClothEater 
-      - DoorBumpOpener
-      - FootstepSound
 
 - type: entity
   save: false

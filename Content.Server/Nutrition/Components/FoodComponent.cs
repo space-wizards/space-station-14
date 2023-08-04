@@ -36,14 +36,11 @@ namespace Content.Server.Nutrition.Components
         public bool UtensilRequired = false;
 
         /// <summary>
-        ///     If this is set to true, eating this food will require you to have a stomach with a
+        ///     If this is set to true, food can only be eaten if you have a stomach with a
         ///     <see cref="StomachComponent.SpecialDigestible"/> that includes this entity in its whitelist,
         ///     rather than just being digestible by anything that can eat food.
+        ///     Whitelist the food component to allow eating of normal food. 
         /// </summary>
-        /// <remarks>
-        ///     TODO think about making this a little more complex, right now you cant disallow mobs from eating stuff
-        ///     that everyone else can eat
-        /// </remarks>
         [DataField("requiresSpecialDigestion")]
         public bool RequiresSpecialDigestion = false;
 
@@ -72,12 +69,6 @@ namespace Content.Server.Nutrition.Components
         /// </summary>
         [DataField("forceFeedDelay")]
         public float ForceFeedDelay = 3;
-
-        /// <summary>
-        ///     A whitelist for what the mob can eat. 
-        /// </summary>
-        [DataField("requiredTag")]
-        public string RequiredTag = string.Empty;
 
         [ViewVariables]
         public int UsesRemaining

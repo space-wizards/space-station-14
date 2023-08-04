@@ -15,7 +15,7 @@
     - id: MaterialCloth1
       amount: 3
   - type: Food
-    requiredTag: ClothEater
+    requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
       food:
@@ -23,6 +23,9 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 30
+  - type: Tag
+    tags: 
+      - ClothMade
 
 - type: entity
   abstract: true
