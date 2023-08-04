@@ -1,33 +1,5 @@
 ﻿- type: entity
   save: false
   name: Vox
-  parent: BaseMobVox
+  parent: [BaseMobVox, BaseMob]
   id: MobVox
-  components:
-    - type: CombatMode
-    - type: InteractionPopup
-      successChance: 1
-      interactSuccessString: hugging-success-generic
-      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
-      messagePerceivedByOthers: hugging-success-generic-others
-    - type: MindContainer
-      showExamineInfo: true
-    - type: Input
-      context: "human"
-    - type: MobMover
-    - type: InputMover
-    - type: Alerts
-    - type: Eye
-    - type: CameraRecoil
-    - type: Examiner
-    - type: CanHostGuardian
-    - type: NpcFactionMember
-      factions:
-        - NanoTrasen
-    - type: Respirator
-      damage:
-       types:
-        Asphyxiation: 1.0
-      damageRecovery:
-        types:
-          Asphyxiation: -1.0

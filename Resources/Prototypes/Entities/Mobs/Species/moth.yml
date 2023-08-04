@@ -1,0 +1,66 @@
+- type: entity
+  save: false
+  name: Urist McFluff
+  parent: BaseMobOrganic
+  id: BaseMobMoth
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: Moth
+  - type: Hunger
+    starvationDamage:
+      types:
+        Cold: 0.5
+        Bloodloss: 0.5
+  - type: Thirst
+  - type: Icon
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: full
+  - type: Body
+    prototype: Moth
+    requiredLegs: 2
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Moth
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 5
+  - type: Vocal
+    sounds:
+      Male: UnisexMoth
+      Female: UnisexMoth
+      Unsexed: UnisexMoth
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4.5
+    weightlessAcceleration: 1.5 # Move around more easily in space.
+    weightlessFriction: 1
+    weightlessModifier: 1
+  - type: Flammable
+    damage:
+      types:
+        Heat: 1.5 # moths burn more easily
+  - type: Temperature # Moths hate the heat and thrive in the cold.
+    heatDamageThreshold: 335
+    coldDamageThreshold: 230
+    currentTemperature: 310.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 0.05 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 0.2 #per second, scales with temperature & other constants
+
+- type: entity
+  save: false
+  name: Urist McFluff
+  parent: MobHumanDummy
+  id: MobMothDummy
+  noSpawn: true
+  description: A dummy moth meant to be used in character setup.
+  components:
+  - type: HumanoidAppearance
+    species: Moth
