@@ -333,6 +333,7 @@
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
+      - id: BookSecretDocuments
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -346,22 +347,8 @@
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos
       - id: ClothingOuterCoatHoSTrench
-      - id: SadTromboneImplant
-        prob: 0.5
       - id: ClothingUniformJumpskirtHoSAlt
       - id: ClothingUniformJumpsuitHoSAlt
-      - id: ClothingUniformJumpsuitHoSBlue
-        prob: 0.5
-      - id: ClothingUniformJumpsuitHoSGrey
-        prob: 0.5
-      - id: ClothingUniformJumpsuitHoSParadeMale
-        prob: 0.1
-      - id: ClothingUniformJumpskirtHoSParadeMale
-        prob: 0.1
-      - id: ClothingShoeSlippersDuck
-        prob: 0.2
-      - id: DrinkVacuumFlask
-        prob: 0.8
       - id: ClothingBeltSecurityFilled
       - id: ClothingHeadsetAltSecurity
       - id: ClothingEyesGlassesSecurity
@@ -370,8 +357,6 @@
         prob: 0.50
       - id: ToyFigurineSecurity
         prob: 0.15
-      - id: PlushieSharkPink
-        prob: 0.1
       - id: DoorRemoteSecurity
       - id: ClothingUniformJumpskirtHosFormal
       - id: ClothingUniformJumpsuitHosFormal
@@ -379,3 +364,4 @@
       - id: SecurityTechFabCircuitboard
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
+      - id: BookSecretDocuments
