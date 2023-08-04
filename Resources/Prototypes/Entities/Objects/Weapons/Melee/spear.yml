@@ -1,4 +1,3 @@
-# TODO: Why does this shit not have a common parent, wat?
 - type: entity
   name: spear
   parent: BaseItem
