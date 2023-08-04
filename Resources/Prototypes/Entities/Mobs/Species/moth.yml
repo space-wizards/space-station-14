@@ -54,7 +54,6 @@
       types:
         Heat : 0.2 #per second, scales with temperature & other constants
   - type: Sprite # sprite again because we want different layer ordering
-    netsync: false
     noRot: true
     drawdepth: Mobs
     layers:
