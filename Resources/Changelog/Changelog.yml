@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: puddle stickiness now updates when solution changes, type: Fix}
-  id: 3936
-  time: '2023-06-03T19:34:44.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Due to budget cuts in atmos, large gas tanks had their volume reduced
@@ -2985,3 +2980,10 @@ Entries:
   - {message: People wont hear buckling and unbuckling sounds twice anymore., type: Fix}
   id: 4435
   time: '2023-08-04T22:24:21.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Gas tanks and jetpacks have reduced capacity and now need to be refilled
+      more regularly., type: Tweak}
+  - {message: Jetpacks now start fully filled., type: Tweak}
+  id: 4436
+  time: '2023-08-04T22:40:42.0000000+00:00'
