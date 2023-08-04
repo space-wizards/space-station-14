@@ -1,0 +1,13 @@
+- type: entity
+  id: FactoryCircuitboard
+  parent: BaseMachineCircuitboard
+  name: autolathe machine board
+  description: A machine printed circuit board for an autolathe
+  components:
+    - type: FactoryPlaceholderMachineCircuitboard
+      prototype: FactoryMachinePlaceholder
+      requirements:
+        MatterBin: 3
+        Manipulator: 1
+      materialRequirements:
+        Glass: 1
