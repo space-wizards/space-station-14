@@ -80993,6 +80993,28 @@ entities:
     - pos: -61.5,26.5
       parent: 1
       type: Transform
+- proto: MaintenancePlantSpawner
+  entities:
+  - uid: 9010
+    components:
+    - pos: -21.5,0.5
+      parent: 1
+      type: Transform
+  - uid: 9013
+    components:
+    - pos: -66.5,50.5
+      parent: 1
+      type: Transform
+  - uid: 9014
+    components:
+    - pos: 8.5,39.5
+      parent: 1
+      type: Transform
+  - uid: 9016
+    components:
+    - pos: 29.5,-5.5
+      parent: 1
+      type: Transform
 - proto: MaintenanceToolSpawner
   entities:
   - uid: 2072

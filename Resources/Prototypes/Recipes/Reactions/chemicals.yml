@@ -21,11 +21,11 @@
 - type: reaction
   id: Phenol
   reactants:
-    Water:
+    Oxygen:
       amount: 1
-    Chlorine:
+    Hydrogen:
       amount: 1
-    Oil:
+    Carbon:
       amount: 1
   products:
     Phenol: 3
@@ -347,14 +347,12 @@
   reactants:
     Ethyloxyephedrine:
       amount: 1
-    Charcoal:
-      amount: 1
-    Pax:
+    SodiumCarbonate:
       amount: 1
     Coffee:
       amount: 1
   products:
-    Diphenylmethylamine: 2
+    Diphenylmethylamine: 3
 
 - type: reaction
   id: SodiumCarbonate
