@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urist McPlants
-  parent: [BaseMobDiona, MobHuman]
+  parent: [BaseMobDiona, BaseMob]
   id: MobDiona
   components:
     - type: Respirator

@@ -20,7 +20,7 @@
       - Trash
 
 - type: entity
-  id: TorsoBase
+  id: BaseTorso
   name: "torso"
   parent: BasePart
   components:
@@ -28,7 +28,7 @@
     partType: Torso
 
 - type: entity
-  id: HeadBase
+  id: BaseHead
   name: "head"
   parent: BasePart
   components:
@@ -42,7 +42,7 @@
       - Head
 
 - type: entity
-  id: LeftArmBase
+  id: BaseLeftArm
   name: "left arm"
   parent: BasePart
   components:
@@ -51,7 +51,7 @@
     symmetry: Left
 
 - type: entity
-  id: RightArmBase
+  id: BaseRightArm
   name: "right arm"
   parent: BasePart
   components:
@@ -60,7 +60,7 @@
     symmetry: Right
 
 - type: entity
-  id: LeftHandBase
+  id: BaseLeftHand
   name: "left hand"
   parent: BasePart
   components:
@@ -69,7 +69,7 @@
     symmetry: Left
 
 - type: entity
-  id: RightHandBase
+  id: BaseRightHand
   name: "right hand"
   parent: BasePart
   components:
@@ -78,7 +78,7 @@
     symmetry: Right
 
 - type: entity
-  id: LeftLegBase
+  id: BaseLeftLeg
   name: "left leg"
   parent: BasePart
   components:
@@ -88,7 +88,7 @@
   - type: MovementBodyPart
 
 - type: entity
-  id: RightLegBase
+  id: BaseRightLeg
   name: "right leg"
   parent: BasePart
   components:
@@ -98,7 +98,7 @@
   - type: MovementBodyPart
 
 - type: entity
-  id: LeftFootBase
+  id: BaseLeftFoot
   name: "left foot"
   parent: BasePart
   components:
@@ -107,7 +107,7 @@
     symmetry: Left
 
 - type: entity
-  id: RightFootBase
+  id: BaseRightFoot
   name: "right foot"
   parent: BasePart
   components:

@@ -17,7 +17,7 @@
 - type: entity
   id: TorsoArachnid
   name: "arachnid torso"
-  parent: [PartArachnid, TorsoBase]
+  parent: [PartArachnid, BaseTorso]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
@@ -33,7 +33,7 @@
 - type: entity
   id: HeadArachnid
   name: "arachnid head"
-  parent: [PartArachnid, HeadBase]
+  parent: [PartArachnid, BaseHead]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
@@ -49,7 +49,7 @@
 - type: entity
   id: LeftArmArachnid
   name: "left arachnid arm"
-  parent: [PartArachnid, LeftArmBase]
+  parent: [PartArachnid, BaseLeftArm]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
@@ -58,7 +58,7 @@
 - type: entity
   id: RightArmArachnid
   name: "right arachnid arm"
-  parent: [PartArachnid, RightArmBase]
+  parent: [PartArachnid, BaseRightArm]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
@@ -67,7 +67,7 @@
 - type: entity
   id: LeftHandArachnid
   name: "left arachnid hand"
-  parent: [PartArachnid, LeftHandBase]
+  parent: [PartArachnid, BaseLeftHand]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
@@ -76,7 +76,7 @@
 - type: entity
   id: RightHandArachnid
   name: "right arachnid hand"
-  parent: [PartArachnid, RightHandBase]
+  parent: [PartArachnid, BaseRightHand]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
@@ -85,7 +85,7 @@
 - type: entity
   id: LeftLegArachnid
   name: "left arachnid leg"
-  parent: [PartArachnid, LeftLegBase]
+  parent: [PartArachnid, BaseLeftLeg]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
@@ -97,7 +97,7 @@
 - type: entity
   id: RightLegArachnid
   name: "right arachnid leg"
-  parent: [PartArachnid, RightLegBase]
+  parent: [PartArachnid, BaseRightLeg]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
@@ -109,7 +109,7 @@
 - type: entity
   id: LeftFootArachnid
   name: "left arachnid foot"
-  parent: [PartArachnid, LeftFootBase]
+  parent: [PartArachnid, BaseLeftFoot]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi
@@ -118,7 +118,7 @@
 - type: entity
   id: RightFootArachnid
   name: "right arachnid foot"
-  parent: [PartArachnid, RightFootBase]
+  parent: [PartArachnid, BaseRightFoot]
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/parts.rsi

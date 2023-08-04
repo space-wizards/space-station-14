@@ -10,7 +10,7 @@
 - type: entity
   id: TorsoDiona
   name: "diona torso"
-  parent: [PartDiona, TorsoBase]
+  parent: [PartDiona, BaseTorso]
   components:
   - type: Sprite
     state: "torso_m"
@@ -18,7 +18,7 @@
 - type: entity
   id: HeadDiona
   name: "diona head"
-  parent: [PartDiona, HeadBase]
+  parent: [PartDiona, BaseHead]
   components:
   - type: Sprite
     state: "head_m"
@@ -26,7 +26,7 @@
 - type: entity
   id: LeftArmDiona
   name: "left diona arm"
-  parent: [PartDiona, LeftArmBase]
+  parent: [PartDiona, BaseLeftArm]
   components:
   - type: Sprite
     state: "l_arm"
@@ -34,7 +34,7 @@
 - type: entity
   id: RightArmDiona
   name: "right diona arm"
-  parent: [PartDiona, RightArmBase]
+  parent: [PartDiona, BaseRightArm]
   components:
   - type: Sprite
     state: "r_arm"
@@ -42,7 +42,7 @@
 - type: entity
   id: LeftHandDiona
   name: "left diona hand"
-  parent: [PartDiona, LeftHandBase]
+  parent: [PartDiona, BaseLeftHand]
   components:
   - type: Sprite
     state: "l_hand"
@@ -50,7 +50,7 @@
 - type: entity
   id: RightHandDiona
   name: "right diona hand"
-  parent: [PartDiona, RightHandBase]
+  parent: [PartDiona, BaseRightHand]
   components:
   - type: Sprite
     state: "r_hand"
@@ -58,7 +58,7 @@
 - type: entity
   id: LeftLegDiona
   name: "left diona leg"
-  parent: [PartDiona, LeftLegBase]
+  parent: [PartDiona, BaseLeftLeg]
   components:
   - type: Sprite
     state: "l_leg"
@@ -69,7 +69,7 @@
 - type: entity
   id: RightLegDiona
   name: "right diona leg"
-  parent: [PartDiona, RightLegBase]
+  parent: [PartDiona, BaseRightLeg]
   components:
   - type: Sprite
     state: "r_leg"
@@ -83,7 +83,7 @@
 - type: entity
   id: LeftFootDiona
   name: "left diona foot"
-  parent: [PartDiona, LeftFootBase]
+  parent: [PartDiona, BaseLeftFoot]
   components:
   - type: Sprite
     state: "l_foot"
@@ -94,7 +94,7 @@
 - type: entity
   id: RightFootDiona
   name: "right diona foot"
-  parent: [PartDiona, RightFootBase]
+  parent: [PartDiona, BaseRightFoot]
   components:
   - type: Sprite
     state: "r_foot"

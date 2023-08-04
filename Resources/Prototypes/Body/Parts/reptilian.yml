@@ -17,7 +17,7 @@
 - type: entity
   id: TorsoReptilian
   name: "reptilian torso"
-  parent: [PartReptilian, TorsoBase]
+  parent: [PartReptilian, BaseTorso]
   components:
   - type: Sprite
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -33,7 +33,7 @@
 - type: entity
   id: HeadReptilian
   name: "reptilian head"
-  parent: [PartReptilian, HeadBase]
+  parent: [PartReptilian, BaseHead]
   components:
   - type: Sprite
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -49,7 +49,7 @@
 - type: entity
   id: LeftArmReptilian
   name: "left reptilian arm"
-  parent: [PartReptilian, LeftArmBase]
+  parent: [PartReptilian, BaseLeftArm]
   components:
   - type: Sprite
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -58,7 +58,7 @@
 - type: entity
   id: RightArmReptilian
   name: "right reptilian arm"
-  parent: [PartReptilian, RightArmBase]
+  parent: [PartReptilian, BaseRightArm]
   components:
   - type: Sprite
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -67,7 +67,7 @@
 - type: entity
   id: LeftHandReptilian
   name: "left reptilian hand"
-  parent: [PartReptilian, LeftHandBase]
+  parent: [PartReptilian, BaseLeftHand]
   components:
   - type: Sprite
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -76,7 +76,7 @@
 - type: entity
   id: RightHandReptilian
   name: "right reptilian hand"
-  parent: [PartReptilian, RightHandBase]
+  parent: [PartReptilian, BaseRightHand]
   components:
   - type: Sprite
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -85,7 +85,7 @@
 - type: entity
   id: LeftLegReptilian
   name: "left reptilian leg"
-  parent: [PartReptilian, LeftLegBase]
+  parent: [PartReptilian, BaseLeftLeg]
   components:
   - type: Sprite
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -97,7 +97,7 @@
 - type: entity
   id: RightLegReptilian
   name: "right reptilian leg"
-  parent: [PartReptilian, RightLegBase]
+  parent: [PartReptilian, BaseRightLeg]
   components:
   - type: Sprite
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -109,7 +109,7 @@
 - type: entity
   id: LeftFootReptilian
   name: "left reptilian foot"
-  parent: [PartReptilian, LeftFootBase]
+  parent: [PartReptilian, BaseLeftFoot]
   components:
   - type: Sprite
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -118,7 +118,7 @@
 - type: entity
   id: RightFootReptilian
   name: "right reptilian foot"
-  parent: [PartReptilian, RightFootBase]
+  parent: [PartReptilian, BaseRightFoot]
   components:
   - type: Sprite
     sprite: Mobs/Species/Reptilian/parts.rsi
