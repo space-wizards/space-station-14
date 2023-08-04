@@ -33,6 +33,7 @@ namespace Content.Server.Atmos.Monitor.Systems;
 public sealed class AirAlarmSystem : EntitySystem
 {
     [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
+    [Dependency] private readonly DeviceListSystem _deviceListSystem = default!;
     [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNetSystem = default!;
     [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -290,10 +291,15 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnUpdateDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateDeviceDataMessage args)
     {
-        if (AccessCheck(uid, args.Session.AttachedEntity, component))
+        if (AccessCheck(uid, args.Session.AttachedEntity, component)
+            && _deviceListSystem.ExistsInDeviceList(uid, args.Address))
+        {
             SetDeviceData(uid, args.Address, args.Data);
+        }
         else
+        {
             UpdateUI(uid, component);
+        }
     }
 
     private bool AccessCheck(EntityUid uid, EntityUid? user, AirAlarmComponent? component = null)

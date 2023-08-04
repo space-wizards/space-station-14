@@ -8,7 +8,8 @@
     - type: InputMover
     - type: MobMover
     - type: HTN
-      rootTask: SimpleHostileCompound
+      rootTask:
+        task: SimpleHostileCompound
       blackboard:
         NavSmash: !type:Bool
           true
@@ -20,7 +21,7 @@
       sprite: Mobs/Aliens/Carps/space.rsi
       layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: base
+        state: alive
     - type: CombatMode
     - type: Physics
     - type: Fixtures
@@ -45,10 +46,10 @@
     - type: DamageStateVisuals
       states:
         Alive:
-          Base: base
+          Base: alive
           BaseUnshaded: mouth
         Dead:
-          Base: base_dead
+          Base: dead
           BaseUnshaded: dead_mouth
     - type: Butcherable
       spawned:
@@ -82,14 +83,14 @@
   - type: Sprite
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: base
+      state: alive
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: mouth
       shader: unshaded
   - type: RandomSprite
     available:
     - enum.DamageStateVisualLayers.Base:
-        base: Rainbow
+        alive: Rainbow
       enum.DamageStateVisualLayers.BaseUnshaded:
         mouth: ""
 
@@ -145,7 +146,7 @@
   name: space carp
   id: MobCarpDragon
   suffix: DragonBrood
-  parent: BaseMobCarp
+  parent: MobCarp
   components:
     - type: GhostRole
       allowMovement: true
@@ -155,7 +156,8 @@
       description: ghost-role-information-sentient-carp-description
     - type: GhostTakeoverAvailable
     - type: HTN
-      rootTask: DragonCarpCompound
+      rootTask:
+        task: DragonCarpCompound
 
 - type: entity
   id: MobCarpDungeon
