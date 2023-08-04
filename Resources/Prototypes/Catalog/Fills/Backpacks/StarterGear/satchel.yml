@@ -65,7 +65,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvivalEngineering
+      - id: BoxSurvivalExtended
       - id: Flash
       #- id: TelescopicBaton
 
@@ -131,7 +131,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvivalEngineering
+      - id: BoxSurvivalExtended
 
 - type: entity
   noSpawn: true
@@ -140,7 +140,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvivalEngineering
+      - id: BoxSurvivalExtended
 
 - type: entity
   noSpawn: true
@@ -230,7 +230,7 @@
   components:
     - type: StorageFill
       contents:
-        - id: BoxSurvivalEngineering
+        - id: BoxSurvivalExtended
 
 - type: entity
   noSpawn: true

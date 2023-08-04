@@ -1028,7 +1028,7 @@ entities:
     - links:
       - 555
       type: DeviceLinkSink
-- proto: BoxSurvivalEngineering
+- proto: BoxSurvivalExtended
   entities:
   - uid: 600
     components:
