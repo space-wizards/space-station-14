@@ -3,6 +3,7 @@
   name: job-name-senior-engineer
   description: job-description-senior-engineer
   playTimeTracker: JobSeniorEngineer
+  radioBold: true
   requirements:
     - !type:RoleTimeRequirement
       role: JobAtmosphericTechnician

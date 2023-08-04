@@ -150,15 +150,16 @@ namespace Content.Server.Access.Systems
         /// <remarks>
         /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
         /// </remarks>
-        public bool TryChangeJobColor(EntityUid uid, string? jobColor, IdCardComponent? id = null, EntityUid? player = null)
+        public bool TryChangeJobColor(EntityUid uid, string? jobColor, bool boldRadio = false, IdCardComponent? id = null, EntityUid? player = null)
         {
             if (!Resolve(uid, ref id))
                 return false;
 
-            if (id.JobColor == jobColor)
+            if (id.JobColor == jobColor && id.RadioBold == boldRadio)
                 return true;
 
             id.JobColor = jobColor;
+            id.RadioBold = boldRadio;
             Dirty(id);
             UpdateEntityName(uid, id);
 

@@ -71,19 +71,19 @@ namespace Content.Server.Access.Systems
 
             _cardSystem.TryChangeJobTitle(uid, job.LocalizedName);
 
+            _cardSystem.TryChangeJobColor(uid, GetJobColor(_prototypeManager, job), job.RadioIsBold);
+
             if (_prototypeManager.TryIndex<StatusIconPrototype>(job.Icon, out var jobIcon))
             {
                 _cardSystem.TryChangeJobIcon(uid, jobIcon);
             }
-
-            _cardSystem.TryChangeJobColor(uid, GetJobColor(job));
         }
 
-        private string GetJobColor(IPrototype job)
+        public static string GetJobColor(IPrototypeManager prototypeManager, IPrototype job)
         {
             var jobCode = job.ID;
 
-            var departments = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>().ToList();
+            var departments = prototypeManager.EnumeratePrototypes<DepartmentPrototype>().ToList();
             departments.Sort((a, b) => a.Sort.CompareTo(b.Sort));
 
             foreach (var department in from department in departments

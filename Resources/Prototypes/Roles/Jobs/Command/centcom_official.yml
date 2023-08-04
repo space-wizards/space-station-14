@@ -8,6 +8,7 @@
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-hos
   canBeAntag: false
+  radioBold: true
   accessGroups:
   - AllAccess
 

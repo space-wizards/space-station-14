@@ -32,5 +32,9 @@ namespace Content.Shared.Access.Components
         [DataField("jobColor")]
         [AutoNetworkedField]
         public string? JobColor;
+
+        [DataField("radioBold")]
+        [AutoNetworkedField]
+        public bool? RadioBold;
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Components;
@@ -11,7 +12,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using System.Linq;
 using static Content.Shared.Access.Components.IdCardConsoleComponent;
 
 namespace Content.Server.Access.Systems;
@@ -134,6 +134,12 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             && _prototype.TryIndex<StatusIconPrototype>(job.Icon, out var jobIcon))
         {
             _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
+
+            _idCard.TryChangeJobColor(
+                targetId,
+                PresetIdCardSystem.GetJobColor(_prototype, job),
+                job.RadioIsBold
+            );
         }
 
         if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))

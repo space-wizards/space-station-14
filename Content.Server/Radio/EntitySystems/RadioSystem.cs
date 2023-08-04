@@ -76,7 +76,13 @@ public sealed class RadioSystem : EntitySystem
 
         name = FormattedMessage.EscapeText(name);
 
-        var formattedName = $"[color={GetIdCardColor(messageSource)}][bold]{GetIdCardName(messageSource)}{name}[/bold][/color]";
+        var formattedName = $"[color={GetIdCardColor(messageSource)}]{GetIdCardName(messageSource)}{name}[/color]";
+
+        var formattedMessage = FormattedMessage.EscapeText(message);
+        if (GetIdCardIsBold(messageSource))
+        {
+            formattedMessage = $"[bold]{formattedMessage}[/bold]";
+        }
 
         // most radios are relayed to chat, so lets parse the chat message beforehand
         var chat = new ChatMessage(
@@ -87,7 +93,7 @@ public sealed class RadioSystem : EntitySystem
                 ("color", channel.Color),
                 ("channel", $"\\[{channel.LocalizedName}\\]"),
                 ("name", formattedName),
-                ("message", FormattedMessage.EscapeText(message))
+                ("message", formattedMessage)
             ),
             EntityUid.Invalid);
 
@@ -180,6 +186,11 @@ public sealed class RadioSystem : EntitySystem
     private string GetIdCardColor(EntityUid senderUid)
     {
         return GetIdCard(senderUid)?.JobColor ?? "#9FED58";
+    }
+
+    private bool GetIdCardIsBold(EntityUid senderUid)
+    {
+        return GetIdCard(senderUid)?.RadioBold ?? false;
     }
 
     /// <inheritdoc cref="TelecomServerComponent"/>
