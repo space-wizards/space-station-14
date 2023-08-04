@@ -122,8 +122,8 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/secglasses.rsi
   - type: FlashImmunity
-  - type: EyeProtection
   - type: ShowSecurityIcons
+  - type: EyeProtection
     protectionTime: 5
   - type: Tag
     tags:
