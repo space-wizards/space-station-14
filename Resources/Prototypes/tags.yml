@@ -168,6 +168,9 @@
   id: CigPack
 
 - type: Tag
+  id: ClothMade
+
+- type: Tag
   id: ClownMask
 
 - type: Tag
