@@ -124,7 +124,7 @@ namespace Content.Server.Toilet
                 }
             }
 
-            if (TryComp<StrapComponent>(uid, out var strap) && strap.BuckledEntities.Count != 0)
+            if (!CanToggle(uid))
                 return;
 
             args.Handled = true;
@@ -132,16 +132,14 @@ namespace Content.Server.Toilet
 
         private void OnToggleSeatVerb(EntityUid uid, ToiletComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
+            if (!args.CanInteract || !args.CanAccess || !CanToggle(uid))
+                return;
+
             string alterToiletSeatText = component.IsSeatUp ? Loc.GetString("toilet-seat-close") : Loc.GetString("toilet-seat-open");
 
             var verb = new AlternativeVerb()
             {
-                Act = () =>
-                {
-                    if (TryComp<StrapComponent>(uid, out var strap) && strap.BuckledEntities.Count != 0)
-                        return;
-                    ToggleToiletSeat(uid, component);
-                },
+                Act = () => { ToggleToiletSeat(uid, component); },
                 Text = alterToiletSeatText
             };
 
@@ -167,6 +165,11 @@ namespace Content.Server.Toilet
 
             toilet.LidOpen = !toilet.LidOpen;
             UpdateSprite(uid, toilet);
+        }
+
+        public bool CanToggle(EntityUid uid)
+        {
+            return TryComp<StrapComponent>(uid, out var strap) && strap.BuckledEntities.Count == 0;
         }
 
         public void ToggleToiletSeat(EntityUid uid, ToiletComponent? component = null)
