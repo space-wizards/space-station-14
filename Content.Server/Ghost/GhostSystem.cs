@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
@@ -242,8 +243,6 @@ namespace Content.Server.Ghost
             if (Deleted(uid) || Terminating(uid))
                 return;
 
-            if (EntityManager.TryGetComponent<MindContainerComponent?>(uid, out var mind))
-                _mindSystem.SetGhostOnShutdown(uid, false, mind);
             QueueDel(uid);
         }
 

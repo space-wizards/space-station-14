@@ -78,7 +78,6 @@
       openingAnimationTime: 0.6
       closingAnimationTime: 0.6
     - type: Weldable
-      fuel: 5
       time: 3
     - type: Firelock
     - type: Appearance

@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Roles;
@@ -30,29 +31,33 @@ namespace Content.Server.Mind
         ///     Note: the Mind is NOT initially attached!
         ///     The provided UserId is solely for tracking of intended owner.
         /// </summary>
-        /// <param name="userId">The session ID of the original owner (may get credited).</param>
-        public Mind(NetUserId? userId)
+        public Mind()
         {
-            OriginalOwnerUserId = userId;
         }
 
         /// <summary>
         ///     The session ID of the player owning this mind.
         /// </summary>
-        [ViewVariables]
-        public NetUserId? UserId { get; internal set; }
+        [ViewVariables, Access(typeof(MindSystem))]
+        public NetUserId? UserId { get; set; }
 
         /// <summary>
         ///     The session ID of the original owner, if any.
         ///     May end up used for round-end information (as the owner may have abandoned Mind since)
         /// </summary>
-        [ViewVariables]
-        public NetUserId? OriginalOwnerUserId { get; }
+        [ViewVariables, Access(typeof(MindSystem))]
+        public NetUserId? OriginalOwnerUserId { get; set; }
+
+        /// <summary>
+        ///     Entity UID for the first entity that this mind controlled. Used for round end.
+        ///     Might be relevant if the player has ghosted since.
+        /// </summary>
+        [ViewVariables] public EntityUid? OriginalOwnedEntity;
 
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
 
-        [ViewVariables]
+        [ViewVariables, Access(typeof(MindSystem))]
         public EntityUid? VisitingEntity { get; set; }
 
         [ViewVariables]
@@ -79,8 +84,8 @@ namespace Content.Server.Mind
         ///     The entity currently owned by this mind.
         ///     Can be null.
         /// </summary>
-        [ViewVariables]
-        public EntityUid? OwnedEntity { get; internal set; }
+        [ViewVariables, Access(typeof(MindSystem))]
+        public EntityUid? OwnedEntity { get; set; }
 
         /// <summary>
         ///     An enumerable over all the roles this mind has.
@@ -112,7 +117,7 @@ namespace Content.Server.Mind
         ///     The session of the player owning this mind.
         ///     Can be null, in which case the player is currently not logged in.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables, Access(typeof(MindSystem), typeof(GameTicker))]
         public IPlayerSession? Session { get; internal set; }
 
         /// <summary>

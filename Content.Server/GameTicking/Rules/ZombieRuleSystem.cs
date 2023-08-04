@@ -1,6 +1,8 @@
 using System.Globalization;
 using System.Linq;
+using Content.Server.Actions;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
@@ -9,8 +11,10 @@ using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
-using Content.Server.StationEvents.Components;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Server.Zombies;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
@@ -19,6 +23,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Zombies;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -34,25 +39,26 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
-    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly InitialInfectedSystem _initialZombie = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
-
-        SubscribeLocalEvent<EntityZombifiedEvent>(OnEntityZombified);
-        SubscribeLocalEvent<ZombieRuleComponent, EntityUnpausedEvent>(OnUnpause);
+        SubscribeLocalEvent<ZombifyOnDeathComponent, ZombifySelfActionEvent>(OnZombifySelf);
     }
 
     private void OnUnpause(EntityUid uid, ZombieRuleComponent component, ref EntityUnpausedEvent args)
@@ -117,25 +123,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         }
 
     }
-
-    /// <remarks>
-    ///     This is just checked if the last human somehow dies
-    ///     by starving or flying off into space.
-    /// </remarks>
-    private void OnMobStateChanged(MobStateChangedEvent ev)
-    {
-        CheckRoundEnd(ev.Target);
-    }
-
-    private void OnEntityZombified(EntityZombifiedEvent ev)
-    {
-        CheckRoundEnd(ev.Target);
-    }
-
     /// <summary>
     ///     The big kahoona function for checking if the round is gonna end
     /// </summary>
-    /// <param name="target">depending on this uid, we should care about the round ending</param>
     private void CheckRoundEnd(EntityUid target)
     {
         // We only care about players, not monkeys and such.
@@ -269,6 +259,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         base.Started(uid, component, gameRule, args);
         var curTime = _timing.CurTime;
 
+        component.StartTime = _timing.CurTime + _random.Next(component.MinStartDelay, component.MaxStartDelay);
         component.InfectInitialAt = curTime + TimeSpan.FromSeconds(component.InitialInfectDelaySecs);
 
         if (component.EarlySettings.EmoteSoundsId != null)
@@ -317,17 +308,39 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         return zombers.Count() / (float) players.Count();
     }
 
-    private List<EntityUid> GetHealthyHumans()
+    /// <summary>
+    /// Gets the list of humans who are alive, not zombies, and are on a station.
+    /// Flying off via a shuttle disqualifies you.
+    /// </summary>
+    /// <returns></returns>
+    private List<EntityUid> GetHealthyHumans(bool includeOffStation = true)
     {
         var healthy = new List<EntityUid>();
-        var players = AllEntityQuery<HumanoidAppearanceComponent, MobStateComponent>();
-        var zombers = GetEntityQuery<LivingZombieComponent>();
-        while (players.MoveNext(out var uid, out _, out var mob))
+
+        var stationGrids = new HashSet<EntityUid>();
+        if (!includeOffStation)
         {
-            if (_mobState.IsAlive(uid, mob) && !zombers.HasComponent(uid))
+            foreach (var station in _station.GetStationsSet())
             {
-                healthy.Add(uid);
+                if (TryComp<StationDataComponent>(station, out var data) && _station.GetLargestGrid(data) is { } grid)
+                    stationGrids.Add(grid);
             }
+        }
+
+        var players = AllEntityQuery<HumanoidAppearanceComponent, ActorComponent, MobStateComponent, TransformComponent>();
+        var zombers = GetEntityQuery<LivingZombieComponent>();
+        while (players.MoveNext(out var uid, out _, out _, out var mob, out var xform))
+        {
+            if (!_mobState.IsAlive(uid, mob))
+                continue;
+
+            if (zombers.HasComponent(uid))
+                continue;
+
+            if (!includeOffStation && !stationGrids.Contains(xform.GridUid ?? EntityUid.Invalid))
+                continue;
+
+            healthy.Add(uid);
         }
         return healthy;
     }
@@ -371,13 +384,14 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     /// </remarks>
     private void InfectInitialPlayers(EntityUid uid, ZombieRuleComponent rules)
     {
+
         var allPlayers = _playerManager.ServerSessions.ToList();
         var playerList = new List<IPlayerSession>();
         var prefList = new List<IPlayerSession>();
 
         foreach (var player in allPlayers)
         {
-
+            // TODO: A
             if (player.AttachedEntity != null && HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
             {
                 if (TryComp<ZombieComponent>(player.AttachedEntity, out var zombie))
@@ -398,9 +412,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 }
                 else
                 {
-                    playerList.Add(player);
+                playerList.Add(player);
 
-                    var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(player.UserId).SelectedCharacter;
+                var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(player.UserId).SelectedCharacter;
                     if (pref.AntagPreferences.Contains(rules.PatientZeroPrototypeID))
                         prefList.Add(player);
                 }
@@ -435,60 +449,54 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var curTime = _timing.CurTime;
         rules.FirstTurnAllowed ??= curTime + TimeSpan.FromSeconds(rules.TurnTimeMin);
 
-        // How long the zombies have as a group to decide to begin their attack.
-        //   Varies randomly from 10 to 15 minutes. After this the virus begins and they start
-        //   taking zombie virus damage.
+        //   Varies randomly from 20 to 30 minutes. After this the virus begins and they start
         var groupTimelimit = _random.NextFloat(rules.MinZombieForceSecs, rules.MaxZombieForceSecs);
-        for (var i = 0; i < numInfected; i++)
+        var totalInfected = 0;
+        while (totalInfected < numInfected)
         {
-            IPlayerSession zombiePlayer;
+            IPlayerSession zombie;
             if (prefList.Count == 0)
             {
                 if (playerList.Count == 0)
                 {
-                    Logger.InfoS("preset", "Insufficient number of players. stopping selection.");
+                    Log.Info("Insufficient number of players. stopping selection.");
                     break;
                 }
-                zombiePlayer = _random.PickAndTake(playerList);
-                Logger.InfoS("preset", "Insufficient preferred patient 0, picking at random.");
+                zombie = _random.Pick(playerList);
+                Log.Info("Insufficient preferred patient 0, picking at random.");
             }
             else
             {
-                zombiePlayer = _random.PickAndTake(prefList);
-                playerList.Remove(zombiePlayer);
-                Logger.InfoS("preset", "Selected a patient 0.");
+                zombie = _random.Pick(prefList);
+                Log.Info("Selected a patient 0.");
             }
 
-            var mind = zombiePlayer.Data.ContentData()?.Mind;
-            if (mind == null)
-            {
-                Logger.ErrorS("preset", "Failed getting mind for picked patient 0.");
+            prefList.Remove(zombie);
+            playerList.Remove(zombie);
+            if (zombie.Data.ContentData()?.Mind is not { } mind || mind.OwnedEntity is not { } ownedEntity)
                 continue;
-            }
 
-            DebugTools.AssertNotNull(mind.OwnedEntity);
+            totalInfected++;
+
             _mindSystem.AddRole(mind, new ZombieRole(mind, _prototypeManager.Index<AntagPrototype>(rules.PatientZeroPrototypeID)));
 
             var inCharacterName = string.Empty;
             // Create some variation between the times of each zombie, relative to the time of the group as a whole.
             var personalDelay = _random.NextFloat(0.0f, rules.PlayerZombieForceVariationSecs);
-            if (mind.OwnedEntity != null)
-            {
-                _initialZombie.AddInitialInfecton(
-                    mind.OwnedEntity.Value,
-                    rules.FirstTurnAllowed ?? TimeSpan.Zero,
-                    // Only take damage after this many seconds
-                    curTime + TimeSpan.FromSeconds(groupTimelimit + personalDelay));
+            _initialZombie.AddInitialInfecton(
+                mind.OwnedEntity.Value,
+                rules.FirstTurnAllowed ?? TimeSpan.Zero,
+                // Only take damage after this many seconds
+                curTime + TimeSpan.FromSeconds(groupTimelimit + personalDelay));
 
-                var zombie = EnsureComp<ZombieComponent>(mind.OwnedEntity.Value);
-                // Patient zero zombies get one set of zombie settings, later zombies get a different (less powerful) set.
-                zombie.Settings = rules.EarlySettings;
-                zombie.VictimSettings = rules.VictimSettings;
-                zombie.Family = new ZombieFamily() { Rules = uid, Generation = 0 };
+            var zombie = EnsureComp<ZombieComponent>(mind.OwnedEntity.Value);
+            // Patient zero zombies get one set of zombie settings, later zombies get a different (less powerful) set.
+            zombie.Settings = rules.EarlySettings;
+            zombie.VictimSettings = rules.VictimSettings;
+            zombie.Family = new ZombieFamily() { Rules = uid, Generation = 0 };
 
-                inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
-
-            }
+            inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
+            EnsureComp<IncurableZombieComponent>(ownedEntity);
 
             if (mind.Session != null)
             {
@@ -496,7 +504,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
 
                 //gets the names now in case the players leave.
-                //this gets unhappy if people with the same name get chose. Probably shouldn't happen.
                 rules.InitialInfectedNames[inCharacterName] = mind.Session.Name;
 
                 // I went all the way to ChatManager.cs and all i got was this lousy T-shirt
@@ -505,7 +512,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                    wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Plum);
 
                 // Notify player about new role assignment with a sound effect
-                _audioSystem.PlayGlobal(rules.EarlySettings.GreetSoundNotification, mind.Session);
+                _audioSystem.PlayGlobal(component.InitialInfectedSound, mind.Session);
             }
         }
     }

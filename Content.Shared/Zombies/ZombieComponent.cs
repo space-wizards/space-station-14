@@ -1,7 +1,9 @@
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Roles;
 using Content.Shared.Humanoid;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -9,98 +11,80 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
-namespace Content.Shared.Zombies
-{
+namespace Content.Shared.Zombies;
+
     [DataDefinition, NetworkedComponent]
     public sealed class ZombieSettings
-    {
-        /// <summary>
-        /// Fraction of damage subtracted when hitting another zombie
-        /// </summary>
-        [DataField("otherZombieDamageCoefficient"), ViewVariables]
-        public float OtherZombieDamageCoefficient = 1.0f;
-
-        /// <summary>
-        /// Chance that this zombie be permanently killed (rolled once on crit->death transition)
-        /// </summary>
-        [DataField("permadeathChance"), ViewVariables(VVAccess.ReadWrite)]
-        public float PermadeathChance = 0.50f;
-
-        /// <summary>
-        /// How many seconds it takes for a zombie to revive (min)
-        /// </summary>
-        [DataField("reviveTime"), ViewVariables(VVAccess.ReadWrite)]
-        public float ReviveTime = 10;
-
-        /// <summary>
-        /// How many seconds it takes for a zombie to revive (max)
-        /// </summary>
-        [DataField("reviveTimeMax"), ViewVariables(VVAccess.ReadWrite)]
-        public float ReviveTimeMax = 60;
-
-        /// <summary>
-        /// The baseline infection chance you have if you are completely nude
-        /// </summary>
+{
+    /// <summary>
+        /// The coefficient of the damage reduction applied when a zombie
+        [ViewVariables]
+        public float OtherZombieDamageCoefficient = 0.25f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ZombiePermadeathChance = 0.80f;
+        /// Chance that this zombie will be healed (rolled each second when in crit or dead)
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ZombieReviveChance = 0.03f;
+        /// Has this zombie stopped healing now that it's died for real?
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Permadeath = false;
+    /// The baseline infection chance you have if you are completely nude
+    /// </summary>
         [DataField("maxInfectionChance"), ViewVariables(VVAccess.ReadWrite)]
-        public float MaxInfectionChance = 0.30f;
+        public float MaxZombieInfectionChance = 0.30f;
 
-        /// <summary>
-        /// The minimum infection chance possible. This is simply to prevent
-        /// being invincible by bundling up.
-        /// </summary>
+    /// <summary>
+    /// The minimum infection chance possible. This is simply to prevent
+    /// being invincible by bundling up.
+    /// </summary>
         [DataField("minInfectionChance"), ViewVariables(VVAccess.ReadWrite)]
-        public float MinInfectionChance = 0.05f;
+        public float MinZombieInfectionChance = 0.05f;
 
         [DataField("movementSpeedDebuff"), ViewVariables(VVAccess.ReadWrite)]
         public float MovementSpeedDebuff = 0.70f;
 
-        /// <summary>
-        /// How long it takes our bite victims to turn in seconds (max).
-        ///   Will roll 25% - 100% of this on bite.
-        /// </summary>
-        [DataField("infectionTurnTime"), ViewVariables(VVAccess.ReadWrite)]
-        public float InfectionTurnTime = 480.0f;
+    /// <summary>
+        [DataField("zombieInfectionTurnTime"), ViewVariables(VVAccess.ReadWrite)]
+        public float ZombieInfectionTurnTime = 480.0f;
         /// <summary>
         /// Minimum time a zombie victim will lie dead before rising as a zombie.
         /// </summary>
         [DataField("deadMinTurnTime"), ViewVariables(VVAccess.ReadWrite)]
         public float DeadMinTurnTime = 10.0f;
+        /// The skin color of the zombie
+    /// </summary>
+    [DataField("skinColor")]
+    public Color SkinColor = new(0.45f, 0.51f, 0.29f);
 
-        /// <summary>
-        /// The skin color of the
-        /// </summary>
-        [DataField("skinColor")]
-        public Color SkinColor = new(0.45f, 0.51f, 0.29f);
+    /// <summary>
+    /// The eye color of the zombie
+    /// </summary>
+    [DataField("eyeColor")]
+    public Color EyeColor = new(0.96f, 0.13f, 0.24f);
 
-        /// <summary>
-        /// The eye color of the zombie
-        /// </summary>
-        [DataField("eyeColor")]
-        public Color EyeColor = new(0.96f, 0.13f, 0.24f);
+    /// <summary>
+    /// The base layer to apply to any 'external' humanoid layers upon zombification.
+    /// </summary>
+    [DataField("baseLayerExternal")]
+    public string BaseLayerExternal = "MobHumanoidMarkingMatchSkin";
 
-        /// <summary>
-        /// The base layer to apply to any 'external' humanoid layers upon zombification.
-        /// </summary>
-        [DataField("baseLayerExternal")]
-        public string BaseLayerExternal = "MobHumanoidMarkingMatchSkin";
+    /// <summary>
+    /// The attack arc of the zombie
+    /// </summary>
+    [DataField("attackArc", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string AttackAnimation = "WeaponArcBite";
 
-        /// <summary>
-        /// The attack arc of the zombie
-        /// </summary>
-        [DataField("attackArc", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string AttackAnimation = "WeaponArcBite";
-
-        /// <summary>
+    /// <summary>
         /// The attack range of the zombie
         /// </summary>
         [DataField("meleeRange"), ViewVariables(VVAccess.ReadWrite)]
         public float MeleeRange = 1.5f;
 
         /// <summary>
-        /// The role prototype of the zombie antag role
-        /// </summary>
-        [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
-        public readonly string ZombieRoleId = "Zombie";
+    /// The role prototype of the zombie antag role
+    /// </summary>
+    [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
+    public readonly string ZombieRoleId = "Zombie";
 
         [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
         public string? EmoteSoundsId = "Zombie";
@@ -211,22 +195,45 @@ namespace Content.Shared.Zombies
         [DataField("family"), ViewVariables(VVAccess.ReadOnly)]
         public ZombieFamily Family = new();
 
-        /// <summary>
-        /// The EntityName of the humanoid to restore in case of cloning
-        /// </summary>
-        [DataField("beforeZombifiedEntityName"), ViewVariables(VVAccess.ReadOnly)]
-        public string BeforeZombifiedEntityName = String.Empty;
+    /// <summary>
+    /// The EntityName of the humanoid to restore in case of cloning
+    /// </summary>
+    [DataField("beforeZombifiedEntityName"), ViewVariables(VVAccess.ReadOnly)]
+    public string BeforeZombifiedEntityName = string.Empty;
+
+    /// <summary>
+    /// The CustomBaseLayers of the humanoid to restore in case of cloning
+    /// </summary>
+    [DataField("beforeZombifiedCustomBaseLayers")]
+    public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> BeforeZombifiedCustomBaseLayers = new ();
+
+    /// <summary>
+    /// The skin color of the humanoid to restore in case of cloning
+    /// </summary>
+    [DataField("beforeZombifiedSkinColor")]
+    public Color BeforeZombifiedSkinColor;
+    [DataField("zombieStatusIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
+    public string ZombieStatusIcon = "ZombieFaction";
 
         /// <summary>
-        /// The CustomBaseLayers of the humanoid to restore in case of cloning
+        /// Healing each second
         /// </summary>
-        [DataField("beforeZombifiedCustomBaseLayers")]
-        public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> BeforeZombifiedCustomBaseLayers = new ();
 
-        /// <summary>
-        /// The skin color of the humanoid to restore in case of cloning
-        /// </summary>
-        [DataField("beforeZombifiedSkinColor")]
-        public Color BeforeZombifiedSkinColor;
-    }
+    /// <summary>
+    ///     Path to antagonist alert sound.
+    /// </summary>
+    [DataField("greetSoundNotification")]
+    public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
+
+    /// <summary>
+    /// The blood reagent of the humanoid to restore in case of cloning
+    /// </summary>
+    [DataField("beforeZombifiedBloodReagent")]
+    public string BeforeZombifiedBloodReagent = string.Empty;
+
+    /// <summary>
+    /// The blood reagent to give the zombie. In case you want zombies that bleed milk, or something.
+    /// </summary>
+    [DataField("newBloodReagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
+    public string NewBloodReagent = "ZombieBlood";
 }

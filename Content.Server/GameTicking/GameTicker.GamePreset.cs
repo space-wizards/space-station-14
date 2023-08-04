@@ -3,13 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Ghost.Components;
-using Content.Server.Mind;
+using Content.Server.Maps;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 
@@ -19,10 +18,15 @@ namespace Content.Server.GameTicking
     {
         public const float PresetFailedCooldownIncrease = 30f;
 
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
-
+        /// <summary>
+        /// The selected preset that will be used at the start of the next round.
+        /// </summary>
         public GamePresetPrototype? Preset { get; private set; }
+
+        /// <summary>
+        /// The preset that's currently active.
+        /// </summary>
+        public GamePresetPrototype? CurrentPreset { get; private set; }
 
         private bool StartPreset(IPlayerSession[] origReadyPlayers, bool force)
         {
@@ -32,7 +36,7 @@ namespace Content.Server.GameTicking
             if (!startAttempt.Cancelled)
                 return true;
 
-            var presetTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
+            var presetTitle = CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty;
 
             void FailedPresetRestart()
             {
@@ -98,6 +102,7 @@ namespace Content.Server.GameTicking
 
             Preset = preset;
             UpdateInfoText();
+            ValidateMap();
 
             if (force)
             {
@@ -136,12 +141,39 @@ namespace Content.Server.GameTicking
             return prototype != null;
         }
 
+        public bool IsMapEligible(GameMapPrototype map)
+        {
+            if (Preset == null)
+                return true;
+
+            if (Preset.MapPool == null || !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
+                return true;
+
+            return pool.Maps.Contains(map.ID);
+        }
+
+        private void ValidateMap()
+        {
+            if (Preset == null || _gameMapManager.GetSelectedMap() is not { } map)
+                return;
+
+            if (Preset.MapPool == null ||
+                !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
+                return;
+
+            if (pool.Maps.Contains(map.ID))
+                return;
+
+            _gameMapManager.SelectMapRandom();
+        }
+
         [PublicAPI]
         private bool AddGamePresetRules()
         {
             if (DummyTicker || Preset == null)
                 return false;
 
+            CurrentPreset = Preset;
             foreach (var rule in Preset.Rules)
             {
                 AddGameRule(rule);
@@ -190,7 +222,7 @@ namespace Content.Server.GameTicking
 
             if (mind.VisitingEntity != default)
             {
-                _mindSystem.UnVisit(mind);
+                _mind.UnVisit(mind);
             }
 
             var position = Exists(playerEntity)
@@ -208,11 +240,11 @@ namespace Content.Server.GameTicking
             // + If we're in a mob that is critical, and we're supposed to be able to return if possible,
             //   we're succumbing - the mob is killed. Therefore, character is dead. Ghosting OK.
             //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
-            var canReturn = canReturnGlobal && _mindSystem.IsCharacterDeadPhysically(mind);
+            var canReturn = canReturnGlobal && _mind.IsCharacterDeadPhysically(mind);
 
             if (canReturnGlobal && TryComp(playerEntity, out MobStateComponent? mobState))
             {
-                if (_mobStateSystem.IsCritical(playerEntity.Value, mobState))
+                if (_mobState.IsCritical(playerEntity.Value, mobState))
                 {
                     canReturn = true;
 
@@ -250,9 +282,9 @@ namespace Content.Server.GameTicking
             _ghosts.SetCanReturnToBody(ghostComponent, canReturn);
 
             if (canReturn)
-                _mindSystem.Visit(mind, ghost);
+                _mind.Visit(mind, ghost);
             else
-                _mindSystem.TransferTo(mind, ghost);
+                _mind.TransferTo(mind, ghost);
             return true;
         }
 

@@ -17,6 +17,7 @@
     - alertType: Stun
     - category: Breathing # Vox gang not calling this oxygen
     - category: Pressure
+    - alertType: Bleed
     - category: Temperature
     - category: Hunger
     - category: Thirst
@@ -202,7 +203,9 @@
 - type: alert
   id: Peckish
   category: Hunger
-  icons: [ /Textures/Interface/Alerts/Hunger/Peckish.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/hunger.rsi
+    state: peckish
   name: alerts-hunger-name
   description: alerts-hunger-desc
 
@@ -232,21 +235,27 @@
 - type: alert
   id: Starving
   category: Hunger
-  icons: [ /Textures/Interface/Alerts/Hunger/Starving.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/hunger.rsi
+    state: starving
   name: alerts-starving-name
   description: alerts-starving-desc
 
 - type: alert
   id: Thirsty
   category: Thirst
-  icons: [ /Textures/Interface/Alerts/Thirst/Thirsty.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/thirst.rsi
+    state: thirsty
   name: alerts-thirsty-name
   description: alerts-thirsty-desc
 
 - type: alert
   id: Parched
   category: Thirst
-  icons: [ /Textures/Interface/Alerts/Thirst/Parched.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/thirst.rsi
+    state: parched
   name: alerts-parched-name
   description: alerts-parched-desc
 
@@ -283,6 +292,36 @@
   onClick: !type:StopPulling  { }
   name: alerts-pulling-name
   description: alerts-pulling-desc
+
+- type: alert
+  id: Bleed
+  icons:
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed0
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed1
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed2
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed3
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed4
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed5
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed6
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed7
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed8
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed9
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed10
+  name: alerts-bleed-name
+  description: alerts-bleed-desc
+  minSeverity: 0
+  maxSeverity: 10
 
 - type: alert
   id: Debug1

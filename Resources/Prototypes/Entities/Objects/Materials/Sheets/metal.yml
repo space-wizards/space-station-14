@@ -8,6 +8,7 @@
     sprite: Objects/Materials/Sheets/metal.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/metal.rsi
+    size: 30
   - type: StaticPrice
     price: 0
   - type: ItemStatus
@@ -56,6 +57,18 @@
   - type: FloorTile
     outputs:
     - Plating
+  - type: Extractable
+    grindableSolutionName: steel
+  - type: SolutionContainerManager
+    solutions:
+      steel:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 22
+        - ReagentId: Carbon
+          Quantity: 2.5
+        - ReagentId: Lead
+          Quantity: 0.5
 
 - type: entity
   parent: SheetSteel
@@ -63,6 +76,8 @@
   name: steel
   suffix: Single
   components:
+  - type: Item
+    size: 1
   - type: Sprite
     state: steel
   - type: Stack
@@ -106,3 +121,5 @@
   - type: Stack
     stackType: Plasteel
     count: 1
+  - type: Item
+    size: 1

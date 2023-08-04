@@ -5,7 +5,6 @@ using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Systems;
@@ -53,7 +52,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Make Zombie",
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Wallmounts/signs.rsi"), "bio"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Actions/zombie-turn.png")),
             Act = () =>
             {
                 _zombie.ZombifyEntity(args.Target);

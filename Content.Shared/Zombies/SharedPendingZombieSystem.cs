@@ -69,13 +69,10 @@ public abstract class SharedPendingZombieSystem : EntitySystem
             var scaledSeconds = (120.0f / pending.MaxInfectionLength) * infectedSecs;
 
             // 1x at 30s, 3x at 60s, 6x at 90s, 10x at 120s. Limit at 20x so we don't gib you.
-            var painMultiple = Math.Min(20f, 0.1f + 0.02f * scaledSeconds + 0.0005f * scaledSeconds * scaledSeconds);
-            if (mobState.CurrentState == MobState.Critical)
-            {
-                // Speed up their transformation when they are (or have been) in crit by ensuring their damage
-                //   multiplier is at least 10x
-                painMultiple = Math.Max(pending.MinimumCritMultiplier, painMultiple);
-            }
+            // var painMultiple = Math.Min(20f, 0.1f + 0.02f * scaledSeconds + 0.0005f * scaledSeconds * scaledSeconds);
+            var painMultiple = mobState.CurrentState == MobState.Critical
+                ? pending.CritDamageMultiplier
+                : 1f;
             _damageable.TryChangeDamage(uid, pending.VirusDamage * painMultiple, true, false, damage);
         }
     }

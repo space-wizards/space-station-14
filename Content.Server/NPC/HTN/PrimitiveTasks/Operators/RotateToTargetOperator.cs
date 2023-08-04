@@ -23,9 +23,9 @@ public sealed class RotateToTargetOperator : HTNOperator
         _rotate = sysManager.GetEntitySystem<RotateToFaceSystem>();
     }
 
-    public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
+    public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
-        base.Shutdown(blackboard, status);
+        base.TaskShutdown(blackboard, status);
         blackboard.Remove<Angle>(TargetKey);
     }
 

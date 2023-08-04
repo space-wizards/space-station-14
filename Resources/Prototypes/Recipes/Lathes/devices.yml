@@ -33,7 +33,7 @@
 - type: latheRecipe
   id: FlashPayload
   result: FlashPayload
-  completetime: 1
+  completetime: 2
   materials:
     Steel: 50
     Plastic: 100
@@ -43,11 +43,13 @@
 - type: latheRecipe
   id: ExplosivePayload
   result: ExplosivePayload
-  completetime: 1
+  completetime: 4
   materials:
-    Steel: 50
+    Steel: 100
     Plastic: 100
     Glass: 50
+    Plasma: 50
+    Silver: 50
 
 - type: latheRecipe
   id: Signaller

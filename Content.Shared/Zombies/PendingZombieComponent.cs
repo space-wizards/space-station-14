@@ -10,6 +10,21 @@ namespace Content.Shared.Zombies;
 [RegisterComponent]
 public sealed class PendingZombieComponent : Component
 {
+    /// <summary>
+    /// Damage dealt every second to infected individuals.
+    /// </summary>
+    /// <summary>
+    /// The amount of time before the infected begins to take damage.
+    /// </summary>
+    [DataField("gracePeriod"), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan GracePeriod = TimeSpan.Zero;
+
+    /// <summary>
+    /// A multiplier for <see cref="Damage"/> applied when the entity is in critical condition.
+    /// </summary>
+    [DataField("critDamageMultiplier")]
+    public float CritDamageMultiplier = 10f;
+
     [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextTick;
 
@@ -17,18 +32,20 @@ public sealed class PendingZombieComponent : Component
     public TimeSpan InfectionStarted;
 
     /// <summary>
-    /// Number of seconds that a typical infection will last before the player is totally overwhelmed with damage and
-    ///   dies.
+    /// The chance each second that a warning will be shown.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("maxInfectionLength")]
-    public float MaxInfectionLength = 120f;
+    [DataField("infectionWarningChance")]
+    public float InfectionWarningChance = 0.0166f;
 
     /// <summary>
-    /// A minimum multiplier applied to Damage once you are in crit to get you dead and ready for your next life
-    ///   as fast as possible.
+    /// Infection warnings shown as popups
     /// </summary>
-    [DataField("minimumCritMultiplier")]
-    public float MinimumCritMultiplier = 10;
+    [DataField("infectionWarnings")]
+    public List<string> InfectionWarnings = new()
+    {
+        "zombie-infection-warning",
+        "zombie-infection-underway"
+    };
 
     /// <summary>
     /// Minimum time this zombie victim will lie dead before rising as a zombie.
