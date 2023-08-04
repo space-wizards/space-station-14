@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Uranium window now can block radiation, type: Tweak}
-  id: 3930
-  time: '2023-06-03T19:12:27.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Players being electrocuted now shows up nicer on the power monitoring
@@ -2992,3 +2987,8 @@ Entries:
   - {message: The smartfridge now uses its old sprites., type: Tweak}
   id: 4429
   time: '2023-08-04T18:29:43.0000000+00:00'
+- author: MilenVolf
+  changes:
+  - {message: Moths now have proper creampied texture! Honk!, type: Tweak}
+  id: 4430
+  time: '2023-08-04T18:31:39.0000000+00:00'
