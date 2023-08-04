@@ -183,9 +183,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
         bool shouldPunctuate = _configurationManager.GetCVar(CCVars.ChatPunctuation);
         // Capitalizing the word I only happens in English, so we check language here
-        var curCulture = CultureInfo.CurrentCulture;
-        bool shouldCapitalizeTheWordI = (!curCulture.IsNeutralCulture && curCulture.Parent.Name == "en")
-            || (curCulture.IsNeutralCulture && curCulture.Name == "en");
+        bool shouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
+            || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
 
         message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize, shouldPunctuate, shouldCapitalizeTheWordI);
 
