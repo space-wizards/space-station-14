@@ -76,7 +76,7 @@
 
 - type: entity
   id: GravityGeneratorMini
-  parent: GravityGenerator
+  parent: [ GravityGenerator, ConstructibleMachine ]
   name: mini gravity generator
   description: It's what keeps you to the floor, now in fun size.
   components:
