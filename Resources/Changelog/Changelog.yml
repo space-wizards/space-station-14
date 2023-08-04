@@ -1,10 +1,4 @@
 Entries:
-- author: Chief-Engineer
-  changes:
-  - {message: 'Ghosts can perform interactions, like fully examining things, at any
-      range', type: Tweak}
-  id: 3922
-  time: '2023-06-02T00:50:17.0000000+00:00'
 - author: icesickleone
   changes:
   - {message: Cowelding tool no longer heals blunt damage when lit, type: Fix}
@@ -2989,3 +2983,9 @@ Entries:
   - {message: Syndicate pAI's can be found on the Nukie planet., type: Tweak}
   id: 4421
   time: '2023-08-03T20:48:40.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: NT has issued a unique anti-balloon weapon to security personnel. Use
+      it to destroy syndicate balloons and crush their morale!, type: Add}
+  id: 4422
+  time: '2023-08-04T01:53:06.0000000+00:00'
