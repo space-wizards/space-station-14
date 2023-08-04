@@ -233,9 +233,14 @@ public abstract partial class InteractionTest
     }
 
     [TearDown]
-    public virtual async Task Cleanup()
+    public async Task TearDownInternal()
     {
         await Server.WaitPost(() => MapMan.DeleteMap(MapId));
         await PairTracker.CleanReturnAsync();
+        await TearDown();
+    }
+    
+    protected virtual async Task TearDown()
+    {
     }
 }
