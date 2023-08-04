@@ -45,5 +45,12 @@
   - sprite: Mobs/Customization/moth_parts.rsi
     state: wings_look3
 
-
-# Other markings
+# Eyes
+- type: marking
+  id: MothEyesLook1
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: eyes_look1
