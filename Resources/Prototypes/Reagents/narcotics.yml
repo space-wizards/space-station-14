@@ -148,6 +148,7 @@
   group: Narcotics
   desc: reagent-desc-thc
   flavor: bitter
+  flavorMinimum: 0.05
   color: "#808080"
   physicalDesc: reagent-physical-desc-crystalline
   plantMetabolism:
@@ -166,7 +167,7 @@
         refresh: false
 
 - type: reagent
-  id: THCOil
+  id: THCOil # deprecated in favor of THC, preserved here for forks
   name: reagent-name-thc-oil
   group: Narcotics
   desc: reagent-desc-thc-oil
