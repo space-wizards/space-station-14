@@ -29,14 +29,6 @@
     proto: BulletLightRifle
 
 - type: entity
-  id: CartridgeLightRifleHighVelocity
-  name: cartridge (.30 rifle high-velocity)
-  parent: BaseCartridgeLightRifle
-  components:
-  - type: CartridgeAmmo
-    proto: BulletLightRifleHighVelocity
-
-- type: entity
   id: CartridgeLightRiflePractice
   name: cartridge (.30 rifle practice)
   parent: BaseCartridgeLightRifle

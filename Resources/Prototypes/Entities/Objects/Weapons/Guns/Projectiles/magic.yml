@@ -102,7 +102,7 @@
 - type: entity
   id: BulletInstakillMagic
   name: magical lead cylinder
-  parent: BaseBulletHighVelocity
+  parent: BaseBullet
   noSpawn: true
   description: This looks familiar.
   components:
@@ -127,7 +127,7 @@
 
 - type: entity
   id: ProjectileIcicle
-  parent: BaseBulletHighVelocity
+  parent: BaseBullet
   name: Icicle
   description: Brrrrr.
   noSpawn: true

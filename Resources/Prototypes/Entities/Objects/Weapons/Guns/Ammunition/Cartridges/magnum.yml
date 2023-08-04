@@ -29,14 +29,6 @@
     proto: BulletMagnum
 
 - type: entity
-  id: CartridgeMagnumHighVelocity
-  name: cartridge (.45 magnum high-velocity)
-  parent: BaseCartridgeMagnum
-  components:
-  - type: CartridgeAmmo
-    proto: BulletMagnumHighVelocity
-
-- type: entity
   id: CartridgeMagnumPractice
   name: cartridge (.45 magnum practice)
   parent: BaseCartridgeMagnum

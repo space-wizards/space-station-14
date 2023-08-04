@@ -88,25 +88,6 @@
 # Tier 2
 
 - type: technology
-  id: OptimizedBallistics
-  name: research-technology-optimized-ballistics
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
-    state: hvdisplay
-  discipline: Arsenal
-  tier: 2
-  cost: 7500
-  recipeUnlocks:
-  - CartridgePistolHighVelocity
-  - CartridgeMagnumHighVelocity
-  - CartridgeLightRifleHighVelocity
-  - CartridgeRifleHighVelocity
-  - MagazineBoxPistolHighVelocity
-  - MagazineBoxMagnumHighVelocity
-  - MagazineBoxLightRifleHighVelocity
-  - MagazineBoxRifleHighVelocity
-
-- type: technology
   id: ConcentratedLaserWeaponry
   name: research-technology-concentrated-laser-weaponry
   icon:
