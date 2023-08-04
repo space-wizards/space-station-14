@@ -1,0 +1,13 @@
+- type: entity
+  name: Спавнер сегвей синдиката
+  id: SpawnVehicleSyndicateSegway
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Vehicles/secway.rsi
+        state: keys
+  - type: ConditionalSpawner
+    prototypes:
+      - VehicleSyndicateSegway

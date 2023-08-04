@@ -1,0 +1,397 @@
+#Leader
+- type: entity
+  parent: LockerCaptain
+  id: LockerEbentIronSquadLeader
+  name: "шкаф командира Железного Отряда"
+  suffix: Filled, Shitspawn, Ebent
+  components:
+  - type: AccessReader
+    access: []
+  - type: StorageFill
+    contents:
+    - id: EnergySword
+    - id: ClothingHeadHatChameleon
+    - id: ClothingUniformJumpsuitPyjamaSyndicateRed
+    - id: ClothingUniformJumpsuitPyjamaSyndicatePink
+    - id: ClothingUniformJumpskirtSyndieFormalDress
+    - id: ClothingUniformJumpsuitSyndieFormal
+    - id: ClothingOuterCoatSyndieCap
+    - id: ClothingHeadHatSyndie
+    - id: ClothingMaskNeckGaiter
+    - id: ClothingUniformJumpskirtOperative
+
+- type: entity
+  name: "рюкзак синдиката"
+  description: "Вместительный рюкзак с множеством карманов, который носят члены синдиката."
+  parent: ClothingBackpackSupaSyndicate
+  id: ClothingBackpackSupaSyndicateLeader
+  suffix: Shitspawn, Ebent, Leader
+  components:
+    - type: StorageFill
+      contents:
+      - id: Crowbar
+      - id: RubberStampSyndicate
+      - id: CigPackSyndicate
+        amount: 2
+      - id: Lighter
+      - id: FlashlightSecliteSyndicate
+      - id: Stimpack
+      - id: PowerCellHyper
+      - id: SpeedLoaderMagnumHighVelocity
+        amount: 2
+      - id: WeaponSubMachineGunC20r
+      - id: MagazinePistolSubMachineGunHighVelocity
+        amount: 2
+      - id: CombatMedipen
+      - id: EnergySwordDouble
+
+- type: startingGear
+  id: EbentIronSquadLeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackSupaSyndicateLeader
+    shoes: ClothingShoesBootsMagSyndie
+    mask: ClothingMaskGasSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    suitstorage: YellowOxygenTankFilled
+    id: SyndiPDAAgent
+    ears: ClothingHeadsetAltSyndicateEbent
+    belt: ClothingBeltSyndieHolsterPython
+    pocket1: FreedomImplanter
+    pocket2: StorageImplanter
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentIronSquadLeader
+  name: Iron Squad Leader Spawner
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentIronSquadLeader
+
+- type: randomHumanoidSettings
+  id: EbentIronSquadLeader
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox ]
+  components:
+    - type: Loadout
+      prototypes: [ EbentIronSquadLeaderGear ]
+
+#Engineer
+- type: entity
+  parent: LockerChiefEngineer
+  id: LockerEbentIronSquadEngineer
+  name: "шкаф инженера Железного Отряда"
+  suffix: Filled, Shitspawn, Ebent
+  components:
+  - type: AccessReader
+    access: []
+  - type: StorageFill
+    contents:
+    - id: EnergySword
+    - id: ClothingHeadHatChameleon
+    - id: ClothingUniformJumpsuitPyjamaSyndicateRed
+    - id: ClothingUniformJumpsuitPyjamaSyndicatePink
+    - id: ClothingUniformJumpskirtSyndieFormalDress
+    - id: ClothingUniformJumpsuitSyndieFormal
+    - id: ClothingOuterCoatSyndieCap
+    - id: ClothingHeadHatSyndie
+    - id: ClothingMaskNeckGaiter
+    - id: ClothingUniformJumpskirtOperative
+    - id: ClothingUniformJumpsuitOperative
+
+- type: entity
+  name: "рюкзак синдиката"
+  description: "Вместительный рюкзак с множеством карманов, который носят члены синдиката."
+  parent: ClothingBackpackSupaSyndicate
+  id: ClothingBackpackSupaSyndicateEngineer
+  suffix: Shitspawn, Ebent, Engineer
+  components:
+    - type: StorageFill
+      contents:
+      - id: Crowbar
+      - id: CigPackSyndicate
+        amount: 2
+      - id: Lighter
+      - id: FlashlightSecliteSyndicate
+      - id: Stimpack
+      - id: PowerCellHyper
+      - id: SpeedLoaderMagnumHighVelocity
+        amount: 2
+      - id: WeaponSubMachineGunC20r
+      - id: MagazinePistolSubMachineGunHighVelocity
+        amount: 2
+      - id: CombatMedipen
+      - id: EnergySwordDouble
+      - id: RCD
+      - id: RCDAmmo
+        amount: 3
+
+- type: startingGear
+  id: EbentIronSquadEngineerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChiefEngineerSyndie
+    back: ClothingBackpackSupaSyndicateEngineer
+    shoes: ClothingShoesBootsMagSyndie
+    mask: ClothingMaskGasSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    suitstorage: YellowOxygenTankFilled
+    id: SyndiPDAAgent
+    ears: ClothingHeadsetAltSyndicateEbent
+    belt: ClothingBeltSyndieHolsterPython
+    pocket1: FreedomImplanter
+    pocket2: StorageImplanter
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentIronSquadEngineer
+  name: Iron Squad Enginner Spawner
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentIronSquadEngineer
+
+- type: randomHumanoidSettings
+  id: EbentIronSquadEngineer
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox ]
+  components:
+    - type: Loadout
+      prototypes: [ EbentIronSquadEngineerGear ]
+
+#Corpsman
+- type: entity
+  parent: LockerMedical
+  id: LockerEbentIronSquadCorpsman
+  name: "шкаф медика Железного Отряда"
+  suffix: Filled, Shitspawn, Ebent
+  components:
+  - type: AccessReader
+    access: []
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpsuitPyjamaSyndicateRed
+    - id: ClothingUniformJumpsuitPyjamaSyndicatePink
+    - id: ClothingMaskNeckGaiter
+    - id: ClothingUniformJumpskirtOperative
+    - id: ClothingUniformJumpsuitOperative
+    - id: ClothingBackpackDuffelSyndicateMedicalBundleFilled
+
+- type: entity
+  name: "рюкзак синдиката"
+  description: "Вместительный рюкзак с множеством карманов, который носят члены синдиката."
+  parent: ClothingBackpackSupaSyndicate
+  id: ClothingBackpackSupaSyndicateCorpsman
+  suffix: Shitspawn, Ebent, Medic
+  components:
+    - type: StorageFill
+      contents:
+      - id: Crowbar
+      - id: CigPackSyndicate
+        amount: 2
+      - id: Lighter
+      - id: FlashlightSecliteSyndicate
+      - id: PowerCellHyper
+      - id: SpeedLoaderMagnumHighVelocity
+        amount: 2
+      - id: WeaponSubMachineGunC20r
+      - id: MagazinePistolSubMachineGun
+        amount: 2
+      - id: EnergySword
+      - id: SyndiHypo
+
+- type: startingGear
+  id: EbentIronSquadCorpsmanGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitParamedicSyndie
+    back: ClothingBackpackSupaSyndicateCorpsman
+    shoes: ClothingShoesBootsMagSyndie
+    mask: ClothingMaskGasSyndicate
+    gloves: ClothingHandsGlovesNitrile
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    suitstorage: YellowOxygenTankFilled
+    id: MedicalPDAAgent
+    ears: ClothingHeadsetAltSyndicateEbent
+    belt: ClothingBeltSyndieHolsterPython
+    pocket1: CombatMedipen
+    pocket2: Stimpack
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentIronSquadCorpsman
+  name: Iron Squad Corpsman Spawner
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentIronSquadCorpsman
+
+- type: randomHumanoidSettings
+  id: EbentIronSquadCorpsman
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox ]
+  components:
+    - type: Loadout
+      prototypes: [ EbentIronSquadCorpsmanGear ]
+
+#CMO
+- type: entity
+  parent: LockerChiefMedicalOfficer
+  id: LockerEbentIronSquadCMO
+  name: "шкаф главврача Железного Отряда"
+  suffix: Filled, Shitspawn, Ebent
+  components:
+  - type: AccessReader
+    access: []
+  - type: StorageFill
+    contents:
+    - id: ClothingHeadHatChameleon
+    - id: ClothingUniformJumpsuitPyjamaSyndicateRed
+    - id: ClothingUniformJumpsuitPyjamaSyndicatePink
+    - id: ClothingUniformJumpskirtSyndieFormalDress
+    - id: ClothingUniformJumpsuitSyndieFormal
+    - id: ClothingOuterCoatSyndieCap
+    - id: ClothingHeadHatSyndie
+    - id: ClothingMaskNeckGaiter
+    - id: ClothingUniformJumpskirtOperative
+    - id: ClothingUniformJumpsuitOperative
+    - id: CloningPodMachineCircuitboard
+    - id: CloningConsoleComputerCircuitboard
+    - id: EnergySword
+
+- type: entity
+  name: "рюкзак синдиката"
+  description: "Вместительный рюкзак с множеством карманов, который носят члены синдиката."
+  parent: ClothingBackpackSupaSyndicate
+  id: ClothingBackpackSupaSyndicateCMO
+  suffix: Shitspawn, Ebent, CMO
+  components:
+    - type: StorageFill
+      contents:
+      - id: Crowbar
+      - id: CigPackSyndicate
+        amount: 2
+      - id: Lighter
+      - id: FlashlightSecliteSyndicate
+      - id: Stimpack
+      - id: PowerCellHyper
+      - id: SpeedLoaderMagnumHighVelocity
+        amount: 2
+      - id: WeaponSubMachineGunC20r
+      - id: MagazinePistolSubMachineGunHighVelocity
+        amount: 2
+      - id: CombatMedipen
+      - id: EnergySwordDouble
+      - id: BoxDeathRattleImplants
+      - id: SyndiHypo
+
+- type: startingGear
+  id: EbentIronSquadCMOGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackSupaSyndicateCMO
+    shoes: ClothingShoesBootsMagSyndie
+    mask: ClothingMaskGasSyndicate
+    gloves: ClothingHandsGlovesNitrile
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    suitstorage: YellowOxygenTankFilled
+    id: MedicalPDAAgent
+    ears: ClothingHeadsetAltSyndicateEbent
+    belt: ClothingBeltSyndieHolsterPython
+    pocket1: FreedomImplanter
+    pocket2: StorageImplanter
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentIronSquadCMO
+  name: Iron Squad CMO Spawner
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentIronSquadCMO
+
+- type: randomHumanoidSettings
+  id: EbentIronSquadCMO
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox ]
+  components:
+    - type: Loadout
+      prototypes: [ EbentIronSquadCMOGear ]
+
+# Trooper
+- type: entity
+  parent: LockerSyndicatePersonal
+  id: LockerEbentIronSquadTrooper
+  name: "шкаф бойца Железного Отряда"
+  suffix: Filled, Shitspawn, Ebent
+  components:
+  - type: AccessReader
+    access: []
+  - type: StorageFill
+    contents:
+    - id: ClothingHeadHatChameleon
+    - id: ClothingUniformJumpsuitPyjamaSyndicateRed
+    - id: ClothingUniformJumpsuitPyjamaSyndicatePink
+    - id: ClothingUniformJumpskirtOperative
+    - id: ClothingUniformJumpsuitOperative
+
+- type: entity
+  name: "рюкзак синдиката"
+  description: "Вместительный рюкзак с множеством карманов, который носят члены синдиката."
+  parent: ClothingBackpackSupaSyndicate
+  id: ClothingBackpackSupaSyndicateTrooper
+  suffix: Shitspawn, Ebent, Trooper
+  components:
+    - type: StorageFill
+      contents:
+      - id: Crowbar
+      - id: CigPackSyndicate
+        amount: 2
+      - id: Lighter
+      - id: FlashlightSecliteSyndicate
+      - id: PowerCellHyper
+      - id: SpeedLoaderMagnumHighVelocity
+        amount: 2
+      - id: WeaponSubMachineGunC20r
+      - id: MagazinePistolSubMachineGunHighVelocity
+        amount: 2
+      - id: EnergySword
+
+- type: startingGear
+  id: EbentIronSquadTrooperGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackSupaSyndicateTrooper
+    shoes: ClothingShoesBootsMagSyndie
+    mask: ClothingMaskGasSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    suitstorage: YellowOxygenTankFilled
+    id: SyndiPDAAgent
+    ears: ClothingHeadsetAltSyndicateEbent
+    belt: ClothingBeltSyndieHolsterPython
+    pocket1: CombatMedipen
+    pocket2: Stimpack
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentIronSquadTrooper
+  name: Iron Squad Trooper Spawner
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentIronSquadTrooper
+
+- type: randomHumanoidSettings
+  id: EbentIronSquadTrooper
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox ]
+  components:
+    - type: Loadout
+      prototypes: [ EbentIronSquadTrooperGear ]
