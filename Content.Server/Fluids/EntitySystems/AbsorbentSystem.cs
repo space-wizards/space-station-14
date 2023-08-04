@@ -136,8 +136,9 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             return false;
         }
 
-        // Remove the non-water reagents as much as possible.
-        // Remove water on target as much as possible.
+        // This code must refill absorber with maximum amount of water and remove nonwater solution as much as possible
+        // Remove the non-water reagents.
+        // Remove water on target.
         // Then do the transfer.
         var nonWater = absorberSoln.SplitSolutionWithout(component.PickupAmount, PuddleSystem.EvaporationReagent);
 
