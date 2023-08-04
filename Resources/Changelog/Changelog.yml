@@ -1,9 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - {message: 'Toy Box has been added, it is filled with new toys.', type: Add}
-  id: 3926
-  time: '2023-06-03T03:31:48.0000000+00:00'
 - author: HerCoyote23
   changes:
   - {message: Swords no longer clank, type: Tweak}
@@ -2992,3 +2987,8 @@ Entries:
     type: Add}
   id: 4425
   time: '2023-08-04T05:21:28.0000000+00:00'
+- author: FillerVK
+  changes:
+  - {message: Added insulated gloves to emaged youtool, type: Add}
+  id: 4426
+  time: '2023-08-04T08:39:34.0000000+00:00'
