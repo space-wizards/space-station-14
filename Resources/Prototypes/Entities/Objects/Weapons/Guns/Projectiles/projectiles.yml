@@ -705,7 +705,9 @@
   noSpawn: true
   components:
     - type: EmbeddableProjectile
+      deleteOnRemove: true
     - type: Clickable
+    - type: InteractionOutline
     - type: Sprite
       noRot: false
       sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
