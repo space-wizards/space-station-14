@@ -2,12 +2,15 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Actions;
 using Content.Server.Destructible;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Blob;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
+using Content.Shared.SubFloor;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -31,6 +34,8 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
 
     public override void Initialize()
     {
@@ -48,6 +53,71 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
         SubscribeLocalEvent<BlobObserverComponent, InteractNoHandEvent>(OnInteract);
         SubscribeLocalEvent<BlobObserverComponent, BlobSwapCoreActionEvent>(OnSwapCore);
         SubscribeLocalEvent<BlobObserverComponent, BlobSplitCoreActionEvent>(OnSplitCore);
+        SubscribeLocalEvent<BlobObserverComponent, MoveEvent>(OnMoveEvent);
+    }
+
+    // TODO: This is very bad, but it is clearly better than invisible walls, let someone do better.
+    private void OnMoveEvent(EntityUid uid, BlobObserverComponent observerComponent, ref MoveEvent args)
+    {
+        if (observerComponent.IsProcessingMoveEvent)
+            return;
+
+        observerComponent.IsProcessingMoveEvent = true;
+
+        if (observerComponent.Core == null)
+        {
+            observerComponent.IsProcessingMoveEvent = false;
+            return;
+        }
+
+        var xform = Transform(observerComponent.Core.Value);
+        var corePos = xform.Coordinates;
+
+        var (nearestEntityUid, nearestDistance) = CalculateNearestBlobTileDistance(args.NewPosition);
+
+        if (nearestEntityUid == null)
+            return;
+
+        if (nearestDistance > 5f)
+        {
+            _transform.SetCoordinates(uid, corePos);
+
+            observerComponent.IsProcessingMoveEvent = false;
+            return;
+        }
+
+        if (nearestDistance > 3f)
+        {
+            observerComponent.CanMove = true;
+            _blocker.UpdateCanMove(uid);
+            var direction = (Transform(nearestEntityUid.Value).Coordinates.Position - args.NewPosition.Position);
+            var newPosition = args.NewPosition.Offset(direction * 0.1f);
+
+            _transform.SetCoordinates(uid, newPosition);
+        }
+
+        observerComponent.IsProcessingMoveEvent = false;
+    }
+
+    private (EntityUid? nearestEntityUid, float nearestDistance) CalculateNearestBlobTileDistance(EntityCoordinates position)
+    {
+        var nearestDistance = float.MaxValue;
+        EntityUid? nearestEntityUid = null;
+
+        foreach (var lookupUid in _lookup.GetEntitiesInRange(position, 5f))
+        {
+            if (!HasComp<BlobTileComponent>(lookupUid))
+                continue;
+            var tileCords = Transform(lookupUid).Coordinates;
+            var distance = Vector2.Distance(position.Position, tileCords.Position);
+
+            if (!(distance < nearestDistance))
+                continue;
+            nearestDistance = distance;
+            nearestEntityUid = lookupUid;
+        }
+
+        return (nearestEntityUid, nearestDistance);
     }
 
     private void OnBlobHelp(EntityUid uid, BlobObserverComponent observerComponent,
@@ -147,9 +217,9 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
 
         EntityUid? blobTile = null;
 
-        foreach (var tileref in centerTile)
+        foreach (var tileRef in centerTile)
         {
-            foreach (var ent in grid.GetAnchoredEntities(tileref.GridIndices))
+            foreach (var ent in grid.GetAnchoredEntities(tileRef.GridIndices))
             {
                 if (!TryComp<BlobTileComponent>(ent, out var blobTileComponent))
                     continue;
@@ -453,7 +523,6 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
             return;
 
         var location = args.ClickLocation;
-        // Initial validity check
         if (!location.IsValid(EntityManager))
             return;
 
@@ -462,7 +531,6 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
         {
             location = location.AlignWithClosestGridTile();
             gridId = location.GetGridUid(EntityManager);
-            // Check if fixing it failed / get final grid ID
             if (!HasComp<MapGridComponent>(gridId))
                 return;
         }
@@ -491,7 +559,7 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
             };
             if (mobAdjacentTiles.Any(indices => grid.GetAnchoredEntities(indices).Any(ent => HasComp<BlobTileComponent>(ent))))
             {
-                if (HasComp<DestructibleComponent>(target) || HasComp<DamageableComponent>(target))
+                if (HasComp<DestructibleComponent>(target) && !HasComp<ItemComponent>(target)&& !HasComp<SubFloorHideComponent>(target))
                 {
                     if (_blobCoreSystem.TryUseAbility(uid, observerComponent.Core.Value, blobCoreComponent, blobCoreComponent.AttackCost))
                     {
@@ -540,32 +608,31 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
             targetTile.GridIndices.Offset(Direction.South)
         };
 
-        if (adjacentTiles.Any(indices => grid.GetAnchoredEntities(indices).Any(ent => HasComp<BlobTileComponent>(ent))))
+        if (!adjacentTiles.Any(indices =>
+                grid.GetAnchoredEntities(indices).Any(ent => HasComp<BlobTileComponent>(ent))))
+            return;
+        var cost = blobCoreComponent.NormalBlobCost;
+        if (targetTileEmplty)
         {
-            var cost = blobCoreComponent.NormalBlobCost;
-            if (targetTileEmplty)
-            {
-                cost *= 2;
-            }
-
-            if (!_blobCoreSystem.TryUseAbility(uid, observerComponent.Core.Value, blobCoreComponent, cost))
-                return;
-
-            if (targetTileEmplty)
-            {
-                var plating = _tileDefinitionManager["Plating"];
-                var platingTile = new Tile(plating.TileId);
-                grid.SetTile(location, platingTile);
-            }
-
-            if (!_blobCoreSystem.TransformBlobTile(null,
-                    observerComponent.Core.Value,
-                    blobCoreComponent.NormalBlobTile,
-                    location,
-                    blobCoreComponent,
-                    transformCost: cost))
-                return;
+            cost *= 2;
         }
+
+        if (!_blobCoreSystem.TryUseAbility(uid, observerComponent.Core.Value, blobCoreComponent, cost))
+            return;
+
+        if (targetTileEmplty)
+        {
+            var plating = _tileDefinitionManager["Plating"];
+            var platingTile = new Tile(plating.TileId);
+            grid.SetTile(location, platingTile);
+        }
+
+        _blobCoreSystem.TransformBlobTile(null,
+            observerComponent.Core.Value,
+            blobCoreComponent.NormalBlobTile,
+            location,
+            blobCoreComponent,
+            transformCost: cost);
     }
 
     private void OnStartup(EntityUid uid, BlobObserverComponent observerComponent, ComponentStartup args)

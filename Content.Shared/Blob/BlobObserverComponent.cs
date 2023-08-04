@@ -6,7 +6,14 @@ namespace Content.Shared.Blob;
 [RegisterComponent, NetworkedComponent]
 public sealed class BlobObserverComponent : Component
 {
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool IsProcessingMoveEvent;
+
+    [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? Core = default!;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool CanMove = true;
 }
 
 public sealed class BlobCreateFactoryActionEvent : WorldTargetActionEvent

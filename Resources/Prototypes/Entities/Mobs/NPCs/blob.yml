@@ -315,7 +315,7 @@
   - type: BlobCore
   - type: BlobNode
   - type: BlobResource
-    pointsPerPulsed: 4
+    pointsPerPulsed: 10
   - type: Sprite
     sprite: Mobs/Aliens/blob.rsi
     drawdepth: BlobTiles
@@ -536,28 +536,28 @@
           shader: unshaded
 
 
-- type: entity
-  parent: BaseStructure
-  id: BlobBorder
-  name: debug wall
-  noSpawn: true
-  suffix: DONTMAP
-  placement:
-    mode: SnapgridCenter
-    snap:
-      - Wall
-  components:
-    - type: BlobBorder
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-          mask:
-            - BlobGhostImpassable
-          layer:
-            - BlobGhostImpassable
+#- type: entity
+#  parent: BaseStructure
+#  id: BlobBorder
+#  name: debug wall
+#  noSpawn: true
+#  suffix: DONTMAP
+#  placement:
+#    mode: SnapgridCenter
+#    snap:
+#      - Wall
+#  components:
+#    - type: BlobBorder
+#    - type: Fixtures
+#      fixtures:
+#        fix1:
+#          shape:
+#            !type:PhysShapeAabb
+#            bounds: "-0.5,-0.5,0.5,0.5"
+#          mask:
+#            - BlobGhostImpassable
+#          layer:
+#            - BlobGhostImpassable
 #    - type: PlacementReplacement
 #      key: walls
 #    - type: Visibility
