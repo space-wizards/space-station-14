@@ -30,10 +30,10 @@
     runningState: building
 
 - type: entity
-  id: MinibombFactoryMachine
-  parent: BaseFactoryMachine
-  name: minibomb assembler
-  description: CyberSun official minibomb assembler, has sharp edges.
+  id: ExplosiveAssemblerFactoryMachine
+  parent: BaseLathe
+  name: explosive assembler
+  description: CyberSun official explosive assembling machine. stand back.
   components:
   - type: Sprite
   sprite: Structures/Machines/autolathe.rsi
@@ -49,7 +49,7 @@
   - state: panel
     map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
-    board: MinibombAssemblerCircuitboard
+    board: ExplosiveAssemblerMachineCircuitboard
   - type: Lathe
     idleState: icon
     runningState: building

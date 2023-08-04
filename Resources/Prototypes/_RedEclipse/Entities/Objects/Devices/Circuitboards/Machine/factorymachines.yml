@@ -7,7 +7,21 @@
     - type: MachineBoard
       prototype: BaseFactoryMachine
       requirements:
-        MatterBin: 3
+        MatterBin: 1
         Manipulator: 1
       materialRequirements:
-        Glass: 1
+        Steel: 1
+
+- type: entity
+  id: ExplosiveAssemblerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: explosive assember machine board
+  description: debug item
+  components:
+    - type: MachineBoard
+      prototype: ExplosiveAssemblerFactoryMachine
+      requirements:
+        MatterBin: 3
+        Manipulator: 3
+      materialRequirements:
+        Steel: 3
