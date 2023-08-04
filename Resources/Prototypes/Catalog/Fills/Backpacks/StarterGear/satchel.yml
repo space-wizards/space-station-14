@@ -230,7 +230,7 @@
   components:
     - type: StorageFill
       contents:
-        - id: BoxSurvival
+        - id: BoxSurvivalEngineering
 
 - type: entity
   noSpawn: true
