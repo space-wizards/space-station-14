@@ -40,6 +40,11 @@ namespace Content.Shared.Projectiles
             if (component.RemovalTime == null)
                 return;
 
+            if (args.Handled || !TryComp<PhysicsComponent>(uid, out var physics) || physics.BodyType != BodyType.Static)
+                return;
+
+            args.Handled = true;
+
             _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.RemovalTime.Value,
                 new RemoveEmbeddedProjectileEvent(), eventTarget: uid, target: uid)
             {

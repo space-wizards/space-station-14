@@ -1,85 +1,4 @@
 Entries:
-- author: Owai-Seek
-  changes:
-  - {message: Added GuideHelp tags to some Janitorial items., type: Add}
-  id: 3929
-  time: '2023-06-03T19:07:06.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Uranium window now can block radiation, type: Tweak}
-  id: 3930
-  time: '2023-06-03T19:12:27.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Players being electrocuted now shows up nicer on the power monitoring
-      console., type: Tweak}
-  id: 3931
-  time: '2023-06-03T19:13:31.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Joints and blunts will get you high again., type: Fix}
-  id: 3932
-  time: '2023-06-03T19:29:46.0000000+00:00'
-- author: tom-leys
-  changes:
-  - {message: 'Latest scientific research shows small boxes around Flesh Anomalies
-      are no longer best practice. Asked to comment on this, our scientific advisor
-      had this to say: "The Tendons! Tendons everywhere! Arrrghhh!"', type: Tweak}
-  id: 3933
-  time: '2023-06-03T19:31:11.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed being able to override the amount of the amount of liquid shot
-      out of a spray bottle., type: Fix}
-  - {message: Fixed vapor sprites being rotated in the wrong direction., type: Fix}
-  - {message: Slightly buffed mega spray bottle., type: Tweak}
-  id: 3934
-  time: '2023-06-03T19:31:50.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'DoAfters (green bar above your head) now work when moving without gravity
-      so you can cuff, strip and use meds in spess.', type: Tweak}
-  id: 3935
-  time: '2023-06-03T19:33:41.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: puddle stickiness now updates when solution changes, type: Fix}
-  id: 3936
-  time: '2023-06-03T19:34:44.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Due to budget cuts in atmos, large gas tanks had their volume reduced
-      by 78%.', type: Tweak}
-  id: 3937
-  time: '2023-06-04T00:09:37.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Due to carp budget cuts, the Chief Space Carp can no longer send the
-      strongest carp and dragons to expedition dungeons.', type: Tweak}
-  id: 3938
-  time: '2023-06-04T11:06:13.0000000+00:00'
-- author: Equivocateur
-  changes:
-  - {message: Nanotrasen has remembered that they had built a therapy room for a reason
-      and is now allowing psychologists to board Origin Station., type: Fix}
-  id: 3939
-  time: '2023-06-04T20:11:15.0000000+00:00'
-- author: Owai-Seek
-  changes:
-  - {message: 'Adds Medical Doctor, Cryo, and Cloning Guidebooks', type: Add}
-  id: 3940
-  time: '2023-06-04T21:06:43.0000000+00:00'
-- author: Owai-Seek
-  changes:
-  - {message: Added Chef Guidebook, type: Add}
-  id: 3941
-  time: '2023-06-04T21:34:29.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Advanced tools now has the recipe for the Experimental welding tool
-      instead of the Industrial welding tool, type: Fix}
-  id: 3942
-  time: '2023-06-04T22:23:27.0000000+00:00'
 - author: HerCoyote23
   changes:
   - {message: Spears and Bats are bigger now, type: Tweak}
@@ -2943,7 +2862,7 @@ Entries:
       brute-force attacks on their uplinks unfeasible.', type: Fix}
   id: 4420
   time: '2023-08-03T11:13:17.0000000+00:00'
-- author: crazybrain
+- author: fedKotikeD & crazybrain
   changes:
   - {message: Added Syndicate pAI., type: Add}
   - {message: Syndicate pAI's can be found on the Nukie planet., type: Tweak}
@@ -2992,3 +2911,80 @@ Entries:
   - {message: Spears can now embed into things and require removing., type: Add}
   id: 4428
   time: '2023-08-04T08:56:39.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: The smartfridge now uses its old sprites., type: Tweak}
+  id: 4429
+  time: '2023-08-04T18:29:43.0000000+00:00'
+- author: MilenVolf
+  changes:
+  - {message: Moths now have proper creampied texture! Honk!, type: Tweak}
+  id: 4430
+  time: '2023-08-04T18:31:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix spear wielding., type: Fix}
+  id: 4431
+  time: '2023-08-04T18:37:17.0000000+00:00'
+- author: Aleksh
+  changes:
+  - {message: Added laser raptors., type: Add}
+  id: 4432
+  time: '2023-08-04T18:38:11.0000000+00:00'
+- author: Unbelievable-Salmon
+  changes:
+  - {message: The Syndicate gas mask now protects your eyes from welders., type: Tweak}
+  id: 4433
+  time: '2023-08-04T18:43:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Allow pulling while buckled, type: Add}
+  id: 4434
+  time: '2023-08-04T18:47:52.0000000+00:00'
+- author: astriloqua
+  changes:
+  - {message: People wont hear buckling and unbuckling sounds twice anymore., type: Fix}
+  id: 4435
+  time: '2023-08-04T22:24:21.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Gas tanks and jetpacks have reduced capacity and now need to be refilled
+      more regularly., type: Tweak}
+  - {message: Jetpacks now start fully filled., type: Tweak}
+  id: 4436
+  time: '2023-08-04T22:40:42.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added the Dr. Gibb Vendor, type: Add}
+  id: 4437
+  time: '2023-08-05T02:07:41.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Changed the swat crate to only contain non-lethal shells; now it comes
+      with shields., type: Tweak}
+  id: 4438
+  time: '2023-08-05T03:47:32.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Uplinks can now purchase a Syndicate pAI., type: Add}
+  id: 4439
+  time: '2023-08-05T04:26:26.0000000+00:00'
+- author: mhamster
+  changes:
+  - {message: 'Added new chemical reaction between iron, aluminium and uranium that
+      will cause electromagnetic pulse.', type: Add}
+  id: 4440
+  time: '2023-08-05T04:31:14.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: 'The Syndicate Disposable Turret is now approved for use by all syndicate
+      agents (with the exception of nuclear operatives), instead of those from a select
+      few jobs.', type: Tweak}
+  id: 4441
+  time: '2023-08-05T04:32:25.0000000+00:00'
+- author: Jesse
+  changes:
+  - {message: New chainsaw sprites, type: Add}
+  - {message: New chainsaw sounds. It goes vroom., type: Add}
+  id: 4442
+  time: '2023-08-05T04:49:56.0000000+00:00'

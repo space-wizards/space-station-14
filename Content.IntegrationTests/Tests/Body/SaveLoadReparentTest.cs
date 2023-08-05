@@ -11,6 +11,7 @@ namespace Content.IntegrationTests.Tests.Body;
 [TestFixture]
 public sealed class SaveLoadReparentTest
 {
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
   name: HumanBodyDummy
@@ -25,8 +26,7 @@ public sealed class SaveLoadReparentTest
     {
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
         {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
+            NoClient = true
         });
         var server = pairTracker.Pair.Server;
 
