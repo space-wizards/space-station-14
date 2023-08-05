@@ -5,14 +5,15 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Audio;
-using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
+using Content.Shared.Maps;
 using Content.Shared.Nuke;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -23,7 +24,9 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosions = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly ServerGlobalSoundSystem _sound = default!;
@@ -53,9 +56,6 @@ public sealed class NukeSystem : EntitySystem
         SubscribeLocalEvent<NukeComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<NukeComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
 
-        // anchoring logic
-        SubscribeLocalEvent<NukeComponent, AnchorAttemptEvent>(OnAnchorAttempt);
-        SubscribeLocalEvent<NukeComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<NukeComponent, AnchorStateChangedEvent>(OnAnchorChanged);
 
@@ -133,28 +133,6 @@ public sealed class NukeSystem : EntitySystem
 
     #region Anchor
 
-    private void OnAnchorAttempt(EntityUid uid, NukeComponent component, AnchorAttemptEvent args)
-    {
-        CheckAnchorAttempt(uid, component, args);
-    }
-
-    private void OnUnanchorAttempt(EntityUid uid, NukeComponent component, UnanchorAttemptEvent args)
-    {
-        CheckAnchorAttempt(uid, component, args);
-    }
-
-    private void CheckAnchorAttempt(EntityUid uid, NukeComponent component, BaseAnchoredAttemptEvent args)
-    {
-        // cancel any anchor attempt if armed
-        if (component.Status == NukeStatus.ARMED)
-        {
-            var msg = Loc.GetString("nuke-component-cant-anchor");
-            _popups.PopupEntity(msg, uid, args.User);
-
-            args.Cancel();
-        }
-    }
-
     private void OnAnchorChanged(EntityUid uid, NukeComponent component, ref AnchorStateChangedEvent args)
     {
         UpdateUserInterface(uid, component);
@@ -186,6 +164,22 @@ public sealed class NukeSystem : EntitySystem
         }
         else
         {
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+                return;
+
+            var worldPos = _transform.GetWorldPosition(xform);
+
+            foreach (var tile in grid.GetTilesIntersecting(new Circle(worldPos, component.RequiredFloorRadius), false))
+            {
+                if (!tile.IsSpace(_tileDefManager))
+                    continue;
+
+                var msg = Loc.GetString("nuke-component-cant-anchor-floor");
+                _popups.PopupEntity(msg, uid, args.Session, PopupType.MediumCaution);
+
+                return;
+            }
+
             _transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid());
             _transform.AnchorEntity(uid, xform);
         }
