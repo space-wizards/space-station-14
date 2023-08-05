@@ -101,6 +101,7 @@
       - ExtendedEmergencyOxygenTank
       - DoubleEmergencyOxygenTank
       - Pickaxe
+      - ModularReciever
       - AppraisalTool
       - SheetRGlass
       - Beaker
@@ -229,6 +230,7 @@
       - ClothingBackpackDuffelHolding
       - WelderExperimental
       - JawsOfLife
+      - ClothingEyesGlassesChemical
 
 - type: entity
   id: CircuitImprinter
@@ -318,6 +320,7 @@
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
+      - MassMediaCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -456,6 +459,7 @@
       - SignalTrigger
       - VoiceTrigger
       - TimerTrigger
+      - Truncheon
       - FlashPayload
       - ExplosivePayload
       - WeaponLaserCarbine
