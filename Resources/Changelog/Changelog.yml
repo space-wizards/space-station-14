@@ -2896,7 +2896,7 @@ Entries:
       brute-force attacks on their uplinks unfeasible.', type: Fix}
   id: 4420
   time: '2023-08-03T11:13:17.0000000+00:00'
-- author: crazybrain
+- author: fedKotikeD & crazybrain
   changes:
   - {message: Added Syndicate pAI., type: Add}
   - {message: Syndicate pAI's can be found on the Nukie planet., type: Tweak}
