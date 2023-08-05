@@ -317,7 +317,7 @@
         Caustic: 0.1
         Radiation: 0.70
         Heat: 0.9
-        blunt: 0.95
+        Blunt: 0.95
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.95
