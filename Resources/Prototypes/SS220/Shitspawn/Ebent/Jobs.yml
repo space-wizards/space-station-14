@@ -55,7 +55,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndieElite
     suitstorage: YellowOxygenTankFilled
-    id: SyndiPDAAgent
+    id: SyndiPDAAgentLeader
     ears: ClothingHeadsetAltSyndicateEbent
     belt: ClothingBeltSyndieHolsterPython
     pocket1: FreedomImplanter
@@ -76,8 +76,49 @@
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox ]
   components:
+    - type: GhostRole
+      name: job-name-iron-squad-leader
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ EbentIronSquadLeaderGear ]
+
+- type: job
+  id: IronSquadLeader
+  name: job-name-iron-squad-leader
+  description: job-description-iron-squad-leader
+  startingGear: EbentIronSquadLeaderGear
+  playTimeTracker: IronSquadLeader
+  setPreference: false
+  canBeAntag: false
+  accessGroups:
+  - Command
+  access:
+  - Maintenance
+  - External
+  - NuclearOperative
+  - Bar
+
+- type: playTimeTracker
+  id: IronSquadLeader
+
+- type: entity
+  parent: AgentIDCard
+  id: AgentIDCardCmdLeader
+  suffix: Агент, Щитспавн, Ebent
+  name: ID карта пассажира
+  components:
+  - type: PresetIdCard
+    job: IronSquadLeader
+
+- type: entity
+  parent: SyndiPDAAgent
+  id: SyndiPDAAgentLeader
+  name: "КПК синдиката"
+  description: "Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!"
+  suffix: Агент, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: AgentIDCardCmdLeader
 
 #Engineer
 - type: entity
@@ -139,7 +180,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndieElite
     suitstorage: YellowOxygenTankFilled
-    id: SyndiPDAAgent
+    id: SyndiPDAAgentEngineer
     ears: ClothingHeadsetAltSyndicateEbent
     belt: ClothingBeltSyndieHolsterPython
     pocket1: FreedomImplanter
@@ -160,8 +201,49 @@
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox ]
   components:
+    - type: GhostRole
+      name: job-name-iron-squad-engineer
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ EbentIronSquadEngineerGear ]
+
+- type: job
+  id: IronSquadEngineer
+  name: job-name-iron-squad-engineer
+  description: job-description-iron-squad-engineer
+  startingGear: EbentIronSquadEngineerGear
+  playTimeTracker: IronSquadEngineer
+  setPreference: false
+  canBeAntag: false
+  accessGroups:
+  - Command
+  access:
+  - Maintenance
+  - External
+  - NuclearOperative
+  - Bar
+
+- type: playTimeTracker
+  id: IronSquadEngineer
+
+- type: entity
+  parent: AgentIDCard
+  id: AgentIDCardCmdEngineer
+  suffix: Агент, Щитспавн, Ebent
+  name: ID карта пассажира
+  components:
+  - type: PresetIdCard
+    job: IronSquadEngineer
+
+- type: entity
+  parent: SyndiPDAAgent
+  id: SyndiPDAAgentEngineer
+  name: "КПК синдиката"
+  description: "Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!"
+  suffix: Агент, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: AgentIDCardCmdEngineer
 
 #Corpsman
 - type: entity
@@ -214,7 +296,7 @@
     gloves: ClothingHandsGlovesNitrile
     outerClothing: ClothingOuterHardsuitSyndieElite
     suitstorage: YellowOxygenTankFilled
-    id: MedicalPDAAgent
+    id: SyndiPDAAgentCorpsman
     ears: ClothingHeadsetAltSyndicateEbent
     belt: ClothingBeltSyndieHolsterPython
     pocket1: CombatMedipen
@@ -235,8 +317,49 @@
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox ]
   components:
+    - type: GhostRole
+      name: job-name-iron-squad-corpsman
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ EbentIronSquadCorpsmanGear ]
+
+- type: job
+  id: IronSquadCorpsman
+  name: job-name-iron-squad-corpsman
+  description: job-description-iron-squad-corpsman
+  startingGear: EbentIronSquadCorpsmanGear
+  playTimeTracker: IronSquadCorpsman
+  setPreference: false
+  canBeAntag: false
+  accessGroups:
+  - Command
+  access:
+  - Maintenance
+  - External
+  - NuclearOperative
+  - Bar
+
+- type: playTimeTracker
+  id: IronSquadCorpsman
+
+- type: entity
+  parent: AgentIDCard
+  id: AgentIDCardCmdCorpsman
+  suffix: Агент, Щитспавн, Ebent
+  name: ID карта пассажира
+  components:
+  - type: PresetIdCard
+    job: IronSquadCorpsman
+
+- type: entity
+  parent: MedicalPDAAgent
+  id: SyndiPDAAgentCorpsman
+  name: "КПК синдиката"
+  description: "Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!"
+  suffix: Агент, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: AgentIDCardCmdCorpsman
 
 #CMO
 - type: entity
@@ -299,7 +422,7 @@
     gloves: ClothingHandsGlovesNitrile
     outerClothing: ClothingOuterHardsuitSyndieElite
     suitstorage: YellowOxygenTankFilled
-    id: MedicalPDAAgent
+    id: SyndiPDAAgentCMO
     ears: ClothingHeadsetAltSyndicateEbent
     belt: ClothingBeltSyndieHolsterPython
     pocket1: FreedomImplanter
@@ -320,8 +443,49 @@
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox ]
   components:
+    - type: GhostRole
+      name: job-name-iron-squad-cmo
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ EbentIronSquadCMOGear ]
+
+- type: job
+  id: IronSquadCMO
+  name: job-name-iron-squad-cmo
+  description: job-description-iron-squad-cmo
+  startingGear: EbentIronSquadCMOGear
+  playTimeTracker: IronSquadCMO
+  setPreference: false
+  canBeAntag: false
+  accessGroups:
+  - Command
+  access:
+  - Maintenance
+  - External
+  - NuclearOperative
+  - Bar
+
+- type: playTimeTracker
+  id: IronSquadCMO
+
+- type: entity
+  parent: AgentIDCard
+  id: AgentIDCardCmdCMO
+  suffix: Агент, Щитспавн, Ebent
+  name: ID карта пассажира
+  components:
+  - type: PresetIdCard
+    job: IronSquadCMO
+
+- type: entity
+  parent: MedicalPDAAgent
+  id: SyndiPDAAgentCMO
+  name: "КПК синдиката"
+  description: "Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!"
+  suffix: Агент, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: AgentIDCardCmdCMO
 
 # Trooper
 - type: entity
@@ -393,5 +557,46 @@
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox ]
   components:
+    - type: GhostRole
+      name: job-name-iron-squad-fighter
+    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ EbentIronSquadTrooperGear ]
+
+- type: job
+  id: IronSquadFighter
+  name: job-name-iron-squad-fighter
+  description: job-description-iron-squad-fighter
+  startingGear: EbentIronSquadTrooperGear
+  playTimeTracker: IronSquadFighter
+  setPreference: false
+  canBeAntag: false
+  accessGroups:
+  - Command
+  access:
+  - Maintenance
+  - External
+  - NuclearOperative
+  - Bar
+
+- type: playTimeTracker
+  id: IronSquadFighter
+
+- type: entity
+  parent: AgentIDCard
+  id: AgentIDCardCmd
+  suffix: Агент, Щитспавн, Ebent
+  name: ID карта пассажира
+  components:
+  - type: PresetIdCard
+    job: IronSquadFighter
+
+- type: entity
+  parent: SyndiPDA
+  id: SyndiPDAAgent
+  name: "КПК синдиката"
+  description: "Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!"
+  suffix: Агент, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: AgentIDCardCmd

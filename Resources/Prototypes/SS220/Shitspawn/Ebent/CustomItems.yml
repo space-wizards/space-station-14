@@ -1,28 +1,4 @@
 - type: entity
-  parent: AgentIDCard
-  id: AgentIDCardCmd
-  suffix: Агент, Щитспавн, Ebent
-  name: ID карта пассажира
-  components:
-  - type: Access
-    groups:
-    - Command
-    tags:
-    - NuclearOperative
-    - External
-    - Maintenance
-
-- type: entity
-  parent: SyndiPDA
-  id: SyndiPDAAgent
-  name: "КПК синдиката"
-  description: "Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!"
-  suffix: Агент, Щитспавн, Ebent
-  components:
-  - type: Pda
-    id: AgentIDCardCmd
-
-- type: entity
   parent: MedicalPDA
   id: MedicalPDAAgent
   name: "КПК врача синдиката"
