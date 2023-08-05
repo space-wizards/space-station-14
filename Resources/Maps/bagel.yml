@@ -134093,6 +134093,12 @@ entities:
     - pos: 31.5,18.5
       parent: 60
       type: Transform
+  - uid: 21247
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: -2.5,15.5
+      parent: 60
+      type: Transform
   - uid: 21367
     components:
     - pos: -45.5,-6.5
@@ -136717,16 +136723,6 @@ entities:
     - pos: 9.5,13.5
       parent: 60
       type: Transform
-  - uid: 6340
-    components:
-    - pos: 40.5,-28.5
-      parent: 60
-      type: Transform
-  - uid: 6341
-    components:
-    - pos: 41.5,-28.5
-      parent: 60
-      type: Transform
   - uid: 6462
     components:
     - pos: 55.5,-12.5
@@ -138270,6 +138266,16 @@ entities:
   - uid: 5546
     components:
     - pos: -43.5,9.5
+      parent: 60
+      type: Transform
+  - uid: 6340
+    components:
+    - pos: 40.5,-28.5
+      parent: 60
+      type: Transform
+  - uid: 6341
+    components:
+    - pos: 41.5,-28.5
       parent: 60
       type: Transform
   - uid: 9424
