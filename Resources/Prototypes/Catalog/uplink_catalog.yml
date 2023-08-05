@@ -100,7 +100,7 @@
       blacklist:
         tags:
           - NukeOpsUplink
-          
+
 # Explosives
 
 - type: listing
@@ -369,7 +369,7 @@
       whitelist:
         tags:
           - NukeOpsUplink
-          
+
 - type: listing
   id: UplinkReinforcementRadioSyndicateMonkey
   name: uplink-reinforcement-radio-monkey-name
@@ -424,15 +424,15 @@
   categories:
   - UplinkUtility
 
-- type: listing
-  id: UplinkVoiceMask
-  name: uplink-voice-mask-name
-  description: uplink-voice-mask-desc
-  productEntity: ClothingMaskGasVoiceChameleon
-  cost:
-    Telecrystal: 6
-  categories:
-  - UplinkUtility
+# - type: listing
+#   id: UplinkVoiceMask
+#   name: uplink-voice-mask-name
+#   description: uplink-voice-mask-desc
+#   productEntity: ClothingMaskGasVoiceChameleon
+#   cost:
+#     Telecrystal: 6
+#   categories:
+#   - UplinkUtility
 
 - type: listing
   id: UplinkRadioJammer
@@ -942,7 +942,7 @@
     whitelist:
     - Zookeeper
     - Scientist
-    - SeniorResearcher      
+    - SeniorResearcher
     - Chef
 
 - type: listing
