@@ -241,3 +241,17 @@
     tags:
       - FootstepSound
 
+- type: entity
+  id: PlayerBorgGeneric
+  parent: BorgChassisGeneric
+  noSpawn: true
+  components:
+  - type: BorgChassis
+    startingBrain: MMIFilled
+    startingModules:
+    - BorgModuleTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium

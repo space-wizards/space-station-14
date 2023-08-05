@@ -1,8 +1,8 @@
 ﻿- type: entity
   parent: BaseItem
   id: MMI
-  name: MMI
-  description: A man-machine interface, able to facilitate communication between a biological brain and electronics.
+  name: man-machine interface
+  description: A MMI, able to facilitate communication between a biological brain and electronics.
   components:
   - type: Sprite
     sprite: Objects/Specific/Robotics/mmi.rsi
@@ -44,6 +44,20 @@
     containers:
       brain_slot: !type:ContainerSlot
   - type: Appearance
+
+- type: entity
+  parent: MMI
+  id: MMIFilled
+  suffix: Filled
+  components:
+  - type: ItemSlots
+    slots:
+      brain_slot:
+        name: "Brain"
+        startingItem: OrganHumanBrain
+        whitelist:
+          components:
+            - Brain
 
 - type: entity
   parent: BaseItem

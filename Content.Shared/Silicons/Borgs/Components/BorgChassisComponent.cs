@@ -2,8 +2,10 @@
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -29,6 +31,9 @@ public sealed partial class BorgChassisComponent : Component
     public ContainerSlot BrainContainer = default!;
 
     public EntityUid? BrainEntity => BrainContainer.ContainedEntity;
+
+    [DataField("startingBrain", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? StartingBrain;
     #endregion
 
     #region Modules
@@ -45,6 +50,9 @@ public sealed partial class BorgChassisComponent : Component
     public Container ModuleContainer = default!;
 
     public int ModuleCount => ModuleContainer.ContainedEntities.Count;
+
+    [DataField("startingModules", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public List<string> StartingModules = new();
     #endregion
 
     [DataField("borgJobId", customTypeSerializer: typeof(PrototypeIdSerializer<JobPrototype>))]

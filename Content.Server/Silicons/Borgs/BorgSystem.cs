@@ -66,6 +66,18 @@ public sealed partial class BorgSystem : SharedBorgSystem
     {
         UpdateBatteryAlert(uid);
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+
+        var coordinates = Transform(uid).Coordinates;
+
+        if (component.StartingBrain != null)
+        {
+            component.BrainContainer.Insert(Spawn(component.StartingBrain, coordinates), EntityManager);
+        }
+
+        foreach (var startingModule in component.StartingModules)
+        {
+            component.ModuleContainer.Insert(Spawn(startingModule, coordinates), EntityManager);
+        }
     }
 
     private void OnChassisInteractUsing(EntityUid uid, BorgChassisComponent component, AfterInteractUsingEvent args)
