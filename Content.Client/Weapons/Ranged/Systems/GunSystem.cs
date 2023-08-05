@@ -164,7 +164,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // Define target coordinates relative to gun entity, so that network latency on moving grids doesn't fuck up the target location.
         var coordinates = EntityCoordinates.FromMap(entity, mousePos, TransformSystem, EntityManager);
 
-        Sawmill.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
+        Log.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
         EntityManager.RaisePredictiveEvent(new RequestShootEvent
         {
