@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Original sprites taken from https://github.com/space-wizards/space-station-14/tree/master/Resources/Textures/Objects/Misc/id_cards.rsi, modified to syndicate version by sTiKyt",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+
+        {
+            "name": "idstationengineer"
+        },
+        {
+            "name": "idintern-tech"
+        },
+        {
+            "name": "default"
+        }
+    ]
+}
