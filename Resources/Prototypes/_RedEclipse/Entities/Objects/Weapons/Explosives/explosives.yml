@@ -2,7 +2,7 @@
   name: syndicate megabomb
   description: A syndicate-manufactured explosive used to stow destruction and cause untold chaos.
   parent: GrenadeBase
-  id: SyndieMegabomb
+  id: SyndieMegaBomb
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
@@ -13,32 +13,8 @@
   - type: Explosive
     explosionType: Minibomb
     totalIntensity: 800
-    intensitySlope: 20 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
+    intensitySlope: 20
     maxIntensity: 80
-  - type: Appearance
-  - type: TimerTriggerVisuals
-    primingSound:
-      path: /Audio/Effects/minibombcountdown.ogg
-      params:
-        volume: 12
-
-- type: entity
-  name: syndicate REALLY MEGA bomb
-  description: A syndicate-manufactured explosive used to stow destruction and cause unreasonable chaos.
-  parent: GrenadeBase
-  id: SyndieReallyMegabomb
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
-    scale: 4.0, 4.0
-  - type: OnUseTimerTrigger
-    delay: 5
-  - type: ExplodeOnTrigger
-  - type: Explosive
-    explosionType: Minibomb
-    totalIntensity: 8000
-    intensitySlope: 4 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
-    maxIntensity: 120
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
