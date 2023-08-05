@@ -6,9 +6,9 @@
   description: Syndicate Personal Data Assistant.
   components:
   - type: Sprite
-    sprite: _RedEclipse/Objects/Devices/syndicate-pda.rsi
+    sprite: _RedEclipse/Objects/Devices/pda.rsi
   - type: Icon
-    sprite: _RedEclipse/Objects/Devices/syndicate-pda.rsi
+    sprite: _RedEclipse/Objects/Devices/pda.rsi
 
 - type: entity
   parent: BaseSyndicatePDA
