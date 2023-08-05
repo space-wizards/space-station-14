@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/cf45322c7ee16f9d7e43d5260daf24ceb77c1b25",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "borg_l_arm"
+    },
+    {
+      "name": "borg_r_arm"
+    },
+    {
+      "name": "borg_l_leg"
+    },
+    {
+      "name": "borg_r_leg"
+    },
+    {
+      "name": "borg_chest"
+    },
+    {
+      "name": "borg_head"
+    },
+    {
+      "name": "robo_suit"
+    },
+    {
+      "name": "borg_head+o"
+    },
+    {
+      "name": "borg_chest+o"
+    },
+    {
+      "name": "borg_l_arm+o"
+    },
+    {
+      "name": "borg_r_arm+o"
+    },
+    {
+      "name": "borg_l_leg+o"
+    },
+    {
+      "name": "borg_r_leg+o"
+    }
+  ]
+}

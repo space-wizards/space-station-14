@@ -70,8 +70,6 @@
     - Binary
     - Common
   - type: ZombieImmune
-  - type: Body
-    prototype: Borg
   - type: BorgChassis
   - type: WiresPanel
   - type: ActivatableUIRequiresPanel
@@ -84,6 +82,7 @@
       borg_brain: !type:ContainerSlot { }
       cell_slot: !type:ContainerSlot { }
       borg_module: !type:Container { }
+      part-container: !type:Container
   - type: PowerCellSlot
     cellSlotId: cell_slot
     fitsInCharger: true
@@ -99,6 +98,11 @@
     proto: robot
   - type: Speech
     speechSounds: Pai
+  - type: Construction
+    graph: Cyborg
+    containers:
+    - part-container
+    - cell_slot
   - type: Flashable
   - type: HandheldLight
     toggleOnInteract: false

@@ -11,11 +11,6 @@
   cost: 5000
   recipeUnlocks:
   - ProximitySensor
-  - LeftArmBorg
-  - LightHeadBorg
-  - RightArmBorg
-  - LeftLegBorg
-  - RightLegBorg
   - Drone
   - ExosuitFabricatorMachineCircuitboard
 

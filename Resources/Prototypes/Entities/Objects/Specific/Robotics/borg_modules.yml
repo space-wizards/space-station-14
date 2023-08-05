@@ -8,6 +8,9 @@
   - type: Sprite
     sprite: Objects/Devices/borgmodule.rsi
   - type: BorgModule
+  - type: Tag
+    tags:
+    - BorgModuleGeneric
 
 - type: entity
   id: BaseProviderBorgModule

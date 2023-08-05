@@ -47,16 +47,31 @@
   id: BorgArm
 
 - type: Tag
+  id: BorgGenericHead
+
+- type: Tag
+  id: BorgGenericLArm
+
+- type: Tag
+  id: BorgGenericLLeg
+
+- type: Tag
+  id: BorgGenericRArm
+
+- type: Tag
+  id: BorgGenericRLeg
+
+- type: Tag
+  id: BorgGenericTorso
+
+- type: Tag
   id: BorgHead
 
 - type: Tag
   id: BorgLeg
 
 - type: Tag
-  id: BorgLeftLeg
-
-- type: Tag
-  id: BorgRightLeg
+  id: BorgModuleGeneric
 
 - type: Tag
   id: BotanyHatchet

@@ -1,5 +1,5 @@
 - type: entity
-  id: BorgChassisStandard
+  id: BorgChassisGeneric
   parent: BaseBorgChassis
   components:
   - type: Sprite
@@ -14,5 +14,11 @@
       map: ["light"]
       visible: false
   - type: BorgChassis
+    maxModules: 5
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
     hasMindState: robot_e
     noMindState: robot_e_r
+  - type: Construction
+    node: Generic

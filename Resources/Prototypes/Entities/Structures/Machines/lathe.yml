@@ -346,13 +346,17 @@
   - type: Lathe
     idleState: fab-idle
     runningState: fab-active
-    dynamicRecipes:
-    - ProximitySensor
+    staticRecipes:
+    - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
     - LeftLegBorg
     - RightLegBorg
     - LightHeadBorg
+    - TorsoBorg
+    - Flash
+    dynamicRecipes:
+    - ProximitySensor
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm

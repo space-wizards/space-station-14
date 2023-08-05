@@ -7,41 +7,56 @@
     Glass: 300
 
 - type: latheRecipe
+  id: CyborgEndoskeleton
+  result: CyborgEndoskeleton
+  completetime: 3
+  materials:
+    Steel: 1500
+
+- type: latheRecipe
   id: LeftArmBorg
   result: LeftArmBorg
   completetime: 2
   materials:
-    Steel: 70
-    Glass: 25
+    Steel: 500
+    Glass: 150
 
 - type: latheRecipe
   id: RightArmBorg
   result: RightArmBorg
   completetime: 2
   materials:
-    Steel: 70
-    Glass: 25
+    Steel: 500
+    Glass: 150
 
 - type: latheRecipe
   id: LeftLegBorg
   result: LeftLegBorg
   completetime: 2
   materials:
-    Steel: 70
-    Glass: 25
+    Steel: 500
+    Glass: 150
 
 - type: latheRecipe
   id: RightLegBorg
   result: RightLegBorg
   completetime: 2
   materials:
-    Steel: 70
-    Glass: 25
+    Steel: 500
+    Glass: 150
 
 - type: latheRecipe
   id: LightHeadBorg
   result: LightHeadBorg
   completetime: 2
   materials:
-    Steel: 70
-    Glass: 25
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: TorsoBorg
+  result: TorsoBorg
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150

@@ -1,0 +1,167 @@
+﻿- type: entity
+  id: CyborgEndoskeleton
+  name: cyborg endoskeleton
+  description: A frame that cyborgs are built on. Significantly less spooky than expected.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    noRot: true
+  - type: CollisionWake
+  - type: TileFrictionModifier
+    modifier: 0.5
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 100
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+        restitution: 0.3
+        friction: 0.2
+  - type: Sprite
+    noRot: true
+    drawdepth: Items
+    sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+    state: robo_suit
+  - type: Appearance
+  - type: ItemMapper
+    sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+    mapLayers:
+      borg_l_arm+o:
+        whitelist:
+          tags:
+          - BorgGenericLArm
+      borg_r_arm+o:
+        whitelist:
+          tags:
+          - BorgGenericRArm
+      borg_l_leg+o:
+        whitelist:
+          tags:
+          - BorgGenericLLeg
+      borg_r_leg+o:
+        whitelist:
+          tags:
+          - BorgGenericRLeg
+      borg_head+o:
+        whitelist:
+          tags:
+          - BorgGenericHead
+      borg_chest+o:
+        whitelist:
+          tags:
+          - BorgGenericTorso
+  - type: ContainerContainer
+    containers:
+      part-container: !type:Container
+      cell_slot: !type:Container
+  - type: PartAssembly
+    parts:
+      generic:
+      - BorgGenericLArm
+      - BorgGenericRArm
+      - BorgGenericLLeg
+      - BorgGenericRLeg
+      - BorgGenericHead
+      - BorgGenericTorso
+  - type: Construction
+    graph: Cyborg
+    node: start
+    containers:
+    - part-container
+    - cell_slot
+  - type: Pullable
+  - type: GuideHelp
+    guides:
+    - Robotics
+
+- type: entity
+  id: LeftArmBorg
+  parent: BaseBorgArmLeft
+  components:
+  - type: Sprite
+    state: borg_l_arm
+  - type: Icon
+    state: borg_l_arm
+  - type: Tag
+    tags:
+    - Trash
+    - BorgArm
+    - BorgGenericLArm
+
+- type: entity
+  id: RightArmBorg
+  parent: BaseBorgArmRight
+  components:
+  - type: Sprite
+    state: borg_r_arm
+  - type: Icon
+    state: borg_r_arm
+  - type: Tag
+    tags:
+    - Trash
+    - BorgArm
+    - BorgGenericRArm
+
+- type: entity
+  id: LeftLegBorg
+  parent: BaseBorgLegLeft
+  components:
+  - type: Sprite
+    state: borg_l_leg
+  - type: Icon
+    state: borg_l_leg
+  - type: Tag
+    tags:
+    - Trash
+    - BorgLeg
+    - BorgGenericLLeg
+
+- type: entity
+  id: RightLegBorg
+  parent: BaseBorgLegRight
+  components:
+  - type: Sprite
+    state: borg_r_leg
+  - type: Icon
+    state: borg_r_leg
+  - type: Tag
+    tags:
+    - Trash
+    - BorgLeg
+    - BorgGenericRLeg
+
+- type: entity
+  id: LightHeadBorg
+  parent: BaseBorgHead
+  components:
+  - type: Sprite
+    state: borg_head
+  - type: Icon
+    state: borg_head
+  - type: Tag
+    tags:
+    - Trash
+    - BorgHead
+    - BorgGenericHead
+
+- type: entity
+  id: TorsoBorg
+  parent: BaseBorgTorso
+  components:
+  - type: Sprite
+    state: borg_chest
+  - type: Icon
+    state: borg_chest
+  - type: Tag
+    tags:
+    - Trash
+    - BorgGenericTorso
