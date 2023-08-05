@@ -25,6 +25,19 @@
     state: honkbot
 
 - type: construction
+  name: taxibot
+  id: taxibot
+  graph: TaxiBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+  description: This bot takes people to their destination.
+  icon:
+    sprite: Mobs/Silicon/Bots/taxibot.rsi
+    state: taxibot
+
+- type: construction
   name: jonkbot
   id: jonkbot
   graph: JonkBot
