@@ -302,7 +302,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitMedical
   name: chief medical officer's hardsuit
-  description: A special suit that protects against hazardous and low pressure environments. Built with lightweight materials for easier movement.
+  description: A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
