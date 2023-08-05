@@ -1,11 +1,6 @@
 Entries:
 - author: Owai-Seek
   changes:
-  - {message: 'Adds Medical Doctor, Cryo, and Cloning Guidebooks', type: Add}
-  id: 3940
-  time: '2023-06-04T21:06:43.0000000+00:00'
-- author: Owai-Seek
-  changes:
   - {message: Added Chef Guidebook, type: Add}
   id: 3941
   time: '2023-06-04T21:34:29.0000000+00:00'
@@ -2985,3 +2980,9 @@ Entries:
   - {message: Uplinks can now purchase a Syndicate pAI., type: Add}
   id: 4439
   time: '2023-08-05T04:26:26.0000000+00:00'
+- author: mhamster
+  changes:
+  - {message: 'Added new chemical reaction between iron, aluminium and uranium that
+      will cause electromagnetic pulse.', type: Add}
+  id: 4440
+  time: '2023-08-05T04:31:14.0000000+00:00'
