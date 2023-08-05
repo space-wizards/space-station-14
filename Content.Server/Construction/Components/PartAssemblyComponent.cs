@@ -1,7 +1,5 @@
 ﻿using Content.Server.Mech.Components;
-using Content.Shared.Tools;
 using Robust.Shared.Containers;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Construction.Components;
 
@@ -14,7 +12,7 @@ namespace Content.Server.Construction.Components;
 public sealed class PartAssemblyComponent : Component
 {
     /// <summary>
-    /// A dictionary of a set of parts to a list of tags for each part.
+    /// A dictionary of a set of parts to a list of tags for each assembly.
     /// </summary>
     [DataField("parts", required: true)]
     public Dictionary<string, List<string>> Parts = new();
@@ -37,11 +35,4 @@ public sealed class PartAssemblyComponent : Component
     /// </summary>
     [ViewVariables]
     public Container PartsContainer = default!;
-
-    /// <summary>
-    /// The quality of tool needed to remove all the parts
-    /// from the parts container.
-    /// </summary>
-    [DataField("qualityNeeded", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-    public string QualityNeeded = "Prying";
 }

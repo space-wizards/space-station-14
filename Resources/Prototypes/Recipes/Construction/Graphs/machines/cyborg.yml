@@ -5,6 +5,16 @@
   - node: start
     entity: CyborgEndoskeleton
     edges:
+    - to: start
+      conditions:
+      - !type:ContainerNotEmpty
+        container: part-container
+      steps:
+      - tool: Prying
+        doAfter: 0.5
+        completed:
+          - !type:EmptyAllContainers
+
     - to: generic
       conditions:
       - !type:PartAssemblyComplete
@@ -20,15 +30,18 @@
       - material: Cable
         amount: 1
         doAfter: 1
+        store: part-contaienr
 
       - component: Flash
         name: Flash
+        store: part-contaienr
         icon:
           sprite: Objects/Weapons/Melee/flash.rsi
           state: flash
 
       - component: Flash
         name: Flash
+        store: part-contaienr
         icon:
           sprite: Objects/Weapons/Melee/flash.rsi
           state: flash

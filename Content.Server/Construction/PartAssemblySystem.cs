@@ -1,7 +1,6 @@
 ﻿using Content.Server.Construction.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
-using Content.Shared.Tools.Components;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 
@@ -20,6 +19,7 @@ public sealed class PartAssemblySystem : EntitySystem
     {
         SubscribeLocalEvent<PartAssemblyComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<PartAssemblyComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<PartAssemblyComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
     }
 
     private void OnInit(EntityUid uid, PartAssemblyComponent component, ComponentInit args)
@@ -29,18 +29,18 @@ public sealed class PartAssemblySystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, PartAssemblyComponent component, InteractUsingEvent args)
     {
-        if (TryInsertPart(args.Used, uid, component))
-        {
-            args.Handled = true;
+        if (!TryInsertPart(args.Used, uid, component))
             return;
-        }
-
-        if (!TryComp<ToolComponent>(args.Used, out var toolComp) ||
-            !toolComp.Qualities.Contains(component.QualityNeeded))
-            return;
-        _container.EmptyContainer(component.PartsContainer);
-        component.CurrentAssembly = null;
         args.Handled = true;
+    }
+
+    private void OnEntRemoved(EntityUid uid, PartAssemblyComponent component, EntRemovedFromContainerMessage args)
+    {
+        if (args.Container.ID != component.ContainerId)
+            return;
+        if (component.PartsContainer.ContainedEntities.Count != 0)
+            return;
+        component.CurrentAssembly = null;
     }
 
     public bool TryInsertPart(EntityUid part, EntityUid uid, PartAssemblyComponent? component = null)
